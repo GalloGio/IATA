@@ -20,28 +20,28 @@ public without sharing class OneId_RegistrationProcessController {
         String recordTypesSet = '';
         String categoryFilter = '';
 
-        if(sector == 'Airline'){
-            recordTypesSet = '(\'IATA_Airline\',\'Operator\')';
-            categoryFilter = ' AND Category__c = \'' + cat + '\'';
-        }
-        else if(sector == 'Travel Agent'){
-            if(cat == 'IATA Passenger Sales Agent'){
-                recordTypesSet = '(\'IATA_Agency\',\'Standard_Account\')';
-            }
-            else if(cat == 'Non-IATA Travel Agent'){
-                recordTypesSet = '(\'Non_IATA_Agency\',\'Standard_Account\')';
-            }
-            categoryFilter = ' AND Category__c = \'' + cat + '\'';
-        }
-        else if(sector == 'Airline Supplier'){
-            recordTypesSet = '(\'Others\',\'Standard_Account\')';
-            categoryFilter = ' AND Category__c in (\'GDS\',\'Content Aggregator\')';
-        }
-
-        if(recordTypesSet == ''){
-            System.debug('NDCMM - invalid sector-category combination : "' + sector + '" - "' + cat + '"');
-            return new List<Account>();
-        }
+		if(sector == 'Airline'){
+			recordTypesSet = '(\'IATA_Airline\',\'Operator\')';
+			categoryFilter = ' AND Category__c = \'' + cat + '\'';
+		}
+		else if(sector == 'Travel Agent'){
+			if(cat == 'IATA Passenger Sales Agent'){
+				recordTypesSet = '(\'IATA_Agency\',\'Standard_Account\')';
+			}
+			else if(cat == 'Non-IATA Travel Agent'){
+				recordTypesSet = '(\'Non_IATA_Agency\',\'Standard_Account\')';
+			}
+			categoryFilter = ' AND Category__c = \'' + cat + '\'';
+		}
+		else if(sector == 'Airline Supplier'){
+			recordTypesSet = '(\'Others\',\'Standard_Account\')';
+			categoryFilter = ' AND Category__c in (\'Global Distribution System\',\'Content Aggregator\')';
+		}
+		
+		if(recordTypesSet == ''){
+			System.debug('NDCMM - invalid sector-category combination : "' + sector + '" - "' + cat + '"');
+			return new List<Account>();
+		}
 
         String queryStr = 'SELECT Id, IATACode__c, Airline_designator__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry FROM Account WHERE ';
         queryStr += ' RecordType.DeveloperName in ' + recordTypesSet;
@@ -277,7 +277,7 @@ public without sharing class OneId_RegistrationProcessController {
                 || (acc.Sector__c == 'Travel Agent'
                 && ((acc.Category__c == 'IATA Passenger Sales Agent'&& (acc.RecordType.DeveloperName == 'IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account')) || (acc.Category__c == 'Non-IATA Travel Agent' && (acc.RecordType.DeveloperName == 'Non_IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account'))))
                 || (acc.Sector__c == 'Airline Supplier'
-                && (acc.Category__c == 'GDS' || acc.Category__c == 'Content Aggreagator')
+                && (acc.Category__c == 'Global Distribution System' || acc.Category__c == 'Content Aggregator')
                 && (acc.RecordType.DeveloperName == 'Others' || acc.RecordType.DeveloperName == 'Standard_Account'));
         return isEligible;
     }
@@ -363,7 +363,7 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     public static Account returnRelatedAcc(Id accID){
-        return [SELECT id, Name, ParentId, Ownerid, Recordtypeid, Category__c, Category_Other_Value__c, BillingCountry, IATA_ISO_Country__c, IATA_ISO_Shipping_Country__c, Sector__c, Reason_for_creation__c FROM Account WHERE ID =: accID];
+        return [SELECT id, Name, ParentId, Ownerid, Recordtypeid, Category__c, Category_Other_Value__c, BillingCountry, IATA_ISO_Country__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c, Sector__c, Reason_for_creation__c FROM Account WHERE ID =: accID];
     }
 
 
@@ -405,27 +405,28 @@ public without sharing class OneId_RegistrationProcessController {
     @AuraEnabled
     public static Map<String,String> getAccountLabels() {
         List<String> contactFields = new List<String> {
-                // 'Id',
-                'BillingAddress',
-                'BillingCity',
-                'BillingCountry',
-                'BillingPostalCode',
-                'BillingState',
-                'BillingStreet',
-                'Category__c',
-                'Email__c',
-                'IATACode__c',
-                'Legal_name__c',
-                'Name',
-                'Sector__c',
-                'ShippingAddress',
-                'ShippingCity',
-                'ShippingCountry',
-                'ShippingPostalCode',
-                'ShippingState',
-                'ShippingStreet',
-                'TradeName__c',
-                'Website'
+           // 'Id',
+            'BillingAddress',
+            'BillingCity',
+            'BillingCountry',
+            'BillingPostalCode',
+            'BillingState',
+            'BillingStreet',
+            'Category__c',
+            'Category_Other_Value__c',
+            'Email__c',
+            'IATACode__c',
+            'Legal_name__c',
+            'Name',
+            'Sector__c',
+            'ShippingAddress',
+            'ShippingCity',
+            'ShippingCountry',
+            'ShippingPostalCode',
+            'ShippingState',
+            'ShippingStreet',
+            'TradeName__c',
+            'Website'
         };
         Map<String, SObjectField> accountFields = Schema.SObjectType.Account.fields.getMap();
         Map<String,String> labels = new Map<String,String>();
@@ -439,12 +440,12 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     @AuraEnabled
-    public static List<String> getContactJobFunctionValues(){
-        List<String> values =  new  List<String>();
+    public static List<PicklistEntry> getContactJobFunctionValues(){
+        List<PicklistEntry> values =  new  List<PicklistEntry>();
 
         List<Schema.PicklistEntry> controllingFieldValues = Schema.Contact.Function__c.getDescribe().getPickListValues();
         for (Schema.PicklistEntry p : controllingFieldValues){
-            values.add(p.getLabel());
+           values.add(new PicklistEntry(p.getLabel(), p.getValue()));
         }
         return values;
     }
@@ -505,6 +506,37 @@ public without sharing class OneId_RegistrationProcessController {
         return OneId_AddressDoctor.validate((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class));
     }
 
+    //Method created as a workaround due to not be able to populate lookups in the Lightning Component. This was a quick fix in order to not change registration method signature. 
+    //Probably the way to set this IDs should be reviewed. 
+    @AuraEnabled
+    public static boolean registrationAux(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
+        
+        if(cityAndStateIds != null){
+            String billingCityId = (String) cityAndStateIds.get('billingCityId');
+            String billingStateId = (String) cityAndStateIds.get('billingStateId');
+            String shippingCityId = (String) cityAndStateIds.get('shippingCityId');
+            String shippingStateId = (String) cityAndStateIds.get('shippingStateId');
+            
+            if(!String.isBlank(billingCityId)){
+                acc.Geoname_Billing_City__c = billingCityId;                
+            }
+
+            if(!String.isBlank(billingStateId)){
+                acc.ISO_State__c = billingStateId;
+                acc.IATA_ISO_Billing_State__c = billingStateId;                            
+            }
+
+            if(!String.isBlank(shippingCityId)){
+                acc.Geoname_Shipping_City__c = shippingCityId;                
+            }
+
+            if(!String.isBlank(shippingStateId)){
+                acc.IATA_ISO_Shipping_State__c = shippingStateId;                            
+            }
+        }
+
+        return OneId_RegistrationProcessController.registration(acc, con, serviceName);
+    }
     @AuraEnabled
     public static boolean registration(Account acc, Contact con, String serviceName){
         return registration(acc, con, serviceName, new Map<String, String>());
@@ -512,16 +544,17 @@ public without sharing class OneId_RegistrationProcessController {
 
     @AuraEnabled
     public static boolean registration(Account acc, Contact con, String serviceName, Map<String, String> serviceSpecificParams){
+
         system.debug('OneId registration process starting...');
         system.debug('account  --> ' + acc);
         system.debug('contact  --> ' + con);
         system.debug('serviceName  --> ' + serviceName);
 
-        if(serviceName == null)
+       if(serviceName == null)
             serviceName = 'IDENTITY';
 
         //it's general public account? create contact / user
-        if(acc.Sector__c == 'General Public'){
+        if(acc.Id == null && acc.Sector__c == 'General Public'){
             List<Account> gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and  IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];
             if(!gpAccount.isEmpty()) acc.Id  = gpAccount[0].Id;
         }
@@ -581,7 +614,7 @@ public without sharing class OneId_RegistrationProcessController {
 
         //create contact
         con.ISO_Country__c = acc.IATA_ISO_Country__c;
-        con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Country__c;
+        con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c;
         con.Country__c = acc.IATA_ISO_Country__c;
         con.Preferred_Language__c = languageString;
         con.IATA_ISO_Billing_State__c = acc.IATA_ISO_Billing_State__c;
@@ -683,10 +716,15 @@ public without sharing class OneId_RegistrationProcessController {
                 if (!String.isBlank(acc.BillingCountry)) {
                     List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
                     if (cn.size()!=0) {
-                        acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
+                        acc.IATA_ISO_Country__c = cn[0].id;
                     }
                 }
-
+                if (!String.isBlank(acc.ShippingCountry)) {
+                    List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.ShippingCountry});
+                    if (cn.size()!=0) {
+                        acc.IATA_ISO_Shipping_Country__c = cn[0].id;
+                    }
+                }
                 database.insert(acc);
             }
 
@@ -951,6 +989,30 @@ public without sharing class OneId_RegistrationProcessController {
         }
 
         return new Account();
+    }
+
+   @AuraEnabled
+    public static StatesAndAlternateNames getStates(String country){
+        List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, (SELECT IATA_ISO_State__r.Name, GeonameName__c, GeonameHierarchy_label__c, Name FROM IATA_ISO_Cities__r ) FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
+        Map<ID, IATA_ISO_City__c> ma = new Map<ID,IATA_ISO_City__c>([SELECT GeonameAlternateNames__c FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name = :country]);
+        StatesAndAlternateNames states = new StatesAndAlternateNames(liis, ma);
+
+        return states;
+    }
+    
+    @TestVisible
+    public class StatesAndAlternateNames{
+        @AuraEnabled 
+        public List<IATA_ISO_State__c> states;
+        
+        @AuraEnabled
+        public Map<ID, IATA_ISO_City__c> idAndAlternateNames;
+
+         public StatesAndAlternateNames(List<IATA_ISO_State__c> states, Map<ID, IATA_ISO_City__c> idAndAlternateNames){
+           this.states = states;
+           this.idAndAlternateNames = idAndAlternateNames;  
+        }
+        
     }
 
     /* Manuel Conde commented this...

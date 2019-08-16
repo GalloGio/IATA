@@ -13,8 +13,6 @@ public class AMS_AgencyAChangeCodeHandler {
         set<id> setIdAACC = new set<id>();
         Id irregRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
-         //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
-        set<id> setIdAACCForNewApplicationPending = new set<id>();
 
         /*** AMSU-198 ***/
         List<Agency_Applied_Change_code__c> accToProcessPayment = new List<Agency_Applied_Change_code__c>();
@@ -26,9 +24,6 @@ public class AMS_AgencyAChangeCodeHandler {
             {
                 aaccToBeProcessed.add(aaccRecord);
             }
-            //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
-            if(aaccRecord.Change_Code__c == 'NEW' && aaccRecord.AccountNewStatus__c == 'New application pending' && aaccRecord.Reason_Code__c == '21')
-                setIdAACCForNewApplicationPending.add(aaccRecord.id);
 
             /*** AMSU-198 ***/
             if(accPaymentDefault.contains(aaccRecord.Change_Code__c)) {
@@ -40,9 +35,6 @@ public class AMS_AgencyAChangeCodeHandler {
         system.debug('SALVES handleAfterInsert -->  minorChangesComingFromOSCAR: ' + AMS_AccountTriggerHandler.minorChangesComingFromOSCAR);
         if(AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR){
 		   updateAccountReason(setIdAACC, false);
-        }else{
-             if(!setIdAACCForNewApplicationPending.isEmpty()) 
-                updateAccountReason(setIdAACCForNewApplicationPending, true);
         }
 		
         //FM 22-09-2016 - Create "Agency Update" records
@@ -54,7 +46,41 @@ public class AMS_AgencyAChangeCodeHandler {
             notifyAirlines(accToProcessPayment);
         }
 
+        processRelatedCases(aacc);  //WMO-482 - ACAMBAS
     }
+
+    //WMO-482 - ACAMBAS: Begin
+    public static void processRelatedCases(List<Agency_Applied_Change_code__c> aaccLst) {
+        List<Id> aaccLstCase = new List<Id>();
+
+        for(Agency_Applied_Change_code__c aacc: aaccLst) {
+            if(aacc.Change_Code__c == 'RVW' && aacc.SIDRA_Case__c != null) {
+                aaccLstCase.add(aacc.SIDRA_Case__c);
+            }
+        }
+
+        if(aaccLstCase.isEmpty()) return;
+
+        List<Case> casesToUpdate = new List<Case>();
+
+        for(Case caseToProcess : [SELECT Id, Parent.BusinessHoursId, ParentId, Parent.New_IFAP_Deadline_date__c
+                                  FROM Case 
+                                  WHERE Id IN :aaccLstCase AND RecordType.DeveloperName = 'Sidra_Lite' AND ParentId != null AND Account.CNS_Agency__c = true]) {
+
+            Case parentCase = new Case(Id = caseToProcess.parentId);                         
+            Date newDateToUpdate = BusinessDays.addNBusinessDays(DateTime.now(), 7, caseToProcess.Parent.BusinessHoursId).date();
+
+            if(caseToProcess.parent.New_IFAP_Deadline_date__c <> newDateToUpdate){
+                parentCase.New_IFAP_Deadline_date__c = newDateToUpdate;
+                casesToUpdate.add(parentCase);
+            }
+        }
+
+        if(!casesToUpdate.isEmpty()) {
+            update casesToUpdate;
+        }
+    }
+    //WMO-482 - ACAMBAS: End
     
     /*** AMSU-198 ***/
     public static void notifyAirlines(List<Agency_Applied_Change_code__c> aaccs) {

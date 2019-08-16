@@ -1,5 +1,7 @@
 public with sharing class ISSP_AvailableServices{
 
+    public static final string WILDCARD = 'ALL';
+
     public string selectedList {get;set;}
     public List<ServiceWrapper> ServiceList;
     public Map<String,ISSPServiceListView__c> ServiceListViewMap {get;set;} 
@@ -40,9 +42,9 @@ public with sharing class ISSP_AvailableServices{
     public static User currentPortalUser {
         get {
             if(currentPortalUser == null){
-                currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, contact.AccountId, contact.name,
-                                    contact.account.ANG_IEP_Status_FF__c,ContactId,
-                                    languagelocalekey,ProfileId, Profile.Name
+                currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c,languagelocalekey,ProfileId,Profile.Name,
+                                    ContactId, contact.name,
+                                    contact.AccountId,contact.account.ANG_IEP_Status_FF__c, contact.account.Sector__c, contact.account.Category__c
                                     from User where id =: UserInfo.getUserId()];
             }
             return currentPortalUser;
@@ -432,23 +434,60 @@ public with sharing class ISSP_AvailableServices{
 
                 size = 10;
 
+                // Find applications from CS ISSPServiceListView__c
                 String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, Auto_approved_for__c, New_Window__c,ServiceName__c, Service_Description_Label__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c ';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }
-                string queryString = '';
-
-                queryString = 'select '+query+' from Portal_Applications__c '+getQueryConditions()+' order by '+ sortFullExp;
-
+                String queryString = 'select '+query+' from Portal_Applications__c '+getQueryConditions()+' order by '+ sortFullExp;
                 ISSP_Utilities.log('SQL String: ' + queryString);
-                setCon = new ApexPages.StandardSetController(Database.getQueryLocator(queryString));
-                setCon.setPageSize(size);
+                list<Portal_Applications__c> listApps = Database.query(queryString);
+
+                // Second search based in Custom Matadata for all those remaining apps
+                list<String> listValidAppNames = getVisibleApplicationNames(currentPortalUser.contact.account);
+                queryString = 'SELECT ' + query
+                    + ' FROM Portal_Applications__c'
+                    + ' WHERE Id NOT IN :listApps'
+                    + ' AND Requestable__c = true'
+                    + ' AND Name IN :listValidAppNames';
+                ISSP_Utilities.log('Second search SQL String: ' + queryString);
+                list<Portal_Applications__c> listRestOfRequestableApps = Database.query(queryString);
+
+                // combine first and second search of apps
+                listApps.addAll(listRestOfRequestableApps);
+
+                setCon = new ApexPages.StandardSetController(listApps);
+                setCon.setPageSize(listApps.size());
                 noOfRecords = setCon.getResultSize();
             }
             return setCon;
         }set;
     }
-    
+
+    /**
+        Returns a list of all visible application names for the input account
+        according to the Custom Metadata Portal_Application_Setting__mdt
+    **/
+    @TestVisible
+    private list<String> getVisibleApplicationNames(Account account) {
+        // Get the list of services visible for thi input account based on the Custom metadata Portal_Application_Setting__mdt
+        list<String> listVisibleApplicationNames = new list<String>();
+        if (account==null) return listVisibleApplicationNames;
+        for (Portal_Application_Setting__mdt setting: [
+                SELECT id, MasterLabel,
+                    (SELECT Sector__c, Category__c
+                    FROM Portal_Application_Visibilities__r
+                    WHERE is_Visible__c = true
+                    AND Sector__c = :account.Sector__c
+                    AND Category__c IN (:account.Category__c,:WILDCARD))
+                FROM Portal_Application_Setting__mdt]) {
+            if (setting.Portal_Application_Visibilities__r.size()>0) {
+                listVisibleApplicationNames.add(setting.MasterLabel);
+            }
+        }
+        return listVisibleApplicationNames;
+    }
+
     public class ServiceWrapper {
         public string Status {get; set;}
         public Boolean selected {get; set;}
@@ -545,7 +584,7 @@ public with sharing class ISSP_AvailableServices{
             allServiceList.add(thisServiceRecord);
         }
         
-        List<Portal_Application_Right__c> appRightList = [SELECT Id, Portal_Application__c,
+        List <Portal_Application_Right__c> appRightList = [SELECT Id, Portal_Application__c,
                                                         Portal_Application__r.Name,
                                                         Portal_Application__r.ServiceName__c,   
                                                         Portal_Application__r.Service_Description__c,
@@ -743,8 +782,9 @@ public with sharing class ISSP_AvailableServices{
             res = 'okauto';
         }
                     
-        Portal_Application_Right__c app =  new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = appRight, ANG_Portal_Service_Role__c = appRole);
-        insert app;
+        Portal_Application_Right__c app =  new Portal_Application_Right__c(Contact__c = contactId, Portal_Application__c = applicationId,Right__c = appRight, ANG_Portal_Service_Role__c = appRole);
+        app.Application_uniqueness_for_contact__c = contactId.left(15) + applicationId.left(15);
+        upsert app Application_uniqueness_for_contact__c;
         submitApprovalProcess(app.id);
         return res;
     }

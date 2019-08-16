@@ -52,6 +52,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>BIN_Conflict_Count__c</fullName>
         <externalId>false</externalId>
@@ -539,8 +540,12 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
     <label>Partner Product</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>PP_Payment_Product_Network_type__c</columns>
+        <columns>PP_VAN_Type__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>Product Name</label>

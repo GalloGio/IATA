@@ -11,7 +11,7 @@
 
     <html>
         <c:ISSP_Header communityName="{!communityName}" ></c:ISSP_Header>
-        <body>
+        <body> 
         <script src="{!URLFOR($Resource.bootbox)}" />
         <script src="{!URLFOR($Resource.datePickerFix)}" />
         <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
@@ -432,7 +432,7 @@
 
     function redirectToPDF() {
          window.open('/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf{!if(communityName=='CNS', '&CommunityName=CNS', '')}', '_blank');
-    }
+    } 
 
     </script>
 
@@ -667,26 +667,50 @@
                                                         <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Associate_Entity}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
                                                     </apex:selectRadio>
                                                 </apex:outputPanel>
-                                            </apex:outputPanel>
+                                            </apex:outputPanel> 
                                         </div>
                                     </div>
+ <!--##RN INC463820  -->
+ <apex:outputPanel id="branchaccountsel" style="display:{!IF(OR(newForm.Scope_of_Change__c=='HO - Selected Branches', newForm.Scope_of_Change__c=='Selected Branches Only'), '', 'none')}">
+                                    <apex:pageBlockSection id="table" columns="1" title="Select Accounts" rendered="{!hierarchyValues.size > 0}">
 
-                                    <apex:outputPanel id="branchaccountsel" style="display:{!IF(OR(newForm.Scope_of_Change__c=='HO - Selected Branches', newForm.Scope_of_Change__c=='Selected Branches Only'), '', 'none')}">
-                                    <div class="form-group">
-                                        <label for="approval focus" class="col-lg-3 control-label"></label>
-                                        <div class="col-lg-9">
-                                            <apex:outputPanel rendered="{!OR(isBankAccountChange = false, con.Account.Location_Type__c != 'AE')}">
-                                                <c:MultiselectPicklist leftLabel="{!IF(OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy'), $Label.ISSP_AMS_NoC_Choose_Branch_Account, $Label.ISSP_AMS_NoC_Choose_Associate_Entities)}"
-                                                                    leftOptions="{!BranchAccounts}"
-                                                                    rightLabel="{!IF(OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy'), $Label.ISSP_AMS_Selected_Branch_Offices, $Label.ISSP_AMS_Selected_Associate_Entities)}"
-                                                                    rightOptions="{!agencyCodesConcerned}"
-                                                                    size="8"
-                                                                    width="300px"
-                                                                    btn_up_down="false"
-                                                />
-                                            </apex:outputPanel>
-                                        </div>
-                                    </div>
+                <apex:outputPanel id="buttonPanel">
+                    <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>        
+                    <apex:outputText >Page {!(currentPage + 1)} of {!totalPages}</apex:outputText>
+                    <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                </apex:outputPanel>
+					
+                <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
+					<apex:column >
+						<apex:facet name="header">
+							<apex:inputCheckbox value="{!selectAll}">
+								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table"/>
+							</apex:inputCheckbox>
+						</apex:facet>
+						<apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}"/>
+					</apex:column>
+
+					<apex:column value="{!hi.acc['Name']}"/>
+                    <apex:column value="{!hi.acc['IATACode__c']}"/>
+                    <apex:column value="{!hi.acc['BillingCity']}"/>
+                    <apex:column value="{!hi.acc['BillingState']}"/>
+                    
+				</apex:pageBlockTable>
+				<apex:actionStatus id="blockEditing">
+					<apex:facet name="start">
+						<apex:outputPanel layout="none">
+							<apex:outputPanel layout="block" styleClass="loading-backdrop"/>
+							<apex:image value="/../img/loading32.gif" styleClass="loading-img"/>
+						</apex:outputPanel>
+					</apex:facet>
+				</apex:actionStatus>
+			</apex:pageBlockSection>
+			
+
+             <!--##RN INC463820  -->
+
                                     </apex:outputPanel>
                                 </apex:outputpanel>
                             </apex:outputpanel>
@@ -701,7 +725,7 @@
                                 </div>
                                 <div class="col-lg-9" id="brcountry" style="padding-top:7px;display:none">
                                     <apex:outputText value="{!amsAllLangCountryLabel}"/>
-                                </div>
+                                </div> 
                             </div>
 
                             <!-- apex:outputpanel id="langGSA" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent')) || isNoticeOfChange}" -->
@@ -1113,11 +1137,11 @@
 
 
            <br/> <br/>
-            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!newCase.CaseNumber}</a>.
+            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="{!portalRedirectToCase}" target="_self">{!newCase.CaseNumber}</a>.
             <br/><br/>
-                <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
+                <a href="{!portalRedirectToCase}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
             <br/><br/>
-           {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="/ISSP_CaseList{!if(communityName=='CNS','?CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
+           {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="{!portalRedirectToCaseList}" target="_self">{!IF(isNewPortal, $Label.CSP_AMS_StepFinal_In_Addition2, $Label.ISSP_AMS_StepFinal_In_Addition2)}</a>.
             <br/><br/><br/><br/>
             <!---
             <a href="/ISSP_APCases?retURL=/ISSP_Homepage"><apex:image value="https://iata--preprod--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000UHn7&oid=00D1100000Bzzsg&lastMod=1425387500000" width="60" height="60" style="vertical-align: middle;"/></a>&nbsp;<b>Create new BSP / CASS Joining application.</b>

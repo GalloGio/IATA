@@ -66,7 +66,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>RecordTypeId</field>
+				<field>RecordTypeId</field>
+			</layoutItems>
+			<layoutItems>
+                <behavior>Edit</behavior>
+                <field>Contact_Role_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>UniqueKey__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -107,13 +115,19 @@
         <fields>Service__c</fields>
         <relatedList>Contact_Role_Service_Access__c.Contact_Role__c</relatedList>
     </relatedLists>
+	<relatedLists>
+		<fields>NAME</fields>
+        <fields>ATC__c</fields>
+        <fields>ATC_ID__c</fields>
+        <relatedList>Yardstick_Contact_Details__c.Account_Contact_Role__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h6E000000aSeF</masterLabel>
+        <masterLabel>00h1r00000iZSkD</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -101,14 +101,14 @@
                                 <div class="slds-accordion__summary">
                                     <div class="slds-p-horizontal--small slds-size--1-of-1">
                                         <h3 class="slds-text-heading_small slds-accordion__summary-heading">
-                                	        <span aria-controls="step1" aria-expanded="true" class="slds-button slds-button_reset slds-accordion__summary-action" onclick="{!c.section1}">
+                                            <span aria-controls="step1" aria-expanded="true" class="slds-button slds-button_reset slds-accordion__summary-action" onclick="{!c.section1}">
 
-                                	            <span class="bulletv2">1</span>
+                                                <span class="bulletv2">1</span>
 
-                                	            <span class="category">{!$Label.c.OneId_Contact_Association_Validation}</span>
+                                                <span class="category">{!$Label.c.OneId_Contact_Association_Validation}</span>
 
-                                	            <span class="{!v.activeSection==1 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
-                                	        </span>
+                                                <span class="{!v.activeSection==1 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
+                                            </span>
                                         </h3>
                                     </div>
                                 </div>
@@ -122,19 +122,19 @@
                                 <div class="slds-accordion__summary">
                                     <div class="slds-p-horizontal--small slds-size--1-of-1">
                                         <h3 class="slds-text-heading_small slds-accordion__summary-heading">
-                    	                    <span aria-controls="step2" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action"  onclick="{!c.section2}">
-                    	                        <span class="bulletv2">2</span>
+                                            <span aria-controls="step2" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action"  onclick="{!c.section2}">
+                                                <span class="bulletv2">2</span>
 
-                    	                        <span class="category">{!$Label.c.OneId_Contact_Creation}</span>
+                                                <span class="category">{!$Label.c.OneId_Contact_Creation}</span>
 
-                    	                        <span class="{!v.activeSection==2 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
-                    	                    </span>
+                                                <span class="{!v.activeSection==2 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
+                                            </span>
                                         </h3>
                                     </div>
 
                                 </div>
                                 <div aria-hidden="false" class="slds-accordion__content" id="step2">
-                                    <c:OneId_ContactForm contact="{!v.contact}" serviceName="{!v.serviceName}" userCountry="{!v.userCountry}" invitationId ="{! v.invitationId}" />
+                                    <c:OneId_ContactForm contact="{!v.contact}" serviceName="{!v.serviceName}" userCountry="{!v.userCountry}" invitationId ="{! v.invitationId}"/>
                                 </div>
                             </section>
                         </div>
@@ -143,13 +143,13 @@
                                 <div class="slds-accordion__summary">
                                     <div class="slds-p-horizontal--small slds-size--1-of-1">
                                         <h3 class="slds-text-heading_small slds-accordion__summary-heading">
-                        	                <span aria-controls="step3" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action"  onclick="{!c.section3}">
-                        	                    <span class="bulletv2">3</span>
+                                            <span aria-controls="step3" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action"  onclick="{!c.section3}">
+                                                <span class="bulletv2">3</span>
 
-                        	                    <span class="category">{!$Label.c.OneId_Account_Association}</span>
+                                                <span class="category">{!$Label.c.OneId_Account_Association}</span>
 
-                        	                    <span class="{!v.activeSection==3 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
-                        	                </span>
+                                                <span class="{!v.activeSection==3 ? 'icon icon-navArrowLeft' : 'icon icon-navArrowDown'}" />
+                                            </span>
                                         </h3>
                                     </div>
                                 </div>
@@ -159,19 +159,26 @@
                                         <c:OneId_Fred_AccountSelection contact="{!v.contact}" account="{!v.account}" serviceName="{!v.serviceName}" userInput="{!v.account.Name}"/>
                                         <aura:set attribute="else">
                                             <aura:if isTrue="{!v.serviceName=='NDCMM'}">
-                                               <!--<c:OneId_NDCMM_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" userInput="{!v.account.Name}"/>-->
+                                                <c:OneId_NDCMM_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" userInput="{!v.account.Name}"/>
 
+                                                <!-- Default account creation -->
                                                 <aura:set attribute="else">
-                                                    <!--GADM Account-->
-                                                    <aura:if isTrue="{!v.serviceName == 'GADM'}">
+                                                    <aura:if isTrue="{!v.serviceName=='ISSP'}">
+                                                        <c:OneId_ISSP_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}"/>
 
-                                                        <c:OneId_GADM_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" isGadmPowerUser="{!v.isGadmPowerUser}" gadmAccountId="{! v.gadmAccountId}"/>
-
-                                                        <!-- Default account creation -->
                                                         <aura:set attribute="else">
-                                                            <c:OneId_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" isGadmPowerUser="{!v.isGadmPowerUser}"/>
-                                                        </aura:set>
 
+                                                            <aura:if isTrue="{!v.serviceName == 'GADM'}">
+
+                                                                <c:OneId_GADM_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" isGadmPowerUser="{!v.isGadmPowerUser}" gadmAccountId="{! v.gadmAccountId}"/>
+
+                                                                <!-- Default account creation -->
+                                                                <aura:set attribute="else">
+                                                                    <c:OneId_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" isGadmPowerUser="{!v.isGadmPowerUser}"/>
+                                                                </aura:set>
+
+                                                            </aura:if>
+                                                        </aura:set>
                                                     </aura:if>
                                                 </aura:set>
                                             </aura:if>

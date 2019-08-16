@@ -1,0 +1,87 @@
+<template>
+
+    <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+        <div class="modal">
+            <div class="customPopupInteriorHalfScreenCentered">
+
+                <!-- Popup Header -->
+                <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
+                    <span class="modalTitle">{titleLabel}</span>
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                            onclick={closeModal}></lightning-icon>
+                    </span>
+                </div>
+
+                <div class="slds-is-relative">
+                    <template if:true={loading}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+
+                    <div class="customWhiteBackground">
+
+                        <div class="slds-grid slds-wrap slds-p-around_large">
+                            <div class="slds-col slds-size_1-of-1">
+                                <template if:true={hasError}>
+                                    <div class="whiteIcon text-xxsmall errorBox">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-13">
+                                                <lightning-icon icon-name="utility:error" alternative-text="Error"
+                                                    variant="error" size="small">
+                                                </lightning-icon>
+                                            </div>
+                                            <div class="slds-col slds-size_12-of-13 wrapContent">
+                                                <lightning-formatted-rich-text value={errorMessage}>
+                                                </lightning-formatted-rich-text>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1">
+                                <lightning-layout-item size="7" flexibility="auto" padding="around-small">
+                                    <lightning-combobox name="communitySelected" label={label.portalStatusLABEL}
+                                        placeholder={label.selectPortalStatusLABEL} value={PortalStatVal} if:false={removeContactLocal}
+                                        options={portalStatusOptions.data} onchange={handlePortalStatusChange} required>
+                                    </lightning-combobox>
+                                </lightning-layout-item>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1">
+                                <label class="form-label text-bold">
+                                    {reasonLabel}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1">
+                                <lightning-layout-item size="7" flexibility="auto" padding="around-small"
+                                    if:true={inactiveStatus}>
+                                    <lightning-combobox name="communitySelected" label={reasonLabel}
+                                        placeholder={label.selectReasonLABEL} value={InactReasonVal}
+                                        options={rejectRegionsOptions.data} onchange={handleReasonCommChange}
+                                        variant="label-hidden" required>
+                                    </lightning-combobox>
+                                </lightning-layout-item>
+                            </div>
+                        </div>
+
+                        <!-- BUTTON -->
+                        <div class="slds-align_absolute-center slds-p-around_large topLightGrayBorder">
+                            <lightning-button variant="brand" class="slds-m-right_medium containedButtonWhite"
+                                name="sendPasswordbtn" label={label.submitLABEL} title={label.submitLABEL}
+                                onclick={submitAction} disabled={noSelected}>
+                            </lightning-button>
+
+                            <lightning-button variant="neutral" class="containedButton"
+                                              name="closeModal" label={label.cancelLABEL} title={label.cancelLABEL}
+                                              onclick={closeModal}
+                                              if:true={removeContactLocal}>
+                            </lightning-button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</template>

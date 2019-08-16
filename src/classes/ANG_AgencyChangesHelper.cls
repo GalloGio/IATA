@@ -11,6 +11,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		public List<Agency_Applied_Change_code__c> changeCodesToCreate;
 		public List<AMS_OSCAR_JSON.ChangeCode> changeCodesToCreateDef;
 		public List<Account> accountsToApplyChangeCodes;
+		public Set<Id> accountsToRecalculateRHC; 
 
 		public Set<Id> accountsChanged;
 
@@ -23,6 +24,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			accountsChanged = new Set<Id>();
 			changesStruct = new Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
 			accountsToApplyChangeCodes = new List<Account>();
+			accountsToRecalculateRHC = new Set<Id>();
 		}
 
 		public void addAccount(Account account){
@@ -41,6 +43,10 @@ public with sharing class ANG_AgencyChangesHelper {
 		public void addChangeCodeDef(AMS_OSCAR_JSON.ChangeCode changeCodeDef, Account acc){
 			this.changeCodesToCreateDef.add(changeCodeDef);
 			this.accountsToApplyChangeCodes.add(acc);
+		}
+
+		public void addAccountToRecalculateRHC(Id accountId){
+			accountsToRecalculateRHC.add(accountId);
 		}
 
 		public Boolean runUpsert(){
@@ -83,6 +89,10 @@ public with sharing class ANG_AgencyChangesHelper {
 			AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
 
 			System.debug('[ANG_AgencyChangesHelper] Upsert has run.');
+
+			if(!accountsToRecalculateRHC.isEmpty()){
+				recalculateRHCInformation(accountsToRecalculateRHC);
+			}
 
 			return hasUpserted;
 		}
@@ -195,8 +205,9 @@ public with sharing class ANG_AgencyChangesHelper {
 				}
 				System.debug('[ANG_AgencyChangesHelper] oscar.Process__c = ' +oscar.Process__c);
 				//if(Pattern.matches(AMS_Utils.ANG_OWNERSHIP + '|' + AMS_Utils.ANG_MINOR_SHAREHOLDING + '|' + AMS_Utils.ANG_MAJOR_SHAREHOLDING, oscar.ANG_Type_Of_Change__c))
-				if(containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP, AMS_Utils.ANG_MINOR_SHAREHOLDING, AMS_Utils.ANG_MAJOR_SHAREHOLDING},oscar.ANG_Type_Of_Change__c))
+				if(containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP, AMS_Utils.ANG_MINOR_SHAREHOLDING, AMS_Utils.ANG_MAJOR_SHAREHOLDING},oscar.ANG_Type_Of_Change__c)) {
 					changesContainer = applyChangeOfOwnership(oscar, accountIdsInvolvedSet, changesContainer, true);
+				}
 
 				if(oscar.Process__c == AMS_Utils.NGCHANGES){
 					
@@ -508,7 +519,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if(rel.Child_Account__c == oscarToProcess.Account__c){
 				
-				Account parentAccount = [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, Financial_Review_Result__c, CNS_Agency__c, (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r) From Account where Id =:rel.Parent_Account__c];
+				Account parentAccount = [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, Financial_Review_Result__c, CNS_Agency__c, Financial_Assessment_Points__c, (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r) From Account where Id =:rel.Parent_Account__c];
 
 				parentAccount.Location_Type__c = AMS_Utils.AE;
 				parentAccount.ParentId = oscarToProcess.Account__c;
@@ -525,12 +536,14 @@ public with sharing class ANG_AgencyChangesHelper {
 				childAccount.ANG_HE_RiskStatus__c = parentAccount.ANG_HE_RiskStatus__c;
 				childAccount.Financial_Review_Result__c = parentAccount.Financial_Review_Result__c;
 				childAccount.Top_Parent__c = null;
+				childAccount.Financial_Assessment_Points__c = parentAccount.Financial_Assessment_Points__c;
 
 				parentAccount.ANG_IEP_HE_AccntNum__c = null;
 				parentAccount.ANG_IEP_Status__c = null;
 				parentAccount.ANG_HE_CashCondition__c = false;
 				parentAccount.ANG_HE_RiskHistoryAssessment__c = null;
 				parentAccount.ANG_HE_RiskStatus__c = null;
+				parentAccount.Financial_Assessment_Points__c = null;
 
 				rel.Child_Account__c = rel.Parent_Account__c;
 
@@ -579,14 +592,15 @@ public with sharing class ANG_AgencyChangesHelper {
 			New parent = external HE
 			The selected agencies will be transformed into AE and linked to the new paren, therefore they will automatically get the Accreditation type "XXX"
 		*/
+
+		Account newHEaccount = toReturn.accountsMap.get(oscarToProcess.New_parent__c);
+
 		if((!accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c) && oscarToProcess.Account__c != oscarToProcess.New_parent__c)){
 
 			//Map<Id,Account> accountsMap;
 
-			Account newHEaccount = toReturn.accountsMap.get(oscarToProcess.New_parent__c);
-
 			if(newHEaccount == null)
-				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c from Account where Id = :oscarToProcess.New_parent__c];
+				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c, ANG_FA_Opt_out__c from Account where Id = :oscarToProcess.New_parent__c];
 
 			Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
 
@@ -633,6 +647,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c) != null ? toReturn.accountsMap.get(oscarToProcess.Account__c) : new Account(Id = oscarToProcess.Account__c);
 			oscarAccount.Location_Type__c = AMS_Utils.AE;
+			oscarAccount.Financial_Assessment_Points__c = null;
 			oscarAccount.ParentId = oscarToProcess.New_parent__c;
 			oscarAccount.Top_Parent__c = oscarToProcess.New_parent__c;
 			oscarAccount.ANG_IEP_HE_AccntNum__c = null;
@@ -640,6 +655,9 @@ public with sharing class ANG_AgencyChangesHelper {
 			oscarAccount.ANG_HE_CashCondition__c = false;
 			oscarAccount.ANG_HE_RiskHistoryAssessment__c = null;
 			oscarAccount.ANG_HE_RiskStatus__c = null;
+			oscarAccount.Assessment_Performed_Date__c = null;
+			oscarAccount.Financial_Review_Result__c = null;
+			oscarAccount.ANG_FA_Opt_out__c = newHEaccount.ANG_FA_Opt_out__c;
 
 			if(switchAccreditationModel){
 				oscarAccount.ANG_Accreditation_Model__c = newAccreditationModel;
@@ -750,6 +768,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			a.ANG_HE_CashCondition__c = false;
 			a.ANG_HE_RiskHistoryAssessment__c = null;
 			a.ANG_HE_RiskStatus__c = null;
+			a.Financial_Assessment_Points__c = null;
 
 			if(switchAccreditationModel){
 				a.ANG_Accreditation_Model__c = newAccreditationModel;
@@ -962,7 +981,7 @@ public with sharing class ANG_AgencyChangesHelper {
                     acc.Is_PCI_compliant__c = oscarToProcess.Is_PCI_compliant__c;
                 }
 
-                if(oscarToProcess.Process__c ==  AMS_Utils.NGCORRECTION && oscarToProcess.ANG_PCI_compliance_expiry_date__c != acc.ANG_PCI_compliance_expiry_date__c){
+                if(oscarToProcess.Process__c ==  AMS_Utils.NGCORRECTION && oscarToProcess.ANG_PCI_compliance_expiry_date__c != null && oscarToProcess.ANG_PCI_compliance_expiry_date__c != acc.ANG_PCI_compliance_expiry_date__c){
                     acc.ANG_PCI_compliance_expiry_date__c = oscarToProcess.ANG_PCI_compliance_expiry_date__c;
                 }
                     
@@ -997,8 +1016,9 @@ public with sharing class ANG_AgencyChangesHelper {
 					if(toReturn.accountsMap.containsKey(accId) && toReturn.accountsMap.get(accId).Location_Type__c == AMS_Utils.HE && oscarToProcess.ANG_Type_Of_Change__c == AMS_Utils.VFMR){
 						involvedAccounts.put(accID,null);
 						
-						if(accFieldApiName == 'Remittance_frequency__c' && oldValue != newValue)
-							accountsToUpdateRHC.add(accId);
+						if(accFieldApiName == 'Remittance_frequency__c' && oldValue != newValue){
+							toReturn.addAccountToRecalculateRHC(accId);
+						}
 					}
 
 					acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
@@ -1012,9 +1032,6 @@ public with sharing class ANG_AgencyChangesHelper {
 				else
 					toReturn.changesStruct.get(acc.Id).changes.addAll(objectChangesList);
 			}
-
-			if(!accountsToUpdateRHC.isEmpty())
-				recalculateRHCInformation(accountsToUpdateRHC);
 
 			if(!involvedAccounts.isEmpty()) new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
 
@@ -1077,6 +1094,13 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		for(Id accId : accountsAffected) {
 
+			Account currentAcc = toReturn.accountsMap.get(accId);
+
+            if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accId))
+                currentAcc.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accId);
+            else if(currentAcc.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(currentAcc.Top_Parent__c))
+                currentAcc.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(currentAcc.Top_Parent__c); 
+                     
 			AMS_AccountRoleCreator.OldAndNewOwners oldNewOwnersByOscar = oldAndNewOwnersMap.get(oscarToProcess.AMS_Online_Accreditation__c);
 
 			if (oldNewOwnersByOscar != null) {
@@ -1366,7 +1390,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Country__r.Due_diligence_mandatory__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
 		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
-		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
+		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, Covered_Ownership__c, Financial_Assessment_Points__c
+
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 

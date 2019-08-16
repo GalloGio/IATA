@@ -22,11 +22,19 @@
 @isTest
 private class IFAP_WebServiceTest {
 
+    @testSetup 
+    static void init() {
+        Group cnsGroup = [SELECT Id FROM Group WHERE DeveloperName = 'CNS_Collection_Process_Group' LIMIT 1];
+
+        GroupMember gm = new GroupMember(UserOrGroupId = UserInfo.getUserId(),
+                                         GroupId = cnsGroup.Id);
+        insert gm;
+    }
     
     static testMethod void TestGetCaseStatus() {
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-		TransformationHelper.CalculateBusinessHoursAges = true;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+        TransformationHelper.CalculateBusinessHoursAges = true;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
         // get the IFAP case recordtype
         Id IFAPcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
@@ -62,8 +70,8 @@ private class IFAP_WebServiceTest {
         case1.IFAP_Financial_Year__c = '2012';
         insert case1;
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
-		TransformationHelper.CalculateBusinessHoursAges = false;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
+        TransformationHelper.CalculateBusinessHoursAges = false;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 
         case theCase = [Select c.Status, c.Id, c.CaseNumber From Case c Where c.Id = :case1.Id limit 1];
         
@@ -71,11 +79,11 @@ private class IFAP_WebServiceTest {
     }
     
     static testMethod void TestLetterSent() {
-	    TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-		TransformationHelper.CalculateBusinessHoursAges = true;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        TransformationHelper.CalculateBusinessHoursAges = true;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
-     	Case case1 = new Case();
+        Case case1 = new Case();
         case1.Subject = 'Test Case 1';
         case1.Description = 'Test Case 1';
         case1.Status = 'Agent Notified';
@@ -85,26 +93,26 @@ private class IFAP_WebServiceTest {
         List<Case> casesID = new List<Case>();
         casesId.add(case1);
         
-      	BatchNumber__c batch = new BatchNumber__c();
-      	Insert batch;  
+        BatchNumber__c batch = new BatchNumber__c();
+        Insert batch;  
         
         
-	    Boolean a = IFAP_WebService.UpdateFSLetterSent(casesID , batch.Name);
-	    Boolean b = IFAP_WebService.UpdateFALetterSent(casesID, batch.Name);
+        Boolean a = IFAP_WebService.UpdateFSLetterSent(casesID , batch.Name);
+        Boolean b = IFAP_WebService.UpdateFALetterSent(casesID, batch.Name);
     
-	    TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
-		TransformationHelper.CalculateBusinessHoursAges = false;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+        TransformationHelper.CalculateBusinessHoursAges = false;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 
-    	String caseStat = IFAP_WebService.CheckCaseStatus(case1.Id);
+        String caseStat = IFAP_WebService.CheckCaseStatus(case1.Id);
     
     }
   
     
     static testMethod void TestSAAMCaseURLGenerationAndArchiving() {
-       	TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-		TransformationHelper.CalculateBusinessHoursAges = true;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        TransformationHelper.CalculateBusinessHoursAges = true;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
  
         // get the SAAM case recordtype
         Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
@@ -141,8 +149,8 @@ private class IFAP_WebServiceTest {
         case1.IFAP_Financial_Year__c = '2012';
         insert case1;
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
-		TransformationHelper.CalculateBusinessHoursAges = false;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
+        TransformationHelper.CalculateBusinessHoursAges = false;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
         String url = IFAP_WebService.generateURLForNewCaseFromSAAM(case1.Id);
         system.assert(url != null && url != '');
         
@@ -151,8 +159,8 @@ private class IFAP_WebServiceTest {
     
     static testMethod void TestFinancialSecurityInfo(){
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-		TransformationHelper.CalculateBusinessHoursAges = true;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+        TransformationHelper.CalculateBusinessHoursAges = true;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
         // get the IFAP case recordtype
         Id IFAPcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
         IFAP_BusinessRulesTest.createIsoCountry();
@@ -186,9 +194,9 @@ private class IFAP_WebServiceTest {
         case1.RecordTypeId = IFAPcaseRecordTypeId;
         case1.IFAP_Financial_Year__c = '2012';
         insert case1;
-   		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
-		TransformationHelper.CalculateBusinessHoursAges = false;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;     
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+        TransformationHelper.CalculateBusinessHoursAges = false;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;     
         // reselect the case to retireve case number
         case theCase = [Select c.Status, c.Id, c.CaseNumber From Case c Where c.Id = :case1.Id limit 1];
         
@@ -205,9 +213,9 @@ private class IFAP_WebServiceTest {
  
     
     static TestMethod void TestCallReassessmentApprovalProcess(){
-		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-		TransformationHelper.CalculateBusinessHoursAges = true;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        TransformationHelper.CalculateBusinessHoursAges = true;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
         // get the IFAP case recordtype
         Id IFAPcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
         
@@ -249,9 +257,9 @@ private class IFAP_WebServiceTest {
         reassessment1.Other_Issue_details__c = 'Test Value'; // Mandatory if a checkbox of the Accounting issue section is checked    
         
         insert reassessment1;
-  		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
-		TransformationHelper.CalculateBusinessHoursAges = false;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;      
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+        TransformationHelper.CalculateBusinessHoursAges = false;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;      
         Test.startTest();
         
         // try to approve a quality issue when the field Wrong figure is set to false (no business rule. Should return OK)
@@ -268,9 +276,9 @@ private class IFAP_WebServiceTest {
     }
     
     static TestMethod void TestCallReassessmentApprovalProcess2(){
-		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-		TransformationHelper.CalculateBusinessHoursAges = true;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        TransformationHelper.CalculateBusinessHoursAges = true;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
         // get the IFAP case recordtype
         Id IFAPcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
@@ -314,9 +322,9 @@ private class IFAP_WebServiceTest {
         reassessment2.Wrong_figure_was_extracted__c = true; 
         
         insert reassessment2;
-  		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
-		TransformationHelper.CalculateBusinessHoursAges = false;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;      
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+        TransformationHelper.CalculateBusinessHoursAges = false;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;      
         Test.startTest();
         
         // try to approve a quality issue when the field Wrong figure is set to true and no accounting issue created for the quality issue (Should fail)
@@ -333,9 +341,9 @@ private class IFAP_WebServiceTest {
     }
     
     static TestMethod void TestCallReassessmentApprovalProcess3(){
-		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-		TransformationHelper.CalculateBusinessHoursAges = true;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        TransformationHelper.CalculateBusinessHoursAges = true;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
         // get the IFAP case recordtype
         Id IFAPcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
@@ -388,9 +396,9 @@ private class IFAP_WebServiceTest {
         accountingIssue.IFAP_Reassessment__c = reassessment3.Id;
        
         insert accountingIssue;
-		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
-		TransformationHelper.CalculateBusinessHoursAges = false;
-		CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+        TransformationHelper.CalculateBusinessHoursAges = false;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
         Test.StartTest();
         
         // try to approve a quality issue when the field Wrong figure is set to false (no business rule. Should return OK)
@@ -405,4 +413,95 @@ private class IFAP_WebServiceTest {
         
         Test.stopTest();
     }
+
+
+    //ACAMBAS - WMO-484: Begin
+    static testMethod void generateURLForIFAPCaseFromCNS() {
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+        ID CNScaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CNS_Collection_Process');
+
+        User testUser = SidraLiteManagerTest.getCNSUser();
+        SidraLiteManagerTest.configureUserToCNS(testUser);
+
+        System.RunAs(testUser) { 
+            IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+                Name = 'United States',
+                ISO_Code__c = 'EU',
+                AIMS_Area_Name__c = 'United States',
+                AIMS_Area_ID__c = '1',
+                CNS_Country__c = true
+            );
+            insert country;
+            
+            Account account1 = new Account(
+                Name = 'Test account',
+                IATA_ISO_Country__c = country.Id,
+                IATACode__c = '1234567',
+                Location_Type__c = 'HO',
+                Location_Class__c = 'C',
+                Type = 'IATA Passenger Sales Agent'
+            );
+            insert account1;
+            
+            Contact contact1 = new Contact(
+                FirstName = 'Dummy',
+                LastName = 'Contact',
+                Type_of_Contact__c = 'IFAP Contact',
+                AccountId = account1.Id,
+                Email = 'some@email.org',
+                Financial_Assessment_Contact__c = true
+            );
+            insert contact1;
+        
+            Case case1 = new Case(
+                ContactId = contact1.Id,
+                AccountId = account1.Id,
+                RecordTypeId = CNScaseRecordTypeID
+            );
+            insert case1;
+
+            String url = IFAP_WebService.generateURLForNewCaseFromSAAM(case1.Id);
+            System.assertEquals(true, url.contains('RecordType=' + IFAPcaseRecordTypeID));
+        }
+    }
+    //ACAMBAS - WMO-484: End
+
+    @isTest static void testIsPortalUser() {
+        Boolean isPortalUser = false;
+        Test.startTest();
+        System.runAs(createPortalUser()){
+            System.assert(IFAP_WebService.isPortalUser());
+        }       
+        Test.stopTest();
+    }
+    
+    @isTest static void testGetLocaleLang(){
+        Test.startTest();
+        System.runAs(createPortalUser()){
+            System.assertEquals('en', IFAP_WebService.getLocaleLang());
+        }
+       
+        Test.stopTest();
+    }
+    
+    private static User createPortalUser(){
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        IATA_ISO_Country__c us = new IATA_ISO_Country__c(Name='United States', ISO_Code__c='US', Region__c='Americas', ISS_Office_Location__c='United States');
+        insert us;     
+        
+        Account acc1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = us.id, 
+                        Location_Type__c = 'HO', Status__c = 'Approved',
+                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com');
+
+        insert acc1;
+        
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= acc1.Id;
+        con.Email = 'Test@test11.com';
+        con.User_Portal_Status__c='Administrator';
+        insert con;
+    
+        return ISSP_ObjectFactory.createPortalUser(con);
+    }
+
 }

@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <email>noreply@iata.org</email>
     <name>GDPR</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>GDPR</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>Legal</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
