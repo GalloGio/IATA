@@ -362,23 +362,10 @@ src/queues/CasesVenezuela.queue
 src/queues/CasesWesternCaribbean.queue
 src/queues/Cases_Agent_Financial_Review.queue
 src/queues/Cases_Americas_Airlines.queue
-src/customMetadata/GDPR_Pardot_Subscription_List.Africa_Middle_East_Insights.md
-src/customMetadata/GDPR_Pardot_Subscription_List.Air_pulse_newsletter.md
-src/customMetadata/GDPR_Pardot_Subscription_List.Airlines_international.md
-src/customMetadata/GDPR_Pardot_Subscription_List.Alexander_de_Juniac_s_blog.md
-src/customMetadata/GDPR_Pardot_Subscription_List.Cargo_tracker.md
-src/customMetadata/GDPR_Pardot_Subscription_List.Conferences_and_events.md
-src/customMetadata/GDPR_Pardot_Subscription_List.Economic_briefings.md
-src/customMetadata/GDPR_Pardot_Subscription_List.European_region_blog.md
-src/customMetadata/GDPR_Pardot_Subscription_List.New_distribution_capability_NDC_hub.md
-src/customMetadata/GDPR_Pardot_Subscription_List.Partner_newsletter.md
-src/customMetadata/GDPR_Pardot_Subscription_List.Press_releases.md
-src/customMetadata/GDPR_Pardot_Subscription_List.Publications.md
-src/customMetadata/GDPR_Pardot_Subscription_List.Training.md
-src/customMetadata/GDPR_Pardot_Subscription_List.Travel_and_tourism_times.md
 src/queues/AgencyManagementChinaNAsia.queue
 src/queues/CustomerServiceChinaNAsia.queue
 src/queues/Weblinkheadoffice.queue
+
 
 *.sublime-project
 *.sublime-settings
