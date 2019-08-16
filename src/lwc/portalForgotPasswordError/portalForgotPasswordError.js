@@ -10,6 +10,7 @@ export default class PortalForgotPasswordError extends LightningElement {
      @track email = "";
      @track message;
      @api loginUrl;
+     @api selfRegistrationUrl;
 
      labels = {
          nextLabel,
@@ -23,6 +24,9 @@ export default class PortalForgotPasswordError extends LightningElement {
              this.message = invalidMailFormat;
              var emailDiv = this.template.querySelector('[data-id="emailDiv"]');
              emailDiv.classList.add('slds-has-error');
+         }
+         else{
+             navigateToPage(this.selfRegistrationUrl);
          }
       }
 
@@ -57,5 +61,4 @@ export default class PortalForgotPasswordError extends LightningElement {
        navigateToLogin() {
           navigateToPage(this.loginUrl);
        }
-
 }
