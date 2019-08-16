@@ -82,7 +82,7 @@ global class PostCopyScript implements SandboxPostCopy {
 
 	@TestVisible
 	private void updateQueuesEmail() {
-		List<Group> lstQueues = [SELECT Id, Email FROM Group WHERE Type = 'Queue' email != ''];
+		List<Group> lstQueues = [SELECT Id, Email FROM Group WHERE Type = 'Queue' and email != ''];
 		
 		for (Group q : lstQueues) {
 				List<String> updateEmail = q.Email.split('@');
