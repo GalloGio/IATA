@@ -35,7 +35,7 @@
             .errorMsg {color:#d74c3b}
             
             .progress-bar-off {
-                color:#6BBBEA;
+                color: #6BBBEA;
                 font-weight:bold;
                 background-image:none !important;
                 background-color:transparent !important;
