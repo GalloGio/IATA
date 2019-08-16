@@ -19,7 +19,12 @@
             c.set("v.customerType",null);
             c.set("v.showSearch",false);
             c.set("v.showCreate",false);
+            var billingCountry = c.get("v.account.BillingCountry");
             c.set("v.account",{});
+            if(billingCountry != null){
+            	c.set("v.account.BillingCountry", billingCountry);
+            	c.set("v.account.ShippingCountry", billingCountry);
+            }
             c.set("v.accountSelected", false);
         }else{
             let metadata = type.metadataCustomerType;
