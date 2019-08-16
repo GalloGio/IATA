@@ -21,7 +21,8 @@ public class PortalFAQsCtrlTest {
             insert con;
 
             User usr = ISSP_ObjectFactory.createPortalUser(con);
-
+			
+            PortalFAQsSharingCtrl.validateUserFAQsPermissions(usr.id);
             FAQ__kav kavObj = new FAQ__kav();
             kavObj.Title = 'Article Portal Documents Test';
             kavObj.UrlName = 'Article-Portal-Documents-Test';
@@ -50,11 +51,10 @@ public class PortalFAQsCtrlTest {
         User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
         FAQ__kav kavObj = [SELECT Id, Title, ArticleNumber, PublishStatus FROM FAQ__kav WHERE Title = 'Article Portal Documents Test' LIMIT 1];
         
+
+
         Test.startTest();
         System.runAs(testUser) {
-            List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> faqsInfo = PortalFAQsCtrl.getCategoryTiles();
-            System.assertNotEquals(0, faqsInfo.size());
-
             PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
             filtersWrapper.searchText = 'Test Publish Online';
             filtersWrapper.faqsComponent = null;
