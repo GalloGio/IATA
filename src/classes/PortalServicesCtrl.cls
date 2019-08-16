@@ -6,6 +6,7 @@ Public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
 Public static final String PORTAL_ACCESS_DENIED='Access Denied';
 Public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
 Public static final String PORTAL_USER_APPROVED='Approved User';
+Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
 Public static final String WILDCARD = 'ALL';
 
 public class portalServiceException extends Exception {}
@@ -1044,12 +1045,17 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
         for(Portal_Application_Right__c right:existingRights) {
             alreadyAssignedContactIds.add(right.Contact__c);
         }
+        
 
-
-        String contactsQuery = 'SELECT Id,Name,Email,User_Portal_Status__c,Account.iataCode__c,Account.BillingCity FROM Contact '
-                + 'WHERE (Account.Top_Parent__c =\''+u.contact.AccountId+'\' OR AccountId = \''+ u.contact.AccountId+'\') '
-                + ' AND Id NOT IN :alreadyAssignedContactIds ';
-
+        String contactsQuery = 'SELECT Id, Name , AccountId, Email, User_Portal_Status__c, '+
+            '(select id, Right__c from Portal_Application_Rights__r where Portal_Application__c =\''+ ServiceId + '\'),'+
+            ' Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,'+
+            ' Account.IATACode__c  from Contact' +
+            ' WHERE User_Portal_Status__c NOT IN (\'Inactive\', \'Rejected\', \'Deactivated\')' +
+            ' AND Community__c != null' +
+            ' AND Email != null' +
+			' AND Id NOT IN :alreadyAssignedContactIds ';
+			
         if(!String.isBlank(queryString)){
             contactsQuery += ' AND (Name LIKE \'%'+queryString+'%\' ) ';
         }
@@ -1152,5 +1158,102 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 
         return false;
     }
+
+	//Activates old Iata Easy Pay users that were disabled after some time (Add users in Manage Portal Service)
+	@AuraEnabled
+	public static void ActivateIEPUsers(List<String> contactIds){
+		try{
+			DAL_WithoutSharing.ActivateIEPUsers(contactIds);
+		}catch(Exception e) {
+			throw new portalServiceException(Label.ISSP_ANG_GenericError);
+		}
+	
+	}
+
+	@AuraEnabled
+	public static string CreateNewPortalAccess(List<String> ContactIds, String ServiceId, String PortalServiceRole){
+
+		if(ContactIds.size()>0) {
+
+			List<Portal_Application_Right__c> ContactToAdd_Lst = new List<Portal_Application_Right__c>();
+
+			Set <String> contactIdSet = new Set <String>();
+
+			String auxRight = PORTAL_ACCESS_REQUESTED;
+
+			List<Portal_Application_Right__c> existPSA_Lst = new List<Portal_Application_Right__c>(
+				[Select p.Name, p.Application_Name__c, p.Right__c,p.PortalServiceTranslatedName__c,  p.Portal_Application__r.Description__c, p.Portal_Application__r.Cannot_be_managed_by_portal_admin__c, p.Portal_Application__r.Requestable__c, p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,
+				 p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c,p.Contact__r.Name, p.Contact__r.AccountId, p.Application_Start_URL__c,
+				 p.Case_creation_record_Type__c,p.Access_Status_Reason__c
+				 From Portal_Application_Right__c p
+				 where p.Contact__c IN: ContactIds AND
+				 p.Portal_Application__c =: ServiceId]
+				);
+
+			for(String ContactId : ContactIds) {
+
+				contactIdSet.add(ContactId.trim());
+
+				Boolean isUpdated = false;
+				if(existPSA_Lst != null & existPSA_Lst.size() > 0 ) {
+					for(Portal_Application_Right__c itemPSA : existPSA_Lst) {
+						itemPSA.Right__c = auxRight;
+						isUpdated = true;
+						itemPSA.ANG_Portal_Service_Role__c = PortalServiceRole;
+					}
+				}
+
+				if(isUpdated == false) {
+					Portal_Application_Right__c PSAitem = new Portal_Application_Right__c();
+
+					PSAitem.Portal_Application__c = ServiceId;
+					PSAitem.Right__c = auxRight;
+					PSAitem.ANG_Portal_Service_Role__c = PortalServiceRole;
+					PSAitem.Contact__c = Id.valueOf(ContactId.trim());
+
+					ContactToAdd_Lst.add(PSAitem);
+				}
+			}
+
+			List <Contact> processContactList = [SELECT Id, User_Portal_Status__c, Name FROM Contact WHERE Id IN :contactIdSet];
+			List <String> activateIdList = new List <String>();
+			Set <Id> createIdSet = new Set <Id>();
+			for (Contact thisContact : processContactList) {
+				if (thisContact.User_Portal_Status__c == PORTAL_USER_PENDING_APPR) {
+					activateIdList.add(thisContact.Id);
+					thisContact.User_Portal_Status__c = PORTAL_USER_APPROVED;
+				}
+				else if (thisContact.User_Portal_Status__c == '' || thisContact.User_Portal_Status__c == null) {
+					createIdSet.add(thisContact.Id);
+				}
+			}
+
+			if (!activateIdList.isEmpty()) {
+				ISSP_EditPortalServiceAccessExt.updateUserProfiles(activateIdList);
+				update processContactList;
+			}
+
+			if (!createIdSet.isEmpty()) {
+				ISSP_ContactList ctrl = new ISSP_ContactList();
+				ctrl.processMultiplePortalUserStatusChange(createIdSet, PORTAL_USER_APPROVED, 'Active');
+			}
+
+			//
+			// Save all the Portal_Application_Right__c after creating the users.
+			// This is important for all EASY PAY services because they need to have the portal users.
+			//
+			if(ContactToAdd_Lst != null && ContactToAdd_Lst.size() > 0) {
+				insert ContactToAdd_Lst;
+			}
+
+			if(existPSA_Lst != null && existPSA_Lst.size() > 0) {
+				update existPSA_Lst;
+			}
+			return 'Success';
+
+		}else{
+			return 'Failure';
+		}
+	}
 
 }

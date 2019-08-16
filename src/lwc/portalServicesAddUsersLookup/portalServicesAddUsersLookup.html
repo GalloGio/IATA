@@ -5,21 +5,23 @@
 <!-- Portal Services Add Users Lookup -->
 <template>
     <div class="slds-form-element">
-        <div class="slds-form-element__control">
+        <div class="slds-form-element__control" tabindex="0" >
             <div class={getContainerClass}>
                 <div class={getDropdownClass} aria-expanded={isExpanded} aria-haspopup="listbox" role="combobox">
 
                     <!-- Search input start -->
                     <!-- New Search -->
                     <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
-                        <input type="text" class="slds-input slds-combobox__input ninetyPercent customWhiteBackground userSeachInput" id="combobox-id-1" aria-autocomplete="list" aria-controls="listbox-id-1"
+                        <input type="text" class="slds-input slds-combobox__input threeQuarters customWhiteBackground userSeachInput" id="combobox-id-1" aria-autocomplete="list" aria-controls="listbox-id-1"
                                placeholder={placeholder}
                                onclick={handleClearSelection} value={getInputValue} readonly={isInputReadonly}
                                onfocus={handleFocus} onblur={handleBlur} oninput={handleInput}/>
+
                         <span class="addUserBttnContainer">
 
                             <template if:false={searchFlag}>
-                                <button class="addUserBttn" disabled={cantAdd} onclick={handleAddAll}>{label.add}</button>
+                                <button class="addUserBttn" disabled={cantAdd} onmousedown={handleAdd}>{label.add}</button>
+                                <button class="addUserBttn slds-m-left--xxx-small" disabled={cantAddAll} onclick={handleAddAll}>{label.addAll}</button>
                             </template>
 
                             <template if:true={searchFlag}>
@@ -41,13 +43,19 @@
 
                     <!-- Result list box start -->
                     <div id="listbox" role="listbox" onclick={handleComboboxClick}>
-                        <ul class={getListboxClass} role="presentation" style="margin-top:1.5rem; border-radius:0; padding-bottom:0;">
+                        <ul class={getListboxClass} role="presentation"  tabindex="0" onblur={handleBlur}>
 
                             <template for:each={searchResults} for:item="result">
                                 <li key={result.id} role="presentation" class="slds-listbox__item resultLine">
                                     <div
                                             class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta slds-grid"
                                             role="option" onclick={handleResultClick} data-recordid={result.id}>
+
+                                            <div class="slds-col checkPlace">
+                                                <template if:true={result.checked}>
+                                                    <lightning-icon icon-name="utility:check" size="x-small" class="cursorPointer"></lightning-icon>
+                                                </template>
+                                            </div>
 
                                             <div class="slds-col breakWord slds-size_1-of-4">{result.title}</div>
                                             <div class="slds-col breakWord slds-size_1-of-4">{result.subtitle}</div>

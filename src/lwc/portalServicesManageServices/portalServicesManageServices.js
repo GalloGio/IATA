@@ -1,4 +1,4 @@
-import { LightningElement, track} from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
@@ -37,8 +37,21 @@ import addUsers from '@salesforce/label/c.CSP_Add_User';
 import newProfile from '@salesforce/label/c.CSP_NewContactProfile';
 import newProfileMessage from '@salesforce/label/c.CSP_NewServiceUserMessage';
 import addNewUser from '@salesforce/label/c.CSP_Add_New_User';
+import ISSP_ANG_Portal_Role_AgencyReadOnly from '@salesforce/label/c.ISSP_ANG_Portal_Role_AgencyReadOnly';
+import ISSP_ANG_Portal_Role_TicketIssuer from '@salesforce/label/c.ISSP_ANG_Portal_Role_TicketIssuer';
+import ISSP_ANG_Portal_Role_MasterWalletManager from '@salesforce/label/c.ISSP_ANG_Portal_Role_MasterWalletManager';
+import ISSP_ANG_Portal_Role_IEPAdmin from '@salesforce/label/c.ISSP_ANG_Portal_Role_IEPAdmin';
+import ANG_ISSP_PORTAL_SERVICE_ROLE from '@salesforce/label/c.ANG_ISSP_PORTAL_SERVICE_ROLE';
+import ISSP_Homepage_Pending_approval from '@salesforce/label/c.ISSP_Homepage_Pending_approval';
+import ANG_ISSP_Request_Access_IATA_EasyPay from '@salesforce/label/c.ANG_ISSP_Request_Access_IATA_EasyPay';
+import ANG_ISSP_IEP_Portal_Request_Access_Msg from '@salesforce/label/c.ANG_ISSP_IEP_Portal_Request_Access_Msg';
+import ANG_ISSP_IEP_add_users_to_account_not_open_error_msg from '@salesforce/label/c.ANG_ISSP_IEP_add_users_to_account_not_open_error_msg';
+import ISSP_AMC_CLOSE from '@salesforce/label/c.ISSP_AMC_CLOSE';
+import CSP_Manage_Services_NoIEPAccount from '@salesforce/label/c.CSP_Manage_Services_NoIEPAccount';
+import ISSP_ANG_GenericError from '@salesforce/label/c.ISSP_ANG_GenericError';
 
-
+//import user id
+import Id from '@salesforce/user/Id';
 
 
 
@@ -52,7 +65,13 @@ import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
 import denyUserAccess from '@salesforce/apex/PortalServicesCtrl.denyAccess';
 import getContactsForAssignment from '@salesforce/apex/PortalServicesCtrl.getContactsForServiceAssignment';
 import grantServiceAccessToContacts from '@salesforce/apex/PortalServicesCtrl.grantAccessToContacts';
+import getUserOptions from '@salesforce/apex/PortalServicesCtrl.getUserOptions';
+import availableIEPPortalServiceRoles from '@salesforce/apex/PortalServicesCtrl.availableIEPPortalServiceRoles';
 import newUserRequestableWithoutApproval from '@salesforce/apex/PortalServicesCtrl.newUserRequestableWithoutApproval';
+import ActivateIEPUsers from '@salesforce/apex/PortalServicesCtrl.ActivateIEPUsers';
+import CreateNewPortalAccess from '@salesforce/apex/PortalServicesCtrl.CreateNewPortalAccess';
+
+
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -91,7 +110,19 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         addUsers,
         newProfile,
         newProfileMessage,
-        addNewUser
+        addNewUser,
+        ISSP_ANG_Portal_Role_AgencyReadOnly,
+        ISSP_ANG_Portal_Role_TicketIssuer,
+        ISSP_ANG_Portal_Role_MasterWalletManager,
+        ISSP_ANG_Portal_Role_IEPAdmin,
+        ANG_ISSP_PORTAL_SERVICE_ROLE,
+        ISSP_Homepage_Pending_approval,
+        ANG_ISSP_Request_Access_IATA_EasyPay,
+        ANG_ISSP_IEP_Portal_Request_Access_Msg,
+        ANG_ISSP_IEP_add_users_to_account_not_open_error_msg,
+        ISSP_AMC_CLOSE,
+        CSP_Manage_Services_NoIEPAccount,
+        ISSP_ANG_GenericError
     };
 
     //links for images
@@ -153,8 +184,19 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track grantingAccess = false;
     @track canAddUsers = false;
 
+    //IEP Rolelist
+    @track roleList;
+    @track isIEPService = false;
+    @track radioOption;
+    @track serviceFullName;
 
 
+    @track IEPRoleSuccessModal = false;
+    @track IEPDeniedModal = false;
+    @track serviceIEPStatus;
+
+    //user id from import
+    userID = Id;
 
     serviceDetailsResult; // wire result holder
 
@@ -216,6 +258,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.isAdmin = this.serviceRecord.isAdmin;
                     this.loadReady = true;
                     this.serviceName = this.serviceRecord.recordService.ServiceName__c;
+                    this.serviceFullName = this.serviceRecord.recordService.Name;
+                    this.isIFG_Service = this.serviceRecord.isIFGPending;
+
+                    if (this.serviceName.includes('IATA EasyPay')) {
+                        this.serviceIEPStatus = this.serviceRecord.accessGranted;
+                    }
+
 
                     if (this.isAdmin) {
                         this.getContactsForPage();
@@ -235,11 +284,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     //Display Add New User button if isAdmin and service can be managed or is EasyPay
-    getCanAddUsers(){
-        newUserRequestableWithoutApproval({isAdmin : this.isAdmin, serviceId:this.serviceId})
-        .then(result => {
-            this.canAddUsers = result;
-        });
+    getCanAddUsers() {
+        newUserRequestableWithoutApproval({ isAdmin: this.isAdmin, serviceId: this.serviceId })
+            .then(result => {
+                this.canAddUsers = result;
+            });
     }
 
     getContactsForPage() {
@@ -565,7 +614,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     get confirmAddUserClass() {
-        return this.noContactsToAdd ? 'footerButtons containedButtonWhite' : 'footerButtons containedButtonSlim';
+        return this.noContactsToAdd ? 'containedButtonWhite' : 'containedButton';
     }
 
     //Cancel Service Access
@@ -576,7 +625,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         let msg = this.label.cancelAccessMsg.replace('{0}', this.serviceName);
         let title = this.label.cancelAccessTitle;
 
-        this.denyUserAccessJS(contact,msg,title, false);
+        this.denyUserAccessJS(contact, msg, title, false);
 
     }
 
@@ -595,8 +644,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 break;
             case 'deactivateUser':
                 let title = this.label.denyAccessTitle;
-                let msg = this.label.confirmDenyAccessMsg.replace('{0}',this.serviceRecord.recordService.ServiceName__c).replace('{1}',row.contactName);
-                this.denyUserAccessJS(row,msg,title, true);
+                let msg = this.label.confirmDenyAccessMsg.replace('{0}', this.serviceRecord.recordService.ServiceName__c).replace('{1}', row.contactName);
+                this.denyUserAccessJS(row, msg, title, true);
                 break;
             case 'ifapContact':
                 const {contactId, contactName } = row;
@@ -629,7 +678,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.selectedlRow = contact;
         this.popupMsg = msg;
         this.isFromContactTable = isFromContactTable;
-        
+
         this.mode = 'deny';
         this.showConfirmPopup = true;
     }
@@ -682,9 +731,127 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     /* Add Users to service */
     toggleAddUserModal() {
         this.showAddUserModal = !this.showAddUserModal;
+        this.contactsToAdd = [];
+        this.radioOption = '';
+        if (this.showAddUserModal) {
+            if (this.showAddUserModal) {
+                this.isIEPService = false;
+                if (this.serviceName.includes('IATA EasyPay')) {
+                    this.isIEPService = true;
+                    getUserOptions({ portalUser: this.userID })
+                        .then(useropts => {
+                            let userOptions = JSON.parse(JSON.stringify(useropts));
+                            if (userOptions.IEP_Status === 'Open') {
+                                availableIEPPortalServiceRoles({ serviceId: this.serviceId })
+                                    .then(data => {
+                                        let roleslist = JSON.parse(JSON.stringify(data));
+                                        this.roleList = roleslist;
+                                        this.roleList = this.roleList.filter(obj => obj.Connected_App__c === this.serviceFullName);
+                                        this.roleList = this.roleList.sort((a, b) => (a.Order__c > b.Order__c) ? 1 : -1);
+                                        for (const item of this.roleList) {
+                                            let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
+                                            item.label = this.label[newlabel];
+                                        }
+                                    }).catch(error => {
+                                        console.log(error);
+                                    });
+                            } else {
+                                this.showAddUserModal = !this.showAddUserModal;
+                                this.IEPDeniedModal = true;
+                            }
+                        });
+                }
+            }
+        }
+    }
+
+    closeIEPDenied() {
+        this.IEPDeniedModal = false;
+    }
+
+    handlRadioOptions(event) {
+        const radioOption = event.target.attributes.getNamedItem('data-id');
+        event.target.value = !event.target.value;
+        this.selectedRole(radioOption);
+    }
+
+    selectedRole(radioOption) {
+        this.radioOption = radioOption.value;
     }
 
     confirmAddUser() {
+
+        if (this.isIEPService && (this.radioOption === undefined || this.radioOption === null)) {
+
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Please select a role.\n',
+                    variant: 'error'
+                })
+            );
+
+        } else if (this.isIEPService && (this.radioOption !== undefined || this.radioOption !== null)) {
+
+            console.log(this.contactsToAdd);
+            const contactsToAddIDs = this.contactsToAdd.map(function (el) { return el.id; });
+            const serviceid = this.serviceId;
+            const roleSelected = this.radioOption;
+            this.showSpinner = true;
+            //Activate Users that are inactive
+
+            ActivateIEPUsers({ contactIds: contactsToAddIDs })
+                .then(() => {
+
+                    CreateNewPortalAccess({
+                        ContactIds: contactsToAddIDs,
+                        ServiceId: serviceid,
+                        PortalServiceRole: roleSelected
+                    }).then(result => {
+
+                        this.showSpinner = false;
+                        this.showAddUserModal = false;
+                        const results = JSON.parse(JSON.stringify(result));
+
+                        if (results === 'Success') {
+                            this.IEPRoleSuccessModal = true;
+
+                        } else if (results === 'Failure') {
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Error',
+                                    message: 'Unable to grant service access.\n',
+                                    variant: 'error'
+                                })
+                            );
+                        }
+                    }).catch(error => {
+                        this.showSpinner = false;
+                        console.log(error);
+                        this.componentLoading = false;
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Error',
+                                message: this.label.ISSP_ANG_GenericError,
+                                variant: 'error'
+                            })
+                        );
+                    });
+
+                }).catch(error => {
+                    this.showSpinner = false;
+                    this.componentLoading = false;
+                    console.log(error);
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: this.label.ISSP_ANG_GenericError,
+                            variant: 'error'
+                        })
+                    );
+                });
+
+        } else {
 
             this.grantingAccess = true;
             let contactIds = [];
@@ -694,23 +861,30 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             });
 
             if (contactIds.length > 0) {
-                grantServiceAccessToContacts({ contactIds: contactIds, serviceId: this.serviceId }).then(result => {
-                    this.grantingAccess = false;
-                    this.contactsToAdd = [];
-                    this.showAddUserModal = false;
-                    this.resetComponent();
-                }).catch((error) => {
-                    this.grantingAccess = false;
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Error',
-                            message: 'Unable to grant service access.\n',
-                            variant: 'error'
-                        })
-                    );
-                });
+                grantServiceAccessToContacts({ contactIds: contactIds, serviceId: this.serviceId })
+                    .then(result => {
+                        this.grantingAccess = false;
+                        this.contactsToAdd = [];
+                        this.showAddUserModal = false;
+                        this.resetComponent();
+                    }).catch((error) => {
+                        this.grantingAccess = false;
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Error',
+                                message: 'Unable to grant service access.\n',
+                                variant: 'error'
+                            })
+                        );
+                    });
             }
         }
+
+    }
+
+    closeIEPConfirm() {
+        this.IEPRoleSuccessModal = false;
+    }
 
     getAvailableContacts() {
         let availableContacts = JSON.parse(JSON.stringify(this.availableContacts));
@@ -739,26 +913,23 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     addContactEntry() {
-        let inputCmp = this.template.querySelector('[data-id="contactlookup"]').getSelection()[0].id;
-        let comp = this.template.querySelector('[data-id="contactlookup"]');
+        let inputCmp = this.template.querySelector('[data-id="contactlookup"]').getSelection();//[0].id;
+        let comp = this.template.querySelector('[data-name="selectionList"]');
 
-        let value = inputCmp;
-        inputCmp = '';
+        let values = inputCmp;
+        inputCmp = [];
         comp.focus();
 
         let availableContacts = JSON.parse(JSON.stringify(this.availableContacts));
 
         let contactsToAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
 
-        if (!contactsToAdd.some(contact => contact.id === value)) {
-            let contact = availableContacts.find(function (c) { return c.id === value; });
+        values.forEach((c, pos, arr) => {
+            let contact = availableContacts.find(function (con) { return c.id === con.id; });
+            contact .deleteIcon = 'utility:delete';
 
-            contact.deleteIcon = 'utility:delete';
-
-            if (contact) {
-                contactsToAdd.push(JSON.parse(JSON.stringify(contact)));
-            }
-        }
+            contactsToAdd.push(contact);
+        });
 
         this.contactsToAdd = contactsToAdd;
     }

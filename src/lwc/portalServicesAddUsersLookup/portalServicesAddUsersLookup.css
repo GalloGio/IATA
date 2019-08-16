@@ -48,12 +48,15 @@
 }
 
 .addUserBttnContainer{
-    display:inline-block;
-    width:10%;
+    float:right;
 }
 
 .ninetyPercent{
     width:90%;
+}
+
+.threeQuarters{
+    width:75%;
 }
 
 .addUserBttn:disabled{
@@ -93,4 +96,14 @@ userSeachInput{
 
 .breakWord{
     word-break: break-all;
+}
+
+.checkPlace{
+    min-width:1.5rem;
+}
+
+.contactListbox{
+    margin-top:1.5rem;
+    border-radius:0;
+    padding-bottom:0;
 }

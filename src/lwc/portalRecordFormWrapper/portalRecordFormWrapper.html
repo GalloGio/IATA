@@ -90,6 +90,7 @@
                                 <template if:false={field.isContactServices}>
                                     <template if:false={field.isJobFunction}>
                                         <template if:false={field.isIdCardInfo}>
+                                            <template if:false={field.isLastLogin}>
                                                 <span key={field.fieldName}
                                                     class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
                                                     <div if:true={field.visible}>
@@ -121,6 +122,19 @@
                                             </template>
                                         </template>
                                     </template>
+                                </template>
+
+                                <template if:true={field.isLastLogin}>
+                                    <div key={field.fieldName} class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue">
+                                        <div class="slds-form-element__label">
+                                            {labels.LastLoginDate}
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">{staticFields.LastLogin}</div>
+                                        </div>
+                                    </div>
+                                </template>
 
                                 <template if:true={field.isJobFunction}>
                                     <div key={field.fieldName}
@@ -178,6 +192,23 @@
                                 </template>
                             </template>
 
+                            <template if:true={field.isPrivacyManagement}>
+                                <div key={labels.IdCardNumber}
+                                    class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-1 labelValue slds-form-element_stacked">
+                                    <div class="slds-form-element__label">
+                                        {field.label}
+                                    </div>
+                                    <div class="textValue">
+                                        <div class="slds-form-element__static">
+                                            <div class="text-xsmall slds-size_1-of-1">
+                                                <a class="text-blue" onclick={navigateToPrivacyPortal}>
+                                                    {field.link}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
 
 
 
@@ -482,24 +513,19 @@
                                     </div>
 
                                     <!-- Popup Footer -->
-                                    <div class="slds-grid slds-wrap slds-p-around_medium slds-grid_align-center topLightGrayBorder customWhiteBackground el-centered slds-clearfix">
+                                    <div
+                                        class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
 
-                                        <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2">
-                                            <a onclick={removeUser} if:true={allowContactDelete}><div class="removeLink">{removeContactLabel}</div></a>
-                                        </div>
-                                        
-                                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                            <lightning-button class="containedButton"
-                                                label={labels.SaveLabel} type="submit" disabled={canSave} variant="brand">
-                                            </lightning-button>
-                                        </div>
+                                        <a onclick={removeUser} if:true={allowContactDelete}><div class="removeLink">{removeContactLabel}</div></a>
 
-                                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                            <lightning-button class="containedButtonWhite"
-                                                disabled={isSaving} label={labels.CancelLabel} variant=""
-                                                onclick={closeModal}>
-                                            </lightning-button>
-                                        </div>
+                                        <lightning-button class="slds-float_right containedButton"
+                                            label={labels.SaveLabel} type="submit" disabled={canSave} variant="brand">
+                                        </lightning-button>
+
+                                        <lightning-button
+                                            class="slds-float_right  containedButtonWhite slds-m-right_medium"
+                                            disabled={isSaving} label={labels.CancelLabel} variant=""
+                                            onclick={closeModal}></lightning-button>
                                     </div>
                                 </lightning-record-edit-form>
                             </div>

@@ -112,7 +112,7 @@ private class PortalCasesCtrlTest {
                 portFilterWrapper.searchText = 'Bla';
                 portFilterWrapper.casesComponent = casesCmp;
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0');
+                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
                 
                 PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false);
                 
@@ -179,7 +179,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0');
+                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
                 
                 PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
                 
@@ -243,7 +243,9 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0');
+                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+                List<CSP_Utils.PickListWrapper> contactPickOptions = PortalCasesCtrl.companyCasesContactsPicklist();
+                System.assertNotEquals(0, contactPickOptions.size());
             }              
            
         Test.stopTest();
@@ -260,7 +262,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0');
+                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -276,7 +278,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0');
+                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -292,7 +294,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0');
+                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -308,7 +310,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0');
+                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -324,7 +326,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0');
+                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -340,7 +342,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0');
+                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -357,7 +359,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0');
+                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -391,7 +393,8 @@ private class PortalCasesCtrlTest {
 
     @IsTest
     static void testGetSurveyLink(){
-        User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+        CaseClosedStatus__c ccs= new CaseClosedStatus__c(name='Closed');
+        insert ccs;
 
         Case newCase = [SELECT Id,RecordType.Name FROM Case WHERE Subject = 'Case Test' LIMIT 1];
         newCase.Status = 'Closed';

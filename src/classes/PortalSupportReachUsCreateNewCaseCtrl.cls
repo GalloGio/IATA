@@ -58,8 +58,13 @@ private static List<Account> searchRelatedAccounts(String searchTerm) {
 
 	String finalQuery = 'SELECT ID, IATAcode__c, Name, BillingCity FROM Account '
 	                    + 'WHERE IATAcode__c != null ';
+	Boolean firstLoadFlag = false;
 
-	if(String.isNotEmpty(searchTerm)) {
+	if(searchTerm == null){
+		firstLoadFlag = true;
+	}
+
+	if(String.isNotEmpty(searchTerm) || firstLoadFlag) {
 		finalQuery += ' AND ( IATAcode__c LIKE  \'%' + String.escapeSingleQuotes(searchTerm)
 		              + '%\' OR BillingCity LIKE \'%' + String.escapeSingleQuotes(searchTerm)
 		              + '%\' OR Name LIKE \'%' + String.escapeSingleQuotes(searchTerm)
