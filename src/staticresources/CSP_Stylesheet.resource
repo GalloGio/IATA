@@ -1442,3 +1442,234 @@ visibility: hidden;
     opacity: 0.1;
     background-image: linear-gradient(256deg, rgba(0, 0, 0, 0), #000000);
 }
+
+/*--------------------------------------------------*/
+.inputFieldStyle input {
+  	line-height: 37px;
+    border-radius: 0.1rem;
+    border: 1px solid #d3d3d352;
+}
+
+.hideInputLabel label{
+    display: none !important;
+}
+
+.buttonWidth button{
+    width : 100%;
+    border: 1px solid #d3d3d352;
+    line-height: 37px;
+}
+
+.loginButton button{
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 12px;
+    /* background-color:blue; */
+    color: white;
+}
+
+.loginButton button:disabled{
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 12px;
+    background-color: #d3d3d352;
+    color: gray;
+}
+
+.fixedLineHeight input{
+    line-height: 45px;
+}
+
+.fixedLineHeight button{
+    line-height: 45px;
+}
+
+.fixed-text{
+    font-size: 16px;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #525252;
+}
+
+.containedButtonDisabled, .containedButtonDisabled button, .containedButtonDisabled button:disabled {
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    border-radius: 1px;
+  	background-color: #f7f8fa;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #999999;
+    height: 56px;
+    width: 100%;
+    word-break: break-all;
+    border: none;
+    box-shadow: none;
+}
+
+.containedButtonLogin, .containedButtonLogin button, .containedButtonLogin button:active, .containedButtonLogin button:visited, .containedButtonLogin button:focus {
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    border-radius: 1px;
+  	box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  	background-color: #3333ff;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    min-height: 40px;
+    word-break: break-all;
+    border: none;
+    height: 56px;
+    width: 100%;
+}
+
+.containedButtonLogin button:hover {
+	border-radius: 1px;
+    box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+    background-color: #1e32fa;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    min-height: 40px;
+    word-break: break-all;
+    border: none;
+	height: 56px;
+    width: 100%;
+}
+
+.custTextInput input{
+    border-radius: 1px;
+    border: solid 1px #e6e6e6;
+    background-color: #ffffff;
+    height: 52px;
+    /*font-size: 16px;*/
+}
+
+.custTextInputXsmall input{
+    font-size: 16px;
+}
+
+.custTextInputXsmall input[readonly]{
+    font-size: 16px;
+}
+
+.custTextInputSmall input{
+    font-size: 18px;
+}
+
+.custTextInputSmall input[readonly]{
+    font-size: 18px;
+}
+
+.custTextInput input[readonly]{
+    color: #999999;
+    padding: 0 1rem 0 .75rem;
+    border-radius: 1px;
+    height: 52px;
+}
+
+.custTextInput input:focus{
+    border: solid 2px rgba(30, 50, 250, 0.6);
+}
+
+.greyLine {
+  height: 2px;
+  background-color: #e6e6e6;
+}
+
+.outlinedButtonLogin button, .outlinedButtonLogin button:hover, .outlinedButtonLogin button:focus, .outlinedButtonLogin button:active{
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    min-height: 48px;
+    word-break: break-all;
+    border-radius: 1px;
+  	border: solid 1px #1e32fa;
+  	background-color: #ffffff;
+    font-size: 16px;
+  	font-weight: 500;
+  	font-style: normal;
+  	font-stretch: normal;
+  	line-height: 1.5;
+  	letter-spacing: normal;
+  	text-align: center;
+  	color: #3333ff;
+    width: 100%;
+    box-shadow: none; 
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"]{
+    border:none;
+    background-color: transparent;
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: transparent;
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"] {
+	height: 32px;
+    color: #3333ff;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.blueCustomButtonLinkMedium, .blueCustomButtonLinkMedium button, .blueCustomButtonLinkMedium button:active, .blueCustomButtonLinkMedium button:visited, .blueCustomButtonLinkMedium button:focus {
+    color: #3333ff;
+    fill: #3333ff;
+    border: none;
+    font-size: 16px;
+    box-shadow: none;
+}
+
+.blueCustomButtonLinkSmall, .blueCustomButtonLinkSmall button, .blueCustomButtonLinkSmall button:active, .blueCustomButtonLinkSmall button:visited, .blueCustomButtonLinkSmall button:focus {
+	color: #3333ff;
+    fill: #3333ff;
+    border: none;
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: none;
+}
+
+.blueCustomButtonLinkLogin, .blueCustomButtonLinkLogin button, .blueCustomButtonLinkLogin button:active, .blueCustomButtonLinkLogin button:visited, .blueCustomButtonLinkLogin button:focus {
+    color: #3333ff;
+    fill: #3333ff;
+    border: none;
+    text-decoration: underline;
+    box-shadow: none;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.grayInfoText {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  color: #999999;
+}
+
+.loginSelect .slds-select{
+	height: 52px;
+    border-radius: 1px;
+    cursor: pointer;
+}
+
+
