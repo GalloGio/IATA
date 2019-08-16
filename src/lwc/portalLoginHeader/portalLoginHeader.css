@@ -1,0 +1,18 @@
+/**
+ * Created by ukaya01 on 11/07/2019.
+ */
+
+.slds-combobox__input{
+    background:transparent !important;
+    border:none !important;
+}
+
+.slds-combobox_container{
+    background:transparent !important;
+    border:none !important;
+}
+
+.slds-combobox_container input[role="textbox"]{
+    background:transparent !important;
+        border:none !important;
+}
