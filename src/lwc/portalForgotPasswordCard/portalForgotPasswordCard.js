@@ -1,0 +1,62 @@
+import { LightningElement, track } from 'lwc';
+import { navigateToPage } from 'c/navigationUtils';
+import getInitialConfig   from '@salesforce/apex/PortalForgotPasswordController.getInitialConfig';
+import RegistrationUtils  from 'c/registrationUtils';
+import isGuest            from '@salesforce/user/isGuest';
+
+export default class PortalForgotPasswordCard extends LightningElement {
+
+    @track isLoadingMain    = true;
+    @track isForgotPassword = true;
+    @track isSuccess;
+    @track loginUrl;
+    @track selfRegistrationUrl;
+    @track isSanctioned;
+
+    connectedCallback() {
+       this.checkUserIsGuest();
+       const RegistrationUtilsJs = new RegistrationUtils();
+       //check user location
+       RegistrationUtilsJs.getUserLocation().then(result=> {
+           this.isSanctioned = result.isRestricted;
+           if(this.isSanctioned == true){
+               navigateToPage("/csportal/s/restricted-login");
+           }
+           else{
+               //get initial configuration information
+                getInitialConfig().then(result => {
+                   this.selfRegistrationUrl = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf("/csportal"));
+                   this.loginUrl = result.loginUrl.substring(result.loginUrl.indexOf("/csportal"));
+                   this.changeIsLoadingMain();
+               })
+               .catch(error => {
+               });
+           }
+       });
+    }
+
+    checkUserIsGuest(){
+       if(isGuest == false){
+           navigateToPage('/csportal/s/',{});
+           return;
+       }
+    }
+
+    changePage(event){
+        this.changeIsLoadingMain();
+        this.isSuccess = event.detail;
+        this.isForgotPassword = false;
+        this.changeIsLoadingMain();
+    }
+
+    changePageFp(){
+        this.changeIsLoadingMain();
+        this.isForgotPassword = true;
+        this.changeIsLoadingMain();
+    }
+
+    changeIsLoadingMain(){
+        this.isLoadingMain = !this.isLoadingMain;
+    }
+
+}
