@@ -75,9 +75,13 @@ private class PlatformEvents_Helper_Test {
         Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
         insert contact;
 
+        Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+
         Account_Contact_Role__c acr = new Account_Contact_Role__c();
         acr.Account__c = account.Id;
         acr.Account_Role__c = provider.Id;
+        acr.Contact_Roles__c = createContactRoles('1').Id;
+        acr.RecordTypeId = functionalRecordTypeId;
         acr.Contact_Role__c = 'Primary Contact';
         acr.Contact__c = contact.Id;
         acr.Service_Rendered__c = 'TIP';
@@ -139,9 +143,13 @@ private class PlatformEvents_Helper_Test {
         Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
         insert contact;
 
+        Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+
         Account_Contact_Role__c acr = new Account_Contact_Role__c();
         acr.Account__c = account.Id;
         acr.Account_Role__c = provider.Id;
+        acr.Contact_Roles__c = createContactRoles('1').Id;
+        acr.RecordTypeId = functionalRecordTypeId;
         acr.Contact_Role__c = 'Primary Contact';
         acr.Contact__c = contact.Id;
         acr.Service_Rendered__c = 'TIP';
@@ -213,9 +221,13 @@ private class PlatformEvents_Helper_Test {
         Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
         insert contact;
 
+        Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+
         Account_Contact_Role__c acr = new Account_Contact_Role__c();
         acr.Account__c = account.Id;
         acr.Account_Role__c = provider.Id;
+        acr.Contact_Roles__c = createContactRoles('1').Id;
+        acr.RecordTypeId = functionalRecordTypeId;
         acr.Contact_Role__c = 'Primary Contact';
         acr.Contact__c = contact.Id;
         acr.Service_Rendered__c = 'TIP';
@@ -276,5 +288,14 @@ private class PlatformEvents_Helper_Test {
     	insert lsLogs;
     	test.stopTest();
     	system.assertEquals(1, [select id from ISSP_Web_Service_Log__c].size());
+    }
+
+    private static Contact_Roles__c createContactRoles(string suffix){
+        Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
+        Contact_Roles__c contactRole = new Contact_Roles__c();
+        contactRole.Name = 'Test User ' + suffix;
+        contactRole.RecordTypeId = externalRecordTypeId;
+        insert contactRole;
+        return contactRole;
     }
 }

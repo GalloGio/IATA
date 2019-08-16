@@ -450,17 +450,18 @@ public class GADM_ExternalUserContactList_CTRL_TEST {
 
         Test.stopTest();
 
-        System.assertEquals(2, wrapper.size(),'There should be exact 2 contacts visible!');
+        System.assertEquals(3, wrapper.size(),'There should be exact 3 contacts visible!');
 
         Contact_Roles_Helper.AggregatedRecordWrapper userWrapper;
         Contact_Roles_Helper.AggregatedRecordWrapper user2Wrapper;
 
-        if(wrapper[0].con.Email == 'Neo.Smith.test@somedomain.com') {
-            userWrapper = wrapper[0];
-            user2Wrapper = wrapper[1];
-        }else{
-            userWrapper = wrapper[1];
-            user2Wrapper = wrapper[0];
+        for(Contact_Roles_Helper.AggregatedRecordWrapper uw: wrapper){
+            if(uw.con.Email == 'Neo.Smith.test@somedomain.com') {
+                userWrapper = uw;
+            }
+            if(uw.con.Email == 'Leo.Black.test@somedomain.com') {
+                user2Wrapper = uw;
+            }
         }
 
         Map<Id, Account_Contact_Role__c> actorsData1 = userWrapper.actorsData;

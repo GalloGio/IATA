@@ -61,15 +61,18 @@ public class AccountRoleHandler_TEST {
         Account_Roles__c isspAccountRole = new Account_Roles__c();
         isspAccountRole.Name = 'ISSP';
         insert isspAccountRole;
+        Id masterRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
 
         Account_Role__c accountRole = new Account_Role__c();
         accountRole.Account__c = acc.Id;
         accountRole.Account_Roles__c = gadmParticipantAccountRole.Id;
+        accountRole.RecordTypeId = masterRecordType;
         insert accountRole;
 
         Account_Role__c accountRole2 = new Account_Role__c();
         accountRole2.Account__c = acc2.Id;
         accountRole2.Account_Roles__c = isspAccountRole.Id;
+        accountRole.RecordTypeId = masterRecordType;
         insert accountRole2;
 
     }
@@ -100,6 +103,8 @@ public class AccountRoleHandler_TEST {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak@somedomain.org'];
 
+        Id masterRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
+
         Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test account Gadm'];
         Account_Roles__c gadmParticipantAccountRole = [SELECT Id FROM Account_Roles__c WHERE Name = 'GADM Participant'];
 
@@ -112,6 +117,7 @@ public class AccountRoleHandler_TEST {
             Account_Role__c newAccountRole = new Account_Role__c();
             newAccountRole.Account__c = testAccount.Id;
             newAccountRole.Account_Roles__c = gadmParticipantAccountRole.Id;
+            newAccountRole.RecordTypeId = masterRecordType;
 
             try {
 
@@ -135,6 +141,8 @@ public class AccountRoleHandler_TEST {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak@somedomain.org'];
 
+        Id masterRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
+
         Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test account Gadm'];
         Account_Roles__c issp = [SELECT Id FROM Account_Roles__c WHERE Name = 'ISSP'];
 
@@ -147,6 +155,7 @@ public class AccountRoleHandler_TEST {
             Account_Role__c newAccountRole = new Account_Role__c();
             newAccountRole.Account__c = testAccount.Id;
             newAccountRole.Account_Roles__c = issp.Id;
+            newAccountRole.RecordTypeId = masterRecordType;
 
             try {
 
@@ -168,6 +177,7 @@ public class AccountRoleHandler_TEST {
     private static void checkGadmDuplicatesInsert3Test() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak@somedomain.org'];
+        Id masterRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
 
         Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test account Gadm 2'];
         Account_Roles__c gadmParticipantAccountRole = [SELECT Id FROM Account_Roles__c WHERE Name = 'GADM Participant'];
@@ -181,6 +191,7 @@ public class AccountRoleHandler_TEST {
             Account_Role__c newAccountRole = new Account_Role__c();
             newAccountRole.Account__c = testAccount.Id;
             newAccountRole.Account_Roles__c = gadmParticipantAccountRole.Id;
+            newAccountRole.RecordTypeId = masterRecordType;
 
             try {
 

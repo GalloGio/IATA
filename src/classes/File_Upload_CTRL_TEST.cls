@@ -24,13 +24,14 @@ public class File_Upload_CTRL_TEST {
         insert accountRoles;
 
         Date today = System.today();
-
+        Id masterRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
         Account_Role__c accountRole = new Account_Role__c();
         accountRole.Account__c = testAccount.Id;
         accountRole.Account_Roles__c = accountRoles.Id;
         accountRole.Effective_From_Date__c = today.addDays(-10);
         accountRole.Effective_To_Date__c = today.addDays(10);
         accountRole.Status__c = 'Active';
+        accountRole.RecordTypeId = masterRecordType;
         insert accountRole;
 
         Account_Role__c accountRole2 = new Account_Role__c();
@@ -39,6 +40,7 @@ public class File_Upload_CTRL_TEST {
         accountRole2.Effective_From_Date__c = today.addDays(-10);
         accountRole2.Effective_To_Date__c = today.addDays(10);
         accountRole2.Status__c = 'Active';
+        accountRole2.RecordTypeId = masterRecordType;
         insert accountRole2;
 
         Contact_Roles__c contactRoles = new Contact_Roles__c();

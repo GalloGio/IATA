@@ -695,7 +695,7 @@ global without sharing class Comm_User_Helper {
         return returnValue;
     }
 
-
+    @TestVisible
     private static String getCharAtIndex(String str, Integer index){
         if (str == null)
             return null;

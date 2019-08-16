@@ -340,13 +340,23 @@ private  class LightningConnectedAppHelper_Test {
         insert contactRoles;
 
         Contact_Roles__c contactRoles2 = new Contact_Roles__c();
-        contactRoles2.Name = 'Power User';
+        contactRoles2.Name = 'Service Power User';
         contactRoles2.RecordTypeId = externalRecordTypeId;
         insert contactRoles2;
 
         Portal_Applications__c portalApplications = new Portal_Applications__c();
         portalApplications.Name = 'GADM';
         insert portalApplications;
+
+        Contact_Role_Service__c gadmUserRoleService = new Contact_Role_Service__c();
+        gadmUserRoleService.Service__c = portalApplications.Id;
+        gadmUserRoleService.Contact_Role__c = contactRoles.Id;
+        insert gadmUserRoleService;
+
+        Contact_Role_Service__c powerUserRoleService = new Contact_Role_Service__c();
+        powerUserRoleService.Service__c = portalApplications.Id;
+        powerUserRoleService.Contact_Role__c = contactRoles2.Id;
+        insert powerUserRoleService;
 
         Account_Role_Services__c accountRoleServices = new Account_Role_Services__c();
         accountRoleServices.Portal_Service__c = portalApplications.Id;
@@ -364,7 +374,8 @@ private  class LightningConnectedAppHelper_Test {
         Test.stopTest();
 
         List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Contact_Roles__r.Name FROM Account_Contact_Role__c];
-        System.assertEquals(2, accountContactRoles.size(), 'Not all Account_Contact_Role__c objects were created!');
+        //functional: power user, gadm user; group gadm user with parent account
+        System.assertEquals(3, accountContactRoles.size(), 'Not all Account_Contact_Role__c objects were created!');
 
         Set<Id> roleIds = new Set<Id>();
         Set<String> roleNames =new Set<String>();
@@ -373,7 +384,7 @@ private  class LightningConnectedAppHelper_Test {
             roleIds.add(accountContactRole.Id);
         }
 
-        System.assertEquals(true, roleNames.contains('Power User'), 'Account_Contact_Role__c for Power User was not created!');
+        System.assertEquals(true, roleNames.contains('Service Power User'), 'Account_Contact_Role__c for Power User was not created!');
         System.assertEquals(true, roleNames.contains('GADM User'), 'Account_Contact_Role__c for GADM User was not created!');
 
         List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id, Status__c FROM Contact_Role_Service_Access__c WHERE Contact_Role__c IN :roleIds];

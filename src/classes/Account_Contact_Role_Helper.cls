@@ -3,7 +3,13 @@ public without sharing class Account_Contact_Role_Helper {
     public static void checkForGadmUserRole(List<Account_Contact_Role__c> accountContactRoles) {
 
         Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
-        Contact_Roles__c gadmRole = [SELECT Id FROM Contact_Roles__c WHERE Name = 'GADM User'];
+        List<Contact_Roles__c> gadmRoles = [SELECT Id FROM Contact_Roles__c WHERE Name = 'GADM User'];
+        Contact_Roles__c gadmRole = null;
+        if(gadmRoles == null || gadmRoles.size() == 0){
+            return;
+        } else {
+            gadmRole = gadmRoles[0];
+        }
 
         Set<Id> contactIds = new Set<Id>();
         for(Account_Contact_Role__c role : accountContactRoles) {
@@ -46,7 +52,7 @@ public without sharing class Account_Contact_Role_Helper {
             List<Account_Contact_Role__c> newAccountContactRoles = newContactIdToRoleMap.get(contactId);
 
             if(newAccountContactRoles.size() > 1) {
-                newAccountContactRoles[0].addError('{!$Label.c.GADM_account_contact_role_gadm_user}');
+                newAccountContactRoles[0].addError(System.Label.GADM_account_contact_role_gadm_user);
             }
         }
     }

@@ -200,28 +200,6 @@ public class Service_Usage_Tracker_CTRL_TEST {
         return testUser;
     }
 
-    @IsTest
-    private static void saveNewCacheEntryTest() {
-
-        User testUser = [SELECT Id FROM User WHERE Email = 'neo.smith.test@somedomain.com'];
-
-        Boolean success = false;
-
-        Test.startTest();
-
-        System.runAs(testUser) {
-            success = Service_Usage_Tracker_CTRL.saveNewCacheEntry(testUser.Id, 'HOME');
-        }
-
-        Test.stopTest();
-
-        System.assertEquals(true, success, 'Key was not saved in session cache!');
-        Cache.SessionPartition sessionPartition = Cache.Session.getPartition('local.ServiceUsage');
-        Set<String> allKeys = sessionPartition.getKeys();
-        System.assertEquals(true, allKeys.contains(testUser.Id+'HOME'), 'Given key is not found in session cache!');
-    }
-
-    @IsTest
     private static void saveUsageTrackingTest() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'neo.smith.test@somedomain.com'];

@@ -402,19 +402,21 @@ public class GADM_ActorMembershipNotifier_TEST {
             wrapper3 = wrappers[1];
         }
 
+        GADM_Settings__mdt gadmSettings = [SELECT Id, Actor_Membership_Termination__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
+
         System.assertEquals(wrapper1.accountName, testAccount.Name, 'Account name does not match!');
         System.assertEquals(1, wrapper1.contacts.size(), 'There should be only 1 contact to notify!');
         System.assertEquals(0, wrapper1.users.size(), 'There should be no users to notify!');
         System.assertEquals(wrapper1.contacts[0].Id, testContact1.Id, 'Expected contact does not match!');
         System.assertEquals(wrapper1.effectiveFrom, accountRole.Effective_From_Date__c, 'Expected effective form date does not match!');
         System.assertEquals(wrapper1.effectiveTo, accountRole.Effective_To_Date__c, 'Expected effective to date does not match!');
-        System.assertEquals(5, wrapper1.priorDaysToNotify, 'Expected days prior does not match!');
+        System.assertEquals(gadmSettings.Actor_Membership_Termination__c, wrapper1.priorDaysToNotify, 'Expected days prior does not match!');
 
         System.assertEquals(0, wrapper2.contacts.size(), 'There should be no contacts to notify!');
         System.assertEquals(true, wrapper2.users.size() >= 2, 'There should be at least two users to notify!');
         System.assertEquals(wrapper2.effectiveFrom, accountRole.Effective_From_Date__c, 'Expected effective form date does not match!');
         System.assertEquals(wrapper2.effectiveTo, accountRole.Effective_To_Date__c, 'Expected effective to date does not match!');
-        System.assertEquals(5, wrapper2.priorDaysToNotify, 'Expected days prior does not match!');
+        System.assertEquals(gadmSettings.Actor_Membership_Termination__c, wrapper2.priorDaysToNotify, 'Expected days prior does not match!');
         System.assertEquals(0, wrapper3.contacts.size(), 'There should be no contacts to notify!');
         System.assertEquals(true, wrapper3.users.size() >= 2, 'There should be at least two users to notify!');
 

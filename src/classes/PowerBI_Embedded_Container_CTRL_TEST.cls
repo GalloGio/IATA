@@ -283,82 +283,13 @@ public class PowerBI_Embedded_Container_CTRL_TEST {
         return testUser;
     }
 
-
-    @IsTest
-    private static void checkSessionCacheTest() {
-
-
-        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
-
-        Boolean isInCache = false;
-
-        Test.startTest();
-
-        System.runAs(testUser) {
-            isInCache = PowerBI_Embedded_Container_CTRL.checkSessionCache(testUser.Id, 'DashboardId');
-        }
-
-        Test.stopTest();
-
-        System.assertEquals(false, isInCache, 'Given key should not be present in session cache!');
-    }
-
-    @IsTest
-    private static void checkSessionCache2Test() {
-
-        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
-
-        Boolean isInCache = false;
-
-        Test.startTest();
-
-        System.runAs(testUser) {
-
-            Cache.SessionPartition sessionPartition = Cache.Session.getPartition('local.ServiceUsage');
-            sessionPartition.put(testUser.Id+'DashboardId', true);
-
-            isInCache = PowerBI_Embedded_Container_CTRL.checkSessionCache(testUser.Id, 'DashboardId');
-        }
-
-        Test.stopTest();
-
-        System.assertEquals(true, isInCache, 'Given key should be present in session cache!');
-    }
-
-
-    /*@IsTest
-    private static void getAvailableDashboardCategoriesForUserTest() {
-
-        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
-
-        Map<String, List<Contact_Role_Service_Permission__c>> categories = new Map<String, List<Contact_Role_Service_Permission__c>>();
-
-        Test.startTest();
-
-        System.runAs(testUser) {
-            categories = PowerBI_Embedded_Container_CTRL.getAvailableDashboardCategoriesForUser(testUser.Id);
-        }
-
-        Test.stopTest();
-
-        System.assertEquals(3, categories.size(), 'There should be exactly 3 categories!');
-
-        List<Contact_Role_Service_Permission__c> permissions1 = categories.get('Ground');
-        List<Contact_Role_Service_Permission__c> permissions2 = categories.get('Security');
-        List<Contact_Role_Service_Permission__c> permissions3 = categories.get('Service Power User');
-        System.assertEquals(2, permissions1.size(), 'There should be exactly 2 permissions for Ground categroy!');
-        System.assertEquals(2, permissions2.size(), 'There should be exactly 2 permissions for Security category!');
-        System.assertEquals(2, permissions3.size(), 'There should be exactly 2 permissions fro Service Power User category!');
-
-    }*/
-
     @IsTest
     private static void getCategories_accessToWorkspaceTest() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
 
         List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
-        List<ContentWorkspace> gadmWorkspace = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
+        //List<ContentWorkspace> gadmWorkspace = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
 
         ContentVersion contentVersion1 = new ContentVersion();
 
@@ -371,18 +302,24 @@ public class PowerBI_Embedded_Container_CTRL_TEST {
 
         contentVersion1 = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :contentVersion1.Id];
 
-        ContentWorkspaceDoc doc = new ContentWorkspaceDoc();
-        doc.ContentDocumentId = contentVersion1.ContentDocumentId;
-        doc.ContentWorkspaceId = gadmWorkspace[0].Id;
-        insert doc;
 
         List<ContentWorkspacePermission> permissions = [SELECT Id FROM ContentWorkspacePermission WHERE Name = 'Viewer'];
 
         List<PowerBI_Embedded_Container_CTRL.CategoryWrapper> wrappers= new List<PowerBI_Embedded_Container_CTRL.CategoryWrapper>();
-
+        User myOtherUser = [select Id from User WHERE Profile.Name = 'Developer' AND IsActive = true LIMIT 1];
         Test.startTest();
+        System.runAs(myOtherUser) {
 
-        System.runAs(testUser) {
+            ContentWorkspace workspace = new ContentWorkspace();
+            workspace.Name = 'GADM Public';
+            insert workspace;
+        }
+        System.runAs(myOtherUser) {
+            List<ContentWorkspace> gadmWorkspace = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
+            ContentWorkspaceDoc doc = new ContentWorkspaceDoc();
+            doc.ContentDocumentId = contentVersion1.ContentDocumentId;
+            doc.ContentWorkspaceId = gadmWorkspace[0].Id;
+            insert doc;
 
             ContentWorkspaceMember workspaceMember = new ContentWorkspaceMember();
             workspaceMember.ContentWorkspaceId = gadmWorkspace[0].Id;
@@ -405,11 +342,8 @@ public class PowerBI_Embedded_Container_CTRL_TEST {
 
     @IsTest
     private static void getCategories_noAccessToWorkspaceTest() {
-
-        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
-
+        List<User> myOtherUser = [select Id from User WHERE Profile.Name = 'Developer' AND IsActive = true LIMIT 2];
         List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
-        List<ContentWorkspace> gadmWorkspace = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
 
         ContentVersion contentVersion1 = new ContentVersion();
 
@@ -421,19 +355,26 @@ public class PowerBI_Embedded_Container_CTRL_TEST {
         insert contentVersion1;
 
         contentVersion1 = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :contentVersion1.Id];
-
-        ContentWorkspaceDoc doc = new ContentWorkspaceDoc();
-        doc.ContentDocumentId = contentVersion1.ContentDocumentId;
-        doc.ContentWorkspaceId = gadmWorkspace[0].Id;
-        insert doc;
-
         List<PowerBI_Embedded_Container_CTRL.CategoryWrapper> wrappers= new List<PowerBI_Embedded_Container_CTRL.CategoryWrapper>();
+        System.runAs(myOtherUser[0]) {
+            ContentWorkspace workspace = new ContentWorkspace();
+            workspace.Name = 'GADM Public';
+            insert workspace;
+        }
+
+        System.runAs(myOtherUser[0]) {
+            List<ContentWorkspace> gadmWorkspace = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
+            ContentWorkspaceDoc doc = new ContentWorkspaceDoc();
+            doc.ContentDocumentId = contentVersion1.ContentDocumentId;
+            doc.ContentWorkspaceId = gadmWorkspace[0].Id;
+            insert doc;
+        }
 
         Test.startTest();
-
-        System.runAs(testUser) {
-            wrappers = PowerBI_Embedded_Container_CTRL.getCategories(testUser.Id);
+        System.runAs(myOtherUser[1]) {
+            wrappers = PowerBI_Embedded_Container_CTRL.getCategories(myOtherUser[1].Id);
         }
+
 
         Test.stopTest();
 

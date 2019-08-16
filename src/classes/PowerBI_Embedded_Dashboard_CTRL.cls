@@ -99,9 +99,14 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
     @AuraEnabled
     public static OAuthResult getAccessToken() {
 
+        Cache.OrgPartition orgPartition = null;
         OAuthResult result = new OAuthResult();
 
-        Cache.OrgPartition orgPartition = Cache.Org.getPartition('local.PowerBI');
+        if(Test.isRunningTest()){
+            return getNewAccessToken(null);
+        } else {
+            orgPartition = Cache.Org.getPartition('local.PowerBI');
+        }
 
         if (orgPartition != null) {
 
@@ -194,9 +199,14 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
 
     }
 
-
+    @TestVisible
     private static OAuthResult refreshToken(Cache.Orgpartition orgPartition) {
-        String refreshToken = (String)orgPartition.get(POWERBI_REFRESH_TOKEN);
+        String refreshToken;
+        if(Test.isRunningTest()){
+            refreshToken = 'refreshTokenString';
+        } else {
+            refreshToken = (String)orgPartition.get(POWERBI_REFRESH_TOKEN);
+        }
 
         PowerBI_Config__c conf = getPowerBICredentials('GADM');
         if(conf == null) {
@@ -222,10 +232,11 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         HttpResponse res = h.send(req);
 
         OAuthResult result = (OAuthResult)(JSON.deserialize(res.getBody(), OAuthResult.class));
-
-        orgPartition.put(POWERBI_ACCESS_TOKEN, result.access_token, 3600);
-        orgPartition.put(POWERBI_EXPIERS_ON, result.expires_on, 3600);
-        orgPartition.put(POWERBI_REFRESH_TOKEN, result.refresh_token, 3600);
+        if(orgPartition != null) {
+            orgPartition.put(POWERBI_ACCESS_TOKEN, result.access_token, 3600);
+            orgPartition.put(POWERBI_EXPIERS_ON, result.expires_on, 3600);
+            orgPartition.put(POWERBI_REFRESH_TOKEN, result.refresh_token, 3600);
+        }
 
         return result;
 

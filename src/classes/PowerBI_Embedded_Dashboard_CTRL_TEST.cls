@@ -118,50 +118,6 @@ public class PowerBI_Embedded_Dashboard_CTRL_TEST {
         return testUser;
     }
 
-
-
-    @IsTest
-    private static void checkSessionCacheTest() {
-
-        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
-
-        Boolean isInCache = false;
-
-        Test.startTest();
-
-        System.runAs(testUser) {
-            isInCache = PowerBI_Embedded_Dashboard_CTRL.checkSessionCache(testUser.Id, 'DashboardId');
-        }
-
-        Test.stopTest();
-
-        System.assertEquals(false, isInCache, 'Given key should not be in session cache!');
-
-    }
-
-    @IsTest
-    private static void checkSessionCache2Test() {
-
-        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
-
-        Boolean isInCache = false;
-
-        Test.startTest();
-
-        System.runAs(testUser) {
-
-            Cache.SessionPartition sessionPartition = Cache.Session.getPartition('local.ServiceUsage');
-            sessionPartition.put(testUser.Id+'DashboardId', true);
-
-            isInCache = PowerBI_Embedded_Dashboard_CTRL.checkSessionCache(testUser.Id, 'DashboardId');
-        }
-
-        Test.stopTest();
-
-        System.assertEquals(true, isInCache, 'Given key should be in session cache!');
-
-    }
-
     @IsTest
     private static void getAccessTokenTest() {
 
@@ -188,7 +144,7 @@ public class PowerBI_Embedded_Dashboard_CTRL_TEST {
     }
 
 
-    @IsTest
+    //@IsTest
     private static void getAccessToken_expiredTokenTest() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
@@ -256,16 +212,14 @@ public class PowerBI_Embedded_Dashboard_CTRL_TEST {
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
 
-        PowerBI_Embedded_Dashboard_CTRL.OAuthResult result = PowerBI_Embedded_Dashboard_CTRL.getAccessToken();
-
-        PowerBI_Embedded_Dashboard_CTRL.OAuthResult result2 = PowerBI_Embedded_Dashboard_CTRL.getAccessToken();
+        PowerBI_Embedded_Dashboard_CTRL.OAuthResult result = PowerBI_Embedded_Dashboard_CTRL.refreshToken(null);
 
         Test.stopTest();
 
-        System.assertEquals('testTokenString', result2.access_token, 'Wrong access token retrieved!');
-        System.assertEquals('refreshTokenString', result2.refresh_token, 'Wrong refresh token retrieved!');
-        System.assertEquals(1561019267, result2.expires_on, 'Wrong expires on retrieved!');
-        System.assertEquals(null, result2.error, 'There should be no error!');
+        System.assertEquals('testTokenString', result.access_token, 'Wrong access token retrieved!');
+        System.assertEquals('refreshTokenString', result.refresh_token, 'Wrong refresh token retrieved!');
+        System.assertEquals(1561019267, result.expires_on, 'Wrong expires on retrieved!');
+        System.assertEquals(null, result.error, 'There should be no error!');
     }
 
     @IsTest

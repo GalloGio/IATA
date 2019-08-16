@@ -35,7 +35,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         insert contactRoles3;
 
         Contact_Roles__c contactRoles4 = new Contact_Roles__c();
-        contactRoles4.Name = 'GADM Data Submitter';
+        contactRoles4.Name = 'GADM Data Consumer';
         insert contactRoles4;
 
         Portal_Applications__c portalApplications = new Portal_Applications__c();
@@ -220,6 +220,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
     }
 
     @IsTest
+    @IsTest
     private static void uniqueKeyUpdatePositiveTest() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'testContactRoleServiceAccessTrigger@test.com'];
@@ -234,17 +235,15 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         //setup inserts only one Contact_Role_Service_Access__c object
         List<Contact_Role_Service_Access__c> serviceAccessesOrig = new List<Contact_Role_Service_Access__c>();
 
-        System.runAs(testUser) {
 
-            try{
-                serviceAccessesOrig = [SELECT Id, Status__c, Service__c, UniqueKey__c FROM Contact_Role_Service_Access__c];
-                serviceAccessesOrig[0].Service__c = portalApplication.Id;
+        try {
+            serviceAccessesOrig = [SELECT Id, Status__c, Service__c, UniqueKey__c FROM Contact_Role_Service_Access__c];
+            serviceAccessesOrig[0].Service__c = portalApplication.Id;
 
-                update serviceAccessesOrig;
+            update serviceAccessesOrig;
 
-            }catch(Exception e) {
-                errorMessage = e.getMessage();
-            }
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
         }
 
         Test.stopTest();
@@ -280,18 +279,16 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         contactRoleServiceAccess.Contact_Role__c = serviceAccessesOrig.Contact_Role__c;
         insert contactRoleServiceAccess;
 
-        System.runAs(testUser) {
+        try {
+            //try to update new Contact_Role_Service_Access__c with Service__c so two records witch identical Service__c and Contact_Role__c would exist -> duplicates
+            Contact_Role_Service_Access__c serviceAccess = [SELECT Id, Service__c FROM Contact_Role_Service_Access__c WHERE Id = :contactRoleServiceAccess.Id];
+            serviceAccess.Service__c = serviceAccessesOrig.Service__c;
+            update serviceAccess;
 
-            try {
-                //try to update new Contact_Role_Service_Access__c with Service__c so two records witch identical Service__c and Contact_Role__c would exist -> duplicates
-                Contact_Role_Service_Access__c serviceAccess = [SELECT Id, Service__c FROM Contact_Role_Service_Access__c WHERE Id = :contactRoleServiceAccess.Id];
-                serviceAccess.Service__c = serviceAccessesOrig.Service__c;
-                update serviceAccess;
-
-            } catch (Exception e) {
-                errorMessage = e.getMessage();
-            }
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
         }
+
 
         Test.stopTest();
 
@@ -375,7 +372,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
     private static void grandAccessToGadmCategoryFilesTest() {
 
         Portal_Applications__c gadmApp = [SELECT Id FROM Portal_Applications__c WHERE Name = 'GADM'];
-        Account_Contact_Role__c accountContactRole = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Roles__r.Name = 'GADM Data Submitter'];
+        Account_Contact_Role__c accountContactRole = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Roles__r.Name = 'GADM Data Consumer'];
         User testUser = [SELECT Id FROM User WHERE Email = 'testContactRoleServiceAccessTrigger2@test.com'];
 
         List<ContentWorkspace> existing = [SELECT Id FROM ContentWorkspace WHERE Name = 'GADM Public' LIMIT 1];
@@ -414,7 +411,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
     private static void grandAccessToGadmCategoryFilesTest2() {
 
         Portal_Applications__c gadmApp = [SELECT Id FROM Portal_Applications__c WHERE Name = 'GADM'];
-        Account_Contact_Role__c accountContactRole = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Roles__r.Name = 'GADM Data Submitter'];
+        Account_Contact_Role__c accountContactRole = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Roles__r.Name = 'GADM Data Consumer'];
         User testUser = [SELECT Id FROM User WHERE Email = 'testContactRoleServiceAccessTrigger2@test.com'];
 
         List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
@@ -455,7 +452,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
     private static void removeAccessToGadmCategoryFilesTest() {
 
         Portal_Applications__c gadmApp = [SELECT Id FROM Portal_Applications__c WHERE Name = 'GADM'];
-        Account_Contact_Role__c accountContactRole = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Roles__r.Name = 'GADM Data Submitter'];
+        Account_Contact_Role__c accountContactRole = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Roles__r.Name = 'GADM Data Consumer'];
         User testUser = [SELECT Id FROM User WHERE Email = 'testContactRoleServiceAccessTrigger2@test.com'];
 
         List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
@@ -488,7 +485,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
     private static void removeAccessToGadmCategoryFilesTest2() {
 
         Portal_Applications__c gadmApp = [SELECT Id FROM Portal_Applications__c WHERE Name = 'GADM'];
-        Account_Contact_Role__c accountContactRole = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Roles__r.Name = 'GADM Data Submitter'];
+        Account_Contact_Role__c accountContactRole = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Roles__r.Name = 'GADM Data Consumer'];
         User testUser = [SELECT Id FROM User WHERE Email = 'testContactRoleServiceAccessTrigger2@test.com'];
 
         List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
