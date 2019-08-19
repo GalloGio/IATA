@@ -884,5 +884,17 @@
 )</errorConditionFormula>
         <errorMessage>Min and Max Range can only be filled when Adjusted = &apos;Mixed&apos; and Accreditation Model = &apos;Multicountry&apos;</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>ANG_Remittance_Frequency_Adj_Required</fullName>
+        <active>true</active>
+        <description>Remittance Frequency is required for Adjustments when the accreditation model is NOT multicountry</description>
+        <errorConditionFormula>AND(
+ RecordType.DeveloperName == &apos;Adjustment&apos;,
+ NOT(ISPICKVAL(ANG_Calculation_Rule__r.ANG_Accreditation_Model__c, &apos;Multicountry&apos;)),
+ ISPICKVAL(ANG_Remittance_Frequency__c, &apos;&apos;)
+)</errorConditionFormula>
+        <errorDisplayField>ANG_Remittance_Frequency__c</errorDisplayField>
+        <errorMessage>You must select a value</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

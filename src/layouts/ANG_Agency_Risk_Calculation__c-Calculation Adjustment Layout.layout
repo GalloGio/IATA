@@ -16,7 +16,7 @@
                 <field>ANG_Calculation_Rule__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>ANG_Remittance_Frequency__c</field>
             </layoutItems>
             <layoutItems>
