@@ -792,6 +792,10 @@
         <fields>Contact_Role_Name__c</fields>
         <fields>First_Name__c</fields>
         <fields>Last_Name__c</fields>
+        <fields>Account_Role__c.Account__c</fields>
+        <fields>Contact_Roles__c</fields>
+        <fields>Service_Rendered__c</fields>
+        <fields>RECORDTYPE</fields>
         <fields>UniqueKey__c</fields>
         <relatedList>Account_Contact_Role__c.Contact__c</relatedList>
     </relatedLists>
@@ -1089,14 +1093,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Data_Submission__c.User__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Account_Role__c.Account__c</fields>
-        <fields>Contact_Roles__c</fields>
-        <fields>Service_Rendered__c</fields>
-        <fields>RECORDTYPE</fields>
-        <relatedList>Account_Contact_Role__c.Contact__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
