@@ -46,7 +46,7 @@ public with sharing class DescribeDataCategoryGroupStructures {
         }
 
         //get the user language for returning the approppriate language
-        String userLanguage = CSP_Utils.getUserLanguage(); 
+        String userLanguage = UserInfo.getLanguage();
         User usr = CSP_Utils.getLoggedUser();
         
         //get the matadata list that contains the tree
