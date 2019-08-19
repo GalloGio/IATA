@@ -6,13 +6,14 @@ global class PostCopyScript implements SandboxPostCopy {
 	global void runApexClass(SandboxContext context) {
 		
 		deleteCustomSettingsRecords();
+		updateQueuesEmail();
 
 	}
 
 
 	/**
 	 * This method deletes the following custom settings records:
-	 * AMS BSPLink Integration, AMS SAP Settings, IEC SAP Settings, IEC Settings and HPM Setting. 
+	 * AMS BSPLink Integration, AMS SAP Settings, IEC SAP Settings, IEC Settings , HPM Setting, ISSP Kavi Setting and Apex Setting
 	*/
 	@TestVisible
 	private void deleteCustomSettingsRecords() {
@@ -69,7 +70,7 @@ global class PostCopyScript implements SandboxPostCopy {
 			delete listKVSettings;
 		}
 
-		//delete Apex setting Setting custom setting record
+		//delete Apex Setting custom setting record
 		List<Apex_Setting__c> apexSettings = new List<Apex_Setting__c>();
 		apexSettings = Apex_Setting__c.getAll().values();
 		for(Apex_Setting__c a: apexSettings){
@@ -77,6 +78,17 @@ global class PostCopyScript implements SandboxPostCopy {
 				delete a;
 			}
 		}
+	}
+
+	@TestVisible
+	private void updateQueuesEmail() {
+		List<Group> lstQueues = [SELECT Id, Email FROM Group WHERE Type = 'Queue' and email != ''];
+		
+		for (Group q : lstQueues) {
+				List<String> updateEmail = q.Email.split('@');
+                q.Email = q.Email.replace('@'+updateEmail[1],'='+updateEmail[1] + '@example.com');
+		} 
+			update lstQueues;
 	}
 
 }
