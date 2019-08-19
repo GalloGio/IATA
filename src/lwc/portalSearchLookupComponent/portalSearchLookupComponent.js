@@ -200,6 +200,7 @@ export default class Lookup extends LightningElement {
         if (!this.isSelectionAllowed()) {
             return;
         }
+        this.searchTerm = '';
         // Delay hiding combobox so that we can capture selected result
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.blurTimeout = window.setTimeout(() => {
@@ -221,6 +222,10 @@ export default class Lookup extends LightningElement {
         this.selection = [];
         // Notify parent components that selection has changed
         //this.dispatchEvent(new CustomEvent('selectionchange'));
+
+
+        this.handleFocus();
+
     }
 
 
