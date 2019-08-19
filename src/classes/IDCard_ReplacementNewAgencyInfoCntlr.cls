@@ -214,7 +214,7 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
             //confPage.getParameters().put(IDCardUtil.ACCOUNT_STATUS_TERMINATED, IDCardUtil.EncryptEncodeParameter('Terminated'));
             
             // INC485389
-            if (System.currentPageReference().getParameters().containsKey(IDCardUtil.PARAM_IATACODE)){
+            if (System.currentPageReference().getParameters().containsKey(IDCardUtil.ACCOUNT_STATUS_TERMINATED)){
                 confPage.getParameters().put(IDCardUtil.ACCOUNT_STATUS_TERMINATED, IDCardUtil.EncryptEncodeParameter('Terminated'));
             }
             // INC485389 END
