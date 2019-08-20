@@ -1,4 +1,4 @@
-import { LightningElement, track} from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
@@ -90,16 +90,16 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track contactList = [];    //list of contacts organized by pages list<list<contacts>
     @track contactListOg = [];  // stores original contactList after filtering
     @track currentContactPage = []; //page being displayed
-    @track pageList=[];         // list of pages for the pagination cmp
-    @track totalNrPagesOg =0;
-    @track totalNrPages =0; // total nr pages 
-    @track totalNrRecords =0;
-    @track nrLoadedRecs =0;     //nr of loaded records
-    @track currentPageNumber=1;
-    
-    searchMode=false;
+    @track pageList = [];         // list of pages for the pagination cmp
+    @track totalNrPagesOg = 0;
+    @track totalNrPages = 0; // total nr pages 
+    @track totalNrRecords = 0;
+    @track nrLoadedRecs = 0;     //nr of loaded records
+    @track currentPageNumber = 1;
 
-    
+    searchMode = false;
+
+
     searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
 
@@ -110,21 +110,21 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     @track componentLoading = true;
 
-    
+
     @track isAdmin = false;
     @track serviceName = false;
     
-    
+
     @track contactTableColums = [];
     @track showConfirmPopup = false;
     @track popupTitle = '';
     @track popupMsg = '';
-    @track appRejReason='';
-    
-    @track showSpinner=false;
-    @track loadingContacts=false;
-    
-	@track isIFG_Service = false;
+    @track appRejReason = '';
+
+    @track showSpinner = false;
+    @track loadingContacts = false;
+
+    @track isIFG_Service = false;
     serviceDetailsResult; // wire result holder
 
     PAGE_SIZE=10; //nr of contact record per page
@@ -137,13 +137,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.serviceId = this.pageParams.serviceId;
         }
 
-        this.contactTableColums = [
+                this.contactTableColums = [
             { label: 'User', fieldName: 'contactName', type: 'text' },
             { label: 'Email', fieldName: 'emailAddress', type: 'text' },
             { label: 'IATA Code Location', fieldName: 'iataCodeLoc', type: 'text' },
             { label: 'Status', fieldName: 'serviceRight', type: 'text' },
-            { type: 'action',typeAttributes: { iconName: 'utility:delete',disabled:true,  rowActions: this.getRowActions } }
-        ];
+                    { type: 'action', typeAttributes: { iconName: 'utility:delete', disabled: true, rowActions: this.getRowActions } }
+                ];
 
 
         //get the service details
@@ -151,45 +151,45 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     }
 
-    resetComponent(){
+    resetComponent() {
         //Resets the component properties back to the start
-        this.appRejReason='';
+        this.appRejReason = '';
         this.contactList = [];    //list of contacts organized by pages list<list<contacts>
         this.contactListOg = [];  // stores original contactList after filtering
         this.currentContactPage = []; //page being displayed
-        this.pageList=[];         // list of pages for the pagination cmp
-        this.totalNrPagesOg =0;
-        this.totalNrPages =0; // total nr pages 
-        this.totalNrRecords =0;
-        this.nrLoadedRecs =0;     //nr of loaded records
-        this.currentPageNumber=1;
+        this.pageList = [];         // list of pages for the pagination cmp
+        this.totalNrPagesOg = 0;
+        this.totalNrPages = 0; // total nr pages 
+        this.totalNrRecords = 0;
+        this.nrLoadedRecs = 0;     //nr of loaded records
+        this.currentPageNumber = 1;
 
         this.getServiceDetailsJS();
     }
 
-    getServiceDetailsJS(){
-        if(this.serviceId !== undefined && this.serviceId !== ''){
+    getServiceDetailsJS() {
+        if (this.serviceId !== undefined && this.serviceId !== '') {
 
             getServiceDetails({ serviceId: this.serviceId })
-            .then(result => {
+                .then(result => {
                 console.log('getServiceDetails: ' ,JSON.parse(JSON.stringify(result)));
 
-                this.serviceRecord = JSON.parse(JSON.stringify(result));
-                this.isAdmin = this.serviceRecord.isAdmin;
-                this.loadReady = true;
-                this.serviceName = this.serviceRecord.recordService.ServiceName__c;
-		this.isIFG_Service = this.serviceRecord.isIFGPending;
-                if (this.isAdmin){
-                    this.getContactsForPage();
-                }else{
+                    this.serviceRecord = JSON.parse(JSON.stringify(result));
+                    this.isAdmin = this.serviceRecord.isAdmin;
+                    this.loadReady = true;
+                    this.serviceName = this.serviceRecord.recordService.ServiceName__c;
+                    this.isIFG_Service = this.serviceRecord.isIFGPending;
+                    if (this.isAdmin) {
+                        this.getContactsForPage();
+                    } else {
+                        //this.showSpinner = false;
+                        this.componentLoading = false;
+                    }
+                })
+                .catch(error => {
                     //this.showSpinner = false;
                     this.componentLoading = false;
-                }
-            })
-            .catch(error => {
-                //this.showSpinner = false;
-                this.componentLoading = false;
-            });
+                });
 
         }
     }
@@ -199,82 +199,82 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         console.log('serviceId:', this.serviceId);
         console.log('offset:', this.nrLoadedRecs);
 
-        getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs})
-        .then(result=>{
-            let resultData = JSON.parse(JSON.stringify(result));
-            this.initialPageLoad(resultData,this.serviceRecord.totalNrContacts);
+        getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs })
+            .then(result => {
+                let resultData = JSON.parse(JSON.stringify(result));
+                this.initialPageLoad(resultData, this.serviceRecord.totalNrContacts);
 
-            //this.showSpinner = false;
-            this.componentLoading = false;
-        });
+                //this.showSpinner = false;
+                this.componentLoading = false;
+            });
     }
 
-    get renderCancelRequest(){
+    get renderCancelRequest() {
         //for either normal users and admin users
-        let returnBool = this.serviceRecord !== undefined && this.serviceRecord.recordService !== undefined && 
-        ((this.serviceRecord.accessGranted === true && this.serviceRecord.recordService.Requestable__c !== undefined && this.serviceRecord.recordService.Requestable__c === true && this.serviceRecord.recordService.Cannot_be_managed_by_portal_admin__c !== undefined && this.serviceRecord.recordService.Cannot_be_managed_by_portal_admin__c === false) || 
-            (this.serviceRecord.accessRequested === true && this.serviceRecord.recordService.Requestable__c !== undefined && this.serviceRecord.recordService.Requestable__c === true));
+        let returnBool = this.serviceRecord !== undefined && this.serviceRecord.recordService !== undefined &&
+            ((this.serviceRecord.accessGranted === true && this.serviceRecord.recordService.Requestable__c !== undefined && this.serviceRecord.recordService.Requestable__c === true && this.serviceRecord.recordService.Cannot_be_managed_by_portal_admin__c !== undefined && this.serviceRecord.recordService.Cannot_be_managed_by_portal_admin__c === false) ||
+                (this.serviceRecord.accessRequested === true && this.serviceRecord.recordService.Requestable__c !== undefined && this.serviceRecord.recordService.Requestable__c === true));
         return returnBool;
     }
 
     //==================== CONTACT LIST METHODS ==============
 
     //loads and organizes the records in pages
-    initialPageLoad(contactList,totalNrRecs){
-        this.totalNrRecords=totalNrRecs;
-        this.totalNrPages=totalNrRecs.length===0?0:Math.ceil(totalNrRecs/this.PAGE_SIZE);
-        this.processContacList(contactList,1);
+    initialPageLoad(contactList, totalNrRecs) {
+        this.totalNrRecords = totalNrRecs;
+        this.totalNrPages = totalNrRecs.length === 0 ? 0 : Math.ceil(totalNrRecs / this.PAGE_SIZE);
+        this.processContacList(contactList, 1);
         this.generatePageList();
     }
 
     //transforms the received list in page form
-    processContacList(contactList,startPage){
-        let tempList=[];
-        let tempPage=[];
+    processContacList(contactList, startPage) {
+        let tempList = [];
+        let tempPage = [];
 
-        for(let i=1;i <=contactList.length;i++){
-            tempPage.push(contactList[i-1]);
-            if((i % this.PAGE_SIZE)===0){ // organizes the records by pages
+        for (let i = 1; i <= contactList.length; i++) {
+            tempPage.push(contactList[i - 1]);
+            if ((i % this.PAGE_SIZE) === 0) { // organizes the records by pages
                 tempList.push(tempPage);
-                tempPage=[];
+                tempPage = [];
             }
         }
-        
-        if(tempPage.length>0) tempList.push(tempPage);
 
-        if(this.contactList.length===0) //on first load
-            this.contactList=tempList;
-        else{
-            let contList=JSON.parse(JSON.stringify(this.contactList));
-            this.contactList=contList.concat(tempList); // adds to current page list
+        if (tempPage.length > 0) tempList.push(tempPage);
+
+        if (this.contactList.length === 0) //on first load
+            this.contactList = tempList;
+        else {
+            let contList = JSON.parse(JSON.stringify(this.contactList));
+            this.contactList = contList.concat(tempList); // adds to current page list
         }
-        
-        this.currentPageNumber=startPage;
-        this.currentContactPage=tempList[startPage-1];
-        if(!this.searchMode)
-            this.nrLoadedRecs+=contactList.length;
-        
+
+        this.currentPageNumber = startPage;
+        this.currentContactPage = tempList[startPage - 1];
+        if (!this.searchMode)
+            this.nrLoadedRecs += contactList.length;
+
     }
 
     //generates paginators menu
     generatePageList() {
         let currentPageList = [];
-        let currentTotalPages = this.totalNrPages;        
-        
+        let currentTotalPages = this.totalNrPages;
+
         if (currentTotalPages > 1) {
-            if(currentTotalPages <= 10) {
+            if (currentTotalPages <= 10) {
                 let counter = 2;
-                for(; counter < currentTotalPages; counter++) {
+                for (; counter < currentTotalPages; counter++) {
                     currentPageList.push(counter);
                 }
             } else {
-                if(this.pageNumber < 5) {
+                if (this.currentPageNumber < 5) {
                     currentPageList.push(2, 3, 4, 5, 6);
                 } else {
-                    if(this.pageNumber > (currentTotalPages - 5)) {
-                        currentPageList.push(currentTotalPages-5, currentTotalPages-4, currentTotalPages-3, currentTotalPages-2, currentTotalPages-1);
+                    if (this.currentPageNumber > (currentTotalPages - 5)) {
+                        currentPageList.push(currentTotalPages - 5, currentTotalPages - 4, currentTotalPages - 3, currentTotalPages - 2, currentTotalPages - 1);
                     } else {
-                        currentPageList.push(this.pageNumber-2, this.pageNumber-1, this.pageNumber, this.pageNumber+1, this.pageNumber+2);
+                        currentPageList.push(this.currentPageNumber - 2, this.currentPageNumber - 1, this.currentPageNumber, this.currentPageNumber + 1, this.currentPageNumber + 2);
                     }
                 }
             }
@@ -283,97 +283,100 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     // ============= PAGINATION Event Methods =======
-    handlePreviousPage(){
-        this.refreshContactPageView(this.currentPageNumber-1);
-    
+    handlePreviousPage() {
+        this.refreshContactPageView(this.currentPageNumber - 1);
+
     }
-    handleNextPage(){
-        this.refreshContactPageView(this.currentPageNumber+1);
-    
+    handleNextPage() {
+        this.refreshContactPageView(this.currentPageNumber + 1);
+
     }
-    handleSelectedPage(event){
+    handleSelectedPage(event) {
         //the event contains the selected page
         this.refreshContactPageView(event.detail);
     }
-    
-    handleFirstPage(){
+
+    handleFirstPage() {
         this.refreshContactPageView(1);
-    
+
     }
-    handleLastPage(){
+    handleLastPage() {
         this.refreshContactPageView(this.totalNrPages);
     }
 
 
     //navigates and renders results for the selected page
-    refreshContactPageView(currentPage){    
+    refreshContactPageView(currentPage) {
 
-        this.currentPageNumber=currentPage;
-        let newPage=this.contactList[this.currentPageNumber-1];
+        this.currentPageNumber = currentPage;
+        let newPage = this.contactList[this.currentPageNumber - 1];
         //if page not loaded yet        
-        if(!newPage){
-            this.loadingContacts=true;
-            getContacts({ serviceId: this.serviceId,offset:this.nrLoadedRecs}).then(result=>{
-                let resultData=JSON.parse(JSON.stringify(result));                
-                this.processContacList(resultData,currentPage);
-                this.refreshContactPageView(currentPage)
+        if (!newPage) {
+            this.loadingContacts = true;
+            getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs }).then(result => {
+                let resultData = JSON.parse(JSON.stringify(result));
+                this.processContacList(resultData, currentPage);
+                this.generatePageList();
+                this.refreshContactPageView(currentPage);
             });
+        }else{
+            this.generatePageList();
         }
-        this.loadingContacts=false;
-        this.currentContactPage= this.contactList[this.currentPageNumber-1];
+        this.loadingContacts = false;
+        this.currentContactPage = this.contactList[this.currentPageNumber - 1];
     }
 
     //search Records
-    searchRecord(event){
-        let searchKey=event.target.value.toLowerCase().trim();
-        this.searchKey=searchKey;
-        if(searchKey!== '' && searchKey.length>=3) {
+    searchRecord(event) {
+        let searchKey = event.target.value.toLowerCase().trim();
+        this.searchKey = searchKey;
+        if (searchKey !== '' && searchKey.length >= 3) {
             //enters search mode
             //backups already retrieve values from server to _og variables
-            if(!this.searchMode){
-                this.searchMode=true;
-                this.contactListOg=this.contactList.slice();
-                this.totalNrPagesOg= this.totalNrPages;
+            if (!this.searchMode) {
+                this.searchMode = true;
+                this.contactListOg = this.contactList.slice();
+                this.totalNrPagesOg = this.totalNrPages;
             }
             //if all records loadded searches localy only
-            if(this.totalNrRecords ==this.nrLoadedRecs){
+            if (this.totalNrRecords == this.nrLoadedRecs) {
 
-                   let tempContactPagesList=JSON.parse(JSON.stringify(this.contactListOg.slice()));
-                   let resultList=[];
-                   tempContactPagesList.forEach((el,pos,arr)=>{
-                       let filteredResults= el.filter((el)=>{
-                           //to avoid uninitialized values
-                           if(!el.contactName) el.contactName='';
-                           if(!el.iataCodeLoc) el.iataCodeLoc='';
-                           if(!el.emailAddress) el.emailAddress='';
-                           return el.contactName.toLowerCase().search(searchKey)!=-1 ||el.iataCodeLoc.toLowerCase().search(searchKey)!=-1|| el.emailAddress.toLowerCase().search(searchKey)!=-1;
-                        });
-                        resultList=resultList.concat(filteredResults);
-                        
+                let tempContactPagesList = JSON.parse(JSON.stringify(this.contactListOg.slice()));
+                let resultList = [];
+                tempContactPagesList.forEach((el, pos, arr) => {
+                    let filteredResults = el.filter((el) => {
+                        //to avoid uninitialized values
+                        if (!el.contactName) el.contactName = '';
+                        if (!el.iataCodeLoc) el.iataCodeLoc = '';
+                        if (!el.emailAddress) el.emailAddress = '';
+                        return el.contactName.toLowerCase().search(searchKey) != -1 || el.iataCodeLoc.toLowerCase().search(searchKey) != -1 || el.emailAddress.toLowerCase().search(searchKey) != -1;
                     });
+                    resultList = resultList.concat(filteredResults);
 
-                    this.contactList=[];
-                    this.processContacList(resultList,1);                    
-                    this.totalNrPages=Math.ceil(resultList.length/this.PAGE_SIZE);
-                    this.generatePageList();               
-            }else{
+                });
+
+                this.contactList = [];
+                this.processContacList(resultList, 1);
+                this.totalNrPages = Math.ceil(resultList.length / this.PAGE_SIZE);
+                this.generatePageList();
+            } else {
                 //searchs from db - invokes server to retrieve search result
-                searchContacts({serviceId: this.serviceId,searchkey:searchKey}).then(result=>{
-                    let tempSearchResult=JSON.parse(JSON.stringify(result));
-                   
-                    this.contactList=[];
-                    this.totalNrPages=Math.ceil(tempSearchResult.length/this.PAGE_SIZE);
-                    this.processContacList(tempSearchResult,1);                    
-                    this.generatePageList(); 
+                searchContacts({ serviceId: this.serviceId, searchkey: searchKey }).then(result => {
+                    let tempSearchResult = JSON.parse(JSON.stringify(result));
+
+                    this.contactList = [];
+                    this.totalNrPages = Math.ceil(tempSearchResult.length / this.PAGE_SIZE);
+                    this.processContacList(tempSearchResult, 1);
+                    this.generatePageList();
                 });
             }
-        }else if(searchKey=== ''){
-            if(this.searchMode){
+        } else if (searchKey === '') {
+            if (this.searchMode) {
                 //Exit search mode
                 //restore all records already retrieved
-                this.searchMode=false;
-                this.contactList=this.contactListOg.slice();
-                this.totalNrPages =this.totalNrPagesOg;
+                this.searchMode = false;
+                this.contactList = this.contactListOg.slice();
+                this.totalNrPages = this.totalNrPagesOg;
                 this.generatePageList();
                 this.refreshContactPageView(1);
             }
@@ -417,20 +420,20 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     //Action on the top button ( request access or navigate to service)
     handleTopAction() {
-        let serviceRec = JSON.parse(JSON.stringify(this.serviceRecord));  
+        let serviceRec = JSON.parse(JSON.stringify(this.serviceRecord));
 
         if (serviceRec.accessGranted) {
             //goes to service
             let appInfo = serviceRec.recordService
             this.goToService(appInfo);
-        }else {
+        } else {
             //displays popup to confirm request
             this.showConfirm = true;
         }
     }
 
     get renderRequest() {
-        let returnBool = this.serviceRecord.accessRequested === true;        
+        let returnBool = this.serviceRecord.accessRequested === true;
         return returnBool;
     }
 
@@ -452,7 +455,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     //navigates to service
     goToService(serviceAux) {
-      
+
         //attributes stored on element that is related to the event
         let appFullUrlData = serviceAux.Application_URL__c;
         let openWindowData = serviceAux.New_Window__c;
@@ -488,47 +491,47 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 } else {
                     myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
                     window.open(myUrl);
-                }
-            } else {
+                                }
+                    } else {
                 window.location.href = myUrl;
             }
         }
     }
-   
+
 
     navigateToServicesPage() {
         navigateToPage("services");
     }
 
 
-    get cancelMessage(){
-        return CancelServiceMessage.replace('{0}',this.serviceName);
+    get cancelMessage() {
+        return CancelServiceMessage.replace('{0}', this.serviceName);
     }
-    get cancelLink(){
-        return CancelServiceActionLabel.replace('{0}',this.serviceName);
+    get cancelLink() {
+        return CancelServiceActionLabel.replace('{0}', this.serviceName);
     }
 
-    get renderCancelService(){
+    get renderCancelService() {
         return this.serviceRecord.accessGranted;
     }
 
-    get noResultsFound(){
-        return this.searchMode && this.contactList.length ==0;
-    } 
+    get noResultsFound() {
+        return this.searchMode && this.contactList.length == 0;
+    }
 
     //Cancel Service Access
-    cancelServiceAccessRequest(event){
+    cancelServiceAccessRequest(event) {
         let contact = {
             contactId: this.serviceRecord.userContactId
         };
-        let msg = this.label.cancelAccessMsg.replace('{0}',this.serviceName);
-        let title=this.label.cancelAccessTitle;
+        let msg = this.label.cancelAccessMsg.replace('{0}', this.serviceName);
+        let title = this.label.cancelAccessTitle;
 
-        this.denyUserAccessJS(contact,msg,title, false);
-        
+        this.denyUserAccessJS(contact, msg, title, false);
+
     }
-    
-    
+
+
 
     //================== Admin Section =======================//
 
@@ -543,8 +546,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 break;
             case 'deactivateUser':
                 let title = this.label.denyAccessTitle;
-                let msg = this.label.confirmDenyAccessMsg.replace('{0}',this.serviceRecord.recordService.ServiceName__c).replace('{1}',row.contactName);
-                this.denyUserAccessJS(row,msg,title, true);
+                let msg = this.label.confirmDenyAccessMsg.replace('{0}', this.serviceRecord.recordService.ServiceName__c).replace('{1}', row.contactName);
+                this.denyUserAccessJS(row, msg, title, true);
                 break;
             case 'ifapContact':
                 //this.deleteAttach(row);
@@ -555,15 +558,15 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 
     //grant access to the service
-    grantUserAccess(contact){
-        this.popupTitle=this.label.grantAccessTitle;
-        this.selectedlRow=contact;
-        if(contact.hasNoContact){
-            this.popupMsg=this.label.grantAccessNoUser;
-        }else{
-            this.popupMsg=this.label.confirmGrantAccessMsg.replace('{0}',this.serviceRecord.recordService.ServiceName__c).replace('{1}',contact.contactName);
+    grantUserAccess(contact) {
+        this.popupTitle = this.label.grantAccessTitle;
+        this.selectedlRow = contact;
+        if (contact.hasNoContact) {
+            this.popupMsg = this.label.grantAccessNoUser;
+        } else {
+            this.popupMsg = this.label.confirmGrantAccessMsg.replace('{0}', this.serviceRecord.recordService.ServiceName__c).replace('{1}', contact.contactName);
         }
-        this.mode='grant';
+        this.mode = 'grant';
         this.showConfirmPopup = true;
     }
 
@@ -572,7 +575,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.selectedlRow = contact;
         this.popupMsg = msg;
         this.isFromContactTable = isFromContactTable;
-        
+
         this.mode = 'deny';
         this.showConfirmPopup = true;
     }
@@ -582,26 +585,26 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.appRejReason = event.target.value;
     }
 
-    handlePopupCancelAction(){
+    handlePopupCancelAction() {
         this.showConfirmPopup = false;
     }
 
-    handlePopupConfirmAction(){
-        this.showSpinner=true;
+    handlePopupConfirmAction() {
+        this.showSpinner = true;
 
         let methodParams = {
             contactId: this.selectedlRow.contactId,
             serviceId: this.serviceRecord.recordService.Id,
             reason: this.appRejReason
         };
-        switch(this.mode){
+        switch (this.mode) {
             case 'grant':
-                grantUserAccess(methodParams).then(result=>{
+                grantUserAccess(methodParams).then(result => {
                     this.componentLoading = true;
-                    this.showSpinner=false;
+                    this.showSpinner = false;
                     this.showConfirmPopup = false;
                     this.resetComponent();
-                }).catch(error=>{
+                }).catch(error => {
                     console.log('error: ', error);
                     this.showConfirmPopup = false;
                 });
@@ -609,18 +612,18 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             case 'deny':
                 methodParams.isFromContactTable = this.isFromContactTable;
 
-                denyUserAccess(methodParams).then(result=>{
+                denyUserAccess(methodParams).then(result => {
                     this.componentLoading = true;
                     this.showSpinner = false;
                     this.showConfirmPopup = false;
                     this.resetComponent();
-                }).catch(error=>{
+                }).catch(error => {
                     this.showConfirmPopup = false;
                 });
                 break;
             default:
-                this.showSpinner=false;
-        }        
+                this.showSpinner = false;
+        }
     }
 
 }
