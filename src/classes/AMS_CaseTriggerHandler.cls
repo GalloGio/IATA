@@ -35,7 +35,7 @@ public class AMS_CaseTriggerHandler {
         	
         	for(Case c : cases){
 				if(c.AccountId != null)
-        		accntFromCases.put(c.AccountId, c.Id);
+        			accntFromCases.put(c.AccountId, c.Id);
         	}
     		
     		//get all HOId, up to 3 levels of hierarchy
