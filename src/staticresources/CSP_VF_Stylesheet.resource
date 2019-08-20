@@ -1,7 +1,5 @@
 .pbBody {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-    padding-top: 10px !important;
+    padding: 10px !important;
 }
 
 .pbBody a {
@@ -10,7 +8,7 @@
 
 .bPageBlock {
     border-top-width : thin !important;
-    border-top: 1px solid #eaeaea;
+    border-top: 0;
 }
 
 body, div.container {
@@ -59,6 +57,17 @@ div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
     color: #3333ff;
     min-width: 130px;
     background-image: none;
+    margin: 0 4px;
+}
+
+.iatabtn-right{
+    float: right;
+    margin-left: 8px;
+    margin-right: 0;
+}
+
+.iatabtn-topMargin{
+    margin-top: 20px;
 }
 
 .iatabtn.smaller,
@@ -86,6 +95,11 @@ div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
 .btn.iatabtn:focus,
 .btnDisabled.iatabtn:focus {
     color: #3333ff;
+    
+}
+
+.btnDisabled.iatabtn{
+    cursor: not-allowed;
 }
 
 .iatabtn.iatabtn-danger:hover,
@@ -154,15 +168,23 @@ body .bPageBlock .pbBody .pbSubheader {
 }
 
 .modal-header {
-    background-color: #f7f8fc;
+    /*background-color: #f7f8fc;*/
+    background-color: #1e32fa  !important;
+    padding: 10px 15px !important;
 }
 
 .modal-title {
-    color: black;
-    font-weight: bold;
-    font-size: 1.3em;
+    color: white;
+    /*font-weight: bold;
+    font-size: 1.3em;*/
+    font-size: 16px;
 }
 
+.modal-header button.close{
+    font-weight: unset;
+    opacity: 0.7;
+    color: white;
+}
 .centered {
     text-align: center;
 }
