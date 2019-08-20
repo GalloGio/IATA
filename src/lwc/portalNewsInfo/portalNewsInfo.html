@@ -1,0 +1,42 @@
+<template>
+
+    <c-portal-custom-card-container>
+
+        <span slot="cardTitle">
+            <span class="text-small">{label.CSP_ForYou}</span>
+        </span>
+
+        <span slot="cardBody">
+            <div class="cardBodyContent">
+                <div class="spinnerContainer" if:true={loading}>
+                    <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
+                </div>
+                <div if:false={loading}>
+                    <div if:true={dataRecords} class="slds-m-around_x-small">
+                        <div class="infoBanner">
+                            <img src={bannerImages} class="carouselBanner cursorPointer" onclick={redirectUrl}>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-vertical_medium">
+                        <lightning-layout vertical-align="center" horizontal-align="center" if:true={showPagination}>
+                            <lightning-layout-item padding="horizontal-small">
+                                <a onclick={handlePrevious}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronleft" size="xx-small"> </lightning-icon></a>
+                            </lightning-layout-item>
+                            <template for:each={sliderIcons} for:item="sliderIcon">
+                                <lightning-layout-item class="slds-p-horizontal_xx-small" key={sliderIcon.id}>
+                                    <lightning-icon icon-name="utility:record" size="xx-small" class={sliderIcon.className}></lightning-icon>
+                                </lightning-layout-item>
+                            </template>
+                            <lightning-layout-item padding="horizontal-small">
+                                <a onclick={handleNext}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronright" size="xx-small"> </lightning-icon></a>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </div>
+            </div>
+        </span>
+
+    </c-portal-custom-card-container>
+    
+</template>

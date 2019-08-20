@@ -6,4 +6,4 @@ Case number:  {!Case.CaseNumber}
 Don’t forget to quote this case number if you have any queries or comments.
 Best regards,
 International Air Transport Association
-Case Thread ID
+Case Thread ID {!Case.Thread_Id}

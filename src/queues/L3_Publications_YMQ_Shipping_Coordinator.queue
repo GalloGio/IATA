@@ -3,11 +3,9 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>L3 Publications YMQ Shipping Coordinator</name>
     <queueMembers>
-        <users>
-            <user>jaradatn@iata.org</user>
-            <user>divitot@iata.org</user>
-            <user>garfieldt@iata.org</user>
-        </users>
+        <publicGroups>
+            <publicGroup>L3_Publications_YMQ_Shipping_Coordinator</publicGroup>
+        </publicGroups>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
