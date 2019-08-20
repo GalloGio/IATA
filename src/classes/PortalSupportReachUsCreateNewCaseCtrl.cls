@@ -78,7 +78,7 @@ private static List<Account> searchRelatedAccounts(String searchTerm) {
 	finalQuery += ' LIMIT ' + MAX_RESULTS;
 
 	List<Account> reorderedCodes = new List<Account>();
-	List<Account> allCodes = DAL_WithoutSharing.BringMeTheData(finalQuery);
+	List<Account> allCodes = DAL_WithoutSharing.getRelatedAccounts(finalQuery);
 
 	//place user's Iata code as first element in the list
 	if(allCodes.size() > 1) {

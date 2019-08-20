@@ -93,4 +93,10 @@ public without sharing class DAL_WithoutSharing {
 
         return new List<Contact>();
     }
+
+    @AuraEnabled
+    public static List<Account> getRelatedAccounts(String finalQuery){
+
+	    return Database.query(finalQuery);
+    }
 }
