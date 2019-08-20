@@ -573,10 +573,10 @@
 
                                 <script>
                                     if(showProductComparisonLink) {
-                                        $('[name$=ProductComparisonLink]').show();
+                                                            $('[id$=ProductComparisonLink]').show();
                                     }
                                     if(hideProductComparisonLink) {
-                                        $('[name$=ProductComparisonLink]').hide();
+                                                            $('[id$=ProductComparisonLink]').hide();
                                     }
                                 </script>
                             </div>
