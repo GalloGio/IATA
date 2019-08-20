@@ -32,8 +32,6 @@ public class ANG_RiskAssessmentEngine{
         set;
     }
 
-    private Set<Id> multicountryLocationsSet = new Set<Id>();
-
     private static void setMaps(){ // method to populate the risk event calculation maps1
         ANG_RiskAssessmentEngine.risCalcMap = new map<id,ang_agency_risk_calculation__c>();
         ANG_RiskAssessmentEngine.risCalAdjcMap = new map<id,ang_agency_risk_calculation__c>();
@@ -262,7 +260,8 @@ public class ANG_RiskAssessmentEngine{
                 }else if(ANG_RiskAssessmentEngine.risCalcMap.get(reRec).ANG_Adjustments__r.size()>0){
 
                     if(acct.accreditationModel == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
-                        ANG_Agency_Risk_Calculation__c arc = riskCalcRulesMulticountryMap.get('MIXED');
+                       
+                        ANG_Agency_Risk_Calculation__c arc = riskCalcRulesMulticountryMap.get(ANG_Risk_Helper.ADJ_MIXED);
                         if(failRiskAssessmentMulticountry(acct, accParentOccs, arc, multicountryRemittancesMap)){
                             result = ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;
                             breakCicle = true;
@@ -288,7 +287,7 @@ public class ANG_RiskAssessmentEngine{
             if(risCalAdjcMap.containsKey(reRec) && risCalAdjcMap.get(reRec).ANG_Adjustments__r.size()>0 ){ //validate adjusted REC
 
                 if(acct.accreditationModel == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
-                    ANG_Agency_Risk_Calculation__c arc = riskCalcRulesMulticountryMap.get('YES');
+                    ANG_Agency_Risk_Calculation__c arc = riskCalcRulesMulticountryMap.get(ANG_Risk_Helper.ADJ_YES);
                     if(failRiskAssessmentMulticountry(acct, accParentOccs, arc, multicountryRemittancesMap)){
                         result = ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;
                         breakCicle = true;
