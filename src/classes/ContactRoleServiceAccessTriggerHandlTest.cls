@@ -220,7 +220,6 @@ public class ContactRoleServiceAccessTriggerHandlTest {
     }
 
     @IsTest
-    @IsTest
     private static void uniqueKeyUpdatePositiveTest() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'testContactRoleServiceAccessTrigger@test.com'];

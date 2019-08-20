@@ -2,11 +2,11 @@
     <aura:attribute name="contact" type="Contact" default="{ 'sobjectType': 'Contact' }" />
     <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account' }" />
     <aura:attribute name="invitation" type="SObject" default="{ 'sobjectType': 'Invitation__c' }" />
-    <aura:attribute name="jobFunctionOptions" type="String[]" />    
+    <aura:attribute name="jobFunctionOptions" type="List" />
     <aura:attribute name="contactLabels" type="Map" />
     <aura:attribute name="actors" type="List" default="[]" />
     <aura:attribute name="allowedDomains" type="Object" default=""/>
-	<aura:attribute name="emailInputError" type="string" default="" />
+    <aura:attribute name="emailInputError" type="string" default="" />
     <aura:attribute name="newUser" type="boolean" default="false" />
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
     <aura:attribute name="sendNotification" type="Boolean" default="false"/>
@@ -109,14 +109,14 @@
                     <label class="slds-form-element__label inblock">{!v.contactLabels.Membership_Function__c}</label>
                     <ui:inputSelect multiple="true" class="multiple required functionsSelect" aura:id="membershipFunction" value="{!v.invitation.Job_Function__c}" >
                         <aura:iteration items="{!v.jobFunctionOptions}" var="function" indexVar="index" aura:id="function">
-                            <ui:inputSelectOption text="{!function}" label="{!function}" />
+                            <ui:inputSelectOption text="{!function.value}" label="{!function.label}" /><!-- value="true" -->
                         </aura:iteration>
                     </ui:inputSelect>
                     <ul aura:id="jobHelp inblock">
                         <li class="slds-form-element__help inblock">{!$Label.c.GADM_User_Invitation_job_function_help_text}</li>
                     </ul>
                 </div>
-				
+
                 <aura:if isTrue="{! v.userType == 'Standard'}">
                     <div class="slds-col--padded  slds-size--1-of-1">
                         <label class="slds-form-element__label">{!$Label.c.GADM_Power_User}</label>
@@ -128,14 +128,14 @@
 
                 <div aura:id="phoneContainer" class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
                     <label class="slds-form-element__label">
-                        {!v.contactLabels.Phone}
+                            {!v.contactLabels.Phone}
                     </label>
                     <ui:inputPhone aura:id="contactPhone" value="{!v.invitation.Business_Phone__c}" class="phoneFormat slds-input" updateOn="keyup" keyup="{!c.validateNumber}" />
                 </div>
 
                 <div aura:id="mobilePhoneContainer" class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
                     <label class="slds-form-element__label">
-                        {!v.contactLabels.MobilePhone}
+                            {!v.contactLabels.MobilePhone}
                     </label>
                     <ui:inputPhone aura:id="contactMobilePhone" value="{!v.invitation.Mobile_Phone__c}" class="mobileFormat slds-input" updateOn="keyup" keyup="{!c.validateNumber}" />
                 </div>

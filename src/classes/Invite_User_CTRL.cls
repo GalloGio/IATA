@@ -1,7 +1,7 @@
 public without sharing class Invite_User_CTRL {
-	@AuraEnabled 
-    public static user getCurrenthUserInfo(){     
-      	User oUser = [select id, UserType FROM User Where id =: userInfo.getUserId()];
+    @AuraEnabled
+    public static user getCurrenthUserInfo(){
+        User oUser = [select id, UserType FROM User Where id =: userInfo.getUserId()];
         return oUser;
     }
     @AuraEnabled
@@ -39,7 +39,7 @@ public without sharing class Invite_User_CTRL {
             try{
                 actorsList = (List<Account>)JSON.deserialize(actors, List<Account>.class);
             }catch(JSONException e) {
-               //JSON error
+                //JSON error
             }
 
             if(actorsList != null && !actorsList.isEmpty()) {
@@ -84,19 +84,19 @@ public without sharing class Invite_User_CTRL {
             invitation = (Invitation__c)JSON.deserialize(invitationStr, Invitation__c.Class);
 
         } catch (Exception ex){}
-        
+
         try{
             if(contact == null && invitation != null){
                 insert invitation;
                 invitation = [SELECT Id, Salutation__c, Email__c, Last_Name__c, First_Name__c FROM Invitation__c WHERE Id =: invitation.Id];
                 return sendEmail(true, invitation);
             } else if (contact != null) {
-           		return sendEmail(false, contact);
+                return sendEmail(false, contact);
             }
             return invitationStr;
-            } catch(Exception e) {
-    			return 'err:'+e.getMessage();
-		}
+        } catch(Exception e) {
+            return 'err:'+e.getMessage();
+        }
     }
 
     private static string sendEmail(boolean newUser, SObject obj){
@@ -106,7 +106,7 @@ public without sharing class Invite_User_CTRL {
         string emailAddress = '';
         String userName = '';
         Id whatId = null;
-        
+
         if (newUser){
             emailTemplate = 'Invite_user_new';
             linkSuffix = '/login/SelfRegister?serviceName=GADM&token='+obj.get('Id');
@@ -136,8 +136,8 @@ public without sharing class Invite_User_CTRL {
         Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(et.Id, UserInfo.getUserId(), whatId);
         string link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + linkSuffix;
 
-		mail.setToAddresses(new List<string>{emailAddress});
-	    mail.setSaveAsActivity(false);
+        mail.setToAddresses(new List<string>{emailAddress});
+        mail.setSaveAsActivity(false);
         mail.setUseSignature(false);
         mail.setTreatTargetObjectAsRecipient(false);
         string body = mail.getHtmlBody();
@@ -161,13 +161,13 @@ public without sharing class Invite_User_CTRL {
             return e.getMessage();
         }
     }
-    @AuraEnabled 
+    @AuraEnabled
     public static List<Account> getUserAccounts(){
         Id userId = UserInfo.getUserId();
         return Contact_Roles_Helper.getUserAccounts(userId);
     }
     @AuraEnabled
-    public static List<String> getContactJobFunctionValues() {
+    public static List<OneId_RegistrationProcessController.PicklistEntry> getContactJobFunctionValues() {
         return OneId_RegistrationProcessController.getContactJobFunctionValues();
     }
     @AuraEnabled
@@ -181,40 +181,40 @@ public without sharing class Invite_User_CTRL {
         boolean emailAddressAvailable = OneId_RegistrationProcessController.checkIsUsernameIsAvailableInGlobalSalesforce(email, existingContacts);
         boolean contactExists = existingContacts.size() > 0;
         boolean contactOrUserExists = !emailAddressAvailable || contactExists;
-        
+
         UserInformationWrapper wrapper = new UserInformationWrapper(
-        	contactExists ? existingContacts[0] : null, new Invitation__c(Email__c=email)
+                contactExists ? existingContacts[0] : null, new Invitation__c(Email__c=email)
         );
-        
+
         wrapper.showNotifyButton = !(!emailAddressAvailable && !contactExists);
-              
+
         wrapper.createNewInvitation = !contactOrUserExists;
         if(emailAddressAvailable && contactExists){
             Contact con = existingContacts[0];
             Account acc = [SELECT Id, Top_Parent__c	FROM Account WHERE Id =: con.AccountId][0];
-        	Invitation__c invitation = new Invitation__c();
+            Invitation__c invitation = new Invitation__c();
             invitation.AccountId__c = acc.Top_Parent__c != null ? acc.Top_Parent__c : con.AccountId;
             invitation.Business_Fax__c = con.Fax;
             invitation.Business_Phone__c = con.Phone;
             invitation.Email__c = con.Email;
             invitation.First_Name__c = con.FirstName;
             invitation.Last_Name__c = con.LastName;
-            
+
             invitation.Job_Title__c = con.Title;
             invitation.Mobile_Phone__c = con.MobilePhone;
             invitation.Salutation__c = con.Salutation;
-            wrapper.invitation = invitation;    
-        	wrapper.contact = null;
+            wrapper.invitation = invitation;
+            wrapper.contact = null;
         }
-        
+
         if(!emailAddressAvailable && !contactExists){
             //internal user
-            wrapper.invitation = null;    
-        	wrapper.contact = null;
+            wrapper.invitation = null;
+            wrapper.contact = null;
         }
 
         return wrapper;
-}
+    }
     public class UserInformationWrapper{
         @AuraEnabled
         public boolean createNewInvitation{get;set;}

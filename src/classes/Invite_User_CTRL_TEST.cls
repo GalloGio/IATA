@@ -361,7 +361,7 @@ public class Invite_User_CTRL_TEST {
 
         Test.startTest();
 
-        List<String> jobValues = new List<String>();
+        List<OneId_RegistrationProcessController.PicklistEntry> jobValues = new List<OneId_RegistrationProcessController.PicklistEntry>();
         Map<String, String> contactValues = new Map<String, String>();
 
         System.runAs(testUser){
