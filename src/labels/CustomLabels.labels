@@ -37459,6 +37459,14 @@ Remittance date: {4}
 ***Above details might change after the creation of the case, Please refer to the case mentioned for accurate information.</value>
     </labels>
     <labels>
+        <fullName>SIDRA_GE_Info</fullName>
+        <categories>ANG, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SIDRA_GE_Info</shortDescription>
+        <value>This SIDRA case is related to Multicountry Agent</value>
+    </labels>
+    <labels>
         <fullName>SIS</fullName>
         <categories>Portal, S10</categories>
         <language>en_US</language>
