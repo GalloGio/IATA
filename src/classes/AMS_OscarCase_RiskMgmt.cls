@@ -103,14 +103,16 @@ public class AMS_OscarCase_RiskMgmt {
 
 			Id caseHOId = c.Account.ParentId == null ? c.AccountId : c.Account.Parent.ParentId == null ? c.Account.ParentId : c.Account.Parent.ParentId;
 
-			casePerParentAcc.put(caseHOId, c.Id);
-    		parentAccPerCase.put(c.Id, caseHOId);
-			//get all the hierarchy account selections for the respective case
-    		if(c.Hierarchy_Account_Selections__r.isEmpty()){
-    			toCreateHierarchySelection.add(c);
-    		} else {
-    			hierarchySelectionPerCase.put(c.Id, c.Hierarchy_Account_Selections__r);
-    		}
+			if(caseHOId != null) {
+				casePerParentAcc.put(caseHOId, c.Id);
+				parentAccPerCase.put(c.Id, caseHOId);
+				//get all the hierarchy account selections for the respective case
+				if(c.Hierarchy_Account_Selections__r.isEmpty()){
+					toCreateHierarchySelection.add(c);
+				} else {
+					hierarchySelectionPerCase.put(c.Id, c.Hierarchy_Account_Selections__r);
+				}
+			}
 		}
 
 		//create missing hierarchy account selections for each case

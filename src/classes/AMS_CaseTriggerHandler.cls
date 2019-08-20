@@ -34,6 +34,7 @@ public class AMS_CaseTriggerHandler {
             Map<Id,Id> accntFromCases = new Map<Id,Id>();
         	
         	for(Case c : cases){
+				if(c.AccountId != null)
         		accntFromCases.put(c.AccountId, c.Id);
         	}
     		
