@@ -81,7 +81,7 @@ public without sharing class RemoteInvocationTriggerHandler {
         }
 
         if(!remoteInvocations.isEmpty()){
-            if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0) {
+            if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
                 System.enqueueJob(new PlatformEvents_Helper(remoteInvocations, 'RemoteInvocation__e', 'Remote_Invocation__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
             } else {
                 PlatformEvents_Helper.publishEvents(remoteInvocations, 'RemoteInvocation__e', 'Remote_Invocation__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);

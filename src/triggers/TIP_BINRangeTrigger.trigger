@@ -10,7 +10,7 @@ trigger TIP_BINRangeTrigger on TIP_BIN_Range__c (after delete, after insert, aft
 	
 	if (Trigger.isAfter) {
         //Publish the platform events
-		if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0) {
+		if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
 			System.enqueueJob(new PlatformEvents_Helper((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Product_Bin_Range__e', 'TIP_BIN_Range__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
 		} else {
     		PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Product_Bin_Range__e', 'TIP_BIN_Range__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
