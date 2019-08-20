@@ -376,11 +376,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Email_Status__c</field>
-            <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Region_10__c</field>
             <table>Contact</table>
         </columns>
@@ -627,11 +622,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>IRMS_Member__c</field>
-            <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Email_Status_Update__c</field>
             <table>Contact</table>
         </columns>
         <columns>
