@@ -3787,6 +3787,14 @@ Payment required on receipt of this Payment Advice
         <shortDescription>Working Areas</shortDescription>
         <value>Working Areas</value>
     </labels>
+    <labels>
+        <fullName>csp_AccountRelocateSuccess</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Relocation</shortDescription>
+        <value>Account relocated successfully.</value>
+    </labels>
 	<labels>
         <fullName>CSP_MyCases</fullName>
         <language>en_US</language>

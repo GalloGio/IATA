@@ -12,6 +12,7 @@ import { navigateToPage } from 'c/navigationUtils';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 import goToPrivacyPortal from '@salesforce/apex/PortalProfileCtrl.goToPrivacyPortal';
+import getMapHierarchyAccounts from '@salesforce/apex/PortalProfileCtrl.getMapHierarchyAccounts';
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
@@ -20,6 +21,7 @@ import Area from '@salesforce/label/c.csp_WorkingAreas';
 import ServicesTitle from '@salesforce/label/c.CSP_Services_Title';
 import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
 import CompleteField from '@salesforce/label/c.csp_CompleteField';
+import RelocateAccount from '@salesforce/label/c.ISSP_Relocate_Contact';
 
 import IdCardNumber from '@salesforce/label/c.ISSP_IDCard_VER_Number';
 import IdCardValidTo from '@salesforce/label/c.ISSP_IDCard_Valid_To';
@@ -50,6 +52,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api services;
     @api showfunction;
 
+    @api relatedAccounts = [];
+
     @api isForEdit = false;
 
     @track isLoading = true;
@@ -71,14 +75,15 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track contactTypeStatus = [];
 
     @track changeUserPortalStatus = false;
+    @track openRelocateAccount = false;
 
     @track hasError = false;
-
+    @track canRelocate = true;
     @api
     get fields(){ return this.fieldsLocal;}
     set fields(value){ this.fieldsLocal = value;}
 
-    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area, ServicesTitle, InvalidValue, CompleteField, IdCardNumber, IdCardValidTo, remove, contact, CSP_Error_Message_Mandatory_Fields_Contact,LastLoginDate};
+    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area, ServicesTitle, InvalidValue, CompleteField, IdCardNumber, IdCardValidTo, remove, contact, CSP_Error_Message_Mandatory_Fields_Contact,LastLoginDate,RelocateAccount};
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -140,6 +145,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         isAdmin().then(result => {
             this.showEdit = result && this.showEdit;
         });
+
+        this.checkCanRelocate();
     }
 
     get accessibilityGetter() {
@@ -515,7 +522,12 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.listSelected = fieldValue;
 
     }
-
+    
+    opensRelocateAccount() {
+        console.log('Open Modal');
+        this.openRelocateAccount = true;
+    }
+    
     openChangeUserPortalStatus() {
         this.changeUserPortalStatus = true;
     }
@@ -523,12 +535,15 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     closePortalChangeUserStatus() {
         this.removeContact = false;
         this.changeUserPortalStatus = false;
+        this.openRelocateAccount = false;
+
     }
 
     closePortalChangeUserStatusWithRefresh() {
         this.dispatchEvent(new CustomEvent('refreshview'));
         this.removeContact = false;
         this.changeUserPortalStatus = false;
+        this.openRelocateAccount = false;
     }
 
     get canSave(){
@@ -564,5 +579,16 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         });
     }
 
-
+    checkCanRelocate(){
+        let contactId = this.recordId;
+        getMapHierarchyAccounts({ contactId: contactId })
+            .then(result => {
+                
+                this.relatedAccounts = JSON.parse(JSON.stringify(result));
+                console.log(this.relatedAccounts );
+                if(this.relatedAccounts === undefined || this.relatedAccounts === null || this.relatedAccounts.length === 0){
+                    this.canRelocate = false;
+                }
+            });
+    }
 }

@@ -11,6 +11,11 @@
                                      remove-contact={removeContact}></c-portal-change-user-status>
     </template>
 
+    <template if:true={openRelocateAccount}>
+        <c-portal-relocate-account record-id={recordId} onclosemodal={closePortalChangeUserStatus}
+            onrefreshview={closePortalChangeUserStatusWithRefresh} related-accounts={relatedAccounts}></c-portal-relocate-account>
+    </template>
+
     <c-portal-profile-section class-name={sectionClass} header-class={headerClass}>
         <span slot="sectionTitle">{sectionTitle}</span>
         <span slot="sectionActions">
@@ -105,6 +110,15 @@
                                                                 <lightning-output-field class="labelValue textValue"
                                                                     field-name={field.fieldName}>
                                                                 </lightning-output-field>
+                                                                <template if:false={isForEdit}>
+
+                                                                    <lightning-icon icon-name="utility:rotate"
+                                                                        size="x-small" if:true={canRelocate}
+                                                                        class="darkBlueIcon cursorPointer stickToField"
+                                                                        title={labels.RelocateAccount}
+                                                                        onclick={opensRelocateAccount}>
+                                                                    </lightning-icon>
+                                                                </template>
                                                                 <template if:false={isForEdit}>
                                                                     <span class="changeUserStatusButton">
                                                                         <lightning-icon icon-name="utility:custom_apps"
