@@ -83,7 +83,7 @@ private static List<Account> searchRelatedAccounts(String searchTerm) {
 	//place user's Iata code as first element in the list
 	if(allCodes.size() > 1) {
 		for(Account act : allCodes) {
-			if(act.id == currentAccount.id) {
+			if(act.id == currentAccount.id && !reorderedCodes.isEmpty()) {
 				reorderedCodes.add(0,act);
 			}else{
 				reorderedCodes.add(act);
