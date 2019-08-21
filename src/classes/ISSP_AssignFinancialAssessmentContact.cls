@@ -8,6 +8,17 @@ public class ISSP_AssignFinancialAssessmentContact {
     
     private String newIFAPContact;
 
+    public Boolean isNewPortal {
+    get {
+        if(isNewPortal == null) {
+            isNewPortal = CSP_Utils.isNewPortalActive();
+         }
+         
+        return isNewPortal;
+    }
+    set;
+    }
+
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
@@ -39,9 +50,16 @@ public class ISSP_AssignFinancialAssessmentContact {
         
          currentFinContact();
     }
-    
+
     public PageReference getReturnPage(){
+        if (!isNewPortal) {
             return new PageReference('/ISSP_ContactList?mid=M4S1' + commParam);
+        } else {
+            String url = CSP_Utils.redirectfromPortalHeader('company-profile');
+            url += '?tab=contact';
+            return new PageReference(url);
+        }
+            
     }
     
     public Contact currentFinContact() {

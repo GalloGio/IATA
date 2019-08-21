@@ -35,7 +35,9 @@ private class AirlineInputHandlerTest {
                                  IATA_ISO_Country__c=isoCountry.id,
                                  recordtypeID = hqrt,
                                  IATACode__c ='1234567',
-                                 Type = 'IATA Cargo Agent',
+                                 Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+                                 Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+                                 Sector__c = AMS_Utils.SECTOR_PASSENGER,
                                  billingCountry = 'CH',Location_Type__c = 'AO');
         insert a;
         

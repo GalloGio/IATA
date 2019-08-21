@@ -24,6 +24,8 @@ global class AMS_ValidateAccSpecialChars_Batch implements Database.Batchable<sOb
 	global AMS_Trigger_Execution_Manager__c runningUserBackup;
 	global Boolean userAlreadyExisted = false;
 	global Boolean toUpdate = false;
+	//WMO-538
+	global String regEx;
 
 	public static List<Id> countriesIds{
 		get {
@@ -66,11 +68,19 @@ global class AMS_ValidateAccSpecialChars_Batch implements Database.Batchable<sOb
 		WHERE RecordType.DeveloperName = \'IATA_Agency\'		
 	*/
 	global AMS_ValidateAccSpecialChars_Batch(Boolean updateRecords) {
+		this(updateRecords, null);
+		//WMO-538
+		Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
+		this.regEx = regExCS != null && String.isNotBlank(regExCS.Text_1__c) ? regExCS.Text_1__c : '^[\\x00-\\x7F\\xA0-\\xFF]+$';		
+	}
+
+	global AMS_ValidateAccSpecialChars_Batch(Boolean updateRecords, String regEx) {
 
 		this.errors = new List<String>();
 		this.countriesInfo = new Map<String,Integer>();	
 		this.countriesErrors = new Map<String,Integer>();	
 		this.toUpdate = updateRecords == null ? false : updateRecords;
+		this.regEx = regEx;
    		
 		//Check if running user have the triggers exception turned "ON", if not we create an entry if already exist we set it to bypass all triggers
 		List<AMS_Trigger_Execution_Manager__c> exceptionUsers = [SELECT Id, Name, SetupOwnerId, All__c, AMS_Agency_Ownership_c_Triggers__c, Case_Triggers__c, Account_Triggers__c 
@@ -165,7 +175,7 @@ global class AMS_ValidateAccSpecialChars_Batch implements Database.Batchable<sOb
 				
 				System.debug('validateAccounts - Initial - error: ' + error);
 				//If errors found let's try to clean up
-				List<String> resChange = AMS_Utils.cleanAndUpdateSpecialChars(a, AMS_Utils.ACCOUNT_FIELDS_TO_VALIDATE, this.toUpdate);
+				List<String> resChange = AMS_Utils.cleanAndUpdateSpecialChars(a, AMS_Utils.ACCOUNT_FIELDS_TO_VALIDATE, this.toUpdate, this.regEx);
 				
 				for(String s : resChange){
 					hasChanged = true;
@@ -178,7 +188,7 @@ global class AMS_ValidateAccSpecialChars_Batch implements Database.Batchable<sOb
 
 				//Validate again after cleasing the special chars
 				error = '';
-				res = AMS_Utils.validateCharacters(a, AMS_Utils.ACCOUNT_FIELDS_TO_VALIDATE);
+				res = AMS_Utils.validateCharacters(a, AMS_Utils.ACCOUNT_FIELDS_TO_VALIDATE, this.regEx);
 				for(String s : res){
 					error += (error == '' ? s : ', '+s);
 				}

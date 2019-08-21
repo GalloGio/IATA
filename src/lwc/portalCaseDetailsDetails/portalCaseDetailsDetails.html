@@ -8,25 +8,14 @@
             <!-- Case details accordion -->
             <div>
                 <div class="slds-p-around_medium customCardTitleBox cursorPointer" onclick={toggleCaseDetailsSection}>
-                  <lightning-icon data-caseicon class="darkBlueIcon" if:false={showCaseDetailsSection}
+                    <lightning-icon data-caseicon class="darkBlueIcon arrowExpanded" if:false={showCaseDetailsSection}
                         icon-name="utility:chevronright" size="xx-small"></lightning-icon>
                     <span class="slds-p-left_large">{labels.CaseDetails}</span>
                 </div>
-                <div data-casediv class="slds-p-around_medium collapsed">
+                <div data-casediv class="slds-p-around_medium">
                     <div class="slds-grid slds-wrap slds-p-horizontal_large">
-                        <!-- ROW 1 -->
-                        <div if:true={hasTopic}
-                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
-                            <span class="grey">{labels.Topic__c}</span><br />
-                            <span>{caseDetails.Topic__c}</span>
-                        </div>
-                        <div if:true={hasSubtopic}
-                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
-                            <span class="grey">{labels.Subtopic__c}</span><br />
-                            <span>{caseDetails.Subtopic__c}</span>
-                        </div>
 
-                        <!-- ROW 2 -->
+                        <!-- ROW 1 -->
                         <div if:true={hasRegion}
                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
                             <span class="grey">{labels.Region__c}</span><br />
@@ -35,10 +24,10 @@
                         <div if:true={hasCountryConcerned}
                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
                             <span class="grey">{labels.Country_concerned__c}</span><br />
-                            <span>{caseDetails.Country_concerned__c}</span>
+                            <span>{caseDetails.Country_concerned_by_the_query__c}</span>
                         </div>
 
-                        <!-- ROW 3 -->
+                        <!-- ROW 2 -->
                         <div if:true={hasAccountConcerned}
                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
                             <span class="grey">{labels.RelatedAccount}</span><br />
@@ -50,12 +39,77 @@
                             <span>{caseDetails.Type_of_case_Portal__c}</span>
                         </div>
 
-                        <!-- ROW 4 -->
+                        <!-- ROW 3 -->
                         <div if:true={hasDescription}
-                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
                             <span class="grey">{labels.Description}</span><br />
                             <span>{caseDetails.Description}</span>
                         </div>
+
+
+
+                        <!-- ROW 5 -->
+                        <div if:true={hasAccount}
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
+                            <span class="grey">Account Name</span><br />
+                            <span if:true={optionBuilder}>
+                                <span if:true={optionBuilder.isAdmin} onclick={openCompanyProfile} class="linkColor">
+                                    {caseDetails.Account.Name}
+                                </span>
+                                <span if:false={optionBuilder.isAdmin}>
+                                    {caseDetails.Account.Name}
+                                </span>
+                            </span>
+                        </div>
+
+                        <!-- ROW 6 -->
+                        <div if:true={hasContact}
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
+                            <span class="grey">Contact Name</span><br />
+                            <span if:true={optionBuilder}>
+                                <span if:true={optionBuilder.isAdmin} onclick={openCompanyProfileContactTab}
+                                    class="linkColor">
+                                    <span>{caseDetails.Contact.FirstName} {caseDetails.Contact.LastName}</span>
+                                </span>
+                                <span if:false={optionBuilder.isAdmin}>
+                                    <span>{caseDetails.Contact.FirstName} {caseDetails.Contact.LastName}</span>
+                                </span>
+                            </span>
+                        </div>
+			<!-- ROW 5 -->
+                        <div if:true={hasSurveyLink}
+                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
+                            <span class="grey">{labels.ISSP_Survey}</span><br />
+                            <a class="text-blue" href={surveyLink} target="_blank">{labels.Open}</a>
+                        </div>
+
+                        <!-- ROW 7 Display PDF -->
+                        <div if:true={getDisplayPDF}
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
+                            <img src={pdfImage}>
+
+                            <span if:true={getPDF1}>
+                                <a class="linkColor" href={getPDFLink1} target="_new">
+                                    {labels.ISSP_AMS_Download_PDF_Copy} </a>
+                            </span>
+
+                            <span if:true={getPDF2_3}>
+                                <a class="linkColor" href={getPDFLink2_3} target="_new">
+                                    {labels.ISSP_AMS_Download_PDF_NOC} </a>
+                            </span>
+
+                            <span if:true={getPDF4}>
+                                <a class="linkColor" href={getPDFLink4} target="_new">
+                                    {labels.ISSP_AMS_Download_PDF_Copy} </a>
+                            </span>
+
+                            <span if:true={getPDF5}>
+                                <a class="linkColor" href={getPDFLink5} target="_new">
+                                    {labels.ISSP_AMS_Download_PDF_Copy} </a>
+                            </span>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
