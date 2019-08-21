@@ -16652,7 +16652,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1 ProgressBar</shortDescription>
-        <value>A. Select Agency Type &amp; Location</value>
+        <value><![CDATA[<span class="progress-tab-step">A</span>]]>Select Agency Type &amp; Location</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_ProgressBar_New</fullName>
@@ -16732,7 +16732,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step2 ProgressBar</shortDescription>
-        <value>B. Review Country Requirements</value>
+        <value><![CDATA[<span class="progress-tab-step">B</span>]]>Review Country Requirements</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_3_1_Title</fullName>
@@ -17579,7 +17579,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 ProgressBar</shortDescription>
-        <value>C. Complete Application Form</value>
+        <value><![CDATA[<span class="progress-tab-step">C</span>]]>Complete Application Form</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Save_Anytime</fullName>
@@ -17603,7 +17603,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step4 ProgressBar</shortDescription>
-        <value>D. Upload Files</value>
+        <value><![CDATA[<span class="progress-tab-step">D</span>]]>Upload Files</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step4_Upload_Continue</fullName>
@@ -17635,7 +17635,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step5 ProgressBar</shortDescription>
-        <value>E. Submit to IATA</value>
+        <value><![CDATA[<span class="progress-tab-step">E</span>]]>Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ProgressBar_CNS</fullName>
