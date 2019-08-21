@@ -145,8 +145,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         isAdmin().then(result => {
             this.showEdit = result && this.showEdit;
         });
-
-        this.checkCanRelocate();
+		
+		if( this.objectName=='Contact')
+			this.checkCanRelocate();
     }
 
     get accessibilityGetter() {
