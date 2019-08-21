@@ -346,7 +346,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 }
             }
 
-            Comm_User_Helper.addDefaultAppRights(con,con.Account);
+            //this does not fit in for bucket account scenario, should be handled on L2 registration?
+            //Comm_User_Helper.addDefaultAppRights(con,con.Account);
 
             return userId;
 

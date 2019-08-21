@@ -77,9 +77,11 @@
                                         </div>
                                     </lightning-layout-item>
                                     <lightning-layout-item size="12">
-                                        <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                            <input type="text" data-id="firstName" name="firstName" value={registrationForm.firstName} placeholder=" " required class="slds-input"
-                                                   onkeyup={handleInputValueChange} onfocusout={handleInputFocusOut} />
+                                        <div data-id="firstNameDiv" class="slds-form-element">
+                                            <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                                <input type="text" data-id="firstName" name="firstName" value={registrationForm.firstName} placeholder=" " required class="slds-input"
+                                                       onkeyup={handleInputValueChange} onfocusout={handleInputFocusOut} />
+                                            </div>
                                         </div>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-large" size="12">
@@ -94,9 +96,11 @@
                                         </div>
                                     </lightning-layout-item>
                                     <lightning-layout-item size="12">
-                                        <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                            <input type="text" data-id="lastName" name="lastName" value={registrationForm.lastName} placeholder=" " required class="slds-input"
-                                                   onkeyup={handleInputValueChange} onfocusout={handleInputFocusOut} />
+                                        <div data-id="lastNameDiv" class="slds-form-element">
+                                            <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                                <input type="text" data-id="lastName" name="lastName" value={registrationForm.lastName} placeholder=" " required class="slds-input"
+                                                       onkeyup={handleInputValueChange} onfocusout={handleInputFocusOut} />
+                                            </div>
                                         </div>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-large" size="12">
@@ -131,10 +135,8 @@
                                     </lightning-layout-item>
                                     <lightning-layout-item size="12">
                                         <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                            <input type="text" data-id="phone" name="phone" placeholder=" " class="phoneFormat slds-input"
+                                            <input data-id="phone" name="phone" class="phoneFormat slds-input" type="tel"
                                                    onkeyup={handleInputValueChange} onfocusout={handleInputFocusOut} value={registrationForm.phone}/>
-
-                                            <!-- <input type="tel" value="" class="phoneFormat slds-input"/> -->
                                         </div>
                                     </lightning-layout-item>
                                     <lightning-layout-item padding="around-large" size="12">
@@ -157,7 +159,8 @@
                                                                     variant="label-hidden"
                                                                     value={registrationForm.sector}
                                                                     options={sector.options}
-                                                                    onchange={handleSectorChange}>
+                                                                    onchange={handleSectorChange}
+                                                                    message-when-value-missing=" ">
                                                 </lightning-combobox>
                                             </div>
                                         </lightning-layout-item>
@@ -182,7 +185,8 @@
                                                                     variant="label-hidden"
                                                                     value={registrationForm.extraChoice}
                                                                     options={extraQuestion.options}
-                                                                    onchange={handleExtraChoiceChange}>
+                                                                    onchange={handleExtraChoiceChange}
+                                                                    message-when-value-missing=" ">
                                                 </lightning-combobox>
                                             </div>
                                         </lightning-layout-item>
@@ -207,7 +211,8 @@
                                                                     variant="label-hidden"
                                                                     value={registrationForm.category}
                                                                     options={category.options}
-                                                                    onchange={handleCategoryChange}>
+                                                                    onchange={handleCategoryChange}
+                                                                    message-when-value-missing=" ">
                                                 </lightning-combobox>
                                             </div>
                                         </lightning-layout-item>
@@ -245,7 +250,7 @@
                                                     <lightning-input type="checkbox" variant="label-hidden" checked={registrationForm.termsAndUsage} onchange={handleTouChange}></lightning-input>
                                                 </div>
                                             </div>
-                                            <div class="text-small" >
+                                            <div class="text-small">
                                                 <lightning-formatted-rich-text value={labels.TouLabel} class="text-small text-gray"></lightning-formatted-rich-text>
                                             </div>
                                         </div>
@@ -258,7 +263,7 @@
                                             <lightning-button disabled data-id="submitButton" class="containedButtonDisabled" onclick={handleSubmit} label={labels.SubmitLabel}></lightning-button>
                                             <div style="min-height:40px;">
                                                 <div if:true={displaySubmitError}>
-                                                    <div class="slds-form-element__help">{errorMessage}</div>
+                                                    <div class="slds-form-element__help" style="padding:5px; text-align:center;">{errorMessage}</div>
                                                 </div>
                                             </div>
                                         </div>

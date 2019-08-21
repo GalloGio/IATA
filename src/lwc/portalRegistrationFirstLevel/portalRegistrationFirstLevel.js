@@ -22,9 +22,11 @@ import isGuest                                  from '@salesforce/user/isGuest';
 /* ==============================================================================================================*/
 /* External Resources
 /* ==============================================================================================================*/
+import PhoneFormatter16                         from '@salesforce/resourceUrl/PhoneFormatter16';
 import PhoneFormatter                           from '@salesforce/resourceUrl/InternationalPhoneNumberFormat';
 import PhoneFormatterS                          from '@salesforce/resourceUrl/InternationalPhoneNumberFormatS';
 import jQuery                                   from '@salesforce/resourceUrl/jQuery172';
+import jquery321minStandard                     from '@salesforce/resourceUrl/jquery321minStandard';
 
 /* ==============================================================================================================*/
 /* Custom Labels
@@ -53,6 +55,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     @track displayContactForm = false;
     @track displayTermsAndUsage = false;
     @track userCountry = "";
+    @track userCountryCode = "";
     @track isSanctioned = false;
     @track isLoading = true;
     @track config = {};
@@ -75,14 +78,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     @track isFrozen = false;
     @track countryOptions = [];
     @track languageOptions = [];
-    @track phoneInitialized = false;
+    //@track phoneInitialized = false;
     @track isSelfRegistrationDisabled = false;
     @track sector = { label : "", options : [], display : false };
     @track category = { label : "", options : [], display : false };
     @track extraQuestion = { label : "", options : [], display : false };
-
     phoneInputInitialized = false;
     alertIcon = CSP_PortalPath + 'alertIcon.png';
+    @track jsLoaded = false;
 
     _labels = {
         LoginLabel,
@@ -112,8 +115,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         }
     }
 
-    @track
     selectedCustomerType = null;
+    @track
 
     @track selectedMetadataCustomerType = {};
 
@@ -184,7 +187,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             */
         } else if (error) {
             var result = JSON.parse(JSON.stringify(error));
-            console.log('error: ', result);
+            console.log('error: ', error);
         }
     }
 
@@ -194,104 +197,95 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
     connectedCallback() {
 
+
         console.log('isGuest: ', isGuest);
         if(isGuest == false){
             //todo:this shouldnt navigate on community builder!
-            //navigateToPage('/csportal/s/',{});
-                                 //return;
+            navigateToPage('/csportal/s/',{});
+            return;
         }
 
-        let pageParams = getParamsFromPage();
 
-        if(pageParams !== undefined){
-            if(pageParams.email !== undefined){
-                this.registrationForm.email = decodeURIComponent(pageParams.email);
-                this.isEmailFieldReadOnly = true;
-                this.displayContactForm = true;
-            }
-            if(pageParams.language !== undefined){
-                this.registrationForm.language = pageParams.language.toLowerCase();;
-            }
-        }else{
-            //todo: delete this section -> only for testing purpose
-            //this.registrationForm.email = 'test@test.test';
-            //this.isEmailFieldReadOnly = true;
-        }
+        Promise.all([
+            loadScript(this, jQuery),
+            loadScript(this, PhoneFormatter16 + '/PhoneFormatter/build/js/intlTelInput.js'),
+            loadStyle(this, PhoneFormatter16 + '/PhoneFormatter/build/css/intlTelInput.css')
+        ]).then(function(){
+            console.log('jsLoaded');
+            this.jsLoaded = true;
 
-        const RegistrationUtilsJs = new RegistrationUtils();
-        console.log('initialize utils');
-        RegistrationUtilsJs.getUserLocation().then(result=> {
-            this.isSanctioned = result.isRestricted;
-            this.userCountry = result.country;
-            this.registrationForm.country = result.countryId;
-            if(this.isSanctioned == true){
-                //navigate to error page
-                navigateToPage('/csportal/s/restricted-login');
-            }else{
-                //getConfig
-                getConfig().then(result => {
-                    var config = JSON.parse(JSON.stringify(result));
-                    console.log('config: ', config);
-                    this.config = config;
-                    this._renderCountryOptions(config.countryInfo.countryList);
-                    this._renderLanguageOptions(config.languageList);
-                    this.isSelfRegistrationEnabled = config.isSelfRegistrationEnabled;
-                    if(this.isSelfRegistrationEnabled == false){
-                        this.isSelfRegistrationDisabled = true;
-                        this.isLoading = false;
-                        return;
-                    }else{
-                        //check localStorage
-                        console.log('localStorage: ', localStorage);
-                        if (localStorage.length > 0) {
-                            this._restoreState();
-                        }else{
+            const RegistrationUtilsJs = new RegistrationUtils();
+            console.log('initialize utils');
+            RegistrationUtilsJs.getUserLocation().then(result=> {
+                this.isSanctioned = result.isRestricted;
+                this.userCountryCode = result.countryCode;
+                this.userCountry = result.country;
+                this.registrationForm.country = result.countryId;
+                if(this.isSanctioned == true){
+                    //navigate to error page
+                    navigateToPage('/csportal/s/restricted-login');
+                }else{
+
+                    //getConfig
+                    getConfig().then(result => {
+                        var config = JSON.parse(JSON.stringify(result));
+                        console.log('config: ', config);
+                        this.config = config;
+                        this._renderCountryOptions(config.countryInfo.countryList);
+                        this._renderLanguageOptions(config.languageList);
+                        this.isSelfRegistrationEnabled = config.isSelfRegistrationEnabled;
+                        if(this.isSelfRegistrationEnabled == false){
+                            this.isSelfRegistrationDisabled = true;
                             this.isLoading = false;
-                            this._renderEmailInput();
+                            return;
+                        }else{
+                            //check localStorage
+                            console.log('localStorage: ', localStorage);
+                            if (localStorage.length > 0) {
+                                this._restoreState();
+                            }else{
+
+                                let pageParams = getParamsFromPage();
+                                if(pageParams !== undefined){
+                                    if(pageParams.language !== undefined){
+                                        this.registrationForm.language = pageParams.language.toLowerCase();;
+                                    }
+
+                                    if(pageParams.email !== undefined){
+                                        this.registrationForm.email = decodeURIComponent(pageParams.email);
+                                        //this.isEmailFieldReadOnly = true;
+                                        //this.displayContactForm = true;
+                                        //this._initializePhoneInput();
+                                        this._renderEmailInput();
+                                        this.handleNext(null);
+                                        return;
+                                    }
+
+                                }
+
+                                this.isLoading = false;
+                            }
                         }
-                    }
 
 
-                })
-                .catch(error => {
-                    console.log('Error: ', error);
-                    this.isLoading = false;
-                });
-            }
-        });
+                    })
+                    .catch(error => {
+                        console.log('Error: ', JSON.parse(JSON.stringify(error)));
+                        this.isLoading = false;
+                    });
+                }
+            });
+
+        }.bind(this));
 
     }
 
     renderedCallback() {
+        /*
         if (this.phoneInputInitialized) {
             return;
         }
         this.phoneInputInitialized = true;
-        /*
-        Promise.all([
-            loadScript(this, jQuery),
-            loadStyle( this, PhoneFormatter + '/intl-tel-input-master/build/css/intlTelInput.css'),
-            loadStyle(this, PhoneFormatterS + '/intl-tel-input-master/build/css/intlTelInput.css'),
-            loadScript(this, PhoneFormatter + '/intl-tel-input-master/build/js/intlTelInput.js'),
-            loadScript(this, PhoneFormatter + '/intl-tel-input-master/build/js/intlTelInput.min.js'),
-            //loadScript(this, PhoneFormatter + '/intl-tel-input-master/lib/libphonenumber/src/utils.js'),
-            //loadScript(this, PhoneFormatter + '/intl-tel-input-master/lib/libphonenumber/build/utils.js'),
-            loadScript(this, PhoneFormatter + '/intl-tel-input-master/src/js/data.js'),
-            loadScript(this, PhoneFormatter + '/intl-tel-input-master/src/spec/helpers/helpers.js'),
-        ])
-        .then(() => {
-            //this._initializePhoneInput();
-        })
-        .catch(error => {
-            console.log('error: ', error);
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error loading PhoneFormatter',
-                    message: error.message,
-                    variant: 'error',
-                }),
-            );
-        });
         */
     }
 
@@ -366,11 +360,16 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                             if(userInfo.hasExistingContact){
                                 if(userInfo.hasExistingUser){
                                     //todo:navigate to Login Page with email parameter
-                                    //todo: toast event does not work...
+                                    /*
                                     let params = {};
                                     params.email = this.registrationForm.email;
                                     params.redirect = 1;
                                     navigateToPage("/csportal/s/login",params);
+                                    */
+                                    //todo: display message of existing user
+                                    this._showEmailValidationError(true, 'You are trying to register with an existing user,'
+                                        + ' please change the email or click login button to go to the login page');
+                                    this.isLoading = false;
                                 }else{
                                     //todo:show Terms and Usage field to proceed submit
                                     this.displayTermsAndUsage = true;
@@ -405,21 +404,27 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     handleSubmit(event){
         console.log('Form: ', JSON.parse(JSON.stringify(this.registrationForm)));
         this.isLoading = true;
-        /*
+
         const inputValidation = [...this.template.querySelectorAll('input')]
             .reduce((validSoFar, inputCmp) => {
-                        return validSoFar && inputCmp.checkValidity();
+                if(inputCmp.checkValidity() == false){
+                    var inputDiv = this.template.querySelector('[data-id="' + inputCmp.name + 'Div"]');
+                    inputDiv.classList.add('slds-has-error');
+                }
+                return validSoFar && inputCmp.checkValidity();
             }, true);
 
 
-        const selectValidation = [...this.template.querySelectorAll('select')]
-             .reduce((validSoFar, selectCmp) => {
-                 return validSoFar && inputCmp.checkValidity();
+        const selectValidation = [...this.template.querySelectorAll('lightning-combobox')]
+             .reduce((validSoFar, comboboxCmp) => {
+                 if(comboboxCmp.checkValidity() == false){
+                    console.log('invalid amuey');
+                 }
+                 comboboxCmp.reportValidity();
+                 return validSoFar && comboboxCmp.checkValidity();
              }, true);
-        if (!inputValidation || !selectValidation) {
-            this._showSubmitError(true, 'Please fill all the required fields!');
-        }
-        */
+
+
 
         let form = this.registrationForm;
         if(this.userInfo.hasExistingContact){
@@ -437,6 +442,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                     return;
             }
         }
+
+        //todo: validate & add country code to the phone number
 
         //todo: for sector =  other and general public -> must implement logic to retrieve sector & category from the final customerTypeMetadata selection
 
@@ -472,6 +479,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         this.registrationForm[inputName] = inputValue;
         this.template.querySelector('[data-id="' + inputName + '"]').classList.remove('inputBackgroundGrey');
         //todo: if input is required => clear submit error message
+        this.template.querySelector('[data-id="' + inputName + 'Div"]').classList.remove('slds-has-error');
         if(this.displaySubmitError){
             if(event.target.required){
                 this._showSubmitError(false,"");
@@ -606,25 +614,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     /* Helper Methods
     /* ==============================================================================================================*/
 
-    _initializePhoneInput(){
-        console.log('_initializePhoneInput()');
-        /*
-        var country = 'gb'; //this.userCountry;
-        var phoneInput = $('.phoneFormat');
-        console.log('phoneInput: ', phoneInput);
-        if(phoneInput != null){
-            console.log('init!!');
-            phoneInput.intlTelInput({
-                initialCountry: country,
-                preferredCountries: [country],
-                placeholderNumberType : 'FIXED_LINE'
-            });
-            console.log('after init');
-            this.phoneInitialized = true;
-        }
-        */
-    }
-
     _showEmailValidationError(state, message){
         var emailDiv = this.template.querySelector('[data-id="emailDiv"]');
         this.errorMessage = message;
@@ -729,11 +718,30 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             submitButton.classList.add('containedButtonDisabled');
             submitButton.disabled = true;
         }
+        this._initializePhoneInput();
     }
 
     async _renderEmailInput(){
         await (this.template.querySelector('[data-id="emailInput"]'));
         this.handleEmailFocusOut(null);
+    }
+
+    async _initializePhoneInput(){
+
+        await(this.jsLoaded == true);
+        await(this.template.querySelector('[data-id="phone"]'));
+
+        var input = this.template.querySelector('[data-id="phone"]');
+        var countryCode = this.userCountryCode;
+
+            window.intlTelInput(input,{
+                initialCountry: countryCode,
+                preferredCountries: [countryCode],
+                placeholderNumberType : "FIXED_LINE",
+                //utilsScript: this.utilsPath,
+                /*autoPlaceholder : "aggressive"*/
+            });
+
     }
 
 }
