@@ -1014,7 +1014,6 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
     </fields>
     <fields>
         <fullName>Integration_RecId__c</fullName>
-        <defaultValue>&quot;C&quot;</defaultValue>
         <description>Value for RecId on the Integration process with SAP PI, 3 possible values: A (Addition), C (Change) and D (Termination)</description>
         <externalId>false</externalId>
         <label>Integration RecId</label>

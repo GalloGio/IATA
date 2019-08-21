@@ -40,7 +40,6 @@ public without sharing class AMS_AgencyUpdateHelper {
         Set<Id> agenciesAlreadyUpdated = new Set<Id>();
         Set<Id> agenciesUpdateNotToCreate = new Set<Id>();
         Set<Id> setToRemoveAgencyUpdate = new Set<Id>();
-        Set<Id> setReEvaluateAgencyUpdate = new Set<Id>();
         Set<Id> agenciesValidateError = new Set<Id>();
         Set<Id> agenciesInvalid = new Set<Id>();
         List<Technical_Logs__c> tlogList = new List<Technical_Logs__c>();
@@ -56,8 +55,8 @@ public without sharing class AMS_AgencyUpdateHelper {
                     bToReEvaluateUpdate = true;
                     agencyUpdateToReEvaluate = au2;
                     reEvaluateAgencyUpdate.add(au2);
-                    setReEvaluateAgencyUpdate.add(au2.Account__c);
-                } else if(!bAlreadyUpdated && !au2.Update_Type__c.equalsIgnoreCase('Update_Sent') && !au2.Update_Type__c.equalsIgnoreCase('Invalid') && !au2.Update_Type__c.equalsIgnoreCase('Deleted')){
+                }
+                if(!bAlreadyUpdated && !au2.Update_Type__c.equalsIgnoreCase('Update_Sent') && !au2.Update_Type__c.equalsIgnoreCase('Invalid') && !au2.Update_Type__c.equalsIgnoreCase('Deleted')){
                     bAlreadyUpdated = true;
                     agenciesAlreadyUpdated.add(au.Id);
                 }
