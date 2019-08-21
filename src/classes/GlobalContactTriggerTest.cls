@@ -7,8 +7,8 @@ private class GlobalContactTriggerTest {
     private static Account acc2child;
 
     private static void loadAccounts() {
-        acc1 = new Account(Name='testAccount1', Type='IATA Passenger Sales Agent', Location_Type__c = 'AO');
-        acc2 = new Account(Name='testAccount2', Type='IATA Passenger Sales Agent', Location_Type__c = 'AO');
+        acc1 = new Account(Name='testAccount1', Type='IATA Passenger Sales Agent', Sector__c = AMS_Utils.SECTOR_PASSENGER ,Category__c = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT, Location_Type__c = 'AO');
+        acc2 = new Account(Name='testAccount2', Type='IATA Passenger Sales Agent', Sector__c = AMS_Utils.SECTOR_PASSENGER ,Category__c = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT, Location_Type__c = 'AO');
         list<Account> listAccount = new list<Account>();
         listAccount.add(acc1);
         listAccount.add(acc2);
@@ -277,6 +277,8 @@ private class GlobalContactTriggerTest {
 
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Type = 'IATA Passenger Sales Agent';
+        acc.Sector__c = AMS_Utils.SECTOR_PASSENGER;
+        acc.Category__c = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
         insert acc;
 
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -417,8 +419,8 @@ private class GlobalContactTriggerTest {
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
 
-        Account acc2 = ISSP_ObjectFactory.createNewAccount();
-        insert acc2;
+            Account acc2 = ISSP_ObjectFactory.createNewAccount();
+            insert acc2;
 
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
@@ -429,15 +431,15 @@ private class GlobalContactTriggerTest {
         con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         insert con;
 
-        testUser.ContactId = con.id;
-        testUser.ContactKaviId__c = con.id;
-        insert testUser;
+            testUser.ContactId = con.id;
+            testUser.ContactKaviId__c = con.id;
+            insert testUser;
 
-        con.Preferred_Language__c = 'Italian';
-        con.Accountid = acc2.id;
-        con.User_Portal_Status__c = 'Deactivated';
-        con.status__c = 'Inactive';
-        con.Kavi_User__c = testUser.id;
+            con.Preferred_Language__c = 'Italian';
+            con.Accountid = acc2.id;
+            con.User_Portal_Status__c = 'Deactivated';
+            con.status__c = 'Inactive';
+            con.Kavi_User__c = testUser.id;
 
 		User usr = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 		

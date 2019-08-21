@@ -44,22 +44,10 @@ public with sharing class ISSP_EditPortalServiceAccessExt {
 		        if (serviceAccess.Application_Name__c.contains('Treasury Dashboard')){
 		        	isTD = true;
 		        	List <ISSP_TD_Currencies__c> currencyList = [SELECT Id, Name, Currency_Label__c FROM ISSP_TD_Currencies__c ORDER BY Name];
-			        //map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.Portal_Application_Right__c.fields.getMap();
-			        //list<Schema.PicklistEntry> values = fieldMap.get('CurrencyIsoCode').getDescribe().getPickListValues();
+			     
 			        List<SelectOption> options = new List<SelectOption>();
 			        List<SelectOption> mainOptions = new List<SelectOption>();
-			        /*
-			      	for (Schema.PicklistEntry a : values)
-			      	{ 
-						if(a.isActive() ){
-							system.debug('Label: ' + a.getLabel() + ', Value: ' + a.getValue());
-							options.add(new SelectOption(a.getValue(), a.getLabel() + ' (' + a.getValue() + ')'));
-							if (a.getValue() == 'USD' || a.getValue() == 'EUR'){
-								mainOptions.add(new SelectOption(a.getValue(), a.getLabel() + ' (' + a.getValue() + ')'));
-							}
-						} 
-			      	}
-			      	*/
+			       
 			      	for (ISSP_TD_Currencies__c a : currencyList)
 			      	{ 
 						system.debug('Label: ' + a.Currency_Label__c + ', Value: ' + a.Name);
@@ -96,7 +84,6 @@ public with sharing class ISSP_EditPortalServiceAccessExt {
 			ApexPages.addMessage(msg);
             return null;
         }
-        system.debug('pendingApproval: ' + pendingApproval);
         if (pendingApproval){
         	thisContact.User_Portal_Status__c = 'Approved User';
         	update thisContact;
@@ -106,7 +93,6 @@ public with sharing class ISSP_EditPortalServiceAccessExt {
         	Set <Id> idSet = new Set <Id>();
         	idSet.add(serviceAccess.Contact__c);
         	ISSP_ContactList ctrl = new ISSP_ContactList();
-        	system.debug('calling processMultiplePortalUserStatusChange: ' + idSet);
         	ctrl.processMultiplePortalUserStatusChange(idSet, 'Approved User', 'Active');
         }
         Pagereference p  = new Pagereference ('/' + serviceAccess.Id );

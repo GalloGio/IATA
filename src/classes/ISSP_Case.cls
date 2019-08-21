@@ -126,6 +126,32 @@ public without sharing class ISSP_Case {
 
     public ANG_ProgressBarHelper progressBarHelper{get; set;}
 
+
+    public Boolean isNewPortal {
+    get {
+        if(isNewPortal == null) {
+            isNewPortal = CSP_Utils.isNewPortalActive();
+        }
+        return isNewPortal;
+    }
+    set;
+    }
+
+    public String portalRedirectToUserProfile {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_Contact?id=' + newCase.ContactId + '&mid=M1S2' + (communityName == 'CNS' ? '&CommunityName=' + communityName : '');
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('my-profile');
+            return url;
+        }
+        
+    }
+    set;
+    }
+
+
     public PageReference pageLoad() {
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
@@ -732,6 +758,12 @@ public without sharing class ISSP_Case {
         if (filedName!=null && fieldValueToMapp!=null){
             if ( filedName.equalsIgnoreCase(ISSP_Case.STATUS_FLD_NAME) && fieldValueToMapp.equals('Solution Provided')){
                 returnVal=Label.ISSP_Solution_Provided;
+            }
+            else if (filedName.equalsIgnoreCase(ISSP_Case.STATUS_FLD_NAME) && fieldValueToMapp.equals('Completed')){
+                returnVal='Assigned';
+            }
+            else if (filedName.equalsIgnoreCase(ISSP_Case.STATUS_FLD_NAME) && fieldValueToMapp.equals('Submitted')){
+                returnVal='Submitted';
             }
             /*
             else if (filedName.equalsIgnoreCase('CaseType') && fieldValueToMapp.equals('Solution Provided')){

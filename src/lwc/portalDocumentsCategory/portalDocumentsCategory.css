@@ -1,0 +1,41 @@
+.underLinded {
+    border-bottom: 1px solid #E1E1E1;
+    padding-bottom: 2%;
+    padding-top:2%;
+}​
+
+.noPadding {
+    padding: 0;
+}
+
+.recordDetail {
+    background-color:#f7f8fa;
+    box-shadow: 0px 10px 15px -5px #e2e2e2 inset;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.textInfo {
+    color: #999999;
+    display: block;
+}
+
+.tableStyle {
+    table-layout: fixed;
+}
+
+.firstColInfo {
+    width: 5%;
+}
+
+.secColInfo {
+    width: 9%;
+}
+
+.thirdColInfo {
+    width: 50%;
+}
+
+.fourthColInfo {
+    width: 15%;
+}

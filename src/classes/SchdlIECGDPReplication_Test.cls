@@ -1,6 +1,7 @@
 @isTest
 private class SchdlIECGDPReplication_Test {
     static testMethod void test_AllMethod() {
+	/*
         TestData.ForReplicateAgencyProfiles testData = new TestData.ForReplicateAgencyProfiles();
         System.runAs(testData.user) {
             TestUtilities.createIECGDPReplicationSetting(true);
@@ -9,5 +10,6 @@ private class SchdlIECGDPReplication_Test {
             System.schedule('testBasicScheduledApex', CRON_EXP, new SchdlIECGDPReplication());
             Test.stopTest(); 
         }
+		*/
     }
 }

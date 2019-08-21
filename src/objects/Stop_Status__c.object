@@ -53,8 +53,10 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Status_Bucket__c</fullName>
+        <description>This is a picklist of available case status values. &quot;Escalatd Internally&quot; means the case has been escalated internally and the time shouldn&apos;t be added to time with support. &quot;With Customer&quot; means the case is being reviewed with the customer and the time shouldn&apos;t be added to time with support. &quot;Escalatd Externally&quot; means the case has been escalated externally and the time shouldn&apos;t be added to time with support</description>
         <externalId>false</externalId>
         <label>Status Bucket</label>
         <required>false</required>

@@ -33,7 +33,7 @@ public without sharing class IEC_Invoice_Item_Sel extends Selector {
             'SELECT {0}, Name, Service_Start_Date__c, Service_End_Date__c ' + 
             '     , Invoice__r.Zuora__Account__c, Invoice__r.Zuora__BillingAccount__r.Contact__c ' +
             '     , Invoice__r.Name, Invoice__r.Zuora__External_Id__c, Invoice__r.Zuora__InvoiceDate__c ' +
-            '     , Product__r.SAPProductMaterialNo__c, Product__r.Name, Product__c ' +
+            '     , New_Product__r.SAP_Material_Number__c, New_Product__r.Name, New_Product__c ' +
             '     , Subscription_Product_Charge__r.Product_Rate_Plan_Charge__r.zqu__ZuoraId__c ' +
             'FROM {1} ' + 
             ' WHERE Id IN :setInvoiceItemId ' +
@@ -47,23 +47,5 @@ public without sharing class IEC_Invoice_Item_Sel extends Selector {
         return Database.query(query);
     }
 
-    /****************************************************************************************************
-    Created by Samy 2016-05-20
-        return an Invoice_Item__c by Set of Subscription Zuora Ids
-    ****************************************************************************************************/
-    /*public List<Invoice_Item__c> getInvoiceItemsBySubZId(Set<String> setSubZId)
-    {
-         String query = String.format(
-            'SELECT {0} ' + 
-            'FROM {1} ' + 
-            ' WHERE Subscription_Zuora_ID__c IN :setSubZId ' +
-            '	AND Charge_Name__c NOT IN (\'\'Tax\'\', \'\'Shipping\'\')',
-            new List<String>{
-                String.join(getDefaultFields(), ', '),
-                getSObjectType().getDescribe().getName()
-            }
-        );
-        
-        return Database.query(query);
-    }*/
+    
 }
