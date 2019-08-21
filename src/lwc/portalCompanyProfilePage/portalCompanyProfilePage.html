@@ -189,13 +189,13 @@
     <template if:true={subTab0Active}>
                                 <template if:true={iataInvoicesLoaded}>                                       
                                     <div class="slds-grid slds-wrap slds-m-top_x-small">
-                                        <c-portal-contact-list is-account="false" object-name="Customer_Invoice__c" class="fullWidth"
+                                        <c-portal-invoice-list object-name="Customer_Invoice__c" class="fullWidth"
                                             default-sort="Name" fields-list={invoiceFields}
                                             records={invoices}
                                             recordid={recordid} accountid={accountid}
-                                            objectid={objectid} ongetcontacts={getInvoices} fetching={isFetching}
+                                            objectid={objectid} ongetrecords={getInvoices} fetching={isFetching}
                                             onrefreshview={refreshview} onsearchrecords={searchRecords}>
-                                        </c-portal-contact-list>
+                                        </c-portal-invoice-list>
                                     </div>
                                 </template>
     <template if:false={iataInvoicesLoaded}>
@@ -209,13 +209,13 @@
     <template if:true={subTab1Active}>
                                 <template if:true={efInvoicesLoaded}>                                       
                                     <div class="slds-grid slds-wrap slds-m-top_x-small">
-                                        <c-portal-contact-list is-account="false" object-name="Customer_Invoice__c" class="fullWidth"
+                                        <c-portal-invoice-list is-account="false" object-name="Customer_Invoice__c" class="fullWidth"
                                             default-sort="Name" fields-list={invoiceFields}
                                             records={invoices}
                                             recordid={recordid} accountid={accountid}
-                                            objectid={objectid} ongetcontacts={getInvoices} fetching={isFetching}
+                                            objectid={objectid} ongetrecords={getInvoices} fetching={isFetching}
                                             onrefreshview={refreshview} onsearchrecords={searchRecords}>
-                                        </c-portal-contact-list>
+                                        </c-portal-invoice-list>
                                     </div>
                                 </template>
     <template if:false={efInvoicesLoaded}>
