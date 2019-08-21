@@ -1726,7 +1726,11 @@ public without sharing class ISSP_AMS_Accreditation {
 
             String agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
 
-            newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();
+            if (isMCNewAEAccredited) {
+                newCase.Reason1__c = AMS_Utils.CASE_REASON_AE_MULTICOUNTRY;
+            } else {
+                newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();
+            }
 
             if (newCase.IFAP_Country_ISO__c == 'CN' && sectorValue.startsWith('Travel_Agent')) {
                 if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
@@ -1829,7 +1833,13 @@ public without sharing class ISSP_AMS_Accreditation {
 
                 if ((draftHQCaseExists) || isDupeSAAMCase) {
                     agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
-                    newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();
+
+                    if (isMCNewAEAccredited) {
+                        newCase.Reason1__c = AMS_Utils.CASE_REASON_AE_MULTICOUNTRY;
+                    } else {
+                        newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();
+                    }
+
                     newCase.Case_Language__c = applyLanguage;
                     newCase.IFAP_Country_ISO__c = newIsoCountry;
 
@@ -3424,6 +3434,8 @@ public without sharing class ISSP_AMS_Accreditation {
                 typeOfProcess = 'ANG.NEW.AE.1.0';
             } else if(newCase.Reason1__c == 'Corrections') {
                 typeOfProcess = AMS_Utils.COR;  
+            } else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_AE_MULTICOUNTRY) {
+                typeOfProcess = AMS_UTILS.MCAE;
             }
 
             if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && !isMultiCountry) {
