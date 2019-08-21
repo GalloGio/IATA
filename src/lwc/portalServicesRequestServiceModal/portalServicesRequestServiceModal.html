@@ -294,14 +294,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="slds-modal__container customCreateCaseModal">
+                <div class="slds-modal__container customCreateCaseModal fitToContent">
                     <div class="slds-p-horizontal_large text-xsmall successBoxContainer modalScroll">
                         <p
                             class="slds-align_absolute-center slds-m-horizontal_large slds-p-top_xx-large slds-p-bottom_small">
                             <span>
                                 <lightning-formatted-rich-text value={submitMessage}></lightning-formatted-rich-text>
-                                <a class="blueCustomButtonLink" onclick={navigateToCompanyProfile}> {companyInformationLabel}</a>
-                                 {companyInformationPageLabel}.
+                                &nbsp;
+                                <a class="blueCustomButtonLink text-xsmall" onclick={navigateToCompanyProfile}>{companyInformationLabel}</a>
+                                &nbsp;{companyInformationPageLabel}.
                             </span>
                         </p>
                     </div>

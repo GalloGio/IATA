@@ -36,6 +36,7 @@ import ISSP_Homepage_Portal_Delegates_Administrators from '@salesforce/label/c.I
 import ContactNameLabel from '@salesforce/label/c.CSP_Name';
 import EmailLabel from '@salesforce/label/c.Email';
 import CountryLabel from '@salesforce/label/c.ISSP_Country';
+import NoResults from '@salesforce/label/c.CSP_NoSearchResults';
 
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -106,6 +107,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
     // ------------------- //
 
     // Portal Admins
+    @track hasPortalAdmins = false;
     @track portalAdminList = [];
     @track portalAdminColumns = [
         { label: ContactNameLabel, fieldName: 'Name' },
@@ -115,9 +117,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     @wire(getPortalAdmins) 
     getPortalAdminList({ error, data }) {
-        if (data) {
+        if(data) {
             this.portalAdminList = [];
-            console.log('data', JSON.parse(JSON.stringify(data)));
+
             data.forEach(admin => {
                 const portalAdmin = {};
                 portalAdmin.Name = [admin.User.Contact.Salutation, admin.User.Contact.Name].filter(Boolean).join(" ");
@@ -125,15 +127,17 @@ export default class PortalCompanyProfilePage extends LightningElement {
                     portalAdmin.Email = admin.User.Contact.Email;
                     portalAdmin.Country = admin.User.Contact.Account.BillingCountry;
                 }
-
+                
                 this.portalAdminList.push( portalAdmin );
             });
             this.error = undefined;
-        } else if (error) {
+        } else if(error) {
             console.error('error', JSON.parse(JSON.stringify(error)));
             this.error = error;
             this.portalAdminList = undefined;
         }
+
+        this.hasPortalAdmins = this.portalAdminList && this.portalAdminList.length > 0 ? true : false;
     }
 
 
@@ -141,7 +145,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
         return (this.loggedUser == null || this.loggedUser.Contact == null || this.loggedUser.Contact.AccountId == null);
     }
 
-    _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP, ISSP_Homepage_Portal_Delegates_Administrators };
+    _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP, ISSP_Homepage_Portal_Delegates_Administrators, NoResults };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 

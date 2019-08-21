@@ -80,12 +80,17 @@
                                         </span>
 
                                         <span slot="componentContent">
-                                            <lightning-datatable
-                                                key-field="Id"
-                                                data={portalAdminList}
-                                                columns={portalAdminColumns}
-                                                hide-checkbox-column="true">
-                                            </lightning-datatable>
+                                            <div if:true={hasPortalAdmins}>
+                                                <lightning-datatable
+                                                    key-field="Id"
+                                                    data={portalAdminList}
+                                                    columns={portalAdminColumns}
+                                                    hide-checkbox-column="true">
+                                                </lightning-datatable>
+                                            </div>
+                                            <div if:false={hasPortalAdmins}>
+                                                {labels.NoResults}
+                                            </div>
                                         </span>
                                     </c-portal-profile-section>
 
