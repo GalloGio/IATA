@@ -54,7 +54,13 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL INTEGER CONTACT_BATCH= 15;
     PRIVATE STATIC FINAL INTEGER BRANCH_BATCH = 15;
 
-    public static Contact contactInfo = new Contact();
+public static final Id RECORDTYPE_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+public static final Id RECORDTYPE_AIRLINE_BR = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+public static final Id RECORDTYPE_AIRLINE_HQ = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+public static final list<Id> VALID_ACCOUNT_RT = new list<String> {RECORDTYPE_AGENCY, RECORDTYPE_AIRLINE_BR, RECORDTYPE_AIRLINE_HQ};
+
+
+public static Contact contactInfo = new Contact();
 
     public static User myUser {
         get {
@@ -820,6 +826,78 @@ public with sharing class PortalProfileCtrl {
     @AuraEnabled
     public static String goToPrivacyPortal(){
         return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.GDPR, '');
+    }
+
+}
+
+
+@AuraEnabled(Cacheable=true)
+public static List<Account> getMapHierarchyAccounts(Id contactId) {
+
+Contact con = [Select id, AccountId from Contact where id = :contactId];
+
+Account account = [
+            Select id, Name,
+            ParentId,
+            Parent.ParentId,
+            Parent.Parent.ParentId,
+            Parent.Parent.Parent.ParentId,
+            Parent.Parent.Parent.Parent.ParentId
+            From Account
+            Where id = :con.AccountId ];
+
+        // find the top parent
+        Id parentId = null;
+        if (account.ParentId == null ) {
+            parentId = account.Id;
+        } else if (account.Parent.ParentId == null ) {
+            parentId = account.ParentId;
+        } else if (account.Parent.Parent.ParentId == null ) {
+            parentId = account.Parent.ParentId;
+        } else if (account.Parent.Parent.Parent.ParentId == null ) {
+            parentId = account.Parent.Parent.ParentId;
+        } else if (account.Parent.Parent.Parent.Parent.ParentId == null ) {
+            parentId = account.Parent.Parent.Parent.ParentId;
+        } else {
+            parentId = account.Parent.Parent.Parent.Parent.ParentId;
+        }
+
+        // Get all account in the hierarchy
+        return new List<Account>([
+            SELECT Id,Name, Site, IATA_ISO_Country__c, Location_Type__c, BillingStreet, IsPartner,
+                BillingCity, BillingPostalCode, BillingState, BillingCountry, IATA_ISO_Country__r.Name
+            FROM Account
+            WHERE RecordTypeId IN :VALID_ACCOUNT_RT
+            AND Status__c != 'Terminated'
+            AND Id != :con.AccountId 
+            AND ( Id = :parentId
+            OR ParentId = :parentId
+            OR Parent.ParentId = :parentId
+            OR Parent.Parent.ParentId = :parentId
+            OR Parent.Parent.Parent.ParentId = :parentId
+            OR Parent.Parent.Parent.Parent.ParentId = :parentId)]);
+}
+
+@AuraEnabled
+public static String RelocateContact(Account acc, String contactId) {
+        try {
+            Contact con = [SELECT Id, AccountId FROM Contact where Id =: contactId];
+            // set  parent account as partner user 
+            if (!acc.IsPartner) {
+                acc.IsPartner = true;
+                update acc;
+            } 
+            // relocate contact
+            con.AccountId = acc.Id;
+            update con;
+            return 'Success';
+        } catch (DMLException e) {
+            System.debug('DML ERROR RelocateContact ' + e.getMessage());
+            return Label.ISSP_Relocate_Failed;
+        } catch (Exception e) {
+            System.debug('ERROR RelocateContact ' + e.getMessage());
+            return Label.ISSP_Relocate_Failed;
+        }
     }
 
 }
