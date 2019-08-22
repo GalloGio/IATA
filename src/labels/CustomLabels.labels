@@ -3793,7 +3793,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Account Relocation</shortDescription>
-        <value>Account relocated successfully.</value>
+        <value>Contact relocated successfully.</value>
     </labels>
 	<labels>
         <fullName>CSP_MyCases</fullName>

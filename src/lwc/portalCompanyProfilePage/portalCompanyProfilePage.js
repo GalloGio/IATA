@@ -481,6 +481,11 @@ export default class PortalCompanyProfilePage extends LightningElement {
     getContactsFieldMap() {
         getContactsListFields().then(result => {
             let sectionMap = JSON.parse(JSON.stringify(result));
+            sectionMap.VIEW.forEach( element => {
+                if(element.fieldName === 'ISSP_Account_Name__c') {
+                    element.canChangeAccount = true;
+                }
+            });
             this.contactFields = sectionMap;
         });
     }
