@@ -124,10 +124,7 @@ public without sharing class OneIdLightningLoginFormController {
             // if PWC or DPC user
             if(oldPortalRedirectSet.contains(oneUser.profile.Name)){ //overrides to old portal
                serviceName='ISSP';
-               startUrl ='/ISSP_Homepage';
-			   
-			   if(oneUser.CNS_Account_or_Agency__c) startUrl+='?communityName=CNS';
-			   
+               startUrl ='/ISSP_Homepage';			   
             }
                 
             username=null != oneUser ? oneUser.Username : username;
