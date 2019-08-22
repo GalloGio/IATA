@@ -863,6 +863,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
     @isTest static void fsNonComplianceConsequencesChinaHETest(){
 
+        AMS_OscarCase_RiskMgmt.runOnce();
+
         Account acct = 
             [SELECT 
                 Id
@@ -885,8 +887,6 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         insert cse;
 
-        AMS_OscarCase_RiskMgmt.EndRun();
-
         try {
             cse.Group_Single_Agent__c = 'Group';
             update cse;
@@ -901,8 +901,6 @@ private class AMS_OscarCase_RiskMgmt_Test {
         cse.Group_Single_Agent__c = 'Group';
 
         update cse;
-
-        AMS_OscarCase_RiskMgmt.EndRun();
 
         List<Agency_applied_change_code__c> changeCodeLst = new List<Agency_applied_change_code__c>(
             [SELECT

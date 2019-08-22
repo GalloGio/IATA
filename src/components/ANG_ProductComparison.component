@@ -110,7 +110,7 @@
 								<apex:outputPanel rendered="{! cell.name == 'Cost'}">
 									<td style="text-align: left; vertical-align: top; padding-right: 10px; padding-left: 10px;">
 										<apex:outputLabel value="{! cell.slabel}"/>
-										<apex:outPutpanel rendered="{!!(helper.costTooltip == '')}">
+										<apex:outPutpanel rendered="{!AND(NOT(helper.costTooltip == ''), NOT(AND(helper.chinaAgent, helper.chinaLocClass == 'Domestic')))}">
 
 											<a href="#" data-html="true" data-toggle="popover" data-trigger="hover" 
 											   title="{!cell.slabel}" data-content="<div escape='false'>{!helper.costTooltip}</div>">

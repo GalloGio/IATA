@@ -14,7 +14,18 @@ public without sharing class ISSP_AMS_Accreditation {
     private static final String BNK_ACCNT_DTLS = 'BNK_ACCNT_DTLS';
     private static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
     private static final String OTHERS = 'OTHERS';
-    private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
+    //private static final string ISO_8859_1_regEx = '^[0-9\\\\A-z\\u00C0-\\u00ff\\s\\.,-\\/#!$%\\^&\\*;:{}=\\-_`~()]+$';
+    private static final string ISO_8859_1_regEx { //Reg exp to limit inputted chars to ISO-8859-1
+        get{
+            if(ISO_8859_1_regEx == null) {
+                //WMO-538
+		        Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
+                ISO_8859_1_regEx = regExCS != null && String.isNotBlank(regExCS.Text_1__c) ? regExCS.Text_1__c : '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+            } 
+            return ISO_8859_1_regEx;
+        }
+        set;
+    }
 
     public enum AccredContactEnum {
         PARAMCODE_OWNERSHIP_SUMMARY,
@@ -273,12 +284,13 @@ public without sharing class ISSP_AMS_Accreditation {
     public Boolean revCaseOpen {
         get{
             List<Case> revCases = [SELECT Id 
-                                FROM Case 
-                                WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
-                                    AND Reason1__c = 'Annual revalidation' 
-                                    AND Status != 'Closed' 
-                                    AND Status != 'Closed_Rejected' 
-                                    AND Status != 'Closed_Withdrawn'];
+                                   FROM Case 
+                                   WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
+                                   AND Reason1__c = 'Annual revalidation' 
+                                   AND Status != 'Closed' 
+                                   AND Status != 'Closed_Rejected' 
+                                   AND Status != 'Closed_Withdrawn'
+                                   AND Status != 'Closed_ Not Accepted'];
             
             return !revCases.isEmpty();
         } 	
@@ -1566,7 +1578,8 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
         } else if (sectorValue.StartsWith('Travel_Agent')) { //User has selected Travel in STEP A
-            if (isHOAccredited && con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT) { //And this is an Accredited PAX Agent
+
+            if (isHOAccredited && (con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT) || (con.Account.Category__c == AMS_Utils.CATEGORY_DOMESTIC_AGENT && AMS_Utils.setDomesticCountries.contains(isocountry.ISO_Code__c))) { //And this is an Accredited PAX Agent
 
                 if(!getIsAccreditationModelNotNullOrLegacy()) {
                     options.add(new SelectOption(AMS_Utils.TYPE_PAX_BRANCH_L, Label.ISSP_AMS_OPTION_PAX_BRANCH));
@@ -2560,8 +2573,11 @@ public without sharing class ISSP_AMS_Accreditation {
     private String getLocationClass() {
         String locationClass = 'P';
 
-        if (sectorValue.StartsWith('Cargo_Agent')) {
-            if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary') {
+        if(newForm.Local_Agent_Type__c == 'Domestic'){
+            locationClass = 'D';
+        }
+        else if (sectorValue.StartsWith('Cargo_Agent')) {
+            if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary')
                 locationClass = 'C';
             } else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE) {
                 locationClass = 'R';
@@ -3371,6 +3387,11 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (newForm.Shipping_ISO_State__c == null) {
                     newForm.Shipping_ISO_State__c = newForm.IATA_ISO_State__c;
                 }
+                //INC484624-START
+                if(newForm.Shipping_Street__c == null)  newForm.Shipping_Street__c = newForm.Branch_Office_Street_name_number__c;
+                if(newForm.Shipping_Postal_Code__c == null) newForm.Shipping_Postal_Code__c = newForm.Branch_Office_Postal_code__c;
+                if(newForm.Shipping_City__c == null) newForm.Shipping_City__c = newForm.Branch_Office_City__c;    
+                //INC484624-END
             }
 
             if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && (newCase.Reason1__c == 'Major Change')) {
@@ -3381,6 +3402,12 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (newForm.Shipping_ISO_State__c == null) {
                     newForm.Shipping_ISO_State__c = accountConcerned.IATA_ISO_Shipping_State__c;
                 }
+                //INC484624-START
+                if(newForm.Shipping_Street__c == null) newForm.Shipping_Street__c = accountConcerned.ShippingStreet;
+                if(newForm.Shipping_Postal_Code__c == null) newForm.Shipping_Postal_Code__c = accountConcerned.ShippingPostalCode;
+                if(newForm.Shipping_City__c == null) newForm.Shipping_City__c = accountConcerned.ShippingCity;
+                //INC484624-END
+
             }
 
             if (isMultiCountry) {
@@ -7388,11 +7415,10 @@ public without sharing class ISSP_AMS_Accreditation {
                                                     Percentage__c, Position__c, RecordTypeId, Title__c, Valid__c, Person__c, Person__r.First_Name__c,
                                                     Person__r.Lastname__c, Person__r.Email__c, Person__r.Phone__c, Contact__c, Contact__r.FirstName,
                                                     Contact__r.LastName, Contact__r.Email, Contact__r.Phone, Contact__r.OtherStreet, Contact__r.OtherCity,
-                                                    Contact__r.OtherPostalCode, Contact__r.OtherCountry, Legacy_External_ID__c
+                                                    Contact__r.OtherPostalCode, Contact__r.OtherCountry, Contact__r.OtherState, Legacy_External_ID__c
                                                 FROM AMS_Account_Role__c
                                                 WHERE Account__c = :lAccountConcerned
-                                                    AND RecordTypeId = :rtAccRoleOwnership AND Active__c = true AND Percentage__c > 0]){
-                if (type.equalsIgnoreCase('NoC')) {
+                                                    AND RecordTypeId = :rtAccRoleOwnership AND Active__c = true AND Percentage__c > 0]){                if (type.equalsIgnoreCase('NoC')) {
                     lstAccreditationContact.add(ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtIdsPerDevNameAccredContact.get('Previous_Owner'), rtIdsPerDevNameAccredContact.get('Previous_Company_Owner')));
                     lstAccreditationContact.add(ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtIdsPerDevNameAccredContact.get('Current_Owner'), rtIdsPerDevNameAccredContact.get('Current_Company_Owner')));
                 }

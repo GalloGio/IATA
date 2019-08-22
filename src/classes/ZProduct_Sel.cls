@@ -46,7 +46,7 @@ public class ZProduct_Sel extends Selector
 		for(String i: zuoraIds)
 			whereItems.add('Id = \'' + i + '\'');
 		
-		String zoql = 'SELECT Id, SAP_Material_Number__c FROM Product WHERE ' + String.join(whereItems, ' OR ');
+		String zoql = 'SELECT Id, SAPProductMaterialNo__c FROM Product WHERE ' + String.join(whereItems, ' OR ');
     	return zoql;
 	}
 

@@ -26,7 +26,8 @@ private class ISSP_AccountContact_Test {
 	static testMethod void contactTest_1() {
 		
 		Account acc = ISSP_ObjectFactory.createNewAccount();
-		acc.Category__c = 'IATA Passenger Sales Agent';
+        acc.Sector__c = AMS_Utils.SECTOR_PASSENGER;
+		acc.Category__c = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
 		insert acc;
 		
 		Contact con = ISSP_ObjectFactory.createNewContact();

@@ -536,6 +536,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>Case_Detail__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>X2015_Overall_Satisfaction__c</fields>
         <fields>X2015_CES__c</fields>
         <fields>X2015_Communication_Satisfaction__c</fields>

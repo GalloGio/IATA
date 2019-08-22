@@ -51,7 +51,7 @@ private class FinancialSecurityHandlerTest {
         if (userinfo.getProfileId() != '00e20000000h0gFAAQ' || (userinfo.getProfileId() == '00e20000000h0gFAAQ' && Test.isRunningTest()) ) {
         	system.assertNotEquals(null, fs.Renewal_Case__c);
             lstCases = [SELECT Id FROM Case LIMIT 10];
-        	system.assertEquals(2, lstCases.size());
+        	system.assertEquals(3, lstCases.size());
         } else {
             system.assertEquals(null, fs.Renewal_Case__c);
         }  

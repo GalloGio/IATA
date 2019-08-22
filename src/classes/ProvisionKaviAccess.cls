@@ -44,7 +44,7 @@ global with sharing class ProvisionKaviAccess {
         
         //Creation of Contact...
         Account acc = new Account();
-        acc = getFakeAccount();     
+        acc = IATASSWAccount;     
         User usr = [Select Id, FirstName, LastName,Profile_Name__c, Email From User Where id = :userId limit 1][0];
         if(usr.Id != null){
                 Contact contact = new Contact();
@@ -64,28 +64,31 @@ global with sharing class ProvisionKaviAccess {
         
     }
     
-    private static Account fakeAccount;
-    public static Account getFakeAccount (){
-        
-        if(fakeAccount != null) return fakeAccount;
-        list<Account> acc2 = [Select Id, Name from Account Where Name= 'IATA SSW ACCOUNT'];
-        if (! acc2.isEmpty())       
-            fakeAccount = acc2[0];
-        else 
-        {
-            Account acc = new Account();
-            acc = new Account();
-            acc.Name = 'IATA SSW ACCOUNT';
-            acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-            //acc.Sector__c = 'IATA';
-            //acc.Category__c = 'IATA Cargo Agent';
-            try {insert acc;}
-            
-            catch(Exception e) {System.debug('Account has not been created becasu wrong: ' + e);}
-            fakeAccount = acc;
+    public static Account IATASSWAccount{
+        get{
+            if(IATASSWAccount == null) IATASSWAccount = new FakeAccount().acc;
+            return IATASSWAccount;
         }
-        
-        return fakeAccount;
+        private set;
+    }
+
+    private without sharing class FakeAccount{
+        private final Account acc;
+
+        private FakeAccount(){
+            List<Account> fakeAccountList = [SELECT Id, Name FROM Account WHERE Name = 'IATA SSW ACCOUNT' LIMIT 1];
+
+            if (! fakeAccountList.isEmpty())  this.acc = fakeAccountList[0];
+            else if(Test.isRunningTest()){
+                Account a = new Account();
+                a.Name = 'IATA SSW ACCOUNT';
+                a.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+                insert a;
+                
+                this.acc = a;
+            }
+            else throw new TransformationException('IATA SSW Account not found');
+        }
     }
     
     public static String createPortalApplicationRightMethod(String contactId) {

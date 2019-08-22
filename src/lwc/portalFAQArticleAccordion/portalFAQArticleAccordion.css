@@ -124,3 +124,7 @@
     top: 12px;
     position: absolute;
 }
+
+.cursorPointerColor{
+    color: #333333 ;
+}

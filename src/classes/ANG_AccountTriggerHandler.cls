@@ -21,6 +21,16 @@ public class ANG_AccountTriggerHandler {
 		set;
 	}
 
+	public Map<Id, List<Agency_Authorization__c>> formOfPaymentsMap {
+		get {
+			if(formOfPaymentsMap == NULL){
+				formOfPaymentsMap = getFormOfPaymentsPerAccount();
+			}
+			return formOfPaymentsMap;
+		}
+		set;
+	}
+
 	// ************************************************************
 	// ****************** distribution methods ********************
 	// ************************************************************
@@ -211,6 +221,9 @@ public class ANG_AccountTriggerHandler {
 			String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
 			for(Id accId : changeCodesForRiskChangesLst){
+
+				List<Agency_Authorization__c> activeOrAuthorizedFoPLst = getActiveOrAuthorizedFoPs(accId);
+
 				Account acc = newMap.get(accId);
 				changeCodes.add(new Agency_Applied_Change_code__c(
 					Active__c = true
@@ -222,6 +235,7 @@ public class ANG_AccountTriggerHandler {
 					, Source__c = source
 					, CreatedDate_User__c = AMS_ChangeCodesHelper.convertToHubEffectiveDate(system.today())
 					, To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c
+					, Forms_of_Payment__c = AMS_ChangeCodesHelper.generateFOPString(activeOrAuthorizedFoPLst, acc.ANG_IsNewGenAgency__c, config.Change_Code__c)
 				));
 			}
 
@@ -253,7 +267,7 @@ public class ANG_AccountTriggerHandler {
 			oldAcc = oldMap.get(acc.Id);
 
 			if(oldAcc.ANG_HE_RiskStatus__c <> acc.ANG_HE_RiskStatus__c && (oldAcc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C || acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A)){
-				toNotify.add(acc.Id);
+				//toNotify.add(acc.Id);
 				if((isExpiration||isLastFinancialReviewUpgrade) && config != null) toChangeCode.add(acc.Id);
 			}
 
@@ -269,6 +283,9 @@ public class ANG_AccountTriggerHandler {
 		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
 		for(Id accId : toChangeCode){
+			
+			List<Agency_Authorization__c> activeOrAuthorizedFoPLst = getActiveOrAuthorizedFoPs(accId);
+
 			Account acc = newMap.get(accId);
 			changeCodes.add(new Agency_Applied_Change_code__c(
 				Active__c = true
@@ -280,6 +297,7 @@ public class ANG_AccountTriggerHandler {
 				, Source__c = source
 				, CreatedDate_User__c = AMS_ChangeCodesHelper.convertToHubEffectiveDate(system.today())
 				, To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c
+				, Forms_of_Payment__c = AMS_ChangeCodesHelper.generateFOPString(activeOrAuthorizedFoPLst, acc.ANG_IsNewGenAgency__c, config.Change_Code__c)
 			));
 		}
 
@@ -696,15 +714,18 @@ public class ANG_AccountTriggerHandler {
 
 	public void updateFormsOfPayment(){
 
-		Set<ID> setAccountIDs = new Set<ID>();
+		List<Agency_Authorization__c> agencyAuthorizationsToProcessLst = new List<Agency_Authorization__c>();
 
 		for(Account a :triggerNew){
-			if(a.Status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c != AMS_Utils.ACC_S0_TERMINATED) setAccountIDs.add(a.id);
-			if(a.Status__c != AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c == AMS_Utils.ACC_S0_TERMINATED) setAccountIDs.add(a.id);
+			if((a.Status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c != AMS_Utils.ACC_S0_TERMINATED) || 
+				 (a.Status__c != AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c == AMS_Utils.ACC_S0_TERMINATED)){
+					 agencyAuthorizationsToProcessLst.addAll(getFormOfPaymentsByAccountId(a.Id));
+			}
 		}
 
 		List<Agency_Authorization__c> AgencyAuthorizationsToUpdate = new List<Agency_Authorization__c>();
-		for (Agency_Authorization__c aa : [SELECT ID, Account__c, ANG_FormOfPayment_ID__c FROM Agency_Authorization__c WHERE Account__c IN :setAccountIDs] ){
+
+		for (Agency_Authorization__c aa : agencyAuthorizationsToProcessLst){
 			Account currentAccount = newMap.get(aa.Account__c);
 
 			if(currentAccount.Status__c == AMS_Utils.ACC_S0_TERMINATED) aa.Status__c = 'Non-Active';
@@ -726,7 +747,9 @@ public class ANG_AccountTriggerHandler {
 			AgencyAuthorizationsToUpdate.add(aa);
 		}
 	
-	if(!AgencyAuthorizationsToUpdate.isEmpty()) update AgencyAuthorizationsToUpdate;
+		if(!AgencyAuthorizationsToUpdate.isEmpty()){
+			update AgencyAuthorizationsToUpdate;
+		}
 
 	}
 
@@ -767,4 +790,49 @@ public class ANG_AccountTriggerHandler {
 			ANG_RHCHelper.handleRiskOrForecastedRhcAmountUpdates(toNotify);
 		}
 	}
+
+	private Map<Id, List<Agency_Authorization__c>> getFormOfPaymentsPerAccount(){
+
+		Map<Id, List<Agency_Authorization__c>> fopMap = new Map<Id, List<Agency_Authorization__c>>();
+
+		Id aaRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+
+		for(Agency_Authorization__c aa : [SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Authority__c, Status__c, ISO_Country__c FROM Agency_Authorization__c WHERE RecordTypeId = :aaRTId AND Account__c IN :newMap.keySet()]){
+		
+			if(fopMap.containsKey(aa.Account__c)){
+				fopMap.get(aa.Account__c).add(aa);
+			}
+			else{
+				fopMap.put(aa.Account__c, new List<Agency_Authorization__c>{aa});
+			}
+		
+		}
+
+		return fopMap;
+
+	}
+
+	private List<Agency_Authorization__c> getFormOfPaymentsByAccountId(Id acctId){
+			if(formOfPaymentsMap.containsKey(acctId)){
+				return formOfPaymentsMap.get(acctId);
+			}
+			return new List<Agency_Authorization__c>();
+	}
+
+	private List<Agency_Authorization__c> getActiveOrAuthorizedFoPs(Id acctId){
+		
+		List<Agency_Authorization__c> fopToReturnLst = new List<Agency_Authorization__c>();
+
+		List<Agency_Authorization__c> fopLst = getFormOfPaymentsByAccountId(acctId);
+
+		for(Agency_Authorization__c aa : fopLst){
+			if(aa.Status__c == 'Active' || aa.Status__c == 'Authorized'){
+				fopToReturnLst.add(aa);
+			}
+		}
+
+		return fopToReturnLst;
+		
+	}
+
 }

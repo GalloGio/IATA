@@ -276,6 +276,7 @@
                 else
                     $('[id$="tcModalConfirmButton"]').attr('disabled','disabled');
             }
+            
             </script>
         <div class="container">
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>

@@ -462,6 +462,19 @@
             window.open('/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf{!if(communityName=='CNS', '&CommunityName=CNS', '')}', '_blank');
         }
 
+		function navigateToComparison() {
+        	var urlComparison = '/apex/ISSP_ANG_ProductComparison';
+        
+        	var chinaAgentTypeId = '{!$Component.step1Form.step1Block.chinaagenttype}';
+        	var chinaAgentType = $('select[name="' + chinaAgentTypeId + '"]').val();
+
+        	if ('{!isocountry.ISO_Code__c}' == 'CN') {
+            	urlComparison += '?chinaAccred=' + chinaAgentType;
+        	}
+        
+        	window.open(urlComparison, '_self');
+    	}
+
         $( document ).ready(function() {
             runMultiCountry();
         });
@@ -694,9 +707,9 @@
                                                         <apex:selectOptions value="{!OfficeTypes}" />
                                                     </apex:selectList>
 
-                                                    <apex:outputPanel id="compare">
-                                                        <apex:outputLink id="ProductComparisonLink" value="/apex/ISSP_ANG_ProductComparison">&nbsp;{!$Label.ISSP_AMS_Compare_Accreditation_Types}</apex:outputLink>
-                                                    </apex:outputPanel>
+                                <apex:outputPanel id="compare">
+                                    <apex:commandLink id="ProductComparisonLink" onclick="navigateToComparison(); return false;" value="{!$Label.ISSP_AMS_Compare_Accreditation_Types}" reRender=""/>
+                                </apex:outputPanel>
 
                                                     <script>
                                                         if(showProductComparisonLink) {
@@ -709,11 +722,11 @@
                                                 </div>
                                             </div>
 
-                                            <!-- NEWGEN-1249-->
-                                            <apex:outputpanel id="isSameLegal" rendered="{!OR(AND(newAccreditationModels,con.Account.Category__c =='IATA Passenger Sales Agent', isHOAccredited), isMultiCountryNewAE)}">
-                                                <apex:outputpanel id="legalEntity" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
-                                                    <div class="form-group" id='isLegal'>
-                                                        <label for="isLegal" class="col-lg-3 control-label">{!IF(isMultiCountryNewAE, $Label.ANG_AE_separate_Legal_Entity_MultiCountry, $Label.ANG_AE_separate_Legal_Entity)}</label>
+                        <!-- NEWGEN-1249-->
+                        <apex:outputpanel id="isSameLegal" rendered="{!OR(AND(newAccreditationModels,OR(con.Account.Category__c =='IATA Passenger Sales Agent', con.Account.Category__c == 'Domestic Agent'), isHOAccredited), isMultiCountryNewAE)}">
+                            <apex:outputpanel id="legalEntity" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
+                                <div class="form-group" id='isLegal'>
+                                    <label for="isLegal" class="col-lg-3 control-label">{!$Label.ANG_AE_separate_Legal_Entity}</label>
 
                                                         <div style="width: 142px;padding-left:15px;padding-top:7px; float:left;margin-left:0px;">
                                                             <apex:selectradio id="separateLegalEntitySelect" style="width:100%;" label="{!$Label.ANG_AE_separate_Legal_Entity}" value="{!newForm.AE_separate_Legal_Entity__c}" onchange="enableDisableLegalName();">
@@ -1264,7 +1277,7 @@
             <br/><br/>
                 <a href="{!portalRedirectToCase}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
             <br/><br/>
-           {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="{!portalRedirectToCaseList}" target="_self">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
+           {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="{!portalRedirectToCaseList}" target="_self">{!IF(isNewPortal, $Label.CSP_AMS_StepFinal_In_Addition2, $Label.ISSP_AMS_StepFinal_In_Addition2)}</a>.
             <br/><br/><br/><br/>
 
             <apex:form rendered="{!AND(OR(BEGINS(sectorValue, 'Travel_Agent'), AND(BEGINS(sectorValue, 'Cargo_Agent'), newForm.Agent_Type__c!='IATA Cargo Agent', newForm.Agent_Type__c!='EACP Intermediary')),!isNoticeOfChange,newForm.SAAM_Case__r.Reason1__c != 'FoP Management',newCase.Reason1__c!='CLO - Closure')}">
