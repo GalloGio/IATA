@@ -460,7 +460,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.showButtons = false;
             this.IEPRoleSuccessModal = true;
             this.showRoleSelection = false;
-            this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, this.radioOption, false, '');
+            this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, this.radioOption, false);
         }
     }
 
@@ -469,19 +469,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.ShowIEPIntroMessage = false;
         this.showButtons = false;
         this.loadingMessage = this.label.ANG_ISSP_UserProvisioningWait;
-        availableIEPPortalServiceRoles({ serviceId: this.trackedServiceId })
-            .then(result => {
-                let myResults = JSON.parse(JSON.stringify(result));
-
-                let mydefaultPortalUserRole = myResults.filter(obj => obj.Default_User_Role__c === true && obj.Connected_App__c === this.serviceFullName);
-
-                if (mydefaultPortalUserRole) {
-                    this.defaultPortalUserRole = mydefaultPortalUserRole[0].Role__c;
-                    this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true, this.defaultPortalUserRole);
-                } else {
-                    console.log('Custom Setting configuration missing');
-                }
-            });
+        this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true);
 
     }
 
@@ -509,7 +497,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.ICCSSuccessMessage = this.label.ISSP_Thanks_for_request;
         this.showSpinner = true;
 
-        this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, this.ICCSRole, false, '');
+        this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, this.ICCSRole, false);
     }
 
     OpenSSWSAccount() {
@@ -523,14 +511,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
 
-    newAppRequest(AppId, AppName, ContactId, AppPortalRole, FlagUseDefaultRole, adefaultPortalUserRole) {
+    newAppRequest(AppId, AppName, ContactId, AppPortalRole, FlagUseDefaultRole) {
         ISSP_AvailableService_newAppsRequest2({
             applicationId: AppId,
             applicationName: AppName,
             contactId: ContactId,
             portalServiceRole: AppPortalRole,
-            flagUseDefaultRole: FlagUseDefaultRole,
-            defaultPortalUserRole: adefaultPortalUserRole
+            flagUseDefaultRole: FlagUseDefaultRole
         })
             .then(result => {
                 let results = JSON.parse(JSON.stringify(result));
