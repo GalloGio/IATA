@@ -43,6 +43,10 @@ public class ANG_GDIRemoteInvocationTest {
 
         case cc = new case(AccountId = acc.Id);
         insert cc;
+
+        ANG_RHC_Information__c rhc = new ANG_RHC_Information__c(ANG_AccountId__c = acc.Id);
+        insert rhc;
+
         Financial_Security__c FS = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=acc.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=fi.Id, SECURITY_STATUS__C='Active', Security_Type__c='GDI', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id);
         insert FS;
 
@@ -161,19 +165,21 @@ public class ANG_GDIRemoteInvocationTest {
         Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = ri.id, Internal_ID__c = '1234567', External_ID__c='001', Valid_From__c=system.Today(), AMOUNT__C = 1000);
         insert artifact;
 
+        test.startTest();
         //Making the process starting to create the Bank Account Case OSCAR 
         ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
         update ri;
-
+        
         system.debug('DTULLO 097 --> ' + [select id, status__c, status_detail__c from Remote_Invocation__c]);
         system.debug('DTULLO 098 --> ' + [select id, Request_Result__c, status_detail__c from Remote_Invocation_Artefact__c]);
-
+        
         List<Opportunitylineitem> stagingFSs = [SELECT id FROM Opportunitylineitem];        
         System.assertEquals(stagingFSs.size(), 1); 
-
+        
         List<Opportunity> Opportunities = [SELECT id,CurrencyIsoCode FROM Opportunity];     
         System.assertEquals(Opportunities.size(), 1); 
-        System.assertEquals(Opportunities[0].CurrencyIsoCode, 'USD'); 
+        System.assertEquals(Opportunities[0].CurrencyIsoCode, 'USD');
+        test.stopTest();
     }   
 
     @isTest

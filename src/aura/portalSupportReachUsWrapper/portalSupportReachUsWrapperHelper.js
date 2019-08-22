@@ -29,8 +29,8 @@
             liveagent.enableLogging();
             liveagent.addCustomDetail('#Contact', userContact.Name);
             liveagent.addCustomDetail('#Account', userContact.Account.Name);
-            liveagent.addCustomDetail('#Sector', userContact.Account.Sector__c);
-            liveagent.addCustomDetail('#Category', userContact.Account.Category__c);
+            liveagent.addCustomDetail('#Sector', userContact.Account.Sector__c == undefined ? '' : userContact.Account.Sector__c);
+            liveagent.addCustomDetail('#Category', userContact.Account.Category__c == undefined ? '' : userContact.Account.Category__c);
             liveagent.addCustomDetail('Case Subject', 'Chat with IATA Customer Service ' + (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear());
             liveagent.addCustomDetail('#Topic', topicLabel);
             liveagent.addCustomDetail('#Subtopic', subTopicLabel);

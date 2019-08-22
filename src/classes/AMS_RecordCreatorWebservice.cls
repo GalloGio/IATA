@@ -34,6 +34,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP, IEP_MODEL_B_PLUS_ACCOUNT_SETUP, NEWVR_PV};
 
+    public static Set<String> newgenChildProcess = new Set<String>{NEWNAE,MCAE}; 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
 
     /**
@@ -154,13 +155,57 @@ global without sharing class AMS_RecordCreatorWebservice {
         return null;
     }
 
+    private static boolean createHierarchyNewgen(String AccountId, String typeOfProcess){
+        
+        // in theory, we should, for NEWGEN, already have an Hierarchy coming from the HE or GE (for Multicountry).ApexPages
+
+        Account accountToProcess = [SELECT Id, ParentId, Top_Parent__c, Location_Type__c from Account where Id = :AccountId LIMIT 1].get(0);
+
+        if(accountToProcess.Top_Parent__c == null){
+            System.debug('There is no Parent Id to create an Hierarchy.');
+            return false;
+        }
+
+        List<AMS_Agencies_Hierarchy__c> hierarchyLst = [Select Id from AMS_Agencies_Hierarchy__c where Main_account__c = :accountToProcess.Top_Parent__c];
+
+        AMS_Agencies_Hierarchy__c hierarchy = null;
+
+        if(!hierarchyLst.isEmpty()){
+            hierarchy = hierarchyLst.get(0);
+        }else{
+            List<AMS_Agencies_relationhip__c> existingRelations = [SELECT Id, Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c =:accountToProcess.Top_Parent__c LIMIT 1];
+
+            if(!existingRelations.isEmpty()){
+                hierarchy = new AMS_Agencies_Hierarchy__c(id= existingRelations.get(0).Hierarchy__c);
+            }
+        }
+
+
+        if(hierarchy == null){
+            System.debug('Did not find any hierarchy, creating new one.');
+
+            hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', Main_account__c = accountToProcess.Top_parent__c);
+            insert hierarchy;
+        }
+
+        AMS_Agencies_relationhip__c relationship = new AMS_Agencies_relationhip__c(Child_Account__c = accountToProcess.Id, Parent_Account__c = accountToProcess.Top_Parent__c, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = true);
+
+        insert relationship;
+
+        return true;
+    }
+
     private static boolean createHierarchy(String accountId, String typeOfProcess){
+
+        if(newgenChildProcess.contains(typeOfProcess)){
+            return createHierarchyNewgen(AccountId, typeOfProcess);
+        }
 
         Account account = new Account(Id = accountId);
 
         System.debug('Account to create hierarchy is ' + account.Id);
 
-        List<Account> parentIdLst = [SELECT Id, ParentId, Location_Type__c from Account where Id = :account.Id LIMIT 1];
+        List<Account> parentIdLst = [SELECT Id, ParentId, Top_Parent__c, Location_Type__c from Account where Id = :account.Id LIMIT 1];
 
         if((!parentIdLst.isEmpty()) && typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) && parentIdLst.get(0).Location_Type__c != 'BR'){
             System.debug('There is no Parent Id to create an Hierarchy but its a TIDS so lets assume its an HO.');

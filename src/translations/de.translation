@@ -169,71 +169,75 @@
         <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Check --></label>
+        <label>Wir sind nicht in der Lage, die angegebene Adresse zu überprüfen.</label>
         <name>AMS_DQ_Cannot_Check</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Find --></label>
+        <label>Wir konnten diese Adresse nicht finden. Wenn Sie sicher sind, dass Ihre Eingaben korrekt sind, können Sie sie dennoch absenden.</label>
         <name>AMS_DQ_Cannot_Find</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City --></label>
+        <label>Wir können keine Adresse ohne eine {0} Stadt verifizieren. Bitte füllen Sie das Feld aus.</label>
         <name>AMS_DQ_Cannot_Validate_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City and Street --></label>
+        <label>Wir können keine Adresse ohne eine {0} Stadt und einen Straßennamen verifizieren. Bitte füllen Sie das Feld aus.</label>
         <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate Street --></label>
+        <label>Wir können keine Adresse ohne einen {0} Straßennamen verifizieren. Bitte füllen Sie das Feld aus.</label>
         <name>AMS_DQ_Cannot_Validate_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Check Addr --></label>
+        <label>Adresse überprüfen</label>
         <name>AMS_DQ_Check_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Cumpulsory --></label>
+        <label>Die Stadt {0} ist vorgeschrieben. Bitte füllen Sie das Feld {1} Stadt aus.</label>
         <name>AMS_DQ_City_Cumpulsory</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Not in Database --></label>
+        <label>Die Stadt {0} ist nicht in unserer Datenbank (oder wurde anders geschrieben).</label>
         <name>AMS_DQ_City_Not_in_Database</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another Country --></label>
+        <label>Die Stadt {0} befindet sich in unserer Datenbank, gehört aber laut unserer Datenbank anscheinend zu einem anderen Land.</label>
         <name>AMS_DQ_City_in_Another_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another State --></label>
+        <label>Die Stadt {0} befindet sich in unserer Datenbank, ist jedoch einem anderen Bundesland/einer anderen Region zugeordnet.</label>
         <name>AMS_DQ_City_in_Another_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Enter Valid City --></label>
+        <label>Geben Sie eine gültige Stadt ein.</label>
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Found Addr --></label>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
+        <label>Übereinstimmende Adresse (n) wurde (n) gefunden.</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review City --></label>
+        <label>Überprüfen Sie den Namen der Stadt. Wenn Sie sicher sind, dass Ihre Eingabe korrekt ist, klicken Sie auf Absenden.</label>
         <name>AMS_DQ_Review_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review Country or City --></label>
+        <label>Überprüfen Sie das Land und/oder den Namen der Stadt. Wenn Sie sicher sind, dass Ihre Eingabe korrekt ist, klicken Sie auf Absenden.</label>
         <name>AMS_DQ_Review_Country_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State --></label>
+        <label>Überprüfen Sie den Namen des Bundeslandes/der Region und/oder der Stadt.</label>
         <name>AMS_DQ_Review_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State or City --></label>
+        <label>Überprüfen Sie den Namen des Bundeslandes/der Region und/oder der Stadt. Wenn Sie sicher sind, dass Ihre Eingabe korrekt ist, klicken Sie auf Absenden.</label>
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Street Compulsory --></label>
+        <label>Die Angabe des Straßennamens ist vorgeschrieben. Bitte füllen Sie das Feld {1} Straßennamen aus.</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
     <customLabels>
@@ -1465,7 +1469,7 @@
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label>Bitte validieren Sie Ihre Rechnungs-und Lieferanschrift, durch klicken auf den &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt; Knopf</label>
+        <label>Bitte überprüfen Sie Ihre Rechnungs- und Lieferadresse, indem Sie auf die Schaltfläche ,,Adresse überprüfen&quot; klicken</label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>
@@ -1721,6 +1725,10 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ANG_Portal_Admin --></label>
         <name>CSP_ANG_Portal_Admin</name>
     </customLabels>
@@ -1737,8 +1745,20 @@
         <name>CSP_Accept_Terms_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Add_All --></label>
+        <name>CSP_Add_All</name>
+    </customLabels>
+    <customLabels>
         <label>Neue Dokumente hinzufügen</label>
         <name>CSP_Add_New_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_New_User --></label>
+        <name>CSP_Add_New_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_User --></label>
+        <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
         <label>Ankündigung</label>
@@ -1861,6 +1881,10 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Continue --></label>
+        <name>CSP_Continue</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
@@ -1887,6 +1911,10 @@
     <customLabels>
         <label>Erscheinungsländer</label>
         <name>CSP_Documents_PubliCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
     </customLabels>
     <customLabels>
         <label>Kontaktieren Sie uns</label>
@@ -1961,12 +1989,24 @@
         <name>CSP_Manage_Services</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Manage_Services --></label>
+        <name>CSP_Manage_Services_NoIEPAccount</name>
+    </customLabels>
+    <customLabels>
         <label>Meine Fälle anzeigen</label>
         <name>CSP_MyCases</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Name --></label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewServiceUserMessage --></label>
+        <name>CSP_NewServiceUserMessage</name>
     </customLabels>
     <customLabels>
         <label>Kein zugehöriges Konto zur Anzeige.</label>
@@ -2009,6 +2049,22 @@
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
+        <name>CSP_Profile_PrivacyManagement_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Text --></label>
+        <name>CSP_Profile_PrivacyManagement_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Title --></label>
+        <name>CSP_Profile_PrivacyManagement_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_URL --></label>
+        <name>CSP_Profile_PrivacyManagement_URL</name>
+    </customLabels>
+    <customLabels>
         <label>Was ist ein Fall und wann brauche ich ihn?</label>
         <name>CSP_Question1</name>
     </customLabels>
@@ -2031,6 +2087,10 @@
     <customLabels>
         <label>Ähnliche Themen</label>
         <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveContact_Reason --></label>
+        <name>CSP_RemoveContact_Reason</name>
     </customLabels>
     <customLabels>
         <label>Dienstleistung anfordern</label>
@@ -2247,6 +2307,10 @@
     <customLabels>
         <label>Art des Falles</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -2549,6 +2613,10 @@
         <name>CurrencyCenter_BSP_CASS_Proffile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_ICCS_Availability --></label>
+        <name>CurrencyCenter_BSP_ICCS_Availability</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -2579,6 +2647,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_CASS --></label>
         <name>CurrencyCenter_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_CASS_ICCS_Availability --></label>
+        <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
@@ -9245,6 +9317,14 @@ and
         <name>ISSP_AMS_Local_Details_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator --></label>
+        <name>ISSP_AMS_MSO_Aggregator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator_Info --></label>
+        <name>ISSP_AMS_MSO_Aggregator_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_MSO_Alternatively --></label>
         <name>ISSP_AMS_MSO_Alternatively</name>
     </customLabels>
@@ -15001,8 +15081,8 @@ Wenn weiterhin Probleme bei der Registrierung zum IATA Kundenportal bestehen, be
         <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
-        <label>Der Payment Link kann zur Zahlung Ihrer IATA Rechnungen mit Kreditkarte verwendet werden&lt;br/&gt;
-&lt;b&gt;Warnung!&lt;/b&gt;&lt;br/&gt;
+        <label>Der Payment Link kann zur Zahlung Ihrer IATA Rechnungen mit Kreditkarte verwendet werden&amp;nbsp;
+&lt;b&gt;Warnung!&lt;/b&gt;&amp;nbsp;
 Bitte beachten Sie , dass viele IATA Rechnungen für akkreditierte Agenten durch die BSP / CASS berechnet werden. Bitte überprüfen Sie Ihre Rechnungsdaten, um sicherzustellen , dass der Betrag noch nicht bezahlt wurde, bevor Sie mit der Zahlung mit Kreditkarte fortfahren</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
@@ -15373,6 +15453,10 @@ Bitte beachten Sie , dass viele IATA Rechnungen für akkreditierte Agenten durch
     <customLabels>
         <label>Bitte geben Sie Ihren Nachnamen ein</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>Bitte wählen Sie Ihr Land</label>
@@ -17845,6 +17929,10 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <name>Not_Applicable</name>
     </customLabels>
     <customLabels>
+        <label><!-- Not In CNS Group Error --></label>
+        <name>Not_In_CNS_Group_Error</name>
+    </customLabels>
+    <customLabels>
         <label>Benachrichtigung</label>
         <name>Notification</name>
     </customLabels>
@@ -19766,6 +19854,10 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
     <customLabels>
         <label><!-- ShoppingCartQtyMsg --></label>
         <name>ShoppingCartQtyMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error displayed when a RO field is changed in a SIDRA Lite case --></label>
+        <name>SidraLiteROFieldError</name>
     </customLabels>
     <customLabels>
         <label><!-- SignIn --></label>

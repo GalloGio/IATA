@@ -7,8 +7,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
     public Account newParent{
         get{
             
-            if(newParent == null && oscar.New_parent__c != null)
-                FetchNewParent();
+            if(newParent == null && oscar.New_parent__c != null) FetchNewParent();
             return newParent;
         }
         set;
@@ -37,6 +36,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
                     , 'Process__c'
                     , 'Account__r.ANG_Accreditation_Model__c'
                     , 'HE_per_BSP_Mapping__c'
+                    , 'RecordTypeId'
                 };
             }
             return oscarFields;
@@ -373,7 +373,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
     }
     
     private Boolean existsLocClassDomesticError = false;
-    private Boolean isMulticountry = false;
+    public Boolean isMulticountry{get;set;}
     private Boolean isCashOrCashless = false;
     private Map<Id, Integer> bspCountMap = new Map<Id, Integer>();
     private Map<ID, Set<Account>> bspAccountMap = new Map<ID, Set<Account>>();
@@ -543,17 +543,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
         set;
     }
 
-
-    public Integer totalPagesForHEPerBSP{
-        get{
-            return hesPerBSPs.size();
-        }
-    }
-
      public Boolean showBSPPanel{
-        get{
-            return !hesPerBSPs.isEmpty();
-        }
+        get{system.debug('##ARD showBSPPanel:' +showBSPPanel);return showBSPPanel;}set;
     }
     
     public Map<Id,HEPerBSP> hesPerBSPs{
@@ -585,21 +576,31 @@ public with sharing class ANG_AccountHierarchySelectionController {
            // if(hesPerBSPsForDisplay == null){
                 hesPerBSPsForDisplay = new List<List<HEPerBSP>>();
 
+                //count the number of elements to display
+                Integer itemsToShow = 0;
+                for(HEPerBSP item : hesPerBSPs.values()) if(!item.hasParentDefined) itemsToShow++;
                 // create as many sub-lists as necessary
-                for(Integer i = 0; i <= (hesPerBSPs.values().size()-1)/rowsPerPage; i++){
+
+                for(Integer i = 0; i <= (itemsToShow-1)/rowsPerPage; i++){
                     hesPerBSPsForDisplay.add(new List<HEPerBSP>());
                 }
 
                 // fill HierarchyItems in the sub-lists
                 Integer itemNumber = 0;
                 for(HEPerBSP item : hesPerBSPs.values()){
-                    hesPerBSPsForDisplay.get(itemNumber++/rowsPerPage).add(item);
+                    if(!item.hasParentDefined) hesPerBSPsForDisplay.get(itemNumber++/rowsPerPage).add(item);
                 }
             //}
             System.debug(loggingLevel.Info, '[cls ANG_AccountHierarchySelectionController] hierarchy items lists - ' + hesPerBSPsForDisplay);
             return hesPerBSPsForDisplay;
         }
         set;
+    }
+
+    public Integer totalPagesForHEPerBSP{
+        get{
+            return hesPerBSPsForDisplay.size();
+        }
     }
 
     
@@ -753,27 +754,43 @@ public with sharing class ANG_AccountHierarchySelectionController {
         if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY)){
 
             HierarchyItem i = hierarchy.get(accountID);
+            Id currentBSP = i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
 
-            if(!existingBSPs.contains(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c)){
+            if(!existingBSPs.contains(currentBSP)){
 
                 //checkbox was selected
                 if(i.selected || i.main){
 
-                    if(!hesPerBSPs.containsKey(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c)){
-                        hesPerBSPs.put(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c, new HEPerBSP(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c, i.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, i.acc.IATA_ISO_Country__r.name));
+                    if(!hesPerBSPs.containsKey(currentBSP)){
+                        hesPerBSPs.put(currentBSP, new HEPerBSP(currentBSP, i.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, i.acc.IATA_ISO_Country__r.name));
                     } 
 
-                    hesPerBSPs.get(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c).possibleAccounts.put(i.acc.ID,i.acc);
-                
-               
+                    hesPerBSPs.get(currentBSP).possibleAccounts.put(i.acc.ID,i.acc);
+
+                    if (i.acc.Location_Type__c == AMS_Utils.GE || i.acc.Location_Type__c == AMS_Utils.HE){
+                        hesPerBSPs.get(currentBSP).hasParentDefined = true;
+                        hesPerBSPs.get(currentBSP).p.parentid = i.acc.id;
+                    } 
+
                 //flag was removed. Since it was already selected, should always contain the bsp but just in case
-                }else if(hesPerBSPs.containsKey(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c)) {
+                }else if(hesPerBSPs.containsKey(currentBSP)) {
                   //}else{  
-                    hesPerBSPs.get(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c).possibleAccounts.remove(accountID);
-                    if(hesPerBSPs.get(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c).possibleAccounts.isEmpty()) hesPerBSPs.remove(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c);
+                    hesPerBSPs.get(currentBSP).possibleAccounts.remove(accountID);
+
+                    if (i.acc.id == hesPerBSPs.get(currentBSP).p.parentid){
+
+                        hesPerBSPs.get(currentBSP).hasParentDefined = false;
+                        hesPerBSPs.get(currentBSP).p.parentid = null;
+                    } 
+
+                    if(hesPerBSPs.get(currentBSP).possibleAccounts.isEmpty()) hesPerBSPs.remove(currentBSP);
                 }
 
-            }  
+            }
+
+            //now need to check if its necessery to show the bsp selection
+            showBSPPanel = false;
+            for(HEPerBSP hePerBSP : hesPerBSPs.values())  if(!hePerBSP.possibleAccounts.isEmpty() && !hePerBSP.hasParentDefined) showBSPPanel = true;
         }
     }
 
@@ -1109,13 +1126,16 @@ public with sharing class ANG_AccountHierarchySelectionController {
         public String country { get; set; }
         public Account p { get; set; }
         public Map<ID, Account> possibleAccounts { get; set; }
+        public boolean hasParentDefined { get; set; }
 
         public HEPerBSP(Id bspId, String name, String country){
             this.bspId = bspId;
             this.name = name;
             this.country = country;
+            this.hasParentDefined = false;
             possibleAccounts = new Map<ID, Account>();
             p = new Account();
+
         }
 
     }

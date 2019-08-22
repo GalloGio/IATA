@@ -14,6 +14,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
     private boolean isHierarchyChange;
 
+	private boolean skipConvertAndSumFSAmounts;
+	
     public void execute(QueueableContext context){
         executeAdhoc();
     }
@@ -52,7 +54,15 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         this.technicalLogsMap = new Map<String,List<String>>();
         fetchTechnicalLogs(oscarId);
 
-        AMS_OSCAR__c oscar = [Select Name, Account__c,New_parent__c, ANG_Type_Of_Change__c from AMS_OSCAR__c where Id =:oscarId];
+        AMS_OSCAR__c oscar = [Select Name, Account__c,New_parent__c, ANG_Type_Of_Change__c, Account__r.IATA_ISO_Country__r.ANG_RHC_LocationType__c from AMS_OSCAR__c where Id =:oscarId];
+		
+		skipConvertAndSumFSAmounts = false;
+		
+        if(oscar.Account__r.IATA_ISO_Country__r.ANG_RHC_LocationType__c == 'Include all AEs'){
+			//Making sure that we do not override FS amounts for countries that 
+            //can have financial securities on associated entities
+			skipConvertAndSumFSAmounts = true;
+        }
 
         accountsRelated = new Set<Id>();
         accountsRelated.addAll(fetchHierarchySelection(oscar.Account__c));
@@ -85,11 +95,17 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
     }
 
     private void rollbackData(){
-        
+
         if(technicalLogsMap.isEmpty()){
             System.System.debug('There is nothing to rollback, doing nothing here.');
             return;
         }
+		
+		if(skipConvertAndSumFSAmounts){
+			//Making sure that we do not override FS amounts for countries that 
+            //can have financial securities on associated entities
+			ANG_RHCInformationTriggerHandler.skipConvertAndSumFSAmounts = true;
+		}
 
         For(String entity: technicalLogsMap.keySet()){
 
@@ -114,7 +130,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         if(technicalLogsMap.get('AMS_Agencies_Hierarchy__c') != null || technicalLogsMap.get('AMS_Agencies_relationhip__c') != null || isHierarchyChange)
             processRollbackHierarchy(technicalLogsMap.get('AMS_Agencies_Hierarchy__c'),technicalLogsMap.get('AMS_Agencies_relationhip__c'));
 
-
+        ANG_RHCInformationTriggerHandler.skipConvertAndSumFSAmounts = false;
 
     }
 

@@ -24,7 +24,7 @@ public with sharing class IFAP_BusinessRules {
     private static final string REOPENED = 'Re-open/ed';
     private static final string SCF = 'Sanity Check Failure';
     private static final string SUBMITTED = 'Submitted';
-    private static final string CLOSEDOPTOUT = 'Closed Opt-out';
+    public static final string CLOSEDOPTOUT = 'Closed Opt-out';
     private static final String CLOSED_NON_COMPLIANCE = 'Closed_Non compliance';
 
 

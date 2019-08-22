@@ -84,7 +84,7 @@ public class AMS_OscarCase_RiskMgmt {
 			for(AMS_Process_Detail__c apd:[select id, HOId__c, Case__c, Account__c from AMS_Process_Detail__c where case__c in:mapTrgNew.keyset()])
 				mapAllHOs.put(apd.Account__c, apd.HOId__c);
 
-			Map<Id,Account> allAccsMap = new Map<Id,Account>([select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, 
+			Map<Id,Account> allAccsMap = new Map<Id,Account>([select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Location_Type__c, ANG_Accreditation_Model__c, Accumulated_Irregularities__c, 
 							ParentId, Parent.ParentId, CNS_Agency__c, Default_date__c, ANG_IsNewGenAgency__c, 
 							(SELECT Id, RecordTypeId, CreatedDate, AccountId, Status, IFAP_Financial_Year__c FROM Cases WHERE RecordTypeId = :AMS_Utils.RECTYPE_IFAP AND Id NOT IN :parentCasesIds)
 							from Account
@@ -305,7 +305,12 @@ public class AMS_OscarCase_RiskMgmt {
                 for(ID idCase:mapChangeCodeToCreate.keyset()){
 					for(AMS_ChangeCodes__c cc :mapChangeCodeToCreate.get(idCase)){
 						id CurrAccntId = mapCases.get(idCase).AccountId;
-						accountIds.add(CurrAccntId);
+						Account currentAcc = allAccsMap.get(CurrAccntId);
+						if(currentAcc.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && currentAcc.Location_Type__c != AMS_Utils.GE && cc.Apply_to_hierarchy__c == false){
+							accountIds.add(mapAllHOs.get(CurrAccntId));
+						} else {
+							accountIds.add(CurrAccntId);
+						}
 						//Some change codes need to be created for the whole hierarchy...
 						if(cc.Apply_to_hierarchy__c){
 							id CurrAccntHOID = mapAllHOs.get(CurrAccntId);
@@ -346,8 +351,13 @@ public class AMS_OscarCase_RiskMgmt {
 						id CurrAccntId = mapCases.get(idCase).AccountId;
 						//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 
-
-                        Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null, mapCases.get(idCase).Account.CNS_Agency__c, aaccsPerAccount, fOPsMap.get(CurrAccntId));
+						Agency_Applied_Change_code__c AACC;
+						Account currentAcc = allAccsMap.get(CurrAccntId);
+						if(currentAcc.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && currentAcc.Location_Type__c != AMS_Utils.GE && cc.Apply_to_hierarchy__c == false){
+                        	AACC = CreateChangeCode(mapCases, idCase, cc, allAccsMap.get(mapAllHOs.get(CurrAccntId)), mapCases.get(idCase).Account.CNS_Agency__c, aaccsPerAccount, fOPsMap.get(mapAllHOs.get(CurrAccntId)));
+						} else {
+                        	AACC = CreateChangeCode(mapCases, idCase, cc, null, mapCases.get(idCase).Account.CNS_Agency__c, aaccsPerAccount, fOPsMap.get(CurrAccntId));
+						}
 
 						if(AACC!=null)
 							lsAACC.add(AACC);

@@ -32,6 +32,8 @@ private class AmazonFileTrgHelperTest {
         Account account = new Account();
         account.Name = 'TestAccount';
         account.Type = 'Airport';
+        account.Sector__c = AMS_Utils.SECTOR_INFRASTRUCTURE;
+        account.Category__c = AMS_Utils.CATEGORY_AIRPORT_AUTHORITY;
         account.IATACode__c = '12345678';
         insert account;
 
@@ -116,7 +118,11 @@ private class AmazonFileTrgHelperTest {
 
     @isTest static void test_InsertWithAction() {
         loadCredentials();
-        Account account = new Account(Name = 'testAccount');
+        Account account = new Account(
+            						Name = 'testAccount', 
+                                    Sector__c = AMS_Utils.SECTOR_AIRLINE, 
+            						Category__c = AMS_Utils.CATEGORY_TRAVEL_AGENT
+        							);
         insert account;
         
         Test.startTest();
@@ -132,7 +138,11 @@ private class AmazonFileTrgHelperTest {
 
     @isTest static void test_UpdateWithAction_Reminder30() {
         loadCredentials();
-        Account account = new Account(Name = 'testAccount');
+        Account account = new Account(
+            						Name = 'testAccount',
+            						Sector__c = AMS_Utils.SECTOR_AIRLINE,
+            						Category__c = AMS_Utils.CATEGORY_TRAVEL_AGENT
+        							); 
         insert account;
 
         Case cse = new Case(
@@ -156,7 +166,11 @@ private class AmazonFileTrgHelperTest {
 
     @isTest static void test_UpdateWithAction_ReminderOnExpiry() {
         loadCredentials();
-        Account account = new Account(Name = 'testAccount');
+        Account account = new Account(
+            						Name = 'testAccount',
+            						Sector__c = AMS_Utils.SECTOR_AIRLINE,
+            						Category__c = AMS_Utils.CATEGORY_TRAVEL_AGENT
+        							);
         insert account;
 
         Case cse = new Case(
@@ -193,7 +207,7 @@ private class AmazonFileTrgHelperTest {
 
         insert conf;
 
-        Account acc = new Account(name = 'some airline', Sector__c = 'Airline', 
+        Account acc = new Account(name = 'some airline', Sector__c = AMS_Utils.SECTOR_AIRLINE, Category__c = AMS_Utils.CATEGORY_TRAVEL_AGENT,
             IATACode__c = '123', recordtypeid = AMS_Utils.RECTYPE_AIRLINE);
 
         insert acc;

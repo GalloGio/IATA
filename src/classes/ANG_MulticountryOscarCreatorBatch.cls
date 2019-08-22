@@ -98,45 +98,8 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 			}else{
 
 				System.debug('Origin is either not Portal or does not have  an accreditation.');
-
-				fieldsOfObject = new Map<String,Object>();
 				
-				fieldsOfObject.put('ANG_Accreditation_type__c',acct.ANG_Accreditation_Model__c);
-				fieldsOfObject.put('Abbreviated_Address__c',acct.Abbreviated_address__c);
-				fieldsOfObject.put('Abbreviated_name__c',acct.Abbreviated_name__c);
-				fieldsOfObject.put('Accept_terms_and_conditions__c',true);
-				fieldsOfObject.put('Billing_State__c',acct.BillingState);
-				fieldsOfObject.put('Branch_Office_City__c',acct.BillingCity);
-				fieldsOfObject.put('Branch_Office_Country__c',acct.IATA_ISO_Country__c);
-				fieldsOfObject.put('Branch_Office_Email__c',acct.Email__c);
-				fieldsOfObject.put('Branch_Office_FAX__c',acct.Fax);
-				fieldsOfObject.put('Branch_Office_Phone__c',acct.Phone);
-				fieldsOfObject.put('Branch_Office_Postal_code__c',acct.BillingPostalCode);
-				fieldsOfObject.put('Branch_Office_Street_name_number__c',acct.BillingStreet);
-				fieldsOfObject.put('IATACode__c',acct.IATACode__c);
-				fieldsOfObject.put('IATA_ISO_State__c',acct.Iso_State__c);
-				fieldsOfObject.put('ISSP_AMS_Legal_Status__c',AMS_AgencyHelper.transformCompanyType(acct.Company_Type__c));
-				fieldsOfObject.put('ISSP_AMS_License_No__c',acct.License_Number__c);
-				fieldsOfObject.put('ISSP_AMS_VAT_number__c',acct.VAT_Number__c);
-				fieldsOfObject.put('Location_Class__c',acct.Location_Class__c);
-				fieldsOfObject.put('Location_Type__c',acct.Location_Type__c);
-				fieldsOfObject.put('Mobile__c',acct.Mobile__c);
-				fieldsOfObject.put('Operation__c',acct.Operation__c);
-				fieldsOfObject.put('Remittance_frequency__c','');
-				fieldsOfObject.put('Shipping_City__c',acct.ShippingCity);
-				fieldsOfObject.put('Shipping_Country__c',acct.ShippingCountry);
-				fieldsOfObject.put('Shipping_ISO_Country__c',acct.IATA_ISO_Shipping_Country__c);
-				fieldsOfObject.put('Shipping_ISO_State__c',acct.IATA_ISO_Shipping_State__c);
-				fieldsOfObject.put('Shipping_Postal_Code__c',acct.ShippingPostalCode);
-				fieldsOfObject.put('Shipping_State__c',acct.ShippingState);
-				fieldsOfObject.put('Shipping_Street__c',acct.ShippingStreet);
-				fieldsOfObject.put('Short_Name__c',acct.Short_Name__c);
-				fieldsOfObject.put('Solicitation_Flag__c',acct.Solicitation_Flag__c);
-				fieldsOfObject.put('Submitted_to_IATA__c',true);
-				fieldsOfObject.put('Trade_Name__c',acct.TradeName__c);
-				fieldsOfObject.put('VAT_Number_2__c',acct.VAT_Number_2__c);
-				fieldsOfObject.put('Website__c',acct.Website);
-				fieldsOfObject.put('ISSP_Branch_AccountId__c',acct.Id);
+				fieldsOfObject = ANG_MulticountryHelper.buildStagingAreaFieldsObject(acct);
 				
 				stagingArea = ANG_EntityCreator.createStagingArea(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Associate_Entity'), acct.Name, newCaseMC.Id, fieldsOfObject);
 				
