@@ -44,6 +44,7 @@ public with sharing class PortalCasesCtrl {
     private static PortalSearchFilterWrapper filtersWrapper;
     private static Integer requestedPageNumber;
 
+    private static String AGENT_ACCREDITATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AgencyAccreditation__c;
     /*
     *
     *
@@ -457,8 +458,8 @@ public with sharing class PortalCasesCtrl {
                 };
             }
         } else if(record.RecordType.Name == 'OSCAR Communication') {
-            if(amsListForm != null && amsListForm.contains(record.Id) && !agencyRightList.isEmpty()) {
-                if(record.Status == 'Draft' || record.Status == 'Open - EDMC') {
+            if(!agencyRightList.isEmpty()) {
+                if(amsListForm != null && amsListForm.contains(record.Id) && (record.Status == 'Draft' || record.Status == 'Open - EDMC') ) {
                     if(record.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || record.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT) {
                         return new Map<Id, String>{
                             record.Id => 
@@ -594,13 +595,69 @@ public with sharing class PortalCasesCtrl {
     public static Case getCaseById(String caseId) {
         Case caseAux = [SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c, 
                         CreatedDate, CreatedBy.Name,LastModifiedDate, Portal_Case_Status__c,Topic__c,
-                        Subtopic__c, Region__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
-                        Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,
-                        BSPCountry__c
+                        Subtopic__c, Region__c, Reason1__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
+                        Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,
+                        RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
+                        Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone
                         FROM Case 
                         WHERE Id = :caseId];
 
         return caseAux;
+    }
+
+    @AuraEnabled
+    public static String getSurveyLink(String caseId){
+        Case newCase = getCaseById(caseId);
+
+        if(newCase.status != 'Closed'){
+            return null;
+        }
+
+        Id profileId = Userinfo.getProfileId();
+        String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
+        ClosedSurvey__c csValues = ClosedSurvey__c.getInstance(newCase.RecordType__c);
+        String userRole =  newCase.WhoClosedCase__c != null ? DAL_WithoutSharing.getUserDetails(newCase.WhoClosedCase__c).UserRole.Name : '';
+
+        String caseType = ISSP_Constant.caseTypeMap.get(newCase.RecordType.Name);
+
+        String surveyLanguage = UserInfo.getLanguage();
+
+        Boolean matchingStatus = newCase.status == 'Closed';
+        Boolean isPWCCase = newCase.RecordType.Name == 'ISS Portal PwC' || newCase.RecordType.Name == 'ISS Portal PwC for IATA user';
+        Boolean isDPCuser = profileName.startsWith('ISS Portal DPC Admin');
+        Boolean isToShowSurveyBtn = csValues != null && csValues.RolesAvailable__c.contains(userRole) || csValues.RolesAvailable__c.contains('All');
+        Boolean matchingCaseType = caseType == null;
+        Boolean surveyCompleted = false;
+
+        List<Instant_Surveys__c> Survey_List = new List<Instant_Surveys__c>([SELECT Case_ID__c
+        FROM Instant_Surveys__c
+        WHERE Relationship_to_Case__c = :newCase.Id
+        AND recordType.developername != 'Live_Agent_Chat']);
+
+        if (Survey_List != null && Survey_List.size() > 0) {
+            surveyCompleted = true ;
+        }
+
+        Boolean showLink = matchingStatus && !isPWCCase && !isDPCuser && isToShowSurveyBtn && matchingCaseType && !surveyCompleted;
+
+        if(!showLink){
+            return null;
+        }
+
+        String fName = newCase.Contact.FirstName != null ? newCase.Contact.FirstName : '';
+        String lName = newCase.Contact.LastName != null ? newCase.Contact.LastName : '';
+        String email = newCase.Contact.Email != null ? newCase.Contact.Email : '';
+        String phone = newCase.Contact.Phone != null ? newCase.Contact.Phone : '';
+
+        String surveyLink = 'http://survey.clicktools.com/go?iv='
+                +System.Label.ISSP_SurveyClosedCase
+                +'&q1='+newCase.Id
+                +'&q2='+newCase.CaseNumber+
+                +'&q3='+newCase.ContactId
+                +'&q9='+fName+'|'+lName+'|'+email+'|'+phone
+                +'&language='+surveyLanguage;
+
+        return surveyLink;
     }
 
     /*
@@ -793,6 +850,100 @@ public with sharing class PortalCasesCtrl {
         }
 
         return returnWrapper;
+    }
+
+    public static String fullnameNOCFile(Case caseObj) {
+
+            String folderName = '500/' + caseObj.Id + '/';
+            String fileName = 'Notice_of_Change_form.pdf';
+            String fullname = folderName + fileName;
+
+            List<AmazonFile__c> amazonfilesList = [SELECT Id, Full_Name_Unique__c FROM AmazonFile__c WHERE Case__c = :caseObj.Id];
+            Boolean hasFile = false;
+            for(AmazonFile__c af : amazonfilesList) {
+                if(af.Full_Name_Unique__c == fullname) {
+                    hasFile = true;
+                    break;
+                }
+            }
+
+            if(hasFile){
+                String link = ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fullname);
+
+                return link;
+            } else {
+
+                Boolean isBankAccountChange = false;
+
+                if(caseObj.Reason1__c == 'Bank Detail Update')
+                    isBankAccountChange = true;
+
+                return '/ISSP_AMS_PDF_NOC?caseId=' + caseObj.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+            }
+    }
+
+    @AuraEnabled
+    public static OptionWrapper optionBuilder(Case caseObj) {
+        Boolean isAdmin = CSP_Utils.isAdmin();
+
+        Boolean isOnlineOSCARCase = false;
+        Boolean isTravelAccreditation = false;
+
+        List <AMS_Pax_Accreditation_Form__c> amsList = [SELECT Id, Operation_Type__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseObj.Id];
+        if (!amsList.isEmpty()){
+            isOnlineOSCARCase = true;
+            if (amsList[0].Operation_Type__c != null && amsList[0].Operation_Type__c.StartsWith('Travel_Agent')) {
+                isTravelAccreditation = true;
+            }
+        }
+
+        Boolean showAccreditation = false;
+        List <Portal_Application_Right__c> appRightList = [SELECT Id FROM Portal_Application_Right__c
+                                                            WHERE Contact__c = :myUser.ContactId AND
+                                                            Right__c = 'Access Granted'  AND
+                                                            Portal_Application__c = :AGENT_ACCREDITATION_PORTAL_SERVICE];
+        if (!appRightList.isEmpty())
+            showAccreditation = true;
+
+        Boolean isMSOcase = false;
+        String caseType = ISSP_Constant.caseTypeMap.get(caseObj.RecordType.Name);
+        if (caseType == 'OSCAR' && (caseObj.Reason1__c == 'GSA / MSO / Handling Agent' || caseObj.Subject.startsWith('MSO code ')))
+            isMSOcase = true;
+        
+        String fullnameNOCFile = fullnameNOCFile(caseObj);
+
+        OptionWrapper optToReturn = new OptionWrapper(isAdmin, isOnlineOSCARCase, showAccreditation, isMSOcase, isTravelAccreditation, fullnameNOCFile);
+        return optToReturn;
+    }
+
+    public class OptionWrapper {
+
+        @AuraEnabled
+        public Boolean isAdmin {get; set;}
+
+        @AuraEnabled
+        public Boolean isOnlineOSCARCase {get; set;}
+
+        @AuraEnabled
+        public Boolean showAccreditation {get; set;}
+
+        @AuraEnabled
+        public Boolean isMSOcase {get; set;}
+
+        @AuraEnabled
+        public Boolean isTravelAccreditation {get; set;}
+
+        @AuraEnabled
+        public String fullnameNOCFile {get; set;}
+
+        public OptionWrapper(Boolean isAdmin, Boolean isOnlineOSCARCase, Boolean showAccreditation, Boolean isMSOcase, Boolean isTravelAccreditation, String fullnameNOCFile){
+            this.isAdmin = isAdmin;
+            this.isOnlineOSCARCase = isOnlineOSCARCase;
+            this.showAccreditation = showAccreditation;
+            this.isMSOcase = isMSOcase;
+            this.isTravelAccreditation = isTravelAccreditation;
+            this.fullnameNOCFile = fullnameNOCFile;
+        }
     }
 
     /*

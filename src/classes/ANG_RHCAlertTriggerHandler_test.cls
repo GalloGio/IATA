@@ -12,6 +12,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 				FolderId = UserInfo.getUserId()
 				);
 		}
+		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+		insert new User(FirstName = 'Test1 User', Division = 'UnitTest', License_Cost_Center__c = 'AAA000AA00', Username = 'test1@iata.org.amsdev1', LastName = 'Test1', Email = 'test1@iata.org', Alias = 'Test1', CommunityNickname = 'Test1', TimeZoneSidKey = 'Europe/Brussels', LocaleSidKey = 'en_US', EmailEncodingKey = 'UTF-8', ProfileId = testProfile.Id, LanguageLocaleKey = 'en_US');
 
 		insert new Notification_template__c (
 			Subject__c = 'Some subject',
@@ -999,8 +1001,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 	    insert con;
 
 	    //NEWGEN-2005
-	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com');
-	    
+	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com', Active__c = true);
+	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true);
 	    test.StartTest();
 	    
 	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
@@ -1062,7 +1064,10 @@ private class ANG_RHCAlertTriggerHandler_test {
 	    insert con;
 
 	    //NEWGEN-2005
-	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com', Active__c = true);
+	    insert new RTS_Senior_Manager__c(Name = 'Test1', Email__c = 'test.2005@yopmail.com');
+	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true);
+	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test3', Email__c = 'test1@iata.org', Active__c = true);
+	    
 	    
 	    test.StartTest();
 	    

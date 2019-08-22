@@ -25,25 +25,24 @@
     margin-top: 16px;
 }
 
-.portalFooter .iataPages {
+.portalFooter .iataPages2 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    min-width: 450px;
     margin-top: 40px;
 }
 
-.portalFooter .iataPages>div {
+.portalFooter .iataPages2>div {
     display: flex;
     justify-content: center;
     padding: 0 20px;
     border-right: 2px solid rgba(255, 255, 255, 0.1);
 }
-.portalFooter .iataPages>div:last-child {
+.portalFooter .iataPages2>div:last-child {
     border-right: 0;
 }
 
-.portalFooter .iataPages>div a {
+.portalFooter .iataPages2>div a {
     color: rgba(255, 255, 255, 0.8);
     font-size: 14px;
     font-weight: 500;
