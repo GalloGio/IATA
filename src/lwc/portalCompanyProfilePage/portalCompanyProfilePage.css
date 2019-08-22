@@ -53,11 +53,14 @@
     justify-content: center;
 }
 
-.slds-form-element__label{
-    display:none;
+.displayFlex {
+  display: flex;
 }
 
-.borderedSearch{
-    width:30%;
-    border-bottom: solid #e2e4e8 2px;
+.marginRight {
+  margin-right: 10px;
+}
+
+.heightCreateContact {
+  height: 100%;
 }

@@ -3009,6 +3009,11 @@ public without sharing class ISSP_AMS_Accreditation {
                     system.DEBUG('IATA_ISO_State__c + Shipping_ISO_State__c: ' + newForm.IATA_ISO_State__c + newForm.Shipping_ISO_State__c);
                     newForm.Shipping_ISO_State__c = newForm.IATA_ISO_State__c;
                 }
+                //INC484624-START
+                if(newForm.Shipping_Street__c == null)  newForm.Shipping_Street__c = newForm.Branch_Office_Street_name_number__c;
+                if(newForm.Shipping_Postal_Code__c == null) newForm.Shipping_Postal_Code__c = newForm.Branch_Office_Postal_code__c;
+                if(newForm.Shipping_City__c == null) newForm.Shipping_City__c = newForm.Branch_Office_City__c;    
+                //INC484624-END
             }
 
             if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && (newCase.Reason1__c == 'Major Change')) {
@@ -3019,6 +3024,12 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (newForm.Shipping_ISO_State__c == null) {
                     newForm.Shipping_ISO_State__c = accountConcerned.IATA_ISO_Shipping_State__c;
                 }
+                //INC484624-START
+                if(newForm.Shipping_Street__c == null) newForm.Shipping_Street__c = accountConcerned.ShippingStreet;
+                if(newForm.Shipping_Postal_Code__c == null) newForm.Shipping_Postal_Code__c = accountConcerned.ShippingPostalCode;
+                if(newForm.Shipping_City__c == null) newForm.Shipping_City__c = accountConcerned.ShippingCity;
+                //INC484624-END
+
             }
 
             upsert newForm;

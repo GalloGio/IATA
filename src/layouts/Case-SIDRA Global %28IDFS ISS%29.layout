@@ -344,6 +344,10 @@
                 <behavior>Readonly</behavior>
                 <field>Collected_Amount_all_periods_USD__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Recovered_Amount__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
