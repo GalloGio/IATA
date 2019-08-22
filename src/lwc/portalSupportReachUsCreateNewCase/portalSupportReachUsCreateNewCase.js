@@ -292,8 +292,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                 } else if (allresults.length === 0) {
                     this.singleresult = [{ title: this.label.CSP_NoSearchResults }];
                 }
-                this.agentProfile = true;
-                this.setPortalUserIATACode();
+                this.getProfile();
 
                 //activate spinner
                 this.loading = false;
@@ -305,9 +304,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         getProfile()
             .then(result => {
                 this.agentProfile = JSON.parse(JSON.stringify(result)).includes('ISS Portal Agency');
-                if (!JSON.parse(JSON.stringify(result)).includes('Admin')) {
-                    this.setPortalUserIATACode();
-                }
+				if(this.agentProfile === true) 
+					this.setPortalUserIATACode();
             });
     }
 
