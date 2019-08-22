@@ -78,31 +78,22 @@
                         <!-- Profile: Branch Offices-->
                         <template if:true={tab1Active}>
                             <template if:true={branchesLoaded}>
-
-                                <div class="slds-clearfix slds-m-top_xx-large slds-m-bottom_medium">
-                                    <div class="slds-float_left class borderedSearch">
-                                        <div class="slds-show_inline-block">
-                                            <img src={searchColored} height="42"
-                                                width="42" class="slds-p-left_small">
-                                        </div>
-
-                                        <div class="slds-show_inline-block">
-                                            <div class="fullWidth">
-                                                <lightning-input name="branch-search" type="text"
-                                                    placeholder={labels.FindBranch}
-                                                    onchange={onchangeSearchInputBranches}
-                                                    class="borderlessInput grayInputBackground searchInput">
-                                                </lightning-input>
-                                            </div>
-                                        </div>
+                                <div class="slds-col slds-grid slds-wrap slds-p-top_medium slds-m-bottom_medium slds-size_1-of-1">
+                                    <div class=" slds-col slds-p-top_xx-large bottomLightGrayBorder searchContainer">
+                                        <img src={searchColored} height="24" width="24" />
+                                        <lightning-input name="branch-search"
+                                            type="text"
+                                            placeholder={labels.FindBranch}
+                                            class="hideInputLabel borderlessInput grayInputBackground text-xsmall"
+                                            onchange={onchangeSearchInputBranches}>
+                                        </lightning-input>
                                     </div>
-                                </div>
-
+                                </div>  
                                 <div class="slds-grid slds-wrap slds-m-top_x-small">
                                     <c-portal-contact-list is-account="true" object-name="Account" class="fullWidth"
                                         fields-list={branchFields} fields-list-to-create={fieldsListToCreate}
                                         default-sort="TradeName__c" records={branches} openmodel={openmodel} recordid={recordid}
-                                        objectid={accountid} fetching={isFetching} onsearchrecords={searchRecords} show-edit={canEditAccount}>
+                                        objectid={accountid} fetching={isFetching} onsearchrecords={searchRecords} show-edit={canEditAccount} search-key={searchTextBranches}>
                                     </c-portal-contact-list>
                                 </div>
                             </template>
@@ -119,38 +110,40 @@
 
                             <template if:true={contactsLoaded}>
 
-                                <div class="slds-clearfix slds-m-top_xx-large slds-m-bottom_medium">
-                                    <div class="slds-float_left borderedSearch">
-                                        <div class="slds-show_inline-block">
-                                            <img src={searchColored} height="42"
-                                                width="42" class="slds-p-left_small">
-                                        </div>
+                                <div class="slds-grid slds-clearfix slds-m-top_xx-large slds-m-bottom_medium">                                   
 
-                                        <div class="slds-show_inline-block">
-                                            <div class="fullWidth">
-                                                <lightning-input name="contact-search" type="text" value={searchValue}
+                                    <div class="slds-col slds-p-top_medium slds-size_1-of-2">
+                                        <div class="searchContainer">
+                                            <div class="searchContainer bottomLightGrayBorder">
+                                                <img src={searchColored} height="24" width="24" />
+                                                <lightning-input name="contact-search"
+                                                    type="text"
                                                     placeholder={labels.FindContact}
-                                                    onchange={onchangeSearchInputContacts}
-                                                    class="borderlessInput grayInputBackground searchInput">
+                                                    class="borderlessInput grayInputBackground hideInputLabel text-xsmall"
+                                                    value={searchValue}
+                                                    onchange={onchangeSearchInputContacts}>
                                                 </lightning-input>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="slds-float_right displayFlex">
-                                        <!-- LABELS -->
-                                        <span if:true={showIFAPBtn}>
-                                            <lightning-button variant="brand" label={labels.ISSP_Assign_IFAP}
-                                                title={labels.ISSP_Assign_IFAP} onclick={navigateToIFAP}
-                                                class="slds-float_right containedButton marginRight">
-                                            </lightning-button>
-                                        </span>
-                                        <span>
-                                            <lightning-button variant="brand" label={labels.NewContact}
-                                                title="Create New Contact" disabled={contactsNotLoaded}
-                                                onclick={createContact} class="slds-float_right containedButton heightCreateContact">
-                                            </lightning-button>
-                                        </span>
+                                    <div class="slds-col slds-size_1-of-2">                                          
+                                        <div class="slds-float_right displayFlex">
+                                            <!-- LABELS -->
+                                            <span if:true={showIFAPBtn}>
+                                                <lightning-button variant="brand" label={labels.ISSP_Assign_IFAP}
+                                                    title={labels.ISSP_Assign_IFAP} onclick={navigateToIFAP}
+                                                    class="slds-float_right containedButton marginRight">
+                                                </lightning-button>
+                                            </span>
+                                            <span>
+                                                <lightning-button variant="brand" label={labels.NewContact}
+                                                    title="Create New Contact" disabled={contactsNotLoaded}
+                                                    onclick={createContact} class="slds-float_right containedButton heightCreateContact">
+                                                </lightning-button>
+                                            </span>
+                                        </div>
+                                        
                                     </div>
 
 
@@ -162,7 +155,7 @@
                                         fields-list-to-create={fieldsListToCreate} records={contacts}
                                         openmodel={openmodel} recordid={recordid} accountid={accountid}
                                         objectid={objectid} ongetcontacts={getContacts} fetching={isFetching}
-                                        onrefreshview={refreshview} onsearchrecords={searchRecords}>
+                                        onrefreshview={refreshview} onsearchrecords={searchRecords} search-key={searchTextContacts}>
                                     </c-portal-contact-list>
 
                                 </div>

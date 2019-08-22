@@ -252,6 +252,9 @@
                                             <div
                                                 class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
 
+                                                <lightning-messages>
+                                                </lightning-messages>
+
                                                 <!-- Display same fields for edit -->
                                                 <template if:false={haveEditFields}>
                                                     <template for:each={fields} for:item="field">

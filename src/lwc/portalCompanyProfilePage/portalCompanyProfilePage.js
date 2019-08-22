@@ -510,8 +510,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
         this.timeout = setTimeout(() => {
             //this.testfunction();
 
-            let contactList = this.template.querySelector('c-portal-contact-list');
-
             this.contactsQuery = this.searchTextContacts;
             this.searchRecords('Contact');
 
@@ -532,7 +530,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
         this.timeout = setTimeout(() => {
             //this.testfunction();
 
-            let contactList = this.template.querySelector('c-portal-contact-list');
             this.contactsQuery = this.searchTextContacts;
 
             this.searchRecords('Contact');
