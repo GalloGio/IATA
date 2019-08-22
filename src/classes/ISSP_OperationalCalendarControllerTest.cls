@@ -67,6 +67,7 @@ public class ISSP_OperationalCalendarControllerTest {
         account.IATA_ISO_Country__c = country.Id;
         account.Remittance_frequency__c = 'M';
         account.Location_Class__c = operationType;
+        account.Membership_status__c = 'Non-IATA member';
         insert account;
         account.IATA_ISO_Country__r = country;
         
@@ -515,7 +516,10 @@ public class ISSP_OperationalCalendarControllerTest {
             Id= user.contact.accountId,
             RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IATA_Airline').getRecordTypeId()
         );
-        update account;
+        User adminuser = [SELECT Id FROM User WHERE Profile.Name = 'System Administrator - automated processes' AND isActive = true LIMIT 1];
+        System.runAs(adminuser) {
+            update account;
+        }
         insert new Services_Rendered__c(Services_Rendered_to_Airline__c = user.contact.accountId);
 
         Test.StartTest();
@@ -564,7 +568,10 @@ public class ISSP_OperationalCalendarControllerTest {
             Id= user.contact.accountId,
             RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IATA_Airline').getRecordTypeId()
         );
-        update account;
+        User adminuser = [SELECT Id FROM User WHERE Profile.Name = 'System Administrator - automated processes' AND isActive = true LIMIT 1];
+        System.runAs(adminuser) {
+            update account;
+        }
 
         insert new Services_Rendered__c(Services_Rendered_to_Airline__c = user.contact.accountId);
 
@@ -630,7 +637,10 @@ public class ISSP_OperationalCalendarControllerTest {
             Id= user.contact.accountId,
             RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IATA_Airline').getRecordTypeId()
         );
-        update account;
+        User adminuser = [SELECT Id FROM User WHERE Profile.Name = 'System Administrator - automated processes' AND isActive = true LIMIT 1];
+        System.runAs(adminuser) {
+            update account;
+        }
 
         insert new Services_Rendered__c(Services_Rendered_to_Airline__c = user.contact.accountId);
 
