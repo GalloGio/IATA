@@ -192,6 +192,24 @@
                                 </template>
                             </template>
 
+                            <template if:true={field.isPrivacyManagement}>
+                                <div key={labels.IdCardNumber}
+                                    class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-1 labelValue slds-form-element_stacked">
+                                    <div class="slds-form-element__label">
+                                        {field.label}
+                                    </div>
+                                    <div class="textValue">
+                                        <div class="slds-form-element__static">
+                                            <div class="text-xsmall slds-size_1-of-1">
+                                                <a class="text-blue" onclick={navigateToPrivacyPortal}>
+                                                    {field.link}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
                         </template>
                     </div>
                 </template>
