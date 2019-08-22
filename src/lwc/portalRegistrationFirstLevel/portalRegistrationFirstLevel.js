@@ -59,6 +59,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     @track isSanctioned = false;
     @track isLoading = true;
     @track config = {};
+    @track userInfo = {}
     @track registrationForm = { "email" : "",
                                 "firstName" : "",
                                 "lastName" : "",
@@ -201,7 +202,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         console.log('isGuest: ', isGuest);
         if(isGuest == false){
             //todo:this shouldnt navigate on community builder!
-            navigateToPage('/csportal/s/',{});
+            navigateToPage(CSP_PortalPath,{});
             return;
         }
 
@@ -223,7 +224,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                 this.registrationForm.country = result.countryId;
                 if(this.isSanctioned == true){
                     //navigate to error page
-                    navigateToPage('/csportal/s/restricted-login');
+                    navigateToPage(CSP_PortalPath + 'restricted-login');
                 }else{
 
                     //getConfig
@@ -294,7 +295,20 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     /* ==============================================================================================================*/
 
     handleNavigateToLogin() {
-        navigateToPage("/csportal/s/login");
+
+        if(this.userInfo.hasExistingUser){
+            if(this.userInfo.hasExistingUser == true && this.registrationForm.email.length > 0){
+                let params = {};
+                params.email = this.registrationForm.email;
+                params.redirect = 1;
+                navigateToPage(CSP_PortalPath + 'login',params);
+            }else{
+                navigateToPage(CSP_PortalPath + 'login');
+            }
+        }else{
+            navigateToPage(CSP_PortalPath + 'login');
+        }
+
     }
 
     handleChangeEmail(event){
@@ -341,7 +355,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                 this._showEmailValidationError(true, InvalidMailFormatLabel);
                 this.isLoading = false;
             }else{
-                RegistrationUtilsJs.checkEmailIsDisposable(`${this.registrationForm.email}`).then(result=> {
+                let anonymousEmail = 'iata' + this.registrationForm.email.substring(this.registrationForm.email.indexOf('@'));
+                RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result=> {
                     if(result == 'true'){
                        //todo:disposable email alert!
                         this._showEmailValidationError(true, InvalidMailFormatLabel);
@@ -357,8 +372,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                             var userInfo = JSON.parse(JSON.stringify(result));
                             console.log('userInfo: ', userInfo);
                             this.userInfo = userInfo;
-                            if(userInfo.hasExistingContact){
-                                if(userInfo.hasExistingUser){
+                            if(userInfo.hasExistingContact == true){
+                                if(userInfo.hasExistingUser == true){
                                     //todo:navigate to Login Page with email parameter
                                     /*
                                     let params = {};
@@ -378,7 +393,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                                     this._initializePhoneInput();
                                 }
                             }else{
-                                if(userInfo.isEmailAddressAvailable){
+                                if(userInfo.isEmailAddressAvailable == true){
                                    //todo: show form
                                    this.displayContactForm = true;
                                     this.isEmailFieldReadOnly = true;

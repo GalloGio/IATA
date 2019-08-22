@@ -312,8 +312,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             system.debug('u: ' + u);
             system.debug('password: ' + password);
             system.debug('accountId: ' + accountId);
-            String link ;
-            String cleanUsername = u.userName.replace('+', Comm_User_Helper.plusReplacer);
+
 
             if (lang != null && lang != ''){
                 system.debug('LANG IN CREATE USER: ' + lang);
@@ -327,6 +326,9 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             userId = Site.createPortalUser(u, accountId, password, false);
             system.debug('USERID: ' + userId);
             if (userId != null) {
+                /*
+                String link ;
+                String cleanUsername = u.userName.replace('+', Comm_User_Helper.plusReplacer);
 
                 String encodedPart = 'c='+EncodingUtil.urlEncode(EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
 
@@ -339,6 +341,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 system.debug('aqui link :::' + link);
                 emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link,Comm_User_Helper.ONEIDENTITY, community);
                 Comm_User_Helper.sendEmail( template ,emailWrap, con, community);
+                */
+                //todo:send email
+                String link = PortalPasswordHandler.generateUrl(u, password, 'firstLogin');
+                Map<String, String> emailMap = PortalPasswordHandler.portalWelcomeEmailMap(u, link);
+                PortalPasswordHandler.sendEmail(userId, 'CSP_New_Member_Welcome_Email', emailMap);
 
                 List<PermissionSet> permissionList = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_SSO'];
                 if(permissionList.size() > 0){
@@ -353,7 +360,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 
         } catch (exception ex) {
-            system.debug('Portal Level 1 registration - Site.createPortalUser(u, accountId,null, true):');
+            system.debug('Portal Level 1 registration - createNewUser');
             //transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'sfdcadmin@iata.org'});
             return userId;
         }
