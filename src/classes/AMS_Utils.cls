@@ -1621,9 +1621,8 @@ public without sharing class AMS_Utils {
                         system.debug('DDD oldValue:' + oldValue);
                         system.debug('DDD newValue:' + newValue);
                                                     
-                        if (oldValue != newValue)
+                        if (oldValue != newValue || (accFieldApiName == 'Covered_Ownership__c' && AMS_AccountRoleCreator.isAccountRoleCreationRunning) ) //Correction with Change of Ownership
                             objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));                       
-
 
                         acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
                     }
