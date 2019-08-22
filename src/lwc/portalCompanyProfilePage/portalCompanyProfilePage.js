@@ -106,7 +106,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
         return (this.loggedUser == null || this.loggedUser.Contact == null || this.loggedUser.Contact.AccountId == null);
     }
 
-    _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP };
+    @track _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
