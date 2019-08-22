@@ -80,7 +80,7 @@
         <fullName>Auto_fill_OI_subject</fullName>
         <description>used to fill in CPS issue check subject with a standard naming convention</description>
         <field>Subject__c</field>
-        <formula>TEXT(Region__c) &amp; &quot; - &quot; &amp; TEXT(  OperationCPS__c ) &amp; &quot; - &quot; &amp; text(Country__c) &amp; &quot; - &quot;  &amp; &quot; - &quot; &amp; TEXT(YEAR( Reporting_Month__c )) &amp; &quot;/&quot; &amp; IF(MONTH(Reporting_Month__c)&lt;10,&quot;0&quot;&amp; TEXT(MONTH(Reporting_Month__c)),TEXT(MONTH(Reporting_Month__c))) &amp; &quot; - &quot; &amp; TEXT( Issue_Categorization__c )&amp; &quot; - &quot; &amp;TEXT( Issue_Sub_Category__c ) &amp; &quot; - USD &quot; &amp; TEXT( Amount_USD_auto__c )</formula>
+        <formula>TEXT(Region__c) &amp; &quot; - &quot; &amp; TEXT(  OperationCPS__c ) &amp; &quot; - &quot; &amp; text(Country__c) &amp; &quot; - &quot;  &amp; &quot; - &quot; &amp; TEXT(YEAR( Reporting_Month__c )) &amp; &quot;/&quot; &amp; IF(MONTH(Reporting_Month__c)&lt;10,&quot;0&quot;&amp; TEXT(MONTH(Reporting_Month__c)),TEXT(MONTH(Reporting_Month__c))) &amp; &quot; - &quot; &amp; TEXT( Issue_Categorization__c )&amp; &quot; - &quot; &amp;TEXT( Issue_Sub_Category__c ) &amp; &quot; - USD &quot; &amp; TEXT( ROUND( Amount_USD_auto__c, 2 ) )</formula>
         <name>Auto fill OI subject</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
