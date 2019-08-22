@@ -1,7 +1,8 @@
 public class ANG_RiskAssessmentEngine{
     
-    private static final String APPLY_CEILING_SUM = 'CEILING[Σ(RF)*0.0075]';
-    private static final String APPLY_SUM_ONLY = 'Σ(RF)';
+    @TestVisible private static final String APPLY_CEILING_SUM = 'CEILING[Σ(RF)*0.0075]';
+    @TestVisible private static final String APPLY_SUM_ONLY = 'Σ(RF)';
+    @TestVisible private static final String REMITTANCE_FREQUENCY_VALUES_REC_TYPE_NAME = 'Remittance_Frequency_Values'; 
     
     private static map<id,ang_agency_risk_calculation__c> risCalcMap{ // map risk event Calculations
         get{
@@ -42,7 +43,7 @@ public class ANG_RiskAssessmentEngine{
         nbrOfRemittancesPerFrequencyMap = new Map<String, Decimal>();
         for(ang_agency_risk_calculation__c arc:[select id, ANG_Occurrence_Num__c, ANG_Accreditation_Model__c, ANG_Adjusted__c, ANG_RF_Sum_Type__c, ANG_Remittance_Frequency__c, RecordType.DeveloperName, (select id,ANG_Parent_Occurences__c,ANG_Occurrence_Num__c,ANG_Remittance_Frequency__c, ANG_Min_Range__c, ANG_Max_Range__c from ANG_Adjustments__r) from ang_agency_risk_calculation__c where recordtype.name='Rules' or recordtype.developername = 'Remittance_Frequency_Values' order by RecordType.Name, ANG_Occurrence_Num__c asc]){
             
-            if(arc.RecordType.DeveloperName == 'Remittance_Frequency_Values'){
+            if(arc.RecordType.DeveloperName == REMITTANCE_FREQUENCY_VALUES_REC_TYPE_NAME){
                 nbrOfRemittancesPerFrequencyMap.put(arc.ANG_Remittance_Frequency__c, arc.ANG_Occurrence_Num__c);
             }
             else if(arc.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
@@ -251,9 +252,67 @@ public class ANG_RiskAssessmentEngine{
         return AccUpdList;  
     }
  
-     private String calculateRiskHistoryAssessment(map<id,integer> groupingMap, AccHelperClass acct, Map<Id, decimal> multicountryRemittancesMap){
-        String result =ANG_Risk_Helper.RISK_ASSESSMENT_PASSED;
-        if(groupingMap==null)return result;
+    private String calculateRiskHistoryAssessmentMulticountry(map<id,integer> groupingMap, AccHelperClass acct, Map<Id, decimal> multicountryRemittancesMap){
+                
+        Boolean processAdjustedOnly = true;
+
+        // Process first all the rules except Adjusted Only
+        for(string reRec: groupingMap.keySet()){
+            
+            integer accParentOccs = groupingMap.get(reRec);
+
+            if(ANG_RiskAssessmentEngine.risCalcMap.containsKey(reRec)){
+
+                if(accParentOccs >= ANG_RiskAssessmentEngine.risCalcMap.get(reRec).ANG_Occurrence_Num__c){
+                    return ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;
+                } 
+                else if(ANG_RiskAssessmentEngine.risCalcMap.get(reRec).ANG_Adjustments__r.size() > 0 && accParentOccs > 0){
+                    System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - calculateRiskHistoryAssessment] Multicountry - Processing Mixed Risk Events');
+                    ANG_Agency_Risk_Calculation__c arc = riskCalcRulesMulticountryMap.get(ANG_Risk_Helper.ADJ_MIXED);
+                    if(isMulticountryRiskAssessmentFailed(acct, arc, multicountryRemittancesMap)){
+                        return ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;
+                    }
+                    processAdjustedOnly = false;
+                }
+            }
+
+        }
+        
+        if(processAdjustedOnly){
+            //Process the adjusted only rules
+            for(string reRec: groupingMap.keySet()){
+                
+                integer accParentOccs = groupingMap.get(reRec);
+
+                if(risCalAdjcMap.containsKey(reRec) && risCalAdjcMap.get(reRec).ANG_Adjustments__r.size() > 0 && accParentOccs > 0){ 
+                    
+                    System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - calculateRiskHistoryAssessment] Multicountry - Processing Adjusted Only Risk Events');
+                    ANG_Agency_Risk_Calculation__c arc = riskCalcRulesMulticountryMap.get(ANG_Risk_Helper.ADJ_YES);
+                    if(isMulticountryRiskAssessmentFailed(acct, arc, multicountryRemittancesMap)){
+                        return ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;
+                    }
+                    
+                }
+
+            }
+        }
+
+        return ANG_Risk_Helper.RISK_ASSESSMENT_PASSED;
+
+    }
+
+    private String calculateRiskHistoryAssessment(map<id,integer> groupingMap, AccHelperClass acct, Map<Id, decimal> multicountryRemittancesMap){
+
+        String result = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED;
+
+        if(groupingMap==null){
+            return result;
+        }
+
+        if(acct.accreditationModel == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+            return calculateRiskHistoryAssessmentMulticountry(groupingMap, acct, multicountryRemittancesMap);
+        }
+
         for(string reRec: groupingMap.keySet()){ // iterate groupings
             integer accParentOccs=groupingMap.get(reRec);                
             if(ANG_RiskAssessmentEngine.risCalcMap.containsKey(reRec)){ //validate REC
@@ -262,25 +321,14 @@ public class ANG_RiskAssessmentEngine{
                     break;
                 }else if(ANG_RiskAssessmentEngine.risCalcMap.get(reRec).ANG_Adjustments__r.size()>0){
 
-                    if(acct.accreditationModel == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
-                        System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - calculateRiskHistoryAssessment] Multicountry - Processing Mixed Risk Events');
-                        ANG_Agency_Risk_Calculation__c arc = riskCalcRulesMulticountryMap.get(ANG_Risk_Helper.ADJ_MIXED);
-                        if(isMulticountryRiskAssessmentFailed(acct, accParentOccs, arc, multicountryRemittancesMap)){
-                            result = ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;
-                            breakCicle = true;
-                            break;
+                    for(ang_agency_risk_calculation__c arca: ANG_RiskAssessmentEngine.risCalcMap.get(reRec).ANG_Adjustments__r){
+                        if(arca.ANG_Remittance_Frequency__c== acct.remitanceFrequency && arca.ANG_Parent_Occurences__c ==accParentOccs && arca.ANG_Occurrence_Num__c <= acct.nrAdjustedRE){
+                            result=ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;      
+                            breakCicle=true;                        
+                            break;  
                         }
                     }
-                    else {
-                        for(ang_agency_risk_calculation__c arca: ANG_RiskAssessmentEngine.risCalcMap.get(reRec).ANG_Adjustments__r){
-                            if(arca.ANG_Remittance_Frequency__c== acct.remitanceFrequency && arca.ANG_Parent_Occurences__c ==accParentOccs && arca.ANG_Occurrence_Num__c <= acct.nrAdjustedRE){
-                                result=ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;      
-                                breakCicle=true;                        
-                                break;  
-                            }
-                        }
-                    }
-
+                
                 }
                 if(breakCicle){ // break cicle since account already failed assessment
                     breakCicle=false;
@@ -289,23 +337,13 @@ public class ANG_RiskAssessmentEngine{
             }
             if(risCalAdjcMap.containsKey(reRec) && risCalAdjcMap.get(reRec).ANG_Adjustments__r.size()>0 ){ //validate adjusted REC
 
-                if(acct.accreditationModel == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
-                    System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - calculateRiskHistoryAssessment] Multicountry - Processing Adjusted Only Risk Events');
-                    ANG_Agency_Risk_Calculation__c arc = riskCalcRulesMulticountryMap.get(ANG_Risk_Helper.ADJ_YES);
-                    if(isMulticountryRiskAssessmentFailed(acct, accParentOccs, arc, multicountryRemittancesMap)){
-                        result = ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;
-                        breakCicle = true;
-                        break;
+                for(ang_agency_risk_calculation__c arca: risCalAdjcMap.get(reRec).ANG_Adjustments__r){
+                    if(arca.ANG_Remittance_Frequency__c==acct.remitanceFrequency && arca.ANG_Occurrence_Num__c <= acct.nrAdjustedRE){
+                        result=ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;      
+                        breakCicle=true;                        
+                        break;  
                     }
-                }
-                else {
-                    for(ang_agency_risk_calculation__c arca: risCalAdjcMap.get(reRec).ANG_Adjustments__r){
-                        if(arca.ANG_Remittance_Frequency__c==acct.remitanceFrequency && arca.ANG_Occurrence_Num__c <= acct.nrAdjustedRE){
-                            result=ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;      
-                            breakCicle=true;                        
-                            break;  
-                        }
-                    }
+                
                 }
 
                 if(breakCicle){ // break cicle since account already failed assessment
@@ -337,6 +375,10 @@ public class ANG_RiskAssessmentEngine{
                     accountIdSet.add(acctId);
                 }
             }
+        }
+
+        if(accountIdSet.isEmpty()){
+            return new Map<Id, decimal>();
         }
 
         List<Account> acctLst = new List<Account>(
@@ -379,13 +421,14 @@ public class ANG_RiskAssessmentEngine{
      * the configuration agency risk calculation rules
      * 
      * @param  acct                    agency wrapper containing account info 
-     * @param  occurrences             number of risk events occurrences
      * @param  arc                     agency risk calculation rule config record
      * @param  remittancesPerHierarchy total number of remittances per hierarchy (aggregated by top parent)
      * @return                         true if the assessment should be "Passed" or false if "Failed" 
      */ 
-    private Boolean isMulticountryRiskAssessmentFailed(AccHelperClass acct, integer occurrences, ANG_Agency_Risk_Calculation__c arc, Map<Id, decimal> remittancesPerHierarchy){
+    private Boolean isMulticountryRiskAssessmentFailed(AccHelperClass acct, ANG_Agency_Risk_Calculation__c arc, Map<Id, decimal> remittancesPerHierarchy){
         
+        integer occurrences = acct.nrAdjustedRE;
+
         Id accountId = acct.acctId;
         if(acct.TopParent != NULL){ 
             accountId = acct.topParent;
@@ -403,34 +446,34 @@ public class ANG_RiskAssessmentEngine{
 
             System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] calcRes: ' + calcRes);
 
-            //Passes if at most there were 2 RE occurrences and 
-            //the calculated number (calcRes) is less than 3
-            if(calcRes < 3 && occurrences < 3){
-                System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] Assessment Failed on condition \'calcRes < 3 && occurrences < 3\'');
-                return false;
-            }
             //Fails if the calculated number (calcRes) is less than 3
-            //and there were more than 2 RE occurrences
-            else if(calcRes < 3){
-                System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] Assessment Passed on condition \'calcRes < 3\'');
+            //and there were at least 3 RE occurrences
+            if(calcRes < 3 && occurrences >= 3){
+                System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] Assessment Failed on condition \'calcRes < 3 && occurrences >= 3\'');
                 return true;
             }
-            //Passes if at most there were 120 RE occurrences and 
-            //the calculated number (calcRes) is greater than 120
-            else if(calcRes > 120 && occurrences < 121){
-                System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] Assessment Failed on condition \'calcRes > 120 && occurrences < 121\'');
+            //Passes if at most there were 2 RE occurrences and 
+            //the calculated number (calcRes) is less than 3
+            else if(calcRes < 3){
+                System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] Assessment Passed on condition \'calcRes < 3\'');
                 return false;
             }
             //Fails if the calculated number (calcRes) is greater than 120
             //and there were more than 120 RE occurrences
-            else if(calcRes > 120){
-                System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] Assessment Passed on condition \'calcRes > 120\'');
+            else if(calcRes > 120 && occurrences > 120){
+                System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] Assessment Failed on condition \'calcRes > 120 && occurrences > 120\'');
                 return true;
             }
-            //Otherwise passes if the number of occurences 
+            //Passes if at most there were 120 RE occurrences and 
+            //the calculated number (calcRes) is greater than 120
+            else if(calcRes > 120){
+                System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] Assessment Passed on condition \'calcRes > 120\'');
+                return false;
+            }
+            //Otherwise fails if the number of occurences 
             //are greater or equal to the ceiling of the calculated number (calcRes)
             else if(occurrences >= Math.ceil(calcRes)){
-                System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] Assessment Passed on condition \'occurrences >= Math.ceil(calcRes)\'');
+                System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] Assessment Failed on condition \'occurrences >= Math.ceil(calcRes)\'');
                 return true;
             }
             
@@ -439,15 +482,14 @@ public class ANG_RiskAssessmentEngine{
             for(ANG_Agency_Risk_Calculation__c arcAdj : arc.ANG_Adjustments__r){
                 if(arcAdj.ANG_Min_Range__c <= nbrOfRemitances && arcAdj.ANG_Max_Range__c >= nbrOfRemitances){
                     System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] Considering configuration range [' + arcAdj.ANG_Min_Range__c + ':' +  arcAdj.ANG_Max_Range__c + ']');
-                    if(occurrences < arcAdj.ANG_Occurrence_Num__c){
-                        System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] Assessment Passed on condition \'occurrences < arcAdj.ANG_Occurrence_Num__c\'');
+                    if(occurrences >= arcAdj.ANG_Occurrence_Num__c){
+                        System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskAssessmentEngine - isMulticountryRiskAssessmentFailed] Assessment Failed on condition \'occurrences >= arcAdj.ANG_Occurrence_Num__c\'');
                         return true;
                     }
                 }
             }
         }
 
-        //Fails by default
         return false;
 
     }
