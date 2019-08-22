@@ -48,6 +48,7 @@
 		function bindCheckboxes() {
 			$('[data-group="select"]').on("change", function () {
 				rerenderNotes();
+				handleCheckBoxClick();
 			});
 
 			$('[data-group="main"]').on("change", function () {
@@ -73,6 +74,7 @@
 						$clicked.prop("checked", true);
 						alert('Main account must always be selected');
 					}
+					
 				}
 			});
 		}
@@ -143,18 +145,18 @@
                 <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
 					
 					<apex:column headerValue="Main">
-						<apex:inputCheckbox html-data-group="main" html-data-controls="{!hi.acc.Id}" value="{!hi.main}" onclick="handleCheckBoxClick('{!hi.acc.id}','{!hi.acc.IATACode__c}','{!hi.acc.IATA_ISO_Country__r.AMS_Settlement_System__c}');" disabled="{!isChinaConversion}"/>
+						<apex:inputCheckbox html-data-group="main" html-data-controls="{!hi.acc.Id}" value="{!hi.main}"  disabled="{!isChinaConversion}"/>
 					</apex:column>
 
 					<apex:column >
 						<apex:facet name="header">
 							<apex:inputCheckbox value="{!selectAll}" disabled="{!isChinaConversion}">
-								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table"/>
+								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table,BSPTable"/>
 							</apex:inputCheckbox>
 						</apex:facet>
 						
 
-						<apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}" onclick="handleCheckBoxClick('{!hi.acc.id}','{!hi.acc.IATACode__c}','{!hi.acc.IATA_ISO_Country__r.AMS_Settlement_System__c}');" disabled="{!isChinaConversion}"/>
+						<apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}"  disabled="{!isChinaConversion}"/>
 					</apex:column>
 
 					<apex:column value="{!hi.acc['Name']}"/>
@@ -162,23 +164,19 @@
 					<apex:column value="{!hi.acc['Location_Class__c']}" rendered="{!isChinaConversion}"/>
 					<apex:column value="{!hi.acc['IATACode__c']}"/>
 					<apex:column value="{!hi.acc['Status__c']}"/>
-					<apex:column value="{!hi.acc.IATA_ISO_Country__r.AMS_Settlement_System__r['name']}" rendered="{!isMulticountry}"/>
+					<apex:column value="{!hi.acc.IATA_ISO_Country__r.AMS_Settlement_System__r['name']}" headerValue="BSP Name" rendered="{!isMulticountry}"/>
 					<apex:column value="{!hi.acc['BillingCity']}"/>
 					<apex:column value="{!hi.acc['Category__c']}"/>
 				</apex:pageBlockTable>
 
-				<apex:actionFunction name="handleCheckBoxClick" action="{!handleSelection}" status="blockEditing" onComplete="forceRerenderBSPTable()"  >
-					<apex:param name="accountID" value=""/>
-					<apex:param name="iataCode" value=""/>
-					<apex:param name="bspID" value=""/>
-				</apex:actionFunction>
+				<apex:actionFunction name="handleCheckBoxClick" action="{!handleSelection}" status="blockEditing" oncomplete="forceRerenderBSPTable()" />
 				<apex:actionFunction name="forceRerenderBSPTable" reRender="BSPTable"/>
 
 				<script>
 					bindCheckboxes();
 				</script>
 
-				<apex:actionFunction name="selectMain" action="{!selectMain}" status="blockEditing" reRender="table, dependentFields"/>
+				<apex:actionFunction name="selectMain" action="{!selectMain}" status="blockEditing" reRender="table, dependentFields, BSPTable" />
 
 				<apex:actionStatus id="blockEditing">
 					<apex:facet name="start">
@@ -191,7 +189,7 @@
 			</apex:pageBlockSection>
 
 
-			<apex:outputPanel id="BSPTable">
+			<apex:outputPanel layout="block" id="BSPTable">
 				<apex:pageBlockSection columns="1" title="Select Country HE per BSP" rendered="{!showBSPPanel}"> 
 
 					<script>
