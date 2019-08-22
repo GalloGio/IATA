@@ -134,8 +134,31 @@
     width: 500px;
 }
 
+.threeQuartersWidth{
+    width: 768px;
+}
 
 .searchContainer{
     display: flex;
     align-items: end;
+}
+
+.userlookupLabel{
+    height: 20px;
+    font-size: 14px;
+    line-height: 1.43;
+    color: #525252;
+}
+
+.fullWidth{
+    width:100%;
+}
+
+.recipients-box{
+    min-height:150px;
+}
+
+
+.contactsToAdd svg{
+    fill:#d2d6fe;
 }

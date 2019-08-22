@@ -27,8 +27,13 @@ public with sharing class ISSP_AMC_OrchestratorHandler {
         }
 
         if(!mapOrchParents.isEmpty()){
+            Case caseToUpdate = new Case();
+            Boolean isToUpdateCase = true;
+            //WMO-630
+            Id airlineCodingRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
 
-            List<IATA_Process_Orchestrator__c> allSteps = [select id, IATA_Orchestrator_Process__c, Process_Step_Stage__c, Status__c, Associated_Case__c
+            List<IATA_Process_Orchestrator__c> allSteps = [select id, IATA_Orchestrator_Process__c, Process_Step_Stage__c, Status__c, Associated_Case__c, Associated_Case__r.Process_Start_Date__c,
+                        Associated_Case__r.RecordTypeId
                     from IATA_Process_Orchestrator__c
                     where IATA_Orchestrator_Process__c in :  mapOrchParents.keySet()];
 
@@ -38,6 +43,11 @@ public with sharing class ISSP_AMC_OrchestratorHandler {
 
             for (IATA_Process_Orchestrator__c tst : allSteps) {
                 mapOrchParents.get(tst.IATA_Orchestrator_Process__c).add(tst.Status__c);
+                
+                //WMO-630
+                if(tst.Status__c == 'Completed' && tst.Associated_Case__r.RecordTypeId == airlineCodingRT && tst.Process_Step_Stage__c == 'STAGE_A' && tst.Associated_Case__r.Process_Start_Date__c == null) {
+                    caseToUpdate.Process_Start_Date__c = Date.today();
+                }
             }
 
             List<IATA_Process_Orchestrator__c> toUpdate = new List<IATA_Process_Orchestrator__c>();
@@ -48,8 +58,8 @@ public with sharing class ISSP_AMC_OrchestratorHandler {
             Boolean fail = false;
             Boolean progressing = false;
             Boolean notApp = false;
-            Case caseToUpdate = new Case();
-            Boolean isToUpdateCase = true;
+
+
 
             for(Id idValue : mapOrchParents.keySet()){
                 String stageValue = 'Not set';

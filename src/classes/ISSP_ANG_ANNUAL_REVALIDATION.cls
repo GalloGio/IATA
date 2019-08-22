@@ -159,15 +159,17 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			accountsList.addAll(h.get(key));
         }
         
+		Set<SelectOption> relAccs = new Set<SelectOption>();
         for(AMS_Agencies_relationhip__c r : accountsList) {
             if(r.Child_Account__c != currentAccount.account.Id && r.Child_Account__r.Status__c != 'Terminated'){
-                relatedAccounts.add(new SelectOption(String.valueOf(r.Child_Account__c), r.Child_Account__r.IATACode__c));
+                relAccs.add(new SelectOption(String.valueOf(r.Child_Account__c), r.Child_Account__r.IATACode__c));
             }
             
             if(r.Parent_Account__c != currentAccount.account.Id && r.Parent_Account__r.Status__c != 'Terminated'){
-                relatedAccounts.add(new SelectOption(String.valueOf(r.Parent_Account__c), r.Parent_Account__r.IATACode__c));
+                relAccs.add(new SelectOption(String.valueOf(r.Parent_Account__c), r.Parent_Account__r.IATACode__c));
             }
         }
+		relatedAccounts.addAll(relAccs);
         
         for(Integer i = relatedAccounts.size() - 1; i >= 0; i--) {
             for(Id completedId : completedForms){
@@ -2054,6 +2056,25 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         if(currentAccount.fw.newform.Notify_Change_Ownership__c == True && currentAccount.fw.newForm.Copy_Ownership__c == True && currentAccount.fw.newform.Copy_Ownership_Records__c != null) {
             
             List<String> idlist = currentAccount.fw.newform.Copy_Ownership_Records__c.split(',');
+			List<id> completedForms = new List<id>();
+            for(AMS_Pax_Accreditation_Form__c accForm : [SELECT Id, IATACode__c, HO_Account__c 
+                                                         FROM AMS_Pax_Accreditation_Form__c 
+                                                         WHERE RecordTypeId =: rtAnnualRevalidation
+                                                         AND Status__c =: 'completed'
+                                                         AND SAAM_Case__c =: currentAccount.fw.newForm.SAAM_Case__c
+                                                         AND HO_Account__c =: idlist]){
+                                                             completedForms.add(accForm.HO_Account__c);
+                                                         }
+            for(Integer i = idlist.size() - 1; i >= 0; i--) {
+                for(Id completedId : completedForms){
+                    if(idlist[i] == completedId)
+                    {
+                        idlist.remove(i);
+                        break;
+                    }
+                }
+            }
+            currentAccount.fw.newform.Copy_Ownership_Records__c = string.join(idlist,',');
 
             if(currentAccount.fw.newform.Copy_Ownership_Records__c != '') {
 				List<AMS_Accreditation_Contact__c> contacts = [SELECT Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c,

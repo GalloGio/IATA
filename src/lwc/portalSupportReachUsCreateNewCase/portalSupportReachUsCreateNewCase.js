@@ -126,6 +126,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     //does the user have an Agent profile?
     @track relatedAccounts;
 
+    @track relatedContacts;
+
     //store parameters in globals for later use
     category;
     topic;
@@ -238,11 +240,11 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
                     } else {
                         //get redirected back to the support reach us page
-                        this.redirectSupport();
+                        this.navigateToSupport();
                     }
                 } else {
                     //get redirected back to the support reach us page
-                    this.redirectSupport();
+                    this.navigateToSupport();
                 }
 
             })
@@ -261,9 +263,6 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             });
     }
 
-    redirectSupport() {
-        window.history.back();
-    }
 
     //create the case and initialize it. No DML operation yet.
     createCase() {
