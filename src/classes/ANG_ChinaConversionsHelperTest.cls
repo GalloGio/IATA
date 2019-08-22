@@ -51,7 +51,7 @@ public class ANG_ChinaConversionsHelperTest {
 
 		//ACCOUNTS
 		
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name='China', ISO_Code__c='CN', Enable_NewGen_Pilot__c=true, Region__c='China & North Asia')  ;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name='China', ISO_Code__c='CN', Enable_NewGen_Pilot__c=true, ANG_Enable_NewGen__c = true, Region__c='China & North Asia')  ;
         insert ctry;
 
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name='CN20', ISO_Code__c='CN20', IATA_ISO_Country__c=ctry.Id);
@@ -146,6 +146,7 @@ public class ANG_ChinaConversionsHelperTest {
             Email__c= 'owner.test@test.com',
             Phone__c= '123456789',
             Financial_interest__c= 100,
+            Agency_Owner__c= true,
             AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
             RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
@@ -216,9 +217,9 @@ public class ANG_ChinaConversionsHelperTest {
 
 		List<Agency_Authorization__c> FoPs_list = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c 
 											  	   FROM Agency_Authorization__c
-											  	   WHERE Account__c IN :accountsMap.keyset() and (ANG_FormOfPayment_ID__c = 'CC' or ANG_FormOfPayment_ID__c = 'EP') and Status__c = 'Non-Active'];
+											  	   WHERE Account__c IN :accountsMap.keyset() and (ANG_FormOfPayment_ID__c = 'CC' or ANG_FormOfPayment_ID__c = 'EP') and Status__c = 'Authorized'];
 
-		System.assertEquals(6, FoPs_list.size());
+		System.assertEquals(3, FoPs_list.size());
 	}
 
 	@isTest static void convertChinaToNewGenStep3Test() {
@@ -281,7 +282,7 @@ public class ANG_ChinaConversionsHelperTest {
 		accountsMap = ANG_ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
 
 		checkChangeCode('LGC');
-		checkAccountsChanges(accountsMap.values(), null, false, new List<String>{'HO','BR'}, null);												   	
+		checkAccountsChanges(accountsMap.values(), null, true, new List<String>{'HO','BR'}, null);												   	
 		checkAccountRelations();
 	}
 
@@ -354,7 +355,7 @@ public class ANG_ChinaConversionsHelperTest {
 		accountsMap = ANG_ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
 
 		checkChangeCode('DOM');
-		checkAccountsChanges(accountsMap.values(), null, false, new List<String>{'HO','BR'}, null);
+		checkAccountsChanges(accountsMap.values(), null, true, new List<String>{'HO','BR'}, null);
 		checkAccountRelations();
 		checkRiskEvents(accountsMap.keyset());
 		checkFormOfPayments(accountsMap.keyset()); 

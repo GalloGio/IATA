@@ -15,7 +15,17 @@ public without sharing class ISSP_AMS_Accreditation {
     private static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
     private static final String OTHERS = 'OTHERS';
     //private static final string ISO_8859_1_regEx = '^[0-9\\\\A-z\\u00C0-\\u00ff\\s\\.,-\\/#!$%\\^&\\*;:{}=\\-_`~()]+$';
-    private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
+    private static final string ISO_8859_1_regEx { //Reg exp to limit inputted chars to ISO-8859-1
+        get{
+            if(ISO_8859_1_regEx == null) {
+                //WMO-538
+		        Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
+                ISO_8859_1_regEx = regExCS != null && String.isNotBlank(regExCS.Text_1__c) ? regExCS.Text_1__c : '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+            } 
+            return ISO_8859_1_regEx;
+        }
+        set;
+    }
     private String vSAAMCaseId;
     private Boolean isScopeOfChangeChanged = false;
     public String hqCountryISOCode;
@@ -242,12 +252,13 @@ public without sharing class ISSP_AMS_Accreditation {
     public Boolean revCaseOpen {
         get{
             List<Case> revCases = [SELECT Id 
-                                FROM Case 
-                                WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
-                                    AND Reason1__c = 'Annual revalidation' 
-                                    AND Status != 'Closed' 
-                                    AND Status != 'Closed_Rejected' 
-                                    AND Status != 'Closed_Withdrawn'];
+                                   FROM Case 
+                                   WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
+                                   AND Reason1__c = 'Annual revalidation' 
+                                   AND Status != 'Closed' 
+                                   AND Status != 'Closed_Rejected' 
+                                   AND Status != 'Closed_Withdrawn'
+                                   AND Status != 'Closed_ Not Accepted'];
             
             return !revCases.isEmpty();
         } 
@@ -1281,7 +1292,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         } else if (sectorValue.StartsWith('Travel_Agent')) { //User has selected Travel in STEP A
 
-            if (isHOAccredited && con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT) { //And this is an Accredited PAX Agent
+            if (isHOAccredited && (con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT) || (con.Account.Category__c == AMS_Utils.CATEGORY_DOMESTIC_AGENT && AMS_Utils.setDomesticCountries.contains(isocountry.ISO_Code__c))) { //And this is an Accredited PAX Agent
 
                 if(!getIsAccreditationModelNotNullOrLegacy()){
                     options.add(new SelectOption(AMS_Utils.TYPE_PAX_BRANCH_L, Label.ISSP_AMS_OPTION_PAX_BRANCH));
@@ -3924,7 +3935,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     Specify_Legal_Status_After_Change__c, Issued_share_capital_After_Change__c, Trade_Name__c, ISSP_AMS_Curr_Entity_with_listed_shares__c, ISSP_AMS_Total_Current_Ownership__c, ISSP_AMS_Total_Previous_Ownership__c, Is_your_firm_handling_Dangerous_Goods__c, Country__c, Account_Name__c,Scope_of_Change__c,Agency_Codes_Concerned__c,Billing_State__c,Website__c,
                     Confirm_Legal_Details_are_correct__c,Notify_Change_Legal_Details__c,Confirm_Location_Details_are_correct__c,Notify_Change_Location__c,Confirm_Ownership_details_are_correct__c,Notify_Change_Ownership__c,Map_Company_Type_to_Legal_Status__c,New_Head_Office_IATA_Code__c,Shipping_Street__c,Shipping_City__c,Shipping_Postal_Code__c,Shipping_State__c,Shipping_Country__c,HO_Account__c,RecordTypeId,
                     IATAN_Code__c,IATA_Registered_IATAN_Agent__c,Enable_Credit_Card_FOP__c,IATAN_Agent_Account__c,AE_separate_Legal_Entity__c,ANG_AE_SameLegal__c,ANG_Accreditation_Model_to_Change__c, Notify_Change_Accreditation_Type__c, Confirm_accreditation_type_are_correct__c, Last_Scope_Of_Change__c, ANG_Accreditation_type__c,
-                    SAAM_Case__r.Reason1__c
+                    SAAM_Case__r.Reason1__c, Branch_Office_Country__r.ISO_Code__c, SAAM_Case__r.Account.Category__c
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE SAAM_Case__c = :newCase.Id
                                          LIMIT 1
@@ -3932,6 +3943,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         system.debug('aqui newForms ' + newForms);
         if (newForms.size() > 0) {
             newForm = newForms[0];
+        }
+
+        if (newForm.Branch_Office_Country__r.ISO_Code__c == 'CN' && newCase.Reason1__c == AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
+            if (newForm.SAAM_Case__r.Account.Category__c == 'Domestic Agent') {
+                newForm.Local_Agent_Type__c = 'Domestic';
+            } else {
+                newForm.Local_Agent_Type__c = 'International';
+            }
         }
     }
 
@@ -7523,8 +7542,8 @@ system.debug('aqui sectorValue ' + sectorValue);
                 Position__c,RecordTypeId,Title__c,Valid__c,
                 Person__c,Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Email__c,
                 Contact__c,Contact__r.FirstName,Contact__r.LastName,Contact__r.Email,Contact__r.Phone,
-                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry, Contact__r.OtherState,
-                Legacy_External_ID__c
+                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry,
+                Legacy_External_ID__c, Contact__r.OtherState
                 FROM AMS_Account_Role__c
                 where Account__c = :lAccountConcerned
                 and RecordTypeId = :rtAccRoleOwnership

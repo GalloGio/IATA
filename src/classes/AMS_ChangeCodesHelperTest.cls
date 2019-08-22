@@ -52,6 +52,7 @@ private class AMS_ChangeCodesHelperTest {
 			'Account__c' => acc.Id,
 			'Termination_Date__c' => System.today()+30,
 			'Change_Effective_as_of__c' => system.today(),
+			'Form_Effective_Date__c' => system.today(),
 			'Business_Process__c' => 'AMS'
 		});
 		AMS_OSCAR__c oscar = (AMS_OSCAR__c)JSON.deserialize(JSONOscar, AMS_OSCAR__c.class);

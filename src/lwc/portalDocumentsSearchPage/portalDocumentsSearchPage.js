@@ -146,7 +146,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
 
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
-            if(this.searchText.length > 3 || this.searchText === '') {
+            if(this.searchText.length > 2 || this.searchText === '') {
                 let _documentObject = JSON.parse(JSON.stringify(this.documentObject));
                 for(let i = 0; i < _documentObject.categories.length; i++) {
                     _documentObject.categories[i].searchText = this.searchText;
