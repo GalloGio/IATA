@@ -877,7 +877,8 @@ public class ANG_RHCAlertTriggerHandler{
         
         List<Messaging.SingleEmailMessage> emailLst = new List<Messaging.SingleEmailMessage>();
 
-        List<String> toAddresses = new List<String>();
+        Set<String> toAddresses = new Set<String>();
+        List<Id> toAddressesUsers = new List<Id>();
         List<RTS_Senior_Manager__c> sManagersRed = RTS_Senior_Manager__c.getAll().values();
         List<RTS_Orange_Senior_Manager__c> sManagersOrange = RTS_Orange_Senior_Manager__c.getAll().values();
 
@@ -899,9 +900,12 @@ public class ANG_RHCAlertTriggerHandler{
                     toAddresses.add(sManager.Email__c);
             }
         }
-
-        system.debug('toAddresses: ' + toAddresses);
-
+        
+        for(User u : [SELECT Id, Email from User where Email IN :toAddresses]) {
+            toAddressesUsers.add(u.Id);
+            toAddresses.remove(u.Email);
+        }
+        List<String> toAddressesNoUsers = new List<String>(toAddresses);
         if(String.isEmpty(emailTemplate)){
             System.debug('Warning: No email Template defined');
             return emailLst;
@@ -914,21 +918,16 @@ public class ANG_RHCAlertTriggerHandler{
             return emailLst;
         }
 
-        if(toAddresses.isEmpty()){
+        if(toAddressesNoUsers.isEmpty() && toAddressesUsers.isEmpty()){
              System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
              return emailLst;
         }
 
         for (ANG_Risk_Alert__c riskAlert: riskAlerts) {
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            mail.setToAddresses(toAddresses);
-            mail.setSubject(template.Subject); 
-            mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
             String tBody = template.Body;
             String subjectName = String.isNotBlank(raAccMap.get(riskAlert.id).Name) ? (raAccMap.get(riskAlert.id).Name + ' - ') : '';
             String subjectIATACode = String.isNotBlank(raAccMap.get(riskAlert.id).IATACode__c) ? (raAccMap.get(riskAlert.id).IATACode__c + ', ') : '';
             String subjectCountry = String.isNotBlank(raAccMap.get(riskAlert.id).IATA_ISO_Country__r.Name) ? raAccMap.get(riskAlert.id).IATA_ISO_Country__r.Name : '';
-            mail.setSubject('Real Time Sales Monitoring – '+ riskAlert.ANG_Severity__c.toUpperCase() +' Alert ('+ subjectName + subjectIATACode + subjectCountry + ')'); 
             String agentSales = (riskAlert.ANG_Agent_Sales__c == null ? '' : String.valueOf(riskAlert.ANG_Agent_Sales__c));
             String iataCode = (raAccMap.get(riskAlert.id).IATACode__c == null ? '' : raAccMap.get(riskAlert.id).IATACode__c);
             String gAmount = (raAccMap.get(riskAlert.id).Guaranteed_amount__c == null ? '' : String.valueOf(raAccMap.get(riskAlert.id).Guaranteed_amount__c.setScale(2)));
@@ -939,9 +938,23 @@ public class ANG_RHCAlertTriggerHandler{
             tBody = tBody.replace('{{currencyIsoCode}}', (agentSales == '' ? '' : riskAlert.CurrencyIsoCode));
             tbody = tBody.replace('{{fsAmount}}', gAmount);
             
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            mail.setToAddresses(toAddressesNoUsers);
+            mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
             mail.setPlainTextBody(tBody);
+            mail.setSubject('Real Time Sales Monitoring – '+ riskAlert.ANG_Severity__c.toUpperCase() +' Alert ('+ subjectName + subjectIATACode + subjectCountry + ')'); 
 
             emailLst.add(mail);
+
+            for(Id targetUser: toAddressesUsers) {
+                Messaging.SingleEmailMessage targetEmail = new Messaging.SingleEmailMessage();
+                targetEmail.setTargetObjectId(targetUser);
+                targetEmail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
+                targetEmail.saveAsActivity = false;
+                targetEmail.setSubject('Real Time Sales Monitoring – '+ riskAlert.ANG_Severity__c.toUpperCase() +' Alert ('+ subjectName + subjectIATACode + subjectCountry + ')');
+                targetEmail.setPlainTextBody(tBody); 
+                emailLst.add(targetEmail);
+            }
         }
 
         return emailLst;
