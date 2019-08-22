@@ -104,6 +104,7 @@ public class ISSP_PersonalInformationWithoutSharing {
 									[SELECT Id,
 											UserId, 
 											TeamMemberRole,
+											User.Contact.User_Portal_Status__c,
 											User.Contact.Salutation, 
 											User.Contact.Name, 
 											User.Contact.Email,
