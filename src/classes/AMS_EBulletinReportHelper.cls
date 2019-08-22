@@ -715,20 +715,22 @@ public without sharing class AMS_EBulletinReportHelper {
 
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWHIERARCHY)) strVal = '=""' + strVal + '""';
                 
-                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(ACCREDITATIONTYPE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWACCREDITATIONTYPE)) strVal = AMS_Utils.transformAccreditationType(strVal);
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(ACCREDITATIONTYPE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWACCREDITATIONTYPE)) strVal = AMS_Utils.transformAccreditationType(strVal);
 
-				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(AGENCYNAME) && !String.isEmpty(cc.Account__r.Bulletin_Headquarter__c)) strVal = strVal + ' on behalf of ' + cc.Account__r.Bulletin_Headquarter__c;
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(AGENCYNAME) && !String.isEmpty(cc.Account__r.Bulletin_Headquarter__c) && cc.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) strVal = strVal + ' on behalf of ' + cc.Account__r.Bulletin_Headquarter__c;
 
-				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONTYPE)){
-                    if(strVal == 'GE') strVal = 'HE';
-                    else if(strVal == 'HE' || strVal == 'AE') strVal = 'AE';
-                }
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONTYPE) && cc.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+					if(strVal == 'GE') strVal = 'HE';
+					else if(strVal == 'HE' || strVal == 'AE') strVal = 'AE';
+				}
 
-                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(GOGLOBALXREF)) {
-                    if(cc.Account__r.Top_Parent__r.Location_Type__c != 'GE') strVal = '';
-                        else strVal = '=""' + strVal + '""';
-                }
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(GOGLOBALXREF)) {
+						if(cc.Account__r.Top_Parent__r.Location_Type__c != 'GE') strVal = '';
+						else strVal = '=""' + strVal + '""';
+				}
+				
 				recordsList.add(strVal);
+
 			}
 			else if(  NEWCHANGECODESET.contains(cc.change_code__c) && fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE)){
 				recordsList.add('');
@@ -756,33 +758,35 @@ public without sharing class AMS_EBulletinReportHelper {
 					else strVal = '=""' + strVal + '""';
 				}
                 
-                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(ACCREDITATIONTYPE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWACCREDITATIONTYPE)) strVal = AMS_Utils.transformAccreditationType(strVal);
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(ACCREDITATIONTYPE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWACCREDITATIONTYPE)) strVal = AMS_Utils.transformAccreditationType(strVal);
 
-                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION)) strVal = (cc.Account__r.ANG_IsNewGenAgency__c ? strVal : NOTAPPLICABLE);
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION)) strVal = (cc.Account__r.ANG_IsNewGenAgency__c ? strVal : NOTAPPLICABLE);
 
-				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(AGENCYNAME) && !String.isEmpty(cc.Account__r.Bulletin_Headquarter__c)) strVal = strVal + ' on behalf of ' + cc.Account__r.Bulletin_Headquarter__c;
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(AGENCYNAME) && !String.isEmpty(cc.Account__r.Bulletin_Headquarter__c) && cc.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) strVal = strVal + ' on behalf of ' + cc.Account__r.Bulletin_Headquarter__c;
 
-				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONTYPE)){
-                    if(strVal == 'GE') strVal = 'HE';
-                    else if(strVal == 'HE' || strVal == 'AE') strVal = 'AE';
-                }
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONTYPE) && cc.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+					if(strVal == 'GE') strVal = 'HE';
+					else if(strVal == 'HE' || strVal == 'AE') strVal = 'AE';
+				}
 
-				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(GOGLOBALXREF)) {
-                    if(cc.Account__r.Top_Parent__r.Location_Type__c != 'GE') strVal = '';
-                        else strVal = '=""' + strVal + '""';
-                }
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(GOGLOBALXREF)){
+						if(cc.Account__r.Top_Parent__r.Location_Type__c != 'GE') strVal = '';
+						else strVal = '=""' + strVal + '""';
+				}
 
 				recordsList.add(strVal);
-                if (fieldsList.get(position - customFieldsCounter) == 'BULLETIN_INFORMATION__C') {
-                    remarkPosition = recordsList.size() - 1;
-                }
+
+				if (fieldsList.get(position - customFieldsCounter) == 'BULLETIN_INFORMATION__C') {
+						remarkPosition = recordsList.size() - 1;
+				}
                 
 			}
 			
 		}
-        if (ownersByType.get('old') > 8 || ownersByType.get('new') > 8) {
-            recordsList.set(remarkPosition, recordsList.get(remarkPosition) + Label.EBulletin_More_than_8_owners_message);
-        } 
+
+		if (ownersByType.get('old') > 8 || ownersByType.get('new') > 8) {
+				recordsList.set(remarkPosition, recordsList.get(remarkPosition) + Label.EBulletin_More_than_8_owners_message);
+		} 
         
 		return recordsList;
 	}

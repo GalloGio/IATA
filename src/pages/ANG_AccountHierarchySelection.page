@@ -162,6 +162,7 @@
 					<apex:column value="{!hi.acc['Location_Class__c']}" rendered="{!isChinaConversion}"/>
 					<apex:column value="{!hi.acc['IATACode__c']}"/>
 					<apex:column value="{!hi.acc['Status__c']}"/>
+					<apex:column value="{!hi.acc.IATA_ISO_Country__r.AMS_Settlement_System__r['name']}" rendered="{!isMulticountry}"/>
 					<apex:column value="{!hi.acc['BillingCity']}"/>
 					<apex:column value="{!hi.acc['Category__c']}"/>
 				</apex:pageBlockTable>

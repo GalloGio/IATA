@@ -3218,7 +3218,7 @@ private class ISSP_AMS_Accreditation_Test {
 	            ctrl2.newForm.Scope_of_Change__c = 'HO - Selected Branches';
 	            ctrl2.newForm.Agency_Codes_Concerned__c = '2000000';
 	            ctrl2.newform.Accept_terms_and_conditions__c = true;
-            ctrl2.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
+            	ctrl2.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
 	
 	            Pagereference pr1 = ctrl2.goToFinalStep();
 

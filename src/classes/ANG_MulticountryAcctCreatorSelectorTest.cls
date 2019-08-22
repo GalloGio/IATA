@@ -71,9 +71,9 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		theAccreditation.Remittance_frequency__c='M';
 		theAccreditation.Solicitation_Flag__c=false;
 		theAccreditation.Location_Class__c='P';
-		theAccreditation.Location_Type__c='HE';
+		theAccreditation.Location_Type__c='GE';
 		theAccreditation.SAAM_Case__c=oscarCase.Id;
-		theAccreditation.Account_Name__c = a1.Id;
+		theAccreditation.ISSP_Branch_AccountId__c = a1.Id;
 
 		insert theAccreditation;
 	}
@@ -336,4 +336,53 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		selectionCrtl.End();
 
     }
+
+	@isTest static void ANG_MulticountryHierarchySelectDiffMainAccountTest(){
+			
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Id settlementRTId = Schema.AMS_Settlement_System__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('BSP').getRecordTypeId();
+
+		AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(Name = 'Portugal',RecordTypeId = settlementRTId);
+		insert settlement;
+
+		IATA_ISO_Country__c ctryPt = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true, Region__c = 'Europe',AMS_Settlement_System__c=settlement.Id, Multicountry_Enabled__c = true);
+        insert ctryPt ;
+
+		AMS_OSCAR__c oscar = [Select Id, Account__c, AMS_Online_Accreditation__c from AMS_OSCAR__c];
+
+		AMS_Pax_Accreditation_Form__c paxAccreditation = [Select id FROM AMS_Pax_Accreditation_Form__c limit 1];
+		oscar.AMS_Online_Accreditation__c = paxAccreditation.id;
+		update oscar;
+
+		Account a1 = new Account(IATA_ISO_Country__c = ctryPt.id, ParentId = oscar.Account__c, Top_Parent__c = oscar.Account__c, RecordTypeId = accountRT ,Name='NewgenAgency PT GE',Short_Name__c='NewgenAgency GE', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+		insert a1;
+
+		PageReference pageRef = Page.ANG_MulticountryHierarchySelection;
+        Test.setCurrentPageReference(pageRef);
+
+		ApexPages.CurrentPage().getparameters().put('pid', oscar.id);
+        ApexPages.StandardController sc = new ApexPages.standardController(oscar); 
+
+        Test.startTest();       
+
+		ANG_MulticountryHierarchySelectionCrtl selectionCrtl = new ANG_MulticountryHierarchySelectionCrtl(sc);
+		Map<String, List<ANG_MulticountryHierarchySelectionCrtl.HierarchyItem>> hierarchy = selectionCrtl.hierarchy;
+		List<ANG_MulticountryHierarchySelectionCrtl.HierarchyItem> hierarchyValues = selectionCrtl.hierarchyValues;
+
+		for (ANG_MulticountryHierarchySelectionCrtl.HierarchyItem it : hierarchyValues) {
+			it.main = false;
+			if(it.acc.Location_type__c == 'GE') it.isHE = true;
+		}
+
+		ANG_MulticountryHierarchySelectionCrtl.HierarchyItem itemPT = hierarchy.get(ctryPt.Name)[0];
+		itemPT.main = true;
+
+		Test.stopTest();
+
+		selectionCrtl.save();
+
+		AMS_Pax_Accreditation_Form__c afterUpdate = [Select id, Account_Name__c, Branch_Office_Country__c FROM AMS_Pax_Accreditation_Form__c limit 1];
+		System.assertEquals(a1.Name, afterUpdate.Account_Name__c);
+		System.assertEquals(a1.IATA_ISO_Country__c, afterUpdate.Branch_Office_Country__c);
+	}
 }

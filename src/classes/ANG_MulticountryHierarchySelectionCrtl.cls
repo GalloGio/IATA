@@ -28,22 +28,15 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 	}
 
 	public Set<String> accountFields{
-		//DO NOT include Id on this Set
 		get{
 			if(accountFields == null){
-				accountFields = new Set<String>{
-					 'Name'
-					,'IATA_ISO_Country__r.Name'
-					,'IATA_ISO_Country__r.AMS_Settlement_System__r.Name'
-					,'BillingCity'
-					,'BillingAddress'
-					,'Location_type__c'
-					,'Category__c'
-					,'BillingStreet'
-					,'BillingPostalCode'
-					,'IATACODE__c'
-					,'Status__c'
-				};
+				accountFields = new Set<String>();
+				Map<String, Schema.SObjectField> schemaFieldMapAccounts = Account.sObjectType.getDescribe().fields.getMap();
+				for (String field : schemaFieldMapAccounts.keySet()){
+					accountFields.add(field);
+				}
+				accountFields.add('IATA_ISO_Country__r.Name');
+				accountFields.add('IATA_ISO_Country__r.AMS_Settlement_System__r.Name'); 
 			}
 			return accountFields;
 		}
@@ -169,14 +162,23 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		set;
 	}
 
+	public Map<Id, Account> mapHierarchyAccounts{
+		get{
+			if(mapHierarchyAccounts == null){
+				Id accountId = oscar.Account__c;
+				mapHierarchyAccounts = new Map<Id, Account>((List<Account>)Database.query('SELECT ' + String.join(accountFieldList, ',') + ' FROM Account WHERE ( Top_Parent__c = :accountId or Id = :accountId ) AND Status__c not in ( ' +  getInvalidStatus() + ' ) ORDER BY IATA_ISO_Country__r.Name'));
+			}
+			return mapHierarchyAccounts;
+		}
+		set;
+	}
+
 	public Map<String, List<HierarchyItem>> hierarchy{
 		get{
 			if(hierarchy == null) {
 				hierarchy = new Map<String, List<HierarchyItem>>();
 
-				Id accountId = oscar.Account__c;
-
-				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE ( Top_Parent__c = :accountId or Id = :accountId ) AND Status__c not in ( ' +  getInvalidStatus() + ' ) ORDER BY IATA_ISO_Country__r.Name')){
+				for(Account a : mapHierarchyAccounts.values()){
 					Boolean main = (a.Id == oscar.Account__c);
 					if(a.Location_Type__c == null){
 						a.Location_Type__c = AMS_Utils.AE;
@@ -358,6 +360,10 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					caseToUpdate = new Case(Id = accreditationForm.SAAM_Case__c);
 					caseToUpdate.AccountId = oscar.Account__c;
 					accreditationForm.HO_Account__c = oscar.Account__c;
+					Account account = mapHierarchyAccounts.get(oscar.Account__c);
+					Map<String,Object> fieldsOfObject = ANG_MulticountryHelper.buildStagingAreaFieldsObject(account);
+					accreditationForm.Account_Name__c = account.Name;
+					accreditationForm = (AMS_Pax_Accreditation_Form__c)ANG_EntityCreator.addFieldsToObject((sObject)accreditationForm, fieldsOfObject);
 				}
 
 				update oscar;
@@ -391,15 +397,26 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 	private void createHierarchy(List<Account> acctLst){
 
+		Id accountGEId;
+		for(Account acct: acctLst){
+			if(acct.Location_type__c == 'GE')
+				accountGEId = acct.Id;
+		}
+
 		Set<String> alreadyCreatedRelations = new Set<String>();
 
 		for(AMS_Agencies_relationhip__c ar : [Select Id, Parent_Account__c, Child_Account__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__c = :oscar.account__c])
 			alreadyCreatedRelations.add(String.valueof(ar.Child_Account__c)+String.valueOf(ar.Parent_Account__c));
 
-		if(acctLst.size() < 2)
+		if(acctLst.size() < 2){
+			if(acctLst.size() == 1 && acctLst.get(0).location_type__C == 'GE'){
+				AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', Main_Account__c = accountGEId);
+				insert hierarchy;
+			}
 			return;
+		}
 
-		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', Main_account__c = accountGEId);
 		insert hierarchy;
 
 		List<AMS_Agencies_relationhip__c> relsToInsert = new List<AMS_Agencies_relationhip__c>();
