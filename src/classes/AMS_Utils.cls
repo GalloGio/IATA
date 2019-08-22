@@ -238,7 +238,7 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_NEW_HO = 'New HO';
     public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
     public static final String CASE_REASON_AE_LITE = 'New AE lite';
-    public static final String CASE_REASON_AE_MULTICOUNTRY = 'New AE multicountry';
+    public static final String CASE_REASON_AE_MULTICOUNTRY = 'New AE Multicountry';
 
     public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
     public static final String CASE_REASON_BR_IP = 'New BR / IP';
@@ -1602,10 +1602,10 @@ public without sharing class AMS_Utils {
                         
                         system.debug('DDD oldValue:' + oldValue);
                         system.debug('DDD newValue:' + newValue);
-                        
+                                                    
                         if (oldValue != newValue)
-                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
-                            
+                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));                       
+
 
                         acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
                     }

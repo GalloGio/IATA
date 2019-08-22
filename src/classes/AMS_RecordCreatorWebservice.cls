@@ -285,7 +285,10 @@ global without sharing class AMS_RecordCreatorWebservice {
 	
         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGGDI))
             return AMS_Utils.RECTYPE_GDI;
-        
+
+        if(typeOfProcess.equalsIgnoreCase(AMS_UTILS.MCAE))
+            return AMS_Utils.RECTYPE_MCAE;
+            
         return null;
     }
 
