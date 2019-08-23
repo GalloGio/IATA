@@ -569,9 +569,9 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
     <fields>
         <fullName>IDCard_Key_Account__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>Indicates if the Agent benefits from ID Card Key Account Conditions. Replicated from "IDCard_Key_Account__c" at Account Level</description>
+        <description>Indicates if the Agent benefits from ID Card Key Account Conditions. Replicated from &quot;IDCard_Key_Account__c&quot; at Account Level</description>
         <externalId>false</externalId>
-        <inlineHelpText>Indicates if the Agent benefits from ID Card Key Account Conditions. Replicated from "IDCard_Key_Account__c" at Account Level</inlineHelpText>
+        <inlineHelpText>Indicates if the Agent benefits from ID Card Key Account Conditions. Replicated from &quot;IDCard_Key_Account__c&quot; at Account Level</inlineHelpText>
         <label>IDCard Key Account</label>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>

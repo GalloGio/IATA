@@ -6,11 +6,11 @@ public without sharing class GDRP_UserInfo_CTRL {
         Individual indiv = new Individual();
         
         // Identify if it's a lead or contact
-        list<Contact> contacts = [SELECT ID, LastName, FirstName, email, salutation, account.Name, Title, phone, MailingCountry, Membership_Function__c, Industry__c FROM CONTACT WHERE Email = :email ORDER BY pi__last_activity__c, LastModifiedDate];
+        list<Contact> contacts = [SELECT ID, LastName, FirstName, email, salutation, account.Name, Title, phone, MailingCountry, Membership_Function__c, Industry__c FROM CONTACT WHERE Email = :email ORDER BY pi__url__c ASC NULLS LAST, LastModifiedDate DESC];
         if(! contacts.isEmpty()) {
                 return contactToIndividual(indiv, contacts[0]);
         }
-        list<Lead> leads = [SELECT ID, LastName, FirstName, email, salutation, company, phone, country, industry, Title , Membership_Function__c FROM LEAD WHERE Email = :email ORDER BY pi__last_activity__c, LastModifiedDate];
+        list<Lead> leads = [SELECT ID, LastName, FirstName, email, salutation, company, phone, country, industry, Title , Membership_Function__c FROM LEAD WHERE Email = :email ORDER BY pi__url__c ASC NULLS LAST, LastModifiedDate DESC];
         if(! leads.isEmpty()) {
                 return leadToIndividual(indiv, leads[0]);
         }
