@@ -6088,21 +6088,14 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <protected>false</protected>
         <shortDescription>IATA Alpha/Numeric Code</shortDescription>
         <value>IATA Alpha/Numeric Code</value>
-    </labels>
-    <labels>
-        <fullName>IATA_GDPR_URL</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IATA_GDPR_URL</shortDescription>
-        <value>https://customer-portal-iata.force.com/dataprivacy</value>
-    </labels>
+    </labels>    
     <labels>
         <fullName>IATA_GDPR_White_Logo</fullName>
         <categories>Email</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IATA GDPR White Logo</shortDescription>
-        <value>https://iata--c.eu12.content.force.com/servlet/servlet.ImageServer?id=0151r0000066HTS&amp;amp;oid=00D2000000008TF&amp;amp;lastMod=1554880895000</value>
+        <value>https://iata--c.eu12.content.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Png&amp;versionId=0681r00000BTmVA&amp;operationContext=DELIVERY&amp;contentId=05T1r00000dOEHZ&amp;page=0&amp;d=/a/1r000000EU6r/LOi9lDSOQ.C8HaVJIasBLxLjxSbtA35uT1V0eFm8.Wc&amp;oid=00D2000000008TF&amp;dpt=null&amp;viewId=</value>
     </labels>
     <labels>
         <fullName>ICAddressDoctor_adns</fullName>

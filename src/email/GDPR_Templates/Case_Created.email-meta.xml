@@ -2,15 +2,9 @@
 <EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
     <available>true</available>
     <encodingKey>UTF-8</encodingKey>
-    <name>Case Created</name>
+    <name>Case created</name>
     <style>none</style>
-    <subject>New Case</subject>
-    <textOnly>Dear User, 
-
-A new case has been open.
-
-Best regards, 
-IATA Support Team</textOnly>
+    <subject>Case created</subject>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

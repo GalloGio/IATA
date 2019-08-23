@@ -19,14 +19,14 @@
         <lightning:spinner alternativeText="Loading" />
     </aura:if>
 
-    <p>Email Address: {!v.email}</p>
+    <p>Updates sent to your email address: {!v.email}</p>
     
     <div class="slds-p-horizontal--small slds-size--1-of-1 ">
         <div class="slds-text-heading_large slds-m-vertical_large IATA_section">
-            Interests
+            Areas of Interest
         </div>
         <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
-         <p>Select your Products and Services interests* </p>
+         <p>Select your Products and Services areas of interest*</p>
          </div>
         <div class="slds-grid slds-wrap" >
             <aura:iteration items="{!v.interests}" var="i">
@@ -40,7 +40,7 @@
     </div>
 
 <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
-<p>*Selecting your interests personalizes your experience with IATA Products and Services Communication. Interests are not additional subscriptions.</p>
+<p>*Selecting your areas of interest personalizes your experience with IATA Products and Services Communication. Areas of interest are not additional subscriptions.</p>
 </div>
 
 <!-- Common footer with subscription tab-->
@@ -51,7 +51,7 @@
     <aura:if isTrue="{!!v.opted_out}">
         <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 positionRight">
             <button class="btn btn-primary buttonSelectAllSpace" type="submit" onclick="{!c.selectAll}" >{!v.showSelect ? 'Select All' : 'Deselect All'}</button>
-            <button class="btn btn-primary " type="submit" onclick="{!c.saveAll}" >Save All</button>
+            <button class="btn btn-primary" type="submit" onclick="{!c.saveAll}">Save Changes</button>
         </div>
     </aura:if>
 </div>
