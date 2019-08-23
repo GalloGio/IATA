@@ -52,6 +52,16 @@
         <label>Email</label>
     </standardValue>
     <standardValue>
+        <fullName>Email - Publications AMS Orders</fullName>
+        <default>false</default>
+        <label>Email - Publications AMS Orders</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email - Publications AMS Queries</fullName>
+        <default>false</default>
+        <label>Email - Publications AMS Queries</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - A&amp;ME Agency Mgmt</fullName>
         <default>false</default>
         <label>E-mail to Case - A&amp;ME Agency Mgmt</label>
@@ -1095,6 +1105,11 @@
         <fullName>E-mail to Case - YMQ -  ATS</fullName>
         <default>false</default>
         <label>E-mail to Case - YMQ -  ATS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - YMQ CDS</fullName>
+        <default>false</default>
+        <label>E-mail to Case - YMQ CDS</label>
     </standardValue>
     <standardValue>
         <fullName>E-mail to Case - YMQ - Customer Service</fullName>

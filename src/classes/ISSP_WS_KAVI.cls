@@ -182,7 +182,7 @@ public class ISSP_WS_KAVI {
 			if (operation == 'create'){
 				accId = retAccountId(newUser.Contact.AccountId,newUser.Contact.Account.RecordTypeId, newUser.Contact.Account.Field_Head_Office__c, newUser.Contact.Account.ParentId, newUser.Contact.Account.Parent.ParentId);
 			}
-			else accId = provisionKaviAccess.getFakeAccount().Id;
+			else accId = ProvisionKaviAccess.IATASSWAccount.Id;
 			newAccountsIds.add(accId);
 			newRelationship.put(newUser.Id,accId);
 

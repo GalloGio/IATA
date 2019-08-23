@@ -51,6 +51,12 @@
 
             if(/\S/.test(servName)){
                 component.set("v.serviceName", servName);
+                if(servName == "CSP"){
+	                component.set("v.serviceNameForLink", "ISSP");
+                }
+                else{
+	                component.set("v.serviceNameForLink", servName);
+                }
                                 
                 var labelHelpLink = $A.getReference("$Label.c.OneId_" + servName + "_Troubleshooting_Link");
                 var labelHelp = $A.getReference("$Label.c.OneId_" + servName + "_Troubleshooting");

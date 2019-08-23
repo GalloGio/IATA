@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Airline_code_3digit__c</fullName>
         <externalId>false</externalId>
@@ -944,66 +945,6 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>201801</fullName>
-                    <default>false</default>
-                    <label>201801</label>
-                </value>
-                <value>
-                    <fullName>201802</fullName>
-                    <default>false</default>
-                    <label>201802</label>
-                </value>
-                <value>
-                    <fullName>201803</fullName>
-                    <default>false</default>
-                    <label>201803</label>
-                </value>
-                <value>
-                    <fullName>201804</fullName>
-                    <default>false</default>
-                    <label>201804</label>
-                </value>
-                <value>
-                    <fullName>201805</fullName>
-                    <default>false</default>
-                    <label>201805</label>
-                </value>
-                <value>
-                    <fullName>201806</fullName>
-                    <default>false</default>
-                    <label>201806</label>
-                </value>
-                <value>
-                    <fullName>201807</fullName>
-                    <default>false</default>
-                    <label>201807</label>
-                </value>
-                <value>
-                    <fullName>201808</fullName>
-                    <default>false</default>
-                    <label>201808</label>
-                </value>
-                <value>
-                    <fullName>201809</fullName>
-                    <default>false</default>
-                    <label>201809</label>
-                </value>
-                <value>
-                    <fullName>201810</fullName>
-                    <default>false</default>
-                    <label>201810</label>
-                </value>
-                <value>
-                    <fullName>201811</fullName>
-                    <default>false</default>
-                    <label>201811</label>
-                </value>
-                <value>
-                    <fullName>201812</fullName>
-                    <default>false</default>
-                    <label>201812</label>
-                </value>
-                <value>
                     <fullName>201901</fullName>
                     <default>false</default>
                     <label>201901</label>
@@ -1063,6 +1004,126 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <default>false</default>
                     <label>201912</label>
                 </value>
+                <value>
+                    <fullName>202001</fullName>
+                    <default>false</default>
+                    <label>202001</label>
+                </value>
+                <value>
+                    <fullName>202002</fullName>
+                    <default>false</default>
+                    <label>202002</label>
+                </value>
+                <value>
+                    <fullName>202003</fullName>
+                    <default>false</default>
+                    <label>202003</label>
+                </value>
+                <value>
+                    <fullName>202004</fullName>
+                    <default>false</default>
+                    <label>202004</label>
+                </value>
+                <value>
+                    <fullName>202005</fullName>
+                    <default>false</default>
+                    <label>202005</label>
+                </value>
+                <value>
+                    <fullName>202006</fullName>
+                    <default>false</default>
+                    <label>202006</label>
+                </value>
+                <value>
+                    <fullName>202007</fullName>
+                    <default>false</default>
+                    <label>202007</label>
+                </value>
+                <value>
+                    <fullName>202008</fullName>
+                    <default>false</default>
+                    <label>202008</label>
+                </value>
+                <value>
+                    <fullName>202009</fullName>
+                    <default>false</default>
+                    <label>202009</label>
+                </value>
+                <value>
+                    <fullName>202010</fullName>
+                    <default>false</default>
+                    <label>202010</label>
+                </value>
+                <value>
+                    <fullName>202011</fullName>
+                    <default>false</default>
+                    <label>202011</label>
+                </value>
+                <value>
+                    <fullName>202012</fullName>
+                    <default>false</default>
+                    <label>202012</label>
+                </value>
+                <value>
+                    <fullName>202101</fullName>
+                    <default>false</default>
+                    <label>202101</label>
+                </value>
+                <value>
+                    <fullName>202102</fullName>
+                    <default>false</default>
+                    <label>202102</label>
+                </value>
+                <value>
+                    <fullName>202103</fullName>
+                    <default>false</default>
+                    <label>202103</label>
+                </value>
+                <value>
+                    <fullName>202104</fullName>
+                    <default>false</default>
+                    <label>202104</label>
+                </value>
+                <value>
+                    <fullName>202105</fullName>
+                    <default>false</default>
+                    <label>202105</label>
+                </value>
+                <value>
+                    <fullName>202106</fullName>
+                    <default>false</default>
+                    <label>202106</label>
+                </value>
+                <value>
+                    <fullName>202107</fullName>
+                    <default>false</default>
+                    <label>202107</label>
+                </value>
+                <value>
+                    <fullName>202108</fullName>
+                    <default>false</default>
+                    <label>202108</label>
+                </value>
+                <value>
+                    <fullName>202109</fullName>
+                    <default>false</default>
+                    <label>202109</label>
+                </value>
+                <value>
+                    <fullName>202110</fullName>
+                    <default>false</default>
+                    <label>202110</label>
+                </value>
+                <value>
+                    <fullName>202111</fullName>
+                    <default>false</default>
+                    <label>202111</label>
+                </value>
+                <value>
+                    <fullName>202112</fullName>
+                    <default>false</default>
+                    <label>202112</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -1082,17 +1143,22 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <value>
                     <fullName>AGTCOD_GSA</fullName>
                     <default>false</default>
-                    <label>AGTCOD_GSA</label>
+                    <label>AGTCOD_GSA - 800355</label>
                 </value>
                 <value>
                     <fullName>AGTCOD_MSO</fullName>
                     <default>false</default>
-                    <label>AGTCOD_MSO</label>
+                    <label>AGTCOD_MSO - 800357</label>
+                </value>
+                <value>
+                    <fullName>AI_ADHOC - 800990</fullName>
+                    <default>false</default>
+                    <label>AI_ADHOC - 800990</label>
                 </value>
                 <value>
                     <fullName>AIRERU_CASS</fullName>
                     <default>false</default>
-                    <label>AIRERU_CASS</label>
+                    <label>AIRERU_CASS - 801026</label>
                 </value>
                 <value>
                     <fullName>AIRSBL_CAIR</fullName>
@@ -1107,7 +1173,7 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <value>
                     <fullName>AISTLM_FILE</fullName>
                     <default>false</default>
-                    <label>AISTLM_FILE</label>
+                    <label>AISTLM_FILE - 801100</label>
                 </value>
                 <value>
                     <fullName>BSPFEE_ADELW</fullName>
@@ -1122,7 +1188,7 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <value>
                     <fullName>BSPFEE_ADMIN</fullName>
                     <default>false</default>
-                    <label>BSPFEE_ADMIN</label>
+                    <label>BSPFEE_ADMIN - 800720</label>
                 </value>
                 <value>
                     <fullName>BSPFEE_BIBIT</fullName>
@@ -1132,7 +1198,7 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <value>
                     <fullName>BSPFEE_CCARD</fullName>
                     <default>false</default>
-                    <label>BSPFEE_CCARD</label>
+                    <label>BSPFEE_CCARD - 800628</label>
                 </value>
                 <value>
                     <fullName>BSPFEE_COMAN</fullName>
@@ -1147,27 +1213,32 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <value>
                     <fullName>BSPFEE_FILES</fullName>
                     <default>false</default>
-                    <label>BSPFEE_FILES</label>
+                    <label>BSPFEE_FILES - 800343</label>
                 </value>
                 <value>
                     <fullName>BSPFEE_JOIN</fullName>
                     <default>false</default>
-                    <label>BSPFEE_JOIN</label>
+                    <label>BSPFEE_JOIN - 800333</label>
                 </value>
                 <value>
                     <fullName>BSPFEE_JOINS</fullName>
                     <default>false</default>
-                    <label>BSPFEE_JOINS</label>
+                    <label>BSPFEE_JOINS - 801021</label>
                 </value>
                 <value>
                     <fullName>BSPFEE_LEGAL</fullName>
                     <default>false</default>
-                    <label>BSPFEE_LEGAL</label>
+                    <label>BSPFEE_LEGAL - 800344</label>
+                </value>
+                <value>
+                    <fullName>BSPFEE_PALMF - 800351</fullName>
+                    <default>false</default>
+                    <label>BSPFEE_PALMF - 800351</label>
                 </value>
                 <value>
                     <fullName>BSPFEE_PALMS</fullName>
                     <default>false</default>
-                    <label>BSPFEE_PALMS</label>
+                    <label>BSPFEE_PALMS - 800481</label>
                 </value>
                 <value>
                     <fullName>BSPFEE_RFABA</fullName>
@@ -1177,7 +1248,7 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <value>
                     <fullName>BSPFEE_RJOIN</fullName>
                     <default>false</default>
-                    <label>BSPFEE_RJOIN</label>
+                    <label>BSPFEE_RJOIN - 752845</label>
                 </value>
                 <value>
                     <fullName>BSPFEE_RPACT</fullName>
@@ -1197,37 +1268,37 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <value>
                     <fullName>BSPFEE_TRAIN</fullName>
                     <default>false</default>
-                    <label>BSPFEE_TRAIN</label>
+                    <label>BSPFEE_TRAIN - 800345</label>
                 </value>
                 <value>
                     <fullName>BSPLNK_MSG</fullName>
                     <default>false</default>
-                    <label>BSPLNK_MSG</label>
+                    <label>BSPLNK_MSG - 800346</label>
                 </value>
                 <value>
                     <fullName>CASFEE_DGRR1</fullName>
                     <default>false</default>
-                    <label>CASFEE_DGRR1</label>
+                    <label>CASFEE_DGRR1  - 801040</label>
                 </value>
                 <value>
                     <fullName>CASFEE_DGRR2</fullName>
                     <default>false</default>
-                    <label>CASFEE_DGRR2</label>
+                    <label>CASFEE_DGRR2 - 801029</label>
                 </value>
                 <value>
                     <fullName>CASFEE_DGRTR</fullName>
                     <default>false</default>
-                    <label>CASFEE_DGRTR</label>
+                    <label>CASFEE_DGRTR - 751573</label>
                 </value>
                 <value>
                     <fullName>CASFEE_DGRVA</fullName>
                     <default>false</default>
-                    <label>CASFEE_DGRVA</label>
+                    <label>CASFEE_DGRVA - 801028</label>
                 </value>
                 <value>
                     <fullName>CASFEE_JOIN</fullName>
                     <default>false</default>
-                    <label>CASFEE_JOIN</label>
+                    <label>CASFEE_JOIN - 801022</label>
                 </value>
                 <value>
                     <fullName>CASFEE_JOINS - 801032</fullName>
@@ -1237,22 +1308,32 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <value>
                     <fullName>CASFEE_RJOIN</fullName>
                     <default>false</default>
-                    <label>CASFEE_RJOIN</label>
+                    <label>CASFEE_RJOIN - 752842</label>
                 </value>
                 <value>
                     <fullName>CASFEE_SEMNR</fullName>
                     <default>false</default>
-                    <label>CASFEE_SEMNR</label>
+                    <label>CASFEE_SEMNR - 801002</label>
                 </value>
                 <value>
                     <fullName>CASITC_JOIN</fullName>
                     <default>false</default>
-                    <label>CASITC_JOIN</label>
+                    <label>CASITC_JOIN - 801186</label>
                 </value>
                 <value>
                     <fullName>CASLNK_MSG</fullName>
                     <default>false</default>
-                    <label>CASLNK_MSG</label>
+                    <label>CASLNK_MSG - 801187</label>
+                </value>
+                <value>
+                    <fullName>CASS_LINK - 800347</fullName>
+                    <default>false</default>
+                    <label>CASS_LINK - 800347</label>
+                </value>
+                <value>
+                    <fullName>CLINK_PREM - 800348</fullName>
+                    <default>false</default>
+                    <label>CLINK_PREM - 800348</label>
                 </value>
                 <value>
                     <fullName>CNSFEE_JOIN</fullName>
@@ -1298,6 +1379,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <fullName>Code Voluntary Change Request Fee - 701929</fullName>
                     <default>false</default>
                     <label>Code Voluntary Change Request Fee - 701929</label>
+                </value>
+                <value>
+                    <fullName>ETTEST_FILE – 800975</fullName>
+                    <default>false</default>
+                    <label>ETTEST_FILE – 800975</label>
                 </value>
                 <value>
                     <fullName>FDS_TDPMS</fullName>
@@ -1387,12 +1473,12 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <value>
                     <fullName>NDCFEE_NSUCR</fullName>
                     <default>false</default>
-                    <label>NDCFEE_NSUCR</label>
+                    <label>NDCFEE_NSUCR - 752438</label>
                 </value>
                 <value>
                     <fullName>NDCFEE_RENEW</fullName>
                     <default>false</default>
-                    <label>NDCFEE_RENEW</label>
+                    <label>NDCFEE_RENEW - 752439</label>
                 </value>
                 <value>
                     <fullName>NOIATA_ANUAL</fullName>
@@ -1410,9 +1496,14 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <label>PDP / PTA Assignment Fee - 701924</label>
                 </value>
                 <value>
+                    <fullName>SFTP_CASS - 801290</fullName>
+                    <default>false</default>
+                    <label>SFTP_CASS - 801290</label>
+                </value>
+                <value>
                     <fullName>TEST_CASS</fullName>
                     <default>false</default>
-                    <label>TEST_CASS</label>
+                    <label>TEST_CASS - 800678</label>
                 </value>
                 <value>
                     <fullName>TEST_FILE</fullName>
@@ -1452,43 +1543,19 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>AGTCOD_GSA</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>AGTCOD_MSO</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>AIRERU_CASS</valueName>
+                <valueName>AI_ADHOC - 800990</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>AIRSBL_CAIR</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>AIRSBL_PAIR</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>AISTLM_FILE</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>BSPFEE_ADELW</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>BSPFEE_ADHOC</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
@@ -1496,53 +1563,31 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>BSPFEE_BIBIT</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>BSPFEE_CCARD</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>BSPFEE_COMAN</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>BSPFEE_ELWRN</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>BSPFEE_FILES</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>BSPFEE_JOIN</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>BSPFEE_JOINS</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>BSPFEE_LEGAL</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>BSPFEE_PALMS</valueName>
+                <valueName>BSPFEE_PALMF - 800351</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>BSPFEE_RFABA</valueName>
+                <valueName>BSPFEE_PALMS</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
@@ -1550,128 +1595,15 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>BSPFEE_RPACT</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>BSPFEE_RSBCH</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>BSPFEE_STATM</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>BSPFEE_TRAIN</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>BSPLNK_MSG</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
                 <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>CASFEE_JOIN</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>GSSA_ANUAL</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>GSSA_APPL</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>GSSA_FEE</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>GSSA_FEEN</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>GSSA_REGI</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>IBCS_JOINA</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>IBCS_JOINE</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>IBCS_JOINF</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>IBCS_SWICH</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>IBCS_YEAR</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>NOIATA_ANUAL</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>NOIATA_CASS</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>TEST_CASS</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>TEST_FILE</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>TSF_ADPX</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>TSF_AGTD</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>VATTAX_CHARG</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>WEBLK_SCU</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>BSP</controllingFieldValue>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>WEBLK_SCUX</valueName>
+                <valueName>AIRERU_CASS</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>CASS</controllingFieldValue>
@@ -1688,6 +1620,10 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>CASFEE_DGRVA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>CASFEE_JOIN</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>CASS</controllingFieldValue>
@@ -1708,6 +1644,27 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>CASLNK_MSG</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>CASS_LINK - 800347</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>CLINK_PREM - 800348</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
+                <controllingFieldValue>CNS</controllingFieldValue>
+                <valueName>CNSFEE_JOIN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>SFTP_CASS - 801290</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>TEST_CASS</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Coding/MITA</controllingFieldValue>
@@ -1782,12 +1739,12 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <valueName>NDCFEE_RENEW</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>WebLink</controllingFieldValue>
-                <valueName>WebLink - Implementation Fee (752545)</valueName>
+                <controllingFieldValue>Other</controllingFieldValue>
+                <valueName>ETTEST_FILE – 800975</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>CNS</controllingFieldValue>
-                <valueName>CNSFEE_JOIN</valueName>
+                <controllingFieldValue>WebLink</controllingFieldValue>
+                <valueName>WebLink - Implementation Fee (752545)</valueName>
             </valueSettings>
         </valueSet>
     </fields>
@@ -2118,6 +2075,26 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                     <default>false</default>
                     <label>1400.00</label>
                 </value>
+                <value>
+                    <fullName>10.00</fullName>
+                    <default>false</default>
+                    <label>10.00</label>
+                </value>
+                <value>
+                    <fullName>450.00</fullName>
+                    <default>false</default>
+                    <label>450.00</label>
+                </value>
+                <value>
+                    <fullName>2700</fullName>
+                    <default>false</default>
+                    <label>2700</label>
+                </value>
+                <value>
+                    <fullName>1,160.80</fullName>
+                    <default>false</default>
+                    <label>1,160.80</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>TEST_FILE</controllingFieldValue>
@@ -2134,8 +2111,6 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValue>BSPLNK_MSG</controllingFieldValue>
                 <controllingFieldValue>BSPFEE_LEGAL</controllingFieldValue>
                 <controllingFieldValue>VATTAX_CHARG</controllingFieldValue>
-                <controllingFieldValue>AGTCOD_GSA</controllingFieldValue>
-                <controllingFieldValue>AGTCOD_MSO</controllingFieldValue>
                 <controllingFieldValue>AIRSBL_CAIR</controllingFieldValue>
                 <controllingFieldValue>AIRSBL_PAIR</controllingFieldValue>
                 <controllingFieldValue>BSPFEE_ADELW</controllingFieldValue>
@@ -2178,6 +2153,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValue>IBCS_JOINE</controllingFieldValue>
                 <controllingFieldValue>GSSA_APPL</controllingFieldValue>
                 <controllingFieldValue>CASLNK_MSG</controllingFieldValue>
+                <controllingFieldValue>CLINK_PREM - 800348</controllingFieldValue>
                 <valueName>200.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2189,6 +2165,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValue>NOIATA_ANUAL</controllingFieldValue>
                 <controllingFieldValue>NOIATA_CASS</controllingFieldValue>
                 <controllingFieldValue>GSSA_ANUAL</controllingFieldValue>
+                <controllingFieldValue>CASS_LINK - 800347</controllingFieldValue>
                 <valueName>500.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2223,8 +2200,6 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>FDS_TDPMS</controllingFieldValue>
-                <controllingFieldValue>Code Assignment Fee - 701907</controllingFieldValue>
-                <controllingFieldValue>Code A4A Assignment Fee - 752539</controllingFieldValue>
                 <valueName>4000.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2236,6 +2211,13 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <valueName>50.00</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Code Assignment Fee - 701907</controllingFieldValue>
+                <controllingFieldValue>Code Annual Retention Fee-  701900</controllingFieldValue>
+                <controllingFieldValue>Code A4A Assignment Fee - 752539</controllingFieldValue>
+                <controllingFieldValue>Code Annual A4A Retention Fee - 701903</controllingFieldValue>
+                <valueName>4100.00</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>BSPFEE_JOIN</controllingFieldValue>
                 <valueName>5000.00</valueName>
             </valueSettings>
@@ -2244,21 +2226,22 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <valueName>7500.00</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Code Annual Administration Fee - 701899</controllingFieldValue>
-                <valueName>1400.00</valueName>
+                <controllingFieldValue>AGTCOD_GSA</controllingFieldValue>
+                <valueName>10.00</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Code Annual Retention Fee-  701900</controllingFieldValue>
-                <controllingFieldValue>Code Annual A4A Retention Fee - 701903</controllingFieldValue>
-                <valueName>4100.00</valueName>
+                <controllingFieldValue>AGTCOD_MSO</controllingFieldValue>
+                <controllingFieldValue>TEST_CASS</controllingFieldValue>
+                <valueName>100.00</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Code Annual Administration Fee - 701899</controllingFieldValue>
+                <controllingFieldValue>Code Application Fee - 752537</controllingFieldValue>
+                <valueName>1400.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>MITA annual fee - 701909</controllingFieldValue>
                 <valueName>23000.00</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Code Application Fee - 752537</controllingFieldValue>
-                <valueName>1300.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Location Identifier Assignment Fee - 701920</controllingFieldValue>
@@ -2270,6 +2253,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>AISTLM_FILE</controllingFieldValue>
+                <controllingFieldValue>AI_ADHOC - 800990</controllingFieldValue>
                 <valueName>250.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2303,8 +2287,16 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <valueName>48.60</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>TEST_CASS</controllingFieldValue>
-                <valueName>100.00</valueName>
+                <controllingFieldValue>BSPFEE_PALMF - 800351</controllingFieldValue>
+                <valueName>450.00</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ETTEST_FILE – 800975</controllingFieldValue>
+                <valueName>2700</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>SFTP_CASS - 801290</controllingFieldValue>
+                <valueName>1,160.80</valueName>
             </valueSettings>
         </valueSet>
     </fields>

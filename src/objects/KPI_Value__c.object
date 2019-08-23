@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Area_Concerned__c</fullName>
         <externalId>false</externalId>
@@ -343,7 +344,7 @@
         <label>Value Percentage</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>3</scale>
+        <scale>6</scale>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
@@ -521,6 +522,7 @@
         <sharedTo>
             <group>CS_Systems</group>
             <group>FDS_KPI_Reporting_Team</group>
+            <group>I_C_GDC</group>
             <group>Invoicing_Management_Regions</group>
         </sharedTo>
     </listViews>
@@ -550,6 +552,7 @@
         <sharedTo>
             <group>CS_Systems</group>
             <group>FDS_KPI_Reporting_Team</group>
+            <group>I_C_GDC</group>
             <group>Invoicing_Management_Regions</group>
         </sharedTo>
     </listViews>
