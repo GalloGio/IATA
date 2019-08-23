@@ -391,7 +391,17 @@ public class ANG_RiskAssessmentEngine{
                 Account 
              WHERE 
                  (Id IN :accountIdSet OR Top_Parent__c IN :accountIdSet) 
+             AND RecordType.DeveloperName = 'IATA_Agency'
              AND Location_Type__c IN (:AMS_Utils.GE, :AMS_Utils.HE)
+             AND Status__c <> NULL
+             AND Status__c NOT IN (
+                 '',
+                 :AMS_Utils.ACC_S0_TERMINATED, 
+                 :AMS_Utils.ACC_S1_NOTACCREDITED,
+                 :AMS_Utils.ACC_S3_NOTINOPERATION,
+                 :AMS_Utils.ACC_S4_LISTED,
+                 :AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING
+             )
             ]
         );
 
