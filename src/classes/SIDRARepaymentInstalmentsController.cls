@@ -110,17 +110,11 @@ public with sharing class SIDRARepaymentInstalmentsController {
             Case_Detail__c oldInstalmentDetails = this.cs != null ? getInstalmentsDetails(this.cs.Id) : null;
 
             if(oldInstalmentDetails == null) {
-                if(this.instalmentsDetails.Interest_Amount__c >= 0) {
+                if(this.instalmentsDetails != null) {
                     insert this.instalmentsDetails;
-                    this.isEditMode = false;
-                }
-                else {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Interest Amount is mandatory!'));
-                }
+                }     
             }
-            else {
-                this.isEditMode = false;
-            }
+            this.isEditMode = false;
             //ACAMBAS - WMO-546: End        
         } 
         catch (DMLException e) {
