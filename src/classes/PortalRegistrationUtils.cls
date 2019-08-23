@@ -6,6 +6,8 @@ public with sharing class PortalRegistrationUtils {
 
     public class UserLocation{
         @AuraEnabled
+        public string countryCode{get;set;}
+        @AuraEnabled
         public string country{get;set;}
         @AuraEnabled
         public string countryId{get;set;}
@@ -79,6 +81,7 @@ public with sharing class PortalRegistrationUtils {
                 }
             }
         }
+        loc.countryCode = country;
         loc.country = countryName;
         loc.countryId = countryId;
         return loc;
