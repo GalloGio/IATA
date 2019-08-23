@@ -638,16 +638,21 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+        <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5 AND 6</booleanFilter>
         <criteriaItems>
-            <field>EmailMessage.Incoming</field>
+            <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>True</value>
+            <value>Internal Cases (IDFS ISS),SAAM,New Process (IDFS ISS),IDFS Airline Participation Process,IATA Financial Review,ID Card Application,SIDRA Lite,OSCAR Communication,Airline Coding Application</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Internal Cases (IDFS ISS),SAAM,New Process (IDFS ISS),IDFS Airline Participation Process,IATA Financial Review,ID Card Application,SIDRA Lite,OSCAR Communication,Airline Coding Application,CNS Collection Process,Invoicing Collection Cases</value>
+            <value>CNS Collection Process,Invoicing Collection Cases</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IsClosed</field>
