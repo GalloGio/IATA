@@ -86,7 +86,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     @track category = { label : "", options : [], display : false };
     @track extraQuestion = { label : "", options : [], display : false };
     phoneInputInitialized = false;
-    alertIcon = CSP_PortalPath + 'alertIcon.png';
     exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_point.svg';
     @track jsLoaded = false;
 

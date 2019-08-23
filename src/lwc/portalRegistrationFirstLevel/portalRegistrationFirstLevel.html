@@ -326,27 +326,11 @@
                     </c-portal-custom-card-container>
                 </template>
                 <template if:true={isSelfRegistrationDisabled}>
-                    <div class="alertDiv">
-                        <lightning-layout multiple-rows vertical-align="center" horizontal-align="center">
-                            <lightning-layout-item size="12" padding="" class="alignCenter">
-                                <!-- <img src={alertIcon} class="alertIcon"> -->
-                                <div class="dot-white overlap-top-center">
-                                    <div class="dot-lightgreen">
-                                        <div class="dot-green dot-allign">
-                                            <div class="dot-white-small dot-allign">
-                                                <img src={exclamationIcon} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </lightning-layout-item>
-                            <lightning-layout-item size="12" padding="around-medium" class="alignCenter">
-                                  <lightning-formatted-rich-text value={labels.DisabledRegistrationLabel} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
-                            </lightning-layout-item>
-                            <lightning-layout-item padding="around-large" size="12">
-                            </lightning-layout-item>
-                        </lightning-layout>
-                    </div>
+                    <c-portal-informative-message-box>
+                        <span slot="message">
+                            <lightning-formatted-rich-text value={labels.DisabledRegistrationLabel} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                        </span>
+                    </c-portal-informative-message-box>
                 </template>
             </template>
             <template if:true={isRegistrationComplete}>

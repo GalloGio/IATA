@@ -36,29 +36,6 @@ input.slds-input:not(:placeholder-shown){
     height: 2000px !important;
 }
 
-.alignCenter{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.alertIcon{
-    margin-top: -64px;
-    width: 96px;
-    height: 96px;
-}
-
-.alertDiv{
-    /*
-  width: 576px;
-  height: 240px;
-  */
-  max-width: 448px;
-  max-height: 662px;
-  background-color: #ffffff;
-}
-
 .slds-spinner_container{
     position: fixed;
 }
@@ -80,57 +57,3 @@ input.slds-input:not(:placeholder-shown){
 .formElementSpacer{
     padding-bottom:40px;
 }
-
-/*alert css begin*/
-.overlap-top-center {
-    position: relative;
-    top: -50px;
-    z-index: 1;
-}
-
-.dot-lightgreen {
-    height: 96px;
-    width: 96px;
-    background-color: rgba(250, 200, 50, 0.4);
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.dot-green {
-    height: 80px;
-    width: 80px;
-    background-color: rgba(250, 200, 50, 0.8);
-    border-radius: 50%;
-    display: inline-block;
-    left: 8px;
-    top: 8px;
-}
-
-.dot-white {
-    height: 96px;
-    width: 96px;
-    background-color: #fff;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.dot-white-small {
-    height: 56px;
-    width: 56px;
-    background-color: #fff;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.dot-white-small.dot-allign {
-    left: 12px;
-    top: 12px;
-    position: absolute;
-}
-
-.dot-allign {
-    left: 8px;
-    top: 8px;
-    position: absolute;
-}
-/*alert css end*/
