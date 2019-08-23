@@ -87,4 +87,15 @@ public with sharing class PortalRegistrationUtils {
         return loc;
     }
 
+    @AuraEnabled
+    public static Boolean isSystemAdmin(){
+
+        List<User> userList =  [ SELECT Id FROM User WHERE Id = :UserInfo.getUserId() AND profile.name = 'System Administrator'];
+        if(userList.isEmpty() == true){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
 }

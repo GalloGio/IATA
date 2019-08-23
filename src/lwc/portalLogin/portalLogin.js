@@ -86,11 +86,14 @@ export default class PortalLogin extends LightningElement {
 
     connectedCallback() {
 
-        if(isGuest == false){
-            //todo:this shouldnt navigate on community builder!
-            navigateToPage(CSP_PortalPath,{});
-            return;
-        }
+        const RegistrationUtilsJs = new RegistrationUtils();
+
+        RegistrationUtilsJs.checkUserIsSystemAdmin().then(result=> {
+            if(result == false && isGuest == false){
+                navigateToPage(CSP_PortalPath,{});
+                return;
+            }
+        });
 
         let pageParams = getParamsFromPage();
         if(pageParams !== undefined && pageParams.email !== undefined){
@@ -102,7 +105,6 @@ export default class PortalLogin extends LightningElement {
             }
         }
 
-        const RegistrationUtilsJs = new RegistrationUtils();
         RegistrationUtilsJs.getUserLocation().then(result=> {
             this.isSanctioned = result.isRestricted;
             if(this.isSanctioned == true){
