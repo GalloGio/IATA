@@ -100,7 +100,7 @@ public class ISSP_AMC_Apply_New_Code {
 
 					}
 					else {
-						if(eachExistingCase.Status != 'Closed'){
+						if(eachExistingCase.Status != 'Closed' && eachExistingCase.Status != 'Closed_Rejected'){
 							
 							caseDesignatorApplicationId = eachExistingCase.Id;
 						}
