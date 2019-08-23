@@ -83,10 +83,6 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         return this.normalView === true && this.isAdminUser === true;
     }
 
-    get isFiltered() {
-        return this.isAdminUser && this.filtered;
-    }
-
     get viewContactsFilterPicklist(){
         return this.isAdminUser === true && this.adminView === true;
     }
