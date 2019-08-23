@@ -51,7 +51,7 @@ export default class PortalLogin extends LightningElement {
     @track isEmailFieldReadOnly = false;
     @track isFrozen = false;
     @track isLoginDisabled = false;
-
+    exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_point.svg';
     alertIcon = CSP_PortalPath + 'alertIcon.png';
 
     _labels = {
@@ -251,7 +251,7 @@ export default class PortalLogin extends LightningElement {
                         navigateToPage(response.sessionUrl, {});
                     }else{
                         this.isFrozen = result.userIsFrozen;
-                        if(result.userIsFrozen){
+                        if(result.userIsFrozen == true){
                             this.showLoginForm = false;
                         }
                         this._showLoginError(true, response.errorMessage);

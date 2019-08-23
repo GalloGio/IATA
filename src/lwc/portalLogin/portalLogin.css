@@ -50,25 +50,6 @@ input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px inset #f7f8fa !important;
 }
 
-.alignCenter{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.alertIcon{
-    margin-top: -64px;
-    width: 96px;
-    height: 96px;
-}
-
-.alertDiv{
-  width: 576px;
-  height: 240px;
-  background-color: #ffffff;
-}
-
 .slds-spinner_container{
     position: fixed;
 }
@@ -94,3 +75,4 @@ input:-webkit-autofill:active  {
 .formElementSpacer{
     padding-bottom:40px;
 }
+

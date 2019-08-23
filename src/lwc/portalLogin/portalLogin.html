@@ -158,32 +158,18 @@
                 </c-portal-custom-card-container>
             </div>
             <div if:true={isFrozen}>
-                <div class="alertDiv">
-                    <lightning-layout multiple-rows vertical-align="center" horizontal-align="center">
-                        <lightning-layout-item size="12" padding="around-medium" class="alignCenter">
-                            <img src={alertIcon} class="alertIcon">
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="around-medium">
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="around-medium" class="alignCenter">
-                              <lightning-formatted-rich-text value={labels.FrozenUserLabel} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
-                        </lightning-layout-item>
-                    </lightning-layout>
-                </div>
+                <c-portal-informative-message-box>
+                    <span slot="message">
+                        <lightning-formatted-rich-text value={labels.FrozenUserLabel} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                    </span>
+                </c-portal-informative-message-box>
             </div>
             <div if:true={isLoginDisabled}>
-                <div class="alertDiv">
-                    <lightning-layout multiple-rows vertical-align="center" horizontal-align="center">
-                        <lightning-layout-item size="12" padding="around-medium" class="alignCenter">
-                            <img src={alertIcon} class="alertIcon">
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="around-medium">
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="around-medium" class="alignCenter">
-                              <lightning-formatted-rich-text value={labels.DisabledLoginLabel} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
-                        </lightning-layout-item>
-                    </lightning-layout>
-                </div>
+                <c-portal-informative-message-box>
+                    <span slot="message">
+                        <lightning-formatted-rich-text value={labels.DisabledLoginLabel} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                    </span>
+                </c-portal-informative-message-box>
             </div>
         </span>
     </c-portal-login-container>
