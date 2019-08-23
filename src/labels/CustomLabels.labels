@@ -3296,6 +3296,13 @@ Payment required on receipt of this Payment Advice
         <value>/csportal/s/</value>
     </labels>
     <labels>
+        <fullName>CSP_Portal_Administrators</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Portal_Administrators</shortDescription>
+        <value>Portal Administrators</value>
+    </labels>
+    <labels>
         <fullName>CSP_Portal_Status</fullName>
         <language>en_US</language>
         <protected>false</protected>
