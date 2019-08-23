@@ -1,5 +1,7 @@
 public class AMS_OscarCaseTriggerHelper {
     
+    public static Boolean avoidRecursiveUpdateOnOSCAR = false;
+
     /**
         This is helper class for both OSCAR and OSCAR Case Communication
     **/
@@ -116,7 +118,11 @@ public class AMS_OscarCaseTriggerHelper {
     }
 
     public static void populateOscarFields(list<Case> triggerNew){
-
+        
+        if(avoidRecursiveUpdateOnOSCAR){
+            return;
+        }
+        
         System.debug('Populating OSCAR fields');
 
         Set<Id> oscarIds = new Set<Id>();

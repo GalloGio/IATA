@@ -3369,9 +3369,12 @@ public class AMS_OSCARTriggerHandler {
                     Financial_Security_Amount__c = updatedOscar.Requested_Bank_Guarantee_amount__c, 
                     Financial_Security_Currency__c = updatedOscar.Requested_Bank_Guarantee_currency__c != null ? updatedOscar.Requested_Bank_Guarantee_currency__c : updatedOscar.CurrencyIsoCode
                 ); 
-
                 System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTriggerHandler - updated currentCase: ' + currentCase + ']');
+                
+                AMS_OscarCaseTriggerHelper.avoidRecursiveUpdateOnOSCAR = true;
                 update currentCase;
+                AMS_OscarCaseTriggerHelper.avoidRecursiveUpdateOnOSCAR = false;
+
             }
         }
 

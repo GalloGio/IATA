@@ -1,3 +1,33 @@
+/**
+ Author: 
+ Fernando Mouzinho
+ 
+ Description: 
+ this batch class is used to schedule 2 different scheduled jobs:
+        - ID Card Daily Contact Email Check Process
+        - ID Card Daily Related Contact Check Process
+ these jobs are launched depending on the operation that is sent:
+        batchOperation :
+            - IDCard_ContactEmail
+            - IDCard_RelatedContact
+ the schedule at the end send a report to the emails accounts configured when launching, 
+ in case of multiple email accounts, these must be separated by a comma (',') 
+    Ex: emails "test1@test1.com,test2@test2.com,test3@test3.com"
+
+Launch Jobs:
+    
+    IDCard_DailyProcessCheckBatch.start([operation],[Crono],[batch size],[email list]);
+    EX: 
+        IDCard_DailyProcessCheckBatch.start('IDCard_ContactEmail','0 30 11 * * ?',200,'Fernando.mouzinho@isobar.com,salima@iata.org');
+        IDCard_DailyProcessCheckBatch.start('IDCard_RelatedContact','0 30 11 * * ?',200,'Fernando.mouzinho@isobar.com,salima@iata.org');
+
+Stop Jobs:
+
+    IDCard_DailyProcessCheckBatch.stop([operation]);  
+    EX:
+        IDCard_DailyProcessCheckBatch.stop('IDCard_ContactEmail');                
+        IDCard_DailyProcessCheckBatch.stop('IDCard_RelatedContact');                
+*/
 global class IDCard_DailyProcessCheckBatch implements Database.Batchable<sObject>, Database.Stateful, Schedulable {
     
     private Integer batchScope {get;set;}
@@ -17,6 +47,11 @@ global class IDCard_DailyProcessCheckBatch implements Database.Batchable<sObject
     }
 
     global IDCard_DailyProcessCheckBatch(Integer batchScope, String emails) {
+        if(!Test.isRunningTest()) {
+            this.operation = 'IDCard_ContactEmail';
+        }else{
+            this.operation = 'IDCard_RelatedContact';
+        }  
         this.operation = 'IDCard_RelatedContact';
         this.batchScope = batchScope;
         this.lstResult = new List<ResultWrapper>();
@@ -30,6 +65,7 @@ global class IDCard_DailyProcessCheckBatch implements Database.Batchable<sObject
     }
 
     global IDCard_DailyProcessCheckBatch(Integer batchScope, String emails, String operation) {
+        system.debug('IDCard_DailyProcessCheckBatch - operation: ' + operation);
         this.operation = operation;
         this.batchScope = batchScope;
         this.lstResult = new List<ResultWrapper>();
@@ -40,6 +76,7 @@ global class IDCard_DailyProcessCheckBatch implements Database.Batchable<sObject
         }else{
             this.reportEmails = new List<String>();
         } 
+        system.debug('IDCard_DailyProcessCheckBatch - this.operation: ' + this.operation);
     }
     /**
     End - Constructor Methods
@@ -48,21 +85,42 @@ global class IDCard_DailyProcessCheckBatch implements Database.Batchable<sObject
 
     /**
     Schedule Methods
+    batchOperation :
+        - IDCard_ContactEmail
+        - IDCard_RelatedContact
     */
-    public static void start(String cron, Integer scope, String emails) {
+    public static void start(String batchOperation, String cron, Integer scope, String emails) {
+        
+        system.debug('Schedule - start - batchOperation: ' + batchOperation);
+
+        String sName = '';
+
+        if(batchOperation == 'IDCard_ContactEmail'){
+            sName = 'Contact Email';
+        }else if(batchOperation == 'IDCard_RelatedContact'){
+            sName = 'Related Contact';
+        }
+
         if(!Test.isRunningTest()) {
-            System.schedule('ID Card Daily Check Process', cron, new IDCard_DailyProcessCheckBatch(scope,emails));
+            System.schedule('ID Card Daily '+ sName +' Check Process', cron, new IDCard_DailyProcessCheckBatch(scope,emails,batchOperation));
         }else{
-            System.schedule('ID Card Daily Check Process TEST', cron, new IDCard_DailyProcessCheckBatch(scope,emails));
+            System.schedule('ID Card Daily '+ sName +' Check Process TEST', cron, new IDCard_DailyProcessCheckBatch(scope,emails,batchOperation));
         }        
     }
 
-    public static void stop(){
+    public static void stop(String batchOperation){
         String sJobName = '';
+        String sName = '';
+        if(batchOperation == 'IDCard_ContactEmail'){
+            sName = 'Contact Email';
+        }else if(batchOperation == 'IDCard_RelatedContact'){
+            sName = 'Related Contact';
+        }
+
         if(!Test.isRunningTest()) {
-            sJobName = 'ID Card Daily Check Process';
+            sJobName = 'ID Card Daily '+ sName +' Check Process';
         }else{
-            sJobName = 'ID Card Daily Check Process TEST';
+            sJobName = 'ID Card Daily '+ sName +' Check Process TEST';
         }
         
         List<CronTrigger> SCHEDULE_ID = [SELECT Id FROM CronTrigger where CronJobDetail.Name = :sJobName limit 1]; 
@@ -73,6 +131,9 @@ global class IDCard_DailyProcessCheckBatch implements Database.Batchable<sObject
     }
     
     global void execute(SchedulableContext sc) {
+        system.debug('Schedule - execute - this: ' + this);
+        system.debug('Schedule - execute - this.batchScope: ' + this.batchScope);
+        
         Database.executeBatch(this, this.batchScope);
     }
     
@@ -216,10 +277,10 @@ global class IDCard_DailyProcessCheckBatch implements Database.Batchable<sObject
 
     	sendReport(lstResult, errorsException, this.operation); 
     	lstResult = new List<ResultWrapper>();
-        if(this.operation == 'IDCard_RelatedContact'){
-            this.operation = 'IDCard_ContactEmail';
-            Database.executeBatch(this, this.batchScope);
-        }
+        //if(this.operation == 'IDCard_RelatedContact'){
+        //    this.operation = 'IDCard_ContactEmail';
+        //    Database.executeBatch(this, this.batchScope);
+        //}
         
     }
     /**
