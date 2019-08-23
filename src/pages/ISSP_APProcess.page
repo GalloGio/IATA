@@ -172,15 +172,21 @@
                                         </div>    
 
                                         <apex:outputPanel id="ich-info" layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!strOperationType=='ICH' && strAreaType=='Airline Joining'}">
-                                            <ul>
-                                                <li><strong>IATA Member Airline:</strong>An Airline who participates in the IATA Membership Service</li>
-                                                <li><strong>Non-IATA Member Airline:</strong>An Airline who does not participates in the IATA Membership Service</li>
-                                                <li><strong>Sponsored Airline:</strong>An Airline whose revenue accounting functions are performed by an IATA Member Airline</li>
-                                                <li><strong>Sponsored Associates:</strong>A Non-Airline whose revenue accounting functions are performed by an IATA Member Airline</li>
-                                                <li><strong>Associate Member:</strong>a Non-Airline who is providing services to Members of the IATA Clearing House</li>
-                                                <li><strong>Associate Member - Subsidiary:</strong>A Non-Airline who is providing services and who is a Subsidiary of an IATA Member Airline who participates in the IATA Clearing House</li>
-                                                <li><strong>Associate Member - Aggregator:</strong>An Aggregator Member is an Associate Member who participates in the IATA Clearing House and has Associate Subsidiaries participating under the responsibility of the parent organization</li>
-                                            </ul>
+                                            <p><strong>ICH Participation Type descriptions:</strong></p>
+                                            <p style="font-style: italic;">
+                                                (The available options will be related to the type of your business)
+                                            </p>
+                                            <p>
+                                                <ul>
+                                                    <li><strong>IATA Member Airline:</strong> An Airline who participates in the IATA Membership Service</li>
+                                                    <li><strong>Non-IATA Member Airline:</strong> An Airline who does not participates in the IATA Membership Service</li>
+                                                    <li><strong>Sponsored Airline:</strong> An Airline whose revenue accounting functions are performed by an IATA Member Airline</li>
+                                                    <li><strong>Sponsored Associates:</strong> A Non-Airline whose revenue accounting functions are performed by an IATA Member Airline</li>
+                                                    <li><strong>Associate Member:</strong> a Non-Airline who is providing services to Members of the IATA Clearing House</li>
+                                                    <li><strong>Associate Member - Subsidiary:</strong> A Non-Airline who is providing services and who is a Subsidiary of an IATA Member Airline who participates in the IATA Clearing House</li>
+                                                    <li><strong>Associate Member - Aggregator:</strong> An Aggregator Member is an Associate Member who participates in the IATA Clearing House and has Associate Subsidiaries participating under the responsibility of the parent organization</li>
+                                                </ul>
+                                            </p>
                                         </apex:outputPanel>
 
                                     </apex:pageBlock>
@@ -238,7 +244,7 @@
                             </div>
                             <div class="panel-body" id="body-enquiries">
 
-                                <c:ISSP_AP_Country_Reqs_Modal />
+                                <c:ISSP_AP_Country_Reqs_Modal ctrl="{!thisController}"/>
                                 
                                 <apex:form >
                                     <center>
@@ -277,7 +283,8 @@
                     <apex:include pageName="ISSP_AP_BSP_Form" rendered="{!AND(strAreaType=='Airline Joining', isBSP, isStep3)}"/>     
                     <apex:include pageName="ISSP_AP_CASS_Form" rendered="{!AND(strAreaType=='Airline Joining', isCASS, isStep3)}"/>
                     <apex:include pageName="ISSP_AP_Changes" rendered="{!AND(strAreaType=='Airline Change', OR(isBSP,isCASS),isStep3)}"/>
-                    <apex:include pageName="ISSP_AP_ICH_Form" rendered="{!AND(isICH, isStep3)}"/>
+                    <apex:include pageName="ISSP_AP_ICH_Form" rendered="{!AND(isICH, strAreaType=='Airline Joining', isStep3)}"/>
+                    <apex:include pageName="ISSP_AP_ICH_Changes" rendered="{!AND(isICH, strAreaType=='Airline Change', isStep3)}" />
                     
                     <!-- ----------------- -->
                     <!--STEP 4 Validation-->

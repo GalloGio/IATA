@@ -198,7 +198,6 @@ global without sharing class ISSP_APProcess {
         set { setSelectedContactPosition('ICH Clearance Initialization Contact',value); }
     }
 
-
     private Boolean getSelectedContactPosition(String position) {
         try {
             return this.selectedContact.Position__c.split(';').contains(position);
@@ -249,7 +248,9 @@ global without sharing class ISSP_APProcess {
             return false;
         }
     }
-   
+
+    public String listUploadedFileIds{get;set;}
+
     public ISSP_APProcess(){
         //Set the Variables default values
         isNewCase = true;
@@ -621,6 +622,8 @@ global without sharing class ISSP_APProcess {
 
         populateCountriesMap();
         poupulateOptInOutOptions();
+        set<String> setFileIds = retrieveMapAmazonFiles(newCase.Id).keySet();
+        listUploadedFileIds = String.join(new list<String>(setFileIds),';');
     }
 
     private void popContact(){
@@ -2220,6 +2223,28 @@ global without sharing class ISSP_APProcess {
         return getDocumentName('CASS_Form_Of_Application_Concurrence');
     }
 
+    /**
+        Get the document forICH
+    **/
+    public String getICHBankMandateFormUrl() {
+        return getDocumentUrl('ICH_Bank_Mandate_Form_Template');
+    }
+    public String getICHBankMandateFormName() {
+        return getDocumentName('ICH_Bank_Mandate_Form_Template');
+    }
+    public String getSISBankMandateFormUrl() {
+        return getDocumentUrl('SIS_Bank_Mandate_Form_Template');
+    }
+    public String getSISBankMandateFormName() {
+        return getDocumentName('SIS_Bank_Mandate_Form_Template');
+    }
+    public String getAdditionalSignatoryFormUrl() {
+        return getDocumentUrl('ICH_Additional_Signatories');
+    }
+    public String getAdditionalSignatoryFormName() {
+        return getDocumentName('ICH_Additional_Signatories');
+    }
+
     public static final map<String,String> MAP_ICH_DOC_TERMS = new map<String,String>{
         ICH_TYPE_IATA_MEMBER => 'ich-iata-member-airline-application',
         ICH_TYPE_NON_IATA_MEMBER => 'ich-non-iata-member-airline-app',
@@ -2459,7 +2484,7 @@ global without sharing class ISSP_APProcess {
             if (isICH) {
                 String title = 'ICH Joining Process';
                 if (!String.isBlank(this.newCase.Classification_SIS__c)) {
-                    title += '(' + this.newCase.Classification_SIS__c + ')';
+                    title += ' (' + this.newCase.Classification_SIS__c + ')';
                 }
                 return title;
             }

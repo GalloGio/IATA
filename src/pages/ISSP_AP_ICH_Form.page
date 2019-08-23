@@ -488,17 +488,12 @@
                 <apex:pageMessages />
 
                 <div class="apcontainer">
-                    <apex:outputPanel rendered="{!strAreaType=='Airline Joining'}">
-                        <c:ICH_Form_IATA_Member ctrl="{!thisController}" rendered="{!IsICHType_IATAMember}"/>
-                        <c:ICH_Form_Non_IATA_Member ctrl="{!thisController}" rendered="{!IsICHType_NonIATAMember}"/>
-                        <c:ICH_Form_AssociateAggregator ctrl="{!thisController}" rendered="{!IsICHType_AssociateAggregator}"/>
-                        <c:ICH_Form_AssociateSubsidiary ctrl="{!thisController}" rendered="{!OR(IsICHType_AssociateSubsidiary,IsICHType_AssociateSP)}"/>
-                        <c:ICH_Form_SponsoredAirline ctrl="{!thisController}" rendered="{!IsICHType_SponsoredAirline}"/>
-                        <c:ICH_Form_SponsoredAssociates ctrl="{!thisController}" rendered="{!IsICHType_SponsoredAssociates}"/>
-                    </apex:outputPanel>
-                    <apex:outputPanel rendered="{!strAreaType=='Airline Change'}">
-                        <c:ICH_Form_Changes ctrl="{!thisController}"/>
-                    </apex:outputPanel>
+                    <c:ICH_Form_IATA_Member ctrl="{!thisController}" rendered="{!IsICHType_IATAMember}"/>
+                    <c:ICH_Form_Non_IATA_Member ctrl="{!thisController}" rendered="{!IsICHType_NonIATAMember}"/>
+                    <c:ICH_Form_AssociateAggregator ctrl="{!thisController}" rendered="{!IsICHType_AssociateAggregator}"/>
+                    <c:ICH_Form_AssociateSubsidiary ctrl="{!thisController}" rendered="{!OR(IsICHType_AssociateSubsidiary,IsICHType_AssociateSP)}"/>
+                    <c:ICH_Form_SponsoredAirline ctrl="{!thisController}" rendered="{!IsICHType_SponsoredAirline}"/>
+                    <c:ICH_Form_SponsoredAssociates ctrl="{!thisController}" rendered="{!IsICHType_SponsoredAssociates}"/>
                 </div>
             </apex:pageBlock>
 
