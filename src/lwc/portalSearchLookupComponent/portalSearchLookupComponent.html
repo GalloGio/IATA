@@ -28,14 +28,14 @@
 
                         <!-- Search icon -->
                         <lightning-icon icon-name="utility:search" size="x-small" alternative-text="Search icon"
-                            class={getSearchIconClass}></lightning-icon>
+                            class={getSearchIconClass} if:false ={hideIcon}></lightning-icon>
 
                         <!-- Clear selection button icon for single entry lookups -->
                         <template if:false={isMultiEntry}>
                             <button title="Remove selected option" 
                                 class={getClearSelectionButtonClass}>
                                 <lightning-icon icon-name="utility:close" size="x-small"
-                                    alternative-text="Remove selected option" class="slds-button__icon">
+                                    alternative-text="Remove selected option" class="slds-button__icon" if:false ={hideIcon} >
                                 </lightning-icon>
                             </button>
                         </template>

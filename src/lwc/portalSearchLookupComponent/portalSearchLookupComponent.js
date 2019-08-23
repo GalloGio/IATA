@@ -14,6 +14,13 @@ export default class Lookup extends LightningElement {
     @api selection = [];
     @api placeholder = '';
     @api isMultiEntry = false;
+    @api 
+    get hideIcon(){
+        return this._hideIcon;
+    } 
+    set hideIcon(val){
+        this._hideIcon=val;
+    } 
     @api errors = [];
     @api scrollAfterNItems;
     @api itemName;
@@ -22,6 +29,7 @@ export default class Lookup extends LightningElement {
     @track searchResults = [];
     @track hasFocus = false;
     @track getContainerClass;
+    @track _hideIcon=false;
 
     cleanSearchTerm;
     blurTimeout;
