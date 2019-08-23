@@ -904,11 +904,14 @@ public static String serviceWrapperRedirect(String serviceId){
 		List<AccountTeamMember> portalAdmins = new List<AccountTeamMember>();
 		Map<Id, AccountTeamMember> portalAdminMap = new Map<Id, AccountTeamMember>();
 
-		if (currentUserContact.User_Portal_Status__c != 'Active'
-			&& currentUserContact.User_Portal_Status__c != 'Regional Administrator'
-			&& currentUserContact.User_Portal_Status__c != 'Approved User'
-			&& currentUserContact.User_Portal_Status__c != 'Pending Approval')
-			return null;
+		if (currentUserContact == null 
+			|| 
+				(currentUserContact.User_Portal_Status__c != 'Active'
+				&& currentUserContact.User_Portal_Status__c != 'Regional Administrator'
+				&& currentUserContact.User_Portal_Status__c != 'Approved User'
+				&& currentUserContact.User_Portal_Status__c != 'Pending Approval')
+			)
+			return new List<AccountTeamMember>();
 			
 		try {
 			String currentUserProfile = '';
