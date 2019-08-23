@@ -472,8 +472,9 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 if (!customerType.children.isEmpty()) {
                     CustomerTypePicklist picklist = new CustomerTypePicklist(customerType.subCategorizationLabel);
                     picklist.picklistName = customerType.metadataCustomerType.sub_categorization_custom_label__c;
-                    picklist.picklistOptions.add(new CustomerTypePicklistOption(customerType.metadataCustomerType.DeveloperName, customerType.subCategorizationPlaceholder, previousCustomerType == null));
-
+                    picklist.picklistOptions.add(new CustomerTypePicklistOption(null, customerType.subCategorizationPlaceholder, previousCustomerType == null));
+                    //picklist.picklistOptions.add(new CustomerTypePicklistOption(customerType.metadataCustomerType.DeveloperName, customerType.subCategorizationPlaceholder, previousCustomerType == null));
+                    system.debug('picklist.picklistOptions: ' + picklist.picklistOptions);
                     for (GCS_CustomerType child : customerType.children) {
                         picklist.picklistOptions.add(new CustomerTypePicklistOption(child.metadataCustomerType.DeveloperName, child.label, child.metadataCustomerType.DeveloperName == previousCustomerType));
                     }

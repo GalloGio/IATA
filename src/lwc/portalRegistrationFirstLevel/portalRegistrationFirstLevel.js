@@ -70,6 +70,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                                 "extraChoice" : "",
                                 "language" : "",
                                 "selectedCustomerType" : "",
+                                "selectedMetadataCustomerType" : {},
                                 "termsAndUsage" : false
                               };
     @track errorMessage = "";
@@ -86,6 +87,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     @track extraQuestion = { label : "", options : [], display : false };
     phoneInputInitialized = false;
     alertIcon = CSP_PortalPath + 'alertIcon.png';
+    exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_point.svg';
     @track jsLoaded = false;
 
     _labels = {
@@ -150,7 +152,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                 obj.label = data.picklistLabel;
                 obj.options = opts;
                 obj.display = true;
-
+                console.log('obj: ', obj);
                 if(data.picklistName == "Sector"){
                     that.sector = obj;
                 }else if(data.picklistName == "Category"){
@@ -417,6 +419,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     }
 
     handleSubmit(event){
+        this.registrationForm.selectedMetadataCustomerType = this.selectedMetadataCustomerType;
         console.log('Form: ', JSON.parse(JSON.stringify(this.registrationForm)));
         this.isLoading = true;
 
@@ -433,7 +436,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         const selectValidation = [...this.template.querySelectorAll('lightning-combobox')]
              .reduce((validSoFar, comboboxCmp) => {
                  if(comboboxCmp.checkValidity() == false){
-                    console.log('invalid amuey');
+                    console.log('invalid');
                  }
                  comboboxCmp.reportValidity();
                  return validSoFar && comboboxCmp.checkValidity();
@@ -539,6 +542,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     }
 
     handleCategoryChange(event){
+        if(event.target.value == null){
+            return;
+        }
         this.selectedCustomerType = event.target.value;
         if(this.selectedCustomerType == '- Select -'){
             this.selectedCustomerType = null;
@@ -556,6 +562,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     }
 
     handleExtraChoiceChange(event){
+        if(event.target.value == null){
+            return;
+        }
         this.selectedCustomerType = event.target.value;
         if(this.selectedCustomerType == '- Select -'){
             this.selectedCustomerType = null;
