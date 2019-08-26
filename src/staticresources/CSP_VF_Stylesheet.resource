@@ -18,6 +18,7 @@ body, div.container {
 .panel-heading {
     background-color: #1e32fa !important;
     background-image: none !important;
+    color: #fff;
 }
 
 .panel-body {
@@ -66,8 +67,12 @@ div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
     margin-right: 0;
 }
 
+.iatabtn-left{
+    float: left;
+}
+
 .iatabtn-topMargin{
-    margin-top: 20px;
+    margin-top: 20px !important;
 }
 
 .iatabtn.smaller,
@@ -77,7 +82,7 @@ div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
 
 .iatabtn.iatabtn-default,
 .iatabtn.iatabtn-success {
-    /*box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);*/
+    box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
     background-color: #d0d7fb;
     color: #3333ff;
 }
@@ -94,8 +99,12 @@ div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
 .iatabtn:focus,
 .btn.iatabtn:focus,
 .btnDisabled.iatabtn:focus {
-    color: #3333ff;
-    
+    color: #3333ff !important;
+}
+
+.iatabtn.iatabtn-default:hover,
+.iatabtn.iatabtn-default:focus{
+    box-shadow: 0px 6px 20px 0 rgba(56, 86, 235, 0.24), 0 1px 8px 0 rgba(56, 86, 235, 0.16);
 }
 
 .btnDisabled.iatabtn{
@@ -168,22 +177,18 @@ body .bPageBlock .pbBody .pbSubheader {
 }
 
 .modal-header {
-    /*background-color: #f7f8fc;*/
-    background-color: #1e32fa  !important;
-    padding: 10px 15px !important;
+    background-color: #f7f8fc;
 }
 
 .modal-title {
-    color: white;
-    /*font-weight: bold;
-    font-size: 1.3em;*/
-    font-size: 16px;
+    color: black;
+    font-weight: bold;
+    font-size: 1.3em;
 }
 
 .modal-header button.close{
     font-weight: unset;
     opacity: 0.7;
-    color: white;
 }
 .centered {
     text-align: center;

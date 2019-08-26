@@ -15,9 +15,10 @@
             <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
             
             <style>
-                .pbTitle {
-                    {!IF(isstep2,'width: 90% !important','width: 40% !important')};
-                }
+                .pbBottomButtons .pbTitle {
+                	display: none;
+                	width: {!IF(isstep2,'90% !important','40% !important')};
+            	}
             
             .bPageBlock {
                 border-top-width : thin !important;
