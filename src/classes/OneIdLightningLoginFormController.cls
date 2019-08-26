@@ -125,7 +125,7 @@ public without sharing class OneIdLightningLoginFormController {
             if(oldPortalRedirectSet.contains(oneUser.profile.Name)){ //overrides to old portal
                serviceName='ISSP';
                startUrl ='/ISSP_Homepage';
-			}
+            }
                 
             username=null != oneUser ? oneUser.Username : username;
             system.debug('pageLink: ' + pageLink);
