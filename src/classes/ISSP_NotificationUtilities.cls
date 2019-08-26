@@ -4,8 +4,17 @@
  * Modified By: Tiago.Ferreira 12-12-2014
  * Modified By: Niv.Goldenberg 13-12-2014
  */
-public class ISSP_NotificationUtilities 
+public class ISSP_NotificationUtilities
 {
+
+    /**
+        Calling sendNotification withouth the last parameter 'listVariables'
+     */
+    public static void sendNotification(List<Contact> lstContacts, Notification_template__c notificationTemplate, 
+                                        Map<String, String> messagesByGroupMap, String contactGroupField){
+        ISSP_NotificationUtilities.sendNotification(lstContacts, notificationTemplate, messagesByGroupMap, contactGroupField, null);
+    }
+
     /**
      * [
      * Send notification to list of contact
@@ -19,16 +28,18 @@ public class ISSP_NotificationUtilities
      *                               and to contacts of account with id 2 a message B, 
      *                               the map will look like this: 1-->A, 2-->B, and the contactGroupField will be AccountId]
      * @param contactGroupField     [Field which grouped the messages for contact, as described above]
+     * @param mapVariables          [A map containing a list of strings per Contact Id, each string is to replace a tag {0}, {1}...
+                                    its number represents the position in the list]
      * Created By:  Niv.Goldenberg 19-11-2014
      * Modified By: Tiago.Ferreira 12-12-2014
      * Modified By: Niv.Goldenberg 13-12-2014
      */
-	public static void sendNotification(List<Contact> lstContacts, Notification_template__c notificationTemplate, 
-                                        Map<String, String> messagesByGroupMap, String contactGroupField){
+    public static void sendNotification(List<Contact> lstContacts, Notification_template__c notificationTemplate, 
+                                        Map<String, String> messagesByGroupMap, String contactGroupField, list<String> listVariables){
         if (!lstContacts.isEmpty()){
-            ISSP_NotificationUtilities.insertNotifications(lstContacts, notificationTemplate, messagesByGroupMap, contactGroupField);
+            ISSP_NotificationUtilities.insertNotifications(lstContacts, notificationTemplate, messagesByGroupMap, contactGroupField, listVariables);
         }
-	}
+    }
 
     /**
      * [Insert Notifications by contacts]
@@ -45,15 +56,21 @@ public class ISSP_NotificationUtilities
      * Modified By: Niv.Goldenberg 13-12-2014
      */
     public static void insertNotifications(List<Contact> lstContacts, Notification_template__c notificationTemplate, 
-                                        Map<String, String> messagesByGroupMap, String contactGroupField)
+                                        Map<String, String> messagesByGroupMap, String contactGroupField, list<String> listVariables)
     {
         List<Notification__c> lstNotifications = new List<Notification__c>();
         for (Contact con : lstContacts)
         {
+
             Notification_template__c selectedTemplate = findLanguageTemplate(con, notificationTemplate);
-            
-            //Set default message by notification template message.
+
+            //set default subject and replace variables in it having the form {number}
+            String subject = selectedTemplate != null ? selectedTemplate.Subject__c : '';
+            subject = replaceVariables(subject, listVariables);
+
+            //Set default message by notification template message and replace variables in it having the form {number}
             String message = selectedTemplate != null ? selectedTemplate.Message__c : '';
+            message = replaceVariables(message, listVariables);
 
             //Check if there is a message by group field, if there is set is as the curreny message.
             if (contactGroupField != null && contactGroupField != '')
@@ -78,7 +95,7 @@ public class ISSP_NotificationUtilities
                 contact__c = con.Id,
                 Message__c = message,
                 Alert_Contact_By_Email__c = selectedTemplate.Alert_Contact_By_Email__c,
-                Subject__c = selectedTemplate.Subject__c,
+                Subject__c = subject,
                 Type__c = selectedTemplate.Type__c,
                 Notificatin_color__c = selectedTemplate.Notification_color__c ,
                 Notification_Campagne_Name__c = null,
@@ -165,5 +182,49 @@ public class ISSP_NotificationUtilities
 
         query += ')';
         return query;
-    } 
+    }
+
+    /**
+     * Replaces all tags: {varnumber}
+     * in the input text using the variables in the input list
+     */
+    public static String replaceVariables(String text, list<String> listVars) {
+        if (listVars==null) return text;
+        String result = text;
+        while (true) {
+            String varName = getFirstVarName(result);
+            if (varName==null) break;
+            // get position in the listVars list to get value
+            String value = '';
+            try {
+                Integer varNumber = Integer.ValueOf(varName);
+                value = listVars.get(varNumber);
+                value = value==null? '': value;
+            } catch (Exception e) {
+                System.debug('___replaceVariables' + e.getStackTraceString());
+            }
+            result = result.replace('{' + varName + '}', value);
+        }
+        return result;
+    }
+
+    /**
+     * Finds the first tag in the input text having this structure: {varnumber}
+     */
+    public static String getFirstVarName(String text) {
+        String fieldName = null;
+        try {
+            if (text.contains('{')) {
+                list<String> listSplit = text.split('[{]');
+                fieldName = listSplit[1];
+                if (fieldName.contains('}')) {
+                    listSplit = fieldName.split('[}]');
+                    fieldName = listSplit[0];
+                }
+            }
+        }catch (Exception e) {
+            System.debug('___getFirstVarName' + e.getStackTraceString());
+        }
+        return fieldName;
+    }
 }
