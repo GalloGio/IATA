@@ -2746,6 +2746,14 @@ Payment required on receipt of this Payment Advice
         <value>Add User</value>
     </labels>
     <labels>
+        <fullName>CSP_Apply</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Apply</shortDescription>
+        <value>Apply</value>
+    </labels>    
+    <labels>
         <fullName>CSP_ArticleHelpful</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3035,6 +3043,22 @@ Payment required on receipt of this Payment Advice
         <shortDescription>Create_Contact_Complete_Field</shortDescription>
         <value>Complete this field.</value>
     </labels>
+    <labels>
+        <fullName>CSP_DateFrom</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DateFrom</shortDescription>
+        <value>Creation Date (from)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DateTo</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DateTo</shortDescription>
+        <value>Creation Date (to)</value>
+    </labels>    
     <labels>
         <fullName>CSP_Deny_User_Access_Title</fullName>
         <language>en_US</language>
@@ -3389,6 +3413,14 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_RelatedArticles</shortDescription>
         <value>Related Articles</value>
     </labels>
+    <labels>
+        <fullName>CSP_RemoveAllFilters</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_RemoveAllFilters</shortDescription>
+        <value>Remove All Filters</value>
+    </labels>    
     <labels>
         <fullName>CSP_RemoveContact_Reason</fullName>
         <language>en_US</language>
