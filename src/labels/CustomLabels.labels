@@ -3103,6 +3103,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Error_Message_Mandatory_Fields_Contact</shortDescription>
         <value>Please fill all the mandatory fields</value>
+    </labels>
+	<labels>
+        <fullName>CSP_Error_while_delete_record</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Error while delete record</shortDescription>
+        <value>Error While Deleting Record</value>
     </labels>	
     <labels>
         <fullName>CSP_FAQs_Title</fullName>
@@ -3874,13 +3881,6 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_SearchingOn</shortDescription>
         <value>Searching on Case Number, Subject or Description</value>
-    </labels>
-	<labels>
-        <fullName>CSP_Error_while_delete_record</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Error while delete record</shortDescription>
-        <value>Error While Deleting Record</value>
     </labels>
     <labels>
         <fullName>CSP_FAQReachUsBanner_ButtonText</fullName>
