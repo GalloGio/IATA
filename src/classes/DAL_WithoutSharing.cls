@@ -95,6 +95,12 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
 
 	return new List<Contact>();
 }
+	  @AuraEnabled
+    public static List<Account> getRelatedAccounts(String finalQuery){
+
+	    return Database.query(finalQuery);
+    }
+}
 
 	//returns user Information wihtout visibility control
 	@AuraEnabled
