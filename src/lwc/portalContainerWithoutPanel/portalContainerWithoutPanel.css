@@ -3,7 +3,7 @@ customPaddingHeader@media only screen and (max-width: 400px) {
        padding-top: 0rem !important;
    }
    .containerHeight{
-       height:870px;
+       height:915px;
        /*min-height:2500px;*/
    }
 
@@ -33,10 +33,10 @@ customPaddingHeader@media only screen and (max-width: 400px) {
        /*position: fixed; */
    }
    .containerHeight{
-       height:870px;
+       height:915px;
        /*min-height:2000px;*/
    }
    .bodyContent{
-       height:870px;
+       height:915px;
    }
 }

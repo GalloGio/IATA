@@ -16,7 +16,7 @@ export default class PortalForgotPasswordCard extends LightningElement {
     @track isSanctioned;
 
     connectedCallback() {
-       this.checkUserIsGuest();
+       this.checkUserIsGuestOrAdmin();
        const RegistrationUtilsJs = new RegistrationUtils();
        //check user location
        RegistrationUtilsJs.getUserLocation().then(result=> {
@@ -38,11 +38,14 @@ export default class PortalForgotPasswordCard extends LightningElement {
        });
     }
 
-    checkUserIsGuest(){
-       if(isGuest == false){
-           navigateToPage(CSP_PortalPath,{});
-           return;
-       }
+    checkUserIsGuestOrAdmin() {
+        const RegistrationUtilsJs = new RegistrationUtils();
+        RegistrationUtilsJs.checkUserIsSystemAdmin().then(result=> {
+            if(result == false && isGuest == false){
+                navigateToPage(CSP_PortalPath,{});
+                return;
+            }
+        });
     }
 
     changePage(event){
