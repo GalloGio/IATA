@@ -70,14 +70,16 @@ public with sharing class PortalCasesCtrl {
 
         String queryConditions = getQueryConditions();
 
-        String queryString = 'SELECT CreatedBy.Id creatorid, CreatedBy.Name creatorname FROM Case ' + queryConditions + ' GROUP BY CreatedBy.Id, CreatedBy.Name ORDER BY CreatedBy.Name ASC ';
+        String queryString = 'SELECT ContactId creatorid, Contact.Name creatorname FROM Case ' + queryConditions + ' GROUP BY ContactId, Contact.Name ORDER BY Contact.Name ASC ';
 
         List<Aggregateresult> lstCases = Database.query(queryString);
 
         List<CSP_Utils.PickListWrapper> lstPickValues = new List<CSP_Utils.PickListWrapper>();
 
         for(Aggregateresult caseAux : lstCases){
-            lstPickValues.add(new CSP_Utils.PickListWrapper(caseAux.get('creatorid') + '', caseAux.get('creatorname')+''));
+            if(caseAux.get('creatorid') != null) {
+                lstPickValues.add(new CSP_Utils.PickListWrapper(caseAux.get('creatorid') + '', caseAux.get('creatorname')+''));
+            }
         }
 
         return lstPickValues;
@@ -263,11 +265,29 @@ public with sharing class PortalCasesCtrl {
                 }
                 if(filtersWrapper.casesComponent.caseContactFilter != null && filtersWrapper.casesComponent.caseContactFilter != ''){
                     if(queryConditions == ''){
-                        queryConditions = ' WHERE CreatedById = \'' + filtersWrapper.casesComponent.caseContactFilter + '\' ';
+                        queryConditions = ' WHERE ContactId = \'' + filtersWrapper.casesComponent.caseContactFilter + '\' ';
                     }else{
-                        queryConditions += ' AND CreatedById = \'' + filtersWrapper.casesComponent.caseContactFilter + '\' ';
+                        queryConditions += ' AND ContactId = \'' + filtersWrapper.casesComponent.caseContactFilter + '\' ';
                     }
                 }
+                if(filtersWrapper.casesComponent.dateFromFilter != null && filtersWrapper.casesComponent.dateFromFilter != ''){
+                    String dateFrom = CSP_Utils.toDatetime(Date.valueOf(filtersWrapper.casesComponent.dateFromFilter));
+
+                    if(queryConditions == ''){
+                        queryConditions = ' WHERE CreatedDate >= ' + dateFrom + ' ';
+                    }else{
+                        queryConditions += ' AND CreatedDate >= ' + dateFrom + ' ';
+                    }
+                }
+                if(filtersWrapper.casesComponent.dateToFilter != null && filtersWrapper.casesComponent.dateToFilter != ''){
+                    String dateTo = CSP_Utils.toDatetime(Date.valueOf(filtersWrapper.casesComponent.dateToFilter));
+
+                    if(queryConditions == ''){
+                        queryConditions = ' WHERE CreatedDate <= ' + dateTo + ' ';
+                    }else{
+                        queryConditions += ' AND CreatedDate <= ' + dateTo + ' ';
+                    }
+                }                
             }
 
             //pagination 

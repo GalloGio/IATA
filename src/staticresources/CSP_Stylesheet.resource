@@ -440,7 +440,7 @@ lightning-datatable .slds-th__action {
 
 .customPopupInteriorHalfScreenCentered {
     background-color: #F7F8FA;
-    width: 50%;
+    width: 35%;
     margin: auto;
     box-shadow: 5px 5px 20px #808080;
     border-radius: 1px;
@@ -581,6 +581,10 @@ lightning-datatable .slds-th__action {
   width: 220px;
   word-break: break-all;
   border: none;
+}
+
+.fullWidth, .fullWidth button, .fullWidth button:active, .fullWidth button:visited, .fullWidth button:focus, .fullWidth button:hover {
+    width: 100%;
 }
 
 .outlinedButton, .outlinedButton button, .outlinedButton button:active, .outlinedButton button:visited, .outlinedButton button:focus{
@@ -1364,6 +1368,14 @@ lightning-datatable .slds-th__action {
 .customPickList input:focus{
     border-color: #e6e6e6;
     box-shadow: none;
+}
+
+/* Date input */
+.dateField input {
+    background-color: #f7f8fa;
+    border-radius: 1px;
+    cursor: pointer;
+    border-color: #d4d4d4;
 }
 
 /* Custom card sizing Support Reach Us*/
