@@ -1047,6 +1047,62 @@ public class SidraLiteManagerTest {
         Test.stopTest();
     }
 
+	@isTest
+    public static void testcreateSidraForChinaAE() {
+        
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+            Name = 'China',
+            ISO_Code__c = 'CN',
+            AIMS_Area_Name__c = 'China',
+            AIMS_Area_ID__c = '1',
+            ANG_Enable_NewGen__c = true
+        );
+        insert country;
+
+        Account accountHE = new Account(
+            Name = 'Test account HE',
+            BillingCity = 'China',
+            BillingCountry = 'China',
+            BillingStreet = 'some street',
+            IATA_ISO_Country__c = country.Id,
+            Location_Type__c = 'HE',
+            IATACode__c = '1234567',
+            Location_Class__c = 'P'
+        );
+        insert accountHE;
+
+        Account accountAE = new Account(
+            Name = 'Test account AE',
+            ParentId = accountHE.id,
+            BillingCity = 'China',
+            BillingCountry = 'China',
+            BillingStreet = 'some street',
+            IATA_ISO_Country__c = country.Id,
+            Location_Type__c = 'AE',
+            IATACode__c = '1234567',
+            Location_Class__c = 'P'
+        );
+        insert accountAE;
+
+
+        Case oscarCase = createOSCARPassenger();
+        oscarCase.AccountId = AccountAE.id;
+        insert oscarCase;
+
+        SidraLiteManager.BLOCK_EXECUTION = false;
+
+        Case sidraCase = createSIDRALite();
+        sidraCase.ParentId = oscarCase.Id;
+        sidraCase.accountId = oscarCase.accountId;
+        sidraCase.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
+        insert sidraCase;
+        
+        case c = [SELECT Group_Single_Agent__c FROM CASE WHERE ID = :sidraCase.id];
+        
+        System.assertEquals('Single Agent', c.Group_Single_Agent__c);
+
+    }
+
     //ACAMBAS - WMO-483: Begin
     @isTest
     public static void testSIDRACaseForCNS() {
