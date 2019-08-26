@@ -22737,6 +22737,27 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>At least one user must be selected</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_NOC_Type_Of_Change</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>First NoC Question</shortDescription>
+        <value>Please select your type of change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_NOC_Type_Of_Change_First</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>First NoC First Answer</shortDescription>
+        <value>Change of Accreditation Type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_NOC_Type_Of_Change_Second</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>First NoC Second Answer</shortDescription>
+        <value>Other Changes</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ONE_OR_MORE_AE</fullName>
         <language>en_US</language>
         <protected>false</protected>

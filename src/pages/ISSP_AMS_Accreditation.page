@@ -476,7 +476,7 @@
     	}
 
         $( document ).ready(function() {
-            runMultiCountry();
+            loadPageOptions();
         });
 
         function checkMCAECountry() {
@@ -547,7 +547,27 @@
             }
         }
 
-        function runMultiCountry() {
+        function checkNoCFirstQuestion() {
+            if ({!isStep1}) {
+                if ($('[id$="typeOfChange"]').find("input")[0]) {
+
+                    if ($('[id$="typeOfChange"]').find("input")[0].checked) {
+                        $('[id$="LocationType"]').find("input")[3].disabled = true;
+                        $('[id$="LocationType"]').find("input")[2].disabled = true;
+                        $('[id$="LocationType"]').find("input")[0].disabled = true;
+                        $('[id$="LocationType"]').find("input")[1].checked = true;
+
+                        reRenderAccountsNoc();
+                    } else {
+                        $('[id$="LocationType"]').find("input")[3].disabled = false;
+                        $('[id$="LocationType"]').find("input")[2].disabled = false;
+                        $('[id$="LocationType"]').find("input")[0].disabled = false;
+                    }
+                }
+            }
+        }
+
+        function loadPageOptions() {
             if({!isMultiCountryNewAE}) {
                 $('[id$=isSameLegal]').first().insertAfter($('[id$=countrySelection').first());
                 populateLegalAndSeparateFields();
@@ -555,12 +575,18 @@
                 $('[id$=officetypelist]').prop('disabled', true);
             }
 
-            if ({!isMCNewAEAccredited} && {!isNoticeOfChange}) {
+            if ({!isNoticeOfChange}) {
                 $('[id$=nocFormQuestions]').first().insertAfter($('[id$=countrySelection').first());
-                checkMCNoC();
-                if ({!isStep1}) {
-                    reRenderNocOptions(); 
+
+                checkNoCFirstQuestion();
+
+                if ({!isMCNewAEAccredited}) {
+                    checkMCNoC();
+                    if ({!isStep1}) {
+                        reRenderNocOptions(); 
+                    }
                 }
+                
             }
         }
 
@@ -656,7 +682,7 @@
                                     <apex:actionStatus id="buttonLoadingStep1">
                                         <apex:facet name="stop"><apex:outputPanel >
                                             <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"/>
-                                            <apex:commandButton styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" rendered="{!NOT(amsIsGSA=='YES')}" status="buttonLoadingStep1" reRender="step1Form" oncomplete="runMultiCountry();"/>
+                                            <apex:commandButton styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" rendered="{!NOT(amsIsGSA=='YES')}" status="buttonLoadingStep1" reRender="step1Form" oncomplete="loadPageOptions();"/>
                                         </apex:outputPanel></apex:facet>
                                         <apex:facet name="start"><apex:outputPanel >
                                             <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
@@ -760,7 +786,28 @@
                                     </apex:outputPanel>
                                 </apex:outputPanel>
 
+                            <apex:outputpanel rendered="{!isNoticeOfChange}" id="nocFirstQuestion">
+                                <apex:outputpanel >
+                                    <div class="form-group">
+                                        <label for="typeOfChange" class="col-lg-3 control-label">
+                                            {!$Label.ISSP_ANG_NOC_Type_Of_Change}
+                                        </label>
+                                        <div class="col-lg-9" style="padding-top:7px">
 
+                                            <apex:outputPanel rendered="{!OR(isBankAccountChange != true, con.Account.Location_Type__c != 'AE')}">
+                                                <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptionsFirstQ">
+                                                    <apex:selectRadio required="true" id="typeOfChange" layout="pageDirection" label="{!$Label.ISSP_ANG_NOC_Type_Of_Change}" style="width:70%;" value="{!newForm.Type_of_Change__c}" onchange="checkNoCFirstQuestion();">
+                                            	    	<apex:selectOption itemValue="{!$Label.ISSP_ANG_NOC_Type_Of_Change_First}" itemLabel="{!$Label.ISSP_ANG_NOC_Type_Of_Change_First}"/>
+                                            
+                                                        <apex:selectOption itemValue="{!$Label.ISSP_ANG_NOC_Type_Of_Change_Second}" itemLabel="{!$Label.ISSP_ANG_NOC_Type_Of_Change_Second}"/>
+                                                    </apex:selectRadio>
+                                                </apex:outputPanel>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+
+                                </apex:outputpanel>
+                            </apex:outputpanel>
 
                             <apex:outputpanel rendered="{!isNoticeOfChange}" id="nocFormQuestions">
                                 <apex:outputpanel >
@@ -787,7 +834,7 @@
                                                     </apex:selectRadio>
                                                 </apex:outputPanel>
 
-                                                <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptions">
+                                                <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptions">    
                                                     <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');">
                                                         <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}"/>
                                                         
@@ -1078,11 +1125,11 @@
             reqIdentifier="{!reqs.File_Identifier2__c}"  
             rendered="{!NOT(ISBLANK(reqs.File_Identifier2__c))}" 
             />
-        <apex:outputPanel  rendered="{!(ISBLANK(reqs.File_Identifier2__c))}">
+        <apex:outputPanel rendered="{!(ISBLANK(reqs.File_Identifier2__c))}">
             <div class = "well">
-            <apex:outputText style="font-weight:bold" value ="{!reqs.Name}" escape="false"/>
+            <apex:outputText style="font-weight:bold" value="{!reqs.Name}" escape="false"/>
             <br/> 
-            <apex:outputText value ="{!reqs.Requirement_text__c}" escape="false"/>
+            <apex:outputText value="{!reqs.Requirement_text__c}" escape="false"/>
             <br/>
             </div>
         </apex:outputPanel>
