@@ -2713,6 +2713,13 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP Accept Terms Error</shortDescription>
         <value>Accept the Terms before you proceed.</value>
     </labels>
+	<labels>
+        <fullName>CSP_Account_Domain_Created</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Account Domain Created</shortDescription>
+        <value>Account Domain created</value>
+    </labels>
     <labels>
         <fullName>CSP_Add_All</fullName>
         <categories>CS Portal</categories>
@@ -3083,6 +3090,13 @@ Payment required on receipt of this Payment Advice
         <value>Publication Countries</value>
     </labels>
 	<labels>
+        <fullName>CSP_Error_Creating_Record</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Error Creating Record</shortDescription>
+        <value>Error Creating Record</value>
+    </labels>
+	<labels>
         <fullName>CSP_Error_Message_Mandatory_Fields_Contact</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3222,6 +3236,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>csp Membership Function</shortDescription>
         <value>Job Function</value>
+    </labels>
+	<labels>
+        <fullName>CSP_New_Email_Domain</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP New Email Domain</shortDescription>
+        <value>New email domain</value>
     </labels>
     <labels>
         <fullName>CSP_NoAccount</fullName>
@@ -3373,6 +3394,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_RecentCases</shortDescription>
         <value>Recent Cases</value>
+    </labels>
+	<labels>
+        <fullName>CSP_Record_Deleted</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Record Deleted</shortDescription>
+        <value>Record is Deleted</value>
     </labels>
     <labels>
         <fullName>CSP_RelatedArticles</fullName>
@@ -3655,6 +3683,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Submit</shortDescription>
         <value>Submit</value>
+    </labels>
+	<labels>
+        <fullName>CSP_Success</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Success</shortDescription>
+        <value>Success</value>
     </labels>    
     <labels>
         <fullName>CSP_Support</fullName>
@@ -3839,6 +3874,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_SearchingOn</shortDescription>
         <value>Searching on Case Number, Subject or Description</value>
+    </labels>
+	<labels>
+        <fullName>CSP_Error_while_delete_record</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Error while delete record</shortDescription>
+        <value>Error While Deleting Record</value>
     </labels>
     <labels>
         <fullName>CSP_FAQReachUsBanner_ButtonText</fullName>

@@ -147,6 +147,14 @@ body {
     fill: #1e32fa;
 }
 
+.blackIcon svg {
+  fill: black;
+}
+
+.orangeIcon svg {
+  fill: #ed7756;
+}
+
 .whiteIcon svg {
     fill: #FFFFFF;
 }

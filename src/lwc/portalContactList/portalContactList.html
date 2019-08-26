@@ -57,6 +57,16 @@
                             <template for:each={record.rowValues} for:item="rowValue">
                                 <td key={rowValue.value} class={rowValue.className} onclick={openRecordDetail} data-item={index}>
                                     <span>{rowValue.value}</span>
+                                    <span if:true={rowValue.emailHasError}>
+                                        <span if:true={rowValue.showIcon}>
+                                            <lightning-helptext icon-name="utility:warning" 
+                                                content={labels.ISSP_ContactList_HoverPopup_Text}
+                                                class="orangeIcon">
+                                            </lightning-helptext>
+                                        </span>
+                                        <span>{rowValue.email}</span>
+                                        <span class={rowValue.emailClass}>{rowValue.domain}</span>
+                                    </span>
                                 </td>
                             </template>
 

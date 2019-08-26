@@ -16,6 +16,10 @@
             onrefreshview={closePortalChangeUserStatusWithRefresh} related-accounts={relatedAccounts}></c-portal-relocate-account>
     </template>
 
+    <template if:true={emailDomain}>
+        <c-portal-email-domain record-id={recordId} oncloseemaildomain={closeEmailDomain}></c-portal-email-domain>
+    </template>
+
     <c-portal-profile-section class-name={sectionClass} header-class={headerClass}>
         <span slot="sectionTitle">{sectionTitle}</span>
         <span slot="sectionActions">
@@ -28,7 +32,26 @@
             <lightning-record-view-form record-id={recordId} object-api-name={objectName} onload={loaded}>
                 <template if:false={isLoading}>
                     <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_small">
+
                         <template for:each={fields} for:item="field">
+                            <template if:true={field.isAccountDomainPermission}>
+                                <span key={field.fieldName}
+                                    class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <span class="specialLabel">
+                                        {labels.CompanyInformation_EMADOMVAL_Title}
+                                    </span>
+                                    <span class="slds-m-left_x-small">
+                                        <lightning-icon icon-name="utility:edit" size="x-small"
+                                            class="blackIcon cursorPointer" onclick={openEmailDomain}></lightning-icon>
+                                    </span>
+                                    <div class="textValue">
+                                        <template for:each={accountDomains} for:item="domain">
+                                            <div key={domain.Name}> {domain.Name} </div>
+                                        </template>
+                                    </div>
+                                </span>
+                            </template>
+
                             <template if:true={field.isAccessibility}>
                                 <span key={field.fieldName}
                                     class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
