@@ -25,10 +25,6 @@
                 <behavior>Required</behavior>
                 <field>Card_Status__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Agency_ISO_Country_Code__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -87,6 +83,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Agency_Accreditation_Class__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Agency_ISO_Country_Code__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

@@ -4,18 +4,18 @@
         //Check if contact is DPO
         var checkIfContactIsDPOAction = component.get("c.checkIfContactIsDPO");
         checkIfContactIsDPOAction.setCallback(this, function(response){
-        	var state = response.getState();
+            var state = response.getState();
             
-        	if (state === "SUCCESS") {
+            if (state === "SUCCESS") {
                 var isDPO = response.getReturnValue();
                 if(isDPO == null)
                 isDPO = false;
                 component.set("v.isContactDPO", isDPO);
                 component.set("v.showDPOArea", isDPO);
                 component.set("v.localLoading", false);
-         	}
-      	});
-       	$A.enqueueAction(checkIfContactIsDPOAction);
+            }
+        });
+        $A.enqueueAction(checkIfContactIsDPOAction);
         
         //get data privacy rights pick values
         var getDataPrivacyRightsPickValuesAction = component.get("c.getDataPrivacyRightsPickValues");
@@ -117,6 +117,58 @@
             component.set("v.localLoading", false);
         }
     },
+
+    fecthAWSInformation : function(c, e, h){
+        
+        let controlDPOField = h.controlDPOFields(c);
+
+        $A.util.toggleClass(c.find('loadingApi'), 'slds-hide');
+
+        if(controlDPOField){
+
+            let fetchTACN = c.get("c.getTACN");
+            
+            fetchTACN.setCallback(this, function(response){    
+                
+                let iataCode = response.getReturnValue();
+
+                if(response.getState() === 'ERROR' || !iataCode){
+                    alert('Something went wrong, please try again later or contact our support team');
+                    console.error('Apex error: '+JSON.stringify(response.getError()));
+                    console.error('Returned IATA Code: '+iataCode);
+
+                }else{
+                    let fullName = c.get("v.newCaseDPO.Passenger_Name_PXNM__c");
+                    let ticketNumber = c.get("v.newCaseDPO.Ticket_Number_TDNR__c");
+
+                    let lName = fullName.split('/')[0].replace(new RegExp('\s+', 'g'), '').toUpperCase();
+                    let lastName = sha256(lName);
+                    let tdnr = sha256(ticketNumber);
+                    let tacn = sha256(iataCode.substr(0,3));
+                    
+                    //convert date from app yyyy-mm-dd to desired format yymmdd 
+                    let d = c.get("v.newCaseDPO.Date_of_Issue_DAIS__c");
+                    let issued = d.substring(2).replace(new RegExp('-', 'g'), '');
+
+                    //for testing purposes
+                    // let lastName = 'e67ae51002ece965e4824a97dad17dd9150c4fe85588720f4dab8b6e4f0a0991';
+                    // let tdnr = '2bb7037f0a73d61d8bb3fe1ecff9d0e8d7bbe4422bbca30ce5f0f04792350e6c';
+                    // let tacn = '72abdfcd75400cfee271e737b4f112e5f671d3691d215ed616db2ad8d5a7778d';
+                    // let issued = '180905';
+
+                    let path = `/gdpr/pax?issueDate=${issued}&tdnr=${tdnr}&name=${lastName}&tacn=${tacn}`;
+
+                    c.set("v.jsonPath", path);
+                    
+                    c.find("jsonTable").loadTable();
+                }
+
+                $A.util.toggleClass(c.find('loadingApi'), 'slds-hide');
+            });
+            $A.enqueueAction(fetchTACN);
+            
+        }
+    }, 
     
     submitNewCaseButtonHandler : function (component, event, helper){
         //Clear fields

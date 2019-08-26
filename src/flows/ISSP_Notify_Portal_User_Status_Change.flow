@@ -564,7 +564,7 @@
 ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c))) 
 &amp;&amp; ISBLANK(PRIORVALUE([Contact].Community__c)))
 &amp;&amp;
-(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Pending Approval&#39;) &amp;&amp;  BEGINS([Contact].Community__c, &#39;CNS&#39;))</stringValue>
+(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Pending Approval&apos;) &amp;&amp;  BEGINS([Contact].Community__c, &apos;CNS&apos;))</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_1</name>
@@ -573,7 +573,7 @@ ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))
 ISBLANK(TEXT(PRIORVALUE({!myVariable_current.User_Portal_Status__c}))) 
 &amp;&amp; ISBLANK(PRIORVALUE({!myVariable_current.Community__c})))
 &amp;&amp;
-(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &#39;Pending Approval&#39;) &amp;&amp;  BEGINS({!myVariable_current.Community__c}, &#39;CNS&#39;))</expression>
+(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &apos;Pending Approval&apos;) &amp;&amp;  BEGINS({!myVariable_current.Community__c}, &apos;CNS&apos;))</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -625,7 +625,7 @@ $User.ContactId != [Contact].Id &amp;&amp;
 ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c))) 
 &amp;&amp; ISBLANK(PRIORVALUE([Contact].Community__c)))
 &amp;&amp;
-(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Pending Approval&#39;) &amp;&amp;  BEGINS([Contact].Community__c, &#39;CNS&#39;))</stringValue>
+(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Pending Approval&apos;) &amp;&amp;  BEGINS([Contact].Community__c, &apos;CNS&apos;))</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_1_pmetrule</name>
@@ -634,7 +634,7 @@ ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))
 ISBLANK(TEXT(PRIORVALUE({!myVariable_old.User_Portal_Status__c}))) 
 &amp;&amp; ISBLANK(PRIORVALUE({!myVariable_old.Community__c})))
 &amp;&amp;
-(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &#39;Pending Approval&#39;) &amp;&amp;  BEGINS({!myVariable_old.Community__c}, &#39;CNS&#39;))</expression>
+(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &apos;Pending Approval&apos;) &amp;&amp;  BEGINS({!myVariable_old.Community__c}, &apos;CNS&apos;))</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -642,16 +642,16 @@ ISBLANK(TEXT(PRIORVALUE({!myVariable_old.User_Portal_Status__c})))
             <value>
                 <stringValue>(NOT(ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))) &amp;&amp; NOT(ISBLANK(PRIORVALUE([Contact].Community__c))))
 &amp;&amp;
-ISCHANGED( [Contact].User_Portal_Status__c  ) &amp;&amp; (NOT(ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c))))) &amp;&amp; ( NOT(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Rejected&#39;)) || NOT(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Deactivate&#39;)) ) &amp;&amp; ( ISPICKVAL([Contact].User_Portal_Status__c, &#39;Approved User&#39;) || ISPICKVAL([Contact].User_Portal_Status__c, &#39;Approved Admin&#39;) || ISPICKVAL([Contact].User_Portal_Status__c, &#39;Regional Administrator&#39;) )
-&amp;&amp;  BEGINS([Contact].Community__c, &#39;ISS&#39;) </stringValue>
+ISCHANGED( [Contact].User_Portal_Status__c  ) &amp;&amp; (NOT(ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c))))) &amp;&amp; ( NOT(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Rejected&apos;)) || NOT(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Deactivate&apos;)) ) &amp;&amp; ( ISPICKVAL([Contact].User_Portal_Status__c, &apos;Approved User&apos;) || ISPICKVAL([Contact].User_Portal_Status__c, &apos;Approved Admin&apos;) || ISPICKVAL([Contact].User_Portal_Status__c, &apos;Regional Administrator&apos;) )
+&amp;&amp;  BEGINS([Contact].Community__c, &apos;ISS&apos;) </stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_3</name>
         <dataType>Boolean</dataType>
         <expression>(NOT(ISBLANK(TEXT(PRIORVALUE({!myVariable_current.User_Portal_Status__c})))) &amp;&amp; NOT(ISBLANK(PRIORVALUE({!myVariable_current.Community__c}))))
 &amp;&amp;
-ISCHANGED( {!myVariable_current.User_Portal_Status__c}  ) &amp;&amp; (NOT(ISBLANK(TEXT(PRIORVALUE({!myVariable_current.User_Portal_Status__c}))))) &amp;&amp; ( NOT(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &#39;Rejected&#39;)) || NOT(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &#39;Deactivate&#39;)) ) &amp;&amp; ( ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &#39;Approved User&#39;) || ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &#39;Approved Admin&#39;) || ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &#39;Regional Administrator&#39;) )
-&amp;&amp;  BEGINS({!myVariable_current.Community__c}, &#39;ISS&#39;)</expression>
+ISCHANGED( {!myVariable_current.User_Portal_Status__c}  ) &amp;&amp; (NOT(ISBLANK(TEXT(PRIORVALUE({!myVariable_current.User_Portal_Status__c}))))) &amp;&amp; ( NOT(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &apos;Rejected&apos;)) || NOT(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &apos;Deactivate&apos;)) ) &amp;&amp; ( ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &apos;Approved User&apos;) || ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &apos;Approved Admin&apos;) || ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &apos;Regional Administrator&apos;) )
+&amp;&amp;  BEGINS({!myVariable_current.Community__c}, &apos;ISS&apos;)</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -659,16 +659,16 @@ ISCHANGED( {!myVariable_current.User_Portal_Status__c}  ) &amp;&amp; (NOT(ISBLAN
             <value>
                 <stringValue>(NOT(ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))) &amp;&amp; NOT(ISBLANK(PRIORVALUE([Contact].Community__c))))
 &amp;&amp;
-ISCHANGED( [Contact].User_Portal_Status__c  ) &amp;&amp; (NOT(ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c))))) &amp;&amp; ( NOT(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Rejected&#39;)) || NOT(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Deactivate&#39;)) ) &amp;&amp; ( ISPICKVAL([Contact].User_Portal_Status__c, &#39;Approved User&#39;) || ISPICKVAL([Contact].User_Portal_Status__c, &#39;Approved Admin&#39;) || ISPICKVAL([Contact].User_Portal_Status__c, &#39;Regional Administrator&#39;) )
-&amp;&amp;  BEGINS([Contact].Community__c, &#39;ISS&#39;) </stringValue>
+ISCHANGED( [Contact].User_Portal_Status__c  ) &amp;&amp; (NOT(ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c))))) &amp;&amp; ( NOT(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Rejected&apos;)) || NOT(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Deactivate&apos;)) ) &amp;&amp; ( ISPICKVAL([Contact].User_Portal_Status__c, &apos;Approved User&apos;) || ISPICKVAL([Contact].User_Portal_Status__c, &apos;Approved Admin&apos;) || ISPICKVAL([Contact].User_Portal_Status__c, &apos;Regional Administrator&apos;) )
+&amp;&amp;  BEGINS([Contact].Community__c, &apos;ISS&apos;) </stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_3_pmetrule</name>
         <dataType>Boolean</dataType>
         <expression>(NOT(ISBLANK(TEXT(PRIORVALUE({!myVariable_old.User_Portal_Status__c})))) &amp;&amp; NOT(ISBLANK(PRIORVALUE({!myVariable_old.Community__c}))))
 &amp;&amp;
-ISCHANGED( {!myVariable_old.User_Portal_Status__c}  ) &amp;&amp; (NOT(ISBLANK(TEXT(PRIORVALUE({!myVariable_old.User_Portal_Status__c}))))) &amp;&amp; ( NOT(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &#39;Rejected&#39;)) || NOT(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &#39;Deactivate&#39;)) ) &amp;&amp; ( ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &#39;Approved User&#39;) || ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &#39;Approved Admin&#39;) || ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &#39;Regional Administrator&#39;) )
-&amp;&amp;  BEGINS({!myVariable_old.Community__c}, &#39;ISS&#39;)</expression>
+ISCHANGED( {!myVariable_old.User_Portal_Status__c}  ) &amp;&amp; (NOT(ISBLANK(TEXT(PRIORVALUE({!myVariable_old.User_Portal_Status__c}))))) &amp;&amp; ( NOT(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &apos;Rejected&apos;)) || NOT(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &apos;Deactivate&apos;)) ) &amp;&amp; ( ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &apos;Approved User&apos;) || ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &apos;Approved Admin&apos;) || ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &apos;Regional Administrator&apos;) )
+&amp;&amp;  BEGINS({!myVariable_old.Community__c}, &apos;ISS&apos;)</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -677,8 +677,8 @@ ISCHANGED( {!myVariable_old.User_Portal_Status__c}  ) &amp;&amp; (NOT(ISBLANK(TE
                 <stringValue>(NOT(ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))) &amp;&amp; NOT(ISBLANK(PRIORVALUE([Contact].Community__c))))
 &amp;&amp;
 ISCHANGED( [Contact].User_Portal_Status__c  ) &amp;&amp; 
-(NOT(ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))))&amp;&amp; ( NOT(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Rejected&#39;)) || NOT(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Deactivate&#39;)) ) &amp;&amp; ( ISPICKVAL([Contact].User_Portal_Status__c, &#39;Approved User&#39;) || ISPICKVAL([Contact].User_Portal_Status__c, &#39;Approved Admin&#39;) || ISPICKVAL([Contact].User_Portal_Status__c, &#39;Regional Administrator&#39;) )
-&amp;&amp;  BEGINS([Contact].Community__c, &#39;CNS&#39;) </stringValue>
+(NOT(ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))))&amp;&amp; ( NOT(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Rejected&apos;)) || NOT(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Deactivate&apos;)) ) &amp;&amp; ( ISPICKVAL([Contact].User_Portal_Status__c, &apos;Approved User&apos;) || ISPICKVAL([Contact].User_Portal_Status__c, &apos;Approved Admin&apos;) || ISPICKVAL([Contact].User_Portal_Status__c, &apos;Regional Administrator&apos;) )
+&amp;&amp;  BEGINS([Contact].Community__c, &apos;CNS&apos;) </stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_5</name>
@@ -686,8 +686,8 @@ ISCHANGED( [Contact].User_Portal_Status__c  ) &amp;&amp;
         <expression>(NOT(ISBLANK(TEXT(PRIORVALUE({!myVariable_current.User_Portal_Status__c})))) &amp;&amp; NOT(ISBLANK(PRIORVALUE({!myVariable_current.Community__c}))))
 &amp;&amp;
 ISCHANGED( {!myVariable_current.User_Portal_Status__c}  ) &amp;&amp; 
-(NOT(ISBLANK(TEXT(PRIORVALUE({!myVariable_current.User_Portal_Status__c})))))&amp;&amp; ( NOT(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &#39;Rejected&#39;)) || NOT(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &#39;Deactivate&#39;)) ) &amp;&amp; ( ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &#39;Approved User&#39;) || ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &#39;Approved Admin&#39;) || ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &#39;Regional Administrator&#39;) )
-&amp;&amp;  BEGINS({!myVariable_current.Community__c}, &#39;CNS&#39;)</expression>
+(NOT(ISBLANK(TEXT(PRIORVALUE({!myVariable_current.User_Portal_Status__c})))))&amp;&amp; ( NOT(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &apos;Rejected&apos;)) || NOT(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &apos;Deactivate&apos;)) ) &amp;&amp; ( ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &apos;Approved User&apos;) || ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &apos;Approved Admin&apos;) || ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &apos;Regional Administrator&apos;) )
+&amp;&amp;  BEGINS({!myVariable_current.Community__c}, &apos;CNS&apos;)</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -696,8 +696,8 @@ ISCHANGED( {!myVariable_current.User_Portal_Status__c}  ) &amp;&amp;
                 <stringValue>(NOT(ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))) &amp;&amp; NOT(ISBLANK(PRIORVALUE([Contact].Community__c))))
 &amp;&amp;
 ISCHANGED( [Contact].User_Portal_Status__c  ) &amp;&amp; 
-(NOT(ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))))&amp;&amp; ( NOT(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Rejected&#39;)) || NOT(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Deactivate&#39;)) ) &amp;&amp; ( ISPICKVAL([Contact].User_Portal_Status__c, &#39;Approved User&#39;) || ISPICKVAL([Contact].User_Portal_Status__c, &#39;Approved Admin&#39;) || ISPICKVAL([Contact].User_Portal_Status__c, &#39;Regional Administrator&#39;) )
-&amp;&amp;  BEGINS([Contact].Community__c, &#39;CNS&#39;) </stringValue>
+(NOT(ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))))&amp;&amp; ( NOT(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Rejected&apos;)) || NOT(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Deactivate&apos;)) ) &amp;&amp; ( ISPICKVAL([Contact].User_Portal_Status__c, &apos;Approved User&apos;) || ISPICKVAL([Contact].User_Portal_Status__c, &apos;Approved Admin&apos;) || ISPICKVAL([Contact].User_Portal_Status__c, &apos;Regional Administrator&apos;) )
+&amp;&amp;  BEGINS([Contact].Community__c, &apos;CNS&apos;) </stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_5_pmetrule</name>
@@ -705,8 +705,8 @@ ISCHANGED( [Contact].User_Portal_Status__c  ) &amp;&amp;
         <expression>(NOT(ISBLANK(TEXT(PRIORVALUE({!myVariable_old.User_Portal_Status__c})))) &amp;&amp; NOT(ISBLANK(PRIORVALUE({!myVariable_old.Community__c}))))
 &amp;&amp;
 ISCHANGED( {!myVariable_old.User_Portal_Status__c}  ) &amp;&amp; 
-(NOT(ISBLANK(TEXT(PRIORVALUE({!myVariable_old.User_Portal_Status__c})))))&amp;&amp; ( NOT(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &#39;Rejected&#39;)) || NOT(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &#39;Deactivate&#39;)) ) &amp;&amp; ( ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &#39;Approved User&#39;) || ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &#39;Approved Admin&#39;) || ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &#39;Regional Administrator&#39;) )
-&amp;&amp;  BEGINS({!myVariable_old.Community__c}, &#39;CNS&#39;)</expression>
+(NOT(ISBLANK(TEXT(PRIORVALUE({!myVariable_old.User_Portal_Status__c})))))&amp;&amp; ( NOT(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &apos;Rejected&apos;)) || NOT(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &apos;Deactivate&apos;)) ) &amp;&amp; ( ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &apos;Approved User&apos;) || ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &apos;Approved Admin&apos;) || ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &apos;Regional Administrator&apos;) )
+&amp;&amp;  BEGINS({!myVariable_old.Community__c}, &apos;CNS&apos;)</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -716,7 +716,7 @@ ISCHANGED( {!myVariable_old.User_Portal_Status__c}  ) &amp;&amp;
 ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c))) 
 &amp;&amp; ISBLANK(PRIORVALUE([Contact].Community__c)))
 &amp;&amp;
-(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Rejected&#39;) &amp;&amp;  BEGINS([Contact].Community__c, &#39;ISS&#39;))</stringValue>
+(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Rejected&apos;) &amp;&amp;  BEGINS([Contact].Community__c, &apos;ISS&apos;))</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_7</name>
@@ -725,7 +725,7 @@ ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))
 ISBLANK(TEXT(PRIORVALUE({!myVariable_current.User_Portal_Status__c}))) 
 &amp;&amp; ISBLANK(PRIORVALUE({!myVariable_current.Community__c})))
 &amp;&amp;
-(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &#39;Rejected&#39;) &amp;&amp;  BEGINS({!myVariable_current.Community__c}, &#39;ISS&#39;))</expression>
+(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &apos;Rejected&apos;) &amp;&amp;  BEGINS({!myVariable_current.Community__c}, &apos;ISS&apos;))</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -735,7 +735,7 @@ ISBLANK(TEXT(PRIORVALUE({!myVariable_current.User_Portal_Status__c})))
 ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c))) 
 &amp;&amp; ISBLANK(PRIORVALUE([Contact].Community__c)))
 &amp;&amp;
-(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Rejected&#39;) &amp;&amp;  BEGINS([Contact].Community__c, &#39;ISS&#39;))</stringValue>
+(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Rejected&apos;) &amp;&amp;  BEGINS([Contact].Community__c, &apos;ISS&apos;))</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_7_pmetrule</name>
@@ -744,7 +744,7 @@ ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))
 ISBLANK(TEXT(PRIORVALUE({!myVariable_old.User_Portal_Status__c}))) 
 &amp;&amp; ISBLANK(PRIORVALUE({!myVariable_old.Community__c})))
 &amp;&amp;
-(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &#39;Rejected&#39;) &amp;&amp;  BEGINS({!myVariable_old.Community__c}, &#39;ISS&#39;))</expression>
+(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &apos;Rejected&apos;) &amp;&amp;  BEGINS({!myVariable_old.Community__c}, &apos;ISS&apos;))</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -754,7 +754,7 @@ ISBLANK(TEXT(PRIORVALUE({!myVariable_old.User_Portal_Status__c})))
 ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c))) 
 &amp;&amp; ISBLANK(PRIORVALUE([Contact].Community__c)))
 &amp;&amp;
-(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Rejected&#39;) &amp;&amp;  BEGINS([Contact].Community__c, &#39;CNS&#39;))</stringValue>
+(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Rejected&apos;) &amp;&amp;  BEGINS([Contact].Community__c, &apos;CNS&apos;))</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_9</name>
@@ -763,7 +763,7 @@ ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))
 ISBLANK(TEXT(PRIORVALUE({!myVariable_current.User_Portal_Status__c}))) 
 &amp;&amp; ISBLANK(PRIORVALUE({!myVariable_current.Community__c})))
 &amp;&amp;
-(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &#39;Rejected&#39;) &amp;&amp;  BEGINS({!myVariable_current.Community__c}, &#39;CNS&#39;))</expression>
+(ISPICKVAL({!myVariable_current.User_Portal_Status__c}, &apos;Rejected&apos;) &amp;&amp;  BEGINS({!myVariable_current.Community__c}, &apos;CNS&apos;))</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -773,7 +773,7 @@ ISBLANK(TEXT(PRIORVALUE({!myVariable_current.User_Portal_Status__c})))
 ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c))) 
 &amp;&amp; ISBLANK(PRIORVALUE([Contact].Community__c)))
 &amp;&amp;
-(ISPICKVAL([Contact].User_Portal_Status__c, &#39;Rejected&#39;) &amp;&amp;  BEGINS([Contact].Community__c, &#39;CNS&#39;))</stringValue>
+(ISPICKVAL([Contact].User_Portal_Status__c, &apos;Rejected&apos;) &amp;&amp;  BEGINS([Contact].Community__c, &apos;CNS&apos;))</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_9_pmetrule</name>
@@ -782,7 +782,7 @@ ISBLANK(TEXT(PRIORVALUE([Contact].User_Portal_Status__c)))
 ISBLANK(TEXT(PRIORVALUE({!myVariable_old.User_Portal_Status__c}))) 
 &amp;&amp; ISBLANK(PRIORVALUE({!myVariable_old.Community__c})))
 &amp;&amp;
-(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &#39;Rejected&#39;) &amp;&amp;  BEGINS({!myVariable_old.Community__c}, &#39;CNS&#39;))</expression>
+(ISPICKVAL({!myVariable_old.User_Portal_Status__c}, &apos;Rejected&apos;) &amp;&amp;  BEGINS({!myVariable_old.Community__c}, &apos;CNS&apos;))</expression>
     </formulas>
     <interviewLabel>ISSP_Notify_Portal_User_Status_Change-5_InterviewLabel</interviewLabel>
     <label>ISSP Notify Portal User Status Change</label>

@@ -268,7 +268,7 @@ public with sharing class PortalProfileCtrl {
         //PRIVACY CARD
         List<FieldWrapper> lstfw5 = new List<FieldWrapper>();
         lstfw5.add(new FieldWrapper(LABEL_PRIVACYMANAGEMENTTITLE, LABEL_PRIVACYMANAGEMENTTEXT, LABEL_PRIVACYMANAGEMENTLINK ));
-        //lstCardWrapper.add(new CardWrapper(LABEL_PRIVACYMANAGEMENTTITLE, lstfw5, false)); // Temporary Silencing for the privacy panel- to be released soon
+        lstCardWrapper.add(new CardWrapper(LABEL_PRIVACYMANAGEMENTTITLE, lstfw5, false));
 
         return lstCardWrapper;
     }
