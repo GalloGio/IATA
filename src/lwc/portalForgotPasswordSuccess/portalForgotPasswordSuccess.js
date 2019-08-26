@@ -8,6 +8,7 @@ export default class PortalForgotPasswordSuccess extends LightningElement {
     logoIcon = CSP_PortalPath + 'check2xGreen.png';
 
     @api selfRegistrationUrl;
+    @api isSelfRegistrationEnabled;
 
     labels = {
         createNewAccountLabel

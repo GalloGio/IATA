@@ -14,6 +14,7 @@ export default class ForgotPasswordOneId extends LightningElement {
     @track message;
     @api loginUrl;
     @api selfRegistrationUrl;
+    @api isSelfRegistrationEnabled;
 
     labels = {
         loginLabel,
@@ -88,6 +89,10 @@ export default class ForgotPasswordOneId extends LightningElement {
 
     navigateToSelfRegister() {
         navigateToPage(this.selfRegistrationUrl);
+    }
+
+    handleNavigateToTroubleshooting() {
+        navigateToPage(this.labels.TroubleShootingUrl);
     }
 
 }

@@ -26,7 +26,9 @@ export default class PortalForgotPasswordError extends LightningElement {
              emailDiv.classList.add('slds-has-error');
          }
          else{
-             navigateToPage(this.selfRegistrationUrl);
+             let params      = {};
+             params.email    = this.email;
+             navigateToPage(this.selfRegistrationUrl,params);
          }
       }
 
