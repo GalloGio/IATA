@@ -20,7 +20,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
 
     public ANG_RiskForecastPropertiesController(ApexPages.StandardController stdController) {
-        this.myCase = [SELECT Id, SIDRA_Lite_Reason__c, Account.Name, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, RecordTypeId, Account.Location_Type__c, Account.Remittance_frequency__c, Account.ANG_Accreditation_Model__c, Account.Status__c, Account.Financial_Review_Result__c, OSCAR__r.Process__c, OSCAR__r.ANG_Type_Of_Change__c, OSCAR__r.ANG_FA_Opt_out__c, OSCAR__r.ANG_Change_Entity_Location__c, OSCAR__r.Change_of_Entity_Location_within_EU__c  FROM Case where Id =:stdController.getId()];
+        this.myCase = [SELECT Id, SIDRA_Lite_Reason__c, Account.Name, Account.ParentId, Account.Top_Parent__c, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, RecordTypeId, Account.Location_Type__c, Account.Remittance_frequency__c, Account.ANG_Accreditation_Model__c, Account.Status__c, Account.Financial_Review_Result__c, OSCAR__r.Process__c, OSCAR__r.ANG_Type_Of_Change__c, OSCAR__r.ANG_FA_Opt_out__c, OSCAR__r.ANG_Change_Entity_Location__c, OSCAR__r.Change_of_Entity_Location_within_EU__c  FROM Case where Id =:stdController.getId()];
     }
 
     public List<SelectOption> getriskOption(){
@@ -131,7 +131,8 @@ public with sharing class ANG_RiskForecastPropertiesController {
         a.ANG_Accreditation_Model__c = myCase.Account.ANG_Accreditation_Model__c;
         a.Status__c = myCase.Account.Status__c;
         a.Financial_Review_Result__c = myCase.Account.Financial_Review_Result__c;
-
+        a.ParentId = myCase.Account.ParentId;
+        a.Top_Parent__c = myCase.Account.Top_Parent__c;
 
         if(riskOpt != 'OptInOut'){
             riskEvents.add(
