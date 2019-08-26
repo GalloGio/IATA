@@ -4,10 +4,13 @@ private class ANG_FinancialAssessmentTest {
 	@testSetup static void setup(){
 
 		Test.startTest();
-
+		
+        ANG_RME_Alert_Service_Test.createRMEMappings();
+        
 		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
 			Name = 'BSP-SG',
-			RecordTypeId = AMS_Utils.RECTYPE_BSP
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			CurrencyIsoCode = 'SGD'
 		);
 
 		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
@@ -62,7 +65,8 @@ private class ANG_FinancialAssessmentTest {
 			ANG_HE_RiskStatus__c = 'A',
 			Type = 'IATA Passenger Sales Agent',
 			BillingCountry = 'Singapore',
-			ANG_HE_CashCondition__c = TRUE
+			ANG_HE_CashCondition__c = TRUE,
+			ANG_Accreditation_Model__c = 'Cash'
 		);
 
 		Account agentPT = new Account(
@@ -76,11 +80,13 @@ private class ANG_FinancialAssessmentTest {
 			Remittance_frequency__c = 'M',
 			Type = 'IATA Passenger Sales Agent',
 			BillingCountry = 'Portugal'
-		);
+    	);
 
 		insert new List<Account>{agentSG, agentPT};
-
-		Contact contSG = new Contact(
+			
+		ANG_RHCHelper.createRHCInfo(new Set<Id>{agentSG.Id}, false);
+		
+    	Contact contSG = new Contact(
 			FirstName = 'Agent',
 			LastName = 'Singapore',
 			Type_of_Contact__c = 'IFAP Contact',
@@ -153,6 +159,25 @@ private class ANG_FinancialAssessmentTest {
 		);
 
 		insert fs; 
+
+		ANG_Risk_Event_Type__c riskEventType = new ANG_Risk_Event_Type__c(
+			Name = 'Fail Financial Statements', 
+			ANG_Risk_ID__c = '5', 
+			ANG_Expiration__c = 12,
+			Limit_Cash_conditions__c=false
+		);
+
+		insert riskEventType;
+
+		ANG_Agency_Risk_Event__c are = new ANG_Agency_Risk_Event__c(
+    		ANG_AccountId__c = agentSG.Id,
+			ANG_Event_Status__c = 'Active',
+    		ANG_HE_AccountId__c = agentSG.Id,
+    		ANG_Risk_Type__c = riskEventType.Id,
+    		ANG_Issued_Date__c = System.today()
+		);
+
+		insert are;
 
 		Test.stopTest();
 		
@@ -275,18 +300,19 @@ private class ANG_FinancialAssessmentTest {
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
 		System.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_APPLIED, message);
 
-		Account updAcct = 
-			[SELECT 
-				Id, 
-				ANG_HE_CashCondition__c 
-			 FROM 
-				Account 
-			 WHERE 
-				Id = :cse.AccountId
-			 LIMIT 1
+		ANG_Agency_Risk_Event__c riskEvent = 
+			[SELECT
+				Id,
+				ANG_Limit_Cash_Conditions__c
+			 FROM
+			 	ANG_Agency_Risk_Event__c
+			 WHERE
+			 	ANG_Risk_Type__r.Name = 'Fail Financial Statements'
+			 AND 
+			 	ANG_Event_Status__c = 'Active'
 			];
 
-		system.assert(updAcct.ANG_HE_CashCondition__c);
+		system.assert(riskEvent.ANG_Limit_Cash_Conditions__c, 'Risk Event must have limit cash conditions TRUE');
 
 		Case updCse = 
 			[SELECT
@@ -421,18 +447,19 @@ private class ANG_FinancialAssessmentTest {
 		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
 		system.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_REMOVED, message); 
 
-		acct = 
-			[SELECT 
-				Id, 
-				ANG_HE_CashCondition__c 
-			 FROM 
-				Account 
-			 WHERE 
-				Id = :cse.AccountId
-			 LIMIT 1
+		ANG_Agency_Risk_Event__c riskEvent = 
+			[SELECT
+				Id,
+				ANG_Limit_Cash_Conditions__c
+			 FROM
+			 	ANG_Agency_Risk_Event__c
+			 WHERE
+			 	ANG_Risk_Type__r.Name = 'Fail Financial Statements'
+			 AND 
+			 	ANG_Event_Status__c = 'Active'
 			];
 
-		system.assert(!acct.ANG_HE_CashCondition__c);
+		system.assert(!riskEvent.ANG_Limit_Cash_Conditions__c, 'Risk Event must have limit cash conditions FALSE');
 
 	}
 
