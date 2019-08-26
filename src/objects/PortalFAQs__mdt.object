@@ -37,6 +37,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>DataCategoryLabel_TR__c</fullName>
+        <description>Label for TR</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for TR</inlineHelpText>
+        <label>DataCategoryLabel_TR</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>DataCategoryLabel_ar__c</fullName>
         <description>Label for ar</description>
         <externalId>false</externalId>
@@ -157,16 +167,6 @@
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>DataCategoryLabel_TR__c</fullName>
-        <description>Label for TR</description>
-        <externalId>false</externalId>
-        <fieldManageability>DeveloperControlled</fieldManageability>
-        <inlineHelpText>Label for TR</inlineHelpText>
-        <label>DataCategoryLabel_TR</label>
-        <required>false</required>
-        <type>TextArea</type>
-    </fields>
-    <fields>
         <fullName>DataCategoryLabel_vi__c</fullName>
         <description>Label for vi</description>
         <externalId>false</externalId>
@@ -265,6 +265,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Order__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Order</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Permission_Set_Name__c</fullName>
         <description>Name of the Permission Set to be assigned if User Account matches Sector, Category and Country filters.</description>
         <externalId>false</externalId>
@@ -305,6 +316,76 @@
             <value>1</value>
         </filters>
         <label>FAQs Structure</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>FAQs_Structure_Categories_Only</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DataCategoryName__c</columns>
+        <columns>DataCategoryLabel_en_US__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>FAQsStructure__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>DataTopicName__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>DataSubtopicName__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>FAQs Structure Categories Only</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>FAQs_Structure_SubTopics_Only</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DataCategoryName__c</columns>
+        <columns>DataTopicName__c</columns>
+        <columns>DataSubtopicName__c</columns>
+        <columns>DataCategoryLabel_en_US__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>DataCategoryName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>DataSubtopicName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>DataTopicName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>FAQs Structure SubTopics Only</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>FAQs_Structure_Topics_Only</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DataCategoryName__c</columns>
+        <columns>DataTopicName__c</columns>
+        <columns>DataCategoryLabel_en_US__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>DataCategoryName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>DataTopicName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>DataSubtopicName__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>FAQs Structure Topics Only</label>
         <language>en_US</language>
     </listViews>
     <listViews>
