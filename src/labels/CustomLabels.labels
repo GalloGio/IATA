@@ -6088,7 +6088,14 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <protected>false</protected>
         <shortDescription>IATA Alpha/Numeric Code</shortDescription>
         <value>IATA Alpha/Numeric Code</value>
-    </labels>    
+    </labels>
+    <labels>
+        <fullName>IATA_GDPR_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA_GDPR_URL</shortDescription>
+        <value>https://customer-portal-iata.force.com/dataprivacy</value>
+    </labels>
     <labels>
         <fullName>IATA_GDPR_White_Logo</fullName>
         <categories>Email</categories>
