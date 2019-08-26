@@ -58,7 +58,7 @@ private class SIDRARepaymentInstalmentsControllerTest {
         controller.save();
         
         rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
-        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY, rpi.size());
+        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY + 1, rpi.size());
         
         controller.Edit(); 
         controller.Cancel();
@@ -87,7 +87,7 @@ private class SIDRARepaymentInstalmentsControllerTest {
         controller.save();
         
         list<Case_Detail__c> rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
-        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY, rpi.size());
+        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY+1, rpi.size());
         
         Test.startTest();
         controller = new SIDRARepaymentInstalmentsController(stdc);
@@ -95,7 +95,7 @@ private class SIDRARepaymentInstalmentsControllerTest {
         controller.save();
         
         rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
-        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY+1, rpi.size());
+        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY+2, rpi.size());
         Test.stopTest();
     }
     
@@ -114,7 +114,7 @@ private class SIDRARepaymentInstalmentsControllerTest {
         controller.save();
         
         list<Case_Detail__c> rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
-        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY, rpi.size());
+        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY+1, rpi.size());
         
         Test.startTest();
         controller = new SIDRARepaymentInstalmentsController(stdc);
@@ -122,7 +122,7 @@ private class SIDRARepaymentInstalmentsControllerTest {
         controller.DeleteRpi();
         
         rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
-        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY-1, rpi.size());
+        system.assertEquals(SIDRARepaymentInstalmentsController.REPAYMENT_INSTALMENTS_QUANTITY, rpi.size());
         Test.stopTest();
     }
 
