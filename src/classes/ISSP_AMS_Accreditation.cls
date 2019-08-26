@@ -660,6 +660,7 @@ public without sharing class ISSP_AMS_Accreditation {
         if(isBankAccountChange) {
             newForm.Is_change_bank_account_details__c = true;
         } else {
+            newForm.Type_of_Change__c = 'Change of Accreditation Type';
             newForm.Scope_of_Change__c = isHOcontact ? 'HO Only' : 'Selected Branches Only'; //Set default
             newForm.Is_change_legal_name__c = true;
             newForm.Is_change_location__c = true;
@@ -2577,7 +2578,7 @@ public without sharing class ISSP_AMS_Accreditation {
             locationClass = 'D';
         }
         else if (sectorValue.StartsWith('Cargo_Agent')) {
-            if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary')
+            if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary') {
                 locationClass = 'C';
             } else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE) {
                 locationClass = 'R';
