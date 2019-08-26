@@ -54,8 +54,9 @@ public with sharing class DescribeDataCategoryGroupStructures {
                                 SectorExceptions__c,DataCategoryLabel_en_US__c,DataCategoryLabel_ar__c,DataCategoryLabel_de__c,
                                 DataCategoryLabel_es__c,DataCategoryLabel_fr__c,DataCategoryLabel_in__c,DataCategoryLabel_it__c,
                                 DataCategoryLabel_ja__c,DataCategoryLabel_ko__c,DataCategoryLabel_pt_BR__c,DataCategoryLabel_ru__c,
-                                DataCategoryLabel_th__c,DataCategoryLabel_TR__c,DataCategoryLabel_vi__c,DataCategoryLabel_zh_CN__c 
-                                FROM PortalFAQs__mdt WHERE FAQsStructure__c = true ];
+                                DataCategoryLabel_th__c,DataCategoryLabel_TR__c,DataCategoryLabel_vi__c,DataCategoryLabel_zh_CN__c,
+                    			Order__c 
+                				FROM PortalFAQs__mdt WHERE FAQsStructure__c = true ORDER BY Order__c ASC NULLS LAST];
 
 
         //having the subtopics set, start construct the structure from the subtopics back to the categories
