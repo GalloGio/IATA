@@ -22,12 +22,12 @@
         </div>
     
      <apex:form id="FinalForm">    
-        <apex:pageBlock rendered="{!isStep4}" title="" mode="edit">
+        <apex:pageBlock rendered="{!isStep4}" mode="edit">
             
-            <apex:pageBlockButtons >
-                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin" action="{!goToStep3}" value="Previous"/>&nbsp;
-                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}"/>&nbsp;
-                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave"/>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}"/>
+                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!goToStep3}" value="Previous"/>
+                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave"/>
             </apex:pageBlockButtons>
             
             <apex:pageMessages />

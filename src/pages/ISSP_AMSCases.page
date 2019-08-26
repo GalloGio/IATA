@@ -258,7 +258,7 @@
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>
             <div class="container">
         
-            <div style="padding-top:16px;padding-left:44px">
+            <div style="padding-top:16px;">
                 <h3>{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_SAA_New, $Label.ISSP_AMS_Step0_SAA))}</h3>
                 <apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_New, $Label.ISSP_AMS_Step0_Intro))}" escape="false"/>
             </div>
