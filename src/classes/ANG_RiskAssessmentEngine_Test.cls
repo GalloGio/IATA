@@ -324,7 +324,7 @@ public class ANG_RiskAssessmentEngine_Test{
 
     TestMethod static void testPassForecastAssessment(){
         //Passes agency risk forecast
-        account acc= [select id,Remittance_frequency__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c,ANG_Limit_Cash_Condition__c from account where name ='acc1' limit 1];
+        account acc= [select id, Top_Parent__c, Remittance_frequency__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c,ANG_Limit_Cash_Condition__c from account where name ='acc1' limit 1];
      
         map<account,list<ANG_Agency_Risk_Event__c>> forecastMap  = new map<account,list<ANG_Agency_Risk_Event__c>>{acc =>[select ANG_Risk_Type__c,ANG_Limit_Cash_Conditions__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c=:acc.id]};
         Test.startTest();
@@ -334,7 +334,7 @@ public class ANG_RiskAssessmentEngine_Test{
 
    TestMethod static void testFailedForecastAssessment(){
         //Fails agency risk forecast
-        account acc= [select id,Remittance_frequency__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c,ANG_Limit_Cash_Condition__c from account where name ='acc1' limit 1];
+        account acc= [select id, Top_Parent__c, Remittance_frequency__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c,ANG_Limit_Cash_Condition__c from account where name ='acc1' limit 1];
         
         ANG_Risk_Event_Type__c ret=[select id,Limit_Cash_conditions__c from ANG_Risk_Event_Type__c where name= 'Risk Type 2'];
         generateRiskEvent(acc.id,ret.id , system.Today());
@@ -356,7 +356,7 @@ public class ANG_RiskAssessmentEngine_Test{
 
     TestMethod static void testFailedForecastAssessmentWithAdjusted(){
         // fails agency risk forecast with adjusted RE
-        account acc= [select id,Remittance_frequency__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c,ANG_Limit_Cash_Condition__c from account where name ='acc1' limit 1];
+        account acc= [select id, Top_Parent__c, Remittance_frequency__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c,ANG_Limit_Cash_Condition__c from account where name ='acc1' limit 1];
         
         list<ANG_Risk_Event_Type__c> retList=[select id,Limit_Cash_conditions__c from ANG_Risk_Event_Type__c where name in('Risk Type 2','Risk Type 4 Adjusted') order by name asc];
         generateRiskEvent(acc.id, retList.get(0).id, system.Today());
