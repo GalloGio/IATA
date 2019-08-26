@@ -81,7 +81,7 @@ private static List<Account> searchRelatedAccounts(String searchTerm) {
 	List<Account> allCodes = DAL_WithoutSharing.getRelatedAccounts(finalQuery);
 
 	//place user's Iata code as first element in the list
-	if(allCodes.size() > 1) {
+	if(!allCodes.isEmpty()) {
 		for(Account act : allCodes) {
 			if(act.id == currentAccount.id && !reorderedCodes.isEmpty()) {
 				reorderedCodes.add(0,act);
