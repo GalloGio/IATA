@@ -34675,6 +34675,14 @@ title,Title,Name</value>
         <value>Compliment</value>
     </labels>
     <labels>
+        <fullName>CSP_Continue</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Continue</shortDescription>
+        <value>Continue</value>
+    </labels>
+    <labels>
         <fullName>csp_LastLoginDate</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
