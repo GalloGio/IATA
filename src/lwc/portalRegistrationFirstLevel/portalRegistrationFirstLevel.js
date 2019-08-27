@@ -14,7 +14,7 @@ import { ShowToastEvent }                       from 'lightning/platformShowToas
 
 import getConfig                                from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getConfig';
 import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
-import register                                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.register';
+import register                                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.simulateRegister';
 import getCustomerTypePicklists                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getCustomerTypePicklists';
 import getMetadataCustomerType                  from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getMetadataCustomerType';
 import isGuest                                  from '@salesforce/user/isGuest';
@@ -43,6 +43,7 @@ import TouLabel                                 from '@salesforce/label/c.CSP_Pr
 import RegistrationCompleteLabel                from '@salesforce/label/c.OneId_RegistrationComplete';
 import CheckEmailLabel                          from '@salesforce/label/c.OneId_CheckEmail';
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
+import TroubleshootingLabel                     from '@salesforce/label/c.OneId_CSP_Troubleshooting';
 
 export default class PortalRegistrationFirstLevel extends LightningElement {
 
@@ -70,7 +71,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                                 "extraChoice" : "",
                                 "language" : "",
                                 "selectedCustomerType" : "",
-                                "selectedMetadataCustomerType" : {},
                                 "termsAndUsage" : false
                               };
     @track errorMessage = "";
@@ -100,7 +100,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         TouLabel,
         RegistrationCompleteLabel,
         CheckEmailLabel,
-        DisabledRegistrationLabel : 'Portal Registration is currently disabled. Thank you for your understanding.'
+        DisabledRegistrationLabel : 'Portal Registration is currently disabled. Thank you for your understanding.',
+        TroubleshootingLabel,
     }
     get labels() {
         return this._labels;
@@ -121,12 +122,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     @track
 
     @track selectedMetadataCustomerType = {};
-
-
-    //todo: sector label dile gore farklilik gosterdigi icin patladik amuey.
-    //loop icerisinde combobox generate edecek sekilde deneyecegim
-    //obj yapisinda selectedValue eklesem gelen optionlari loop ederek? selectedi dursa bir zarari var mi ?
-    //ya da methodu kopyalayip degistirecegim, label gibi ek olarak type/name gibi bir attribute ekleyecegim her zaman ingilizcesini verecek?!
 
     @wire(getCustomerTypePicklists, {leaf:'$selectedCustomerType'})
     getPickLists({ error, data }){
@@ -161,9 +156,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                 }
 
             });
+            this.isLoading = false;
         } else if (error) {
             var result = JSON.parse(JSON.stringify(error));
             console.log('error: ', result);
+            this.isLoading = false;
         }
     };
 
@@ -199,14 +196,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
     connectedCallback() {
 
+        const RegistrationUtilsJs = new RegistrationUtils();
 
-        console.log('isGuest: ', isGuest);
-        if(isGuest == false){
-            //todo:this shouldnt navigate on community builder!
-            navigateToPage(CSP_PortalPath,{});
-            return;
-        }
-
+        RegistrationUtilsJs.checkUserIsSystemAdmin().then(result=> {
+            if(result == false && isGuest == false){
+                navigateToPage(CSP_PortalPath,{});
+                return;
+            }
+        });
 
         Promise.all([
             loadScript(this, jQuery),
@@ -216,8 +213,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             console.log('jsLoaded');
             this.jsLoaded = true;
 
-            const RegistrationUtilsJs = new RegistrationUtils();
-            console.log('initialize utils');
             RegistrationUtilsJs.getUserLocation().then(result=> {
                 this.isSanctioned = result.isRestricted;
                 this.userCountryCode = result.countryCode;
@@ -380,7 +375,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                                     let params = {};
                                     params.email = this.registrationForm.email;
                                     params.redirect = 1;
-                                    navigateToPage("/csportal/s/login",params);
+                                    navigateToPage(CSP_PortalPath + 'login',params);
                                     */
                                     //todo: display message of existing user
                                     this._showEmailValidationError(true, 'You are trying to register with an existing user,'
@@ -418,8 +413,10 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     }
 
     handleSubmit(event){
-        this.registrationForm.selectedMetadataCustomerType = this.selectedMetadataCustomerType;
+
         console.log('Form: ', JSON.parse(JSON.stringify(this.registrationForm)));
+        console.log('Customer Type : ', JSON.parse(JSON.stringify(this.selectedMetadataCustomerType)));
+
         this.isLoading = true;
 
         const inputValidation = [...this.template.querySelectorAll('input')]
@@ -463,8 +460,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         //todo: validate & add country code to the phone number
 
         //todo: for sector =  other and general public -> must implement logic to retrieve sector & category from the final customerTypeMetadata selection
-
         register({ registrationForm : JSON.stringify(this.registrationForm),
+                   customerType : JSON.stringify(this.selectedMetadataCustomerType),
                    contactId : this.userInfo.contactId,
                    accountId : this.userInfo.accountId
                  }).then(result => {
@@ -473,12 +470,15 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             if(dataAux.isSuccess == true){
                 //todo: show success message
                 this.isRegistrationComplete = true;
+            }else{
+                this._showSubmitError(true, 'Error Creating User');
             }
             this.isLoading = false;
         })
         .catch(error => {
             var dataAux = JSON.parse(JSON.stringify(error));
             console.log(dataAux);
+            this._showSubmitError(true, 'Error Creating User');
             this.isLoading = false;
         });
 
@@ -523,6 +523,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 
     handleSectorChange(event){
+        this.isLoading = true;
         this.selectedCustomerType = event.target.value;
         if(this.selectedCustomerType == '- Select -'){
             this.selectedCustomerType = null;
@@ -544,6 +545,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         if(event.target.value == null){
             return;
         }
+        this.isLoading = true;
         this.selectedCustomerType = event.target.value;
         if(this.selectedCustomerType == '- Select -'){
             this.selectedCustomerType = null;
@@ -564,6 +566,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         if(event.target.value == null){
             return;
         }
+        this.isLoading = true;
         this.selectedCustomerType = event.target.value;
         if(this.selectedCustomerType == '- Select -'){
             this.selectedCustomerType = null;

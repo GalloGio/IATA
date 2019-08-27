@@ -255,7 +255,7 @@
                                                 <div class="formLabelContainer">
                                                     <div style="width:100%;" class="text-xxsmall">
                                                         <abbr class="slds-required" title="required">*</abbr>
-                                                        {config.accountLabelMap.Preferred_Language__c}
+                                                        {config.contactLabelMap.Preferred_Language__c}
                                                     </div>
                                                 </div>
                                             </div>
@@ -278,12 +278,12 @@
                                         </lightning-layout-item>
                                         <lightning-layout-item size="12">
                                             <div style="display: flex;justify-content: center;align-items: start;">
-                                                <div style="display: flex; align-items: center;justify-content: center; padding-right8px;">
-                                                    <div style="max-width:20px;" >
-                                                        <lightning-input type="checkbox" variant="label-hidden" checked={registrationForm.termsAndUsage} onchange={handleTouChange}></lightning-input>
+                                                <div style="display: flex; align-items: center;justify-content: center;">
+                                                    <div style="max-width:20px; padding-left:5px;" >
+                                                        <lightning-input type="checkbox" variant="label-hidden" checked={registrationForm.termsAndUsage} onchange={handleTouChange} class="registerCheckBox"></lightning-input>
                                                     </div>
                                                 </div>
-                                                <div class="text-small">
+                                                <div class="text-small" style="margin-left:12px; width:100%;">
                                                     <lightning-formatted-rich-text value={labels.TouLabel} class="text-small text-gray"></lightning-formatted-rich-text>
                                                 </div>
                                             </div>
@@ -310,7 +310,7 @@
                                     <lightning-layout-item size="12">
                                         <div class="formElementSpacer" data-id="submitDiv">
                                             <div if:true={displaySubmitError}>
-                                                <div class="slds-form-element__help" style="padding:5px; text-align:center;">{errorMessage}</div>
+                                                <div class="slds-form-element__help text-xxsmall" style="padding:5px; text-align:center;">{errorMessage}</div>
                                             </div>
                                         </div>
                                     </lightning-layout-item>

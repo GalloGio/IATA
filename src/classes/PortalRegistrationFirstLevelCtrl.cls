@@ -3,7 +3,7 @@
  */
 
 public without sharing class PortalRegistrationFirstLevelCtrl {
-
+    
     public class RegistrationConfig{
         @AuraEnabled
         public Boolean isSelfRegistrationEnabled{get;set;}
@@ -24,6 +24,17 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         public String message{get;set;}
         @AuraEnabled
         public Id portalUserId{get;set;}
+    }
+
+    public class RegistrationParameters{
+        public string email{get;set;}
+        public string firstName{get;set;}
+        public string lastName{get;set;}
+        public string country{get;set;}
+        public string phone{get;set;}
+        public string language{get;set;}
+        public string contactId{get;set;}
+        public string accountId{get;set;}
     }
 
     @AuraEnabled(cacheable=true)
@@ -50,6 +61,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             Contact.Phone,
             Contact.MobilePhone,
             Contact.Fax,
+            Contact.Preferred_Language__c,
             Contact.Membership_Function__c
         };
 
@@ -67,8 +79,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             Account.Sector__c,
             Account.Category__c,
             Account.IATA_ISO_Country__c,
-            Account.Services_Rendered_Country__c,
-            Account.Preferred_Language__c
+            Account.Services_Rendered_Country__c
         };
 
         Map<String,String> labels = new Map<String,String>();
@@ -191,27 +202,150 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
     }
 
     @AuraEnabled
-    public static RegistrationResult register(string registrationForm, string contactId, string accountId){
+    public static RegistrationResult simulateRegister(string registrationForm, string customerType, string contactId, string accountId){
+
         RegistrationResult result = new RegistrationResult();
-        //AddOrderItemComponentController.pricebookEntrySelected pbe = (AddOrderItemComponentController.pricebookEntrySelected)JSON.deserialize(pbeStr,AddOrderItemComponentController.pricebookEntrySelected.class);
-        system.debug('registrationForm: ' + registrationForm);
-        Map<String, Object> inputMap = (Map<String, Object>)JSON.deserializeUntyped(registrationForm);
+        Savepoint sp = Database.setSavepoint();
+
+        try{
+
+            system.debug('registrationForm: ' + registrationForm);
+            Map<String, Object> inputMap = (Map<String, Object>)JSON.deserializeUntyped(registrationForm);
+            GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType = (GCS_Customer_Type_For_Registration__mdt) JSON.deserialize(customerType, GCS_Customer_Type_For_Registration__mdt.class);
+            system.debug('selectedMetadataCustomerType: '+ selectedMetadataCustomerType);
+
+            RegistrationParameters params = new RegistrationParameters();
+            params.email     = (inputMap.get('email') != null) ? string.valueOf(inputMap.get('email')) : '';
+            params.firstName = (inputMap.get('firstName') != null) ? string.valueOf(inputMap.get('firstName')) : '';
+            params.lastName  = (inputMap.get('lastName') != null) ? string.valueOf(inputMap.get('lastName')) : '';
+            params.phone     = (inputMap.get('phone') != null) ? string.valueOf(inputMap.get('phone')) : '';
+            params.country   = (inputMap.get('country') != null) ? string.valueOf(inputMap.get('country')) : '';
+            params.language  = (inputMap.get('language') != null) ? string.valueOf(inputMap.get('language')) : '';
+            params.contactId = contactId != null ? contactId : '';
+            params.accountId = accountId != null ? accountId : '';
+
+            if(params.email.length() < 1 || params.firstName.length() < 1 || params.lastName.length() < 1){
+                result.isSuccess = false;
+                result.message = 'Missing required fields';
+                return result;
+            }
+
+            //Find Bucket Account
+            if(params.accountId.length() < 1){
+                Account bucketAccount = getBucketAccount(selectedMetadataCustomerType);
+                system.debug('bucketAccount: ' + bucketAccount);
+                if(bucketAccount == null){
+                    result.isSuccess = false;
+                    result.message = 'Could not find bucket account';
+                    return result;
+                }else{
+                    params.accountId = bucketAccount.Id;
+                }
+            }
+
+
+            //Create or find Contact
+            Contact con;
+            if(params.contactId.length() < 1){
+                con = createContact(params);
+            }else{
+                con = [SELECT Id, AccountId, firstName, LastName, Phone, Email FROM Contact WHERE ID=: contactId LIMIT 1];
+            }
+
+            if(con == null){
+                result.isSuccess = false;
+                result.message = 'Failed to create contact';
+                return result;
+            }
+
+
+            //Create User
+            OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
+            Id userId = createNewUser(con, string.valueOf(mode), params.language);
+
+            system.debug('userId: ' + userId);
+            if(userId!= null) {
+                Database.rollback(sp);
+                result.isSuccess = true;
+                result.portalUserId = userId;
+
+                string oneTimeUrl = generateOneTimeUrl(params);
+                system.debug('oneTimeUrl: ' + oneTimeUrl);
+
+                Map<String, String> emailMap = generateEmailBodyParams(params, oneTimeUrl);
+
+                result.isSuccess = sendEmail(params.email, 'CSP_New_lMember_Welcome_Email', emailMap);
+                if(result.isSuccess == false){
+                    result.message = 'Error sending Welcome Email';
+                }
+                //todo: add site name
+                return result;
+            }else{
+                Database.rollback(sp);
+                result.isSuccess = false;
+                result.message = 'User Creation failed!';
+                return result;
+            }
+        }catch(Exception e){
+            Database.rollback(sp);
+            result.isSuccess = false;
+            result.message = e.getMessage();
+            return result;
+        }
+
+    }
+
+    @AuraEnabled
+    public static RegistrationResult register(string registrationForm, string customerType, string contactId, string accountId){
+
+        RegistrationResult result = new RegistrationResult();
         Contact con;
         Savepoint sp = Database.setSavepoint();
 
         try{
 
+            system.debug('registrationForm: ' + registrationForm);
+            Map<String, Object> inputMap = (Map<String, Object>)JSON.deserializeUntyped(registrationForm);
+            GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType = (GCS_Customer_Type_For_Registration__mdt) JSON.deserialize(customerType, GCS_Customer_Type_For_Registration__mdt.class);
+            system.debug('selectedMetadataCustomerType: '+ selectedMetadataCustomerType);
+
+            //todo: find the bucket account for input customer type
+            Account bucketAccount = getBucketAccount(selectedMetadataCustomerType);
+
+            if(bucketAccount == null){
+                result.isSuccess = false;
+                result.message = 'Could not find bucket account';
+                return result;
+            }
+
+            system.debug('bucketAccount: ' + bucketAccount);
+
+            string lang = string.valueOf(inputMap.get('language'));
+
             if(contactId == null){
-                //todo: find the general public account for input customer type
-                Id generalPublicAccId = '0014E000012f6cm';
+
+                //Id generalPublicAccId = '0014E000012f6cm';
                 con = new Contact();
-                con.AccountId = generalPublicAccId;
-                con.ISO_Country__c = string.valueOf(inputMap.get('country'));
+
+                List<Preferred_Language_on_ISS_Portal__c> pLangcs = Preferred_Language_on_ISS_Portal__c.getall().values();
+
+                if(pLangcs!= null || !pLangcs.isEmpty()){
+                    for(Preferred_Language_on_ISS_Portal__c language : pLangcs){
+                        if(language.languageLocalKey__c == lang){
+                            con.Preferred_Language__c = language.Language__c;
+                        }
+                    }
+                }
+
+
+                con.AccountId = bucketAccount.Id;
+                if(inputMap.get('country') != null){
+                    con.ISO_Country__c = string.valueOf(inputMap.get('country'));
+                }
                 con.firstName = string.valueOf(inputMap.get('firstName'));
                 con.lastName = string.valueOf(inputMap.get('lastName'));
                 con.Phone = string.valueOf(inputMap.get('phone'));
                 con.Email = string.valueOf(inputMap.get('email'));
-                con.Preferred_Language__c = string.valueOf(inputMap.get('language'));
                 con.Community__c = 'ISS Customer Portal';
                 con.User_Portal_Status__c = 'Pending';
                 //todo: perform field check before insert
@@ -232,7 +366,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             }
 
             OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
-            Id userId = createNewUser(con, string.valueOf(mode), string.valueOf(inputMap.get('language')));
+            Id userId = createNewUser(con, string.valueOf(mode), lang);
             system.debug('userId: ' + userId);
             if(userId!= null) {
                 result.isSuccess = true;
@@ -250,6 +384,107 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             return result;
         }
 
+
+    }
+
+    public static Account getBucketAccount(GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType){
+
+        String sector = '';
+        String category = '';
+        String recordType = '';
+
+        if(selectedMetadataCustomerType.Can_Account_Be_Created__c == true){
+            sector = selectedMetadataCustomerType.Created_Account_Sector__c;
+            category = selectedMetadataCustomerType.Created_Account_Category__c;
+        }else{
+            sector = selectedMetadataCustomerType.Filter_on_Sector__c;
+            category = selectedMetadataCustomerType.Filter_on_Category__c;
+        }
+        recordType = selectedMetadataCustomerType.Filter_on_Record_Type__c;
+
+        String accountQuery = '';
+        accountQuery +='SELECT Id, Sector__c, Category__c';
+        accountQuery +=' FROM Account';
+        accountQuery +=' WHERE Id != null';
+
+
+        if(!String.isEmpty(recordType)) {
+
+            List<String> recordTypes = new List<String>();
+            for(String rcType : recordType.split(',')){
+                recordTypes.add('\'' + rcType.trim() + '\'');
+            }
+
+            accountQuery += ' AND RecordType.DeveloperName in (' + String.join(recordTypes, ',') + ')';
+
+        }
+        if(!String.isEmpty(sector)){
+            accountQuery +=' AND Sector__c =\''+ sector +'\'';
+        }
+        if(!String.isEmpty(category)){
+            accountQuery +=' AND Category__c =\''+ category +'\'';
+        }
+
+        List<Account> accs = new List<Account>();
+
+        System.debug('Account query: '+accountQuery);
+
+        accs = Database.query(accountQuery);
+
+        System.debug('Found accounts : '+accs.size());
+
+        if(accs.isEmpty()){
+            //todo: create bucket account? to be confirmed by IATA
+            return null;
+        }else{
+            return accs.get(0);
+        }
+
+    }
+
+    public static Contact createContact(RegistrationParameters params){
+
+        Contact con = new Contact();
+
+        try{
+
+            if(params.language.length() > 0){
+                List<Preferred_Language_on_ISS_Portal__c> pLangcs = Preferred_Language_on_ISS_Portal__c.getall().values();
+
+                if(pLangcs!= null || !pLangcs.isEmpty()){
+                    for(Preferred_Language_on_ISS_Portal__c language : pLangcs){
+                        if(language.languageLocalKey__c == params.language){
+                            con.Preferred_Language__c = language.Language__c;
+                        }
+                    }
+                }
+            }
+
+            con.AccountId = params.accountId;
+            con.ISO_Country__c = params.country;
+            con.firstName = params.firstName;
+            con.lastName = params.lastName;
+            con.Phone = params.phone;
+            con.Email = params.email;
+            con.Community__c = 'ISS Customer Portal';
+            con.User_Portal_Status__c = 'Pending';
+            //todo: perform field check before insert
+            DataBase.SaveResult sr = DataBase.Insert(con);
+            system.debug('PortalRegistrationFirstLevelCtrl -> Contact Save Result: ' + sr);
+            if(sr.isSuccess() == false){
+                for(Database.Error objErr : sr.getErrors()) {
+                    System.debug('The following error has occurred.');
+                    System.debug(objErr.getStatusCode() + ': ' + objErr.getMessage());
+                }
+                return null;
+            }else{
+                return con;
+            }
+
+        }catch(Exception e){
+            system.debug('Portal Level 1 registration - createNewContact: ' + e.getMessage());
+            return null;
+        }
 
     }
 
@@ -316,55 +551,123 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             if (lang != null && lang != ''){
                 system.debug('LANG IN CREATE USER: ' + lang);
-                if (!ISSP_Constant.languageMap.containsKey(lang)){
+
+                Map<string,string> langMap = ISSP_Constant.languageMap;
+                Map<string,string> lowercaseLangMap = new Map<string,string>();
+                for(string key : langMap.keySet()){
+                    lowercaseLangMap.put(key.toLowerCase(),key);
+                }
+
+                if (!lowercaseLangMap.containsKey(lang)){
                     lang = 'en_US';
                     system.debug('LANG IN CREATE USER DEFAULT: ' + lang);
+                }else{
+                    u.languagelocalekey = lowercaseLangMap.get(lang);
                 }
-                u.languagelocalekey = lang;
+
             }
+
+            system.debug('user to be created: ' + u);
 
             userId = Site.createPortalUser(u, accountId, password, false);
             system.debug('USERID: ' + userId);
-            if (userId != null) {
-                /*
-                String link ;
-                String cleanUsername = u.userName.replace('+', Comm_User_Helper.plusReplacer);
-
-                String encodedPart = 'c='+EncodingUtil.urlEncode(EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
-
-                String template ='';
-                Map<String,String> emailWrap = new Map<String,String>();
-
-                link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?' + encodedPart;
-                link += '&serviceName=ISSP';
-                template = 'Identity_Portal_ISSP_New_User';
-                system.debug('aqui link :::' + link);
-                emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link,Comm_User_Helper.ONEIDENTITY, community);
-                Comm_User_Helper.sendEmail( template ,emailWrap, con, community);
-                */
-                //todo:send email
-                String link = PortalPasswordHandler.generateUrl(u, password, 'firstLogin');
-                Map<String, String> emailMap = PortalPasswordHandler.portalWelcomeEmailMap(u, link);
-                PortalPasswordHandler.sendEmail(userId, 'CSP_New_Member_Welcome_Email', emailMap);
-
-                List<PermissionSet> permissionList = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_SSO'];
-                if(permissionList.size() > 0){
-                    addPermissionToUser(permissionList.get(0).Id,userId);
-                }
-            }
-
             //this does not fit in for bucket account scenario, should be handled on L2 registration?
             //Comm_User_Helper.addDefaultAppRights(con,con.Account);
 
             return userId;
 
 
-        } catch (exception ex) {
-            system.debug('Portal Level 1 registration - createNewUser');
+        } catch (exception e) {
+            system.debug('Portal Level 1 registration - createNewUser: ' + e.getMessage());
             //transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'sfdcadmin@iata.org'});
             return userId;
         }
 
+    }
+
+    public static string generateOneTimeUrl(RegistrationParameters params){
+
+        string paramsJson = JSON.serialize(params);
+        string encryptedStr = PortalPasswordHandler.EncryptString(paramsJson);
+        system.debug('encryptedStr: ' + encryptedStr);
+        String encodedPart = 'c=' + EncodingUtil.urlEncode(encryptedStr, 'UTF-8');
+        system.debug('encodedPart: ' + encodedPart);
+
+        String prefix = '';
+        if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('/login'));
+        String oneTimeUrl = prefix + '/' + 'firstLogin' + '?' + encodedPart;
+        return oneTimeUrl;
+
+    }
+
+    public static Map<String,String> generateEmailBodyParams(RegistrationParameters params, string oneTimeLink){
+
+        Map<String, String> mapBodyParams = new map<String, String>{
+                '{!Contact.Salutation}' => '',
+                '{!Contact.Password}' => '',
+                '{!Receiving_User.FirstName}' => params.firstName,
+                '{!Receiving_User.LastName}' => params.lastName,
+                '{!Receiving_User.Email}' => params.email,
+                '{!Community_Name}' => '',
+                '{!Community_Url}' => oneTimeLink,
+                '{!$Label.ISSP_Email_Here}' => 'here',
+                '{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply
+        };
+
+        return mapBodyParams;
+
+    }
+
+    public static boolean sendEmail(String receiver, String template, Map<String,String> mapBodyParams) {
+        boolean success = true;
+
+        try{
+            List<Messaging.SendEmailResult>    listEmailResult = null;
+            List<Messaging.SingleEmailmessage> listSingleEmailMessages = new List<Messaging.SingleEmailmessage>();
+
+            EmailTemplate emailTemplate = [SELECT Id,Subject,HtmlValue,Body FROM EmailTemplate WHERE DeveloperName=:template];
+
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            OrgWideEmailAddress orgWideEmail  = [SELECT Id,Address FROM OrgWideEmailAddress WHERE Address='noreply@iata.org' Limit 1];
+            if(orgWideEmail != null){
+                mail.setOrgWideEmailAddressId(orgWideEmail.Id);
+            }
+            else{
+                mail.setSenderDisplayName('IATA Noreply');
+            }
+
+            mail.setToAddresses(new List<string>{receiver});
+            mail.setReplyTo('noreply@iata.org');
+            //mail.setTargetObjectId(userId);
+            mail.setSubject(emailTemplate.Subject);
+
+            String htmlBody  = emailTemplate.HtmlValue;
+            String plainBody = emailTemplate.Body;
+            for(String key : mapBodyParams.keySet()) {
+                if(htmlBody <> null && mapBodyParams <> null) {
+                    htmlBody  = htmlBody.replace(key, (mapBodyParams.get(key) == null)  ? '' : mapBodyParams.get(key));
+                    plainBody = plainBody.replace(key, (mapBodyParams.get(key) == null) ? '' : mapBodyParams.get(key));
+                }
+            }
+
+            if(htmlBody <> null){
+                mail.setHtmlBody(htmlBody);
+            }
+
+            mail.setSaveAsActivity(false);
+            mail.setPlainTextBody(plainBody);
+            listSingleEmailMessages.add(mail);
+
+            if(!Test.isRunningTest()) {
+                listEmailResult = Messaging.sendEmail(listSingleEmailMessages);
+            }
+        }
+        catch(Exception ex){
+            success = false;
+            system.debug(ex.getMessage());
+        }
+
+        return success;
     }
 
     @future
@@ -375,13 +678,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         oPermissionSetAssignment.PermissionSetId = permissionSetId;
         insert oPermissionSetAssignment;
     }
-
-    public static String EncryptString( String str) {
-        Blob dataToEncrypt = Blob.valueOf(str);
-        Blob encryptedData = Crypto.encryptWithManagedIV('AES128', EncodingUtil.base64Decode(Comm_User_Helper.KEYTODECODE), dataToEncrypt);
-        return EncodingUtil.base64Encode(encryptedData);
-    }
-
 
     private static Map<String,GCS_CustomerType> customerTypesMap {
         get{
@@ -495,5 +791,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
         return orderedPicklists;
     }
+
 
 }
