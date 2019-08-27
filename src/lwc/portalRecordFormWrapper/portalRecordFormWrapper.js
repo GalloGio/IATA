@@ -145,9 +145,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         isAdmin().then(result => {
             this.showEdit = result && this.showEdit;
         });
-		
-		if( this.objectName=='Contact')
-			this.checkCanRelocate();
     }
 
     get accessibilityGetter() {
@@ -187,10 +184,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     handleSucess(event) {
-        const updatedRecord = event.detail.id;
         this.isSaving = false;
 
-        let listSelected = JSON.parse(JSON.stringify(this.listSelected));
         this.closeModal();
 
         this.updateMembershipFunctions(event.detail);
@@ -525,8 +520,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
     
     opensRelocateAccount() {
-        console.log('Open Modal');
         this.openRelocateAccount = true;
+        this.checkCanRelocate();
     }
     
     openChangeUserPortalStatus() {
@@ -581,15 +576,17 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     checkCanRelocate(){
+    checkCanRelocate() {
         let contactId = this.recordId;
         getMapHierarchyAccounts({ contactId: contactId })
-            .then(result => {
-                
-                this.relatedAccounts = JSON.parse(JSON.stringify(result));
-                console.log(this.relatedAccounts );
-                if(this.relatedAccounts === undefined || this.relatedAccounts === null || this.relatedAccounts.length === 0){
-                    this.canRelocate = false;
-                }
-            });
+        .then(result => {
+            this.isLoading = false;
+            this.relatedAccounts = JSON.parse(JSON.stringify(result));
+            
+            if(this.relatedAccounts === undefined || this.relatedAccounts === null || this.relatedAccounts.length === 0){
+                this.canRelocate = false;
+            }
+        });
     }
+
 }

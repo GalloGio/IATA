@@ -59,6 +59,7 @@ public static final Id RECORDTYPE_AIRLINE_BR = RecordTypeSingleton.getInstance()
 public static final Id RECORDTYPE_AIRLINE_HQ = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 public static final list<Id> VALID_ACCOUNT_RT = new list<String> {RECORDTYPE_AGENCY, RECORDTYPE_AIRLINE_BR, RECORDTYPE_AIRLINE_HQ};
 
+	public class PortalProfileException extends Exception {}
 
 public static Contact contactInfo = new Contact();
 
@@ -831,8 +832,10 @@ public static Contact contactInfo = new Contact();
 
 
 
-	@AuraEnabled(Cacheable=true)
+	@AuraEnabled
 	public static List<Account> getMapHierarchyAccounts(Id contactId) {
+		if(contactId == null) 
+			return new list<Account>();
 
 		Contact con = [Select id, AccountId from Contact where id = :contactId];
 
@@ -879,25 +882,27 @@ public static Contact contactInfo = new Contact();
 	}
 
 	@AuraEnabled
-	public static String RelocateContact(Account acc, String contactId) {
-		try {
-			Contact con = [SELECT Id, AccountId FROM Contact where Id =: contactId];
+	public static void relocateContact(Account acc, String contactId) {
+        try {
+            Contact con = [SELECT Id, AccountId FROM Contact where Id =: contactId];
+            
 			// set  parent account as partner user 
-			if (!acc.IsPartner) {
-				acc.IsPartner = true;
-				update acc;
-			} 
-			// relocate contact
-			con.AccountId = acc.Id;
-			update con;
-			return 'Success';
-		} catch (DMLException e) {
-			System.debug('DML ERROR RelocateContact ' + e.getMessage());
-			return Label.ISSP_Relocate_Failed;
-		} catch (Exception e) {
-			System.debug('ERROR RelocateContact ' + e.getMessage());
-			return Label.ISSP_Relocate_Failed;
-		}
-	}
+            if (!acc.IsPartner) {
+                acc.IsPartner = true;
+                update acc;
+            }
+
+            // relocate contact
+            con.AccountId = acc.Id;
+            update con;
+
+        } catch (DMLException e) {
+            System.debug('DML ERROR RelocateContact ' + e.getMessage());
+			throw new PortalProfileException(Label.ISSP_Relocate_Failed + ' - ' + e.getMessage());
+        } catch (Exception e) {
+            System.debug('ERROR RelocateContact ' + e.getMessage());
+			throw new PortalProfileException(Label.ISSP_Relocate_Failed + ' - ' + e.getMessage());
+        }
+    }
 
 }
