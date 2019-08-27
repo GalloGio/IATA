@@ -617,7 +617,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.emailDomain = false;
     }
 
-    checkCanRelocate(){
     checkCanRelocate() {
         let contactId = this.recordId;
         getMapHierarchyAccounts({ contactId: contactId })
