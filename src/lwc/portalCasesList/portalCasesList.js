@@ -48,6 +48,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
     searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
     filterIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/filter.svg';
+    filteredIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/filtered.svg';
 
     fieldLabels = [
         'CaseNumber', 'Type_of_case_Portal__c', 'Subject', 'Country_concerned__c', 'LastModifiedDate', 'Portal_Case_Status__c'

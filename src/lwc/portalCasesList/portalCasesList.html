@@ -17,7 +17,7 @@
             <lightning-layout-item class="slds-text-align_right noPadding" size="3" flexibility="auto" small-device-size="3" medium-device-size="3">
                 <!-- FILTER -->
                 <button if:true={filtered} class="slds-m-right_small slds-button slds-button_icon slds-button_icon-container slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
-                    {label.CSP_Filtered}<img style="padding-left: 7rem;" src={filterIconUrl}>
+                    {label.CSP_Filtered}<img style="padding-left: 7rem;" src={filteredIconUrl}>
                 </button>
                 <button if:false={filtered} class="slds-m-right_small slds-button slds-button_icon slds-button_icon-container slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
                     {label.CSP_Filter}<img style="padding-left: 7rem;" src={filterIconUrl}>
