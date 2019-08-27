@@ -19,7 +19,7 @@
                         if(res=='FORBID') { // CR1: Check if email is not a disposal email type
                             inputEmail.set("v.errors",[{ message: "Forbidden email address"}]);
                         } else {
-                            window.open($A.get('$Label.c.IATA_GDPR_URL')+'/s/confirmation','_top');
+                            window.open('./confirmation','_top');
                         }
                     }
                 });

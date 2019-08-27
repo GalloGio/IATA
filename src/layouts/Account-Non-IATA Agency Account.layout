@@ -2,8 +2,7 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Detailed_Hierarchy_View</customButtons>
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -752,8 +751,9 @@
         <fields>ANG_Severity__c</fields>
         <fields>ANG_Agent_Sales__c</fields>
         <fields>ANG_RHC_Information__c</fields>
-        <fields>CREATED_DATE</fields>
         <fields>ANG_Direction__c</fields>
+        <fields>ANG_Triggered_Rules__c</fields>
+        <fields>CREATED_DATE</fields>
         <fields>ANG_Threshold_Level__c</fields>
         <relatedList>ANG_Risk_Alert__c.ANG_Account__c</relatedList>
         <sortField>CREATED_DATE</sortField>
@@ -866,6 +866,10 @@
         <relatedList>Location__c.Account__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Account_Role__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

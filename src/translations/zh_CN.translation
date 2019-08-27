@@ -169,71 +169,75 @@
         <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Check --></label>
+        <label>我们无法检查指定位置的地址。</label>
         <name>AMS_DQ_Cannot_Check</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Find --></label>
+        <label>我们无法找到该地址。 如果您确定您的输入是正确的，您仍然可以提交。</label>
         <name>AMS_DQ_Cannot_Find</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City --></label>
+        <label>没有{0}城市，我们无法验证地址。 请填写该字段。</label>
         <name>AMS_DQ_Cannot_Validate_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City and Street --></label>
+        <label>没有{0}城市和街道，我们无法验证地址。 请填写该字段。</label>
         <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate Street --></label>
+        <label>没有{0}街道，我们无法验证地址。 请填写该字段。</label>
         <name>AMS_DQ_Cannot_Validate_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Check Addr --></label>
+        <label>检查地址</label>
         <name>AMS_DQ_Check_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Cumpulsory --></label>
+        <label>{0}城市是必填的。 请填写{1}城市字段。</label>
         <name>AMS_DQ_City_Cumpulsory</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Not in Database --></label>
+        <label>城市{0}不在我们的数据库中（或拼写不同）。</label>
         <name>AMS_DQ_City_Not_in_Database</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another Country --></label>
+        <label>城市{0}在我们的数据库中，但根据我们的数据库，显然它属于另一个国家。</label>
         <name>AMS_DQ_City_in_Another_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another State --></label>
+        <label>城市{0}位于我们的数据库中，但它与另一个州/省相关联。</label>
         <name>AMS_DQ_City_in_Another_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Enter Valid City --></label>
+        <label>请输入有效的城市。</label>
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Found Addr --></label>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
+        <label>匹配地址已找到。</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review City --></label>
+        <label>查看城市名称。 如果您确定您的输入是正确的，请点击&quot;提交&quot;。</label>
         <name>AMS_DQ_Review_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review Country or City --></label>
+        <label>查看国家和/或城市名称。 如果您确定您的输入是正确的，请点击&quot;提交&quot;。</label>
         <name>AMS_DQ_Review_Country_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State --></label>
+        <label>查看州/省和/或城市名称。</label>
         <name>AMS_DQ_Review_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State or City --></label>
+        <label>查看州/省和/或城市名称。 如果您确定您的输入是正确的，请点击&quot;提交&quot;。</label>
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Street Compulsory --></label>
+        <label>{0}街道是必填的。 请填写{1}街道字段。</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
     <customLabels>
@@ -1461,7 +1465,7 @@
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label>请通过点击&lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;按钮来确认您的账单地址及邮寄地址</label>
+        <label>请点击&quot;检查地址&quot;按钮查看您的账单和收件地址</label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>
@@ -1717,6 +1721,10 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ANG_Portal_Admin --></label>
         <name>CSP_ANG_Portal_Admin</name>
     </customLabels>
@@ -1733,8 +1741,20 @@
         <name>CSP_Accept_Terms_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Add_All --></label>
+        <name>CSP_Add_All</name>
+    </customLabels>
+    <customLabels>
         <label>添加新文档</label>
         <name>CSP_Add_New_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_New_User --></label>
+        <name>CSP_Add_New_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_User --></label>
+        <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
         <label>公告</label>
@@ -1857,6 +1877,10 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Continue --></label>
+        <name>CSP_Continue</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
@@ -1883,6 +1907,10 @@
     <customLabels>
         <label>发布国家</label>
         <name>CSP_Documents_PubliCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
     </customLabels>
     <customLabels>
         <label>联系我们</label>
@@ -1957,12 +1985,24 @@
         <name>CSP_Manage_Services</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Manage_Services --></label>
+        <name>CSP_Manage_Services_NoIEPAccount</name>
+    </customLabels>
+    <customLabels>
         <label>查看我的案例</label>
         <name>CSP_MyCases</name>
     </customLabels>
     <customLabels>
         <label>名称</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewServiceUserMessage --></label>
+        <name>CSP_NewServiceUserMessage</name>
     </customLabels>
     <customLabels>
         <label>没有要显示的相关帐户。</label>
@@ -2005,6 +2045,22 @@
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
+        <name>CSP_Profile_PrivacyManagement_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Text --></label>
+        <name>CSP_Profile_PrivacyManagement_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Title --></label>
+        <name>CSP_Profile_PrivacyManagement_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_URL --></label>
+        <name>CSP_Profile_PrivacyManagement_URL</name>
+    </customLabels>
+    <customLabels>
         <label>什么是案例，我什么时候需要它？</label>
         <name>CSP_Question1</name>
     </customLabels>
@@ -2027,6 +2083,10 @@
     <customLabels>
         <label>相关文章</label>
         <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveContact_Reason --></label>
+        <name>CSP_RemoveContact_Reason</name>
     </customLabels>
     <customLabels>
         <label>请求服务</label>
@@ -2243,6 +2303,10 @@
     <customLabels>
         <label>案例类型</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -2545,6 +2609,10 @@
         <name>CurrencyCenter_BSP_CASS_Proffile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_ICCS_Availability --></label>
+        <name>CurrencyCenter_BSP_ICCS_Availability</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -2575,6 +2643,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_CASS --></label>
         <name>CurrencyCenter_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_CASS_ICCS_Availability --></label>
+        <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
@@ -15377,6 +15449,10 @@ and
         <name>ISSP_Registration_Error_LastName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
+    </customLabels>
+    <customLabels>
         <label>请选择您所在的国家</label>
         <name>ISSP_Registration_Error_Location</name>
     </customLabels>
@@ -17839,6 +17915,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Not_Applicable</name>
     </customLabels>
     <customLabels>
+        <label><!-- Not In CNS Group Error --></label>
+        <name>Not_In_CNS_Group_Error</name>
+    </customLabels>
+    <customLabels>
         <label>通知</label>
         <name>Notification</name>
     </customLabels>
@@ -19760,6 +19840,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- ShoppingCartQtyMsg --></label>
         <name>ShoppingCartQtyMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error displayed when a RO field is changed in a SIDRA Lite case --></label>
+        <name>SidraLiteROFieldError</name>
     </customLabels>
     <customLabels>
         <label><!-- SignIn --></label>

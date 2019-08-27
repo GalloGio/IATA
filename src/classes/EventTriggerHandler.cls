@@ -30,7 +30,7 @@ public class EventTriggerHandler {
 		System.debug('jmc - EventTriggerHandler.handleCountryProfileEvents getLimitEmailInvocations: ' + Limits.getLimitEmailInvocations());
 
 		if(!lsWhatIds.isEmpty()){
-			List<EntitySubscription> lstSubscriptions = [SELECT Id, ParentId, SubscriberId FROM EntitySubscription WHERE ParentId in :lsWhatIds];
+			List<EntitySubscription> lstSubscriptions = [SELECT Id, ParentId, Subscriber.ContactId FROM EntitySubscription WHERE ParentId in :lsWhatIds];
 			System.debug('jmc - EventTriggerHandler.handleCountryProfileEvents lstSubscriptions: ' + lstSubscriptions);
 
 			List<Country_Profile__c> lstCountryProfile = [SELECT Id, Name FROM Country_Profile__c WHERE Id in:lsWhatIds];
@@ -43,7 +43,7 @@ public class EventTriggerHandler {
 				if(subscrivers.containsKey(es.ParentId)){
 					tmpCountrySubscrivers = subscrivers.get(es.ParentId);
 				}
-				tmpCountrySubscrivers.add(es.SubscriberId);
+				tmpCountrySubscrivers.add(es.Subscriber.ContactId);
 				subscrivers.put(es.ParentId, tmpCountrySubscrivers);
 			}
 			System.debug('jmc - EventTriggerHandler.handleCountryProfileEvents subscrivers: ' + subscrivers);
@@ -64,6 +64,7 @@ public class EventTriggerHandler {
 							mailMsg.setTemplateID(et[0].Id);
 							mailMsg.setSaveAsActivity(false);
 							//mailMsg.setWhatId(e.Id);
+							mailMsg.setWhatId(e.WhatId); //ACAMBAS - WMO-568
 							mailMsgs.add(mailMsg);
 						}
 					}

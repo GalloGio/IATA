@@ -34,6 +34,10 @@
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
+        <submitter>rajputf@iata.org</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <submitter>trentinog@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
