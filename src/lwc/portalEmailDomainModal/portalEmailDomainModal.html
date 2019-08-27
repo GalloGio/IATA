@@ -39,12 +39,13 @@
 
                         <!-- BUTTON -->
                         <div class="slds-align_absolute-center slds-p-around_large topLightGrayBorder">
-                            <lightning-button variant="brand" class="slds-m-right_medium containedButtonWhite"
-                                name="successBtn" label={btnSuccess} title={btnSuccess} onclick={addDomain}>
-                            </lightning-button>
-                            <lightning-button variant="brand" class="containedButtonWhite" name="cancelBtn"
-                                label={btnCancel} title={btnCancel} onclick={cancel}>
-                            </lightning-button>
+                            <button
+                                class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small"
+                                name="cancelBtn" title={btnCancel} onclick={cancel}>{btnCancel}
+                            </button>
+                            <button class="containedButton containedButton-size slds-m-horizontal_small"
+                                name="successBtn" title={btnSuccess} onclick={addDomain}>{btnSuccess}
+                            </button>
                         </div>
 
                     </div>

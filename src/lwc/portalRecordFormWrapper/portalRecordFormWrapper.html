@@ -37,14 +37,14 @@
                             <template if:true={field.isAccountDomainPermission}>
                                 <span key={field.fieldName}
                                     class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                    <span class="specialLabel">
+                                    <span class="specialLabel slds-m-left_xx-small">
                                         {labels.CompanyInformation_EMADOMVAL_Title}
                                     </span>
                                     <span class="slds-m-left_x-small">
                                         <lightning-icon icon-name="utility:edit" size="x-small"
-                                            class="blackIcon cursorPointer" onclick={openEmailDomain}></lightning-icon>
+                                            class="darkBlueIcon cursorPointer" onclick={openEmailDomain}></lightning-icon>
                                     </span>
-                                    <div class="textValue">
+                                    <div class="textValue slds-m-left_xx-small">
                                         <template for:each={accountDomains} for:item="domain">
                                             <div key={domain.Name}> {domain.Name} </div>
                                         </template>
