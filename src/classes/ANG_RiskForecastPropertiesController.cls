@@ -1,5 +1,6 @@
 public with sharing class ANG_RiskForecastPropertiesController {
 
+    @TestVisible
     private static final String CONVERSION_TO_MULTICOUNTRY_OPT = 'ConversionToMulticountry';
 
     public Case myCase{get;set;}
