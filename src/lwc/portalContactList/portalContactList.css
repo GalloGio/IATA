@@ -121,3 +121,11 @@ td.inactive {
 .openTransition{
     transition: height 0.3s ease;
 }
+
+.invalidEmail {
+  color: rgb(255, 0, 0);
+}
+
+.validEmail {
+  color: rgb(0, 128, 0);
+}

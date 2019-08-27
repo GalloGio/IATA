@@ -3,8 +3,13 @@
  */
 
 import { LightningElement, track, api } from 'lwc';
+
+import getAccountDomains from '@salesforce/apex/PortalProfileCtrl.getAccountDomains';
+import isAccountDomain from '@salesforce/apex/PortalProfileCtrl.isAccountDomain';
+
 import BasicsSection from '@salesforce/label/c.csp_Basics_Section_label';
 import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
+import ISSP_ContactList_HoverPopup_Text from '@salesforce/label/c.ISSP_ContactList_HoverPopup_Text';
 
 
 export default class PortalContactList extends LightningElement {
@@ -27,6 +32,8 @@ export default class PortalContactList extends LightningElement {
     @api recordsInitDone = false;
     @track openId;
     @track showEditLocal = false;
+    @track isAccountDomain;
+    @track accountDomain = [];
 
     /* Dynamic fields*/
     @api sectionMap;
@@ -64,11 +71,8 @@ export default class PortalContactList extends LightningElement {
             this.recordsInitDone = true;
             if (this.sortBy != null) {
                 this.orderRows(this.sortBy);
-            }else if(this.defaultSort != null){
+            } else if (this.defaultSort != null) {
                 this.orderRows(this.defaultSort);
-            }
-            else{
-                this.processRecords();
             }
         }
     }
@@ -85,13 +89,31 @@ export default class PortalContactList extends LightningElement {
 
 
 
-    _labels = { BasicsSection, CSP_NoSearchResults };
+    _labels = { BasicsSection, CSP_NoSearchResults, ISSP_ContactList_HoverPopup_Text };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
     connectedCallback() {
         this.fetching = false;
         this.isAccount = (this.isAccount === 'true' ? true : false);
+
+        isAccountDomain().then(result => {
+            this.isAccountDomain = result;
+            if (result) {
+                getAccountDomains({ accountId: this.objectid }).then(results => {
+                    let accountDomainsLocal = JSON.parse(JSON.stringify(results));
+                    let domainValues = [];
+                    accountDomainsLocal.forEach( function(domain) {
+                        domainValues.push(domain.Name);
+                    });
+                    this.accountDomain = domainValues;
+                    this.processRecords();
+                });
+            } else {
+                this.processRecords();
+            }
+        });
+        
     }
 
     openRecordDetail(event) {
@@ -140,8 +162,28 @@ export default class PortalContactList extends LightningElement {
                     let rowValue = {};
 
                     if (record[fieldName] != null) {
-                        rowValue.value = record[fieldName];
+
                         rowValue.className = field.className;
+
+                        if (fieldName === 'Email' && this.isAccountDomain) {
+                            let emailError = this.checkEmail(record[fieldName]);
+                                rowValue.emailHasError = true;
+                                let emailArray = record[fieldName].split('@');
+                                rowValue.email = emailArray[0];
+                                rowValue.domain = '@' + emailArray[1];
+
+                            if (emailError){
+                                rowValue.emailClass = 'invalidEmail';
+                                rowValue.showIcon = true;
+                            } else {
+                                rowValue.emailClass = 'validEmail';
+                            }
+                        } else {
+                            rowValue.value = record[fieldName];
+                        }
+                        
+                        
+
                         let extraStyle = this.getRowStyle(fieldName, record[fieldName]);
                         if (extraStyle != null) {
                             rowValue.className += ' ' + extraStyle;
@@ -193,9 +235,23 @@ export default class PortalContactList extends LightningElement {
         return 'underLinded';
     }
 
+    checkEmail(value) {
+        let accountDomainLocal = JSON.parse(JSON.stringify(this.accountDomain));
+        let hasError = true;
+        
+        accountDomainLocal.forEach( function(domain){
+            let val = value.trim();
+            if( val.includes(domain) ){
+               hasError = false;
+            }
+        });
+
+        return hasError;
+    }
+
     columnSort(event) {
         let fieldName = event.target.dataset.name;
-        this.isAsc=!this.isAsc;
+        this.isAsc = !this.isAsc;
         this.orderRows(fieldName);
     }
 
