@@ -128,7 +128,7 @@ public class ANG_RHCHelper {
 
 		if(!accountsIds.isEmpty()){
 			for(Account a : [SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__c, Financial_Assessment_Points__c, ANG_RiskStatus__c,
-								Remittance_frequency__c, (SELECT id, ANG_RHC_Amount_Equals_FS__c FROM RHC_Informations__r)
+								Remittance_frequency__c, ANG_Accreditation_Model__c, (SELECT id, ANG_RHC_Amount_Equals_FS__c FROM RHC_Informations__r)
 							FROM Account WHERE Id IN :accountsIds]) {
 
 				if(!a.RHC_Informations__r.isEmpty() && !a.RHC_Informations__r[0].ANG_RHC_Amount_Equals_FS__c) 	isoCountries.put(a.Id, a.IATA_ISO_Country__r.Iso_Code__c);
@@ -206,14 +206,18 @@ public class ANG_RHCHelper {
 		Map<String, ANG_BSP_Attributes__c> bspAttributesMap = fetchBSPAttributesConfig(accountsBspMap.values());
 
 		for(ANG_RHC_Information__c rhc : rhcInfo){
-		
+
+			Account acct = accountsMap.get(rhc.ANG_AccountId__c);
+
+			Boolean isMulticountry = (acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
+
 			Decimal fsAmount = (rhc.ANG_Financial_Security__c == NULL) ? 0 : rhc.ANG_Financial_Security__c;
 			Decimal rhcAmountFsPercent = (rhc.RHC_Amount_Equals_FS_Percent__c == NULL) ? 0 : rhc.RHC_Amount_Equals_FS_Percent__c;
 
 			//If RHC equal FS % condition is applied on the agent
 			//retrieve % of FS from the RHC information (rhcAmountFsPercent) 
 			//and calculate RHC amount
-			if(rhc.ANG_RHC_Amount_Equals_FS__c){
+			if(rhc.ANG_RHC_Amount_Equals_FS__c && !isMulticountry){
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Amount Equals FS');
 				applyRhcAmountFsPercentage(rhc, fsAmount, rhcAmountFsPercent, mapBillingPeriodPerAccount);
 				continue;
@@ -227,13 +231,32 @@ public class ANG_RHCHelper {
 			//and apply RHC amount = % FS
 			if(rhc.ANG_CashCondition__c && fsAmount > 0){
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Cash Condition');
-				ANG_BSP_Attributes__c bspAttrCash = bspAttributesMap.get(relatedBspId + '.' + RECTYPE_CASH_CONDITION_CONFIG);
-				Decimal fsPercentage = (bspAttrCash == null || bspAttrCash.FS_Percentage__c == null) ? 0 : bspAttrCash.FS_Percentage__c;
+
+				Decimal fsPercentage = NULL;
+
+				if(isMulticountry){
+					fsPercentage = 100;
+					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply 100% percentage for multicountry agent');
+				}
+				else{
+					ANG_BSP_Attributes__c bspAttrCash = bspAttributesMap.get(relatedBspId + '.' + RECTYPE_CASH_CONDITION_CONFIG);
+					fsPercentage = (bspAttrCash == null || bspAttrCash.FS_Percentage__c == null) ? 0 : bspAttrCash.FS_Percentage__c;
+					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Consider cash condition BSP Attribute');
+
+				}
+
 				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage, mapBillingPeriodPerAccount);
 				continue;
 			}
 
-			Account acct = accountsMap.get(rhc.ANG_AccountId__c);
+			//If we are processing a RHC information record 
+			//related with a multicountry hierarchy 
+			//jump into the formula calculation
+			if(isMulticountry){
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply formula calculation for multicountry agent');
+				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, mapBillingPeriodPerAccount);
+				continue;
+			}
 
 			String currentBspAttrKey = (relatedBspId + RECTYPE_RHC_AMOUNT_CONFIG + acct.ANG_RiskStatus__c);
 
@@ -291,46 +314,82 @@ public class ANG_RHCHelper {
 			} 
 			else {
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: Formula');
-				Decimal rmeAmount = rhc.ANG_RME_Amount__c == null ? 0 : rhc.ANG_RME_Amount__c;
-				Decimal provisionalRHC = rhc.ANG_RHC_Amount_Provisional__c == null ? 0 : rhc.ANG_RHC_Amount_Provisional__c;
-				Decimal exceedingFS = rhc.ANG_Exceeding_Financial_Security__c == null ? 0 : rhc.ANG_Exceeding_Financial_Security__c;
-
-				/*	NEWGEN-4881 - comment logic to set ANG_RHC_Amount
-				if (fsAmount > (rmeAmount + exceedingFS)) rhc.ANG_RHC_Amount__c = fsAmount;
-				else rhc.ANG_RHC_Amount__c = rmeAmount + exceedingFS; */
-
-				//if the ANG_RHC_Amount_Forecasted__c is different then Populate the Forecast Effective RHD Date check
-				if (fsAmount > (provisionalRHC + exceedingFS)){
-					if(rhc.ANG_RHC_Amount_Forecasted__c != fsAmount) rhc.ANG_Forecasted_RHC_Effective_date__c = mapBillingPeriodPerAccount.get(rhc.ANG_AccountId__c);
-					
-					rhc.ANG_RHC_Amount_Forecasted__c = fsAmount;
-				}else{
-					if(rhc.ANG_RHC_Amount_Forecasted__c != (provisionalRHC + exceedingFS)) rhc.ANG_Forecasted_RHC_Effective_date__c = mapBillingPeriodPerAccount.get(rhc.ANG_AccountId__c);
-					
-					rhc.ANG_RHC_Amount_Forecasted__c = provisionalRHC + exceedingFS;	
-				} 
-
-				// The minimum rhc amount is defined in the AMS Country Specific Attributes for the account's ISO country.
-				// if that is not defined then we get the AMS Country Specific Attributes for the ww country (All countries)
-				// If the calculated RHC amount is lower than the minimum RHC amount the the RHC amount = minimum RHC amount.
-				
-				AMS_Country_Specific_Attribute__c att = attributes.get( attributes.containsKey(isoCountries.get(rhc.ANG_AccountId__c)) ? isoCountries.get(rhc.ANG_AccountId__c) : DEFAULT_CODE );
-				if(rhc.ANG_CashCondition__c || att == null) continue;
-
-				Decimal minimumRHCAmount = ANG_Risk_Helper.currencyConverter(att.CurrencyIsoCode, att.ANG_Minimum_RHC_Amount__c, rhc.CurrencyIsoCode);
-
-				/* NEWGEN-4881 - comment logic to set ANG_RHC_Amount
-				if(rhc.ANG_RHC_Amount__c < minimumRHCAmount) rhc.ANG_RHC_Amount__c = minimumRHCAmount; */
-								
-				//if the ANG_RHC_Amount_Forecasted__c is different then Populate the Forecast Effective RHD Date check
-				if(rhc.ANG_RHC_Amount_Forecasted__c < minimumRHCAmount){
-					if(rhc.ANG_RHC_Amount_Forecasted__c != minimumRHCAmount) rhc.ANG_Forecasted_RHC_Effective_date__c = mapBillingPeriodPerAccount.get(rhc.ANG_AccountId__c);
-
-					rhc.ANG_RHC_Amount_Forecasted__c = minimumRHCAmount;
-				} 
+				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, mapBillingPeriodPerAccount);
 			}
 
 		}
+	}
+
+	/**
+	 * Apply RHC formula calculation type according to the following logic:
+	 *  - Higher amount between Total FS provided and the Sum of Provisional RHC Amount and Exceeding
+	 * 
+	 * @param  rhc                        rhc information record
+	 * @param  fsAmount                   total fs provided amount
+	 * @param  isoCountries               maps the Id with the ISO Country Code
+	 * @param  attributes                 country specific attributes of type 'Minimum RHC Amount'
+	 * @param  mapBillingPeriodPerAccount next billing period per each account
+	 */ 
+	private static void applyRhcFormulaCalculations(ANG_RHC_Information__c rhc, Decimal fsAmount, Map<Id, String> isoCountries, Map<String, AMS_Country_Specific_Attribute__c> attributes, Map<ID, Date> mapBillingPeriodPerAccount){
+
+		Decimal provisionalRHC = rhc.ANG_RHC_Amount_Provisional__c == null ? 0 : rhc.ANG_RHC_Amount_Provisional__c;
+		Decimal exceedingFS = rhc.ANG_Exceeding_Financial_Security__c == null ? 0 : rhc.ANG_Exceeding_Financial_Security__c;
+
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] fsAmount: ' + fsAmount);
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] provisionalRHC: ' + provisionalRHC);
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] exceedingFS: ' + exceedingFS);
+
+		/*	NEWGEN-4881 - comment logic to set ANG_RHC_Amount
+		if (fsAmount > (rmeAmount + exceedingFS)) rhc.ANG_RHC_Amount__c = fsAmount;
+		else rhc.ANG_RHC_Amount__c = rmeAmount + exceedingFS; */
+
+		//if the ANG_RHC_Amount_Forecasted__c is different then Populate the Forecast Effective RHD Date check
+		if (fsAmount > (provisionalRHC + exceedingFS)){
+
+			if(rhc.ANG_RHC_Amount_Forecasted__c != fsAmount){
+				rhc.ANG_Forecasted_RHC_Effective_date__c = mapBillingPeriodPerAccount.get(rhc.ANG_AccountId__c);
+			}
+
+			rhc.ANG_RHC_Amount_Forecasted__c = fsAmount;
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] fsAmount > (provisionalRHC + exceedingFS)');
+
+		}else{
+
+			if(rhc.ANG_RHC_Amount_Forecasted__c != (provisionalRHC + exceedingFS)){
+				rhc.ANG_Forecasted_RHC_Effective_date__c = mapBillingPeriodPerAccount.get(rhc.ANG_AccountId__c);
+			}
+
+			rhc.ANG_RHC_Amount_Forecasted__c = provisionalRHC + exceedingFS;
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] fsAmount <= (provisionalRHC + exceedingFS)');
+
+		} 
+
+		// The minimum rhc amount is defined in the AMS Country Specific Attributes for the account's ISO country.
+		// if that is not defined then we get the AMS Country Specific Attributes for the ww country (All countries)
+		// If the calculated RHC amount is lower than the minimum RHC amount the the RHC amount = minimum RHC amount.
+		
+		AMS_Country_Specific_Attribute__c att = attributes.get( attributes.containsKey(isoCountries.get(rhc.ANG_AccountId__c)) ? isoCountries.get(rhc.ANG_AccountId__c) : DEFAULT_CODE );
+		if(rhc.ANG_CashCondition__c || att == null){
+			return;
+		}
+
+		Decimal minimumRHCAmount = ANG_Risk_Helper.currencyConverter(att.CurrencyIsoCode, att.ANG_Minimum_RHC_Amount__c, rhc.CurrencyIsoCode);
+
+		/* NEWGEN-4881 - comment logic to set ANG_RHC_Amount
+		if(rhc.ANG_RHC_Amount__c < minimumRHCAmount) rhc.ANG_RHC_Amount__c = minimumRHCAmount; */
+						
+		//if the ANG_RHC_Amount_Forecasted__c is different then Populate the Forecast Effective RHD Date check
+		if(rhc.ANG_RHC_Amount_Forecasted__c < minimumRHCAmount){
+			
+			if(rhc.ANG_RHC_Amount_Forecasted__c != minimumRHCAmount){
+				rhc.ANG_Forecasted_RHC_Effective_date__c = mapBillingPeriodPerAccount.get(rhc.ANG_AccountId__c);
+			}
+
+			rhc.ANG_RHC_Amount_Forecasted__c = minimumRHCAmount;
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] Set RHC Forecasted Amount as minimum RHC amount: ' + minimumRHCAmount);
+
+		}
+
 	}
 
 	/**
