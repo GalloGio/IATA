@@ -5,6 +5,9 @@
 import { LightningElement, track, api } from 'lwc';
 import BasicsSection from '@salesforce/label/c.csp_Basics_Section_label';
 import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
+import CSP_Search_NoResults_text1 from '@salesforce/label/c.CSP_Search_NoResults_text1';
+import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults_text2';
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 
 export default class PortalContactList extends LightningElement {
@@ -27,6 +30,11 @@ export default class PortalContactList extends LightningElement {
     @api recordsInitDone = false;
     @track openId;
     @track showEditLocal = false;
+    @track _searchKey = false;
+
+    
+    
+    searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
     /* Dynamic fields*/
     @api sectionMap;
@@ -39,6 +47,15 @@ export default class PortalContactList extends LightningElement {
 
     set showEdit(value){
         this.showEditLocal = value;
+    }
+
+    @api
+    get searchKey(){
+        return this._searchKey;
+    }
+
+    set searchKey(value){
+        this._searchKey = value;
     }
 
 
@@ -85,7 +102,7 @@ export default class PortalContactList extends LightningElement {
 
 
 
-    _labels = { BasicsSection, CSP_NoSearchResults };
+    _labels = { BasicsSection, CSP_NoSearchResults, CSP_Search_NoResults_text1, CSP_Search_NoResults_text2 };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
