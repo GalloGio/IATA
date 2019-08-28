@@ -23,6 +23,20 @@
     //Opens the Options panel
     showOptions: function (component, event, helper) {
         component.set("v.showOptions", true);
+        
+        const topic = event.getParam('topic');
+        const subtopic = event.getParam('subtopic');
+        const category = event.getParam('category');
+        
+        if(topic !== undefined) {
+            component.set("v.topic", topic);
+        }
+        if(subtopic !== undefined) {
+            component.set("v.subTopic", topic);
+        }
+        if(category !== undefined) {
+            component.set("v.category", topic);
+        }
     },
 
     //Closes the Options panel and resets variables to their default value
