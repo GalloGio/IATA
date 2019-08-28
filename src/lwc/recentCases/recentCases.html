@@ -6,7 +6,7 @@
             <span class="text-small">{label.CSP_RecentCases}</span>
         </span>
 
-        <span slot="cardButton" if:true={dataRecords}>
+        <span slot="cardButton" if:true={dataRecordsSeeAll}>
             <lightning-button variant="base" 
                 label={label.CSP_SeeAll} 
                 title={label.CSP_SeeAll}
@@ -29,7 +29,8 @@
                             data={data}
                             columns={columns}
                             data-id="tableList"
-                            hide-checkbox-column>
+                            hide-checkbox-column
+                            resize-column-disabled>
                         </lightning-datatable>
                     </div>
                     <div if:false={dataRecords}>

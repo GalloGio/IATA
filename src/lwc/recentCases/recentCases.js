@@ -1,4 +1,4 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, track, wire, api } from 'lwc';
 
 import getRecentCases from '@salesforce/apex/PortalCasesCtrl.getRecentCases';
 import getSelectedColumns from '@salesforce/apex/CSP_Utils.getSelectedColumns';
@@ -37,7 +37,21 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
     @track casesListUrl;
     noCasesImg = CSP_PortalPath + 'CSPortal/Images/Icons/nocases.svg';
 
+    @track homePageLocal = true;
+    @api
+    get homePage() {
+        return this.homePageLocal;
+    }
+
+    set homePage(value) {
+       this.homePageLocal = value;
+    }
+
+    @api specialCase = false;
+
     connectedCallback() {
+        console.log('HomePage: ', this.homePageLocal);
+
         this[NavigationMixin.GenerateUrl]({
             type: "standard__namedPage",
             attributes: {
@@ -48,18 +62,28 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
 
         getSelectedColumns({ sObjectType: 'Case', sObjectFields: this.fieldLabels })
         .then(results => {
-            this.columns = [
-                { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 137, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
-                { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 130 },
-                { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
-                { label: results.Country_concerned__c, fieldName: 'Country', type: 'text' },
-                { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: { class: { fieldName: 'statusClass' } } }
-            ];
+            if(this.homePageLocal === true){
+                this.columns = [
+                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 137, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
+                    { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 130 },
+                    { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
+                    { label: results.Country_concerned__c, fieldName: 'Country', type: 'text' },
+                    { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: { class: { fieldName: 'statusClass' } } }
+                ];
+            } else {
+                this.columns = [
+                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
+                    { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text' },
+                    { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
+                    { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: { class: { fieldName: 'statusClass' } } }
+                ];
+            }
+            
         });
 
     }
 
-    @wire(getRecentCases, { limitView: true, seeAll: false })
+    @wire(getRecentCases, { limitView: true, seeAll: false, specialCaseOption: '$specialCase' })
     wiredRecentCases(results) {
         this.loading = true;
         if (results.data) {
@@ -81,6 +105,10 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
 
     get dataRecords() {
         return (this.data && this.data.length) > 0 ? true : false;
+    }
+
+    get dataRecordsSeeAll() {
+        return (this.data && this.data.length && this.homePageLocal) > 0 ? true : false;
     }
 
     seeAllCases(event) {
