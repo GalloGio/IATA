@@ -43,10 +43,32 @@
         </outputParameters>
     </actionCalls>
     <actionCalls>
+        <description>FillCaseTypeCustomer</description>
+        <name>FillCaseTypeCustomer</name>
+        <label>FillCaseTypeCustomer</label>
+        <locationX>1738</locationX>
+        <locationY>2087</locationY>
+        <actionName>ANG_FillCaseTypeOfCustomer</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>OscarCaseCreation</targetReference>
+        </connector>
+        <inputParameters>
+            <name>accountId</name>
+            <value>
+                <elementReference>AccountToProcess.Id</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>CaseTypeOfCustomer</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Verify_Eligibility_for_New_Multicountry_Agent</name>
         <label>Verify Eligibility for New Multicountry Agent</label>
-        <locationX>1395</locationX>
-        <locationY>376</locationY>
+        <locationX>2087</locationX>
+        <locationY>792</locationY>
         <actionName>ANG_EligibilityForNewMulticountryAgent</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -73,37 +95,11 @@
             <name>isParentInSameBSP</name>
         </outputParameters>
     </actionCalls>
-    <apexPluginCalls>
-        <name>AMS_FillCaseTypeOfCustomer</name>
-        <label>AMS_FillCaseTypeOfCustomer</label>
-        <locationX>899</locationX>
-        <locationY>1541</locationY>
-        <apexClass>AMS_FillCaseTypeOfCustomer</apexClass>
-        <connector>
-            <targetReference>OscarCaseCreation</targetReference>
-        </connector>
-        <inputParameters>
-            <name>Category_Input</name>
-            <value>
-                <elementReference>AccountToProcess.Category__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>LocationType_Input</name>
-            <value>
-                <elementReference>AccountToProcess.Location_Type__c</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>CaseTypeOfCustomer</assignToReference>
-            <name>typeOfCustomer</name>
-        </outputParameters>
-    </apexPluginCalls>
     <assignments>
         <name>AccountToCopyOwnersFrom</name>
         <label>AccountToCopyOwnersFrom</label>
-        <locationX>707</locationX>
-        <locationY>2269</locationY>
+        <locationX>1737</locationX>
+        <locationY>2640</locationY>
         <assignmentItems>
             <assignToReference>AccountToCopyOwners</assignToReference>
             <operator>Assign</operator>
@@ -250,6 +246,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>NewProcessMulticountryAE</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NewProcessConversionStToMCValue</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ANG_CONVERT_ST_TO_MC</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -822,23 +825,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>TradeNameAssignment</name>
-        <label>TradeNameAssignment</label>
-        <locationX>2359</locationX>
-        <locationY>371</locationY>
-        <assignmentItems>
-            <assignToReference>AccountTradeName</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>AccountToProcess.TradeName__c</elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
         <name>TypeOfOscarProcessAssigment</name>
         <label>TypeOfOscarProcessAssigment</label>
-        <locationX>480</locationX>
-        <locationY>688</locationY>
+        <locationX>1029</locationX>
+        <locationY>686</locationY>
         <assignmentItems>
             <assignToReference>Type_of_OSCAR_process_man</assignToReference>
             <operator>Assign</operator>
@@ -853,8 +843,8 @@
     <assignments>
         <name>TypeOfOscarProcessAssigment_0</name>
         <label>TypeOfOscarProcessAssigment</label>
-        <locationX>311</locationX>
-        <locationY>776</locationY>
+        <locationX>421</locationX>
+        <locationY>934</locationY>
         <assignmentItems>
             <assignToReference>Type_of_OSCAR_process_man</assignToReference>
             <operator>Assign</operator>
@@ -869,8 +859,8 @@
     <assignments>
         <name>TypeOfOscarProcessAssigment_1</name>
         <label>TypeOfOscarProcessAssigment</label>
-        <locationX>201</locationX>
-        <locationY>863</locationY>
+        <locationX>595</locationX>
+        <locationY>779</locationY>
         <assignmentItems>
             <assignToReference>Type_of_OSCAR_process_man</assignToReference>
             <operator>Assign</operator>
@@ -883,15 +873,47 @@
         </connector>
     </assignments>
     <assignments>
-        <name>TypeOfOscarProcessAssignment_acc</name>
-        <label>TypeOfOscarProcessAssignment</label>
-        <locationX>1134</locationX>
-        <locationY>714</locationY>
+        <name>TypeOfOscarProcessAssigmentNoFOP</name>
+        <label>TypeOfOscarProcessAssigmentNoFOP</label>
+        <locationX>184</locationX>
+        <locationY>1037</locationY>
         <assignmentItems>
             <assignToReference>Type_of_OSCAR_process_man</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Type_of_HE_Process</elementReference>
+                <elementReference>TypeOfOscarNoFOP</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ChangeFieldsAssignmentAccountToProcess</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>TypeOfOscarProcessAssigmentNoFOP2</name>
+        <label>TypeOfOscarProcessAssigment</label>
+        <locationX>1769</locationX>
+        <locationY>679</locationY>
+        <assignmentItems>
+            <assignToReference>Type_of_OSCAR_process_man</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Type_of_OSCAR_changeNOFOP</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ChangeFieldsAssignmentAccountToProcess</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>TypeOfOscarProcessAssigmentNoFOP3</name>
+        <label>TypeOfOscarProcessAssigment</label>
+        <locationX>893</locationX>
+        <locationY>489</locationY>
+        <assignmentItems>
+            <assignToReference>Type_of_OSCAR_process_man</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Type_of_OSCAR_change_NOFOP</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -4268,6 +4290,7 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         <showHeader>true</showHeader>
     </screens>
     <startElementReference>AccountToProcessLookup_1</startElementReference>
+    <status>Active</status>
     <variables>
         <name>AccountAbbreviatedaddress</name>
         <dataType>String</dataType>
@@ -4866,6 +4889,13 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         <value>
             <elementReference>NewProcessCertificate</elementReference>
         </value>
+    </variables>
+    <variables>
+        <name>NewProcessConversionStToMCValue</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>NewProcessFOPValue</name>
