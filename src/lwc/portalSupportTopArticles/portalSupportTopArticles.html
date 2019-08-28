@@ -1,0 +1,33 @@
+<template>
+    <div if:true={loading} class="spinnerContainer">
+        <lightning-spinner size="medium"></lightning-spinner>
+    </div>
+
+    <div if:false={loading} class="slds-align_absolute-center">
+        <div if:true={hasArticles} class="slds-m-around_large slds-p-around_x-large topLightGrayBorder bottomLightGrayBorder">
+            <div class="slds-p-vertical_medium text-bold text-medium slds-align_absolute-center">
+                <h1>{label.TitleLabel}</h1>
+            </div>
+            
+            <template for:each={relatedArticles} for:item="article">
+                <div key={article.id} class="customBorderlessCardWhite slds-size_1-of-1 slds-m-vertical_x-small slds-p-around_x-small cursorPointer" 
+                    onclick={navigateToArticle} data-item={article.id}>
+                    <lightning-layout horizontal-align="spread" data-item={article.id}>
+                        <lightning-layout-item class="verticalAlign slds-p-horizontal_x-small" data-item={article.id}>
+                            <div class="text-bold text-xsmall" data-item={article.id}>{article.title}</div>
+                        </lightning-layout-item>
+
+                        <lightning-layout-item class="verticalAlign slds-p-horizontal_x-small" data-item={article.id}> 
+                            <lightning-button variant="base"
+                                icon-name="utility:forward"
+                                size="x-small"
+                                class="blueCustomButtonLink"
+                                data-item={article.id}>
+                            </lightning-button>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

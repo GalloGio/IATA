@@ -576,7 +576,6 @@ lightning-datatable .slds-th__action {
   background-color: #d0d6fa;
   transition-duration: 0.4s;
   border-radius: 1px;
-  box-shadow: 0 6px 16px 0 rgba(1, 1, 1, 0.24), 0 1px 2px 0 rgba(1, 1, 1, 0.16);
   font-size: 16px;
   font-weight: 500;
   font-style: normal;

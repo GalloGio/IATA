@@ -1,16 +1,14 @@
 import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { updateRecord } from 'lightning/uiRecordApi';
 
-import searchRelatedAccounts from '@salesforce/apex/PortalProfileCtrl.getMapHierarchyAccounts';
-import relocateAccount from '@salesforce/apex/PortalProfileCtrl.RelocateContact';
-
+import relocateAccount from '@salesforce/apex/PortalProfileCtrl.relocateContact';
 
 import ISSP_Relocate_Contact from '@salesforce/label/c.ISSP_Relocate_Contact';
 import submitLABEL from '@salesforce/label/c.ISSP_Confirm';
 import cancelLABEL from '@salesforce/label/c.ISSP_Cancel';
 import remove from '@salesforce/label/c.Button_Remove';
 import contact from '@salesforce/label/c.ISSP_Contact';
-
 import ISSP_Relocate_Move_To from '@salesforce/label/c.ISSP_Relocate_Move_To';
 import ISSP_Relocate_Select_Account from '@salesforce/label/c.ISSP_Relocate_Select_Account';
 import ICCS_Account_Name_Label from '@salesforce/label/c.ICCS_Account_Name_Label';
@@ -18,6 +16,7 @@ import ISSP_CompanyAddressInformation from '@salesforce/label/c.ISSP_CompanyAddr
 import csp_AccountRelocateSuccess from '@salesforce/label/c.csp_AccountRelocateSuccess';
 import ISSP_Relocate_Failed from '@salesforce/label/c.ISSP_Relocate_Failed';
 import CSP_Error_Message_Mandatory_Fields_Contact from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
+import ContinueLabel from '@salesforce/label/c.CSP_Continue';
 
 export default class ChangeUserPortalStatus extends LightningElement {
     @api recordId;
@@ -47,7 +46,8 @@ export default class ChangeUserPortalStatus extends LightningElement {
         ISSP_CompanyAddressInformation,
         csp_AccountRelocateSuccess,
         ISSP_Relocate_Failed,
-        CSP_Error_Message_Mandatory_Fields_Contact
+        CSP_Error_Message_Mandatory_Fields_Contact,
+        ContinueLabel
     }
 
     get titleLabel() {
@@ -90,22 +90,31 @@ export default class ChangeUserPortalStatus extends LightningElement {
 
     submitAction() {
         if (this.AccountInfo !== undefined) {
-
-
             let account = this.AccountInfo;
             let contactId = this.recordId;
             this.loading = true;
+            
             relocateAccount({ acc: account, contactId: contactId })
-                .then(result => {
-                    this.loading = false;
-                    this.resultMessage = true;
-                    if (result === 'Success') {
-                        this.resultMessageLabel = this.label.csp_AccountRelocateSuccess;
-                    } else if (result === this.label.ISSP_Relocate_Failed) {
-                        this.resultMessageLabel = this.label.ISSP_Relocate_Failed;
-                    }
+            .then(result => {
+                this.loading = false;
+                this.resultMessage = true;
+                
+                this.resultMessageLabel = this.label.csp_AccountRelocateSuccess;
 
-                });
+                // a way (WORKAROUND) to refresh data in standard components
+                updateRecord({ fields: { Id: this.recordId } });
+            })
+            .catch(error => {
+                console.error('relocate account error', JSON.parse(JSON.stringify(error)));
+                this.loading = false;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: this.label.ISSP_Relocate_Contact,
+                        message: this.label.ISSP_Relocate_Failed,
+                        variant: 'error'
+                    })
+                );
+            });
         } else {
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -118,12 +127,6 @@ export default class ChangeUserPortalStatus extends LightningElement {
     }
 
     closeModal() {
-
-        if (this.resultMessage) {
-            this.dispatchEvent(new CustomEvent('refreshview'));
-            this.dispatchEvent(new CustomEvent('closemodal'));
-        } else {
-            this.dispatchEvent(new CustomEvent('closemodal'));
-        }
+        this.dispatchEvent(new CustomEvent('closemodal'));
     }
 }

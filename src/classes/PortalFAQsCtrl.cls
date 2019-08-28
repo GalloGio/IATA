@@ -28,7 +28,12 @@ public with sharing class PortalFAQsCtrl {
 
     @AuraEnabled(cacheable=true)
     public static List<FAQ__kav> getArticles(String selectedParams) {
-        String query = 'SELECT Id, ArticleNumber, Title, Answer__c FROM FAQ__kav WHERE PublishStatus=\'Online\' WITH DATA CATEGORY FAQs__c BELOW ' + String.escapeSingleQuotes(selectedParams) + ' ORDER BY ArticleTotalViewCount DESC LIMIT 15';
+        return getArticlesWithParam(selectedParams, 15);
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<FAQ__kav> getArticlesWithParam(String selectedParams, Integer limitParam) {
+        String query = 'SELECT Id, ArticleNumber, Title, Answer__c FROM FAQ__kav WHERE PublishStatus=\'Online\' WITH DATA CATEGORY FAQs__c BELOW ' + String.escapeSingleQuotes(selectedParams) + ' ORDER BY ArticleTotalViewCount DESC LIMIT ' + limitParam;
         System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticles] query - ' + query);
 
         return Database.query(query);
