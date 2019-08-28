@@ -24,6 +24,13 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         public String message{get;set;}
         @AuraEnabled
         public Id portalUserId{get;set;}
+        @AuraEnabled
+        public String userName{get;set;}
+    }
+
+    public class NewUserDetail{
+        public Id userId{get;set;}
+        public String userName{get;set;}
     }
 
     public class RegistrationParameters{
@@ -261,20 +268,21 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             //Create User
             OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
-            Id userId = createNewUser(con, string.valueOf(mode), params.language);
+            NewUserDetail usr = createNewUser(con, string.valueOf(mode), params.language);
 
-            system.debug('userId: ' + userId);
-            if(userId!= null) {
+            system.debug('userId: ' + usr.userId);
+            if(usr.userId!= null) {
                 Database.rollback(sp);
                 result.isSuccess = true;
-                result.portalUserId = userId;
+                result.portalUserId = usr.userId;
+                result.userName = usr.userName;
 
                 string oneTimeUrl = generateOneTimeUrl(params);
                 system.debug('oneTimeUrl: ' + oneTimeUrl);
 
                 Map<String, String> emailMap = generateEmailBodyParams(params, oneTimeUrl);
 
-                result.isSuccess = sendEmail(params.email, 'CSP_New_lMember_Welcome_Email', emailMap);
+                result.isSuccess = sendEmail(params.email, 'CSP_New_Member_Welcome_Email', emailMap);
                 if(result.isSuccess == false){
                     result.message = 'Error sending Welcome Email';
                 }
@@ -296,83 +304,40 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
     }
 
     @AuraEnabled
-    public static RegistrationResult register(string registrationForm, string customerType, string contactId, string accountId){
+    public static RegistrationResult register(RegistrationParameters params){
 
         RegistrationResult result = new RegistrationResult();
-        Contact con;
         Savepoint sp = Database.setSavepoint();
+        system.debug('params: ' + params);
 
         try{
 
-            system.debug('registrationForm: ' + registrationForm);
-            Map<String, Object> inputMap = (Map<String, Object>)JSON.deserializeUntyped(registrationForm);
-            GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType = (GCS_Customer_Type_For_Registration__mdt) JSON.deserialize(customerType, GCS_Customer_Type_For_Registration__mdt.class);
-            system.debug('selectedMetadataCustomerType: '+ selectedMetadataCustomerType);
+            //Create or find Contact
+            Contact con;
+            if(params.contactId != null){
+                con = createContact(params);
+            }else{
+                con = [SELECT Id, AccountId, firstName, LastName, Phone, Email FROM Contact WHERE ID=: params.contactId LIMIT 1];
+            }
 
-            //todo: find the bucket account for input customer type
-            Account bucketAccount = getBucketAccount(selectedMetadataCustomerType);
-
-            if(bucketAccount == null){
+            if(con == null){
                 result.isSuccess = false;
-                result.message = 'Could not find bucket account';
+                result.message = 'Failed to create contact';
                 return result;
             }
 
-            system.debug('bucketAccount: ' + bucketAccount);
-
-            string lang = string.valueOf(inputMap.get('language'));
-
-            if(contactId == null){
-
-                //Id generalPublicAccId = '0014E000012f6cm';
-                con = new Contact();
-
-                List<Preferred_Language_on_ISS_Portal__c> pLangcs = Preferred_Language_on_ISS_Portal__c.getall().values();
-
-                if(pLangcs!= null || !pLangcs.isEmpty()){
-                    for(Preferred_Language_on_ISS_Portal__c language : pLangcs){
-                        if(language.languageLocalKey__c == lang){
-                            con.Preferred_Language__c = language.Language__c;
-                        }
-                    }
-                }
-
-
-                con.AccountId = bucketAccount.Id;
-                if(inputMap.get('country') != null){
-                    con.ISO_Country__c = string.valueOf(inputMap.get('country'));
-                }
-                con.firstName = string.valueOf(inputMap.get('firstName'));
-                con.lastName = string.valueOf(inputMap.get('lastName'));
-                con.Phone = string.valueOf(inputMap.get('phone'));
-                con.Email = string.valueOf(inputMap.get('email'));
-                con.Community__c = 'ISS Customer Portal';
-                con.User_Portal_Status__c = 'Pending';
-                //todo: perform field check before insert
-                DataBase.SaveResult sr = DataBase.Insert(con);
-                system.debug('PortalRegistrationFirstLevelCtrl -> Contact Save Result: ' + sr);
-                if(sr.isSuccess() == false){
-                    result.issuccess = false;
-                    for(Database.Error objErr : sr.getErrors()) {
-                        System.debug('The following error has occurred.');
-                        System.debug(objErr.getStatusCode() + ': ' + objErr.getMessage());
-                        result.message = objErr.getMessage();
-                    }
-                    return result;
-                }
-
-            }else{
-                con = [SELECT Id, AccountId, firstName, LastName, Phone, Email FROM Contact WHERE ID=: contactId LIMIT 1];
-            }
-
+            //Create User
             OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
-            Id userId = createNewUser(con, string.valueOf(mode), lang);
-            system.debug('userId: ' + userId);
-            if(userId!= null) {
+            NewUserDetail usr = createNewUser(con, string.valueOf(mode), params.language);
+
+            system.debug('userId: ' + usr.userId);
+            if(usr.userId != null) {
                 result.isSuccess = true;
-                result.portalUserId = userId;
+                result.portalUserId = usr.userId;
+                result.userName = usr.userName;
                 return result;
             }else{
+                Database.rollback(sp);
                 result.isSuccess = false;
                 result.message = 'User Creation failed!';
                 return result;
@@ -488,9 +453,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     }
 
-    public static Id createNewUser(Contact con, string community, string lang){
+    public static NewUserDetail createNewUser(Contact con, string community, string lang){
 
-        String userId = null;
+        NewUserDetail usr = new NewUserDetail();
+        usr.userId = null;
+        usr.userName = null;
 
         try {
 
@@ -502,7 +469,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             User u = new User();
             //u.Username = con.email;
             u.Community__c = community;
-            u.UID__c = UID;
+            //u.UID__c = UID;
             u.Username =  userName;//AEF
             u.Email = con.email;
             u.FirstName = con.firstName;
@@ -569,18 +536,19 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             system.debug('user to be created: ' + u);
 
-            userId = Site.createPortalUser(u, accountId, password, false);
-            system.debug('USERID: ' + userId);
+            usr.userId = Site.createPortalUser(u, accountId, password, false);
+            usr.userName = u.username;
+            system.debug('USERID: ' + usr.userId);
             //this does not fit in for bucket account scenario, should be handled on L2 registration?
             //Comm_User_Helper.addDefaultAppRights(con,con.Account);
 
-            return userId;
+            return usr;
 
 
         } catch (exception e) {
             system.debug('Portal Level 1 registration - createNewUser: ' + e.getMessage());
             //transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'sfdcadmin@iata.org'});
-            return userId;
+            return usr;
         }
 
     }
@@ -588,6 +556,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
     public static string generateOneTimeUrl(RegistrationParameters params){
 
         string paramsJson = JSON.serialize(params);
+        paramsJson = paramsJson.replace('+', PortalPasswordHandler.plusReplacer);
         string encryptedStr = PortalPasswordHandler.EncryptString(paramsJson);
         system.debug('encryptedStr: ' + encryptedStr);
         String encodedPart = 'c=' + EncodingUtil.urlEncode(encryptedStr, 'UTF-8');
@@ -595,7 +564,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
         String prefix = '';
         if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('/login'));
-        String oneTimeUrl = prefix + '/' + 'firstLogin' + '?' + encodedPart;
+        String oneTimeUrl = prefix + '/' + 'createPassword' + '?' + encodedPart;
         return oneTimeUrl;
 
     }
@@ -636,7 +605,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 mail.setSenderDisplayName('IATA Noreply');
             }
 
-            mail.setToAddresses(new List<string>{receiver});
+
+            List<String> receiverList = new List<String>();
+            receiverList.add(receiver);
+            mail.setToAddresses(receiverList);
             mail.setReplyTo('noreply@iata.org');
             //mail.setTargetObjectId(userId);
             mail.setSubject(emailTemplate.Subject);

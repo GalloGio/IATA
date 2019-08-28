@@ -759,14 +759,15 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
         var input = this.template.querySelector('[data-id="phone"]');
         var countryCode = this.userCountryCode;
+        console.log('countryCode: ', countryCode);
 
-            window.intlTelInput(input,{
-                initialCountry: countryCode,
-                preferredCountries: [countryCode],
-                placeholderNumberType : "FIXED_LINE",
-                //utilsScript: this.utilsPath,
-                /*autoPlaceholder : "aggressive"*/
-            });
+        window.intlTelInput(input,{
+            initialCountry: countryCode,
+            preferredCountries: [countryCode],
+            placeholderNumberType : "FIXED_LINE",
+            //utilsScript: this.utilsPath,
+            /*autoPlaceholder : "aggressive"*/
+        });
 
     }
 
