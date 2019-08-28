@@ -3,7 +3,7 @@
 
     <html>
      
- <c:ISSP_Header/>
+ <c:ISSP_Header />
  <body>
 
     <style>
@@ -15,15 +15,23 @@
    .pbBody a {color:#337ab7;}
         
    html .brandTertiaryBgr {
-    background-color: #DDE4E9!important;
-    color: #222222!important;
+    /*background-color: #DDE4E9!important;*/
+    /*color: #222222!important;*/
     background-image: none!important;
+    }
+
+    .pbSubheader {
+        padding: 8px !important; 
     }
     
    .pbSubheader h3 {
         font-size: 1.1em;
         font-weight: bold;
         font-size: 91%;
+    }
+
+    .pbSubheader img{
+        vertical-align: baseline;
     }
         
    .bPageBlock .pbTitle h2 {
@@ -45,13 +53,14 @@
     }      
         
  </style>
+ <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
  
  <apex:includeScript value="/soap/ajax/28.0/connection.js"/>
  <apex:includeScript value="/soap/ajax/28.0/apex.js"/>
 
-
-    <div class="container">
     <c:ISSP_CustomNavigation />
+    <div class="container">
+    
         
         <apex:outputPanel rendered="{!IFAPCases.size > 1}" >
             <h3 class="form-control" >{!$Label.ISSP_IFAP_IATAFinancialAssessment}</h3>
@@ -108,11 +117,11 @@
             </apex:outputPanel>
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-primary">
+                <div class="panel-primary">
                     <div class="panel-heading head_panel_green">
                         <h3 class="panel-title">{!$Label.IDCard_CaseNumber + ' - ' + IFAPCases[0].cse.CaseNumber}</h3>
                     </div>
-                    <div class="panel panel-body">
+                    <div class="panel-body">
                     <apex:outputpanel id="theBlock" >
                         <apex:pageBlock >
                         <!-- 
@@ -734,8 +743,9 @@
             </div><!--end main col -->
         </div><!--end main row -->
         </apex:outputPanel>
- <c:ISSP_CustomFooter />
+
     </div><!-- end container-->
+    <c:ISSP_CustomFooter />
     </body>
     </html>
 </apex:page>
