@@ -543,7 +543,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
     
     opensRelocateAccount() {
-        this.openRelocateAccount = true;
         this.checkCanRelocate();
     }
     
@@ -555,7 +554,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.removeContact = false;
         this.changeUserPortalStatus = false;
         this.openRelocateAccount = false;
-
     }
 
     closePortalChangeUserStatusWithRefresh() {
@@ -622,6 +620,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         getMapHierarchyAccounts({ contactId: contactId })
         .then(result => {
             this.isLoading = false;
+            this.openRelocateAccount = true;
             this.relatedAccounts = JSON.parse(JSON.stringify(result));
             
             if(this.relatedAccounts === undefined || this.relatedAccounts === null || this.relatedAccounts.length === 0){
