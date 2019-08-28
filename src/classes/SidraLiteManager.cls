@@ -592,32 +592,24 @@ public with sharing class SidraLiteManager {
                     throw new SidraLiteException('Second non compliance it is not allowed for a CNS agency');        
                 }
             }
+            //ACAMBAS - WMO-485: End
             else {
-            //ACAMBAS - WMO-485: End       
-            if (parentCase.Status == 'Sanity Check Failure') {
-                if ( cse.SIDRA_Lite_Reason__c != 'Sanity Check failure of financial statement' ) {
-                    cse.SIDRA_Lite_Reason__c.addError('Set right value here');
-                    throw new SidraLiteException('The SIDRA lite reason must be "Sanity Check failure of financial statement" for this scenario');
-                }
-            } else {
                 if ( cse.SIDRA_Lite_Reason__c != 'Financial Review Non-compliance' ) {
                     cse.SIDRA_Lite_Reason__c.addError('Set right value here');
                     throw new SidraLiteException('The SIDRA lite reason must be "Financial Review Non-compliance" for this scenario');
                 }
-            }
-            // finally update SIDRA lite case
-            parentCase.FirstFAnonComplianceDate__c = Date.today();
-            if (SidraLiteUtil.isPassenger(account)) {
-                parentCase.FA_Second_Deadline_Date__c = parentCase.firstFAnonComplianceDate__c.addDays(31);
-            }
-            if (SidraLiteUtil.isCargoCASS(account)) {
-                parentCase.FA_Second_Deadline_Date__c = parentCase.firstFAnonComplianceDate__c.addDays(30);
-            }
+                // finally update SIDRA lite case
+                parentCase.FirstFAnonComplianceDate__c = Date.today();
+                if (SidraLiteUtil.isPassenger(account)) {
+                    parentCase.FA_Second_Deadline_Date__c = parentCase.firstFAnonComplianceDate__c.addDays(31);
+                }
+                if (SidraLiteUtil.isCargoCASS(account)) {
+                    parentCase.FA_Second_Deadline_Date__c = parentCase.firstFAnonComplianceDate__c.addDays(30);
+                }
 
-            /*NEWGEN-5301*/
-            evaluateAnotherIfapCases(parentCase, cse, account);
-
-        }
+                /*NEWGEN-5301*/
+                evaluateAnotherIfapCases(parentCase, cse, account);
+            }
         }
         return parentCase;
     }

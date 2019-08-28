@@ -46,9 +46,6 @@ public with sharing class SidraLiteHelperForIFAP {
     }
 
     public static void verifyNewgenBusinessRules(Case parentCase){
-
-        Set<String> statusIFAP = new set<String>{'Agent Notified (Mail)','Agent Notified (Email)','Financial Statements Uploaded','Sanity Check Failure'};
-
         boolean firstRule = parentCase.FA_Second_Deadline_Date__c < System.today();
         boolean secondRule = STATUS_FOR_FA.contains(parentCase.Status);
 
@@ -121,11 +118,7 @@ public with sharing class SidraLiteHelperForIFAP {
 
             // for FA
             if ( !isFS(parentCase) || parentCase.Status == 'Sanity Check Failure') {
-                if (parentCase.Status == 'Sanity Check Failure') {
-                    returnCase.SIDRA_Lite_Reason__c = 'Sanity Check failure of financial statement';
-                } else {
-                    returnCase.SIDRA_Lite_Reason__c = 'Financial Review Non-compliance';
-                }
+                returnCase.SIDRA_Lite_Reason__c = 'Financial Review Non-compliance';
                 returnCase.Subject = 'SIDRA Lite - ' + returnCase.SIDRA_Lite_Reason__c;
                 if ( SidraLiteUtil.isPassenger(parentCase.account) ) {
                     if (SidraLiteUtil.isAccountActive(parentCase.account)) {
