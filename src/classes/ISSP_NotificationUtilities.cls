@@ -190,41 +190,10 @@ public class ISSP_NotificationUtilities
      */
     public static String replaceVariables(String text, list<String> listVars) {
         if (listVars==null) return text;
-        String result = text;
-        while (true) {
-            String varName = getFirstVarName(result);
-            if (varName==null) break;
-            // get position in the listVars list to get value
-            String value = '';
-            try {
-                Integer varNumber = Integer.ValueOf(varName);
-                value = listVars.get(varNumber);
-                value = value==null? '': value;
-            } catch (Exception e) {
-                System.debug('___replaceVariables' + e.getStackTraceString());
-            }
-            result = result.replace('{' + varName + '}', value);
+        for (Integer i=0; i<listVars.size(); i++) {
+            text = text.replace('{' + i + '}', listVars[i]);
         }
-        return result;
+        return text;
     }
 
-    /**
-     * Finds the first tag in the input text having this structure: {varnumber}
-     */
-    public static String getFirstVarName(String text) {
-        String fieldName = null;
-        try {
-            if (text.contains('{')) {
-                list<String> listSplit = text.split('[{]');
-                fieldName = listSplit[1];
-                if (fieldName.contains('}')) {
-                    listSplit = fieldName.split('[}]');
-                    fieldName = listSplit[0];
-                }
-            }
-        }catch (Exception e) {
-            System.debug('___getFirstVarName' + e.getStackTraceString());
-        }
-        return fieldName;
-    }
 }
