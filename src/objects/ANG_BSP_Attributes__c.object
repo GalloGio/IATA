@@ -309,7 +309,7 @@ J-Joint Vent</inlineHelpText>
         <fullName>Remittances_Per_Year__c</fullName>
         <description>Number of remittances per year to compute the most frequence value.</description>
         <externalId>false</externalId>
-        <formula>IF(Operation__r.Country__r.ISO_Code__c &lt;&gt; &apos;CN&apos;, 
+        <formula>IF(BSP__r.Name &lt;&gt; &apos;BSP-CN&apos;, 
 
 CASE( (TEXT(Remittance_Frequency__c)) , 
 
