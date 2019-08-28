@@ -58,7 +58,8 @@ public with sharing class PortalRegistrationUtils {
                 }
             }
         }catch(Exception e){
-
+            system.debug('Error Retrieving Location(ipinfo): ' + e.getMessage());
+            return loc;
         }
 
         if ((ipAddress != '' && ipAddress != null && country == '') || test.isRunningTest()){
