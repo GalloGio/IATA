@@ -231,7 +231,7 @@
                   					</div>
                   					<div class="row" style="display: {!IF(hqAccount.IATA_ISO_Country__r.ISO_Code__c == 'CN', 'block', 'none')}">
                     					<div class="col-md-2">
-                      						<apex:outputLabel value="Type of Agency:"/>
+                      						<apex:outputLabel value="{!$Label.ISSP_ANG_Country_Reqs_Type_Of_Agency}"/>
                     					</div>
                     					<div class="col-md-2">
                       						<apex:selectList size="1" value="{!agencyType}" multiselect="false" id="agencyTypeSelection" onchange="changeAgencyType(this.value);" disabled="{!isHOAccredited}">
