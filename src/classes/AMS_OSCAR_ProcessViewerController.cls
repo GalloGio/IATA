@@ -125,6 +125,12 @@ public class AMS_OSCAR_ProcessViewerController {
         }
     }
 
+    public boolean isNewGEConversion{
+        get{
+            return (oscar != null && oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY);
+        }
+    }
+
     private Boolean dueDiligenceBlocked {
         get{
             return (
@@ -191,7 +197,7 @@ public class AMS_OSCAR_ProcessViewerController {
     }
 
     private Boolean isStepBlocked(String stepApiName){
-        if(oscar != null && oscar.STEP45__c != AMS_Utils.PASSED && oscar.Process__c == AMS_Utils.NEWGESTANDARD && stepApiName != 'STEP45__c') return true;   
+        if(oscar != null && oscar.STEP45__c != AMS_Utils.PASSED && (oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY) && stepApiName != 'STEP45__c') return true;   
         return alwaysOnSteps.contains(stepApiName) ? false : dueDiligenceBlocked;
     }
     
