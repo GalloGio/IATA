@@ -47,22 +47,26 @@ export default class PortalCreatePassword extends LightningElement {
                 navigateToPage(CSP_PortalPath + "restricted-login");
             }
             else{
-                var sPageURL = ''+ window.location;
-                console.log(sPageURL);
-                 getParameters({ urlExtension : sPageURL }).then(result => {
-                    this.registrationParams = JSON.parse(result.registrationParameters);
-
-                    if(result.isUserExist == true){
-                        navigateToPage(CSP_PortalPath);
-                    }
-                    else if(this.registrationParams['email'] != ''){
-                       this.email = this.registrationParams['email'];
+                const RegistrationUtilsJs = new RegistrationUtils();
+                RegistrationUtilsJs.checkUserIsSystemAdmin().then(result=> {
+                   if(result == true){
                        this.changeIsLoading();
-                    }
+                       return;
+                   }
+                   else{
+                       var sPageURL = ''+ window.location;
+                        getParameters({ urlExtension : sPageURL }).then(result => {
+                            this.registrationParams = JSON.parse(result.registrationParameters);
 
-                })
-                .catch(error => {
-                    console.log('error' + JSON.stringify(error));
+                           if(result.isUserExist == true){
+                               navigateToPage(CSP_PortalPath);
+                           }
+                           else if(this.registrationParams['email'] != ''){
+                              this.email = this.registrationParams['email'];
+                              this.changeIsLoading();
+                           }
+                       })
+                   }
                 });
             }
         });
@@ -185,7 +189,6 @@ export default class PortalCreatePassword extends LightningElement {
         this.changeIsLoading();
         if(this.buttonDisabled == false){
             createUser({ paramStr : JSON.stringify(this.registrationParams), password : this.password }).then(result => {
-                console.log(result);
                  if(result.isSuccess == true){
                     navigateToPage(result.message, {});
                  }

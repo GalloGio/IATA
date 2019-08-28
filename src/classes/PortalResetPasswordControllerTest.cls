@@ -13,8 +13,8 @@ public class PortalResetPasswordControllerTest {
 
         string enc = EncodingUtil.urlEncode(PortalPasswordHandler.EncryptString(username+PortalPasswordHandler.SEPARATOR+password+PortalPasswordHandler.SEPARATOR+UID), 'UTF-8');
 
-        string userId = PortalResetPasswordController.getUserId('https://a.a.com/s/resetPassword?c=' + enc);
-        PortalResetPasswordController.resultWrapper result = PortalResetPasswordController.setNewPassword(userId, 'test');
+        User user = PortalResetPasswordController.getUser('https://a.a.com/s/resetPassword?c=' + enc);
+        PortalResetPasswordController.resultWrapper result = PortalResetPasswordController.setNewPassword(user, 'test');
     }
 
 }

@@ -1,10 +1,13 @@
 import { LightningElement, track } from 'lwc';
-
-import passwordLabel     from '@salesforce/label/c.OneId_Password'
-import CSP_PortalPath    from '@salesforce/label/c.CSP_PortalPath';
-import RegistrationUtils from 'c/registrationUtils';
-import SetNewPassword    from '@salesforce/apex/PortalResetPasswordController.setNewPassword';
-import GetUserId         from '@salesforce/apex/PortalResetPasswordController.getUserId';
+import { ShowToastEvent }          from 'lightning/platformShowToastEvent';
+import { navigateToPage }          from 'c/navigationUtils';
+import passwordLabel               from '@salesforce/label/c.OneId_Password'
+import confirmPasswordLabel        from '@salesforce/label/c.Confirm_password';
+import CSP_PortalPath              from '@salesforce/label/c.CSP_PortalPath';
+import RegistrationUtils           from 'c/registrationUtils';
+import { reduceErrors }            from 'c/ldsUtils';
+import SetNewPassword              from '@salesforce/apex/PortalResetPasswordController.setNewPassword';
+import GetUser                     from '@salesforce/apex/PortalResetPasswordController.getUser';
 
 export default class PortalResetPassword extends LightningElement {
 
@@ -15,7 +18,7 @@ export default class PortalResetPassword extends LightningElement {
       @track buttonDisabled    = true;
       @track passwordInputType = "password";
       @track success           = false;
-      @track userId;
+      @track user;
 
 
       @track isSanctioned;
@@ -23,7 +26,8 @@ export default class PortalResetPassword extends LightningElement {
       logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
 
       labels = {
-          passwordLabel
+          passwordLabel,
+          confirmPasswordLabel
       }
 
       get svgURL(){
@@ -42,25 +46,29 @@ export default class PortalResetPassword extends LightningElement {
                      navigateToPage(CSP_PortalPath + "restricted-login");
                  }
                  else{
-                      var sPageURL = ''+ window.location;
-                      GetUserId({ urlExtension : sPageURL }).then(result => {
-
-                         if(result == ''){
-                             navigateToPage(CSP_PortalPath);
-                         }
-                         else{
-                             this.userId = result;
-                             this.changeIsLoading();
-                         }
-
-                     })
-                     .catch(error => {
-                         console.log('error' + JSON.stringify(error));
-                     });
+                     const RegistrationUtilsJs = new RegistrationUtils();
+                     RegistrationUtilsJs.checkUserIsSystemAdmin().then(result=> {
+                        if(result == true){
+                            this.changeIsLoading();
+                            return;
+                        }
+                        else{
+                          var sPageURL = ''+ window.location;
+                          GetUser({ urlExtension : sPageURL }).then(result => {
+                             if(!result){
+                                 navigateToPage(CSP_PortalPath);
+                             }
+                             else{
+                                 this.user = result;
+                                 this.changeIsLoading();
+                             }
+                           })
+                        }
+                    });
                  }
              });
       }
-
+      
       handlePasswordChange(event){
           this.setButtonDisabled();
           this.password = event.target.value;
@@ -181,10 +189,8 @@ export default class PortalResetPassword extends LightningElement {
       handleSavePassword(){
           this.changeIsLoading();
           if(this.buttonDisabled == false){
-               SetNewPassword({ userId : this.userId, password : this.password }).then(result => {
-                   console.log(result);
+               SetNewPassword({ user : this.user, password : this.password }).then(result => {
                    if(result.success == true){
-                      //navigateToPage('/csportal/s');
                       this.success = result.success;
                       this.changeIsLoading();
                    }
@@ -200,6 +206,15 @@ export default class PortalResetPassword extends LightningElement {
                    this.changeIsLoading();
                 });
           }
+      }
+
+      showNotification() {
+          const evt = new ShowToastEvent({
+              title: 'Error',
+              message: this.message,
+              variant: 'error',
+          });
+          this.dispatchEvent(evt);
       }
 
 }

@@ -2,7 +2,7 @@
  * Created by bkaya01 on 28/08/2019.
  */
 
-public with sharing class PortalResetPasswordController {
+public without sharing class PortalResetPasswordController {
 
     public class resultWrapper{
         @AuraEnabled
@@ -12,8 +12,9 @@ public with sharing class PortalResetPasswordController {
     }
 
     @AuraEnabled
-    public static string getUserId(String urlExtension){
-        string userId = '';
+    public static User getUser(String urlExtension){
+        User user;
+
         PageReference pageRef = new PageReference(urlExtension);
         String parameters     = pageRef.getParameters().get('c');
 
@@ -24,33 +25,31 @@ public with sharing class PortalResetPasswordController {
         String password = paramList[1];
         string UID      = paramList[2];
 
-        string ids = '';
         if (!String.isEmpty(userName)) {
-            List<User> user = [Select Id, Username, UID__c from user where username = :userName OR email = :userName];
-            if (!user.isEmpty()) {
-                if (user[0].UID__c == UID) {
-                    userId = user[0].Id;
+            List<User> userList = [Select Id, Username, UID__c from user where username = :userName OR email = :userName];
+            if (!userList.isEmpty()) {
+                if (userList[0].UID__c == UID) {
+                    userList[0].UID__c = '';
+                    user = userList[0];
                 }
             }
         }
-        return userId;
+        return user;
     }
 
     @AuraEnabled
-    public static resultWrapper setNewPassword(String userId, String password){
+    public static resultWrapper setNewPassword(User user, String password){
         resultWrapper result = new resultWrapper();
         result.success       = true;
 
         try{
-            system.setPassword(userId, password);
-
-            User user = [Select id, uid__c from user where id =: userId limit 1];
-            user.uid__c = '';
+            system.setPassword(user.id, password);
             update user;
         }
         catch(Exception ex){
             result.success = false;
             result.message = ex.getMessage();
+            system.debug(ex.getMessage());
         }
 
         return result;
