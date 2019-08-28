@@ -19366,7 +19366,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Ownership Update</shortDescription>
-        <value>You can update you Ownership details at any time by following the &lt;i&gt;IATA Accreditation &amp; Changes&lt;/i&gt; link on the home page.</value>
+        <value>You can update your Ownership details at any time by following the &lt;i&gt;IATA Accreditation &amp; Changes&lt;/i&gt; link on the home page.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_PAX_Company</fullName>
@@ -22756,6 +22756,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>First NoC Second Answer</shortDescription>
         <value>Other Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_NOC_Type_Of_Change_Third</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>First NoC Third Answer</shortDescription>
+        <value>Other Changes (without Change of Hierarchy)</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ONE_OR_MORE_AE</fullName>

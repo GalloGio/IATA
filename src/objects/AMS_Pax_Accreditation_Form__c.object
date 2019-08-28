@@ -6155,6 +6155,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                     <default>false</default>
                     <label>Other Changes</label>
                 </value>
+                <value>
+                    <fullName>Other Changes (without Change of Hierarchy)</fullName>
+                    <default>false</default>
+                    <label>Other Changes (without Change of Hierarchy)</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

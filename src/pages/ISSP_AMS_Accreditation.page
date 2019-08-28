@@ -477,30 +477,27 @@
 
         $( document ).ready(function() {
             loadPageOptions();
+
+            setArrowListeners();
         });
+
+        function setArrowListeners() {
+            $('[id$=rightList]').on('DOMNodeInserted', function(e) {
+                setTimeout( function() { 
+                    reRenderAccountsNoc();
+                }, 500);
+            });
+
+            $('[id$=rightList]').on('DOMNodeRemoved', function(e) {
+                setTimeout( function() { 
+                    reRenderAccountsNoc();
+                }, 500);
+            });
+        }
 
         function checkMCAECountry() {
             if({!isMultiCountryNewAE}) {
                 fetchLegalNames();
-            }
-        }
-
-        function checkMCNoC() {
-            if ({!isStep1}) {
-                if ($('[id$="LocationType"]').find("input")[1]) {
-                    if ($('[id$=countrySelectedMCNOC]').val() === '{!hqAccount.Country_ISO_Code__c}') {
-                        $('[id$="LocationType"]').find("input")[1].disabled = false;
-                        $('[id$="LocationType"]').find("input")[2].disabled = false;
-                        $('[id$="LocationType"]').find("input")[0].disabled = false;
-                    } else {
-                        $('[id$="LocationType"]').find("input")[1].disabled = true;
-                        $('[id$="LocationType"]').find("input")[2].disabled = true;
-                        $('[id$="LocationType"]').find("input")[0].disabled = true;
-                        $('[id$="LocationType"]').find("input")[3].checked = true;
-                    }
-                }
-                
-                reRenderAccountsNoc();
             }
         }
 
@@ -547,24 +544,69 @@
             }
         }
 
+        function checkMCNoC() {
+            if ($('[id$="LocationType"]').find("input")[1]) {
+                if ($('[id$=countrySelectedMCNOC]').val() === '{!hqAccount.Country_ISO_Code__c}') {
+                    $('[id$="LocationType"]').find("input")[1].disabled = false;
+                    $('[id$="LocationType"]').find("input")[2].disabled = false;
+                    $('[id$="LocationType"]').find("input")[0].disabled = false;
+                } else {
+                    $('[id$="LocationType"]').find("input")[1].disabled = true;
+                    $('[id$="LocationType"]').find("input")[2].disabled = true;
+                    $('[id$="LocationType"]').find("input")[0].disabled = true;
+                    $('[id$="LocationType"]').find("input")[3].checked = true;
+                }
+            }
+            
+            reRenderAccountsNoc();
+        }
+
         function checkNoCFirstQuestion() {
-            if ({!isStep1}) {
-                if ($('[id$="typeOfChange"]').find("input")[0]) {
+            if ($('[id$="typeOfChange"]').find("input")[0]) {
 
-                    if ($('[id$="typeOfChange"]').find("input")[0].checked) {
-                        $('[id$="LocationType"]').find("input")[3].disabled = true;
-                        $('[id$="LocationType"]').find("input")[2].disabled = true;
-                        $('[id$="LocationType"]').find("input")[0].disabled = true;
-                        $('[id$="LocationType"]').find("input")[1].checked = true;
+                if ($('[id$="typeOfChange"]').find("input")[0].checked) {
+                    $('[id$="LocationType"]').find("input")[3].disabled = true;
+                    $('[id$="LocationType"]').find("input")[2].disabled = true;
+                    $('[id$="LocationType"]').find("input")[0].disabled = true;
+                    $('[id$="LocationType"]').find("input")[1].checked = true;
 
-                        reRenderAccountsNoc();
-                    } else {
-                        $('[id$="LocationType"]').find("input")[3].disabled = false;
-                        $('[id$="LocationType"]').find("input")[2].disabled = false;
-                        $('[id$="LocationType"]').find("input")[0].disabled = false;
+                    showCountryMultiSelection();
+
+                    reRenderAccountsNoc();
+                }
+
+                if ($('[id$="typeOfChange"]').find("input")[1].checked) {
+                    showCountryMultiSelection();
+                    enableLocationQuestions();
+                }
+
+                if ($('[id$="typeOfChange"]').find("input")[2].checked) {
+                    $('[id$="countrySelectedMCNOC"]').css('display', 'block');
+                    $('[id$="countryMultiSelection"]').css('display', 'none');
+                    $('[id$="selectAllLabel"]').css('display', 'none');
+                    $('[id$="selectAll"]').css('display', 'none');
+
+                    enableLocationQuestions();
+
+                    if ({!isMCNewAEAccredited}) {
+                        checkMCNoC();
                     }
                 }
             }
+        }
+
+        function enableLocationQuestions() {
+            $('[id$="LocationType"]').find("input")[3].disabled = false;
+            $('[id$="LocationType"]').find("input")[2].disabled = false;
+            $('[id$="LocationType"]').find("input")[0].disabled = false;
+        }
+
+        function showCountryMultiSelection() {
+            $('[id$="countrySelectedMCNOC"]').css('display', 'none');
+            $('[id$="countryMultiSelection"]').css('display', 'block');
+
+            $('[id$="selectAllLabel"]').css('display', 'inline-block');
+            $('[id$="selectAll"]').css('display', 'inline-block');
         }
 
         function loadPageOptions() {
@@ -578,15 +620,9 @@
             if ({!isNoticeOfChange}) {
                 $('[id$=nocFormQuestions]').first().insertAfter($('[id$=countrySelection').first());
 
-                checkNoCFirstQuestion();
-
-                if ({!isMCNewAEAccredited}) {
-                    checkMCNoC();
-                    if ({!isStep1}) {
-                        reRenderNocOptions(); 
-                    }
+                if ({!isStep1}) {
+                    checkNoCFirstQuestion();
                 }
-                
             }
         }
 
@@ -674,8 +710,7 @@
                             <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" oncomplete="populateLegalAndSeparateFields();" />
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
                             <apex:actionFunction action="{!resetHierarchy}" name="reRenderAccountsNoc" reRender="branchaccountsel"/>
-                            <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions"/>
-
+                            <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions" oncomplete=""/>
 
                             <apex:pageBlock id="step1Block" mode="edit" >
                                 <apex:pageBlockButtons location="bottom" style="padding-left:100px">
@@ -800,6 +835,8 @@
                                             	    	<apex:selectOption itemValue="{!$Label.ISSP_ANG_NOC_Type_Of_Change_First}" itemLabel="{!$Label.ISSP_ANG_NOC_Type_Of_Change_First}"/>
                                             
                                                         <apex:selectOption itemValue="{!$Label.ISSP_ANG_NOC_Type_Of_Change_Second}" itemLabel="{!$Label.ISSP_ANG_NOC_Type_Of_Change_Second}"/>
+
+                                                        <apex:selectOption itemValue="{!$Label.ISSP_ANG_NOC_Type_Of_Change_Third}" itemLabel="{!$Label.ISSP_ANG_NOC_Type_Of_Change_Third}" rendered="{!con.Account.ANG_Accreditation_Model__c == 'Multicountry'}"/>
                                                     </apex:selectRadio>
                                                 </apex:outputPanel>
                                             </apex:outputPanel>
@@ -836,13 +873,13 @@
 
                                                 <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptions">    
                                                     <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');">
-                                                        <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}"/>
+                                                        <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}" itemDisabled="{!newForm.Type_Of_Change__c == 'Change of Accreditation Type'}"/>
                                                         
                                                         <apex:selectOption itemValue="HO - All Branches" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_All_Branches_MC, $Label.ISSP_AMS_NoC_HE_All_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCNewAEAccredited)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
                                                         
-                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_Some_Branches_MC, $Label.ISSP_AMS_NoC_HE_Some_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCNewAEAccredited)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
+                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_Some_Branches_MC, $Label.ISSP_AMS_NoC_HE_Some_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCNewAEAccredited)), AND(isMCNewAEAccredited, branchAccountCount > 0))}" itemDisabled="{!newForm.Type_Of_Change__c == 'Change of Accreditation Type'}"/>
                                                         
-                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_Associate_Entity_MC, $Label.ISSP_AMS_NoC_Associate_Entity)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCNewAEAccredited)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
+                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_Associate_Entity_MC, $Label.ISSP_AMS_NoC_Associate_Entity)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCNewAEAccredited)), AND(isMCNewAEAccredited, branchAccountCount > 0))}" itemDisabled="{!newForm.Type_Of_Change__c == 'Change of Accreditation Type'}"/>
                                                     </apex:selectRadio>
 
                                                 </apex:outputPanel>
@@ -896,16 +933,34 @@
 
                                 <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
                                     <apex:outputPanel rendered="{!AND(isMCNewAEAccredited, isNoticeOfChange)}">
-                                        <apex:selectList id="countrySelectedMCNOC" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1" onchange="checkMCNoC();">
+                                        <apex:selectList id="countrySelectedMCNOC" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1" onchange="checkMCNoC(); reRenderAccountsNoc();">
                                             <apex:selectOptions value="{!mcNocCountryList}"/>
-                                            <!--<apex:actionSupport event="onselect" rerender=""/>-->
                                         </apex:selectList>
+
+                                        <apex:outputPanel>
+                                            <c:MultiselectPicklist id="countryMultiSelection"
+                                                                leftLabel="{!$Label.ISSP_AMS_eBulletin_AvailableCountries}" 
+                                                                leftOptions="{!auxSelectMulipleCountryList}"
+                                                                rightLabel="{!$Label.ISSP_AMS_eBulletin_SelectedCountries}"
+                                                                rightOptions="{!selectedCountryIsos}"
+                                                                size="8"
+                                                                width="300px"
+                                                                btn_up_down="false"/>
+
+                                            <apex:outputLabel id="selectAllLabel" value="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}" style="font-weight: 100;"/>&nbsp;
+
+                                            <apex:inputCheckBox id="selectAll" value="{!allCountriesSelected}" label="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}">
+                                                <apex:actionSupport event="onchange" action="{!selectAllCountries}" id="cbSAd" reRender="countryMultiSelection" oncomplete="reRenderAccountsNoc(); setArrowListeners();"/>
+                                            </apex:inputCheckbox>
+                                        </apex:outputPanel>
                                     </apex:outputPanel>
+
                                     <apex:outputPanel rendered="{!AND(isMultiCountryNewAE, NOT(isNoticeOfChange))}">
                                         <apex:selectList id="countrySelectedMC" required="false" styleClass="form-control" style="width:40%" value="{!mcformCountryISO}" size="1" onchange="checkMCAECountry();">
                                             <apex:selectOptions value="{!countryISOCodeList}"/>
                                         </apex:selectList>
                                     </apex:outputPanel>
+
                                     <apex:outputPanel rendered="{!AND(NOT(isMultiCountryNewAE), NOT(isNoticeOfChange), NOT(isMCNewAEAccredited))}">
                                         <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
                                             <apex:selectOptions value="{!countryISOCodeList}"/>

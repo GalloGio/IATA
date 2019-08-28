@@ -433,8 +433,12 @@ public without sharing class ISSP_AMS_Accreditation {
     }
     set;
     }
-    
 
+    public Boolean isPassAccreditation {get; set;}
+
+    public List<SelectOption> selectedCountryIsos {get; set;}
+    public Boolean allCountriesSelected {get; set;}
+    
     public ISSP_AMS_Accreditation() {
         isNewCase = true;
         isStep1 = false;
@@ -468,6 +472,9 @@ public without sharing class ISSP_AMS_Accreditation {
         isMCNewAEAccredited = false;
         mcformCountryISO = '';
         agencyListByBSPByISOMap = new Map<String, Map<String, List<AgencyInfoByISOWrapper>>>();
+
+        selectedCountryIsos = new List<SelectOption>();
+        allCountriesSelected = false;        
 
         newCase = new Case();
         newForm = new AMS_Pax_Accreditation_Form__c();
@@ -1242,6 +1249,18 @@ public without sharing class ISSP_AMS_Accreditation {
         set;
     }
 
+    public List<SelectOption> auxSelectMulipleCountryList {
+        get {
+            if (auxSelectMulipleCountryList == null) {
+                auxSelectMulipleCountryList = mcNocCountryList;
+                auxSelectMulipleCountryList.remove(0);
+            }
+
+            return auxSelectMulipleCountryList;
+        }
+        set;
+    }
+
     public List<SelectOption> mcNocCountryList {
         get {
             List<SelectOption> options = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_COUNTRY)};
@@ -1254,9 +1273,10 @@ public without sharing class ISSP_AMS_Accreditation {
                         if (a.Location_Type__c == 'GE') {
                             countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name + ' - Head Entity Country', a.Country_ISO_Code__c);
                         } else {
-                            countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name, a.Country_ISO_Code__c);
+                            if (!countryNameByIsoCode.values().contains(a.Country_ISO_Code__c)) {
+                                countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name, a.Country_ISO_Code__c);
+                            }
                         }
-                        
                     }
                 }
             }
@@ -7777,16 +7797,25 @@ public without sharing class ISSP_AMS_Accreditation {
             if(hierarchy == null) {
                 hierarchy = new Map<Id, HierarchyItem>();
 
-                Set<Id> accountIds = new Set<Id>();
-                accountIds.add(vHQAccountId);       
+                List<String> mcCountryIsos = new List<String>();
+                
+                for (SelectOption country: selectedCountryIsos) {
+                    mcCountryIsos.add(country.getValue());
+                }
                 
                 List<Account> acc = getBranchList(false);
                 for(Account a : acc){
                     branchAccountCount++;
                     Boolean isSelected = false;
 
-                    if (isMCNewAEAccredited && isNoticeOfChange && a.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
-                        continue;
+                    if (newForm.Type_of_Change__c == 'Other Changes') {
+                        if (isMCNewAEAccredited && isNoticeOfChange && !mcCountryIsos.contains(a.Country_ISO_Code__c)) {
+                            continue;
+                        }
+                    } else {
+                        if (isMCNewAEAccredited && isNoticeOfChange && a.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
+                            continue;
+                        }
                     }
 
                     hierarchy.put(a.Id, new HierarchyItem(a,isSelected));
@@ -7920,5 +7949,21 @@ public without sharing class ISSP_AMS_Accreditation {
         currentPage = hierarchyValuesForDisplay.size()-1;
         return null;
     }
-    
+
+    public void selectAllCountries() {
+        if (allCountriesSelected) {
+            for (SelectOption country: auxSelectMulipleCountryList) {
+                selectedCountryIsos.add(country);
+            }
+
+            auxSelectMulipleCountryList.clear();
+
+        } else {
+            for (SelectOption country: selectedCountryIsos) {
+                auxSelectMulipleCountryList.add(country);
+            }
+
+            selectedCountryIsos.clear();
+        }
+    }
 }
