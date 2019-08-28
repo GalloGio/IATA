@@ -5,7 +5,7 @@ public with sharing class AWW_CoreRelationshipCtrl {
         Response res = new Response();
         Account hqAccount = [
             SELECT Id, NDC_engagement__c, External_Entities_PAX__c, External_Entities_CARGO__c,
-                External_Entities_PAX_OTHER__c, External_Entities_CARGO_OTHER__c
+                External_Entities_PAX_OTHER__c, External_Entities_CARGO_OTHER__c, Agency_Business_Model__c
             FROM Account 
             WHERE Id = :accountId
         ]; 
@@ -50,12 +50,12 @@ public with sharing class AWW_CoreRelationshipCtrl {
         Map<String,Integer> mapLocationTypes = new Map<String,Integer> {
             'GE' => 0,
             'HE' => 0,
+            'HO' => 0,
             'AO' => 0,
             'AE' => 0,
             'BR' => 0,
-            'HO' => 0,
-            'TIDS' => 0,
             'IATAN Codes' => 0,
+            'TIDS' => 0,
             'CNS Codes' => 0
         };
         Integer countTIDS = 0;

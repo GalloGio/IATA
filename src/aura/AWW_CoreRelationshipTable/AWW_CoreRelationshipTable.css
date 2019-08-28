@@ -1,2 +1,14 @@
-.THIS {
+.THIS.myTable> * table tbody tr:last-child *{
+    font-weight: bold;
+    /*padding-top: 5px;*/
 }
+.THIS.myTable> * table thead * {
+   display: none;
+}
+.THIS.myTable .slds-table_header-fixed_container.slds-scrollable_x{
+    padding-top: 0;
+}
+.THIS lightning-primitive-header-actions {
+    display: none;
+}
+

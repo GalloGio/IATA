@@ -3,7 +3,22 @@
     <description>Permission set to allow users to read data on Agency Management App</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.AM_Ownership_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NDC_engagement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Other_Type_of_Subsidiaries__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.VAT_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -41,13 +41,16 @@
             if (component.isValid() && state === "SUCCESS") {                
                 var result = response.getReturnValue();
                 console.log(result);
-                component.set('v.data1', result.iataRelations);
+                let aux = result.iataRelations;
+                let popped = aux.pop();
+                component.set('v.data1',aux );
                 component.set('v.data2', result.countries);
                 component.set('v.data3', result.regions);
                 //result.externalRelationsPAX.unshift({label: 'Passenger', value: false});
                 component.set('v.data4', result.externalRelationsPAX);
                 //result.externalRelationsCARGO.unshift({label: 'Cargo', value: false});
                 component.set('v.data5', result.externalRelationsCARGO);
+                component.set('v.data6', popped);
                 component.set('v.record', result.record);
             }   
         });

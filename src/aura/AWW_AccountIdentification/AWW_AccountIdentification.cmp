@@ -3,6 +3,8 @@
     <aura:attribute name="record" type="Account"/>
     <aura:attribute name="manager" type="Object"/>
     <aura:attribute name="canEdit" type="Boolean"/>
+    <aura:attribute name="otherTypeofSubsidiariesToEdit" type="Boolean" default="false"/>
+    <aura:attribute name="otherTypeofSubsidiariesOldValue" type="String"/>
 
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
 
@@ -65,20 +67,28 @@
                     </div>
                     <div class="slds-col slds-size_1-of-3 slds-p-bottom_medium">
                         <div class="slds-form-element">
-                            <label class="slds-form-element__label">Sub-Region</label>
-                            <div class="slds-form-element__control">
-                                {!v.record.Sub_Region__c}
-                            </div>
-                        </div> 
-                    </div>
-                    <div class="slds-col slds-size_1-of-3 slds-p-bottom_medium">
-                        <div class="slds-form-element">
                             <label class="slds-form-element__label">IATA Account Number</label>
                             <div class="slds-form-element__control">
                                 TO CLARIFY
                             </div>
                         </div>         
                     </div>              
+                    <div class="slds-col slds-size_1-of-3 slds-p-bottom_medium">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label">VAT Number</label>
+                            <div class="slds-form-element__control">
+                                {!v.record.VAT_Number__c}
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="slds-col slds-size_1-of-3 slds-p-bottom_medium">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label">Sub-Region</label>
+                            <div class="slds-form-element__control">
+                                {!v.record.Sub_Region__c}
+                            </div>
+                        </div> 
+                    </div>     
                     <div class="slds-col slds-size_1-of-3 slds-p-bottom_medium">
                         <div class="slds-form-element">
                             <label class="slds-form-element__label">EU Agency Consent</label>
@@ -91,7 +101,7 @@
                         <div class="slds-form-element">
                             <label class="slds-form-element__label">Ownership Type</label>
                             <div class="slds-form-element__control">
-                                TO CLARIFY
+                                {!v.record.AM_Ownership_Type__c}
                             </div>
                         </div>
                     </div>
@@ -115,7 +125,17 @@
             </div>
             <div class="slds-col slds-size_1-of-2">
                 <c:AWW_Subsidiaries accountId="{!v.accountId}" canEdit="{!v.canEdit}"/>
+                <lightning:textarea onblur="{!c.otherTypeofSubsidiariesCancel}" onclick="{!c.otherTypeofSubsidiariesOnclick}" class="slds-p-top_x-small slds-p-left_x-small slds-p-right_x-small" value="{!v.record.Other_Type_of_Subsidiaries__c}" label="Other Type of Subsidiaries"/>
+                <aura:if isTrue="{!v.otherTypeofSubsidiariesToEdit}">
+                    <div class="slds-grid slds-gutters slds-grid_align-center slds-m-around_medium">
+                        <lightning:button label="Cancel"  onclick="{!c.otherTypeofSubsidiariesCancel}"/>
+                        <lightning:button label="Save" onclick="{!c.otherTypeofSubsidiariesSave}"/>
+                    </div>    
+                </aura:if>     
             </div>            
         </div>
     </div>
+    <div aura:id="app-spinner" class="slds-hide">
+        <lightning:spinner alternativeText="Loading" size="large"/>
+    </div>  
 </aura:component>

@@ -33,3 +33,7 @@
 .THIS .th_9 {
     width: 9%;
 }
+
+.THIS lightning-primitive-header-actions {
+    display: none;
+}

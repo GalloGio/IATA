@@ -48,7 +48,7 @@
             </div>
             <div class="slds-col_padded slds-size_1-of-7">
                 <p class="slds-text-heading_label">Agency Business Model</p>
-                TO CLARIFY
+                <ui:outputText value="{!v.record.Agency_Business_Model__c}"/>
             </div>
         </div>
     </div>

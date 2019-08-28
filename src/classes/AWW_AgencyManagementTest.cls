@@ -82,6 +82,7 @@ private class AWW_AgencyManagementTest {
         Account wwAccount = [SELECT Id FROM Account WHERE RecordType.DeveloperName= 'Agency_WW_HQ'];
         Test.startTest();
         Account res = AWW_AccountIdentificationCtrl.getAccountDetails(wwAccount.Id);
+        Account res2 = AWW_AccountIdentificationCtrl.saveAccountDetails(wwAccount);
         res = AWW_AccountHeaderCtrl.getAccountHeader(wwAccount.Id);
         Test.stopTest();
     }

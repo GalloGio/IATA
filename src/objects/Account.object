@@ -15238,6 +15238,16 @@ J-Joint Vent</inlineHelpText>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Other_Type_of_Subsidiaries__c</fullName>
+        <externalId>false</externalId>
+        <label>Other Type of Subsidiaries</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>Overdue_Invoices_Indicator__c</fullName>
         <externalId>false</externalId>
         <formula>IF (
@@ -100672,6 +100682,36 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Agency_Business_Model__c</picklist>            
+            <values>                
+            	<fullName>Consolidator</fullName>                
+            	<default>false</default>            
+        	</values>           
+        	<values>                
+	        	<fullName>Freight Forwarder</fullName>                
+	        	<default>false</default>            
+        	</values>            
+        	<values>                
+	        	<fullName>Online Travel Agency</fullName>                
+	        	<default>false</default>            
+        	</values>            
+        	<values>                
+	        	<fullName>Other</fullName>                
+	        	<default>false</default>            
+        	</values>            <values>                
+	        	<fullName>Retail Leisure</fullName>                
+	        	<default>false</default>            
+        	</values>            
+        	<values>                
+	        	<fullName>Tour Operator</fullName>                
+	        	<default>false</default>            
+        	</values>            
+        	<values>                
+	        	<fullName>Travel Management Company</fullName>                
+	        	<default>false</default>            
+        	</values>        
+    	</picklistValues>        
+    	<picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>

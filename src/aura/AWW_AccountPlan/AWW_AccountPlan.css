@@ -5,3 +5,7 @@
 .THIS .slds-th__action > span.slds-truncate {
     white-space: pre-wrap !important;
 }
+
+.THIS lightning-primitive-header-actions {
+    display: none;
+}

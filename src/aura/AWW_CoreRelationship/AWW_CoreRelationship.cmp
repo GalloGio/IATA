@@ -10,6 +10,7 @@
     <aura:attribute name="data4" type="List"/>
     <aura:attribute name="columns5" type="List"/>
     <aura:attribute name="data5" type="List"/>
+    <aura:attribute name="data6" type="List"/>
     <aura:attribute name="record" type="Account"/>
     <aura:attribute name="canEdit" type="Boolean"/>
 
@@ -36,25 +37,32 @@
                                 <c:AWW_CoreRelationshipTable columns="{!v.columns1}" data="{!v.data1}"/>
                             </lightning:card>
                         </div>
+                        <div class="slds-box slds-p-around_none slds-m-right_xxx-small slds-m-bottom_xxx-small">
+                            <c:AWW_CoreRelationshipTable columns="{!v.columns1}" data="{!v.data6}" isCoreRelationshipWithIATA="true"/>
+                        </div>
                     </div>
                     <div class="slds-col slds-size_1-of-2">
                         <div class="slds-box slds-p-around_none slds-m-left_xxx-small slds-m-bottom_xxx-small">
                             <lightning:card title="Relationship with External Entities" iconName="standard:strategy">
-                                <c:AWW_CoreRelationshipTable columns="{!v.columns4}" data="{!v.data4}"/>
-                                <lightning:textarea class="slds-p-top_x-small slds-p-left_x-small slds-p-right_x-small" value="{!v.record.External_Entities_PAX_OTHER__c}" label="OTHER" disabled="true"/>
-                                <c:AWW_CoreRelationshipTable columns="{!v.columns5}" data="{!v.data5}"/> 
-                                <lightning:textarea class="slds-p-around_x-small" value="{!v.record.External_Entities_CARGO_OTHER__c}" label="OTHER" disabled="true"/>
+                                <aura:if isTrue="{!v.record.Agency_Business_Model__c != 'Freight Forwarder' &amp;&amp; v.record.Agency_Business_Model__c != 'Other'}">
+                                    <c:AWW_CoreRelationshipTable columns="{!v.columns4}" data="{!v.data4}"/>
+                                    <lightning:textarea class="slds-p-top_x-small slds-p-left_x-small slds-p-right_x-small" value="{!v.record.External_Entities_PAX_OTHER__c}" label="OTHER" disabled="true"/>
+                                </aura:if>
+                                <aura:if isTrue="{!v.record.Agency_Business_Model__c == 'Freight Forwarder' || v.record.Agency_Business_Model__c == 'Other' || v.record.Agency_Business_Model__c == null}">
+                                    <c:AWW_CoreRelationshipTable columns="{!v.columns5}" data="{!v.data5}"/> 
+                                    <lightning:textarea class="slds-p-around_x-small" value="{!v.record.External_Entities_CARGO_OTHER__c}" label="OTHER" disabled="true"/>
+                                </aura:if>
                             </lightning:card>
                         </div>
                     </div>
-                    <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-col slds-size_1-of-2 margin_top">
                         <div class="slds-box slds-p-around_none slds-m-right_xxx-small slds-m-top_xxx-small">
                             <lightning:card title="Accredited Locations per Country" iconName="standard:strategy">
                                 <c:AWW_CoreRelationshipTable columns="{!v.columns2}" data="{!v.data2}"/>
                             </lightning:card>
                         </div>
                     </div>
-                    <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-col slds-size_1-of-2 margin_top">
                         <div class="slds-box slds-p-around_none slds-m-left_xxx-small slds-m-top_xxx-small">
                             <lightning:card title="Accredited Locations per Region" iconName="standard:strategy">
                                 <c:AWW_CoreRelationshipTable columns="{!v.columns3}" data="{!v.data3}"/>

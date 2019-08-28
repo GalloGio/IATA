@@ -11,3 +11,7 @@
 .THIS .sortColumn {
     cursor: pointer;
 }
+
+.THIS lightning-primitive-header-actions {
+    display: none;
+}

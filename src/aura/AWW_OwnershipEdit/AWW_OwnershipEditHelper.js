@@ -1,9 +1,9 @@
 ({
     initTable : function(component) {
         component.set('v.columns',[
-            {label: 'Account Name', fieldName: 'accountLink', type: 'url', typeAttributes: {label: {fieldName: 'accountName'}, target: '_blank'}},
-            {label: 'IATA Code', fieldName: 'iataCode', type: 'text'},
-            {label: 'Country', fieldName: 'country', type: 'text'}
+            {label: 'Account Name', fieldName: 'accountLink', type: 'url', sortable : true, typeAttributes: {label: {fieldName: 'accountName'}, target: '_blank'}},
+            {label: 'IATA Code', fieldName: 'iataCode', type: 'text', sortable : true},
+            {label: 'Country', fieldName: 'country', type: 'text', sortable : true}
         ]);
     },
     initModal : function(component,args) {
@@ -49,6 +49,11 @@
             if (component.isValid() && state === "SUCCESS") {
                 var result = response.getReturnValue();
                 component.set('v.data', result.accounts);
+                if(result.accounts.length > 0){
+                    component.set('v.noAccount', false);
+                }else{
+                    component.set('v.noAccount', true);
+                }
             }
         });
 
@@ -63,13 +68,13 @@
             var record;
             if(operation == 'Add') {
                 record = typeOfRecord == 'Owner' ? this.createOwnerRecord(component,rows[i]) : this.createSubsidiaryRecord(component,rows[i]);
-            } else {
+            } else { 
                 record = rows[i];
             }
 
             if(!record.percentage || record.percentage == 0) {
                 delete record.percentage;
-        }       
+            }
 
             records.push(record);
         }
@@ -77,8 +82,8 @@
         var action = component.get('c.addRecord');
         action.setParams({
             request : JSON.stringify(records)
-        });
-
+        });   
+        
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (component.isValid() && state === "SUCCESS") {
@@ -101,7 +106,7 @@
         });
 
         this.handleSpinner(component,'show');
-        $A.enqueueAction(action);
+        $A.enqueueAction(action);   
     },
     createOwnerRecord : function(component,row) {
         var record = {
@@ -141,5 +146,16 @@
         var spinner = component.getEvent('controlSpinner');
         spinner.setParams({'option': value});
         spinner.fire();
+    },
+    sortData : function(component,fieldName,sortDirection) {
+        var data = component.get('v.data');
+        var reverse = sortDirection == 'asc' ? 1: -1;
+        var key = function(a) { return a[fieldName.replace('Link','Name')]}
+        data.sort(function(a,b) {
+            var a = key(a) ? key(a) : '';
+            var b = key(b) ? key(b) : '';
+            return reverse * ((a>b) - (b>a));
+        });
+        component.set('v.data', data);
     }
 })
