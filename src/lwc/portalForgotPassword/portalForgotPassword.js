@@ -6,6 +6,7 @@ import loginLabel              from '@salesforce/label/c.Login';
 import submitLabel             from '@salesforce/label/c.ISSP_Submit';
 import createNewAccountLabel   from '@salesforce/label/c.OneId_CreateNewAccount';
 import troubleshootingLabel    from '@salesforce/label/c.OneId_CSP_Troubleshooting';
+import troubleshootingUrl      from '@salesforce/label/c.OneId_CSP_Troubleshooting_Link';
 
 export default class ForgotPasswordOneId extends LightningElement {
     @track email           = "";
@@ -92,7 +93,7 @@ export default class ForgotPasswordOneId extends LightningElement {
     }
 
     handleNavigateToTroubleshooting() {
-        navigateToPage(this.labels.TroubleShootingUrl);
+        navigateToPage(troubleshootingUrl);
     }
 
 }

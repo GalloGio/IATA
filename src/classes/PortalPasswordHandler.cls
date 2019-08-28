@@ -113,24 +113,6 @@ public without sharing class PortalPasswordHandler {
         return mapBodyParams;
     }
 
-    public static Map<String, String> portalWelcomeEmailMap(User user, String link){
-        //get contact information
-        Contact contactInfo = [SELECT Id,Email, firstName, LastName,Salutation FROM Contact WHERE ID = :user.contactid limit 1];
-
-        Map<String, String> mapBodyParams = new map<String, String>{
-                '{!Contact.Salutation}' => contactInfo.Salutation,
-                '{!Contact.Password}' => '',
-                '{!Receiving_User.FirstName}' => contactInfo.Firstname,
-                '{!Receiving_User.LastName}' => contactInfo.LastName,
-                '{!Receiving_User.Email}' => contactInfo.Email,
-                '{!Community_Name}' => '',
-                '{!Community_Url}' => link,
-                '{!$Label.ISSP_Email_Here}' => 'here',
-                '{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply
-        };
-        return mapBodyParams;
-    }
-
     public static boolean sendEmail(Id userId, String template, Map<String, String> mapBodyParams) {
         boolean success = true;
 
@@ -138,8 +120,7 @@ public without sharing class PortalPasswordHandler {
             List<Messaging.SendEmailResult>    listEmailResult = null;
             List<Messaging.SingleEmailmessage> listSingleEmailMessages = new List<Messaging.SingleEmailmessage>();
 
-            EmailTemplate emailTemplate = [SELECT Id,Subject,HtmlValue,Body FROM EmailTemplate WHERE DeveloperName=:template];
-
+            EmailTemplate emailTemplate = [SELECT Id,Subject,HtmlValue,Body FROM EmailTemplate WHERE DeveloperName=:template Limit 1];
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             OrgWideEmailAddress orgWideEmail  = [SELECT Id,Address FROM OrgWideEmailAddress WHERE Address='noreply@iata.org' Limit 1];
             if(orgWideEmail != null){
@@ -162,17 +143,13 @@ public without sharing class PortalPasswordHandler {
                 }
             }
 
-            if(htmlBody <> null){
-                mail.setHtmlBody(htmlBody);
-            }
+            if(htmlBody <> null) mail.setHtmlBody(htmlBody);
 
             mail.setSaveAsActivity(false);
             mail.setPlainTextBody(plainBody);
             listSingleEmailMessages.add(mail);
 
-            if(!Test.isRunningTest()) {
-                listEmailResult = Messaging.sendEmail(listSingleEmailMessages);
-            }
+            if(!Test.isRunningTest())  listEmailResult = Messaging.sendEmail(listSingleEmailMessages);
         }
         catch(Exception ex){
             success = false;
@@ -197,37 +174,6 @@ public without sharing class PortalPasswordHandler {
             }
         }
         return result;
-    }
-
-    @AuraEnabled
-    public static boolean setNewPassword(String password){
-        boolean success = true;
-
-        try{
-            system.setPassword(userinfo.getUserId(), password);
-        }
-        catch(Exception ex){
-            success = false;
-        }
-
-        if(success == true){
-            User user = [Select id, uid__c from User where id =: userinfo.getUserId() Limit 1];
-            if(user != null){
-                user.uid__c = '';
-                update user;
-            }
-        }
-        return success;
-    }
-
-    @AuraEnabled
-    public static string getUserEmail(){
-        String email = '';
-        User user = [Select email from User where id =: userinfo.getUserId() Limit 1];
-        if(user != null){
-            email = user.email;
-        }
-        return email;
     }
 
     @AuraEnabled

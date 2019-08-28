@@ -32,7 +32,7 @@ public without sharing class PortalForgotPasswordController {
     public static PortalPasswordHandler.resultWrapper handleResetPassword(String email){
         PortalPasswordHandler.resultWrapper result = PortalPasswordHandler.handleResetPassword(email);
         if(result.success == true){
-            String link                  = PortalPasswordHandler.generateUrl(result.user, result.password, 'passwordReset');
+            String link                  = PortalPasswordHandler.generateUrl(result.user, result.password, 'resetPassword');
             Map<String, String> emailMap = PortalPasswordHandler.forgotPasswordEmailMap(result.user, link);
             result.success               = PortalPasswordHandler.sendEmail(result.user.id, 'CSP_Forgot_Password_Email', emailMap);
         }
