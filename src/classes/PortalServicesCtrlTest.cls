@@ -597,7 +597,6 @@ public class PortalServicesCtrlTest {
             PortalServicesCtrl.newAppsRequest2(portalServicelist.get(2).id, '', c.id, '', false); 
         Test.StopTest();
 	}
-}
 
 @isTest
 public static void PortalServicesCtrlTest_getTotalNrContacts() {
