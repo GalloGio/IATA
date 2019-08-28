@@ -433,7 +433,7 @@ lightning-datatable .slds-th__action {
 
 .modal {
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 2; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   padding-bottom: 50px;
   left: 0;
