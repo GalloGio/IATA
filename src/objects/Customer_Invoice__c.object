@@ -168,11 +168,11 @@
         <deleteConstraint>Restrict</deleteConstraint>
         <description>Account Id</description>
         <externalId>false</externalId>
-        <label>Account</label>
+        <label>Account Id</label>
         <referenceTo>Account</referenceTo>
         <relationshipLabel>Customer Invoices</relationshipLabel>
         <relationshipName>Customer_Invoices</relationshipName>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -222,10 +222,11 @@
     </fields>
     <fields>
         <fullName>Billed_Member_Accounting_Code__c</fullName>
-        <description>Billed Member Accounting Code</description>
+        <description>AccountId__r.Accounting_Code__c</description>
         <externalId>false</externalId>
+        <formula>AccountId__r.Accounting_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Billed Member Accounting Code</label>
-        <length>12</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -233,21 +234,33 @@
     </fields>
     <fields>
         <fullName>Billed_Member_Designator_Code__c</fullName>
-        <description>Billed Member Designator Code</description>
+        <description>AccountId__r.Airline_designator__c</description>
         <externalId>false</externalId>
+        <formula>AccountId__r.Airline_designator__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Billed Member Designator Code</label>
-        <length>2</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Billed_Member_Id__c</fullName>
+        <description>SIS Id of the related account (lookup)</description>
+        <externalId>true</externalId>
+        <label>Billed Member Id</label>
+        <length>13</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Billed_Member_Name__c</fullName>
-        <description>Billed Member Name</description>
         <externalId>false</externalId>
+        <formula>AccountId__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Billed Member Name</label>
-        <length>100</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -259,6 +272,39 @@
         <externalId>false</externalId>
         <label>Billing Currency</label>
         <length>3</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Member_Accounting_Code__c</fullName>
+        <description>Billing Member Accounting Code</description>
+        <externalId>false</externalId>
+        <label>Billing Member Accounting Code</label>
+        <length>12</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Member_Designator_Code__c</fullName>
+        <description>Billing Member Designator Code</description>
+        <externalId>false</externalId>
+        <label>Billing Member Designator Code</label>
+        <length>2</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Member_Id__c</fullName>
+        <description>Billing Member Id</description>
+        <externalId>true</externalId>
+        <label>Billing Member Id</label>
+        <length>13</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -287,6 +333,17 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Billing_Member_Name__c</fullName>
+        <description>Billing Member Name</description>
+        <externalId>false</externalId>
+        <label>Billing Member Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Branch_Code__c</fullName>
@@ -424,8 +481,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-<<<<<<< HEAD
-=======
         <fullName>Has_Attachments__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Indicates if the invoice has attachments</description>
@@ -435,7 +490,6 @@
         <type>Checkbox</type>
     </fields>
     <fields>
->>>>>>> b9400ba63e2fdb4721238b7cd6ec1d28ca73210b
         <fullName>IBAN__c</fullName>
         <description>IBAN</description>
         <externalId>false</externalId>
@@ -457,14 +511,15 @@
     </fields>
     <fields>
         <fullName>Invoice_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
         <description>Invoice ID</description>
         <externalId>false</externalId>
         <label>Invoice ID</label>
         <length>16</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
-        <unique>false</unique>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>Invoice_Number__c</fullName>
