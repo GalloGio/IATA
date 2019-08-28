@@ -319,7 +319,17 @@
         <filters>
             <field>LAST_UPDATE</field>
             <operation>greaterOrEqual</operation>
-            <value>5/23/2019 1:00 PM</value>
+            <value>8/22/2019 3:00 AM</value>
+        </filters>
+        <filters>
+            <field>Method__c</field>
+            <operation>contains</operation>
+            <value>Put</value>
+        </filters>
+        <filters>
+            <field>CREATEDBY_USER</field>
+            <operation>contains</operation>
+            <value>Jean-Claude</value>
         </filters>
         <label>Debug View</label>
         <language>en_US</language>
