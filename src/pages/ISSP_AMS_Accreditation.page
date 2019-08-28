@@ -478,11 +478,22 @@
         $( document ).ready(function() {
             loadPageOptions();
 
-            $('[id$=rightList]').change(function() {
-                reRenderAccountsNoc();
-                console.log('ola');
-            }); 
+            setArrowListeners();
         });
+
+        function setArrowListeners() {
+            $('[id$=rightList]').on('DOMNodeInserted', function(e) {
+                setTimeout( function() { 
+                    reRenderAccountsNoc();
+                }, 500);
+            });
+
+            $('[id$=rightList]').on('DOMNodeRemoved', function(e) {
+                setTimeout( function() { 
+                    reRenderAccountsNoc();
+                }, 500);
+            });
+        }
 
         function checkMCAECountry() {
             if({!isMultiCountryNewAE}) {
@@ -700,8 +711,6 @@
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
                             <apex:actionFunction action="{!resetHierarchy}" name="reRenderAccountsNoc" reRender="branchaccountsel"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions" oncomplete=""/>
-                            <apex:actionFunction name="reRenderCountryList " reRender="brabroadcountries"/>
-
 
                             <apex:pageBlock id="step1Block" mode="edit" >
                                 <apex:pageBlockButtons location="bottom" style="padding-left:100px">
@@ -924,7 +933,7 @@
 
                                 <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
                                     <apex:outputPanel rendered="{!AND(isMCNewAEAccredited, isNoticeOfChange)}">
-                                        <apex:selectList id="countrySelectedMCNOC" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1" onchange="checkMCNoC();">
+                                        <apex:selectList id="countrySelectedMCNOC" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1" onchange="checkMCNoC(); reRenderAccountsNoc();">
                                             <apex:selectOptions value="{!mcNocCountryList}"/>
                                         </apex:selectList>
 
@@ -935,13 +944,13 @@
                                                                 rightLabel="{!$Label.ISSP_AMS_eBulletin_SelectedCountries}"
                                                                 rightOptions="{!selectedCountryIsos}"
                                                                 size="8"
-                                                                width="150px"
+                                                                width="300px"
                                                                 btn_up_down="false"/>
 
                                             <apex:outputLabel id="selectAllLabel" value="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}" style="font-weight: 100;"/>&nbsp;
 
                                             <apex:inputCheckBox id="selectAll" value="{!allCountriesSelected}" label="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}">
-                                                <apex:actionSupport event="onchange" action="{!selectAllCountries}" id="cbSAd" reRender="countryMultiSelection"/>
+                                                <apex:actionSupport event="onchange" action="{!selectAllCountries}" id="cbSAd" reRender="countryMultiSelection" oncomplete="reRenderAccountsNoc(); setArrowListeners();"/>
                                             </apex:inputCheckbox>
                                         </apex:outputPanel>
                                     </apex:outputPanel>

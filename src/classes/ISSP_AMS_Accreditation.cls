@@ -1273,9 +1273,10 @@ public without sharing class ISSP_AMS_Accreditation {
                         if (a.Location_Type__c == 'GE') {
                             countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name + ' - Head Entity Country', a.Country_ISO_Code__c);
                         } else {
-                            countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name, a.Country_ISO_Code__c);
+                            if (!countryNameByIsoCode.values().contains(a.Country_ISO_Code__c)) {
+                                countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name, a.Country_ISO_Code__c);
+                            }
                         }
-                        
                     }
                 }
             }
@@ -7807,8 +7808,14 @@ public without sharing class ISSP_AMS_Accreditation {
                     branchAccountCount++;
                     Boolean isSelected = false;
 
-                    if (isMCNewAEAccredited && isNoticeOfChange && !mcCountryIsos.contains(a.Country_ISO_Code__c)) {
-                        continue;
+                    if (newForm.Type_of_Change__c == 'Other Changes') {
+                        if (isMCNewAEAccredited && isNoticeOfChange && !mcCountryIsos.contains(a.Country_ISO_Code__c)) {
+                            continue;
+                        }
+                    } else {
+                        if (isMCNewAEAccredited && isNoticeOfChange && a.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
+                            continue;
+                        }
                     }
 
                     hierarchy.put(a.Id, new HierarchyItem(a,isSelected));
