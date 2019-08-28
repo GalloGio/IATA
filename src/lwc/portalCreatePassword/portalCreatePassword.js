@@ -1,14 +1,14 @@
-import { LightningElement,track } from 'lwc';
-import { navigateToPage }         from 'c/navigationUtils';
-import { ShowToastEvent }         from 'lightning/platformShowToastEvent';
-import { reduceErrors }     from 'c/ldsUtils';
-import RegistrationUtils    from 'c/registrationUtils';
-import GetUserEmail         from '@salesforce/apex/PortalPasswordHandler.getUserEmail';
-import SetNewPassword       from '@salesforce/apex/PortalPasswordHandler.setNewPassword';
-import passwordLabel        from '@salesforce/label/c.OneId_Password'
-import invalidMailFormat    from '@salesforce/label/c.ISSP_AMS_Invalid_Email';
-import CSP_PortalPath       from '@salesforce/label/c.CSP_PortalPath';
-import confirmPasswordLabel from '@salesforce/label/c.Confirm_password';
+import { LightningElement,track }   from 'lwc';
+import { navigateToPage }           from 'c/navigationUtils';
+import { ShowToastEvent }           from 'lightning/platformShowToastEvent';
+import { reduceErrors }             from 'c/ldsUtils';
+import RegistrationUtils            from 'c/registrationUtils';
+import passwordLabel                from '@salesforce/label/c.OneId_Password'
+import invalidMailFormat            from '@salesforce/label/c.ISSP_AMS_Invalid_Email';
+import CSP_PortalPath               from '@salesforce/label/c.CSP_PortalPath';
+import confirmPasswordLabel         from '@salesforce/label/c.Confirm_password';
+import getParameters                from '@salesforce/apex/portalCreatePasswordController.getParameters';
+import createUser                   from '@salesforce/apex/portalCreatePasswordController.createUserAndSetPassword';
 
 export default class PortalCreatePassword extends LightningElement {
     @track email             = "";
@@ -22,6 +22,7 @@ export default class PortalCreatePassword extends LightningElement {
 
     @track message;
     @track isSanctioned;
+    @track registrationParams;
 
     logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
 
@@ -46,14 +47,23 @@ export default class PortalCreatePassword extends LightningElement {
                 navigateToPage(CSP_PortalPath + "restricted-login");
             }
             else{
-              GetUserEmail().then(result => {
-                        this.email = result;
-                        this.changeIsLoading();
-                    })
-                    .catch(error => {
-                        this.message = reduceErrors(error).join(', ');
-                        this.showNotification();
-                    });
+                var sPageURL = ''+ window.location;
+                console.log(sPageURL);
+                 getParameters({ urlExtension : sPageURL }).then(result => {
+                    this.registrationParams = JSON.parse(result.registrationParameters);
+
+                    if(result.isUserExist == true){
+                        navigateToPage(CSP_PortalPath);
+                    }
+                    else if(this.registrationParams['email'] != ''){
+                       this.email = this.registrationParams['email'];
+                       this.changeIsLoading();
+                    }
+
+                })
+                .catch(error => {
+                    console.log('error' + JSON.stringify(error));
+                });
             }
         });
     }
@@ -174,11 +184,16 @@ export default class PortalCreatePassword extends LightningElement {
     handleSavePassword(){
         this.changeIsLoading();
         if(this.buttonDisabled == false){
-             SetNewPassword({ password : this.password }).then(result => {
-                 if(result == true){
-                    //navigateToPage('/csportal/s');
+            createUser({ paramStr : JSON.stringify(this.registrationParams), password : this.password }).then(result => {
+                console.log(result);
+                 if(result.isSuccess == true){
+                    navigateToPage(result.message, {});
                  }
-              })
+                 else{
+                    this.message = result.message;
+                    this.showNotification();
+                 }
+             })
               .catch(error => {
                  this.message = reduceErrors(error).join(', ');
                  this.showNotification();
