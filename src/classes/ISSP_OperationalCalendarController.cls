@@ -248,7 +248,7 @@ global without sharing class ISSP_OperationalCalendarController {
                 ( SELECT frequency_code__c, Operation_Currency__c, Operation_Type__c, Operation_Code__c
                     FROM Operational_Calendars__r
                     WHERE RecordTypeId = :RT_ISS_CALENDAR.getRecordTypeId()
-                    AND First_Day__c >= LAST_YEAR
+                    AND Submission_Open__c >= LAST_YEAR
                     AND Visible_on_the_portal__c=true)
             FROM AMS_Settlement_System__c 
         ];
