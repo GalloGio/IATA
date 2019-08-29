@@ -739,6 +739,14 @@ public without sharing class ISSP_AMS_Accreditation {
 
                 if ((isMultiCountryNewAE || isMultiCountryAccredittedAddingAEs()) && !String.isBlank(mcformCountryISO)) {
                     isocountry = fetchISOCountry(mcformCountryISO);
+
+                    if (applyLanguage == 'en_US') {
+                        amsCountryLabel = isocountry.Case_BSP_Country__c;
+                    } else if (applyLanguage == 'fr') {
+                        amsCountryLabel = isocountry.IATA_Country_FR__c;
+                    } else {
+                        amsCountryLabel = isocountry.IATA_Country_SP__c;
+                    }
                 }
 
                 newForm.HO_Account__c = vHQAccountId;
