@@ -19,7 +19,6 @@
         action.setParams({
             "accountDetails": component.get("v.record")
         });
-        console.log("saveOtherTypeofSubsidiaries");
         action.setCallback(this, function(response) {
             var state = response.getState();
             console.log("state", state);

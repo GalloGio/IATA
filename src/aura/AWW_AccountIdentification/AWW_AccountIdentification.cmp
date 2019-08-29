@@ -125,7 +125,7 @@
             </div>
             <div class="slds-col slds-size_1-of-2">
                 <c:AWW_Subsidiaries accountId="{!v.accountId}" canEdit="{!v.canEdit}"/>
-                <lightning:textarea onblur="{!c.otherTypeofSubsidiariesCancel}" onclick="{!c.otherTypeofSubsidiariesOnclick}" class="slds-p-top_x-small slds-p-left_x-small slds-p-right_x-small" value="{!v.record.Other_Type_of_Subsidiaries__c}" label="Other Type of Subsidiaries"/>
+                <lightning:textarea onblur="{!c.otherTypeofSubsidiariesCancel}" onclick="{!c.otherTypeofSubsidiariesOnclick}" class="slds-p-top_x-small slds-p-horizontal_x-small" value="{!v.record.Other_Type_of_Subsidiaries__c}" label="Other Type of Subsidiaries"/>
                 <aura:if isTrue="{!v.otherTypeofSubsidiariesToEdit}">
                     <div class="slds-grid slds-gutters slds-grid_align-center slds-m-around_medium">
                         <lightning:button label="Cancel"  onclick="{!c.otherTypeofSubsidiariesCancel}"/>

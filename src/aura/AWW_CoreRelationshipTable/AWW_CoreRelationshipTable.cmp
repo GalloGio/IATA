@@ -6,7 +6,7 @@
     <aura:attribute name="isCoreRelationshipWithIATA" type="String" default=""/>
 
     <lightning:datatable 
-        class="{!v.isCoreRelationshipWithIATA == 'true' ? 'myTable' : ''}"
+        class="{!v.isCoreRelationshipWithIATA == 'true' ? 'coreRelationshipWithIATATableClass' : ''}"
         keyField="label"
         data="{!v.data}"
         columns="{!v.columns}"

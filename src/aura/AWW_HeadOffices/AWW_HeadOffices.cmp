@@ -1,4 +1,4 @@
-<aura:component controller="AWW_HeadOfficesCtrl">
+<aura:component controller="AWW_HeadOfficesCtrl"  extends="c:TablePagination">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="data" type="Object"/>
     <aura:attribute name="filteredData" type="Object"/>
