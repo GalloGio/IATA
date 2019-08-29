@@ -46,13 +46,23 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
     private Set<String> notes{
 		get{
 			Set<String> toReturn = new Set<String>();
-			toReturn.add('This page will allow the user to select the Hierarchy of the multi-country hierarchy.');
-			toReturn.add('The following rules must be implemented:');
-			toReturn.add('There are not AEs alone in any BSP.');
-			toReturn.add('There is 1 and only 1 GE');
-			toReturn.add('In each BSP there is 1 and only 1 HE');
-			toReturn.add('There are at least 2 BSPs involved');
-
+			if(isConversionProcess){
+				toReturn.add('This page will allow the user to define the Multicountry hierarchy.');
+				toReturn.add('The following rules will be applied:');
+				toReturn.add('There are no active AE locations alone in any BSP');
+				toReturn.add('There is 1 and only 1 GE in the hierarchy');
+				toReturn.add('In every BSP there is 1 and only 1 HE or GE');
+				toReturn.add('There are at least 2 BSPs involved');
+				toReturn.add('You cannot proceed if the agencies selected are not in Approved status');
+				toReturn.add('You cannot proceed if the agencies selected do not have the same Remittance Frequency per BSP');
+			}else{
+				toReturn.add('This page will allow the user to select the Hierarchy of the multi-country hierarchy.');
+				toReturn.add('The following rules must be implemented:');
+				toReturn.add('There are not AEs alone in any BSP.');
+				toReturn.add('There is 1 and only 1 GE');
+				toReturn.add('In each BSP there is 1 and only 1 HE');
+				toReturn.add('There are at least 2 BSPs involved');
+			}
 			return toReturn;
 		}
 		set;
@@ -162,11 +172,56 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		set;
 	}
 
+	public Map<Id, AMS_Process_Detail__c> mapHierarchyProcessDetail{
+		get{
+			if(mapHierarchyProcessDetail == null){
+				mapHierarchyProcessDetail = new Map<Id, AMS_Process_Detail__c>();
+				Id oscarId = oscar.Id;
+				for(AMS_Process_Detail__c detail : [SELECT id, Account__c, OSCAR__c, ANG_Location_Type_Conversion__c FROM AMS_Process_Detail__c WHERE OSCAR__c = :oscarId]) {
+					mapHierarchyProcessDetail.put(detail.Account__c, detail);
+				}
+			}
+			return mapHierarchyProcessDetail;
+		}
+		set;
+	}
+
 	public Map<Id, Account> mapHierarchyAccounts{
 		get{
 			if(mapHierarchyAccounts == null){
-				Id accountId = oscar.Account__c;
-				mapHierarchyAccounts = new Map<Id, Account>((List<Account>)Database.query('SELECT ' + String.join(accountFieldList, ',') + ' FROM Account WHERE ( Top_Parent__c = :accountId or Id = :accountId ) AND Status__c not in ( ' +  getInvalidStatus() + ' ) ORDER BY IATA_ISO_Country__r.Name'));
+				String condition = ' Id in (';
+				//Load accounts from AMS_Proccess_Detail if is a ConvertionProcess
+				if(isConversionProcess){
+					for(Id id : mapHierarchyProcessDetail.keySet()){
+						condition += ' \'id\',';
+					}
+					condition += '\''+oscar.Account__c+'\') ORDER BY IATA_ISO_Country__r.Name'; //Oscar account id (Should be the GE at this point)
+
+					System.debug('mapHierarchyAccounts - condition: ' + condition);
+
+					/*mapHierarchyAccounts = new Map<Id, Account>();
+					for(AMS_Process_Detail__c detail : mapHierarchyProcessDetail.values()){
+						Account newAccount = new Account();
+						newAccount.id = detail.Account__c;
+						newAccount.Name = detail.Account__r.Name;
+						newAccount.IATACode__c = detail.Account__r.IATACode__c;
+						newAccount.Status__c = detail.Account__r.Status__c;
+
+						newAccount.IATA_ISO_Country__r.AMS_Settlement_System__c = detail.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c;
+						newAccount.IATA_ISO_Country__r.Name = detail.Account__r.IATA_ISO_Country__r.Name; //check this too 
+
+						newAccount.BillingStreet = detail.Account__r.BillingStreet;
+						newAccount.BillingCity = detail.Account__r.BillingCity;
+						newAccount.BillingPostalCode = detail.Account__r.BillingPostalCode;
+						newAccount.Remittance_frequency__c = detail.Account__r.Remittance_frequency__c;
+
+						mapHierarchyAccounts.put(newAccount.id, newAccount);
+*/
+				}else{
+					Id accountId = oscar.Account__c;
+					condition = ' WHERE ( Top_Parent__c = :accountId or Id = :accountId ) AND Status__c not in ( ' +  getInvalidStatus() + ' ) ORDER BY IATA_ISO_Country__r.Name';
+				}
+				mapHierarchyAccounts = new Map<Id, Account>((List<Account>)Database.query('SELECT ' + String.join(accountFieldList, ',') + ' FROM Account ' + condition));
 			}
 			return mapHierarchyAccounts;
 		}
@@ -180,8 +235,11 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 				for(Account a : mapHierarchyAccounts.values()){
 					Boolean main = (a.Id == oscar.Account__c);
-					if(a.Location_Type__c == null){
+					if(a.Location_Type__c == null || mapHierarchyProcessDetail.get(a.id).ANG_Location_Type_Conversion__c == null){  //add condition to set the location_type conversion already selected
 						a.Location_Type__c = AMS_Utils.AE;
+					}
+					else if(isConversionProcess && mapHierarchyProcessDetail.get(a.id).ANG_Location_Type_Conversion__c != null){
+						a.Location_Type__c = mapHierarchyProcessDetail.get(a.id).ANG_Location_Type_Conversion__c;
 					}
 					if(hierarchy.get(a.IATA_ISO_Country__r.AMS_Settlement_System__r.Name) == null)
 						hierarchy.put(a.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, new List<HierarchyItem>{new HierarchyItem(a, main, processDetails.containsKey(a.Id), a.Location_Type__c == AMS_Utils.GE)});
@@ -258,7 +316,19 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
     }
 
 	private static Id oscarMainAccount;
-    
+
+	public static final Set<String> invalidAgencyStatus = new Set<String>{AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S7_UNDERREVIEW, AMS_Utils.ACC_S8_CHANGESPROCESSED};
+
+	public Boolean isConversionProcess{
+		get{
+			if(isConversionProcess == null){
+				isConversionProcess = oscar.RecordTypeId == AMS_Utils.RECTYPE_NGCONVERSIONTOMULTICOUNTRY ? true : false;
+			}
+			return isConversionProcess;
+		}
+		set;
+	}
+
 	// ***********************************
 	// ********** constructor ************
 	// ***********************************
@@ -268,7 +338,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		oscarId = stdController.getId();
 		oscar = (AMS_OSCAR__c)stdController.getRecord();
 
-        if(Test.isRunningTest()) oscar =  [Select Id, Account__c, Process__c, Step6__c, ANG_Type_Of_Change__c, STEP45__c, ANG_Hierarchy_Created__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Id =:oscarId];
+        if(Test.isRunningTest()) oscar =  [Select Id, RecordTypeId, Account__c, Process__c, Step6__c, ANG_Type_Of_Change__c, STEP45__c, ANG_Hierarchy_Created__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Id =:oscarId];
 	
 	}
 
@@ -394,6 +464,39 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			}
 		}
 	}
+
+	
+	public void saveConvertion(){
+	
+		if(performValidations()){
+
+			Case caseToUpdate;
+            AMS_Pax_Accreditation_Form__c accreditationForm;
+
+			//if main account changed change update the stagging area
+			if(oscarMainAccount != null){
+				oscar.Account__c = oscarMainAccount;
+				accreditationForm = [Select Id, SAAM_Case__c from AMS_Pax_Accreditation_Form__c where Id =:oscar.AMS_Online_Accreditation__c];
+				caseToUpdate = new Case(Id = accreditationForm.SAAM_Case__c);
+				caseToUpdate.AccountId = oscar.Account__c;
+				accreditationForm.HO_Account__c = oscar.Account__c;
+				Account account = mapHierarchyAccounts.get(oscar.Account__c);
+				Map<String,Object> fieldsOfObject = ANG_MulticountryHelper.buildStagingAreaFieldsObject(account);
+				accreditationForm.Account_Name__c = account.Name;
+				accreditationForm = (AMS_Pax_Accreditation_Form__c)ANG_EntityCreator.addFieldsToObject((sObject)accreditationForm, fieldsOfObject);
+			}
+
+			update oscar;
+
+			if(oscarMainAccount != null){
+				update caseToUpdate;
+				update accreditationForm;
+			}
+
+			//Get all Proccess_Detail accounts and update - check all the process details that have been changed 
+		
+		}
+	} 
 
 	private void createHierarchy(List<Account> acctLst){
 
@@ -526,12 +629,24 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		Map<String,BSPAttributes> bspMap = new Map<String,BSPAttributes>();
 
+		//Map<String, List<Account>> mapBspAccounts = new Map<String, List<Account>>();
+
 		for( HierarchyItem item: hierarchyValues){
 
-			if(bspMap.get(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name) == null)
+			if(bspMap.get(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name) == null){
 				bspMap.put(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name,new BSPAttributes(item.acc));
-			else	
+
+				//mapBspAccounts.put(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, new List<Account>{item.acc});
+			}else{
 				bspMap.get(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name).addCount(item.acc);
+
+				//mapBspAccounts.get(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name).add(item.acc);
+			}
+
+			if(isConversionProcess && ANG_MulticountryHierarchySelectionCrtl.invalidAgencyStatus.contains(item.acc.Status__c)){
+				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'You have selected locations that have change or suspension processes in progress. Please finalize the process and then proceed with the multicountry conversion'));
+				return false;
+			}
 
 		}
 
@@ -541,47 +656,84 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		}
 
 		for(BSPAttributes bspAtt: bspMap.values()){
+
+			if(isConversionProcess && !bspAtt.rfIsAlignInBSP){
+				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Please align the Remittance Frequencies in the same BSP and then proceed with the multicountry conversion'));
+				toReturn = false;
+			}
 					
 			if(bspAtt.numberOfHE > 1){
 				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'There should only be one HE per BSP.'));
 				toReturn = false;
 			}
 			if(bspAtt.numberOfAE > 0)
-				if(bspAtt.numberOfHE == 0 && !bspAtt.isGE){
+				if(bspAtt.numberOfHE == 0 && !bspAtt.isGE && (!isConversionProcess || (isConversionProcess && bspAtt.bspContainsNotTerminatedAEs))){
 					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'There should not be any AEs alone in any BSP (that is not a GE).'));
 					toReturn = false;
 				}
-
 		}
 
+/*
+		if(isConversionProcess){
+			//If the Remittance Frequency values are not aligned on all the agencies in the same BSP, do not allow to proceed”
+			for(String bspName : hierarchy.keySet()){
+
+				String remittanceFrequency = mapBspAccounts.get(bspName)[0].Remittance_frequency__c; // Check with Diogo
+				for(Account acc : mapBspAccounts.get(bspName)){
+					if(remittanceFrequency != acc.Remittance_frequency__c){
+						ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, ''));
+						toReturn = false;
+					}
+				}
+
+			}
+		}
+*/
 		return toReturn;
 	}
 
 	public class BSPAttributes{
+			
+		Set<String> agencyStatusToBeAlone = new Set<String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S4_LISTED, AMS_Utils.ACC_S3_NOTINOPERATION, AMS_Utils.ACC_S1_NOTACCREDITED, ''};
 
 		public Integer numberOfHE;
 		public Integer numberOfAE;
+		public String remittanceFrequency;
+		public Boolean rfIsAlignInBSP;
+		public Boolean bspContainsNotTerminatedAEs;
 		public Boolean isGE;
 
 		public BSPAttributes(Account a){
 
 			numberOfHE = 0;
 			numberOfAE = 0;
+			rfIsAlignInBSP = true;
+			remittanceFrequency = a.Remittance_Frequency__c;
+			bspContainsNotTerminatedAEs = false;
+
 			isGE = false;
 
 			if(a.Location_Type__c == AMS_Utils.HE)
 				this.numberOfHE = 1;
-			if(a.Location_Type__c == AMS_Utils.AE)
+			if(a.Location_Type__c == AMS_Utils.AE){
 				this.numberOfAE = 1;
+				if(!agencyStatusToBeAlone.contains(a.status__c))
+					this.bspContainsNotTerminatedAEs = true;
+			}
 			if(a.Location_Type__c == AMS_Utils.GE)
 				this.isGE = true;
 		}
 
 		public void addCount(Account a){
+			if(this.remittanceFrequency != a.Remittance_Frequency__c)
+				rfIsAlignInBSP = false;
 			if(a.Location_Type__c == AMS_Utils.HE)
 				this.numberOfHE++;
-			if(a.Location_Type__c == AMS_Utils.AE)
+			if(a.Location_Type__c == AMS_Utils.AE){
 				this.numberOfAE++;
+				if(!agencyStatusToBeAlone.contains(a.status__c))
+					this.bspContainsNotTerminatedAEs = true;
+			}
 			if(a.Location_Type__c == AMS_Utils.GE)
 				this.isGE = true;			
 		}
