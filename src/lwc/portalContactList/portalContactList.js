@@ -165,7 +165,7 @@ export default class PortalContactList extends LightningElement {
 
                         rowValue.className = field.className;
 
-                        if (fieldName === 'Email' && this.isAccountDomain) {
+                        if (fieldName === 'Email' && this.isAccountDomain && this.accountDomain.length > 0) {
                             let emailError = this.checkEmail(record[fieldName]);
                                 rowValue.emailHasError = true;
                                 let emailArray = record[fieldName].split('@');
