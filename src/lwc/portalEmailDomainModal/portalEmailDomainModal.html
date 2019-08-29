@@ -33,6 +33,9 @@
                                 <div if:true={isNewRecord}>
                                     <lightning-input label="Domain" onchange={handleDomainChange}
                                         class="slds-m-bottom_x-small"></lightning-input>
+                                    <div if:true={hasError} class="fieldError">
+                                        {labels.CSP_Email_Domain_Error_Message}
+                                    </div>
                                 </div>
                             </div>
                         </div>

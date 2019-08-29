@@ -3122,6 +3122,13 @@ Payment required on receipt of this Payment Advice
         <value>Publication Countries</value>
     </labels>
 	<labels>
+        <fullName>CSP_Email_Domain_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Domain Error Message</shortDescription>
+        <value>* Add Domains without &quot;@&quot;.</value>
+    </labels>
+	<labels>
         <fullName>CSP_Error_Creating_Record</fullName>
         <language>en_US</language>
         <protected>false</protected>

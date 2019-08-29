@@ -22,7 +22,6 @@ import ISSP_No from '@salesforce/label/c.ISSP_No';
 import ISSP_Submit from '@salesforce/label/c.ISSP_Submit';
 import ISSP_Cancel from '@salesforce/label/c.ISSP_Cancel';
 
-
 import CSP_New_Email_Domain from '@salesforce/label/c.CSP_New_Email_Domain';
 import CSP_Success from '@salesforce/label/c.CSP_Success';
 
@@ -31,6 +30,8 @@ import CSP_Error_while_delete_record from '@salesforce/label/c.CSP_Error_while_d
 
 import CSP_Account_Domain_Created from '@salesforce/label/c.CSP_Account_Domain_Created';
 import CSP_Error_Creating_Record from '@salesforce/label/c.CSP_Error_Creating_Record';
+
+import CSP_Email_Domain_Error_Message from '@salesforce/label/c.CSP_Email_Domain_Error_Message';
 
 
 export default class PortalEmailDomainModal extends LightningElement {
@@ -48,6 +49,8 @@ export default class PortalEmailDomainModal extends LightningElement {
 
     @track domain = '';
 
+    @track hasError = false;
+
     labels = {
         Confirmation,
         ISSP_EMADOMVAL_RemoveConfirmMsg,
@@ -60,7 +63,8 @@ export default class PortalEmailDomainModal extends LightningElement {
         CSP_Record_Deleted,
         CSP_Error_while_delete_record,
         CSP_Account_Domain_Created,
-        CSP_Error_Creating_Record
+        CSP_Error_Creating_Record,
+        CSP_Email_Domain_Error_Message
     }
 
     connectedCallback() {
@@ -88,9 +92,11 @@ export default class PortalEmailDomainModal extends LightningElement {
     addDomain() {
         if (!this.isNewRecord) {
             this.showSpinner = true;
+            this.hasError = false;
             this.deleteAccount();
         } else {
             this.showSpinner = true;
+            this.hasError = false;
             this.createAccountDomain();
         }
     }
@@ -112,20 +118,29 @@ export default class PortalEmailDomainModal extends LightningElement {
     }
 
     createAccountDomain() {
-        const fields = {};
-        fields[NAME_FIELD.fieldApiName] = this.domain;
-        fields[ACCOUNT_FIELD.fieldApiName] = this.accountId;
-        const recordInput = { apiName: ACCOUNT_DOMAIN_OBJECT.objectApiName, fields };
-        createRecord(recordInput)
-            .then(account => {
-                this.accountId = account.id;
-                this.displayToast(this.labels.CSP_Success, this.labels.CSP_Account_Domain_Created, 'success');
-                this.closeModal();
-            })
-            .catch(error => {
-                this.displayToast(this.labels.CSP_Error_Creating_Record, error.body.message, 'error');
-                this.closeModal();
-            });
+        const domainLocal = this.domain.trim();
+
+        if (domainLocal.indexOf('@') > -1) {
+            this.showSpinner = false;
+            this.hasError = true;
+            this.template.querySelector('lightning-input').classList.add('slds-has-error');
+        } else {
+            const fields = {};
+            fields[NAME_FIELD.fieldApiName] = domainLocal;
+            fields[ACCOUNT_FIELD.fieldApiName] = this.accountId;
+            const recordInput = { apiName: ACCOUNT_DOMAIN_OBJECT.objectApiName, fields };
+            createRecord(recordInput)
+                .then(account => {
+                    this.accountId = account.id;
+                    this.displayToast(this.labels.CSP_Success, this.labels.CSP_Account_Domain_Created, 'success');
+                    this.closeModal();
+                })
+                .catch(error => {
+                    this.displayToast(this.labels.CSP_Error_Creating_Record, error.body.message, 'error');
+                    this.closeModal();
+                });
+        }
+
     }
 
     displayToast(title, message, variant) {
