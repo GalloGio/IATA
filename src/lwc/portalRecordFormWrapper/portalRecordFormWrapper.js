@@ -622,10 +622,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             this.isLoading = false;
             this.openRelocateAccount = true;
             this.relatedAccounts = JSON.parse(JSON.stringify(result));
-            
-            if(this.relatedAccounts === undefined || this.relatedAccounts === null || this.relatedAccounts.length === 0){
-                this.canRelocate = false;
-            }
         });
     }
 
