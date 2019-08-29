@@ -60,7 +60,7 @@ private class FinancialSecurityHandlerTest {
     }
 
     @isTest static void testAcknowledge() {
-        Financial_Security__c fs = [SELECT Id, Security_Status__c FROM Financial_Security__c];
+        Financial_Security__c fs = [SELECT Id, Security_Status__c, Send_FS_acknowledgment__c FROM Financial_Security__c limit 1];
         Test.startTest();
         fs.Send_FS_acknowledgment__c = true;
         update fs;
