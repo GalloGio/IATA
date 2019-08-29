@@ -7722,6 +7722,8 @@ public without sharing class ISSP_AMS_Accreditation {
             newCon.AddressCity__c = con.AddressCity__c;
             newCon.AddressPostcode__c = con.AddressPostcode__c;
             newCon.AddressCountry__c = con.AddressCountry__c;
+            newCon.Authorised_signatory__c = con.Authorised_signatory__c;
+            newCon.Agency_role__c = con.Agency_role__c;
 
             contactsToBeCreated.add(newCon);
         }
