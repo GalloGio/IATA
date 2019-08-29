@@ -638,21 +638,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
             getInvoices({ offset: offset, type: type }).then(result => {
                 this.isFetching = false;
-
-                /*if (result.length == 0) {
-                    this.invoicesEnded = true;
-
-                    if (type == 'IATA_OFFICE') {
-                        this.iataInvoicesLoaded = true;
-                        this.efInvoicesLoaded = false;
-                    } else {
-                        this.iataInvoicesLoaded = false;
-                        this.efInvoicesLoaded = true;
-                    }
-
-                    return;
-                }*/
-
                 this.invoicesOffset = offset + result.length;
                 let existingInvoices = offset != 0 ? JSON.parse(JSON.stringify(this.invoices)) : [];
                 let invoices = JSON.parse(JSON.stringify(result));

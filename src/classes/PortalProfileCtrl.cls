@@ -742,11 +742,6 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_No__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_Name__c',false,true,true));
 
-        //EDIT
-        //wrapperMap.get(editFields).add(new FieldWrapper('Invoice_Number__c',true,true,true));
-        //wrapperMap.get(editFields).add(new FieldWrapper('Invoice_Status__c',true,true));
-        //wrapperMap.get(editFields).add(new FieldWrapper('Total_Amount__c',true,true));
-
         return wrapperMap;
     }
 
