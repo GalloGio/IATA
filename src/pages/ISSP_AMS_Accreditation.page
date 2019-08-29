@@ -483,16 +483,19 @@
 
         function setArrowListeners() {
             $('[id$=rightList]').on('DOMNodeInserted', function(e) {
-                setTimeout( function() { 
-                    reRenderAccountsNoc();
-                }, 500);
+                multiSelectListAction();
             });
 
             $('[id$=rightList]').on('DOMNodeRemoved', function(e) {
-                setTimeout( function() { 
-                    reRenderAccountsNoc();
-                }, 500);
+                multiSelectListAction();
             });
+        }
+
+        function multiSelectListAction() {
+            setTimeout( function() { 
+                reRenderAccountsNoc();
+                checkSelectedAccounts();
+            }, 500);
         }
 
         function checkMCAECountry() {
@@ -578,6 +581,9 @@
                 if ($('[id$="typeOfChange"]').find("input")[1].checked) {
                     showCountryMultiSelection();
                     enableLocationQuestions();
+                    reRenderAccountsNoc();
+
+                    checkSelectedAccounts();
                 }
 
                 if ($('[id$="typeOfChange"]').find("input")[2].checked) {
@@ -591,6 +597,24 @@
                     if ({!isMCNewAEAccredited}) {
                         checkMCNoC();
                     }
+                }
+            }
+        }
+
+        function checkSelectedAccounts() {
+            if ($('[id$="typeOfChange"]').find("input")[1].checked) {
+
+                var countLeft = $('[id$=leftList]').first().children().length;
+                var countRight = $('[id$=rightList]').first().children().length;
+                
+                if (countLeft != 0 && countRight != 0) {
+                    $('[id$="LocationType"]').find("input")[1].disabled = true;
+                    $('[id$="LocationType"]').find("input")[0].checked = true;
+                    
+                    $('[id$="warningNotAllCountriesSelected"]').css('display', 'inline-block');
+                } else {
+                    $('[id$="LocationType"]').find("input")[1].disabled = false;
+                    $('[id$="warningNotAllCountriesSelected"]').css('display', 'none');
                 }
             }
         }
@@ -615,14 +639,14 @@
                 populateLegalAndSeparateFields();
                 enableDisableLegalName();
                 $('[id$=officetypelist]').prop('disabled', true);
+                
             }
 
-            if ({!isNoticeOfChange}) {
+            if ({!isNoticeOfChange} && {!isStep1}) {
                 $('[id$=nocFormQuestions]').first().insertAfter($('[id$=countrySelection').first());
-
-                if ({!isStep1}) {
-                    checkNoCFirstQuestion();
-                }
+                $('[id$="LocationType"]').find("input").next().append("&nbsp;");
+                $('[id$="warningNotAllCountriesSelected"]').first().insertAfter($('[id$="LocationType"]').find("input").next()[1]);
+                checkNoCFirstQuestion();
             }
         }
 
@@ -876,6 +900,7 @@
                                                         <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}" itemDisabled="{!newForm.Type_Of_Change__c == 'Change of Accreditation Type'}"/>
                                                         
                                                         <apex:selectOption itemValue="HO - All Branches" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_All_Branches_MC, $Label.ISSP_AMS_NoC_HE_All_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCNewAEAccredited)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
+                                                        <apex:image id="warningNotAllCountriesSelected" value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step1_Lang_Display_Help}" html-data-placement="right" html-data-toggle="tooltip" style="display: none;"/>
                                                         
                                                         <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_Some_Branches_MC, $Label.ISSP_AMS_NoC_HE_Some_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCNewAEAccredited)), AND(isMCNewAEAccredited, branchAccountCount > 0))}" itemDisabled="{!newForm.Type_Of_Change__c == 'Change of Accreditation Type'}"/>
                                                         
@@ -912,6 +937,7 @@
                                                 <apex:column value="{!hi.acc['IATACode__c']}"/>
                                                 <apex:column value="{!hi.acc['BillingCity']}"/>
                                                 <apex:column value="{!hi.acc['BillingState']}"/>
+                                                <apex:column headerValue="{!$Label.ISSP_Country}" value="{!hi.acc['IATA_ISO_Country__r.Name']}"/>
                                                 
                                             </apex:pageBlockTable>
                                             <apex:actionStatus id="blockEditing">
@@ -950,7 +976,7 @@
                                             <apex:outputLabel id="selectAllLabel" value="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}" style="font-weight: 100;"/>&nbsp;
 
                                             <apex:inputCheckBox id="selectAll" value="{!allCountriesSelected}" label="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}">
-                                                <apex:actionSupport event="onchange" action="{!selectAllCountries}" id="cbSAd" reRender="countryMultiSelection" oncomplete="reRenderAccountsNoc(); setArrowListeners();"/>
+                                                <apex:actionSupport event="onchange" action="{!selectAllCountries}" id="cbSAd" reRender="countryMultiSelection" oncomplete="reRenderAccountsNoc(); setArrowListeners(); checkSelectedAccounts();"/>
                                             </apex:inputCheckbox>
                                         </apex:outputPanel>
                                     </apex:outputPanel>

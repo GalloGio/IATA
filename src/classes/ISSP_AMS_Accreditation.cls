@@ -739,6 +739,14 @@ public without sharing class ISSP_AMS_Accreditation {
 
                 if ((isMultiCountryNewAE || isMultiCountryAccredittedAddingAEs()) && !String.isBlank(mcformCountryISO)) {
                     isocountry = fetchISOCountry(mcformCountryISO);
+
+                    if (applyLanguage == 'en_US') {
+                        amsCountryLabel = isocountry.Case_BSP_Country__c;
+                    } else if (applyLanguage == 'fr') {
+                        amsCountryLabel = isocountry.IATA_Country_FR__c;
+                    } else {
+                        amsCountryLabel = isocountry.IATA_Country_SP__c;
+                    }
                 }
 
                 newForm.HO_Account__c = vHQAccountId;
@@ -7592,7 +7600,7 @@ public without sharing class ISSP_AMS_Accreditation {
                                                                             Same_Legal_Entity_Agency_Form__c, Same_Legal_Entity_Agency_Account__c, Account_Name__c, Location_Type__c,
                                                                             Branch_Office_Country__r.ISO_Code__c, Trade_Name__c, ISSP_AMS_Legal_Status__c,
                                                                             SAAM_Case__r.Status, Same_Legal_Entity_Agency_Form__r.Status__c,
-                                                                            Previous_Postal_code__c, Previous_Street_Name_Number__c, Previous_City__c
+                                                                            Previous_Postal_code__c, Previous_Street_Name_Number__c, Previous_City__c, Full_Address__c
                                                                         FROM AMS_Pax_Accreditation_Form__c
                                                                         WHERE SAAM_Case__c = :newCase.Id
                                                                         ORDER BY Name ASC];
@@ -7714,6 +7722,8 @@ public without sharing class ISSP_AMS_Accreditation {
             newCon.AddressCity__c = con.AddressCity__c;
             newCon.AddressPostcode__c = con.AddressPostcode__c;
             newCon.AddressCountry__c = con.AddressCountry__c;
+            newCon.Authorised_signatory__c = con.Authorised_signatory__c;
+            newCon.Agency_role__c = con.Agency_role__c;
 
             contactsToBeCreated.add(newCon);
         }
