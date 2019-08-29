@@ -198,49 +198,40 @@ public without sharing class GDPR_Helper {
     
 
      public static String headerHtml() {
-        String str = '<div style="background-color: #1E32FA; margin-bottom: 30px; font-family: Arial, Helvetica, sans-serif;">'+
-        '<table style="color:white; font-size: 23px;font-weight: 600;">'+
-            '<tr>'+
-            '<td><img style="margin-right:15px;margin-left:40px;margin-top:15px;margin-bottom:15px;width:73px;height:50px;" src="'+Label.IATA_GDPR_White_Logo+'"/></td>'+
-            '<td><hr style="margin-right:15px;height:34px; width:1px;background-color:#A5ADFD;"/></td>'+
-            '<td><p style="font-size:23px;">Signup &amp; Privacy Portal <p></td>'+
-            '</tr>'+
-        '</table>'+
-        '</div>';
-        return str;
-    }
+         String str = '<table style="background-color: #1E32FA; width:100%;"><tr><td style="padding: 15px 40px;">'+
+                '<table style="color:white; font-family: Arial, Helvetica, sans-serif; font-size: 23px;font-weight: 600;">'+
+                 '<tr>'+
+                     '<td style="padding: 0;"><img width="73" height="50" src="'+Label.IATA_GDPR_White_Logo+'"/></td>'+
+                     '<td style="border-left: 2px solid white; padding-left: 20px; width: 100%;">Signup &amp; Privacy Portal</td>'+
+                 '</tr>'+
+                 '</table>'+
+             '</td></tr></table>';
+         return str;
+     }
 
     public static String footerHtml() {
-       String str = '<div style="background-color: #535151; margin-top: 30px; font-family: Arial, Helvetica, sans-serif;">'+
-        '<table style="color:white; font-size: 23px; width:100%;">'+
+        String str = '<table style="background-color: #535151; color:white; font-family: Arial, Helvetica, sans-serif; font-size: 23px; width:100%; padding: 15px 40px">'+
             '<tr>'+
-                '<td style="width:20%"><img style="margin-right:15px;margin-left:40px;margin-top:15px;margin-bottom:15px;width:73px;height:50px;" src="'+Label.IATA_GDPR_White_Logo+'" /></td>'+
-                '<td colspan="2" style="width:80%">Our mission is to represent, lead and serve the airline industry</td>'+            
+                '<td style="width:20%"><img width="73" height="50" src="'+Label.IATA_GDPR_White_Logo+'" /></td>'+
+                '<td colspan="2">Our mission is to represent, lead and serve the airline industry</td>'+            
             '</tr>'+
-            '<tr>'+
-                '<td style="width:100%;" colspan="3">'+
-                    '<hr style="margin-right:40px; margin-left:40px;"/>'+
+
+            '<tr><td colspan="3"><hr/></td></tr>'+
+
+            '<tr >'+
+                '<td style="width:20%; text-align:center;">'+
+                    '<span><a style="font-size:15px; text-decoration: none; color:#ffffff;" href="https://www.iata.org" target="_blank">www.IATA.org</a></span>'+
+                '</td>'+
+                '<td style="width:60%; text-align:center;">'+
+                    '<span style="font-size:15px;">© International Air Transportation Association (IATA). All rights reserved.</span>'+
+                '</td>'+
+                '<td style="width:20%; text-align:center;">'+
+                    '<a style="font-size:15px; text-decoration: none; color:#ffffff;" class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">Privacy policy</a>'+
                 '</td>'+
             '</tr>'+
-            '<tr >'+
             
-            '<td style="width:20%; text-align:center;">'+
-                '<span><a style="font-size:15px; text-decoration: none; color:#ffffff;" href="https://www.iata.org" target="_blank">www.IATA.org</a></span>'+
-            '</td>'+
-            '<td style="width:60%; text-align:center;">'+
-                '<span style="font-size:15px;">© International Air Transportation Association (IATA). All rights reserved.</span>'+
-            '</td>'+
-
-            '<td style="width:20%; text-align:center;">'+
-                '<a style="font-size:15px; text-decoration: none; color:#ffffff;" class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">Privacy policy</a>'+            
-            '</td>'+
-            
-          '</tr>'+
-
-        '</table>'+
-        '</div>';
+            '</table>';
         return str;
-    }
 
     public static void sendEmail(String email, String htmlBody) {
         OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'IATA Noreply'];
@@ -254,29 +245,29 @@ public without sharing class GDPR_Helper {
 
     public static void sendAccessEmailUnknown(String email, String link){
         String htmlBody = '<html>'+
-                            '<body>'+
-                                headerHtml()+
-                                'Thank you for your interest in IATA.<br/>'+ 
-                                'Please <a href="'+link+'">follow this link</a> to access our Signup & Privacy portal.<br/><br/>'+
-                                'All the best,<br/>'+
-                                'The IATA Team'+
-                                    footerHtml()+
-                            '</body>'+
-                            '</html>';  
+                '<body>'+
+                    headerHtml()+
+                    '<p style="margin: 30px 0">Thank you for your interest in IATA.<br/>'+ 
+                    'Please <a href="'+link+'">follow this link</a> to access our Signup & Privacy portal.<br/><br/>'+
+                    'All the best,<br/>'+
+                    'The IATA Team</p>'+
+                    footerHtml()+
+                '</body>'+
+            '</html>';   
         sendEmail(email, htmlBody);
     }
 
     public static void sendAccessEmail(String email, String link){
         String htmlBody = '<html>'+
-                            '<body>'+
-                                headerHtml()+
-                                'Thank you for your interest in IATA.<br/>'+ 
-                                'Please <a href="'+link+'">follow this link</a>  to access our Signup & Privacy portal.<br/><br/>'+
-                                'All the best,<br/>'+
-                                'The IATA Team'+
-                                footerHtml()+
-                            '</body>'+
-                            '</html>';  
+                '<body>'+
+                    headerHtml()+
+                    '<p style="margin: 30px 0">Thank you for your interest in IATA.<br/>'+ 
+                    'Please <a href="'+link+'">follow this link</a> to access our Signup & Privacy portal.<br/><br/>'+
+                    'All the best,<br/>'+
+                    'The IATA Team</p>'+
+                    footerHtml()+
+                '</body>'+
+            '</html>';  
 
          sendEmail(email, htmlBody);
     }
@@ -286,11 +277,11 @@ public without sharing class GDPR_Helper {
         String htmlBody = '<html>'+
                             '<body>'+
                                 headerHtml()+
-                                'Welcome to IATA<br/><br/>'+
+                                '<p style="margin: 30px 0">Welcome to IATA<br/><br/>'+
                                 'Thank you for registering to the IATA Signup & Privacy Portal.<br/><br/>'+
                                 'Please click on the following <a href="'+link+'">link</a> to access the Portal.<br/><br/>'+
                                 'Best regards,<br/>'+
-                                'IATA Team'+
+                                'IATA Team</p>'+
                                 footerHtml()+
                             '</body>'+
                             '</html>';  
@@ -302,13 +293,13 @@ public without sharing class GDPR_Helper {
         String htmlBody = '<html>'+
                             '<body>'+
                                 headerHtml()+
-                                'Welcome to IATA<br/><br/>'+ 
+                                '<p style="margin: 30px 0">Welcome to IATA<br/><br/>'+ 
                                 'Thank you for registering to the IATA Signup & Privacy Portal, your one place to:<br/>'+
                                 '- Manage Your Profile;<br/>'+
                                 '- Manage Your Subscriptions (newsletters, products and services);<br/>'+
                                 '- Manage Your Interests for Our Products & Services (events, training, publications);<br/><br/>'+                                
                                 'Best regards,<br/>'+
-                                'IATA Team'+
+                                'IATA Team</p>'+
                                     footerHtml()+
                             '</body>'+
                             '</html>';  
@@ -319,13 +310,13 @@ public without sharing class GDPR_Helper {
         String htmlBody = '<html>'+
                             '<body>'+
                                 headerHtml()+
-                                'Dear user,<br/><br/>'+ 
+                                '<p style="margin: 30px 0">Dear user,<br/><br/>'+ 
                                 'We confirm that your modifications of your subscriptions and interests have been taken into account.<br/><br/>';
                                 if(optout) {
                                     htmlBody += 'You decided to unsubsribe from all IATA communication. You will no longer receive any email from our service.<br/><br/>';
                                 }
                                 htmlBody +='Best regards,<br/>'+
-                                'IATA Team'+
+                                'IATA Team</p>'+
                                 footerHtml()+
                             '</body>'+
                             '</html>';  
