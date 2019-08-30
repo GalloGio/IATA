@@ -44,7 +44,7 @@ import ISSP_ANG_GenericError from '@salesforce/label/c.ISSP_ANG_GenericError';
 import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
 import PKB2_js_error from '@salesforce/label/c.PKB2_js_error';
 import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
-
+import csp_SearchNotPerformed from '@salesforce/label/c.csp_SearchNotPerformed';
 // Import standard salesforce labels
 import csp_caseNumber from '@salesforce/schema/Case.CaseNumber';
 import csp_caseSubject from '@salesforce/schema/Case.Subject';
@@ -90,7 +90,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         ISSP_ANG_GenericError,
         IDCard_FillAllFields,
         PKB2_js_error,
-        CSP_NoSearchResults
+        CSP_NoSearchResults,
+        csp_SearchNotPerformed
     }
 
     //spinner controller
@@ -300,16 +301,16 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         getProfile()
             .then(result => {
                 this.agentProfile = JSON.parse(JSON.stringify(result)).includes('ISS Portal Agency');
-                if (!JSON.parse(JSON.stringify(result)).includes('Admin')) {
-                    this.setPortalUserIATACode();
-                }
+				if(this.agentProfile === true) 
+					this.setPortalUserIATACode();
             });
     }
 
     setPortalUserIATACode() {
         getContact()
             .then(result => {
-                this.singleresult = this.relatedAccounts.find(x => x.id === JSON.parse(JSON.stringify(result)).Account.Id);
+                let contactResults = JSON.parse(JSON.stringify(result));
+                this.singleresult = this.relatedAccounts.filter(x => x.id === contactResults.AccountId);
             });
     }
 
@@ -345,8 +346,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             .catch((error) => {
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: 'Search could not be performed',
-                        message: 'An error occured. Please refresh the page or contact administration',
+                        title: this.label.csp_SearchNotPerformed,
+                        message: this.label.ISSP_ANG_GenericError,
                         variant: 'error'
                     })
                 );
@@ -366,8 +367,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             .catch((error) => {
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: 'Search could not be performed',
-                        message: 'An error occured. Please refresh the page or contact administration',
+                        title: this.label.csp_SearchNotPerformed,
+                        message: this.label.ISSP_ANG_GenericError,
                         variant: 'error'
                     })
                 );
