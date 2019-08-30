@@ -22,13 +22,15 @@ public class CustomMetadataCallbackTest {
               
         System.runAs(usr) {
             Test.startTest();
-            Metadata.DeployResult result = new Metadata.DeployResult();
-            result.numberComponentErrors = 1;
-            Metadata.DeployCallbackContext context = new Metadata.DeployCallbackContext();
-
-            CustomMetadataCallback c = new CustomMetadataCallback();
-
-            c.handleResult(result,context);
+            List<CustomMetadataCallback.CustomMetadataType> cmdtDTLIST = new List<CustomMetadataCallback.CustomMetadataType>();
+            CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType();
+            cmdtDT.strMDTAndRecord = 'PortalFAQs__mdt.' + 'x' + 'NameTest';
+            cmdtDT.strMasterLabel = '' + 'x' + 'NameTest';
+            cmdtDT.fieldLIST = new List<String>{'DataCategoryName__c', 'FAQsStructure__c', 'DataCategoryLabel_en_US__c'};
+            cmdtDT.valueLIST = new List<Object>{'' + 'NameTest', true, '' + 'Name Test'};
+            cmdtDTLIST.add(cmdtDT);
+            
+            CustomMetadataCallback.Upsert_MDT_Value(cmdtDTLIST);
             Test.stopTest();
         }
 
