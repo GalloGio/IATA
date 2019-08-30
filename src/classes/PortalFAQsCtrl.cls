@@ -7,6 +7,122 @@ public with sharing class PortalFAQsCtrl {
         return convertStructure(DescribeDataCategoryGroupStructures.getFaqsStructure());               
     }
 
+    @AuraEnabled(cacheable=false)    
+    public static List<DescribeDataCategoryGroupStructures.FAQCategoryWrapper> getFaqsStructureForEditing() {
+        return DescribeDataCategoryGroupStructures.getFAQDataCategorySetupStructure();               
+    }
+
+    @AuraEnabled(cacheable=false)    
+    public static List<PortalFAQs__mdt> getAllFAQsMetadata() {
+        return DescribeDataCategoryGroupStructures.getAllFAQs();               
+    }
+
+    @AuraEnabled(cacheable=false)
+    public static void updateMetadata(String strNewMetadata){
+        List<PortalFAQsCTRL.MetadataWrapper> lstNewMetadata =  (List<MetadataWrapper>)JSON.deserialize(strNewMetadata , List<PortalFAQsCTRL.MetadataWrapper>.class);
+
+        List<PortalFAQs__mdt> lstCurrentMetadata = DescribeDataCategoryGroupStructures.getAllFAQs();
+        List<DescribeDataCategoryGroupStructures.FAQCategoryWrapper> lstFAQsStructure = DescribeDataCategoryGroupStructures.getFAQDataCategorySetupStructure();
+        String userLanguage = UserInfo.getLanguage();
+
+        List<CustomMetadataCallback.CustomMetadataType> customMetadataToUpsert = new List<CustomMetadataCallback.CustomMetadataType>();
+
+        for(PortalFAQsCTRL.MetadataWrapper metaAux : lstNewMetadata){
+
+            PortalFAQs__mdt metaFound = null;
+
+            for(PortalFAQs__mdt currentMetaAux : lstCurrentMetadata){                
+                if( (!String.isEmpty(metaAux.categoryName) && String.isEmpty(metaAux.topicName) && String.isEmpty(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName) ||
+                    (!String.isEmpty(metaAux.categoryName) && !String.isEmpty(metaAux.topicName) && String.isEmpty(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName && currentMetaAux.DataTopicName__c == metaAux.topicName) || 
+                    (!String.isEmpty(metaAux.categoryName) && !String.isEmpty(metaAux.topicName) && !String.isEmpty(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName && currentMetaAux.DataTopicName__c == metaAux.topicName && currentMetaAux.DataSubtopicName__c == metaAux.subtopicName)
+                ){
+                    metaFound = currentMetaAux; 
+                    break;
+                }
+            }
+
+
+            if(metaFound != null){
+                // update just the order and active fields, because the other are the same
+                CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType(); 
+                cmdtDT.strMDTAndRecord = metaFound.DeveloperName;
+                cmdtDT.strMasterLabel = metaFound.MasterLabel;
+                cmdtDT.fieldLIST = new List<String>{ 'Order__c', 'Active__c', 'Label'};
+                cmdtDT.valueLIST = new List<Object>{ Integer.valueof(metaAux.order), true, metaFound.Label};
+                customMetadataToUpsert.add(cmdtDT);
+            }else{
+                //insert new meta
+                
+                //new category
+                if(!String.isEmpty(metaAux.categoryName) && String.isEmpty(metaAux.topicName) && String.isEmpty(metaAux.subtopicName)){
+                    
+                    String hashBase64SHA1 = EncodingUtil.convertToHex(Crypto.generateDigest('SHA1',Blob.valueOf(metaAux.categoryName)));
+                    String label = DescribeDataCategoryGroupStructures.getLabelFromDescribe('' + metaAux.categoryName, null, null, 'category', lstFAQsStructure );
+
+                    CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType(); 
+                    cmdtDT.strMDTAndRecord = 'PortalFAQs__mdt.' + 'x' + hashBase64SHA1.substring(0,34);
+                    cmdtDT.strMasterLabel = '' + 'x' + hashBase64SHA1.substring(0,34);
+                    cmdtDT.fieldLIST = new List<String>{'DataCategoryName__c', 'FAQsStructure__c', 'Order__c', 'Active__c', 'DataCategoryLabel_'+ userLanguage + '__c'};
+                    cmdtDT.valueLIST = new List<Object>{'' + metaAux.categoryName, true, Integer.valueof(metaAux.order), true, '' + label};
+                    customMetadataToUpsert.add(cmdtDT);
+
+                }
+
+                //new topic
+                if(!String.isEmpty(metaAux.categoryName) && !String.isEmpty(metaAux.topicName) && String.isEmpty(metaAux.subtopicName)){
+                    
+                    String hashBase64SHA1 = EncodingUtil.convertToHex(Crypto.generateDigest('SHA1', Blob.valueOf(metaAux.categoryName + metaAux.topicName)));
+                    String label = DescribeDataCategoryGroupStructures.getLabelFromDescribe('' + metaAux.categoryName, '' + metaAux.topicName, null, 'topic', lstFAQsStructure );
+
+                    CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType(); 
+                    cmdtDT.strMDTAndRecord = 'PortalFAQs__mdt.' + 'x' + hashBase64SHA1.substring(0,34);
+                    cmdtDT.strMasterLabel = '' + 'x' + hashBase64SHA1.substring(0,34);
+                    cmdtDT.fieldLIST = new List<String>{'DataCategoryName__c', 'DataTopicName__c', 'FAQsStructure__c', 'Order__c', 'Active__c', 'DataCategoryLabel_'+ userLanguage + '__c'};
+                    cmdtDT.valueLIST = new List<Object>{'' + metaAux.categoryName, '' + metaAux.topicName, true, Integer.valueof(metaAux.order), true, '' + label};
+                    customMetadataToUpsert.add(cmdtDT);
+
+                }
+
+                //new subtopic
+                if(!String.isEmpty(metaAux.categoryName) && !String.isEmpty(metaAux.topicName) && !String.isEmpty(metaAux.subtopicName)){
+                    
+                    String hashBase64SHA1 = EncodingUtil.convertToHex(Crypto.generateDigest('SHA1',Blob.valueOf(metaAux.categoryName + metaAux.topicName + metaAux.subtopicName)));
+                    String label = DescribeDataCategoryGroupStructures.getLabelFromDescribe('' + metaAux.categoryName, '' + metaAux.topicName, '' + metaAux.subtopicName, 'subtopic', lstFAQsStructure );
+
+                    CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType(); 
+                    cmdtDT.strMDTAndRecord = 'PortalFAQs__mdt.' + 'x' + hashBase64SHA1.substring(0,34);
+                    cmdtDT.strMasterLabel = '' + 'x' + hashBase64SHA1.substring(0,34);
+                    cmdtDT.fieldLIST = new List<String>{'DataCategoryName__c', 'DataTopicName__c', 'DataSubtopicName__c', 'FAQsStructure__c', 'Order__c', 'Active__c', 'DataCategoryLabel_'+ userLanguage + '__c'};
+                    cmdtDT.valueLIST = new List<Object>{'' + metaAux.categoryName, '' + metaAux.topicName,'' + metaAux.subtopicName, true, Integer.valueof(metaAux.order), true, '' + label};
+                    customMetadataToUpsert.add(cmdtDT);
+
+                }
+
+
+            }
+        }
+
+        CustomMetadataCallback.Upsert_MDT_Value(customMetadataToUpsert);
+
+
+
+    }
+
+
+    public class MetadataWrapper{
+        @AuraEnabled
+        public String categoryName {get; set;}
+        @AuraEnabled
+        public String topicName {get; set;}
+        @AuraEnabled
+        public String subtopicName {get; set;}
+        @AuraEnabled
+        public String order {get; set;}
+
+        public MetadataWrapper(){}
+
+    }
+
     private static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> convertStructure(List<DescribeDataCategoryGroupStructures.FAQCategoryWrapper> lstToConvert){
         List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstToReturn = new List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
 

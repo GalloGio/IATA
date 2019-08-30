@@ -50,19 +50,21 @@
 
                     <!-- RELATED ARTICLES -->
                     <div class="slds-p-vertical_x-large">
-                        <c-portal-f-a-q-related-article article={articleInfo}></c-portal-f-a-q-related-article>
+                        <c-portal-f-a-q-related-article article={articleInfo} guest-user={guestUser}></c-portal-f-a-q-related-article>
                     </div>
                     <!-- REACHS US BANNER -->
                     <div class="slds-p-vertical_x-large">
-                        <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic}></c-portal-f-a-q-reach-us-banner>
-                    </div> 
+                        <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic}>
+                        </c-portal-f-a-q-reach-us-banner>
+                    </div>
                 </div>
             </div>
         </template>
         <template if:false={hasArticles}>
             <!-- REACHS US BANNER -->
             <div class="slds-p-vertical_x-large">
-                <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic}></c-portal-f-a-q-reach-us-banner>
+                <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic}>
+                </c-portal-f-a-q-reach-us-banner>
             </div>
         </template>
     </div>

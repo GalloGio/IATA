@@ -1,0 +1,57 @@
+.THIS .icon-logo img{
+    width: 96px;
+       float: left;
+   }
+   .THIS .widthLimiter h2{
+       max-width: 1180px;
+       margin: 13px auto 0;
+       font-size: 35px;
+       color: #fff;
+       font-weight: normal;
+       font-family: "HelveticaNeueW01-Thin", "Helvetica Neue LT W10_35 Thin", Arial;
+       padding-bottom: 30px;
+   } 
+   
+   .THIS .ft{
+       height:2px;
+       color:#828282;
+       background-color:#828282
+   }
+   
+   .THIS .ft .footerSeparator{
+       height:2px;
+       color:#828282;
+       background-color:#828282
+   }
+   .THIS #ft{
+       clear:both;
+       padding:0;
+       background-color:#535151;
+       color:#fff
+   }
+   
+   .THIS .widthLimiter{width:100%;max-width:1180px;margin-left:auto;margin-right:auto;display:block;overflow:hidden}
+   
+   .THIS #ft .header .icon-logo{font-size:48px;float:left;margin-left:5px;margin-right:40px}
+   .THIS #ft .externalLinks{margin:0 auto;float:left;padding-top:20px}
+   .THIS #ft .externalLinks li{display:inline-block;padding:20px 0;color:white;font-size:16px;font-weight:bold}
+   .THIS #ft .externalLinks li:first-child{padding-right:140px}
+   .THIS #ft .externalLinks a{font-size:14px;font-weight:normal;line-height:20px}
+   .THIS #ft .socialLinks{float:right;padding-top:40px}
+   .THIS #ft .socialLinks li{float:left;padding:0 35px}
+   .THIS #ft .copyright{max-width:1180px;font-size:14px;height:20px;padding:100px 0 20px;color:white;float: left;width: 100%;}
+   .THIS #ft .copyright p{float:left}
+   .THIS #ft .copyright ul{float:right}
+   .THIS #ft .copyright ul li{display:inline-block;border-left:1px solid #fff;padding:0 10px}
+   .THIS #ft .copyright ul li:first-child{border-left:0}
+   .THIS #ft .header {
+       background-color: #535151;
+       width: 100%;
+       height: 60px;
+       padding-top: 30px;
+       display: inline-table;
+   }
+   .THIS #ft a:link, .THIS #ft a:visited {
+       color: #fff;
+       text-decoration: none;
+   }
