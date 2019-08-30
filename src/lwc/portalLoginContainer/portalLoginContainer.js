@@ -6,7 +6,7 @@ import { LightningElement, track, api } from 'lwc';
 
 export default class PortalLoginContainer extends LightningElement {
 
-    @api forcerefresh = false;
+    @api preventrefresh = false;
 
     handleLanguageChange(event){
         this.dispatchEvent(new CustomEvent('changelanguage',{detail : event.detail}));

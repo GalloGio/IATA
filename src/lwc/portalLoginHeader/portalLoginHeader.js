@@ -12,7 +12,7 @@ export default class PortalLoginHeader extends LightningElement {
     @track selectedLang = 'en_US';
     @track langOptions = [];
     @track loadingLangs = true;
-    @api forcerefresh = false;
+    @api preventrefresh = false;
 
     connectedCallback(){
         var pageParams = getParamsFromPage();
@@ -51,7 +51,7 @@ export default class PortalLoginHeader extends LightningElement {
             search += 'language='+this.selectedLang;
         }
 
-        if(this.forcerefresh == "true"){
+        if(this.preventrefresh == "false" || this.preventrefresh == false){
             location.search = search;
         }else{
             this.dispatchEvent(new CustomEvent('languagechange',{detail : this.selectedLang}));
