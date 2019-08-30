@@ -118,8 +118,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         }
     }
 
-    selectedCustomerType = null;
-    @track
+    @track selectedCustomerType = null;
 
     @track selectedMetadataCustomerType = {};
 
@@ -386,12 +385,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                                     this.displayTermsAndUsage = true;
                                     this.isEmailFieldReadOnly = true;
                                     this.isLoading = false;
-                                    this._initializePhoneInput();
                                 }
                             }else{
                                 if(userInfo.isEmailAddressAvailable == true){
-                                   //todo: show form
-                                   this.displayContactForm = true;
+                                    //todo: show form
+                                    this.displayContactForm = true;
                                     this.isEmailFieldReadOnly = true;
                                     this.isLoading = false;
                                     this._initializePhoneInput();
@@ -744,7 +742,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             submitButton.classList.add('containedButtonDisabled');
             submitButton.disabled = true;
         }
-        this._initializePhoneInput();
+        if(this.displayContactForm){
+            this._initializePhoneInput();
+        }
     }
 
     async _renderEmailInput(){

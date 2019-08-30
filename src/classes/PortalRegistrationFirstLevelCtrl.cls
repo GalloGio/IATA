@@ -17,6 +17,27 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         public List<CSP_Utils.PickListWrapper> languageList{get;set;}
     }
 
+    public class RegistrationConfirmationConfig{
+        @AuraEnabled
+        public Map<String,String> contactLabelMap{get;set;}
+        @AuraEnabled
+        public Map<String,String> accountLabelMap{get;set;}
+        @AuraEnabled
+        public CountryInformation countryInfo{get;set;}
+        @AuraEnabled
+        public List<CSP_Utils.PickListWrapper> languageList{get;set;}
+        @AuraEnabled
+        public Contact contact{get;set;}
+        @AuraEnabled
+        public string selectedCustomerType{get;set;}
+        @AuraEnabled
+        public string sector{get;set;}
+        @AuraEnabled
+        public string category{get;set;}
+        @AuraEnabled
+        public string extraChoice{get;set;}
+    }
+
     public class RegistrationResult{
         @AuraEnabled
         public Boolean isSuccess{get;set;}
@@ -118,6 +139,37 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         }
     }
 
+    @AuraEnabled//(cacheable=true)
+    public static RegistrationConfirmationConfig getRegistrationConfirmationConfig(){
+        RegistrationConfirmationConfig config = new RegistrationConfirmationConfig();
+
+        User loggedUser = CSP_Utils.getLoggedUser();
+        List<Contact> contactList = [SELECT Id, Email, FirstName, LastName, Phone, Preferred_Language__c, ISO_Country__c, Account.Sector__c, Account.Category__c FROM Contact WHERE Id =:loggedUser.contactId LIMIT 1];
+        if(!contactList.isEmpty()){
+            config.contact = contactList.get(0);
+            config.selectedCustomerType = GCS_CustomerType.getCustomerTypeFromSectorAndCategory(config.contact.Account.Sector__c, config.contact.Account.Category__c);
+            GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType = getMetadataCustomerType(config.selectedCustomerType);
+            if(selectedMetadataCustomerType.Type__c == 'Category'){
+                config.category = selectedMetadataCustomerType.DeveloperName;
+                config.sector = selectedMetadataCustomerType.Parent__c;
+                selectedMetadataCustomerType = getMetadataCustomerType(selectedMetadataCustomerType.Parent__c);
+                if(selectedMetadataCustomerType.Parent__c == 'Other'){
+                    config.extraChoice = config.sector;
+                    config.sector = 'Other';
+                }
+
+            }else{
+                //todo check for general public..
+            }
+        }
+        config.contactLabelMap = getContactLabels();
+        config.accountLabelMap = getAccountLabels();
+        config.countryInfo = getISOCountries();
+        config.languageList = CSP_Utils.getCommunityAvailableLanguages(null,null);
+        return config;
+
+    }
+
 
     public class UserInformation {
         @AuraEnabled
@@ -134,7 +186,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     @AuraEnabled
     public static UserInformation getUserInformationFromEmail(String email){
-        system.debug('email: ' + email);
         UserInformation userInfo = new UserInformation();
         List<Contact> conList = returnExistingContact(email); // Since the email is unique we didn't expect to receive more than one email
         userInfo.hasExistingContact = true ? conList.size() > 0 : false;
@@ -146,7 +197,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         List<User> userList = returnExistingUser(contactIds, email);
         userInfo.hasExistingUser = true ? userList.size() > 0 :false;
         userInfo.isEmailAddressAvailable = checkIsUsernameIsAvailableInGlobalSalesforce(email, conList);
-        system.debug('userInfo: ' + userInfo);
         return userInfo;
     }
 
@@ -166,18 +216,14 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {
         // Method to test if another user existin in all SF instances to avoid having an error at the end of the process
-        system.debug('check username availability');
         Savepoint sp = Database.setSavepoint();
         List<Profile> profileList = [SELECT Id, Name FROM Profile];
-        system.debug('profileList: ' + profileList);
-        system.debug('ProfileId: ' + [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id);
         map<ID, Profile> profileMap = new map<ID, Profile> (
         [SELECT Id, Name,
                 UserLicenseId,
                 UserLicense.Name
         FROM Profile
         WHERE (UserLicense.Name = 'Partner Community' OR UserLicense.Name = 'Identity')]);
-        system.debug('profileMap: ' + profileMap);
 
         try {
             User testingUser = new User(LastName = 'DUMMY',
@@ -194,7 +240,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                     LocaleSidKey = 'en_US',
                     License_Cost_center__c = 'ISF005CH01'
             );
-            system.debug(testingUser);
             insert testingUser;
 
             // Rollback to avoid creation of the user
@@ -216,10 +261,16 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
         try{
 
-            system.debug('registrationForm: ' + registrationForm);
             Map<String, Object> inputMap = (Map<String, Object>)JSON.deserializeUntyped(registrationForm);
             GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType = (GCS_Customer_Type_For_Registration__mdt) JSON.deserialize(customerType, GCS_Customer_Type_For_Registration__mdt.class);
-            system.debug('selectedMetadataCustomerType: '+ selectedMetadataCustomerType);
+
+            //cannot proceed unless agreed with terms and usage
+            boolean terms = boolean.valueOf(inputMap.get('termsAndUsage'));
+            if(terms != true){
+                result.isSuccess = false;
+                result.message = 'Missing required fields';
+                return result;
+            }
 
             RegistrationParameters params = new RegistrationParameters();
             params.email     = (inputMap.get('email') != null) ? string.valueOf(inputMap.get('email')) : '';
@@ -231,10 +282,14 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             params.contactId = contactId != null ? contactId : '';
             params.accountId = accountId != null ? accountId : '';
 
-            if(params.email.length() < 1 || params.firstName.length() < 1 || params.lastName.length() < 1){
-                result.isSuccess = false;
-                result.message = 'Missing required fields';
-                return result;
+
+
+            if(params.contactId.length() < 1){
+                if(params.email.length() < 1 || params.firstName.length() < 1 || params.lastName.length() < 1){
+                    result.isSuccess = false;
+                    result.message = 'Missing required fields';
+                    return result;
+                }
             }
 
             //Find Bucket Account
@@ -243,7 +298,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 system.debug('bucketAccount: ' + bucketAccount);
                 if(bucketAccount == null){
                     result.isSuccess = false;
-                    result.message = 'Could not find bucket account';
+                    result.message = 'Failed to find bucket account';
                     return result;
                 }else{
                     params.accountId = bucketAccount.Id;
@@ -268,9 +323,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             //Create User
             OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
-            NewUserDetail usr = createNewUser(con, string.valueOf(mode), params.language);
+            NewUserDetail usr = createNewUser(con, string.valueOf(mode), params.language, null);
 
-            system.debug('userId: ' + usr.userId);
             if(usr.userId!= null) {
                 Database.rollback(sp);
                 result.isSuccess = true;
@@ -278,7 +332,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 result.userName = usr.userName;
 
                 string oneTimeUrl = generateOneTimeUrl(params);
-                system.debug('oneTimeUrl: ' + oneTimeUrl);
 
                 Map<String, String> emailMap = generateEmailBodyParams(params, oneTimeUrl);
 
@@ -304,17 +357,16 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
     }
 
     @AuraEnabled
-    public static RegistrationResult register(RegistrationParameters params){
+    public static RegistrationResult register(RegistrationParameters params, string password){
 
         RegistrationResult result = new RegistrationResult();
         Savepoint sp = Database.setSavepoint();
-        system.debug('params: ' + params);
 
         try{
 
             //Create or find Contact
             Contact con;
-            if(params.contactId != null){
+            if(params.contactId == null || params.contactId == ''){
                 con = createContact(params);
             }else{
                 con = [SELECT Id, AccountId, firstName, LastName, Phone, Email FROM Contact WHERE ID=: params.contactId LIMIT 1];
@@ -328,7 +380,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             //Create User
             OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
-            NewUserDetail usr = createNewUser(con, string.valueOf(mode), params.language);
+            NewUserDetail usr = createNewUser(con, string.valueOf(mode), params.language, password);
 
             system.debug('userId: ' + usr.userId);
             if(usr.userId != null) {
@@ -370,7 +422,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         String accountQuery = '';
         accountQuery +='SELECT Id, Sector__c, Category__c';
         accountQuery +=' FROM Account';
-        accountQuery +=' WHERE Id != null';
+        accountQuery +=' WHERE Id != null AND Is_General_Public_Account__c = true';
 
 
         if(!String.isEmpty(recordType)) {
@@ -392,11 +444,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
         List<Account> accs = new List<Account>();
 
-        System.debug('Account query: '+accountQuery);
-
         accs = Database.query(accountQuery);
-
-        System.debug('Found accounts : '+accs.size());
 
         if(accs.isEmpty()){
             //todo: create bucket account? to be confirmed by IATA
@@ -435,11 +483,9 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             con.User_Portal_Status__c = 'Pending';
             //todo: perform field check before insert
             DataBase.SaveResult sr = DataBase.Insert(con);
-            system.debug('PortalRegistrationFirstLevelCtrl -> Contact Save Result: ' + sr);
             if(sr.isSuccess() == false){
                 for(Database.Error objErr : sr.getErrors()) {
-                    System.debug('The following error has occurred.');
-                    System.debug(objErr.getStatusCode() + ': ' + objErr.getMessage());
+                    System.debug('Portal Level 1 registration - createNewContact: ' + objErr.getStatusCode() + ': ' + objErr.getMessage());
                 }
                 return null;
             }else{
@@ -453,7 +499,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     }
 
-    public static NewUserDetail createNewUser(Contact con, string community, string lang){
+    public static NewUserDetail createNewUser(Contact con, string community, string lang, string password){
 
         NewUserDetail usr = new NewUserDetail();
         usr.userId = null;
@@ -462,14 +508,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         try {
 
             String accountId = '';
-            string log;
             // prepare new User
-            string UID = Comm_User_Helper.NewGuid();
             string userName = ISSP_Utilities.buildPortalUserName(con.email);
             User u = new User();
-            //u.Username = con.email;
             u.Community__c = community;
-            //u.UID__c = UID;
             u.Username =  userName;//AEF
             u.Email = con.email;
             u.FirstName = con.firstName;
@@ -480,45 +522,27 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             if (con.lastName.length() > 3)
                 thisNickname = con.lastName.substring(0,3)+Datetime.now().formatLong();
             else
-                    thisNickname = con.lastName+Datetime.now().formatLong();
-            system.debug('NICKNAME 1: ' + thisNickname);
-            system.debug('NICKNAME 1 length: ' + thisNickname.length());
+                thisNickname = con.lastName+Datetime.now().formatLong();
             if (thisNickname.length() > 40){
-                system.debug('more than 40');
                 thisNickname = thisNickname.left(40);
             }
             else{
-                system.debug('not more than 40');
                 thisNickname = thisNickname;
             }
-            system.debug('NICKNAME 2: ' + thisNickname);
-            system.debug('NICKNAME 2 length: ' + thisNickname.length());
             u.CommunityNickname = thisNickname;
 
             string profileName = 'ISS Portal (Partner)';
-
-
-            system.debug('profileName: ' + profileName);
             u.ProfileId = [SELECT Id FROM Profile WHERE Name =: profileName LIMIT 1].Id;
-            system.debug('u.ProfileId: ' + u.ProfileId);
 
-            //throw new transformationException('u.ProfileId: ' + u.ProfileId);
-
-            string password;
-
-
-            if(con.accountId != null)
+            if(con.accountId != null){
                 accountId = con.accountId;
-            password = Comm_User_Helper.generateRandomString(6) + '1a';
+            }
 
-            system.debug('u: ' + u);
-            system.debug('password: ' + password);
-            system.debug('accountId: ' + accountId);
-
+            if(password == null){
+                password = Comm_User_Helper.generateRandomString(6) + '1a';
+            }
 
             if (lang != null && lang != ''){
-                system.debug('LANG IN CREATE USER: ' + lang);
-
                 Map<string,string> langMap = ISSP_Constant.languageMap;
                 Map<string,string> lowercaseLangMap = new Map<string,string>();
                 for(string key : langMap.keySet()){
@@ -527,7 +551,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
                 if (!lowercaseLangMap.containsKey(lang)){
                     lang = 'en_US';
-                    system.debug('LANG IN CREATE USER DEFAULT: ' + lang);
                 }else{
                     u.languagelocalekey = lowercaseLangMap.get(lang);
                 }
@@ -535,10 +558,15 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             }
 
             system.debug('user to be created: ' + u);
-
             usr.userId = Site.createPortalUser(u, accountId, password, false);
             usr.userName = u.username;
             system.debug('USERID: ' + usr.userId);
+
+            List<PermissionSet> permissionList = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_SSO'];
+            if(permissionList.size() > 0){
+                addPermissionToUser(permissionList.get(0).Id, usr.userId);
+            }
+
             //this does not fit in for bucket account scenario, should be handled on L2 registration?
             //Comm_User_Helper.addDefaultAppRights(con,con.Account);
 
@@ -558,9 +586,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         string paramsJson = JSON.serialize(params);
         paramsJson = paramsJson.replace('+', PortalPasswordHandler.plusReplacer);
         string encryptedStr = PortalPasswordHandler.EncryptString(paramsJson);
-        system.debug('encryptedStr: ' + encryptedStr);
         String encodedPart = 'c=' + EncodingUtil.urlEncode(encryptedStr, 'UTF-8');
-        system.debug('encodedPart: ' + encodedPart);
 
         String prefix = '';
         if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('/login'));
@@ -732,17 +758,12 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             }
             else {
                 GCS_CustomerType customerType = customerTypesMap.get(currentCustomerType);
-                system.debug('customerType: ' + customerType);
-                system.debug('customerType.subCategorizationLabel: ' + customerType.subCategorizationLabel);
-                system.debug('customerType.metadataCustomerType: ' + customerType.metadataCustomerType);
-                system.debug('customerType.metadataCustomerType.DeveloperName: ' + customerType.metadataCustomerType.DeveloperName);
 
                 if (!customerType.children.isEmpty()) {
                     CustomerTypePicklist picklist = new CustomerTypePicklist(customerType.subCategorizationLabel);
                     picklist.picklistName = customerType.metadataCustomerType.sub_categorization_custom_label__c;
                     picklist.picklistOptions.add(new CustomerTypePicklistOption(null, customerType.subCategorizationPlaceholder, previousCustomerType == null));
                     //picklist.picklistOptions.add(new CustomerTypePicklistOption(customerType.metadataCustomerType.DeveloperName, customerType.subCategorizationPlaceholder, previousCustomerType == null));
-                    system.debug('picklist.picklistOptions: ' + picklist.picklistOptions);
                     for (GCS_CustomerType child : customerType.children) {
                         picklist.picklistOptions.add(new CustomerTypePicklistOption(child.metadataCustomerType.DeveloperName, child.label, child.metadataCustomerType.DeveloperName == previousCustomerType));
                     }

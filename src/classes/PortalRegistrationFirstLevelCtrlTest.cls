@@ -33,9 +33,22 @@ public class PortalRegistrationFirstLevelCtrlTest {
         PortalRegistrationFirstLevelCtrl.getConfig();
         PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('admin@iata.org');
         PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('contact@bucketline.com');
+
         string registrationJson = '{"email":"user@bucketline.com","firstName":"testFirstName","lastName":"testLastName","country":"","phone":"","extraChoice":"","language":"en_us","termsAndUsage":true}';
         string customerTypeJson = '{"Filter_on_Sector__c":"Airline", "Filter_on_Category__c": "Passenger and Cargo"}';
-        PortalRegistrationFirstLevelCtrl.register(registrationJson, customerTypeJson, null, null);
+        PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, con.Id, acc.Id );
+
+        PortalRegistrationFirstLevelCtrl.RegistrationParameters params = new PortalRegistrationFirstLevelCtrl.RegistrationParameters();
+        params.email = 'user@bucketline.com';
+        params.firstName = 'testFirstName';
+        params.firstName = 'testLastName';
+        params.country = '';
+        params.phone = '';
+        params.language = 'en_us';
+        params.contactId = con.Id;
+        params.accountId = acc.Id;
+
+        PortalRegistrationFirstLevelCtrl.register(params, 'password');
         PortalRegistrationFirstLevelCtrl.getCustomerTypePicklists(null);
         PortalRegistrationFirstLevelCtrl.getCustomerTypePicklists('Airline');
         PortalRegistrationFirstLevelCtrl.getMetadataCustomerType('Airline');
