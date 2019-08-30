@@ -3239,52 +3239,52 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
-	<fields>
-		<fullName>New_parent__c</fullName>
-		<deleteConstraint>SetNull</deleteConstraint>
-		<description>On a change of hierarchy process this field determines which will be the new parent of the agencies that are changing to another hierarchy.
-	On a conversion from Standard to Multicountry this field is used as an auxiliary lookup to add standard hierarchies to the account selection page using the conditions on the lookup filter (only if the oscar process is ANG.CONVERT.ST.TO.MC)</description>
-		<externalId>false</externalId>
-		<label>New parent</label>
-		<lookupFilter>
-			<active>true</active>
-			<booleanFilter>1 OR (2 AND 3 AND 4 AND 5)</booleanFilter>
-			<filterItems>
-				<field>$Source.Process__c</field>
-				<operation>notEqual</operation>
-				<value>ANG.CONVERT.ST.TO.MC</value>
-			</filterItems>
-			<filterItems>
-				<field>Account.ANG_Accreditation_Model__c</field>
-				<operation>equals</operation>
-				<value>Cash</value>
-			</filterItems>
-			<filterItems>
-				<field>Account.Location_Type__c</field>
-				<operation>equals</operation>
-				<value>HE</value>
-			</filterItems>
-			<filterItems>
-				<field>Account.Status__c</field>
-				<operation>notEqual</operation>
-				<value>Listed, Not accreditated, Not in operation, Terminated</value>
-			</filterItems>
-			<filterItems>
-				<field>$Source.Process__c</field>
-				<operation>equals</operation>
-				<value>ANG.CONVERT.ST.TO.MC</value>
-			</filterItems>
-			<isOptional>false</isOptional>
-		</lookupFilter>
-		<referenceTo>Account</referenceTo>
-		<relationshipLabel>OSCARs (New parent)</relationshipLabel>
-		<relationshipName>OSCARs2</relationshipName>
-		<required>false</required>
-		<trackFeedHistory>false</trackFeedHistory>
-		<trackHistory>false</trackHistory>
-		<trackTrending>false</trackTrending>
-		<type>Lookup</type>
-	</fields>
+    <fields>
+        <fullName>New_parent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>On a change of hierarchy process this field determines which will be the new parent of the agencies that are changing to another hierarchy.
+    On a conversion from Standard to Multicountry this field is used as an auxiliary lookup to add standard hierarchies to the account selection page using the conditions on the lookup filter (only if the oscar process is ANG.CONVERT.ST.TO.MC)</description>
+        <externalId>false</externalId>
+        <label>New parent</label>
+        <lookupFilter>
+            <active>true</active>
+            <booleanFilter>1 OR (2 AND 3 AND 4 AND 5)</booleanFilter>
+            <filterItems>
+                <field>$Source.Process__c</field>
+                <operation>notEqual</operation>
+                <value>ANG.CONVERT.ST.TO.MC</value>
+            </filterItems>
+            <filterItems>
+                <field>Account.ANG_Accreditation_Model__c</field>
+                <operation>equals</operation>
+                <value>Cash</value>
+            </filterItems>
+            <filterItems>
+                <field>Account.Location_Type__c</field>
+                <operation>equals</operation>
+                <value>HE</value>
+            </filterItems>
+            <filterItems>
+                <field>Account.Status__c</field>
+                <operation>notEqual</operation>
+                <value>Listed, Not accreditated, Not in operation, Terminated</value>
+            </filterItems>
+            <filterItems>
+                <field>$Source.Process__c</field>
+                <operation>equals</operation>
+                <value>ANG.CONVERT.ST.TO.MC</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>OSCARs (New parent)</relationshipLabel>
+        <relationshipName>OSCARs2</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
     <fields>
         <fullName>Notification_days__c</fullName>
         <externalId>false</externalId>
