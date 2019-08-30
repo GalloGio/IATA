@@ -67,7 +67,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 		}
 		
 		if(!disableContactIdSet.isEmpty()){
-			HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.DISABLE_EXISTING_MEMBERS, disableContactIdSet, null);
+			HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.DISABLE_EXISTING_MEMBERS, disableContactIdSet);
             HigherLogicIntegrationHelper.assignHLPermissionSet(disableContactIdSet, HigherLogicIntegrationHelper.REMOVE_ACCESS);
 		}
 		
@@ -333,8 +333,6 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 		ISSP_UserTriggerHandler.removeNonTdReportSharing(contactRemove2FAIdSet);
 	}
 	
-	Id provAcctId = ProvisionKaviAccess.getFakeAccount().Id;
-
 	if (!contactKaviAdd.isEmpty()){
 		
 		String action = HigherLogicIntegrationHelper.PUSH_MEMBERS;
@@ -345,7 +343,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 			action = HigherLogicIntegrationHelper.PUSH_INTERNAL_MEMBERS;
 		}
 
-		HigherLogicIntegrationHelper.pushPersonCompanyMembers(action, contactKaviAdd, provAcctId);
+		HigherLogicIntegrationHelper.pushPersonCompanyMembers(action, contactKaviAdd);
 
 		//RN-ENHC0012059 grant and remove the permission set to the user	
 		HigherLogicIntegrationHelper.assignHLPermissionSet(contactKaviAdd, HigherLogicIntegrationHelper.GRANT_ACCESS); 
@@ -354,7 +352,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	
 	//RN-ENHC0012059 grant and remove the permission set to the user
 	if(!removeKaviPermissionSet.isEmpty()){
-		HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, removeKaviPermissionSet, provAcctId);
+		HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, removeKaviPermissionSet);
 		HigherLogicIntegrationHelper.assignHLPermissionSet(removeKaviPermissionSet, HigherLogicIntegrationHelper.REMOVE_ACCESS);
 	}
 

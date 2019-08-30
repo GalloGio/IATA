@@ -4471,7 +4471,10 @@ OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
 AND( 
 ISPICKVAL(Origin,&quot;Escalation&quot;), 
-Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+OR( 
+Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
+ISPICKVAL(Priority,&quot;High&quot;) 
+) 
 ) 
 ), 
 RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, 
@@ -4491,7 +4494,9 @@ OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
 AND( 
 ISPICKVAL(Origin,&quot;Escalation&quot;), 
-Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
+ISPICKVAL(Priority,&quot;High&quot;) 
+) 
 ) 
 ), 
 OR( 
@@ -4509,7 +4514,9 @@ OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
 AND( 
 ISPICKVAL(Origin,&quot;Escalation&quot;), 
-Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
+ISPICKVAL(Priority,&quot;High&quot;) 
+) 
 ) 
 ), 
 OR( 
@@ -4523,7 +4530,9 @@ OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
 AND( 
 ISPICKVAL(Origin,&quot;Escalation&quot;), 
-Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
+ISPICKVAL(Priority,&quot;High&quot;) 
+) 
 ) 
 ), 
 OR( 
@@ -4547,7 +4556,9 @@ OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
 AND( 
 ISPICKVAL(Origin,&quot;Escalation&quot;), 
-Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
+ISPICKVAL(Priority,&quot;High&quot;) 
+) 
 ) 
 ), 
 OR( 
@@ -4564,7 +4575,9 @@ OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
 AND( 
 ISPICKVAL(Origin,&quot;Escalation&quot;), 
-Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
+ISPICKVAL(Priority,&quot;High&quot;) 
+) 
 ) 
 ), 
 OR( 
@@ -6324,13 +6337,27 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>ACCA_Bug_Fix</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - ACCA Bug Fix</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>ACCA Bug Fix</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>OperationalManagementHeadOffice</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 OR 2 OR 5) OR (3 AND 4)</booleanFilter>
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - ISDM,E-mail to Case - Cargolink,E-mail to Case - ACCA Bug Fix</value>
+                <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - ISDM,E-mail to Case - Cargolink</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordType__c</field>

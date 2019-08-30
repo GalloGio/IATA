@@ -17,7 +17,7 @@
             <lightning:tab class="element" label="SUBSCRIPTIONS" id="2">
                 <c:GDPR_Subscriptions/>
             </lightning:tab>
-            <lightning:tab class="element" label="INTERESTS" id="3">
+            <lightning:tab class="element" label="AREAS OF INTEREST" id="3">
                 <c:GDPR_Interests/>    
             </lightning:tab>
             <aura:if isTrue="{!v.isRegisteredUser}">
