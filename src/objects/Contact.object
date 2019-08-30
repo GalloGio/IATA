@@ -20253,7 +20253,7 @@ Account.RecordType.DeveloperName = &quot;IATA_Agency&quot;
     </validationRules>
     <validationRules>
         <fullName>Contact_cannot_change_his_portal_status</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
    TEXT(PRIORVALUE(User_Portal_Status__c)) &lt;&gt; TEXT(User_Portal_Status__c),
    $User.ContactId  =  Id 

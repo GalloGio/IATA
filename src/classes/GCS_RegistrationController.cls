@@ -1,6 +1,6 @@
 public without sharing class GCS_RegistrationController{
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static CountryInformation getISOCountries() {
         List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
         for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
@@ -13,24 +13,23 @@ public without sharing class GCS_RegistrationController{
 
     @AuraEnabled
     public static GCS_Customer_Type_For_Registration__mdt getMetadataCustomerType(String customerTypeKey) {
-    	return GCS_AccountCreation.getMetadataCustomerType(customerTypeKey);
+        return GCS_AccountCreation.getMetadataCustomerType(customerTypeKey);
     }
 
     @AuraEnabled
     public static boolean registration(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
-    	System.debug('GCS Registration process - account information : ' + acc);
-    	if(acc.Id != null){
-    		Account existingAccount = [SELECT Sector__c,IATA_ISO_Country__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,IATA_ISO_Billing_State__c
-    				FROM Account 
-    				WHERE Id =: acc.Id];
-    				
-    		acc.Sector__c = existingAccount.Sector__c;
-    		acc.IATA_ISO_Country__c = existingAccount.IATA_ISO_Country__c;
-    		acc.IATA_ISO_Shipping_Country__c = existingAccount.IATA_ISO_Shipping_Country__c;
-    		acc.IATA_ISO_Shipping_State__c = existingAccount.IATA_ISO_Shipping_State__c;
-    		acc.IATA_ISO_Billing_State__c = existingAccount.IATA_ISO_Billing_State__c;
-    	}
-    	
+        System.debug('GCS Registration process - account information : ' + acc);
+        if(acc.Id != null){
+            Account existingAccount = [SELECT Sector__c,IATA_ISO_Country__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,IATA_ISO_Billing_State__c
+                    FROM Account 
+                    WHERE Id =: acc.Id];
+                    
+            acc.Sector__c = existingAccount.Sector__c;
+            acc.IATA_ISO_Country__c = existingAccount.IATA_ISO_Country__c;
+            acc.IATA_ISO_Shipping_Country__c = existingAccount.IATA_ISO_Shipping_Country__c;
+            acc.IATA_ISO_Shipping_State__c = existingAccount.IATA_ISO_Shipping_State__c;
+            acc.IATA_ISO_Billing_State__c = existingAccount.IATA_ISO_Billing_State__c;
+        }
         return OneId_RegistrationProcessController.registrationAux(acc, con, serviceName, cityAndStateIds);
     }
 
@@ -108,14 +107,19 @@ public without sharing class GCS_RegistrationController{
         return labels;
     }
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<GCS_CustomerType> getCustomerTypesList(){
-		return GCS_CustomerType.getCustomerTypesList();
+        return GCS_CustomerType.getCustomerTypesList();
     }
     
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static AccountListWrapper searchAccounts(String customerTypeKey, String countryId, String userInputIataCodes, String userInputCompanyName){
+        System.debug('customerTypeKey ' + customerTypeKey);
+        System.debug('countryId ' + countryId);
+        System.debug('userInputIataCodes ' + userInputIataCodes);
+        System.debug('userInputCompanyName ' + userInputCompanyName);
+
         GCS_Customer_Type_For_Registration__mdt customerType = GCS_CustomerType.getCustomerTypesMap().get(customerTypeKey).metadataCustomerType;
         
         String fieldsToRetrieve = '';
@@ -182,32 +186,32 @@ public without sharing class GCS_RegistrationController{
 
         // Filter on Account Name
         if(userInputCompanyName != null && userInputCompanyName != '' && userInputCompanyName.length() >= 3){
-        	inputFilters.add('Name LIKE  \'%' + userInputCompanyName + '%\'');
+            inputFilters.add('Name LIKE  \'%' + userInputCompanyName + '%\'');
         }
         
-		// Filter on IATA Codes    
+        // Filter on IATA Codes    
         if(userInputIataCodes != null && userInputIataCodes != '' && userInputIataCodes.length() >= 2){
-	        //Partial Match
-			if(customerType.Fields_Targeted_Partial_Match__c != null){
-		        for(String targetedField : customerType.Fields_Targeted_Partial_Match__c.split(',')){
-		            inputFilters.add(targetedField + ' LIKE  \'%' + userInputIataCodes + '%\'');
-		        }
-			}
-	
-	        // Exact Match
-			if(customerType.Fields_Targeted_Exact_Match__c != null){
+            //Partial Match
+            if(customerType.Fields_Targeted_Partial_Match__c != null){
+                for(String targetedField : customerType.Fields_Targeted_Partial_Match__c.split(',')){
+                    inputFilters.add(targetedField + ' LIKE  \'%' + userInputIataCodes + '%\'');
+                }
+            }
+    
+            // Exact Match
+            if(customerType.Fields_Targeted_Exact_Match__c != null){
                 GCS_CustomerType customerTypeParent = GCS_CustomerType.getCustomerTypesMap().get(customerType.Parent__c);
-		        for(String targetedField : customerType.Fields_Targeted_Exact_Match__c.split(',')){
+                for(String targetedField : customerType.Fields_Targeted_Exact_Match__c.split(',')){
                     //For Travel Agents the code must be of 7 or 8 digits
                     //For Cargo Agents the code must be of 10 or 11 digits
                     if((customerTypeParent.metadataCustomerType.MasterLabel == 'Travel Agent' && ( userInputIataCodes.length() == 7 || userInputIataCodes.length() == 8))
                             || (customerTypeParent.metadataCustomerType.MasterLabel == 'Cargo Agent' && ( userInputIataCodes.length() == 10 || userInputIataCodes.length() == 11 ))){
                         inputFilters.add(targetedField + ' LIKE  \'%' + userInputIataCodes + '%\'');
                     }else{
-		            	inputFilters.add(targetedField + ' =  \'' + userInputIataCodes + '\'');
-		        	}
-				}
-        	}
+                        inputFilters.add(targetedField + ' =  \'' + userInputIataCodes + '\'');
+                    }
+                }
+            }
         }
 
         if(!inputFilters.isEmpty()){
@@ -240,6 +244,11 @@ public without sharing class GCS_RegistrationController{
 
         @AuraEnabled
         public Integer totalAccounts { get; private set; }
+        
+        @AuraEnabled
+        public List<WrappedResult> wrappedResults { get; private set; }
+
+        
 
         public AccountListWrapper(String customerTypeKey, List<Account> accounts){
             // Retrieve list of requested fields
@@ -254,10 +263,10 @@ public without sharing class GCS_RegistrationController{
             for(String field : fieldsToRetrieveList){
                 fieldsAPIName.add(field.trim());
                 if(field.trim() == 'BillingStreet'){
-	                fieldLabels.add(Label.ISSP_Street);
+                    fieldLabels.add(Label.ISSP_Street);
                 }
                 else{
-                	fieldLabels.add(accountLabels.get(field.trim()));
+                    fieldLabels.add(accountLabels.get(field.trim()));
                 }
             }
             
@@ -265,6 +274,7 @@ public without sharing class GCS_RegistrationController{
 
             results = new List<List<String>>();
             accountIds = new List<String>();
+            wrappedResults = new List<WrappedResult>();
 
             // Store accounts fields values in a List<List<String>>
             // Replace nulls by empty Strings
@@ -275,9 +285,9 @@ public without sharing class GCS_RegistrationController{
                 
                 // remove accounts which are not verified
                 if((acc.RecordType.DeveloperName == 'IATA_Airline' && acc.ACLI_Status__c == 'Inactive Company')
-                	|| (acc.RecordType.DeveloperName == 'IATA_Agency' && acc.Status__c == 'Terminated')
-                	|| (acc.RecordType.DeveloperName == 'IATA_GSA' && acc.Status__c == 'Terminated')){
-                	continue;
+                    || (acc.RecordType.DeveloperName == 'IATA_Agency' && acc.Status__c == 'Terminated')
+                    || (acc.RecordType.DeveloperName == 'IATA_GSA' && acc.Status__c == 'Terminated')){
+                    continue;
                 }
                 
                 accountIds.add(acc.Id);
@@ -290,16 +300,16 @@ public without sharing class GCS_RegistrationController{
                         String relatedFieldApiName = split[1];
                         fieldValue = (String) acc.getSobject(relationshipApiName).get(relatedFieldApiName);
                     }else if(fieldAPIName == 'IATACode__c'){
-			            // Display only last 3 characters of the IATA Code
+                        // Display only last 3 characters of the IATA Code
                         String iataCode = (String) acc.get(fieldAPIName);
                         
                         if(iataCode == null || iataCode.length() <= 3){
-	                        fieldValue = iataCode;
+                            fieldValue = iataCode;
                         }
                         else{
-                        	String star = '*';
-                        	String last3Chars = iataCode.substring(iataCode.length() - 3);
-                        	fieldValue = star.repeat(iataCode.length() - 3) + last3Chars;
+                            String star = '*';
+                            String last3Chars = iataCode.substring(iataCode.length() - 3);
+                            fieldValue = star.repeat(iataCode.length() - 3) + last3Chars;
                         }
                     }
                     else{
@@ -312,7 +322,10 @@ public without sharing class GCS_RegistrationController{
                     result.add(fieldValue);
                 }
                 results.add(result);
+                
                 System.debug('RESULTS: ' + result);
+                
+                wrappedResults.add(new WrappedResult(acc.Id, acc.Name, result));
             }
             totalAccounts = results.size();
         }
@@ -328,6 +341,23 @@ public without sharing class GCS_RegistrationController{
         public CountryInformation(List<IATA_ISO_Country__c> countryList){
             this.countryList = countryList;
             this.countryMap = new Map<Id, IATA_ISO_Country__c>(countryList);
+        }
+    }
+    
+    public class WrappedResult{
+        @AuraEnabled
+        public List<String> fields { get; private set; }
+
+        @AuraEnabled
+        public String accountId { get; private set; }
+
+        @AuraEnabled
+        public String accountName { get; private set; }
+
+        public WrappedResult(String accountId, String accountName, List<String> fields){
+            this.accountId = accountId;
+            this.accountName = accountName;
+            this.fields = fields;
         }
     }
 }

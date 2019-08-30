@@ -13596,6 +13596,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_General_Public_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the Account is a General Public account</description>
+        <externalId>false</externalId>
+        <label>Is General Public Account</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_PCI_compliant__c</fullName>
         <description>Determines if an agency is PCI Compliant</description>
         <externalId>false</externalId>

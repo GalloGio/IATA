@@ -15,10 +15,18 @@ public without sharing class GCS_AccountCreation{
     	return GCS_RegistrationController.getAccountLabels();
     }
 
-    @AuraEnabled
-    public static GCS_Customer_Type_For_Registration__mdt getMetadataCustomerType(String customerTypeKey) {
-    	return customerTypesMap.get(customerTypeKey).metadataCustomerType;
-    }
+	@AuraEnabled
+	public static GCS_Customer_Type_For_Registration__mdt getMetadataCustomerType(String customerTypeKey) {
+		return customerTypesMap.get(customerTypeKey).metadataCustomerType;
+	}
+
+	@AuraEnabled(cacheable=true)
+	public static GCS_Customer_Type_For_Registration__mdt getMetadataCustomerType_Test(String customerTypeKey) {
+		if(customerTypeKey == null){
+			return null;
+		}
+		return customerTypesMap.get(customerTypeKey).metadataCustomerType;
+	}
 
     @AuraEnabled
     public static OneId_RegistrationProcessController.StatesAndAlternateNames getStates(String country){
@@ -36,20 +44,20 @@ public without sharing class GCS_AccountCreation{
         return OneId_AddressDoctor.validate((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class));
     }
 
-    @AuraEnabled
+	@AuraEnabled
 	public static List<CustomerTypePicklist> getCustomerTypePicklists(String root, String leaf){
 		List<CustomerTypePicklist> picklists = new List<CustomerTypePicklist>();
-		
+
 		String selectedItem;
-		
+
 		Boolean keepLooping = true;
-		
+
 		String currentCustomerType = leaf;
 		String previousCustomerType = null;
-		
+
 		while(keepLooping){
 			GCS_CustomerType customerType = customerTypesMap.get(currentCustomerType);
-			
+
 			if(!customerType.children.isEmpty()){
 				CustomerTypePicklist picklist = new CustomerTypePicklist(customerType.subCategorizationLabel);
 
@@ -58,10 +66,10 @@ public without sharing class GCS_AccountCreation{
 				for(GCS_CustomerType child : customerType.children){
 					picklist.picklistOptions.add(new CustomerTypePicklistOption(child.metadataCustomerType.DeveloperName, child.label, child.metadataCustomerType.DeveloperName == previousCustomerType));
 				}
-				
+
 				picklists.add(picklist);
 			}
-			
+
 			if(customerType.parent != null && currentCustomerType != root){
 				previousCustomerType = currentCustomerType;
 				currentCustomerType = customerType.parent.metadataCustomerType.DeveloperName;
@@ -76,10 +84,66 @@ public without sharing class GCS_AccountCreation{
 		for(Integer i = picklists.size()- 1 ; i >= 0; i--){
 			orderedPicklists.add(picklists[i]);
 		}
-		
+
 		return orderedPicklists;
 	}
-	
+
+	@AuraEnabled(cacheable=true)
+	public static List<CustomerTypePicklist> getCustomerTypePicklists_Test(String leaf){
+		List<CustomerTypePicklist> picklists = new List<CustomerTypePicklist>();
+
+		String selectedItem;
+
+		Boolean keepLooping = true;
+
+		String currentCustomerType = leaf;
+		String previousCustomerType = null;
+
+		while(keepLooping){
+			// Top level
+			if(currentCustomerType == null){
+				// need to retrieve the records without parents
+				CustomerTypePicklist picklist = new CustomerTypePicklist(GCS_CustomerType.customLabels.get('Sector'));
+
+				picklist.picklistOptions.add(new CustomerTypePicklistOption(null, GCS_CustomerType.customLabels.get('Select'), previousCustomerType == null));
+
+				for(GCS_CustomerType child : GCS_CustomerType.getCustomerTypesList()){ 
+					picklist.picklistOptions.add(new CustomerTypePicklistOption(child.metadataCustomerType.DeveloperName, child.label, child.metadataCustomerType.DeveloperName == previousCustomerType));
+				}
+
+				picklists.add(picklist);
+
+				keepLooping = false;
+			}
+			else {
+				GCS_CustomerType customerType = customerTypesMap.get(currentCustomerType);
+
+				if (!customerType.children.isEmpty()) {
+					CustomerTypePicklist picklist = new CustomerTypePicklist(customerType.subCategorizationLabel);
+
+					picklist.picklistOptions.add(new CustomerTypePicklistOption(customerType.metadataCustomerType.DeveloperName, customerType.subCategorizationPlaceholder, previousCustomerType == null));
+
+					for (GCS_CustomerType child : customerType.children) {
+						picklist.picklistOptions.add(new CustomerTypePicklistOption(child.metadataCustomerType.DeveloperName, child.label, child.metadataCustomerType.DeveloperName == previousCustomerType));
+					}
+
+					picklists.add(picklist);
+				}
+
+				previousCustomerType = currentCustomerType;
+				currentCustomerType = customerType.parent != null ? customerType.parent.metadataCustomerType.DeveloperName : null;
+			}
+		}
+
+		List<CustomerTypePicklist> orderedPicklists = new List<CustomerTypePicklist>();
+
+		for(Integer i = picklists.size()- 1 ; i >= 0; i--){
+			orderedPicklists.add(picklists[i]);
+		}
+
+		return orderedPicklists;
+	}
+
 	public class CustomerTypePicklist{
 		@AuraEnabled
 		String picklistLabel { get; private set; }
