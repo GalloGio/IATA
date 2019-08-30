@@ -26,7 +26,6 @@ import PhoneFormatter16                         from '@salesforce/resourceUrl/Ph
 import PhoneFormatter                           from '@salesforce/resourceUrl/InternationalPhoneNumberFormat';
 import PhoneFormatterS                          from '@salesforce/resourceUrl/InternationalPhoneNumberFormatS';
 import jQuery                                   from '@salesforce/resourceUrl/jQuery172';
-import jquery321minStandard                     from '@salesforce/resourceUrl/jquery321minStandard';
 
 /* ==============================================================================================================*/
 /* Custom Labels
