@@ -1,0 +1,65 @@
+/**
+ * Created by ukaya01 on 29/07/2019.
+ */
+
+/*
+.slds-has-error input{
+    border-radius: 1px !important;
+    border: solid 2px rgba(240, 70, 50, 0.8) !important;
+    box-shadow: none !important;
+}
+
+.slds-has-error .slds-form-element__help{
+    color: #f04632 !important;
+    font-size: 14px !important;
+}
+
+.slds-has-error .slds-form-element__help div{
+    color: #f04632 !important;
+}
+*/
+
+.inputBackgroundGrey{
+    background-color: #f7f8fa !important;
+}
+
+.slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: #f7f8fa;
+}
+/*
+input.slds-input:not(:placeholder-shown){
+    background-color: #f7f8fa;
+}
+*/
+
+.c-portallogincontainer_portallogincontainer{
+    height: 2000px !important;
+}
+
+.slds-spinner_container{
+    position: fixed;
+}
+
+.formElementContainer{
+    display: flex;
+    /*justify-content: center;*/
+    align-items: center;
+    height : 40px;
+}
+
+.formLabelContainer{
+    /*display: flex;*/
+    flex: 1 0 auto;
+    /*align-items: center;*/
+    /*justify-content: center;*/
+}
+
+.formElementSpacer{
+    padding-bottom:40px;
+}
+
+
+.slds-checkbox .slds-checkbox_faux {
+    width: 14px !important;
+    height: 14px !important;
+}
