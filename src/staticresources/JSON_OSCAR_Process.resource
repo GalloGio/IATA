@@ -8217,7 +8217,9 @@
                     ]
                   }],
                 "Automations": [],
-                "DisplayFields": [],
+                "DisplayFields": [
+                  "STEP45__c"
+                ],
                 "IsDependent": false
               }
             ]
