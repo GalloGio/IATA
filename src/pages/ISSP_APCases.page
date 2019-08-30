@@ -61,6 +61,7 @@
       left: 50%;
     }
   </style>
+  <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
 
   <script>
     var optInOut;
