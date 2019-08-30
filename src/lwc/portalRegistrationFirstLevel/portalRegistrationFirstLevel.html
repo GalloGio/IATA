@@ -5,7 +5,7 @@
 <!-- Portal Registration First Level -->
 <template>
 
-    <c-portal-login-container onchangelanguage={handleLanguageChange} forcerefresh=false>
+    <c-portal-login-container onchangelanguage={handleLanguageChange} preventrefresh=true>
         <span slot="pageBody">
 
             <template if:false={isRegistrationComplete}>
