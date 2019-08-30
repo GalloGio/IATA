@@ -509,7 +509,7 @@ lightning-datatable .slds-th__action {
     border: none;
 }
 
-.containedButton button:disabled, .containedButton button:disabled:hover, .containedButton:disabled {
+.containedButton button:disabled, .containedButton button:disabled:hover, .containedButton:disabled, .containedButton.disabledButton {
     background-color: #f7f8fa;
     color: #999999;
     box-shadow: none;
