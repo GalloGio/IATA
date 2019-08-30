@@ -6,6 +6,8 @@ public with sharing class PortalRegistrationUtils {
 
     public class UserLocation{
         @AuraEnabled
+        public string countryCode{get;set;}
+        @AuraEnabled
         public string country{get;set;}
         @AuraEnabled
         public string countryId{get;set;}
@@ -56,7 +58,8 @@ public with sharing class PortalRegistrationUtils {
                 }
             }
         }catch(Exception e){
-
+            system.debug('Error Retrieving Location(ipinfo): ' + e.getMessage());
+            return loc;
         }
 
         if ((ipAddress != '' && ipAddress != null && country == '') || test.isRunningTest()){
@@ -79,9 +82,21 @@ public with sharing class PortalRegistrationUtils {
                 }
             }
         }
+        loc.countryCode = country;
         loc.country = countryName;
         loc.countryId = countryId;
         return loc;
     }
 
+    @AuraEnabled
+    public static Boolean isSystemAdmin(){
+
+        List<User> userList =  [ SELECT Id FROM User WHERE Id = :UserInfo.getUserId() AND profile.name = 'System Administrator'];
+        if(userList.isEmpty() == true){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
 }

@@ -1,51 +1,15 @@
 /**
  * Created by ukaya01 on 27/06/2019.
  */
-.maxWidth{
-    width: 100%;
-}
 
-
-.inputLineHeight{
-    line-height: 45px;
-}
-
-
-.fontBold{
-    font-weight: bold !important;
-}
-
-.loginTitle{
-    margin-top: -10px;
-}
-
-.loginLabel{
-    font-size: 12px;
-    border-radius: 0.1rem;
-}
-
-.loginUrlHighlight{
-    width: 100%;
-    font-weight: 500;
-    color: #3333ff;
-}
-
-.loginSeparator {
-    border-bottom-style: solid;
+.containerBorderTop {
+    border-top-style: solid;
     color: #d3d3d352;
-    margin-bottom: 15px;
+    /*margin-bottom: 15px;*/
 }
 
 .textAlignCenter {
     text-align: center;
-}
-
-.textAlignEnd {
-    text-align: end;
-}
-
-.marginBottomGeneral {
-    margin-bottom: 20px;
 }
 
 .showPasswordButton{
@@ -64,10 +28,6 @@
     opacity:0.5;
 }
 
-.inputBackgroundGrey{
-    background-color: #f7f8fa !important;
-}
-
 .slds-has-error input{
     border-radius: 1px !important;
     border: solid 2px rgba(240, 70, 50, 0.8) !important;
@@ -83,16 +43,6 @@
     color: #f04632 !important;
 }
 
-.font-small{
-    font-size: 18px !important;
-}
-
-/*
-.slds-spinner_container{
-    position : inherit;
-}
-*/
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -100,26 +50,29 @@ input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px inset #f7f8fa !important;
 }
 
-.alignCenter{
+.slds-spinner_container{
+    position: fixed;
+}
+
+.inputBackgroundGrey{
+    background-color: #f7f8fa !important;
+}
+
+.formElementContainer{
     display: flex;
+    /*justify-content: center;*/
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    height : 40px;
 }
 
-.alertIcon{
-    margin-top: -64px;
-    width: 96px;
-    height: 96px;
+.formLabelContainer{
+    /*display: flex;*/
+    flex: 1 0 auto;
+    /*align-items: center;*/
+    /*justify-content: center;*/
 }
 
-.alertDiv{
-  width: 576px;
-  height: 240px;
-  background-color: #ffffff;
+.formElementSpacer{
+    padding-bottom:40px;
 }
-/*
-.auraMsgMask, #auraErrorMask, body .auraLoadingBox{
-    display:none !important;
-}
-*/
+

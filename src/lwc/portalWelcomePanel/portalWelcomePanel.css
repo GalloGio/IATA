@@ -28,17 +28,29 @@
 
 .rectangle {
   width: 368px;
-  height: 454px;
+  /*height: 454px;*/
   border-radius: 1px;
   background-color: rgba(255, 255, 255, 0.96);
+  -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 100% 91%, 91% 100%, 0% 100%, 0% 0%, 0% 0%);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 100% 91%, 91% 100%, 0% 100%, 0% 0%, 0% 0%);
 }
 
 .bounds {
   width: 336px;
-  height: 88px;
+  /*height: 88px;*/
   object-fit: contain;
   border-radius: 1px;
-  padding:16px;
+  padding: 16px;
+}
+
+.faqContainer{
+    width: 336px;
+    /*height: 88px;*/
+    object-fit: contain;
+    border-radius: 1px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
 }
 
 .service {
@@ -61,7 +73,7 @@
 
 .description {
   width: 272px;
-  height: 40px;
+  /*height: 40px;*/
   font-size: 14px;
   font-weight: normal;
   font-style: normal;

@@ -6,7 +6,7 @@
 <template>
 
 
-    <c-portal-login-container forcerefresh=true>
+    <c-portal-login-container preventrefresh=false>
         <span slot="pageBody">
             <div if:true={showLoginForm}>
                 <c-portal-custom-card-container>
@@ -16,7 +16,7 @@
                     </span>
 
                     <span slot="cardBody">
-                        <div class="slds-card__body" style="margin-bottom:50px;">
+                        <div class="slds-card__body" style="padding-top:8px; margin-bottom:140px;">
                             <div style="min-height:40px;" if:true={showPageMessage} class="text-xxsmall">
                                 {pageMessage}
                                 <div style="padding: 1.5rem;"></div>
@@ -24,9 +24,9 @@
                             <div if:true={config.isUsernamePasswordEnabled}>
                                     <lightning-layout multiple-rows vertical-align="end">
                                         <lightning-layout-item size="12">
-                                            <div style="display: flex;justify-content: center;align-items: center;">
-                                                <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
-                                                    <div style="width:100%;" class="text-xxsmall text-gray">
+                                            <div class="formElementContainer">
+                                                <div class="formLabelContainer">
+                                                    <div class="text-xxsmall">
                                                         {labels.EmailLabel}
                                                     </div>
                                                 </div>
@@ -48,14 +48,14 @@
                                                 </div>
                                             </div>
                                         </lightning-layout-item>
-                                        <lightning-layout-item padding="around-large" size="12">
-                                            <div>
+                                        <lightning-layout-item size="12">
+                                            <div class="formElementSpacer">
                                             </div>
                                         </lightning-layout-item>
                                         <lightning-layout-item size="12">
-                                            <div style="display: flex;justify-content: center;align-items: center;">
-                                                <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
-                                                    <div style="width:100%;" class="text-xxsmall text-gray">
+                                            <div class="formElementContainer">
+                                                <div class="formLabelContainer">
+                                                    <div class="text-xxsmall text-gray">
                                                         {labels.PasswordLabel}
                                                     </div>
                                                 </div>
@@ -81,24 +81,25 @@
                                                         <span class="slds-assistive-text"></span>
                                                     </button>
                                                 </div>
-                                                <div style="min-height:40px;">
+                                                <div style="height:48px;">
                                                     <div if:true={showError}>
                                                         <div class="slds-form-element__help">{errorMessage}</div>
                                                     </div>
                                                 </div>
+                                                <div if:true={showError} style="height:16px;">
+                                                </div>
                                             </div>
                                         </lightning-layout-item>
-                                        <lightning-layout-item padding="around-medium" size="12">
-                                            <div>
-                                            </div>
-                                        </lightning-layout-item>
+
                                         <lightning-layout-item size="12">
                                             <div>
                                                 <lightning-button data-id="loginButton" label={labels.LoginLabel} variant="brand"  disabled={loginButtonDisabled} onclick={handleLogin} class="containedButtonDisabled">
                                                 </lightning-button>
                                             </div>
                                         </lightning-layout-item>
-                                        <lightning-layout-item padding="around-large" size="12">
+                                        <lightning-layout-item size="12">
+                                            <div style="height:64px;">
+                                            </div>
                                         </lightning-layout-item>
 
                                         <template if:true={displayTroubleshooting}>
@@ -119,17 +120,19 @@
                                                 </div>
                                             </lightning-layout-item>
 
-                                            <lightning-layout-item padding="around-small" size="12">
-                                            </lightning-layout-item>
+                                            <lightning-layout-item size="12">
+                                            <div style="height:24px;">
+                                            </div>
+                                        </lightning-layout-item>
                                         </template>
 
-                                        <lightning-layout-item padding="" size="12">
-                                            <div class="loginSeparator"></div>
-                                        </lightning-layout-item>
-                                        <lightning-layout-item padding="around-x-small" size="12">
-                                        </lightning-layout-item>
+
                                         <template if:true={config.isSelfRegistrationEnabled}>
+
                                             <lightning-layout-item size="12">
+                                                <div class="containerBorderTop" style="height:24px;">
+
+                                                </div>
                                                 <div class="textAlignCenter text-xsmall text-gray">
                                                     Still not an IATA Customer Portal User?
                                                 </div>
@@ -143,8 +146,8 @@
                                                                       class="blueCustomButtonLinkSmall">
                                                     </lightning-button>
                                                 </div>
-                                            </lightning-layout-item>
-                                            <lightning-layout-item padding="around-medium" size="12">
+                                                <div style="height:41px;">
+                                                </div>
                                             </lightning-layout-item>
                                         </template>
                                     </lightning-layout>
@@ -155,32 +158,18 @@
                 </c-portal-custom-card-container>
             </div>
             <div if:true={isFrozen}>
-                <div class="alertDiv">
-                    <lightning-layout multiple-rows vertical-align="center" horizontal-align="center">
-                        <lightning-layout-item size="12" padding="around-medium" class="alignCenter">
-                            <img src={alertIcon} class="alertIcon">
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="around-medium">
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="around-medium" class="alignCenter">
-                              <lightning-formatted-rich-text value={labels.FrozenUserLabel} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
-                        </lightning-layout-item>
-                    </lightning-layout>
-                </div>
+                <c-portal-informative-message-box>
+                    <span slot="message">
+                        <lightning-formatted-rich-text value={labels.FrozenUserLabel} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                    </span>
+                </c-portal-informative-message-box>
             </div>
             <div if:true={isLoginDisabled}>
-                <div class="alertDiv">
-                    <lightning-layout multiple-rows vertical-align="center" horizontal-align="center">
-                        <lightning-layout-item size="12" padding="around-medium" class="alignCenter">
-                            <img src={alertIcon} class="alertIcon">
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="around-medium">
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="around-medium" class="alignCenter">
-                              <lightning-formatted-rich-text value={labels.DisabledLoginLabel} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
-                        </lightning-layout-item>
-                    </lightning-layout>
-                </div>
+                <c-portal-informative-message-box>
+                    <span slot="message">
+                        <lightning-formatted-rich-text value={labels.DisabledLoginLabel} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                    </span>
+                </c-portal-informative-message-box>
             </div>
         </span>
     </c-portal-login-container>

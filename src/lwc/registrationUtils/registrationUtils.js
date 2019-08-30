@@ -3,6 +3,7 @@
  */
 import { LightningElement } from 'lwc';
 import getUserLoc from '@salesforce/apex/PortalRegistrationUtils.getUserLocation';
+import isSystemAdmin from '@salesforce/apex/PortalRegistrationUtils.isSystemAdmin';
 
 export default class RegistrationUtils {
 
@@ -74,5 +75,19 @@ export default class RegistrationUtils {
         );
     }
 
+    checkUserIsSystemAdmin(){
+        return new Promise(
+            (resolve, reject) => {
+                isSystemAdmin().then(result => {
+                    console.log('isSystemAdmin: ', result);
+                    resolve(result);
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+            }
+        );
+    }
 }
 
