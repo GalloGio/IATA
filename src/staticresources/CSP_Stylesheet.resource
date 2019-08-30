@@ -1581,6 +1581,7 @@ visibility: hidden;
     color: #999999;
     padding: 0 1rem 0 .75rem;
     border-radius: 1px;
+	border-color: #e6e6e6;
     height: 52px;
 }
 
@@ -1672,4 +1673,28 @@ visibility: hidden;
     cursor: pointer;
 }
 
+.slds-has-error .slds-input{
+    border-radius: 1px !important;
+    border: solid 2px rgba(240, 70, 50, 0.8) !important;
+    box-shadow: none !important;
+}
 
+.slds-has-error .slds-form-element__help {
+	color: rgba(240, 70, 50, 0.8) !important;
+}
+
+.registerCheckBox .slds-checkbox .slds-checkbox_faux {
+    width: 14px !important;
+    height: 14px !important;
+    border: 1px solid #3333ff !important;
+}
+
+.registrationPopup {
+    background-color: #F7F8FA;
+    width: 100%;
+    max-width: 448px;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
+    border: solid 1px #e2e2e2;
+}
