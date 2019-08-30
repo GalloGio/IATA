@@ -231,8 +231,8 @@
         <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000zGve&oid=00D2000000008TF&lastMod=1401896785000"/><br/>
         <h3>You don't have any pending Airline Participation {!IF(APprocess=='chg', 'Change Requests', IF(APprocess=='bnk', 'change of bank account details', 'Joining Processes'))}</h3><br/>
         <div class="row">
-          <a class="btn btn-primary" href="/ISSP_APProcess?proc={!APprocess}&retURL=/ISSP_APCases">New {!IF(APprocess=='chg', 'Changing', 'Joining')} Request</a>&nbsp;
-          <button style="display: {!IF(APprocess=='chg','','none')};" type="button" id="modalButton" onclick="optInOut();" class="btn btn-primary">IATA EasyPay Opt-In / Opt-Out</button>
+          <a class="iatabtn iatabtn-default" href="/ISSP_APProcess?proc={!APprocess}&retURL=/ISSP_APCases">New {!IF(APprocess=='chg', 'Changing', 'Joining')} Request</a>&nbsp;
+          <button style="display: {!IF(APprocess=='chg','','none')};" type="button" id="modalButton" onclick="optInOut();" class="iatabtn iatabtn-default">IATA EasyPay Opt-In / Opt-Out</button>
         </div>
       </div>
     </apex:pageBlock>
