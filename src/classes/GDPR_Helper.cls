@@ -232,6 +232,7 @@ public without sharing class GDPR_Helper {
             
             '</table>';
         return str;
+    }
 
     public static void sendEmail(String email, String htmlBody) {
         OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'IATA Noreply'];
