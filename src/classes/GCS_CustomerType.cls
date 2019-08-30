@@ -152,7 +152,26 @@ public class GCS_CustomerType implements Comparable{
 
         return customerTypeList;
     }
-    
+
+    @AuraEnabled
+    public static String getCustomerTypeFromSectorAndCategory(String sector, String category){
+        System.debug('sector-category "' + sector + '"-"' + category + '"');
+        if(sector == null || category == null){
+            return null;
+        }
+
+        List<GCS_CustomerType> customerTypesList = getCustomerTypesMap().values();
+        for(GCS_CustomerType customerType : customerTypesList){
+            System.debug('"' + customerType.metadataCustomerType.Created_Account_Sector__c + '"-"' + customerType.metadataCustomerType.Created_Account_Category__c + '"');
+            if(customerType.metadataCustomerType.Created_Account_Sector__c == sector && customerType.metadataCustomerType.Created_Account_Category__c == category){
+                System.debug('found : ' + customerType.metadataCustomerType.DeveloperName);
+                return customerType.metadataCustomerType.DeveloperName;
+            }
+        }
+        System.debug('NOT found');
+        return null;
+    }
+
     private static void sortCustomerTypesList(List<GCS_CustomerType> customerTypeList){
     	customerTypeList.sort();
     	for(GCS_CustomerType customerType : customerTypeList){
