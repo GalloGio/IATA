@@ -893,7 +893,19 @@ public static List<Connected_App_Roles__c> availableICCSPortalServiceRoles(){
 }
 
 @AuraEnabled
-public static String newAppsRequest2(String applicationId, String applicationName, String contactId, String portalServiceRole, Boolean flagUseDefaultRole, String defaultPortalUserRole){
+public static String newAppsRequest2(String applicationId, String applicationName, String contactId, String portalServiceRole, Boolean flagUseDefaultRole){
+	String defaultPortalUserRole = '';
+	if(flagUseDefaultRole){
+		List<Connected_App_Roles__c> lstConAppRoles = availableIEPPortalServiceRoles(applicationId);
+		for(Connected_App_Roles__c car : lstConAppRoles){
+			if(car.Default_User_Role__c && car.Connected_App__c == applicationName){
+				defaultPortalUserRole = car.Role__c;
+			}
+		}
+		if(defaultPortalUserRole == ''){
+			return null;
+		}
+	}
 	return ISSP_AvailableServices.newAppsRequest2(applicationId, applicationName, contactId, portalServiceRole, flagUseDefaultRole, defaultPortalUserRole);
 }
 

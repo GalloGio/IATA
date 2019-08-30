@@ -20,7 +20,7 @@
 					
 					<apex:pageBlockSectionItem >
 						<apex:outputLabel >Region</apex:outputLabel>
-						<apex:selectList value="{!userRegion}" size="1" multiselect="false" disabled="{!OR(running, $Profile.Name != 'System Administrator')}">
+						<apex:selectList value="{!userRegion}" size="1" multiselect="false" disabled="{!running}">
 							<apex:selectOptions value="{!regions}"/>
 						</apex:selectList> 
 					</apex:pageBlockSectionItem>
