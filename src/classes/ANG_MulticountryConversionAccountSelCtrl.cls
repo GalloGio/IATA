@@ -1,5 +1,10 @@
 public class ANG_MulticountryConversionAccountSelCtrl {
 
+	@TestVisible
+	private static final String CANNOT_REMOVE_HE_ERROR = 'You cannot remove the HE associated with the OSCAR'; 
+	@TestVisible
+	private static final String CANNOT_ADD_ACCOUNTS_WARNING = 'New Accounts cannot be added anymore.';
+
 	public class SelectedAccountWrapper implements Comparable {
 		
 		public Account acct {get; set;}
@@ -91,16 +96,6 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 		set;
 	}
 
-	private Boolean oscarChanged {
-		get {
-			if(oscarChanged == null){
-				oscarChanged = false;
-			}
-			return oscarChanged;
-		}
-		set;
-	}
-
 	public Integer totalPages {
 		get {
 			return accountSelectionBucketLst.size();
@@ -139,7 +134,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 					FROM
 						AMS_Process_Detail__c
 					WHERE
-						OSCAR__c = :oscar.Id
+						OSCAR__c = :this.oscar.Id
 					AND
 						RecordType.DeveloperName = 'Agency_Involved'
 					]
@@ -157,6 +152,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 	}
 
+	@TestVisible
 	private Integer rowsPerPage = 100;
 
 	public AMS_OSCAR__c oscar {get; set;}
@@ -167,13 +163,18 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 	public ANG_MulticountryConversionAccountSelCtrl(ApexPages.StandardController controller){
 		
-		controller.addFields(new List<String>{'Account__c', 'New_parent__c', 'STEP45__c'});
+		if(Test.isRunningTest()){
+			Id oscarId = controller.getId();
+			this.oscar = [SELECT Id, Account__c, New_parent__c, STEP45__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
+		}
+		else {
+			controller.addFields(new List<String>{'Account__c', 'New_parent__c', 'STEP45__c'});
+			this.oscar = (AMS_OSCAR__c) controller.getRecord();
+		}
 
-		oscar = (AMS_OSCAR__c) controller.getRecord();
-
-		if(oscar.STEP45__c == AMS_Utils.PASSED){
+		if(this.oscar.STEP45__c == AMS_Utils.PASSED){
 			readOnly = true;
-			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, 'New Accounts cannot be added anymore.'));
+			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, CANNOT_ADD_ACCOUNTS_WARNING));
 		}
 		
 		for(Id acctId : processDetailsMap.keySet()){
@@ -191,7 +192,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 			this.alreadyAddedAccounts.add(acct.Id);
 		}
 
-		addHierarchyFromHE(oscar.Account__c);
+		addHierarchyFromHE(this.oscar.Account__c);
 
 		sortLists();
 
@@ -230,6 +231,10 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 		this.allAccountsSelectionLst.sort();
 	}
 
+	/**
+	 * Adds the selected HE and the related hierarchy
+	 * @param  selectedHE: receives Id of the selected HE 
+	 */
 	private void addHierarchyFromHE(Id selectedHE){
 
 		List<Account> accountLst = new List<Account>(
@@ -277,34 +282,46 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 	}
 
+	/**
+	 * Adds the selected HE and 
+	 * the related hierarchy to the accounts table 
+	 * @return null
+	 */ 
 	public PageReference addHierarchyFromHE(){
 		//Using the oscar field as auxiliary to fetch the accounts
 		//We won't save any value on the field
-		Id selectedHE = oscar.New_Parent__c;
+		Id selectedHE = this.oscar.New_Parent__c;
 		
-		addHierarchyFromHE(selectedHE);
+		if(selectedHE != NULL){
+			addHierarchyFromHE(selectedHE);
 		
-		oscar.New_Parent__c = null;
+			this.oscar.New_Parent__c = null;
 
-		//Reset account buckets for pagination
-		currentPage = null;
-		accountSelectionBucketLst = null;
+			//Reset account buckets for pagination
+			currentPage = null;
+			accountSelectionBucketLst = null;
 
-		sortLists();
+			sortLists();
+		}
 
 		return null;
 	}
 
+	/**
+	 * Removes the intended HE and the related hierarchy
+	 * @return null 
+	 */
 	public PageReference removeHeAccount(){
 		
-		SelectedAccountWrapper heToRemove = this.heAccountSelectionLst.remove(heAccountIndex);
+		SelectedAccountWrapper heToRemove = this.heAccountSelectionLst.get(heAccountIndex);
 
-		//If the HE account associated with the oscar 
-		//was removed from the selection we need to assign another HE to the oscar
-		if(heToRemove.acct.Id == this.oscar.Account__c && this.heAccountSelectionLst.size() > 0){
-			this.oscar.Account__c = this.heAccountSelectionLst.get(0).acct.Id;
-			this.oscarChanged = true;
+		//Block the HE account associated with the oscar to be removed 
+		if(heToRemove.acct.Id == this.oscar.Account__c){
+			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, CANNOT_REMOVE_HE_ERROR));
+			return null;
 		}
+
+		heToRemove = this.heAccountSelectionLst.remove(heAccountIndex);
 
 		integer i=0;
 
@@ -330,6 +347,11 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 	}
 
+	/**
+	 * Save method that creates and 
+	 * inserts the AMS Process Detail records 
+	 * @return null 
+	 */
 	public PageReference save(){
 
 		Id rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
@@ -337,7 +359,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 		List<AMS_Process_Detail__c> processDetailLst = new List<AMS_Process_Detail__c>();
 
 		for(SelectedAccountWrapper saw : this.allAccountsSelectionLst){
-			if(oscar.Account__c != saw.acct.Id){
+			if(this.oscar.Account__c != saw.acct.Id){
 				AMS_Process_Detail__c pd = new AMS_Process_Detail__c();
 				pd.Oscar__c = this.oscar.Id;
 				pd.Account__c = saw.acct.Id;
@@ -349,10 +371,6 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 		SavePoint sp = Database.setSavepoint();
 
 		try {
-
-			if(this.oscarChanged){
-				update oscar;
-			}
 
 			if(!processDetailsMap.isEmpty()){
 				delete processDetailsMap.values();

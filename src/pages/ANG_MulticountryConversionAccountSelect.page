@@ -112,7 +112,7 @@
 
 					<apex:column headerValue="" rendered="{!!readOnly}">
 					 
-						<apex:commandButton action="{!removeHeAccount}" value="❌" status="blockEditing" immediate="true" rerender="selectedAccountsPanel, selectedHeSection, allSelectedAccountsTable, pageMesssagesPanel">
+						<apex:commandButton action="{!removeHeAccount}" value="❌" status="blockEditing" rerender="selectedAccountsPanel, selectedHeSection, allSelectedAccountsTable, pageMesssagesPanel">
 							<apex:param name="removeIndex" value="{!removeIndex}" assignTo="{!heAccountIndex}" />
 						</apex:commandButton>
 						
