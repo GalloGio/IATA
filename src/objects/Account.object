@@ -3475,10 +3475,21 @@
     <fields>
         <fullName>ANG_CashCondition__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ANG_FA_Opt_out__c,true,
-   IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),false,
-      IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ANG_HE_CashCondition__c,Top_Parent__r.ANG_HE_CashCondition__c)
-   ))</formula>
+        <formula>IF(ANG_FA_Opt_out__c, true,
+
+	IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),false,
+   
+   		IF(AND(OR(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Multicountry&apos;), ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Multicountry&apos;)), ISPICKVAL(Location_Type__c ,&apos;GE&apos;)), ANG_HE_CashCondition__c, 
+   
+   			IF(OR(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Multicountry&apos;), ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Multicountry&apos;)), Top_Parent__r.ANG_HE_CashCondition__c,
+
+      			IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ANG_HE_CashCondition__c,Top_Parent__r.ANG_HE_CashCondition__c
+
+      			)
+      		)
+      	)
+    )
+)</formula>
         <inlineHelpText>Indicates that the RHC Amount is equal to the Guaranteed Amount. Will be enforced only if the agency has a FS</inlineHelpText>
         <label>Cash Condition equal to FS</label>
         <trackHistory>false</trackHistory>
@@ -100533,19 +100544,39 @@ $User.ProfileId = &apos;00ew0000001R7Ci&apos;)))</errorConditionFormula>
     <validationRules>
         <fullName>Cannot_change_HO_location_type</fullName>
         <active>true</active>
-        <description>Cannot change the Location Type from HO or HE to anything else than HE or HO if the account has a financial assessment contact linked to it.</description>
+        <description>Cannot change the Location Type/Accreditation Model from HO, HE or GE to anything else than GE, HE or HO if the account has a financial assessment contact linked to it.</description>
         <errorConditionFormula>AND(
   RecordType.DeveloperName = &apos;IATA_Agency&apos;,
-  ISCHANGED(Location_Type__c),
-  OR (
-    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HO&apos;),
-    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HE&apos;)
-  ),
-  NOT(ISPICKVAL(Location_Type__c, &apos;HO&apos;)),
-  NOT(ISPICKVAL(Location_Type__c, &apos;HE&apos;)),
-  Has_a_Financial_Assessment_Contact__c
+		OR(
+						
+		 AND(		
+		    ISCHANGED(Location_Type__c),
+      OR (
+        ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HO&apos;),
+        ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HE&apos;),
+				    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;GE&apos;)
+      ),
+      NOT(ISPICKVAL(Location_Type__c, &apos;HO&apos;)),
+		    OR(
+					    AND(
+					        NOT(ISPICKVAL(Location_Type__c, &apos;HE&apos;)),
+					        NOT(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Multicountry&apos;))
+					    ),
+					    AND(
+					        NOT(ISPICKVAL(Location_Type__c, &apos;GE&apos;)),
+					        ISPICKVAL(ANG_Accreditation_Model__c, &apos;Multicountry&apos;)
+					    )			
+		    )
+		 ),
+	  AND(		
+		    ISCHANGED(ANG_Accreditation_Model__c),
+						NOT(ISPICKVAL(Location_Type__c, &apos;GE&apos;)),
+						ISPICKVAL(ANG_Accreditation_Model__c, &apos;Multicountry&apos;)	
+		 )
+  ),	
+		Has_a_Financial_Assessment_Contact__c
 )</errorConditionFormula>
-        <errorMessage>The Location Type of this account cannot be changed from &apos;HO&apos; or &apos;HE&apos; because it has a Financial Assessment Contact linked to it.</errorMessage>
+        <errorMessage>The Location Type/Accreditation Model of this account cannot be changed from &apos;HO&apos;, &apos;HE&apos;, or &apos;GE&apos; because it has a Financial Assessment Contact linked to it.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>CategoryOtherRequired</fullName>

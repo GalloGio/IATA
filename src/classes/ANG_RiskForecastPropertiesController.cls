@@ -1,5 +1,8 @@
 public with sharing class ANG_RiskForecastPropertiesController {
 
+    @TestVisible
+    private static final String CONVERSION_TO_MULTICOUNTRY_OPT = 'ConversionToMulticountry';
+
     public Case myCase{get;set;}
     public String riskOpt{get; set;}
     public String newRiskStatus{get;set;}
@@ -20,7 +23,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
 
     public ANG_RiskForecastPropertiesController(ApexPages.StandardController stdController) {
-        this.myCase = [SELECT Id, SIDRA_Lite_Reason__c, Account.Name, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, RecordTypeId, Account.Location_Type__c, Account.Remittance_frequency__c, Account.ANG_Accreditation_Model__c, Account.Status__c, Account.Financial_Review_Result__c, OSCAR__r.Process__c, OSCAR__r.ANG_Type_Of_Change__c, OSCAR__r.ANG_FA_Opt_out__c, OSCAR__r.ANG_Change_Entity_Location__c, OSCAR__r.Change_of_Entity_Location_within_EU__c  FROM Case where Id =:stdController.getId()];
+        this.myCase = [SELECT Id, SIDRA_Lite_Reason__c, Account.Name, Account.Identify_as_Multicountry_Key_Hierarchy__c, Account.ParentId, Account.Top_Parent__c, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, RecordTypeId, Account.Location_Type__c, Account.Remittance_frequency__c, Account.ANG_Accreditation_Model__c, Account.Status__c, Account.Financial_Review_Result__c, OSCAR__r.Process__c, OSCAR__r.ANG_Type_Of_Change__c, OSCAR__r.ANG_FA_Opt_out__c, OSCAR__r.ANG_Change_Entity_Location__c, OSCAR__r.Change_of_Entity_Location_within_EU__c  FROM Case where Id =:stdController.getId()];
     }
 
     public List<SelectOption> getriskOption(){
@@ -109,6 +112,11 @@ public with sharing class ANG_RiskForecastPropertiesController {
             riskOpt = 'OptInOut';
         }
 
+        if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
+            options.add(new SelectOption(CONVERSION_TO_MULTICOUNTRY_OPT, 'Conversion to Multicountry'));
+            riskOpt = CONVERSION_TO_MULTICOUNTRY_OPT;
+        }
+
         return options;
     }
 
@@ -120,10 +128,8 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
     public void forecast(){
         // get riskOpt value and forecast risk
-        
+                
         System.debug('Starting forecasting for account ' + myCase.AccountId);
-
-        List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Risk_Type__c, ANG_Risk_ID__c, ANG_Limit_Cash_Conditions__c FROM ANG_Agency_Risk_Event__c where ANG_AccountId__c = :myCase.AccountId and ANG_Event_Status__c = 'Active' ];
 
         Account a = new Account(id = myCase.AccountId);
         a.Location_Type__c = myCase.Account.Location_Type__c;
@@ -131,15 +137,25 @@ public with sharing class ANG_RiskForecastPropertiesController {
         a.ANG_Accreditation_Model__c = myCase.Account.ANG_Accreditation_Model__c;
         a.Status__c = myCase.Account.Status__c;
         a.Financial_Review_Result__c = myCase.Account.Financial_Review_Result__c;
+		a.ParentId = myCase.Account.ParentId;
+        a.Top_Parent__c = myCase.Account.Top_Parent__c;
+        a.Identify_as_Multicountry_Key_Hierarchy__c = myCase.Account.Identify_as_Multicountry_Key_Hierarchy__c;
+        
+        List<ANG_Agency_Risk_Event__c> riskEvents = new List<ANG_Agency_Risk_Event__c>();
 
+        if(riskOpt != CONVERSION_TO_MULTICOUNTRY_OPT || (riskOpt == CONVERSION_TO_MULTICOUNTRY_OPT && !a.Identify_as_Multicountry_Key_Hierarchy__c)){
 
-        if(riskOpt != 'OptInOut'){
-            riskEvents.add(
-                new ANG_Agency_Risk_Event__c(
-                    ANG_Risk_Type__c=riskEventTypeMap.get(riskOpt).id,
-                    ANG_Limit_Cash_Conditions__c =riskEventTypeMap.get(riskOpt).Limit_Cash_conditions__c
-                )
-            );
+            riskEvents = [SELECT Id, ANG_Risk_Type__c, ANG_Risk_ID__c, ANG_Limit_Cash_Conditions__c FROM ANG_Agency_Risk_Event__c where ANG_AccountId__c = :myCase.AccountId and ANG_Event_Status__c = 'Active' ];
+
+            if(riskOpt != 'OptInOut' && riskOpt != CONVERSION_TO_MULTICOUNTRY_OPT){
+                riskEvents.add(
+                    new ANG_Agency_Risk_Event__c(
+                        ANG_Risk_Type__c=riskEventTypeMap.get(riskOpt).id,
+                        ANG_Limit_Cash_Conditions__c =riskEventTypeMap.get(riskOpt).Limit_Cash_conditions__c
+                    )
+                );
+            }
+
         }
         
         Map<Account,List<ANG_Agency_Risk_Event__c>> riskEventsPerAccount = new Map<Account,List<ANG_Agency_Risk_Event__c>>();
