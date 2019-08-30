@@ -1151,62 +1151,109 @@
                         				<apex:inputField value="{!newForm.ISSP_AMS_Principal_business_Org__c}" style="width: 250px;" />
                       				</apex:pageBlockSection>
 
-                          			<apex:pageBlockSection columns="2" id="agencydates">
-                            			<apex:inputField showDatePicker="true" id="dateOpenedAsTravelAgency" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}"/>
-                            			<apex:outputText/>
+                          <apex:pageBlockSection columns="2" id="agencydates">
+                            <apex:inputField showDatePicker="true" id="dateOpenedAsTravelAgency" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}"/>
+                            <apex:outputtext >
+                              <!--empty: move following field to next row -->
+                            </apex:outputtext>
+                            <apex:outputPanel rendered="{!NOT(countryCheckList.License_required__c)}"></apex:outputPanel>
+                            <apex:inputfield id="license-no" value="{!newForm.ISSP_AMS_License_No__c}" rendered="{!countryCheckList.License_required__c==true}"/>
+                            <apex:inputfield id="trade-reg-no" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" rendered="{!countryCheckList.Registration_required__c==true}"/>
+                            <apex:inputfield id="date-license-granted" value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" rendered="{!countryCheckList.License_required__c==true}"/>
+                            <apex:inputfield id="date-reg-granted" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" rendered="{!countryCheckList.Registration_required__c==true}"/>
+                          </apex:pageBlockSection>
 
-                            			<apex:outputPanel rendered="{!NOT(countryCheckList.License_required__c)}"/>
-                            			<apex:inputfield id="license-no" value="{!newForm.ISSP_AMS_License_No__c}" rendered="{!countryCheckList.License_required__c==true}"/>
-                            			<apex:inputfield id="trade-reg-no" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" rendered="{!countryCheckList.Registration_required__c==true}"/>
-                            			<apex:inputfield id="date-license-granted" value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" rendered="{!countryCheckList.License_required__c==true}"/>
-                            			<apex:inputfield id="date-reg-granted" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" rendered="{!countryCheckList.Registration_required__c==true}"/>
-                          			</apex:pageBlockSection>
-                  				</apex:pageblock>
-                  				<script>
-						            $( document ).ready(function() {
-						                $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c');
-						                var oldElemt = $('#shipping_country__c > input');
-						                oldElemt.attr('style', 'display: none;');
-						                $('#shipping_country__c').css("padding-right", 0);
+                          <apex:pageBlockSection columns="2" collapsible="false" rendered="{!isocountry.Local_language_Agency_details_required__c}">
+                            <apex:facet name="header">
+                                <apex:outputpanel >
+                                    {!txtLocalAgencyDetailsTitle}
+                                </apex:outputpanel>
+                            </apex:facet>
+                            <apex:outputText value="{!txtLocalAgencyDetailsPleaseEnter}"/>
+                            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                            <apex:pageBlockSectionItem labelStyle="width:10%;text-align:left" dataStyle="width:20%">
+                                <apex:outputLabel value="{!txtLocalAgencyDetailsLegalName}"/>
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!newForm.Local_Legally_Registered_Name__c}" />
+                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoCompany}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>                   
+                            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                            <input type="checkbox" id="copyCheckBox" onChange="copyPhysicalAddress()"/>
+                            <label for="copyCheckBox">{!txtLocalAgencyDetailsCopyAddress}</label> 
+                            
+                            <apex:pageBlockSection columns="1">    
+                                <apex:outputText value="{!txtLocalAgencyDetailsPhysicalAddress}" style="font-weight:bold; font-size:110%"/>
+                                <apex:pageBlockSectionItem labelStyle="width:35%">
+                                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Street__c.Label}"/>
+                                    <apex:inputField value="{!newForm.Local_Physical_Address_Street__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalStreet"/>
+                                </apex:pageBlockSectionItem>  
+                                <apex:inputField value="{!newForm.Local_Physical_Address_City__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalCity"/>
+                                <apex:inputField value="{!newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode"/>
+                                <apex:inputField value="{!newForm.Local_Physical_Address_Province__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalProvince"/>
+                                <apex:inputField value="{!newForm.Local_Physical_Address_Area__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalArea"/>
+                                <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                            </apex:pageBlockSection>
+                          
+                            <apex:pageBlockSection columns="1">
+                                <apex:outputText value="{!txtLocalAgencyDetailsCorrespondenceAddress}" style="font-weight:bold; font-size:110%"/>
+                                <apex:pageBlockSectionItem labelStyle="width:30%">
+                                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Street__c.Label}"/>
+                                    <apex:inputField value="{!newForm.Local_Postal_Address_Street__c}" styleClass="PostalStreet"/>
+                                </apex:pageBlockSectionItem>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_City__c}" styleClass="PostalCity"/>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode"/>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince"/>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
+                                <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                            </apex:pageBlockSection>
+                        </apex:pageBlockSection>
+                  </apex:pageblock>
+                  <script>
+					            $( document ).ready(function() {
+					                $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c');
+					                var oldElemt = $('#shipping_country__c > input');
+					                oldElemt.attr('style', 'display: none;');
+					                $('#shipping_country__c').css("padding-right", 0);
 
-						                $('[id$="subbranchsection"]').children().children().children().children().last().remove();
+					                $('[id$="subbranchsection"]').children().children().children().children().last().remove();
 
-						                if ($('[id$="ShippingCountryList"]').parent().find('.errorMsg').length > 0) {
-						                    $('[id$="ShippingCountryList"]').addClass('error');
-						                }
+					                if ($('[id$="ShippingCountryList"]').parent().find('.errorMsg').length > 0) {
+					                    $('[id$="ShippingCountryList"]').addClass('error');
+					                }
 
-						                $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
-						                    return "* " + $(this).text();
-						                });
-						         
-						                $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
-						                    return "* " + $(this).text();
-						                });
-						                
-						                $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
-						                    return "* " + $(this).text();
-						                });
-						            });
+					                $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
+					                    return "* " + $(this).text();
+					                });
+					         
+					                $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
+					                    return "* " + $(this).text();
+					                });
+					                
+					                $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
+					                    return "* " + $(this).text();
+					                });
+					            });
 
-						            function copyToADShippingCntr(){
-						                $('#shipping_country__c > input').val($('[id$="ShippingCountryList"]').val());
-						                $('#shipping_country__c > input').change();
-						            }
-						        </script>
-	                  
-                  				<script>
-                    				$j( document ).ready(function() {
-                      					var dateOpenedAsTravelAgency = $j('[for$=dateOpenedAsTravelAgency]')[0],
-				                        licenseNo = $j('[for$=license-no]')[0],
-				                        tradeRegNo = $j('[for$=trade-reg-no]')[0],
-				                        dateLicenseGranted = $j('[for$=date-license-granted]')[0],
-				                        dateRegGranted = $j('[for$=date-reg-granted]')[0],
-				                        vatLabel = $j('[for$=VATInput]')[0],
-				                        officePhoneLabel = $j('[id$=office-phone-label]')[0],
-				                        officeEmail = $j('.office-email')[0].childNodes[0],
-				                        labelBillStreet = $j('.address-label')[0].childNodes[0],
-				                        labelBillCity = $j('.address-label')[1].childNodes[0],
-				                        legalStatusLabel = $j('.LegalStatusLabel')[0].childNodes[0];
+					            function copyToADShippingCntr(){
+					                $('#shipping_country__c > input').val($('[id$="ShippingCountryList"]').val());
+					                $('#shipping_country__c > input').change();
+					            }
+					        </script>
+                  <script>
+                    $j( document ).ready(function() {
+                      var dateOpenedAsTravelAgency = $j('[for$=dateOpenedAsTravelAgency]')[0],
+                         licenseNo = $j('[for$=license-no]')[0],
+                         tradeRegNo = $j('[for$=trade-reg-no]')[0],
+                         dateLicenseGranted = $j('[for$=date-license-granted]')[0],
+                         dateRegGranted = $j('[for$=date-reg-granted]')[0],
+                         vatLabel = $j('[for$=VATInput]')[0],
+                         officePhoneLabel = $j('[id$=office-phone-label]')[0],
+                         officeEmail = $j('.office-email')[0].childNodes[0],
+                         labelBillStreet = $j('.address-label')[0].childNodes[0],
+                         labelBillCity = $j('.address-label')[1].childNodes[0],
+                         legalStatusLabel = $j('.LegalStatusLabel')[0].childNodes[0];
                          
                          
 	                        			if(dateOpenedAsTravelAgency) {

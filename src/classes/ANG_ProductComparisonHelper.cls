@@ -16,13 +16,17 @@ public with sharing class ANG_ProductComparisonHelper {
     private User currentUser {get; set;}
     public String chinaLocClass {
     	get {
-    		String chinaTypeOfAccred = '';
+    		if (chinaLocClass == null) {
+				String chinaTypeOfAccred = '';
 
-    		if (ApexPages.currentPage().getParameters().containsKey('chinaAccred')) {
-    			chinaTypeOfAccred = ApexPages.currentPage().getParameters().get('chinaAccred');
-    		}
+				if (ApexPages.currentPage().getParameters().containsKey('chinaAccred')) {
+					chinaTypeOfAccred = ApexPages.currentPage().getParameters().get('chinaAccred');
+				}
 
-    		return chinaTypeOfAccred;
+				return chinaTypeOfAccred;
+			}
+
+    		return chinaLocClass;
     	}
     	set;
     }
@@ -54,12 +58,20 @@ public with sharing class ANG_ProductComparisonHelper {
     	mapFeatures = new Map<string, Product_Component__c>();
 
     	currentUser = [SELECT Contact.Account.Country_ISO_Code__c, Contact.Account.Status__c, 
-    					Contact.Account.RecordTypeId
+    					Contact.Account.RecordTypeId, Contact.Account.Category__c
 					FROM User 
 					WHERE Id = :UserInfo.getUserId() 
 					LIMIT 1];
 
 		chinaAgent = currentUser.Contact.Account.Country_ISO_Code__c == 'CN';
+
+		if (AMS_Utils.ACTIVEAGENCYSTATUS.contains(currentUser.Contact.Account.Status__c)) {
+			if (currentUser.Contact.Account.Category__c == 'Domestic Agent') {
+				chinaLocClass = 'Domestic';
+			} else {
+				chinaLocClass = 'International';
+			}
+		}
 
     	Map<String, String> mapProductLabels = new Map<String, String>();
     	Map<String, String> mapTooltipLabels = new Map<String, String>();

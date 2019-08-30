@@ -326,6 +326,9 @@ public class Product_Svc
         map<String,String> apiName_Label = productApiNames();
         map<String,String> new_oldValue = new map<String,String>();
         map<String,String> value_Label = new map<String,String>();
+
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        List<Messaging.SingleEmailMessage> messages = new List<Messaging.SingleEmailMessage>(); 
         
         for(Product2 product : products){
             
@@ -455,11 +458,15 @@ public class Product_Svc
                         bodyToSend = bodyToSend.replace('{!ListOfFields}', productId_FieldsTable.get(producId));
                     }
 
-                    //send the notification
-                    Utility.sendEmail(productEmails,subj,bodyToSend,true,null);
+                    //create email notification without sending
+                    message = Utility.sendEmail(productEmails,subj,bodyToSend,true,null, false);
+                    messages.add(message);
                 }
             }
         }
+        if(!messages.isEmpty())
+            //send the notification
+            Messaging.sendEmail(messages);
 
         //create all the tasks for PM
         if(taskToInsert.size() > 0){

@@ -364,6 +364,10 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             accredModel = user.contact.Account.ANG_Accreditation_Model__c;
         }
 
+        if (String.isBlank(accreditationType)) {
+            accreditationType = accredModel;
+        }
+
         if(isHOAccredited && category == AMS_UTILS.CATEGORY_PASSENGER_SALES_AGENT) {
             if (isNewgenEnabled) {
                 if (accredModel == 'Cash') {
