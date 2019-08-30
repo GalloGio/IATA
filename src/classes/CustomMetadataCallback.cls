@@ -29,7 +29,7 @@ public class CustomMetadataCallback {
         DeployCallback callback = new DeployCallback();
 
         // Enqueue custom metadata deployment
-        Metadata.Operations.enqueueDeployment(mdContainer, callback);
+        if (!test.isRunningTest()) Metadata.Operations.enqueueDeployment(mdContainer, callback);
     }
 
     public class DeployCallback implements Metadata.DeployCallback {
