@@ -39,7 +39,7 @@ import NextLabel                                from '@salesforce/label/c.ISSP_N
 import SubmitLabel                              from '@salesforce/label/c.CSP_Submit';
 import AcceptTermsLabel                         from '@salesforce/label/c.ISSP_Registration_acceptGeneralConditions';
 import AcceptTermsErrorLabel                    from '@salesforce/label/c.CSP_Accept_Terms_Error';
-import TouLabel                                 from '@salesforce/label/c.CSP_Privacy_Policy';
+//import TouLabel                                 from '@salesforce/label/c.CSP_Privacy_Policy';
 import RegistrationCompleteLabel                from '@salesforce/label/c.OneId_RegistrationComplete';
 import CheckEmailLabel                          from '@salesforce/label/c.OneId_CheckEmail';
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
@@ -97,7 +97,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         SubmitLabel,
         AcceptTermsLabel,
         AcceptTermsErrorLabel,
-        TouLabel,
+        //TouLabel,
         RegistrationCompleteLabel,
         CheckEmailLabel,
         DisabledRegistrationLabel : 'Portal Registration is currently disabled. Thank you for your understanding.',
