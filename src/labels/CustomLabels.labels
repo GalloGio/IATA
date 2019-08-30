@@ -3552,17 +3552,6 @@ Payment required on receipt of this Payment Advice
         <value>Portal Status</value>
     </labels>
     <labels>
-        <fullName>CSP_Privacy_Policy</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Privacy Policy</shortDescription>
-        <value>I agree with IATA&apos;s
-&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy &lt;/a&gt;
-and &lt;br/&gt;
-&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Terms of Use. &lt;/a&gt;</value>
-    </labels>
-    <labels>
         <fullName>CSP_Question1</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
