@@ -596,6 +596,8 @@ public without sharing class ISSP_AMS_Accreditation {
             applyLanguage = 'en_US';
         }
 
+        newForm.Multicountry_Apply_Language__c = applyLanguage;
+
         //Labels set in controller remain in portal's user language
         lblStepA = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_Step1_ProgressBar_New: Label.ISSP_AMS_Step1_ProgressBar;
         lblStepB = Label.ISSP_AMS_Step2_ProgressBar;
@@ -700,10 +702,14 @@ public without sharing class ISSP_AMS_Accreditation {
 
                 amsAllLangCountryLabel = getAmsAllLangCountryLabel(isocountry, UserInfo.getLanguage());
 
-                if(newCase.Case_Language__c == null || newCase.Case_Language__c == 'English') newCase.Case_Language__c = 'en_US';
+                if(newCase.Case_Language__c == null || newCase.Case_Language__c == 'English') {
+                    newCase.Case_Language__c = 'en_US';
+                } 
 
                 applyLanguage = newCase.Case_Language__c;
                 displayLanguage = newCase.Case_Language__c;
+
+                
 
                 if (applyLanguage == 'en_US') {
                     amsCountryLabel = isocountry.Case_BSP_Country__c; 
@@ -731,6 +737,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 fetchAMSProcessForm();
                 if (modifyForm) {
                     newform.Status__c = 'InProgress';
+                }
+
+                if (isMultiCountryNewAE) {
+                    applyLanguage = newForm.Multicountry_Apply_Language__c;
                 }
 
                 if (String.isBlank(mcformCountryISO)) {
@@ -998,6 +1008,10 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         applyLanguage = newCase.Case_Language__c;
+
+        if (isMultiCountryNewAE) {
+            applyLanguage = newForm.Multicountry_Apply_Language__c;
+        }
 
         // NewGen is only valid for Travel Agents
         newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && !String.isBlank(sectorValue) && sectorValue.StartsWith('Travel_Agent'));//fix amsu-113
