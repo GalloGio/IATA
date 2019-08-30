@@ -12,7 +12,7 @@ public class PortalPasswordHandlerTest {
     }
 
     @isTest
-    public static void handleResetPasswordTest(){
+    public static void unitTest(){
         Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acc = new Account(
                 RecordTypeId = rtHQ,
@@ -39,7 +39,14 @@ public class PortalPasswordHandlerTest {
         User portalUser = ISSP_ObjectFactory.createPortalUser(con2);
 
         System.runAs(portalUser) {
+            EmailTemplate emailTemplate = new EmailTemplate (developerName = 'test', Subject = 'subject', HtmlValue = '', Body = '', TemplateType = 'Text', Name = 'test', folderId = UserInfo.getUserId());
+            insert emailTemplate;
+
             PortalPasswordHandler.resultWrapper result = PortalPasswordHandler.handleResetPassword('contact@bucketairline.com');
+            String url = PortalPasswordHandler.generateUrl(portalUser, 'password', 'pageName');
+            Map<String, String> emailMap = PortalPasswordHandler.forgotPasswordEmailMap(portalUser, url);
+            boolean success = PortalPasswordHandler.sendEmail(portalUser.Id, 'test', emailMap);
+            PortalPasswordHandler.resultWrapper changeResult = PortalPasswordHandler.changePassword('test123!', 'New1234!', 'New1234!');
         }
     }
 }

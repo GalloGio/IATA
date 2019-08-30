@@ -12,10 +12,11 @@ export default class PortalForgotPasswordCard extends LightningElement {
     @track isSuccess;
     @track loginUrl;
     @track selfRegistrationUrl;
+    @track isSelfRegistrationEnabled;
     @track isSanctioned;
 
     connectedCallback() {
-       this.checkUserIsGuest();
+       this.checkUserIsGuestOrAdmin();
        const RegistrationUtilsJs = new RegistrationUtils();
        //check user location
        RegistrationUtilsJs.getUserLocation().then(result=> {
@@ -26,21 +27,23 @@ export default class PortalForgotPasswordCard extends LightningElement {
            else{
                //get initial configuration information
                 getInitialConfig().then(result => {
-                   this.selfRegistrationUrl = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf(CSP_PortalPath));
-                   this.loginUrl = result.loginUrl.substring(result.loginUrl.indexOf(CSP_PortalPath));
+                   this.selfRegistrationUrl       = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf(CSP_PortalPath));
+                   this.loginUrl                  = result.loginUrl.substring(result.loginUrl.indexOf(CSP_PortalPath));
+                   this.isSelfRegistrationEnabled = result.isSelfRegistrationEnabled;
                    this.changeIsLoadingMain();
-               })
-               .catch(error => {
                });
            }
        });
     }
 
-    checkUserIsGuest(){
-       if(isGuest == false){
-           navigateToPage(CSP_PortalPath,{});
-           return;
-       }
+    checkUserIsGuestOrAdmin() {
+        const RegistrationUtilsJs = new RegistrationUtils();
+        RegistrationUtilsJs.checkUserIsSystemAdmin().then(result=> {
+            if(result == false && isGuest == false){
+                navigateToPage(CSP_PortalPath,{});
+                return;
+            }
+        });
     }
 
     changePage(event){

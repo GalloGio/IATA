@@ -9,6 +9,10 @@ public without sharing class PortalPasswordHandler {
         public String message {get;set;}
         @AuraEnabled
         public boolean success {get;set;}
+        @AuraEnabled
+        public String password {get;set;}
+        @AuraEnabled
+        public User user {get;set;}
     }
 
     public static final string SEPARATOR    = '@#@#@#';
@@ -55,62 +59,68 @@ public without sharing class PortalPasswordHandler {
     }
 
     //update user information
-    public static boolean updateUserPassword(User user){
-        boolean success = true;
+    public static resultWrapper updateUserPassword(User user){
+        resultWrapper result = new resultWrapper();
+        result.success = true;
+        result.user    = user;
 
         user.uid__c   = Comm_User_Helper.NewGuid();
         user.isActive = true;
         user.portal_user_frozen_checkbox__c = false;
 
-        string password = Comm_User_Helper.generateRandomString(6)+'1a';
+        result.password = Comm_User_Helper.generateRandomString(6)+'1a';
 
         try{
-            system.setPassword(user.id, password);
-            sendEmail(user,password);
+            system.setPassword(user.id, result.password);
         }
         catch(Exception ex){
-            success = false;
+            result.message = ex.getMessage();
+            result.success = false;
         }
 
-        if(success == true) update user;
+        if(result.success == true) update user;
 
-        return success;
+        return result;
     }
 
-    public static void sendEmail(User user, String password) {
-        //get contact information
-        Contact contactInfo = [SELECT Id,Email, firstName, LastName,Salutation FROM Contact WHERE ID = :user.contactid limit 1];
-
-        //generate one time link for forgot password
+    public static string generateUrl (User user, String password, String pageName){
         String cleanUsername = user.userName.replace('+', plusReplacer);
         String encodedPart = 'c=' + EncodingUtil.urlEncode(EncryptString(cleanUsername + SEPARATOR + password + SEPARATOR + user.uid__c), 'UTF-8');
 
-        String prefix   = '';
+        String prefix = '';
         if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('/login'));
-        String link     = prefix + '/firstLogin?' + encodedPart;
-        String template = 'CSP_Forgot_Password_Email';
-        String imageURL = Label.OneId_Email_Header_Identity;
+        String link = prefix + '/' + pageName + '?' + encodedPart;
+        return link;
+    }
+
+    public static Map<String, String> forgotPasswordEmailMap(User user, String link){
+        //get contact information
+        Contact contactInfo = [SELECT Id,Email, firstName, LastName,Salutation FROM Contact WHERE ID = :user.contactid limit 1];
 
         Map<String, String> mapBodyParams = new map<String, String>{
                 '{!Contact.Salutation}' => contactInfo.Salutation,
-                '{!Contact.Password}' => password,
+                '{!Contact.Password}' => '',
                 '{!Receiving_User.FirstName}' => contactInfo.Firstname,
                 '{!Receiving_User.LastName}' => contactInfo.LastName,
                 '{!Receiving_User.Email}' => contactInfo.Email,
                 '{!Community_Name}' => '',
                 '{!Community_Url}' => link,
-                '{!Community_Header}' => imageURL,
+                '{!Community_Header}' => Label.OneId_Email_Header_Identity,
                 '{!$Label.ISSP_Email_Here}' => 'here',
                 '{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply,
                 '{!$Label.OneId_IATA_represent_lead_and_serve_the_airline_industry}' => Label.OneId_IATA_represent_lead_and_serve_the_airline_industry
         };
+        return mapBodyParams;
+    }
+
+    public static boolean sendEmail(Id userId, String template, Map<String, String> mapBodyParams) {
+        boolean success = true;
 
         try{
             List<Messaging.SendEmailResult>    listEmailResult = null;
             List<Messaging.SingleEmailmessage> listSingleEmailMessages = new List<Messaging.SingleEmailmessage>();
 
-            EmailTemplate emailTemplate = [SELECT Id,Subject,HtmlValue,Body FROM EmailTemplate WHERE DeveloperName=:template];
-
+            EmailTemplate emailTemplate = [SELECT Id,Subject,HtmlValue,Body FROM EmailTemplate WHERE DeveloperName=:template Limit 1];
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             OrgWideEmailAddress orgWideEmail  = [SELECT Id,Address FROM OrgWideEmailAddress WHERE Address='noreply@iata.org' Limit 1];
             if(orgWideEmail != null){
@@ -121,7 +131,7 @@ public without sharing class PortalPasswordHandler {
             }
 
             mail.setReplyTo('noreply@iata.org');
-            mail.setTargetObjectId(user.Id);
+            mail.setTargetObjectId(userId);
             mail.setSubject(emailTemplate.Subject);
 
             String htmlBody  = emailTemplate.HtmlValue;
@@ -133,21 +143,19 @@ public without sharing class PortalPasswordHandler {
                 }
             }
 
-            if(htmlBody <> null){
-                mail.setHtmlBody(htmlBody);
-            }
+            if(htmlBody <> null) mail.setHtmlBody(htmlBody);
 
             mail.setSaveAsActivity(false);
             mail.setPlainTextBody(plainBody);
             listSingleEmailMessages.add(mail);
 
-            if(!Test.isRunningTest()) {
-                listEmailResult = Messaging.sendEmail(listSingleEmailMessages);
-            }
+            if(!Test.isRunningTest())  listEmailResult = Messaging.sendEmail(listSingleEmailMessages);
         }
         catch(Exception ex){
-            system.debug(ex.getMessage());
+            success = false;
         }
+
+        return success;
     }
 
     @AuraEnabled
@@ -155,15 +163,28 @@ public without sharing class PortalPasswordHandler {
         resultWrapper result = new resultWrapper();
         //check email validity
         result = checkEmailIsValid(email);
-
         if(result.success == true){
-            User user = getUserFromEmail(email);
-            if(user != null){
-                result.success = updateUserPassword(user);
+            result.user = getUserFromEmail(email);
+            if(result.user != null){
+                result = updateUserPassword(result.user);
             }
             else{
                 result.success = false;
             }
+        }
+        return result;
+    }
+
+    @AuraEnabled
+    public static resultWrapper changePassword(String currentPassword, String newPassword, String confirmPassword){
+        resultWrapper result = new resultWrapper();
+        result.success = true;
+        try{
+            PageReference pageRef = Site.changePassword(newPassword, confirmPassword, currentPassword);
+        }
+        catch(Exception ex){
+            result.success = false;
+            result.message = 'Your new password could not be set.';
         }
         return result;
     }

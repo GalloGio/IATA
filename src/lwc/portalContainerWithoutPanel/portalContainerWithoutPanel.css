@@ -1,0 +1,42 @@
+customPaddingHeader@media only screen and (max-width: 400px) {
+   .customPadding {
+       padding-top: 0rem !important;
+   }
+   .containerHeight{
+       height:915px;
+       /*min-height:2500px;*/
+   }
+
+}
+
+@media only screen and (min-width: 401px) and (max-width: 960px) {
+   .customPadding {
+       padding-top: 1rem !important;
+   }
+   .containerHeight{
+       height:690px;
+       /*min-height:2500px;*/
+   }
+}
+
+@media only screen and (min-width: 961px) {
+   .customPadding {
+       padding-top: 4rem !important;
+   }
+   .customPaddingHeader{
+       /*padding-top: 2rem !important;
+       padding-bottom: 6rem !important;*/
+   }
+   .fixedPosition{
+       /*max-width: 600px;*/
+       height: 100%;
+       /*position: fixed; */
+   }
+   .containerHeight{
+       height:915px;
+       /*min-height:2000px;*/
+   }
+   .bodyContent{
+       height:915px;
+   }
+}

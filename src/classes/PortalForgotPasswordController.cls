@@ -5,6 +5,8 @@ public without sharing class PortalForgotPasswordController {
         public String selfRegistrationUrl{get;set;}
         @AuraEnabled
         public String loginUrl{get;set;}
+        @AuraEnabled
+        public boolean isSelfRegistrationEnabled{get;set;}
     }
 
     @AuraEnabled
@@ -15,6 +17,7 @@ public without sharing class PortalForgotPasswordController {
         //get login and self registration url
         config.selfRegistrationUrl = authConfig.getSelfRegistrationUrl();
         config.loginUrl = Network.getLoginURL(Network.getNetworkId());
+        config.isSelfRegistrationEnabled = authConfig.getSelfRegistrationEnabled();
         return config;
     }
 
@@ -28,6 +31,12 @@ public without sharing class PortalForgotPasswordController {
     @AuraEnabled
     public static PortalPasswordHandler.resultWrapper handleResetPassword(String email){
         PortalPasswordHandler.resultWrapper result = PortalPasswordHandler.handleResetPassword(email);
+        if(result.success == true){
+            String link                  = PortalPasswordHandler.generateUrl(result.user, result.password, 'resetPassword');
+            Map<String, String> emailMap = PortalPasswordHandler.forgotPasswordEmailMap(result.user, link);
+            result.success               = PortalPasswordHandler.sendEmail(result.user.id, 'CSP_Forgot_Password_Email', emailMap);
+        }
+
         return result;
     }
 
