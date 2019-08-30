@@ -41,9 +41,6 @@ export default class ForgotPasswordOneId extends LightningElement {
                 else{
                   this.dispatchSubmitEvent(true);
                 }
-            })
-            .catch(error => {
-                //
             });
          }
     }

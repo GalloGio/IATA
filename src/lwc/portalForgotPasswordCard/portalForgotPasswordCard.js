@@ -31,8 +31,6 @@ export default class PortalForgotPasswordCard extends LightningElement {
                    this.loginUrl                  = result.loginUrl.substring(result.loginUrl.indexOf(CSP_PortalPath));
                    this.isSelfRegistrationEnabled = result.isSelfRegistrationEnabled;
                    this.changeIsLoadingMain();
-               })
-               .catch(error => {
                });
            }
        });

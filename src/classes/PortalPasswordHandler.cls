@@ -153,7 +153,6 @@ public without sharing class PortalPasswordHandler {
         }
         catch(Exception ex){
             success = false;
-            system.debug(ex.getMessage());
         }
 
         return success;
