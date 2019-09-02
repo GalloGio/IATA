@@ -65,6 +65,36 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Location_Type_Conversion__c</fullName>
+        <description>Allow the definition of the location type in a standard account to Multicountry hierarchy</description>
+        <externalId>false</externalId>
+        <label>ANG_Location_Type_Conversion</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>GE</fullName>
+                    <default>false</default>
+                    <label>GE</label>
+                </value>
+                <value>
+                    <fullName>HE</fullName>
+                    <default>false</default>
+                    <label>HE</label>
+                </value>
+                <value>
+                    <fullName>AE</fullName>
+                    <default>false</default>
+                    <label>AE</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -122,6 +152,21 @@ Account__c))</formula>
         <fullName>Agency_Involved</fullName>
         <active>true</active>
         <label>Agency Involved</label>
+        <picklistValues>
+            <picklist>ANG_Location_Type_Conversion__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>CaseRelatedAgencies</fullName>

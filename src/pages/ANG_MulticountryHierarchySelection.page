@@ -193,7 +193,7 @@
 			<apex:pageBlockButtons location="bottom">
 				<apex:commandButton action="{!save}" oncomplete="{!IF(closeTab, 'refreshTab();', '')}" status="blockEditing" value="Confirm Hierarchy Structure" reRender="pageMessages" rendered="{!AND(editable, !isConversionProcess)}"/>
 				<!-- Conversion button -->
-				<apex:commandButton action="{!saveConvertion}" oncomplete="{!IF(closeTab, 'refreshTab();', '')}" status="blockEditing" value="{!$Label.site.save}" reRender="pageMessages" rendered="{!AND(editable, isConversionProcess)}"/>
+				<apex:commandButton action="{!saveConversion}" oncomplete="{!IF(closeTab, 'refreshTab();', '')}" status="blockEditing" value="{!$Label.site.save}" reRender="pageMessages" rendered="{!AND(editable, isConversionProcess)}"/>
 				<apex:commandButton onclick="closeTab(); return false;" status="blockEditing" value="{!$Label.site.cancel}" immediate="true" rendered="{!editable}"/>
 			</apex:pageBlockButtons>
 		</apex:pageBlock>
