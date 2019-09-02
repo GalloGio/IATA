@@ -175,3 +175,8 @@
 .negative-margin-left{
     margin-left: -9.0rem;
 }
+
+.recentCasesMargin {
+    margin-left: 200px; 
+    margin-right: 170px;
+}

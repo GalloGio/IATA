@@ -1,9 +1,9 @@
 <template>
 
-    <c-portal-custom-card-container>
+    <c-portal-custom-card-container special-card={specialCase}>
 
         <span slot="cardTitle">
-            <span class="text-small">{label.CSP_RecentCases}</span>
+            <span class="text-small"> {title} </span>
         </span>
 
         <span slot="cardButton" if:true={dataRecordsSeeAll}>
