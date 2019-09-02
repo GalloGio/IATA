@@ -589,28 +589,28 @@ public class PortalServicesCtrlTest {
         
         Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
 
-	User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
 
-	List<String> lstString = new List<String>();
-	lstString.add(c.id);
-	List<PortalServicesCtrl.ServiceWrapper> paList = new List<PortalServicesCtrl.ServiceWrapper>();
-	System.runAs(portalUser) {
+        List<String> lstString = new List<String>();
+        lstString.add(c.id);
+        List<PortalServicesCtrl.ServiceWrapper> paList = new List<PortalServicesCtrl.ServiceWrapper>();
+        System.runAs(portalUser) {
 
-		Test.StartTest();
-		list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name in ('serviceTest3','serviceTest2','Insurance Providers')];
+            Test.StartTest();
+            list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name in ('serviceTest3','serviceTest2','Insurance Providers')];
 
-		PortalServicesCtrl.requestAccess(portalServicelist.get(0).id);
-		PortalServicesCtrl.getPortalAdmins();
-		paList = PortalServicesCtrl.getAllServices();
+            PortalServicesCtrl.requestAccess(portalServicelist.get(0).id);
+            PortalServicesCtrl.getPortalAdmins();
+            paList = PortalServicesCtrl.getAllServices();
 
 
-		//requestAccessToICCS
-		PortalServicesCtrl.newAppsRequestICCS(portalServicelist.get(1).id, '', c.id);
+            //requestAccessToICCS
+            PortalServicesCtrl.newAppsRequestICCS(portalServicelist.get(1).id, '', c.id);
 
-		PortalServicesCtrl.newAppsRequest2(portalServicelist.get(2).id, '', c.id, '', false);
-		Test.StopTest();
-	}
-}
+            PortalServicesCtrl.newAppsRequest2(portalServicelist.get(2).id, '', c.id, '', false);
+            Test.StopTest();
+        }
+    }
 
 @isTest
 public static void PortalServicesCtrlTest_getTotalNrContacts() {
