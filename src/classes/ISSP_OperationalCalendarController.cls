@@ -753,7 +753,9 @@ global without sharing class ISSP_OperationalCalendarController {
             Date dateToCompare = isAirline? operation.Settlement_Day__c: operation.Remittance_Day__c;
             String rowclass = getDateComparedToToday(dateToCompare);
             numOfNonPastRow+= rowclass=='past-row'? 0: 1;
-            if (numOfNonPastRow == 1)  rowclass += ' first-nonpast-row';
+            if (operationType.contains('BSP') || operationType.contains('CASS') || operationType.contains('CNS')) {
+                if (numOfNonPastRow == 1)  rowclass += ' first-nonpast-row';
+            }
             listLine.add(rowclass);
             listLine.add(''+operation.LastModifiedDate);
             

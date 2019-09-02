@@ -124,36 +124,36 @@
         updatePicklist($("#typeFilter"), listValues, 0, '');
         // set default values
         if ("{!$CurrentPage.parameters.ftype}" > "") {
-            $("#typeFilter").val("{!$CurrentPage.parameters.ftype}");
+            $("#typeFilter").val(decodeURIComponent("{!$CurrentPage.parameters.ftype}"));
         } else {
             $("#typeFilter").val(defaultOperationType);
         }
         updatePicklistsFromType();
         if ("{!$CurrentPage.parameters.fsubtype}">"") {
-            $("#subtypeFilter").val("{!$CurrentPage.parameters.fsubtype}");
+            $("#subtypeFilter").val(decodeURIComponent("{!$CurrentPage.parameters.fsubtype}"));
         } else {
             $("#subtypeFilter").val(defaultSubtype);
         }
         updatePicklistsFromSubtype();
         if ("{!$CurrentPage.parameters.fcycle}">"") {
-            $("#cycleFilter").val("{!$CurrentPage.parameters.fcycle}");
+            $("#cycleFilter").val(decodeURIComponent("{!$CurrentPage.parameters.fcycle}"));
         } else {
             $("#cycleFilter").val(defaultCycle);
         }
         if ("{!$CurrentPage.parameters.fcountry}">"") {
-            $("#countryFilter").val("{!$CurrentPage.parameters.fcountry}");
+            $("#countryFilter").val(decodeURIComponent("{!$CurrentPage.parameters.fcountry}"));
         } else {
             $("#countryFilter").val(defaultCountry);
         }
         //updatePicklistsFromCountry();
         if ("{!$CurrentPage.parameters.ffrequency}">"") {
-            $("#frequencyFilter").val("{!$CurrentPage.parameters.ffrequency}");
+            $("#frequencyFilter").val(decodeURIComponent("{!$CurrentPage.parameters.ffrequency}"));
         } else {
             $("#frequencyFilter").val(defaultFrequency);
         }
         //updatePicklistsFromFrequency();
         if ("{!$CurrentPage.parameters.fcurrency}">"") {
-            $("#currencyFilter").val("{!$CurrentPage.parameters.fcurrency}");
+            $("#currencyFilter").val(decodeURIComponent("{!$CurrentPage.parameters.fcurrency}"));
         }
         var fenablefilters = "{!$CurrentPage.parameters.fenablefilters}";
         if (fenablefilters>"") {
@@ -295,22 +295,22 @@
     function getDetailsUrl() {
         var href="/ISSP_OperationalCalendarDetails?MainNav=resources&subNav=OperationalCalendar&mid=M2S4";
         if ($("#typeFilter").val()>"") {
-            href+="&ftype=" + $("#typeFilter").val();
+            href+="&ftype=" + encodeURIComponent($("#typeFilter").val());
         }
         if ($("#subtypeFilter").val()>"") {
-          href+="&fsubtype=" + $("#subtypeFilter").val();
+          href+="&fsubtype=" + encodeURIComponent($("#subtypeFilter").val());
         }
         if ($("#cycleFilter").val()>"") {
-          href+="&fcycle=" + $("#cycleFilter").val();
+          href+="&fcycle=" + encodeURIComponent($("#cycleFilter").val());
         }
         if ($("#countryFilter").val()>"") {
-            href+="&fcountry=" + $("#countryFilter").val();
+            href+="&fcountry=" + encodeURIComponent($("#countryFilter").val());
         }
         if ($("#frequencyFilter").val()>"") {
-            href+="&ffrequency=" + $("#frequencyFilter").val();
+            href+="&ffrequency=" + encodeURIComponent($("#frequencyFilter").val());
         }
         if ($("#currencyFilter").val()>"") {
-            href+="&fcurrency=" + $("#currencyFilter").val();
+            href+="&fcurrency=" + encodeURIComponent($("#currencyFilter").val());
         }
         if ($("#enableFiltersCheck").prop("checked")) {
             href+="&fenablefilters=true";
@@ -397,6 +397,7 @@
             //populate BSP CASS subcategory picklist
             var listValues = containsInArray(LIST_FILTERS, operationType + ',');
             updatePicklist($("#subtypeFilter"), listValues,1,'');
+            updatePicklistsFromSubtype();
 
         } else if (operationType=='SIS') {
             $("#subtypeFilter").parent().removeClass("hidden");
@@ -406,6 +407,7 @@
             $("#currencyFilter").parent().addClass("hidden");
             //populate SIS subcategory picklist
             updatePicklist($("#subtypeFilter"), SIS_OPTIONS,0,'');
+            updatePicklistsFromSubtype();
 
         } else if (operationType=='ICCS') {
             $("#cycleFilter").parent().removeClass("hidden");
