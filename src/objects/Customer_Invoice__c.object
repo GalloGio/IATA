@@ -675,11 +675,10 @@
         <description>Settlement Method</description>
         <externalId>false</externalId>
         <label>Settlement Method</label>
-        <precision>1</precision>
+        <length>1</length>
         <required>false</required>
-        <scale>0</scale>
         <trackTrending>false</trackTrending>
-        <type>Number</type>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
