@@ -1,0 +1,167 @@
+<!--
+ - Created by pvavruska on 8/8/2019.
+ -->
+
+<!-- Portal Address Form -->
+<template>
+
+
+    <div>
+        <div style="display: flex;justify-content: center;align-items: center;">
+            <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
+                <div style="width:100%;" class="text-xxsmall text-gray">
+                    {fieldTitle}
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="slds-form-element">
+                <div class="slds-form-element__control custTextInput custTextInputSmall">
+
+                    <div style="display: flex;justify-content: center;align-items: center;">
+                        <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
+                            <div style="width:100%;" class="text-xxsmall text-gray">
+                                <abbr class="slds-required" title="required">* </abbr>Country
+                            </div>
+                        </div>
+                    </div>
+                    <!-- COUNTRY COMBOBOX -->
+                    <lightning-combobox class="countryCombobox slds-p-bottom_medium"
+                                        title="Country"
+                                        name="C"
+                                        label="Country"
+                                        variant="label-hidden"
+                                        options={countryOptions}
+                                        data-fieldname="Country"
+                                        value={countryId}
+                                        spinner-active={loadingCountries}
+                                        onchange={handleFieldChange}>
+                    </lightning-combobox>
+
+                    <!-- TODO: Display input if no states are found -->
+                    <div style="display: flex;justify-content: center;align-items: center;">
+                        <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
+                            <div style="width:100%;" class="text-xxsmall text-gray">
+                                <abbr class="slds-required" title="required">* </abbr>State/Province
+                            </div>
+                        </div>
+                    </div>
+                    <lightning-combobox class="stateCombobox slds-p-vertical_medium"
+                                        title="State"
+                                        name=""
+                                        label="State"
+                                        variant="label-hidden"
+                                        options={stateOptions}
+                                        data-fieldname="State"
+                                        value={stateId}
+                                        spinner-active={loadingStates}
+                                        onchange={handleFieldChange}>
+                    </lightning-combobox>
+
+                    <!-- CITY INPUT WITH SUGGESTIONS -->
+                    <div style="display: flex;justify-content: center;align-items: center;">
+                        <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
+                            <div style="width:100%;" class="text-xxsmall text-gray">
+                                <abbr class="slds-required" title="required">* </abbr>City
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text"
+                           class="slds-input cityInput slds-m-vertical_medium"
+                           data-address="true"
+                           placeholder="City..."
+                           data-fieldname="City"
+                           onchange={handleFieldChange}
+                           onkeyup={handleCityKey}
+                           autocomplete="no"
+                           value={thisCity}
+                           onblur={hideCities}
+                    />
+
+                    <template if:true={showCitySuggestions}>
+                        <div id="listbox" role="listbox" tabindex="0" class="contactListbox slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid customMaxHeight slds-scrollable_y">
+
+                            <ul role="presentation">
+
+                                <template for:each={citySuggestion} for:item="city">
+                                    <li key={city.value} role="presentation" class="slds-listbox__item"
+                                        data-value={city.value} data-name={city.name} data-stateid={city.stateid}>
+
+                                        <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta slds-grid"
+                                             data-value={city.value} data-name={city.name} data-stateid={city.stateid}
+                                             role="option" onmousedown={handleCityChange}>
+
+                                            <div data-value={city.value} data-name={city.name} data-stateid={city.stateid} class="slds-col breakWord">
+                                                {city.label}
+                                            </div>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </template>
+
+                    <!-- STREET INPUT -->
+                    <div style="display: flex;justify-content: center;align-items: center;">
+                        <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
+                            <div style="width:100%;" class="text-xxsmall text-gray">
+                                <abbr class="slds-required" title="required">* </abbr>Street
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text"
+                           class="slds-input streetInput slds-m-vertical_medium"
+                           placeholder="Street..."
+                           data-fieldname="Street"
+                           onchange={handleFieldChange}
+                           autocomplete="no"
+                    />
+
+                    <!-- ZIP INPUT -->
+                    <div style="display: flex;justify-content: center;align-items: center;">
+                        <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
+                            <div style="width:100%;" class="text-xxsmall text-gray">
+                                <abbr class="slds-required" title="required">* </abbr>Postal Code
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text"
+                           class="slds-input zipInput slds-m-vertical_medium"
+                           data-fieldname="zip"
+                           placeholder="Postal code..."
+                           onchange={handleFieldChange}
+                           value={thisZip}
+                           autocomplete="no"
+                    />
+
+                    <!-- ADDRESS SUGGESTION MODAL -->
+                    <!-- TODO: Validate address, if not matching, show suggestion, if yes, show checkbox as validated -->
+
+                    <!--<template if:true={showDoctor}>-->
+                        <c-address-doctor-search country-code={countryCode} street={thisStreet} zip={thisZip} city={thisCity} state-name={stateName}
+                                                 type={fieldTitle}
+                                                 input-value={thisStreet}
+                                                 onaddressselected={suggestionSelected}>
+                        </c-address-doctor-search>
+                    <!--</template>-->
+
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-m-vertical_medium">
+            <lightning-button variant="base" class="slds-m-top_small containedButtonWhite"
+                              type="close" label="Check address" onclick={validateAddress}>
+            </lightning-button>
+        </div>
+
+
+        <!-- Address form spinner -->
+        <div if:true={componentLoading} class="spinnerContainer">
+            <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+        </div>
+
+
+    </div>
+
+</template>
