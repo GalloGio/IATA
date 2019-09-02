@@ -82,6 +82,7 @@
         <columns>Account_Sector__c</columns>
         <columns>Account_Categories__c</columns>
         <columns>Permission_Set_Name__c</columns>
+        <columns>ISO_Country_Codes1__c</columns>
         <filterScope>Everything</filterScope>
         <label>Portal FAQs</label>
         <language>en_US</language>

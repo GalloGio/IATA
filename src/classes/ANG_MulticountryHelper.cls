@@ -350,10 +350,11 @@ public class ANG_MulticountryHelper {
 
 		List<AMS_Accreditation_Contact__c> aContactLst = new List<AMS_Accreditation_Contact__c>();
 
-		for(AMS_Account_Role__c contactRole: [Select Id, Owner_Account__c, Owner_Account__r.Name, Contact__c, Contact__r.FirstName, Contact__r.LastName, Contact_Email__c,Financial_Assessment_Contact__c,Percentage__c,Legacy_External_ID__c,Person__c, Person__r.First_Name__c, Person__r.Lastname__c, Person__r.Contact__r.FirstName, Person__r.Contact__r.LastName, Person__r.Name, Contact_Phone__c from AMS_Account_Role__c where Account__c = :onlineForm.SAAM_Case__r.Account.ParentId and active__c = true and RecordTypeId = :AMS_Utils.AccountRoleOwnershipRT]){
+		for(AMS_Account_Role__c contactRole: [Select Id, Owner_Account__c, Owner_Account__r.Name, Contact__c, Contact__r.FirstName, Contact__r.LastName, Contact_Email__c,Financial_Assessment_Contact__c,Percentage__c,Legacy_External_ID__c,Person__c, Person__r.First_Name__c, Person__r.Lastname__c, Person__r.Contact__r.FirstName, Person__r.Contact__r.LastName, Person__r.Name, Contact_Phone__c, Contact__r.Authorized_Signatory__c from AMS_Account_Role__c where Account__c = :onlineForm.SAAM_Case__r.Account.ParentId and active__c = true and RecordTypeId = :AMS_Utils.AccountRoleOwnershipRT]){
 
 			String firstName = contactRole.Owner_Account__c <> null ? contactRole.Owner_Account__r.Name : contactRole.Contact__c <> null ? contactRole.contact__r.FirstName : contactRole.Person__c <> null ? '' : contactRole.Owner_Name__c;
 			String lastName =  contactRole.Owner_Account__c <> null ? contactRole.Owner_Account__r.Name : contactRole.Contact__c <> null ? contactRole.contact__r.LastName : contactRole.Person__c <> null ? contactRole.Person__r.Name : contactRole.Owner_Name__c;
+			Boolean authorizedSignatory = contactRole.Contact__c <> null ? contactRole.Contact__r.Authorized_Signatory__c : false;
 
 			AMS_Accreditation_Contact__c aContact = new AMS_Accreditation_Contact__c();
 				
@@ -370,6 +371,7 @@ public class ANG_MulticountryHelper {
 			aContact.Name = firstName == null ? LastName : firstName + ' ' + LastName;
 			aContact.Person_AMS__c = contactRole.Person__c;
 			aContact.Phone__c = contactRole.Contact_Phone__c;
+			aContact.Authorised_signatory__c = authorizedSignatory;
 			aContact.RecordTypeId = contactRole.Owner_Account__c == null ? AMS_Utils.AccreditationContactPersonRT : AMS_Utils.AccreditationContactCompanyRT;
 
 			aContactLst.add(aContact);
