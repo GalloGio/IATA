@@ -1450,13 +1450,28 @@ public without sharing class ISSP_AMS_Accreditation {
         return optionLabel;
     }
 
+    public List<Account> selectedHierarchyAccounts {
+        get {
+            List<Account> accountList = new List<Account>();
+            
+            for (HierarchyItem hi: hierarchyValues) {
+                if (hi.selected) {
+                    accountList.add(hi.acc);
+                }
+            }
+            
+            return accountList;
+        }
+        set;
+    }
+
     public List<SelectOption> getAgencyCodesConcerned() {
         List<Account> accountList = new List<Account>();
         List<SelectOption> options = new List<SelectOption>();
 
         //SYSTEM.DEBUG('SPLIT size: ' + newForm.Agency_Codes_Concerned__c.split(',').size());
         if(hierarchyValues.size() > 0){
-            for(HierarchyItem hi:  hierarchyValues){
+            for(HierarchyItem hi: hierarchyValues){
                 if(hi.selected){
                     accountList.add(hi.acc);
                 }
