@@ -719,10 +719,10 @@ public without sharing class ISSP_AMS_Accreditation {
                     amsCountryLabel = isocountry.IATA_Country_SP__c;
                 }
                     
-                if (!isMultiCountryNewAE && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD 
+                if (!isMultiCountryNewAE && !isMCNewAEAccredited && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD 
                     || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY)) {
                     amsOfficeType = AMS_Utils.HO; //Branches Abroad have same country requirements as HO in that country
-                } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE)) {
+                } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || isMCNewAEAccredited)) {
                     amsOfficeType = 'Branch';
                 }
 
@@ -1450,13 +1450,28 @@ public without sharing class ISSP_AMS_Accreditation {
         return optionLabel;
     }
 
+    public List<Account> selectedHierarchyAccounts {
+        get {
+            List<Account> accountList = new List<Account>();
+            
+            for (HierarchyItem hi: hierarchyValues) {
+                if (hi.selected) {
+                    accountList.add(hi.acc);
+                }
+            }
+            
+            return accountList;
+        }
+        set;
+    }
+
     public List<SelectOption> getAgencyCodesConcerned() {
         List<Account> accountList = new List<Account>();
         List<SelectOption> options = new List<SelectOption>();
 
         //SYSTEM.DEBUG('SPLIT size: ' + newForm.Agency_Codes_Concerned__c.split(',').size());
         if(hierarchyValues.size() > 0){
-            for(HierarchyItem hi:  hierarchyValues){
+            for(HierarchyItem hi: hierarchyValues){
                 if(hi.selected){
                     accountList.add(hi.acc);
                 }
@@ -1844,7 +1859,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
             }
 
-            isocountry = isMultiCountryNewAE ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
+            isocountry = (isMultiCountryNewAE || isMCNewAEAccredited) ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
             
             if (isocountry.OSCAR_enabled__c && (!isocountry.SAAM_enable_non_IATA_Cargo_Agents__c ||
                 (newForm.Agent_Type__c != AMS_Utils.CATEGORY_CASSASSOCIATE && newForm.Agent_Type__c != AMS_Utils.CATEGORY_IMPORT_AGENT 
@@ -1856,7 +1871,7 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c;
             newCase.Country_concerned_by_the_query__c = isocountry.Name;
 
-            if (isMultiCountryNewAE) {
+            if (isMultiCountryNewAE || isMCNewAEAccredited) {
                 newForm.Branch_Office_Country__c = isocountry.Id;
             }
 
@@ -1870,7 +1885,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 newCase.Type_of_customer__c = con.Account.Category__c;
             }
 
-            if(amsLocationType.contains('Standard') || amsLocationType.contains('Associate') || amsLocationType.contains('Multicountry')){
+            if(amsLocationType.contains('Standard') || amsLocationType.contains('Associate') || amsLocationType.contains('Multicountry') || isMCNewAEAccredited){
                 newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + newCase.Country_concerned_by_the_query__c;
             } else {
                 newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;
@@ -1903,7 +1918,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
                     newCase.BSPCountry__c = isocountry.Case_BSP_Country__c;
 
-                    if (isMultiCountryNewAE) newform.Branch_Office_Country__c = isocountry.Id;
+                    if (isMultiCountryNewAE || isMCNewAEAccredited) newform.Branch_Office_Country__c = isocountry.Id;
                     newCase.Country_concerned_by_the_query__c = isocountry.Name;
                     newCase.Description = Label.ISSP_Email_Draft_Process1 + ' ' + getApplicationTypeLabel(amsLocationType) + getAccreditationModel(hqAccount.ANG_Accreditation_Model__c) + '.';
 
@@ -6209,7 +6224,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     errorFound = true;
                 }
 
-                if (newCase.Reason1__c != AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD && !isMultiCountryNewAE) {
+                if (newCase.Reason1__c != AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD && !isMultiCountryNewAE && !isMCNewAEAccredited) {
                     if (newForm.Wholly_owned_by_this_Head_Office__c == null) {
                         newForm.Wholly_owned_by_this_Head_Office__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
