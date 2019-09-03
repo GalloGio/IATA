@@ -640,15 +640,14 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			if(currentPD != null){
 
 				if(!item.isHE && !item.isAE) { 
-					item.wasChanged = true;
-					cloneProcess = mapHierarchyProcessDetail.get(item.acc.ID);
+					cloneProcess = currentPD;
 					item.acc.Location_type__c = AMS_Utils.GE;
 				}
 
-				if(item.isHE) mapHierarchyProcessDetail.get(item.acc.ID).ANG_Location_Type_Conversion__c = AMS_Utils.HE;
-				if(item.isAE) mapHierarchyProcessDetail.get(item.acc.ID).ANG_Location_Type_Conversion__c = AMS_Utils.AE;
+				if(item.isHE) currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.HE;
+				if(item.isAE) currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.AE;
 
-				if(mapHierarchyProcessDetail.get(item.acc.ID).ANG_Location_Type_Conversion__c != item.acc.Location_type__c)	item.wasChanged = true;
+				if(currentPD.ANG_Location_Type_Conversion__c != item.acc.Location_type__c)	item.wasChanged = true;
 
 			}else if(currentPD == null && (item.isHE || item.isAE)){
 				oldMainAccount = item.acc;
