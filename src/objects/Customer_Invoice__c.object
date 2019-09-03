@@ -514,9 +514,9 @@
         <fullName>Invoice_ID__c</fullName>
         <caseSensitive>false</caseSensitive>
         <description>Invoice ID</description>
-        <externalId>false</externalId>
+        <externalId>true</externalId>
         <label>Invoice ID</label>
-        <length>16</length>
+        <length>32</length>
         <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
