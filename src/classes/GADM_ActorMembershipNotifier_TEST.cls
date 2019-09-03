@@ -73,6 +73,10 @@ public class GADM_ActorMembershipNotifier_TEST {
 
         GADM_Settings__mdt gadmSettings = [SELECT Id, Actor_Membership_Termination__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
 
+        Integer daysToTerminate = 0;
+        if(gadmSettings.Actor_Membership_Termination__c != null) {
+            daysToTerminate = (Integer)gadmSettings.Actor_Membership_Termination__c;
+        }
 
         List<Account_Role__c> accountRolesToInsert = new List<Account_Role__c>();
 
@@ -82,16 +86,16 @@ public class GADM_ActorMembershipNotifier_TEST {
         accountRole.Account_Roles__c = accountRoles.Id;
         accountRole.Status__c = 'Active';
         accountRole.Effective_From_Date__c = today.addDays(-10);
-        accountRole.Effective_To_Date__c = today.addDays((Integer)gadmSettings.Actor_Membership_Termination__c);
+        accountRole.Effective_To_Date__c = today.addDays(daysToTerminate);
         accountRolesToInsert.add(accountRole);
 
         Account_Role__c accountRole2 = new Account_Role__c();
         accountRole2.RecordTypeId = defaultRecordTypeId;
         accountRole2.Account__c = acc2.Id;
         accountRole2.Account_Roles__c = accountRoles.Id;
-        accountRole2.Status__c = 'Active';
+        accountRole2.Status__c = 'Inactive';
         accountRole2.Effective_From_Date__c = today.addDays(-10);
-        accountRole2.Effective_To_Date__c = today.addDays((Integer)gadmSettings.Actor_Membership_Termination__c);
+        accountRole2.Effective_To_Date__c = today.addDays(daysToTerminate);
         accountRolesToInsert.add(accountRole2);
 
         insert accountRolesToInsert;
@@ -380,26 +384,19 @@ public class GADM_ActorMembershipNotifier_TEST {
 
         Test.stopTest();
 
-        System.assertEquals(3, wrappers.size());
+        System.assertEquals(2, wrappers.size());
 
         GADM_ActorMembershipNotifier.NotifierWrapper wrapper1 = new GADM_ActorMembershipNotifier.NotifierWrapper();
         GADM_ActorMembershipNotifier.NotifierWrapper wrapper2 = new GADM_ActorMembershipNotifier.NotifierWrapper();
-        GADM_ActorMembershipNotifier.NotifierWrapper wrapper3 = new GADM_ActorMembershipNotifier.NotifierWrapper();
 
         if(wrappers[0].users.size() == 0) {
             wrapper1 = wrappers[0];
             wrapper2 = wrappers[1];
-            wrapper3 = wrappers[2];
 
         }else if(wrappers[1].users.size() == 0){
             wrapper1 = wrappers[1];
             wrapper2 = wrappers[0];
-            wrapper3 = wrappers[2];
 
-        }else{
-            wrapper1 = wrappers[2];
-            wrapper2 = wrappers[0];
-            wrapper3 = wrappers[1];
         }
 
         GADM_Settings__mdt gadmSettings = [SELECT Id, Actor_Membership_Termination__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
@@ -410,18 +407,13 @@ public class GADM_ActorMembershipNotifier_TEST {
         System.assertEquals(wrapper1.contacts[0].Id, testContact1.Id, 'Expected contact does not match!');
         System.assertEquals(wrapper1.effectiveFrom, accountRole.Effective_From_Date__c, 'Expected effective form date does not match!');
         System.assertEquals(wrapper1.effectiveTo, accountRole.Effective_To_Date__c, 'Expected effective to date does not match!');
-        System.assertEquals(gadmSettings.Actor_Membership_Termination__c, wrapper1.priorDaysToNotify, 'Expected days prior does not match!');
+        System.assertEquals(gadmSettings.Actor_Membership_Termination__c == null ? 0 : gadmSettings.Actor_Membership_Termination__c, wrapper1.priorDaysToNotify, 'Expected days prior does not match!');
 
         System.assertEquals(0, wrapper2.contacts.size(), 'There should be no contacts to notify!');
         System.assertEquals(true, wrapper2.users.size() >= 2, 'There should be at least two users to notify!');
         System.assertEquals(wrapper2.effectiveFrom, accountRole.Effective_From_Date__c, 'Expected effective form date does not match!');
         System.assertEquals(wrapper2.effectiveTo, accountRole.Effective_To_Date__c, 'Expected effective to date does not match!');
-        System.assertEquals(gadmSettings.Actor_Membership_Termination__c, wrapper2.priorDaysToNotify, 'Expected days prior does not match!');
-        System.assertEquals(0, wrapper3.contacts.size(), 'There should be no contacts to notify!');
-        System.assertEquals(true, wrapper3.users.size() >= 2, 'There should be at least two users to notify!');
-
-
-
+        System.assertEquals(gadmSettings.Actor_Membership_Termination__c == null ? 0 : gadmSettings.Actor_Membership_Termination__c, wrapper2.priorDaysToNotify, 'Expected days prior does not match!');
 
     }
 

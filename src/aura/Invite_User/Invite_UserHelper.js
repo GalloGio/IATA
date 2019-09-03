@@ -1,4 +1,20 @@
-({		
+({
+    placePhoneFlags : function(country){
+            console.log('XXX');
+            //console.log($('.phoneFormat'));
+            //console.log($('.phoneFormat').intlTelInput);
+            $('.phoneFormat').intlTelInput({
+                initialCountry: country,
+                preferredCountries: [country],
+                placeholderNumberType : 'FIXED_LINE'
+            });
+
+            $(".mobileFormat").intlTelInput({
+                initialCountry: country,
+                preferredCountries: [country],
+                placeholderNumberType : 'MOBILE'
+            });
+     },
     validateEmail :function(component) {
 		$A.util.addClass(component.find("emailError"), 'slds-hide');
         $A.util.addClass(component.find("emailExists"), 'slds-hide'); 

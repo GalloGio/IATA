@@ -94,6 +94,7 @@ public class GADMwrapper_CTRL_TEST {
         accountContactRole2.Contact_Roles__c = contactRoles2.Id;
         accountContactRole2.Account_Role__c = accountRole.Id;
         accountContactRole2.Service_Rendered__c = 'GADM';
+        accountContactRole2.RecordTypeId = functionalRecordTypeId;
         insert accountContactRole2;
 
         //role GADM User is granted

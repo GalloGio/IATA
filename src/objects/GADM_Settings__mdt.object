@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <fields>
+        <fullName>AWS_Landing_Folder__c</fullName>
+        <description>Name of upload folder in AWS for Data Submissions.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Must end with &apos;/&apos;.</inlineHelpText>
+        <label>AWS Landing Folder</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Actor_Membership_Termination__c</fullName>
         <description>How many days prior to Actor termination are users notified.</description>
         <externalId>false</externalId>
@@ -80,6 +92,7 @@
         <fullName>Permitted_File_Extensions__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>No white spaces, separate with &apos;;&apos;.</inlineHelpText>
         <label>Permitted_File_Extensions</label>
         <length>255</length>
         <required>false</required>

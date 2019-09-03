@@ -137,7 +137,7 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         serviceDetail.Active_User_Count__c = 5;
         serviceDetail.External_Actor_Id__c = 'ExtTestId001';
         serviceDetail.Data_Submission_Period__c = submissionPeriod.Id;
-        serviceDetail.Submission_Period_Extension__c = 30;
+        serviceDetail.Submission_Period_Extension__c = 5;
         serviceDetail.Periods_without_data_submission_notify__c = 2;
         insert serviceDetail;
 
@@ -455,7 +455,7 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         GADM_Data_Submission_Period__c testPeriod = [SELECT Id FROM GADM_Data_Submission_Period__c WHERE Name = 'Test'];
 
         Date today = Date.today();
-        Date testDate = Date.newInstance(today.year(), 1, 15);
+        Date testDate = Date.newInstance(today.year(), 1, 21);
 
         boolean isOnTime = false;
 

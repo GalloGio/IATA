@@ -37,9 +37,12 @@
 
                     let credentialsName = gadmSettings.Credentials_Name__c;
 
+                    let awsLandingFolder = gadmSettings.AWS_Landing_Folder__c;
+
                     component.set('v.maxFileCount', maxFileCount);
                     component.set('v.emptyFileSize', emptyFileSize);
                     component.set('v.credentialsName', credentialsName);
+                    component.set('v.awsLandingFolder', awsLandingFolder);
 
                     let permittedExtensions = gadmSettings.Permitted_File_Extensions__c;
                     if(! $A.util.isEmpty(permittedExtensions)) {
@@ -678,6 +681,7 @@
         }
 
         function createUploadFile(component, event, file, dataSubmissionId, isOutsidePeriod, externalActorId) {
+            let awsLandingFolder = component.get('v.awsLandingFolder');
             let action = component.get('c.createUploadFile');
             action.setParams({
                 'dataSubmissionId' : dataSubmissionId,
@@ -686,7 +690,8 @@
                 'fileName' : file.name,
                 'userId' :component.get('v.userId'),
                 'actorId' : externalActorId,
-                'isOnTime' : isOutsidePeriod
+                'isOnTime' : isOutsidePeriod,
+                'landingFolder' : awsLandingFolder
             });
             action.setCallback(this, function(response){
             let state = response.getState();

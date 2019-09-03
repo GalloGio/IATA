@@ -17,7 +17,10 @@
         });
         myEvent.fire();
     },
-
+    jsLoaded: function(c, e , h){
+        console.log('jsloaded');
+        //h.placePhoneFlags('CZE');
+    },
     backToEmailField : function(component, event, helper) {
         $A.util.removeClass(component.find('form'), 'slds-hide');
         $A.util.addClass(component.find('sent'), 'slds-hide');
@@ -26,10 +29,16 @@
         let invitation = component.get('v.invitation');
         invitation.Email__c = ''
         component.set('v.invitation', invitation);
+
+        let emailField = component.find('email');
+        if(! $A.util.isEmpty(emailField)) {
+            emailField.set('v.disabled', false);
+        }
+        component.set('v.showBack', false);
+
     },
 
     inviteUser : function(cmp, event, helper) {
-        debugger;
         helper.handleInviteUser(cmp, event);
 	},
  
@@ -60,6 +69,11 @@
 
             if(params.showNotifyButton){
                 $A.util.removeClass(cmp.find("notifyUserButton"), 'slds-hide');
+                let emailField = cmp.find('email');
+                if(! $A.util.isEmpty(emailField)) {
+                    emailField.set('v.disabled', true);
+                }
+                cmp.set('v.showBack', true);
             } else {
                 $A.util.addClass(cmp.find("notifyUserButton"), 'slds-hide');
             }
@@ -72,6 +86,7 @@
                 $A.util.removeClass(cmp.find("emailExists"), 'slds-hide'); 
                 $A.util.addClass(cmp.find("detail"), 'slds-hide');
                 cmp.set('v.sendNotification', true);
+                cmp.set('v.showBack', true);
             }
 
             helper.toggleSpinner(cmp);

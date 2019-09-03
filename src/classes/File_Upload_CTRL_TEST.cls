@@ -316,7 +316,7 @@ public class File_Upload_CTRL_TEST {
         Test.startTest();
 
         System.runAs(testUser) {
-            uploadFile = File_Upload_CTRL.createUploadFile(submission.Id,'testFile.csv', 'application/vnd.ms-excel', 'GenericAttach', testUser.Id, testContact.AccountId, true);
+            uploadFile = File_Upload_CTRL.createUploadFile(submission.Id,'testFile.csv', 'application/vnd.ms-excel', 'GenericAttach', testUser.Id, testContact.AccountId, true, 'Input/Test_Folder/');
         }
 
         Test.stopTest();
@@ -324,7 +324,7 @@ public class File_Upload_CTRL_TEST {
         System.assertEquals(testContact.AccountId, uploadFile.actorId, 'ActorId on UploadFile is not as expected!');
         System.assertEquals('asd', uploadFile.bucketName, 'BucketName on UploadFile is not as expected!');
         System.assertEquals(submission.Id, uploadFile.dataSubmissionId, 'DataSubmissionId on UploadFile is not as expected!');
-        System.assertEquals('Input/Salesforce_Landing/'+submission.Id + '.csv', uploadFile.fullFileNameEncoded, 'FullFileNameEncoded on UploadFile is not as expected!');
+        System.assertEquals('Input/Test_Folder/'+submission.Id + '.csv', uploadFile.fullFileNameEncoded, 'FullFileNameEncoded on UploadFile is not as expected!');
 
 
     }

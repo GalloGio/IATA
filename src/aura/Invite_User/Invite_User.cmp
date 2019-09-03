@@ -10,6 +10,7 @@
     <aura:attribute name="newUser" type="boolean" default="false" />
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
     <aura:attribute name="sendNotification" type="Boolean" default="false"/>
+    <aura:attribute name="showBack" type="Boolean" default="false"/>
 
     <!--ARE WE IN LIGHTNING OR CLASSIC?-->
     <aura:attribute name="theme" type="String" default="Theme4d"/>
@@ -26,6 +27,10 @@
     <aura:if isTrue="{!v.showSpinner}">
         <lightning:spinner alternativeText="Loading" size="medium" />
     </aura:if>
+
+    <ltng:require
+            styles="{!$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/css/intlTelInput.js'}"
+            afterScriptsLoaded="{!c.jsLoaded}"/>
 
 
     <div aura:id="container" class="{!v.userType == 'Standard' ? 'sfContainer slds-container--fluid' : 'slds-container--fluid'}">
@@ -56,6 +61,9 @@
                     <!--internal-->
                     <aura:set attribute="else">
                         <div class="slds-col--padded  text_center">
+                            <aura:if isTrue="{! v.showBack}">
+                                <lightning:button variant="base" label="Back" title="Back" onclick="{! c.backToEmailField }" class="btn btn-primary btn-grey button_width right" />
+                            </aura:if>
                             <lightning:button variant="base" label="Validate" title="Validate" onclick="{! c.checkUsername }" class="btn btn-primary btn-grey button_width left" />
                         </div>
                     </aura:set>
@@ -156,36 +164,52 @@
 
         <div aura:id="sent" class="slds-hide">
 
-            <div class="slds-grid slds-wrap">
+            <!--PORTAL USER-->
+            <aura:if isTrue="{! v.userType != 'Standard'}">
 
-                <div class="slds-col--padded slds-size--8-of-12 center text_center">
+                <div class="slds-grid slds-wrap">
 
-                    <aura:if isTrue="{! v.sendNotification}">
-                        <p>{!$Label.c.GADM_Invite_User_notification_sent}</p>
-                        <aura:set attribute="else">
-                            <p>{!$Label.c.GADM_Invite_User_invitation_sent}</p>
-                        </aura:set>
-                    </aura:if>
-
-                </div>
-
-                <!--LIGHTNING-->
-                <aura:if isTrue="{! v.theme == 'Theme4d'}">
+                    <div class="slds-col--padded slds-size--8-of-12 center text_center">
+                        <aura:if isTrue="{! v.sendNotification}">
+                            <p>{!$Label.c.GADM_Invite_User_notification_sent}</p>
+                            <aura:set attribute="else">
+                                <p>{!$Label.c.GADM_Invite_User_invitation_sent}</p>
+                            </aura:set>
+                        </aura:if>
+                    </div>
 
                     <div class="slds-col--padded slds-size--8-of-12 center text_center">
                         <lightning:button variant="base" label="Back" title="Back" onclick="{! c.back }" class="btn btn-primary btn-grey button_width" />
                     </div>
 
-                    <!--NOT LIGHTNING-->
-                    <aura:set attribute="else">
-                        <div class="slds-col--padded slds-size--8-of-12 center text_center">
+
+                </div>
+
+
+                <!--INTERNAL USER-->
+                <aura:set attribute="else">
+
+                    <div class="slds-grid slds-wrap text_center">
+
+                        <div class="slds-col--padded slds-size--12-of-12">
+                            <aura:if isTrue="{! v.sendNotification}">
+                                <p>{!$Label.c.GADM_Invite_User_notification_sent}</p>
+                                <aura:set attribute="else">
+                                    <p>{!$Label.c.GADM_Invite_User_invitation_sent}</p>
+                                </aura:set>
+                            </aura:if>
+                        </div>
+
+                        <div class="slds-col--padded slds-size--12-of-12">
                             <lightning:button variant="base" label="Back" title="Back" onclick="{! c.backToEmailField }" class="btn btn-primary btn-grey button_width" />
                         </div>
-                    </aura:set>
 
-                </aura:if>
 
-            </div>
+                    </div>
+
+                </aura:set>
+
+            </aura:if>
 
 
         </div>

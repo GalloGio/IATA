@@ -116,7 +116,7 @@ public without sharing class GADM_ActorMembershipNotifier {
             Date targetDate = today.addDays(priorDaysToNotify);
 
             //accounts that will be terminated
-            List<Account_Role__c> accountRoles = [SELECT Id, Account__c, Account__r.Name, Effective_From_Date__c, Effective_To_Date__c FROM Account_Role__c WHERE Account_Roles__r.Name = 'GADM Participant' AND Effective_To_Date__c = :targetDate];
+            List<Account_Role__c> accountRoles = [SELECT Id, Account__c, Account__r.Name, Effective_From_Date__c, Effective_To_Date__c FROM Account_Role__c WHERE Account_Roles__r.Name = 'GADM Participant' AND Status__c = 'Active' AND Effective_To_Date__c = :targetDate];
             if(! accountRoles.isEmpty()) {
                 Map<Id, Account_Role__c> accountToGadmAccountRoleMap = new Map<Id, Account_Role__c>();
                 for (Account_Role__c role : accountRoles) {

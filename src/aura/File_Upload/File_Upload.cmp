@@ -8,6 +8,7 @@
     <aura:attribute name="maxFileCount" type="Integer"/>
     <aura:attribute name="credentialsName" type="String"/>
     <aura:attribute name="iataEmailContact" type="String"/>
+    <aura:attribute name="awsLandingFolder" type="String"/>
 
     <!--USER INFO-->
     <aura:attribute name="userId" type="Id" access="private"/>

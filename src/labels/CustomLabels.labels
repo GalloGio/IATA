@@ -40032,7 +40032,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GADM_User_Invitation_job_title</shortDescription>
-        <value>Job Function</value>
+        <value>Job Title</value>
     </labels>
     <labels>
         <fullName>GADM_User_Invitation_none</fullName>

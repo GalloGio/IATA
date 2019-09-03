@@ -19,7 +19,7 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
 
             Date prolongedSubmissionCycleEnd = currentData.CurrentSubmissionCycleEnd;
             if(gadmActorDetail != null && gadmActorDetail.size() > 0){
-                prolongedSubmissionCycleEnd.addDays((integer)(gadmActorDetail[0].Submission_Period_Extension__c == null ? 0 : gadmActorDetail[0].Submission_Period_Extension__c));
+                prolongedSubmissionCycleEnd = prolongedSubmissionCycleEnd.addDays((integer)(gadmActorDetail[0].Submission_Period_Extension__c == null ? 0 : gadmActorDetail[0].Submission_Period_Extension__c));
             }
 
             return currentData.CurrentSubmissionCycleStart <=  testDate && prolongedSubmissionCycleEnd >= testDate;

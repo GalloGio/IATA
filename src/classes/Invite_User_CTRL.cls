@@ -10,7 +10,9 @@ public without sharing class Invite_User_CTRL {
 
         List<Account_Roles__c> gadmParticipant = [SELECT Id FROM Account_Roles__c WHERE Name = 'GADM Participant' LIMIT 1];
         if(! gadmParticipant.isEmpty()) {
-            List<Account_Role__c> accountRoles = [SELECT Id, Account__c FROM Account_Role__c WHERE Account_Roles__c = :gadmParticipant];
+            Date today = System.today();
+
+            List<Account_Role__c> accountRoles = [SELECT Id, Account__c FROM Account_Role__c WHERE Status__c = 'Active' AND Effective_From_Date__c <= :today AND Effective_To_Date__c >= :today AND Account_Roles__c = :gadmParticipant];
             if(! accountRoles.isEmpty()) {
                 Set<Id> actorIds = new Set<Id>();
                 for(Account_Role__c accountRole : accountRoles) {
@@ -163,8 +165,37 @@ public without sharing class Invite_User_CTRL {
     }
     @AuraEnabled
     public static List<Account> getUserAccounts(){
+
+        List<Account> accountsToReturn = new List<Account>();
+
         Id userId = UserInfo.getUserId();
-        return Contact_Roles_Helper.getUserAccounts(userId);
+        List<Account> userAccounts = Contact_Roles_Helper.getUserAccounts(userId);
+
+        if(userAccounts != null && userAccounts.size() > 0) {
+
+            Date today = System.today();
+
+            List<Account_Role__c> accountRoles = [SELECT Id, Account__c, Status__c, Effective_From_Date__c, Effective_To_Date__c FROM Account_Role__c WHERE Status__c = 'Active' AND (Effective_From_Date__c <= :today AND Effective_To_Date__c >= :today) AND Account__c =:userAccounts];
+            if(! accountRoles.isEmpty()) {
+                Set<Id> accountIds = new Set<Id>();
+
+                for(Account_Role__c accountRole : accountRoles) {
+                    accountIds.add(accountRole.Account__c);
+                }
+
+                if(! accountIds.isEmpty()) {
+                    for(Account acc : userAccounts) {
+                        if(accountIds.contains(acc.Id)) {
+                            accountsToReturn.add(acc);
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+        return accountsToReturn;
     }
     @AuraEnabled
     public static List<OneId_RegistrationProcessController.PicklistEntry> getContactJobFunctionValues() {

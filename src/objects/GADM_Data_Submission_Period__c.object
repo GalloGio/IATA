@@ -194,5 +194,59 @@
         <errorDisplayField>Start_Date__c</errorDisplayField>
         <errorMessage>Date must always be first day of month.</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>InDueNotification</fullName>
+        <active>true</active>
+        <errorConditionFormula>In_Due_Notification__c &lt; 0</errorConditionFormula>
+        <errorMessage>In due notification must be equal or greater than 0.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>PeriodLenght</fullName>
+        <active>true</active>
+        <errorConditionFormula>Period_Length__c &lt; 1</errorConditionFormula>
+        <errorMessage>Period Length must be equal or greater than 1.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubmissionCycleEndDate</fullName>
+        <active>true</active>
+        <errorConditionFormula>Submission_Cycle_End_Day__c &lt;  Submission_Cycle_Start_Day__c</errorConditionFormula>
+        <errorMessage>Submission Cycle End Day must be equal or greater than Submission Cycle Start Day</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubmissionCycleEndMonth</fullName>
+        <active>true</active>
+        <errorConditionFormula>Submission_Cycle_End_Month__c   &lt;  Submission_Cycle_Start_Month__c</errorConditionFormula>
+        <errorMessage>Submission Period End Month must be equal or greater than Submission Period Start Month</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubmissionCycleEndtMonth_PeriondLength</fullName>
+        <active>true</active>
+        <errorConditionFormula>Submission_Cycle_End_Month__c &gt;  Period_Length__c</errorConditionFormula>
+        <errorMessage>Submission Period End Month must be equal or greater than Period Length</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubmissionCycleStartDate</fullName>
+        <active>true</active>
+        <errorConditionFormula>Submission_Cycle_Start_Day__c &lt; 1</errorConditionFormula>
+        <errorMessage>Submissin Cycle Start Day must be &gt; 0</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubmissionCycleStartMonth</fullName>
+        <active>true</active>
+        <errorConditionFormula>Submission_Cycle_Start_Month__c &lt; 1</errorConditionFormula>
+        <errorMessage>Submission Cycle Start Month must be &gt; 0</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubmissionCycleStartMonth_PeriondLength</fullName>
+        <active>true</active>
+        <errorConditionFormula>Submission_Cycle_Start_Month__c &gt;  Period_Length__c</errorConditionFormula>
+        <errorMessage>Submission Period Start Month must be equal or greater than Period Length</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Upcoming_notification</fullName>
+        <active>true</active>
+        <errorConditionFormula>Upcoming_Notification__c &lt; 0</errorConditionFormula>
+        <errorMessage>Upcoming notification must be equal or greater than 0.</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

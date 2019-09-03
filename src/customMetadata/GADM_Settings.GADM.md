@@ -3,6 +3,10 @@
     <label>GADM</label>
     <protected>false</protected>
     <values>
+        <field>AWS_Landing_Folder__c</field>
+        <value xsi:type="xsd:string">Input/Salesforce_IncidentLanding/</value>
+    </values>
+    <values>
         <field>Actor_Membership_Termination__c</field>
         <value xsi:type="xsd:double">30.0</value>
     </values>

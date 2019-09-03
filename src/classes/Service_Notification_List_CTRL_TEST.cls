@@ -41,11 +41,14 @@ public class Service_Notification_List_CTRL_TEST {
         portalApplications.Name = 'GADM';
         insert portalApplications;
 
+        Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+
         Account_Contact_Role__c accountContactRole = new Account_Contact_Role__c();
         accountContactRole.Contact__c = testContact.Id;
         accountContactRole.Contact_Roles__c = contactRoles.Id;
         accountContactRole.Account_Role__c = accountRole.Id;
         accountContactRole.Service_Rendered__c = 'GADM';
+        accountContactRole.RecordTypeId = functionalRecordTypeId;
         insert accountContactRole;
 
         Account_Contact_Role__c accountContactRole2 = new Account_Contact_Role__c();
@@ -53,6 +56,7 @@ public class Service_Notification_List_CTRL_TEST {
         accountContactRole2.Contact_Roles__c = contactRoles2.Id;
         accountContactRole2.Account_Role__c = accountRole.Id;
         accountContactRole2.Service_Rendered__c = 'GADM';
+        accountContactRole2.RecordTypeId = functionalRecordTypeId;
         insert accountContactRole2;
 
         //role GADM User is pending

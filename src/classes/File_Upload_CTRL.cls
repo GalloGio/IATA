@@ -66,7 +66,7 @@ public without sharing class File_Upload_CTRL {
 
     @AuraEnabled
     public static GADM_Settings__mdt getGadmSettings() {
-        GADM_Settings__mdt settings = [SELECT Empty_File_Size_B__c, Max_File_Size_MB__c, Max_Files_Count__c, Permitted_File_Extensions__c, Credentials_Name__c, IATA_Email_Contact__c FROM GADM_Settings__mdt WHERE QualifiedApiName = 'GADM'];
+        GADM_Settings__mdt settings = [SELECT Empty_File_Size_B__c, Max_File_Size_MB__c, Max_Files_Count__c, Permitted_File_Extensions__c, Credentials_Name__c, IATA_Email_Contact__c, AWS_Landing_Folder__c FROM GADM_Settings__mdt WHERE QualifiedApiName = 'GADM'];
         return settings;
     }
 
@@ -118,14 +118,13 @@ public without sharing class File_Upload_CTRL {
 
 
     @AuraEnabled
-    public static UploadFile createUploadFile(String dataSubmissionId, String fileName, String contentType, String credentialName, String userId, String actorId, Boolean isOnTime) {
+    public static UploadFile createUploadFile(String dataSubmissionId, String fileName, String contentType, String credentialName, String userId, String actorId, Boolean isOnTime, String landingFolder) {
         AmazonCredentials credential = AmazonCredentials.getCredentials(credentialName);
 
         // remove all repeated spaces
         String filteredFileName = fileName.replaceAll('[ ]+', ' ');
-        String folder = 'Input/Salesforce_Landing/';
 
-        UploadFile upF = new UploadFile(dataSubmissionId, filteredFileName, contentType, folder, credential, userId, actorId, isOnTime);
+        UploadFile upF = new UploadFile(dataSubmissionId, filteredFileName, contentType, landingFolder, credential, userId, actorId, isOnTime);
 
         //TODO:possible additional checks here
 
