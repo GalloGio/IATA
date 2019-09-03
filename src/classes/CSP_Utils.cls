@@ -1,4 +1,14 @@
 public with sharing class CSP_Utils {
+    
+    /* 
+    * @description Indicates whether the current user isn’t logged in to the community.
+    * @params
+    * @return Boolean
+    */    
+    @AuraEnabled
+    public static Boolean isGuestUser(){
+        return Auth.CommunitiesUtil.isGuestUser();
+    } 
 
     public static String toDatetime(Date dte) {
         DateTime dtAndTime = DateTime.newInstanceGmt(dte.year(), dte.month(), dte.day(), 0, 0, 0);
