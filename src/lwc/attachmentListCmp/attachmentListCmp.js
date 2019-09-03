@@ -212,8 +212,7 @@ export default class AttachmentListCmp extends LightningElement {
     }
 
     viewAttachment(row) {
-        if (row.viewURL == '') {
-            //gets Amazon or Content Document Link
+        if (row.sfdcContext == 'content' || row.sfdcContext == 'amazon') {
             getExpiringLinkWithRecId({
                 recId: row.id
             })

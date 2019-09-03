@@ -1,5 +1,6 @@
-.THIS .cardBackgroundColor{
+.THIS .uiInput--default label.uiLabel-left.form-element__label.uiLabel > span{
     
-    background-color: #F8F8F8;
+    color: #212529;
+    font-weight: bold;
     
 }

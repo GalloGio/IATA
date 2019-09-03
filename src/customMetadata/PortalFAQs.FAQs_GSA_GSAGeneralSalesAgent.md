@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>Permission_Set_Name__c</field>
-        <value xsi:type="xsd:string">FAQs_Visibility_GSA_GSSA</value>
+        <value xsi:type="xsd:string">FAQs_Visibility_GSA_GSA</value>
     </values>
 </CustomMetadata>

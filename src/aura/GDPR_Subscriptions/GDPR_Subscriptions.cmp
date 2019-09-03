@@ -25,16 +25,14 @@
         <lightning:spinner alternativeText="Loading" />
     </aura:if>
 
-
-    <h5>Yes I would like to receive</h5>
-    <p>Email Address: {!v.email}</p>
+    <p>Updates sent to your email address: {!v.email}</p>
     
     <div class="slds-p-horizontal--small slds-size--1-of-1 ">
             <div class="slds-text-heading_large slds-m-vertical_large IATA_section">
-                    Newsletters
+                    Newsletters, blogs and briefings
                 </div>
             <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
-                <p><b>Subscribe to our Newsletters to receive the latest updates*</b> Mouseover each item to learn more.</p> 
+                <p><b>Subscribe or unsubscribe to our Newsletters, blog updates and briefings.</b> Mouseover each item to learn more.</p> 
                 </div>
         <div class="slds-grid slds-wrap" >
             <aura:iteration items="{!v.newsletters}" var="i">
@@ -48,10 +46,10 @@
 
     <div class="slds-p-horizontal--small slds-size--1-of-1 ">
         <div class="slds-text-heading_large slds-m-vertical_large IATA_section">
-            <a style="color: black;" onclick="{!c.redirectToSubscriptionTab}">Products and services</a>
+            <a style="color: black;" onclick="{!c.redirectToSubscriptionTab}">Updates on products and services</a>
             </div>
             <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
-                <p><b>Subscribe to any of our Products and Services.</b> Please click on the <a onclick="{!c.redirectToSubscriptionTab}">Interest’s tab</a> to personalize. Mouseover each item to learn more.</p> 
+                <p><b>Subscribe to any of our products and services updates.</b> You can personalize your areas of interest (such as cargo, safety, security, etc.) through the<a onclick="{!c.redirectToSubscriptionTab}">&nbsp;areas of interest tab</a>.</p> 
             </div>
     <div class="slds-grid slds-wrap" >
            <aura:iteration items="{!v.products}" var="i">
@@ -65,7 +63,8 @@
 
 <br /><br />
 <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
-    <p>*You can unsubscribe from IATA Communication at any time by un-ticking a box. Note, unsubscribing from IATA Communication does not affect your receipt of operational emails that are necessary to your interaction with IATA, such as security updates, support and services, invoices, account management, and registration updates.</p>
+    <p><b>No longer interested?</b></p>
+    <p>Untick the options currently selected. You can also unsubscribe from our newsletters and updates at any time by following the “unsubscribe” option at the bottom of each email.  Please note however that unsubscribing from newsletters and product and service updates does not impact operational emails necessary to your interaction with IATA, such as security updates, product or services support, invoices, account management, and registration updates.</p>
 </div>
 
 <!-- Common footer with subscription tab-->
@@ -76,7 +75,7 @@
     <aura:if isTrue="{!!v.opted_out}">
         <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 positionRight">
             <button class="btn btn-primary buttonSelectAllSpace" type="submit" onclick="{!c.selectAll}" >{!v.showSelect ? 'Select All' : 'Deselect All'}</button>
-            <button class="btn btn-primary " type="submit" onclick="{!c.saveAll}" >Save All Changes</button>
+            <button class="btn btn-primary " type="submit" onclick="{!c.saveAll}" >Save Changes</button>
         </div>
     </aura:if>
 </div>

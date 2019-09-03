@@ -57,8 +57,43 @@ public class AMS_AgencyAChangeCodeHandler {
         if(!accToProcessPayment.isEmpty()) {
             notifyAirlines(accToProcessPayment);
         }
+
+        processRelatedCases(aacc);  //WMO-482 - ACAMBAS
     }
 
+    //WMO-482 - ACAMBAS: Begin
+    public static void processRelatedCases(List<Agency_Applied_Change_code__c> aaccLst) {
+        List<Id> aaccLstCase = new List<Id>();
+
+        for(Agency_Applied_Change_code__c aacc: aaccLst) {
+            if(aacc.Change_Code__c == 'RVW' && aacc.SIDRA_Case__c != null) {
+                aaccLstCase.add(aacc.SIDRA_Case__c);
+            }
+        }
+
+        if(aaccLstCase.isEmpty()) return;
+
+        List<Case> casesToUpdate = new List<Case>();
+
+        for(Case caseToProcess : [SELECT Id, Parent.BusinessHoursId, ParentId, Parent.New_IFAP_Deadline_date__c
+                                  FROM Case 
+                                  WHERE Id IN :aaccLstCase AND RecordType.DeveloperName = 'Sidra_Lite' AND ParentId != null AND Account.CNS_Agency__c = true]) {
+
+            Case parentCase = new Case(Id = caseToProcess.parentId);                         
+            Date newDateToUpdate = BusinessDays.addNBusinessDays(DateTime.now(), 7, caseToProcess.Parent.BusinessHoursId).date();
+
+            if(caseToProcess.parent.New_IFAP_Deadline_date__c <> newDateToUpdate){
+                parentCase.New_IFAP_Deadline_date__c = newDateToUpdate;
+                casesToUpdate.add(parentCase);
+            }
+        }
+
+        if(!casesToUpdate.isEmpty()) {
+            update casesToUpdate;
+        }
+    }
+    //WMO-482 - ACAMBAS: End
+    
     /*** AMSU-198 ***/
     public static void notifyAirlines(List<Agency_Applied_Change_code__c> aaccs) {
         Database.executeBatch(new AMS_MajorDefaultCommunication(aaccs), 50);

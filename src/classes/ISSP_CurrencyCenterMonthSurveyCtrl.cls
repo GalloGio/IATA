@@ -1338,7 +1338,8 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 					Amount__c,
 					Currency__c,
 					Amount_USD__c,
-					Bank_Percentage__c
+					Bank_Percentage__c,
+					Total_Amount_USD__c
 				FROM Currency_Center_Survey__c 
 				WHERE Parent_Id__c IN :reportingTypesIds
 				AND (Section__c = 'Bank Record' OR RecordTypeId=:ISSP_CurrencyCenterUtil.rtIdMonthlyBank)];

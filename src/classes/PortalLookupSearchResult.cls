@@ -9,6 +9,7 @@ public class PortalLookupSearchResult {
     private String icon;
     private String title;
     private String subtitle;
+    public Map<String,String> extraFields;
 
     public PortalLookupSearchResult(Id id, String sObjectType, String icon, String title, String subtitle) {
         this.id = id;
@@ -16,6 +17,10 @@ public class PortalLookupSearchResult {
         this.icon = icon;
         this.title = title;
         this.subtitle = subtitle;
+    }
+
+    public void setExtraFields(Map<String,String> extras) {
+        this.extraFields = extras;
     }
 
     @AuraEnabled
@@ -41,5 +46,10 @@ public class PortalLookupSearchResult {
     @AuraEnabled
     public String getSubtitle() {
         return subtitle;
+    }
+
+    @AuraEnabled
+    public Map<String,String> getExtraFields() {
+        return extraFields;
     }
 }

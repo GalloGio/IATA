@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>List of IATA stakeholders for whom an email is sent every time an EDS alert is received</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Email__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <description>IATA stakeholder email address</description>
+        <externalId>false</externalId>
+        <label>Email</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>true</unique>
+    </fields>
+    <label>EDS Alert Stakeholders</label>
+    <visibility>Public</visibility>
+</CustomObject>

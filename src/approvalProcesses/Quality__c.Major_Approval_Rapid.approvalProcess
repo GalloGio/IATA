@@ -25,6 +25,10 @@
         <submitter>ponsa@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>rajputf@iata.org</submitter>
+        <type>user</type>
+    </allowedSubmitters>
     <approvalPageFields>
         <field>Name</field>
         <field>Owner</field>

@@ -265,7 +265,7 @@ public class AMS_OscarCaseTriggerHelper {
         if(newSidraCases.isEmpty()) return;
 
         Set<Id> isoCountries = new Set<Id>();
-        for(Account a : [SELECT Id, IATA_ISO_Country__c, Location_Class__c FROM Account WHERE IATA_ISO_Country__c != null AND Location_Class__c != null AND Id IN :accounts.keySet()]){
+        for(Account a : [SELECT Id, IATA_ISO_Country__c, Location_Class__c, CNS_Agency__c FROM Account WHERE IATA_ISO_Country__c != null AND Location_Class__c != null AND Id IN :accounts.keySet()]){
             accounts.put(a.Id, a);
             isoCountries.add(a.IATA_ISO_Country__c);
         }
@@ -283,7 +283,7 @@ public class AMS_OscarCaseTriggerHelper {
 
         for(Case c : newSidraCases){
             Account a = accounts.get(c.AccountId);
-            if(a != null){
+            if(a != null && a.CNS_Agency__c != true) { //WMO-482 - ACAMBAS: Acc_IRR_leading_to_DEF__c should not be updated for CNS cases
                  c.Acc_IRR_leading_to_DEF__c = thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c);
                  system.debug(logginglevel.error, 'DTULLO 301 --> ' +  thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c));
             }
