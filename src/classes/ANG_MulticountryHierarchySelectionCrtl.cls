@@ -174,7 +174,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 	public Map<Id, AMS_Process_Detail__c> mapHierarchyProcessDetail{
 		get{
-			if(mapHierarchyProcessDetail == null){
+			if(isConversionProcess && mapHierarchyProcessDetail == null){
 				mapHierarchyProcessDetail = new Map<Id, AMS_Process_Detail__c>();
 				Id oscarId = oscar.Id;
 				for(AMS_Process_Detail__c detail : [SELECT id, Account__c, OSCAR__c, ANG_Location_Type_Conversion__c FROM AMS_Process_Detail__c WHERE OSCAR__c = :oscarId]) {
@@ -196,7 +196,6 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 						condition += ' \'' + id + '\',';
 					}
 					condition += '\''+oscar.Account__c+'\') ORDER BY IATA_ISO_Country__r.Name'; //Oscar account id (Should be the GE at this point)
-					System.debug('mapHierarchyAccounts - condition: ' + condition);
 				}else{
 					Id accountId = oscar.Account__c;
 					condition = ' WHERE ( Top_Parent__c = :accountId or Id = :accountId ) AND Status__c not in ( ' +  getInvalidStatus() + ' ) ORDER BY IATA_ISO_Country__r.Name';
@@ -485,6 +484,8 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 						processDetails.add(mapHierarchyProcessDetail.get(item.acc.ID));
 				}
 
+				System.debug(loggingLevel.DEBUG, '____ [cls AMS_AccountHierarchySelectionController - saveConversion] Process Details to update: ' + processDetails);
+
 				update processDetails;
 
 				//Close Tab
@@ -494,7 +495,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				Database.rollback(sp);
 				//DML Exceptions are sometimes displayed on the page
 				if(e.getTypeName() != 'System.DmlException' || !ApexPages.hasMessages()) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
-				System.debug(loggingLevel.ERROR, '____ [cls AMS_AccountHierarchySelectionController - save] error - ' + e.getMessage());
+				System.debug(loggingLevel.ERROR, '____ [cls AMS_AccountHierarchySelectionController - saveConversion] error - ' + e.getMessage());
 			}
 		}
 	} 
@@ -629,6 +630,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		AMS_Process_Detail__c cloneProcess;
 		Account oldMainAccount;
+		String convertLocation;
 
 		for(HierarchyItem item: hierarchyValues){
 			AMS_Process_Detail__c currentPD = mapHierarchyProcessDetail.get(item.acc.ID);
@@ -642,6 +644,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					cloneProcess = mapHierarchyProcessDetail.get(item.acc.ID);
 					item.acc.Location_type__c = AMS_Utils.GE;
 				}
+
 				if(item.isHE) mapHierarchyProcessDetail.get(item.acc.ID).ANG_Location_Type_Conversion__c = AMS_Utils.HE;
 				if(item.isAE) mapHierarchyProcessDetail.get(item.acc.ID).ANG_Location_Type_Conversion__c = AMS_Utils.AE;
 
@@ -650,6 +653,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			}else if(currentPD == null && (item.isHE || item.isAE)){
 				oldMainAccount = item.acc;
 				item.wasChanged = true;
+				convertLocation = item.isHE ? AMS_Utils.HE : AMS_Utils.AE;
 			}
 		}
 
@@ -658,9 +662,8 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			//Removed the previous entry with the key of the new GE(clone the previous ) and add a new Entry with the new HE/AE 
 			mapHierarchyProcessDetail.remove(cloneProcess.Account__c);
 			cloneProcess.Account__c = oldMainAccount.ID;
+			cloneProcess.ANG_Location_Type_Conversion__c = convertLocation;
 			mapHierarchyProcessDetail.put(oldMainAccount.ID, cloneProcess);
-
-			System.debug('mapHierarchyProcessDetail after change the GE: ' + mapHierarchyProcessDetail);	
 		}
 	}
 
@@ -679,7 +682,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			else
 				bspMap.get(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name).addCount(item.acc, mapHierarchyProcessDetail != null ? mapHierarchyProcessDetail.get(item.acc.ID) : null);
 
-			if(isConversionProcess && ANG_MulticountryHierarchySelectionCrtl.invalidAgencyStatus.contains(item.acc.Status__c)){
+			if(isConversionProcess && invalidAgencyStatus.contains(item.acc.Status__c)){
 				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'You have selected locations that have change or suspension processes in progress. Please finalize the process and then proceed with the multicountry conversion'));
 				return false;
 			}
@@ -692,9 +695,16 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		for(BSPAttributes bspAtt: bspMap.values()){
 
-			if(isConversionProcess && !bspAtt.rfIsAlignInBSP){
-				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Please align the Remittance Frequencies in the same BSP and then proceed with the multicountry conversion'));
-				toReturn = false;
+			if(isConversionProcess){
+				if(!bspAtt.rfIsAlignInBSP){
+					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Please align the Remittance Frequencies in the same BSP and then proceed with the multicountry conversion'));
+					toReturn = false;
+				}
+
+				if(bspAtt.numberOfHE > 0 && bspAtt.isGE){
+					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'There cannot be an HE account in the same BSP of the GE account.'));
+					toReturn = false;
+				}
 			}
 					
 			if(bspAtt.numberOfHE > 1){
