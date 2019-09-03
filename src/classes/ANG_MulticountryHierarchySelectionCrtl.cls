@@ -633,7 +633,6 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		AMS_Process_Detail__c cloneProcess;
 		Account oldMainAccount;
-		String convertLocation;
 
 		for(HierarchyItem item: hierarchyValues){
 			AMS_Process_Detail__c currentPD = mapHierarchyProcessDetail.get(item.acc.ID);
@@ -652,11 +651,10 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				if(item.isAE){
 					currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.AE;
 					item.acc.Location_type__c = AMS_Utils.AE;
-				}
-				
-			}else if(currentPD == null && (item.isHE || item.isAE)){
+				}				
+			}else if(currentPD == null && (item.isHE || item.isAE)){				
 				oldMainAccount = item.acc;
-				convertLocation = item.isHE ? AMS_Utils.HE : AMS_Utils.AE;
+				item.acc.Location_Type__c = item.isHE ? AMS_Utils.HE : AMS_Utils.AE;
 			}
 		}
 
@@ -665,8 +663,8 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			//Removed the previous entry with the key of the new GE(clone the previous ) and add a new Entry with the new HE/AE 
 			mapHierarchyProcessDetail.remove(cloneProcess.Account__c);
 			cloneProcess.Account__c = oldMainAccount.ID;
-			cloneProcess.ANG_Location_Type_Conversion__c = convertLocation;
 			mapHierarchyProcessDetail.put(oldMainAccount.ID, cloneProcess);
+
 		}
 	}
 
@@ -758,7 +756,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			if(a.Location_Type__c == AMS_Utils.AE)
 				this.numberOfAE++;
 			if(a.Location_Type__c == AMS_Utils.GE)
-				this.isGE = true;			
+				this.isGE = true;		
 		}
 	}
 
