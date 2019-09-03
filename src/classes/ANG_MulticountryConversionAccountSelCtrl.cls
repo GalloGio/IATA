@@ -2,9 +2,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 	@TestVisible
 	private static final String CANNOT_REMOVE_HE_ERROR = 'You cannot remove the HE associated with the OSCAR'; 
-	@TestVisible
-	private static final String CANNOT_ADD_ACCOUNTS_WARNING = 'New Accounts cannot be added anymore.';
-
+    
 	public class SelectedAccountWrapper implements Comparable {
 		
 		public Account acct {get; set;}
@@ -174,7 +172,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 		if(this.oscar.STEP45__c == AMS_Utils.PASSED){
 			readOnly = true;
-			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, CANNOT_ADD_ACCOUNTS_WARNING));
+            return;
 		}
 		
 		for(Id acctId : processDetailsMap.keySet()){

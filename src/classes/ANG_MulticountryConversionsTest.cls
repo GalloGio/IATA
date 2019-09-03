@@ -342,7 +342,6 @@ private class ANG_MulticountryConversionsTest {
     controller = new ANG_MulticountryConversionAccountSelCtrl(stdOscarCtrl);
 
     System.assertEquals(true, controller.readOnly, 'The page must be read only');
-    System.assert(findApexPagesMessage(ANG_MulticountryConversionAccountSelCtrl.CANNOT_ADD_ACCOUNTS_WARNING));
 
   }
 
