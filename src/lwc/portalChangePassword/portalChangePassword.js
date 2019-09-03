@@ -176,7 +176,7 @@ export default class PortalChangePassword extends LightningElement {
         if(this.buttonDisabled == false){
              ChangePassword({ currentPassword : this.currentPassword, newPassword : this.newPassword, confirmPassword : this.confirmPassword }).then(result => {
                              if(result.success == true){
-                                navigateToPage(CSP_PortalPath + "/secur/logout.jsp");
+                                 navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "changePasswordSuccess");
                              }
                              else{
                                  this.message = 'Your new password could not be set.';
