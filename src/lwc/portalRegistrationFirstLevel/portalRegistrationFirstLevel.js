@@ -536,6 +536,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         this.registrationForm.selectedCustomerType = this.selectedCustomerType;
         this.registrationForm.sector = this.selectedCustomerType;
         this.registrationForm.category = "";
+        this.registrationForm.extraChoice = "";
     }
 
     handleCategoryChange(event){

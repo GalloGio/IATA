@@ -46,7 +46,8 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
                                 "category" : "",
                                 "extraChoice" : "",
                                 "language" : "",
-                                "selectedCustomerType" : ""
+                                "selectedCustomerType" : "",
+                                "contactId" : ""
                               };
     @track errorMessage = "";
     @track displayError = false;
@@ -59,6 +60,7 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
     @track jsLoaded = false;
     @track selectedCustomerType = null;
     @track selectedMetadataCustomerType = {};
+    countryCode = '';
 
     @wire(getCustomerTypePicklists, {leaf:'$selectedCustomerType'})
     getPickLists({ error, data }){
@@ -131,28 +133,37 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
     /* ==============================================================================================================*/
     connectedCallback(){
 
-        getRegistrationConfirmationConfig().then(result => {
-            var config = JSON.parse(JSON.stringify(result));
-            console.log('config: ', config);
-            if(config.contact == null){
-                alert('Failed to find Contact');
-                return;
-            }
-            this.config = config;
-            this.registrationForm = this._mapFormFields(config);
-            this.selectedCustomerType = config.selectedCustomerType;
-            this._renderCountryOptions(config.countryInfo.countryList);
-            this._renderLanguageOptions(config.languageList);
-            this.isLoading = false;
-            this._renderInputs();
-            //render phone input as well
 
-        })
-        .catch(error => {
-            console.log('Error: ', JSON.parse(JSON.stringify(error)));
-            this.isLoading = false;
-            //todo: should close popup(should not be mandatory if it fails to load)
-        });
+        Promise.all([
+            loadScript(this, jQuery),
+            loadScript(this, PhoneFormatter16 + '/PhoneFormatter/build/js/intlTelInput.js'),
+            loadStyle(this, PhoneFormatter16 + '/PhoneFormatter/build/css/intlTelInput.css')
+        ]).then(function(){
+            getRegistrationConfirmationConfig().then(result => {
+                var config = JSON.parse(JSON.stringify(result));
+                console.log('config: ', config);
+                if(config.contact == null){
+                    alert('Failed to find Contact');
+                    return;
+                }
+                this.config = config;
+                this.registrationForm = this._mapFormFields(config);
+                this.selectedCustomerType = config.selectedCustomerType;
+                this._renderCountryOptions(config.countryInfo.countryList);
+                this._renderLanguageOptions(config.languageList);
+                this.isLoading = false;
+                this._renderInputs();
+                this._initializePhoneInput();
+
+            })
+            .catch(error => {
+                console.log('Error: ', JSON.parse(JSON.stringify(error)));
+                this.isLoading = false;
+                //todo: should close popup(should not be mandatory if it fails to load)
+            });
+        }.bind(this));
+
+
     }
 
 
@@ -167,7 +178,12 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
 
     handleSubmit(){
         //update contact
-        console.log(this.registrationForm);
+
+        if(this.config.selectedCustomerType != this.registrationForm.selectedCustomerType || this.config.contact.ISO_Country__c != this.registrationForm.country){
+            console.log('customer type changed');
+        }
+        console.log('form: ', this.registrationForm);
+        this._showSubmitError(true, 'Error!');
         //this.dispatchEvent(new CustomEvent('hideregistrationpopup'));
     }
 
@@ -219,6 +235,7 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
         this.registrationForm.selectedCustomerType = this.selectedCustomerType;
         this.registrationForm.sector = this.selectedCustomerType;
         this.registrationForm.category = "";
+        this.registrationForm.extraChoice = "";
         this.isLoading = false;
     }
 
@@ -359,8 +376,12 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
 
         await(this.jsLoaded == true);
         await(this.template.querySelector('[data-id="phone"]'));
-
         var input = this.template.querySelector('[data-id="phone"]');
+
+        var countryId = this.registrationForm.country;
+        var countryList = this.countryOptions;
+
+
         var countryCode = this.userCountryCode;
         console.log('countryCode: ', countryCode);
 
@@ -379,13 +400,33 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
         formFields.email = config.contact.Email;
         formFields.firstName = config.contact.FirstName;
         formFields.lastName = config.contact.LastName;
-        formFields.country = config.contact.ISO_Country__c;
-        formFields.phone = config.contact.Phone;
+        formFields.country = config.contact.ISO_Country__c ? config.contact.ISO_Country__c : '';
+        formFields.phone = config.contact.Phone ? config.contact.Phone : '';
         formFields.sector = config.sector;
         formFields.category = config.category;
-        formFields.extraChoice = config.extraChoice;
+        formFields.extraChoice = config.extraChoice ? config.extraChoice : '';
         formFields.language = config.contact.Preferred_Language__c;
-        formFields.selectedCustomerType = '';
+        formFields.selectedCustomerType = config.selectedCustomerType;
+        formFields.contactId = config.contact.Id;
+
+        if(formFields.phone.length < 1){
+            if(formFields.country.length > 0){
+                var countryCode = config.countryInfo.countryMap[formFields.country].ISO_Code__c;
+                this.userCountryCode = countryCode;
+            }else{
+                 this.userCountryCode = 'CH';
+             }
+        }else{
+            //todo:format the phone flag from the value of the existing phone number?! Replace code below
+            if(formFields.country.length > 0){
+                var countryCode = config.countryInfo.countryMap[formFields.country].ISO_Code__c;
+                this.userCountryCode = countryCode;
+            }else{
+                this.userCountryCode = 'CH';
+            }
+        }
+
+        console.log('formFields: ', formFields);
         return formFields;
     }
 

@@ -49,7 +49,7 @@
                                         <div data-id="emailDiv" class="slds-form-element">
                                             <div class="slds-form-element__control custTextInput custTextInputSmall">
                                                 <input type="text" value={registrationForm.email} data-id="emailInput" placeholder=" " required class="slds-input"
-                                                       onkeyup={handleEmailChange} onfocusout={handleEmailFocusOut} readonly={isEmailFieldReadOnly} />
+                                                       onkeyup={handleEmailChange} onfocusout={handleEmailFocusOut} disabled={isEmailFieldReadOnly} readonly={isEmailFieldReadOnly} />
                                             </div>
                                             <div class="formElementSpacer">
                                                 <div if:true={displayError}>
@@ -125,7 +125,7 @@
                                             </div>
                                         </lightning-layout-item>
                                         <lightning-layout-item size="12">
-                                            <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                            <div class="slds-form-element__control registrationComboBox custTextInputSmall">
                                                 <lightning-combobox class="" placeholder=" "
                                                                     name="" label=""
                                                                     variant="label-hidden"
@@ -172,7 +172,7 @@
                                                 </div>
                                             </lightning-layout-item>
                                             <lightning-layout-item size="12">
-                                                <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                                <div class="slds-form-element__control registrationComboBox custTextInputSmall">
                                                     <lightning-combobox class="" placeholder=" "
                                                                         name="sectorCbx" label="" required
                                                                         variant="label-hidden"
@@ -202,7 +202,7 @@
                                                 </div>
                                             </lightning-layout-item>
                                             <lightning-layout-item size="12">
-                                                <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                                <div class="slds-form-element__control registrationComboBox custTextInputSmall">
                                                     <lightning-combobox class="" placeholder=" "
                                                                         name="extraCbx" label="" required
                                                                         variant="label-hidden"
@@ -232,7 +232,7 @@
                                                 </div>
                                             </lightning-layout-item>
                                             <lightning-layout-item size="12">
-                                                <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                                <div class="slds-form-element__control registrationComboBox custTextInputSmall">
                                                     <lightning-combobox class="" placeholder=" "
                                                                         name="categoryCbx" label="" required
                                                                         variant="label-hidden"
@@ -261,7 +261,7 @@
                                             </div>
                                         </lightning-layout-item>
                                         <lightning-layout-item size="12">
-                                            <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                            <div class="slds-form-element__control registrationComboBox custTextInputSmall">
                                                 <lightning-combobox class="" placeholder=" "
                                                                     name="" label="" required
                                                                     variant="label-hidden"
@@ -284,7 +284,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="text-small" style="margin-left:12px; width:100%;">
-                                                    I agree with IATA's
+                                                    I agree with IATA's&nbsp;
 <a target="_blank" href="http://www.iata.org/customer-portal/Pages/terms.aspx" style="color: blue; text-decoration: underline;">Privacy Policy </a>
 and <br/>
 <a target="_blank" href="http://www.iata.org/customer-portal/Pages/terms.aspx" style="color: blue; text-decoration: underline;">Terms of Use. </a>

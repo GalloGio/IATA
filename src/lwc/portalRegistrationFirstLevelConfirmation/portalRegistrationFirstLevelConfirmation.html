@@ -43,7 +43,7 @@
                             <lightning-layout-item size="12">
                                 <div data-id="emailDiv" class="slds-form-element">
                                     <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                        <input type="text" data-id="email" name="email" value={registrationForm.email} placeholder=" " readonly required class="slds-input inputBackgroundGrey" />
+                                        <input type="text" data-id="email" name="email" value={registrationForm.email} placeholder=" " disabled readonly required class="slds-input inputBackgroundGrey" />
                                     </div>
                                 </div>
                             </lightning-layout-item>
@@ -112,7 +112,7 @@
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item size="12">
-                            <div class="slds-form-element__control custTextInput custTextInputSmall">
+                            <div class="slds-form-element__control registrationComboBox custTextInputSmall">
                                 <lightning-combobox class="" placeholder=" "
                                                     name="" label=""
                                                     variant="label-hidden"
@@ -136,7 +136,7 @@
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item size="12">
-                            <div class="slds-form-element__control custTextInput custTextInputSmall">
+                            <div class="slds-form-element__control registrationComboBox custTextInput custTextInputSmall">
                                 <input data-id="phone" name="phone" class="phoneFormat slds-input" type="tel"
                                        onkeyup={handleInputValueChange} onfocusout={handleInputFocusOut} value={registrationForm.phone}/>
                             </div>
@@ -159,7 +159,7 @@
                                 </div>
                             </lightning-layout-item>
                             <lightning-layout-item size="12">
-                                <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                <div class="slds-form-element__control registrationComboBox custTextInputSmall">
                                     <lightning-combobox class="" placeholder=" "
                                                         name="sectorCbx" label="" required
                                                         variant="label-hidden"
@@ -189,7 +189,7 @@
                                 </div>
                             </lightning-layout-item>
                             <lightning-layout-item size="12">
-                                <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                <div class="slds-form-element__control registrationComboBox custTextInputSmall">
                                     <lightning-combobox class="" placeholder=" "
                                                         name="extraCbx" label="" required
                                                         variant="label-hidden"
@@ -219,7 +219,7 @@
                                 </div>
                             </lightning-layout-item>
                             <lightning-layout-item size="12">
-                                <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                <div class="slds-form-element__control registrationComboBox custTextInputSmall">
                                     <lightning-combobox class="" placeholder=" "
                                                         name="categoryCbx" label="" required
                                                         variant="label-hidden"
@@ -247,7 +247,7 @@
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item size="12">
-                            <div class="slds-form-element__control custTextInput custTextInputSmall">
+                            <div class="slds-form-element__control registrationComboBox custTextInputSmall">
                                 <lightning-combobox class="" placeholder=" "
                                                     name="" label="" required
                                                     variant="label-hidden"
@@ -264,12 +264,13 @@
                         <lightning-layout-item size="12">
                             <div>
                                 <lightning-button data-id="submitButton" class="containedButtonLogin" onclick={handleSubmit} label="Submit Label"></lightning-button>
-                                <div class="formElementSpacer" data-id="submitDiv">
+                                <div data-id="submitDiv">
                                     <div if:true={displaySubmitError}>
-                                        <div class="slds-form-element__help text-xxsmall" style="padding:5px; text-align:center;">{errorMessage}</div>
+                                        <div class="slds-form-element__help text-xxsmall formElementSpacer" style="padding:5px; text-align:center;">{errorMessage}</div>
                                     </div>
                                 </div>
                             </div>
+
                         </lightning-layout-item>
 
                     </div>

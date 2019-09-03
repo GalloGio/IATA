@@ -404,6 +404,15 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     }
 
+    @AuraEnabled
+    public static RegistrationResult updateContactInfo(string registrationForm, string customerType, string contactId, string accountId){
+
+        RegistrationResult result = new RegistrationResult();
+        //todo:update contact info & bucket account relation
+        return result;
+
+    }
+
     public static Account getBucketAccount(GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType){
 
         String sector = '';
