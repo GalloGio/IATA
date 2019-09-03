@@ -3,8 +3,6 @@ private class ANG_MulticountryConversionsTest {
 
   @testSetup static void setup(){
 
-    Test.startTest();
-
     AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
       Name = 'BSP-PT',
       RecordTypeId = AMS_Utils.RECTYPE_BSP,
@@ -104,6 +102,8 @@ private class ANG_MulticountryConversionsTest {
     standardHePT.Remittance_frequency__c = 'W';
     
     insert new List<Account>{standardHePT, standardHeUK, standardHeFR};
+    
+    Test.startTest();
 
     Account standardAePT = new Account();
     standardAePT.Name = 'Standard AE PT';
@@ -429,6 +429,19 @@ private class ANG_MulticountryConversionsTest {
     selectionCrtl.saveConversion();
     System.assert(findApexPagesMessage('You have selected locations that have change or suspension processes in progress. Please finalize the process and then proceed with the multicountry conversion'));		 
   
+    //Test GE & HE in the Same BSP
+    for (ANG_MulticountryHierarchySelectionCrtl.HierarchyItem it : hierarchyValues) {
+      if(it.acc.Name == 'Standard AE PT'){ 
+        it.isAE = false;
+        it.isHE = true;
+        it.acc.Status__c = 'Approved';
+        it.acc.Remittance_Frequency__c = 'W';
+      }
+		}
+    selectionCrtl.saveConversion();
+    System.assert(findApexPagesMessage('There cannot be an HE account in the same BSP of the GE account.'));		 
+  
+    Test.stopTest();
   }
 
 
@@ -480,6 +493,7 @@ private class ANG_MulticountryConversionsTest {
       if(it.acc.Name == 'Standard HE UK') {
         it.isHE = true;
         it.isAE = false;
+        it.main = false;
       }
 		}
 
