@@ -1581,12 +1581,16 @@ visibility: hidden;
     color: #999999;
     padding: 0 1rem 0 .75rem;
     border-radius: 1px;
-	border-color: #e6e6e6;
+	/*border-color: #e6e6e6;*/
     height: 52px;
 }
 
 .custTextInput input:focus{
     border: solid 2px rgba(30, 50, 250, 0.6);
+}
+
+.custTextInput input:disabled {
+  border:none;
 }
 
 .greyLine {
@@ -1697,4 +1701,8 @@ visibility: hidden;
     box-shadow: 5px 5px 20px #808080;
     border-radius: 1px;
     border: solid 1px #e2e2e2;
+}
+
+.registrationComboBox .slds-combobox_container input[role="textbox"]{
+	border-color: #e6e6e6;
 }
