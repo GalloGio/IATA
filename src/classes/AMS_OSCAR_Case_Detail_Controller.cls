@@ -46,10 +46,10 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 this.allowMultipleRemittances = false;
                 if(operations != null && !operations.isEmpty()){
                     for(AMS_Settlement_System__c opCode: operations){
-                        //if(opCode.Allow_multiple_remittances__c){
-                            //this.allowMultipleRemittances = opCode.Allow_multiple_remittances__c;
-                            //return this.allowMultipleRemittances;
-                        //}
+                        if(opCode.Allow_multiple_remittances__c){
+                            this.allowMultipleRemittances = opCode.Allow_multiple_remittances__c;
+                            return this.allowMultipleRemittances;
+                        }
                     }
                 }
             }

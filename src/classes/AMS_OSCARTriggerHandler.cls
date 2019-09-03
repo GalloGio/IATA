@@ -288,7 +288,7 @@ public class AMS_OSCARTriggerHandler {
         Set<String> countryCodes = new Set<String>();
         List<AMS_Oscar__c> oscarsToValidate = new List<AMS_Oscar__c>();
         Map<String, Map<String, Set<String>>> mapCountryClassAttributes = new Map<String, Map<String, Set<String>>>();
-        Map<String, String> mapBSPISOCode = new Map<String, String>(); 
+        Map<String, List<String>> mapBSPISOCode = new Map<String, List<String>>(); 
 
         Set<String> locationsToCheck = new Set<String> {'P','D','C','R'};
 
@@ -321,7 +321,11 @@ public class AMS_OSCARTriggerHandler {
 
         List<IATA_ISO_Country__c> countryList = IATAIsoCountryDAO.getIsoCountryByIsoCodes(mapCountryClassAttributes.keySet());
         for(IATA_ISO_Country__c country : countryList){
-            mapBSPISOCode.put(country.AMS_Settlement_System__c, country.ISO_Code__c);
+            if(mapBSPISOCode.get(country.AMS_Settlement_System__c) == NULL) {
+                mapBSPISOCode.put(country.AMS_Settlement_System__c, new List<String>{country.ISO_Code__c});
+            } else {
+                mapBSPISOCode.get(country.AMS_Settlement_System__c).add(country.ISO_Code__c);
+            }
         }
 
         Id assessmentRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
@@ -334,19 +338,22 @@ public class AMS_OSCARTriggerHandler {
                                                         RecordtypeId = :assessmentRTId];
             for(AMS_Settlement_System__c operation : operations) {
                 for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
-                    Map<String, Set<String>> mapClassAttributes = mapCountryClassAttributes.get(mapBSPISOCode.get(operation.Id));
-                    if(mapClassAttributes == null) {
-                        mapClassAttributes = new Map<String, Set<String>>();
-                        mapCountryClassAttributes.put(mapBSPISOCode.get(operation.Id), mapClassAttributes);
-                    }
+                    List<String> countriesLst = mapBSPISOCode.get(operation.Id);
+                    for(String countryCode : countriesLst){
+                        Map<String, Set<String>> mapClassAttributes = mapCountryClassAttributes.get(countryCode);
+                        if(mapClassAttributes == null) {
+                            mapClassAttributes = new Map<String, Set<String>>();
+                            mapCountryClassAttributes.put(countryCode, mapClassAttributes);
+                        }
 
-                    Set<String> classAttributes = mapClassAttributes.get(attribute.Class_Type__c);
-                    if(classAttributes == null) {
-                        classAttributes = new Set<String>();
-                        mapClassAttributes.put(attribute.Class_Type__c, classAttributes);
-                    }
+                        Set<String> classAttributes = mapClassAttributes.get(attribute.Class_Type__c);
+                        if(classAttributes == null) {
+                            classAttributes = new Set<String>();
+                            mapClassAttributes.put(attribute.Class_Type__c, classAttributes);
+                        }
 
-                    classAttributes.add(attribute.Remittance_Frequency__c);
+                        classAttributes.add(attribute.Remittance_Frequency__c);
+                    }
                 }
             }
 
@@ -439,10 +446,14 @@ public class AMS_OSCARTriggerHandler {
             }
         }
         List<IATA_ISO_Country__c> countryList = IATAIsoCountryDAO.getIsoCountryByIsoCodes(mapClassAttributes.keySet());
-        Map<String, String> mapBSPISOCode = new Map<String, String>(); 
-            for(IATA_ISO_Country__c country : countryList){
-                mapBSPISOCode.put(country.AMS_Settlement_System__c, country.ISO_Code__c);
+        Map<String, List<String>> mapBSPISOCode = new Map<String, List<String>>(); 
+        for(IATA_ISO_Country__c country : countryList){
+            if(mapBSPISOCode.get(country.AMS_Settlement_System__c) == NULL) {
+                mapBSPISOCode.put(country.AMS_Settlement_System__c, new List<String>{country.ISO_Code__c});
+            } else {
+                mapBSPISOCode.get(country.AMS_Settlement_System__c).add(country.ISO_Code__c);
             }
+        }
 
         Id assessmentRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
         Set<String> locationsToCheck = new Set<String> {'P', 'D'};
@@ -455,14 +466,18 @@ public class AMS_OSCARTriggerHandler {
 
             for(AMS_Settlement_System__c operation : operations) {
                 for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
-                    Set<String> locations = mapClassAttributes.get(mapBSPISOCode.get(operation.Id));
-
-                    if(locations == null) {
-                        locations = new Set<String>();
-                        mapClassAttributes.put(mapBSPISOCode.get(operation.Id), locations);
+                    List<String> countriesLst = mapBSPISOCode.get(operation.Id);
+                                            
+                    for(String countryCode : countriesLst){
+                        Set<String> locations = mapClassAttributes.get(countryCode);
+                        
+                        if(locations == null) {
+                            locations = new Set<String>();
+                            mapClassAttributes.put(countryCode, locations);
+                        }
+                        
+                        locations.add(attribute.Class_Type__c);
                     }
-
-                    locations.add(attribute.Class_Type__c);
                 }
             }
 

@@ -1447,7 +1447,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 		}
 		
-        return Database.query('SELECT Id, (SELECT Remittance_Frequency__c, Remittances_Per_Year__c FROM BSP_Attributes__r' +(classType != null ? ' WHERE Class_Type__c = :classType' : '') +' ORDER BY Remittances_Per_Year__c DESC) FROM AMS_Settlement_System__c WHERE RecordtypeID = :settlementRTId' + (OperationsIds != null ? ' AND Id IN :operationsIds' : ''));	}
+        return Database.query('SELECT Id, Allow_multiple_remittances__c, (SELECT Remittance_Frequency__c, Remittances_Per_Year__c FROM BSP_Attributes__r' +(classType != null ? ' WHERE Class_Type__c = :classType' : '') +' ORDER BY Remittances_Per_Year__c DESC) FROM AMS_Settlement_System__c WHERE RecordtypeID = :settlementRTId' + (OperationsIds != null ? ' AND Id IN :operationsIds' : ''));	}
 
 	/**
 	Returns operationCodes and respective BSP Configurations
@@ -1466,7 +1466,7 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	/**
-	Returns a Map of Agency Operations Operation Codes for the given accounts
+	Returns a Map of Operations for the given accounts
 	*/
 	public static Map<Id,Account> fetchAgOperationPerAccount(List<Id> accIds) {
 
