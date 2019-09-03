@@ -6,27 +6,18 @@ import getSelectedColumns from '@salesforce/apex/CSP_Utils.getSelectedColumns';
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
 
-import CSP_NoCases1 from '@salesforce/label/c.CSP_NoCases1';
-import CSP_NoCases2 from '@salesforce/label/c.CSP_NoCases2';
 import CSP_RecentCases from '@salesforce/label/c.CSP_RecentCases';
 import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
-import CSP_Question1 from '@salesforce/label/c.CSP_Question1';
-import CSP_Question2 from '@salesforce/label/c.CSP_Question2';
-import CSP_Question1URL from '@salesforce/label/c.CSP_Question1URL';
-import CSP_Question2URL from '@salesforce/label/c.CSP_Question2URL';
+import CSP_RecentCases_Support from '@salesforce/label/c.CSP_RecentCases_Support';
+
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class RecentCases extends NavigationMixin(LightningElement) {
     label = {
-        CSP_NoCases1,
-        CSP_NoCases2,
         CSP_RecentCases,
         CSP_SeeAll,
-        CSP_Question1,
-        CSP_Question2,
-        CSP_Question1URL,
-        CSP_Question2URL
+        CSP_RecentCases_Support
     };
     @track data;
     @track columns;
@@ -35,7 +26,6 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         'CaseNumber', 'Type_of_case_Portal__c', 'Subject', 'Country_concerned__c', 'Portal_Case_Status__c'
     ];
     @track casesListUrl;
-    noCasesImg = CSP_PortalPath + 'CSPortal/Images/Icons/nocases.svg';
 
     @track homePageLocal = true;
     @api
@@ -48,6 +38,8 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
     }
 
     @api specialCase = false;
+
+    @track title = "";
 
     connectedCallback() {
         console.log('HomePage: ', this.homePageLocal);
@@ -63,6 +55,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         getSelectedColumns({ sObjectType: 'Case', sObjectFields: this.fieldLabels })
         .then(results => {
             if(this.homePageLocal === true){
+                this.title = this.label.CSP_RecentCases;
                 this.columns = [
                     { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 137, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
                     { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 130 },
@@ -71,11 +64,12 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
                     { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: { class: { fieldName: 'statusClass' } } }
                 ];
             } else {
+                this.title = this.label.CSP_RecentCases_Support;
                 this.columns = [
                     { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
                     { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text' },
                     { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
-                    { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: { class: { fieldName: 'statusClass' } } }
+                    { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 80, cellAttributes: { class: { fieldName: 'statusClass' } } }
                 ];
             }
             
@@ -97,6 +91,11 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
                 row.statusClass= row.Status.replace(/\s/g, '').replace(/_|-|\./g, '');
             }
             this.data = allDataAux.records;
+
+            if (this.data.length === 0 && this.specialCase){
+                this.dispatchEvent(new CustomEvent('checkemptylist'));
+            }
+
             this.loading = false;
         } else if (results.error) {
             this.loading = false;
@@ -118,30 +117,4 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         navigateToPage(this.casesListUrl, {});
     }
 
-    navigateToLinkOne(event) {
-        let params = {};
-        params.q = 'case';
-
-        event.preventDefault();
-        event.stopPropagation();
-        this[NavigationMixin.GenerateUrl]({
-            type: "comm__namedPage",
-            attributes: {
-                pageName: "support-view-article"
-            }})
-        .then(url => navigateToPage(url, params));
-    }
-    navigateToLinkTwo(event) {
-        let params = {};
-        params.q = 'case';
-
-        event.preventDefault();
-        event.stopPropagation();
-        this[NavigationMixin.GenerateUrl]({
-            type: "comm__namedPage",
-            attributes: {
-                pageName: "support-view-article"
-            }})
-        .then(url => navigateToPage(url, params));
-    }
 }

@@ -301,9 +301,9 @@ public with sharing class PortalCasesCtrl {
 
         if(isCaseFromReachUs) {
             if(queryConditions == ''){
-                queryConditions = ' WHERE IsClosed != true AND Status != \'Draft\'';
+                queryConditions = ' WHERE IsClosed != true AND Portal_Case_Status__c != \'Draft\'';
             }else{
-                queryConditions += ' AND IsClosed != true AND Status != \'Draft\'';
+                queryConditions += ' AND IsClosed != true AND Portal_Case_Status__c != \'Draft\'';
             }
         }
         

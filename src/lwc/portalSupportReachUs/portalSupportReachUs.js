@@ -89,6 +89,8 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     @track showModal = false;
     @track callUsPhoneNumberConfigs;
     @track phoneNumber = [];
+
+    @track showHideRecentCasesList = false;
     //@track suggestion;
 
     //global variables
@@ -870,5 +872,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                         && item.DeveloperName === 'LVA_CallUs_GEN'); // ---- Seventh Condition ------//
             });
         }
+    }
+
+    hideRecentCasesList() {
+        this.showHideRecentCasesList = true;
     }
 }
