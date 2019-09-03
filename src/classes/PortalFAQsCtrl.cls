@@ -108,18 +108,22 @@ public with sharing class PortalFAQsCtrl {
                 }
             }
 
-            String levels = '(' + String.join(subtopics,' , ') + ' ) ';
+            String levels = '';
+            if(!subtopics.isEmpty()) levels = '(' + String.join(subtopics,' , ') + ' ) ';
             
             String queryPartOne = 'FIND \'' + String.escapeSingleQuotes(filtersWrapper.searchText) + '\' IN ALL FIELDS '+
-                           'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\' ';
-            String queryPartTwo = ' ) WITH DATA CATEGORY FAQs__c BELOW ' + levels ;
+                           'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\'';
+            String queryPartTwo = ' WITH DATA CATEGORY FAQs__c BELOW ' + levels ;
 
 
             //Since SOSL don't have count, the first requested page is queried to all records
             //and then the count is retrived from the returned results list. For the next pages
             //limit and offset is used to improve loading times. 
             if(requestedPageAux == 0){
-                String finalQuery = queryPartOne + queryPartTwo;
+                String finalQuery = queryPartOne + ')';
+                if(String.isNotBlank(levels)) finalQuery += queryPartTwo;
+
+                System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] finalQuery - ' + finalQuery);
                 List<List<SObject>> searchList = Search.query(finalQuery);
                 List<FAQ__kav> tmpList = (List<FAQ__kav>)searchList[0];
 
@@ -131,9 +135,12 @@ public with sharing class PortalFAQsCtrl {
                 result.totalItemCount = tmpList.size();
             }else{
                 Integer offset = requestedPageAux * PortalFAQsCtrl.RESULTS_PER_PAGE;
-                String offsetQuery = ' LIMIT ' + PortalFAQsCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ' ';
+                String offsetQuery = ' LIMIT ' + PortalFAQsCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ')';
 
-                String finalQuery = queryPartOne + offsetQuery + queryPartTwo;
+                String finalQuery = queryPartOne + offsetQuery;
+                if(String.isNotBlank(queryPartTwo)) finalQuery += queryPartTwo;
+                
+				System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] finalQuery - ' + finalQuery);
 
                 List<List<SObject>> searchList = Search.query(finalQuery);
                 List<FAQ__kav> tmpList = (List<FAQ__kav>)searchList[0];
