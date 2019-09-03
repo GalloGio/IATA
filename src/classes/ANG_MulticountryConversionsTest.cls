@@ -87,7 +87,7 @@ private class ANG_MulticountryConversionsTest {
     standardHeUK.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
     standardHeUK.Status__c = 'Approved';
     standardHeUK.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-    standardHePT.Remittance_frequency__c = 'W';
+    standardHeUK.Remittance_frequency__c = 'W';
 
     Account standardHeFR = new Account();
     standardHeFR.Name = 'Standard HE FR';
@@ -99,7 +99,7 @@ private class ANG_MulticountryConversionsTest {
     standardHeFR.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
     standardHeFR.Status__c = 'Approved';
     standardHeFR.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-    standardHePT.Remittance_frequency__c = 'W';
+    standardHeFR.Remittance_frequency__c = 'W';
     
     insert new List<Account>{standardHePT, standardHeUK, standardHeFR};
     
@@ -116,7 +116,7 @@ private class ANG_MulticountryConversionsTest {
     standardAePT.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
     standardAePT.Status__c = 'Approved';
     standardAePT.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-    standardHePT.Remittance_frequency__c = 'M';
+    standardAePT.Remittance_frequency__c = 'M';
 
     Account standardAeUK = new Account();
     standardAeUK.Name = 'Standard AE UK';
