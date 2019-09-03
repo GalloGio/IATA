@@ -384,4 +384,43 @@ public with sharing class Account_Contact_Role_Helper_TEST {
 
     }
 
+
+    @IsTest
+    public static void generateGadmUniqueKeyTest() {
+
+
+        Contact_Roles__c gadmRole = [SELECT Id FROM Contact_Roles__c WHERE Name = 'GADM User'];
+        List<User> admins = [SELECT Id FROM User WHERE IsActive = true AND Profile.Name = 'System Administrator'];
+
+        Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+        List<Account_Contact_Role__c> existing = [SELECT Id, RecordTypeId, Contact_Roles__c, Contact__c, Account_Role__c, Service_Rendered__c FROM Account_Contact_Role__c WHERE RecordTypeId = :functionalRecordTypeId AND Contact_Roles__c = :gadmRole.Id AND Service_Rendered__c = 'GADM'];
+
+        String errorMessage = '';
+
+        Test.startTest();
+
+        System.runAs(admins[0]) {
+
+            Account_Contact_Role__c newAccountContactRole = new Account_Contact_Role__c();
+            newAccountContactRole.RecordTypeId = existing[0].RecordTypeId;
+            newAccountContactRole.Service_Rendered__c = existing[0].Service_Rendered__c;
+            newAccountContactRole.Contact__c = existing[0].Contact__c;
+            newAccountContactRole.Contact_Roles__c = existing[0].Contact_Roles__c;
+            newAccountContactRole.Account_Role__c = existing[0].Account_Role__c;
+
+            try{
+                insert newAccountContactRole;
+            }catch(DmlException e) {
+                errorMessage = e.getMessage();
+            }
+
+        }
+
+
+        Test.stopTest();
+
+        System.assertEquals(true, errorMessage.contains(System.Label.GADM_account_contact_role_gadm_user), 'User can have only one Account Contact Role for GADM User role and Reco');
+
+    }
+
 }

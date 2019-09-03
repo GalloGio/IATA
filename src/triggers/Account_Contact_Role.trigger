@@ -9,6 +9,7 @@ trigger Account_Contact_Role on Account_Contact_Role__c (after delete, after ins
                 }
             }
 
+            Account_Contact_Role_Helper.generateGadmUniqueKey(Trigger.new);
             Account_Contact_Role_Helper.checkForGadmUserRole(Trigger.new);
         }
     }
