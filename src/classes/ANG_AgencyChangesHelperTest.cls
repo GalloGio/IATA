@@ -2276,7 +2276,7 @@ public class ANG_AgencyChangesHelperTest {
 		accountsIds.add(a1.Id);
 		accountsIds.add(he1.Id);
 
-		ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accountsIds);
+		ANG_AgencyChangesHelper.fetchAgOperationPerAccount(accountsIds);
 
 		
 		//2nd oscar - CAD
@@ -2514,7 +2514,7 @@ public class ANG_AgencyChangesHelperTest {
 		accountsIds.add(a1.Id);
 		accountsIds.add(he1.Id);
 
-		ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accountsIds);
+		ANG_AgencyChangesHelper.fetchAgOperationPerAccount(accountsIds);
 
 		Test.stopTest();
 

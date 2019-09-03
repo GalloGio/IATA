@@ -1562,12 +1562,21 @@
 	
     /*** AMSU-193 ***/
     @isTest static void prepopulateRF() {
+        AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
+			Name = 'BSP-SG',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			ANG_RHC_Amount_Equals_FS__c = true
+		);
+
+        insert bspSG;
+
         IATA_ISO_Country__c country = new IATA_ISO_Country__c();
         country.Name = 'Portugal';
         country.ISO_Code__c = 'PT';
         country.ISO_Code_Numeric__c = 11;
         country.Case_BSP_Country__c = 'Test';
         country.AMS_Default_State__c = 'FR';
+        country.AMS_Settlement_System__c = bspSG.Id;
         insert country;
 
 
@@ -1593,7 +1602,7 @@
         AMS_OSCAR__c oscar = new AMS_OSCAR__c();  
         oscar.Account__c = agency.Id;
         oscar.OwnerId = UserInfo.getUserId();
-        oscar.Process__c = AMS_Utils.new_HO;    
+        oscar.Process__c = AMS_Utils.new_HO;  
         oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         insert oscar;
 
@@ -1650,14 +1659,6 @@
         operation.Settlement__c = issOperation.Id;
         operation.Name = 'TEST';
         insert operation;
-
-		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
-			Name = 'BSP-SG',
-			RecordTypeId = AMS_Utils.RECTYPE_BSP,
-			ANG_RHC_Amount_Equals_FS__c = true
-		);
-
-        insert bspSG;
 
         ANG_BSP_Attributes__c attribute = new ANG_BSP_Attributes__c();
         attribute.BSP__c = bspSG.Id;

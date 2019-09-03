@@ -288,6 +288,7 @@ public class AMS_OSCARTriggerHandler {
         Set<String> countryCodes = new Set<String>();
         List<AMS_Oscar__c> oscarsToValidate = new List<AMS_Oscar__c>();
         Map<String, Map<String, Set<String>>> mapCountryClassAttributes = new Map<String, Map<String, Set<String>>>();
+        Map<String, List<String>> mapBSPISOCode = new Map<String, List<String>>(); 
 
         Set<String> locationsToCheck = new Set<String> {'P','D','C','R'};
 
@@ -318,29 +319,41 @@ public class AMS_OSCARTriggerHandler {
             }
         }
 
+        List<IATA_ISO_Country__c> countryList = IATAIsoCountryDAO.getIsoCountryByIsoCodes(mapCountryClassAttributes.keySet());
+        for(IATA_ISO_Country__c country : countryList){
+            if(mapBSPISOCode.get(country.AMS_Settlement_System__c) == NULL) {
+                mapBSPISOCode.put(country.AMS_Settlement_System__c, new List<String>{country.ISO_Code__c});
+            } else {
+                mapBSPISOCode.get(country.AMS_Settlement_System__c).add(country.ISO_Code__c);
+            }
+        }
+
         Id assessmentRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
         if(!oscarsToValidate.isEmpty() && assessmentRTId != null) {
-            List<AMS_Operation__c> operations = [SELECT Id, Name, Country__c, Country__r.ISO_Code__c,
-                                                    (SELECT Class_Type__c , Remittance_Frequency__c FROM BSP_Attributes__r WHERE Class_Type__c IN :locationsToCheck) 
-                                                 FROM AMS_Operation__c
-                                                 WHERE Country__r.ISO_Code__c IN :mapCountryClassAttributes.keySet() AND 
-                                                    Settlement__r.RecordtypeId = :assessmentRTId]; 
-
-            for(AMS_Operation__c operation : operations) {
+            
+            List<AMS_Settlement_System__c> operations = [SELECT Id, Name,
+                                                        (SELECT Class_Type__c , Remittance_Frequency__c FROM BSP_Attributes__r WHERE Class_Type__c IN :locationsToCheck) 
+                                                        FROM AMS_Settlement_System__c
+                                                        WHERE Id IN :mapBSPISOCode.keySet() AND 
+                                                        RecordtypeId = :assessmentRTId];
+            for(AMS_Settlement_System__c operation : operations) {
                 for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
-                    Map<String, Set<String>> mapClassAttributes = mapCountryClassAttributes.get(operation.Country__r.ISO_Code__c);
-                    if(mapClassAttributes == null) {
-                        mapClassAttributes = new Map<String, Set<String>>();
-                        mapCountryClassAttributes.put(operation.Country__r.ISO_Code__c, mapClassAttributes);
-                    }
+                    List<String> countriesLst = mapBSPISOCode.get(operation.Id);
+                    for(String countryCode : countriesLst){
+                        Map<String, Set<String>> mapClassAttributes = mapCountryClassAttributes.get(countryCode);
+                        if(mapClassAttributes == null) {
+                            mapClassAttributes = new Map<String, Set<String>>();
+                            mapCountryClassAttributes.put(countryCode, mapClassAttributes);
+                        }
 
-                    Set<String> classAttributes = mapClassAttributes.get(attribute.Class_Type__c);
-                    if(classAttributes == null) {
-                        classAttributes = new Set<String>();
-                        mapClassAttributes.put(attribute.Class_Type__c, classAttributes);
-                    }
+                        Set<String> classAttributes = mapClassAttributes.get(attribute.Class_Type__c);
+                        if(classAttributes == null) {
+                            classAttributes = new Set<String>();
+                            mapClassAttributes.put(attribute.Class_Type__c, classAttributes);
+                        }
 
-                    classAttributes.add(attribute.Remittance_Frequency__c);
+                        classAttributes.add(attribute.Remittance_Frequency__c);
+                    }
                 }
             }
 
@@ -432,26 +445,39 @@ public class AMS_OSCARTriggerHandler {
                 mapClassAttributes.put(oscar.Country_ISO_Code__c, null);
             }
         }
+        List<IATA_ISO_Country__c> countryList = IATAIsoCountryDAO.getIsoCountryByIsoCodes(mapClassAttributes.keySet());
+        Map<String, List<String>> mapBSPISOCode = new Map<String, List<String>>(); 
+        for(IATA_ISO_Country__c country : countryList){
+            if(mapBSPISOCode.get(country.AMS_Settlement_System__c) == NULL) {
+                mapBSPISOCode.put(country.AMS_Settlement_System__c, new List<String>{country.ISO_Code__c});
+            } else {
+                mapBSPISOCode.get(country.AMS_Settlement_System__c).add(country.ISO_Code__c);
+            }
+        }
 
         Id assessmentRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
         Set<String> locationsToCheck = new Set<String> {'P', 'D'};
         if(!oscarsToValidate.isEmpty() && assessmentRTId != null) {
-            List<AMS_Operation__c> operations = [SELECT Id, Name, Country__c, Country__r.ISO_Code__c,
-                                                    (SELECT Class_Type__c FROM BSP_Attributes__r WHERE Class_Type__c IN :locationsToCheck) 
-                                                 FROM AMS_Operation__c
-                                                 WHERE Country__r.ISO_Code__c IN :mapClassAttributes.keySet() AND 
-                                                    Settlement__r.RecordtypeId = :assessmentRTId]; 
+            List<AMS_Settlement_System__c> operations = [SELECT Id, Name,
+                                                        (SELECT Class_Type__c , Remittance_Frequency__c FROM BSP_Attributes__r WHERE Class_Type__c IN :locationsToCheck) 
+                                                        FROM AMS_Settlement_System__c
+                                                        WHERE Id IN :mapBSPISOCode.keySet() AND 
+                                                        RecordtypeId = :assessmentRTId];
 
-            for(AMS_Operation__c operation : operations) {
+            for(AMS_Settlement_System__c operation : operations) {
                 for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
-                    Set<String> locations = mapClassAttributes.get(operation.Country__r.ISO_Code__c);
-
-                    if(locations == null) {
-                        locations = new Set<String>();
-                        mapClassAttributes.put(operation.Country__r.ISO_Code__c, locations);
+                    List<String> countriesLst = mapBSPISOCode.get(operation.Id);
+                                            
+                    for(String countryCode : countriesLst){
+                        Set<String> locations = mapClassAttributes.get(countryCode);
+                        
+                        if(locations == null) {
+                            locations = new Set<String>();
+                            mapClassAttributes.put(countryCode, locations);
+                        }
+                        
+                        locations.add(attribute.Class_Type__c);
                     }
-
-                    locations.add(attribute.Class_Type__c);
                 }
             }
 

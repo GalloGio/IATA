@@ -654,12 +654,12 @@ public class ANG_AccountTriggerHandler {
 		for (Account a: accs)
 			accsIds.add(a.Id);
 
-		Map<Id,AMS_Agency_Operations__c> agOpMap = ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accsIds);
-		List<AMS_Operation__c> opCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c','BSP'),
+		Map<Id,Account> agOpMap = ANG_AgencyChangesHelper.fetchAgOperationPerAccount(accsIds);
+		List<AMS_Settlement_System__c> ops = ANG_AgencyChangesHelper.fetchOperationConfiguration(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c','BSP'),
 		 agOpMap.keySet());
 
 		Integer aux = 0;
-		for(AMS_Operation__c op: opCodes){
+		for(AMS_Settlement_System__c op: ops){
 			for(ANG_BSP_Attributes__c attr : op.BSP_Attributes__r){
 
 				if((Integer)attr.Remittances_Per_Year__c > aux){
