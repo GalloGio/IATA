@@ -132,7 +132,7 @@ public class AMS_OscarCaseTriggerHelper {
         if(oscarCases.isEmpty()) return;
 
         List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
-        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c 
+        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c, process__c
                                                                    FROM AMS_OSCAR__c WHERE Id = :oscarIds]);
 
         for(Case c : oscarCases){
@@ -141,6 +141,11 @@ public class AMS_OscarCaseTriggerHelper {
             Boolean changed = false;
             AMS_OSCAR__c oscar = oscars.get(c.OSCAR__c);
             
+            if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
+                oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE;
+                changed = true;
+            }
+
             if(oscar.Name != c.CaseNumber){
                 System.debug(loggingLevel.FINE, '____ [cls AMS_OscarCaseTriggerHelper - populateOscarFields] Renaming OSCAR - ' + oscar.Id + '('+c.CaseNumber+')');
                 
