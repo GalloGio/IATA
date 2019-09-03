@@ -118,7 +118,12 @@ public with sharing class PortalLoginCtrl {
     }
 
     public static void reactivateUser(User usr){
-        PortalPasswordHandler.handleResetPassword(usr.email);
+        PortalPasswordHandler.resultWrapper result = PortalPasswordHandler.handleResetPassword(usr.email);
+        if(result.success == true){
+            String link                  = PortalPasswordHandler.generateUrl(result.user, result.password, 'resetPassword');
+            Map<String, String> emailMap = PortalPasswordHandler.forgotPasswordEmailMap(result.user, link);
+            result.success               = PortalPasswordHandler.sendEmail(result.user.id, 'CSP_Forgot_Password_Email', emailMap);
+        }
     }
 
 }
