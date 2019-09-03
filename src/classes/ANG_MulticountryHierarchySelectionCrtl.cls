@@ -456,7 +456,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			try {
 	
 				AMS_Pax_Accreditation_Form__c accreditationForm = [Select Id, SAAM_Case__c, Location_Type__c from AMS_Pax_Accreditation_Form__c where Id =:oscar.AMS_Online_Accreditation__c];
-				Account account;
+				Account account = mapHierarchyAccounts.get(oscar.Account__c);
 				selectMain();
 
 				//if main account changed change update the stagging area
@@ -469,13 +469,13 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					Map<String,Object> fieldsOfObject = ANG_MulticountryHelper.buildStagingAreaFieldsObject(account);
 					accreditationForm.Account_Name__c = account.Name;
 					accreditationForm = (AMS_Pax_Accreditation_Form__c)ANG_EntityCreator.addFieldsToObject((sObject)accreditationForm, fieldsOfObject);
+					accreditationForm.Remittance_Frequency__c = account.Remittance_Frequency__c;
 
 					update oscar;
 					update caseToUpdate;
 					update accreditationForm;
 				}
 				else if(accreditationForm.Location_Type__c != account.Location_type__c) {
-					account = mapHierarchyAccounts.get(oscar.Account__c);
 					accreditationForm.Location_Type__c = account.Location_type__c;
 					update accreditationForm; //enforce the new location type 
 				}
