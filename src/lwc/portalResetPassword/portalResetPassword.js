@@ -78,7 +78,7 @@ export default class PortalResetPassword extends LightningElement {
               this.template.querySelector('[data-id="passwordIcon"]').classList.add('showPasswordIconDisabled');
           }
 
-          if (this.password.length >= 8){
+          if (this.password.length >= 10){
               this.template.querySelector('[data-id="chars"]').classList.add("checked");
               this.template.querySelector('[data-id="checkCircleInputChars"]').checked = true;
           } else {
@@ -110,7 +110,7 @@ export default class PortalResetPassword extends LightningElement {
               this.template.querySelector('[data-id="checkCircleInputSymbol"]').checked = false;
           }
 
-          if(this.password.length >= 8 && /[A-Z]/.test(this.password) && /\d/.test(this.password) && /[\W_]/.test(this.password)) {
+          if(this.password.length >= 10 && /[A-Z]/.test(this.password) && /\d/.test(this.password) && /[\W_]/.test(this.password)) {
               this.passwordFormat = true;
           } else {
               this.passwordFormat = false;

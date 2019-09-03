@@ -62,7 +62,7 @@ export default class PortalChangePassword extends LightningElement {
             this.template.querySelector('[data-id="newPasswordIcon"]').classList.add('showPasswordIconDisabled');
          }
 
-         if (this.newPassword.length >= 8){
+         if (this.newPassword.length >= 10){
              this.template.querySelector('[data-id="chars"]').classList.add("checked");
              this.template.querySelector('[data-id="checkCircleInputChars"]').checked = true;
          } else {
@@ -94,7 +94,7 @@ export default class PortalChangePassword extends LightningElement {
              this.template.querySelector('[data-id="checkCircleInputSymbol"]').checked = false;
          }
 
-         if(this.newPassword.length >= 8 && /[A-Z]/.test(this.newPassword) && /\d/.test(this.newPassword) && /[\W_]/.test(this.newPassword)) {
+         if(this.newPassword.length >= 10 && /[A-Z]/.test(this.newPassword) && /\d/.test(this.newPassword) && /[\W_]/.test(this.newPassword)) {
              this.passwordFormat = true;
          } else {
              this.passwordFormat = false;
