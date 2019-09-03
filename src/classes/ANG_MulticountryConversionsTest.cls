@@ -3,8 +3,6 @@ private class ANG_MulticountryConversionsTest {
 
   @testSetup static void setup(){
 
-    Test.startTest();
-
     AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
       Name = 'BSP-PT',
       RecordTypeId = AMS_Utils.RECTYPE_BSP,
@@ -89,7 +87,7 @@ private class ANG_MulticountryConversionsTest {
     standardHeUK.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
     standardHeUK.Status__c = 'Approved';
     standardHeUK.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-    standardHePT.Remittance_frequency__c = 'W';
+    standardHeUK.Remittance_frequency__c = 'W';
 
     Account standardHeFR = new Account();
     standardHeFR.Name = 'Standard HE FR';
@@ -101,9 +99,11 @@ private class ANG_MulticountryConversionsTest {
     standardHeFR.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
     standardHeFR.Status__c = 'Approved';
     standardHeFR.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-    standardHePT.Remittance_frequency__c = 'W';
+    standardHeFR.Remittance_frequency__c = 'W';
     
     insert new List<Account>{standardHePT, standardHeUK, standardHeFR};
+    
+    Test.startTest();
 
     Account standardAePT = new Account();
     standardAePT.Name = 'Standard AE PT';
@@ -116,7 +116,7 @@ private class ANG_MulticountryConversionsTest {
     standardAePT.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
     standardAePT.Status__c = 'Approved';
     standardAePT.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-    standardHePT.Remittance_frequency__c = 'M';
+    standardAePT.Remittance_frequency__c = 'M';
 
     Account standardAeUK = new Account();
     standardAeUK.Name = 'Standard AE UK';
@@ -429,6 +429,19 @@ private class ANG_MulticountryConversionsTest {
     selectionCrtl.saveConversion();
     System.assert(findApexPagesMessage('You have selected locations that have change or suspension processes in progress. Please finalize the process and then proceed with the multicountry conversion'));		 
   
+    //Test GE & HE in the Same BSP
+    for (ANG_MulticountryHierarchySelectionCrtl.HierarchyItem it : hierarchyValues) {
+      if(it.acc.Name == 'Standard AE PT'){ 
+        it.isAE = false;
+        it.isHE = true;
+        it.acc.Status__c = 'Approved';
+        it.acc.Remittance_Frequency__c = 'W';
+      }
+		}
+    selectionCrtl.saveConversion();
+    System.assert(findApexPagesMessage('There cannot be an HE account in the same BSP of the GE account.'));		 
+  
+    Test.stopTest();
   }
 
 
@@ -480,6 +493,7 @@ private class ANG_MulticountryConversionsTest {
       if(it.acc.Name == 'Standard HE UK') {
         it.isHE = true;
         it.isAE = false;
+        it.main = false;
       }
 		}
 

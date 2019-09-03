@@ -455,19 +455,17 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			Savepoint sp = Database.setSavepoint();
 			try {
 	
-				Case caseToUpdate;
-				AMS_Pax_Accreditation_Form__c accreditationForm;
-
+				AMS_Pax_Accreditation_Form__c accreditationForm = [Select Id, SAAM_Case__c, Location_Type__c from AMS_Pax_Accreditation_Form__c where Id =:oscar.AMS_Online_Accreditation__c];
+				Account account;
 				selectMain();
 
 				//if main account changed change update the stagging area
 				if(oscarMainAccount != null){
 					oscar.Account__c = oscarMainAccount;
-					accreditationForm = [Select Id, SAAM_Case__c from AMS_Pax_Accreditation_Form__c where Id =:oscar.AMS_Online_Accreditation__c];
-					caseToUpdate = new Case(Id = accreditationForm.SAAM_Case__c);
+					Case caseToUpdate = new Case(Id = accreditationForm.SAAM_Case__c);
 					caseToUpdate.AccountId = oscar.Account__c;
 					accreditationForm.HO_Account__c = oscar.Account__c;
-					Account account = mapHierarchyAccounts.get(oscar.Account__c);
+					account = mapHierarchyAccounts.get(oscar.Account__c);
 					Map<String,Object> fieldsOfObject = ANG_MulticountryHelper.buildStagingAreaFieldsObject(account);
 					accreditationForm.Account_Name__c = account.Name;
 					accreditationForm = (AMS_Pax_Accreditation_Form__c)ANG_EntityCreator.addFieldsToObject((sObject)accreditationForm, fieldsOfObject);
@@ -476,11 +474,16 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					update caseToUpdate;
 					update accreditationForm;
 				}
+				else if(accreditationForm.Location_Type__c != account.Location_type__c) {
+					account = mapHierarchyAccounts.get(oscar.Account__c);
+					accreditationForm.Location_Type__c = account.Location_type__c;
+					update accreditationForm; //enforce the new location type 
+				}
 
 				List<AMS_Process_Detail__c> processDetails = new List<AMS_Process_Detail__c>();
 
 				for(HierarchyItem item : hierarchyValues){
-					if(item.wasChanged && mapHierarchyProcessDetail.get(item.acc.ID) != null) 
+					if(mapHierarchyProcessDetail.get(item.acc.ID) != null) 
 						processDetails.add(mapHierarchyProcessDetail.get(item.acc.ID));
 				}
 
@@ -634,7 +637,6 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		for(HierarchyItem item: hierarchyValues){
 			AMS_Process_Detail__c currentPD = mapHierarchyProcessDetail.get(item.acc.ID);
-			item.wasChanged = false;
 
 			//if found a Process Detail record - then it is a HE / AE or the GE changed
 			if(currentPD != null){
@@ -643,15 +645,17 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					cloneProcess = currentPD;
 					item.acc.Location_type__c = AMS_Utils.GE;
 				}
-
-				if(item.isHE) currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.HE;
-				if(item.isAE) currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.AE;
-
-				if(currentPD.ANG_Location_Type_Conversion__c != item.acc.Location_type__c)	item.wasChanged = true;
-
+				if(item.isHE){
+					currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.HE;
+					item.acc.Location_type__c = AMS_Utils.HE;
+				} 
+				if(item.isAE){
+					currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.AE;
+					item.acc.Location_type__c = AMS_Utils.AE;
+				}
+				
 			}else if(currentPD == null && (item.isHE || item.isAE)){
 				oldMainAccount = item.acc;
-				item.wasChanged = true;
 				convertLocation = item.isHE ? AMS_Utils.HE : AMS_Utils.AE;
 			}
 		}
@@ -677,9 +681,9 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		for( HierarchyItem item: hierarchyValues){
 
 			if(bspMap.get(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name) == null)
-				bspMap.put(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name,new BSPAttributes(item.acc, mapHierarchyProcessDetail != null ? mapHierarchyProcessDetail.get(item.acc.ID) : null));
+				bspMap.put(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name,new BSPAttributes(item.acc));
 			else
-				bspMap.get(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name).addCount(item.acc, mapHierarchyProcessDetail != null ? mapHierarchyProcessDetail.get(item.acc.ID) : null);
+				bspMap.get(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name).addCount(item.acc);
 
 			if(isConversionProcess && invalidAgencyStatus.contains(item.acc.Status__c)){
 				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'You have selected locations that have change or suspension processes in progress. Please finalize the process and then proceed with the multicountry conversion'));
@@ -711,7 +715,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				toReturn = false;
 			}
 			if(bspAtt.numberOfAE > 0)
-				if(bspAtt.numberOfHE == 0 && !bspAtt.isGE && (!isConversionProcess || (isConversionProcess && bspAtt.bspContainsNotTerminatedAEs))){
+				if(bspAtt.numberOfHE == 0 && !bspAtt.isGE){
 					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'There should not be any AEs alone in any BSP (that is not a GE).'));
 					toReturn = false;
 				}
@@ -728,45 +732,31 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		public Integer numberOfAE;
 		public String remittanceFrequency;
 		public Boolean rfIsAlignInBSP;
-		public Boolean bspContainsNotTerminatedAEs;
 		public Boolean isGE;
 
-		public BSPAttributes(Account a, AMS_Process_Detail__c processDetail){
+		public BSPAttributes(Account a){
 
 			numberOfHE = 0;
 			numberOfAE = 0;
 			rfIsAlignInBSP = true;
 			remittanceFrequency = a.Remittance_Frequency__c;
-			bspContainsNotTerminatedAEs = false;
-
 			isGE = false;
-
-			if(processDetail != null) a.Location_Type__c = processDetail.ANG_Location_Type_Conversion__c;
 
 			if(a.Location_Type__c == AMS_Utils.HE)
 				this.numberOfHE = 1;
-			if(a.Location_Type__c == AMS_Utils.AE){
+			if(a.Location_Type__c == AMS_Utils.AE)
 				this.numberOfAE = 1;
-				if(!agencyStatusToBeAlone.contains(a.status__c))
-					this.bspContainsNotTerminatedAEs = true;
-			}
 			if(a.Location_Type__c == AMS_Utils.GE)
 				this.isGE = true;
 		}
 
-		public void addCount(Account a, AMS_Process_Detail__c processDetail){
-
-			if(processDetail != null) a.Location_Type__c = processDetail.ANG_Location_Type_Conversion__c;
-
+		public void addCount(Account a){
 			if(this.remittanceFrequency != a.Remittance_Frequency__c)
 				rfIsAlignInBSP = false;
 			if(a.Location_Type__c == AMS_Utils.HE)
 				this.numberOfHE++;
-			if(a.Location_Type__c == AMS_Utils.AE){
+			if(a.Location_Type__c == AMS_Utils.AE)
 				this.numberOfAE++;
-				if(!agencyStatusToBeAlone.contains(a.status__c))
-					this.bspContainsNotTerminatedAEs = true;
-			}
 			if(a.Location_Type__c == AMS_Utils.GE)
 				this.isGE = true;			
 		}
