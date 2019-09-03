@@ -332,10 +332,6 @@
                 <field>Current_Outstanding_Amount_all_per_USD__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Recovered_after_default__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Collected_Amount_all_periods__c</field>
             </layoutItems>
