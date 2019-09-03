@@ -1,4 +1,4 @@
-import { LightningElement, api, track, wire } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import getFilteredFAQsResultsPage from '@salesforce/apex/PortalFAQsCtrl.getFilteredFAQsResultsPage';
 import CSP_RelatedArticles from '@salesforce/label/c.CSP_RelatedArticles';
 import { NavigationMixin } from 'lightning/navigation';
@@ -13,6 +13,7 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
     @track _articleId;
     @track relatedArticles;
     @track loading = true;
+    @api guestUser;
 
     @api
     get article() {
@@ -55,10 +56,17 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
         params.id1 = this._articleId; // PARENT ARTICLE
         params.id2 = event.target.attributes.getNamedItem('data-item').value; // SPECIFIC RELATED ARTICLE TO THE PARENT ARTICLE
 
+        let pageName;
+        if(!this.guestUser) {
+            pageName = 'support-view-article';
+        } else {
+            pageName = 'faq-article';
+        }
+
         this[NavigationMixin.GenerateUrl]({
             type: "standard__namedPage",
             attributes: {
-                pageName: "support-view-article"
+                pageName: pageName
             }})
         .then(url => navigateToPage(url, params));
     }

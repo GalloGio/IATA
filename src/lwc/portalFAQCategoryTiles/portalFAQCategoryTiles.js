@@ -1,5 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
 import getFaqsStructure from '@salesforce/apex/DescribeDataCategoryGroupStructures.getFaqsStructure';
+import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
 
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
@@ -18,16 +19,21 @@ export default class PortalFAQCategoryTiles extends NavigationMixin(LightningEle
     @api renderWithIcons;
     @track lstTiles = [];
     @track loading = true;
+    @track guestUser = false;
 
     iconsBaseLink = CSP_PortalPath + 'CSPortal/Images/FAQ/';
     iconsExtension = '.svg';
     
-    connectedCallback() {                
+    connectedCallback() {
+        isGuestUser().then(results => {            
+            if(results) this.guestUser = true;
+        });
+
         getFaqsStructure()
         .then(results => {
             if(results.length) {
                 let resultsAux = JSON.parse(JSON.stringify(results));
-
+                
                 for(let i = 0; i < resultsAux.length; i++){
                     if(i === 0 || i === 1){
                         resultsAux[i].class = 'slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-vertical_xx-small slds-text-align_center';
@@ -50,12 +56,19 @@ export default class PortalFAQCategoryTiles extends NavigationMixin(LightningEle
             params.category = selectedCategory;
         }
 
+        let pageName;
+        if(!this.guestUser) {
+            pageName = 'support-view-category';
+        } else {
+            pageName = 'faq-category';
+        }    
+
         event.preventDefault();
         event.stopPropagation();
         this[NavigationMixin.GenerateUrl]({
             type: "standard__namedPage",
             attributes: {
-                pageName: "support-view-category"
+                pageName: pageName
             }})
         .then(url => navigateToPage(url, params));
     }
