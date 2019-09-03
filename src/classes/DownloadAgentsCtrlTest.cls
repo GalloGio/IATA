@@ -56,6 +56,7 @@ private class DownloadAgentsCtrlTest {
          ApexPages.currentPage().getParameters().put('exclOpenCases','false');
          ApexPages.currentPage().getParameters().put('targetFinancialYear','String.valueOF(date.today().Year())');
          ApexPages.currentPage().getParameters().put('yearend','--All--');
+         ApexPages.currentPage().getParameters().put('exclFAOptOut','true');
                  
         DownloadAgentsCtrl crtl = new DownloadAgentsCtrl();
         system.assertEquals(crtl.displayList.size(),1);

@@ -16,6 +16,7 @@ public with sharing class DownloadAgentsCtrl {
     public String targetFinancialYear   {get; set;}
     public String exclOpenCases         {get; set;}
     public String exclClosedCases       {get; set;}
+    public String exclFAOptOut          {get; set;}
 
     public DownloadAgentsCtrl () {
 
@@ -28,7 +29,7 @@ public with sharing class DownloadAgentsCtrl {
         targetFinancialYear = Apexpages.currentPage().getParameters().get('targetFinancialYear');  // phase 4
         exclOpenCases = Apexpages.currentPage().getParameters().get('exclOpenCases');  // phase 4
         exclClosedCases = Apexpages.currentPage().getParameters().get('exclClosedCases');  // phase 4
-
+        exclFAOptOut = Apexpages.currentPage().getParameters().get('exclFAOptOut');
         runSearch();
 
     }
