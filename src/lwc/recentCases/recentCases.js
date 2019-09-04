@@ -40,6 +40,9 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
     @api specialCase = false;
 
     @track title = "";
+    @track titleCss = "";
+    @track cardBodyContent;
+    @track rowHeight = "";
 
     connectedCallback() {
         console.log('HomePage: ', this.homePageLocal);
@@ -56,6 +59,9 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         .then(results => {
             if(this.homePageLocal === true){
                 this.title = this.label.CSP_RecentCases;
+                this.titleCss = "text-small";
+                this.cardBodyContent = "cardBodyContent";
+                this.rowHeight = "";
                 this.columns = [
                     { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 137, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
                     { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 130 },
@@ -65,9 +71,11 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
                 ];
             } else {
                 this.title = this.label.CSP_RecentCases_Support;
+                this.titleCss = "text-medium text-bold slds-align_absolute-center";
+                this.cardBodyContent = "cardBodyContentSmall";
+                this.rowHeight = "rowHeight";
                 this.columns = [
-                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
-                    { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text' },
+                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 130, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
                     { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
                     { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 80, cellAttributes: { class: { fieldName: 'statusClass' } } }
                 ];

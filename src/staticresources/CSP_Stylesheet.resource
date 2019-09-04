@@ -665,6 +665,10 @@ lightning-datatable .slds-th__action {
   height: 66px;
 }
 
+.rowHeight .slds-hint-parent {
+  height: 30px;
+}
+
 .text-black lightning-formatted-url a {
     color: #000000;
 }

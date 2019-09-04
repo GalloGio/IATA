@@ -2,6 +2,11 @@
     min-height: 318px;
 }
 
+.cardBodyContentSmall {
+    min-height: 120px;
+    margin-top: -25px;
+}
+
 .noRecentCases {
     display: flex;
     flex-direction: column;
