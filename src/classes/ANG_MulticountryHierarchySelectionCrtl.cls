@@ -215,9 +215,9 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				for(Account a : mapHierarchyAccounts.values()){
 					Boolean main = (a.Id == oscar.Account__c);
 
-					if(a.Location_Type__c == null || isConversionProcess) a.Location_Type__c = AMS_Utils.AE;
+					if(a.Location_Type__c == null) a.Location_Type__c = AMS_Utils.AE;
 					
-					if(isConversionProcess && main) a.Location_Type__c = AMS_Utils.GE;
+					else if(isConversionProcess && main) a.Location_Type__c = AMS_Utils.GE;
 
 					else if(isConversionProcess && mapHierarchyProcessDetail.get(a.id).ANG_Location_Type_Conversion__c != null)
 						a.Location_Type__c = mapHierarchyProcessDetail.get(a.id).ANG_Location_Type_Conversion__c;
@@ -456,7 +456,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			try {
 	
 				AMS_Pax_Accreditation_Form__c accreditationForm = [Select Id, SAAM_Case__c, Location_Type__c from AMS_Pax_Accreditation_Form__c where Id =:oscar.AMS_Online_Accreditation__c];
-				Account account;
+				Account account = mapHierarchyAccounts.get(oscar.Account__c);
 				selectMain();
 
 				//if main account changed change update the stagging area
@@ -469,13 +469,13 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					Map<String,Object> fieldsOfObject = ANG_MulticountryHelper.buildStagingAreaFieldsObject(account);
 					accreditationForm.Account_Name__c = account.Name;
 					accreditationForm = (AMS_Pax_Accreditation_Form__c)ANG_EntityCreator.addFieldsToObject((sObject)accreditationForm, fieldsOfObject);
+					accreditationForm.Remittance_Frequency__c = account.Remittance_Frequency__c;
 
 					update oscar;
 					update caseToUpdate;
 					update accreditationForm;
 				}
 				else if(accreditationForm.Location_Type__c != account.Location_type__c) {
-					account = mapHierarchyAccounts.get(oscar.Account__c);
 					accreditationForm.Location_Type__c = account.Location_type__c;
 					update accreditationForm; //enforce the new location type 
 				}
@@ -633,7 +633,6 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		AMS_Process_Detail__c cloneProcess;
 		Account oldMainAccount;
-		String convertLocation;
 
 		for(HierarchyItem item: hierarchyValues){
 			AMS_Process_Detail__c currentPD = mapHierarchyProcessDetail.get(item.acc.ID);
@@ -652,11 +651,10 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				if(item.isAE){
 					currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.AE;
 					item.acc.Location_type__c = AMS_Utils.AE;
-				}
-				
-			}else if(currentPD == null && (item.isHE || item.isAE)){
+				}				
+			}else if(currentPD == null && (item.isHE || item.isAE)){				
 				oldMainAccount = item.acc;
-				convertLocation = item.isHE ? AMS_Utils.HE : AMS_Utils.AE;
+				item.acc.Location_Type__c = item.isHE ? AMS_Utils.HE : AMS_Utils.AE;
 			}
 		}
 
@@ -665,8 +663,8 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			//Removed the previous entry with the key of the new GE(clone the previous ) and add a new Entry with the new HE/AE 
 			mapHierarchyProcessDetail.remove(cloneProcess.Account__c);
 			cloneProcess.Account__c = oldMainAccount.ID;
-			cloneProcess.ANG_Location_Type_Conversion__c = convertLocation;
 			mapHierarchyProcessDetail.put(oldMainAccount.ID, cloneProcess);
+
 		}
 	}
 
@@ -692,7 +690,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		}
 
 		if(bspMap.values().size() < 2){
-			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'There should are at least 2 BSPs involved in the hierarchy.'));
+			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'There should be at least 2 BSPs involved in the hierarchy.'));
 			return false;
 		}
 
@@ -758,7 +756,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			if(a.Location_Type__c == AMS_Utils.AE)
 				this.numberOfAE++;
 			if(a.Location_Type__c == AMS_Utils.GE)
-				this.isGE = true;			
+				this.isGE = true;		
 		}
 	}
 
