@@ -5002,6 +5002,17 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>MultiCountry_Countries_Concerned__c</fullName>
+        <externalId>false</externalId>
+        <label>MultiCountry Countries Concerned</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>New_Head_Office_IATA_Code__c</fullName>
         <externalId>false</externalId>
         <label>New Head Office IATA Code</label>
