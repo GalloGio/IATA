@@ -1439,7 +1439,13 @@ public with sharing class ANG_AgencyChangesHelper {
 	/**
 	Returns operations and respective BSP Configurations
 	*/
-	private static List<AMS_Settlement_System__c> fetchOperationConfiguration(Set<Id> countryIds, Id settlementRTId, Set<Id> operationsIds, String classType) {
+	private static List<AMS_Settlement_System__c> fetchOperationConfiguration(Set<Id> countryIds, Id settlementRTId, Set<Id> operationsInputIds, String classType) {
+
+		Set<Id> operationsIds = new Set<Id>();
+
+		if(operationsInputIds != NULL && !operationsInputIds.isEmpty()){
+			operationsIds.addAll(operationsInputIds);
+		}
 
 		if(CountryIds != null){
 			for(IATA_ISO_Country__c  country : IATAIsoCountryDAO.getIsoCountriesByIds(countryIds)){
