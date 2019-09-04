@@ -26,3 +26,8 @@
   .wrapContent {
     flex: auto;
   }
+
+  .fixButton {
+    display: flex; 
+    justify-content: flex-end;
+  }
