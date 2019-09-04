@@ -635,7 +635,7 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         List<Id> contacts = notSubmitting[0].contactsNotSubmitting;
         System.assertEquals(true, notSubmitting[0].accountName == 'Test account 2', 'Data for wrong account retrieved!');
         System.assertEquals(true, contacts.contains(testContact1.Id), 'Contact id missing among notified contacts!');
-        System.assertEquals(false, contacts.contains(testContact2.Id), 'Contact id missing among notified contacts!');
+        System.assertEquals(true, contacts.contains(testContact2.Id), 'Contact id missing among notified contacts!');
 
 
     }
