@@ -21,6 +21,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		public List<AMS_Agencies_relationhip__c> relationsToDeleteLst;
 		public List<ANG_RHC_Information__c> deactivateRhcInformationLst;
 		public List<Agency_Authorization__c> agencyAuthorizationToUpdateLst;
+		public Map<Id, Map<Id, Integer>> calculateRiskAssessmentMap;
 
 		public Set<Id> accountsChanged;
 
@@ -42,6 +43,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			relationsToDeleteLst = new List<AMS_Agencies_relationhip__c>();
 			deactivateRhcInformationLst = new List<ANG_RHC_Information__c>();
 			agencyAuthorizationToUpdateLst = new List<Agency_Authorization__c>();
+			calculateRiskAssessmentMap = new Map<Id, Map<Id, Integer>>();
 		}
 
 		public void addAccount(Account account){
@@ -88,6 +90,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		public void addAgencyAuthorizationToUpdate(Agency_Authorization__c aa){
 			agencyAuthorizationToUpdateLst.add(aa);
+		}
+
+		public void addAccountToCalculateRiskAssessment(Id accountId){
+			calculateRiskAssessmentMap.put(accountId, null);
 		}
 
 		public Boolean runUpsert(){
@@ -153,6 +159,11 @@ public with sharing class ANG_AgencyChangesHelper {
 				update agencyAuthorizationToUpdateLst;
 			}
 
+			if(calculateRiskAssessmentMap != NULL && !calculateRiskAssessmentMap.isEmpty()){
+				System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - runUpsert] Calculate risk assessment for accounts: ' + calculateRiskAssessmentMap.keySet());
+				new ANG_RiskAssessmentEngine(calculateRiskAssessmentMap).assessment();
+			}
+			
 			if(!accountsToRecalculateRHC.isEmpty()){
 				recalculateRHCInformation(accountsToRecalculateRHC);
 			}
@@ -820,6 +831,16 @@ public with sharing class ANG_AgencyChangesHelper {
 		if(String.isNotBlank(oscarToProcess.HE_per_BSP_Mapping__c)){
 			hePerBspMapping = (Map<Id, Id>) JSON.deserialize(oscarToProcess.HE_per_BSP_Mapping__c, Map<Id, Id>.class);
 		}
+
+		Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
+
+		Id topParentId = oscarAccount.Top_Parent__c != NULL ? oscarAccount.Top_Parent__c : oscarAccount.Id;
+
+		if(!accountIdsInvolvedSet.contains(topParentId)){
+			toReturn.addAccountToCalculateRiskAssessment(topParentId);
+		}
+
+		toReturn.addAccountToCalculateRiskAssessment(oscarToProcess.New_parent__c);
 
 		Boolean isHierarchySplit = accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c);
 

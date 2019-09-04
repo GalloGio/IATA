@@ -234,8 +234,56 @@ public class AMS_OSCARTriggerHandler {
 
         /*** AMSU-193 ***/
         prepopulateRFrequencyStgArea((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
+        calculateRiskAssessment();
     }
-	
+
+    /**
+     * Triggers the risk assessment engine when 
+     * a new HE is accredited for a multicountry hierarchy
+     * since the total number of remittances will change 
+     */ 
+    public static void calculateRiskAssessment(){
+
+        List<AMS_OSCAR__c> oscarLst = (List<AMS_OSCAR__c>) Trigger.new;
+        
+        Set<Id> accountsToFetchTopParentSet = new Set<Id>();
+
+        for(AMS_OSCAR__c oscar : oscarLst){
+            AMS_OSCAR__c oldOscar = (AMS_OSCAR__c) Trigger.oldMap.get(oscar.Id);
+            //If we are approving a new HE accreditation OSCAR for a multicountry hierarchy we will need to trigger the risk assessment calculation on GE
+            if(oldOscar.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL && oscar.Process__c == AMS_Utils.MCAE){
+                addAccountId(oscar.Account__c);
+                accountsToFetchTopParentSet.add(oscar.Account__c);
+            }
+        }
+
+        if(accountsToFetchTopParentSet.isEmpty()){
+            System.debug(LoggingLevel.FINE, '____ [cls AMS_OSCARTriggerHandler - calculateRiskAssessment] No need for Risk Assessment recalculation');
+            return;
+        }
+
+        List<Account> accountLst = getAccounts(accountsToFetchTopParentSet);
+
+        Map<Id, Map<Id, Integer>> calculateRiskAssessmentMap = new Map<Id, Map<Id, Integer>>();
+
+        for(Account acct : accountLst){
+            //Make sure that we only trigger the calculation 
+            //if the OSCAR related accounts are new HE's
+            //We cannot verify this before since the OSCAR Process 
+            //is the same for new HE or AE in multicountry
+            if(acct.Location_Type__c == AMS_Utils.HE){
+                calculateRiskAssessmentMap.put(acct.Top_Parent__c, null);
+            }
+        }
+        
+        System.debug(LoggingLevel.FINE, '____ [cls AMS_OSCARTriggerHandler - calculateRiskAssessment] calculateRiskAssessmentMap: ' + calculateRiskAssessmentMap);
+
+        if(!calculateRiskAssessmentMap.isEmpty()){
+            new ANG_RiskAssessmentEngine(calculateRiskAssessmentMap).assessment();
+        }
+
+    }
+    	
     /*** AMSU-193 ***/
     public static void prepopulateRFrequencyStgArea(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
         Set<String> countryCodes = new Set<String>();
