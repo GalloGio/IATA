@@ -129,7 +129,7 @@ public without sharing class AMS_Utils {
     //AMSU-180
     public static final Set<String> oscarAMSProcesses_ValidateOwnership = new Set <String>{new_HO, AGENCYCHANGES, new_TIDS, COR};
 
-    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWGESTANDARD, NEWAE, MCAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
+    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWGESTANDARD, NEWAE, MCAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP, NGCONVERSIONTOMULTICOUNTRY};
     public static final Set<String> oscarNewGenNewAppProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWGESTANDARD,NEWAE, MCAE};
 
     public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
