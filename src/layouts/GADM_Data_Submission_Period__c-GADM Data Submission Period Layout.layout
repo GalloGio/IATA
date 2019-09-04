@@ -12,12 +12,10 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
                 <behavior>Required</behavior>
                 <field>Upcoming_Notification__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
                 <behavior>Required</behavior>
                 <field>In_Due_Notification__c</field>
             </layoutItems>
@@ -32,22 +30,18 @@
         <label>Submission Cycle</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
                 <behavior>Required</behavior>
                 <field>Start_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
                 <behavior>Required</behavior>
                 <field>Period_Length__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
                 <behavior>Required</behavior>
                 <field>Submission_Cycle_Start_Day__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
                 <behavior>Required</behavior>
                 <field>Submission_Cycle_Start_Month__c</field>
             </layoutItems>
@@ -60,12 +54,10 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
                 <behavior>Required</behavior>
                 <field>Submission_Cycle_End_Day__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
                 <behavior>Required</behavior>
                 <field>Submission_Cycle_End_Month__c</field>
             </layoutItems>
