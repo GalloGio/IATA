@@ -172,8 +172,13 @@ a.iatabtn {
         
 body .bPageBlock .pbBody .pbSubheader {
         background-image: none !important;
-        background-color: #1e32fa;
-        color: #fff;
+        background-color: #e2e4e8 !important;
+        color: #000 !important;
+}
+
+body .secondaryPalette.bPageBlock{
+    background-color: unset;
+    border: none;
 }
 
 .modal-header {
