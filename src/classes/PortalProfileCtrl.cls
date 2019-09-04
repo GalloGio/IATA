@@ -668,6 +668,21 @@ public with sharing class PortalProfileCtrl {
         }
 
         return wrapperMap;
-
     }
+
+    @AuraEnabled
+    public static Boolean checkCanEdit(){
+        User loggedUser = CSP_Utils.getLoggedUser();
+        if (loggedUser.Contact.User_Portal_Status__c == 'Approved Admin') {
+            if (!loggedUser.Profile.Name.contains('Airline') ) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+ 
+    }
+
 }

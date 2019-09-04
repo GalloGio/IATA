@@ -76,6 +76,12 @@
                                 </span>
                             </span>
                         </div>
+			<!-- ROW 5 -->
+                        <div if:true={hasSurveyLink}
+                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
+                            <span class="grey">{labels.ISSP_Survey}</span><br />
+                            <a class="text-blue" href={surveyLink} target="_blank">{labels.Open}</a>
+                        </div>
 
                         <!-- ROW 7 Display PDF -->
                         <div if:true={getDisplayPDF}
