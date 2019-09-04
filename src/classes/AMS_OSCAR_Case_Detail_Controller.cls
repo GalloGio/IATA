@@ -144,7 +144,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             String sCorrectionType_of_change = '';
 
             if(oscarObj != null && oscarObj.Type_of_change__c != null) editableFields = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.Type_of_change__c);
-            if(oscarObj != null && oscarObj.ANG_Type_of_change__c != null) editableFields = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.ANG_Type_of_change__c);
+            if(oscarObj != null && oscarObj.ANG_Type_of_change__c != null && oscarObj.Process__c != 'ANG.CONVERT.ST.TO.MC') editableFields = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.ANG_Type_of_change__c);
+            if(oscarObj != null && oscarObj.ANG_Type_of_change__c != null && oscarObj.Process__c == 'ANG.CONVERT.ST.TO.MC') editableFields = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.ANG_Type_of_change__c+'_CONVERSION');
 
             //FM AMSU-1
             //AMSU-151 (AMSU-1) - added chech for isVATnumberSpecialCase in order to use the new 
@@ -192,7 +193,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     private Boolean isEditable(String fieldName){
 
-        if(this.oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == 'Multicountry'){
+        if(this.oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == 'Multicountry' && this.oscarObj.process__c != 'ANG.CONVERT.ST.TO.MC'){
 			return false;
 		}
 		
@@ -578,7 +579,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean hasEditableFields{
         get{
 
-            if(oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == 'Multicountry'){
+            if(oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == 'Multicountry' && this.oscarObj.process__c != 'ANG.CONVERT.ST.TO.MC'){
                 return false;
             }
             
