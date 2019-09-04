@@ -1,36 +1,69 @@
 <apex:page standardController="LocalGovernance_Meeting__c" extensions="NewLocalGroupMeetingCtrl">
+    <style>
+        textarea {
+            width: 94%;
+        }
+        select[id$="responsible_mlktp"] {
+            display: none;
+        }
+    </style>
     <apex:form >
     <apex:sectionHeader title="Local Group Meeting Edit" subtitle="New Local Group Meeting" /> 
     
     <apex:pageBlock title="Local Group Meeting Edit" id="ThePageBlock" mode="edit">
         <apex:Pagemessages escape="false"/>
-        <apex:pageBlockSection title="Information" columns="1">
+
+        <apex:pageBlockSection title="Information" columns="2">
             <apex:inputField value="{!lm.Name}" required="true"/>
-            <apex:inputField value="{!lm.Date_of_Meeting__c}"/>
-            <div id="myUserLookup">
-                <apex:inputField value="{!lm.Meeting_Responsible__c}" required="true"/>
-            </div>
-            <style>
-               select{display:none;}
-            </style>
+            <apex:outputField value="{!lm.Local_Governance__c}"/>
+
+            <apex:inputField value="{!lm.Date_of_Meeting__c}" required="true"/>
+            <apex:pageBlockSectionItem/>
+
+            <apex:inputField id="responsible" value="{!lm.Meeting_Responsible__c}"/>
+            <apex:pageBlockSectionItem/>
         </apex:pageBlockSection>
         
         
-        <apex:pageBlockSection title="Checklist to be completed before the Local Group meeting" columns="1">
-            <apex:inputField value="{!lm.Date_Legal_Requested_to_Sign_off_Agenda__c}" />
-            <apex:inputField value="{!lm.Date_Legal_Signed_off_Agenda__c}"/>
+        <apex:pageBlockSection title="Checklist to be completed before the Local Group meeting" columns="2">
+            <apex:inputField value="{!lm.Date_Legal_Requested_to_Sign_off_Agenda__c}"/>
             <apex:inputField value="{!lm.Date_Legal_REJECTED_the_agenda__c}"/>
+
+            <apex:inputField value="{!lm.Date_Legal_Signed_off_Agenda__c}"/>
+            <apex:inputField value="{!lm.Reason_for_Rejection_Agenda__c}"/>
+
+            <apex:pageBlockSectionItem/>
+            <apex:inputField value="{!lm.Legal_Remarks_Agenda__c}"/>
         </apex:pageBlockSection>
         
         
-        <apex:pageBlockSection title="Checklist to be completed after the Local Group Meeting" columns="1">
+        <apex:pageBlockSection title="Checklist to be completed after the Local Group Meeting" columns="2">
             <apex:inputField value="{!lm.Criteria_Reviewed__c}"/>
+            <apex:pageBlockSectionItem/>
+
             <apex:inputField value="{!lm.Remittance_Frequency_Reviewed__c}"/>
+            <apex:pageBlockSectionItem/>
+
             <apex:inputField value="{!lm.VMFR__c}"/>
+            <apex:pageBlockSectionItem/>
+
+            <apex:inputField value="{!lm.Other__c}"/>
+            <apex:pageBlockSectionItem/>
+
+            <apex:inputField value="{!lm.Proposal_to_Conference__c}"/>
+            <apex:pageBlockSectionItem/>
+
+            <apex:inputField value="{!lm.Comments_checklist__c}"/>
+            <apex:pageBlockSectionItem/>
+
             <apex:inputField value="{!lm.Date_Legal_Requested_to_Sign_Off_Minutes__c}"/>
             <apex:inputField value="{!lm.Date_Legal_Signed_Off_the_Minutes__c}"/>
+
             <apex:inputField value="{!lm.Date_Legal_REJECTED_the_minutes__c}"/>
             <apex:inputField value="{!lm.Comments__c}"/>
+
+            <apex:inputField value="{!lm.Reason_for_Rejection_Minutes__c}"/>
+            <apex:pageBlockSectionItem/>
         </apex:pageBlockSection>
         
         <apex:pageBlockSection title="Add Group Participants as attendees for this meeting" columns="1">

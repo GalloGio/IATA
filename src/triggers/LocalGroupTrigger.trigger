@@ -1,4 +1,4 @@
-trigger LocalGroupTrigger on LocalGovernance__c (before insert, before update, before delete) {
+trigger LocalGroupTrigger on LocalGovernance__c (before insert, before update, before delete, after update) {
 
     localgroupTriggerHandler handler = new localgroupTriggerHandler();
 
@@ -134,4 +134,14 @@ trigger LocalGroupTrigger on LocalGovernance__c (before insert, before update, b
 
     }
 
+    if(Trigger.isBefore) {
+        if (Trigger.isUpdate) {
+            localgroupTriggerHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
+        }
+    }
+    if(Trigger.isAfter) {
+        if (Trigger.isUpdate) {
+            localgroupTriggerHandler.afterUpdate(Trigger.newMap, Trigger.oldMap);
+        }
+    }
 }

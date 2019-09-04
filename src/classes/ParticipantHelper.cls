@@ -1,4 +1,35 @@
 public with sharing class ParticipantHelper {
+
+	public static void afterInsert(list<Participant__c> listParticipant) {
+		FlagParticipatingContacts(listParticipant);
+		updateParentContacts(listParticipant);
+	}
+
+	public static void beforeDelete(list<Participant__c> listParticipant) {
+		blockDeletingFromInactiveGroups(listParticipant);
+	}
+
+	public static void afterDelete(list<Participant__c> listParticipant) {
+		UnflagParticipatingContacts(listParticipant);
+		updateParentContacts(listParticipant);
+	}
+
+	public static void afterUndelete(list<Participant__c> listParticipant) {
+		updateParentContacts(listParticipant);
+	}
+
+	/*
+	 * finds all contacts related to the input participants and calls the method
+	 * to update some fields
+	 */
+	public static void updateParentContacts(list<Participant__c> listParticipant) {
+		list<Id> listContactId = new list<Id>();
+		for (Participant__c participant: listParticipant) {
+			listContactId.add(participant.Contact__c);
+		}
+		localgroupTriggerHandler.updateParentContacts(listContactId);
+	}
+
 	/*
 	 * Flags the contact using the LCAG_Member__c and APJC_Participant__c checkboxes if the parent Local Group / Governance has the respective type 
 	 */
