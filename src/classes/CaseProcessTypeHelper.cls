@@ -43,6 +43,7 @@ public with sharing class CaseProcessTypeHelper {
     public static void processKPI(List<Case> cases, Map<Id,Case> oldMap) {
         Datetime x1stDate = Datetime.newInstance(2019, 1, 1);
         Set<Id> accountIds = new Set<Id>();
+        Set<Id> oscarIds = new Set<Id>(); //WMO-564 - ACAMBAS
         List<Case> casesToProcess = new List<Case>();
 
         for(Case cse : cases) {
@@ -53,6 +54,7 @@ public with sharing class CaseProcessTypeHelper {
             if(hasConfig && beingClosed && cse.ClosedDate >= x1stDate && String.isNotBlank(cse.Closed_by_Role__c) && String.isNotBlank(cse.Region__c) && validSubject) {
                 casesToProcess.add(cse);
                 accountIds.add(cse.AccountId);
+                oscarIds.add(cse.OSCAR__c); //WMO-564 - ACAMBAS
             }
         }
 
@@ -62,14 +64,18 @@ public with sharing class CaseProcessTypeHelper {
         
         /* US Accounts must be excluded */
         Map<Id,Account> mapAccounts = new Map<Id,Account>([SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.ISO_Code__c FROM Account WHERE Id IN :accountIds]);
+        
+        Map<Id, AMS_OSCAR__c> mapOscars = new Map<Id, AMS_OSCAR__c>([SELECT Id FROM AMS_OSCAR__c WHERE Id IN :oscarIds]); //WMO-564 - ACAMBAS
+        
         for(Case cse : casesToProcess) {
             Account acc = mapAccounts.get(cse.AccountId);
             if(String.isNotBlank(acc.IATA_ISO_Country__c) && acc.IATA_ISO_Country__r.ISO_Code__c == 'US') {
                 continue;
             }
 
+            AMS_OSCAR__c oscar = mapOscars.get(cse.OSCAR__c); //WMO-564 - ACAMBAS
             Case_Process_Type__mdt process = getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c);
-            calculateKPI(cse, process);
+            calculateKPI(cse, oscar, process);
         }
     }
 
@@ -89,8 +95,23 @@ public with sharing class CaseProcessTypeHelper {
      *  KPI_Reference_Value__c, this field has the value we need to compare with Case field, if the Case field is greather than the
      *  reference value then KPI will be 0 otherwise it will be 1
      */
-    private static void calculateKPI(Case cse, Case_Process_Type__mdt process) {
-        Integer recordValue = Integer.valueOf(cse.get(process.KPI_Reference_Field__c));
+    private static void calculateKPI(Case cse, AMS_OSCAR__c oscar, Case_Process_Type__mdt process) {
+        
+        //WMO-564 - ACAMBAS: Begin
+        List<String> refFieldList = process.KPI_Reference_Field__c.split('.');
+        Integer recordValue;
+        
+        if(refFieldList.size() == 2 && refFieldList[0] == 'Oscar') {
+         	recordValue = Integer.valueOf(oscar.get(process.KPI_Reference_Field__c));   
+        }
+        else if(refFieldList.size() == 0) { //Case
+            recordValue = Integer.valueOf(cse.get(process.KPI_Reference_Field__c));
+        }
+        else {
+            cse.addError('Configuration error - invalid field: ' + process.KPI_Reference_Field__c);
+        }
+        //WMO-564 - ACAMBAS: End   
+        
         cse.KPI_Calculation__c = recordValue <= process.KPI_Reference_Value__c ? 1 : 0;
     }
 
