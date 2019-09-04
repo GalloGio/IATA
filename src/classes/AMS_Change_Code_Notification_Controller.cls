@@ -27,8 +27,6 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 
     public void setNotificationMessage() {
 
-        list<Case> lstCases = [SELECT Id, RecordType.DeveloperName, Remittance_Period__c, AccountId, Status, Account.Name, OSCAR__c FROM Case WHERE Id = :caseId];
-
         if (currentCase != null) {
             list<Agency_Applied_Change_code__c> lstRecentChangeCodes = new list<Agency_Applied_Change_code__c>();
             Datetime dateRange = Datetime.now().addMinutes(-1);
@@ -126,9 +124,9 @@ public with sharing class AMS_Change_Code_Notification_Controller {
                 if(currentCase.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
                     String geData = Label.SIDRA_GE_Info + ' ';
                     if(currentCase.Account.Location_Type__c == AMS_Utils.GE) {
-                        geData = geData + currentCase.Account.Name + ' ' + currentCase.Account.IATACode__c;
+                        geData = geData + currentCase.Account.IATACode__c + ' ' + currentCase.Account.Name;
                     } else {
-                        geData = geData + currentCase.Account.Top_Parent__r.Name + ' ' + currentCase.Account.Top_Parent__r.IATACode__c;
+                        geData = geData + currentCase.Account.Top_Parent__r.IATACode__c + ' ' + currentCase.Account.Top_Parent__r.Name;
                     }
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, geData));
                 }
