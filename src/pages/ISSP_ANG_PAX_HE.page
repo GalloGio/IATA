@@ -899,7 +899,22 @@
                               
                    <apex:outputText ><strong>{!$Label.ISSP_AMS_Step3_Office_FullAddress}</strong></apex:outputText>
                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_PAX_Issuing_Address}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />                      
-                                 
+                        <apex:pageBlockSection columns="2" id="testing">
+                            <apex:pageBlockSectionItem labelStyle="display: none;">
+                                <apex:outputLabel style="display: none;"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem>  
+                                <apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="none">
+                                    <div class="row">
+                                        <apex:outputLabel style="color:black; font-size:110%; margin-right: 10px;" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
+                                        <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBillingAddress();" />
+                                        <br/>
+                                    </div>
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                        
+                        </apex:pageBlockSection>         
+                        
                         <apex:pageBlockSection columns="2" id="addressBlockSection">
                             <apex:pageBlockSectionItem>    
                                 <DSE:DS_DataQuality id="BillingAddress"
@@ -915,12 +930,8 @@
                                 </DSE:DS_DataQuality>
                             </apex:pageBlockSectionItem>
 
-                            <apex:pageBlockSectionItem>  
-                                <apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
-                                    <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
-                                    <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBillingAddress();" />
-                                    <br/>
-                                </apex:outputPanel>
+                            <apex:pageBlockSectionItem >  
+                                
                                 <apex:outputPanel>
                                     <DSE:DS_DataQuality id="ShippingAddress"
                                         RecordRef="{!hqAccount}"

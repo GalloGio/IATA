@@ -269,7 +269,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         System.debug('Creating relationship with parent ' + parentAccount.Id + ' and child ' + account.Id);
 
-        Boolean isNewgenRelation = typeOfProcess.equalsIgnoreCase(NEWNAE);
+        Boolean isNewgenRelation = typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MCAE);
 
         AMS_Agencies_relationhip__c relationship = new AMS_Agencies_relationhip__c(Child_Account__c = account.Id, Parent_Account__c = parentAccount.Id, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = isNewgenRelation);
 

@@ -154,7 +154,7 @@
                 if (('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false')) {
                     $('#modalChooseAccreditationType').modal('toggle');
                 } else {
-                    navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}{!IF(con.Account.ANG_Accreditation_Model__c == 'Multicountry', 'isMultiCountryNewAE=true&isMCNewAEAccredited=true&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                    navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}{!IF(con.Account.ANG_Accreditation_Model__c == 'Multicountry', 'isMultiCountryNewAE=true&isMCAccredited=true&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                 }
                 return false;
             }
@@ -299,7 +299,7 @@
                 <apex:actionFunction action="{!discardMCApplication}" name="discardMCApplication" status="loadStatusSpinner" reRender="DraftCasespageblock, amsCasesMessage" oncomplete="reRenderAllSections();"/>
                     
                     <div class="row">
-                        <section name="left-side-agency-accred" id="left-side-regular" class="col-md-7" style="min-height: 350px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCNewAEAccredited)), 'none', '')};">
+                        <section name="left-side-agency-accred" id="left-side-regular" class="col-md-7" style="min-height: 350px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCAccredited)), 'none', '')};">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -327,7 +327,7 @@
                             </div>
                         </div>
 
-                        <div class="row" style="padding-bottom: 20px; {!IF(isMCNewAEAccredited, 'padding-top: 20px;', '')}">
+                        <div class="row" style="padding-bottom: 20px; {!IF(isMCAccredited, 'padding-top: 20px;', '')}">
                             <div class="col-md-7" style="display:{!IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};">
                                 <input type="button" class="btn btn_iata_primary" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/><br/>
                                         <apex:outputText escape="false" value="{!$Label.ISSP_ANG_proof_PCI_Info}"/>
@@ -358,7 +358,7 @@
                              </div>   
                         </section>
 
-                        <section name="left-side-agency-accred-multicountry" id="left-side-mc" class="col-md-7" style="min-height: 350px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCNewAEAccredited)), '', 'none')};">
+                        <section name="left-side-agency-accred-multicountry" id="left-side-mc" class="col-md-7" style="min-height: 350px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCAccredited)), '', 'none')};">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -410,7 +410,7 @@
                     </div>
                     
                     <div class="row">
-                        <section name="left-side-ongoing-apps" id="ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCNewAEAccredited)), 'none', '')}">
+                        <section name="left-side-ongoing-apps" id="ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCAccredited)), 'none', '')}">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -422,7 +422,7 @@
                                 <apex:pageBlock id="DraftCasespageblock">
                                     <apex:pageBlockTable id="DraftCases" value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(AMSDraftCasesIsEmpty)}">
                                         <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
-                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}{!IF(con.Account.ANG_Accreditation_Model__c == 'Multicountry', '&isMultiCountryNewAE=true&isMCNewAEAccredited=true', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}{!IF(con.Account.ANG_Accreditation_Model__c == 'Multicountry', '&isMultiCountryNewAE=true&isMCAccredited=true', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
                                             
                                             <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
 
@@ -450,7 +450,7 @@
                                 
                         </section>
                             
-                        <section name="right-side-other-forms" id="other-forms" class="col-md-5" style="display:{!IF(OR(AND(isMultiCountryStarted, NOT(isMCNewAEAccredited)),AND(con.Account.Category__c == 'Domestic Agent', NOT(isocountry.ANG_Enable_NewGen__c))), 'none', IF(isUserAccAccredited, '', 'none'))}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
+                        <section name="right-side-other-forms" id="other-forms" class="col-md-5" style="display:{!IF(OR(AND(isMultiCountryStarted, NOT(isMCAccredited)),AND(con.Account.Category__c == 'Domestic Agent', NOT(isocountry.ANG_Enable_NewGen__c))), 'none', IF(isUserAccAccredited, '', 'none'))}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
