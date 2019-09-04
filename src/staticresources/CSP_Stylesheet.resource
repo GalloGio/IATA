@@ -472,7 +472,7 @@ lightning-datatable .slds-th__action {
 /* ############################################## */
 /* Classes for the buttons */
 
-.containedButton button, .containedButton button:active, .containedButton button:visited, .containedButton button:focus {
+.containedButton, .containedButton button, .containedButton button:active, .containedButton button:visited, .containedButton button:focus {
     -webkit-transition-duration: 0.4s; /* Safari */
   	transition-duration: 0.4s;
     border-radius: 1px;
