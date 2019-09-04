@@ -220,7 +220,7 @@
         var isEUcountry = {!isEUcountry};
 
         function setVarsProductComparisonLink(namEnabled, sectorValue, isHOAccredited, sector) {
-           if(namEnabled == 'true' && (sectorValue === 'Travel_Agent') && (isHOAccredited == 'false' || sector === 'Cargo Agent')) {
+            if(namEnabled == 'true' && (sectorValue === 'Travel_Agent') && ((isHOAccredited == 'false' && !{!isMultiCountryNewAE}) || sector === 'Cargo Agent')) {
                 showProductComparisonLink = true;
                 hideProductComparisonLink = false;
             } else {
@@ -599,9 +599,6 @@
                     }
                 }
             }
-
-            console.log({!selectedCountryIsos});
-            console.log({!selectionPah});
         }
 
         function checkSelectedAccounts() {
@@ -801,10 +798,10 @@
 
                                                     <script>
                                                         if(showProductComparisonLink) {
-                                                            $('[name$=ProductComparisonLink]').show();
+                                                            $('[id$=ProductComparisonLink]').show();
                                                         }
                                                         if(hideProductComparisonLink) {
-                                                            $('[name$=ProductComparisonLink]').hide();
+                                                            $('[id$=ProductComparisonLink]').hide();
                                                         }
                                                     </script>
                                                 </div>
@@ -814,7 +811,7 @@
                         <apex:outputpanel id="isSameLegal" rendered="{!OR(AND(newAccreditationModels,OR(con.Account.Category__c =='IATA Passenger Sales Agent', con.Account.Category__c == 'Domestic Agent'), isHOAccredited), isMultiCountryNewAE)}">
                             <apex:outputpanel id="legalEntity" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
                                 <div class="form-group" id='isLegal'>
-                                    <label for="isLegal" class="col-lg-3 control-label">{!$Label.ANG_AE_separate_Legal_Entity}</label>
+                                    <label for="isLegal" class="col-lg-3 control-label">{!IF(isMultiCountryNewAE, $Label.ANG_AE_separate_Legal_Entity_MultiCountry, $Label.ANG_AE_separate_Legal_Entity)}</label>
 
                                                         <div style="width: 142px;padding-left:15px;padding-top:7px; float:left;margin-left:0px;">
                                                             <apex:selectradio id="separateLegalEntitySelect" style="width:100%;" label="{!$Label.ANG_AE_separate_Legal_Entity}" value="{!newForm.AE_separate_Legal_Entity__c}" onchange="enableDisableLegalName();">

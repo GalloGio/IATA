@@ -707,9 +707,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 } 
 
                 applyLanguage = newCase.Case_Language__c;
-                displayLanguage = newCase.Case_Language__c;
-
-                
+                displayLanguage = newCase.Case_Language__c;                
 
                 if (applyLanguage == 'en_US') {
                     amsCountryLabel = isocountry.Case_BSP_Country__c; 
@@ -741,6 +739,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
                 if (isMultiCountryNewAE) {
                     applyLanguage = newForm.Multicountry_Apply_Language__c;
+                    displayLanguage = newForm.Multicountry_Apply_Language__c;
                 }
 
                 if (String.isBlank(mcformCountryISO)) {
@@ -1854,6 +1853,10 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.CaseArea__c = 'Accreditation Process';
             newcase.Case_Language__c = applyLanguage;
             newCase.Visible_on_ISS_Portal__c = true;
+
+            if (isMultiCountryNewAE) {
+                newForm.Multicountry_Apply_Language__c = applyLanguage;
+            }
             
             if (!isMultiCountryNewAE && newCase.IFAP_Country_ISO__c == null) {
                 newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
@@ -1913,6 +1916,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
                     newCase.Case_Language__c = applyLanguage;
                     newCase.IFAP_Country_ISO__c = newIsoCountry;
+
+                    if (isMultiCountryNewAE) {
+                        newForm.Multicountry_Apply_Language__c = applyLanguage;
+                    }
 
                     isocountry = (isMultiCountryNewAE) ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
@@ -3177,43 +3184,63 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public Pagereference goToStep3Section1() {
+        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_one';
+        
         if (isNoticeOfChange) {
-            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam + '&step=3#nav_one' );
+             pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+        } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
+            pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
         }
-
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id  + commParam +'&step=3#nav_one' );
+        
+        return new Pagereference(pageURL);
     }
 
     public Pagereference goToStep3Section2() {
+        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_two';
+        
         if (isNoticeOfChange) {
-            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam + '&step=3#nav_two' );
+             pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+        } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
+            pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
         }
-
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam + '&step=3#nav_two');
+        
+        return new Pagereference(pageURL);
     }
 
     public Pagereference goToStep3Section3() {
+        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_three';
+        
         if (isNoticeOfChange) {
-            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam +'&step=3#nav_three' );
+             pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+        } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
+            pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
         }
-
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id  + commParam +'&step=3#nav_three');
+        
+        return new Pagereference(pageURL);
     }
 
     public Pagereference goToStep3Section4() {
+        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_four';
+        
         if (isNoticeOfChange) {
-            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam +'&step=3#nav_four' );
+             pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+        } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
+            pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
         }
-
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_four' );
+        
+        return new Pagereference(pageURL);
     }
 
     public Pagereference goToStep3Section5() {
+        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_five';
+        
         if (isNoticeOfChange) {
-            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam +'&step=3#nav_five' );
+             pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+        } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
+            pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
         }
         
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_five' );
+        return new Pagereference(pageURL);
     }
 
     public Pagereference goToStep3Section6() {
