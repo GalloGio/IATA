@@ -730,10 +730,10 @@
             </apex:actionFunction>
 					
 			<apex:pageBlock id="AMSBlock">
-			<div class="alert alert-info" role="alert" style="margin-bottom: {!IF(AND(isMCNewAEAccredited, isNoticeOfChange), '5px !important', '20px;')}">
+			<div class="alert alert-info" role="alert" style="margin-bottom: {!IF(AND(isMCAccredited, isNoticeOfChange), '5px !important', '20px;')}">
 				{!$Label.ISSP_AMS_NoC_StepB_message}
 			</div>
-			<div class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCNewAEAccredited, isNoticeOfChange), 'block', 'none')}; margin-bottom: 20px;">
+			<div class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange), 'block', 'none')}; margin-bottom: 20px;">
                 {!$Label.ISSP_AMS_Noc_StepA_message_MC}
             </div>
 			<apex:pageBlockButtons >
@@ -2200,7 +2200,7 @@
 				allowedAccreditationModelSelectPanel = $j('[id$=allowedAccreditationModelSelectPanel]'),
 				allowedAccreditationModelSelectDisplay = allowedAccreditationModelSelect.parent().parent().children(),
 				confirmAccType = $j('[id$=confirmAccType]'),
-				typeOfChange = '{newForm.Type_of_Change__c}';
+				typeOfChange = '{!newForm.Type_of_Change__c}';
 
 		function removeMessage() {
 			var warningBox = $j('[id$=warningHoverBox]');
@@ -2312,32 +2312,31 @@
 			}
 		}
 
-		if ({!isMCNewAEAccredited} && {!isNoticeOfChange} && lScopeOfChange !== 'HO Only') {
+		if ({!isMCAccredited} && {!isNoticeOfChange} && lScopeOfChange !== 'HO Only') {
 			setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 		}
 
 		if ({!isNoticeOfChange}) {
 			if (typeOfChange !== 'Change of Accreditation Type') {
-				$j('[id$=iataChangeAccType]').disabled = 'disabled';
-				setWarningBoxOnHoverMC($j('[id$=iataChangeAccType]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}"); rui
+				$j('[id$=iataChangeAccType]').prop('disabled', true);
+				setWarningBoxOnHoverMC($j('[id$=iataChangeAccType]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
 
-			console.log({!selectedCountryIsos});
+			console.log(typeOfChange);
 
-			if (typeOfChange === 'Change of Accreditation Type' && {!selectedCountryIsos} > 1) {
-				$j('[id$=notifyLegalDetailsChange]').disabled = 'disabled';
+			if (typeOfChange === 'Change of Accreditation Type' && '{!newForm.MultiCountry_Countries_Concerned__c}'.includes(",")) {
+				console.log('in here');
+				$j('[id$=notifyLegalDetailsChange]').prop('disabled', true);
 				setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 				
-				$j('[id$=notifyOwnershipChange]').disabled = 'disabled';
+				$j('[id$=notifyOwnershipChange]').prop('disabled', true);
 				setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
 
-			console.log({!selectedHierarchyAccounts});
-
-			if (typeOfChange === 'Change of Accreditation Type' || {!selectedHierarchyAccounts} > 1) {
-				$j('[id$=notifyChangeLocationCheckbox]').disabled = 'disabled';
-				setWarningBoxOnHoverMC($j('[id$=notifyChangeLocationCheckbox]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}"); rui
+			if (typeOfChange === 'Change of Accreditation Type' || '{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
+				$j('[id$=notifyChangeLocationCheckbox]').prop('disabled', true);
+				setWarningBoxOnHoverMC($j('[id$=notifyChangeLocationCheckbox]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
 		}
 		

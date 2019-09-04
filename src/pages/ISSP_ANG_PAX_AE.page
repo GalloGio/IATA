@@ -1271,7 +1271,7 @@
 
                     					<apex:outputText value="{!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'),$Label.ISSP_AMS_Step3_4_People,$Label.ISSP_AMS_Step3_4_Branch_People)}" styleClass="col-md-12" escape="false" />
 
-                              			<apex:outputText rendered="{!AND(OR(isMultiCountryNewAE, isMCNewAEAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}" value="Text message (missing)" style="color: red;" styleClass="col-md-12" escape="false"/>
+                              			<apex:outputText rendered="{!AND(OR(isMultiCountryNewAE, isMCAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}" value="Text message (missing)" style="color: red;" styleClass="col-md-12" escape="false"/>
 
 					                    <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
 					                      {!$Label.ISSP_AMS_Not_Listed_Msg}
@@ -1282,7 +1282,7 @@
                                       <div style="width: 100%;">
                             						<apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(AND(isMultiCountryNewAE, NOT(isHOAccredited)), $Label.ISSP_AMS_Add_Contact, IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person))}</apex:commandLink>
 
-                            						<apex:commandLink onfocus="showOwnersMulticountry();" style="float: right; {!IF(ownersFromMainLegalEntity.size == 0,'pointer-events: none !important; cursor: default; color: gray !important;','')}" rendered="{!AND(OR(isMultiCountry || isMultiCountryNewAE || isMCNewAEAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}"><span class="glyphicon glyphicon-arrow-down"></span>&nbsp;{!IF(isHOAccredited, $Label.ISSP_ANG_View_Owners, $Label.ISSP_ANG_View_And_Modify_Owners)}</apex:commandLink>
+                            						<apex:commandLink onfocus="showOwnersMulticountry();" style="float: right; {!IF(ownersFromMainLegalEntity.size == 0,'pointer-events: none !important; cursor: default; color: gray !important;','')}" rendered="{!AND(OR(isMultiCountry || isMultiCountryNewAE || isMCAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}"><span class="glyphicon glyphicon-arrow-down"></span>&nbsp;{!IF(isHOAccredited, $Label.ISSP_ANG_View_Owners, $Label.ISSP_ANG_View_And_Modify_Owners)}</apex:commandLink>
                                       </div>
                                     </div>
                               			</apex:outputPanel>

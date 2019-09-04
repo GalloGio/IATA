@@ -234,7 +234,7 @@
         }
 
         function toggleCountries(v) {
-            if (({!isMCNewAEAccredited} && {!isNoticeOfChange}) || (v!=undefined && v.indexOf('New BR Abroad')!=-1)){
+            if (({!isMCAccredited} && {!isNoticeOfChange}) || (v!=undefined && v.indexOf('New BR Abroad')!=-1)){
                 $('#brcountry').hide();
                 $('#brabroadcountries').show();
             } else if (v==undefined || v.indexOf('New BR Abroad')==-1){
@@ -594,11 +594,14 @@
 
                     enableLocationQuestions();
 
-                    if ({!isMCNewAEAccredited}) {
+                    if ({!isMCAccredited}) {
                         checkMCNoC();
                     }
                 }
             }
+
+            console.log({!selectedCountryIsos});
+            console.log({!selectionPah});
         }
 
         function checkSelectedAccounts() {
@@ -755,12 +758,12 @@
                                     <div class="alert alert-info" role="alert" style="display:{!IF(NOT(isNoticeOfChange),'','none')}">
                                         <apex:outputText value="{!$Label.ISSP_AMS_Step1_Separate_Application}" escape="false"/>
                                     </div>
-                                    <div class="alert alert-warning" role="alert" style="display: {!IF(AND(isMultiCountryNewAE, NOT(isMCNewAEAccredited)), 'none', 'block')}; margin-bottom: {!IF(AND(isMCNewAEAccredited, isNoticeOfChange), '5px !important', '20px;')}">
+                                    <div class="alert alert-warning" role="alert" style="display: {!IF(AND(isMultiCountryNewAE, NOT(isMCAccredited)), 'none', 'block')}; margin-bottom: {!IF(AND(isMCAccredited, isNoticeOfChange), '5px !important', '20px;')}">
                                         {!IF(NOT(isNoticeOfChange), 
                                         $Label.ISSP_AMS_Step1_Two_Weeks_Expiry,
                                         $Label.ISSP_AMS_Noc_StepA_message)}
                                     </div>
-                                    <div class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCNewAEAccredited, isNoticeOfChange), 'block', 'none')}; margin-bottom: 20px;">
+                                    <div class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange), 'block', 'none')}; margin-bottom: 20px;">
                                         {!$Label.ISSP_AMS_Noc_StepA_message_MC}
                                     </div>
 
@@ -899,12 +902,12 @@
                                                     <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');">
                                                         <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}" itemDisabled="{!newForm.Type_Of_Change__c == 'Change of Accreditation Type'}"/>
                                                         
-                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_All_Branches_MC, $Label.ISSP_AMS_NoC_HE_All_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCNewAEAccredited)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
+                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!IF(AND(isMCAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_All_Branches_MC, $Label.ISSP_AMS_NoC_HE_All_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}"/>
                                                         <apex:image id="warningNotAllCountriesSelected" value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step1_Lang_Display_Help}" html-data-placement="right" html-data-toggle="tooltip" style="display: none;"/>
                                                         
-                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_Some_Branches_MC, $Label.ISSP_AMS_NoC_HE_Some_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCNewAEAccredited)), AND(isMCNewAEAccredited, branchAccountCount > 0))}" itemDisabled="{!newForm.Type_Of_Change__c == 'Change of Accreditation Type'}"/>
+                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!IF(AND(isMCAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_Some_Branches_MC, $Label.ISSP_AMS_NoC_HE_Some_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" itemDisabled="{!newForm.Type_Of_Change__c == 'Change of Accreditation Type'}"/>
                                                         
-                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_Associate_Entity_MC, $Label.ISSP_AMS_NoC_Associate_Entity)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCNewAEAccredited)), AND(isMCNewAEAccredited, branchAccountCount > 0))}" itemDisabled="{!newForm.Type_Of_Change__c == 'Change of Accreditation Type'}"/>
+                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!IF(AND(isMCAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_Associate_Entity_MC, $Label.ISSP_AMS_NoC_Associate_Entity)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" itemDisabled="{!newForm.Type_Of_Change__c == 'Change of Accreditation Type'}"/>
                                                     </apex:selectRadio>
 
                                                 </apex:outputPanel>
@@ -958,7 +961,7 @@
                                         <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
 
                                 <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
-                                    <apex:outputPanel rendered="{!AND(isMCNewAEAccredited, isNoticeOfChange)}">
+                                    <apex:outputPanel rendered="{!AND(isMCAccredited, isNoticeOfChange)}">
                                         <apex:selectList id="countrySelectedMCNOC" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1" onchange="checkMCNoC(); reRenderAccountsNoc();">
                                             <apex:selectOptions value="{!mcNocCountryList}"/>
                                         </apex:selectList>
@@ -987,7 +990,7 @@
                                         </apex:selectList>
                                     </apex:outputPanel>
 
-                                    <apex:outputPanel rendered="{!AND(NOT(isMultiCountryNewAE), NOT(isNoticeOfChange), NOT(isMCNewAEAccredited))}">
+                                    <apex:outputPanel rendered="{!AND(NOT(isMultiCountryNewAE), NOT(isNoticeOfChange), NOT(isMCAccredited))}">
                                         <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
                                             <apex:selectOptions value="{!countryISOCodeList}"/>
                                         </apex:selectList>
@@ -1356,8 +1359,8 @@
                     <apex:actionStatus id="buttonLoadingStep5NoC">
                         <apex:facet name="stop"><apex:outputPanel >
                         <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5NoC"/>
-                        <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5NoC" reRender="NoCForm" rendered="{!NOT(isMCNewAEAccredited)}"/>
-                        <apex:commandButton value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" reRender="NoCForm" rendered="{!isMCNewAEAccredited}" onclick="showfinalConfirmationNoCMCModal();"/>
+                        <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5NoC" reRender="NoCForm" rendered="{!NOT(isMCAccredited)}"/>
+                        <apex:commandButton value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" reRender="NoCForm" rendered="{!isMCAccredited}" onclick="showfinalConfirmationNoCMCModal();"/>
                         
                         <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5NoC"/>
                     </apex:outputPanel></apex:facet>
