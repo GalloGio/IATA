@@ -816,7 +816,6 @@ public class AMS_OscarCase_RiskMgmt {
 
 		if(condition.startsWithIgnoreCase('NOT EQUAL TO:')){
 			String sValue = sFieldToCheck == 'Parent.Status' ? newCaseValues.Parent.Status : (String)newCaseValues.get(sFieldToCheck);
-			if(sValue==null)return false;
 			setValues.addAll((condition.right(condition.length()-'NOT EQUAL TO:'.length())).split(';'));
 			return sValue == null || !setValues.contains(sValue.toUpperCase());
 		}
