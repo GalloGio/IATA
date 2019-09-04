@@ -120,7 +120,16 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         for(ANG_RHC_Currencies__c c: ANG_RHC_Currencies__c.getall().values())
             op.add(new SelectOption(c.Name, c.Currency_Name__c));
         return op;
-  }
+    }
+
+    //NEWGEN-5859
+    public List<SelectOption> getAvailableAccModel() {
+        List<SelectOption> op = new List<SelectOption>();
+        op.add(new SelectOption('', '--None--'));
+        for(String accModel: AMS_OSCAR_Case_Detail_Controller.standardAccreditationModel)
+            op.add(new SelectOption(accModel, accModel));
+        return op;
+    }
 
     public static Set<String> hidenFieldsNewgenApplications = new Set<String>{};
 
@@ -600,6 +609,17 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     public static final Set<String> notEditableForNEWGEN = new Set<String>{'Location_Class__c','Location_Type__c','CASS_Number__c','Abbreviated_Address__c'};
 
+    //NEWGEN-5859
+    private static final Set<String> standardAccreditationModel = new Set<String>{AMS_Utils.ACCREDITATIONMODEL_CASHLESS,AMS_Utils.ACCREDITATIONMODEL_CASH};
+
+    public Boolean isStandardAgency{
+        get {
+            isStandardAgency = standardAccreditationModel.contains(oscarObj.Account__r.ANG_Accreditation_Model__c);
+            return isStandardAgency;
+        }
+        set;
+    }
+    //NEWGEN-5859-END
 
     // The extension constructor initializes the private member
     // variable oscarObj by using the getRecord method from the standard
@@ -717,7 +737,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c,
                         AMS_Target_Agency__c, Account__r.Is_Branch_Abroad__c, STEP6__c, //FM AMSU-1
                         Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c, //AMSU-151 
-                        Location_Type__c  //NEWGEN-4850
+                        Location_Type__c,  //NEWGEN-4850
+                        Account__r.ANG_Accreditation_Model__c //NEWGEN-5859
                         FROM AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
         if(oSCARs.isEmpty()) return null;
