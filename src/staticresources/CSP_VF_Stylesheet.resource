@@ -116,6 +116,49 @@ div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
     color: #9a9eb0;
 }
 
+.iatabtn-main{
+    border-radius: 1px;
+    box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+    background-color: #3333ff;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    min-height: 40px;
+    width: 220px;
+    word-break: break-word;
+    border: none;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.iatabtn-flat{
+    background-color: transparent;
+    box-shadow: none;
+    color: #3333ff;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    min-height: 40px;
+    width: 220px;
+    word-break: break-word;
+    border: none;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.iatabtn-flat:hover, .iatabtn-flat:focus{
+    color: #3333ff !important;
+}
+
+.iatabtn-main:hover, .iatabtn-main:focus{
+    color: #fff !important;
+}
+
 a.iatabtn {
     padding: 5px;
     padding-left: 15px;
