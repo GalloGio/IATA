@@ -217,7 +217,7 @@
             <apex:pageBlockSectionItem >&nbsp;</apex:pageBlockSectionItem>
 
             <apex:repeat value="{!accreditationFields}" var="field">
-                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" rendered="{!AND(field.rendered, field.name != 'Remittance_frequency__c', field.name != 'Preferred_RHC_currency__c', field.name != 'ANG_Accreditation_type__c')}">
+                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" rendered="{!AND(field.rendered, field.name != 'Remittance_frequency__c', field.name != 'Preferred_RHC_currency__c', OR(!isAgencyChanges, !isStandardAgency, field.name != 'ANG_Accreditation_type__c'))}">
                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}" />
                     <apex:outputField value="{!accreditationObj[field.name]}" >
                         <apex:inlineEditSupport event="{!field.event}" showonEdit="saveButton,cancelButton" disabled="{!OR(NOT(field.inlineEdit),isCertificationOSCAR)}" />
