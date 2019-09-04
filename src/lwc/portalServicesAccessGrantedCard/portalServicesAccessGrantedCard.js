@@ -2,6 +2,7 @@ import { LightningElement, api } from 'lwc';
 
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
+import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
@@ -46,6 +47,7 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
         let openWindowData = serviceAux.New_Window__c;
         let requestable = serviceAux.Requestable__c;
         let recordId = serviceAux.Id;
+        let appName = serviceAux.ServiceName__c;
 
         // update Last Visit Date on record
         updateLastModifiedService({ serviceId: recordId })
@@ -57,6 +59,9 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
             flag = true;
         } else if (appFullUrlData !== '') {
             myUrl = appFullUrlData;
+            flag = true;
+        } else if (appName === 'Payment Link' || appName === 'Paypal') {
+            myUrl = '';
             flag = true;
         }
         if (flag) {
@@ -80,11 +85,26 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
                             });
 
                     } else {
-                        if (!myUrl.startsWith('http')) {
-                            myUrl = window.location.protocol + '//' + myUrl;
+                        if (appName === 'Payment Link' || appName === 'Paypal') {
+                            paymentLinkRedirect()
+                                .then(result => {
+                                    if (result !== undefined && result !== '') {
+                                        myUrl = result;
+                                        if (!myUrl.startsWith('http')) {
+                                            myUrl = window.location.protocol + '//' + myUrl;
+                                        }
+                                    }
+                                    window.open(myUrl);
+                                    this.toggleSpinner();
+                                });
+
+                        } else {
+                            if (!myUrl.startsWith('http')) {
+                                myUrl = window.location.protocol + '//' + myUrl;
+                            }
+                            window.open(myUrl);
+                            this.toggleSpinner();
                         }
-                        window.open(myUrl);
-                        this.toggleSpinner();
                     }
 
 

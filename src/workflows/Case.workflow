@@ -840,7 +840,6 @@
     <alerts>
         <fullName>IATA_iiNet_Service_Now</fullName>
         <ccEmails>iata@service-now.com</ccEmails>
-        <ccEmails>iinetCare@iata.org</ccEmails>
         <description>IATA iiNet Service Now</description>
         <protected>false</protected>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -3899,7 +3898,9 @@
     </alerts>
     <alerts>
         <fullName>Send_Email_to_Online_store_support</fullName>
-        <ccEmails>iata@servicenow.org</ccEmails>
+        <ccEmails>servicedesk@iata.org</ccEmails>
+        <ccEmails>szpyndam@iata.org</ccEmails>
+        <ccEmails>ganeaa@iata.org</ccEmails>
         <description>Send Email to Online store support</description>
         <protected>false</protected>
         <senderAddress>onlinestoresupport@iata.org</senderAddress>
@@ -8961,6 +8962,17 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Cases Escalated To SNOW</fullName>
+        <actions>
+            <name>IATA_iiNet_Service_Now</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <description>Cases Escalated To SNOW</description>
+        <formula>OwnerId = &apos;00G1r0000031kjM&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Change record type from Europe to AME</fullName>
         <actions>
             <name>Change_record_type_from_Europe_to_AME</name>
@@ -12248,7 +12260,32 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </actions>
         <active>true</active>
         <description>Clear New interaction field when Query is closed. It is necessary when query  had another Record Type with New Interaction Info</description>
-        <formula>AND(OR (  RecordType.DeveloperName = &quot;Cases_Global&quot;,  RecordType.DeveloperName = &quot;OSCAR_Communication&quot;, RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; , RecordType.DeveloperName = &quot;CasesMENA&quot; , RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;, RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;, RecordType.DeveloperName =&quot;ID_Card_Application&quot;, RecordType.DeveloperName =&apos;Airline_Coding_Application&apos;,RecordType.DeveloperName =&apos;DPC_Service_Request&apos;) , RecordType.DeveloperName =&apos;CNS_Collection_Process&apos;, OwnerId = LastModifiedById, contains(TEXT(Status),&quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
+        <formula>AND(
+  OR (
+    RecordType.DeveloperName = &quot;Cases_Global&quot;,
+    RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,
+    RecordType.DeveloperName = &quot;Invoicing_Collection_Cases&quot;,
+    RecordType.DeveloperName = &quot;CasesAmericas&quot;,
+    RecordType.DeveloperName = &quot;CasesEurope&quot;,
+    RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; ,
+    RecordType.DeveloperName = &quot;CasesMENA&quot; ,
+    RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
+    RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
+    RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,
+    RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;,
+    RecordType.DeveloperName = &quot;ComplaintIDFS&quot;,
+    RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;,
+    RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,
+    RecordType.DeveloperName = &quot;IATA_Financial_Review&quot;,
+    RecordType.DeveloperName = &quot;ID_Card_Application&quot;,
+    RecordType.DeveloperName = &apos;Airline_Coding_Application&apos;,
+    RecordType.DeveloperName = &apos;DPC_Service_Request&apos;,
+    RecordType.DeveloperName = &apos;CNS_Collection_Process&apos;
+  ) ,
+  OwnerId = LastModifiedById,
+  contains(TEXT(Status),&quot;Closed&quot;),
+  not(ispickval(New_interaction__c, &quot;&quot;))
+)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

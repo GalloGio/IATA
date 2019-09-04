@@ -4,7 +4,8 @@ private class IDCard_DailyProcessCheckBatchTest {
 	public static Account a;
 	public static List<Contact> cs;
 	public static List<ID_Card__c> idcs;
-	public static String CRON_EXP = '0 0 0 15 3 ? 2050';
+	public static String CRON_EXP1 = '0 0 0 15 3 ? 2050';
+	public static String CRON_EXP2 = '0 0 0 17 3 ? 2050';
 
 	public static void initData(){
 	    Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
@@ -150,15 +151,15 @@ private class IDCard_DailyProcessCheckBatchTest {
 		Test.startTest();
 
 		// Schedule the test job
-		String jobId = System.schedule('IDCard_DailyProcessCheckBatch', CRON_EXP, new IDCard_DailyProcessCheckBatch());
-		String jobId2 = System.schedule('IDCard_DailyProcessCheckBatch2', CRON_EXP, new IDCard_DailyProcessCheckBatch(200,'test@test.com,test2@test.com'));
-		String jobId3 = System.schedule('IDCard_DailyProcessCheckBatch3', CRON_EXP, new IDCard_DailyProcessCheckBatch(200,'test@test.com,test2@test.com','IDCard_RelatedContact'));
+		String jobId = System.schedule('IDCard_DailyProcessCheckBatch', CRON_EXP1, new IDCard_DailyProcessCheckBatch());
+		String jobId2 = System.schedule('IDCard_DailyProcessCheckBatch2', CRON_EXP1, new IDCard_DailyProcessCheckBatch(200,'test@test.com,test2@test.com'));
+		String jobId3 = System.schedule('IDCard_DailyProcessCheckBatch3', CRON_EXP1, new IDCard_DailyProcessCheckBatch(200,'test@test.com,test2@test.com','IDCard_RelatedContact'));
 
 		// Get the information from the CronTrigger API object
 		CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime FROM CronTrigger WHERE id = :jobId3];
 
 		// Verify the expressions are the same
-		System.assertEquals(CRON_EXP, ct.CronExpression);
+		System.assertEquals(CRON_EXP1, ct.CronExpression);
 
 		// Verify the job has not run
 		System.assertEquals(0, ct.TimesTriggered);
@@ -179,9 +180,19 @@ private class IDCard_DailyProcessCheckBatchTest {
 
 		Test.startTest();
 
-		IDCard_DailyProcessCheckBatch.start(CRON_EXP,200,'test@test.com,test2@test.com');
+		IDCard_DailyProcessCheckBatch.start('IDCard_ContactEmail',CRON_EXP2,200,'test@test.com,test2@test.com');
+		IDCard_DailyProcessCheckBatch.stop('IDCard_ContactEmail');
 
-		IDCard_DailyProcessCheckBatch.stop();
+		Test.stopTest();
+	}
+
+	@isTest static void test_method_four() {
+		initData();
+
+		Test.startTest();
+
+		IDCard_DailyProcessCheckBatch.start('IDCard_RelatedContact',CRON_EXP1,200,'test@test.com,test2@test.com');
+		IDCard_DailyProcessCheckBatch.stop('IDCard_RelatedContact');
 
 		Test.stopTest();
 	}
@@ -192,6 +203,23 @@ private class IDCard_DailyProcessCheckBatchTest {
 		Test.startTest();
 
 		IDCard_DailyProcessCheckBatch c = new IDCard_DailyProcessCheckBatch(200,'test@test.com,test2@test.com');
+		Database.executeBatch(c, 200);
+
+		List<String> exceptionMsg = new List<String>();
+		exceptionMsg.add('test');
+
+		c.sendReport(new List<IDCard_DailyProcessCheckBatch.ResultWrapper>(), exceptionMsg, 'operation');
+
+		Test.stopTest();
+	}
+
+	@isTest static void test_method_five() {
+		initData();
+
+		Test.startTest();
+
+		IDCard_DailyProcessCheckBatch c = new IDCard_DailyProcessCheckBatch(200,'test@test.com,test2@test.com');
+		c.operation = 'IDCard_ContactEmail';
 		Database.executeBatch(c, 200);
 
 		List<String> exceptionMsg = new List<String>();

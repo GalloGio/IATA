@@ -457,7 +457,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                     this.optionsButton = true;
                     if (this.emergencyCategories.some(obj => obj.value === this.topic + ('__c'))
                         && this.emergencyCategories.some(obj => obj.value.includes(this.subTopic + '__c'))) {
-                        this.emergencyButton = true;
+                            if(this.isQuestion){
+                                this.emergencyButton = true;
+                            }
                     }
                 }
             } else {
@@ -487,7 +489,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
                 if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
                     && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
-                    this.emergencyButton = true;
+                        if(this.isQuestion){
+                            this.emergencyButton = true;
+                        }
                 }
             }
         } else {
@@ -507,7 +511,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
             if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
                 && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
-                this.emergencyButton = true;
+                    if(this.isQuestion){
+                        this.emergencyButton = true;
+                    }
             }
         } else {
             this.optionsButton = false;

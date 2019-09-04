@@ -436,7 +436,7 @@
             <field>ISSP_AMS_Total_Current_Ownership__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
-            </displayedFields>
+        </displayedFields>
         <label>AMS_CorrectionSingleAccount</label>
     </fieldSets>
     <fieldSets>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="jsonDatatable">
+    <description>This component makes a callout to a webservice using apex and exposes the resulting JSON as a datatable. Right now the webservice must return a simple Array of objects [{},{},...]  to work properly.    </description>
+    <apiVersion>46.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default,lightning__AppPage,lightning__HomePage,lightning__RecordPage">
+            <property type="Boolean" name="autoLoad" label="Auto Load" description="If true, the tabled is loaded as soon as the component is shown on the page" default="true"/>
+            <property type="String" name="operationType" label="Method" datasource="GET,POST" required="true"/>
+            <property type="String" name="endpointType" label="Endpoint Type" datasource="URL,Named Credential" required="true"/>
+            <property type="String" name="webserviceEndpoint" label="Endpoint" description="The domain of your webservice" placeholder="http://www.webservice.com" required="true"/>
+            <property type="String" name="webservicePath" label="Path" description="The location of the webservice on the domain, can also include parameters." placeholder="/apy/myservice?validation=%au@hsh" required="false"/>
+            <property type="String" name="webserviceBody" label="Body" description="Use only for POST requests. For dynamic values, use code" required="false"/>
+            <property type="String" name="handler" label="Response Handler" description="The name of the class that handles the response from the webservice. (See class WebserviceTableController for an example)"/>
+            <property type="String" name="columnOrder" label="Column Order" description="The order in which the columns from the result should be displayed" required="true"/>
+            <property type="String" name="columnNames" label="Column Names" description="If you want to ovewrite the name of the columns, use this field. Please note that it should have the same number of fields as the Column Order" required="false"/>
+            <property type="String" name="maxHeight" label="Table Max Height" description="To define the maximum height a table should have (if there are too many results, the table will receive a scroll bar"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
