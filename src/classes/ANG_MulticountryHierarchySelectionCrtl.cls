@@ -215,9 +215,9 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				for(Account a : mapHierarchyAccounts.values()){
 					Boolean main = (a.Id == oscar.Account__c);
 
-					if(a.Location_Type__c == null || isConversionProcess) a.Location_Type__c = AMS_Utils.AE;
+					if(a.Location_Type__c == null) a.Location_Type__c = AMS_Utils.AE;
 					
-					if(isConversionProcess && main) a.Location_Type__c = AMS_Utils.GE;
+					else if(isConversionProcess && main) a.Location_Type__c = AMS_Utils.GE;
 
 					else if(isConversionProcess && mapHierarchyProcessDetail.get(a.id).ANG_Location_Type_Conversion__c != null)
 						a.Location_Type__c = mapHierarchyProcessDetail.get(a.id).ANG_Location_Type_Conversion__c;
@@ -690,7 +690,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		}
 
 		if(bspMap.values().size() < 2){
-			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'There should are at least 2 BSPs involved in the hierarchy.'));
+			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'There should be at least 2 BSPs involved in the hierarchy.'));
 			return false;
 		}
 
