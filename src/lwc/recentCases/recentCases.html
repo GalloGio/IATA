@@ -3,7 +3,7 @@
     <c-portal-custom-card-container special-card={specialCase}>
 
         <span slot="cardTitle">
-            <span class="text-small"> {title} </span>
+            <span class={titleCss}> {title} </span>
         </span>
 
         <span slot="cardButton" if:true={dataRecordsSeeAll}>
@@ -18,7 +18,7 @@
         </span>
 
         <span slot="cardBody">
-            <div class="cardBodyContent">
+            <div class={cardBodyContent}>
                 <div if:true={loading} class="spinnerContainer">
                     <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
                 </div>
@@ -26,6 +26,7 @@
                     <div if:true={dataRecords}>
                         <lightning-datatable
                             key-field="Id"
+                            class={rowHeight}
                             data={data}
                             columns={columns}
                             data-id="tableList"
@@ -36,7 +37,7 @@
                     <div if:false={dataRecords}>
                         <c-portal-no-cases-banner></c-portal-no-cases-banner>
                     </div>
-                    
+
                 </div>
             </div>
         </span>
