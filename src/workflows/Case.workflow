@@ -5656,6 +5656,9 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <fullName>IDFS_CREATED_BY_ROLE</fullName>
         <field>Created_By_Role__c</field>
         <formula>(IF( 
+  CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;), 
+  &quot;DPC External&quot;, 
+  (IF( 
   OR( 
   CONTAINS( $Profile.Name,&quot;ISS Portal&quot;), 
   CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;), 
@@ -5697,9 +5700,6 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
   (IF( 
   CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;), 
   &quot;SIS Help Desk&quot;, 
-  (IF( 
-  CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;), 
-  &quot;DPC External&quot;, 
   (IF( 
   CONTAINS( $UserRole.Name, &quot;Banking&quot;), 
   &quot;Banking&quot;, 
