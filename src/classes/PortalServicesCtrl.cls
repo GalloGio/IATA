@@ -907,6 +907,7 @@ public static String serviceWrapperRedirect(String serviceId){
 		if (currentUserContact == null 
 			|| 
 				(currentUserContact.User_Portal_Status__c != 'Active'
+            	&& currentUserContact.User_Portal_Status__c != 'Approved Admin' //WMO-386  
 				&& currentUserContact.User_Portal_Status__c != 'Regional Administrator'
 				&& currentUserContact.User_Portal_Status__c != 'Approved User'
 				&& currentUserContact.User_Portal_Status__c != 'Pending Approval')
