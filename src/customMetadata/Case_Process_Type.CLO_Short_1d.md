@@ -4,11 +4,11 @@
     <protected>false</protected>
     <values>
         <field>KPI_Reference_Field__c</field>
-        <value xsi:type="xsd:string">Process_Age__c</value>
+        <value xsi:type="xsd:string">AMS_Oscar__c.KPI_Aux1__c</value>
     </values>
     <values>
         <field>KPI_Reference_Value__c</field>
-        <value xsi:type="xsd:double">1.0</value>
+        <value xsi:type="xsd:double">0.0</value>
     </values>
     <values>
         <field>Reason__c</field>

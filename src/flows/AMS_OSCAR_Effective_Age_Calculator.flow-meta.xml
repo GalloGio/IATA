@@ -51,7 +51,7 @@
     <assignments>
         <name>Subtract_Reconsideration_Time</name>
         <label>Subtract Reconsideration Time</label>
-        <locationX>999</locationX>
+        <locationX>936</locationX>
         <locationY>551</locationY>
         <assignmentItems>
             <assignToReference>EffectiveAge</assignToReference>
@@ -136,6 +136,20 @@
             </conditions>
             <conditions>
                 <leftValueReference>oscar.Reconsideration_date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>oscar.Disapproval_date__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>oscar.Bank_Guarantee_requested__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>oscar.Bank_Guarantee_requested__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>

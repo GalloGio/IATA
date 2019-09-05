@@ -65,7 +65,7 @@ public with sharing class CaseProcessTypeHelper {
         /* US Accounts must be excluded */
         Map<Id,Account> mapAccounts = new Map<Id,Account>([SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.ISO_Code__c FROM Account WHERE Id IN :accountIds]);
         
-        Map<Id, AMS_OSCAR__c> mapOscars = new Map<Id, AMS_OSCAR__c>([SELECT Id FROM AMS_OSCAR__c WHERE Id IN :oscarIds]); //WMO-564 - ACAMBAS
+        Map<Id, AMS_OSCAR__c> mapOscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, KPI_Aux1__c FROM AMS_OSCAR__c WHERE Id IN :oscarIds]); //WMO-564 - ACAMBAS
         
         for(Case cse : casesToProcess) {
             Account acc = mapAccounts.get(cse.AccountId);
@@ -95,24 +95,23 @@ public with sharing class CaseProcessTypeHelper {
      *  KPI_Reference_Value__c, this field has the value we need to compare with Case field, if the Case field is greather than the
      *  reference value then KPI will be 0 otherwise it will be 1
      */
-    private static void calculateKPI(Case cse, AMS_OSCAR__c oscar, Case_Process_Type__mdt process) {
-        
+    private static void calculateKPI(Case cse, AMS_OSCAR__c oscar, Case_Process_Type__mdt process) {  
         //WMO-564 - ACAMBAS: Begin
-        List<String> refFieldList = process.KPI_Reference_Field__c.split('.');
+        List<String> refFieldList = process.KPI_Reference_Field__c.split('\\.');
         Integer recordValue;
         
-        if(refFieldList.size() == 2 && refFieldList[0] == 'Oscar') {
-         	recordValue = Integer.valueOf(oscar.get(process.KPI_Reference_Field__c));   
+        if(refFieldList.size() == 2 && refFieldList[0] == 'AMS_Oscar__c') {
+         	recordValue = Integer.valueOf(oscar.get(refFieldList[1]));
+            cse.KPI_Calculation__c = recordValue == process.KPI_Reference_Value__c ? 1 : 0;
         }
         else if(refFieldList.size() == 0) { //Case
-            recordValue = Integer.valueOf(cse.get(process.KPI_Reference_Field__c));
+            recordValue = Integer.valueOf(cse.get(process.KPI_Reference_Field__c));          
+            cse.KPI_Calculation__c = recordValue <= process.KPI_Reference_Value__c ? 1 : 0;
         }
         else {
             cse.addError('Configuration error - invalid field: ' + process.KPI_Reference_Field__c);
         }
         //WMO-564 - ACAMBAS: End   
-        
-        cse.KPI_Calculation__c = recordValue <= process.KPI_Reference_Value__c ? 1 : 0;
     }
 
     /*
