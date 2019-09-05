@@ -751,9 +751,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 addPermissionToUser(permissionList.get(0).Id, usr.userId);
             }
 
-            //todo:this should be handled on L2 registration or stay on L1?
-            Comm_User_Helper.addDefaultAppRights(con,con.Account);
-
             return usr;
 
 
