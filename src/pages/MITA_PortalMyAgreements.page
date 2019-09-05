@@ -1,602 +1,759 @@
-<apex:page controller="MITA_PortalMyAgreementsCtrl" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false" action="{!initActions}">
-<html>
- <c:ISSP_Header />
- <head>
-	<style>
-		li.topmenu{margin-left:0;}
-    .accountInfoPanel{font-size: small;}
-		.mytabheadercontainer{}
-		.mytabheader{display:inline-block; border:1px solid lightgrey; border-top-left-radius:0.5em; border-top-right-radius:0.5em; padding:0.5em; margin-left:0.1em; font-weight:bold; cursor:pointer;}
-		.mytabheader.active{background:#337AB7; border:none; color:white; border:1px solid #337AB7;}
+<apex:page controller="MITA_PortalMyAgreementsCtrl" standardStylesheets="false" showHeader="false" sidebar="false" applyBodyTag="false"
+ applyHtmlTag="false" action="{!initActions}">
+	<html>
+	<c:ISSP_Header />
 
-		.mytabcontainer{ border:1px solid lightgrey; border-radius:5px; border-top-left-radius:0; margin-left:1px;}
-		.mytab{display:none; }
-		.mytab.active{display:block;}
-		.searchwrapper{display:inline-block;}
-		.iconx{cursor:pointer; width:1em;}
-		.iconarrow{cursor:pointer; width:1.2em;}
-		.myinline{display:inline-block; width:inherit;margin-right:1em;}
-		.mydisabled{display:none;}
+	<head>
 
-		.mytabcontainer .mytabheader{border-radius: 0px; width: 49.4%; margin: 1px;}
-		.mytabcontainer .mytabcontainer { padding: 1em; border: none; margin:0px;}
+		<style>
+			@font-face {
+				font-family: 'DaMaWebFont';
+				font-weight: 400;
+				font-style: normal;
+				src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot')}");
+				/* IE9 Compat Modes */
+				src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot?#iefix')}") format('embedded-opentype'),
+				/* IE6-IE8 */
+				url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff2')}") format('woff2'),
+				/* Super Modern Browsers */
+				url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff')}") format('woff');
+				/* Pretty Modern Browsers */
+			}
 
-		.message.errorM3{
-			background-color: #E7C3C3;
-		    background: linear-gradient(to bottom, #F2DEDE 0px, #E7C3C3 100%);
-		    background: -webkit-linear-gradient(to bottom, #F2DEDE 0px, #E7C3C3 100%); /* For Safari 5.1 to 6.0 */
-			background: -o-linear-gradient(to bottom, #F2DEDE 0px, #E7C3C3 100%); /* For Opera 11.1 to 12.0 */
-			background: -moz-linear-gradient(to bottom, #F2DEDE 0px, #E7C3C3 100%); /* For Firefox 3.6 to 15 */
-			background: linear-gradient(to bottom, #F2DEDE 0px, #E7C3C3 100%); /* Standard syntax */
-		    background-repeat: repeat-x;
-		    border: 1px solid #DCA7A7;
-		    padding:1em;
-		    border-radius:5px;
-		}
-	</style>
- </head>
- <body>
-    <div class="container">
+			@font-face {
+				font-family: 'DaMaWebFont';
+				font-weight: 500;
+				font-style: normal;
+				src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot')}");
+				/* IE9 Compat Modes */
+				src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot?#iefix')}") format('embedded-opentype'),
+				/* IE6-IE8 */
+				url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff2')}") format('woff2'),
+				/* Super Modern Browsers */
+				url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff')}") format('woff');
+				/* Pretty Modern Browsers */
+			}
 
-       	<apex:image styleclass="mastericonx" url="{!URLFOR($Resource.MITAicons, 'icon-x.png')}" style="display:none"/>
-       	<apex:image styleclass="mastericonarrow" url="{!URLFOR($Resource.MITAicons, 'icon-arrow.png')}" style="display:none"/>
+			body {
+				font-family: DaMaWebFont !important;
+				color: #333;
+			}
 
-        <c:ISSP_CustomNavigation />
-        <c:Loading />
+			li.topmenu {
+				margin-left: 0;
+			}
 
-		<apex:includescript value="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" />
-		<apex:stylesheet value="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css" />
+			.accountInfoPanel {
+				font-size: small;
+			}
 
-		<apex:outputPanel id="messages" >
-			<apex:pageMessages />
-			<script>
+			.mytabheadercontainer {}
+
+			.mytabheader {
+				display: inline-block;
+				border: 1px solid lightgrey;
+				background: #fff;
+				padding: 0.5em;
+				/* margin-left: 0.1em; */
+				font-weight: bold;
+				cursor: pointer;
+			}
+
+			.mytabheader.active {
+				background: #1e32fa;
+				border: none;
+				color: white;
+				border: 1px solid #1e32fa;
+			}
+
+			.mytabcontainer {
+				border: 1px solid lightgrey;
+				/* border-radius: 5px; */
+				/* border-top-left-radius: 0; */
+				margin-left: 1px;
+			}
+
+			.mytab {
+				display: none;
+			}
+
+			.mytab.active {
+				display: block;
+			}
+
+			.searchwrapper {
+				display: inline-block;
+			}
+
+			.iconx {
+				cursor: pointer;
+				width: 1em;
+			}
+
+			.iconarrow {
+				cursor: pointer;
+				width: 1.2em;
+			}
+
+			.myinline {
+				display: inline-block;
+				width: inherit;
+				margin-right: 1em;
+			}
+
+			.mydisabled {
+				display: none;
+			}
+
+			.mytabcontainer .mytabheader {
+				border-radius: 0px;
+				width: 50%;
+				/* margin: 1px; */
+			}
+
+			.mytabcontainer .mytabcontainer {
+				padding: 1em;
+				border: none;
+				margin: 0px;
+			}
+
+			.message.errorM3 {
+				background-color: #E7C3C3;
+				background: linear-gradient(to bottom, #F2DEDE 0px, #E7C3C3 100%);
+				background: -webkit-linear-gradient(to bottom, #F2DEDE 0px, #E7C3C3 100%);
+				/* For Safari 5.1 to 6.0 */
+				background: -o-linear-gradient(to bottom, #F2DEDE 0px, #E7C3C3 100%);
+				/* For Opera 11.1 to 12.0 */
+				background: -moz-linear-gradient(to bottom, #F2DEDE 0px, #E7C3C3 100%);
+				/* For Firefox 3.6 to 15 */
+				background: linear-gradient(to bottom, #F2DEDE 0px, #E7C3C3 100%);
+				/* Standard syntax */
+				background-repeat: repeat-x;
+				border: 1px solid #DCA7A7;
+				padding: 1em;
+				border-radius: 5px;
+			}
+		</style>
+	</head>
+	<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
+
+	<body>
+		<c:ISSP_CustomNavigation />
+		<div class="container">
+
+			<apex:image styleclass="mastericonx" url="{!URLFOR($Resource.MITAicons, 'icon-x.png')}" style="display:none" />
+			<apex:image styleclass="mastericonarrow" url="{!URLFOR($Resource.MITAicons, 'icon-arrow.png')}" style="display:none" />
+
+
+			<c:Loading />
+
+			<apex:includescript value="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" />
+			<apex:stylesheet value="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css" />
+
+			<apex:outputPanel id="messages">
+				<apex:pageMessages />
+				<script>
 				//$("[id$=messages]").addClass("alert alert-danger");
-			</script>
-		</apex:outputPanel>
-
-    <script>
-      var MITAagreementsTable;
-      var BIETAagreementsTable;
-      var MITAsuggestionsTable;
-      var BIETAsuggestionsTable;
-
-      var activeMainTab = '';
-      var activeTab = {};
-
-      /****** METHODS FOR AGREEMENTS ******/
-
-      $(document).ready( function () {
-        //initAgreementTable(true);
-        //initAgreementTable(false);
-
-        //initSuggestionTable(true);
-        //initSuggestionTable(false);
-        showTab('Existing');
-      });
-
-      function initAgreementTable(isMITA){
-        var agreementsTable = $('#'+(isMITA ? 'MITA' : 'BIETA')+'agreementsTable').DataTable({
-          "dom": '<"top" lf>rt<"bottom"ip><"clear">',
-          "pageLength": 50,
-          "columnDefs": [
-            { "name": "designator", "targets": 0, "width": "110px" },
-            { "name": "code", "targets": 1, "width": "110px" },
-            { "name": "prefix", "targets": 2, "width": "110px" },
-            { "name": "name", "targets": 3},
-            { "name": "type", "targets": 4},
-            { "name": "active", "targets": 5, "width": "110px" }
-          ],
-          "language": {
-              "lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
-              "zeroRecords": "{!$Label.ISSP_Nothing_found}",
-              "info": "{!$Label.ISSP_Showing_page}",
-              "infoEmpty": "{!$Label.ISSP_No_records_available}",
-              "infoFiltered": "{!$Label.ISSP_filtered_from_total_records}",
-              "search": "{!$Label.ISSP_Search}",
-              "paginate": {
-                "next": "{!$Label.ISSP_Next}",
-                "previous": "{!$Label.ISSP_Previous}"
-              }
-          }
-        });
-
-        $(agreementsTable.rows().nodes()).find(".iconx").attr('src',$('.mastericonx').attr('src'));
-
-        if(isMITA)
-        MITAagreementsTable = agreementsTable;
-        else
-        BIETAagreementsTable = agreementsTable;
-
-        filterAgreements(isMITA);
-
-        $(".agreementtypefilter, .agreementactivefilter").on( 'change', function(){
-          var isMITA = $(this).attr('data-type') == "MITA";
-          filterAgreements(isMITA);
-        });
-      }
-
-
-      function filterAgreements(isMITA){
-        var MB = isMITA ? "MITA" : "BIETA";
-        var typefilter = $('.agreementtypefilter[data-type="'+MB+'"]:checked').attr("data-value").trim();
-
-        if(isMITA)
-        MITAagreementsTable
-        .column('type:name').search('"'+typefilter+'"')
-        .draw();
-        else
-        BIETAagreementsTable
-        .column('type:name').search('"'+typefilter+'"')
-        .draw();
-      }
-
-      function initSuggestionTable(isMITA){
-        var suggestionsTable = $('#'+(isMITA ? 'MITA' : 'BIETA')+'suggestionsTable').DataTable({
-          "dom": '<"top" lf>rt<"bottom"ip><"clear">',
-          "pageLength": 50,
-          "columnDefs": [
-          { "name": "dcode", "targets": 0, "width": "110px"},
-          { "name": "ncode", "targets": 1, "width": "110px" },
-          { "name": "prefix", "targets": 2, "width": "110px" },
-          { "name": "name", "targets": 3},
-          { "name": "type", "targets": 4 }
-          ]
-        });
-
-        $(suggestionsTable.rows().nodes()).find(".iconarrow").attr('src',$('.mastericonarrow').attr('src'));
-
-        if(isMITA)
-        MITAsuggestionsTable = suggestionsTable;
-        else
-        BIETAsuggestionsTable = suggestionsTable;
-
-        filterSuggestions(isMITA);
-
-        $(".suggestiontypefilter, .suggestiontype").on( 'change', function(){
-          var isMITA = $(this).attr('data-type') == "MITA";
-          filterSuggestions(isMITA);
-        });
-      }
-
-      function filterSuggestions(isMITA){
-        var MB = isMITA ? "MITA" : "BIETA";
-        var typefilter = $('.suggestiontypefilter[data-type="'+MB+'"]:checked').attr("data-value").trim() + '(Senior)';
-
-
-        if(isMITA)
-        MITAsuggestionsTable
-        .column('type:name').search('"'+typefilter+'"')
-        .draw();
-        else
-        BIETAsuggestionsTable
-        .column('type:name').search('"'+typefilter+'"')
-        .draw();
-      }
-
-      function showTab(maintab, tab){
-        // If no parameter is received
-        if(maintab==null){
-          maintab = activeMainTab;
-          tab = activeTab[activeMainTab];
-          $(".mytab, .mytabheader").removeClass("active");
-          $("#tab"+maintab+", #hd"+maintab).addClass("active");
-          $("#tab"+tab+", #hd"+tab).addClass("active");
-          // Switching only the main tab
-        }else if(maintab!=null && tab==null){
-          $(".mytab.level1, .mytabheader.level1").removeClass("active");
-          $("#tab"+maintab+", #hd"+maintab).addClass("active");
-          // Switching the second tab
-        }else{
-          $("#tab"+maintab+" .mytab.level2, #tab"+maintab+" .mytabheader.level2").removeClass("active");
-          $("#tab"+tab+", #hd"+tab).addClass("active");
-        }
-        activeMainTab = maintab;
-        activeTab[maintab] = tab;
-      }
-
-    </script>
-
-		<apex:outputPanel id="column2" style="width:40%">
-			<script>$('#canChangeTab').val('true')</script>
-
-			<apex:outputPanel id="accountInfoPanel">
-				<apex:form >
-
-				<apex:pageBlock >
-					<h2>{!acc.Name} / {!acc.Airline_designator__c} / {!acc.IATACode__c}</h2><br/>
-					<!-- CUSTOM TAB HEADER -->
-					<div class="mytabheadercontainer level1" >
-						<div class="mytabheader level1 active" id="hdExisting" onclick="showTab('Existing')">{!$Label.ISSP_Existing_Agreements}</div>
-						<div class="mytabheader level1" id="hdAdd" onclick="showTab('Add')">{!$Label.ISSP_Agreements_available}</div>
-					</div>
-
-					<!-- TAB CONTAINER -->
-					<div class="mytabcontainer level1">
-
-					 	<!-- FIRST EXTERNAL TAB: EXISTING AGREEMENTS -->
-					 	<div class="mytab level1 active" id="tabExisting">
-
-					 		<div class="mytabheadercontainer level2" >
-								<div class="mytabheader level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" id="hdMITA" onclick="showTab('Existing','MITA')">MITA</div>
-								<div class="mytabheader level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" id="hdBIETA" onclick="showTab('Existing','BIETA')">BIETA</div>
-							</div>
-
-					 		<div class="mytabcontainer level2">
-					 			<!-- FIRST INTERNAL TAB: MITA -->
-								<div class="mytab level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" id="tabMITA">
-
-
-									<!-- SECTION FOR MITA AGREEMENTS -->
-									<apex:inputHidden value="{!MITAagreementid}" id="MITAagreementid"/>
-									<apex:actionFunction id="selectMITAAgreement" name="selectMITAAgreement" action="{!selectMITAAgreement}" rerender="MITAagreementInfoPanel,messages" status="Loading"/>
-
-									<apex:pageBlockSection columns="1" id="MITAagreementSearchPanel" >
-										<apex:outputPanel rendered="{!NOT(MITAwithdrawalMode)}" >
-											<div style="float:left;padding-bottom: 20px;" >
-												<apex:outputText value="{!MITAagreementTypes}" escape="false" />
-											</div>
-											<div style="float:right; visibility: hidden;" >
-												<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value=" " />{!$Label.ISSP_Show_all_the_agreements}<br/>
-												<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="true" checked="checked"/>{!$Label.ISSP_Active_agreements}<br/>
-												<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="false" />{!$Label.ISSP_Inactive_agreements}<br/>
-											</div>
-
-											<table id="MITAagreementsTable" class="agreementsTable dataTable no-footer hover row-border compact" >
-												<thead>
-													<tr>
-														<th>{!$Label.ISSP_IATA_Designator}</th>
-														<th>{!$Label.ISSP_3_Digit_Code}</th>
-														<th>{!$Label.ISSP_Airline_Prefix}</th>
-														<th>{!$Label.ISSP_Airline}</th>
-														<th>{!$Label.ISSP_Agreement_type}</th>
-														<th>{!$Label.ISSP_Active}</th>
-													</tr>
-												</thead>
-												<tbody>
-													<apex:outputText value="{!MITAAgreementTable}" escape="false" />
-												</tbody>
-											</table>
-											<script>
-												initAgreementTable(true);
-											</script>
-											<br/><br/>
-										</apex:outputPanel>
-									</apex:pageBlockSection>
-
-									<!-- SECTION FOR MITA WITHDRAWAL -->
-									<apex:outputPanel id="MITAWithdrawalPanel" >
-									<apex:pageBlockSection columns="1" rendered="{!MITAwithdrawalMode}" >
-
-										<p>You are submitting a WITHDRAWAL on behalf of: <b>{!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_1__r.Name, wrapper.agreement.Airline_2__r.Name)}</b></p>
-										<p>For: <b>{!wrapper.agreement.Agreement_type__c}</b></p>
-										<p>With Airline: <b>{!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</b></p>
-										<p style="display:inline-block">With effective date</p>
-										<apex:inputField label="" value="{!wrapper.agreement.Cancellation_date__c}" required="true" style="display:inline-block;width:inherit" styleclass="form-control mandatory"/>
-										<p>Please add some comments</p>
-										<apex:inputField label="" value="{!wrapper.agreement.Comments__c}"  styleclass="form-control"/>
-
-										<br/>
-										<p>Copy contacts from {!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</p>
-										<apex:pageBlockTable value="{!otherContacts}" var="cw">
-											<apex:column >
-												<apex:inputCheckbox value="{!cw.sel}"/>
-											</apex:column>
-											<apex:column headerValue="Name">
-												<apex:outputField value="{!cw.c.Name}" />
-											</apex:column>
-											<apex:column headerValue="Title">
-												<apex:outputField value="{!cw.c.Title}" />
-											</apex:column>
-											<apex:column headerValue="Email">
-												<apex:outputField value="{!cw.c.Email}" />
-											</apex:column>
-											<apex:column headerValue="Contact Type">
-												<apex:outputField value="{!cw.c.MITA_Contact_Type__c}" />
-											</apex:column>
-										</apex:pageBlockTable>
-									</apex:pageBlockSection>
-									<br/><br/>
-									<div style="text-align:center">
-									<apex:outputPanel rendered="{!MITAWithdrawalMode}">
-										<apex:commandButton styleClass="btn_iata_success btn" value="Submit" action="{!completeWithdrawal}"  status="Loading" rerender="MITAWithdrawalPanel,MITAagreementSearchPanel"/>
-										<apex:commandButton styleClass="btn_iata_cancel btn" value="Cancel" action="{!resetMITAWithdrawals}" status="Loading" immediate="true" rerender="MITAWithdrawalPanel,MITAagreementSearchPanel"/>
-									</apex:outputPanel>
-								</div>
-								</apex:outputPanel>
-							</div>
-
-					 			<!-- SECOND INTERNAL TAB: BIETA -->
-								<div class="mytab level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" id="tabBIETA">
-
-									<!-- SECTION FOR BIETA AGREEMENTS -->
-									<apex:inputHidden value="{!BIETAagreementid}" id="BIETAagreementid"/>
-									<apex:actionFunction id="selectBIETAAgreement" name="selectBIETAAgreement" action="{!selectBIETAAgreement}" rerender="BIETAagreementInfoPanel,messages" status="Loading"/>
-
-									<apex:pageBlockSection columns="1" id="BIETAagreementSearchPanel" >
-										<apex:outputPanel rendered="{!NOT(BIETAwithdrawalMode)}" >
-											<div style="float:left;padding-bottom: 20px;" >
-												<apex:outputText value="{!BIETAagreementTypes}" escape="false" />
-											</div>
-											<div style="float:right; visibility: hidden;" >
-												<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value=" " />{!$Label.ISSP_Show_all_the_agreements}<br/>
-												<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value="true" checked="checked"/>{!$Label.ISSP_Active_agreements}<br/>
-												<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value="false" />{!$Label.ISSP_Inactive_agreements}<br/>
-											</div>
-
-											<table id="BIETAagreementsTable" class="agreementsTable dataTable no-footer hover row-border compact" >
-												<thead>
-													<tr>
-														<th>{!$Label.ISSP_IATA_Designator}</th>
-														<th>{!$Label.ISSP_3_Digit_Code}</th>
-														<th>{!$Label.ISSP_Airline_Prefix}</th>
-														<th>{!$Label.ISSP_Airline}</th>
-														<th>{!$Label.ISSP_Agreement_type}</th>
-														<th>{!$Label.ISSP_Active}</th>
-													</tr>
-												</thead>
-												<tbody>
-													<apex:outputText value="{!BIETAAgreementTable}" escape="false" />
-												</tbody>
-											</table>
-											<script>
-												initAgreementTable(false);
-											</script>
-											<br/><br/>
-										</apex:outputPanel>
-									</apex:pageBlockSection>
-
-									<!-- SECTION FOR BIETA WITHDRAWAL -->
-									<apex:outputPanel id="BIETAWithdrawalPanel" >
-									<apex:pageBlockSection columns="1" rendered="{!BIETAwithdrawalMode}" >
-
-										<p>You are submitting a WITHDRAWAL on behalf of: <b>{!IF(wrapper.agreement.Airline_1__c = wrapper.agreement.Id, wrapper.agreement.Airline_1__r.Name, wrapper.agreement.Airline_2__r.Name)}</b></p>
-										<p>For: <b>{!wrapper.agreement.Agreement_type__c}</b></p>
-										<p>With Airline: <b>{!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</b></p>
-										<p style="display:inline-block">With effective date</p>
-										<apex:inputField label="" value="{!wrapper.agreement.Cancellation_date__c}" required="true" style="display:inline-block;width:inherit" styleclass="form-control mandatory"/>
-										<p>Please add some comments</p>
-										<apex:inputField label="" value="{!wrapper.agreement.Comments__c}"  styleclass="form-control"/>
-
-										<br/>
-										<p>Copy contacts from {!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</p>
-										<apex:pageBlockTable value="{!otherContacts}" var="cw">
-											<apex:column >
-												<apex:inputCheckbox value="{!cw.sel}"/>
-											</apex:column>
-											<apex:column headerValue="Name">
-												<apex:outputField value="{!cw.c.Name}" />
-											</apex:column>
-											<apex:column headerValue="Title">
-												<apex:outputField value="{!cw.c.Title}" />
-											</apex:column>
-											<apex:column headerValue="Email">
-												<apex:outputField value="{!cw.c.Email}" />
-											</apex:column>
-											<apex:column headerValue="Contact Type">
-												<apex:outputField value="{!cw.c.MITA_Contact_Type__c}" />
-											</apex:column>
-										</apex:pageBlockTable>
-									</apex:pageBlockSection>
-									<br/><br/>
-									<div style="text-align:center">
-									<apex:outputPanel rendered="{!BIETAWithdrawalMode}">
-										<apex:commandButton styleClass="btn_iata_success btn" value="Submit" action="{!completeWithdrawal}"  status="Loading" rerender="BIETAWithdrawalPanel,BIETAagreementSearchPanel"/>
-										<apex:commandButton styleClass="btn_iata_cancel btn" value="Cancel" action="{!resetBIETAWithdrawals}" status="Loading" immediate="true" rerender="BIETAWithdrawalPanel,BIETAagreementSearchPanel"/>
-									</apex:outputPanel>
-									</div>
-									</apex:outputPanel>
-
-								</div>
-					 		</div>
-
-				 		</div>
-
-					 	<!-- SECOND EXTERNAL TAB: ADD AGREEMENTS -->
-					 	<div class="mytab level1" id="tabAdd">
-
-					 		<div class="mytabheadercontainer level2" >
-								<div class="mytabheader level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" id="hdNewMITA" onclick="showTab('Add','NewMITA')">MITA</div>
-								<div class="mytabheader level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" id="hdNewBIETA" onclick="showTab('Add','NewBIETA')">BIETA</div>
-							</div>
-
-					 		<div class="mytabcontainer level2">
-					 			<apex:outputPanel id="NewMITAPanel">
-						 		<apex:inputHidden value="{!MITAairlineID}" id="MITAairlineid"/>
-
-						 		<!-- FIRST INTERNAL TAB: NEW MITA -->
-						 		<div class="mytab level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" id="tabNewMITA">
-
-                  <div style="float:left;padding-bottom: 20px;" >
-                    <apex:outputText value="{!MITASuggestionTypes}" escape="false" />
-                  </div>
-
-						 			<apex:pageBlockSection rendered="{!NOT(MITAsubmitMode)}">
-						 			<apex:outputPanel >
-						 			<table id="MITAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
-						 				<thead>
-											<tr>
-												<th>{!$Label.ISSP_IATA_Designator}</th>
-												<th>{!$Label.ISSP_3_Digit_Code}</th>
-												<th>{!$Label.ISSP_Airline_Prefix}</th>
-												<th>{!$Label.ISSP_Airline}</th>
-												<th>{!$Label.ISSP_Available_types}</th>
-											</tr>
-										</thead>
-										<tbody>
-											<apex:outputText value="{!MITASuggestionTable}" escape="false" />
-										</tbody>
-						 			</table>
-						 			<script>
-										initSuggestionTable(true);
-									</script>
-									</apex:outputPanel>
-						 			</apex:pageBlockSection>
-
-						 			<!-- SECTION FOR MITA SUBMIT -->
-						 			<apex:pageBlockSection rendered="{!MITAsubmitMode}" columns="1">
-					 				<apex:outputPanel >
-						 				<p>You are submitting a concurrence on behalf of: <b>{!acc.Name}</b></p>
-										<apex:inputField label="" value="{!wrapper.agreement.MITAorBIETA__c}" style="display:none;"/>
-
-										<p class="myinline">For</p>
-										<apex:selectList value="{!wrapper.agreement.Agreement_type__c}" styleclass="form-control mandatory myinline" size="1">
-											<apex:selectOptions value="{!sair.MITAAvailableTypes}"/>
-										</apex:selectList>
-										<br/>
-										<p>With Airline: <b>{!sair.Name}</b></p>
-
-										<p class="myinline">With effective date</p>
-										<apex:inputField value="{!wrapper.agreement.Effective_date__c}" required="true" styleclass="form-control mandatory myinline"/>
-										<br/>
-										<p>Please add some comments</p>
-										<apex:inputField label="" value="{!wrapper.agreement.Comments__c}"  styleclass="form-control"/>
-
-
-										<br/>
-										<p>Copy contacts from {!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</p>
-										<apex:pageBlockTable value="{!otherContacts}" var="cw">
-											<apex:column >
-												<apex:inputCheckbox value="{!cw.sel}"/>
-											</apex:column>
-											<apex:column headerValue="Name">
-												<apex:outputField value="{!cw.c.Name}" />
-											</apex:column>
-											<apex:column headerValue="Title">
-												<apex:outputField value="{!cw.c.Title}" />
-											</apex:column>
-											<apex:column headerValue="Email">
-												<apex:outputField value="{!cw.c.Email}" />
-											</apex:column>
-											<apex:column headerValue="Contact Type">
-												<apex:outputField value="{!cw.c.MITA_Contact_Type__c}" />
-											</apex:column>
-										</apex:pageBlockTable>
-									</apex:outputPanel>
-						 			</apex:pageBlockSection>
-						 			<br/><br/>
-									<div style="text-align:center">
-									<apex:outputPanel rendered="{!MITAsubmitMode}">
-										<apex:commandButton styleClass="btn_iata_success btn" value="Submit" action="{!completeSubmit}"  status="Loading" rerender="MITAWithdrawalPanel,MITAagreementSearchPanel,NewMITAPanel, messages"/>
-										<apex:commandButton styleClass="btn_iata_cancel btn" value="Cancel" action="{!resetMITAsubmit}" status="Loading" immediate="true" rerender="NewMITAPanel, messages"/>
-									</apex:outputPanel>
-									</div>
-						 		</div>
-						 		</apex:outputPanel>
-
-
-
-						 		<apex:outputPanel id="NewBIETAPanel">
-						 		<apex:inputHidden value="{!BIETAairlineID}" id="BIETAairlineid"/>
-						 		<!-- SECOND INTERNAL TAB: NEW BIETA -->
-						 		<div class="mytab level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" id="tabNewBIETA">
-
-                  <div style="float:left;padding-bottom: 20px;" >
-                    <apex:outputText value="{!BIETASuggestionTypes}" escape="false" />
-                  </div>
-
-                  <br style="clear:both"/>
-
-						 			<apex:pageBlockSection rendered="{!NOT(BIETAsubmitMode)}">
-						 			<apex:outputPanel >
-						 			<table id="BIETAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
-						 				<thead>
-											<tr>
-												<th>{!$Label.ISSP_IATA_Designator}</th>
-												<th>{!$Label.ISSP_3_Digit_Code}</th>
-												<th>{!$Label.ISSP_Airline_Prefix}</th>
-												<th>{!$Label.ISSP_Airline}</th>
-												<th>{!$Label.ISSP_Available_types}</th>
-											</tr>
-										</thead>
-										<tbody>
-											<apex:outputText value="{!BIETASuggestionTable}" escape="false" />
-										</tbody>
-						 			</table>
-						 			<script>
-										initSuggestionTable(false);
-									</script>
-									</apex:outputPanel>
-						 			</apex:pageBlockSection>
-
-						 			<!-- SECTION FOR BIETA SUBMIT -->
-						 			<apex:pageBlockSection rendered="{!BIETAsubmitMode}" columns="1">
-						 				<apex:outputPanel >
-						 				<p>You are submitting a concurrence on behalf of: <b>{!acc.Name}</b></p>
-										<apex:inputField label="" value="{!wrapper.agreement.MITAorBIETA__c}" style="display:none;"/>
-
-										<p class="myinline">For</p>
-										<apex:selectList value="{!wrapper.agreement.Agreement_type__c}" styleclass="form-control mandatory myinline" size="1">
-											<apex:selectOptions value="{!sair.BIETAAvailableTypes}"/>
-										</apex:selectList>
-										<br/>
-										<p>With Airline: <b>{!sair.Name}</b></p>
-
-										<p class="myinline">With effective date</p>
-										<apex:inputField value="{!wrapper.agreement.Effective_date__c}" required="true" styleclass="form-control mandatory myinline"/>
-										<br/>
-										<p>Please add some comments</p>
-										<apex:inputField label="" value="{!wrapper.agreement.Comments__c}"  styleclass="form-control"/>
-
-
-										<br/>
-										<p>Copy contacts from {!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</p>
-										<apex:pageBlockTable value="{!otherContacts}" var="cw">
-											<apex:column >
-												<apex:inputCheckbox value="{!cw.sel}"/>
-											</apex:column>
-											<apex:column headerValue="Name">
-												<apex:outputField value="{!cw.c.Name}" />
-											</apex:column>
-											<apex:column headerValue="Title">
-												<apex:outputField value="{!cw.c.Title}" />
-											</apex:column>
-											<apex:column headerValue="Email">
-												<apex:outputField value="{!cw.c.Email}" />
-											</apex:column>
-											<apex:column headerValue="Contact Type">
-												<apex:outputField value="{!cw.c.MITA_Contact_Type__c}" />
-											</apex:column>
-										</apex:pageBlockTable>
-										</apex:outputPanel>
-						 			</apex:pageBlockSection>
-						 			<br/><br/>
-									<div style="text-align:center">
-									<apex:outputPanel rendered="{!BIETAsubmitMode}">
-										<apex:commandButton styleClass="btn_iata_success btn" value="Submit" action="{!completeSubmit}"  status="Loading" rerender="BIETAWithdrawalPanel,BIETAagreementSearchPanel,NewBIETAPanel, messages"/>
-										<apex:commandButton styleClass="btn_iata_cancel btn" value="Cancel" action="{!resetBIETAsubmit}" status="Loading" immediate="true" rerender="NewBIETAPanel, messages"/>
-									</apex:outputPanel>
-									</div>
-						 		</div>
-						 		</apex:outputPanel>
-
-						 	</div>
-					 	</div>
-
-				</div>
-
-
-
-				<br/><br/>
-
-
-
-				</apex:pageBlock>
-
-				<apex:actionFunction name="deleteMITAAgremeent" action="{!deleteMITAAgreement}" rerender="MITAWithdrawalPanel,MITAagreementSearchPanel, messages" status="Loading"/>
-				<apex:actionFunction name="deleteBIETAAgremeent" action="{!deleteBIETAAgreement}" rerender="BIETAWithdrawalPanel,BIETAagreementSearchPanel, messages" status="Loading"/>
-
-				<apex:actionFunction name="submitMITAAgremeent" action="{!createMITAAgreement}" rerender="NewMITAPanel, messages" status="Loading"/>
-				<apex:actionFunction name="submitBIETAAgremeent" action="{!createBIETAAgreement}" rerender="NewBIETAPanel, messages" status="Loading"/>
-
-				</apex:form>
-
+				</script>
 			</apex:outputPanel>
-		</apex:outputPanel>
+
+			<script>
+				var MITAagreementsTable;
+				var BIETAagreementsTable;
+				var MITAsuggestionsTable;
+				var BIETAsuggestionsTable;
+
+				var activeMainTab = '';
+				var activeTab = {};
+
+				/****** METHODS FOR AGREEMENTS ******/
+
+				$(document).ready(function () {
+					//initAgreementTable(true);
+					//initAgreementTable(false);
+
+					//initSuggestionTable(true);
+					//initSuggestionTable(false);
+					showTab('Existing');
+				});
+
+				function initAgreementTable(isMITA) {
+					var agreementsTable = $('#' + (isMITA ? 'MITA' : 'BIETA') + 'agreementsTable').DataTable({
+						"dom": '<"top" lf>rt<"bottom"ip><"clear">',
+						"pageLength": 50,
+						"columnDefs": [
+							{ "name": "designator", "targets": 0, "width": "110px" },
+							{ "name": "code", "targets": 1, "width": "110px" },
+							{ "name": "prefix", "targets": 2, "width": "110px" },
+							{ "name": "name", "targets": 3 },
+							{ "name": "type", "targets": 4 },
+							{ "name": "active", "targets": 5, "width": "110px" }
+						],
+						"language": {
+							"lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
+							"zeroRecords": "{!$Label.ISSP_Nothing_found}",
+							"info": "{!$Label.ISSP_Showing_page}",
+							"infoEmpty": "{!$Label.ISSP_No_records_available}",
+							"infoFiltered": "{!$Label.ISSP_filtered_from_total_records}",
+							"search": "{!$Label.ISSP_Search}",
+							"paginate": {
+								"next": "{!$Label.ISSP_Next}",
+								"previous": "{!$Label.ISSP_Previous}"
+							}
+						}
+					});
+
+					$(agreementsTable.rows().nodes()).find(".iconx").attr('src', $('.mastericonx').attr('src'));
+
+					if (isMITA)
+						MITAagreementsTable = agreementsTable;
+					else
+						BIETAagreementsTable = agreementsTable;
+
+					filterAgreements(isMITA);
+
+					$(".agreementtypefilter, .agreementactivefilter").on('change', function () {
+						var isMITA = $(this).attr('data-type') == "MITA";
+						filterAgreements(isMITA);
+					});
+				}
+
+
+				function filterAgreements(isMITA) {
+					var MB = isMITA ? "MITA" : "BIETA";
+					var typefilter = $('.agreementtypefilter[data-type="' + MB + '"]:checked').attr("data-value").trim();
+
+					if (isMITA)
+						MITAagreementsTable
+							.column('type:name').search('"' + typefilter + '"')
+							.draw();
+					else
+						BIETAagreementsTable
+							.column('type:name').search('"' + typefilter + '"')
+							.draw();
+				}
+
+				function initSuggestionTable(isMITA) {
+					var suggestionsTable = $('#' + (isMITA ? 'MITA' : 'BIETA') + 'suggestionsTable').DataTable({
+						"dom": '<"top" lf>rt<"bottom"ip><"clear">',
+						"pageLength": 50,
+						"columnDefs": [
+							{ "name": "dcode", "targets": 0, "width": "110px" },
+							{ "name": "ncode", "targets": 1, "width": "110px" },
+							{ "name": "prefix", "targets": 2, "width": "110px" },
+							{ "name": "name", "targets": 3 },
+							{ "name": "type", "targets": 4 }
+						]
+					});
+
+					$(suggestionsTable.rows().nodes()).find(".iconarrow").attr('src', $('.mastericonarrow').attr('src'));
+
+					if (isMITA)
+						MITAsuggestionsTable = suggestionsTable;
+					else
+						BIETAsuggestionsTable = suggestionsTable;
+
+					filterSuggestions(isMITA);
+
+					$(".suggestiontypefilter, .suggestiontype").on('change', function () {
+						var isMITA = $(this).attr('data-type') == "MITA";
+						filterSuggestions(isMITA);
+					});
+				}
+
+				function filterSuggestions(isMITA) {
+					var MB = isMITA ? "MITA" : "BIETA";
+					var typefilter = $('.suggestiontypefilter[data-type="' + MB + '"]:checked').attr("data-value").trim() + '(Senior)';
+
+
+					if (isMITA)
+						MITAsuggestionsTable
+							.column('type:name').search('"' + typefilter + '"')
+							.draw();
+					else
+						BIETAsuggestionsTable
+							.column('type:name').search('"' + typefilter + '"')
+							.draw();
+				}
+
+				function showTab(maintab, tab) {
+					// If no parameter is received
+					if (maintab == null) {
+						maintab = activeMainTab;
+						tab = activeTab[activeMainTab];
+						$(".mytab, .mytabheader").removeClass("active");
+						$("#tab" + maintab + ", #hd" + maintab).addClass("active");
+						$("#tab" + tab + ", #hd" + tab).addClass("active");
+						// Switching only the main tab
+					} else if (maintab != null && tab == null) {
+						$(".mytab.level1, .mytabheader.level1").removeClass("active");
+						$("#tab" + maintab + ", #hd" + maintab).addClass("active");
+						// Switching the second tab
+					} else {
+						$("#tab" + maintab + " .mytab.level2, #tab" + maintab + " .mytabheader.level2").removeClass("active");
+						$("#tab" + tab + ", #hd" + tab).addClass("active");
+					}
+					activeMainTab = maintab;
+					activeTab[maintab] = tab;
+				}
+
+			</script>
+
+			<apex:outputPanel id="column2" style="width:40%">
+				<script>$('#canChangeTab').val('true')</script>
+
+				<apex:outputPanel id="accountInfoPanel">
+					<apex:form>
+
+						<apex:pageBlock>
+							<h2>{!acc.Name} / {!acc.Airline_designator__c} / {!acc.IATACode__c}</h2>
+							<br/>
+							<!-- CUSTOM TAB HEADER -->
+							<div class="mytabheadercontainer level1" style="padding-left: 2px;">
+								<div class="mytabheader level1 active" id="hdExisting" onclick="showTab('Existing')">{!$Label.ISSP_Existing_Agreements}</div>
+								<div class="mytabheader level1" id="hdAdd" onclick="showTab('Add')">{!$Label.ISSP_Agreements_available}</div>
+							</div>
+
+							<!-- TAB CONTAINER -->
+							<div class="mytabcontainer level1" style="background-color: #fff;">
+
+								<!-- FIRST EXTERNAL TAB: EXISTING AGREEMENTS -->
+								<div class="mytab level1 active" id="tabExisting">
+
+									<div class="mytabheadercontainer level2">
+										<div class="mytabheader level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" style="float:left;" id="hdMITA" onclick="showTab('Existing','MITA')">MITA</div>
+										<div class="mytabheader level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" style="float:right;"
+										 id="hdBIETA" onclick="showTab('Existing','BIETA')">BIETA</div>
+									</div>
+
+									<div class="mytabcontainer level2">
+										<!-- FIRST INTERNAL TAB: MITA -->
+										<div class="mytab level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" id="tabMITA">
+
+
+											<!-- SECTION FOR MITA AGREEMENTS -->
+											<apex:inputHidden value="{!MITAagreementid}" id="MITAagreementid" />
+											<apex:actionFunction id="selectMITAAgreement" name="selectMITAAgreement" action="{!selectMITAAgreement}" rerender="MITAagreementInfoPanel,messages"
+											 status="Loading" />
+
+											<apex:pageBlockSection columns="1" id="MITAagreementSearchPanel">
+												<apex:outputPanel rendered="{!NOT(MITAwithdrawalMode)}">
+													<div style="float:left;padding-bottom: 20px;">
+														<apex:outputText value="{!MITAagreementTypes}" escape="false" />
+													</div>
+													<div style="float:right; visibility: hidden;">
+														<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value=" " />{!$Label.ISSP_Show_all_the_agreements}
+														<br/>
+														<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="true" checked="checked"
+														/>{!$Label.ISSP_Active_agreements}
+														<br/>
+														<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="false" />{!$Label.ISSP_Inactive_agreements}
+														<br/>
+													</div>
+
+													<table id="MITAagreementsTable" class="agreementsTable dataTable no-footer hover row-border compact">
+														<thead>
+															<tr>
+																<th>{!$Label.ISSP_IATA_Designator}</th>
+																<th>{!$Label.ISSP_3_Digit_Code}</th>
+																<th>{!$Label.ISSP_Airline_Prefix}</th>
+																<th>{!$Label.ISSP_Airline}</th>
+																<th>{!$Label.ISSP_Agreement_type}</th>
+																<th>{!$Label.ISSP_Active}</th>
+															</tr>
+														</thead>
+														<tbody>
+															<apex:outputText value="{!MITAAgreementTable}" escape="false" />
+														</tbody>
+													</table>
+													<script>
+														initAgreementTable(true);
+													</script>
+													<br/>
+													<br/>
+												</apex:outputPanel>
+											</apex:pageBlockSection>
+
+											<!-- SECTION FOR MITA WITHDRAWAL -->
+											<apex:outputPanel id="MITAWithdrawalPanel">
+												<apex:pageBlockSection columns="1" rendered="{!MITAwithdrawalMode}">
+
+													<p>You are submitting a WITHDRAWAL on behalf of:
+														<b>{!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_1__r.Name, wrapper.agreement.Airline_2__r.Name)}</b>
+													</p>
+													<p>For:
+														<b>{!wrapper.agreement.Agreement_type__c}</b>
+													</p>
+													<p>With Airline:
+														<b>{!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</b>
+													</p>
+													<p style="display:inline-block">With effective date</p>
+													<apex:inputField label="" value="{!wrapper.agreement.Cancellation_date__c}" required="true" style="display:inline-block;width:inherit"
+													 styleclass="form-control mandatory" />
+													<p>Please add some comments</p>
+													<apex:inputField label="" value="{!wrapper.agreement.Comments__c}" styleclass="form-control" />
+
+													<br/>
+													<p>Copy contacts from {!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</p>
+													<apex:pageBlockTable value="{!otherContacts}" var="cw">
+														<apex:column>
+															<apex:inputCheckbox value="{!cw.sel}" />
+														</apex:column>
+														<apex:column headerValue="Name">
+															<apex:outputField value="{!cw.c.Name}" />
+														</apex:column>
+														<apex:column headerValue="Title">
+															<apex:outputField value="{!cw.c.Title}" />
+														</apex:column>
+														<apex:column headerValue="Email">
+															<apex:outputField value="{!cw.c.Email}" />
+														</apex:column>
+														<apex:column headerValue="Contact Type">
+															<apex:outputField value="{!cw.c.MITA_Contact_Type__c}" />
+														</apex:column>
+													</apex:pageBlockTable>
+												</apex:pageBlockSection>
+												<br/>
+												<br/>
+												<div style="text-align:center">
+													<apex:outputPanel rendered="{!MITAWithdrawalMode}">
+														<apex:commandButton styleClass="btn_iata_success btn" value="Submit" action="{!completeWithdrawal}" status="Loading" rerender="MITAWithdrawalPanel,MITAagreementSearchPanel"
+														/>
+														<apex:commandButton styleClass="btn_iata_cancel btn" value="Cancel" action="{!resetMITAWithdrawals}" status="Loading" immediate="true"
+														 rerender="MITAWithdrawalPanel,MITAagreementSearchPanel" />
+													</apex:outputPanel>
+												</div>
+											</apex:outputPanel>
+										</div>
+
+										<!-- SECOND INTERNAL TAB: BIETA -->
+										<div class="mytab level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" id="tabBIETA">
+
+											<!-- SECTION FOR BIETA AGREEMENTS -->
+											<apex:inputHidden value="{!BIETAagreementid}" id="BIETAagreementid" />
+											<apex:actionFunction id="selectBIETAAgreement" name="selectBIETAAgreement" action="{!selectBIETAAgreement}" rerender="BIETAagreementInfoPanel,messages"
+											 status="Loading" />
+
+											<apex:pageBlockSection columns="1" id="BIETAagreementSearchPanel">
+												<apex:outputPanel rendered="{!NOT(BIETAwithdrawalMode)}">
+													<div style="float:left;padding-bottom: 20px;">
+														<apex:outputText value="{!BIETAagreementTypes}" escape="false" />
+													</div>
+													<div style="float:right; visibility: hidden;">
+														<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value=" " />{!$Label.ISSP_Show_all_the_agreements}
+														<br/>
+														<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value="true" checked="checked"
+														/>{!$Label.ISSP_Active_agreements}
+														<br/>
+														<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value="false" />{!$Label.ISSP_Inactive_agreements}
+														<br/>
+													</div>
+
+													<table id="BIETAagreementsTable" class="agreementsTable dataTable no-footer hover row-border compact">
+														<thead>
+															<tr>
+																<th>{!$Label.ISSP_IATA_Designator}</th>
+																<th>{!$Label.ISSP_3_Digit_Code}</th>
+																<th>{!$Label.ISSP_Airline_Prefix}</th>
+																<th>{!$Label.ISSP_Airline}</th>
+																<th>{!$Label.ISSP_Agreement_type}</th>
+																<th>{!$Label.ISSP_Active}</th>
+															</tr>
+														</thead>
+														<tbody>
+															<apex:outputText value="{!BIETAAgreementTable}" escape="false" />
+														</tbody>
+													</table>
+													<script>
+														initAgreementTable(false);
+													</script>
+													<br/>
+													<br/>
+												</apex:outputPanel>
+											</apex:pageBlockSection>
+
+											<!-- SECTION FOR BIETA WITHDRAWAL -->
+											<apex:outputPanel id="BIETAWithdrawalPanel">
+												<apex:pageBlockSection columns="1" rendered="{!BIETAwithdrawalMode}">
+
+													<p>You are submitting a WITHDRAWAL on behalf of:
+														<b>{!IF(wrapper.agreement.Airline_1__c = wrapper.agreement.Id, wrapper.agreement.Airline_1__r.Name, wrapper.agreement.Airline_2__r.Name)}</b>
+													</p>
+													<p>For:
+														<b>{!wrapper.agreement.Agreement_type__c}</b>
+													</p>
+													<p>With Airline:
+														<b>{!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</b>
+													</p>
+													<p style="display:inline-block">With effective date</p>
+													<apex:inputField label="" value="{!wrapper.agreement.Cancellation_date__c}" required="true" style="display:inline-block;width:inherit"
+													 styleclass="form-control mandatory" />
+													<p>Please add some comments</p>
+													<apex:inputField label="" value="{!wrapper.agreement.Comments__c}" styleclass="form-control" />
+
+													<br/>
+													<p>Copy contacts from {!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</p>
+													<apex:pageBlockTable value="{!otherContacts}" var="cw">
+														<apex:column>
+															<apex:inputCheckbox value="{!cw.sel}" />
+														</apex:column>
+														<apex:column headerValue="Name">
+															<apex:outputField value="{!cw.c.Name}" />
+														</apex:column>
+														<apex:column headerValue="Title">
+															<apex:outputField value="{!cw.c.Title}" />
+														</apex:column>
+														<apex:column headerValue="Email">
+															<apex:outputField value="{!cw.c.Email}" />
+														</apex:column>
+														<apex:column headerValue="Contact Type">
+															<apex:outputField value="{!cw.c.MITA_Contact_Type__c}" />
+														</apex:column>
+													</apex:pageBlockTable>
+												</apex:pageBlockSection>
+												<br/>
+												<br/>
+												<div style="text-align:center">
+													<apex:outputPanel rendered="{!BIETAWithdrawalMode}">
+														<apex:commandButton styleClass="btn_iata_success btn" value="Submit" action="{!completeWithdrawal}" status="Loading" rerender="BIETAWithdrawalPanel,BIETAagreementSearchPanel"
+														/>
+														<apex:commandButton styleClass="btn_iata_cancel btn" value="Cancel" action="{!resetBIETAWithdrawals}" status="Loading" immediate="true"
+														 rerender="BIETAWithdrawalPanel,BIETAagreementSearchPanel" />
+													</apex:outputPanel>
+												</div>
+											</apex:outputPanel>
+
+										</div>
+									</div>
+
+								</div>
+
+								<!-- SECOND EXTERNAL TAB: ADD AGREEMENTS -->
+								<div class="mytab level1" id="tabAdd">
+
+									<div class="mytabheadercontainer level2">
+										<div class="mytabheader level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" style="float:left;" id="hdNewMITA" onclick="showTab('Add','NewMITA')">MITA</div>
+										<div class="mytabheader level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" style="float:right;"
+										 id="hdNewBIETA" onclick="showTab('Add','NewBIETA')">BIETA</div>
+									</div>
+
+									<div class="mytabcontainer level2">
+										<apex:outputPanel id="NewMITAPanel">
+											<apex:inputHidden value="{!MITAairlineID}" id="MITAairlineid" />
+
+											<!-- FIRST INTERNAL TAB: NEW MITA -->
+											<div class="mytab level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" id="tabNewMITA">
+
+												<div style="float:left;padding-bottom: 20px;">
+													<apex:outputText value="{!MITASuggestionTypes}" escape="false" />
+												</div>
+
+												<apex:pageBlockSection rendered="{!NOT(MITAsubmitMode)}">
+													<apex:outputPanel>
+														<table id="MITAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
+															<thead>
+																<tr>
+																	<th>{!$Label.ISSP_IATA_Designator}</th>
+																	<th>{!$Label.ISSP_3_Digit_Code}</th>
+																	<th>{!$Label.ISSP_Airline_Prefix}</th>
+																	<th>{!$Label.ISSP_Airline}</th>
+																	<th>{!$Label.ISSP_Available_types}</th>
+																</tr>
+															</thead>
+															<tbody>
+																<apex:outputText value="{!MITASuggestionTable}" escape="false" />
+															</tbody>
+														</table>
+														<script>
+															initSuggestionTable(true);
+														</script>
+													</apex:outputPanel>
+												</apex:pageBlockSection>
+
+												<!-- SECTION FOR MITA SUBMIT -->
+												<apex:pageBlockSection rendered="{!MITAsubmitMode}" columns="1">
+													<apex:outputPanel>
+														<p>You are submitting a concurrence on behalf of:
+															<b>{!acc.Name}</b>
+														</p>
+														<apex:inputField label="" value="{!wrapper.agreement.MITAorBIETA__c}" style="display:none;" />
+
+														<p class="myinline">For</p>
+														<apex:selectList value="{!wrapper.agreement.Agreement_type__c}" styleclass="form-control mandatory myinline" size="1">
+															<apex:selectOptions value="{!sair.MITAAvailableTypes}" />
+														</apex:selectList>
+														<br/>
+														<p>With Airline:
+															<b>{!sair.Name}</b>
+														</p>
+
+														<p class="myinline">With effective date</p>
+														<apex:inputField value="{!wrapper.agreement.Effective_date__c}" required="true" styleclass="form-control mandatory myinline"
+														/>
+														<br/>
+														<p>Please add some comments</p>
+														<apex:inputField label="" value="{!wrapper.agreement.Comments__c}" styleclass="form-control" />
+
+
+														<br/>
+														<p>Copy contacts from {!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</p>
+														<apex:pageBlockTable value="{!otherContacts}" var="cw">
+															<apex:column>
+																<apex:inputCheckbox value="{!cw.sel}" />
+															</apex:column>
+															<apex:column headerValue="Name">
+																<apex:outputField value="{!cw.c.Name}" />
+															</apex:column>
+															<apex:column headerValue="Title">
+																<apex:outputField value="{!cw.c.Title}" />
+															</apex:column>
+															<apex:column headerValue="Email">
+																<apex:outputField value="{!cw.c.Email}" />
+															</apex:column>
+															<apex:column headerValue="Contact Type">
+																<apex:outputField value="{!cw.c.MITA_Contact_Type__c}" />
+															</apex:column>
+														</apex:pageBlockTable>
+													</apex:outputPanel>
+												</apex:pageBlockSection>
+												<br/>
+												<br/>
+												<div style="text-align:center">
+													<apex:outputPanel rendered="{!MITAsubmitMode}">
+														<apex:commandButton styleClass="btn_iata_success btn" value="Submit" action="{!completeSubmit}" status="Loading" rerender="MITAWithdrawalPanel,MITAagreementSearchPanel,NewMITAPanel, messages"
+														/>
+														<apex:commandButton styleClass="btn_iata_cancel btn" value="Cancel" action="{!resetMITAsubmit}" status="Loading" immediate="true"
+														 rerender="NewMITAPanel, messages" />
+													</apex:outputPanel>
+												</div>
+											</div>
+										</apex:outputPanel>
 
 
 
-        <c:ISSP_CustomFooter />
-    </div>
-     </body>
-    </html>
+										<apex:outputPanel id="NewBIETAPanel">
+											<apex:inputHidden value="{!BIETAairlineID}" id="BIETAairlineid" />
+											<!-- SECOND INTERNAL TAB: NEW BIETA -->
+											<div class="mytab level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" id="tabNewBIETA">
+
+												<div style="float:left;padding-bottom: 20px;">
+													<apex:outputText value="{!BIETASuggestionTypes}" escape="false" />
+												</div>
+
+												<br style="clear:both" />
+
+												<apex:pageBlockSection rendered="{!NOT(BIETAsubmitMode)}">
+													<apex:outputPanel>
+														<table id="BIETAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
+															<thead>
+																<tr>
+																	<th>{!$Label.ISSP_IATA_Designator}</th>
+																	<th>{!$Label.ISSP_3_Digit_Code}</th>
+																	<th>{!$Label.ISSP_Airline_Prefix}</th>
+																	<th>{!$Label.ISSP_Airline}</th>
+																	<th>{!$Label.ISSP_Available_types}</th>
+																</tr>
+															</thead>
+															<tbody>
+																<apex:outputText value="{!BIETASuggestionTable}" escape="false" />
+															</tbody>
+														</table>
+														<script>
+															initSuggestionTable(false);
+														</script>
+													</apex:outputPanel>
+												</apex:pageBlockSection>
+
+												<!-- SECTION FOR BIETA SUBMIT -->
+												<apex:pageBlockSection rendered="{!BIETAsubmitMode}" columns="1">
+													<apex:outputPanel>
+														<p>You are submitting a concurrence on behalf of:
+															<b>{!acc.Name}</b>
+														</p>
+														<apex:inputField label="" value="{!wrapper.agreement.MITAorBIETA__c}" style="display:none;" />
+
+														<p class="myinline">For</p>
+														<apex:selectList value="{!wrapper.agreement.Agreement_type__c}" styleclass="form-control mandatory myinline" size="1">
+															<apex:selectOptions value="{!sair.BIETAAvailableTypes}" />
+														</apex:selectList>
+														<br/>
+														<p>With Airline:
+															<b>{!sair.Name}</b>
+														</p>
+
+														<p class="myinline">With effective date</p>
+														<apex:inputField value="{!wrapper.agreement.Effective_date__c}" required="true" styleclass="form-control mandatory myinline"
+														/>
+														<br/>
+														<p>Please add some comments</p>
+														<apex:inputField label="" value="{!wrapper.agreement.Comments__c}" styleclass="form-control" />
+
+
+														<br/>
+														<p>Copy contacts from {!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</p>
+														<apex:pageBlockTable value="{!otherContacts}" var="cw">
+															<apex:column>
+																<apex:inputCheckbox value="{!cw.sel}" />
+															</apex:column>
+															<apex:column headerValue="Name">
+																<apex:outputField value="{!cw.c.Name}" />
+															</apex:column>
+															<apex:column headerValue="Title">
+																<apex:outputField value="{!cw.c.Title}" />
+															</apex:column>
+															<apex:column headerValue="Email">
+																<apex:outputField value="{!cw.c.Email}" />
+															</apex:column>
+															<apex:column headerValue="Contact Type">
+																<apex:outputField value="{!cw.c.MITA_Contact_Type__c}" />
+															</apex:column>
+														</apex:pageBlockTable>
+													</apex:outputPanel>
+												</apex:pageBlockSection>
+												<br/>
+												<br/>
+												<div style="text-align:center">
+													<apex:outputPanel rendered="{!BIETAsubmitMode}">
+														<apex:commandButton styleClass="btn_iata_success btn" value="Submit" action="{!completeSubmit}" status="Loading" rerender="BIETAWithdrawalPanel,BIETAagreementSearchPanel,NewBIETAPanel, messages"
+														/>
+														<apex:commandButton styleClass="btn_iata_cancel btn" value="Cancel" action="{!resetBIETAsubmit}" status="Loading" immediate="true"
+														 rerender="NewBIETAPanel, messages" />
+													</apex:outputPanel>
+												</div>
+											</div>
+										</apex:outputPanel>
+
+									</div>
+								</div>
+
+							</div>
+
+
+
+							<br/>
+							<br/>
+
+
+
+						</apex:pageBlock>
+
+						<apex:actionFunction name="deleteMITAAgremeent" action="{!deleteMITAAgreement}" rerender="MITAWithdrawalPanel,MITAagreementSearchPanel, messages"
+						 status="Loading" />
+						<apex:actionFunction name="deleteBIETAAgremeent" action="{!deleteBIETAAgreement}" rerender="BIETAWithdrawalPanel,BIETAagreementSearchPanel, messages"
+						 status="Loading" />
+
+						<apex:actionFunction name="submitMITAAgremeent" action="{!createMITAAgreement}" rerender="NewMITAPanel, messages" status="Loading"
+						/>
+						<apex:actionFunction name="submitBIETAAgremeent" action="{!createBIETAAgreement}" rerender="NewBIETAPanel, messages" status="Loading"
+						/>
+
+					</apex:form>
+
+				</apex:outputPanel>
+			</apex:outputPanel>
+		</div>
+		<c:ISSP_CustomFooter />
+	</body>
+
+	</html>
 </apex:page>

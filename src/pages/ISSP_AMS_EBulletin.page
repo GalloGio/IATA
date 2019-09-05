@@ -126,23 +126,23 @@
             height: unset;
             background-color: #fff;
             box-shadow: none;
+            margin-bottom: 0 !important;
         }
         
         .progress-bar {
-            padding: 10px;
-            color: #1e32fa;
+            padding: 5px;
+            color: #fff;
             font-weight: bold;
             font-size:inherit;
             background-image: none;
-            background-color: #fff;
+            background-color: #1e32fa;
             box-shadow: none;
-            border-bottom: 5px solid #1e32fa;
         }
 
         .progress-bar-off {
             font-weight: bold;
             background-image: none !important;
-            background-color: transparent !important;
+            background-color: #f0f2f5 !important;
             border-bottom: none !important;
         }
         

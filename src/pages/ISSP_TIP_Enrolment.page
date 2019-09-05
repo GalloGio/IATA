@@ -14,6 +14,8 @@
       <c:iss_ap_css />
       <c:ISSP_WaitingStatus />
       <body>
+         <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
+
          <script src="{!URLFOR($Resource.bootbox)}" />
             <script src="{!URLFOR($Resource.datePickerFix)}" />
             <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
@@ -23,6 +25,38 @@
             <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
             <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"/>
              <style>
+                @font-face {
+                   font-family: 'DaMaWebFont';
+                   font-weight: 400;
+                   font-style: normal;
+                   src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot')}");
+                   /* IE9 Compat Modes */
+                   src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot?#iefix')}") format('embedded-opentype'),
+                   /* IE6-IE8 */
+                   url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff2')}") format('woff2'),
+                   /* Super Modern Browsers */
+                   url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff')}") format('woff');
+                   /* Pretty Modern Browsers */
+               }
+            
+               @font-face {
+                   font-family: 'DaMaWebFont';
+                   font-weight: 500;
+                   font-style: normal;
+                   src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot')}");
+                   /* IE9 Compat Modes */
+                   src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot?#iefix')}") format('embedded-opentype'),
+                   /* IE6-IE8 */
+                   url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff2')}") format('woff2'),
+                   /* Super Modern Browsers */
+                   url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff')}") format('woff');
+                   /* Pretty Modern Browsers */
+               }
+            
+               body {
+                   font-family: DaMaWebFont !important;
+                   color: #333;
+               }
                 .datePicker{
                    z-index:9999;
                 }
@@ -376,9 +410,9 @@
                 
              
          </script>
+         <c:ISSP_CustomNavigation />
          <div class="container">
             <div id="contentWrapper">
-               <c:ISSP_CustomNavigation />
                <div class="panel-primary">
                   <div class="panel-heading head_panel_green">
                      <h3 class="panel-title">{!$Label.ISSP_Application_for_Enlistment_as_a_Payment_Provider}</h3>
@@ -395,9 +429,9 @@
 
 
                             <apex:pageBlockButtons >
-                                        <apex:commandButton action="{!submitAccountEnrolmentToIATA}" value="Submit to IATA" onclick="startLoading();"/>
-                                        <apex:commandButton action="{!saveAccountEnrolmentAsDraft}" value="{!$Label.ISSP_Save_Draft}" onclick="startLoading();"/>
-                                        <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" />
+                                        <apex:commandButton action="{!submitAccountEnrolmentToIATA}" styleClass="iatabtn" value="Submit to IATA" onclick="startLoading();"/>
+                                        <apex:commandButton action="{!saveAccountEnrolmentAsDraft}" styleClass="iatabtn" value="{!$Label.ISSP_Save_Draft}" onclick="startLoading();"/>
+                                        <apex:commandButton onclick="confirmCancelExitPage();return false;" styleClass="iatabtn"  value="{!$Label.ISSP_Cancel}" />
                             </apex:pageBlockButtons>   
                             
 
@@ -651,7 +685,6 @@
                   </div>
                </div>
             </div>
-            <c:ISSP_CustomFooter />
          </div>
          <apex:form id="ContactForm" >
             <apex:actionFunction name="rerenderContactSection" rerender="sectionTwo" />
@@ -660,7 +693,7 @@
                <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content">
                      <div class="modal-header">
-                        <button type="button" class="close" onclick=" return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="iatabtn close" onclick=" return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">{!IF(newContact.FirstName != null, 'Updating ' + newContact.FirstName , 'Insert New Contact')}</h4>
                      </div>
                      <apex:pageMessages id="theMessages" />
@@ -763,10 +796,10 @@
                         </apex:outputPanel>
                      </div>
                      <div class="modal-footer">
-                        <apex:commandButton action="{!createContact}" onclick="rerenderModal();checkContactMandatoryFields();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();stopLoading();" >
+                        <apex:commandButton action="{!createContact}" onclick="rerenderModal();checkContactMandatoryFields();" status="WaitingStatus"  styleClass="iatabtn btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();stopLoading();" >
                         </apex:commandButton>
                         &nbsp;
-                        <button type="button" class="btn btn-default" onclick="closeModal();return false;">
+                        <button type="button" class="iatabtn btn btn-default" onclick="closeModal();return false;">
                         {!$Label.ISSP_Cancel} </button>
                      </div>
                      <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
@@ -775,6 +808,7 @@
                </div>
             </div>
          </apex:form>
+         <c:ISSP_CustomFooter />
       </body>
    </html>
 </apex:page>
