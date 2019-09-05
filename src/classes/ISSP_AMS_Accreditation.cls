@@ -4986,7 +4986,8 @@ public without sharing class ISSP_AMS_Accreditation {
                                             'Major Change',
                                             :AMS_Utils.CASE_REASON_HE_STANDARD,
                                             :AMS_Utils.CASE_REASON_HE_LITE,
-                                            :AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD)
+                                            :AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD,
+                                            :AMS_Utils.CASE_REASON_AE_MULTICOUNTRY)
                     ORDER BY CaseNumber DESC]));
             }
             return setConnNotDraft;
