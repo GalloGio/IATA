@@ -11,10 +11,10 @@ public class PortalResetPasswordControllerTest {
         String password = 'password';
         String UID      = Comm_User_Helper.NewGuid();
 
-        string enc = EncodingUtil.urlEncode(PortalPasswordHandler.EncryptString(username+PortalPasswordHandler.SEPARATOR+password+PortalPasswordHandler.SEPARATOR+UID), 'UTF-8');
+        string enc = EncodingUtil.urlEncode(PortalPasswordHandler.EncryptString(username+PortalPasswordHandler.SEPARATOR+password+PortalPasswordHandler.SEPARATOR+UID+PortalPasswordHandler.SEPARATOR+string.valueOf(system.now())), 'UTF-8');
 
-        User user = PortalResetPasswordController.getUser('https://a.a.com/s/resetPassword?c=' + enc);
-        PortalResetPasswordController.resultWrapper result = PortalResetPasswordController.setNewPassword(user, 'test');
+        PortalResetPasswordController.getUserWrapper userInfo = PortalResetPasswordController.getUser('https://a.a.com/s/resetPassword?c=' + enc);
+        PortalResetPasswordController.resultWrapper result = PortalResetPasswordController.setNewPassword(userInfo.user, 'test');
     }
 
 }
