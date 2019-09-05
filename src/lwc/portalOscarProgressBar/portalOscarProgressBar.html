@@ -1,0 +1,51 @@
+<template>
+    <div class="customCard slds-align_absolute-center row">
+
+        <div if:true={progressStatusList} class="ANG_progress slds-m-around_large">
+            <template for:each={progressStatusList} for:item="node">
+                <span key={node.status}>
+                    <span if:true={node.isDone}>
+                        <div class="circle done">
+                            <span class="label">
+                                <lightning-icon size="small" class="whiteIcon" icon-name="utility:check"
+                                    alternative-text="Check"></lightning-icon>
+                            </span>
+                            <span class="title">{node.title}</span>
+                        </div>
+                    </span>
+                    <span if:true={node.isInProgress}>
+                        <div class="circle inProgress">
+                            <span class="label">
+                                <lightning-icon size="small" class="whiteIcon" icon-name="utility:right"
+                                    alternative-text="In Progress"></lightning-icon>
+                            </span>
+                            <span class="title">{node.title}</span>
+                        </div>
+                    </span>
+                    <span if:true={node.isNotDone}>
+                        <div class="circle notDone">
+                            <span class="label"></span>
+                            <span class="title">{node.title}</span>
+                        </div>
+                    </span>
+                    <span if:true={node.isError}>
+                        <div class="circle error">
+                            <span class="label">
+                                <lightning-icon class="whiteIcon rotateIcon" size="small" icon-name="utility:add"
+                                    alternative-text="In Progress"></lightning-icon>
+                            </span>
+                            <span class="title">{node.title}</span>
+                        </div>
+                    </span>
+                    <template if:false={node.isLastStatus}>
+                        <span class="bar inProgress"></span>
+                    </template>
+
+                </span>
+
+
+            </template>
+        </div>
+
+    </div>
+</template>
