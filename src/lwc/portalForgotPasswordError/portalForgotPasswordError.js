@@ -39,7 +39,6 @@ export default class PortalForgotPasswordError extends LightningElement {
 
           emailDiv.classList.remove('slds-has-error');
           this.message = "";
-          this.template.querySelector('[data-id="emailInput"]').classList.remove('inputBackgroundGrey');
 
           if (this.email !== '' && this.email !== null && this.email.length > 0) {
               submitBtn.classList.remove('containedButtonDisabled');
@@ -49,14 +48,6 @@ export default class PortalForgotPasswordError extends LightningElement {
               submitBtn.classList.remove('containedButtonLogin');
               submitBtn.classList.add('containedButtonDisabled');
               submitBtn.disabled = true;
-          }
-       }
-
-       handleEmailFocusOut(event){
-          if(this.email.length > 0){
-               this.template.querySelector('[data-id="emailInput"]').classList.add('inputBackgroundGrey');
-          }else{
-               this.template.querySelector('[data-id="emailInput"]').classList.remove('inputBackgroundGrey');
           }
        }
 

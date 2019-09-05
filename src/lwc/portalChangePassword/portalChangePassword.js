@@ -109,42 +109,6 @@ export default class PortalChangePassword extends LightningElement {
         this.checkButtonVisibility();
     }
 
-    handleCurrentPasswordFocusIn(event){
-        this.template.querySelector('[data-id="currentPasswordInput"]').classList.remove('inputBackgroundGrey');
-    }
-
-    handleNewPasswordFocusIn(event){
-        this.template.querySelector('[data-id="newPasswordInput"]').classList.remove('inputBackgroundGrey');
-    }
-
-    handleConfirmPasswordFocusIn(event){
-        this.template.querySelector('[data-id="confirmPasswordInput"]').classList.remove('inputBackgroundGrey');
-    }
-
-    handleCurrentPasswordFocusOut(event){
-        if(this.currentPassword.length > 0){
-            this.template.querySelector('[data-id="currentPasswordInput"]').classList.add('inputBackgroundGrey');
-        }else{
-            this.template.querySelector('[data-id="currentPasswordInput"]').classList.remove('inputBackgroundGrey');
-        }
-    }
-
-    handleNewPasswordFocusOut(event){
-        if(this.newPassword.length > 0){
-            this.template.querySelector('[data-id="newPasswordInput"]').classList.add('inputBackgroundGrey');
-        }else{
-            this.template.querySelector('[data-id="newPasswordInput"]').classList.remove('inputBackgroundGrey');
-        }
-    }
-
-    handleConfirmPasswordFocusOut(event){
-        if(this.confirmPassword.length > 0){
-            this.template.querySelector('[data-id="confirmPasswordInput"]').classList.add('inputBackgroundGrey');
-        }else{
-            this.template.querySelector('[data-id="confirmPasswordInput"]').classList.remove('inputBackgroundGrey');
-        }
-    }
-
     setButtonDisabled(){
         var submitBtn = this.template.querySelector('[data-id="submitButton"]');
         submitBtn.classList.remove('containedButtonLogin');

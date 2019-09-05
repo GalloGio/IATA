@@ -69,18 +69,6 @@ export default class ForgotPasswordOneId extends LightningElement {
         }
     }
 
-    handleEmailFocusOut(event){
-        if(this.email.length > 0){
-            this.template.querySelector('[data-id="emailInput"]').classList.add('inputBackgroundGrey');
-        }else{
-            this.template.querySelector('[data-id="emailInput"]').classList.remove('inputBackgroundGrey');
-        }
-    }
-
-    handleEmailFocusIn(event){
-        this.template.querySelector('[data-id="emailInput"]').classList.remove('inputBackgroundGrey');
-    }
-
     navigateToLogin() {
         navigateToPage(this.loginUrl);
     }

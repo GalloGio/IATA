@@ -11,9 +11,19 @@ public without sharing class PortalResetPasswordController {
         public String message{get;set;}
     }
 
+    public class getUserWrapper{
+        @AuraEnabled
+        public User user{get;set;}
+        @AuraEnabled
+        public Boolean isExpired{get;set;}
+        @AuraEnabled
+        public String password{get;set;}
+    }
+
     @AuraEnabled
-    public static User getUser(String urlExtension){
-        User user;
+    public static getUserWrapper getUser(String urlExtension){
+        getUserWrapper result = new getUserWrapper();
+        result.isExpired = false;
 
         PageReference pageRef = new PageReference(urlExtension);
         String parameters     = pageRef.getParameters().get('c');
@@ -24,17 +34,21 @@ public without sharing class PortalResetPasswordController {
         STring userName = paramList[0].replace(PortalPasswordHandler.plusReplacer, '+');
         String password = paramList[1];
         string UID      = paramList[2];
+        Datetime dt     = datetime.valueOf(paramList[3]);
+
+        if(system.now() > dt.addHours(8)) result.isExpired = true;
 
         if (!String.isEmpty(userName)) {
-            List<User> userList = [Select Id, Username, UID__c from user where username = :userName OR email = :userName];
+            List<User> userList = [Select Id, Username, UID__c, contactId from user where username = :userName OR email = :userName];
             if (!userList.isEmpty()) {
                 if (userList[0].UID__c == UID) {
-                    userList[0].UID__c = '';
-                    user = userList[0];
+                    if(result.isExpired != true) userList[0].UID__c = '';
+                    result.user     = userList[0];
+                    result.password = password;
                 }
             }
         }
-        return user;
+        return result;
     }
 
     @AuraEnabled
@@ -52,5 +66,15 @@ public without sharing class PortalResetPasswordController {
         }
 
         return result;
+    }
+
+    @AuraEnabled
+    public static boolean resendEmail(String userInfo, String password){
+        User user = (User)JSON.deserialize(userInfo, user.class);
+        String link                  = PortalPasswordHandler.generateUrl(user, password, 'resetPassword');
+        Map<String, String> emailMap = PortalPasswordHandler.forgotPasswordEmailMap(user, link);
+
+        boolean success = PortalPasswordHandler.sendEmail(user.id, 'CSP_Forgot_Password_Email', emailMap);
+        return success;
     }
 }

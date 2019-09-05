@@ -85,7 +85,7 @@ public without sharing class PortalPasswordHandler {
 
     public static string generateUrl (User user, String password, String pageName){
         String cleanUsername = user.userName.replace('+', plusReplacer);
-        String encodedPart = 'c=' + EncodingUtil.urlEncode(EncryptString(cleanUsername + SEPARATOR + password + SEPARATOR + user.uid__c), 'UTF-8');
+        String encodedPart = 'c=' + EncodingUtil.urlEncode(EncryptString(cleanUsername + SEPARATOR + password + SEPARATOR + user.uid__c + SEPARATOR + string.valueOf(system.now())), 'UTF-8');
 
         String prefix = '';
         if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('/login'));

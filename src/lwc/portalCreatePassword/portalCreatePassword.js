@@ -13,6 +13,7 @@ import createUser                   from '@salesforce/apex/portalCreatePasswordC
 export default class PortalCreatePassword extends LightningElement {
     @track email             = "";
     @track password          = "";
+    @track isExpired         = false;
     @track isLoading         = true;
     @track confirmPassword   = "";
     @track passwordFormat    = false;
@@ -56,13 +57,13 @@ export default class PortalCreatePassword extends LightningElement {
                    else{
                        var sPageURL = ''+ window.location;
                         getParameters({ urlExtension : sPageURL }).then(result => {
-                            this.registrationParams = JSON.parse(result.registrationParameters);
-
+                           this.registrationParams = JSON.parse(result.registrationParameters);
                            if(result.isUserExist == true){
                                navigateToPage(CSP_PortalPath);
                            }
                            else if(this.registrationParams['email'] != ''){
-                              this.email = this.registrationParams['email'];
+                              this.email     = this.registrationParams['email'];
+                              this.isExpired = result.isExpired;
                               this.changeIsLoading();
                            }
                        })
@@ -159,30 +160,6 @@ export default class PortalCreatePassword extends LightningElement {
         }
 
         this.checkButtonVisibility();
-    }
-
-    handlePasswordFocusOut(event){
-        if(this.password.length > 0){
-            this.template.querySelector('[data-id="passwordInput"]').classList.add('inputBackgroundGrey');
-        }else{
-            this.template.querySelector('[data-id="passwordInput"]').classList.remove('inputBackgroundGrey');
-        }
-    }
-
-    handleConfirmPasswordFocusOut(event){
-        if(this.password.length > 0){
-            this.template.querySelector('[data-id="confirmPasswordInput"]').classList.add('inputBackgroundGrey');
-        }else{
-            this.template.querySelector('[data-id="confirmPasswordInput"]').classList.remove('inputBackgroundGrey');
-        }
-    }
-
-    handleConfirmPasswordFocusIn(event){
-        this.template.querySelector('[data-id="confirmPasswordInput"]').classList.remove('inputBackgroundGrey');
-    }
-
-    handlePasswordFocusIn(event){
-        this.template.querySelector('[data-id="passwordInput"]').classList.remove('inputBackgroundGrey');
     }
 
     handleSavePassword(){

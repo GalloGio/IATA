@@ -13,13 +13,14 @@ export default class PortalResetPassword extends LightningElement {
 
       @track password          = "";
       @track confirmPassword   = "";
+      @track tempPassword      = "";
       @track isLoading         = true;
       @track passwordFormat    = false;
       @track buttonDisabled    = true;
       @track passwordInputType = "password";
       @track success           = false;
+      @track isExpired         = false;
       @track user;
-
 
       @track isSanctioned;
 
@@ -55,11 +56,13 @@ export default class PortalResetPassword extends LightningElement {
                         else{
                           var sPageURL = ''+ window.location;
                           GetUser({ urlExtension : sPageURL }).then(result => {
-                             if(!result){
+                             this.isExpired = result.isExpired;
+                             if(!result.user){
                                  navigateToPage(CSP_PortalPath);
                              }
                              else{
-                                 this.user = result;
+                                 this.user         = result.user;
+                                 this.tempPassword = result.password;
                                  this.changeIsLoading();
                              }
                            })
@@ -156,30 +159,6 @@ export default class PortalResetPassword extends LightningElement {
           this.setButtonDisabled();
           this.confirmPassword = event.target.value;
           this.checkButtonVisibility();
-      }
-
-      handlePasswordFocusOut(event){
-          if(this.password.length > 0){
-              this.template.querySelector('[data-id="passwordInput"]').classList.add('inputBackgroundGrey');
-          }else{
-              this.template.querySelector('[data-id="passwordInput"]').classList.remove('inputBackgroundGrey');
-          }
-      }
-
-      handleConfirmPasswordFocusOut(event){
-          if(this.password.length > 0){
-              this.template.querySelector('[data-id="confirmPasswordInput"]').classList.add('inputBackgroundGrey');
-          }else{
-              this.template.querySelector('[data-id="confirmPasswordInput"]').classList.remove('inputBackgroundGrey');
-          }
-      }
-
-      handleConfirmPasswordFocusIn(event){
-          this.template.querySelector('[data-id="confirmPasswordInput"]').classList.remove('inputBackgroundGrey');
-      }
-
-      handlePasswordFocusIn(event){
-          this.template.querySelector('[data-id="passwordInput"]').classList.remove('inputBackgroundGrey');
       }
 
       changeIsLoading(){
