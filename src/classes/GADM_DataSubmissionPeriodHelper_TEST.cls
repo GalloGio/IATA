@@ -633,6 +633,8 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         System.assertEquals(1, notSubmitting.size());
 
         List<Id> contacts = notSubmitting[0].contactsNotSubmitting;
+        //keep the system debug as list.contains has bug and is not initialized without this step..
+        system.debug(contacts);
         System.assertEquals(true, notSubmitting[0].accountName == 'Test account 2', 'Data for wrong account retrieved!');
         System.assertEquals(true, contacts.contains(testContact1.Id), 'Contact id missing among notified contacts!');
         System.assertEquals(true, contacts.contains(testContact2.Id), 'Contact id missing among notified contacts!');
