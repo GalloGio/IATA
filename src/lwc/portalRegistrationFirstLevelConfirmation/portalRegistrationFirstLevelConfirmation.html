@@ -5,14 +5,15 @@
 <!-- Portal Registration First Level Confirmation -->
 <template>
 
-    <div if:true={isLoading}>
-        <div class="modalSpinnerContainer">
-            <lightning-spinner class="" alternative-text="Loading" size="medium">
-            </lightning-spinner>
-        </div>
-    </div>
-
     <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+
+        <div if:true={isLoading}>
+            <div class="modalSpinnerContainer">
+                <lightning-spinner class="" alternative-text="Loading" size="medium">
+                </lightning-spinner>
+            </div>
+        </div>
+
         <div class="modal">
             <div  class="registrationPopup">
                 <!-- Popup Header -->
@@ -24,7 +25,7 @@
                     </span>
                 </div>
 
-                <div if:false={isLoading} class="slds-is-relative">
+                <div class="slds-is-relative">
 
                     <div class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large customWhiteBackground">
 
@@ -67,7 +68,7 @@
                                 <div data-id="firstNameDiv" class="slds-form-element">
                                     <div class="slds-form-element__control custTextInput custTextInputSmall">
                                         <input type="text" data-id="firstName" name="firstName" value={registrationForm.firstName} placeholder=" " required class="slds-input"
-                                               onkeyup={handleInputValueChange} onfocusout={handleInputFocusOut} />
+                                               onkeyup={handleInputValueChange} />
                                     </div>
                                 </div>
                             </lightning-layout-item>
@@ -93,7 +94,7 @@
                             <div data-id="lastNameDiv" class="slds-form-element">
                                 <div class="slds-form-element__control custTextInput custTextInputSmall">
                                     <input type="text" data-id="lastName" name="lastName" value={registrationForm.lastName} placeholder=" " required class="slds-input"
-                                           onkeyup={handleInputValueChange} onfocusout={handleInputFocusOut} />
+                                           onkeyup={handleInputValueChange} />
                                 </div>
                             </div>
                         </lightning-layout-item>
@@ -137,8 +138,8 @@
                         </lightning-layout-item>
                         <lightning-layout-item size="12">
                             <div class="slds-form-element__control registrationComboBox custTextInput custTextInputSmall">
-                                <input data-id="phone" name="phone" class="phoneFormat slds-input" type="tel"
-                                       onkeyup={handleInputValueChange} onfocusout={handleInputFocusOut} value={registrationForm.phone}/>
+                                <input data-id="phone" name="phone" class="phoneFormat slds-input" type="tel" placeholder=" "
+                                       onkeyup={handleInputValueChange} value={registrationForm.phone}/>
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item size="12">
@@ -251,7 +252,9 @@
                                 <lightning-combobox class="" placeholder=" "
                                                     name="" label="" required
                                                     variant="label-hidden"
-                                                    value={registrationForm.language} options={languageOptions}>
+                                                    value={registrationForm.language}
+                                                    options={languageOptions}
+                                                    onchange={handlePreferredLanguageChange}>
                                 </lightning-combobox>
                             </div>
                         </lightning-layout-item>
@@ -263,7 +266,7 @@
 
                         <lightning-layout-item size="12">
                             <div>
-                                <lightning-button data-id="submitButton" class="containedButtonLogin" onclick={handleSubmit} label="Submit Label"></lightning-button>
+                                <lightning-button data-id="submitButton" class="containedButtonLogin" onclick={handleSubmit} label="Submit"></lightning-button>
                                 <div data-id="submitDiv">
                                     <div if:true={displaySubmitError}>
                                         <div class="slds-form-element__help text-xxsmall formElementSpacer" style="padding:5px; text-align:center;">{errorMessage}</div>

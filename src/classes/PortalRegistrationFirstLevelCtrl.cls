@@ -54,6 +54,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         public String userName{get;set;}
     }
 
+    public class BucketAccountDetail{
+        public Account acc {get;set;}
+        public boolean isNewAccount {get;set;}
+    }
+
     public class RegistrationParameters{
         public string email{get;set;}
         public string firstName{get;set;}
@@ -63,6 +68,9 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         public string language{get;set;}
         public string contactId{get;set;}
         public string accountId{get;set;}
+        public boolean isNewAccount{get;set;}
+        public string selectedCustomerType {get;set;}
+        public string registrationTime {get;set;}
     }
 
     @AuraEnabled(cacheable=true)
@@ -120,11 +128,24 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     public static CountryInformation getISOCountries() {
         List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
+        IATA_ISO_Country__c noCountry;
         for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
             //todo align with Marc - Second Level Registration
             if (iso.Name != 'All Countries' &&  iso.Name != 'NO COUNTRY'){
                 countries.add(iso);
+            }else{
+                if(iso.Name == 'NO COUNTRY'){
+                    noCountry = iso;
+                    noCountry.Name = '';
+                }
             }
+        }
+        //add no country to the top
+        if(noCountry != null){
+            List<IATA_ISO_Country__c> countriesTemp = new List<IATA_ISO_Country__c>();
+            countriesTemp.add(noCountry);
+            countriesTemp.addAll(countries);
+            countries = countriesTemp;
         }
         return new CountryInformation(countries);
     }
@@ -147,6 +168,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         List<Contact> contactList = [SELECT Id, Email, FirstName, LastName, Phone, Preferred_Language__c, ISO_Country__c, Account.Sector__c, Account.Category__c FROM Contact WHERE Id =:loggedUser.contactId LIMIT 1];
         if(!contactList.isEmpty()){
             config.contact = contactList.get(0);
+            system.debug('config.contact: ' + config.contact);
             config.selectedCustomerType = GCS_CustomerType.getCustomerTypeFromSectorAndCategory(config.contact.Account.Sector__c, config.contact.Account.Category__c);
             GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType = getMetadataCustomerType(config.selectedCustomerType);
             if(selectedMetadataCustomerType.Type__c == 'Category'){
@@ -159,7 +181,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 }
 
             }else{
-                //todo check for general public..
+                //check for general public..
+                config.sector = selectedMetadataCustomerType.Parent__c;
+                config.category = selectedMetadataCustomerType.Filter_on_Category__c;
+                config.extraChoice = selectedMetadataCustomerType.DeveloperName;
             }
         }
         config.contactLabelMap = getContactLabels();
@@ -253,6 +278,18 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         }
     }
 
+    public static boolean sendRegistrationEmail(RegistrationParameters params){
+
+        Boolean result = false;
+        string oneTimeUrl = generateOneTimeUrl(params);
+
+        Map<String, String> emailMap = generateEmailBodyParams(params, oneTimeUrl);
+
+        result = sendEmail(params.email, 'CSP_New_Member_Welcome_Email', emailMap);
+        return result;
+
+    }
+
     @AuraEnabled
     public static RegistrationResult simulateRegister(string registrationForm, string customerType, string contactId, string accountId){
 
@@ -281,8 +318,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             params.language  = (inputMap.get('language') != null) ? string.valueOf(inputMap.get('language')) : '';
             params.contactId = contactId != null ? contactId : '';
             params.accountId = accountId != null ? accountId : '';
-
-
+            params.selectedCustomerType = (inputMap.get('selectedCustomerType') != null) ? string.valueOf(inputMap.get('selectedCustomerType')) : '';
+            params.registrationTime = string.valueOf(DateTime.Now());
 
             if(params.contactId.length() < 1){
                 if(params.email.length() < 1 || params.firstName.length() < 1 || params.lastName.length() < 1){
@@ -294,14 +331,15 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             //Find Bucket Account
             if(params.accountId.length() < 1){
-                Account bucketAccount = getBucketAccount(selectedMetadataCustomerType);
+                BucketAccountDetail bucketAccount = getBucketAccount(selectedMetadataCustomerType, params.country);
                 system.debug('bucketAccount: ' + bucketAccount);
-                if(bucketAccount == null){
+                if(bucketAccount.acc == null){
                     result.isSuccess = false;
                     result.message = 'Failed to find bucket account';
                     return result;
                 }else{
-                    params.accountId = bucketAccount.Id;
+                    params.accountId = bucketAccount.acc.Id;
+                    params.isNewAccount = bucketAccount.isNewAccount;
                 }
             }
 
@@ -331,15 +369,12 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 result.portalUserId = usr.userId;
                 result.userName = usr.userName;
 
-                string oneTimeUrl = generateOneTimeUrl(params);
-
-                Map<String, String> emailMap = generateEmailBodyParams(params, oneTimeUrl);
-
-                result.isSuccess = sendEmail(params.email, 'CSP_New_Member_Welcome_Email', emailMap);
+                //Send Welcome Email
+                result.isSuccess = sendRegistrationEmail(params);
                 if(result.isSuccess == false){
                     result.message = 'Error sending Welcome Email';
                 }
-                //todo: add site name
+
                 return result;
             }else{
                 Database.rollback(sp);
@@ -356,6 +391,9 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     }
 
+
+
+
     @AuraEnabled
     public static RegistrationResult register(RegistrationParameters params, string password){
 
@@ -363,6 +401,20 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         Savepoint sp = Database.setSavepoint();
 
         try{
+
+            //Check for Bucket Account
+            if(params.isNewAccount == true){
+                GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType = getMetadataCustomerType(params.selectedCustomerType);
+                BucketAccountDetail bucketAccount = getBucketAccount(selectedMetadataCustomerType, params.country);
+                system.debug('bucketAccount: ' + bucketAccount);
+                if(bucketAccount.acc == null){
+                    result.isSuccess = false;
+                    result.message = 'Failed to find bucket account';
+                    return result;
+                }else{
+                    params.accountId = bucketAccount.acc.Id;
+                }
+            }
 
             //Create or find Contact
             Contact con;
@@ -405,19 +457,90 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
     }
 
     @AuraEnabled
-    public static RegistrationResult updateContactInfo(string registrationForm, string customerType, string contactId, string accountId){
+    public static RegistrationResult updateContactInfo(string registrationForm, string customerType, boolean customerTypeChanged){
 
         RegistrationResult result = new RegistrationResult();
-        //todo:update contact info & bucket account relation
-        return result;
+        Savepoint sp = Database.setSavepoint();
+        //update contact info & bucket account relation
+
+        try{
+
+            Map<String, Object> inputMap = (Map<String, Object>)JSON.deserializeUntyped(registrationForm);
+            GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType = (GCS_Customer_Type_For_Registration__mdt) JSON.deserialize(customerType, GCS_Customer_Type_For_Registration__mdt.class);
+
+            Id contactId = string.valueOf(inputMap.get('contactId'));
+
+            if(contactId == null){
+                result.isSuccess = false;
+                result.message = 'Error Finding Contact';
+                return result;
+            }
+
+            Contact con = [SELECT Id FROM Contact WHERE Id =: contactId LIMIT 1];
+
+            if(customerTypeChanged == true){
+                //Find Bucket Account
+                string country = (inputMap.get('country') != null) ? string.valueOf(inputMap.get('country')) : '';
+                BucketAccountDetail bucketAccount = getBucketAccount(selectedMetadataCustomerType, country);
+                system.debug('bucketAccount: ' + bucketAccount);
+                if(bucketAccount.acc == null){
+                    result.isSuccess = false;
+                    result.message = 'Failed to find bucket account';
+                    return result;
+                }else{
+                    con.AccountId = bucketAccount.acc.Id;
+                    if((inputMap.get('country') != null)){
+                        con.ISO_Country__c = string.valueOf(inputMap.get('country'));
+                    }
+                }
+            }
+
+            if((inputMap.get('firstName') != null)){
+                con.FirstName = string.valueOf(inputMap.get('firstName'));
+            }
+
+            if((inputMap.get('lastName') != null)){
+                con.LastName = string.valueOf(inputMap.get('lastName'));
+            }
+
+            if((inputMap.get('phone') != null)){
+                con.Phone = string.valueOf(inputMap.get('phone'));
+            }
+
+            if((inputMap.get('language') != null)){
+                con.Preferred_Language__c = string.valueOf(inputMap.get('language'));
+            }
+
+            system.debug('con: ' + con);
+            DataBase.SaveResult sr = DataBase.update(con);
+            if(sr.isSuccess() == false){
+                for(Database.Error objErr : sr.getErrors()) {
+                    System.debug('Portal Level 1 registration Confirmation - update contact: ' + objErr.getStatusCode() + ': ' + objErr.getMessage());
+                }
+                result.isSuccess = false;
+                result.message = 'Failed to update Contact';
+                return result;
+            }else{
+                result.isSuccess = true;
+                return result;
+            }
+
+
+        }catch(Exception e){
+            Database.rollback(sp);
+            result.isSuccess = false;
+            result.message = e.getMessage();
+            return result;
+        }
 
     }
 
-    public static Account getBucketAccount(GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType){
+    public static BucketAccountDetail getBucketAccount(GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType, string country){
+
+        BucketAccountDetail accDetail = new BucketAccountDetail();
 
         String sector = '';
         String category = '';
-        String recordType = '';
 
         if(selectedMetadataCustomerType.Can_Account_Be_Created__c == true){
             sector = selectedMetadataCustomerType.Created_Account_Sector__c;
@@ -426,24 +549,23 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             sector = selectedMetadataCustomerType.Filter_on_Sector__c;
             category = selectedMetadataCustomerType.Filter_on_Category__c;
         }
-        recordType = selectedMetadataCustomerType.Filter_on_Record_Type__c;
 
         String accountQuery = '';
         accountQuery +='SELECT Id, Sector__c, Category__c';
         accountQuery +=' FROM Account';
         accountQuery +=' WHERE Id != null AND Is_General_Public_Account__c = true';
 
-
-        if(!String.isEmpty(recordType)) {
-
-            List<String> recordTypes = new List<String>();
-            for(String rcType : recordType.split(',')){
-                recordTypes.add('\'' + rcType.trim() + '\'');
+        if(!String.isEmpty(country)){
+            accountQuery +=' AND IATA_ISO_Country__c =\''+ country +'\'';
+        }else{
+            //if country field is empty, look for NO COUNTRY record
+            List<IATA_ISO_Country__c> countryList = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'NO COUNTRY' LIMIT 1];
+            if(!countryList.isEmpty()){
+                accountQuery +=' AND IATA_ISO_Country__c =\''+ countryList.get(0).Id +'\'';
             }
 
-            accountQuery += ' AND RecordType.DeveloperName in (' + String.join(recordTypes, ',') + ')';
-
         }
+
         if(!String.isEmpty(sector)){
             accountQuery +=' AND Sector__c =\''+ sector +'\'';
         }
@@ -451,21 +573,65 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             accountQuery +=' AND Category__c =\''+ category +'\'';
         }
 
-        List<Account> accs = new List<Account>();
+        List<Account> accList = new List<Account>();
 
-        accs = Database.query(accountQuery);
+        accList = Database.query(accountQuery);
 
-        if(accs.isEmpty()){
-            //todo: create bucket account? to be confirmed by IATA
-            return null;
+        if(accList.isEmpty()){
+            Account acc = new Account();
+            acc.Reason_for_creation__c = 'Created by customer';
+            //acc.Comments_Reason_for_creation__c = 'General Public Account';
+            acc.ownerid = ISSP_Constant.newAccountOwnerId;
+            acc.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+            acc.Name = sector + ' - ' + category;
+            acc.Sector__c = sector;
+            acc.Category__c = category;
+            acc.Is_General_Public_Account__c = true;
+            //acc.IsPartner = true;
+
+            if(!String.isEmpty(country)) {
+                String countryCode = [SELECT ISO_Code__c FROM IATA_ISO_Country__c WHERE ID =: country LIMIT 1].ISO_Code__c;
+                acc.Name = acc.Name + ' - ' + countryCode;
+                acc.Site = countryCode;
+                acc.IATA_ISO_Country__c = country;
+            }else{
+                List<IATA_ISO_Country__c> countryList = [SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c WHERE Name = 'NO COUNTRY' LIMIT 1];
+                if(!countryList.isEmpty()){
+                    acc.Name = acc.Name + ' - ' + countryList.get(0).ISO_Code__c;
+                    acc.Site = countryList.get(0).ISO_Code__c;
+                    acc.IATA_ISO_Country__c = countryList.get(0).Id;
+                }
+
+            }
+
+            system.debug('acc: ' + acc);
+            DataBase.SaveResult sr = DataBase.insert(acc);
+            if(sr.isSuccess() == false){
+                for(Database.Error objErr : sr.getErrors()) {
+                    System.debug('Portal Level 1 registration Confirmation - create bucket account: ' + objErr.getStatusCode() + ': ' + objErr.getMessage());
+                }
+                accDetail.acc = null;
+                accDetail.isNewAccount = false;
+                return accDetail;
+            }else{
+                acc.IsPartner = true;
+                update acc;
+                accDetail.acc = acc;
+                accDetail.isNewAccount = true;
+                return accDetail;
+            }
+
+
         }else{
-            return accs.get(0);
+            accDetail.acc = accList.get(0);
+            accDetail.isNewAccount = false;
+            return accDetail;
         }
 
     }
 
     public static Contact createContact(RegistrationParameters params){
-
+        system.debug('params: ' + params);
         Contact con = new Contact();
 
         try{
@@ -482,6 +648,14 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 }
             }
 
+            if(params.country == null || params.country == ''){
+                List<IATA_ISO_Country__c> countryList = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'NO COUNTRY' LIMIT 1];
+                if(!countryList.isEmpty()){
+                    params.country = countryList.get(0).Id;
+                }
+            }
+
+
             con.AccountId = params.accountId;
             con.ISO_Country__c = params.country;
             con.firstName = params.firstName;
@@ -491,6 +665,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             con.Community__c = 'ISS Customer Portal';
             con.User_Portal_Status__c = 'Pending';
             //todo: perform field check before insert
+            system.debug('con: ' + con);
             DataBase.SaveResult sr = DataBase.Insert(con);
             if(sr.isSuccess() == false){
                 for(Database.Error objErr : sr.getErrors()) {
@@ -576,8 +751,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 addPermissionToUser(permissionList.get(0).Id, usr.userId);
             }
 
-            //this does not fit in for bucket account scenario, should be handled on L2 registration?
-            //Comm_User_Helper.addDefaultAppRights(con,con.Account);
+            //todo:this should be handled on L2 registration or stay on L1?
+            Comm_User_Helper.addDefaultAppRights(con,con.Account);
 
             return usr;
 

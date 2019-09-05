@@ -43,7 +43,7 @@
                                         <lightning-layout-item size="12">
                                             <div data-id="emailDiv" class="slds-form-element">
                                                 <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                                    <input type="text" value={email} data-id="emailInput" placeholder="" required="" class="slds-input"
+                                                    <input type="text" value={email} data-id="emailInput" placeholder=" " required="" class="slds-input"
                                                            onkeyup={handleEmailChange} onfocusout={handleEmailFocusOut} readonly={isEmailFieldReadOnly} />
                                                 </div>
                                             </div>
@@ -73,7 +73,7 @@
                                         <lightning-layout-item size="12">
                                             <div data-id="passwordDiv" class="slds-form-element">
                                                 <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right custTextInput custTextInputSmall" >
-                                                    <input type={passwordInputType} value={password} data-id="passwordInput"  placeholder="" onkeyup={handlePasswordChange}
+                                                    <input type={passwordInputType} value={password} data-id="passwordInput"  placeholder=" " onkeyup={handlePasswordChange}
                                                            onfocusout={handlePasswordFocusOut} class="slds-input inputHasError" autocomplete="off" />
                                                     <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right showPasswordButton" title="" onclick={handleShowPassword} disabled={isPasswordIconDisabled}>
                                                         <img src={svgURL} data-id="passwordIcon" class="slds-button__icon slds-icon-text-light showPasswordIcon showPasswordIconDisabled" aria-hidden="true">

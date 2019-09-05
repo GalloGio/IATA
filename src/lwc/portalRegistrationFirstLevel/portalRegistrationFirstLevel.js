@@ -251,7 +251,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                                         //this.isEmailFieldReadOnly = true;
                                         //this.displayContactForm = true;
                                         //this._initializePhoneInput();
-                                        this._renderEmailInput();
                                         this.handleNext(null);
                                         return;
                                     }
@@ -317,7 +316,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         this.registrationForm.email = event.target.value;
         var nextBtn = this.template.querySelector('[data-id="nextButton"]');
         this._showEmailValidationError(false, "");
-        this.template.querySelector('[data-id="emailInput"]').classList.remove('inputBackgroundGrey');
 
         if (this.registrationForm.email !== '' && this.registrationForm.email !== null && this.registrationForm.email.length > 0) {
             nextBtn.classList.remove('containedButtonDisabled');
@@ -330,13 +328,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         }
     }
 
-    handleEmailFocusOut(event){
-        if(this.registrationForm.email.length > 0){
-            this.template.querySelector('[data-id="emailInput"]').classList.add('inputBackgroundGrey');
-        }else{
-            this.template.querySelector('[data-id="emailInput"]').classList.remove('inputBackgroundGrey');
-        }
-    }
 
     handleNext(event){
 
@@ -446,17 +437,25 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             }
         }else{
             if(form.email.length < 1 || form.firstName.length < 1 || form.lastName.length < 1 || form.language.length < 1
-                || form.termsAndUsage != true || form.sector.length < 1 || form.category.length < 1){
+                || form.termsAndUsage != true || form.sector.length < 1){
                     //todo: this check fails for General Public -> Student
                     this._showSubmitError(true, 'Please fill all the required fields!');
                     this.isLoading = false;
                     return;
             }
+            if(form.sector == 'General_Public_Sector' && form.extraChoice.length < 1){
+                this._showSubmitError(true, 'Please fill all the required fields!');
+                this.isLoading = false;
+                return;
+            }else if(form.sector != 'General_Public_Sector' && form.category.length < 1){
+                this._showSubmitError(true, 'Please fill all the required fields!');
+                this.isLoading = false;
+                return;
+            }
         }
 
         //todo: validate & add country code to the phone number
 
-        //todo: for sector =  other and general public -> must implement logic to retrieve sector & category from the final customerTypeMetadata selection
         register({ registrationForm : JSON.stringify(this.registrationForm),
                    customerType : JSON.stringify(this.selectedMetadataCustomerType),
                    contactId : this.userInfo.contactId,
@@ -491,7 +490,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         var inputName = event.target.name;
         var inputValue = event.target.value;
         this.registrationForm[inputName] = inputValue;
-        this.template.querySelector('[data-id="' + inputName + '"]').classList.remove('inputBackgroundGrey');
         //todo: if input is required => clear submit error message
         this.template.querySelector('[data-id="' + inputName + 'Div"]').classList.remove('slds-has-error');
         if(this.displaySubmitError){
@@ -500,16 +498,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             }
         }
 
-    }
-
-    handleInputFocusOut(event){
-        //todo:dynamic input focus out checker
-        var inputName = event.target.name;
-        if(this.registrationForm[inputName].length > 0){
-            this.template.querySelector('[data-id="' + inputName + '"]').classList.add('inputBackgroundGrey');
-        }else{
-            this.template.querySelector('[data-id="' + inputName + '"]').classList.remove('inputBackgroundGrey');
-        }
     }
 
     handleTouChange(event){
@@ -602,6 +590,10 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
     }
 
+    handlePreferredLanguageChange(event){
+        this.registrationForm.language = event.target.value;
+    }
+
     handleLanguageChange(event){
         console.log('handleLanguageChange');
         this.isLoading = true;
@@ -665,7 +657,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     _renderCountryOptions(options){
         let dataList = JSON.parse(JSON.stringify(options));
         let optionList = [];
-        optionList.push({ 'label': '', 'value': '' });
+        //optionList.push({ 'label': '', 'value': '' });
         dataList.forEach(function (data) {
             optionList.push({ 'label': data.Name, 'value': data.Id });
         });
@@ -720,10 +712,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
         this.isLoading = false;
 
-        if(this.registrationForm.email.length > 0){
-            this._renderEmailInput();
-        }
-
         if(this.displayContactForm){
             this._renderSubmitButton(this.registrationForm.termsAndUsage);
         }
@@ -747,10 +735,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         }
     }
 
-    async _renderEmailInput(){
-        await (this.template.querySelector('[data-id="emailInput"]'));
-        this.handleEmailFocusOut(null);
-    }
 
     async _initializePhoneInput(){
 
