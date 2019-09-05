@@ -1593,6 +1593,10 @@ visibility: hidden;
   border:none;
 }
 
+.custTextInput input:not(:placeholder-shown) {
+    background-color: #f7f8fa;
+}
+
 .greyLine {
   height: 2px;
   background-color: #e6e6e6;
