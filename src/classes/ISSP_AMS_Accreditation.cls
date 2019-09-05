@@ -555,6 +555,10 @@ public without sharing class ISSP_AMS_Accreditation {
             isHOcontact = false;
         }
 
+        if (!String.isBlank(hqAccount.ShippingCountry)) {
+            hqAccount.ShippingCountry = hqAccount.ShippingCountry.toUpperCase();
+        }
+
         if (isMultiCountryStarted) {
             fetchMultiCountryApplicationForms();
         }
