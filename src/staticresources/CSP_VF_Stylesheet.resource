@@ -241,3 +241,16 @@ body .secondaryPalette.bPageBlock{
 .centered {
     text-align: center;
 }
+
+.section-header {
+    background-color: #1e32fa;
+    color: white;
+    line-height: 1.42857143;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+
+  .content-box{
+    box-shadow: 5px 5px 20px #e2e2e2;
+    background-color: white;
+  }
