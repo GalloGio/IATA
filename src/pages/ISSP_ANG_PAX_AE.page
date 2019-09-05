@@ -1019,7 +1019,7 @@
                         
                         				<apex:pageBlockSection columns="1" id="subbranchsection">
                         					<apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
-							                    <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
+							                    <apex:outputLabel style="color:black; font-size:110%; margin-right: 10px;" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
 							                    <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBranchAddress()" />
 							                </apex:outputPanel>
                         					<apex:pageBlockSectionItem> 
