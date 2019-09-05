@@ -3542,7 +3542,7 @@ public without sharing class ISSP_AMS_Accreditation {
             String typeOfProcess = 'NEW.HO.1.0';
             if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD) {
                 typeOfProcess = 'NEW.BR.ABROAD';
-            } else if (!isNoticeOfChange && amsOfficeType == 'Branch' && newCase.Reason1__c != AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
+            } else if (!isNoticeOfChange && amsOfficeType == 'Branch' && newCase.Reason1__c != AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD && newCase.Reason1__c != AMS_Utils.CASE_REASON_AE_MULTICOUNTRY) {
                 typeOfProcess = 'NEW.BR';
             } else if (isNoticeOfChange && isBankAccountChange) {
                 typeOfProcess = 'BANK.ACCOUNT.CHANGES';
