@@ -782,7 +782,7 @@
                 			<apex:param name="vatno" value="" assignto="{!vatNUmber}" />
               			</apex:actionfunction>
               			<apex:actionFunction name="updateStatus" action="{!updateStatusMCForm}" rerender=""/>
-                    <apex:actionFunction name="reRenderImportOwnersMCModal" rerender="importOwnersMCModal, ownershipLinks"/>
+						<apex:actionFunction name="reRenderImportOwnersMCModal" rerender="importOwnersMCModal, ownershipLinks"/>
 
               			<apex:pageBlock id="AMSBlock">
                 			<div class="alert alert-info" role="alert">
@@ -1019,7 +1019,7 @@
                         
                         				<apex:pageBlockSection columns="1" id="subbranchsection">
                         					<apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
-							                    <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
+							                    <apex:outputLabel style="color:black; font-size:110%; margin-right: 10px;" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
 							                    <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBranchAddress()" />
 							                </apex:outputPanel>
                         					<apex:pageBlockSectionItem> 
@@ -1489,7 +1489,8 @@
 				                        		<apex:outputLabel id="previous-default-details-label" value="{!$Label.ISSP_AMS_Previous_Default_Details}" style="width:95%; text-align: justify;"/>
 				                        		<apex:inputField value="{!newForm.ISSP_AMS_Prev_default_explanation__c}" style="width:95%" />
 				                      		</apex:pageBlockSectionItem>
-				                    	</apex:pageBlockSection>
+										</apex:pageBlockSection>
+										
 				                  	</div>
 
                   					<div id="multi-owners" style="{!IF(AND(newForm.ISSP_AMS_Legal_Status__c != 'Sole Proprietorship', newForm.ISSP_AMS_Legal_Status__c !=null), 'border: 0px !important;', 'display:none')}">
@@ -1498,25 +1499,27 @@
 					                      	<div class="col-md-12">
 					                        	<apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies}" escape="false" />
 					                      	</div>
-                      						<apex:commandLink id="addcompany" style="margin-right:5px" onfocus="showNewCompanyDialog();" rendered="{!newForm.AE_separate_Legal_Entity__c != 'No'}"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}</apex:commandLink>
-                      						<apex:outputText value="{!$Label.ISSP_AMS_NoC_No_Company_Owners}" styleClass="alert alert-info" rendered="{!newForm.AE_separate_Legal_Entity__c == 'Yes'}" />
+                      						<apex:commandLink id="addcompany" style="margin-right:5px" onfocus="showNewCompanyDialog();" rendered="{!OR(newForm.AE_separate_Legal_Entity__c != 'No', isMCAccredited)}"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}</apex:commandLink>
+											<apex:outputPanel id="noCompanyInfo">
+												<apex:outputText value="{!$Label.ISSP_AMS_NoC_No_Company_Owners}" styleClass="alert alert-info" rendered="{!OR(AND(newForm.AE_separate_Legal_Entity__c == 'Yes', NOT(isMCAccredited)), AND(OR(amsOfficeType='Branch',newCase.Reason1__c=='New BR Abroad'), List_AgencyCompanies.size==0, isMCAccredited))}" />
+											</apex:outputPanel>  
                       						<apex:pageBlockTable value="{!List_AgencyCompanies}" var="agencycon" id="companyList" styleClass="table-hover table table-condensed table-responsive">
 						                        <apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Company_Name_Local__c + ')','')}" />
 							                    <apex:column value="{!agencycon.Registration_number__c}" />
-							                    <apex:column value="{!agencycon.IATACode__c}" />
+							                    <apex:column value="{!agencycon.Agency_owner__c}" />
 							                    <apex:column value="{!agencycon.Financial_interest__c}" />
-							                    <apex:column rendered="{!NOT(AND(OR(amsOfficeType='Branch',newCase.Reason1__c=='New BR Abroad'), agencycon.Agency_owner__c))}">
-							                        <apex:commandLink action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewCompanyDialog();" rerender="companyList, newCompany">
+							                    <apex:column rendered="{!NOT(AND(OR(AND(amsOfficeType='Branch', NOT(isMCAccredited)), newCase.Reason1__c=='New BR Abroad'), agencycon.Agency_owner__c))}">
+							                        <apex:commandLink action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewCompanyDialog();" rerender="companyList, newCompany, multi-owners, noCompanyInfo">
 							                            <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
 							                        </apex:commandLink>
 							                    </apex:column>
                         						<apex:column>
-                          							<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'company')" styleClass="glyphicon glyphicon-trash" rerender="companyList" />
+                          							<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'company')" styleClass="glyphicon glyphicon-trash" rerender="companyList, multi-owners, noCompanyInfo" />
                         						</apex:column> 
                       						</apex:pageBlockTable>
-                      						<apex:actionFunction name="deleteContact" action="{!deleteAgencyContact}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" rerender="contactList,companyList,ownerList, importOwnersMCModal, ownershipLinks">
+                      						<apex:actionFunction name="deleteContact" action="{!deleteAgencyContact}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" rerender="contactList,companyList,ownerList, importOwnersMCModal, ownershipLinks, multi-owners, noCompanyInfo">
                         						<apex:param value="" name="recordId" assignTo="{!editContactId}" />
-                      						</apex:actionFunction>
+											  </apex:actionFunction>
                    			 			</apex:pageBlockSection>
                     					<apex:pageBlockSection columns="1">
                       						<div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_3}</strong></div>
@@ -2025,7 +2028,7 @@
             		</div>
 
 		            <div class="modal-footer">
-		              	<apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled';" reRender="contactList, ownerList, theMessages">
+		              	<apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled';" reRender="contactList, ownerList, theMessages, noCompanyInfo">
 		                	<apex:param value="Person" name="persontype" assignTo="{!contactType}" />
 		              	</apex:commandButton>&nbsp;
 		              	<button type="button" class="btn btn-default" onclick="cancelAgentUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
@@ -2190,7 +2193,7 @@
             		</div>
 
             		<div class="modal-footer">
-              			<apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeModal2(); cancelCompanyUpdate(); reRenderImportOwnersMCModal();} this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="companyList, ownerList, companyMessages">
+              			<apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeModal2(); cancelCompanyUpdate(); reRenderImportOwnersMCModal();} this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="companyList, ownerList, companyMessages, noCompanyInfo">
                 			<apex:param value="Company" name="companytype" assignTo="{!contactType}" />
               			</apex:commandButton>&nbsp;
               			<button type="button" class="btn btn-default" onclick="cancelCompanyUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
