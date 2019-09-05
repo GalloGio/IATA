@@ -3453,7 +3453,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Record Deleted</shortDescription>
-        <value>Record is Deleted</value>
+        <value>Account Domain is Deleted</value>
     </labels>
     <labels>
         <fullName>CSP_RelatedArticles</fullName>
