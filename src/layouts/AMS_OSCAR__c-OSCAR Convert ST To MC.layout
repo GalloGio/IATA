@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customButtons>Set_Ownership</customButtons>
     <customButtons>ANG_Edit_the_accounts_involved</customButtons>
     <customButtons>Manage_Attachments</customButtons>
     <excludeButtons>Clone</excludeButtons>

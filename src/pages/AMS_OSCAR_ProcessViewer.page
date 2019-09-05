@@ -566,11 +566,11 @@ function buildFunctionCall(func, argList){
                     <apex:outputPanel styleClass="{!flowColors[p.name + flow.name]}">
                     <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="{!collapsibleMap[p.name + flow.name]}" columns="1">
                         <apex:outputPanel layout="block" styleClass="sectionWrapper">
-                            <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name] && !isNewGE && !isNewGEConversion}">
+                            <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name] && !isNewGE && !isNewGEConversion }">
                                 <p>{!$Label.AMS_Due_Diligence_Lock}</p>
                             </apex:outputPanel>
-                             <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name] && (isNewGE || isNewGEConversion)}">
-                                <p>{!$Label.ANG_NEW_GE_lock}</p>
+                             <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name] && OR(isNewGE, isNewGEConversion )}">
+                                <p>{!IF(oscar.step45__c == 'Passed',$Label.AMS_Due_Diligence_Lock, $Label.ANG_NEW_GE_lock)}</p>
                             </apex:outputPanel>
                             <apex:pageBlockSection columns="3">
                                 <apex:repeat value="{!flow.steps}" var="step">
