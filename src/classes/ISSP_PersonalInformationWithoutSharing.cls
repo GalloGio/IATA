@@ -1,4 +1,4 @@
-public class ISSP_PersonalInformationWithoutSharing {
+public without sharing class ISSP_PersonalInformationWithoutSharing {
 	
 	ISSP_PersonalInformation theParentController { get; set; }
 	public Contact theUserContact { get; set; }
