@@ -100,7 +100,6 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
 
 	    return Database.query(finalQuery);
     }
-}
 
 	//returns user Information wihtout visibility control
 	@AuraEnabled
