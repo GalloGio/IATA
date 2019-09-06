@@ -558,8 +558,8 @@
                   </div>
                 </div>
 
-                <!-- Modal GDI Portal App Request --> 
-                <div class="modal" id="termsAndConsitionsMCModal" tabindex="-1" role="dialog">
+                <!-- Modal MC Terms and conditions --> 
+                <div class="modal" id="termsAndConsitionsMCModal" tabindex="-1" role="dialog" style="overflow-x: hidden; overflow-y: auto;">
                     <apex:outputPanel layout="block" id="myModalContent"> 
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
