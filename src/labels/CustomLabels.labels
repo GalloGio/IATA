@@ -28105,6 +28105,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Sync Calendar</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_Timezone_Disclaimer</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Timezone_Disclaimer</shortDescription>
+        <value>Times based in Montreal’s timezone</value>
+    </labels>
+    <labels>
         <fullName>ISSP_OperationalCalendar_TypeFilter</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>

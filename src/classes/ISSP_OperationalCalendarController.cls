@@ -20,11 +20,7 @@ global without sharing class ISSP_OperationalCalendarController {
         'SIS',
         'ICCS'
     };
-    public static final list<String> LIST_SIS_TYPES = new list<String>{
-        'SIS',
-        'SIS+ACH',
-        'SIS+ICH'
-    };
+    public static final set<String> SIS_SUBSTATUS = new set<String>{'ISPA Airline','ISPA Supplier','ISUA Airline','ISUA Supplier'};
     public static final list<String> LIST_MULTIDOWNALOAD_TYPES = new list<String>{
         'BSP International',
         'BSP Domestic',
@@ -146,7 +142,17 @@ global without sharing class ISSP_OperationalCalendarController {
         return JSON.serialize(MAP_COUNTRIES,true);
     }
     public String getSisOptionsJSON() {
-        return JSON.serialize(LIST_SIS_TYPES,true);
+        list<String> listSisTypes = new list<String>();
+        if (getIsSISAccount()) {
+            listSisTypes.add('SIS');
+            if (this.account.ICH_Member__c) listSisTypes.add('SIS+ICH');
+            if (this.account.ACH_Member__c) listSisTypes.add('SIS+ACH');
+        }
+        return JSON.serialize(listSisTypes,true);
+    }
+    public Boolean getIsSISAccount() {
+        return this.account.SIS_Status__c == 'Active' &&
+            SIS_SUBSTATUS.contains(this.account.SIS_Sub_Status__c);
     }
 
     /**** END GETTERS ****/
@@ -165,12 +171,15 @@ global without sharing class ISSP_OperationalCalendarController {
                 Contact.Account.Id,
                 Contact.Account.IATA_ISO_Country__c,
                 Contact.Account.Remittance_frequency__c,
-                Contact.Account.Location_Class__c
+                Contact.Account.Location_Class__c,
+                Contact.Account.SIS_Status__c,
+                Contact.Account.SIS_Sub_Status__c,
+                Contact.Account.ICH_Member__c,
+                Contact.Account.ACH_Member__c
             FROM User
             WHERE Id = :UserInfo.getUserId()];
         this.contact = this.user.contact;
         this.account = this.user.contact.account;
-        this.setFilter = new set<String>();
         this.defaultCountry = this.account.IATA_ISO_Country__c;
         this.defaultOperationSubtype = nvl(MAP_OPERATION_TYPES.get(this.account.Location_Class__c));
         this.defaultOperationType = String.isBlank(this.defaultOperationSubtype)? 'BSP/CASS': '';
@@ -204,12 +213,28 @@ global without sharing class ISSP_OperationalCalendarController {
         this section is only visilbe for airline users
     **/
     public void initPicklistValues() {
-        initPicklistValuesSIS();
+        this.setFilter = new set<String>();
+        if (getIsSISAccount())  {
+            list<String> listResult = initPicklistValuesSIS();
+            if (!listResult.isEmpty()) {
+                this.setFilter.addAll(listResult);
+                // set default values for filters
+                this.defaultOperationType = 'SIS';
+                if (this.account.ICH_Member__c && !this.account.ACH_Member__c) {
+                    this.defaultOperationSubtype = 'SIS+ICH';
+                } else if (!this.account.ICH_Member__c && this.account.ACH_Member__c) {
+                    this.defaultOperationSubtype = 'SIS+ACH';
+                } else {
+                    this.defaultOperationSubtype = 'SIS';
+                }
+            } 
+        }
         initPicklistValuesICCS();
         initPicklistValuesBSPCASS();
     }
 
-    public void initPicklistValuesSIS() {
+    public list<String> initPicklistValuesSIS() {
+        list<String> listResult = new list<String>();
         // adding remmitance frequencies only for SIS
         for (AggregateResult result: [
                 SELECT frequency_code__c
@@ -220,8 +245,9 @@ global without sharing class ISSP_OperationalCalendarController {
                 GROUP BY frequency_code__c
                 ORDER BY frequency_code__c ASC]){
             String str = 'SIS' + ',' + result.get('frequency_code__c');
-            this.setFilter.add(str);
+            listResult.add(str);
         }
+        return listResult;
     }
 
     public void initPicklistValuesICCS() {
@@ -333,9 +359,6 @@ global without sharing class ISSP_OperationalCalendarController {
         if (operation.RecordTypeId==RT_SIS_CALENDAR.getRecordTypeId()) {
             fieldset = SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Hover_For_SIS;
         }
-        if (operation.RecordTypeId==RT_ICCS_CALENDAR.getRecordTypeId()) {
-            fieldset = SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Hover_For_ICCS;
-        }
         String description = '';
         if (fieldset!=null) {
             for(Schema.FieldSetMember f : fieldset.getFields()) {
@@ -354,6 +377,9 @@ global without sharing class ISSP_OperationalCalendarController {
     **/
     private static list<EventWrapper> getOperationalCalendarEvents(list<Operational_Calendar__c> listOperations, Boolean isGrouped, String sisType) {
         list<EventWrapper> listEvents = new list<EventWrapper>();
+        //using maps for ICCS, it requires to group events by day
+        map<Date,EventWrapper> mapICCSEvent1 = new map<Date,EventWrapper>();
+        map<Date,EventWrapper> mapICCSEvent2 = new map<Date,EventWrapper>();
         for (Operational_Calendar__c operation: listOperations) {
             String title = operation.Period_Code__c;
             String description = getEventDescription(operation, IS_AIRLINE);
@@ -466,29 +492,43 @@ global without sharing class ISSP_OperationalCalendarController {
                 }
             }
             if (operation.RecordTypeId==RT_ICCS_CALENDAR.getRecordTypeId()) {
-                EventWrapper event1 = new EventWrapper();
-                event1.title = 'BSP Settlement Date';
-                event1.start = operation.BSP_Settlement_Date__c;
-                event1.allDay = true;
-                event1.className = 'event_1';
-                event1.description = description;
-                listEvents.add(event1);
-                EventWrapper event2 = new EventWrapper();
-                event2.title = 'ICCS Cycle Start Date';
-                event2.start = operation.ICCS_Cycle_Start_Date__c;
-                event2.allDay = true;
-                event2.className = 'event_2';
-                event2.description = description;
-                listEvents.add(event2);
-                EventWrapper event3 = new EventWrapper();
-                event3.title = 'ICCS Settlement Date';
-                event3.start = operation.ICCS_Settlement_Date__c;
-                event3.allDay = true;
-                event3.className = 'event_3';
-                event3.description = description;
-                listEvents.add(event3);
+                String countryName = MAP_COUNTRIES.get(operation.Country__c);
+                //iccs event 1
+                Date key1 = operation.ICCS_Cycle_Start_Date__c;
+                if (key1!=null) {
+                    EventWrapper event1 = mapICCSEvent1.get(key1);
+                    if (event1==null) {
+                        event1 = new EventWrapper();
+                        event1.title = 'ICCS Cycle Start Date';
+                        event1.start = key1;
+                        event1.allDay = true;
+                        event1.className = 'event_1';
+                        event1.description = countryName;
+                    } else {
+                        event1.description += '</br>' + countryName;
+                    }
+                    mapICCSEvent1.put(key1, event1);
+                }
+                //iccs event 2
+                Date key2 = operation.ICCS_Settlement_Date__c;
+                if (key2!=null) {
+                    EventWrapper event2 = mapICCSEvent2.get(key2);
+                    if (event2==null) {
+                        event2 = new EventWrapper();
+                        event2.title = 'ICCS Settlement Date';
+                        event2.start = key2;
+                        event2.allDay = true;
+                        event2.className = 'event_2';
+                        event2.description = countryName;
+                    } else {
+                        event2.description += '</br>' + countryName;
+                    }
+                    mapICCSEvent2.put(key2, event2);
+                }
             }
         }
+        listEvents.addAll(mapICCSEvent1.values());
+        listEvents.addAll(mapICCSEvent2.values());
         return listEvents;
     }
     
@@ -528,7 +568,7 @@ global without sharing class ISSP_OperationalCalendarController {
             query = getSISQuery(frequency, billingPeriod);
         }
         if (operationType.contains('ICCS')) {
-            query = getICCSQuery(cycle, country, frequency, currencyCode, billingPeriod);
+            query = getICCSQuery(cycle, country, billingPeriod);
         }
         System.debug('QUERY: ' + query);
             return Database.query(query);
@@ -609,7 +649,7 @@ global without sharing class ISSP_OperationalCalendarController {
         return query;
     }
 
-    private static String getICCSQuery(String cycle, String country, String frequency, String currencyCode, Integer billingPeriod) {
+    private static String getICCSQuery(String cycle, String country, Integer billingPeriod) {
         String query = 'SELECT ' + ALL_FIELDS
             + ' FROM Operational_Calendar__c'
             + ' WHERE Visible_on_the_portal__c = true'
@@ -620,13 +660,8 @@ global without sharing class ISSP_OperationalCalendarController {
         if (String.isNotBlank(country)) {
             query += ' AND Country__c = \'' + country + '\'';
         }
-        if (String.isNotBlank(frequency)) {
-            query += ' AND frequency_code__c = \'' + frequency + '\'';
-        }
-        if (String.isNotBlank(currencyCode)) {
-            query += ' AND Operation_Currency__c = \'' + currencyCode + '\'';
-        }
         query += getBillingPeriodCondition(billingPeriod);
+        query += ' ORDER BY ICCS_Settlement_Date__c ASC';
         return query;
     }
 
@@ -746,16 +781,26 @@ global without sharing class ISSP_OperationalCalendarController {
         }
         //data
         table.data = new list<list<String>>();
-        Integer numOfNonPastRow = 0;
+        //find the first non past date
+        String dateFieldNameToCompare;
+        if (operationType == 'ICCS') {
+            dateFieldNameToCompare = 'ICCS_Settlement_Date__c';
+        } else {
+            dateFieldNameToCompare = isAirline? 'Settlement_Day__c': 'Remittance_Day__c';
+        }
+        list<Date> listDate = new list<Date>();
+        for (Operational_Calendar__c operation: listOperations) {
+            Date dt = Date.ValueOf(operation.get(dateFieldNameToCompare));
+            if (dt >= Date.today()) listDate.add(dt);
+        }
+        listDate.sort();
+        Date firstNoPastDate = listDate.isEmpty()? Date.today(): listDate.get(0);
+        //create structure for rows
         for (Operational_Calendar__c operation: listOperations) {
             list<String> listLine = new list<String>();
-            //special columns to define if it's a past record
-            Date dateToCompare = isAirline? operation.Settlement_Day__c: operation.Remittance_Day__c;
-            String rowclass = getDateComparedToToday(dateToCompare);
-            numOfNonPastRow+= rowclass=='past-row'? 0: 1;
-            if (operationType.contains('BSP') || operationType.contains('CASS') || operationType.contains('CNS')) {
-                if (numOfNonPastRow == 1)  rowclass += ' first-nonpast-row';
-            }
+            //special columns to define if it's a past, present or future record
+            Date dateToCompare = Date.ValueOf(operation.get(dateFieldNameToCompare));
+            String rowclass = getDateClassName(dateToCompare, firstNoPastDate);
             listLine.add(rowclass);
             listLine.add(''+operation.LastModifiedDate);
             
@@ -789,9 +834,12 @@ global without sharing class ISSP_OperationalCalendarController {
     }
     
     /**
-        Returns "past", "present" or "future" strings for incoming date
+        Returns the class name, if it's past, present, future or the first non past date
     **/
-    public static String getDateComparedToToday(Date dt) {
+    public static String getDateClassName(Date dt, Date firstNoPastDate) {
+        if (dt == firstNoPastDate) {
+            return 'first-nonpast-row';
+        }
         if (dt < Date.today()) {
             return 'past-row';
         }

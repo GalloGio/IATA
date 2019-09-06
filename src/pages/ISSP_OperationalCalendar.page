@@ -34,10 +34,6 @@
     var defaultCountry = "{!defaultCountry}";
     var defaultFrequency = "{!defaultFrequency}";
     var defaultCycle = "";
-    if (isAirline) {
-        defaultOperationType = "";
-        defaultFrequency = "";
-    }
     var title = "{!$Label.ISSP_OperationalCalendar_Header}";
     console.log(MAP_FREQUENCIES);
     console.log(MAP_COUNTRIES);
@@ -413,14 +409,12 @@
             $("#cycleFilter").parent().removeClass("hidden");
             $("#subtypeFilter").parent().addClass("hidden");
             $("#countryFilter").parent().removeClass("hidden");
-            $("#frequencyFilter").parent().removeClass("hidden");
-            $("#currencyFilter").parent().removeClass("hidden");
+            $("#frequencyFilter").parent().addClass("hidden");
+            $("#currencyFilter").parent().addClass("hidden");
             //populate visible picklists for ICCS
             var listValues = containsInArray(LIST_FILTERS,'ICCS,');
             updatePicklist($("#cycleFilter"), listValues,1,'');
             updatePicklist($("#countryFilter"), listValues,2,'');
-            updatePicklist($("#frequencyFilter"), listValues,3,'');
-            updatePicklist($("#currencyFilter"), listValues,4,'');
 
         } else {
             $("#cycleFilter").parent().addClass("hidden");

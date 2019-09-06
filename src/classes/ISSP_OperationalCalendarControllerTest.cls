@@ -124,9 +124,10 @@ public class ISSP_OperationalCalendarControllerTest {
     public static void testStaticMethods() {
         delete [SELECT Name FROM ISSP_CS__c];
         Test.StartTest();
-        System.assertEquals('present-row',ISSP_OperationalCalendarController.getDateComparedToToday(Date.today()));
-        System.assertEquals('past-row',ISSP_OperationalCalendarController.getDateComparedToToday(Date.today().addDays(-1)));
-        System.assertEquals('future-row',ISSP_OperationalCalendarController.getDateComparedToToday(Date.today().addDays(1)));
+        System.assertEquals('present-row',ISSP_OperationalCalendarController.getDateClassName(Date.today(),Date.today().addDays(2)));
+        System.assertEquals('past-row',ISSP_OperationalCalendarController.getDateClassName(Date.today().addDays(-1),Date.today().addDays(2)));
+        System.assertEquals('future-row',ISSP_OperationalCalendarController.getDateClassName(Date.today().addDays(1),Date.today().addDays(2)));
+        System.assertEquals('first-nonpast-row',ISSP_OperationalCalendarController.getDateClassName(Date.today().addDays(1),Date.today().addDays(1)));
         System.assert(ISSP_OperationalCalendarController.AIRLINE_PROFILES.isEmpty());
         System.assert(ISSP_OperationalCalendarController.AGENT_PROFILES.isEmpty());
         Test.StopTest();
@@ -151,6 +152,7 @@ public class ISSP_OperationalCalendarControllerTest {
             controller.getMapCountriesJSON();
             controller.getSisOptionsJSON();
             controller.getDescription();
+            controller.getUserLanguage();
             List<SelectOption> listOptions = controller.selectedOperations;
             controller.selectedOperations = listOptions;
             listOptions = controller.selectedFrenquencies;
