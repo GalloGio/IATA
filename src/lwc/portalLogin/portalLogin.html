@@ -12,7 +12,7 @@
                 <c-portal-custom-card-container>
 
                     <span slot="cardTitle">
-                        <span class="text-medium">{labels.LoginLabel}</span>
+                        <span class="text-medium">{labels.Login}</span>
                     </span>
 
                     <span slot="cardBody">
@@ -27,13 +27,13 @@
                                             <div class="formElementContainer">
                                                 <div class="formLabelContainer">
                                                     <div class="text-xxsmall">
-                                                        {labels.EmailLabel}
+                                                        {labels.Email}
                                                     </div>
                                                 </div>
                                                 <div if:true={isEmailFieldReadOnly} class="text-xxsmall" >
                                                     <lightning-button variant="base"
-                                                                      label="Change Email"
-                                                                      title="Change Email"
+                                                                      label={labels.CSP_Change_Email}
+                                                                      title={labels.CSP_Change_Email}
                                                                       onclick={handleChangeEmail}
                                                                       class="blueCustomButtonLinkSmall">
                                                     </lightning-button>
@@ -56,13 +56,13 @@
                                             <div class="formElementContainer">
                                                 <div class="formLabelContainer">
                                                     <div class="text-xxsmall text-gray">
-                                                        {labels.PasswordLabel}
+                                                        {labels.OneId_Password}
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <lightning-button variant="base"
-                                                                      label={labels.ForgotPasswordLabel}
-                                                                      title={labels.ForgotPasswordLabel}
+                                                                      label={labels.CSP_Forgot_Password}
+                                                                      title={labels.CSP_Forgot_Password}
                                                                       onclick={handleNavigateToForgotPassword}
                                                                       class="blueCustomButtonLinkSmall">
                                                     </lightning-button>
@@ -93,7 +93,7 @@
 
                                         <lightning-layout-item size="12">
                                             <div>
-                                                <lightning-button data-id="loginButton" label={labels.LoginLabel} variant="brand"  disabled={loginButtonDisabled} onclick={handleLogin} class="containedButtonDisabled">
+                                                <lightning-button data-id="loginButton" label={labels.Login} variant="brand"  disabled={loginButtonDisabled} onclick={handleLogin} class="containedButtonDisabled">
                                                 </lightning-button>
                                             </div>
                                         </lightning-layout-item>
@@ -104,6 +104,14 @@
 
                                         <template if:true={displayTroubleshooting}>
                                             <lightning-layout-item padding="" size="12">
+
+                                                   <p class="text-xsmall textAlignCenter"> {labels.CSP_Troubleshooting_Info}</p>
+                                                   <p class="text-xsmall textAlignCenter">
+                                                      <lightning-button variant="base" label={labels.CSP_Troubleshooting} class="blueCustomButtonLinkLogin" onclick={handleNavigateToTroubleshooting}></lightning-button>
+                                                   </p>
+
+
+                                                <!--
                                                 <lightning-layout-item size="12">
                                                     <div class="textAlignCenter text-xsmall text-gray">
                                                         For further help
@@ -112,12 +120,14 @@
                                                 <div class="textAlignCenter text-xsmall">
                                                     please check &nbsp;
                                                     <lightning-button variant="base"
-                                                                      label={labels.TroubleshootingLabel}
-                                                                      title={labels.TroubleshootingLabel}
+                                                                      label={labels.CSP_Troubleshooting}
+                                                                      title={labels.CSP_Troubleshooting}
                                                                       onclick={handleNavigateToTroubleshooting}
                                                                       class="blueCustomButtonLinkLogin">
                                                     </lightning-button>
                                                 </div>
+                                                -->
+
                                             </lightning-layout-item>
 
                                             <lightning-layout-item size="12">
@@ -134,14 +144,14 @@
 
                                                 </div>
                                                 <div class="textAlignCenter text-xsmall text-gray">
-                                                    Still not an IATA Customer Portal User?
+                                                    {labels.CSP_Create_New_Account_Label}
                                                 </div>
                                             </lightning-layout-item>
                                             <lightning-layout-item size="12">
                                                 <div class="textAlignCenter text-xxsmall">
                                                     <lightning-button variant="base"
-                                                                      label={labels.CreateNewAccountLabel}
-                                                                      title={labels.CreateNewAccountLabel}
+                                                                      label={labels.OneId_CreateNewAccount}
+                                                                      title={labels.OneId_CreateNewAccount}
                                                                       onclick={handleNavigateToSelfRegister}
                                                                       class="blueCustomButtonLinkSmall">
                                                     </lightning-button>
@@ -157,17 +167,17 @@
 
                 </c-portal-custom-card-container>
             </div>
-            <div if:true={isFrozen}>
+            <div >
                 <c-portal-informative-message-box>
                     <span slot="message">
-                        <lightning-formatted-rich-text value={labels.FrozenUserLabel} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                        <lightning-formatted-rich-text value={labels.CSP_Frozen_User_Message} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
                     </span>
                 </c-portal-informative-message-box>
             </div>
-            <div if:true={isLoginDisabled}>
+            <div >
                 <c-portal-informative-message-box>
                     <span slot="message">
-                        <lightning-formatted-rich-text value={labels.DisabledLoginLabel} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                        <lightning-formatted-rich-text value={labels.CSP_Portal_Login_Disabled_Message} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
                     </span>
                 </c-portal-informative-message-box>
             </div>
@@ -181,6 +191,5 @@
             <div class="slds-spinner__dot-b"></div>
         </div>
     </div>
-
 
 </template>

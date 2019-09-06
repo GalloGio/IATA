@@ -15,16 +15,32 @@ import login from '@salesforce/apex/PortalLoginCtrl.login';
 /* ==============================================================================================================*/
 /* Custom Labels
 /* ==============================================================================================================*/
-import LoginLabel from '@salesforce/label/c.login';
-import EmailLabel from '@salesforce/label/c.Email';
-import PasswordLabel from '@salesforce/label/c.OneId_Password';
-import ForgotPasswordLabel from '@salesforce/label/c.OneId_ForgotPassword';
+import Login                                from '@salesforce/label/c.login';
+import Email                                from '@salesforce/label/c.Email';
+import OneId_Password                       from '@salesforce/label/c.OneId_Password';
+import CSP_Change_Email                     from '@salesforce/label/c.CSP_Change_Email';
+import CSP_Forgot_Password                  from '@salesforce/label/c.CSP_Forgot_Password';
+import CSP_Troubleshooting_Info             from '@salesforce/label/c.CSP_Troubleshooting_Info';
+import CSP_Troubleshooting                  from '@salesforce/label/c.CSP_Troubleshooting';
+import CSP_Create_New_Account_Label         from '@salesforce/label/c.CSP_Create_New_Account_Label';
+import CSP_Frozen_User_Message              from '@salesforce/label/c.CSP_Frozen_User_Message';
+import CSP_Portal_Login_Disabled_Message    from '@salesforce/label/c.CSP_Portal_Login_Disabled_Message';
+import OneId_CreateNewAccount               from '@salesforce/label/c.OneId_CreateNewAccount';
+import CSP_Invalid_Email                    from '@salesforce/label/c.CSP_Invalid_Email';
+import OneId_CSP_Troubleshooting_Link       from '@salesforce/label/c.OneId_CSP_Troubleshooting_Link';
+import CSP_Existing_User_Message            from '@salesforce/label/c.CSP_Existing_User_Message';
+import OneId_LoginFail                      from '@salesforce/label/c.OneId_LoginFail';
+import CSP_PortalPath                       from '@salesforce/label/c.CSP_PortalPath';
+
+/*
+
 import CreateNewAccountLabel from '@salesforce/label/c.OneId_CreateNewAccount';
 import TroubleshootingLabel from '@salesforce/label/c.OneId_CSP_Troubleshooting';
 import FrozenUserLabel from '@salesforce/label/c.ISSP_Frozen_User_Alert_Message';
 import invalidMailFormatLabel from '@salesforce/label/c.ISSP_AMS_Invalid_Email';
 import TroubleShootingUrl from '@salesforce/label/c.OneId_CSP_Troubleshooting_Link';
-import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+*/
+
 
 
 
@@ -55,16 +71,25 @@ export default class PortalLogin extends LightningElement {
     alertIcon = CSP_PortalPath + 'alertIcon.png';
 
     _labels = {
-        LoginLabel,
-        EmailLabel,
-        PasswordLabel,
-        ForgotPasswordLabel,
-        CreateNewAccountLabel,
-        TroubleshootingLabel,
-        FrozenUserLabel,
-        TroubleShootingUrl,
-        DisabledLoginLabel : 'Portal Login is currently disabled. Thank you for your understanding.'
+        Login,
+        Email,
+        OneId_Password,
+        CSP_Change_Email,
+        CSP_Forgot_Password,
+        CSP_Troubleshooting_Info,
+        CSP_Troubleshooting,
+        CSP_Create_New_Account_Label,
+        CSP_Frozen_User_Message,
+        CSP_Portal_Login_Disabled_Message,
+        OneId_CreateNewAccount,
+        CSP_Invalid_Email,
+        OneId_CSP_Troubleshooting_Link,
+        CSP_Existing_User_Message,
+        OneId_LoginFail
     }
+
+
+
     get labels() {
         return this._labels;
     }
@@ -85,6 +110,8 @@ export default class PortalLogin extends LightningElement {
     /* ==============================================================================================================*/
 
     connectedCallback() {
+
+        this._labels.CSP_Forgot_Password = this._labels.CSP_Forgot_Password + '?';
 
         const RegistrationUtilsJs = new RegistrationUtils();
 
@@ -242,7 +269,7 @@ export default class PortalLogin extends LightningElement {
         const RegistrationUtilsJs = new RegistrationUtils();
         RegistrationUtilsJs.checkEmailIsValid(`${this.email}`).then(result=> {
             if(result == false){
-                this._showLoginError(true, invalidMailFormatLabel);
+                this._showLoginError(true, this.labels.CSP_Invalid_Email);
                 this.isLoading = false;
                 return;
             }else{
@@ -291,7 +318,7 @@ export default class PortalLogin extends LightningElement {
     }
 
     handleNavigateToTroubleshooting() {
-        navigateToPage(this.labels.TroubleShootingUrl);
+        navigateToPage(this.labels.OneId_CSP_Troubleshooting_Link);
     }
 
     /* ==============================================================================================================*/
