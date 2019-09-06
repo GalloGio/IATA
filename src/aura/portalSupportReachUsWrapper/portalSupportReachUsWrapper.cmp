@@ -53,30 +53,6 @@
                         <h2 class="text-xsmall slds-p-top_small">{!$Label.c.csp_Options_Label}</h2>
                     </div>
 
-                    <c:portalSupportTopArticles category="{!v.category}" topic="{!v.topic}" subtopic="{!v.subTopic}"></c:portalSupportTopArticles>
-
-                    <!-- <div class="slds-p-bottom_xx-large lower_gray_panel_half_border">
-                        <div class="slds-p-vertical_large slds-text-align_center">
-                            <h2 class="text-medium text-bold">{!$Label.c.csp_Suggestion_label}</h2>
-                        </div>
-                        <div class="slds-p-top_large">
-                            <div
-                                class="slds-grid grid-margin-bottom-justified slds-grid_vertical slds-align_absolute-center lower_panel_size">
-                                <div class="slds-col tile-column slds-size_2-of-2 slds-small-size_2-of-2 
-                                                            slds-medium-size_2-of-2 slds-large-size_4-of-6
-                                                            slds-m-bottom_large 
-                                                            cursorPointer customCardWhite">
-                                    <div class="noPointerEvents slds-p-around_small 
-                                                        slds-text-align_left text-small">
-                                        Lorem ipsum dolor sit amet
-                                        <lightning:icon iconName="utility:forward" size="xx-small"
-                                            class="tileNewServiceIcon slds-current-color blue_arrow slds-float_right">
-                                        </lightning:icon>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="slds-grid grid-margin-bottom-justified slds-wrap 
                         slds-p-bottom_xx-large slds-align_absolute-center ">
                         <div class="slds-col tile-column slds-size_1-of-2 
@@ -190,6 +166,10 @@
                             </aura:if>
                         </aura:if>
                     </div>
+
+                    <!-- RELATED ARTICLES SECTION -->
+                    <c:portalSupportTopArticles category="{!v.category}" topic="{!v.topic}" subtopic="{!v.subTopic}"></c:portalSupportTopArticles>
+
                 </aura:if>
             </div>
         </div>
