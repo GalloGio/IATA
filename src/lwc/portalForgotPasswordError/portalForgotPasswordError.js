@@ -1,9 +1,12 @@
 import { LightningElement, track, api } from 'lwc';
-import { navigateToPage }    from 'c/navigationUtils';
-import nextLabel             from '@salesforce/label/c.PKB2_Next_Link';
-import loginLabel            from '@salesforce/label/c.Login';
-import invalidMailFormat     from '@salesforce/label/c.ISSP_AMS_Invalid_Email';
-import createNewAccountLabel from '@salesforce/label/c.OneId_CreateNewAccount';
+import { navigateToPage }     from 'c/navigationUtils';
+import emailLabel             from '@salesforce/label/c.Email';
+import nextLabel              from '@salesforce/label/c.PKB2_Next_Link';
+import loginLabel             from '@salesforce/label/c.Login';
+import invalidMailFormat      from '@salesforce/label/c.CSP_Invalid_Email';
+import createNewAccountLabel  from '@salesforce/label/c.OneId_CreateNewAccount';
+import errorMessageLabel      from '@salesforce/label/c.CSP_Forgot_Password_Error_Message';
+import newAccountInfoLabel    from '@salesforce/label/c.CSP_Create_New_Account_Info';
 
 export default class PortalForgotPasswordError extends LightningElement {
 
@@ -13,9 +16,12 @@ export default class PortalForgotPasswordError extends LightningElement {
      @api selfRegistrationUrl;
 
      labels = {
+         emailLabel,
          nextLabel,
          loginLabel,
-         createNewAccountLabel
+         errorMessageLabel,
+         createNewAccountLabel,
+         newAccountInfoLabel
      }
 
       handleNext(){

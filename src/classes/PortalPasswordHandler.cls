@@ -95,20 +95,20 @@ public without sharing class PortalPasswordHandler {
 
     public static Map<String, String> forgotPasswordEmailMap(User user, String link){
         //get contact information
-        Contact contactInfo = [SELECT Id,Email, firstName, LastName,Salutation FROM Contact WHERE ID = :user.contactid limit 1];
+        Contact contactInfo = [SELECT Id,Email, firstName FROM Contact WHERE ID = :user.contactid limit 1];
 
         Map<String, String> mapBodyParams = new map<String, String>{
-                '{!Contact.Salutation}' => contactInfo.Salutation,
-                '{!Contact.Password}' => '',
-                '{!Receiving_User.FirstName}' => contactInfo.Firstname,
-                '{!Receiving_User.LastName}' => contactInfo.LastName,
-                '{!Receiving_User.Email}' => contactInfo.Email,
-                '{!Community_Name}' => '',
-                '{!Community_Url}' => link,
-                '{!Community_Header}' => Label.OneId_Email_Header_Identity,
-                '{!$Label.ISSP_Email_Here}' => 'here',
-                '{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply,
-                '{!$Label.OneId_IATA_represent_lead_and_serve_the_airline_industry}' => Label.OneId_IATA_represent_lead_and_serve_the_airline_industry
+                '{!Receiving_User.FirstName}'                    => contactInfo.Firstname,
+                '{!Community_Url}'                               => link,
+                '{!$Label.ISSP_Email_Here}'                      => Label.ISSP_Email_Here,
+                '{!$Label.ISSP_Email_do_not_reply}'              => Label.ISSP_Email_do_not_reply,
+                '{!$Label.ISSP_Email_Dear_Pre}'                  => Label.ISSP_Email_Dear_Pre,
+                '{!$Label.CSP_Email_Password_Reset_Body_Part_1}' => Label.CSP_Email_Password_Reset_Body_Part_1,
+                '{!$Label.CSP_Email_Password_Reset_Body_Part_2}' => Label.CSP_Email_Password_Reset_Body_Part_2,
+                '{!$Label.CSP_Email_Password_Reset_Body_Part_3}' => Label.CSP_Email_Password_Reset_Body_Part_3,
+                '{!$Label.CSP_Email_Password_Reset_Body_Part_4}' => Label.CSP_Email_Password_Reset_Body_Part_4,
+                '{!$Label.CSP_Email_Signature_Part_1}'           => Label.CSP_Email_Signature_Part_1,
+                '{!$Label.CSP_Email_Signature_Part_2}'           => Label.CSP_Email_Signature_Part_2
         };
         return mapBodyParams;
     }

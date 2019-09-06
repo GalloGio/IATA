@@ -1,12 +1,17 @@
 import { LightningElement, track, api } from 'lwc';
-import { navigateToPage }      from 'c/navigationUtils';
-import handleResetPassword     from '@salesforce/apex/PortalForgotPasswordController.handleResetPassword';
-import invalidMailFormat       from '@salesforce/label/c.ISSP_AMS_Invalid_Email';
-import loginLabel              from '@salesforce/label/c.Login';
-import submitLabel             from '@salesforce/label/c.ISSP_Submit';
-import createNewAccountLabel   from '@salesforce/label/c.OneId_CreateNewAccount';
-import troubleshootingLabel    from '@salesforce/label/c.OneId_CSP_Troubleshooting';
-import troubleshootingUrl      from '@salesforce/label/c.OneId_CSP_Troubleshooting_Link';
+import { navigateToPage }       from 'c/navigationUtils';
+import handleResetPassword      from '@salesforce/apex/PortalForgotPasswordController.handleResetPassword';
+import invalidMailFormat        from '@salesforce/label/c.ISSP_AMS_Invalid_Email';
+import emailLabel               from '@salesforce/label/c.Email';
+import loginLabel               from '@salesforce/label/c.Login';
+import submitLabel              from '@salesforce/label/c.ISSP_Submit';
+import createNewAccountLabel    from '@salesforce/label/c.OneId_CreateNewAccount';
+import troubleshootingLabel     from '@salesforce/label/c.CSP_Troubleshooting';
+import forgotPasswordLabel      from '@salesforce/label/c.CSP_Forgot_Password';
+import passwordInfoLabel        from '@salesforce/label/c.CSP_Forgot_Password_Info';
+import troubleshootingUrl       from '@salesforce/label/c.OneId_CSP_Troubleshooting_Link';
+import newAccountMessageLabel   from '@salesforce/label/c.CSP_Create_New_Account_Label';
+import troubleshootingInfoLabel from '@salesforce/label/c.CSP_Troubleshooting_Info';
 
 export default class ForgotPasswordOneId extends LightningElement {
     @track email           = "";
@@ -18,10 +23,15 @@ export default class ForgotPasswordOneId extends LightningElement {
     @api isSelfRegistrationEnabled;
 
     labels = {
+        emailLabel,
         loginLabel,
         submitLabel,
+        passwordInfoLabel,
+        forgotPasswordLabel,
         createNewAccountLabel,
-        troubleshootingLabel
+        troubleshootingLabel,
+        newAccountMessageLabel,
+        troubleshootingInfoLabel
     };
 
     handleSubmit(){
