@@ -273,6 +273,11 @@ public with sharing class ANG_AgencyChangesHelper {
 				//if(Pattern.matches(AMS_Utils.ANG_LOCATION_TYPE + '|' + AMS_Utils.ANG_HIERARCHY, oscar.ANG_Type_Of_Change__c))
 				if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE,AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY, AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
 					
+					//NEWGEN-4856				
+					ID topParentAcc = oscar.ANG_Type_Of_Change__c ==  AMS_Utils.ANG_HIERARCHY ? null : changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c;
+					processRiskAlertChanges(oscar, topParentAcc);
+					//NEWGEN-4856-END
+
 					Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = null;
 
 					if(containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
@@ -557,7 +562,6 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 		
 		}
-
 		
 		return changesContainer;
 	}
@@ -1940,5 +1944,42 @@ public with sharing class ANG_AgencyChangesHelper {
 
 
 		return changesContainer;
+    }
+
+	/* NEWGEN-4856 - When perfomring a change of Location / Hierarchy  
+	 * Move the Risk Alerts into the Main account 
+	 * Set Monitored Account with the previous account when Sanity Check is passed 
+     */
+    private static void processRiskAlertChanges(AMS_OSCAR__c osc, Id topParentAcc){
+
+        System.debug('[ANG_AgencyChangesHelper] Start processRiskAlertChanges');
+
+    	Schema.DescribeSObjectResult r = ANG_Risk_Alert__c.sObjectType.getDescribe();
+        ID accID = topParentAcc == null ? osc.Account__c : topParentAcc;
+
+        String riskAlertQuery = 'SELECT ';
+        for(String field : r.fields.getMap().keySet()){
+            riskAlertQuery+= field + ', ';
+        }
+        riskAlertQuery = riskAlertQuery.removeEnd(', ');
+        riskAlertQuery += ' FROM ANG_Risk_Alert__c WHERE ANG_Account__c = :accID';
+
+        List<ANG_Risk_Alert__c> riskAlertToDelete = Database.query(riskAlertQuery);            
+        List<ANG_Risk_Alert__c> newRiskAlertList = new List<ANG_Risk_Alert__c>();
+
+        for(ANG_Risk_Alert__c riskAlert : riskAlertToDelete){
+            ANG_Risk_Alert__c newRiskAlert = riskAlert.clone(false, false, false, false);
+            newRiskAlert.Monitored_Account__c = riskAlert.ANG_Account__c;
+            newRiskAlert.ANG_Account__c = osc.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY ? osc.New_parent__c : osc.Account__c;
+            newRiskAlertList.add(newRiskAlert);
+
+            System.debug('[ANG_AgencyChangesHelper] NEW RiskAlert: ' + newRiskAlert);
+        }
+
+        if(!newRiskAlertList.isEmpty()){
+            delete riskAlertToDelete;
+            insert newRiskAlertList;
+        }
+
     }
 }

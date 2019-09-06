@@ -181,7 +181,12 @@ public class ANG_RHCAlertTriggerHandler{
                 }
             }
 
-            if(!orangeRiskAlerts.isEmpty())sendNotificationToSeniors(orangeRiskAlerts,'RTS_Notification_Manager_orange',false);
+	        if(!orangeRiskAlerts.isEmpty()){
+	            List<Messaging.SingleEmailMessage> emailLst = createNotificationToSeniors(orangeRiskAlerts, RTS_NOTIFICATION_MANAGER_ORANGE, false);
+	            if(!emailLst.isEmpty()){
+	                Messaging.sendEmail(emailLst);
+	            }
+	        }
 
             //prevent breaking already existing logic
             raAccMap.clear();

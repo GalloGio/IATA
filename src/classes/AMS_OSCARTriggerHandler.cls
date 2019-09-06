@@ -4666,8 +4666,8 @@ public class AMS_OSCARTriggerHandler {
             for(ID oscarId:newMap.keySet()){
                 if(newMap.get(oscarId).ANG_Type_Of_Change__c != null && AMS_Utils.OSCARBackupProcessMap.containsKey(newMap.get(oscarId).Process__c) && newMap.get(oscarId).ANG_Type_of_change__c != AMS_Utils.CONVERTTOINTERNATIONAL)
                     oscarsToProcess.add(oscarId);
+                }
             }
-        }
 
         if(Trigger.isUpdate){
 
@@ -4679,7 +4679,7 @@ public class AMS_OSCARTriggerHandler {
 
             }
         }
-       
+
 
         for(Id oscarId: oscarsToProcess){
             ID jobID = System.enqueueJob(new ANG_BackupEngineHelper(oscarId,true));
@@ -4690,7 +4690,7 @@ public class AMS_OSCARTriggerHandler {
     }
 
     public static void performRollbackANG(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap){
-        
+
         if(ANG_AgencyChangesHelper.testRunnningForNonBackup)
             return;
 
@@ -4752,6 +4752,7 @@ public class AMS_OSCARTriggerHandler {
             ANG_RME_Alert_Service.requestGDIEndorsementCertificate(key,iataCodes.get(key));
         
     }         
+
 
     // to be removed
   public void fakeMethod(){
