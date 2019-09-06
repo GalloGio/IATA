@@ -58,6 +58,43 @@
                         </div>
 
                         <!-- ROW 5 -->
+                        <!-- ROW 6 -->
+                        <div if:true={optionBuilder}
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+                            <div if:true={optionBuilder.isSidraCase}>
+                                <span class="grey">{labels.Email}</span><br />
+                                <span> {caseDetails.Contact.Email} </span>
+                            </div>
+                        </div>
+
+                        <!-- ROW 7 -->
+                        <div if:true={optionBuilder}
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+                            <div if:true={optionBuilder.isSidraCase}>
+                                <span class="grey">{labels.CSP_Remittantce_Date}</span><br />
+                                <span> {caseDetails.Remittance_Date__c} </span>
+                            </div>
+                        </div>
+
+                        <!-- ROW 8 -->
+                        <div if:true={optionBuilder}
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+                            <div if:true={optionBuilder.isSidraCase}>
+                                <span class="grey">{labels.CSP_Case_Currency}</span><br />
+                                <span> {caseDetails.CurrencyIsoCode} </span>
+                            </div>
+                        </div>
+
+                        <!-- ROW 9 -->
+                        <div if:true={optionBuilder}
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+                            <div if:true={optionBuilder.isSidraCase}>
+                                <div if:true={caseDetails.Update_AIMS_IRR__c}>
+                                    <span class="grey"> {labels.ISSP_SIDRA_Irregularity_Date} </span><br />
+                                    <span> {caseDetails.Update_AIMS_IRR__c} </span>
+                                </div>
+                            </div>
+                        </div>
                         <div if:true={hasSurveyLink}
                              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
                             <span class="grey">{labels.ISSP_Survey}</span><br />

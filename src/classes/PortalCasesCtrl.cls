@@ -214,7 +214,7 @@ public with sharing class PortalCasesCtrl {
             fieldPathSet.add(f.getFieldPath());
         }
 
-        String query = ' CaseArea__c, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name ';
+        String query = ' BSP_CASS__c, IATA_Code__c, Remittance_period__c, CaseArea__c, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name ';
         Boolean hasStatus = false;
         
         for(String fieldPath : fieldPathSet) {
@@ -311,6 +311,12 @@ public with sharing class PortalCasesCtrl {
 
         result = new PagedResult();
         result.records = Database.query(queryString);
+
+        for(Case c : (List<Case>) result.records){
+            if (c.RecordType.Name.contains('SIDRA') ) {
+                c = buildSubject(c);
+            }
+        }
 
         if(filtersWrapper == null){
             result.totalItemCount = result.records.size();
@@ -656,15 +662,33 @@ public with sharing class PortalCasesCtrl {
     */
     @AuraEnabled
     public static Case getCaseById(String caseId) {
-        Case caseAux = [SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c, 
+        Case caseAux = [SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c,
+                        Remittance_Date__c, CurrencyIsoCode, Update_AIMS_IRR__c, BSP_CASS__c, IATA_Code__c, Remittance_period__c,
                         CreatedDate, CreatedBy.Name,LastModifiedDate, Portal_Case_Status__c,Topic__c,
-                        Subtopic__c, Region__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
+                        Subtopic__c, Region__c, Reason1__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
                         Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,
-                        RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c,
-                        ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone
+                        RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
+                        Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone
                         FROM Case 
                         WHERE Id = :caseId];
 
+        if ( caseAux.RecordType__c.contains('SIDRA') ) {
+            caseAux = buildSubject(caseAux);
+        }
+        return caseAux;
+    }
+
+    private Static Case buildSubject(Case caseAux){
+        String subJ = '';
+        
+        subJ += (caseAux.BSP_CASS__c != null) ? caseAux.BSP_CASS__c + ' ' + System.Label.CSP_Payment + ' - ' : '';
+        subJ += (caseAux.IATA_Code__c != null) ? System.Label.ICCS_IATA_Code + ': ' + caseAux.IATA_Code__c + ' - ' : '';
+        subJ += (caseAux.Remittance_period__c != null) ? System.Label.CSP_Period + ' ' +  caseAux.Remittance_period__c : '';
+        if ( subJ.length() > 0 ) {
+            caseAux.Subject =  System.Label.CSP_IMPORTANT + ': ' + subJ;
+        } else {
+            caseAux.Subject =  (caseAux.BSP_CASS__c != null) ? System.Label.CSP_IMPORTANT + ': ' + caseAux.Subject : '';
+        }
         return caseAux;
     }
 
