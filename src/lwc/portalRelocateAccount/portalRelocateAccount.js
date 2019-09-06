@@ -69,7 +69,7 @@ export default class ChangeUserPortalStatus extends LightningElement {
         for (const item of this.myResult) {
             if (!map.has(item.Name)) {
                 myRelatedAccountOptions.push({
-                    label: (item.Site === undefined ? '' : item.Site) + ' ' + (item.Name === undefined ? '' : item.Name) + ' ' + (item.IATA_ISO_Country__c === undefined ? '' : item.IATA_ISO_Country__r.Name),
+                    label: (item.IATACode__c === undefined ? '' : item.IATACode__c) + ' ' + (item.Name === undefined ? '' : ' - ' + item.Name) + ' ' + (item.IATA_ISO_Country__c === undefined ? '' : ' - ' + item.IATA_ISO_Country__r.Name),
                     value: item.Id
                 });
             }
