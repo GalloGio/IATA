@@ -232,23 +232,30 @@ global with sharing class IDCardUtil {
     }
 
 
+    /**
+     * Returns the application fee of a Price Table based on the following: Regular/Reissue, with or without expedite and with or without ITDI Package
+     */
+    public static decimal GetApplicableFee(Price_Table__c priceTable, boolean isReissue, boolean isWithExpedite, boolean isWithITDIPackage, Promotion__c validPromo)
+    {
+        return GetApplicableFee(priceTable, isReissue, isWithExpedite, isWithITDIPackage, validPromo, true);
+    }
 
     /**
      * Returns the application fee of a Price Table based on the following: Regular/Reissue, with or without expedite and with or without ITDI Package
      */
-    public static decimal GetApplicableFee(Price_Table__c priceTable, boolean isReissue, boolean isWithExpedite, boolean isWithITDIPackage, Promotion__c validPromo) {
-
-        decimal applicableFee = 0.0;
+    public static decimal GetApplicableFee(Price_Table__c priceTable, boolean isReissue, boolean isWithExpedite, boolean isWithITDIPackage, Promotion__c validPromo, Boolean isToPrint) {
 
         // reselect the price table (to make sure every required field has been queryed)
         //Price_Table__c thePriceTable = [Select p.ID_Card_Fee__c, p.Expedite__c, p.IATA_Package__c From Price_Table__c p where p.Id =: priceTable.Id limit 1];
         Price_Table__c thePriceTable = priceTable;
+        
+        decimal applicableFee = thePriceTable.ID_Card_Fee__c;
 
-        if (isReissue) {
-            applicableFee = (thePriceTable.ID_Card_Fee__c / 2);
-        } else {
-            applicableFee = thePriceTable.ID_Card_Fee__c;
-        }
+        if (isToPrint)
+            applicableFee += priceTable.Cost_of_Printer__c == null ? 0 : priceTable.Cost_of_Printer__c;
+
+        if (isReissue)
+            applicableFee = applicableFee / 2;
 
         if (validPromo != null) {
             // apply reduction percentage
@@ -270,24 +277,30 @@ global with sharing class IDCardUtil {
         return GetDetailledFees( priceTable,  isReissue,  isWithExpedite,  isWithITDIPackage,  validPromo, null);
     }
 
+    public static Map<String, decimal> GetDetailledFees(Price_Table__c priceTable, boolean isReissue, boolean isWithExpedite, boolean isWithITDIPackage, Promotion__c validPromo, Id applicationRecordType)
+    {
+        return GetDetailledFees(priceTable, isReissue, isWithExpedite, isWithITDIPackage, validPromo, applicationRecordType, true);
+    }
+
     /**
      * Returns a Map application detailled fee of a Price Table based on the following: Regular/Reissue, with or without expedite and with or without ITDI Package
      * Keys for the Map are : "IDCardFee", "PromoFee", "ExpediteFee", "ITDIFee"
      */
-    public static Map<String, decimal> GetDetailledFees(Price_Table__c priceTable, boolean isReissue, boolean isWithExpedite, boolean isWithITDIPackage, Promotion__c validPromo, Id applicationRecordType) {
+    public static Map<String, decimal> GetDetailledFees(Price_Table__c priceTable, boolean isReissue, boolean isWithExpedite, boolean isWithITDIPackage, Promotion__c validPromo, Id applicationRecordType, Boolean isToPrint) {
 
         Map<String, decimal> detailledFee = new Map<String, decimal>();
-        decimal applicableFee;
 
         // reselect the price table (to make sure every required field has been queryed)
 
         Price_Table__c thePriceTable = priceTable;
 
-        if (isReissue) {
-            applicableFee = (thePriceTable.ID_Card_Fee__c / 2);
-        } else {
-            applicableFee = thePriceTable.ID_Card_Fee__c;
-        }
+        decimal applicableFee = thePriceTable.ID_Card_Fee__c;
+
+        if (isToPrint)
+            applicableFee += priceTable.Cost_of_Printer__c == null ? 0 : priceTable.Cost_of_Printer__c;
+
+        if (isReissue)
+            applicableFee = applicableFee / 2;
 
         if (validPromo != null) {
             // apply reduction percentage
