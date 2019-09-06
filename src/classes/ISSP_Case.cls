@@ -18,6 +18,7 @@ public without sharing class ISSP_Case {
     public boolean isISSPortalPwCCase {set; get;}
     public boolean isNewCase {get; set;}
     public boolean isSISCase {get; set;}
+    public boolean isCloneDPC {get; set;}
     public boolean isPWCCase {get; set;}
     public boolean isAPCase {get; set;}
     public boolean isOSCARCase {get; set;}
@@ -153,6 +154,7 @@ public without sharing class ISSP_Case {
 
 
     public PageReference pageLoad() {
+        isCloneDPC = false;
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
             newCase = DAL_ISSP.getCase(caseId);
@@ -232,6 +234,19 @@ public without sharing class ISSP_Case {
             }
             showAlertMessage();
 
+        }
+
+        if (ApexPages.currentPage().getParameters().containsKey('cloneDPCId')) {
+            string caseId = ApexPages.currentPage().getParameters().get('cloneDPCId');
+            newCase = DAL_ISSP.getCase(caseId);
+            Case cloneCase = new Case();
+            cloneCase.CaseArea__c = newCase.CaseArea__c;
+            cloneCase.Reason1__c = newCase.Reason1__c;
+            cloneCase.Applicable_to_Which_Version_s__c = newCase.Applicable_to_Which_Version_s__c;
+            cloneCase.SUbject = newCase.SUbject;
+            cloneCase.Description = newCase.Description;
+            newCase = cloneCase;
+            isCloneDPC = true;
         }
         return null;
     }
@@ -696,15 +711,15 @@ public without sharing class ISSP_Case {
                     }
                 }
                 
-                List<Contact> lsContacts = new list<Contact>();
-                for (User user: [SELECT ContactId, Contact.Name, Contact.Email, Contact.AccountId
-                        FROM User
-                        WHERE isActive = true
-                        AND Contact.AccountId IN :lsAccounts
-                        AND Contact.User_Portal_Status__c IN ('Approved Admin', 'Approved User')
-                        AND Contact.Status__c = 'Active']) {
-                    lsContacts.add(user.contact);
-                }
+                List<Contact> DPC2DPCCasesEmails = [SELECT Email__c 
+                                                                    FROM DPC2DPCCasesEmails__c];
+                List<String> allEmailsDPC2DPCCases = new list<String>();
+                for(DPC2DPCCasesEmails__c ddc : DPC2DPCCasesEmails){
+                    allEmailsDPC2DPCCases.add(ddc.Email__c);
+                }                                            
+                List<Contact> lsContacts = [SELECT id, Name, Email, AccountId 
+                                            FROM Contact 
+                                            WHERE Email IN : allEmailsDPC2DPCCases];
 
                 JSONcontacts = JSON.serialize(lsContacts);
                 System.debug(lsAccounts);
@@ -744,6 +759,10 @@ public without sharing class ISSP_Case {
         progressBarHelper = new ANG_ProgressBarHelper(newCase);
     }
 
+    //  This method shall take the user to a new case creation page with the 5 above field values copied from the original case.
+    public PageReference CloneDPC(){
+        return new Pagereference('/ISSP_Case?cloneDPCId='+newCase.id);
+    }
     @TestVisible private String getCustomLabel(String labelName) {
         Component.Apex.OutputText output = new Component.Apex.OutputText();
         output.expressions.value = '{!$Label.' + labelName + '}';
@@ -878,6 +897,18 @@ public without sharing class ISSP_Case {
         system.debug('isFDSRecordType: ' + isFDSRecordType);
         system.debug('AccountId: ' + accountId);
 
+        if(newCase.Priority == 'High'){
+            List<DPCCasePriorityHigh__c> DPCCasePriorityHighEmails = [SELECT Email__c 
+                                                                    FROM DPCCasePriorityHigh__c];
+            List<String> allEmailsDPCCasePriorityHigh = new List<String>();
+            for(DPCCasePriorityHigh__c dcph : DPCCasePriorityHighEmails){
+                if(this.additionalRecipients == ''){
+                    this.additionalRecipients += dcph.Email__c;
+                }else{
+                    this.additionalRecipients += ','+dcph.Email__c;
+                }
+            }                                            
+        }
         //DPC
         if(isDPCUser) {
             Boolean isIATA = false;

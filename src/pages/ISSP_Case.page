@@ -385,7 +385,7 @@
                                     </apex:pageblocksectionitem>
 
                                     <apex:inputField value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" styleclass="form-control" required="true">
-                                        <apex:actionSupport event="onchange" reRender="reason1Picklist"/>
+                                        <apex:actionSupport event="onchange" reRender="reason1Picklist" rendered="{!NOT(isCloneDPC)}"/>
                                     </apex:inputField>
                                     <apex:inputField id="reason1Picklist" value="{!newCase.Reason1__c}" rendered="{!isDPCUser}" styleclass="form-control" required="true"/>
 
@@ -644,6 +644,7 @@
                                             <apex:outputpanel layout="none" rendered=" {!AND(isDPCUser, NOT(isEditMode), OR(isDPCAccepted,isACRAccepted), OR(caseType='ACR', caseType='IATASR'))}">
                                                 <input type="button" class="btn" value="Change DPC Owner" onclick="openCustomlkp('{!newCase.id}')" styleclass="btn btn_iata_primary" />
                                             </apex:outputpanel>
+                                            <apex:commandbutton action="{!CloneDPC}" value="Clone" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />
                                             <apex:actionfunction action="{!changeDpcOwner}" name="changeDpcOwner" rerender="existingCaseForm" status="changeOwnerStatus" />
                                             <apex:commandbutton action="{!close}" value="Close Case" rendered="{!AND(NOT(IsInterDPCCase), newCase.Status!='Closed',OR(AND(caseType='IATASR', newCase.isDPCCurrentUser__c),AND(caseType='DPCSR', isDPCAdmin)))}" styleclass="btn btn_iata_primary" />
                                             <apex:commandbutton action="{!close}" value="Close Case" rendered="{!AND(IsInterDPCCase, newCase.OwnerId==$User.Id, newCase.Status!='Closed')}" styleclass="btn btn_iata_primary" />
