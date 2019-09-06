@@ -121,7 +121,7 @@
         <object>MessagingSession</object>
     </recordUpdates>
     <startElementReference>Find_Contact</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>CaseID</name>
         <dataType>String</dataType>

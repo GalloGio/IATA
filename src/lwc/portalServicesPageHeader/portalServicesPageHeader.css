@@ -1,0 +1,13 @@
+.emptyGrayAreaSize{
+    height: 50px;
+}
+
+.searchBarPosition{
+    position:relative;
+    margin-top:-37px;
+}
+
+.headerContainerShadow::after{
+    height: 165px;
+    top: 10px;
+}

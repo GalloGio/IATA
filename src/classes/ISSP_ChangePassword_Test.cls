@@ -46,6 +46,14 @@ private class ISSP_ChangePassword_Test {
     	PageReference pgRef = Page.ISSP_ChangePassword;
     	Test.setCurrentPage(pgRef);
     	
+    	List<Network> networks = [SELECT Id
+									FROM Network
+									WHERE (Name = 'IATA Portal' OR Name = 'CS Portal')];
+
+		if(!networks.isEmpty()){
+			ApexPages.currentPage().getParameters().put('retUrl','networkId='+networks[0].Id);
+		}
+    	
     	// insert account
         Account newAccount = new Account();
         newAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
@@ -161,7 +169,7 @@ private class ISSP_ChangePassword_Test {
 	 	Pagereference pr = Page.ISSP_Login;
 	
 	}
-	
+
 	static testMethod void loginPage_ISSP_3() {
 		ISSP_CS__c cs = new ISSP_CS__c();
 		cs.Name = 'ipinfo_token';

@@ -1,0 +1,67 @@
+<apex:page controller="ANG_RequestProvisionalRHCCtrl" showHeader="false" sidebar="false">
+
+
+    <apex:includeScript value="{!$Resource.jquery2_1_4}" />
+    <apex:includeScript value="/support/console/34.0/integration.js" />
+
+    <script>
+
+        function openPrimaryTab(tabId, tabName) {
+            var changeTab = function(result) {
+                if (result.success == false) {
+                    sforce.console.focusPrimaryTabByName(tabId);
+                }
+            };
+            sforce.console.openPrimaryTab(null, tabId, true, tabName, changeTab, tabId);
+        };
+
+        function closeTab() {
+            sforce.console.getEnclosingTabId(closeSubtab);
+        };
+
+        var closeSubtab = function closeSubtab(result) {
+            var tabId = result.id;
+            sforce.console.closeTab(tabId);
+        };
+
+        function openSubtab(subtabUrl, subTabTitle) {
+            // Use the results primary tab id and open a new subtab
+            var openSubtab = function(result) {
+                sforce.console.openSubtab(result.id, subtabUrl, true, subTabTitle, null);
+            };
+            sforce.console.getEnclosingPrimaryTabId(openSubtab);
+        };
+
+    </script>
+
+   <apex:form >
+
+      <apex:pageBlock id="infoBlock" mode="edit" tabStyle="ANG_RHC_Information__c" rendered="{!rhc != null}">
+			<apex:pageMessages />
+         <apex:pageBlockSection title="RHC Information" columns="2">
+            <apex:repeat value="{!displayFields}" var="field">
+               		<apex:outputField value="{!rhc[field.name]}"/>
+            </apex:repeat>
+             
+         </apex:pageBlockSection>
+          <apex:outputLabel >
+            <div style="text-align:center;color:green;">
+				<apex:outputText rendered="{!hasChanged}"><b>The Provisional RHC Amount has been requested with success.</b></apex:outputText>
+            </div>
+            <div style="text-align:center;color:red;">
+				<apex:outputText rendered="{!!hasChanged && buttonAlreadyPushed}"><b>The Provisional RHC Amount has been requested but the values on the RHC are up-to-date.</b></apex:outputText>
+            </div>
+   		</apex:outputLabel>
+      </apex:pageBlock>
+      <apex:pageBlock id="editSection" mode="edit" tabStyle="ANG_RHC_Information__c">
+          	<apex:pageBlockButtons location="bottom">
+            <apex:commandButton value="Request Provisional RHC" action="{!requestProvisionalRHC}"  id="requestProvisional" rerender="infoBlock,editSection">
+            </apex:commandButton>
+                <apex:commandButton value="Confirm Forecasted RHC" action="{!save}"  id="acceptButton" disabled="{!!hasChanged}" rerender="infoBlock,editSection">
+            </apex:commandButton>
+            <apex:commandButton value="Cancel" id="cancel" onclick="closeTab();return false;">
+            </apex:commandButton>
+         </apex:pageBlockButtons>
+      </apex:pageBlock>
+   </apex:form>
+</apex:page>

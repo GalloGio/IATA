@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>false</enableSharing>
     <enableStreamingApi>false</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
     <fields>
         <fullName>Division__c</fullName>
         <description>This field corresponds to SAP Division Code</description>

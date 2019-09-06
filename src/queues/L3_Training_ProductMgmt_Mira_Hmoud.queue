@@ -2,6 +2,11 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>L3-Training-ProductMgmt-Mira Hmoud</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>L3_Training_ProductMgmt_Mira_Hmoud</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

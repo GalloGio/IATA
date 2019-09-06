@@ -306,18 +306,18 @@
     </choices>
     <choices>
         <name>IEP_Model_B_Account_Setup</name>
-        <choiceText>Screening IEP Model B</choiceText>
+        <choiceText>IEP Model B Screening</choiceText>
         <dataType>String</dataType>
         <value>
             <elementReference>IEP_MODEL_B_ACC_PROCESS</elementReference>
         </value>
     </choices>
     <choices>
-        <name>IEP_Model_B_Onboarding</name>
-        <choiceText>Screening IEP Model B</choiceText>
+        <name>IEP_Model_B_PLUS_Account_Setup</name>
+        <choiceText>IEP Model B+ Onboarding</choiceText>
         <dataType>String</dataType>
         <value>
-            <elementReference>IEP_MODEL_B_ACC_PROCESS</elementReference>
+            <stringValue>IEP.MODEL.B.PLUS.ACCOUNT.SETUP</stringValue>
         </value>
     </choices>
     <choices>
@@ -778,7 +778,7 @@
             <label>None/All Branches</label>
         </rules>
     </decisions>
-    <description>Added ifap contact validation for GDI</description>
+    <description>add IEP Model B+ Onboarding option</description>
     <dynamicChoiceSets>
         <name>Accreditation_Scope_of_Change</name>
         <dataType>Picklist</dataType>
@@ -789,6 +789,12 @@
     </dynamicChoiceSets>
     <interviewLabel>OscarCaseMigration {!$Flow.CurrentDateTime}</interviewLabel>
     <label>OscarCaseMigration Working Version</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
         <name>AccountConcernedLookup</name>
@@ -1040,7 +1046,8 @@
             <choiceReferences>Correction</choiceReferences>
             <choiceReferences>IEP_Bank_Account_Setup</choiceReferences>
             <choiceReferences>IEP_Model_A_Account_Setup</choiceReferences>
-            <choiceReferences>IEP_Model_B_Onboarding</choiceReferences>
+            <choiceReferences>IEP_Model_B_Account_Setup</choiceReferences>
+            <choiceReferences>IEP_Model_B_PLUS_Account_Setup</choiceReferences>
             <choiceReferences>ANG_GDISetup</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Please choose the process to convert</fieldText>
@@ -1145,6 +1152,7 @@ In order to migrate the SAAM case to a GDI OSCAR case please link it to a valid 
             <choiceReferences>ANG_NewProcessOPTINOUT</choiceReferences>
             <choiceReferences>IEP_Bank_Account_Setup</choiceReferences>
             <choiceReferences>IEP_Model_A_Account_Setup</choiceReferences>
+            <choiceReferences>IEP_Model_B_PLUS_Account_Setup</choiceReferences>
             <choiceReferences>IEP_Model_B_Account_Setup</choiceReferences>
             <choiceReferences>ANG_GDISetup</choiceReferences>
             <dataType>String</dataType>

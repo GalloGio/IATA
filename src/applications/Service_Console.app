@@ -5,7 +5,7 @@
             <alignment>right</alignment>
             <components>Console.BuiltInComponent.mostRecentlyUsed</components>
             <components>Console.BuiltInComponent.knowledgeOne</components>
-            <components>LiveAgentConsoleComponent</components>
+            <components>Console.BuiltInComponent.servicePresence</components>
             <components>DG_Routing_Component</components>
         </componentList>
         <detailPageRefreshMethod>flag</detailPageRefreshMethod>

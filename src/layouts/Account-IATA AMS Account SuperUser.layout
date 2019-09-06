@@ -341,6 +341,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>IATA_ISO_Shipping_Country__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Shipping_State__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Email__c</field>
             </layoutItems>
             <layoutItems>
@@ -362,14 +370,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>In_a_Airport__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IATA_ISO_Shipping_Country__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IATA_ISO_Shipping_State__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -663,7 +663,7 @@
                 <height>200</height>
                 <page>ImportantContacts</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
@@ -846,6 +846,7 @@
         <fields>ANG_Agent_Sales__c</fields>
         <fields>ANG_Threshold_Level__c</fields>
         <fields>ANG_Direction__c</fields>
+        <fields>ANG_Triggered_Rules__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>ANG_Risk_Alert__c.ANG_Account__c</relatedList>
         <sortField>CREATED_DATE</sortField>

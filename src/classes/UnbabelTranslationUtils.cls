@@ -81,7 +81,7 @@ public class UnbabelTranslationUtils {
 
 	public String checkLanguage(String content){
 		
-		if(Test.isRunningTest()) unbabelapi.UnbabelRestConnectorOutbound.desiredLanguage = 'pt';
+		if(Test.isRunningTest()) unbabelapi.UnbabelRestConnectorOutbound.desiredLanguage = getValidTargetLanguage();
 
 		unbabelapi.UnbabelRestEnvelopeCL ure = unbabelapi.UnbabelRestConnectorOutbound.checkLanguage(JSON.serialize(new EmailMessage(textBody=content)));
         String languageFound;
@@ -138,6 +138,18 @@ public class UnbabelTranslationUtils {
 
 		return userPermission.unbabelapi__Human__c ? 'Human' : 'Machine';
 
+	}
+
+	private String getValidTargetLanguage(){
+		
+		String validLang;
+
+		for(Schema.PicklistEntry pe : unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Languages__c.getDescribe().getPickListValues()){
+    		if(pe.isActive() && pe.getValue().split(':').get(0) != 'en'){
+		    	validLang = pe.getValue().split(':').get(0);
+    		}
+		}
+		return validLang;
 	}
 
 

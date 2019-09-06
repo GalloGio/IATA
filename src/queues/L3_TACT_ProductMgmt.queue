@@ -3,10 +3,9 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>L3-TACT-ProductMgmt</name>
     <queueMembers>
-        <users>
-            <user>hartonga@iata.org</user>
-            <user>meuniera@iata.org</user>
-        </users>
+        <publicGroups>
+            <publicGroup>L3_TACT_ProductMgmt</publicGroup>
+        </publicGroups>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

@@ -18,6 +18,7 @@
     <aura:attribute name="communitySelfRegisterUrl" type="String" access="private"/>
     <aura:attribute name="clientIpAddress" type="String" access="private"/>
     <aura:attribute name="serviceName" type="String" />
+    <aura:attribute name="serviceNameForLink" type="String" />
    
     <input type="hidden" id="clientIpAddressAjax" value="" />
     
@@ -71,12 +72,12 @@
                     </div>
                     
                     <div class="sfdc slds-p-top_medium slds-order_2 slds-medium-order_1  slds-max-small-size_1-of-1">
-                        <a href="{!if(v.serviceName != null, v.communityForgotPasswordUrl+'?serviceName='+v.serviceName, v.communityForgotPasswordUrl)}">
+                        <a href="{!if(v.serviceName != null, v.communityForgotPasswordUrl+'?serviceName='+v.serviceNameForLink, v.communityForgotPasswordUrl)}">
                             {!$Label.site.forgot_your_password_q}
                         </a>
                         <aura:if isTrue="{!v.isSelfRegistrationEnabled}">
-                            |
-                            <a href="{!if(v.serviceName != null, v.communitySelfRegisterUrl+'?serviceName='+v.serviceName, v.communitySelfRegisterUrl)}">
+                            <span class="black slds-p-horizontal_xx-small">|</span>
+                            <a href="{!if(v.serviceName != null, v.communitySelfRegisterUrl+'?serviceName='+v.serviceNameForLink, v.communitySelfRegisterUrl)}">
                                 {!$Label.site.new_user_q}
                             </a>
                         </aura:if>                            

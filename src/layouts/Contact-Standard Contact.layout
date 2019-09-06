@@ -63,14 +63,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Services__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Available_Services__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Available_Services_Images__c</field>
             </layoutItems>
             <layoutItems>
@@ -486,6 +482,10 @@
                 <behavior>Readonly</behavior>
                 <field>Contact_Profile_Complete__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>WebStar_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -555,6 +555,22 @@
             <layoutItems>
                 <height>350</height>
                 <page>EF_Contact_Attachment_List</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Custom tracking history</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>300</height>
+                <page>ContactTrackingHistory</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>
@@ -774,6 +790,14 @@
         <fields>Date_activated__c</fields>
         <fields>Date_Inactivated__c</fields>
         <relatedList>Related_Contact__c.Contact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact_Role_Name__c</fields>
+        <fields>First_Name__c</fields>
+        <fields>Last_Name__c</fields>
+        <fields>UniqueKey__c</fields>
+        <relatedList>Account_Contact_Role__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -1015,6 +1039,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Authorized_Signatories_Package__c.NAME</fields>
         <fields>Authorized_Signatories_Package__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>Authorized_Signatory__c.Contact__c</relatedList>

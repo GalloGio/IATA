@@ -1,0 +1,33 @@
+<template>
+
+    <c-portal-services-card-container image-url={service.recordService.Application_icon_URL__c}
+        background-variant="white">
+
+        <span slot="serviceName">
+            {service.recordService.ServiceName__c}
+            <lightning-icon if:true={service.recordService.New_Window__c} icon-name="utility:forward_up" size="xx-small"
+                slot="actions" class='slds-current-color extIconClass'>
+            </lightning-icon>
+        </span>
+        <span slot="serviceDescription">
+            <lightning-formatted-rich-text value={service.recordService.Service_Description__c} class="breakWord">
+            </lightning-formatted-rich-text>
+        </span>
+        <template if:true={service.recordService.Requestable__c}>
+
+            <span slot="leftButton">
+                <lightning-button variant="base" label={label.CSP_Services_ManageService}
+                    title={label.CSP_Services_ManageService} onclick={goToManageServiceButtonClick}
+                    class="slds-p-right_small text-xxsmall text-bold blueCustomButtonLink">
+                </lightning-button>
+            </span>
+        </template>
+
+        <span slot="rightButton">
+            <lightning-button label={label.CSP_Services_GoToService} class="containedButtonSlim"
+                onclick={goToServiceButtonClick}>
+            </lightning-button>
+        </span>
+    </c-portal-services-card-container>
+
+</template>

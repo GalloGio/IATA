@@ -355,7 +355,7 @@
         </rules>
     </decisions>
     <description>The process builder is used to Update the Parent Case and Create Comment from the Email reply</description>
-    <interviewLabel>Escalation_Email_to_Vendors_Handling_the_Reply-14_InterviewLabel</interviewLabel>
+    <interviewLabel>Escalation_Email_to_Vendors_Handling_the_Reply-2_InterviewLabel</interviewLabel>
     <label>Escalation Email to Vendors - Handling the Reply</label>
     <processMetadataValues>
         <name>ObjectType</name>

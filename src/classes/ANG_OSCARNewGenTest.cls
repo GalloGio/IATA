@@ -108,4 +108,5 @@ private class ANG_OSCARNewGenTest {
 		System.assertEquals('CC', aaList.get(0).ANG_FormOfPayment_ID__c);
 
 	}
+
 }

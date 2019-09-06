@@ -136,8 +136,10 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', ANG_Enable_NewGen__c = true,
-                                    Postal_Code_Format_regEx__c = '\\d{4}([\\-]\\d{3})?');
+                                    Postal_Code_Format_regEx__c = '\\d{4}([\\-]\\d{3})?', Region__c = 'some', State_Province_Picklist__c = true);
 		insert country;
+
+		insert new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c = country.Id, Name='Ontario', ISO_Code__c='CA-ON');
 
 		AMS_Accreditation_Country_CheckList__c aacc = new AMS_Accreditation_Country_CheckList__c(
      		IATA_ISO_Country__c = country.Id,
@@ -264,13 +266,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.confirmUpdate();
 
-		/*ctrl.currentAccount.fw.newform.Local_Physical_Address_Street__c = 'test';
-		ctrl.currentAccount.fw.newform.Local_Postal_Address_Street__c = 'test';
-		ctrl.currentAccount.fw.newform.Local_Physical_Address_City__c = 'test';
-		ctrl.currentAccount.fw.newform.Local_Postal_Address_City__c = 'test';
-		ctrl.currentAccount.fw.newform.Local_Physical_Address_Province__c = 'test';
-		ctrl.currentAccount.fw.newform.Local_Postal_Address_Province__c = 'test';
-		ctrl.currentAccount.fw.newform.Local_Legally_Registered_Name__c = 'test';*/
+		String countryInfoByCountryNameMapString = ctrl.countryInfoByCountryNameMapString;
+		String stateListByCountryName = ctrl.stateListByCountryName;
 
 		ctrl.currentAccount.fw.newForm.Notify_Change_Legal_Details__c = true;
 		ctrl.currentAccount.fw.newForm.Notify_Change_Location__c = true;
@@ -370,6 +367,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.newContact.Last_name__c = 'a';
 		ctrl.currentAccount.newContact.AddressStreet__c = 'a';
 		ctrl.currentAccount.newContact.AddressCity__c = 'a';
+        ctrl.currentAccount.newContact.AddressState__c = 'a';
 		ctrl.currentAccount.newContact.AddressPostcode__c = 'a';
 		ctrl.currentAccount.newContact.Job_title__c = 'a';
 		ctrl.currentAccount.newContact.Agencies_prev_worked_for__c = 'some';
@@ -418,6 +416,10 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.newContact = new AMS_Accreditation_Contact__c();
 		ctrl.contactType = 'Person';
         ctrl.amsContactCountry = 'Country';
+
+        System.currentPageReference().getParameters().put('countryName', 'test');
+
+        ctrl.getContactStates();
         
 		ctrl.createAgencyContact();
 
@@ -464,6 +466,17 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.currentAccount.fw.newform.Account_Name__c = '中文';
 		ctrl.currentAccount.fw.newform.Trade_Name__c = '中文';
+
+		ctrl.currentAccount.fw.newform.Branch_Office_Postal_code__c = '中文';
+		ctrl.currentAccount.fw.newform.Website__c = '中文';
+		ctrl.currentAccount.fw.newform.Branch_Office_Email__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_State__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_Postal_Code__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_Country__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_City__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_Street__c = '中文';
+		ctrl.currentAccount.fw.newform.Branch_Office_Street_name_number__c = '中文';
+
 		ctrl.currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c = null;
 		ctrl.currentAccount.isocountry.Tax_Number_VAT_field_mandatory__c = true;
         ctrl.currentAccount.isocountry.Tax_Number_2_VAT_field_2_mandatory__c = true;
@@ -1029,8 +1042,11 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ISSP_ANG_ANNUAL_REVALIDATION ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
 
-
+		ctrl.updateDetails();
 		String mode = ctrl.mode;
+        List<SelectOption> relAc = ctrl.relatedAccounts;
+        ctrl.currentAccount.fw.newform.Copy_Ownership__c = true;
+        ctrl.currentAccount.fw.newform.Notify_Change_Ownership__c = true;
 
 		List<SelectOption> countryNameList = ctrl.countryNameList;
 		AMS_Accreditation_Country_CheckList__c CountryCheckList = ctrl.CountryCheckList;
@@ -1039,15 +1055,23 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		upd.ca = ctrl.currentAccount;
 		upd.newAgencyContact();
 		upd.editAgencyContact();
+        ctrl.cleanOwnership();
+        List<String> forms = new List<String>();
+        forms.add(child.Id);
+        ctrl.formsToCopyOwnersTo = forms;
+        ctrl.copyOwnership();
+        
 		AMS_Accreditation_Country_CheckList__c CountryCheckListUpd = upd.CountryCheckList;
         
         Test.startTest();
         
         upd.validateVATNumber();
         upd.validateVATNumber2();
+        ctrl.confirmUpdate();
+        ctrl.getBatchStatus();
                 
         Boolean c = upd.displayShipping;
-        system.assertEquals(true, c);
+        system.assertEquals(false, c);
         upd.displayShipping = false;
         upd.resetCheckbox();
         

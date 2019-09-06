@@ -169,6 +169,78 @@
         <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
     <customLabels>
+        <label>لا يمكننا التحقق من العنوان في الموقع المحدد.</label>
+        <name>AMS_DQ_Cannot_Check</name>
+    </customLabels>
+    <customLabels>
+        <label>لم نتمكن من العثور على هذا العنوان. إذا كنتم متأكدين من صحة معلوماتكم، فلا يزال بإمكانكم الإرسال.</label>
+        <name>AMS_DQ_Cannot_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>لا يمكننا التحقق من صحة العنوان بدون مدينة {0}. الرجاء ملء هذا الحقل.</label>
+        <name>AMS_DQ_Cannot_Validate_City</name>
+    </customLabels>
+    <customLabels>
+        <label>لا يمكننا التحقق من صحة العنوان بدون {0} مدينة وشارع. الرجاء ملء هذا الحقل.</label>
+        <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>لا يمكننا التحقق من صحة العنوان بدون شارع {0}. الرجاء ملء هذا الحقل.</label>
+        <name>AMS_DQ_Cannot_Validate_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>تحقق من العنوان</label>
+        <name>AMS_DQ_Check_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label>المدينة {0} إلزامية. الرجاء ملء حقل المدينة {1}.</label>
+        <name>AMS_DQ_City_Cumpulsory</name>
+    </customLabels>
+    <customLabels>
+        <label>المدينة {0} ليست موجودة في قاعدة البيانات الخاصة بنا (أو تمت تهجئتها بشكل مختلف).</label>
+        <name>AMS_DQ_City_Not_in_Database</name>
+    </customLabels>
+    <customLabels>
+        <label>المدينة {0} موجودة في قاعدة بياناتنا ولكن يبدو أنها تنتمي إلى بلد آخر وفقًا لقاعدة البيانات الخاصة بنا.</label>
+        <name>AMS_DQ_City_in_Another_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>المدينة {0} موجودة في قاعدة بياناتنا ولكنها مرتبطة بولاية / مقاطعة أخرى.</label>
+        <name>AMS_DQ_City_in_Another_State</name>
+    </customLabels>
+    <customLabels>
+        <label>الرجاء إدخال مدينة صحيحة.</label>
+        <name>AMS_DQ_Enter_Valid_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
+        <label>تم العثور على العنوان (العناوين) المطابق (المطابقة).</label>
+        <name>AMS_DQ_Found_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label>مراجعة اسم المدينة. إذا كنتم متأكدين من صحة معلوماتكم المُدخلة ، الرجاء النقر فوق &quot;إرسال&quot;.</label>
+        <name>AMS_DQ_Review_City</name>
+    </customLabels>
+    <customLabels>
+        <label>مراجعة اسم (اسماء) البلد و / أو المدينة. إذا كنتم متأكدين من صحة معلوماتكم المُدخلة ، الرجاء النقر فوق &quot;إرسال&quot;.</label>
+        <name>AMS_DQ_Review_Country_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label>مراجعة اسم الولاية / المقاطعة و / أو المدينة.</label>
+        <name>AMS_DQ_Review_State</name>
+    </customLabels>
+    <customLabels>
+        <label>مراجعة الولاية / المقاطعة و / أو اسم المدينة. إذا كنتم متأكدين من صحة معلوماتكم المُدخلة ، الرجاء النقر فوق &quot;إرسال&quot;.</label>
+        <name>AMS_DQ_Review_State_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label>الشارع {0} إلزامي. الرجاء ملء حقل الشارع {1}.</label>
+        <name>AMS_DQ_Street_Compulsory</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Due Diligence Lock --></label>
         <name>AMS_Due_Diligence_Lock</name>
     </customLabels>
@@ -869,6 +941,10 @@
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
+    </customLabels>
+    <customLabels>
         <label>قائمة المؤسسات المالية التي توفر تأمين الضمان المالي في بلدكم</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>
@@ -1389,7 +1465,7 @@
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label>نرجو منك التحقق من صحة عناوين الفوترة والشحن الخاصة بك عن طريق الضغط على زر &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <label>الرجاء التحقق من عناوين إرسال الفواتير والشحن الخاصة بكم عن طريق النقر على زر مراجعة العنوان</label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>
@@ -1447,6 +1523,14 @@
     <customLabels>
         <label><!-- AirlineSuspensionEmailRecipientsEurope --></label>
         <name>AirlineSuspensionEmailRecipientsEurope</name>
+    </customLabels>
+    <customLabels>
+        <label>جميع الإشعارات</label>
+        <name>All_Notifications_Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>الإعلانات</label>
+        <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- Ask Delete Attachment --></label>
@@ -1637,23 +1721,643 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Community --></label>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin --></label>
+        <name>CSP_ANG_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin_Authorized_Signature --></label>
+        <name>CSP_ANG_Portal_Admin_Authorized_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_About --></label>
+        <name>CSP_About</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Accept Terms Error --></label>
+        <name>CSP_Accept_Terms_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_All --></label>
+        <name>CSP_Add_All</name>
+    </customLabels>
+    <customLabels>
+        <label>إضافة مستندات جديدة</label>
+        <name>CSP_Add_New_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_New_User --></label>
+        <name>CSP_Add_New_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_User --></label>
+        <name>CSP_Add_User</name>
+    </customLabels>
+    <customLabels>
+        <label>إعلان</label>
+        <name>CSP_Announcement</name>
+    </customLabels>
+    <customLabels>
+        <label>هل كان المقال مفيداً؟!</label>
+        <name>CSP_ArticleHelpful</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Branch Offices --></label>
+        <name>CSP_Branch_Offices</name>
+    </customLabels>
+    <customLabels>
+        <label>البحث المتقدم</label>
+        <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>الملف الخاص بالشركة</label>
+        <name>CSP_Breadcrumb_CompanyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_FAQ_Title --></label>
+        <name>CSP_Breadcrumb_FAQ_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>الصفحة الرئيسية</label>
+        <name>CSP_Breadcrumb_Home_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>الخدمات</label>
+        <name>CSP_Breadcrumb_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_Support_CreateNewCase --></label>
+        <name>CSP_Breadcrumb_Support_CreateNewCase</name>
+    </customLabels>
+    <customLabels>
+        <label>التواصل معنا</label>
+        <name>CSP_Breadcrumb_Support_ReachUs</name>
+    </customLabels>
+    <customLabels>
+        <label>الدعم</label>
+        <name>CSP_Breadcrumb_Support_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
+        <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>إلغاء</label>
+        <name>CSP_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>إلغاء خدمة {0}</label>
+        <name>CSP_CancelServiceActionLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>يمكنك إلغاء وصولك إلى  {0}</label>
+        <name>CSP_CancelServiceMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>هل أنتم متأكدون من أنكم ترغبون بإلغاء إمكانية الوصول إلى {0} ؟</label>
+        <name>CSP_Cancel_Access_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>إلغاء الوصول</label>
+        <name>CSP_Cancel_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>إلغاء الطلب</label>
+        <name>CSP_Cancel_Request</name>
+    </customLabels>
+    <customLabels>
+        <label>يمكنك إرسال واستقبال الرسائل إلى خدمة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA) حول هذه القضية.</label>
+        <name>CSP_CaseMessage_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>اكتب تعليقاتك هنا</label>
+        <name>CSP_CaseMessage_InputPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>الرسائل</label>
+        <name>CSP_CaseMessage_MessageTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>تم إضافة التعليق بنجاح</label>
+        <name>CSP_CaseMessage_SubmitSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>رقم القضية</label>
+        <name>CSP_CaseNumber</name>
+    </customLabels>
+    <customLabels>
+        <label>القضايا</label>
+        <name>CSP_Cases</name>
+    </customLabels>
+    <customLabels>
+        <label>المجتمع</label>
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Portal_Status --></label>
+        <label>عرض قضايا شركتي</label>
+        <name>CSP_CompanyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>الملف الشخصي للشركة</label>
+        <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>هل أنتم متأكدون من رغبتكم برفض إمكانية الوصول إلى &lt;b&gt;{0}&lt;/b&gt;  ل &lt;b&gt;{1}&lt;/b&gt;؟</label>
+        <name>CSP_Confirm_Deny_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>هل أنتم متأكدون أنكم تريدون منح حق الوصول إلى &lt;b &gt; {0} &lt; / b &gt; ل &lt; b &gt; {1} &lt; / b &gt; ؟</label>
+        <name>CSP_Confirm_Grant_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>تم إيصال طلب تمكين وصولكم ل {0} إلى مسؤولي البوابة. إذا كان لديكم أي أسئلة أو طلبات تتعلق بهذه العملية ، فيمكنكم التواصل مع أحد المسؤولين أدناه:</label>
+        <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Continue --></label>
+        <name>CSP_Continue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Create_Contact_Complete_Field --></label>
+        <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>رفض وصول المستخدم</label>
+        <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>المستندات</label>
+        <name>CSP_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label>جميع الوثائق</label>
+        <name>CSP_DocumentsAll</name>
+    </customLabels>
+    <customLabels>
+        <label>المستندات</label>
+        <name>CSP_DocumentsLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>يرجى تحديد الفئة التي ينتمي إليها المستند الذي تبحثون عنه.</label>
+        <name>CSP_DocumentsSelCat</name>
+    </customLabels>
+    <customLabels>
+        <label>دول النشر</label>
+        <name>CSP_Documents_PubliCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>التواصل معنا</label>
+        <name>CSP_FAQReachUsBanner_ButtonText</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;قم بإنشاء قضية، والدردشة مباشرة مع ممثل الاتحاد الدولي للنقل الجوي (إياتا - IATA) أو الاتصال بنا.&quot;</label>
+        <name>CSP_FAQReachUsBanner_Text</name>
+    </customLabels>
+    <customLabels>
+        <label>هل تريد المزيد من المساعدة؟</label>
+        <name>CSP_FAQReachUsBanner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>الأسئلة المكررة</label>
+        <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>اختر واحدة من الفئات الرئيسية</label>
+        <name>CSP_FAQ_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_FAQs_Title --></label>
+        <name>CSP_FAQs_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>الخدمات المفضلة</label>
+        <name>CSP_FavoriteServices_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>الميزات:</label>
+        <name>CSP_Features_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>أخبرنا كيف يمكننا جعل هذه المقالة أكثر فائدة.</label>
+        <name>CSP_FeedbackBody</name>
+    </customLabels>
+    <customLabels>
+        <label>نحن نقدر ملاحظاتك من أجل مساعدتنا في تحسين جودة مقالاتنا.</label>
+        <name>CSP_FeedbackBody2</name>
+    </customLabels>
+    <customLabels>
+        <label>التقييمات</label>
+        <name>CSP_FeedbackTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>من أجلك</label>
+        <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>منح وصول للمستخدم</label>
+        <name>CSP_Grant_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>مرحباً!</label>
+        <name>CSP_Home_WelcomeTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>تسجيل الخروج</label>
+        <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>يمكنكم إدارة المستخدمين من القائمة أدناه.</label>
+        <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>إدارة الخدمة</label>
+        <name>CSP_Manage_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>إدارة الخدمات</label>
+        <name>CSP_Manage_Services</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Manage_Services --></label>
+        <name>CSP_Manage_Services_NoIEPAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>عرض القضايا الخاصة بي</label>
+        <name>CSP_MyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>الاسم</label>
+        <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewServiceUserMessage --></label>
+        <name>CSP_NewServiceUserMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>لا يوجد حساب مرتبط لعرضه.</label>
+        <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>ليس لديك أي قضايا في الوقت الحالي.</label>
+        <name>CSP_NoCases1</name>
+    </customLabels>
+    <customLabels>
+        <label>ولكن فور ذلك، سترى الأحدث هنا.</label>
+        <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>لا نتائج</label>
+        <name>CSP_NoSearchResults</name>
+    </customLabels>
+    <customLabels>
+        <label>إذا اقتضى الأمر، يمكنك إضافة وثائق إلى القضية.</label>
+        <name>CSP_No_Documents_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>التقويم الأسبوعي</label>
+        <name>CSP_OperationalCalendar_HomeTileTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>العرض علي اساس شهري</label>
+        <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
+    </customLabels>
+    <customLabels>
+        <label>نحن بحاجة إلى مدخلاتك للمضي قدماً في قضيتك.</label>
+        <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PortalPath --></label>
+        <name>CSP_PortalPath</name>
+    </customLabels>
+    <customLabels>
+        <label>حالة البوابة</label>
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_SelectCommunity --></label>
+        <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
+        <name>CSP_Profile_PrivacyManagement_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Text --></label>
+        <name>CSP_Profile_PrivacyManagement_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Title --></label>
+        <name>CSP_Profile_PrivacyManagement_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_URL --></label>
+        <name>CSP_Profile_PrivacyManagement_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>ماذا تعني القضية ومتى أحتاج إليها؟</label>
+        <name>CSP_Question1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question1URL --></label>
+        <name>CSP_Question1URL</name>
+    </customLabels>
+    <customLabels>
+        <label>كيف يمكنني رؤية وتحديث تفاصيل القضية؟</label>
+        <name>CSP_Question2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question2URL --></label>
+        <name>CSP_Question2URL</name>
+    </customLabels>
+    <customLabels>
+        <label>القضايا الأخيرة</label>
+        <name>CSP_RecentCases</name>
+    </customLabels>
+    <customLabels>
+        <label>مقالات ذات صلة</label>
+        <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveContact_Reason --></label>
+        <name>CSP_RemoveContact_Reason</name>
+    </customLabels>
+    <customLabels>
+        <label>طلب خدمة</label>
+        <name>CSP_Request_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>حفظ</label>
+        <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>البحث باستخدام تفاصيل الوثيقة</label>
+        <name>CSP_SearchDocuments</name>
+    </customLabels>
+    <customLabels>
+        <label>البحث باستخدام تفاصيل الأسئلة الشائعة</label>
+        <name>CSP_SearchFAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>البحث المتقدم</label>
+        <name>CSP_Search_AdvancedSearch</name>
+    </customLabels>
+    <customLabels>
+        <label>البلد</label>
+        <name>CSP_Search_Case_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>النوع</label>
+        <name>CSP_Search_Case_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>الفئة</label>
+        <name>CSP_Search_Documents_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>نوع المنتج</label>
+        <name>CSP_Search_Documents_ProdType</name>
+    </customLabels>
+    <customLabels>
+        <label>البلد المنشور</label>
+        <name>CSP_Search_Documents_PubCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>الفئة</label>
+        <name>CSP_Search_FAQ_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>الموضوع الفرعي</label>
+        <name>CSP_Search_FAQ_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>موضوع</label>
+        <name>CSP_Search_FAQ_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>ابحث عن الخدمات والقضايا والدعم وأكثر من ذلك</label>
+        <name>CSP_Search_Home_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>العثور على مستخدم الخدمة</label>
+        <name>CSP_Search_In_Contacts_In_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>لا توجد نتائج للبحث</label>
+        <name>CSP_Search_NoResults_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;عذرا ، لا يوجد أي نتائج ل&quot;</label>
+        <name>CSP_Search_NoResults_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>الرجاء التحقق من تهجئة كلماتكم المفتاحية أو إعادة المحاولة باستخدام كلمات جديدة.</label>
+        <name>CSP_Search_NoResults_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>البحث في الخدمات</label>
+        <name>CSP_Search_Services_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>البحث في الدعم</label>
+        <name>CSP_Search_Support_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>أولى النتائج</label>
+        <name>CSP_Search_TopResults</name>
+    </customLabels>
+    <customLabels>
+        <label>الرجاء كتابة مصطلحات البحث الخاصة بكم</label>
+        <name>CSP_Search_TypeIn_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>يرجى كتابة شيء أكبر من حرفين لبدء البحث.</label>
+        <name>CSP_Search_TypeIn_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>الرجاء تحديد قسم تصفية لتحسين نتائج البحث الخاصة بكم.</label>
+        <name>CSP_Search_TypeIn_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>البحث عن رقم الحالة أو الموضوع أو الوصف</label>
+        <name>CSP_SearchingOn</name>
+    </customLabels>
+    <customLabels>
+        <label>اظهار الكل</label>
+        <name>CSP_SeeAll</name>
+    </customLabels>
+    <customLabels>
+        <label>اختر المجتمع</label>
         <name>CSP_SelectCommunity</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_SelectPortalStatus --></label>
+        <label>حدد حالة البوابة</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_selectReason --></label>
+        <label>الوصول إلى الخدمة</label>
+        <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>الوصول مطلوب</label>
+        <name>CSP_Services_AccessRequested</name>
+    </customLabels>
+    <customLabels>
+        <label>تم طلب الوصول</label>
+        <name>CSP_Services_AccessRequestedTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>جميع الخدمات المتاحة لشركتك مدرجة أدناه.</label>
+        <name>CSP_Services_AvailableServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>الخدمات المتاحة</label>
+        <name>CSP_Services_AvailableServicesTabTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>الذهاب إلى الخدمة</label>
+        <name>CSP_Services_GoToService</name>
+    </customLabels>
+    <customLabels>
+        <label>الذهاب إلى الخدمات</label>
+        <name>CSP_Services_GoToServices</name>
+    </customLabels>
+    <customLabels>
+        <label>هل تبحث عن خدمة؟</label>
+        <name>CSP_Services_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>إدارة الخدمة</label>
+        <name>CSP_Services_ManageService</name>
+    </customLabels>
+    <customLabels>
+        <label>خدمات شركتك مدرجة أدناه.</label>
+        <name>CSP_Services_MyServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>خدماتي</label>
+        <name>CSP_Services_MyServicesTabTile</name>
+    </customLabels>
+    <customLabels>
+        <label>عرض الخدمات المتاحة</label>
+        <name>CSP_Services_RequestServiceBannerButton</name>
+    </customLabels>
+    <customLabels>
+        <label>عرض معلومات مفصلة عن الخدمة وطلب الوصول إلى الخدمات المتاحة.</label>
+        <name>CSP_Services_RequestServiceBannerSubtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>طلب خدمة</label>
+        <name>CSP_Services_RequestServiceBannerTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>معلومات الخدمة</label>
+        <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>الخدمات</label>
+        <name>CSP_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>الإعدادات</label>
+        <name>CSP_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label>الحالة</label>
+        <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>إرسال</label>
+        <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>الدعم</label>
+        <name>CSP_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>كيف يمكننا المساعدة؟</label>
+        <name>CSP_Support_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>يمكنك تحميل ملفات من نوع pdf و jpeg و jpg و png و ppt و pptx و xls و xlsx و tif و tiff و tiff files. يجب أن يكون الحجم أصغر من 50 ميغابايت.</label>
+        <name>CSP_Supported_File_Extensions</name>
+    </customLabels>
+    <customLabels>
+        <label>مهمة</label>
+        <name>CSP_Task</name>
+    </customLabels>
+    <customLabels>
+        <label>نشكركم على ملاحظاتكم.</label>
+        <name>CSP_ThanksFeedback</name>
+    </customLabels>
+    <customLabels>
+        <label>العنوان</label>
+        <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>نوع القضية</label>
+        <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Announcements --></label>
+        <name>CSP_You_Dont_Have_Announcements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Notifications --></label>
+        <name>CSP_You_Dont_Have_Notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Tasks --></label>
+        <name>CSP_You_Dont_Have_Tasks</name>
+    </customLabels>
+    <customLabels>
+        <label>مخاطر الائتمان للوكيل</label>
+        <name>CSP_cpcc_Agent_Credit_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label>المفوَّض بالتوقيع</label>
+        <name>CSP_cpcc_Authorised_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>جهة الاتصال للدفع لدى الدفع لتسوية الفواتير (BSP) / (CASS) نظام تسوية حسابات الشحن</label>
+        <name>CSP_cpcc_BSP_CASS_Payment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>حالة نوع جهة الاتصال</label>
+        <name>CSP_cpcc_Contact_Type_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>جهة اتصال للتقييم المالي</label>
+        <name>CSP_cpcc_Financial_Assessment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>جهة اتصال للفوترة</label>
+        <name>CSP_cpcc_Invoice_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>ملف تعريف لجهة اتصال جديدة</label>
+        <name>CSP_cpcc_New_Contact_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>مدير البوابة</label>
+        <name>CSP_cpcc_Portal_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label>أماكن العمل</label>
+        <name>CSP_cpcc_Working_Areas</name>
+    </customLabels>
+    <customLabels>
+        <label>اختر السبب</label>
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
@@ -1707,6 +2411,10 @@
     <customLabels>
         <label><!-- CaseValidation - Area --></label>
         <name>CaseValidation_Area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CaseValidation - Area2 --></label>
+        <name>CaseValidation_Area2</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
@@ -1901,6 +2609,10 @@
         <name>CurrencyCenter_BSP_CASS_Proffile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_ICCS_Availability --></label>
+        <name>CurrencyCenter_BSP_ICCS_Availability</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -1931,6 +2643,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_CASS --></label>
         <name>CurrencyCenter_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_CASS_ICCS_Availability --></label>
+        <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
@@ -3321,7 +4037,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>الملف الشخصي</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -7909,6 +8625,10 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label>انتباه! بنسخِ معلومات مِلكية إلى وكالةٍ ما فإنكم ستحذفون بذلك أي معلومات مِلكية موجودة حول الوكالة المستهدفة.</label>
+        <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Country Select --></label>
         <name>ISSP_AMS_Country_Select</name>
     </customLabels>
@@ -8591,6 +9311,14 @@ and
     <customLabels>
         <label><!-- ISSP AMS Local Details Title --></label>
         <name>ISSP_AMS_Local_Details_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator --></label>
+        <name>ISSP_AMS_MSO_Aggregator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator_Info --></label>
+        <name>ISSP_AMS_MSO_Aggregator_Info</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_MSO_Alternatively --></label>
@@ -9689,6 +10417,10 @@ and
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
+        <label>اختر الحسابات المستهدفة</label>
+        <name>ISSP_AMS_Select_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>*يرجى اختيار الكيانات المنتسبة</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
@@ -9707,6 +10439,10 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_Signatory --></label>
         <name>ISSP_AMS_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>الولاية/المقاطعة</label>
+        <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_State_Names_Addresses_Field_Label --></label>
@@ -11097,6 +11833,22 @@ and
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
+        <label>جارٍ البحث...</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
+    </customLabels>
+    <customLabels>
+        <label>يسمح لكم هذا الإجراء بنسخ بيانات المِلكية من هذا الحساب إلى المواقع المختارة التي تخصّ التسلسل الخاص بكم. وسوف تتمكنون من إظهار التغييرات المطبّقة بواسطة هذا الإجراء على الوكالات المستهدفة فقط بعد تأكيد تحديث جميع التفاصيل في هذه الصفحة.</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
+    </customLabels>
+    <customLabels>
+        <label>الوكالات التي تمت معالجتها</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
+    </customLabels>
+    <customLabels>
+        <label>سيْر نسخ المِلكية</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
+    </customLabels>
+    <customLabels>
         <label>يرجى النقر هنا لمتابعة التوافق مع اشتراطات قطاع بطاقات الدفع PCI</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
@@ -11350,7 +12102,7 @@ and
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;إدارة الودائع بالمحافظ الفرعية المحددة&lt;/li&gt; &lt;li&gt;إدارة صلاحيات دخول «مُصدّري التذاكر» مستخدمي حساب IATA EasyPay والمَحافظ الفرعية&lt;/li&gt; &lt;li&gt;إنشاء أرقام IATA EasyPay من المَحافظ المحددة لاستخدامها في إصدار التذاكر عبر نظام التوزيع العالمي GDS.&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;إنشاء أرقام IATA EasyPay من أي محفظة (مَحافظ) محددة لاستخدامها في إصدار التذاكر عبر نظام التوزيع العالمي GDS.&lt;/li&gt;&lt;/ul&gt;</label>
@@ -12071,6 +12823,10 @@ and
         <name>ISSP_ClosedIFAPCasesStatus</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Closed_Non_Compliance --></label>
+        <name>ISSP_Closed_Non_Compliance</name>
+    </customLabels>
+    <customLabels>
         <label>تفاصيل العنوان</label>
         <name>ISSP_CompanyAddressInformation</name>
     </customLabels>
@@ -12165,6 +12921,10 @@ and
     <customLabels>
         <label>اسم المستخدم</label>
         <name>ISSP_ContactName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
         <label>معلومات الاتصال</label>
@@ -12867,6 +13627,14 @@ and
         <name>ISSP_EnterValidString</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Enter_Value --></label>
         <name>ISSP_Enter_Value</name>
     </customLabels>
@@ -13155,6 +13923,10 @@ and
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
+        <label>باختيار الاشتراك، سيتمكن مورّدو القطاع مثل شركات الطيران والفنادق ومشغّلي الرحلات من توزيع رسائل هامّة إلى وكالتكم حول المنتجات والعروض الترويجية والمبيعات وسياسات الوكالة.</label>
+        <name>ISSP_Gdp_Opt_In_Hint</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_GeneralPublicNotFound --></label>
         <name>ISSP_GeneralPublicNotFound</name>
     </customLabels>
@@ -13381,6 +14153,10 @@ and
     <customLabels>
         <label><!-- ISSP IATA Designator --></label>
         <name>ISSP_IATA_Designator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IATA_Location_Code --></label>
+        <name>ISSP_IATA_Location_Code</name>
     </customLabels>
     <customLabels>
         <label>رمز الاياتا المُدخل غير موجود. يرجى إدخال رمز الاياتا الصحيح. إن كنت لا تملك رمز اياتا, يرجى اختيار Other ك Type of Customer.</label>
@@ -13751,7 +14527,7 @@ and
         <name>ISSP_MyOutstandingPaymentsCases</name>
     </customLabels>
     <customLabels>
-        <label>حسابي</label>
+        <label>ملفي الشخصي</label>
         <name>ISSP_MyProfile</name>
     </customLabels>
     <customLabels>
@@ -14669,6 +15445,10 @@ and
         <name>ISSP_Registration_Error_LastName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
+    </customLabels>
+    <customLabels>
         <label>يرجى اختيار البلد</label>
         <name>ISSP_Registration_Error_Location</name>
     </customLabels>
@@ -14939,8 +15719,16 @@ and
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
+        <label>ينبغي اتخاذ التغييرات، باستثناء ما يتعلق بالاشتراك في GDP، من خلال عملية إعادة التفعيل السنوية</label>
+        <name>ISSP_Rev_Case_Open_Acc_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP SELECT COUNTRY --></label>
         <name>ISSP_SELECT_COUNTRY</name>
+    </customLabels>
+    <customLabels>
+        <label>- اختر الولاية -</label>
+        <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP SELECT THREE or MORE --></label>
@@ -15585,6 +16373,10 @@ and
     <customLabels>
         <label><!-- ISSP Status change to Inactive --></label>
         <name>ISSP_Status_change_to_Inactive</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
     </customLabels>
     <customLabels>
         <label>الفئة الفرعية</label>
@@ -16983,6 +17775,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
+        <label>ضع إشارةً بأنه مقروء</label>
+        <name>MarkAsRead_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -17115,6 +17911,22 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Not_Applicable</name>
     </customLabels>
     <customLabels>
+        <label><!-- Not In CNS Group Error --></label>
+        <name>Not_In_CNS_Group_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>إخطار</label>
+        <name>Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>الإشعارات:</label>
+        <name>NotificationCenter_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>تفاصيل الإشعار</label>
+        <name>NotificationDetail_Detail</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Notions_Essentl_Tarif_Billet_Description --></label>
         <name>Notions_Essentl_Tarif_Billet_Description</name>
     </customLabels>
@@ -17165,6 +17977,18 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>لُطفاً، اختاروا الفئة</label>
@@ -18650,6 +19474,18 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Please_select_the_target_Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- PortalAccess --></label>
+        <name>PortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal Name to Redirect --></label>
+        <name>PortalNameRedirect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PortalService --></label>
+        <name>PortalService</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>
@@ -19002,6 +19838,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>ShoppingCartQtyMsg</name>
     </customLabels>
     <customLabels>
+        <label><!-- Error displayed when a RO field is changed in a SIDRA Lite case --></label>
+        <name>SidraLiteROFieldError</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SignIn --></label>
         <name>SignIn</name>
     </customLabels>
@@ -19090,6 +19930,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label>مهام</label>
+        <name>Tasks_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Taxes --></label>
         <name>Taxes</name>
     </customLabels>
@@ -19146,6 +19990,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
+        <label>{0} طلب الوصول إلى البوابة.</label>
+        <name>UserRequestPortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} طلب الوصول إلى خدمة {1}</label>
+        <name>UserRequestServiceAccess</name>
+    </customLabels>
+    <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
     </customLabels>
@@ -19172,6 +20024,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- ViewCart --></label>
         <name>ViewCart</name>
+    </customLabels>
+    <customLabels>
+        <label>عرض التفاصيل</label>
+        <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- View_6_more --></label>
@@ -19268,6 +20124,494 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Contacting us --></label>
         <name>contacting_us</name>
+    </customLabels>
+    <customLabels>
+        <label>عملية الاعتماد</label>
+        <name>csp_Accreditation_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>اختر الفئة الرئيسية</label>
+        <name>csp_ActionForCategoryPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>خدمة الوصول</label>
+        <name>csp_ActionForTopicPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>أكمل النموذج لرؤية خيارات الدعم الموصى بها</label>
+        <name>csp_ActionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_AgencyReadOnly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Profile section label --></label>
+        <name>csp_Basics_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label>اتصل بنا</label>
+        <name>csp_Call_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>الفترة المتاحة:</label>
+        <name>csp_Call_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>سيبدأ ممثل الاتحاد الدولي للنقل الجوي (إياتا - IATA) العمل على ذلك.</label>
+        <name>csp_CaseBeingWorked</name>
+    </customLabels>
+    <customLabels>
+        <label>تم إنشاء القضية بنجاح.</label>
+        <name>csp_CaseCreatedSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>سوف تحصل على إجابة قريباً.</label>
+        <name>csp_CaseResponseGuarantee</name>
+    </customLabels>
+    <customLabels>
+        <label>يمكنكم إضافة التعليقات والمستندات والمستلمين في حالة التحديث. يمكنكم تتبع الحالة وإجراء التحديثات على</label>
+        <name>csp_CaseTracking</name>
+    </customLabels>
+    <customLabels>
+        <label>إنشاء قضية</label>
+        <name>csp_Case_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>أخبرنا كيف يمكننا المساعدة</label>
+        <name>csp_Case_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>قم بالدردش معنا</label>
+        <name>csp_Chat_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>الدردشة مع ممثل الاتحاد الدولي للنقل الجوي (إياتا - IATA)</label>
+        <name>csp_Chat_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>احصل على الدعم مباشرة من خلال بوابة الاتحاد الدولي للنقل الجوي (إياتا - IATA)، عن طريق الهاتف أو الدردشة.</label>
+        <name>csp_ChooseOption</name>
+    </customLabels>
+    <customLabels>
+        <label>العنوان للتواصل مع الشركة</label>
+        <name>csp_CompanyContact_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Complete required field label --></label>
+        <name>csp_CompleteField</name>
+    </customLabels>
+    <customLabels>
+        <label>شكرا على المشاركة.</label>
+        <name>csp_Compliment</name>
+    </customLabels>
+    <customLabels>
+        <label>في الاتحاد الدولي للنقل الجوي (إياتا - IATA) ، نسعى جاهدين لتوفير خدمة عملاء ممتازة ، ومن الرائع معرفة أنكم تهتمون أيضًا. نحن ننظر باهتمام في أي تغذية راجعة وردود فعل تقدمونها لنا.</label>
+        <name>csp_ComplimentInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>إطراء</label>
+        <name>csp_Compliment_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>شكوى</label>
+        <name>csp_Concern</name>
+    </customLabels>
+    <customLabels>
+        <label>شكوى</label>
+        <name>csp_Concern_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>حدد بلد أو منطقة الاستعلام الخاص بك</label>
+        <name>csp_CountryOrRegionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label>إنشاء حالة وإضافة المرفقات</label>
+        <name>csp_CreateNewCaseAddAttachment</name>
+    </customLabels>
+    <customLabels>
+        <label>قدِّم كل التفاصيل التي ستساعدنا في التحقيق في استفسارك</label>
+        <name>csp_CreateNewCaseMainInputBoxSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>الوصف</label>
+        <name>csp_CreateNewCaseMainInputBoxTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>إضافة مستخدم آخر للبوابة</label>
+        <name>csp_CreateNewCaseMainInputEmailsSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>مستلمون إضافيون</label>
+        <name>csp_CreateNewCaseMainInputEmailsTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>ما هو موضوع سؤالك؟</label>
+        <name>csp_CreateNewCaseMainInputSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>الموضوع</label>
+        <name>csp_CreateNewCaseMainInputTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>رمز الحساب ذات الصلة</label>
+        <name>csp_CreateNewCaseMainPicklistLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>إنشاء قضية</label>
+        <name>csp_CreateNewCaseTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>لقد قمت بالتحديد</label>
+        <name>csp_CreateNewCaseTopSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>يرجى تزويدنا بمزيد من المعلومات.</label>
+        <name>csp_CreateNewCaseTopSubSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>إنشاء جهة اتصال جديدة</label>
+        <name>csp_CreateNewContact</name>
+    </customLabels>
+    <customLabels>
+        <label>استعلام طارئ</label>
+        <name>csp_Emergency_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>الاستعراض المالي</label>
+        <name>csp_Financial_Review</name>
+    </customLabels>
+    <customLabels>
+        <label>البحث عن فرع</label>
+        <name>csp_Find_Branch</name>
+    </customLabels>
+    <customLabels>
+        <label>البحث عن جهة اتصال</label>
+        <name>csp_Find_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Facebook_URL --></label>
+        <name>csp_Footer_Facebook_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>متجر الاتحاد الدولي للنقل الجوي (إياتا - IATA)</label>
+        <name>csp_Footer_IATA_Store</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_IataStore_URL --></label>
+        <name>csp_Footer_IataStore_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Legal_URL --></label>
+        <name>csp_Footer_Legal_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Linkedin_URL --></label>
+        <name>csp_Footer_Linkedin_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Privacy_URL --></label>
+        <name>csp_Footer_Privacy_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Twitter_URL --></label>
+        <name>csp_Footer_Twitter_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Youtube_URL --></label>
+        <name>csp_Footer_Youtube_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>الذهاب إلى الصفحة الرئيسية</label>
+        <name>csp_GoToHomepage</name>
+    </customLabels>
+    <customLabels>
+        <label>الذهاب إلى الدعم</label>
+        <name>csp_GoToSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>الدفع للاتحاد الدولي للنقل الجوي (إياتا - IATA)</label>
+        <name>csp_IATA_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label>مدير IEP</label>
+        <name>csp_IEPAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label>التواصل مع الدعم</label>
+        <name>csp_IntentionOnThisPage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_InvalidPhoneValue --></label>
+        <name>csp_InvalidPhoneValue</name>
+    </customLabels>
+    <customLabels>
+        <label>هل استفسارك حالة طارئة؟</label>
+        <name>csp_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>آخر تسجيل دخول</label>
+        <name>csp_LastLoginDate</name>
+    </customLabels>
+    <customLabels>
+        <label>الدردشة غير متوفرة. يرجى الاتصال أو إنشاء قضية.</label>
+        <name>csp_LiveAgentBadConfig</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;انتهت مدة اتصال الدردشة. يمكنك تحديث الصفحة، أو إنشاء قضية&quot;</label>
+        <name>csp_LiveAgentTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>انتهاء مهلة اتصال الوكيل المباشر. يرجى إنعاش الصفحة أو الاتصال بالدعم</label>
+        <name>csp_LiveTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>مدير رئيسي للمحفظة</label>
+        <name>csp_MasterWalletManager</name>
+    </customLabels>
+    <customLabels>
+        <label>وظيفة العملية</label>
+        <name>csp_MembershipFunction</name>
+    </customLabels>
+    <customLabels>
+        <label>الشركة</label>
+        <name>csp_My_Profile_Company</name>
+    </customLabels>
+    <customLabels>
+        <label>البريد الإلكتروني</label>
+        <name>csp_My_Profile_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>العنوان الوظيفي</label>
+        <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_NoPortalServiceNameFound</name>
+    </customLabels>
+    <customLabels>
+        <label>حدد خيار الدعم المفضل لديك</label>
+        <name>csp_Options_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>معالجة</label>
+        <name>csp_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>جهة اتصال تجارية</label>
+        <name>csp_Profile_BusinessContact</name>
+    </customLabels>
+    <customLabels>
+        <label>بريد الشركة الإلكتروني</label>
+        <name>csp_Profile_CompanyEmail</name>
+    </customLabels>
+    <customLabels>
+        <label>رمز إياتا IATA</label>
+        <name>csp_Profile_IATACode</name>
+    </customLabels>
+    <customLabels>
+        <label>جهة اتصال شخصية</label>
+        <name>csp_Profile_PersonalContact</name>
+    </customLabels>
+    <customLabels>
+        <label>الوصول إلى البوابة</label>
+        <name>csp_Profile_PortalAccessibility</name>
+    </customLabels>
+    <customLabels>
+        <label>مهني</label>
+        <name>csp_Profile_Professional</name>
+    </customLabels>
+    <customLabels>
+        <label>موقع الكتروني</label>
+        <name>csp_Profile_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>الدعم</label>
+        <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>وكالتم حالياً لا تمتلك حساب مفتوح على إيزي باي EasyPay لدى إياتا. &lt;br /&gt;&lt;/br /&gt;يرجى الاتصال بالمفوَّض بالتوقيع لدى مكتبكم الرئيسي لمطالبته بفتح حساب إيزي باي EasyPay لدى الاتحاد الدولي للنقل الجوي (إياتا - IATA). كمسؤول البوابة يمكنكم إما تحديث &lt;a href=&quot;/my-profile&quot;&gt;المعلومات الشخصية&lt;/a&gt; لتعيين جهتكم كمفوَّض قانوني معتمد للتوقيع ، أو تعيين مسؤول موقع البوابة الصحيح من صفحة &lt;a href=&quot;/company-profile&quot;&gt; إدارة الشركة - &gt; جهات الاتصال&lt;/a&gt; وسؤاله لفتح حساب إيزي باي EasyPay خاص بكم.&lt;br/&gt;&lt;br/&gt;يرجى &lt;a href = &quot;/Support-Reach-Us&quot;&gt; الاتصال بالدعم &lt;/a&gt; إذا كنتم بحاجة إلى مساعدة.</label>
+        <name>csp_RequestService_ContactPortalAdmin_Alt</name>
+    </customLabels>
+    <customLabels>
+        <label>وكالتكم حالياً لا تمتلك حساباً مفتوحاً لدى إيزي باي EasyPay من الاتحاد الدولي للنقل الجوي (إياتا - IATA) &lt;br/&gt; &lt; br/ &gt; يرجى الاتصال بالمفوَّض بالتوقيع لدى مكتبكم الرئيسي لطلب فتح حساب إيزي باي EasyPay لدى الاتحاد الدولي للنقل الجوي (إياتا - IATA) من أجل فتح حساب إيزي باي EasyPay لدى الاتحاد الدولي للنقل الجوي (إياتا - IATA) ، يجب أن تكونوا مسؤولي بوابة ومفوَّضين معتمدين للتوقيع لوكالتكم.&lt;br/&gt;&lt;br/&gt;يرجى &lt;a href=&quot;/Support-Reach-Us?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;الاتصال بالدعم&lt;/a&gt; إذا كنتم بحاجة إلى المساعدة.</label>
+        <name>csp_RequestService_ContactPortalAdmin_LegalAuth</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_RequestService_ContactSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>لقد بدأ مفوَّض معتمد للتوقيع من كيانكم الرئيسي بالفعل بعملية فتح حساب IEP الخاص بوكالتكم. بمجرد فتح حساب IEP بنجاح ، ستتمكنون من الوصول إلى هذه الخدمة.</label>
+        <name>csp_RequestService_IEPAccountOpenInProgress</name>
+    </customLabels>
+    <customLabels>
+        <label>سيتم نقلكم الآن إلى بوابة إيزي باي EasyPay حيث يمكنكم إكمال طلبكم لفتح حساب إيزي باي EasyPay لدى الاتحاد الدولي للنقل الجوي (إياتا - IATA) الخاص بكم. &lt;br/&gt; &lt; br/ &gt; من خلال المتابعة، فإنكم توافقون على تقديم الاتحاد الدولي للنقل الجوي (إياتا - IATA) لاسمكم الأول واسم العائلة وعنوان البريد الإلكتروني ورمز IATA وأية معلومات شخصية أخرى ذات صلة متاحة إلى موردي إيزي باي EasyPay لدى الاتحاد الدولي للنقل الجوي (إياتا - IATA). لن يتم استخدام هذه المعلومات إلا من خلال موردي إيزي باي EasyPay لدى الاتحاد الدولي للنقل الجوي (إياتا - IATA) بغرض فتح وإدارة حساب إيزي باي EasyPay الخاص بكم وتشغيل خدمات إيزي باي EasyPay عمومًا ، أو غير ذلك وفقًا لما يقتضيه القانون. &lt; br/ &gt; &lt; br/ &gt; هل تريدون المتابعة؟</label>
+        <name>csp_RequestService_ProceedIEPAccountOpen</name>
+    </customLabels>
+    <customLabels>
+        <label>طلب الوصول</label>
+        <name>csp_Request_New_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>دفع المبيعات</label>
+        <name>csp_Sales_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_SearchNotPerformed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceAccessConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceRequestConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label>الموضوع الفرعي</label>
+        <name>csp_Sub_Topic_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>الموضوع الفرعي</label>
+        <name>csp_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>اقتراح</label>
+        <name>csp_Suggest_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>قد يساعد هذا</label>
+        <name>csp_Suggestion_label</name>
+    </customLabels>
+    <customLabels>
+        <label>نحن هنا للمساعدة.</label>
+        <name>csp_SupportCategoriesInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>سؤال</label>
+        <name>csp_SupportReachUs_AskTile</name>
+    </customLabels>
+    <customLabels>
+        <label>نحن هنا للمساعدة.</label>
+        <name>csp_SupportReachUs_BasicInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>الفئة</label>
+        <name>csp_SupportReachUs_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>إطراء</label>
+        <name>csp_SupportReachUs_ComplimentTile</name>
+    </customLabels>
+    <customLabels>
+        <label>شكوى</label>
+        <name>csp_SupportReachUs_ConcernTile</name>
+    </customLabels>
+    <customLabels>
+        <label>البلد</label>
+        <name>csp_SupportReachUs_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>هل استفسارك حالة طارئة؟</label>
+        <name>csp_SupportReachUs_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>احصل على الدعم مباشرة من خلال بوابة الاتحاد الدولي للنقل الجوي (إياتا - IATA) ، عن طريق الهاتف أو الدردشة.</label>
+        <name>csp_SupportReachUs_PlzChoosePath</name>
+    </customLabels>
+    <customLabels>
+        <label>اختر الفئة الرئيسية</label>
+        <name>csp_SupportReachUs_SelectCategory</name>
+    </customLabels>
+    <customLabels>
+        <label>حدد بلد أو منطقة الاستعلام الخاص بك</label>
+        <name>csp_SupportReachUs_SelectCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>اختر الموضوع</label>
+        <name>csp_SupportReachUs_SelectTopic</name>
+    </customLabels>
+    <customLabels>
+        <label>إظهار خيارات الدعم</label>
+        <name>csp_SupportReachUs_ShowSupportOptions</name>
+    </customLabels>
+    <customLabels>
+        <label>الرجاء إكمال النموذج لرؤية خيارات الدعم الموصى بها</label>
+        <name>csp_SupportReachUs_SpecifyCaseDetails</name>
+    </customLabels>
+    <customLabels>
+        <label>اقتراح</label>
+        <name>csp_SupportReachUs_SuggestTile</name>
+    </customLabels>
+    <customLabels>
+        <label>موضوع</label>
+        <name>csp_SupportReachUs_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>تواصل معنا</label>
+        <name>csp_SupportReachUs_WhatDoYouWant</name>
+    </customLabels>
+    <customLabels>
+        <label>الدعم</label>
+        <name>csp_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;تتيح لوحة التحكم هذه لكل فريق صندوق شركة طيران إمكانية رؤية كامل المبيعات الواردة لبطاقات الائتمان، وتقرير قابل للتنزيل لمبيعات بطاقات الائتمان ذات الصلة - بالإضافة إلى عرض التدفقات النقدية التي تتم معالجتها بواسطة كل من أنظمة التسوية الرئيسية لـ الاتحاد الدولي للنقل الجوي (إياتا - IATA): الدفع لتسوية الفواتير (BSP)، (CASS) نظام تسوية حسابات الشحن، ICCS (خدمة تخليص العملة) و ICH (غرفة مقاصة الاتحاد الدولي للنقل الجوي (إياتا - IATA)).&quot;</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel1</name>
+    </customLabels>
+    <customLabels>
+        <label>لمزيد من المعلومات ، يرجى زيارة: www.iata.org/treasurydashboard</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel2</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;أنتم على وشك طلب مزيد من المعلومات حول خدمة تجارية من الاتحاد الدولي للنقل الجوي (إياتا - IATA) بالنقر على &quot;&quot;تأكيد&quot;&quot; ، سترسل إليكم جميع التفاصيل حول كيفية الاشتراك في لوحة تحكم الصندوق من الاتحاد الدولي للنقل الجوي (إياتا - IATA) الفئة الممتازة (premium) على أساس شهري.&quot;</label>
+        <name>csp_TDP_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;أنتم على وشك طلب مزيد من المعلومات حول خدمة تجارية من الاتحاد الدولي للنقل الجوي (إياتا - IATA). بالنقر على &quot;&quot;تأكيد&quot;&quot; ، سيتم إرسال جميع التفاصيل الخاصة بكم حول كيفية الاشتراك في لوحة تحكم الصندوق من الاتحاد الدولي للنقل الجوي (إياتا - IATA) الفئة الممتازة (premium) على أساس شهري.&quot;</label>
+        <name>csp_TD_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>مصدّر التذاكر</label>
+        <name>csp_TicketIssuer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_TimeoutIEP</name>
+    </customLabels>
+    <customLabels>
+        <label>لم تتم إضافة المستلم. يرجى الضغط على زر الإضافة.</label>
+        <name>csp_ToastWarningRecipientNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label>عرض ملخص القضية</label>
+        <name>csp_ViewCaseSummary</name>
+    </customLabels>
+    <customLabels>
+        <label>مجالات العمل</label>
+        <name>csp_WorkingAreas</name>
+    </customLabels>
+    <customLabels>
+        <label>إظهار خيارات الدعم</label>
+        <name>csp_btn_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>خطأ في إنشاء الحالة</label>
+        <name>csp_errorCreatingCase</name>
+    </customLabels>
+    <customLabels>
+        <label>البحث بواسطة الاسم أو البريد الإلكتروني</label>
+        <name>csp_searchEmailRecipientPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;البحث بواسطة رمز IATA، أو الموقع أو الاسم&quot;</label>
+        <name>csp_searchIataCodeLocationNamePlaceHolder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_toSelectSubTopic</name>
     </customLabels>
     <customLabels>
         <label><!-- days left --></label>

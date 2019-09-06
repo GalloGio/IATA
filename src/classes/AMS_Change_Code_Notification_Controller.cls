@@ -41,14 +41,14 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 
             if (!lstRecentChangeCodes.isEmpty()) {
                 String codes = '';
-
+                
                 map<String, Integer> mapCountPerChangeCode = new map<String, Integer>();
-                for (Agency_Applied_Change_code__c cc : lstRecentChangeCodes) 
+                for (Agency_Applied_Change_code__c cc : lstRecentChangeCodes)
                     if (mapCountPerChangeCode.get(cc.Change_Code__c) != null)
                         mapCountPerChangeCode.put(cc.Change_Code__c, mapCountPerChangeCode.get(cc.Change_Code__c) + 1);
                     else
                         mapCountPerChangeCode.put(cc.Change_Code__c, 1);
-                
+
                 for (Agency_Applied_Change_code__c cc : lstRecentChangeCodes) {
                     if (mapCountPerChangeCode.get(cc.Change_Code__c) == 1) {
                         // create the link to the newly applied code: std hyper link for normal interface, javascript for console (the oscar is supposed to only be open in console mode)
@@ -69,12 +69,14 @@ public with sharing class AMS_Change_Code_Notification_Controller {
                 List<Technical_Logs__c> notifications = [SELECT Id, Record__c, Log__c FROM Technical_Logs__c WHERE Record__c LIKE :caseId+'%' AND CreatedDate > :dateRange ORDER BY CreatedDate DESC];
 
                 if(!notifications.isEmpty()){
-                    String message = ''; 
+                    String message = '';
                     for(Integer i = 0; i < notifications.size(); i++){
-                        message += (i == 0 ? '' :' and ')+notifications[i].Log__c; 
+
+                        if(notifications[i].Log__c.contains('NOT')) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'This is not the third non-compliance. NOT change code was not generated'));
+                        else message += (i == 0 ? '' :' and ')+notifications[i].Log__c; 
                     }
-                    
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, message+(notifications.size()>1?' were ' : ' was ')+'not generated, please issue Notice of Termination'));
+
+                    if(!String.isEmpty(message)) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, message+(notifications.size()>1?' were ' : ' was ')+'not generated, please issue Notice of Termination'));
 
                     //clean log records
                     delete notifications;
@@ -118,8 +120,8 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 		        }
 	        }
         }
-
     }
+
 	//EM - To be removed
 	public static void fakemethod () {
 		Integer i=0;
@@ -151,8 +153,5 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 		i=0;
 		i=0;
 		i=0;
-		
-	
-	
 	}
 }

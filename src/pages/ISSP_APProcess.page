@@ -20,7 +20,7 @@
                 }
             
             .bPageBlock {
-                border-top-width : thin !important;
+                border-top : 0px;
             }
             
             ul li, ol li {
@@ -41,29 +41,31 @@
                 background-color:transparent !important;
                 border-right:2px solid white;
             } 
-                       </style>
-                       
+            .row {
+              display: flex;
+            }
+            .col {
+              flex: 1;
+            }
+            .doc-link {
+                color: #6BBBEA;
+                font-weight: bold;
+            }
+            .req {
+                border-left: 3px solid red;
+                padding: 0px 10px 0px 10px;
+            }
+            .center {
+              text-align: center;
+            }
+            .doc-border {
+                margin: 30px;
+                -webkit-box-shadow:0px 0px 12px 1px #808080 ;
+                -moz-box-shadow:0px 0px 12px 1px #808080 ;
+                box-shadow:0px 0px 12px 1px #808080 ;
+            }
+            </style>
                        <script>
-                           function hideText(myValue){
-                           
-                           var inputs = document.getElementsByTagName("input");
-                           var theValue = document.getElementById(myValue).value;
-                           //  alert(theValue);
-                           if (theValue == 'Yes' ){
-                               document.getElementById('bankmandate_p').style.display='none';
-                               document.getElementById('bankmandatelink_p').style.display='none';
-                               document.getElementById('bankmandateupload_p').style.display='none';
-                               document.getElementById('bankmandatenotes_p').style.display='block';
-                               document.getElementById('bankmandateattachment_p').style.display='none';    
-                           } else {
-                               document.getElementById('bankmandate_p').style.display='block';
-                               document.getElementById('bankmandatelink_p').style.display='block';
-                               document.getElementById('bankmandateupload_p').style.display='block';   
-                               document.getElementById('bankmandateattachment_p').style.display='block';       
-                               document.getElementById('bankmandatenotes_p').style.display='none';
-                           }
-                       }
-                       
                        $(document).ready(function() {
                            $(".cass-airlines-select").select2({width : "resolve"});
                        
@@ -75,7 +77,9 @@
                        $(function () {
                            $('[data-toggle="tooltip"]').tooltip()
                        })
-                       
+                       function updateGuideCounter() {
+                           ISSP_APProcess.updateGuideCounter("{!newCase.Id}",function(result, event) {});
+                       }
                        </script>
             
             <div class="container">
@@ -107,7 +111,12 @@
                                         D. Submit to IATA
                                     </div>
                                 </div>
-                                
+
+                                <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
+                                    Any doubts? Please check out our&nbsp;
+                                    <apex:outputLink value="{!DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
+                                </apex:outputPanel>
+
                                 <apex:form styleClass="form-horizontal">
                                     <apex:actionFunction action="{!null}" name="refreshCountryList" reRender="countryList" oncomplete="$('.country-select').select2({width : 'resolve'});">
                                         <apex:param value="" assignTo="{!strOT}" name="strOT"/>
@@ -122,7 +131,7 @@
                                         </apex:pageBlockButtons>
                                         <apex:pageMessages ></apex:pageMessages>
                                         <div class="alert alert-info" role="alert">You can save your {!CASE(APProcess, 'chg', 'change request', 'bnk', 'change of bank account', 'joining form')} at anytime and come back later to complete it.</div>
-                                        <div class="alert alert-warning" role="alert">{!IF(strAreaType=='Airline Joining', 'Online Joining Applications', IF(strChangeType=='Minor database changes','Online Change Requests','Online changes of bank details'))} must be submitted within 2 weeks, otherwise you will need to restart the process for each participation type and country.
+                                        <div class="alert alert-warning" role="alert">{!IF(strAreaType=='Airline Joining', 'Online Joining Applications', IF(strChangeType=='Minor database changes','Online Change Requests','Online changes of bank details'))} must be submitted within 8 weeks, otherwise you will need to restart the process for each participation type and country.
                                         </div>
                                         
                                         <div class="form-group">
@@ -210,7 +219,7 @@
       
                     <!------------------------------------------->
                     <!--STEP 2 Display the country requirements-->
-                    <!------------------------------------------->
+                    <!----------------------------------------- -->
                     <apex:outputText rendered="{!isStep2&&countryRequirementFound}">
                         <div class="panel-primary">
                             <div class="panel-heading head_panel_green">
@@ -231,6 +240,7 @@
                                         D. Submit to IATA
                                     </div>
                                 </div>
+                                
                                 <c:ISSP_AP_Country_Reqs_Modal />
                                 
                                 <apex:form >

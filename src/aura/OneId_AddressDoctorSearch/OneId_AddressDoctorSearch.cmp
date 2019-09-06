@@ -11,12 +11,12 @@
     <!-- INTERNAL ATTRIBUTES -->
     <aura:attribute type="Object[]" name="response" access="private"/>
     <aura:attribute type="Boolean" name="searching" default="false" access="private" />
-    
+
     <!-- BODY -->
     <div class="slds-combobox_container">
         <div class="slds-combobox  slds-dropdown-trigger_click" aura:id="results" aria-expanded="true" aria-haspopup="listbox" role="combobox">
             <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
-                <ui:inputText value="{!v.inputValue}" updateOn="keyup" class="slds-input" disabled="{!v.disabled}" blur="{!c.closeResults}" />
+                <ui:inputText aura:id="Street" value="{!v.inputValue}" updateOn="change" class="slds-input" disabled="{!v.disabled}" change="{!c.closeResults}" required="true"/>
                 <!--<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
                     <aura:if isTrue="{!v.searching}">
                         <lightning:spinner size="small"/>

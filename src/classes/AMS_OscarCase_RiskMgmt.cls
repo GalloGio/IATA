@@ -85,8 +85,8 @@ public class AMS_OscarCase_RiskMgmt {
 				mapAllHOs.put(apd.Account__c, apd.HOId__c);
 
 			Map<Id,Account> allAccsMap = new Map<Id,Account>([select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, 
-							ParentId, Parent.ParentId, CNS_Agency__c, Default_date__c, ANG_IsNewGenAgency__c,
-							(SELECT Id, RecordTypeId, CreatedDate, AccountId, Status FROM Cases WHERE RecordTypeId = :AMS_Utils.RECTYPE_IFAP AND Id NOT IN :parentCasesIds)
+							ParentId, Parent.ParentId, CNS_Agency__c, Default_date__c, ANG_IsNewGenAgency__c, 
+							(SELECT Id, RecordTypeId, CreatedDate, AccountId, Status, IFAP_Financial_Year__c FROM Cases WHERE RecordTypeId = :AMS_Utils.RECTYPE_IFAP AND Id NOT IN :parentCasesIds)
 							from Account
 							where id in:mapAllHOs.keyset()]);
 
@@ -176,7 +176,6 @@ public class AMS_OscarCase_RiskMgmt {
 				mapIRRS.put(irr.Account__c, lsIRRS);
 			}
 
-
 			//Query the Cases and account info: from the trigger, I'm not getting all necessary lookup value. Trigger is always running AFTER
 			map<id, case> mapCases = new map<id, case>([
 			select id, recordType.DeveloperName, DEF_Withdrawal_Approval_Rejection__c, Short_Payment_Date__c, DEF_Withdrawal_Reason__c, DEF_Approval_Rejection__c, End_of_Grace_Period_Date__c,
@@ -188,13 +187,15 @@ public class AMS_OscarCase_RiskMgmt {
 								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c
 								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c, Account.ANG_IsNewGenAgency__c, Account.ParentId
 								  //DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-								  , Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c
+								  , Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c, Parent.IFAP_Financial_Year__c
 								  from case where id in:mapTrgNew.keySet()]);
 
 			set<string> setOperationCalendarExtID = new set<string>();
 			List<Technical_Logs__c> notifications = new List<Technical_Logs__c>();
+			Boolean generateNOTnotification = true;
 
 			for(Case c: mapCases.values()){
+
 				setAccntIdCase.add(c.AccountId);
 				string sExtId = GetOpCalendarExtId(c.External_ID__c);
 				if(sExtId!='')	setOperationCalendarExtID.add(sExtId);
@@ -246,22 +247,39 @@ public class AMS_OscarCase_RiskMgmt {
 					if(conf.Field5__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field5__c, conf.Field5Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
 
-					if(conf.Field6__c!=null && CCToBeGenerated)
-						CCToBeGenerated = bCheckCondition(c, conf.Field6__c, conf.Field6Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
+					if(conf.Field6__c!=null && CCToBeGenerated){
+						//NEWGEN-5318 - Get the last IFAP case from the related Account's Cases
+						Case lastIFAP = findLastIFAP(allAccsMap.get(c.AccountId).Cases, c.Parent.IFAP_Financial_Year__c);
+						CCToBeGenerated = bCheckCondition(c, conf.Field6__c, conf.Field6Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes, lastIFAP);
+
+						if(!CCToBeGenerated && generateNOTnotification && conf.Change_Code__c == 'NOT'){
+							generateNOTnotification = false;
+							notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = 'NOT change code'));
+						}
+
+					}
 
 					if(CCToBeGenerated)
 						CCToBeGenerated = CheckOldNewValues(c,  mapTrgOld.get(c.Id), conf.Field1__c, conf.Field2__c, conf.Field3__c, conf.Field4__c, conf.Field5__c, conf.Field6__c);
 
 					if(CCToBeGenerated){
-						//mapCasePerAccount.put(c.AccountId, c);
-						list<AMS_ChangeCodes__c> ls;
-						if(mapChangeCodeToCreate.KeySet().contains(c.Id))
-							ls = mapChangeCodeToCreate.get(c.Id);
-						else
-							ls = new list<AMS_ChangeCodes__c>();
+						//NEWGEN-2719 check if we need to skip CC creation depending on previous ifap status
+						if(conf.Change_Code__c == 'NFS' && c.Parent.RecordTypeId == AMS_Utils.RECTYPE_IFAP && allAccsMap.get(c.AccountId).ANG_IsNewGenAgency__c 
+							&& !allAccsMap.get(c.AccountId).Cases.isEmpty() && IFAP_BusinessRules.isPreviousIFAPStatusEquals(allAccsMap.get(c.AccountId).Cases, 'Closed_Non compliance')){
 
-						ls.add(conf);
-						mapChangeCodeToCreate.put(c.Id, ls);
+							notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = 'NFS change code'));
+
+						}else{	
+							//mapCasePerAccount.put(c.AccountId, c);
+							list<AMS_ChangeCodes__c> ls;
+							if(mapChangeCodeToCreate.KeySet().contains(c.Id))
+								ls = mapChangeCodeToCreate.get(c.Id);
+							else
+								ls = new list<AMS_ChangeCodes__c>();
+
+							ls.add(conf);
+							mapChangeCodeToCreate.put(c.Id, ls);
+						}
 					}
 				}
 			}
@@ -323,6 +341,7 @@ public class AMS_OscarCase_RiskMgmt {
 					for(AMS_ChangeCodes__c cc :mapChangeCodeToCreate.get(idCase)){
 						id CurrAccntId = mapCases.get(idCase).AccountId;
 						//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
+
 
                         Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null, mapCases.get(idCase).Account.CNS_Agency__c, aaccsPerAccount, fOPsMap.get(CurrAccntId));
 
@@ -772,6 +791,16 @@ public class AMS_OscarCase_RiskMgmt {
 	}
 
 
+	/**
+	 * Overloaded method to be able call 
+	 * the bCheckCondition with new paramenter
+	 *
+	 */
+	@TestVisible
+	private static boolean bCheckCondition(case NewCaseValues, string sFieldToCheck, string condition, case OldCaseValues, map<id, list<Agency_Applied_Change_code__c>> mapCC){		
+		return bCheckCondition(NewCaseValues, sFieldToCheck, condition, OldCaseValues, mapCC, null);
+	}
+
 	/**********************************************************************************************************************
 		Method return true if condition is verified.
 		Most of the times, a simple text value need to be checked. However, there are some expections such as:
@@ -787,20 +816,26 @@ public class AMS_OscarCase_RiskMgmt {
 		Most of the time, field to check is taken directly from the SIDRA/SIDRA Lite case.
 	***********************************************************************************************************************/
 	@TestVisible
-	private static boolean bCheckCondition(case NewCaseValues, string sFieldToCheck, string condition, case OldCaseValues, map<id, list<Agency_Applied_Change_code__c>> mapCC){
+	private static boolean bCheckCondition(case NewCaseValues, string sFieldToCheck, string condition, case OldCaseValues, map<id, list<Agency_Applied_Change_code__c>> mapCC, Case lastIFAP){
 		set<string> setValues = new set<string>();
 
 		if(condition.startsWithIgnoreCase('VALUES:')){
 			string sValue = null;
 			if(sFieldToCheck=='Parent.Status')
 				sValue = NewCaseValues.Parent.Status;
-			else
+			else if(sFieldToCheck=='LastYearIFAP.Status'){
+				//Account must have an IFAP Case from last year to be possible to generate NOT change code
+				if(lastIFAP != null) sValue = lastIFAP.Status;
+			}
+			else {
 				sValue = (string)NewCaseValues.get(sFieldToCheck);
+			}			
 
 			//if((string)NewCaseValues.get(sFieldToCheck) == null) return false;
 			if(sValue==null)	 return false;
 			setValues.addAll((condition.right(condition.length()-'VALUES:'.length())).split(';'));
 			//if(setValues.contains(((string)NewCaseValues.get(sFieldToCheck)).toUpperCase()))
+
 			if(setValues.contains(sValue.toUpperCase()))
 				return true;
 			else return false;
@@ -933,7 +968,8 @@ public class AMS_OscarCase_RiskMgmt {
 				((Field3==null || Field3.toUpperCase() == 'PARENT.STATUS' || Field3.toUpperCase() ==  'CHANGECODE' || Field3.toUpperCase()== 'EXISTS') || (Field3 != null && NewCaseValues.get(Field3) == OldCaseValues.get(Field3))) &&
 				((Field4==null || Field4.toUpperCase() == 'PARENT.STATUS' || Field4.toUpperCase() ==  'CHANGECODE' || Field4.toUpperCase()== 'EXISTS') || (Field4 != null && NewCaseValues.get(Field4) == OldCaseValues.get(Field4))) &&
 				((Field5==null || Field5.toUpperCase() == 'PARENT.STATUS' || Field5.toUpperCase() ==  'CHANGECODE' || Field5.toUpperCase()== 'EXISTS') || (Field5 != null && NewCaseValues.get(Field5) == OldCaseValues.get(Field5))) &&
-				((Field6==null || Field6.toUpperCase() == 'PARENT.STATUS' || Field6.toUpperCase() ==  'CHANGECODE' || Field6.toUpperCase()== 'EXISTS') || (Field6 != null && NewCaseValues.get(Field6) == OldCaseValues.get(Field6)))
+				//NEWGEN-5318 - avoid validation when Field6 Value = LASTYEARIFAP.STATUS
+				((Field6==null || Field6.toUpperCase() == 'PARENT.STATUS' || Field6.toUpperCase() ==  'CHANGECODE' || Field6.toUpperCase()== 'EXISTS') || (Field6 != null && Field6.toUpperCase() != 'LASTYEARIFAP.STATUS' && NewCaseValues.get(Field6) == OldCaseValues.get(Field6)))
 				)
 				return false;
 		}
@@ -1185,5 +1221,25 @@ public class AMS_OscarCase_RiskMgmt {
             return String.ValueOf(detail.Due_Date__c);
         }
         return '';
+    }
+
+
+    /**
+     * For the given Case list 
+     * find the Last IFAP case in the last Financial Year
+     * 
+     */
+    private static Case findLastIFAP(List<Case> caseList, String financialYear){
+
+    	Case lastIfapCase = null;
+    	if(financialYear == null) return null;
+
+    	Integer lastYearIfap = Integer.valueOf(financialYear) - 1;
+
+    	for(Case c : caseList){
+    		if(c.IFAP_Financial_Year__c == String.valueOf(lastYearIfap) && (lastIfapCase == null || lastIfapCase.CreatedDate < c.CreatedDate))
+    			lastIfapCase = c;
+    	}
+    	return lastIfapCase;
     }
 }

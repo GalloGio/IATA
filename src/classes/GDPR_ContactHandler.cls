@@ -24,12 +24,18 @@ public class GDPR_ContactHandler {
             }
         }
 
-        try{
-            il = [SELECT ID, Email__c FROM Individual WHERE Email__c IN :contactsEmails];
-        }catch(Exception e){
-            System.debug(e.getMessage());
+        if(!contactsEmails.isEmpty()) {
+
+            try{
+
+                il = [SELECT ID, Email__c FROM Individual WHERE Email__c IN :contactsEmails];
+
+            }catch(Exception e){
+                
+                System.debug(e.getMessage());
+            }
         }
-        
+
         Integer numOfIndivs = il.size();
         
         //If at least one contact has an individual with a similar email on contact        

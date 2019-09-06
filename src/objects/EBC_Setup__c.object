@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Default_Cost_per_E_mail__c</fullName>
         <description>The field designates the default value that will be used when there are no pre-paid plans active.</description>

@@ -169,6 +169,78 @@
         <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
     <customLabels>
+        <label>Chúng tôi không thể kiểm tra địa chỉ ở vị trí được chỉ định.</label>
+        <name>AMS_DQ_Cannot_Check</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi không thể tìm thấy địa chỉ đó. Nếu bạn chắc chắn rằng đầu vào của bạn là chính xác, bạn vẫn có thể gửi.</label>
+        <name>AMS_DQ_Cannot_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi không thể xác thực địa chỉ mà không có thành phố {0}. Vui lòng điền vào trường.</label>
+        <name>AMS_DQ_Cannot_Validate_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi không thể xác thực địa chỉ mà không có thành phố và đường phố {0}. Vui lòng điền vào trường.</label>
+        <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi không thể xác thực địa chỉ mà không có đường {0}. Vui lòng điền vào trường.</label>
+        <name>AMS_DQ_Cannot_Validate_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>Kiểm tra địa chỉ</label>
+        <name>AMS_DQ_Check_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label>Thành phố {0} là bắt buộc. Vui lòng điền vào trường thành phố {1}.</label>
+        <name>AMS_DQ_City_Cumpulsory</name>
+    </customLabels>
+    <customLabels>
+        <label>Thành phố {0} không có trong cơ sở dữ liệu của chúng tôi (hoặc nó được viết theo cách khác).</label>
+        <name>AMS_DQ_City_Not_in_Database</name>
+    </customLabels>
+    <customLabels>
+        <label>Thành phố {0} nằm trong cơ sở dữ liệu của chúng tôi nhưng dường như nó thuộc về một quốc gia khác theo cơ sở dữ liệu của chúng tôi.</label>
+        <name>AMS_DQ_City_in_Another_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Thành phố {0} nằm trong cơ sở dữ liệu của chúng tôi nhưng nó được liên kết với một Bang / Tỉnh khác.</label>
+        <name>AMS_DQ_City_in_Another_State</name>
+    </customLabels>
+    <customLabels>
+        <label>Nhập một thành phố hợp lệ.</label>
+        <name>AMS_DQ_Enter_Valid_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
+        <label>Địa chỉ phù hợp đã được tìm thấy.</label>
+        <name>AMS_DQ_Found_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label>Xem lại tên thành phố. Nếu bạn chắc chắn rằng đầu vào của bạn là chính xác, nhấp gửi.</label>
+        <name>AMS_DQ_Review_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Xem lại quốc gia và / hoặc tên thành phố. Nếu bạn chắc chắn rằng đầu vào của bạn là chính xác, nhấp gửi.</label>
+        <name>AMS_DQ_Review_Country_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Xem lại tiểu bang / tỉnh và / hoặc tên thành phố.</label>
+        <name>AMS_DQ_Review_State</name>
+    </customLabels>
+    <customLabels>
+        <label>Xem lại tiểu bang / tỉnh và / hoặc tên thành phố. Nếu bạn chắc chắn rằng đầu vào của bạn là chính xác, nhấp gửi.</label>
+        <name>AMS_DQ_Review_State_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Đường {0} là bắt buộc. Vui lòng điền vào ô đường {1}.</label>
+        <name>AMS_DQ_Street_Compulsory</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Due Diligence Lock --></label>
         <name>AMS_Due_Diligence_Lock</name>
     </customLabels>
@@ -869,6 +941,10 @@
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
+    </customLabels>
+    <customLabels>
         <label>Danh sách Các tổ chức Tài chính cung cấp Bảo hiểm Bảo đảm Tài chính tại quốc gia của bạn</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>
@@ -1391,7 +1467,7 @@
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label>Vui lòng xác nhận địa chỉ nhận hóa đơn của bạn bằng cách ấn vào ô &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <label>Vui lòng kiểm tra địa chỉ thanh toán và giao hàng bằng cách nhấp vào nút kiểm tra địa chỉ</label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>
@@ -1449,6 +1525,14 @@
     <customLabels>
         <label><!-- AirlineSuspensionEmailRecipientsEurope --></label>
         <name>AirlineSuspensionEmailRecipientsEurope</name>
+    </customLabels>
+    <customLabels>
+        <label>Tất cả các thông báo</label>
+        <name>All_Notifications_Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>Các thông báo</label>
+        <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- Ask Delete Attachment --></label>
@@ -1639,23 +1723,643 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Community --></label>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin --></label>
+        <name>CSP_ANG_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin_Authorized_Signature --></label>
+        <name>CSP_ANG_Portal_Admin_Authorized_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_About --></label>
+        <name>CSP_About</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Accept Terms Error --></label>
+        <name>CSP_Accept_Terms_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_All --></label>
+        <name>CSP_Add_All</name>
+    </customLabels>
+    <customLabels>
+        <label>Thêm tài liệu mới</label>
+        <name>CSP_Add_New_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_New_User --></label>
+        <name>CSP_Add_New_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_User --></label>
+        <name>CSP_Add_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Thông báo</label>
+        <name>CSP_Announcement</name>
+    </customLabels>
+    <customLabels>
+        <label>Bài viết này hữu ích không?</label>
+        <name>CSP_ArticleHelpful</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Branch Offices --></label>
+        <name>CSP_Branch_Offices</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm kiếm nâng cao</label>
+        <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Hồ sơ công ty</label>
+        <name>CSP_Breadcrumb_CompanyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_FAQ_Title --></label>
+        <name>CSP_Breadcrumb_FAQ_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Trang chủ</label>
+        <name>CSP_Breadcrumb_Home_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Dịch vụ</label>
+        <name>CSP_Breadcrumb_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_Support_CreateNewCase --></label>
+        <name>CSP_Breadcrumb_Support_CreateNewCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Liên lạc với chúng tôi</label>
+        <name>CSP_Breadcrumb_Support_ReachUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Ủng hộ</label>
+        <name>CSP_Breadcrumb_Support_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
+        <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Hủy</label>
+        <name>CSP_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>Hủy {0} Dịch vụ</label>
+        <name>CSP_CancelServiceActionLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn có thể hủy quyền truy cập của bạn vào {0}</label>
+        <name>CSP_CancelServiceMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn có chắc chắn muốn hủy quyền truy cập vào {0} không?</label>
+        <name>CSP_Cancel_Access_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Hủy truy cập</label>
+        <name>CSP_Cancel_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Hủy yêu cầu</label>
+        <name>CSP_Cancel_Request</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn có thể gửi và nhận tin nhắn đến Dịch vụ khách hàng của IATA về trường hợp này.</label>
+        <name>CSP_CaseMessage_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Nhập ý kiến của bạn ở đây</label>
+        <name>CSP_CaseMessage_InputPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Tin nhắn</label>
+        <name>CSP_CaseMessage_MessageTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Đã thêm bình luận thành công</label>
+        <name>CSP_CaseMessage_SubmitSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>Số hồ sơ</label>
+        <name>CSP_CaseNumber</name>
+    </customLabels>
+    <customLabels>
+        <label>Các trường hợp</label>
+        <name>CSP_Cases</name>
+    </customLabels>
+    <customLabels>
+        <label>Cộng đồng</label>
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Portal_Status --></label>
+        <label>Xem trường hợp công ty của tôi</label>
+        <name>CSP_CompanyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>Hồ sơ công ty</label>
+        <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn có chắc chắn muốn từ chối quyền truy cập vào &lt; b &gt; {0} &lt; / b &gt; cho &lt; b &gt; {1} &lt; / b &gt; không?</label>
+        <name>CSP_Confirm_Deny_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn có chắc chắn muốn cấp quyền truy cập cho &lt; b &gt; {0} &lt; / b &gt; cho &lt; b &gt; {1} &lt; / b &gt; không?</label>
+        <name>CSP_Confirm_Grant_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Yêu cầu truy cập {0} của bạn đã được gửi tới quản trị viên cổng thông tin. Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu nào về quy trình, bạn có thể liên hệ với quản trị viên bên dưới:&quot;</label>
+        <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Continue --></label>
+        <name>CSP_Continue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Create_Contact_Complete_Field --></label>
+        <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>Từ chối quyền truy cập của người dùng</label>
+        <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Các tài liệu</label>
+        <name>CSP_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label>Tất cả tài liệu</label>
+        <name>CSP_DocumentsAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Các tài liệu</label>
+        <name>CSP_DocumentsLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng chọn danh mục mà tài liệu bạn đang tìm kiếm thuộc về.</label>
+        <name>CSP_DocumentsSelCat</name>
+    </customLabels>
+    <customLabels>
+        <label>Các nước xuất bản</label>
+        <name>CSP_Documents_PubliCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>Liên lạc với chúng tôi</label>
+        <name>CSP_FAQReachUsBanner_ButtonText</name>
+    </customLabels>
+    <customLabels>
+        <label>Tạo một trường hợp, trò chuyện trực tiếp với Đại diện IATA hoặc gọi cho chúng tôi.</label>
+        <name>CSP_FAQReachUsBanner_Text</name>
+    </customLabels>
+    <customLabels>
+        <label>Cần thêm sự giúp đỡ?</label>
+        <name>CSP_FAQReachUsBanner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Các câu hỏi thường gặp</label>
+        <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Chọn một trong các loại chính</label>
+        <name>CSP_FAQ_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_FAQs_Title --></label>
+        <name>CSP_FAQs_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Các dịch vụ yêu thích</label>
+        <name>CSP_FavoriteServices_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Tính năng, đặc điểm</label>
+        <name>CSP_Features_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Hãy cho chúng tôi biết làm thế nào chúng tôi có thể làm cho mục này hữu ích hơn.</label>
+        <name>CSP_FeedbackBody</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi đánh giá cao phản hồi của bạn để giúp chúng tôi cải thiện chất lượng bài viết của mình.</label>
+        <name>CSP_FeedbackBody2</name>
+    </customLabels>
+    <customLabels>
+        <label>Phản hồi</label>
+        <name>CSP_FeedbackTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Cho bạn</label>
+        <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>Cấp quyền truy cập người dùng</label>
+        <name>CSP_Grant_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin chào [username]</label>
+        <name>CSP_Home_WelcomeTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Đăng xuất</label>
+        <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn có thể quản lý người dùng từ danh sách dưới đây.</label>
+        <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>Quản lý dịch vụ</label>
+        <name>CSP_Manage_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Quản lý các dịch vụ</label>
+        <name>CSP_Manage_Services</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Manage_Services --></label>
+        <name>CSP_Manage_Services_NoIEPAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Xem trường hợp của tôi</label>
+        <name>CSP_MyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>Tên</label>
+        <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewServiceUserMessage --></label>
+        <name>CSP_NewServiceUserMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Không có tài khoản liên quan để hiển thị.</label>
+        <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Bây giờ bạn không có trường hợp nào.</label>
+        <name>CSP_NoCases1</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Nhưng một khi bạn có, bạn sẽ thấy những cái gần đây nhất ở đây.&quot;</label>
+        <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>Không có kết quả</label>
+        <name>CSP_NoSearchResults</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Nếu cần thiết, bạn có thể thêm tài liệu vào trường hợp.&quot;</label>
+        <name>CSP_No_Documents_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Lịch hàng tuần</label>
+        <name>CSP_OperationalCalendar_HomeTileTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Xem hàng tháng</label>
+        <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi cần ý kiến đóng góp của bạn để tiến hành với trường hợp của bạn.</label>
+        <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PortalPath --></label>
+        <name>CSP_PortalPath</name>
+    </customLabels>
+    <customLabels>
+        <label>Trạng thái cổng thông tin</label>
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_SelectCommunity --></label>
+        <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
+        <name>CSP_Profile_PrivacyManagement_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Text --></label>
+        <name>CSP_Profile_PrivacyManagement_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Title --></label>
+        <name>CSP_Profile_PrivacyManagement_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_URL --></label>
+        <name>CSP_Profile_PrivacyManagement_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Một trường hợp là gì và khi nào tôi cần nó?</label>
+        <name>CSP_Question1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question1URL --></label>
+        <name>CSP_Question1URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Làm thế nào tôi có thể xem và cập nhật các chi tiết của một trường hợp?</label>
+        <name>CSP_Question2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question2URL --></label>
+        <name>CSP_Question2URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Các trường hợp gần đây</label>
+        <name>CSP_RecentCases</name>
+    </customLabels>
+    <customLabels>
+        <label>Những bài viết liên quan</label>
+        <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveContact_Reason --></label>
+        <name>CSP_RemoveContact_Reason</name>
+    </customLabels>
+    <customLabels>
+        <label>Yêu cầu dịch vụ</label>
+        <name>CSP_Request_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Tiết kiệm</label>
+        <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm kiếm theo chi tiết tài liệu</label>
+        <name>CSP_SearchDocuments</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm kiếm theo chi tiết Câu hỏi thường gặp</label>
+        <name>CSP_SearchFAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm kiếm nâng cao</label>
+        <name>CSP_Search_AdvancedSearch</name>
+    </customLabels>
+    <customLabels>
+        <label>Quốc gia</label>
+        <name>CSP_Search_Case_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Kiểu</label>
+        <name>CSP_Search_Case_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Thể loại</label>
+        <name>CSP_Search_Documents_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Loại sản phẩm</label>
+        <name>CSP_Search_Documents_ProdType</name>
+    </customLabels>
+    <customLabels>
+        <label>Nước phát hành</label>
+        <name>CSP_Search_Documents_PubCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>Thể loại</label>
+        <name>CSP_Search_FAQ_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Tiêu đề phụ</label>
+        <name>CSP_Search_FAQ_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>Đề tài</label>
+        <name>CSP_Search_FAQ_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm dịch vụ, trường hợp, hỗ trợ và nhiều hơn nữa</label>
+        <name>CSP_Search_Home_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm dịch vụ người dùng</label>
+        <name>CSP_Search_In_Contacts_In_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Không có kết quả tìm kiếm</label>
+        <name>CSP_Search_NoResults_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin lỗi, không có kết quả nào cho</label>
+        <name>CSP_Search_NoResults_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>Kiểm tra chính tả các từ khóa của bạn hoặc thử lại với những từ khóa mới.</label>
+        <name>CSP_Search_NoResults_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>Dịch vụ tìm kiếm</label>
+        <name>CSP_Search_Services_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Hỗ trợ tìm kiếm</label>
+        <name>CSP_Search_Support_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Kết quả hàng đầu</label>
+        <name>CSP_Search_TopResults</name>
+    </customLabels>
+    <customLabels>
+        <label>Nhập cụm từ tìm kiếm của bạn</label>
+        <name>CSP_Search_TypeIn_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng nhập một điều gì đó nhiều hơn 2 chữ cái để bắt đầu tìm kiếm.</label>
+        <name>CSP_Search_TypeIn_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>Chọn một phần bộ lọc để cải thiện hơn nữa kết quả tìm kiếm của bạn.</label>
+        <name>CSP_Search_TypeIn_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm kiếm trên số hiệu của trường hợp, Tiêu đề hoặc Mô tả</label>
+        <name>CSP_SearchingOn</name>
+    </customLabels>
+    <customLabels>
+        <label>Nhìn thấy tất cả</label>
+        <name>CSP_SeeAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Chọn cộng đồng</label>
         <name>CSP_SelectCommunity</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_SelectPortalStatus --></label>
+        <label>Chọn Trạng thái cổng thông tin</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_selectReason --></label>
+        <label>Truy cập dịch vụ</label>
+        <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>Yêu cầu truy cập</label>
+        <name>CSP_Services_AccessRequested</name>
+    </customLabels>
+    <customLabels>
+        <label>Yêu cầu truy cập</label>
+        <name>CSP_Services_AccessRequestedTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Tất cả các dịch vụ có sẵn cho công ty của bạn được liệt kê dưới đây.</label>
+        <name>CSP_Services_AvailableServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Dịch vụ có sẵn</label>
+        <name>CSP_Services_AvailableServicesTabTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Đi đến dịch vụ</label>
+        <name>CSP_Services_GoToService</name>
+    </customLabels>
+    <customLabels>
+        <label>Chuyển đến Dịch vụ</label>
+        <name>CSP_Services_GoToServices</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm kiếm một dịch vụ?</label>
+        <name>CSP_Services_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Quản lý dịch vụ</label>
+        <name>CSP_Services_ManageService</name>
+    </customLabels>
+    <customLabels>
+        <label>Dịch vụ của công ty bạn được liệt kê dưới đây.</label>
+        <name>CSP_Services_MyServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Dịch vụ của tôi</label>
+        <name>CSP_Services_MyServicesTabTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Xem các dịch vụ có sẵn</label>
+        <name>CSP_Services_RequestServiceBannerButton</name>
+    </customLabels>
+    <customLabels>
+        <label>Xem thông tin dịch vụ chi tiết và yêu cầu quyền truy cập vào các dịch vụ có sẵn.</label>
+        <name>CSP_Services_RequestServiceBannerSubtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Yêu cầu dịch vụ</label>
+        <name>CSP_Services_RequestServiceBannerTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Thông tin dịch vụ</label>
+        <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>Dịch vụ</label>
+        <name>CSP_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Cài đặt</label>
+        <name>CSP_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label>Trạng thái</label>
+        <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Gửi đi</label>
+        <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>Ủng hộ</label>
+        <name>CSP_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>Làm thế nào chúng tôi có thể giúp đỡ?</label>
+        <name>CSP_Support_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn có thể tải lên tệp pdf, jpeg, jpg, png, ppt, pptx, xls, xlsx, tif, tiff, zip. Kích thước phải nhỏ hơn 50 MB.</label>
+        <name>CSP_Supported_File_Extensions</name>
+    </customLabels>
+    <customLabels>
+        <label>Nhiệm vụ</label>
+        <name>CSP_Task</name>
+    </customLabels>
+    <customLabels>
+        <label>Cảm ơn phản hồi của bạn.</label>
+        <name>CSP_ThanksFeedback</name>
+    </customLabels>
+    <customLabels>
+        <label>Chức vụ</label>
+        <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Loại trường hợp</label>
+        <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Announcements --></label>
+        <name>CSP_You_Dont_Have_Announcements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Notifications --></label>
+        <name>CSP_You_Dont_Have_Notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Tasks --></label>
+        <name>CSP_You_Dont_Have_Tasks</name>
+    </customLabels>
+    <customLabels>
+        <label>Rủi ro Tín dụng Đại lý</label>
+        <name>CSP_cpcc_Agent_Credit_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label>Ký Ủy quyền</label>
+        <name>CSP_cpcc_Authorised_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>BSP (Hệ thống báo cáo và thanh toán)/CASS (Hệ thống giải quyết tài khoản hàng hóa) Liên hệ thanh toán</label>
+        <name>CSP_cpcc_BSP_CASS_Payment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>Tình trạng loại liên hệ</label>
+        <name>CSP_cpcc_Contact_Type_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Liên hệ đánh giá tài chính</label>
+        <name>CSP_cpcc_Financial_Assessment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>Liên hệ hóa đơn</label>
+        <name>CSP_cpcc_Invoice_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>Hồ sơ liên hệ mới</label>
+        <name>CSP_cpcc_New_Contact_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>Quản trị viên cổng thông tin</label>
+        <name>CSP_cpcc_Portal_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label>Khu vực làm việc</label>
+        <name>CSP_cpcc_Working_Areas</name>
+    </customLabels>
+    <customLabels>
+        <label>Chọn lý do</label>
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
@@ -1709,6 +2413,10 @@
     <customLabels>
         <label><!-- CaseValidation - Area --></label>
         <name>CaseValidation_Area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CaseValidation - Area2 --></label>
+        <name>CaseValidation_Area2</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
@@ -1903,6 +2611,10 @@
         <name>CurrencyCenter_BSP_CASS_Proffile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_ICCS_Availability --></label>
+        <name>CurrencyCenter_BSP_ICCS_Availability</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -1933,6 +2645,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_CASS --></label>
         <name>CurrencyCenter_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_CASS_ICCS_Availability --></label>
+        <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
@@ -3323,7 +4039,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>Hồ sơ</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -7911,6 +8627,10 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label>Chú ý! Bằng cách sao chép thông tin quyền sở hữu vào một Đại lý, bạn sẽ xóa bất kỳ thông tin quyền sở hữu nào hiện có về Đại lý mục tiêu.</label>
+        <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Country Select --></label>
         <name>ISSP_AMS_Country_Select</name>
     </customLabels>
@@ -8593,6 +9313,14 @@ and
     <customLabels>
         <label><!-- ISSP AMS Local Details Title --></label>
         <name>ISSP_AMS_Local_Details_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator --></label>
+        <name>ISSP_AMS_MSO_Aggregator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator_Info --></label>
+        <name>ISSP_AMS_MSO_Aggregator_Info</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_MSO_Alternatively --></label>
@@ -9691,6 +10419,10 @@ and
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
+        <label>Chọn Tài khoản Mục tiêu</label>
+        <name>ISSP_AMS_Select_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>* Pháp nhân phụ đã chọn</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
@@ -9709,6 +10441,10 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_Signatory --></label>
         <name>ISSP_AMS_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>Tiểu bang/Tỉnh</label>
+        <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_State_Names_Addresses_Field_Label --></label>
@@ -11099,6 +11835,22 @@ and
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
+        <label>Đang kiểm tra...</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
+    </customLabels>
+    <customLabels>
+        <label>Thao tác này sẽ cho phép bạn sao chép chi tiết quyền sở hữu từ tài khoản này vào các vị trí đã chọn thuộc hệ thống phân cấp của bạn. Chỉ sau khi bấm nút Xác nhận Cập nhật tất cả chi tiết của trang này, bạn mới có thể nhìn thấy các thay đổi đối với đại lý mục tiêu do thao tác này thực hiện.</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
+    </customLabels>
+    <customLabels>
+        <label>Các đại lý đã được xử lý</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
+    </customLabels>
+    <customLabels>
+        <label>Tình trạng Sao chép Quyền sở hữu</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
+    </customLabels>
+    <customLabels>
         <label>Nhấp vào đây để tiếp tục với Tuân thủ PCI</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
@@ -11352,7 +12104,7 @@ and
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;Quản lý tiền của (các) Ví điện tử Phụ đã được gán&lt;/li&gt; &lt;li&gt;Quản lý quyền truy cập của người dùng IATA EasyPay “Đơn vị Phát hành vé”’ và (các) Ví điện tử Phụ&lt;/li&gt; &lt;li&gt;Tạo Mã số IATA EasyPay từ (các) ví điện tử đã được gán nhằm được dùng để phát hành vé qua GDS&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;Tạo Mã số IATA EasyPay từ bất kỳ ví điện tử đã được gán nào nhằm được dùng để phát hành vé qua GDS&lt;/li&gt;&lt;/ul&gt;</label>
@@ -12073,6 +12825,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_ClosedIFAPCasesStatus</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Closed_Non_Compliance --></label>
+        <name>ISSP_Closed_Non_Compliance</name>
+    </customLabels>
+    <customLabels>
         <label>Thông tin địa chỉ</label>
         <name>ISSP_CompanyAddressInformation</name>
     </customLabels>
@@ -12167,6 +12923,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
     <customLabels>
         <label>Tên Liên Hệ</label>
         <name>ISSP_ContactName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
         <label>Thông tin Liên hệ</label>
@@ -12869,6 +13629,14 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_EnterValidString</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
+    </customLabels>
+    <customLabels>
         <label>Nhập chữ</label>
         <name>ISSP_Enter_Value</name>
     </customLabels>
@@ -13157,6 +13925,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
+        <label>Bằng cách đăng ký tham gia, các nhà cung cấp trong ngành như các hãng hàng không, khách sạn và công ty kinh doanh lữ hành sẽ có thể gửi các thông điệp quan trọng tới đại lý của bạn về sản phẩm, chương trình khuyến mãi, bán hàng và chính sách đại lý của họ.</label>
+        <name>ISSP_Gdp_Opt_In_Hint</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_GeneralPublicNotFound --></label>
         <name>ISSP_GeneralPublicNotFound</name>
     </customLabels>
@@ -13383,6 +14155,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
     <customLabels>
         <label><!-- ISSP IATA Designator --></label>
         <name>ISSP_IATA_Designator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IATA_Location_Code --></label>
+        <name>ISSP_IATA_Location_Code</name>
     </customLabels>
     <customLabels>
         <label>Mã IATA không tồn tại. Xin vui lòng điền đúng Mã IATA. Nếu bạn không có mã IATA, xin vui lòng chọn ‘Other’ (Khác) làm ‘Type of Customer’ (Loại Khách Hàng).</label>
@@ -13753,7 +14529,7 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_MyOutstandingPaymentsCases</name>
     </customLabels>
     <customLabels>
-        <label>Hồ Sơ của tôi</label>
+        <label>Hồ sơ của tôi</label>
         <name>ISSP_MyProfile</name>
     </customLabels>
     <customLabels>
@@ -14675,6 +15451,10 @@ Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều đư�
         <name>ISSP_Registration_Error_LastName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
+    </customLabels>
+    <customLabels>
         <label>Xin vui lòng chọn quốc gia của bạn</label>
         <name>ISSP_Registration_Error_Location</name>
     </customLabels>
@@ -14950,8 +15730,16 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
+        <label>Các thay đổi, ngoại trừ GDP Opt-in, cần được thực hiện thông qua quy trình Tái xác nhận Thường niên</label>
+        <name>ISSP_Rev_Case_Open_Acc_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP SELECT COUNTRY --></label>
         <name>ISSP_SELECT_COUNTRY</name>
+    </customLabels>
+    <customLabels>
+        <label>- Chọn Tiểu bang -</label>
+        <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP SELECT THREE or MORE --></label>
@@ -15596,6 +16384,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label><!-- ISSP Status change to Inactive --></label>
         <name>ISSP_Status_change_to_Inactive</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
     </customLabels>
     <customLabels>
         <label>Phụ mục</label>
@@ -16996,6 +17788,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
+        <label>Đánh dấu là đã đọc</label>
+        <name>MarkAsRead_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -17128,6 +17924,22 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Not_Applicable</name>
     </customLabels>
     <customLabels>
+        <label><!-- Not In CNS Group Error --></label>
+        <name>Not_In_CNS_Group_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Thông báo</label>
+        <name>Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>Các thông báo</label>
+        <name>NotificationCenter_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Thông báo chi tiết</label>
+        <name>NotificationDetail_Detail</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Notions_Essentl_Tarif_Billet_Description --></label>
         <name>Notions_Essentl_Tarif_Billet_Description</name>
     </customLabels>
@@ -17178,6 +17990,18 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>Xin vui lòng chọn danh mục</label>
@@ -18663,6 +19487,18 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>Please_select_the_target_Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- PortalAccess --></label>
+        <name>PortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal Name to Redirect --></label>
+        <name>PortalNameRedirect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PortalService --></label>
+        <name>PortalService</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>
@@ -19015,6 +19851,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>ShoppingCartQtyMsg</name>
     </customLabels>
     <customLabels>
+        <label><!-- Error displayed when a RO field is changed in a SIDRA Lite case --></label>
+        <name>SidraLiteROFieldError</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SignIn --></label>
         <name>SignIn</name>
     </customLabels>
@@ -19103,6 +19943,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label>Các nhiệm vụ</label>
+        <name>Tasks_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Taxes --></label>
         <name>Taxes</name>
     </customLabels>
@@ -19159,6 +20003,14 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
+        <label>{0} yêu cầu quyền truy cập vào Cổng thông tin.</label>
+        <name>UserRequestPortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} yêu cầu quyền truy cập vào dịch vụ {1}</label>
+        <name>UserRequestServiceAccess</name>
+    </customLabels>
+    <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
     </customLabels>
@@ -19185,6 +20037,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label><!-- ViewCart --></label>
         <name>ViewCart</name>
+    </customLabels>
+    <customLabels>
+        <label>Xem chi tiết</label>
+        <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- View_6_more --></label>
@@ -19281,6 +20137,494 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label><!-- Contacting us --></label>
         <name>contacting_us</name>
+    </customLabels>
+    <customLabels>
+        <label>Quy trình công nhận</label>
+        <name>csp_Accreditation_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>Chọn danh mục chính</label>
+        <name>csp_ActionForCategoryPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>Dịch vụ truy cập</label>
+        <name>csp_ActionForTopicPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>Hoàn thành biểu mẫu để xem các tùy chọn hỗ trợ được đề xuất</label>
+        <name>csp_ActionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_AgencyReadOnly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Profile section label --></label>
+        <name>csp_Basics_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Gọi cho chúng tôi</label>
+        <name>csp_Call_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Thời gian hoạt động:</label>
+        <name>csp_Call_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Đại diện IATA sẽ bắt đầu làm việc với nó.</label>
+        <name>csp_CaseBeingWorked</name>
+    </customLabels>
+    <customLabels>
+        <label>Trường hợp được tạo thành công.</label>
+        <name>csp_CaseCreatedSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn sẽ nhận được câu trả lời sớm.</label>
+        <name>csp_CaseResponseGuarantee</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn có thể thêm ý kiến, tài liệu và người nhận trong trường hợp cập nhật. Bạn có thể theo dõi trạng thái và cập nhật trong</label>
+        <name>csp_CaseTracking</name>
+    </customLabels>
+    <customLabels>
+        <label>Tạo trường hợp</label>
+        <name>csp_Case_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Hãy cho chúng tôi biết làm thế nào chúng tôi có thể giúp đỡ</label>
+        <name>csp_Case_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Trò chuyện với chúng tôi</label>
+        <name>csp_Chat_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Trò chuyện với Đại diện IATA</label>
+        <name>csp_Chat_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Nhận hỗ trợ trực tiếp qua cổng IATA, qua điện thoại hoặc trò chuyện.</label>
+        <name>csp_ChooseOption</name>
+    </customLabels>
+    <customLabels>
+        <label>Liên hệ Công ty</label>
+        <name>csp_CompanyContact_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Complete required field label --></label>
+        <name>csp_CompleteField</name>
+    </customLabels>
+    <customLabels>
+        <label>Cám ơn vì đã chia sẻ.</label>
+        <name>csp_Compliment</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Tại IATA, chúng tôi cố gắng cung cấp một dịch vụ khách hàng tuyệt vời và thật bổ ích khi biết rằng bạn cũng quan tâm. Chúng tôi xem xét bất kỳ thông tin phản hồi bạn cung cấp cho chúng tôi.&quot;</label>
+        <name>csp_ComplimentInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>Lời khen</label>
+        <name>csp_Compliment_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Than phiền</label>
+        <name>csp_Concern</name>
+    </customLabels>
+    <customLabels>
+        <label>Than phiền</label>
+        <name>csp_Concern_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Chọn quốc gia hoặc khu vực truy vấn của bạn</label>
+        <name>csp_CountryOrRegionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label>Tạo Case &amp; Thêm tệp đính kèm</label>
+        <name>csp_CreateNewCaseAddAttachment</name>
+    </customLabels>
+    <customLabels>
+        <label>Cung cấp tất cả các chi tiết sẽ giúp chúng tôi điều tra truy vấn của bạn</label>
+        <name>csp_CreateNewCaseMainInputBoxSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Miêu tả</label>
+        <name>csp_CreateNewCaseMainInputBoxTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Thêm người dùng cổng khác</label>
+        <name>csp_CreateNewCaseMainInputEmailsSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Người nhận bổ sung</label>
+        <name>csp_CreateNewCaseMainInputEmailsTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Câu hỏi của bạn là gì?</label>
+        <name>csp_CreateNewCaseMainInputSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Tiêu đề</label>
+        <name>csp_CreateNewCaseMainInputTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Mã tài khoản liên quan</label>
+        <name>csp_CreateNewCaseMainPicklistLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Tạo trường hợp</label>
+        <name>csp_CreateNewCaseTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn đã chọn</label>
+        <name>csp_CreateNewCaseTopSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng cung cấp cho chúng tôi thêm thông tin.</label>
+        <name>csp_CreateNewCaseTopSubSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Tạo liên hệ mới</label>
+        <name>csp_CreateNewContact</name>
+    </customLabels>
+    <customLabels>
+        <label>Truy vấn khẩn cấp</label>
+        <name>csp_Emergency_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>Đánh giá tài chính</label>
+        <name>csp_Financial_Review</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm chi nhánh</label>
+        <name>csp_Find_Branch</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm liên hệ</label>
+        <name>csp_Find_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Facebook_URL --></label>
+        <name>csp_Footer_Facebook_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Cửa hàng IATA</label>
+        <name>csp_Footer_IATA_Store</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_IataStore_URL --></label>
+        <name>csp_Footer_IataStore_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Legal_URL --></label>
+        <name>csp_Footer_Legal_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Linkedin_URL --></label>
+        <name>csp_Footer_Linkedin_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Privacy_URL --></label>
+        <name>csp_Footer_Privacy_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Twitter_URL --></label>
+        <name>csp_Footer_Twitter_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Youtube_URL --></label>
+        <name>csp_Footer_Youtube_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Chuyển đến Trang chủ</label>
+        <name>csp_GoToHomepage</name>
+    </customLabels>
+    <customLabels>
+        <label>Đi tới Hỗ trợ</label>
+        <name>csp_GoToSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>Thanh toán IATA</label>
+        <name>csp_IATA_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label>Quản trị viên IEP</label>
+        <name>csp_IEPAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label>Liên hệ Hỗ trợ</label>
+        <name>csp_IntentionOnThisPage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_InvalidPhoneValue --></label>
+        <name>csp_InvalidPhoneValue</name>
+    </customLabels>
+    <customLabels>
+        <label>Truy vấn của bạn là một trường hợp khẩn cấp?</label>
+        <name>csp_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Lần đăng nhập cuối</label>
+        <name>csp_LastLoginDate</name>
+    </customLabels>
+    <customLabels>
+        <label>Trò chuyện không có sẵn. Vui lòng gọi hoặc tạo một trường hợp.</label>
+        <name>csp_LiveAgentBadConfig</name>
+    </customLabels>
+    <customLabels>
+        <label>Kết nối trò chuyện đã hết thời gian. Bạn có thể làm mới trang hoặc tạo một trường hợp</label>
+        <name>csp_LiveAgentTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>Hết thời gian kết nối Đại lý trực tiếp. Vui lòng làm mới trang hoặc Liên hệ Hỗ trợ</label>
+        <name>csp_LiveTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>Quản lý ví chủ</label>
+        <name>csp_MasterWalletManager</name>
+    </customLabels>
+    <customLabels>
+        <label>Chức năng công việc</label>
+        <name>csp_MembershipFunction</name>
+    </customLabels>
+    <customLabels>
+        <label>Công ty</label>
+        <name>csp_My_Profile_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp My Profile Email --></label>
+        <name>csp_My_Profile_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Chức danh công việc</label>
+        <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_NoPortalServiceNameFound</name>
+    </customLabels>
+    <customLabels>
+        <label>Chọn tùy chọn hỗ trợ ưa thích của bạn</label>
+        <name>csp_Options_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Quá trình</label>
+        <name>csp_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>Liên hệ kinh doanh</label>
+        <name>csp_Profile_BusinessContact</name>
+    </customLabels>
+    <customLabels>
+        <label>E-Mail công ty</label>
+        <name>csp_Profile_CompanyEmail</name>
+    </customLabels>
+    <customLabels>
+        <label>Mã IATA</label>
+        <name>csp_Profile_IATACode</name>
+    </customLabels>
+    <customLabels>
+        <label>Liên hệ cá nhân</label>
+        <name>csp_Profile_PersonalContact</name>
+    </customLabels>
+    <customLabels>
+        <label>Cổng truy cập thông tin</label>
+        <name>csp_Profile_PortalAccessibility</name>
+    </customLabels>
+    <customLabels>
+        <label>Chuyên nghiệp</label>
+        <name>csp_Profile_Professional</name>
+    </customLabels>
+    <customLabels>
+        <label>Trang mạng</label>
+        <name>csp_Profile_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Hỗ trợ</label>
+        <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>Đại lý của bạn hiện không có tài khoản IATA EasyPay mở. &lt;br/&gt; &lt;br/&gt;Vui lòng liên hệ với Người ký ủy quyền của Trụ sở chính để yêu cầu họ mở Tài khoản EasyPay của IATA. Là Quản trị viên Cổng thông tin, bạn có thể cập nhật &lt;a href=&quot;/my-profile&quot;&gt; Thông tin cá nhân &lt;/a&gt; để chỉ định mình là Người ký ủy quyền hợp pháp hoặc chỉ định người quản trị cổng thông tin chính xác từ &lt;a href=&quot;/company-profile&quot;&gt; Quản trị Công ty - &gt; Liên hệ &lt;/a&gt; và yêu cầu họ mở tài khoản EasyPay của bạn.&lt;br/&gt;&lt;br/&gt;Hãy &lt;a href=&quot;/Support-Reach-Us&quot;&gt; Liên hệ Hỗ trợ &lt;/a&gt; nếu bạn cần sự giúp đỡ.</label>
+        <name>csp_RequestService_ContactPortalAdmin_Alt</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Cơ quan của bạn hiện không có tài khoản IATA EasyPay. &lt;br /&gt; &lt;br /&gt; Hãy liên hệ với bên ký kết ủy quyền của bạn Trụ sở chính để yêu cầu họ mở một tài khoản EasyPay IATA. Để mở Tài khoản IATA EasyPay, bạn cần phải là Quản trị viên Cổng thông tin và Người ký ủy quyền cho Đại lý của bạn.&lt;br/&gt;&lt;br/&gt;Hãy &lt;a href = &quot;/Support-Reach-Us&quot;&gt; Liên hệ Hỗ trợ &lt;/a&gt; nếu bạn cần sự giúp đỡ.</label>
+        <name>csp_RequestService_ContactPortalAdmin_LegalAuth</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_RequestService_ContactSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Người được ký ủy quyền từ Người đứng đầu cơ quan của bạn đã bắt đầu mở Tài khoản IEP của Đại lý cho bạn. Khi Tài khoản IEP được mở thành công, bạn sẽ có thể truy cập dịch vụ này.&quot;</label>
+        <name>csp_RequestService_IEPAccountOpenInProgress</name>
+    </customLabels>
+    <customLabels>
+        <label>Bây giờ bạn sẽ được đưa đến Cổng thông tin EasyPay nơi bạn có thể hoàn thành đơn đăng ký của mình để mở tài khoản IATA EasyPay của Đại lý. &lt; Br / &gt; &lt; br / &gt; Bằng cách tiếp tục, bạn đồng ý với IATA gửi Họ tên của bạn, địa chỉ email và mã IATA và bất kỳ thông tin cá nhân khác có liên quan có sẵn cho các nhà cung cấp IATA EasyPay. Thông tin này sẽ chỉ được các Nhà cung cấp IATA EasyPay sử dụng cho mục đích mở và quản lý tài khoản EasyPay của bạn và vận hành các dịch vụ EasyPay nói chung, hoặc theo quy định của pháp luật. &lt; Br / &gt; &lt; br / &gt; Bạn có muốn tiếp tục?</label>
+        <name>csp_RequestService_ProceedIEPAccountOpen</name>
+    </customLabels>
+    <customLabels>
+        <label>Yêu cầu truy cập</label>
+        <name>csp_Request_New_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Thanh toán bán hàng</label>
+        <name>csp_Sales_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_SearchNotPerformed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceAccessConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceRequestConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label>Tiêu đề phụ</label>
+        <name>csp_Sub_Topic_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Tiêu đề phụ</label>
+        <name>csp_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>Gợi ý</label>
+        <name>csp_Suggest_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Những điều này có thể giúp</label>
+        <name>csp_Suggestion_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi ở đây để giúp đỡ.</label>
+        <name>csp_SupportCategoriesInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>Câu hỏi</label>
+        <name>csp_SupportReachUs_AskTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi ở đây để giúp đỡ.</label>
+        <name>csp_SupportReachUs_BasicInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>Thể loại</label>
+        <name>csp_SupportReachUs_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Lời khen</label>
+        <name>csp_SupportReachUs_ComplimentTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Than phiền</label>
+        <name>csp_SupportReachUs_ConcernTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Quốc gia</label>
+        <name>csp_SupportReachUs_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Truy vấn của bạn là một trường hợp khẩn cấp?</label>
+        <name>csp_SupportReachUs_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Nhận hỗ trợ trực tiếp qua cổng IATA, qua điện thoại hoặc trò chuyện.</label>
+        <name>csp_SupportReachUs_PlzChoosePath</name>
+    </customLabels>
+    <customLabels>
+        <label>Chọn danh mục chính</label>
+        <name>csp_SupportReachUs_SelectCategory</name>
+    </customLabels>
+    <customLabels>
+        <label>Chọn quốc gia hoặc khu vực truy vấn của bạn</label>
+        <name>csp_SupportReachUs_SelectCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>Chọn chủ đề</label>
+        <name>csp_SupportReachUs_SelectTopic</name>
+    </customLabels>
+    <customLabels>
+        <label>Hiển thị tùy chọn hỗ trợ</label>
+        <name>csp_SupportReachUs_ShowSupportOptions</name>
+    </customLabels>
+    <customLabels>
+        <label>Hoàn thành biểu mẫu để xem các tùy chọn hỗ trợ được đề xuất</label>
+        <name>csp_SupportReachUs_SpecifyCaseDetails</name>
+    </customLabels>
+    <customLabels>
+        <label>Gợi ý</label>
+        <name>csp_SupportReachUs_SuggestTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Đề tài</label>
+        <name>csp_SupportReachUs_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>Liên hệ với chúng tôi</label>
+        <name>csp_SupportReachUs_WhatDoYouWant</name>
+    </customLabels>
+    <customLabels>
+        <label>Ủng hộ</label>
+        <name>csp_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Bảng điều khiển này cho phép mỗi Đội Ngân quỹ của máy bay đạt được tầm nhìn đầy đủ về bán thẻ tín dụng sắp tới, và báo cáo bán thẻ tín dụng có thể tải xuống liên quan - thêm vào đó, để xem dòng tiền đang được xử lý bởi mỗi hệ thống giải quyết chính của IATA: BSP (Hệ thống báo cáo và thanh toán), CASS (Hệ thống giải quyết tài khoản hàng hóa), ICCS (Dịch vụ thông quan tiền tệ) và ICH (IATA Phòng thanh toán bù trừ).&quot;</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel1</name>
+    </customLabels>
+    <customLabels>
+        <label>Để biết thêm thông tin, hãy truy cập: www.iata.org/treasurydashboard</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel2</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn sắp yêu cầu thêm thông tin về dịch vụ thương mại IATA. Bằng cách nhấp vào &quot;xác nhận&quot;, bạn sẽ được gửi tất cả các chi tiết về cách đăng ký tài khoản Premium IATA Treasury Dashboard hàng tháng.</label>
+        <name>csp_TDP_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn sắp yêu cầu thêm thông tin về dịch vụ thương mại IATA. Bằng cách nhấp vào &quot;xác nhận&quot;, bạn sẽ được gửi tất cả các chi tiết về cách đăng ký Bảng điều khiển Kho bạc IATA hàng tháng.</label>
+        <name>csp_TD_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Người phát hành vé</label>
+        <name>csp_TicketIssuer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_TimeoutIEP</name>
+    </customLabels>
+    <customLabels>
+        <label>Người nhận chưa được thêm. Vui lòng nhấn nút Thêm.</label>
+        <name>csp_ToastWarningRecipientNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label>Xem tóm tắt trường hợp</label>
+        <name>csp_ViewCaseSummary</name>
+    </customLabels>
+    <customLabels>
+        <label>Khu vực làm việc</label>
+        <name>csp_WorkingAreas</name>
+    </customLabels>
+    <customLabels>
+        <label>Hiển thị tùy chọn hỗ trợ</label>
+        <name>csp_btn_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Lỗi tạo trường hợp</label>
+        <name>csp_errorCreatingCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm kiếm theo tên hoặc email</label>
+        <name>csp_searchEmailRecipientPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm kiếm theo mã IATA, vị trí hoặc tên</label>
+        <name>csp_searchIataCodeLocationNamePlaceHolder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_toSelectSubTopic</name>
     </customLabels>
     <customLabels>
         <label><!-- days left --></label>

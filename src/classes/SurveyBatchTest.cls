@@ -2271,4 +2271,57 @@ System.runAS(u) {
        Database.executeBatch(batch, 50);
        test.stopTest();
     }
+	
+   static testMethod void testProcessSurvey() {
+      Test.startTest();
+      IATA_ISO_Country__c ct1 = new IATA_ISO_Country__c(
+         Name= 'Country Test',
+         Case_BSP_Country__c= 'Test'
+      );
+      Account acc = new Account(
+         Name= 'Test Agency',
+         IATA_ISO_Country__r= ct1
+      );
+      Contact con = new Contact(
+         Account= acc,
+         Email= 'testContact@test.com',
+         HasOptedOutOfEmail= false
+      );
+      UserRole uRole = new UserRole(
+         Name= 'MAD Hub CS Manager'
+      );
+      User analyst = new User(
+         UserRole= uRole
+      );
+      Case cse1 = new Case(
+         Account= acc,
+         Contact= con,
+         Reason1__c= 'New HO',
+         Status= 'Closed',
+         WhoClosedCase__r= analyst,
+         RecordType= new RecordType(DeveloperName= 'OSCAR_Communication'),
+         Region__c= 'Europe',
+         BSPCountry__c= 'Portugal',
+         Subject= 'New HO',
+         OwnerId = UserInfo.getUserId()
+      );
+      Case cse2 = cse1.clone(false,true,false,false);
+      cse2.Region__c = 'Africa & Middle East';
+
+      Case cse3 = cse1.clone(false,true,false,false);
+      cse3.Region__c = 'Asia & Pacific';
+
+      Case cse4 = cse1.clone(false,true,false,false);
+      cse4.Region__c = 'China & North Asia';
+
+      Case cse5 = cse1.clone(false,true,false,false);
+      cse5.Region__c = 'Americas';
+
+      SurveyBatch sb = new SurveyBatch();
+      sb.totalCases = 0;
+      sb.noNation1 = 0;
+      sb.countersMap = new Map<String,Integer>();
+      sb.processSurveyEmail(new List<Case> {cse1, cse2, cse3, cse4, cse5});
+      Test.stopTest();
+   }
 }

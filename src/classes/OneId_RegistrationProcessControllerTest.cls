@@ -127,7 +127,7 @@ private class OneId_RegistrationProcessControllerTest {
         Test.startTest();
         
         // Call linked method
-        List<String> returnedValue = OneId_RegistrationProcessController.getContactJobFunctionValues();
+        List<OneId_RegistrationProcessController.PicklistEntry> returnedValue = OneId_RegistrationProcessController.getContactJobFunctionValues();
         
         // Stop the test
         Test.stopTest();
@@ -464,13 +464,30 @@ private class OneId_RegistrationProcessControllerTest {
         
         Contact c;
         
+        Portal_Applications__c p = new Portal_Applications__c(Name='One Id NDC Matchmaker');
+        insert p;
+
+        
 
         User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
 
             System.runAs(myUser)
             {
-                User user1 = ISSP_AMC_ParticipationFactory.portalSetup();       
+                User user1 = ISSP_AMC_ParticipationFactory.portalSetup();    
+                
+                Portal_Application_Right__c par = new Portal_Application_Right__c(Portal_Application__c = p.Id, Right__c = 'Access Granted', Contact__c = [SELECT ID FROM CONTACT LIMIT 1].Id);
+        		insert par;
+    
+        		Id recordTypeId = Schema.SObjectType.One_Id_Service_Provider_Config__c.getRecordTypeInfosByDeveloperName().get('Service_Provider').getRecordTypeId();
+
+        		One_Id_Service_Provider_Config__c oispc = new One_Id_Service_Provider_Config__c(Portal_Service__c = pa.Id, Service_Provider_Name__c='NDCMM', RecordTypeId = recordTypeId);
+        
+        		insert oispc;
+
+                Contact con = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto2@lls.com');
+                insert con;    
+                
                 System.runAs(user1){
                     PortalType portalType = PortalType.PowerPartner;
                     User userWithRole = null;
@@ -482,8 +499,10 @@ private class OneId_RegistrationProcessControllerTest {
                     Test.startTest();
 
                         OneId_RegistrationProcessController.registration(a,c,serviceName);
-
                         OneId_RegistrationProcessController.getUserInformationFromEmail(c.email,'FRED');
+                        OneId_RegistrationProcessController.registration(a,c,'NDCMM');
+                        OneId_RegistrationProcessController.getUserInformationFromEmail(con.email,'NDCMM');
+                    	OneId_RegistrationProcessController.getUserInformationFromEmail(c.email,'ISSP');
 
                     Test.stopTest();
                 }
@@ -543,4 +562,55 @@ private class OneId_RegistrationProcessControllerTest {
 
         Test.stopTest();
     }
+@isTest
+     static void amsDataQuality(){
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Canada',
+                                                               ISO_Code__c='CA')  ;
+        insert country ;
+
+        IATA_ISO_STATE__C state = new IATA_ISO_STATE__c (Name='Quebec',
+                                                         ISO_Code__c='CA-QC',
+                                                         IATA_ISO_Country__c=country.Id,
+                                                         GeonameName__c='Quebec',
+                                                         GeonameAsciiName__c='Quebec',
+                                                         GeonameId__c='6115047');
+         insert state;
+         IATA_ISO_City__c city = new IATA_ISO_City__c(Name = 'Montreal', 
+                                                       IATA_ISO_State__c = state.ID,
+                                                       GeonameID__c = '6077243',
+                                                       GeonameAlternateNames__c = 'Lungsod ng Montreal,Lungsod ng Montréal,Monreal,Monreal\','+
+                                                                                  'Monreala,Monrealis,Monreyal,Monreāla,Mons Regius,Mont-real,Montreal,Montreal - Montreal,Montreal - Montréal,Montreal City,Montreali,Montrealo,'+
+                                                                                  'Montréal,YMQ,meng te li er,monreali,monteuliol,montorioru,mwntral,mwntryal,Μοντρεαλ,Μόντρεαλ,Монреал,Монреаль,Монтреал,מונטריאול,مونترآل,مونتریال,مونترېئال,'+
+                                                                                  'მონრეალი,ᒧᕆᐊᓪ,モントリオール,蒙特利尔,몬트리올' );
+        insert city;
+
+        OneId_RegistrationProcessController.getStates('Canada');        
+        OneId_RegistrationProcessController.registrationAux(new Account(), new Contact(), null, new Map<String, String>{'billingCityId' => String.valueOf(city.Id),
+                                                                                                                       'billingStateId' => String.valueOf(state.Id),
+                                                                                                                       'shippingCityId' => String.valueOf(city.Id),
+                                                                                                                       'shippingStateId' => String.valueOf(state.Id)});
+     }
+
+     @isTest
+     static void increaseCoverage(){
+
+        Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Travel Agent', Category__c='Non-IATA Travel Agent');
+        insert a;
+
+        Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com', AccountId = a.Id);
+        insert c;
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
+        insert country ;
+         
+         Account acc = OneId_RegistrationProcessController.returnRelatedAcc(a.Id);
+         OneId_RegistrationProcessController.updateContactInFuture(c.Id, 'testCommunity', 'active', 'testMail@mail.com', a.Id);
+
+         List<Account> lacc1 = OneId_RegistrationProcessController.getAccountsBySectorAndCategory('Airline', 'testcat', country.Id, 'TEST');
+         List<Account> lacc2 = OneId_RegistrationProcessController.getAccountsBySectorAndCategory('Travel Agent', 'IATA Passenger Sales Agent', country.Id, 'TEST');
+         List<Account> lacc3 = OneId_RegistrationProcessController.getAccountsBySectorAndCategory('Travel Agent', 'Non-IATA Travel Agent', country.Id, 'TEST');
+         List<Account> lacc4 = OneId_RegistrationProcessController.getAccountsBySectorAndCategory('Non-IATA Travel Agent', 'testcat', country.Id, 'TEST');
+         List<Account> lacc5 = OneId_RegistrationProcessController.getAccountsBySectorAndCategory('Airline Supplier', 'testcat', country.Id, 'TEST');
+       
+     }
 }

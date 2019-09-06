@@ -150,6 +150,9 @@ public class PlatformEvents_Helper {
     private static Map<Id,sObject> getAccountContactRoleToPublish(Map<Id,sObject> mapCnt){
     	map<id, sObject> mapToRet = new map<id, sObject>();
     	mapToRet.putAll(mapCnt);
+
+        if(mapCnt.keyset().isEmpty()) return mapToRet;
+        
     	for(Account_Contact_Role__c AccntConRole: [select id, RecordTypeId, Account__c from Account_Contact_Role__c where Account__c in:mapCnt.keyset() and Service_Rendered__c = 'TIP']){
     		mapToRet.put(AccntConRole.Id, AccntConRole);
     	}

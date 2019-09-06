@@ -5,7 +5,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 	private static final Set<String> newgenProcesses = new Set<String>{'ANG.MAJOR.CHANGES.1.0','VR.1.0','CER.1.0','CORRECTION.1.0','BANK.ACCOUNT.CHANGES','NGFormsOfPayment','ANG_FS_OPTINOUT','ANG.NEW.HE.LITE.1.0','ANG.NEW.AE.1.0','ANG.NEW.HE.STANDARD.1.0'};
 
-	private static final Set<String> doesNotNeedStagingAreaProcesses = new Set<String>{'VR.1.0','VR.1.0.CA','CER.1.0',AMS_Utils.NGOPTINOUT,AMS_Utils.NGFOP,AMS_Utils.BANKACCCHANGES, AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP, AMS_Utils.NGGDI};
+	private static final Set<String> doesNotNeedStagingAreaProcesses = new Set<String>{'VR.1.0','VR.1.0.CA','CER.1.0',AMS_Utils.NGOPTINOUT,AMS_Utils.NGFOP,AMS_Utils.BANKACCCHANGES, AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_MODEL_B_PLUS_ACCOUNT_SETUP, AMS_Utils.NGGDI};
 	
 		public static Map<String,String> newgenCaseReason{
 		get{
@@ -23,6 +23,7 @@ public without sharing class AMS_MigrationToolHelper {
 			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => 'IEP Bank account setup',
 			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP => 'Onboarding IEP Model A',
 			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP => 'Screening IEP Model B',
+			AMS_RecordCreatorWebservice.IEP_MODEL_B_PLUS_ACCOUNT_SETUP => 'Onboarding IEP Model B+',
 			AMS_Utils.NGGDI => 'GDI setup'
 		};
 		}
@@ -42,6 +43,7 @@ public without sharing class AMS_MigrationToolHelper {
 			'ANG.NEW.HE.STANDARD.1.0' => AMS_Utils.RECTYPE_NEWHE,
 			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELA,
 			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELB,
+			AMS_RecordCreatorWebservice.IEP_MODEL_B_PLUS_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELBPLUS,
 			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,
 			AMS_Utils.NGGDI => AMS_Utils.RECTYPE_GDI
 		};
@@ -810,7 +812,7 @@ public without sharing class AMS_MigrationToolHelper {
                 oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
             if(processType == 'CER.1.0')
                 oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
-            if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP ||  processType == AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
+            if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
                 oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'BANK_ACCOUNT_SETUP');
 
 

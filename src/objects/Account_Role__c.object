@@ -53,6 +53,21 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Account_Role_Name__c</fullName>
+        <description>A functional role that an Account may assume when interacting with an IATA Salesforce functional capability. This designation technically supports the provisioning of IATA Salesforce functional capabilities.
+
+The Account Role record should be named after the functional capability for which the record applies. If required, Account related data, within the context of the functional capability, could be held on a related Account Role Detail record.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Account Role Name to fill accordingly to the application using the record</inlineHelpText>
+        <label>Account Role Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Account_Roles__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -225,6 +240,42 @@
     </nameField>
     <pluralLabel>Account Roles</pluralLabel>
     <recordTypes>
+        <fullName>Amsterdam_Publications</fullName>
+        <active>true</active>
+        <description>For records migrated and synchronized with Amsterdam Publications system.</description>
+        <label>Amsterdam Publications</label>
+        <picklistValues>
+            <picklist>Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
         <fullName>Default</fullName>
         <active>true</active>
         <label>Default</label>
@@ -251,6 +302,42 @@
             </values>
             <values>
                 <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Master</fullName>
+        <active>true</active>
+        <description>Master recordType</description>
+        <label>Master</label>
+        <picklistValues>
+            <picklist>Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

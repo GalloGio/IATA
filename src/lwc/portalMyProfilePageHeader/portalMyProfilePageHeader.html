@@ -1,0 +1,59 @@
+<template>
+
+    <c-portal-page-container style-class="dark">
+        <span slot="componentContent">
+            <div style="min-width:300px;">
+
+                <!-- Breadcrumbs -->
+                <div class="breadcrumbsPosition">
+                    <c-portal-breadcrumbs></c-portal-breadcrumbs>
+                </div>
+
+                <!-- Header -->
+                <div class="headerPosition">
+                    <template if:true={loading}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+
+                    <template if:false={loading}>
+                        <div class="coverBand" style={backgroundStyle}></div>
+
+                        <!-- possible to use image with src or a div with background -->
+                        <!--div style={profileDivStyle}></div-->
+                        <!--<img src={portalImg} style={profilePhotoStyle}/>-->
+
+                        <div class="myProfileHeader">
+                            <!-- Image spacers -->
+                            
+                            <!--div class="slds-hide_medium imagespacer">< Image ></div>
+                            <div class="slds-show_medium imagespacerSmall">< Image ></div-->
+
+                            <!-- Header My Profile Info -->
+                            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large headerMyProfile" >
+                                <div class="slds-col slds-size_3-of-3 slds-medium-size_3-of-3 slds-large-size_3-of-3 ">
+                                    <div class="text-medium text-bold text-darkGray"> {contact.Name} </div>
+                                </div>
+
+                                <!-- Labels -->
+                                <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3">
+                                    <div class="fieldLabel"> {labels.csp_My_Profile_Job_Title} </div>
+                                    <div class="fieldValue"> {contact.Title} </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3">
+                                    <div class="fieldLabel"> {labels.csp_My_Profile_Company} </div>
+                                    <div class="fieldValue"> {contact.DSE__DS_Company__c} </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3 ">
+                                    <div class="fieldLabel"> {labels.csp_My_Profile_Email} </div>
+                                    <div class="fieldValue"> {contact.Email} </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+        </span>
+    </c-portal-page-container>
+</template>

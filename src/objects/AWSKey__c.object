@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>AWS_ENDPOINT_URL__c</fullName>
         <defaultValue>&quot;http://s3.awsamazon.com&quot;</defaultValue>

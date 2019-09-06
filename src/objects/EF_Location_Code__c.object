@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Contract_BA_Id__c</fullName>
         <description>Copy of Billing Agreement Contract Id to avoid queries on location Code trigger.</description>

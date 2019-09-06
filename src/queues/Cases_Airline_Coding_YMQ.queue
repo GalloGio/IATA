@@ -10,6 +10,9 @@
         <roleAndSubordinatesInternal>
             <roleAndSubordinateInternal>DistributionAirlineManagementHOI</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
+        <users>
+            <user>shalbakf@iata.org</user>
+        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
