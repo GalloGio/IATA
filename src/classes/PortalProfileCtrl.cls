@@ -41,14 +41,27 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_TRADE_NAME = System.label.ISSP_MyProfile_TradeName;
     PRIVATE STATIC FINAL STRING LABEL_ISO_COUNTRY = System.label.Country;
 
-
     PRIVATE STATIC FINAL STRING LABEL_INVOICE_CONTACT = System.label.CSP_cpcc_Invoice_Contact;
     PRIVATE STATIC FINAL STRING LABEL_AUTHORISED_SIGNATORY = System.label.CSP_cpcc_Authorised_Signatory;
     PRIVATE STATIC FINAL STRING LABEL_PAYMENT_CONTACT = System.label.CSP_cpcc_BSP_CASS_Payment_Contact;
     PRIVATE STATIC FINAL STRING LABEL_AGENT_CREDIT_RISK = System.label.CSP_cpcc_Agent_Credit_Risk;
 
+    //WMO-627 - ACAMBAS: Begin
+    PRIVATE STATIC FINAL STRING LABEL_INVOICE_NUMBER = System.label.Invoice_number;
+    PRIVATE STATIC FINAL STRING LABEL_CURRENCY = System.label.ISSP_Currency;
+    PRIVATE STATIC FINAL STRING LABEL_INVOICE_STATUS = System.label.Invoice_Status;
+    PRIVATE STATIC FINAL STRING LABEL_TOTAL_AMOUNT = System.label.Total_Amount;
+    PRIVATE STATIC FINAL STRING LABEL_BILLING_MEMBER_ACCOUNTING_CODE = System.label.Billing_Member_Accounting_Code;
+    PRIVATE STATIC FINAL STRING LABEL_BILLING_MEMBER_DESIGNATOR_CODE = System.label.Billing_Member_Designator_Code;
+    PRIVATE STATIC FINAL STRING LABEL_BILLING_MEMBER_NAME = System.label.Billing_Member_Name;
+    PRIVATE STATIC FINAL STRING LABEL_INVOICE_DATE = System.label.Invoice_Date;
+    //WMO-627 - ACAMBAS: End
+
     PRIVATE STATIC FINAL INTEGER CONTACT_BATCH= 15;
     PRIVATE STATIC FINAL INTEGER BRANCH_BATCH = 15;
+    PRIVATE STATIC FINAL INTEGER INVOICE_BATCH = 15; //WMO-627 - ACAMBAS
+
+    PRIVATE STATIC FINAL STRING IATA_INVOICE_TYPE = 'IATA_OFFICE'; //WMO-627 - ACAMBAS
 
     public static Contact contactInfo = new Contact();
 
@@ -670,19 +683,87 @@ public with sharing class PortalProfileCtrl {
         return wrapperMap;
     }
 
+    //WMO-627 - ACAMBAS: Begin
+
+    /** Outstanding Invoices section */
+
     @AuraEnabled
-    public static Boolean checkCanEdit(){
-        User loggedUser = CSP_Utils.getLoggedUser();
-        if (loggedUser.Contact.User_Portal_Status__c == 'Approved Admin') {
-            if (!loggedUser.Profile.Name.contains('Airline') ) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
+    public static Map<String,List<FieldWrapper>> getInvoicesListFields(String invoiceType){
+
+        String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
+        String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
+        String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
+
+        List<String> toRow;
+
+        if(invoiceType == IATA_INVOICE_TYPE && myContact.Account.RecordType.DeveloperName == 'IATA_Agency') {
+            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Status__c', 'Total_Amount__c', 'Billing_Currency__c', 'Invoice_Date__c'};
         }
- 
+        else {
+            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Status__c', 'Total_Amount__c', 'Billing_Currency__c', 
+                                     'Billing_Member_Accounting_Code__c', 'Billing_Member_Designator_Code__c', 'Billing_Member_Name__c', 'Invoice_Date__c'};   
+        }
+
+        Map<String,String> fieldLabels = new Map<String,String>();
+
+        fieldLabels.put('Invoice_Number__c', LABEL_INVOICE_NUMBER);
+        fieldLabels.put('Invoice_Status__c', LABEL_INVOICE_STATUS);
+        fieldLabels.put('Total_Amount__c', LABEL_TOTAL_AMOUNT);
+        fieldLabels.put('Billing_Currency__c', LABEL_CURRENCY);
+        fieldLabels.put('Billing_Member_Accounting_Code__c', LABEL_BILLING_MEMBER_ACCOUNTING_CODE);
+        fieldLabels.put('Billing_Member_Designator_Code__c', LABEL_BILLING_MEMBER_DESIGNATOR_CODE);
+        fieldLabels.put('Billing_Member_Name__c', LABEL_BILLING_MEMBER_NAME);
+        fieldLabels.put('Invoice_Date__c', LABEL_INVOICE_DATE);
+
+        /*for(String fieldName: toRow){
+            if(!fieldLabels.containsKey(fieldName)){ fieldLabels.put(fieldName,fieldName);}
+        }*/
+
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+
+        wrapperMap.put(rowsFields,new List<FieldWrapper>());
+        for(String fieldName : toRow){
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+        }
+
+        wrapperMap.put(viewFields,new List<FieldWrapper>());
+        wrapperMap.put(editFields,new List<FieldWrapper>());
+
+        //VIEW
+        wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Name__c',true,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('IBAN__c',true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('SWIFT__c',true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Code__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Branch_Code__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_No__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_Name__c',false,true,true));
+
+        return wrapperMap;
     }
 
+    @AuraEnabled
+    public static List<Customer_Invoice__c> getCustomerInvoices() {
+        return getCustomerInvoices(0, IATA_INVOICE_TYPE);
+    }
+
+    @AuraEnabled
+    public static List<Customer_Invoice__c> getCustomerInvoices(Integer offset, String type) {
+        List<String> statusList = new List<String>();
+        for(Custom_Invoices_Visible_Status__mdt visibleStatus : [SELECT MasterLabel FROM Custom_Invoices_Visible_Status__mdt]) {
+            statusList.add(visibleStatus.MasterLabel);
+        }
+
+        List<Customer_Invoice__c> invoices = 
+                [SELECT Id, Invoice_Number__c, Invoice_Status__c, Total_Amount__c, Billing_Currency__c, 
+                        Billing_Member_Accounting_Code__c, Billing_Member_Designator_Code__c, Billing_Member_Name__c, Invoice_Date__c,
+                        Bank_Name__c, IBAN__c, SWIFT__c, Bank_Code__c, Branch_Code__c, Bank_Account_No__c, Bank_Account_Name__c
+                 FROM Customer_Invoice__c 
+                 WHERE AccountId__c = :myContact.AccountId AND Billing_Member_IS_Sub_Status__c = :type AND Invoice_Status__c IN :statusList
+                 ORDER BY Invoice_Number__c ASC LIMIT:INVOICE_BATCH OFFSET :offset
+                ];
+
+        return invoices;
+    }
+
+    //WMO-627 - ACAMBAS: End
 }
