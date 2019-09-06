@@ -1780,6 +1780,10 @@ public class ANG_AgencyChangesHelperTest {
 		Account a1 = [Select Id, IATACode__c,IATA_ISO_Country__c,Location_Class__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE1 H1'];
 		Account he1 = [Select Id, IATACode__c, IATA_ISO_Country__c,Location_Class__c,Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Main HE Account H1'];
 
+		Id rtsRiskAlertRT = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c', 'Risk_Alert_RTS');
+		ANG_Risk_Alert__c rtsRiskAlert = new ANG_Risk_Alert__c(ANG_EventId__c = 'RTS Alert - HE', ANG_Account__c = he1.id, RecordTypeId = rtsRiskAlertRT, ANG_Severity__c = 'Orange');
+ 		insert rtsRiskAlert;
+
 		Id oscarRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id, recordTypeId = oscarRT, Process__c = 'ANG.MAJOR.CHANGES.1.0' );
@@ -1873,6 +1877,19 @@ public class ANG_AgencyChangesHelperTest {
 		ANG_AgencyChangesHelper.AChangeStructure changesContainer = new ANG_AgencyChangesHelper.AChangeStructure();
 
 		ANG_AgencyChangesHelper.generateLNFChangeCode(oscar, new Map<Id, Agency_Applied_Change_code__c>{a1.Id => aacc1}, changesContainer);
+
+		Map<ID, Account> accountMapAfterChange = new Map<ID, Account>([SELECT ID, Name, (SELECT ID, ANG_Account__c, Monitored_Account__c FROM Risk_Alerts__r)
+												FROM Account 
+												Where ID = :he1.ID OR ID = :a1.ID]);
+
+		Account newMainAccount = accountMapAfterChange.get(a1.ID);
+		List<ANG_Risk_Alert__c> riskAlertList = newMainAccount.Risk_Alerts__r;
+		System.assertEquals(1, riskAlertList.size());
+		System.assertEquals(he1.ID, riskAlertList.get(0).Monitored_Account__c);
+		System.assertEquals(a1.ID, riskAlertList.get(0).ANG_Account__c);
+
+		Account newAEAccount = accountMapAfterChange.get(he1.ID);
+		System.assertEquals(0, newAEAccount.Risk_Alerts__r.size());
 
 		Test.stopTest();
 

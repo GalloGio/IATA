@@ -70,7 +70,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
                 }
             }
 
-            ANG_RestServiceHelper.GenerateResponse(json.serialize(lsToReturn), 200);
+            ANG_RestServiceHelper.GenerateResponse(json.serialize(lsToReturn, true), 200);
         }
         catch(exception e){
             ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('500', e.getMessage()) ), 500);
@@ -108,9 +108,9 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
                             +' Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, '
                             +' IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, '
                             +' VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Top_Parent__c, ParentId,'
-                            +' GDI_Status__c, Location_Type_Ordered__c, Multicountry_Key_Hierarchy__c, Identify_as_Key_Customer__c  '
+                            +' GDI_Status__c, Location_Type_Ordered__c, Multicountry_Key_Hierarchy__c, Identify_as_Key_Customer__c, Is_PCI_compliant__c  '
                             +' , (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in (\'BSPLink\',\'FormOfPayment\'))'  //Accelya Email + FOP
-                            +' , (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\' )' //List of children
+                            +' , (Select Id, IATACode__c, Status__c, Is_PCI_compliant__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\' )' //List of children
                             +' , (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r)'  //RHC Information
                             +' , (Select Id, STEP17__c, STEP41__c From OSCARs__r where RecordTypeId IN :iEPRecordTypes ORDER BY LastModifiedDate DESC)' //OSCAR
                             +' , (select Hierarchy__c, Hierarchy__r.name from AMS_Agencies_relationships__r limit 1)' //hierarchy name
@@ -215,7 +215,15 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
         }
     }
 
-    /* Succesfull payload when the caller is GDI */
+    private static Map<String, Boolean> pciCompliantFldMapping = new Map<String, Boolean>{
+        'Yes' => TRUE,
+        'No' => FALSE,
+        'Nil CC' => FALSE,
+        'Corporate Card' => TRUE
+    };
+
+    /* Succesfull payload when the caller is Mulesoft */
+    @TestVisible
     private class INT008_SuccessPayload{
         /* Agency Information */
         public string isBranchAbroad;
@@ -262,6 +270,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
         public list<Owner> owners;
         public list<DueDiligence> dueDiligence;
         public list<string> externalSystems; //NEWGEN-4276
+        public Boolean isPciDss;
         public list<theCurrency> currencies;
         public string hierarchyId;
         public boolean isMultiCountryKeyCustomer;
@@ -373,6 +382,12 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
                 //GDI - note: we do publish HE/HO only
                 if(string.isNotBlank(acc.GDI_Status__c) && setGDIStatusToPublish.contains(acc.GDI_Status__c))
                    this.externalSystems.add(ISSP_Financial_Institutions.GDI_PORTAL_SERVICE); //check if we do have it somewhere in any static variable
+                
+                //Fill isPciDss attribute for every Account IEP Status except "No IEP Account" or blank 
+                if(String.isNotBlank(acc.ANG_IEP_Status_FF__c) && acc.ANG_IEP_Status_FF__c != AMS_Utils.NO_IEP_ACCOUNT){
+                    this.isPciDss = String.isNotBlank(acc.Is_PCI_compliant__c) ? pciCompliantFldMapping.get(acc.Is_PCI_compliant__c) : FALSE;
+                }
+
             }
             catch(exception e){
                 throw e;

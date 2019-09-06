@@ -50,12 +50,12 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		'Minor shareholding' => new List<String>{'AMS_Account_Role__c','Contact','ANG_RHC_Information__c'},
 		'Major shareholding' => new List<String>{'AMS_Account_Role__c','Contact','ANG_RHC_Information__c'},
 		'Ownership' => new List<String>{'AMS_Account_Role__c','Contact','ANG_RHC_Information__c'},
-		'Location type' => new List<String>{'ANG_RHC_Information__c','Financial_Security__c','ANG_Agency_Risk_Event__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'},
+		'Location type' => new List<String>{'ANG_RHC_Information__c','Financial_Security__c','ANG_Agency_Risk_Event__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c', 'ANG_Risk_Alert__c'},
 		'Location' => new List<String>{'ANG_RHC_Information__c'},
-		'Hierarchy' => new List<String>{'Agency_Authorization__c','ANG_Agency_Risk_Event__c','ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c','Contact','Financial_Security__c','Portal_Application_Right__c'},
+		'Hierarchy' => new List<String>{'Agency_Authorization__c','ANG_Agency_Risk_Event__c','ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c','Contact','Financial_Security__c','Portal_Application_Right__c', 'ANG_Risk_Alert__c'},
 		'VMFR' => new List<String>{'ANG_RHC_Information__c'},
 		'Accreditation type' => new List<String>{'Agency_Authorization__c', 'Portal_Application_Right__c', 'ANG_RHC_Information__c','ANG_Agency_Risk_Event__c'},
-		'Location type to different legal entity' => new List<String>{'ANG_RHC_Information__c','Financial_Security__c','ANG_Agency_Risk_Event__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c','Agency_Authorization__c'},
+		'Location type to different legal entity' => new List<String>{'ANG_RHC_Information__c','Financial_Security__c','ANG_Agency_Risk_Event__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c','Agency_Authorization__c', 'ANG_Risk_Alert__c'},
 		'Trade name' => new List<String>{'ANG_RHC_Information__c'},
 		'Conversion to GoLite' => new List<String>{'Agency_Authorization__c','ANG_Agency_Risk_Event__c','ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'},
 		'Conversion to Domestic with Cash' => new List<String>{'Agency_Authorization__c','ANG_Agency_Risk_Event__c','ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'}
@@ -73,7 +73,8 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			'PORTAL_APPLICATION_RIGHT__C' => ' Contact__r.AccountId IN :objectIds AND Application_Name__c = \'IFAP\'',
 			'AMS_OSCAR__C' => ' Id =:oscarId',
 			'AMS_AGENCIES_HIERARCHY__C' => ' Id in (select Hierarchy__c  from AMS_AGENCIES_RELATIONHIP__C WHERE Child_Account__c in:objectIds or Parent_Account__c in:objectIds or Child_Account__r.Top_Parent__c in :objectIds)',
-			'AMS_AGENCIES_RELATIONHIP__C' => ' Child_Account__c in:objectIds or Parent_Account__c in:objectIds or Child_Account__r.Top_Parent__c in :objectIds'
+			'AMS_AGENCIES_RELATIONHIP__C' => ' Child_Account__c in:objectIds or Parent_Account__c in:objectIds or Child_Account__r.Top_Parent__c in :objectIds',
+			'ANG_RISK_ALERT__C' => 'ANG_Account__c in:objectIds'
 	};
 
 	private Set<String> headLocationTypesSet = new Set<String>{AMS_Utils.GE, AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
@@ -260,7 +261,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 					Operation__c= 'Rollback');
 
 				backupToInsert.add(backupData);
-                
+
 				system.debug('[ANG_BackupEngineHelper] (5) after Entity '+entity +' and object ' + sobjectToInsert.Id+' Heap size: ' + Limits.getHeapSize() + ' of ' + Limits.getLimitHeapSize());
 
 			}
