@@ -1,0 +1,51 @@
+<template>
+
+    <template if:true={emailDomainModal}>
+        <c-portal-email-domain-modal account-id={recordId} domain-id={domainId} is-new-record={isNewRecord}
+            oncloseemaildomainmodal={closeEmailDomain}>
+        </c-portal-email-domain-modal>
+    </template>
+
+    <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+        <div class="modal">
+            <div class="customPopupInteriorHalfScreenCentered">
+
+                <!-- Popup Header -->
+                <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
+                    <span class="modalTitle"> {labels.ISSP_EMADOMVAL_Title} </span>
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                            onclick={closeModal}></lightning-icon>
+                    </span>
+                </div>
+
+                <div class="customWhiteBackground">
+
+                    <div class="slds-p-around_large">
+                        <div>
+                            <label class="form-label text-bold">
+                                {labels.ISSP_EMADOMVAL_ImportantInformation}
+                            </label>
+                        </div>
+
+                        <div class="slds-scrollable_x slds-m-vertical_medium">
+                            <lightning-datatable data={domainsList} columns={columns} key-field="id"
+                                onrowaction={handleRowAction} hide-checkbox-column>
+                            </lightning-datatable>
+                        </div>
+                    </div>
+
+                    <!-- BUTTON -->
+                    <div class="slds-align_absolute-center slds-p-around_large topLightGrayBorder">
+                        <lightning-button variant="brand" class="containedButtonWhite" name="addDomainBtn"
+                            label={labels.ISSP_EMADOMVAL_AddBtn} title={labels.ISSP_EMADOMVAL_AddBtn}
+                            onclick={addDomain}>
+                        </lightning-button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</template>

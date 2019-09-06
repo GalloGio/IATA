@@ -11,12 +11,13 @@ import remove from '@salesforce/label/c.Button_Remove';
 import contact from '@salesforce/label/c.ISSP_Contact';
 import ISSP_Relocate_Move_To from '@salesforce/label/c.ISSP_Relocate_Move_To';
 import ISSP_Relocate_Select_Account from '@salesforce/label/c.ISSP_Relocate_Select_Account';
+import ISSP_Relocate_No_Accounts from '@salesforce/label/c.ISSP_Relocate_No_Accounts';
 import ICCS_Account_Name_Label from '@salesforce/label/c.ICCS_Account_Name_Label';
 import ISSP_CompanyAddressInformation from '@salesforce/label/c.ISSP_CompanyAddressInformation';
 import csp_AccountRelocateSuccess from '@salesforce/label/c.csp_AccountRelocateSuccess';
 import ISSP_Relocate_Failed from '@salesforce/label/c.ISSP_Relocate_Failed';
 import CSP_Error_Message_Mandatory_Fields_Contact from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
-import ContinueLabel from '@salesforce/label/c.CSP_Continue';
+import CSP_Continue from '@salesforce/label/c.CSP_Continue';
 
 export default class ChangeUserPortalStatus extends LightningElement {
     @api recordId;
@@ -33,6 +34,7 @@ export default class ChangeUserPortalStatus extends LightningElement {
     @track myResults = [];
     @track resultMessage = false;
     @track resultMessageLabel = '';
+    @track selectAccountPlaceholder;
 
     label = {
         submitLABEL,
@@ -42,12 +44,13 @@ export default class ChangeUserPortalStatus extends LightningElement {
         ISSP_Relocate_Contact,
         ISSP_Relocate_Move_To,
         ISSP_Relocate_Select_Account,
+        ISSP_Relocate_No_Accounts,
         ICCS_Account_Name_Label,
         ISSP_CompanyAddressInformation,
         csp_AccountRelocateSuccess,
         ISSP_Relocate_Failed,
         CSP_Error_Message_Mandatory_Fields_Contact,
-        ContinueLabel
+        CSP_Continue
     }
 
     get titleLabel() {
@@ -72,6 +75,26 @@ export default class ChangeUserPortalStatus extends LightningElement {
             }
         }
         this.relatedAccountOptions = myRelatedAccountOptions;
+
+        if(this.hasNoOptions) {
+            this.selectAccountPlaceholder = this.label.ISSP_Relocate_No_Accounts;
+        } else {
+            this.selectAccountPlaceholder = this.label.ISSP_Relocate_Select_Account;
+        }
+    }
+
+    get hasNoOptions() {
+        if(this.relatedAccountOptions === undefined || this.relatedAccountOptions === null || this.relatedAccountOptions.length === 0) {
+            return true;
+        }
+        return false;
+    }
+
+    get isConfirmDisabled() {
+        if(this.hasNoOptions || !this.relatedAccountValue) {
+            return true;
+        }
+        return false;
     }
 
     handleRelatedAccountChange(event) {

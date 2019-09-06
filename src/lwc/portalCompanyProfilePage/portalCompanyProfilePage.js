@@ -17,6 +17,7 @@ import searchBranches from '@salesforce/apex/PortalProfileCtrl.searchCompanyBran
 import checkCanEdit from '@salesforce/apex/PortalProfileCtrl.checkCanEdit';
 import goToOldIFAP from '@salesforce/apex/PortalProfileCtrl.goToOldIFAP';
 import isAdminAndIATAAgencyAcct from '@salesforce/apex/PortalProfileCtrl.isAdminAndIATAAgencyAcct';
+import getPortalAdmins from '@salesforce/apex/PortalServicesCtrl.getPortalAdmins';
 import LANG from '@salesforce/i18n/lang';
 
 import { getParamsFromPage } from 'c/navigationUtils';
@@ -31,6 +32,11 @@ import NoAccount from '@salesforce/label/c.CSP_NoAccount';
 import CSP_Branch_Offices from '@salesforce/label/c.CSP_Branch_Offices';
 import ISSP_Contacts from '@salesforce/label/c.ISSP_Contacts';
 import ISSP_Assign_IFAP from '@salesforce/label/c.ISSP_Assign_IFAP';
+import CSP_Portal_Administrators from '@salesforce/label/c.CSP_Portal_Administrators';
+import ContactNameLabel from '@salesforce/label/c.CSP_Name';
+import EmailLabel from '@salesforce/label/c.Email';
+import CountryLabel from '@salesforce/label/c.ISSP_Country';
+import NoResults from '@salesforce/label/c.CSP_NoSearchResults';
 
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -100,13 +106,46 @@ export default class PortalCompanyProfilePage extends LightningElement {
     @track showIFAPBtn = false;
     // ------------------- //
 
+    // Portal Admins
+    @track hasPortalAdmins = false;
+    @track portalAdminList = [];
+    @track portalAdminColumns = [
+        { label: ContactNameLabel, fieldName: 'Name' },
+        { label: EmailLabel, fieldName: 'Email', type: 'text' },
+        { label: CountryLabel, fieldName: 'Country' },
+    ];
+
+    @wire(getPortalAdmins) 
+    getPortalAdminList({ error, data }) {
+        if(data) {
+            this.portalAdminList = [];
+
+            data.forEach(admin => {
+                const portalAdmin = {};
+                portalAdmin.Name = [admin.User.Contact.Salutation, admin.User.Contact.Name].filter(Boolean).join(" ");
+                if(admin.User.Contact.User_Portal_Status__c !== 'Pending Approval') {
+                    portalAdmin.Email = admin.User.Contact.Email;
+                    portalAdmin.Country = admin.User.Contact.Account.BillingCountry;
+                }
+                
+                this.portalAdminList.push( portalAdmin );
+            });
+            this.error = undefined;
+        } else if(error) {
+            console.error('error', JSON.parse(JSON.stringify(error)));
+            this.error = error;
+            this.portalAdminList = undefined;
+        }
+
+        this.hasPortalAdmins = this.portalAdminList && this.portalAdminList.length > 0 ? true : false;
+    }
 
 
     get noAccount() {
         return (this.loggedUser == null || this.loggedUser.Contact == null || this.loggedUser.Contact.AccountId == null);
     }
 
-    _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP };
+    _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP, CSP_Portal_Administrators, NoResults };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -220,9 +259,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
     }
 
     renderedCallback() {
-        let sections = this.template.querySelectorAll('.section');
-
-
         const leftNav = this.template.querySelector('c-portal-company-profile-info-nav');
         if (leftNav) {
             /* Set nav items for sticky navigation */
@@ -230,12 +266,24 @@ export default class PortalCompanyProfilePage extends LightningElement {
             for(let i = 0; i < this.sectionMap.length; i++){
                 navItems.push({ label: this.sectionMap[i].cardTitle, value: this.sectionMap[i].cardTitle, open: true });
             }
+            navItems.push({ label: this.labels.CSP_Portal_Administrators, value: 'adminContacts', open: true });
 
             leftNav.navItems = navItems;
             leftNav.activesection = 'Basics';
         }
-    }
 
+
+        // Scroll to specific section
+        let pageParams = getParamsFromPage();
+
+        if (pageParams.section !== undefined && pageParams.section !== '') {
+            this.timeout = setTimeout(() => {
+                leftNav.activesection = pageParams.section;
+                this.handleNavigation({ detail: pageParams.section });
+            }, 1500, this);
+        }
+
+    }
 
     navItemSelected(event) {
         this.navItem = event.detail.item;

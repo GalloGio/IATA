@@ -13,7 +13,7 @@ import CSP_Question2 from '@salesforce/label/c.CSP_Question2';
 //Community Path
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
-export default class PortalNoCasesBanner extends LightningElement {
+export default class PortalNoCasesBanner extends NavigationMixin(LightningElement) {
 
     //assets 
     noCasesImg = CSP_PortalPath + 'CSPortal/Images/Icons/nocases.svg';

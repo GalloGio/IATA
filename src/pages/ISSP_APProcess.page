@@ -15,9 +15,10 @@
             <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
             
             <style>
-                .pbTitle {
-                    {!IF(isstep2,'width: 90% !important','width: 40% !important')};
-                }
+                .pbBottomButtons .pbTitle {
+                	display: none;
+                	width: {!IF(isstep2,'90% !important','40% !important')};
+            	}
             
             .bPageBlock {
                 border-top-width : thin !important;
@@ -35,13 +36,14 @@
             .errorMsg {color:#d74c3b}
             
             .progress-bar-off {
-                color:#6BBBEA;
+                color: #6BBBEA;
                 font-weight:bold;
                 background-image:none !important;
                 background-color:transparent !important;
                 border-right:2px solid white;
             } 
-                       </style>
+                </style>
+		<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
                        
                        <script>
                            function hideText(myValue){
@@ -77,10 +79,10 @@
                        })
                        
                        </script>
-            
+            <c:ISSP_CustomNavigation />
             <div class="container">
                 <div id="contentWrapper">
-                    <c:ISSP_CustomNavigation />
+                    
                     
                     <!----------------------------------------->
                     <!-- STEP 1 -->
@@ -93,20 +95,25 @@
                             </div>
                             <div class="panel-body" id="body-enquiries">
                                 
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                                        A. Participation Country &amp; Type
-                                    </div>
-                                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-                                        B. Review Country Requirements
-                                    </div>
-                                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                                        C. BSP / CASS {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor database changes','Change Request','Bank details change'))}
-                                    </div>
-                                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                                        D. Submit to IATA
-                                    </div>
+                                <div class="progress iata-tabs">
+                                <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
+                                    style="width: 25%;">
+                                    <span class="progress-tab-step">A</span> Participation Country &amp; Type
                                 </div>
+                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0"
+                                    style="width: 25%;">
+                                    <span class="progress-tab-step">B</span> Review Country Requirements
+                                </div>
+                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
+                                    style="width: 25%;">
+                                    <span class="progress-tab-step">C</span> BSP / CASS {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor
+                                    database changes','Change Request','Bank details change'))}
+                                </div>
+                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+                                    style="width: 25%;">
+                                    <span class="progress-tab-step">D</span> Submit to IATA
+                                </div>
+                            </div>
                                 
                                 <apex:form styleClass="form-horizontal">
                                     <apex:actionFunction action="{!null}" name="refreshCountryList" reRender="countryList" oncomplete="$('.country-select').select2({width : 'resolve'});">
@@ -116,10 +123,11 @@
                                         <apex:param value="" assignTo="{!gssaCountryISOCode}" name="gssaCountryISOCode"/>
                                     </apex:actionFunction>
                                     <apex:pageBlock mode="edit">
-                                        <apex:pageBlockButtons location="bottom" style="padding-left:100px">
-                                            <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true"/>&nbsp;
-                                            <apex:commandButton styleclass="btn btn-default" action="{!save}" value="Continue"/>
-                                        </apex:pageBlockButtons>
+                                       <apex:pageBlockButtons location="bottom" style="padding-left:100px">
+                                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" value="Continue" />&nbsp;
+                                        <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}"
+                                            immediate="true" />
+                                    </apex:pageBlockButtons>
                                         <apex:pageMessages ></apex:pageMessages>
                                         <div class="alert alert-info" role="alert">You can save your {!CASE(APProcess, 'chg', 'change request', 'bnk', 'change of bank account', 'joining form')} at anytime and come back later to complete it.</div>
                                         <div class="alert alert-warning" role="alert">{!IF(strAreaType=='Airline Joining', 'Online Joining Applications', IF(strChangeType=='Minor database changes','Online Change Requests','Online changes of bank details'))} must be submitted within 2 weeks, otherwise you will need to restart the process for each participation type and country.
@@ -217,28 +225,37 @@
                                 <h3 class="panel-title">{!IF(strAreaType=='Airline Joining', 'Airline Participation Joining Application', IF(strChangeType=='Minor database changes', 'Airline Participation Change Request', 'Change of Bank Account details'))}</h3>
                             </div>
                             <div class="panel-body" id="body-enquiries">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                                        A. Participation Country &amp; Type
-                                    </div>
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-                                        B. Review Country Requirements:{!strLoB}-{!apCountry}
-                                    </div>
-                                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                                       C. BSP / CASS {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor database changes','Change Request','Bank details change'))}
-                                    </div>
-                                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                                        D. Submit to IATA
-                                    </div>
+                            <div class="progress iata-tabs">
+                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
+                                    style="width: 25%;">
+                                    <span class="progress-tab-step">A</span> Participation Country &amp; Type
                                 </div>
+                                <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0"
+                                    style="width: 25%;">
+                                    <span class="progress-tab-step">B</span> Review Country Requirements:{!strLoB}-{!apCountry}
+                                </div>
+                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
+                                    style="width: 25%;">
+                                    <span class="progress-tab-step">C</span> BSP / CASS {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor
+                                    database changes','Change Request','Bank details change'))}
+                                </div>
+                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+                                    style="width: 25%;">
+                                    <span class="progress-tab-step">D</span> Submit to IATA
+                                </div>
+                            </div>
+                            <div class="panel-body">
                                 <c:ISSP_AP_Country_Reqs_Modal />
-                                
+                            </div>
                                 <apex:form >
                                     <center>
                                         <apex:pageBlock mode="edit">
-                                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep1}" value="Previous" id="Previous"/>&nbsp;
-                                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3}" value="Next" id="Next"/>
-                                        </apex:pageBlock>
+                                           <apex:pageBlockButtons location="bottom">
+                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!goToStep3}" value="Next" id="Next"
+                                            />&nbsp;
+                                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!goToStep1}" value="Previous"
+                                                id="Previous" />
+                                        </apex:pageBlockButtons>                                        </apex:pageBlock>
                                     </center>
                                 </apex:form>
                                 
@@ -309,10 +326,9 @@
                         </div>
                     </apex:pageBlock>
                 </div>
-                <c:ISSP_CustomFooter />
-            </div>
-            
-        </body>  
+                </div>
+        <c:ISSP_CustomFooter />
+    </body>
     </html>
     
 </apex:page>

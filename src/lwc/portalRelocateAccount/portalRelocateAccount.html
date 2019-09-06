@@ -25,9 +25,9 @@
                                 <div class="slds-col slds-size_1-of-1">
                                     <lightning-layout-item size="7" flexibility="auto" padding="around-small">
                                         <lightning-combobox name="AccountSelected" label={label.ISSP_Relocate_Move_To}
-                                            placeholder={label.ISSP_Relocate_Select_Account} value={relatedAccountValue}
+                                            placeholder={selectAccountPlaceholder} value={relatedAccountValue}
                                             options={relatedAccountOptions} dropdown-alignment="auto"
-                                            onchange={handleRelatedAccountChange} required>
+                                            onchange={handleRelatedAccountChange} required disabled={hasNoOptions}>
                                         </lightning-combobox>
                                     </lightning-layout-item>
                                 </div>
@@ -64,9 +64,9 @@
                                     label={label.cancelLABEL} title={label.cancelLABEL} onclick={closeModal}>
                                 </lightning-button>
                                 
-                                <lightning-button variant="brand" class="containedButton"
+                                <lightning-button variant="brand" class="containedButton disabledButton"
                                     name="sendPasswordbtn" label={label.submitLABEL} title={label.submitLABEL}
-                                    onclick={submitAction} disabled={noSelected}>
+                                    onclick={submitAction} disabled={isConfirmDisabled}>
                                 </lightning-button>
 
                             </div>
@@ -104,7 +104,7 @@
                                     <div class="slds-grid slds-gutters">
                                         <div class="slds-col slds-align_absolute-center">
                                             <lightning-button variant="brand" class="containedButton"
-                                                name="Continuebtn" label={label.ContinueLabel} title={label.ContinueLabel}
+                                                name="Continuebtn" label={label.CSP_Continue} title={label.CSP_Continue}
                                                 onclick={closeModal}>
                                             </lightning-button>
                                         </div>

@@ -6,28 +6,28 @@
                <h3 class="panel-title">{!IF(strAreaType=='Airline Joining', 'Airline Participation Joining Application', IF(strChangeType=='Minor database changes', 'Airline Participation Change Request', 'Change of Bank Account details'))}</h3>
             </div>
     <div class="panel-body" id="body-enquiries">
-        <div class="progress">
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                A. Participation Country &amp; Type
+        <div class="progress iata-tabs">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                <span class="progress-tab-step">A</span> Participation Country &amp; Type
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-                B. {!strLoB} Country requirements
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
+                <span class="progress-tab-step">B</span> {!strLoB} Country requirements
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                 C. BSP / CASS {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor database changes','Change Request','Bank details change'))}
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                <span class="progress-tab-step">C</span> BSP / CASS {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor database changes','Change Request','Bank details change'))}
             </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                D. Submit to IATA
+            <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                <span class="progress-tab-step">D</span> Submit to IATA
             </div>
         </div>
     
      <apex:form id="FinalForm">    
-        <apex:pageBlock rendered="{!isStep4}" title="" mode="edit">
+        <apex:pageBlock rendered="{!isStep4}" mode="edit">
             
-            <apex:pageBlockButtons >
-                <apex:commandButton styleclass="apbutton" action="{!goToStep3}" value="Previous"/>&nbsp;
-                <apex:commandButton styleclass="apbutton" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}"/>
-                <apex:commandButton styleclass="apbutton" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave" style="float:right"/>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}"/>
+                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!goToStep3}" value="Previous"/>
+                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave"/>
             </apex:pageBlockButtons>
             
             <apex:pageMessages />

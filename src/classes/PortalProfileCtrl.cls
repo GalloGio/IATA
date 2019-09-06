@@ -84,6 +84,16 @@ public static Contact contactInfo = new Contact();
         set;
     }
 
+    public static Boolean isAccountDomain {
+		get {
+			Boolean issp_AccountDomain = ISSP_AccountDomainPermission__c.getInstance(myUser.Contact.Account.RecordType.DeveloperName) != null;
+			Boolean isAdmin = CSP_Utils.isAdmin();
+
+			return issp_AccountDomain && isAdmin;
+		}
+		set;
+	}
+
     /**
     * Todo: Implement contact search.
     * With infinite scrolling, search currently only filters records that are already on the client.
@@ -428,6 +438,10 @@ public static Contact contactInfo = new Contact();
         }
         lstCardWrapper.add(new CardWrapper(LABEL_BASICS, lstfw1, true));
 
+        if (isAccountDomain) {
+			lstfw1.add(new FieldWrapper('AccountDomainPermission',false,false));
+		}
+
         //COMPANY CONTACT CARD
         List<FieldWrapper> lstfw2 = new List<FieldWrapper>();
         for(Schema.FieldSetMember f : contactFields) {
@@ -511,6 +525,9 @@ public static Contact contactInfo = new Contact();
         @AuraEnabled 
         public Boolean isPrivacyManagement;
 
+        @AuraEnabled
+        public Boolean isAccountDomainPermission;
+
         public FieldWrapper(String title, String label, String link){
             this.label = label;
             this.link = link;
@@ -543,6 +560,7 @@ public static Contact contactInfo = new Contact();
             this.visible = visible;
             this.labeled = false;
             this.isAccessibility = (fieldName == 'Authorization' ? true : false);
+            this.isAccountDomainPermission = (fieldName == 'AccountDomainPermission' ? true : false);
             if (fieldName == 'Authorization') {
                 this.accessibilityList = new List<accessibilityWrapper>{
                         new accessibilityWrapper(false, LABEL_INVOICE_CONTACT, 'Invoicing_Contact__c'),
@@ -829,8 +847,15 @@ public static Contact contactInfo = new Contact();
         return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.GDPR, '');
     }
 
+    @AuraEnabled
+	public static List<Account_Domain__c> getAccountDomains(Id accountId){
+		return [SELECT Id, Name, CreatedDate, Account__c, Account__r.Name FROM Account_Domain__c WHERE Account__c =: accountId];
+	}
 
-
+	@AuraEnabled
+	public static Boolean isAccountDomain(){
+		return isAccountDomain;
+	}
 
 	@AuraEnabled
 	public static List<Account> getMapHierarchyAccounts(Id contactId) {
