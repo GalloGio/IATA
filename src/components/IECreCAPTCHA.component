@@ -8,7 +8,7 @@
             
        
         <!-- <script src="https://www.google.com/recaptcha/api.js"  /> -->
-        <script src='https://www.google.com/recaptcha/api.js?hl={!lang}'  />
+        <script src='https://www.recaptcha.net/recaptcha/api.js?hl={!lang}'  />
         
         
         <div class="g-recaptcha" data-sitekey="{!cttr.siteKey}" style="color: red !important;"></div>
