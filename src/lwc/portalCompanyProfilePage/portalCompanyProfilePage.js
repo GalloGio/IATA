@@ -490,6 +490,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     getContacts() {
         this.contactsLoaded = false;
+        this.contacts = [];
+        this.contactsOffset = 0;
         this.retrieveContacts();
     }
 
