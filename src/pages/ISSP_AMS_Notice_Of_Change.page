@@ -2323,10 +2323,7 @@
 				setWarningBoxOnHoverMC($j('[id$=iataChangeAccType]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
 
-			console.log(typeOfChange);
-
 			if (typeOfChange === 'Change of Accreditation Type' && '{!newForm.MultiCountry_Countries_Concerned__c}'.includes(",")) {
-				console.log('in here');
 				$j('[id$=notifyLegalDetailsChange]').prop('disabled', true);
 				setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 				

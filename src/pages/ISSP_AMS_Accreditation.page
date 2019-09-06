@@ -565,7 +565,7 @@
         }
 
         function checkNoCFirstQuestion() {
-            if ($('[id$="typeOfChange"]').find("input")[0]) {
+            /*if ($('[id$="typeOfChange"]').find("input")[0]) {
 
                 if ($('[id$="typeOfChange"]').find("input")[0].checked) {
                     $('[id$="LocationType"]').find("input")[3].disabled = true;
@@ -598,7 +598,7 @@
                         checkMCNoC();
                     }
                 }
-            }
+            }*/
         }
 
         function checkSelectedAccounts() {
@@ -619,19 +619,19 @@
             }
         }
 
-        function enableLocationQuestions() {
+        /*function enableLocationQuestions() {
             $('[id$="LocationType"]').find("input")[3].disabled = false;
             $('[id$="LocationType"]').find("input")[2].disabled = false;
             $('[id$="LocationType"]').find("input")[0].disabled = false;
-        }
+        }*/
 
-        function showCountryMultiSelection() {
+        /*function showCountryMultiSelection() {
             $('[id$="countrySelectedMCNOC"]').css('display', 'none');
             $('[id$="countryMultiSelection"]').css('display', 'block');
 
             $('[id$="selectAllLabel"]').css('display', 'inline-block');
             $('[id$="selectAll"]').css('display', 'inline-block');
-        }
+        }*/
 
         function loadPageOptions() {
             if({!isMultiCountryNewAE}) {
@@ -643,10 +643,74 @@
             }
 
             if ({!isNoticeOfChange} && {!isStep1}) {
-                $('[id$=nocFormQuestions]').first().insertAfter($('[id$=countrySelection').first());
-                $('[id$="LocationType"]').find("input").next().append("&nbsp;");
-                $('[id$="warningNotAllCountriesSelected"]').first().insertAfter($('[id$="LocationType"]').find("input").next()[1]);
-                checkNoCFirstQuestion();
+                $('[id$="nocThirdQuestion"]').find("input")[1].checked = true;
+
+                $('[id$="nocThirdQuestion"]').find("input")[1].disabled = true;
+                $('[id$="nocThirdQuestion"]').find("input")[0].disabled = true;
+                //$('[id$="LocationType"]').find("input").next().append("&nbsp;");
+                //$('[id$="warningNotAllCountriesSelected"]').first().insertAfter($('[id$="LocationType"]').find("input").next()[1]);
+                //checkNoCFirstQuestion();
+                checkLocationQuestion();
+            }
+        }
+
+        function checkLocationQuestion() {
+            if ($('[id$="LocationType"]').find("input")[0].checked) {
+                if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
+                    $('[id$="nocThirdQuestion"]').css('display', 'block');
+                    //meter NO e tudo disabled
+                } else {
+                    $('[id$="nocThirdQuestion"]').css('display', 'none');
+                    toggleCountryMultiSelection(true, false, false); 
+                }
+            }
+            
+            if ($('[id$="LocationType"]').find("input")[1].checked) {
+                $('[id$="nocThirdQuestion"]').css('display', 'block');
+                
+                if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
+                    //meter NO e tudo disabled
+                } else {
+                    toggleCountryMultiSelection(true, false, false);
+                }
+            }
+
+            if ($('[id$="LocationType"]').find("input")[2].checked) {
+                if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
+                    $('[id$="nocThirdQuestion"]').css('display', 'block');
+                } else {
+                    $('[id$="nocThirdQuestion"]').css('display', 'none');
+                    toggleCountryMultiSelection(true, false, false);
+                }
+            }
+
+            if ($('[id$="LocationType"]').find("input")[3].checked) {
+                if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
+                    $('[id$="nocThirdQuestion"]').css('display', 'block');
+                } else {
+                    $('[id$="nocThirdQuestion"]').css('display', 'none');
+                    toggleCountryMultiSelection(true, false, false);
+                }
+            }
+        }
+
+        function toggleCountryMultiSelection(countryLabel, singleCountry, multiCountry) {
+            if (countryLabel) {
+                $('[id$="brcountry"]').css('display', 'block');
+            } else {
+                $('[id$="brcountry"]').css('display', 'none');
+            }
+
+            if (singleCountry) {
+                $('[id$="countrySelectedMCNOC"]').css('display', 'block');
+            } else {
+                $('[id$="countrySelectedMCNOC"]').css('display', 'none');
+            }
+
+            if (multiCountry) {
+                $('[id$="countryMultiSelection"]').css('display', 'block');
+            } else {
+                $('[id$="countryMultiSelection"]').css('display', 'none');
             }
         }
 
@@ -735,7 +799,7 @@
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
                             <apex:actionFunction action="{!resetHierarchy}" name="reRenderAccountsNoc" reRender="branchaccountsel"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions" oncomplete=""/>
-
+                            
                             <apex:pageBlock id="step1Block" mode="edit" >
                                 <apex:pageBlockButtons location="bottom" style="padding-left:100px">
                                     <apex:actionStatus id="buttonLoadingStep1">
@@ -845,31 +909,6 @@
                                     </apex:outputPanel>
                                 </apex:outputPanel>
 
-                            <apex:outputpanel rendered="{!isNoticeOfChange}" id="nocFirstQuestion">
-                                <apex:outputpanel >
-                                    <div class="form-group">
-                                        <label for="typeOfChange" class="col-lg-3 control-label">
-                                            {!$Label.ISSP_ANG_NOC_Type_Of_Change}
-                                        </label>
-                                        <div class="col-lg-9" style="padding-top:7px">
-
-                                            <apex:outputPanel rendered="{!OR(isBankAccountChange != true, con.Account.Location_Type__c != 'AE')}">
-                                                <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptionsFirstQ">
-                                                    <apex:selectRadio required="true" id="typeOfChange" layout="pageDirection" label="{!$Label.ISSP_ANG_NOC_Type_Of_Change}" style="width:70%;" value="{!newForm.Type_of_Change__c}" onchange="checkNoCFirstQuestion();">
-                                            	    	<apex:selectOption itemValue="{!$Label.ISSP_ANG_NOC_Type_Of_Change_First}" itemLabel="{!$Label.ISSP_ANG_NOC_Type_Of_Change_First}"/>
-                                            
-                                                        <apex:selectOption itemValue="{!$Label.ISSP_ANG_NOC_Type_Of_Change_Second}" itemLabel="{!$Label.ISSP_ANG_NOC_Type_Of_Change_Second}"/>
-
-                                                        <apex:selectOption itemValue="{!$Label.ISSP_ANG_NOC_Type_Of_Change_Third}" itemLabel="{!$Label.ISSP_ANG_NOC_Type_Of_Change_Third}" rendered="{!con.Account.ANG_Accreditation_Model__c == 'Multicountry'}"/>
-                                                    </apex:selectRadio>
-                                                </apex:outputPanel>
-                                            </apex:outputPanel>
-                                        </div>
-                                    </div>
-
-                                </apex:outputpanel>
-                            </apex:outputpanel>
-
                             <apex:outputpanel rendered="{!isNoticeOfChange}" id="nocFormQuestions">
                                 <apex:outputpanel >
                                     <div class="form-group">
@@ -896,15 +935,15 @@
                                                 </apex:outputPanel>
 
                                                 <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptions">    
-                                                    <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');">
-                                                        <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}" itemDisabled="{!newForm.Type_Of_Change__c == 'Change of Accreditation Type'}"/>
+                                                    <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}'); checkLocationQuestion();">
+                                                        <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}" />
                                                         
                                                         <apex:selectOption itemValue="HO - All Branches" itemLabel="{!IF(AND(isMCAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_All_Branches_MC, $Label.ISSP_AMS_NoC_HE_All_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}"/>
                                                         <apex:image id="warningNotAllCountriesSelected" value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step1_Lang_Display_Help}" html-data-placement="right" html-data-toggle="tooltip" style="display: none;"/>
                                                         
-                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!IF(AND(isMCAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_Some_Branches_MC, $Label.ISSP_AMS_NoC_HE_Some_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" itemDisabled="{!newForm.Type_Of_Change__c == 'Change of Accreditation Type'}"/>
+                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!IF(AND(isMCAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_Some_Branches_MC, $Label.ISSP_AMS_NoC_HE_Some_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" />
                                                         
-                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!IF(AND(isMCAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_Associate_Entity_MC, $Label.ISSP_AMS_NoC_Associate_Entity)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" itemDisabled="{!newForm.Type_Of_Change__c == 'Change of Accreditation Type'}"/>
+                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!IF(AND(isMCAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_Associate_Entity_MC, $Label.ISSP_AMS_NoC_Associate_Entity)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" />
                                                     </apex:selectRadio>
 
                                                 </apex:outputPanel>
@@ -954,8 +993,8 @@
                                 </apex:outputpanel>
                             </apex:outputpanel>
 
-                                    <div class="form-group" id="countrySelection">
-                                        <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
+                            <div class="form-group" id="countrySelection">
+                                <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
 
                                 <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
                                     <apex:outputPanel rendered="{!AND(isMCAccredited, isNoticeOfChange)}">
@@ -997,6 +1036,29 @@
                                     <apex:outputText value="{!amsAllLangCountryLabel}"/>
                                 </div>
                             </div>
+
+                            <apex:outputpanel rendered="{!isNoticeOfChange}" id="nocThirdQuestion" style="display: none;">
+                                <!--<apex:outputpanel rendered="{!newForm.Scope_of_Change__c == 'HO - All Branches'}">-->
+                                    <div class="form-group">
+                                        <label for="typeOfChange" class="col-lg-3 control-label">
+                                            {!$Label.ISSP_ANG_NOC_Type_Of_Change}
+                                        </label>
+                                        <div class="col-lg-9" style="padding-top:7px">
+
+                                            <apex:outputPanel rendered="{!OR(isBankAccountChange != true, con.Account.Location_Type__c != 'AE')}">
+                                                <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptionsFirstQ">
+                                                    <apex:selectRadio required="true" id="typeOfChange" layout="pageDirection" label="{!$Label.ISSP_ANG_NOC_Type_Of_Change}" style="width:70%;" value="{!newForm.Type_of_Change__c}" >
+                                                        <apex:selectOption itemValue="{!$Label.ISSP_Yes}" itemLabel="{!$Label.ISSP_Yes}"/>
+
+                                                        <apex:selectOption itemValue="{!$Label.ISSP_No}" itemLabel="{!$Label.ISSP_No}"/>
+                                                    </apex:selectRadio>
+                                                </apex:outputPanel>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+
+                                <!--</apex:outputpanel>-->
+                            </apex:outputpanel>
 
                                     <div class="form-group" id="legalNameSelection" style="display: {!IF(AND(isMultiCountryNewAE, sectorValue == 'Travel_Agent'), '', 'none')};">
                                         <label for="legalNameSelection" class="col-lg-3 control-label">* {!$Label.ISSP_AMS_Noc_Legal_Name}</label>
