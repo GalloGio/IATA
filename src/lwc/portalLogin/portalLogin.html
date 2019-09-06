@@ -167,14 +167,14 @@
 
                 </c-portal-custom-card-container>
             </div>
-            <div >
+            <div if:true={isFrozen}>
                 <c-portal-informative-message-box>
                     <span slot="message">
                         <lightning-formatted-rich-text value={labels.CSP_Frozen_User_Message} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
                     </span>
                 </c-portal-informative-message-box>
             </div>
-            <div >
+            <div if:true={isLoginDisabled}>
                 <c-portal-informative-message-box>
                     <span slot="message">
                         <lightning-formatted-rich-text value={labels.CSP_Portal_Login_Disabled_Message} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
