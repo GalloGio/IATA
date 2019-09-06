@@ -687,7 +687,7 @@ public with sharing class PortalCasesCtrl {
         if ( subJ.length() > 0 ) {
             caseAux.Subject =  System.Label.CSP_IMPORTANT + ': ' + subJ;
         } else {
-            caseAux.Subject =  (caseAux.BSP_CASS__c != null) ? System.Label.CSP_IMPORTANT + ': ' + caseAux.Subject : '';
+            caseAux.Subject =  (caseAux.Subject != null) ? System.Label.CSP_IMPORTANT + ': ' + caseAux.Subject : '';
         }
         return caseAux;
     }
