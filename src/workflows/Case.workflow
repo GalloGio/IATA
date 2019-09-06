@@ -13080,7 +13080,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <value>Agent to be Notified</value>
         </criteriaItems>
         <description>Send a confirmation email as soon as the case is created for ID Card Application</description>
-        <triggerType>onCreateOnly</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>IDCard_MassConfirmationEmail Send</fullName>
