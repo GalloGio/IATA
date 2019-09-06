@@ -27830,7 +27830,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_PRIMARY_CONTACTS_MSG</shortDescription>
-        <value>Please &lt;a style=&quot;color:blue&quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;submit a case to IATA&lt;/a&gt; if you wish to change your primary contact.</value>
+        <value>Please &lt;a style=&quot;color:blue&quot; href=&quot;/csportal/s/support-reach-us&quot;&gt;submit a case to IATA&lt;/a&gt; if you wish to change your primary contact.</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_PRODUCT_DETAILS_SECTION</fullName>
@@ -27956,7 +27956,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2</shortDescription>
-        <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;submit a case to IATA&lt;/a&gt; if you wish to make any changes.</value>
+        <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;/csportal/s/support-reach-us&quot;&gt;submit a case to IATA&lt;/a&gt; if you wish to make any changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</fullName>
