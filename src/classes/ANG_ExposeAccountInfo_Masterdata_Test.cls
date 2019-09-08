@@ -107,20 +107,9 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
         
         insert aa;
         
-        Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Change_Code__c = 'IRR',
-                                                                                Account__c = account.Id); 
-        Agency_Applied_Change_code__c aacc2 = new Agency_Applied_Change_code__c(Change_Code__c = 'DFE',
-                                                                                Account__c = account.Id);
-        Agency_Applied_Change_code__c aacc3 = new Agency_Applied_Change_code__c(Change_Code__c = 'RCR',
-                                                                                Account__c = account.Id);
-        Agency_Applied_Change_code__c aacc4 = new Agency_Applied_Change_code__c(Change_Code__c = 'IRW',
-                                                                                Account__c = account.Id);
-        Agency_Applied_Change_code__c aacc5 = new Agency_Applied_Change_code__c(Change_Code__c = 'LSP',
-                                                                                Account__c = account.Id);
-        Agency_Applied_Change_code__c aacc6 = new Agency_Applied_Change_code__c(Change_Code__c = 'MaddY',
-                                                                                Account__c = account.Id);
-        
-       // insert new List<Agency_Applied_Change_code__c>{aacc2, aacc3, aacc4, aacc5, aacc6}; 
+        Agency_Applied_Change_code__c aacc = new Agency_Applied_Change_code__c(Change_Code__c = 'LSP',
+                                                                                Account__c = account.Id);        
+        insert aacc;
 
     }
     
@@ -164,6 +153,8 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
         ANG_ExposeAccountInfo_Masterdata.ANG_ExposeAccountInfo_Masterdata(new Map<Id, Account>(lsAccnt), 'S', 'LSP');
         ANG_ExposeAccountInfo_Masterdata.ANG_ExposeAccountInfo_Masterdata(new Map<Id, Account>(lsAccnt), 'P', 'LSP');
         ANG_ExposeAccountInfo_Masterdata.ANG_ExposeAccountInfo_Masterdata(new Map<Id, Account>(lsAccnt), 'D', 'LSP');
+        
+        system.assertEquals(200, RestContext.response.statusCode);
         
         test.stopTest();
     }
