@@ -15691,6 +15691,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Are you sure you want to discard your changes?</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_CONFIRM_DISCARD_APPLICATION</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CONFIRM DISCARD APPLICATION</shortDescription>
+        <value>Are you sure you want to discard your application?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Capacity</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -22740,29 +22748,8 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <fullName>ISSP_ANG_NOC_Type_Of_Change</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>First NoC Question</shortDescription>
-        <value>Please select your type of change</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_NOC_Type_Of_Change_First</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>First NoC First Answer</shortDescription>
-        <value>Change of Accreditation Type</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_NOC_Type_Of_Change_Second</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>First NoC Second Answer</shortDescription>
-        <value>Other Changes</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_NOC_Type_Of_Change_Third</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>First NoC Third Answer</shortDescription>
-        <value>Other Changes (without Change of Hierarchy)</value>
+        <shortDescription>Third NoC Question</shortDescription>
+        <value>Would you like to change your accreditation type?</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ONE_OR_MORE_AE</fullName>

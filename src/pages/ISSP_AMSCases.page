@@ -276,6 +276,15 @@
                 else
                     $('[id$="tcModalConfirmButton"]').attr('disabled','disabled');
             }
+
+            function discardMCApplication() {
+                bootbox.confirm('{!$Label.ISSP_AMS_CONFIRM_DISCARD}', function(result) {
+                    if (result) {
+                        finalDiscardMCApplication();
+                    };
+                });
+                return false;
+            }
             
             </script>
         <div class="container">
@@ -296,7 +305,7 @@
                 <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
                 <apex:actionFunction action="{!runOptInOut}" name="runOptInOut" oncomplete="onCompleteOptInOut();" rerender="DraftCases"/>
                 <apex:actionFunction action="{!submitMultiCountryApplication}" name="submitMultiCountryApplication" status="loadStatusSpinner" rerender="other-forms, DraftCasespageblock, amsCasesMessage, ongoing-apps" oncomplete="reRenderAllSections();"/>
-                <apex:actionFunction action="{!discardMCApplication}" name="discardMCApplication" status="loadStatusSpinner" reRender="DraftCasespageblock, amsCasesMessage" oncomplete="reRenderAllSections();"/>
+                <apex:actionFunction action="{!discardMCApplication}" name="finalDiscardMCApplication" status="loadStatusSpinner" reRender="DraftCasespageblock, amsCasesMessage" oncomplete="reRenderAllSections();"/>
                     
                     <div class="row">
                         <section name="left-side-agency-accred" id="left-side-regular" class="col-md-7" style="min-height: 350px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCAccredited)), 'none', '')};">
@@ -549,8 +558,8 @@
                   </div>
                 </div>
 
-                <!-- Modal GDI Portal App Request --> 
-                <div class="modal" id="termsAndConsitionsMCModal" tabindex="-1" role="dialog">
+                <!-- Modal MC Terms and conditions --> 
+                <div class="modal" id="termsAndConsitionsMCModal" tabindex="-1" role="dialog" style="overflow-x: hidden; overflow-y: auto;">
                     <apex:outputPanel layout="block" id="myModalContent"> 
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
