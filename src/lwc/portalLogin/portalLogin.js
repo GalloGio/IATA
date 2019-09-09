@@ -215,6 +215,10 @@ export default class PortalLogin extends LightningElement {
             this.template.querySelector('[data-id="loginButton"]').classList.remove('containedButtonLogin');
         }
         this._showLoginError(false, "");
+
+        if(event.keyCode == 13 && this.loginButtonDisabled == false){
+            this.handleLogin();
+        }
         //this._checkEmailField();
     }
 
@@ -255,6 +259,10 @@ export default class PortalLogin extends LightningElement {
         }
 
         this._showLoginError(false, "");
+
+        if(event.keyCode == 13 && this.loginButtonDisabled == false){
+            this.handleLogin();
+        }
 
     }
 
