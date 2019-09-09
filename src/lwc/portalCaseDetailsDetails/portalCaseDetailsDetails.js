@@ -13,6 +13,11 @@ import RelatedAccount from '@salesforce/label/c.csp_CreateNewCaseMainPicklistLab
 import ISSP_Survey from '@salesforce/label/c.ISSP_Survey';
 import Open from '@salesforce/label/c.Open';
 
+import Email from '@salesforce/label/c.Email';
+import CSP_Remittantce_Date from '@salesforce/label/c.CSP_Remittantce_Date';
+import CSP_Case_Currency from '@salesforce/label/c.CSP_Case_Currency';
+import ISSP_SIDRA_Irregularity_Date from '@salesforce/label/c.ISSP_SIDRA_Irregularity_Date';
+
 
 export default class PortalCaseDetailsDetails extends LightningElement {
 
@@ -33,6 +38,10 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         RelatedAccount,
         ISSP_Survey,
         Open
+        Email,
+        CSP_Remittantce_Date,
+        CSP_Case_Currency,
+        ISSP_SIDRA_Irregularity_Date
     };
 
     acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
