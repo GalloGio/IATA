@@ -411,6 +411,10 @@ lightning-datatable .slds-th__action {
     align-items: center;
     vertical-align: middle;
 }
+@media only screen and (max-device-width: 480px){
+  td.cellHidden{
+    display: none;
+  }
 
 .Draft lightning-primitive-cell-wrapper lightning-formatted-text, .OpenEDMC lightning-primitive-cell-wrapper lightning-formatted-text{
     background-color: #f0f2f5;
@@ -425,8 +429,20 @@ lightning-datatable .slds-th__action {
     vertical-align: middle;
 }
 /* ############################################## */
+  .casesListWrapper thead{
+    display: none;
+  }
 
+  .casesListWrapper .slds-scrollable_y{
+    width: unset !important;
+  }
 
+  .casesListWrapper table{
+    width: 100% !important;
+  }
+}
+
+/* ############################################## */
 
 /* ############################################## */
 /* Casses for the popups */
