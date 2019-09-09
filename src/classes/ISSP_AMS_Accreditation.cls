@@ -1836,9 +1836,18 @@ public without sharing class ISSP_AMS_Accreditation {
                 return null;
             }
 
+            if (String.isBlank(mcformCountryISO) && isMultiCountryNewAE) {
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'country not selected')); //newerror, Giulio to define
+                return null;
+            }
+
             if (String.isBlank(newForm.Account_Name__c)) {
                 if ((isMultiCountryNewAE && !isMCAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Form__c)) || (isMCAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Account__c))) {
-                    ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Legal_Name_Selected_Null));
+                    if (newForm.AE_separate_Legal_Entity__c == 'Yes') {
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Legal_Name_Selected_Null));
+                    } else {
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'no legal name written')); //newerror, Giulio to define
+                    }
                     return null;
                 }
             }
