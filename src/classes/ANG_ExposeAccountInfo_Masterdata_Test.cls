@@ -1,19 +1,50 @@
 @isTest
 public class ANG_ExposeAccountInfo_Masterdata_Test {
     
+    private static Integer HTTP_STATUS_OK = 200;
+
     @testSetup static void setup() {
                 
         Portal_Applications__c pa = new Portal_Applications__c (Name='TEST');
         insert pa;
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true, ISO_Code_Numeric__c = 445, BSP_Country_free_text__c = 'test', ANG_Portal_Service__c = pa.Id)  ;
-        insert ctry ;
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true, Multicountry_Enabled__c = true, ISO_Code_Numeric__c = 445, BSP_Country_free_text__c = 'test', ANG_Portal_Service__c = pa.Id)  ;
+        
+        IATA_ISO_Country__c ukCountry = new IATA_ISO_Country__c(
+            Name = 'United Kingdom', 
+            CurrencyIsoCode = 'EUR', 
+            ISO_Code_Numeric__c = 999, 
+            ISO_Code__c = 'UK',
+            AIMS_Area_ID__c='1',
+            ANG_Enable_NewGen__c = true,
+            ANG_IEP_Model__c = 'Model B+'
+        );
+
+        insert new List<IATA_ISO_Country__c>{ctry, ukCountry};
 
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
         insert stt;
         
         Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Id aaRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'BSPLink');
+        
+        Account accHE = new Account(
+            Name ='UK Test', 
+            Type = 'IATA Passenger Sales Agent',
+            Sector__c='Travel Agent', 
+            Location_Type__c = AMS_Utils.HE,
+            Location_Class__c = 'P',
+            ANG_FA_Opt_out__c = false,
+            IATACode__c='999999999',
+            IATA_ISO_Country__c = ukCountry.Id,
+            BillingCountry='UK Test',
+            ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+            Status__c = AMS_Utils.ACC_S9_APPROVED,
+            ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
+            Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
+            RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+            ANG_IEP_Status__c = 'In Progress'
+        );
         
         Account accountGE = new Account();
         accountGE.Name = 'Main HE Account H1';
@@ -22,7 +53,7 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
         accountGE.Category__c = 'IATA Passenger Sales Agent';
         accountGE.Location_Class__c = 'P';
         accountGE.Location_Type__c = 'GE';
-        accountGE.ANG_Accreditation_Model__c = 'Cashless';
+        accountGE.ANG_Accreditation_Model__c = 'Multicountry';
         accountGE.IATA_ISO_Country__c = ctry.Id;
         accountGE.RecordTypeId = accountAgencyRT;
         accountGE.GDI_Status__c = 'Open';
@@ -31,7 +62,7 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
         accountGE.Accreditation_date__c = date.today();
         accountGE.Default_date__c = date.today();
         
-        insert accountGE;
+        insert new List<Account>{accHE, accountGE};
 
         Account account = new Account();
         account.Name = 'Main HE Account H1';
@@ -39,8 +70,8 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
         account.IATACode__c = '12345678';
         account.Category__c = 'IATA Passenger Sales Agent';
         account.Location_Class__c = 'P';
-        account.Location_Type__c = 'HE';
-        account.ANG_Accreditation_Model__c = 'Cashless';
+        account.Location_Type__c = 'AE';
+        account.ANG_Accreditation_Model__c = 'Multicountry';
         account.IATA_ISO_Country__c = ctry.Id;
         account.RecordTypeId = accountAgencyRT;
         account.GDI_Status__c = 'Open';
@@ -54,6 +85,13 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
         
         insert account;
         
+        ANG_RHC_Currencies__c rhcCurrencies = new ANG_RHC_Currencies__c();
+		rhcCurrencies.Name = 'USD';
+		rhcCurrencies.CurrencyIsoCode = 'USD';
+		rhcCurrencies.Currency_Name__c  = 'US Dollar';
+
+		insert rhcCurrencies;
+
         ANG_RHC_Information__c rhc = new ANG_RHC_Information__c();
         rhc.ANG_AccountId__c = account.Id;
         rhc.ANG_RHC_Amount__c = 5;
@@ -69,23 +107,28 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
         
         insert aa;
         
-        Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Change_Code__c = 'IRR',
-                                                                                Account__c = account.Id);
-        Agency_Applied_Change_code__c aacc2 = new Agency_Applied_Change_code__c(Change_Code__c = 'DFE',
-                                                                                Account__c = account.Id);
-        Agency_Applied_Change_code__c aacc3 = new Agency_Applied_Change_code__c(Change_Code__c = 'RCR',
-                                                                                Account__c = account.Id);
-        Agency_Applied_Change_code__c aacc4 = new Agency_Applied_Change_code__c(Change_Code__c = 'IRW',
-                                                                                Account__c = account.Id);
-        Agency_Applied_Change_code__c aacc5 = new Agency_Applied_Change_code__c(Change_Code__c = 'LSP',
-                                                                                Account__c = account.Id);
-        Agency_Applied_Change_code__c aacc6 = new Agency_Applied_Change_code__c(Change_Code__c = 'MaddY',
-                                                                                Account__c = account.Id);
-        
-        insert new List<Agency_Applied_Change_code__c>{aacc1, aacc2, aacc3, aacc4, aacc5, aacc6};
+        Agency_Applied_Change_code__c aacc = new Agency_Applied_Change_code__c(Change_Code__c = 'LSP',
+                                                                                Account__c = account.Id);        
+        insert aacc;
 
     }
     
+    private static RestResponse doCallOutToWS(String iataCode, String caller, String accountType){
+        RestRequest request = new RestRequest(); 
+        RestResponse response = new RestResponse();
+        
+        request.requestURI = '/account-details/'+iataCode + '/account-masterdata';  
+        request.httpMethod = 'GET';
+        request.addParameter('caller', caller);
+        request.addParameter('accountType', accountType);
+        
+        RestContext.request = request;
+        RestContext.response = response;
+        ANG_ExposeAccountInfo.doGet();
+
+        return response;
+    }
+
     @isTest static void testExposeAccMasterData() {
         
         list<Account> lsAccnt = [SELECT Id, Name, Sector__c, IATACode__c, Category__c, Location_Class__c, parentId, Top_Parent__c, Date_Organisation_Status_attained__c,
@@ -111,6 +154,87 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
         ANG_ExposeAccountInfo_Masterdata.ANG_ExposeAccountInfo_Masterdata(new Map<Id, Account>(lsAccnt), 'P', 'LSP');
         ANG_ExposeAccountInfo_Masterdata.ANG_ExposeAccountInfo_Masterdata(new Map<Id, Account>(lsAccnt), 'D', 'LSP');
         
+        system.assertEquals(200, RestContext.response.statusCode);
+        
         test.stopTest();
     }
+
+     @isTest static void pciCompliantTest(){
+                
+        Account acct = 
+            [SELECT 
+                Id,
+                Name,
+                IATACode__c,
+                Is_PCI_Compliant__c
+                FROM
+                Account 
+             WHERE 
+                Name = 'Uk Test' 
+             LIMIT 1
+            ];
+
+        Test.startTest();
+
+        RestResponse response = doCallOutToWS(acct.IATACode__c, ANG_RestServiceHelper.Caller_Mulesoft, 'Agency');
+        System.assertEquals(HTTP_STATUS_OK, response.statusCode, 'The service response must be ' + HTTP_STATUS_OK);
+        
+        String respBody = response.responseBody.toString();
+    
+        List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload> payloadLst = (List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload>) JSON.deserialize(respBody, List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload>.class);
+
+        ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload payload = payloadLst.get(0);
+
+        system.assert(payload.isPciDss != NULL, 'Payload isPciDss element must NOT be empty');
+        system.assert(!payload.isPciDss, 'Payload isPciDss element must be \'FALSE\'');
+        
+        acct.Is_PCI_Compliant__c = 'Nil CC';
+        update acct;
+
+        response = doCallOutToWS(acct.IATACode__c, ANG_RestServiceHelper.Caller_Mulesoft, 'Agency');
+        System.assertEquals(HTTP_STATUS_OK, response.statusCode, 'The service response must be ' + HTTP_STATUS_OK);
+        
+        respBody = response.responseBody.toString();
+    
+        payloadLst = (List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload>) JSON.deserialize(respBody, List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload>.class);
+
+        payload = payloadLst.get(0);
+
+        system.assert(payload.isPciDss != NULL, 'Payload isPciDss element must NOT be empty');
+        system.assert(!payload.isPciDss, 'Payload isPciDss element must be \'FALSE\'');
+
+        acct.Is_PCI_Compliant__c = 'Corporate Card';
+        update acct;
+
+        response = doCallOutToWS(acct.IATACode__c, 'Mulesoft', 'Agency');
+        System.assertEquals(HTTP_STATUS_OK, response.statusCode, 'The service response must be ' + HTTP_STATUS_OK);
+        
+        respBody = response.responseBody.toString();
+    
+        payloadLst = (List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload>) JSON.deserialize(respBody, List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload>.class);
+
+        payload = payloadLst.get(0);
+    
+        system.assert(payload.isPciDss != NULL, 'Payload isPciDss element must NOT be empty');
+        system.assert(payload.isPciDss, 'Payload isPciDss element must be \'TRUE\'');
+        
+        //When the IEP Status is not 'open' or 'in progress' 
+        //the pci compliant value must not be in the payload
+        acct.ANG_IEP_Status__c = 'No IEP Account';
+        update acct;
+
+        response = doCallOutToWS(acct.IATACode__c, 'Mulesoft', 'Agency');
+        System.assertEquals(HTTP_STATUS_OK, response.statusCode, 'The service response must be ' + HTTP_STATUS_OK);
+        
+        respBody = response.responseBody.toString();
+    
+        payloadLst = (List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload>) JSON.deserialize(respBody, List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload>.class);
+
+        payload = payloadLst.get(0);
+    
+        system.assert(payload.isPciDss == NULL, 'Payload isPciDss element must be NULL');
+
+        Test.stopTest();
+    }
+    
 }

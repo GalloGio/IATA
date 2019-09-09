@@ -3,8 +3,6 @@ private class ANG_MulticountryConversionsTest {
 
   @testSetup static void setup(){
 
-    Test.startTest();
-
     AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
       Name = 'BSP-PT',
       RecordTypeId = AMS_Utils.RECTYPE_BSP,
@@ -77,6 +75,7 @@ private class ANG_MulticountryConversionsTest {
     standardHePT.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
     standardHePT.Status__c = 'Approved';
     standardHePT.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
+    standardHePT.Remittance_frequency__c = 'W';
 
     Account standardHeUK = new Account();
     standardHeUK.Name = 'Standard HE UK';
@@ -88,6 +87,7 @@ private class ANG_MulticountryConversionsTest {
     standardHeUK.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
     standardHeUK.Status__c = 'Approved';
     standardHeUK.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
+    standardHeUK.Remittance_frequency__c = 'W';
 
     Account standardHeFR = new Account();
     standardHeFR.Name = 'Standard HE FR';
@@ -99,8 +99,11 @@ private class ANG_MulticountryConversionsTest {
     standardHeFR.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
     standardHeFR.Status__c = 'Approved';
     standardHeFR.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
+    standardHeFR.Remittance_frequency__c = 'W';
     
     insert new List<Account>{standardHePT, standardHeUK, standardHeFR};
+    
+    Test.startTest();
 
     Account standardAePT = new Account();
     standardAePT.Name = 'Standard AE PT';
@@ -113,6 +116,7 @@ private class ANG_MulticountryConversionsTest {
     standardAePT.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
     standardAePT.Status__c = 'Approved';
     standardAePT.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
+    standardAePT.Remittance_frequency__c = 'M';
 
     Account standardAeUK = new Account();
     standardAeUK.Name = 'Standard AE UK';
@@ -342,7 +346,6 @@ private class ANG_MulticountryConversionsTest {
     controller = new ANG_MulticountryConversionAccountSelCtrl(stdOscarCtrl);
 
     System.assertEquals(true, controller.readOnly, 'The page must be read only');
-    System.assert(findApexPagesMessage(ANG_MulticountryConversionAccountSelCtrl.CANNOT_ADD_ACCOUNTS_WARNING));
 
   }
 
@@ -363,5 +366,147 @@ private class ANG_MulticountryConversionsTest {
 	  return false;
 	
 	}
+
+  @isTest static void conversionHierarchySelectionErrorCasesTest(){
+    
+    AMS_OSCAR__c oscar = [SELECT Id, STEP45__c,  Process__c,  Account__c, Oscar_Communication_Case_Id__c, RecordTypeId FROM AMS_OSCAR__c LIMIT 1 ];
+
+    List<AMS_Process_Detail__c> processDetails = new List<AMS_Process_Detail__c>();
+
+    List<Account> accountList = [SELECT ID, Name, Location_type__c FROM Account Where (Location_Type__c = 'HE' OR Name = 'Standard AE PT') AND ID <> :oscar.Account__c];
+
+    //Create AMS_Process_Detail for the existing Accounts - excluding the Oscar's Account
+    for(Account acc : accountList){
+      AMS_Process_Detail__c pd = new AMS_Process_Detail__c();
+      pd.Account__c = acc.ID;
+      pd.Oscar__c = oscar.Id;
+      pd.Case__c = oscar.Oscar_Communication_Case_Id__c;
+
+      processDetails.add(pd);
+    }
+    insert processDetails;
+
+    PageReference pageRef = Page.ANG_MulticountryHierarchySelection;
+    Test.setCurrentPageReference(pageRef);
+
+		ApexPages.CurrentPage().getparameters().put('pid', oscar.id);
+    ApexPages.StandardController sc = new ApexPages.standardController(oscar); 
+
+    Test.startTest();       
+
+		ANG_MulticountryHierarchySelectionCrtl selectionCrtl = new ANG_MulticountryHierarchySelectionCrtl(sc);
+		List<ANG_MulticountryHierarchySelectionCrtl.HierarchyItem> hierarchyValues = selectionCrtl.hierarchyValues;
+
+		for (ANG_MulticountryHierarchySelectionCrtl.HierarchyItem it : hierarchyValues) {
+      if(it.acc.Name == 'Standard HE UK') it.isHE = true;
+      if(it.acc.Name == 'Standard HE FR') it.isAE = true;
+		}
+
+    //AE account should not be alone in a BSP 
+    selectionCrtl.saveConversion();
+    System.assert(findApexPagesMessage('There should not be any AEs alone in any BSP (that is not a GE).'));
+
+    //Test Different RF in same BSP
+    for (ANG_MulticountryHierarchySelectionCrtl.HierarchyItem it : hierarchyValues) {
+      if(it.acc.Name == 'Standard HE FR') { 
+        it.isHE = true;
+        it.isAE = false;
+      }
+      if(it.acc.Name == 'Standard AE PT') it.isAE = true;
+		}
+    selectionCrtl.saveConversion();
+    System.assert(findApexPagesMessage('Please align the Remittance Frequencies in the same BSP and then proceed with the multicountry conversion'));
+
+     //Test Different RF in same BSP
+    for (ANG_MulticountryHierarchySelectionCrtl.HierarchyItem it : hierarchyValues) {
+      if(it.acc.Name == 'Standard AE PT'){ 
+        it.isAE = true;
+        it.acc.Status__c = 'New application pending';
+      }
+		}
+
+    selectionCrtl.saveConversion();
+    System.assert(findApexPagesMessage('You have selected locations that have change or suspension processes in progress. Please finalize the process and then proceed with the multicountry conversion'));		 
+  
+    //Test GE & HE in the Same BSP
+    for (ANG_MulticountryHierarchySelectionCrtl.HierarchyItem it : hierarchyValues) {
+      if(it.acc.Name == 'Standard AE PT'){ 
+        it.isAE = false;
+        it.isHE = true;
+        it.acc.Status__c = 'Approved';
+        it.acc.Remittance_Frequency__c = 'W';
+      }
+		}
+    selectionCrtl.saveConversion();
+    System.assert(findApexPagesMessage('There cannot be an HE account in the same BSP of the GE account.'));		 
+  
+    Test.stopTest();
+  }
+
+
+  @isTest static void conversionHierarchySelectionSuccessTest(){
+  
+    AMS_OSCAR__c oscar = [SELECT Id, STEP45__c,  Process__c,  Account__c, Oscar_Communication_Case_Id__c, RecordTypeId FROM AMS_OSCAR__c LIMIT 1 ];
+
+    List<AMS_Process_Detail__c> processDetails = new List<AMS_Process_Detail__c>();
+
+    List<Account> accountList = [SELECT ID, Name, Location_type__c FROM Account Where Location_Type__c = 'HE' AND ID <> :oscar.Account__c];
+
+    //Create AMS_Process_Detail for the existing Accounts - excluding the Oscar's Account
+    for(Account acc : accountList){
+      AMS_Process_Detail__c pd = new AMS_Process_Detail__c();
+      pd.Account__c = acc.ID;
+      pd.Oscar__c = oscar.Id;
+      pd.Case__c = oscar.Oscar_Communication_Case_Id__c;
+
+      processDetails.add(pd);
+    }
+    insert processDetails;
+
+    PageReference pageRef = Page.ANG_MulticountryHierarchySelection;
+    Test.setCurrentPageReference(pageRef);
+
+		ApexPages.CurrentPage().getparameters().put('pid', oscar.id);
+    ApexPages.StandardController sc = new ApexPages.standardController(oscar); 
+
+    Test.startTest();       
+
+		ANG_MulticountryHierarchySelectionCrtl selectionCrtl = new ANG_MulticountryHierarchySelectionCrtl(sc);
+		List<ANG_MulticountryHierarchySelectionCrtl.HierarchyItem> hierarchyValues = selectionCrtl.hierarchyValues;
+
+    //Change the main account and proceed with correct conversion 
+    Id oldMainAccount;
+
+    for (ANG_MulticountryHierarchySelectionCrtl.HierarchyItem it : hierarchyValues) {
+      if(it.acc.Name == 'Standard HE PT'){
+        oldMainAccount = it.acc.Id;
+        it.isHE = true;
+        it.isAE = false;
+        it.main = false;
+      }
+      if(it.acc.Name == 'Standard HE FR'){
+        it.isHE = false;
+        it.isAE = false;
+        it.main = true;
+      }
+      if(it.acc.Name == 'Standard HE UK') {
+        it.isHE = true;
+        it.isAE = false;
+        it.main = false;
+      }
+		}
+
+    selectionCrtl.saveConversion();
+
+    Test.stopTest();
+
+    //Validate if the Account staging area has been updated
+    AMS_Pax_Accreditation_Form__c paxUpdated = [SELECT id, Account_Name__c FROM AMS_Pax_Accreditation_Form__c];
+    System.assertEquals('Standard HE FR',paxUpdated.Account_Name__c);
+
+    AMS_Process_Detail__c oldMainAccountProcessDetail = [SELECT id, Account__c, ANG_Location_Type_Conversion__c FROM AMS_Process_Detail__c WHERE Account__c = :oldMainAccount];
+    System.assertEquals('HE', oldMainAccountProcessDetail.ANG_Location_Type_Conversion__c);
+
+  }
 
 }

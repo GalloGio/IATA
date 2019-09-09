@@ -235,6 +235,7 @@ public class AMS_OSCARTriggerHandler {
         /*** AMSU-193 ***/
         prepopulateRFrequencyStgArea((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         handleAgentsAutomaticallyOptOutFromFA();
+		calculateRiskAssessment();
     }
 	
     private static void handleAgentsAutomaticallyOptOutFromFA(){
@@ -281,6 +282,52 @@ public class AMS_OSCARTriggerHandler {
 
         }
 
+    }
+	
+	/**
+     * Triggers the risk assessment engine when 
+     * a new HE is accredited for a multicountry hierarchy
+     * since the total number of remittances will change 
+     */ 
+    public static void calculateRiskAssessment(){
+
+        List<AMS_OSCAR__c> oscarLst = (List<AMS_OSCAR__c>) Trigger.new;
+        
+        Set<Id> accountsToFetchTopParentSet = new Set<Id>();
+
+        for(AMS_OSCAR__c oscar : oscarLst){
+            AMS_OSCAR__c oldOscar = (AMS_OSCAR__c) Trigger.oldMap.get(oscar.Id);
+            //If we are approving a new HE accreditation OSCAR for a multicountry hierarchy we will need to trigger the risk assessment calculation on GE
+            if(oldOscar.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL && oscar.Process__c == AMS_Utils.MCAE){
+                addAccountId(oscar.Account__c);
+                accountsToFetchTopParentSet.add(oscar.Account__c);
+            }
+        }
+
+        if(accountsToFetchTopParentSet.isEmpty()){
+            System.debug(LoggingLevel.FINE, '____ [cls AMS_OSCARTriggerHandler - calculateRiskAssessment] No need for Risk Assessment recalculation');
+            return;
+        }
+
+        List<Account> accountLst = getAccounts(accountsToFetchTopParentSet);
+
+        Map<Id, Map<Id, Integer>> calculateRiskAssessmentMap = new Map<Id, Map<Id, Integer>>();
+
+        for(Account acct : accountLst){
+            //Make sure that we only trigger the calculation 
+            //if the OSCAR related accounts are new HE's
+            //We cannot verify this before since the OSCAR Process 
+            //is the same for new HE or AE in multicountry
+            if(acct.Location_Type__c == AMS_Utils.HE){
+                calculateRiskAssessmentMap.put(acct.Top_Parent__c, null);
+            }
+        }
+        
+        System.debug(LoggingLevel.FINE, '____ [cls AMS_OSCARTriggerHandler - calculateRiskAssessment] calculateRiskAssessmentMap: ' + calculateRiskAssessmentMap);
+
+        if(!calculateRiskAssessmentMap.isEmpty()){
+            new ANG_RiskAssessmentEngine(calculateRiskAssessmentMap).assessment();
+        }
     }
 
     /*** AMSU-193 ***/
@@ -4700,8 +4747,8 @@ public class AMS_OSCARTriggerHandler {
             for(ID oscarId:newMap.keySet()){
                 if(newMap.get(oscarId).ANG_Type_Of_Change__c != null && AMS_Utils.OSCARBackupProcessMap.containsKey(newMap.get(oscarId).Process__c) && newMap.get(oscarId).ANG_Type_of_change__c != AMS_Utils.CONVERTTOINTERNATIONAL)
                     oscarsToProcess.add(oscarId);
+                }
             }
-        }
 
         if(Trigger.isUpdate){
 
@@ -4713,7 +4760,7 @@ public class AMS_OSCARTriggerHandler {
 
             }
         }
-       
+
 
         for(Id oscarId: oscarsToProcess){
             ID jobID = System.enqueueJob(new ANG_BackupEngineHelper(oscarId,true));
@@ -4724,7 +4771,7 @@ public class AMS_OSCARTriggerHandler {
     }
 
     public static void performRollbackANG(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap){
-        
+
         if(ANG_AgencyChangesHelper.testRunnningForNonBackup)
             return;
 

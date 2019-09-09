@@ -131,7 +131,7 @@ public without sharing class AMS_Utils {
     //AMSU-180
     public static final Set<String> oscarAMSProcesses_ValidateOwnership = new Set <String>{new_HO, AGENCYCHANGES, new_TIDS, COR};
 
-    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWGESTANDARD, NEWAE, MCAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
+    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWGESTANDARD, NEWAE, MCAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP, NGCONVERSIONTOMULTICOUNTRY};
     public static final Set<String> oscarNewGenNewAppProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWGESTANDARD,NEWAE, MCAE};
 
     public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
@@ -304,7 +304,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
     public static final Set<String> LocationClassDGR = new Set<String>{'C','R'};
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X','G','D'};
-    public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO','HE'};
+    public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO','HE', 'GE'};
 
     public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
     public static final String AGENTTYPE_NOCASH = 'Standard no Cash';
@@ -346,7 +346,7 @@ public without sharing class AMS_Utils {
     public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);
     public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH);
     public static final String TYPE_HE_MULTICOUNTRY = buildOfficeType(CASE_REASON_HE_MULTICOUNTRY, AGENTTYPE_MULTICOUNTRY);
-    public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWGESTANDARD,NEWAE,MCAE,NGCHANGES}; 
+    public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWGESTANDARD,NEWAE,MCAE,NGCHANGES,NGCONVERSIONTOMULTICOUNTRY}; 
     public static final String TYPE_PAX_AE_MULTICOUNTRY = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, AGENTTYPE_MULTICOUNTRY);
 	public static final Set<String> processesAMSrequiredAttachValidation = new Set<String>{new_HO,new_BR,AGENCYCHANGES,CERTIFICATION,VOLRELINQUISH,PCI_COMPLIANT}; //AMSU-34
 

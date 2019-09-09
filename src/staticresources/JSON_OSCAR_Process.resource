@@ -8319,7 +8319,9 @@
                     ]
                   }],
                 "Automations": [],
-                "DisplayFields": [],
+                "DisplayFields": [
+                  "STEP45__c"
+                ],
                 "IsDependent": false
               }
             ]
@@ -8330,22 +8332,7 @@
               {
                 "Name": "STEP6",
                 "Required": [],
-                "Actions": [
-                  {
-                    "FunctionName": "ANG_checkAccountHierarchy",
-                    "ActionLabel": "AMS_OSCAR_Action6",
-                    "args": [
-                      "oscarid"
-                    ]
-                  },
-                  {
-                    "FunctionName": "SIDRALiteAction",
-                    "ActionLabel": "AMS_OSCAR_Action7",
-                    "args": [
-                      "oscarid", "6"
-                    ]
-                  }
-                ],
+                "Actions": [],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -8432,15 +8419,7 @@
                 "Required": [
                   "STEP6"
                 ],
-                "Actions": [
-          {
-            "FunctionName": "SIDRALiteAction",
-            "ActionLabel": "AMS_OSCAR_Action7",
-            "args": [
-              "oscarid", "9"
-            ]
-          }
-        ],
+                "Actions": [],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -8512,13 +8491,6 @@
                       "agencyid",
                       "accountNameFromOscar"
                     ]
-                  },
-          {
-                    "FunctionName": "SIDRALiteAction",
-                    "ActionLabel": "AMS_OSCAR_Action7",
-                    "args": [
-                      "oscarid", "35"
-                    ]
                   }
                 ],
                 "Automations": [
@@ -8548,15 +8520,7 @@
                   "STEP8",
                   "STEP9"
                 ],
-                "Actions": [
-          {
-            "FunctionName": "SIDRALiteAction",
-            "ActionLabel": "AMS_OSCAR_Action7",
-            "args": [
-              "oscarid", "14"
-            ]
-          }
-        ],
+                "Actions": [],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -8617,13 +8581,6 @@
                     "ActionLabel": "AMS_OSCAR_Action16",
                     "args": [
                       "oscarid"
-                    ]
-                  },
-          {
-                    "FunctionName": "SIDRALiteAction",
-                    "ActionLabel": "AMS_OSCAR_Action7",
-                    "args": [
-                      "oscarid", "RPM"
                     ]
                   }],
                 "Automations": [

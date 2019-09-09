@@ -125,6 +125,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
                 processRollbackREs(technicalLogsMap.get(entity));
             if(entity == 'Portal_Application_Right__c')
                 processRollbackPortalAppRights(technicalLogsMap.get(entity));
+            if(entity == 'ANG_Risk_Alert__c')
+                processRollbackRiskAlert(technicalLogsMap.get(entity));
         }
 
         if(technicalLogsMap.get('AMS_Agencies_Hierarchy__c') != null || technicalLogsMap.get('AMS_Agencies_relationhip__c') != null || isHierarchyChange)
@@ -301,6 +303,32 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         }       
 
     }
+
+    private void processRollbackRiskAlert(List<String> riskAlertList){
+
+        Map<Id, ANG_Risk_Alert__c> riskAlertToRollback = new Map<Id, ANG_Risk_Alert__c>();
+
+        for(String raString: riskAlertList){
+            ANG_Risk_Alert__c riskAlert = (ANG_Risk_Alert__c) JSON.deserialize(raString, ANG_Risk_Alert__c.class);
+            riskAlertToRollback.put(riskAlert.Id, riskAlert);
+        }
+
+        Map<Id, ANG_Risk_Alert__c> existingRiskAlert = new Map<Id, ANG_Risk_Alert__c>([SELECT Id FROM ANG_Risk_Alert__c WHERE Id IN :riskAlertToRollback.keySet()]);
+
+        for (Id riskAlertID: riskAlertToRollback.keySet()) {
+            if (!existingRiskAlert.keySet().contains(riskAlertID)) {
+                System.debug('[ANG_RollbackEngineHelper] Risk Alert - Set ID = NULL');
+                riskAlertToRollback.get(riskAlertID).Id = null;
+            }
+        }
+
+        delete [Select Id from ANG_Risk_Alert__c where ANG_Account__c in:accountsRelated and Id not in: riskAlertToRollback.keySet()];
+
+        if(!riskAlertToRollback.isEmpty()){
+            upsert riskAlertToRollback.values();
+        }
+
+    } 
 
     private void processRollbackHierarchy(List<String> hierarchyList, List<String> relationshipList){
 

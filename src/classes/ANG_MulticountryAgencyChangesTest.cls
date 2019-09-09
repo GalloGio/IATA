@@ -5,126 +5,126 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		Test.startTest();
 		
-        Portal_Applications__c par = new Portal_Applications__c (Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE);
+		Portal_Applications__c par = new Portal_Applications__c (Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE);
 		insert par;
-        
+				
 		Amazon_Cred__c amazon_Cred =  new Amazon_Cred__c(
 			Name = 'IFAP', 
 			Prod_Configuration__c = 'adevconf', 
 			Dev_Configuration__c = 'adevconf'
 		);
 
-        Amazon_Cred__c genericAttach = new Amazon_Cred__c(
-        	Name = 'GenericAttach', 
-        	Prod_Configuration__c = 'adevconf', 
-        	Dev_Configuration__c = 'adevconf'
-        );
+		Amazon_Cred__c genericAttach = new Amazon_Cred__c(
+			Name = 'GenericAttach', 
+			Prod_Configuration__c = 'adevconf', 
+			Dev_Configuration__c = 'adevconf'
+		);
 
-        Amazon_Cred__c recycleBin =  new Amazon_Cred__c(
-        	Name = 'RecycleBin', 
-        	Prod_Configuration__c = 'adevconf', 
-        	Dev_Configuration__c = 'adevconf'
-        );
-        
-        insert new List<Amazon_Cred__c>{amazon_Cred, genericAttach, recycleBin};
+		Amazon_Cred__c recycleBin =  new Amazon_Cred__c(
+			Name = 'RecycleBin', 
+			Prod_Configuration__c = 'adevconf', 
+			Dev_Configuration__c = 'adevconf'
+		);
+		
+		insert new List<Amazon_Cred__c>{amazon_Cred, genericAttach, recycleBin};
 
-        List<AWSKey__c> AWS_KEYs = new List<AWSKey__c>{
-            new AWSKey__c(
-                name = 'adevconf',
-                Key__c = 'asd', 
-                Secret__c = 'asd',  
-                IAS_configuration_name__c = 'asdas', 
-                IAS_Access_Point__c = 'asd',
-                Bucket__c = 'asd',
-                AWS_ENDPOINT_URL__c = 'asd'
-            )
-        };
+		List<AWSKey__c> AWS_KEYs = new List<AWSKey__c>{
+				new AWSKey__c(
+						name = 'adevconf',
+						Key__c = 'asd', 
+						Secret__c = 'asd',  
+						IAS_configuration_name__c = 'asdas', 
+						IAS_Access_Point__c = 'asd',
+						Bucket__c = 'asd',
+						AWS_ENDPOINT_URL__c = 'asd'
+				)
+		};
 
-        insert AWS_KEYs;
+		insert AWS_KEYs;
 
 		//Agency changes configuration settings
-        ANG_AgencyChangesConfig__c changeLocationType = new ANG_AgencyChangesConfig__c();
-        changeLocationType.Name = 'ChangeLocationType';
-        changeLocationType.TC_Location_Type__c = true;
-        changeLocationType.TCA_Sanity_check__c = 'CAD';
-        changeLocationType.TCA_Application_withdrawal__c = 'CWD';
-        changeLocationType.TCA_Not_Applicable_Steps__c = 'STEP17';
+		ANG_AgencyChangesConfig__c changeLocationType = new ANG_AgencyChangesConfig__c();
+		changeLocationType.Name = 'ChangeLocationType';
+		changeLocationType.TC_Location_Type__c = true;
+		changeLocationType.TCA_Sanity_check__c = 'CAD';
+		changeLocationType.TCA_Application_withdrawal__c = 'CWD';
+		changeLocationType.TCA_Not_Applicable_Steps__c = 'STEP17';
 
-        ANG_AgencyChangesConfig__c changeLocationTypeDiffLegalEnt = new ANG_AgencyChangesConfig__c();
-        changeLocationTypeDiffLegalEnt.Name = 'ChangeLocationTypeDifferentLegalEntity';
-        changeLocationTypeDiffLegalEnt.TC_Location_type_diff_legal_ent__c = true;
-        changeLocationTypeDiffLegalEnt.TCA_Sanity_check__c = 'CDL';
-        changeLocationTypeDiffLegalEnt.TCA_Manager_approval__c = 'CDF';
-        changeLocationTypeDiffLegalEnt.TCA_Application_withdrawal__c = 'CWD';
+		ANG_AgencyChangesConfig__c changeLocationTypeDiffLegalEnt = new ANG_AgencyChangesConfig__c();
+		changeLocationTypeDiffLegalEnt.Name = 'ChangeLocationTypeDifferentLegalEntity';
+		changeLocationTypeDiffLegalEnt.TC_Location_type_diff_legal_ent__c = true;
+		changeLocationTypeDiffLegalEnt.TCA_Sanity_check__c = 'CDL';
+		changeLocationTypeDiffLegalEnt.TCA_Manager_approval__c = 'CDF';
+		changeLocationTypeDiffLegalEnt.TCA_Application_withdrawal__c = 'CWD';
 
 		ANG_AgencyChangesConfig__c changeHierarchy = new ANG_AgencyChangesConfig__c();
-        changeHierarchy.Name = 'ChangeHierarchy';
-        changeHierarchy.TC_Hierarchy__c = true;
-        changeHierarchy.TCA_Sanity_check__c = 'CHH';
-        changeHierarchy.TCA_Manager_approval__c = 'HCF';
-        changeHierarchy.TCA_Application_withdrawal__c = 'CWD';
+		changeHierarchy.Name = 'ChangeHierarchy';
+		changeHierarchy.TC_Hierarchy__c = true;
+		changeHierarchy.TCA_Sanity_check__c = 'CHH';
+		changeHierarchy.TCA_Manager_approval__c = 'HCF';
+		changeHierarchy.TCA_Application_withdrawal__c = 'CWD';
 
-        insert new List<ANG_AgencyChangesConfig__c>{changeLocationType, changeLocationTypeDiffLegalEnt, changeHierarchy};
+		insert new List<ANG_AgencyChangesConfig__c>{changeLocationType, changeLocationTypeDiffLegalEnt, changeHierarchy};
 
-       	AMS_ChangeCodes__c cadCode = new AMS_ChangeCodes__c(
-       		Name = 'CAD',
-       		Bulletin_Memo_Text__c = 'Change of Location Type Finalized',
-       		Change_Code__c = 'CAD',
-       		Integration_RecId__c = 'C'
-       	);
+		AMS_ChangeCodes__c cadCode = new AMS_ChangeCodes__c(
+			Name = 'CAD',
+			Bulletin_Memo_Text__c = 'Change of Location Type Finalized',
+			Change_Code__c = 'CAD',
+			Integration_RecId__c = 'C'
+		);
 
-       	AMS_ChangeCodes__c cdlCode = new AMS_ChangeCodes__c(
-       		Name = 'CDL',
-       		Account_status_change__c = '8;9',
-       		Billable__c = true,
-       		Change_Code__c = 'CDL',
-       		Reason_Code_Description__c = 'CHANGE IN PROCESS',
-       		Reason_Code__c = '81',
-       		Integration_RecId__c = 'C',
-       		Class_Type__c = 'P',
-       		Billable_Location_Class__c = 'P;D'
-       	);
+		AMS_ChangeCodes__c cdlCode = new AMS_ChangeCodes__c(
+			Name = 'CDL',
+			Account_status_change__c = '8;9',
+			Billable__c = true,
+			Change_Code__c = 'CDL',
+			Reason_Code_Description__c = 'CHANGE IN PROCESS',
+			Reason_Code__c = '81',
+			Integration_RecId__c = 'C',
+			Class_Type__c = 'P',
+			Billable_Location_Class__c = 'P;D'
+		);
 
-       	AMS_ChangeCodes__c cdfCode = new AMS_ChangeCodes__c(
-       		Name = 'CDF',
-       		Account_status_change__c = '9;8',
-       		Change_Code__c = 'CDF',
-       		Reason_Code_Description__c = 'ACCREDITED-MEET-STANDARDS',
-       		Reason_Code__c = '91',
-       		Integration_RecId__c = 'C',
-       		Class_Type__c = 'P'
-       	);
+		AMS_ChangeCodes__c cdfCode = new AMS_ChangeCodes__c(
+			Name = 'CDF',
+			Account_status_change__c = '9;8',
+			Change_Code__c = 'CDF',
+			Reason_Code_Description__c = 'ACCREDITED-MEET-STANDARDS',
+			Reason_Code__c = '91',
+			Integration_RecId__c = 'C',
+			Class_Type__c = 'P'
+		);
 
-       	AMS_ChangeCodes__c cwdCode = new AMS_ChangeCodes__c(
-       		Name = 'CWD',
-       		Account_status_change__c = '9;8',
-       		Bulletin_Memo_Text__c = 'ACCREDITED-MEET-STANDARDS',
-       		Reason_Code__c = '91',
-       		Change_Code__c = 'CWD',
-       		Integration_RecId__c = 'C',
-       		Published_in_bulletin__c = true
-       	);
+		AMS_ChangeCodes__c cwdCode = new AMS_ChangeCodes__c(
+			Name = 'CWD',
+			Account_status_change__c = '9;8',
+			Bulletin_Memo_Text__c = 'ACCREDITED-MEET-STANDARDS',
+			Reason_Code__c = '91',
+			Change_Code__c = 'CWD',
+			Integration_RecId__c = 'C',
+			Published_in_bulletin__c = true
+		);
 
-       	AMS_ChangeCodes__c hcfCode = new AMS_ChangeCodes__c(
-       		Name = 'HCF',
-       		Account_status_change__c = '9;8',
-       		Change_Code__c = 'HCF',
-       		Reason_Code_Description__c = 'ACCREDITED-MEET-STANDARDS',
-       		Reason_Code__c = '91',
-       		Integration_RecId__c = 'C',
-       		Class_Type__c = 'P'
-       	);
+		AMS_ChangeCodes__c hcfCode = new AMS_ChangeCodes__c(
+			Name = 'HCF',
+			Account_status_change__c = '9;8',
+			Change_Code__c = 'HCF',
+			Reason_Code_Description__c = 'ACCREDITED-MEET-STANDARDS',
+			Reason_Code__c = '91',
+			Integration_RecId__c = 'C',
+			Class_Type__c = 'P'
+		);
 
-       	AMS_ChangeCodes__c chhCode = new AMS_ChangeCodes__c(
-       		Name = 'CHH',
-       		Account_status_change__c = '8;9',
-       		Change_Code__c = 'CHH',
-       		Reason_Code_Description__c = 'CHANGE IN PROCESS',
-       		Reason_Code__c = '81',
-       		Integration_RecId__c = 'C'
-       	);
+		AMS_ChangeCodes__c chhCode = new AMS_ChangeCodes__c(
+			Name = 'CHH',
+			Account_status_change__c = '8;9',
+			Change_Code__c = 'CHH',
+			Reason_Code_Description__c = 'CHANGE IN PROCESS',
+			Reason_Code__c = '81',
+			Integration_RecId__c = 'C'
+		);
 
-       	insert new List<AMS_ChangeCodes__c>{cadCode, cdlCode, cdfCode, cwdCode, chhCode, hcfCode};
+		insert new List<AMS_ChangeCodes__c>{cadCode, cdlCode, cdfCode, cwdCode, chhCode, hcfCode};
 
 		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
 			Name = 'BSP-PT',
@@ -197,6 +197,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountGE.IATACode__c = '12300099';
 		accountGE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountGE.Status__c = 'Approved';
+		accountGE.Remittance_Frequency__c = 'D';
 		accountGE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		Account accountUkGE_h2 = new Account();
@@ -208,6 +209,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountUkGE_h2.IATACode__c = '22300099';
 		accountUkGE_h2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountUkGE_h2.Status__c = 'Approved';
+		accountUkGE_h2.Remittance_Frequency__c = 'D';
 		accountUkGE_h2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;		
 
 		insert new List<Account>{accountGE, accountUkGE_h2};
@@ -222,6 +224,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountUkHE.IATACode__c = '12300098';
 		accountUkHE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountUkHE.Status__c = 'Approved';
+		accountUkHE.Remittance_Frequency__c = 'D';
 		accountUkHE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		Account accountFrHE = new Account();
@@ -234,6 +237,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountFrHE.IATACode__c = '12300097';
 		accountFrHE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountFrHE.Status__c = 'Approved';
+		accountFrHE.Remittance_Frequency__c = 'D';
 		accountFrHE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		Account accountAE = new Account();
@@ -246,6 +250,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountAE.IATACode__c = '12300096';
 		accountAE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountAE.Status__c = 'Approved';
+		accountAE.Remittance_Frequency__c = 'D';
 		accountAE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		Account accountAE_2 = new Account();
@@ -258,6 +263,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountAE_2.IATACode__c = '12300095';
 		accountAE_2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountAE_2.Status__c = 'Approved';
+		accountAE_2.Remittance_Frequency__c = 'D';
 		accountAE_2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		Account accountAeUk_h2 = new Account();
@@ -270,6 +276,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountAeUk_h2.IATACode__c = '22300095';
 		accountAeUk_h2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountAeUk_h2.Status__c = 'Approved';
+		accountAeUk_h2.Remittance_Frequency__c = 'D';
 		accountAeUk_h2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		Account accountHePt_h2 = new Account();
@@ -282,6 +289,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountHePt_h2.IATACode__c = '32300095';
 		accountHePt_h2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountHePt_h2.Status__c = 'Approved';
+		accountHePt_h2.Remittance_Frequency__c = 'D';
 		accountHePt_h2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		Account accountHeSg_h2 = new Account();
@@ -294,6 +302,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountHeSg_h2.IATACode__c = '42300095';
 		accountHeSg_h2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountHeSg_h2.Status__c = 'Approved';
+		accountHeSg_h2.Remittance_Frequency__c = 'D';
 		accountHeSg_h2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		insert new List<Account>{accountUkHE, accountFrHE, accountAE, accountAE_2, accountAeUk_h2, accountHePt_h2, accountHeSg_h2};
@@ -308,6 +317,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountUkAE.IATACode__c = '12300094';
 		accountUkAE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountUkAE.Status__c = 'Approved';
+		accountUkAE.Remittance_Frequency__c = 'D';
 		accountUkAE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		Account accountUkAE_2 = new Account();
@@ -320,6 +330,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountUkAE_2.IATACode__c = '12300093';
 		accountUkAE_2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountUkAE_2.Status__c = 'Approved';
+		accountUkAE_2.Remittance_Frequency__c = 'D';
 		accountUkAE_2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		Account accountFrAE = new Account();
@@ -332,6 +343,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountFrAE.IATACode__c = '12300092';
 		accountFrAE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountFrAE.Status__c = 'Approved';
+		accountFrAE.Remittance_Frequency__c = 'D';
 		accountFrAE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		Account accountFrAE_2 = new Account();
@@ -344,6 +356,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountFrAE_2.IATACode__c = '12300091';
 		accountFrAE_2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountFrAE_2.Status__c = 'Approved';
+		accountFrAE_2.Remittance_Frequency__c = 'D';
 		accountFrAE_2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		Account accountAePt_h2 = new Account();
@@ -356,6 +369,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountAePt_h2.IATACode__c = '22300091';
 		accountAePt_h2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountAePt_h2.Status__c = 'Approved';
+		accountAePt_h2.Remittance_Frequency__c = 'D';
 		accountAePt_h2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		Account accountAeSg_h2 = new Account();
@@ -368,33 +382,34 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountAeSg_h2.IATACode__c = '42300091';
 		accountAeSg_h2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountAeSg_h2.Status__c = 'Approved';
+		accountAeSg_h2.Remittance_Frequency__c = 'D';
 		accountAeSg_h2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		insert new List<Account>{accountUkAE, accountUkAE_2, accountFrAE, accountFrAE_2, accountAePt_h2, accountAeSg_h2};
 
-        AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Multicountry Hierarchy');
+		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Multicountry Hierarchy');
 		AMS_Agencies_Hierarchy__c hierarchy_h2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Multicountry Hierarchy H2');
 		
-        insert new List<AMS_Agencies_Hierarchy__c>{hierarchy, hierarchy_h2};
-        
-        List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
+		insert new List<AMS_Agencies_Hierarchy__c>{hierarchy, hierarchy_h2};
+		
+		List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
 
-        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountFrHE.Id, Child_Account__c = accountFrAE.Id, Is_Newgen_Relation__c = true));
-        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountFrHE.Id, Child_Account__c = accountFrAE_2.Id, Is_Newgen_Relation__c = true));
-        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountUkHE.Id, Child_Account__c = accountUkAE.Id, Is_Newgen_Relation__c = true));
-        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountUkHE.Id, Child_Account__c = accountUkAE_2.Id, Is_Newgen_Relation__c = true));
-        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountGE.Id, Child_Account__c = accountFrHE.Id, Is_Newgen_Relation__c = true));
-	    rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountGE.Id, Child_Account__c = accountUkHE.Id, Is_Newgen_Relation__c = true));
-        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountGE.Id, Child_Account__c = accountAE.Id, Is_Newgen_Relation__c = true));
-        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountGE.Id, Child_Account__c = accountAE_2.Id, Is_Newgen_Relation__c = true));
-        
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountFrHE.Id, Child_Account__c = accountFrAE.Id, Is_Newgen_Relation__c = true));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountFrHE.Id, Child_Account__c = accountFrAE_2.Id, Is_Newgen_Relation__c = true));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountUkHE.Id, Child_Account__c = accountUkAE.Id, Is_Newgen_Relation__c = true));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountUkHE.Id, Child_Account__c = accountUkAE_2.Id, Is_Newgen_Relation__c = true));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountGE.Id, Child_Account__c = accountFrHE.Id, Is_Newgen_Relation__c = true));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountGE.Id, Child_Account__c = accountUkHE.Id, Is_Newgen_Relation__c = true));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountGE.Id, Child_Account__c = accountAE.Id, Is_Newgen_Relation__c = true));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountGE.Id, Child_Account__c = accountAE_2.Id, Is_Newgen_Relation__c = true));
+				
 		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy_h2.Id, Parent_Account__c = accountUkGE_h2.Id, Child_Account__c = accountAeUk_h2.Id, Is_Newgen_Relation__c = true));
-        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy_h2.Id, Parent_Account__c = accountUkGE_h2.Id, Child_Account__c = accountHePt_h2.Id, Is_Newgen_Relation__c = true));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy_h2.Id, Parent_Account__c = accountUkGE_h2.Id, Child_Account__c = accountHePt_h2.Id, Is_Newgen_Relation__c = true));
 		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy_h2.Id, Parent_Account__c = accountUkGE_h2.Id, Child_Account__c = accountHeSg_h2.Id, Is_Newgen_Relation__c = true));
-        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy_h2.Id, Parent_Account__c = accountHePt_h2.Id, Child_Account__c = accountAePt_h2.Id, Is_Newgen_Relation__c = true));
-        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy_h2.Id, Parent_Account__c = accountHeSg_h2.Id, Child_Account__c = accountAeSg_h2.Id, Is_Newgen_Relation__c = true));
-        
-        insert rels;
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy_h2.Id, Parent_Account__c = accountHePt_h2.Id, Child_Account__c = accountAePt_h2.Id, Is_Newgen_Relation__c = true));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy_h2.Id, Parent_Account__c = accountHeSg_h2.Id, Child_Account__c = accountAeSg_h2.Id, Is_Newgen_Relation__c = true));
+		
+		insert rels;
 
 		ANG_RHC_Currencies__c rhcCurrencies = new ANG_RHC_Currencies__c();
 		rhcCurrencies.Name = 'EUR';
@@ -403,8 +418,8 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		insert rhcCurrencies;
 
-        ANG_RHC_Information__c rhcInfoForGE = new ANG_RHC_Information__c(
-        	ANG_AccountId__c = accountGE.Id,
+		ANG_RHC_Information__c rhcInfoForGE = new ANG_RHC_Information__c(
+			ANG_AccountId__c = accountGE.Id,
 			CurrencyIsoCode = 'EUR',
 			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
 			ANG_Financial_Security__c = 0,
@@ -414,7 +429,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		);
 
 		ANG_RHC_Information__c rhcInfoForGE_h2 = new ANG_RHC_Information__c(
-        	ANG_AccountId__c = accountUkGE_h2.Id,
+			ANG_AccountId__c = accountUkGE_h2.Id,
 			CurrencyIsoCode = 'EUR',
 			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
 			ANG_Financial_Security__c = 0,
@@ -423,23 +438,93 @@ private class ANG_MulticountryAgencyChangesTest {
 			ANG_RME_Amount__c = 100
 		);
 
-        insert new List<ANG_RHC_Information__c>{rhcInfoForGE, rhcInfoForGE_h2};
+		insert new List<ANG_RHC_Information__c>{rhcInfoForGE, rhcInfoForGE_h2};
 
 		Test.stopTest();
+
+		Id rfValuesRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Agency_Risk_Calculation__c', ANG_RiskAssessmentEngine.REMITTANCE_FREQUENCY_VALUES_REC_TYPE_NAME);
+
+		ANG_Agency_Risk_Calculation__c nbrOfRemittancesMonthly = new ANG_Agency_Risk_Calculation__c(
+			ANG_Occurrence_Num__c = 12,
+			ANG_Remittance_Frequency__c = 'M',
+			RecordTypeId = rfValuesRecTypeId
+		);
+
+		ANG_Agency_Risk_Calculation__c nbrOfRemittancesFortnightly = new ANG_Agency_Risk_Calculation__c(
+			ANG_Occurrence_Num__c = 24,
+			ANG_Remittance_Frequency__c = 'F',
+			RecordTypeId = rfValuesRecTypeId
+		);
+
+		ANG_Agency_Risk_Calculation__c nbrOfRemittances4TimesPerMonth = new ANG_Agency_Risk_Calculation__c(
+			ANG_Occurrence_Num__c = 48,
+			ANG_Remittance_Frequency__c = 'W',
+			RecordTypeId = rfValuesRecTypeId
+		);
+
+		ANG_Agency_Risk_Calculation__c nbrOfRemittancesEvery10Days = new ANG_Agency_Risk_Calculation__c(
+			ANG_Occurrence_Num__c = 48,
+			ANG_Remittance_Frequency__c = 'R',
+			RecordTypeId = rfValuesRecTypeId
+		);
+
+		ANG_Agency_Risk_Calculation__c nbrOfRemittancesWeekly = new ANG_Agency_Risk_Calculation__c(
+			ANG_Occurrence_Num__c = 52,
+			ANG_Remittance_Frequency__c = 'V',
+			RecordTypeId = rfValuesRecTypeId
+		);
+
+		ANG_Agency_Risk_Calculation__c nbrOfRemittancesEvery5Days = new ANG_Agency_Risk_Calculation__c(
+			ANG_Occurrence_Num__c = 73,
+			ANG_Remittance_Frequency__c = 'S',
+			RecordTypeId = rfValuesRecTypeId
+		);
+		
+		ANG_Agency_Risk_Calculation__c nbrOfRemittancesTwiceAWeek = new ANG_Agency_Risk_Calculation__c(
+			ANG_Occurrence_Num__c = 96,
+			ANG_Remittance_Frequency__c = 'B',
+			RecordTypeId = rfValuesRecTypeId
+		);
+
+		ANG_Agency_Risk_Calculation__c nbrOfRemittancesEvery3Days = new ANG_Agency_Risk_Calculation__c(
+			ANG_Occurrence_Num__c = 105,
+			ANG_Remittance_Frequency__c = 'T',
+			RecordTypeId = rfValuesRecTypeId
+		);
+
+		ANG_Agency_Risk_Calculation__c nbrOfRemittancesDaily = new ANG_Agency_Risk_Calculation__c(
+			ANG_Occurrence_Num__c = 122,
+			ANG_Remittance_Frequency__c = 'D',
+			RecordTypeId = rfValuesRecTypeId
+		);
+
+		List<ANG_Agency_Risk_Calculation__c> rfValuesLst = new List<ANG_Agency_Risk_Calculation__c>();
+
+		rfValuesLst.add(nbrOfRemittancesMonthly);
+		rfValuesLst.add(nbrOfRemittancesFortnightly);
+		rfValuesLst.add(nbrOfRemittances4TimesPerMonth);
+		rfValuesLst.add(nbrOfRemittancesEvery10Days);
+		rfValuesLst.add(nbrOfRemittancesWeekly);
+		rfValuesLst.add(nbrOfRemittancesEvery5Days);
+		rfValuesLst.add(nbrOfRemittancesTwiceAWeek);
+		rfValuesLst.add(nbrOfRemittancesEvery3Days);
+		rfValuesLst.add(nbrOfRemittancesDaily);
+
+		insert rfValuesLst;
 
 	}
 
 	private static AMS_OSCAR__c createNecessaryData(Account acct){
 
 		Contact cont = new Contact(
-      		AccountId = acct.id, 
-      		Firstname = 'Richard', 
-      		Lastname = 'Vaughan', 
-      		Phone = '666123456', 
-      		MobilePhone = '911111111', 
-      		Email = 'richard.vaughan@test.com', 
-      		Financial_Assessment_Contact__c = false
-      	);
+			AccountId = acct.id, 
+			Firstname = 'Richard', 
+			Lastname = 'Vaughan', 
+			Phone = '666123456', 
+			MobilePhone = '911111111', 
+			Email = 'richard.vaughan@test.com', 
+			Financial_Assessment_Contact__c = false
+		);
 
 		insert cont;
 
@@ -458,9 +543,9 @@ private class ANG_MulticountryAgencyChangesTest {
 		Case oscarCase = new Case();
 		oscarCase.Oscar__c = oscar.Id;
 		oscarCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
-        oscarCase.AccountId = acct.Id;
-        oscarCase.ContactId = cont.Id;
-        insert oscarCase;
+		oscarCase.AccountId = acct.Id;
+		oscarCase.ContactId = cont.Id;
+		insert oscarCase;
 
 		AmazonFile__c aFile = new AmazonFile__c(
 			Full_Name_Unique__c = 'Attachment Required',
@@ -508,7 +593,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		insert acontact;
 
 		oscar.AMS_Online_Accreditation__c = staging.Id;
-        oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
+		oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 
 		update oscar;
 
@@ -538,11 +623,11 @@ private class ANG_MulticountryAgencyChangesTest {
 				Account__c, 
 				Change_Code__c 
 			 FROM 
-			 	Agency_Applied_Change_code__c 
+				Agency_Applied_Change_code__c 
 			 WHERE 
-			 	OSCAR__c = :oscarId
+				OSCAR__c = :oscarId
 			 AND
-			 	Change_Code__c = :changeCode
+				Change_Code__c = :changeCode
 			]
 		);
 
@@ -573,14 +658,14 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Type__c,
 				Top_Parent__c
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE 
-			 	Name = 'Multicountry AE PT'
+				Name = 'Multicountry AE PT'
 			 AND
-			 	Location_Type__c = :AMS_Utils.AE
+				Location_Type__c = :AMS_Utils.AE
 			];
 
-      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+		AMS_OSCAR__c oscar = createNecessaryData(acct);
 
 		PageReference pg = Page.ANG_AccountHierarchySelection;
 		pg.getParameters().put('Id', oscar.Id);
@@ -652,14 +737,14 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Type__c,
 				Top_Parent__c
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE 
-			 	Name = 'Multicountry AE UK'
+				Name = 'Multicountry AE UK'
 			 AND
-			 	Location_Type__c = :AMS_Utils.AE
+				Location_Type__c = :AMS_Utils.AE
 			];
 
-      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+		AMS_OSCAR__c oscar = createNecessaryData(acct);
 
 		PageReference pg = Page.ANG_AccountHierarchySelection;
 		pg.getParameters().put('Id', oscar.Id);
@@ -731,14 +816,14 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Type__c,
 				Top_Parent__c
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE 
-			 	Name = 'Multicountry AE PT'
+				Name = 'Multicountry AE PT'
 			 AND
-			 	Location_Type__c = :AMS_Utils.AE
+				Location_Type__c = :AMS_Utils.AE
 			];
 
-      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+		AMS_OSCAR__c oscar = createNecessaryData(acct);
 
 		PageReference pg = Page.ANG_AccountHierarchySelection;
 		pg.getParameters().put('Id', oscar.Id);
@@ -754,7 +839,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
 			if(item.acc.Location_Type__c == AMS_Utils.GE){
-                accountsInvolvedSet.add(item.acc.Id);
+				accountsInvolvedSet.add(item.acc.Id);
 				item.selected = true;
 				break;
 			}
@@ -815,14 +900,14 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Type__c,
 				Top_Parent__c
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE 
-			 	Name = 'Multicountry AE FR'
+				Name = 'Multicountry AE FR'
 			 AND
-			 	Location_Type__c = :AMS_Utils.AE
+				Location_Type__c = :AMS_Utils.AE
 			];
 
-      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+		AMS_OSCAR__c oscar = createNecessaryData(acct);
 
 		PageReference pg = Page.ANG_AccountHierarchySelection;
 		pg.getParameters().put('Id', oscar.Id);
@@ -838,7 +923,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
 			if(item.acc.Location_Type__c == AMS_Utils.HE && item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c == acct.IATA_ISO_Country__r.AMS_Settlement_System__c){
-                accountsInvolvedSet.add(item.acc.Id);
+								accountsInvolvedSet.add(item.acc.Id);
 				item.selected = true;
 				break;
 			}
@@ -899,14 +984,14 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Type__c,
 				Top_Parent__c
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE 
-			 	Name = 'Multicountry AE UK'
+				Name = 'Multicountry AE UK'
 			 AND
-			 	Location_Type__c = :AMS_Utils.AE
+				Location_Type__c = :AMS_Utils.AE
 			];
 
-      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+		AMS_OSCAR__c oscar = createNecessaryData(acct);
 
 		PageReference pg = Page.ANG_AccountHierarchySelection;
 		pg.getParameters().put('Id', oscar.Id);
@@ -922,7 +1007,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
 			if(item.acc.Location_Type__c == AMS_Utils.GE){
-                accountsInvolvedSet.add(item.acc.Id);
+				accountsInvolvedSet.add(item.acc.Id);
 				item.selected = true;
 				break;
 			}
@@ -983,14 +1068,14 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Type__c,
 				Top_Parent__c
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE 
-			 	Name = 'Multicountry HE FR'
+				Name = 'Multicountry HE FR'
 			 AND
-			 	Location_Type__c = :AMS_Utils.HE
+				Location_Type__c = :AMS_Utils.HE
 			];
 
-      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+		AMS_OSCAR__c oscar = createNecessaryData(acct);
 
 		PageReference pg = Page.ANG_AccountHierarchySelection;
 		pg.getParameters().put('Id', oscar.Id);
@@ -1006,7 +1091,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
 			if(item.acc.Location_Type__c == AMS_Utils.GE){
-                accountsInvolvedSet.add(item.acc.Id);
+				accountsInvolvedSet.add(item.acc.Id);
 				item.selected = true;
 				break;
 			}
@@ -1070,15 +1155,15 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Type__c,
 				ANG_Accreditation_Model__c
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE 
-			 	Name = 'Multicountry HE FR'
+				Name = 'Multicountry HE FR'
 			 AND
-			 	Location_Type__c = :AMS_Utils.HE
+				Location_Type__c = :AMS_Utils.HE
 			];
 
 
-      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+		AMS_OSCAR__c oscar = createNecessaryData(acct);
 
 		PageReference pg = Page.ANG_AccountHierarchySelection;
 		pg.getParameters().put('Id', oscar.Id);
@@ -1094,14 +1179,14 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
 			if(item.acc.Location_Type__c == AMS_Utils.GE){
-				item.selected = true;
-				break;
+				item.main = true;
 			}
+			item.selected = true;
 		}
 
 		IATA_ISO_Country__c ctry = [SELECT id, name FROM IATA_ISO_Country__c WHERE name = 'Portugal' limit 1];
 
-	//Test Scenario 1
+		//Test Scenario 1
 		Test.startTest();
 
 		//Create Standard HE Cash account 
@@ -1132,7 +1217,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		System.assertEquals('You cannot select a Standard or Lite hierarchy as the New Parent.', pageMessagesScenario1[0].getSummary());
 
-	//Test Scenario 3
+		//Test Scenario 3
 
 		//Create Multicountry GE account 
 		Account accountGE = new Account();
@@ -1149,11 +1234,21 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		insert accountGE;
 
+		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
+			if(item.acc.Location_Type__c == AMS_Utils.AE){
+				item.selected = false;
+			}
+			if(item.acc.Location_Type__c == AMS_Utils.GE){
+				item.selected = false;
+			}
+		}
+
 		//Perform Save
 		con.oscar.New_parent__c = accountGE.id;
+		con.newParent = accountGE; 
+
 		con.save();
 
-		
 		Boolean checkErrorMessage = false;
 		for(ApexPages.Message msg : ApexPages.getMessages()){
 			if(msg.getSummary().contains('You cannot leave an AE account alone in a BSP'))
@@ -1169,6 +1264,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		//Perform Save
 		con.oscar.New_parent__c = heAccount.id;
+		con.newParent = heAccount; 
 		con.save();
 
 		checkErrorMessage = false;
@@ -1196,9 +1292,9 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Type__c,
 				Top_Parent__c
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE
-			 	Location_Type__c = :AMS_Utils.GE
+				Location_Type__c = :AMS_Utils.GE
 			]
 		);
 
@@ -1208,7 +1304,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		Account acct = acct0.Name.contains('H2') ? acct0: acct1;
 		Account newParentAcct = acct0.Name.contains('H2') ? acct1: acct0;
 
-      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+		AMS_OSCAR__c oscar = createNecessaryData(acct);
 
 		PageReference pg = Page.ANG_AccountHierarchySelection;
 		pg.getParameters().put('Id', oscar.Id);
@@ -1293,9 +1389,9 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Type__c,
 				Top_Parent__c
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE
-			 	IATACode__c IN :iataCodesToSelectSet
+				IATACode__c IN :iataCodesToSelectSet
 			]
 		);
 	
@@ -1340,7 +1436,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		insert authorizationLst;
 
-      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+		AMS_OSCAR__c oscar = createNecessaryData(acct);
 
 		PageReference pg = Page.ANG_AccountHierarchySelection;
 		pg.getParameters().put('Id', oscar.Id);

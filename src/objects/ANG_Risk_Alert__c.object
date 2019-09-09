@@ -312,6 +312,19 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+    <fields>
+        <fullName>Monitored_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Reference to the previous account before the change of Hierarchy / Location Type / Location Type to Different Legal Entity</description>
+        <externalId>false</externalId>
+        <label>Monitored Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Risk Alerts (Monitored Account)</relationshipLabel>
+        <relationshipName>MoniteredAccount</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
     <label>Risk Alert</label>
     <listViews>
         <fullName>All</fullName>
