@@ -12003,7 +12003,7 @@ and
         <name>ISSP_ANG_OPTION_PAX_HE_standard</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Theo hồ sơ của chúng tôi, bạn được chỉ định là Người liên hệ IFAP cho đại lý của bạn. Nếu đúng, xin vui lòng đăng ký tham gia  quy trình Đánh giá Tài chính, nếu không phải, xin hãy chỉ định đúng Người liên hệ IFAP ở &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;trang Thông tin Công ty&lt;/a&gt; và đề nghị họ tiếp tục yêu cầu.&quot;</label>
+        <label>Theo hồ sơ của chúng tôi, bạn được chỉ định là Người liên hệ IFAP cho đại lý của bạn. Nếu đúng, xin vui lòng đăng ký tham gia  quy trình Đánh giá Tài chính, nếu không phải, xin hãy chỉ định đúng Người liên hệ IFAP ở &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;trang Thông tin Công ty&lt;/a&gt; và đề nghị họ tiếp tục yêu cầu.</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</name>
     </customLabels>
     <customLabels>
