@@ -1,8 +1,21 @@
 import { LightningElement, track } from 'lwc';
-import { navigateToPage } from 'c/navigationUtils';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import CSP_PortalPath     from '@salesforce/label/c.CSP_PortalPath';
-import ChangePassword     from '@salesforce/apex/PortalPasswordHandler.changePassword'; 
+import { navigateToPage }       from 'c/navigationUtils';
+import { ShowToastEvent }       from 'lightning/platformShowToastEvent';
+import CSP_PortalPath           from '@salesforce/label/c.CSP_PortalPath';
+import ChangePassword           from '@salesforce/apex/PortalPasswordHandler.changePassword';
+import confirmPasswordLabel     from '@salesforce/label/c.Confirm_password';
+import newPasswordLabel         from '@salesforce/label/c.New_password';
+import currentPasswordLabel     from '@salesforce/label/c.Current_password';
+import saveLabel                from '@salesforce/label/c.ISSP_Save';
+import changePasswordLabel      from '@salesforce/label/c.ISSP_ChangePassword';
+import changePasswordInfoLabel  from '@salesforce/label/c.CSP_Reset_Password_Info_1';
+import changePasswordInfo2Label from '@salesforce/label/c.CSP_Reset_Password_Info_2';
+import passwordRule1Label       from '@salesforce/label/c.CSP_Password_Rule_1';
+import passwordRule2Label       from '@salesforce/label/c.CSP_Password_Rule_2';
+import passwordRule3Label       from '@salesforce/label/c.CSP_Password_Rule_3';
+import passwordRule4Label       from '@salesforce/label/c.CSP_Password_Rule_4';
+import errorMessageLabel        from '@salesforce/label/c.CSP_Change_Password_Error';
+
 
 export default class PortalChangePassword extends LightningElement {
     @track isLoading       = false;
@@ -13,6 +26,21 @@ export default class PortalChangePassword extends LightningElement {
     @track buttonDisabled           = true;
     @track currentPasswordInputType = "password";
     @track newPasswordInputType     = "password";
+
+    labels = {
+        saveLabel,
+        newPasswordLabel,
+        errorMessageLabel,
+        passwordRule1Label,
+        passwordRule2Label,
+        passwordRule3Label,
+        passwordRule4Label,
+        changePasswordLabel,
+        confirmPasswordLabel,
+        currentPasswordLabel,
+        changePasswordInfoLabel,
+        changePasswordInfo2Label
+    }
 
     get svgURL(){
         return CSP_PortalPath + 'show_blue.png';
@@ -143,13 +171,13 @@ export default class PortalChangePassword extends LightningElement {
                                  navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "changePasswordSuccess");
                              }
                              else{
-                                 this.message = 'Your new password could not be set.';
+                                 this.message = errorMessageLabel;
                                  this.showNotification();
                                  this.changeIsLoading();
                              }
                            })
                            .catch(error => {
-                               this.message = 'Your new password could not be set.';
+                               this.message = errorMessageLabel;
                                this.showNotification();
                                this.changeIsLoading();
                            });

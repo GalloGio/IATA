@@ -3,10 +3,19 @@ import { navigateToPage }           from 'c/navigationUtils';
 import { ShowToastEvent }           from 'lightning/platformShowToastEvent';
 import { reduceErrors }             from 'c/ldsUtils';
 import RegistrationUtils            from 'c/registrationUtils';
+import emailLabel                   from '@salesforce/label/c.Email';
 import passwordLabel                from '@salesforce/label/c.OneId_Password'
 import invalidMailFormat            from '@salesforce/label/c.ISSP_AMS_Invalid_Email';
 import CSP_PortalPath               from '@salesforce/label/c.CSP_PortalPath';
 import confirmPasswordLabel         from '@salesforce/label/c.Confirm_password';
+import createPasswordLabel          from '@salesforce/label/c.CSP_Create_Password';
+import passwordRule1Label           from '@salesforce/label/c.CSP_Password_Rule_1';
+import passwordRule2Label           from '@salesforce/label/c.CSP_Password_Rule_2';
+import passwordRule3Label           from '@salesforce/label/c.CSP_Password_Rule_3';
+import passwordRule4Label           from '@salesforce/label/c.CSP_Password_Rule_4';
+import saveLoginLabel               from '@salesforce/label/c.CSP_Save_Login';
+import changePasswordInfoLabel      from '@salesforce/label/c.CSP_Reset_Password_Info_1';
+import changePasswordInfo2Label     from '@salesforce/label/c.CSP_Reset_Password_Info_2';
 import getParameters                from '@salesforce/apex/portalCreatePasswordController.getParameters';
 import createUser                   from '@salesforce/apex/portalCreatePasswordController.createUserAndSetPassword';
 
@@ -28,8 +37,17 @@ export default class PortalCreatePassword extends LightningElement {
     logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
 
     labels = {
+        emailLabel,
         passwordLabel,
-        confirmPasswordLabel
+        saveLoginLabel,
+        passwordRule1Label,
+        passwordRule2Label,
+        passwordRule3Label,
+        passwordRule4Label,
+        createPasswordLabel,
+        confirmPasswordLabel,
+        changePasswordInfoLabel,
+        changePasswordInfo2Label
     };
 
     get svgURL(){
