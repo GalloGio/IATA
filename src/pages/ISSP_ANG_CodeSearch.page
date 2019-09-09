@@ -213,7 +213,7 @@
                           <apex:outputLabel value="{!$Label.Accreditation_date}"/>
                         </td>
                         <td>
-                          <apex:outputText style="margin-left: 15px;" value="{! agency.Accreditation_date__c}"/>
+                          <apex:outputText style="margin-left: 15px;" value="{!AccreditationDateFormated}"/>
                         </td>
                       </tr>
 
