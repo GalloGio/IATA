@@ -51,8 +51,8 @@
 
 			.mytabheader {
 				display: inline-block;
-				border: 1px solid lightgrey;
-				background: #fff;
+				border: 1px solid rgb(240, 242, 245);
+				background: white;
 				padding: 0.5em;
 				/* margin-left: 0.1em; */
 				font-weight: bold;
@@ -107,7 +107,7 @@
 
 			.mytabcontainer .mytabheader {
 				border-radius: 0px;
-				width: 50%;
+				width: 49.8%;
 				/* margin: 1px; */
 			}
 
@@ -115,6 +115,8 @@
 				padding: 1em;
 				border: none;
 				margin: 0px;
+				padding-top: 10px;
+   				background-color: white;
 			}
 
 			.message.errorM3 {
@@ -133,6 +135,7 @@
 				padding: 1em;
 				border-radius: 5px;
 			}
+
 		</style>
 	</head>
 	<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
@@ -303,9 +306,9 @@
 				<script>$('#canChangeTab').val('true')</script>
 
 				<apex:outputPanel id="accountInfoPanel">
-					<apex:form>
+					<apex:form >
 
-						<apex:pageBlock>
+						<apex:pageBlock >
 							<h2>{!acc.Name} / {!acc.Airline_designator__c} / {!acc.IATACode__c}</h2>
 							<br/>
 							<!-- CUSTOM TAB HEADER -->
@@ -320,15 +323,15 @@
 								<!-- FIRST EXTERNAL TAB: EXISTING AGREEMENTS -->
 								<div class="mytab level1 active" id="tabExisting">
 
-									<div class="mytabheadercontainer level2">
+									<div class="mytabheadercontainer level2" style="background-color: transparent;">
 										<div class="mytabheader level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" style="float:left;" id="hdMITA" onclick="showTab('Existing','MITA')">MITA</div>
-										<div class="mytabheader level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" style="float:right;"
-										 id="hdBIETA" onclick="showTab('Existing','BIETA')">BIETA</div>
+										<div class="mytabheader level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}"  style="float:right;" id="hdBIETA"
+										 onclick="showTab('Existing','BIETA')">BIETA</div>
 									</div>
 
-									<div class="mytabcontainer level2">
+									<div class="mytabcontainer level2" style="border: lightgrey solid 1px; background-color: #fff;">
 										<!-- FIRST INTERNAL TAB: MITA -->
-										<div class="mytab level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" id="tabMITA">
+										<div class="mytab level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}"  id="tabMITA">
 
 
 											<!-- SECTION FOR MITA AGREEMENTS -->
@@ -338,7 +341,7 @@
 
 											<apex:pageBlockSection columns="1" id="MITAagreementSearchPanel">
 												<apex:outputPanel rendered="{!NOT(MITAwithdrawalMode)}">
-													<div style="float:left;padding-bottom: 20px;">
+													<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
 														<apex:outputText value="{!MITAagreementTypes}" escape="false" />
 													</div>
 													<div style="float:right; visibility: hidden;">
@@ -396,7 +399,7 @@
 													<br/>
 													<p>Copy contacts from {!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</p>
 													<apex:pageBlockTable value="{!otherContacts}" var="cw">
-														<apex:column>
+														<apex:column >
 															<apex:inputCheckbox value="{!cw.sel}" />
 														</apex:column>
 														<apex:column headerValue="Name">
@@ -436,7 +439,7 @@
 
 											<apex:pageBlockSection columns="1" id="BIETAagreementSearchPanel">
 												<apex:outputPanel rendered="{!NOT(BIETAwithdrawalMode)}">
-													<div style="float:left;padding-bottom: 20px;">
+													<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
 														<apex:outputText value="{!BIETAagreementTypes}" escape="false" />
 													</div>
 													<div style="float:right; visibility: hidden;">
@@ -494,7 +497,7 @@
 													<br/>
 													<p>Copy contacts from {!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</p>
 													<apex:pageBlockTable value="{!otherContacts}" var="cw">
-														<apex:column>
+														<apex:column >
 															<apex:inputCheckbox value="{!cw.sel}" />
 														</apex:column>
 														<apex:column headerValue="Name">
@@ -533,8 +536,8 @@
 
 									<div class="mytabheadercontainer level2">
 										<div class="mytabheader level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" style="float:left;" id="hdNewMITA" onclick="showTab('Add','NewMITA')">MITA</div>
-										<div class="mytabheader level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" style="float:right;"
-										 id="hdNewBIETA" onclick="showTab('Add','NewBIETA')">BIETA</div>
+										<div class="mytabheader level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" style="float:right;" id="hdNewBIETA"
+										 onclick="showTab('Add','NewBIETA')">BIETA</div>
 									</div>
 
 									<div class="mytabcontainer level2">
@@ -544,12 +547,12 @@
 											<!-- FIRST INTERNAL TAB: NEW MITA -->
 											<div class="mytab level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" id="tabNewMITA">
 
-												<div style="float:left;padding-bottom: 20px;">
+												<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
 													<apex:outputText value="{!MITASuggestionTypes}" escape="false" />
 												</div>
 
 												<apex:pageBlockSection rendered="{!NOT(MITAsubmitMode)}">
-													<apex:outputPanel>
+													<apex:outputPanel >
 														<table id="MITAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
 															<thead>
 																<tr>
@@ -572,7 +575,7 @@
 
 												<!-- SECTION FOR MITA SUBMIT -->
 												<apex:pageBlockSection rendered="{!MITAsubmitMode}" columns="1">
-													<apex:outputPanel>
+													<apex:outputPanel >
 														<p>You are submitting a concurrence on behalf of:
 															<b>{!acc.Name}</b>
 														</p>
@@ -598,7 +601,7 @@
 														<br/>
 														<p>Copy contacts from {!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</p>
 														<apex:pageBlockTable value="{!otherContacts}" var="cw">
-															<apex:column>
+															<apex:column >
 																<apex:inputCheckbox value="{!cw.sel}" />
 															</apex:column>
 															<apex:column headerValue="Name">
@@ -636,14 +639,14 @@
 											<!-- SECOND INTERNAL TAB: NEW BIETA -->
 											<div class="mytab level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" id="tabNewBIETA">
 
-												<div style="float:left;padding-bottom: 20px;">
+												<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
 													<apex:outputText value="{!BIETASuggestionTypes}" escape="false" />
 												</div>
 
 												<br style="clear:both" />
 
 												<apex:pageBlockSection rendered="{!NOT(BIETAsubmitMode)}">
-													<apex:outputPanel>
+													<apex:outputPanel >
 														<table id="BIETAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
 															<thead>
 																<tr>
@@ -666,7 +669,7 @@
 
 												<!-- SECTION FOR BIETA SUBMIT -->
 												<apex:pageBlockSection rendered="{!BIETAsubmitMode}" columns="1">
-													<apex:outputPanel>
+													<apex:outputPanel >
 														<p>You are submitting a concurrence on behalf of:
 															<b>{!acc.Name}</b>
 														</p>
@@ -692,7 +695,7 @@
 														<br/>
 														<p>Copy contacts from {!IF(wrapper.agreement.Airline_1__c = acc.Id, wrapper.agreement.Airline_2__r.Name, wrapper.agreement.Airline_1__r.Name)}</p>
 														<apex:pageBlockTable value="{!otherContacts}" var="cw">
-															<apex:column>
+															<apex:column >
 																<apex:inputCheckbox value="{!cw.sel}" />
 															</apex:column>
 															<apex:column headerValue="Name">
