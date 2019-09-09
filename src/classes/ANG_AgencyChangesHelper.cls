@@ -1796,39 +1796,50 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	/**
+	Returns operations and respective BSP Configurations
+	*/
+	private static List<AMS_Settlement_System__c> fetchOperationConfiguration(Set<Id> countryIds, Id settlementRTId, Set<Id> operationsInputIds, String classType) {
+
+		Set<Id> operationsIds = new Set<Id>();
+
+		if(operationsInputIds != NULL && !operationsInputIds.isEmpty()){
+			operationsIds.addAll(operationsInputIds);
+		}
+
+		if(CountryIds != null){
+			for(IATA_ISO_Country__c  country : IATAIsoCountryDAO.getIsoCountriesByIds(countryIds)){
+				if(country.AMS_Settlement_System__c != null) operationsIds.add(country.AMS_Settlement_System__c);
+			}
+		}
+		
+        return Database.query('SELECT Id, Allow_multiple_remittances__c, (SELECT Remittance_Frequency__c, Remittances_Per_Year__c FROM BSP_Attributes__r' +(classType != null ? ' WHERE Class_Type__c = :classType' : '') +' ORDER BY Remittances_Per_Year__c DESC) FROM AMS_Settlement_System__c WHERE RecordtypeID = :settlementRTId' + (OperationsIds != null ? ' AND Id IN :operationsIds' : ''));	}
+
+	/**
 	Returns operationCodes and respective BSP Configurations
 	*/
-	private static List<AMS_Operation__c> fetchOperationCodeConfiguration(Set<Id> countryIds, Id settlementRTId, Set<Id> operationsIds, String classType) {
+	public static List<AMS_Settlement_System__c> fetchOperationConfiguration(Id settlementRTId, Set<Id> operationsIds) {
 
-		return Database.query('SELECT Id, Allow_multiple_remittances__c, (SELECT Remittance_Frequency__c, Remittances_Per_Year__c FROM BSP_Attributes__r' +(classType != null ? ' WHERE Class_Type__c = :classType' : '') +' ORDER BY Remittances_Per_Year__c DESC) FROM AMS_Operation__c WHERE Settlement__r.RecordtypeID = :settlementRTId' + (CountryIds != null ? ' AND Country__c IN :countryIds' : '' ) + (OperationsIds != null ? ' AND Id IN :operationsIds' : ''));
+		return fetchOperationConfiguration(null, settlementRTId, operationsIds, null);
 	}
 
 	/**
 	Returns operationCodes and respective BSP Configurations
 	*/
-	public static List<AMS_Operation__c> fetchOperationCodeConfiguration(Id settlementRTId, Set<Id> operationsIds) {
+	public static List<AMS_Settlement_System__c> fetchOperationConfiguration(Id settlementRTId, Id countryId, String classType) {
 
-		return fetchOperationCodeConfiguration(null, settlementRTId, operationsIds, null);
+		return fetchOperationConfiguration(new Set<Id>{countryId}, settlementRTId, null, classType);
 	}
 
 	/**
-	Returns operationCodes and respective BSP Configurations
+	Returns a Map of Operations for the given accounts
 	*/
-	public static List<AMS_Operation__c> fetchOperationCodeConfiguration(Id settlementRTId, Id countryId, String classType) {
+	public static Map<Id,Account> fetchAgOperationPerAccount(List<Id> accIds) {
 
-		return fetchOperationCodeConfiguration(new Set<Id>{countryId}, settlementRTId, null, classType);
-	}
+		Map<Id,Account> bspPerAcc = new Map<Id,Account>();
+		for(Account agOp : [SELECT Id, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.RecordType.Name FROM Account WHERE Id in :accIds])
+			bspPerAcc.put(agOp.IATA_ISO_Country__r.AMS_Settlement_System__c,agOp);
 
-	/**
-	Returns a Map of Agency Operations Operation Codes for the given accounts
-	*/
-	public static Map<Id,AMS_Agency_Operations__c> fetchAccountAgOperationPerOpCode(List<Id> accIds) {
-
-		Map<Id,AMS_Agency_Operations__c> agencyOperations = new Map<Id,AMS_Agency_Operations__c>();
-		for(AMS_Agency_Operations__c agOp : [SELECT Id, Account__c, Operation__c, Operation__r.Settlement__r.RecordType.Name FROM AMS_Agency_Operations__c WHERE Account__c in :accIds])
-			agencyOperations.put(agOp.Operation__c,agOp);
-
-		return agencyOperations;
+		return bspPerAcc;
 	}
 
 	    /**

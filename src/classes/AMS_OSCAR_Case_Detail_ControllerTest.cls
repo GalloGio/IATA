@@ -113,6 +113,9 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 			insert settlement;
 
+			country.AMS_Settlement_System__c = settlement.Id;
+			update country;
+
 			AMS_Operation__c opCode = new AMS_Operation__c(
 				Name = 'test operation',
 				Settlement__c = settlement.id,
@@ -232,6 +235,9 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
         );
 
         insert settlement;
+
+		country.AMS_Settlement_System__c = settlement.Id;
+		update country;
 
         AMS_Operation__c opCode = new AMS_Operation__c(
             Name = 'test operation',

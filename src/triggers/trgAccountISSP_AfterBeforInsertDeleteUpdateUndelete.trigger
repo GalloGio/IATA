@@ -29,13 +29,9 @@ after update, before delete, before insert, before update) {
         }
     }
     else if(trigger.isUpdate && trigger.isAfter){
-        //Skip parents update calculation since 
-        //we are already doing it in scope of change of hierarchy
-        if(!AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess){
-            acctToUpdate = ISSP_FillTopParent.getAcctsToUpdate(trigger.newMap, trigger.oldMap);
-            if(!acctToUpdate.isEmpty())
-                ISSP_FillTopParent.accountsAfterUpdateTopParent(acctToUpdate, trigger.oldMap);
-        }
+        acctToUpdate = ISSP_FillTopParent.getAcctsToUpdate(trigger.newMap, trigger.oldMap);
+        if(!acctToUpdate.isEmpty())
+            ISSP_FillTopParent.accountsAfterUpdateTopParent(acctToUpdate, trigger.oldMap);
     }
     
     set<Id> accIdSet = new set<Id>();
