@@ -74,6 +74,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
                 ];
             } else {
                 this.title = this.label.CSP_RecentCases_Support;
+                this.helpText = this.label.CSP_RecentCases_HelpText;
                 this.titleCss = "text-medium text-bold slds-align_absolute-center";
                 this.cardBodyContent = "cardBodyContentSmall";
                 this.rowHeight = "rowHeight";
