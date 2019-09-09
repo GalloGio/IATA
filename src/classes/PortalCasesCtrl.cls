@@ -44,6 +44,7 @@ public with sharing class PortalCasesCtrl {
     private static PortalSearchFilterWrapper filtersWrapper;
     private static Integer requestedPageNumber;
 
+    private static Boolean isCaseFromReachUs = false;
     /*
     *
     *
@@ -91,9 +92,9 @@ public with sharing class PortalCasesCtrl {
     * @return List<Case>
     */
     @AuraEnabled(cacheable=true)
-    public static PagedResult getRecentCases(Boolean limitView, Boolean seeAll) {
+    public static PagedResult getRecentCases(Boolean limitView, Boolean seeAll, Boolean specialCaseOption) {
         seeAllCases = seeAll;
-
+        isCaseFromReachUs = specialCaseOption;
         initialization();
 
         return getCases(limitView);
@@ -232,7 +233,9 @@ public with sharing class PortalCasesCtrl {
         String queryLimit = '';
 
         if(filtersWrapper == null) {
-            if(limitView) {
+            if (isCaseFromReachUs){
+                queryLimit += 'LIMIT 3';
+            } else if(limitView) {
                 queryLimit += 'LIMIT 4';
             } else {
                 queryLimit += 'LIMIT 2000';
@@ -296,6 +299,14 @@ public with sharing class PortalCasesCtrl {
 
         }
 
+        if(isCaseFromReachUs) {
+            if(queryConditions == ''){
+                queryConditions = ' WHERE IsClosed != true AND Portal_Case_Status__c != \'Draft\'';
+            }else{
+                queryConditions += ' AND IsClosed != true AND Portal_Case_Status__c != \'Draft\'';
+            }
+        }
+        
         queryString = 'SELECT ' + query.substring(1) + ' FROM Case ' + queryConditions + ' ORDER BY LastModifiedDate DESC ' + queryLimit;
 
         result = new PagedResult();
@@ -627,7 +638,7 @@ public with sharing class PortalCasesCtrl {
         }
         seeAllCases = isAdmin;
         
-        PagedResult pages = getRecentCases(false, isAdmin);
+        PagedResult pages = getRecentCases(false, isAdmin, false);
 
         return pages;
     }
