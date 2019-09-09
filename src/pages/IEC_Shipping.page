@@ -445,7 +445,7 @@
 
                                 <div class="footer-actions">
                                     <ul class="list actions">
-                                        <li><a href="{!$Site.BaseUrl}/IEC_ProductList" class="button secondary">{!$Label.Button_Continue_Shopping}</a></li>
+                                        <li><a href="{!$Site.BaseRequestURL}/IEC_ProductList" class="button secondary">{!$Label.Button_Continue_Shopping}</a></li>
                                     </ul>
                                 </div>
 
@@ -454,7 +454,7 @@
                             <apex:outputPanel layout="none" rendered="{!NOT(quoteGenerated)}">                          
                                 <div class="process">
                                     <ol class="list steps">
-                                        <li class="step step-1"><a href="{!$Site.BaseUrl}/IEC_CustomerInformation">{!$Label.PageTitleCustomerInformation}</a></li>
+                                        <li class="step step-1"><a href="{!$Site.BaseRequestURL}/IEC_CustomerInformation">{!$Label.PageTitleCustomerInformation}</a></li>
                                         <li class="step step-2 active"><a href="javascript:void(0);">{!$Label.PageTitleShippingPayment}</a></li>
                                         <li class="step step-3 disabled"><a href="javascript:void(0);">{!$Label.PageTitleConfirmOrder}</a></li>
                                     </ol>
@@ -798,8 +798,8 @@
                                             <h2 class="group-title">Your order</h2>
                                             <apex:outputPanel styleClass="table-container" id="yourOrder" layout="block">
                                                 <div class="header text-right table-actions">
-                                                    <apex:outputLink onclick="editOrderPush();" value="{!$Site.BaseUrl}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink>
-                                                    <!-- <a href="{!$Site.BaseUrl}/IEC_ShoppingCart">Edit Order</a> -->
+                                                    <apex:outputLink onclick="editOrderPush();" value="{!$Site.BaseRequestURL}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink>
+                                                    <!-- <a href="{!$Site.BaseRequestURL}/IEC_ShoppingCart">Edit Order</a> -->
                                                 </div>
 
                                                 <table class="data-table table-shopping-cart js-adjust-tooltip-placement">
@@ -1023,8 +1023,8 @@
                                                 </table>
 
                                                 <div class="footer text-right table-actions">
-                                                    <apex:outputLink onclick="editOrderPush();" value="{!$Site.BaseUrl}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink>
-                                                    <!-- <a href="{!$Site.BaseUrl}/IEC_ShoppingCart">Edit Order</a> -->
+                                                    <apex:outputLink onclick="editOrderPush();" value="{!$Site.BaseRequestURL}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink>
+                                                    <!-- <a href="{!$Site.BaseRequestURL}/IEC_ShoppingCart">Edit Order</a> -->
                                                 </div>
                                             </apex:outputPanel>
                                         </section>
@@ -1174,7 +1174,7 @@
                                 <!-- Cart Empty -->
                                 <apex:variable var="cartEmpty" value="0" rendered="{!OR(vfOrder.orderItems == null, vfOrder.orderItems.size == 0) && stopProcess != true}">
                                     <div class="footer-actions text-right">
-                                        <a href="{!$Site.BaseUrl}/IEC_ProductList" class="button wide">{!$Label.Button_Continue_Shopping}</a>
+                                        <a href="{!$Site.BaseRequestURL}/IEC_ProductList" class="button wide">{!$Label.Button_Continue_Shopping}</a>
                                     </div>
                                 </apex:variable>
                             </apex:outputPanel>
