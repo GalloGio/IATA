@@ -711,7 +711,7 @@ public without sharing class ISSP_Case {
                     }
                 }
                 
-                List<Contact> DPC2DPCCasesEmails = [SELECT Email__c 
+                List<DPC2DPCCasesEmails__c> DPC2DPCCasesEmails = [SELECT Email__c 
                                                                     FROM DPC2DPCCasesEmails__c];
                 List<String> allEmailsDPC2DPCCases = new list<String>();
                 for(DPC2DPCCasesEmails__c ddc : DPC2DPCCasesEmails){
