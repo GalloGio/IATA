@@ -118,7 +118,7 @@ public class GCS_RegistrationControllerTest {
 		List<GCS_AccountCreation.CustomerTypePicklist> picklists = GCS_AccountCreation.getCustomerTypePicklists('Airline', 'Passenger_and_Cargo');
 		
 		OneId_RegistrationProcessController.StatesAndAlternateNames states = GCS_AccountCreation.getStates(country.Id);
-		String cities = GCS_AccountCreation.getAllCities(country.Id);
+		//String cities = GCS_AccountCreation.getAllCities(country.Id);
 
         Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Travel Agent', Category__c='Non-IATA Travel Agent',IATA_ISO_Country__c = country.Id);
         Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');

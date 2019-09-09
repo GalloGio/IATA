@@ -1757,6 +1757,30 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <type>Checkbox</type>
     </fields>
     <label>Agency Applied Change code</label>
+    <listViews>
+        <fullName>RVW</fullName>
+        <columns>NAME</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>RVW</value>
+        </filters>
+        <filters>
+            <field>Reason_Code__c</field>
+            <operation>equals</operation>
+            <value>61</value>
+        </filters>
+        <filters>
+            <field>Reason_Description__c</field>
+            <operation>equals</operation>
+            <value>NON COMPLIANCE TO FINANCIAL CRITERIA</value>
+        </filters>
+        <label>RVW</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>AACC-{000000}</displayFormat>
         <label>Change code details</label>

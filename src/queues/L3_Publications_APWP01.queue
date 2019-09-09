@@ -3,9 +3,9 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>L3 Publications APWP01</name>
     <queueMembers>
-        <users>
-            <user>mandelawye@iata.org</user>
-        </users>
+        <publicGroups>
+            <publicGroup>L3_Publications_APWP01</publicGroup>
+        </publicGroups>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

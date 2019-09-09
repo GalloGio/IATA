@@ -15,13 +15,13 @@ private class AirlineSuspensionChildBatchTest {
         // Create an Airline HQ account
         Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
-                                RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id);
+                                Sector__c=AMS_Utils.SECTOR_AIRLINE, Category__c=AMS_Utils.CATEGORY_PASSENGER_ONLY, RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id);
         insert acct_hq;
 
         // Create an Airline BR account for the HQ above
         Id AirlineBR_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
         Account acct_br = new Account(Name = 'Qatar Airways FR', ParentId = acct_hq.Id, Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
-                                RecordTypeId = AirlineBR_RT_Id, IATA_ISO_Country__c = country_fr.Id);
+                                Sector__c=AMS_Utils.SECTOR_AIRLINE, Category__c=AMS_Utils.CATEGORY_PASSENGER_ONLY, RecordTypeId = AirlineBR_RT_Id, IATA_ISO_Country__c = country_fr.Id);
         insert acct_br;
 
         // create a service rendered record, rendered by the hq to the br
