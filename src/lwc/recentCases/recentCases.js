@@ -9,7 +9,7 @@ import { navigateToPage } from 'c/navigationUtils';
 import CSP_RecentCases from '@salesforce/label/c.CSP_RecentCases';
 import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
 import CSP_RecentCases_Support from '@salesforce/label/c.CSP_RecentCases_Support';
-
+import CSP_RecentCases_HelpText from '@salesforce/label/c.CSP_RecentCases_HelpText';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -17,8 +17,10 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
     label = {
         CSP_RecentCases,
         CSP_SeeAll,
-        CSP_RecentCases_Support
+        CSP_RecentCases_Support,
+        CSP_RecentCases_HelpText
     };
+
     @track data;
     @track columns;
     @track loading = true;
@@ -40,6 +42,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
     @api specialCase = false;
 
     @track title = "";
+    @track helpText = "";
     @track titleCss = "";
     @track cardBodyContent;
     @track rowHeight = "";

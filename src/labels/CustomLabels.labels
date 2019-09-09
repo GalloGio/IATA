@@ -3434,6 +3434,13 @@ Payment required on receipt of this Payment Advice
         <value>Recent Cases</value>
     </labels>
 	<labels>
+        <fullName>CSP_RecentCases_HelpText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP RecentCases HelpText</shortDescription>
+        <value>On Going</value>
+    </labels>
+	<labels>
         <fullName>CSP_RecentCases_Support</fullName>
         <language>en_US</language>
         <protected>false</protected>

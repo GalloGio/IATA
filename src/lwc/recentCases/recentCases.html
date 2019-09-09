@@ -4,6 +4,10 @@
 
         <span slot="cardTitle">
             <span class={titleCss}> {title} </span>
+
+            <span if:true={specialCase} class="slds-text-align_center text-xsmall">
+                <h2 class="slds-p-top_medium">{helpText}</h2>
+            </span>
         </span>
 
         <span slot="cardButton" if:true={dataRecordsSeeAll}>
