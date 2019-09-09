@@ -7622,6 +7622,9 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <description>This field update contains a formula based on User&apos;s profile and role, the result is stored in the case field &apos;Closed by Role&apos;</description>
         <field>Closed_by_Role__c</field>
         <formula>(IF(
+  CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;),
+  &quot;DPC External&quot;,
+(IF(
   OR(
     CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),
     CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;),
@@ -7663,9 +7666,6 @@ CONTAINS( $UserRole.Name, &quot;R&amp;S staff&quot;)
 (IF(
   CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;),
   &quot;SIS Help Desk&quot;,
-(IF(
-  CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;),
-  &quot;DPC External&quot;,
 (IF(
   CONTAINS( $UserRole.Name, &quot;Banking&quot;),
   &quot;Banking&quot;,
