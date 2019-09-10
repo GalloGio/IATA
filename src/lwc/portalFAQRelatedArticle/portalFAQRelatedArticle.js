@@ -12,8 +12,25 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
     @track _articleTitle;
     @track _articleId;
     @track relatedArticles;
+    @track filteringObject = {};
     @track loading = true;
-    @api guestUser;
+    @track _userInfo;
+    @track language;
+    @track guestUser;
+
+    @api
+    get userInfo() {
+        return this._userInfo;
+    }
+
+    set userInfo(value) {
+        if(value !== undefined) {
+            let __userInfo = JSON.parse(JSON.stringify(value));
+
+            this.language = __userInfo.language;
+            this.guestUser = __userInfo.guestUser;
+        }        
+    }
 
     @api
     get article() {
@@ -23,18 +40,26 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
     set article(value) {                    
         if(value !== undefined) {
             let articleInfo = JSON.parse(JSON.stringify(value));
+
             this._articleTitle = articleInfo.title;
             this._articleId = articleInfo.id;
 
-            let filteringObject = {};
-            filteringObject.searchText = this._articleTitle;
-
-            this.renderSearchArticles(JSON.stringify(filteringObject));
+            this.filteringObject.searchText = this._articleTitle;
         }
     }
     
     get hasArticles() {
         return this.relatedArticles !== undefined && this.relatedArticles.length > 0;
+    }
+
+    connectedCallback() {
+        let _filteringObject = JSON.parse(JSON.stringify(this.filteringObject));
+        if(this.guestUser) {
+            _filteringObject.language = this.language;
+            _filteringObject.guestUser = this.guestUser;
+        }
+        
+        this.renderSearchArticles(JSON.stringify(_filteringObject));
     }
 
     renderSearchArticles(searchParam) {

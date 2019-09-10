@@ -1,12 +1,34 @@
 public with sharing class DescribeDataCategoryGroupStructures {
 
+    public static String LANGUAGE = 'en_US';
+
+    /*
+    * @description Same as getFaqsStructure method, but here is specific for guest user because we're setting the language
+    * @params String lang
+    * @return List<FAQCategoryWrapper>
+    */
+    @AuraEnabled
+    public static List<FAQCategoryWrapper> getPublicFaqsStructure(String lang) {
+        LANGUAGE = lang;
+        
+        return getFaqsStructure();
+    }
+
+    /*
+    * @description Return a FAQ structure based on the user visibility.
+    * @description Joining metadata records from Portal FAQs with setup configuration from Data Category Visibility if internal user or just metadata records if guest user
+    * @params
+    * @return List<FAQCategoryWrapper>
+    */
     @AuraEnabled
     public static List<FAQCategoryWrapper> getFaqsStructure() {
         //get matadata list that contains the tree
         List<PortalFAQs__mdt> lstCustomMetadataFaqs = getAllFAQs();
 
+        //if internal user, compare and return a FAQ structure based on what the user is allowed to see.
+        //if guest user, just returns a FAQ structure based on metadata records.
         if(!CSP_Utils.isGuestUser()) {
-            String userLanguage = UserInfo.getLanguage();
+            LANGUAGE = UserInfo.getLanguage();
             User usr = CSP_Utils.getLoggedUser();
             Set<String> setSubtopicsForUser = getUserAccessonFAQs();
 
@@ -30,11 +52,11 @@ public with sharing class DescribeDataCategoryGroupStructures {
                         //if the map does not contain this topic yet, then insert the topic and a new list of subtopics with just this subtopic
                         if(!mapCategoryNameTopicNameAndLstSubtopics.containsKey(categoryAndTopicNames)) {
                             List<FAQSubtopicWrapper> lstAux = new List<FAQSubtopicWrapper>();
-                            lstAux.add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(userLanguage, faqSubtopicAux )));
+                            lstAux.add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqSubtopicAux )));
                             mapCategoryNameTopicNameAndLstSubtopics.put(categoryAndTopicNames, lstAux);
                         } else {
                             //else, insert into the existing map
-                            mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames).add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(userLanguage, faqSubtopicAux )));
+                            mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames).add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqSubtopicAux )));
                         }
                     }
                 }
@@ -57,11 +79,11 @@ public with sharing class DescribeDataCategoryGroupStructures {
                         //checks if there is already a category in the map
                         if(!mapCategoryNameAndLstTopics.containsKey(faqTopicAux.DataCategoryName__c)) {
                             List<FAQTopicWrapper> lstAux = new List<FAQTopicWrapper>();
-                            lstAux.add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(userLanguage, faqTopicAux ), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
+                            lstAux.add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqTopicAux ), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
                             mapCategoryNameAndLstTopics.put(faqTopicAux.DataCategoryName__c, lstAux);
                         } else {
                             //else, insert into the existing map
-                            mapCategoryNameAndLstTopics.get(faqTopicAux.DataCategoryName__c).add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(userLanguage, faqTopicAux ), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
+                            mapCategoryNameAndLstTopics.get(faqTopicAux.DataCategoryName__c).add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqTopicAux ), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
                         }
                     }
                 }
@@ -81,14 +103,14 @@ public with sharing class DescribeDataCategoryGroupStructures {
 
                     //if the map from the previous iteration contains the category, then process it
                     if(mapCategoryNameAndLstTopics.containsKey(faqCategoryAux.DataCategoryName__c)) {
-                        lstFinalCategories.add(new FAQCategoryWrapper(faqCategoryAux.DataCategoryName__c, getFAQLabelWithUserLanguage(userLanguage, faqCategoryAux ), mapCategoryNameAndLstTopics.get(faqCategoryAux.DataCategoryName__c)));
+                        lstFinalCategories.add(new FAQCategoryWrapper(faqCategoryAux.DataCategoryName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqCategoryAux ), mapCategoryNameAndLstTopics.get(faqCategoryAux.DataCategoryName__c)));
                     }
                 }
             }
 
             return lstFinalCategories;
         } else {
-            String userLanguage = 'en_US';
+            //if guest user, just returns a FAQ structure based on metadata records
 
             //having the subtopics set, start construct the structure from the subtopics back to the categories
             //the key to this map is a concatenation of the category with topic, because you can have the same topic name in different categories
@@ -106,11 +128,11 @@ public with sharing class DescribeDataCategoryGroupStructures {
                         //if the map does not contain this topic yet, then insert the topic and a new list of subtopics with just this subtopic
                         if(!mapCategoryNameTopicNameAndLstSubtopics.containsKey(categoryAndTopicNames)) {
                             List<FAQSubtopicWrapper> lstAux = new List<FAQSubtopicWrapper>();
-                            lstAux.add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, faqSubtopicAux.DataCategoryLabel_en_US__c));
+                            lstAux.add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqSubtopicAux)));
                             mapCategoryNameTopicNameAndLstSubtopics.put(categoryAndTopicNames, lstAux);
                         } else {
                             //else, insert into the existing map
-                            mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames).add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, faqSubtopicAux.DataCategoryLabel_en_US__c));
+                            mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames).add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqSubtopicAux)));
                         }
                 }
             }
@@ -130,11 +152,11 @@ public with sharing class DescribeDataCategoryGroupStructures {
                         //checks if there is already a category in the map
                         if(!mapCategoryNameAndLstTopics.containsKey(faqTopicAux.DataCategoryName__c)) {
                             List<FAQTopicWrapper> lstAux = new List<FAQTopicWrapper>();
-                            lstAux.add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, faqTopicAux.DataCategoryLabel_en_US__c, mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
+                            lstAux.add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqTopicAux), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
                             mapCategoryNameAndLstTopics.put(faqTopicAux.DataCategoryName__c, lstAux);
                         } else {
                             //else, insert into the existing map
-                            mapCategoryNameAndLstTopics.get(faqTopicAux.DataCategoryName__c).add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, faqTopicAux.DataCategoryLabel_en_US__c, mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
+                            mapCategoryNameAndLstTopics.get(faqTopicAux.DataCategoryName__c).add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqTopicAux), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
                         }
                     }
                 }
@@ -152,7 +174,7 @@ public with sharing class DescribeDataCategoryGroupStructures {
 
                     //if the map from the previous iteration contains the category, then process it
                     if(mapCategoryNameAndLstTopics.containsKey(faqCategoryAux.DataCategoryName__c)) {
-                        lstFinalCategories.add(new FAQCategoryWrapper(faqCategoryAux.DataCategoryName__c, faqCategoryAux.DataCategoryLabel_en_US__c, mapCategoryNameAndLstTopics.get(faqCategoryAux.DataCategoryName__c)));
+                        lstFinalCategories.add(new FAQCategoryWrapper(faqCategoryAux.DataCategoryName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqCategoryAux), mapCategoryNameAndLstTopics.get(faqCategoryAux.DataCategoryName__c)));
                     }
                 }
             }
@@ -161,6 +183,11 @@ public with sharing class DescribeDataCategoryGroupStructures {
         }
     }
 
+    /*
+    * @description Get only subtopics level from user access to the FAQs Data Category Setup based on Data Category Visibility from Role, Profile and/or Permission Sets
+    * @params
+    * @return List<PortalFAQs__mdt>
+    */
     private static Set<String> getUserAccessonFAQs() {
         //Get the structure that the user have access to
         List<DescribeDataCategoryGroupStructureResult> categoryGroups = getUserFaqsDescribeDataCategoryGroupStructureResult();
@@ -292,6 +319,12 @@ public with sharing class DescribeDataCategoryGroupStructures {
         return lstToReturn;
     }
 
+    /*
+    * @description Get all records flagged with FAQsStructure from Portal FAQs Custom Metadata Type
+    * @params
+    * @return List<PortalFAQs__mdt>
+    */
+    @AuraEnabled
     public static List<PortalFAQs__mdt> getAllFAQs() {
         return [SELECT DataCategoryName__c, DataTopicName__c, DataSubtopicName__c, CategoryExceptions__c, 
                     SectorExceptions__c, DataCategoryLabel_en_US__c, DataCategoryLabel_ar__c, DataCategoryLabel_de__c, 
@@ -307,7 +340,7 @@ public with sharing class DescribeDataCategoryGroupStructures {
     * @params
     * @return List<DescribeDataCategoryGroupStructureResult>
     */
-    private static List<DescribeDataCategoryGroupStructureResult> getUserFaqsDescribeDataCategoryGroupStructureResult(){
+    public static List<DescribeDataCategoryGroupStructureResult> getUserFaqsDescribeDataCategoryGroupStructureResult(){
         List<DescribeDataCategoryGroupResult> describeCategoryResult;
         List<DescribeDataCategoryGroupStructureResult> describeCategoryStructureResult;
         //Making the call to the describeDataCategoryGroups to get the list of category groups associated
