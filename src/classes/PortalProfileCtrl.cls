@@ -242,11 +242,6 @@ public with sharing class PortalProfileCtrl {
         fw.isRequired = true;
         lstfw2.add(fw);
         lstfw2.add(new FieldWrapper('MobilePhone',true,true));
-        lstfw2.add(new FieldWrapper('MailingCountry',true,true));
-        lstfw2.add(new FieldWrapper('MailingCity',true,true));
-        lstfw2.add(new FieldWrapper('MailingState',true,true));
-        lstfw2.add(new FieldWrapper('MailingStreet',true,true));
-        lstfw2.add(new FieldWrapper('MailingPostalCode',true,true));
         lstCardWrapper.add(new CardWrapper(LABEL_PERSONAL_CONTACT, lstfw2, true));
 
         //ACCESSIBILITY CARD
