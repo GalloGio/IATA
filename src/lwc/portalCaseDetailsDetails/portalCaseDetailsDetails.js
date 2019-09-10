@@ -19,6 +19,7 @@ import Email from '@salesforce/label/c.Email';
 import CSP_Remittantce_Date from '@salesforce/label/c.CSP_Remittantce_Date';
 import CSP_Case_Currency from '@salesforce/label/c.CSP_Case_Currency';
 import ISSP_SIDRA_Irregularity_Date from '@salesforce/label/c.ISSP_SIDRA_Irregularity_Date';
+import CSP_IATA_Country from '@salesforce/label/c.CSP_IATA_Country';
 
 
 export default class PortalCaseDetailsDetails extends LightningElement {
@@ -44,7 +45,8 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         Email,
         CSP_Remittantce_Date,
         CSP_Case_Currency,
-        ISSP_SIDRA_Irregularity_Date
+        ISSP_SIDRA_Irregularity_Date,
+        CSP_IATA_Country
     };
 
     acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];

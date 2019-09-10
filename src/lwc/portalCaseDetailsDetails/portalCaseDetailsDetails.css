@@ -11,6 +11,12 @@
     transform: rotate(90deg);
 }
 
-.blue{
-    color:blue;
+.linkColor:hover {
+    
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.a {
+    color: blue;
 }
