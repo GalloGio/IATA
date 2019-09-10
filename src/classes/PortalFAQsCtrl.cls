@@ -1,20 +1,32 @@
 public with sharing class PortalFAQsCtrl {
 
     public static Integer RESULTS_PER_PAGE = 10;
+    public static String LANGUAGE;
 
+    /*
+    * @description Return a FAQ structure based on the user visibility.
+    * @description Joining metadata records from Portal FAQs with setup configuration from Data Category Visibility if internal user or just metadata records if guest user
+    * @params
+    * @return List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>
+    */
     @AuraEnabled(cacheable=true)    
     public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getFAQsInfo() {
         return convertStructure(DescribeDataCategoryGroupStructures.getFaqsStructure());               
     }
 
-    @AuraEnabled(cacheable=false)    
-    public static List<DescribeDataCategoryGroupStructures.FAQCategoryWrapper> getFaqsStructureForEditing() {
-        return DescribeDataCategoryGroupStructures.getFAQDataCategorySetupStructure();               
+    /*
+    * @description Same as getFAQsInfo method, but here is specific for guest user because we're setting the language
+    * @params String lang
+    * @return List<FAQCategoryWrapper>
+    */
+    @AuraEnabled(cacheable=true)    
+    public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getFAQsInfoByLanguage(String lang) {
+        return convertStructure(DescribeDataCategoryGroupStructures.getPublicFaqsStructure(lang));               
     }
 
     @AuraEnabled(cacheable=false)    
-    public static List<PortalFAQs__mdt> getAllFAQsMetadata() {
-        return DescribeDataCategoryGroupStructures.getAllFAQs();               
+    public static List<DescribeDataCategoryGroupStructures.FAQCategoryWrapper> getFaqsStructureForEditing() {
+        return DescribeDataCategoryGroupStructures.getFAQDataCategorySetupStructure();               
     }
 
     @AuraEnabled(cacheable=false)
@@ -103,11 +115,7 @@ public with sharing class PortalFAQsCtrl {
         }
 
         CustomMetadataCallback.Upsert_MDT_Value(customMetadataToUpsert);
-
-
-
     }
-
 
     public class MetadataWrapper{
         @AuraEnabled
@@ -142,6 +150,13 @@ public with sharing class PortalFAQsCtrl {
         return lstToReturn;
     }
 
+    @AuraEnabled
+    public static List<FAQ__kav> getArticlesByLanguage(String selectedParams, String lang) {
+        LANGUAGE = lang;
+        
+        return getArticlesWithParam(selectedParams, 15);
+    }
+
     @AuraEnabled(cacheable=true)
     public static List<FAQ__kav> getArticles(String selectedParams) {
         return getArticlesWithParam(selectedParams, 15);
@@ -149,10 +164,14 @@ public with sharing class PortalFAQsCtrl {
 
     @AuraEnabled(cacheable=true)
     public static List<FAQ__kav> getArticlesWithParam(String selectedParams, Integer limitParam) {
-        String query = 'SELECT Id, ArticleNumber, Title, Answer__c FROM FAQ__kav WHERE PublishStatus=\'Online\' WITH DATA CATEGORY FAQs__c BELOW ' + String.escapeSingleQuotes(selectedParams) + ' ORDER BY ArticleTotalViewCount DESC LIMIT ' + limitParam;
-        System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticles] query - ' + query);
+        String queryOne = 'SELECT Id, ArticleNumber, Title, Answer__c FROM FAQ__kav WHERE PublishStatus=\'Online\'';
+        String queryTwo = String.isNotBlank(LANGUAGE) ? ' AND Language = \'' + LANGUAGE + '\'' : '';
+        String queryThree = ' WITH DATA CATEGORY FAQs__c BELOW ' + String.escapeSingleQuotes(selectedParams) + ' ORDER BY ArticleTotalViewCount DESC LIMIT ' + limitParam;
+        
+        String finalQuery = queryOne + queryTwo + queryThree;
+        System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticles] finalQuery - ' + finalQuery);
 
-        return Database.query(query);
+        return Database.query(finalQuery);
     }
 
     @AuraEnabled(cacheable=true)
@@ -207,8 +226,15 @@ public with sharing class PortalFAQsCtrl {
 
             List<String> subtopics = new List<String>();
             if(filtersWrapper.faqsComponent == null || filtersWrapper.faqsComponent.faqSubtopicsList == null || filtersWrapper.faqsComponent.faqSubtopicsList.isEmpty()){
-                List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstStructure = PortalFAQsCtrl.getFAQsInfo();
-                if(lstStructure != null && !lstStructure.isEmpty()){
+                List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstStructure = new List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
+                //Get necessary 
+                if(String.isNotBlank(filtersWrapper.language)) {
+                    lstStructure = PortalFAQsCtrl.getFAQsInfoByLanguage(filtersWrapper.language);
+                } else {
+                    lstStructure = PortalFAQsCtrl.getFAQsInfo();
+                }
+
+                if(!lstStructure.isEmpty()) {
                     for(DescribeDataCategoryGroupStructures.DataCategoryWrapper category : lstStructure){
                         if(category.categoryName != 'All'){
                             for(String subtopicAux : category.childs.values()){
@@ -229,6 +255,7 @@ public with sharing class PortalFAQsCtrl {
             
             String queryPartOne = 'FIND \'' + String.escapeSingleQuotes(filtersWrapper.searchText) + '\' IN ALL FIELDS '+
                            'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\'';
+            String queryLanguage = filtersWrapper.guestUser != null && filtersWrapper.guestUser ? ' AND Language = \'' + filtersWrapper.language + '\'' : '';
             String queryPartTwo = ' WITH DATA CATEGORY FAQs__c BELOW ' + levels ;
 
 
@@ -236,7 +263,12 @@ public with sharing class PortalFAQsCtrl {
             //and then the count is retrived from the returned results list. For the next pages
             //limit and offset is used to improve loading times. 
             if(requestedPageAux == 0){
-                String finalQuery = queryPartOne + ')';
+                String finalQuery;
+                if(String.isNotBlank(queryLanguage)) {
+                    finalQuery = queryPartOne + queryLanguage + ')';
+                } else {
+                    finalQuery = queryPartOne + ')';
+                }
                 if(String.isNotBlank(levels)) finalQuery += queryPartTwo;
 
                 System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] finalQuery - ' + finalQuery);
@@ -257,7 +289,6 @@ public with sharing class PortalFAQsCtrl {
                 if(String.isNotBlank(queryPartTwo)) finalQuery += queryPartTwo;
                 
 				System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] finalQuery - ' + finalQuery);
-
                 List<List<SObject>> searchList = Search.query(finalQuery);
                 List<FAQ__kav> tmpList = (List<FAQ__kav>)searchList[0];
                 result.records = tmpList;

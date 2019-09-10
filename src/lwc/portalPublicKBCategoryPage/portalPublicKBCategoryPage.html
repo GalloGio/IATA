@@ -8,6 +8,7 @@
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3" >
                         <c-portal-f-a-q-subtopic-tiles 
                             category={category}
+                            language={language}
                             ontopicselected={topicSelected}
                             onsubtopicselected={subTopicSelected}>
                         </c-portal-f-a-q-subtopic-tiles>
@@ -16,7 +17,8 @@
                     <!-- Articles -->
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3" >
                        <c-portal-f-a-q-article-accordion 
-                            category={category} 
+                            category={category}
+                            language={language}
                             topic={topic}
                             sub-topic={subTopic}>
                         </c-portal-f-a-q-article-accordion>

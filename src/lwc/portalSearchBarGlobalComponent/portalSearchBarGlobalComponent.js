@@ -6,7 +6,8 @@ export default class PortalSearchBarGlobalComponent extends LightningElement {
     @api showCases = false;
     @api showFAQs = false;
     @api showDocuments = false;
-
+    @api showAdvancedSearch = false;
+    @api language;
     @api searchBarPlaceholder;
 
     @track filteringObject;
@@ -17,7 +18,8 @@ export default class PortalSearchBarGlobalComponent extends LightningElement {
             showAllComponents : true,
             searchText : "",
             highlightTopResults : false,
-            advancedSearch : true,
+            advancedSearch : this.showAdvancedSearch,
+            language : this.language,
             servicesComponent : {
                 show : this.showServices,
                 highlight : false,
