@@ -939,6 +939,109 @@ public with sharing class PortalCasesCtrl {
         return returnWrapper;
     }
 
+    public static String fullnameNOCFile(Case caseObj) {
+
+            String folderName = '500/' + caseObj.Id + '/';
+            String fileName = 'Notice_of_Change_form.pdf';
+            String fullname = folderName + fileName;
+
+            List<AmazonFile__c> amazonfilesList = [SELECT Id, Full_Name_Unique__c FROM AmazonFile__c WHERE Case__c = :caseObj.Id];
+            Boolean hasFile = false;
+            for(AmazonFile__c af : amazonfilesList) {
+                if(af.Full_Name_Unique__c == fullname) {
+                    hasFile = true;
+                    break;
+                }
+            }
+
+            if(hasFile){
+                String link = ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fullname);
+
+                return link;
+            } else {
+
+                Boolean isBankAccountChange = false;
+
+                if(caseObj.Reason1__c == 'Bank Detail Update')
+                    isBankAccountChange = true;
+
+                return '/ISSP_AMS_PDF_NOC?caseId=' + caseObj.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+            }
+    }
+
+    @AuraEnabled
+    public static OptionWrapper optionBuilder(Case caseObj) {
+        Boolean isAdmin = CSP_Utils.isAdmin();
+
+        Boolean isOnlineOSCARCase = false;
+        Boolean isTravelAccreditation = false;
+        Boolean isSidraCase = false;
+
+        List <AMS_Pax_Accreditation_Form__c> amsList = [SELECT Id, Operation_Type__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseObj.Id];
+        if (!amsList.isEmpty()){
+            isOnlineOSCARCase = true;
+            if (amsList[0].Operation_Type__c != null && amsList[0].Operation_Type__c.StartsWith('Travel_Agent')) {
+                isTravelAccreditation = true;
+            }
+        }
+
+        Boolean showAccreditation = false;
+        List <Portal_Application_Right__c> appRightList = [SELECT Id FROM Portal_Application_Right__c
+                                                            WHERE Contact__c = :myUser.ContactId AND
+                                                            Right__c = 'Access Granted'  AND
+                                                            Portal_Application__c = :AGENT_ACCREDITATION_PORTAL_SERVICE];
+        if (!appRightList.isEmpty())
+            showAccreditation = true;
+
+        Boolean isMSOcase = false;
+        String caseType = ISSP_Constant.caseTypeMap.get(caseObj.RecordType.Name);
+        if (caseType == 'OSCAR' && (caseObj.Reason1__c == 'GSA / MSO / Handling Agent' || caseObj.Subject.startsWith('MSO code ')))
+            isMSOcase = true;
+        
+        String fullnameNOCFile = fullnameNOCFile(caseObj);
+
+        if ( caseObj.RecordType__c.contains('SIDRA') ) {
+            isSidraCase = true;
+        }
+
+        OptionWrapper optToReturn = new OptionWrapper(isAdmin, isOnlineOSCARCase, showAccreditation, isMSOcase, isTravelAccreditation, fullnameNOCFile, isSidraCase);
+        return optToReturn;
+    }
+
+    public class OptionWrapper {
+
+        @AuraEnabled
+        public Boolean isAdmin {get; set;}
+
+        @AuraEnabled
+        public Boolean isOnlineOSCARCase {get; set;}
+
+        @AuraEnabled
+        public Boolean showAccreditation {get; set;}
+
+        @AuraEnabled
+        public Boolean isMSOcase {get; set;}
+
+        @AuraEnabled
+        public Boolean isTravelAccreditation {get; set;}
+
+        @AuraEnabled
+        public String fullnameNOCFile {get; set;}
+
+        @AuraEnabled
+        public Boolean isSidraCase {get; set;}
+
+        public OptionWrapper(Boolean isAdmin, Boolean isOnlineOSCARCase, Boolean showAccreditation, Boolean isMSOcase, Boolean isTravelAccreditation, String fullnameNOCFile, Boolean isSidraCase){
+            this.isAdmin = isAdmin;
+            this.isOnlineOSCARCase = isOnlineOSCARCase;
+            this.showAccreditation = showAccreditation;
+            this.isMSOcase = isMSOcase;
+            this.isTravelAccreditation = isTravelAccreditation;
+            this.fullnameNOCFile = fullnameNOCFile;
+            this.isSidraCase = isSidraCase;
+        }
+    }
+
     /*
     *   Wrapper class for returning database operations success / unsuccess
     */
