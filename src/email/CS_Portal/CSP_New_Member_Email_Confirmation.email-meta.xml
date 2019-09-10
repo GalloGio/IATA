@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
     <available>true</available>
-    <description>Reset password when forgotten</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>CSP Forgot Password Email</name>
+    <name>CSP New Member Email Confirmation</name>
     <style>none</style>
-    <subject>Reset your password for IATA Customer Portal</subject>
+    <subject>IATA Customer Portal Email Confirmation</subject>
     <textOnly>{!$Label.ISSP_Email_do_not_reply}
 
 Dear {!Receiving_User.FirstName},
 
-We have received your request to reset your IATA Customer Portal password.
+Thank you for registering to the IATA Customer Portal. You&apos;re just one step away from getting access!
 
-Please click here to set a new password.
+Please confirm your email address by clicking here.
 
 For security reasons, this link is valid from 8 hours. After the time limit has expired, you will have to resubmut your request.
 

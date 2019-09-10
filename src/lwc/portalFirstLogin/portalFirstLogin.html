@@ -1,0 +1,62 @@
+<!--
+ - Created by ukaya01 on 10/09/2019.
+ -->
+
+<!-- Portal First Login -->
+<template>
+
+    <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+
+        <div if:true={isLoading}>
+            <div class="modalSpinnerContainer">
+                <lightning-spinner class="" alternative-text="Loading" size="medium">
+                </lightning-spinner>
+            </div>
+        </div>
+
+        <div class="modal">
+
+            <div class="registrationPopup">
+
+                <div class="customWhiteBackground">
+
+                    <div class="slds-p-top_x-large slds-p-bottom_x-small">
+                        <div style="width:100%;">
+                            <span class="slds-p-left_large">
+                                <span><img src={successIcon} height="55" width="55" class="slds-p-left_small"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="slds-m-horizontal_x-large">
+                        <div class="cardBodyContent">
+                            <div class="slds-card__body">
+
+                                <div class="slds-p-bottom_x-small">
+                                    <span class="text-medium text-darkGray text-bold">
+                                        <span>Welcome on board {userName}</span>
+                                    </span>
+                                </div>
+
+                                <div class="slds-p-bottom_x-large">
+                                    <span class="fixed-text text-gray">Your account is created successfully. You can discover the portal features now. Please complete your profile to get more personalized content.</span>
+                                </div>
+
+                                <div class="slds-p-bottom_large">
+                                    <lightning-button class="outlinedButtonLogin" label="Skip" onclick={handleCloseModal}></lightning-button>
+                                </div>
+                                <div class="slds-p-bottom_large">
+                                    <lightning-button class="containedButtonLogin" label="Submit" onclick={handleAccept} ></lightning-button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</template>

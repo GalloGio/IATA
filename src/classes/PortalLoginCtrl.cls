@@ -39,10 +39,27 @@ public with sharing class PortalLoginCtrl {
     }
 
     @AuraEnabled
-    public static LoginResult login(String username, String password) {
+    public static LoginResult login(String username, String password, string landingPage) {
         LoginResult result = new LoginResult();
         result.userIsFrozen = false;
-        string startUrl = Label.CSP_PortalPath;
+        string startUrl = '';
+
+        system.debug('landingPage: ' + landingPage);
+
+        if(landingPage != null && landingPage != ''){
+            landingPage = EncodingUtil.urlDecode(landingPage, 'UTF-8');
+            system.debug('landingPage: ' + landingPage);
+            if(landingPage.contains(Label.CSP_PortalPath)){
+                startUrl = landingPage;
+            }else{
+                startUrl = Label.CSP_PortalPath + landingPage;
+            }
+        }else{
+            startUrl = Label.CSP_PortalPath;
+        }
+
+        system.debug('startUrl: ' + startUrl);
+
         User oneUser;
         username = (null != username) ? username.trim() : username;
 

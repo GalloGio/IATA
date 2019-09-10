@@ -12,14 +12,13 @@
         <br/> <br/> <br/>
 
         <div class="headerTitle">
-            Welcome to <br/>
-            IATA Customer Portal
+            <lightning-formatted-rich-text value={labels.CSP_Welcome_Title} class=""></lightning-formatted-rich-text>
         </div>
 
         <br/> <br/>
 
         <div class="infoText">
-            This is the center of IATA customer experience, where you can access and manage IATA services and products and get support about any subject.
+            {labels.CSP_Welcome_Panel_Info}
         </div>
 
         <br/> <br/>
@@ -34,10 +33,10 @@
                             </lightning-layout-item>
                             <lightning-layout-item size=10>
                                 <div class="cardItemTitle">
-                                    Access IATA services
+                                    {labels.CSP_Welcome_Panel_Bullet_1_Title}
                                 </div>
                                 <div class="description">
-                                    Access nearly 60 IATA services such as BSPLink, ICCS, TIESS.
+                                    {labels.CSP_Welcome_Panel_Bullet_1_Desc}
                                 </div>
                             </lightning-layout-item>
                         </lightning-layout>
@@ -49,10 +48,10 @@
                             </lightning-layout-item>
                             <lightning-layout-item size=10>
                                 <div class="cardItemTitle">
-                                    Keep up to date
+                                    {labels.CSP_Welcome_Panel_Bullet_2_Title}
                                 </div>
                                 <div class="description">
-                                    Easily manage and update your IATA profile. Open and follow up cases.
+                                    {labels.CSP_Welcome_Panel_Bullet_2_Desc}
                                 </div>
                             </lightning-layout-item>
                         </lightning-layout>
@@ -64,10 +63,10 @@
                             </lightning-layout-item>
                             <lightning-layout-item size=10>
                                 <div class="cardItemTitle">
-                                    Find special offers for you
+                                    {labels.CSP_Welcome_Panel_Bullet_3_Title}
                                 </div>
                                 <div class="description">
-                                    Discover the selection of publications, trainings and other IATA products and services.
+                                    {labels.CSP_Welcome_Panel_Bullet_3_Desc}
                                 </div>
                             </lightning-layout-item>
                         </lightning-layout>
@@ -79,10 +78,10 @@
                             </lightning-layout-item>
                             <lightning-layout-item size=10>
                                 <div class="cardItemTitle">
-                                    Find answers
+                                    {labels.CSP_Welcome_Panel_Bullet_4_Title}
                                 </div>
                                 <div class="description">
-                                    Reach the extensive collection of questions & answers; and document archive.
+                                    {labels.CSP_Welcome_Panel_Bullet_4_Desc}
                                 </div>
                             </lightning-layout-item>
                         </lightning-layout>
@@ -96,8 +95,8 @@
                             <lightning-layout-item size=10>
                                 <div class="textAlignCenter text-xsmall">
                                     <lightning-button variant="base"
-                                                      label="Go to FAQ"
-                                                      title="Go to FAQ"
+                                                      label={labels.CSP_FAQ_Label}
+                                                      title={labels.CSP_FAQ_Label}
                                                       onclick={handleNavigateToFAQ}
                                                       class="blueCustomButtonLinkSmall">
                                     </lightning-button>

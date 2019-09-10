@@ -163,9 +163,8 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
                 var config = JSON.parse(JSON.stringify(result));
                 console.log('config: ', config);
                 if(config.contact == null){
-                    alert('Failed to find Contact');
-                    return;
                     this.dispatchEvent(new CustomEvent('hideregistrationpopup'));
+                    return;
                 }
 
                 this.config = config;
@@ -179,6 +178,7 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
                 ]).then(function(){
                     this.isLoading = false;
                     this.initialLoad = false;
+                    this._checkForMissingFields();
                 }.bind(this));
 
             })
@@ -197,8 +197,15 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
     /* Event Handlers
     /* ==============================================================================================================*/
 
-    handleToggleSpinner(){
-        this.isLoading = true;
+    handleFormKeyPress(event){
+        if(event.keyCode === 13){
+            var submitButton = this.template.querySelector('[data-id="submitButton"]');
+            if(submitButton){
+                if(submitButton.disabled == false){
+                    this.handleSubmit();
+                }
+            }
+        }
     }
 
     handleCloseModal(){
@@ -213,69 +220,22 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
         console.log('form: ', JSON.parse(JSON.stringify(this.registrationForm)));
         console.log('customer type: ', JSON.parse(JSON.stringify(this.selectedMetadataCustomerType)));
 
+
         if(this.config.selectedCustomerType != this.registrationForm.selectedCustomerType){
-            console.log('customer type changed');
             customerTypeChanged = true;
         }
 
         if(this.config.contact.ISO_Country__c){
             if(this.config.contact.ISO_Country__c != this.registrationForm.country){
-                console.log('customer type changed');
                 customerTypeChanged = true;
             }
         }else{
             if(this.registrationForm.country.length > 0){
-                console.log('customer type changed');
                 customerTypeChanged = true;
             }
         }
 
-        const inputValidation = [...this.template.querySelectorAll('input')]
-        .reduce((validSoFar, inputCmp) => {
-            if(inputCmp.checkValidity() == false){
-                var inputDiv = this.template.querySelector('[data-id="' + inputCmp.name + 'Div"]');
-                inputDiv.classList.add('slds-has-error');
-            }
-            return validSoFar && inputCmp.checkValidity();
-        }, true);
-
-
-        const selectValidation = [...this.template.querySelectorAll('lightning-combobox')]
-        .reduce((validSoFar, comboboxCmp) => {
-            if(comboboxCmp.checkValidity() == false){
-                console.log('invalid');
-            }
-            comboboxCmp.reportValidity();
-            return validSoFar && comboboxCmp.checkValidity();
-        }, true);
-
-        console.log(1);
-        if(this.registrationForm.email.length < 1 || this.registrationForm.firstName.length < 1 || this.registrationForm.lastName.length < 1 || this.registrationForm.language.length < 1
-            || this.registrationForm.sector.length < 1){
-                //todo: this check fails for General Public -> Student
-                this._showSubmitError(true, 'Please fill all the required fields!');
-                this.isLoading = false;
-                return;
-        }
-
-
-        console.log(2);
-
-        if(this.registrationForm.sector == 'General_Public_Sector' && this.registrationForm.extraChoice.length < 1){
-            console.log(3);
-            this._showSubmitError(true, 'Please fill all the required fields!');
-            this.isLoading = false;
-            return;
-        }else if(this.registrationForm.sector != 'General_Public_Sector' && this.registrationForm.category.length < 1){
-            console.log(4);
-            this._showSubmitError(true, 'Please fill all the required fields!');
-            this.isLoading = false;
-            return;
-        }
-
         //todo: validate & add country code to the phone number
-
-        //todo: for sector =  other and general public -> must implement logic to retrieve sector & category from the final customerTypeMetadata selection
         updateContactInfo({ registrationForm : JSON.stringify(this.registrationForm),
                             customerType : JSON.stringify(this.selectedMetadataCustomerType),
                             customerTypeChanged : customerTypeChanged
@@ -285,11 +245,12 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
             if(dataAux.isSuccess == true){
                 //todo: show success message
                 this.dispatchEvent(new CustomEvent('hideregistrationpopup'));
+                this.isLoading = false;
             }else{
                 this._showSubmitError(true, 'Error Updating Contact');
+                this.isLoading = false;
                 //this.dispatchEvent(new CustomEvent('hideregistrationpopup'));
             }
-            this.isLoading = false;
         })
         .catch(error => {
             var dataAux = JSON.parse(JSON.stringify(error));
@@ -315,16 +276,22 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
                 this._showSubmitError(false,"");
             }
         }
+        this._checkForMissingFields();
 
     }
 
     handleSectorChange(event){
+
         this.isLoading = true;
+
+        if(this.selectedCustomerType == event.target.value){
+            this._checkForMissingFields();
+            this.isLoading = false;
+            return;
+        }
+
         this.selectedCustomerType = event.target.value;
-        console.log('selectedCustomerType: ', this.selectedCustomerType);
-        if(this.selectedCustomerType == '- Select -'){
-            this.selectedCustomerType = null;
-        }else{
+        if(this.selectedCustomerType != null){
             //clear error messages
             if(this.displaySubmitError){
                 if(event.target.required){
@@ -337,17 +304,27 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
         this.registrationForm.sector = this.selectedCustomerType;
         this.registrationForm.category = "";
         this.registrationForm.extraChoice = "";
+
+        this._checkForMissingFields();
     }
 
     handleCategoryChange(event){
+
         if(event.target.value == null){
+            this.registrationForm.category = "";
+            this._checkForMissingFields();
             return;
         }
-        this.isLoading = true;
+
+        if(this.selectedCustomerType == event.target.value){
+            this.registrationForm.category = this.selectedCustomerType;
+            this._checkForMissingFields();
+            this.isLoading = false;
+            return;
+        }
+
         this.selectedCustomerType = event.target.value;
-        if(this.selectedCustomerType == '- Select -'){
-            this.selectedCustomerType = null;
-        }else{
+        if(this.selectedCustomerType != null){
             //clear error messages
             if(this.displaySubmitError){
                 if(event.target.required){
@@ -358,17 +335,31 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
 
         this.registrationForm.selectedCustomerType = this.selectedCustomerType;
         this.registrationForm.category = this.selectedCustomerType;
+        this._checkForMissingFields();
     }
 
     handleExtraChoiceChange(event){
+        this.isLoading = true;
+
         if(event.target.value == null){
+            this.selectedCustomerType = this.registrationForm.sector;
+            this.registrationForm.selectedCustomerType = this.registrationForm.sector;
+            this.registrationForm.extraChoice = "";
+            this.registrationForm.category = "";
+            //this.category = {};
+            this.isLoading = false;
+            this._checkForMissingFields();
             return;
         }
-        this.isLoading = true;
+
+        if(this.selectedCustomerType == event.target.value){
+            this._checkForMissingFields();
+            this.isLoading = false;
+            return;
+        }
+
         this.selectedCustomerType = event.target.value;
-        if(this.selectedCustomerType == '- Select -'){
-            this.selectedCustomerType = null;
-        }else{
+        if(this.selectedCustomerType != null){
             //clear error messages
             if(this.displaySubmitError){
                 if(event.target.required){
@@ -380,12 +371,11 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
         this.registrationForm.selectedCustomerType = this.selectedCustomerType;
         this.registrationForm.extraChoice = this.selectedCustomerType;
         this.registrationForm.category = "";
+
+        this._checkForMissingFields();
     }
 
     handleCustomerTypeChange(event) {
-        console.log('source: ', event.source);
-        console.log('target: ', event.target);
-        console.log('detail: ', event.detail);
 
         this.selectedCustomerType = event.target.value;
         if(this.selectedCustomerType == '- Select -'){
@@ -404,11 +394,44 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
 
     handlePreferredLanguageChange(event){
         this.registrationForm.language = event.target.value;
+        this._checkForMissingFields();
     }
 
     /* ==============================================================================================================*/
     /* Helper Methods
     /* ==============================================================================================================*/
+
+    async _checkForMissingFields(){
+
+        let isValid = true;
+
+        if(this.registrationForm.email.length < 1 || this.registrationForm.firstName.length < 1 || this.registrationForm.lastName.length < 1 || this.registrationForm.language.length < 1
+            || this.registrationForm.sector.length < 1){
+                isValid = false;
+        }
+
+        if(this.registrationForm.sector == 'General_Public_Sector' && this.registrationForm.extraChoice.length < 1){
+            isValid = false;
+        }else if(this.registrationForm.sector != 'General_Public_Sector' && this.registrationForm.category.length < 1){
+            isValid = false;
+        }
+
+        await (this.template.querySelector('[data-id="submitButton"]'));
+        var submitButton = this.template.querySelector('[data-id="submitButton"]');
+        if(isValid == true){
+            if(submitButton.disabled == true){
+                submitButton.classList.remove('containedButtonDisabled');
+                submitButton.classList.add('containedButtonLogin');
+                submitButton.disabled = false;
+            }
+        }else{
+            submitButton.classList.remove('containedButtonLogin');
+            submitButton.classList.add('containedButtonDisabled');
+            submitButton.disabled = true;
+        }
+
+    }
+
     _showEmailValidationError(state, message){
         var emailDiv = this.template.querySelector('[data-id="emailDiv"]');
         this.errorMessage = message;
@@ -422,7 +445,6 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
     }
 
     _showSubmitError(state, message){
-        console.log(message);
         var submitDiv = this.template.querySelector('[data-id="submitDiv"]');
         this.errorMessage = message;
         this.displaySubmitError = state;
@@ -463,7 +485,6 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
 
 
         var countryCode = this.userCountryCode;
-        console.log('countryCode: ', countryCode);
 
         window.intlTelInput(input,{
             initialCountry: countryCode,
@@ -481,17 +502,13 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
         formFields.firstName = config.contact.FirstName ? config.contact.FirstName : '';
         formFields.lastName = config.contact.LastName ? config.contact.LastName : '';
         formFields.country = config.contact.ISO_Country__c ? config.contact.ISO_Country__c : '';
-        console.log('p1');
         formFields.phone = config.contact.Phone ? config.contact.Phone : '';
-        console.log('p2');
         formFields.sector = config.sector ? config.sector : '';
         formFields.category = config.category ? config.category : '';
         formFields.extraChoice = config.extraChoice ? config.extraChoice : '';
         formFields.language = config.contact.Preferred_Language__c ? config.contact.Preferred_Language__c : '';
         formFields.selectedCustomerType = config.selectedCustomerType ? config.selectedCustomerType : '';
         formFields.contactId = config.contact.Id ? config.contact.Id : '';
-
-        console.log('formFields: ', formFields);
 
         if(formFields.phone.length < 1){
             if(formFields.country.length > 0){
@@ -516,7 +533,6 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
             }
         }
 
-        console.log('formFields: ', formFields);
         return formFields;
     }
 

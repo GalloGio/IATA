@@ -15,7 +15,7 @@
         </div>
 
         <div class="modal">
-            <div  class="registrationPopup">
+            <div  class="registrationPopup" onkeypress={handleFormKeyPress}>
                 <!-- Popup Header -->
                 <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
                     <span>Personal Information</span>
@@ -266,7 +266,7 @@
 
                         <lightning-layout-item size="12">
                             <div>
-                                <lightning-button data-id="submitButton" class="containedButtonLogin" onclick={handleSubmit} label="Submit"></lightning-button>
+                                <lightning-button data-id="submitButton" disabled class="containedButtonDisabled" onclick={handleSubmit} label="Submit"></lightning-button>
                                 <div data-id="submitDiv">
                                     <div if:true={displaySubmitError}>
                                         <div class="slds-form-element__help text-xxsmall formElementSpacer" style="padding:5px; text-align:center;">{errorMessage}</div>

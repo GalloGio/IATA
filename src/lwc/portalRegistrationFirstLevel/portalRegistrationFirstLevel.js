@@ -38,11 +38,18 @@ import NextLabel                                from '@salesforce/label/c.ISSP_N
 import SubmitLabel                              from '@salesforce/label/c.CSP_Submit';
 import AcceptTermsLabel                         from '@salesforce/label/c.ISSP_Registration_acceptGeneralConditions';
 import AcceptTermsErrorLabel                    from '@salesforce/label/c.CSP_Accept_Terms_Error';
-//import TouLabel                                 from '@salesforce/label/c.CSP_Privacy_Policy';
+import TouLabel                                 from '@salesforce/label/c.CSP_Privacy_Policy';
 import RegistrationCompleteLabel                from '@salesforce/label/c.OneId_RegistrationComplete';
 import CheckEmailLabel                          from '@salesforce/label/c.OneId_CheckEmail';
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
 import TroubleshootingLabel                     from '@salesforce/label/c.OneId_CSP_Troubleshooting';
+import successLabel                             from '@salesforce/label/c.CSP_Success';
+import createNewAccountLabel                    from '@salesforce/label/c.OneId_CreateNewAccount';
+import successMessageLabel                      from '@salesforce/label/c.CSP_Forgot_Password_Success_Message';
+import retryTitleLabel                          from '@salesforce/label/c.CSP_Forgot_Password_Retry_Title';
+import retryMessageLabel                        from '@salesforce/label/c.CSP_Forgot_Password_Retry_Message';
+import tryAgainLabel                            from '@salesforce/label/c.CSP_Try_Again';
+import newAccountMessageLabel                   from '@salesforce/label/c.CSP_Create_New_Account_Label';
 
 export default class PortalRegistrationFirstLevel extends LightningElement {
 
@@ -86,6 +93,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     @track extraQuestion = { label : "", options : [], display : false };
     phoneInputInitialized = false;
     exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_point.svg';
+    successIcon = CSP_PortalPath + 'check2xGreen.png';
     @track jsLoaded = false;
 
     _labels = {
@@ -96,11 +104,18 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         SubmitLabel,
         AcceptTermsLabel,
         AcceptTermsErrorLabel,
-        //TouLabel,
+        TouLabel,
         RegistrationCompleteLabel,
         CheckEmailLabel,
         DisabledRegistrationLabel : 'Portal Registration is currently disabled. Thank you for your understanding.',
         TroubleshootingLabel,
+        successLabel,
+        tryAgainLabel,
+        retryTitleLabel,
+        retryMessageLabel,
+        successMessageLabel,
+        createNewAccountLabel,
+        newAccountMessageLabel
     }
     get labels() {
         return this._labels;
@@ -214,7 +229,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             RegistrationUtilsJs.getUserLocation().then(result=> {
                 this.isSanctioned = result.isRestricted;
                 this.userCountryCode = result.countryCode;
-                this.userCountry = result.country;
+                this.userCountry = result.countryId;
                 this.registrationForm.country = result.countryId;
                 if(this.isSanctioned == true){
                     //navigate to error page
@@ -287,6 +302,17 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     /* Event Handlers
     /* ==============================================================================================================*/
 
+    handleFormKeyPress(event){
+        if(event.keyCode === 13){
+            var submitButton = this.template.querySelector('[data-id="submitButton"]');
+            if(submitButton){
+                if(submitButton.disabled == false){
+                    this.handleSubmit();
+                }
+            }
+        }
+    }
+
     handleNavigateToLogin() {
 
         if(this.userInfo.hasExistingUser){
@@ -326,6 +352,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             nextBtn.classList.add('containedButtonDisabled');
             nextBtn.disabled = true;
         }
+
+        if(event.keyCode === 13 && nextBtn.disabled == false){
+            this.handleNext();
+        }
+
     }
 
 
@@ -379,6 +410,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                             }else{
                                 if(userInfo.isEmailAddressAvailable == true){
                                     //todo: show form
+
+                                    if(this.userCountry != ""){
+                                        this.registrationForm.country = this.userCountry;
+                                    }
+
                                     this.displayContactForm = true;
                                     this.isEmailFieldReadOnly = true;
                                     this.isLoading = false;
@@ -406,54 +442,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         console.log('Customer Type : ', JSON.parse(JSON.stringify(this.selectedMetadataCustomerType)));
 
         this.isLoading = true;
-
-        const inputValidation = [...this.template.querySelectorAll('input')]
-            .reduce((validSoFar, inputCmp) => {
-                if(inputCmp.checkValidity() == false){
-                    var inputDiv = this.template.querySelector('[data-id="' + inputCmp.name + 'Div"]');
-                    inputDiv.classList.add('slds-has-error');
-                }
-                return validSoFar && inputCmp.checkValidity();
-            }, true);
-
-
-        const selectValidation = [...this.template.querySelectorAll('lightning-combobox')]
-             .reduce((validSoFar, comboboxCmp) => {
-                 if(comboboxCmp.checkValidity() == false){
-                    console.log('invalid');
-                 }
-                 comboboxCmp.reportValidity();
-                 return validSoFar && comboboxCmp.checkValidity();
-             }, true);
-
-
-
-        let form = this.registrationForm;
-        if(this.userInfo.hasExistingContact){
-            if(form.email.length < 1 || form.termsAndUsage != true){
-                this._showSubmitError(true, 'Please fill all the required fields!');
-                this.isLoading = false;
-                return;
-            }
-        }else{
-            if(form.email.length < 1 || form.firstName.length < 1 || form.lastName.length < 1 || form.language.length < 1
-                || form.termsAndUsage != true || form.sector.length < 1){
-                    //todo: this check fails for General Public -> Student
-                    this._showSubmitError(true, 'Please fill all the required fields!');
-                    this.isLoading = false;
-                    return;
-            }
-            if(form.sector == 'General_Public_Sector' && form.extraChoice.length < 1){
-                this._showSubmitError(true, 'Please fill all the required fields!');
-                this.isLoading = false;
-                return;
-            }else if(form.sector != 'General_Public_Sector' && form.category.length < 1){
-                this._showSubmitError(true, 'Please fill all the required fields!');
-                this.isLoading = false;
-                return;
-            }
-        }
-
         //todo: validate & add country code to the phone number
 
         register({ registrationForm : JSON.stringify(this.registrationForm),
@@ -466,10 +454,12 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             if(dataAux.isSuccess == true){
                 //todo: show success message
                 this.isRegistrationComplete = true;
+                this.isLoading = false;
             }else{
+                this.isLoading = false;
                 this._showSubmitError(true, 'Error Creating User');
             }
-            this.isLoading = false;
+
         })
         .catch(error => {
             var dataAux = JSON.parse(JSON.stringify(error));
@@ -478,11 +468,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             this.isLoading = false;
         });
 
-
     }
 
     handleCountryChange(event){
         this.registrationForm.country = event.detail.value;
+        this._checkForMissingFields();
     }
 
     handleInputValueChange(event){
@@ -498,21 +488,30 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             }
         }
 
+        this._checkForMissingFields();
+
     }
 
     handleTouChange(event){
         var inputValue = event.target.checked;
         this.registrationForm.termsAndUsage = inputValue;
-        this._renderSubmitButton(inputValue);
+        this._checkForMissingFields();
+
     }
 
 
     handleSectorChange(event){
+
         this.isLoading = true;
+
+        if(this.selectedCustomerType == event.target.value){
+            this._checkForMissingFields();
+            this.isLoading = false;
+            return;
+        }
+
         this.selectedCustomerType = event.target.value;
-        if(this.selectedCustomerType == '- Select -'){
-            this.selectedCustomerType = null;
-        }else{
+        if(this.selectedCustomerType != null){
             //clear error messages
             if(this.displaySubmitError){
                 if(event.target.required){
@@ -525,17 +524,27 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         this.registrationForm.sector = this.selectedCustomerType;
         this.registrationForm.category = "";
         this.registrationForm.extraChoice = "";
+
+        this._checkForMissingFields();
     }
 
     handleCategoryChange(event){
+
         if(event.target.value == null){
+            this.registrationForm.category = "";
+            this._checkForMissingFields();
             return;
         }
-        this.isLoading = true;
+
+        if(this.selectedCustomerType == event.target.value){
+            this.registrationForm.category = this.selectedCustomerType;
+            this._checkForMissingFields();
+            this.isLoading = false;
+            return;
+        }
+
         this.selectedCustomerType = event.target.value;
-        if(this.selectedCustomerType == '- Select -'){
-            this.selectedCustomerType = null;
-        }else{
+        if(this.selectedCustomerType != null){
             //clear error messages
             if(this.displaySubmitError){
                 if(event.target.required){
@@ -546,17 +555,32 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
         this.registrationForm.selectedCustomerType = this.selectedCustomerType;
         this.registrationForm.category = this.selectedCustomerType;
+
+        this._checkForMissingFields();
     }
 
     handleExtraChoiceChange(event){
+        this.isLoading = true;
+
         if(event.target.value == null){
+            this.selectedCustomerType = this.registrationForm.sector;
+            this.registrationForm.selectedCustomerType = this.registrationForm.sector;
+            this.registrationForm.extraChoice = "";
+            this.registrationForm.category = "";
+            //this.category = {};
+            this.isLoading = false;
+            this._checkForMissingFields();
             return;
         }
-        this.isLoading = true;
+
+        if(this.selectedCustomerType == event.target.value){
+            this._checkForMissingFields();
+            this.isLoading = false;
+            return;
+        }
+
         this.selectedCustomerType = event.target.value;
-        if(this.selectedCustomerType == '- Select -'){
-            this.selectedCustomerType = null;
-        }else{
+        if(this.selectedCustomerType != null){
             //clear error messages
             if(this.displaySubmitError){
                 if(event.target.required){
@@ -568,6 +592,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         this.registrationForm.selectedCustomerType = this.selectedCustomerType;
         this.registrationForm.extraChoice = this.selectedCustomerType;
         this.registrationForm.category = "";
+
+        this._checkForMissingFields();
     }
 
     handleCustomerTypeChange(event) {
@@ -617,7 +643,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                 category : this.category,
                 extraQuestion : this.extraQuestion,
                 selectedCustomerType : this.selectedCustomerType,
-                selectedMetadataCustomerType : this.selectedMetadataCustomerType
+                selectedMetadataCustomerType : this.selectedMetadataCustomerType,
+                userCountry : this.userCountry,
+                userCountryCode : this.userCountryCode
             };
 
             localStorage.setItem("registrationState", JSON.stringify(registrationState));
@@ -709,15 +737,53 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         this.category = registrationState.category;
         this.extraQuestion = registrationState.extraQuestion;
         this.selectedMetadataCustomerType = registrationState.selectedMetadataCustomerType;
-
+        this.userCountry = registrationState.userCountry;
+        this.userCountryCode = registrationState.userCountryCode;
         this.isLoading = false;
 
         if(this.displayContactForm){
-            this._renderSubmitButton(this.registrationForm.termsAndUsage);
+            this._checkForMissingFields();
+            this._initializePhoneInput();
         }
 
     }
 
+    async _checkForMissingFields(){
+
+        let isValid = true;
+        let form = this.registrationForm;
+        if(this.userInfo.hasExistingContact){
+            if(form.email.length < 1 || form.termsAndUsage != true){
+                isValid = false;
+            }
+        }else{
+            if(form.email.length < 1 || form.firstName.length < 1 || form.lastName.length < 1 || form.language.length < 1
+                || form.termsAndUsage != true || form.sector.length < 1){
+                    isValid = false;
+            }
+            if(form.sector == 'General_Public_Sector' && form.extraChoice.length < 1){
+                isValid = false;
+            }else if(form.sector != 'General_Public_Sector' && form.category.length < 1){
+                isValid = false;
+            }
+        }
+
+        await (this.template.querySelector('[data-id="submitButton"]'));
+        var submitButton = this.template.querySelector('[data-id="submitButton"]');
+        if(isValid == true){
+            if(submitButton.disabled == true){
+                submitButton.classList.remove('containedButtonDisabled');
+                submitButton.classList.add('containedButtonLogin');
+                submitButton.disabled = false;
+            }
+        }else{
+            submitButton.classList.remove('containedButtonLogin');
+            submitButton.classList.add('containedButtonDisabled');
+            submitButton.disabled = true;
+        }
+
+    }
+    /*
     async _renderSubmitButton(state){
         await (this.template.querySelector('[data-id="submitButton"]'));
         var submitButton = this.template.querySelector('[data-id="submitButton"]');
@@ -734,7 +800,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             this._initializePhoneInput();
         }
     }
-
+    */
 
     async _initializePhoneInput(){
 

@@ -278,12 +278,25 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         }
     }
 
-    public static boolean sendRegistrationEmail(RegistrationParameters params){
+    public static boolean sendConfirmationEmail(RegistrationParameters params){
 
         Boolean result = false;
         string oneTimeUrl = generateOneTimeUrl(params);
 
-        Map<String, String> emailMap = generateEmailBodyParams(params, oneTimeUrl);
+        Map<String, String> emailMap = generateEmailBodyParamsForConfirmation(params, oneTimeUrl);
+
+        result = sendEmail(params.email, 'CSP_New_Member_Email_Confirmation', emailMap);
+        return result;
+
+    }
+
+    public static boolean sendRegistrationEmail(RegistrationParameters params){
+
+        Boolean result = false;
+        string url = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('login'));
+        url = url + 'my-profile';
+
+        Map<String, String> emailMap = generateEmailBodyParamsForRegistration(params, url);
 
         result = sendEmail(params.email, 'CSP_New_Member_Welcome_Email', emailMap);
         return result;
@@ -369,10 +382,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 result.portalUserId = usr.userId;
                 result.userName = usr.userName;
 
-                //Send Welcome Email
-                result.isSuccess = sendRegistrationEmail(params);
+                //Send Confirmation Email
+                result.isSuccess = sendConfirmationEmail(params);
                 if(result.isSuccess == false){
-                    result.message = 'Error sending Welcome Email';
+                    result.message = 'Error sending Confirmation Email';
                 }
 
                 return result;
@@ -439,6 +452,13 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 result.isSuccess = true;
                 result.portalUserId = usr.userId;
                 result.userName = usr.userName;
+
+                //Send Confirmation Email
+                result.isSuccess = sendRegistrationEmail(params);
+                if(result.isSuccess == false){
+                    result.message = 'Error sending Registration Email';
+                }
+
                 return result;
             }else{
                 Database.rollback(sp);
@@ -751,6 +771,9 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 addPermissionToUser(permissionList.get(0).Id, usr.userId);
             }
 
+            //Check user permissions for FAQs, reassign if needed
+            PortalFAQsSharingCtrl.validateUserFAQsPermissions(usr.userId);
+
             return usr;
 
 
@@ -776,18 +799,70 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     }
 
-    public static Map<String,String> generateEmailBodyParams(RegistrationParameters params, string oneTimeLink){
+    public static Map<String,String> generateEmailBodyParamsForConfirmation(RegistrationParameters params, string oneTimeLink){
+
+        String headerImageName = Label.CSP_Email_Header_Image;
+        String footerImageName = Label.CSP_Email_Footer_Image;
+        String headerImageUrl;
+        String footerImageUrl;
+        Map<String,Id> docNameIdMap = new Map<String,Id>();
+
+        for(Document doc : [Select id, name From Document Where name = :headerImageName or name= :footerImageName]){
+            docNameIdMap.put(doc.name,doc.id);
+        }
+
+        if(docNameIdMap.get(headerImageName) != null) headerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(headerImageName)+'&oid='+userinfo.getorganizationid();
+        if(docNameIdMap.get(footerImageName) != null) footerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(footerImageName)+'&oid='+userinfo.getorganizationid();
 
         Map<String, String> mapBodyParams = new map<String, String>{
-                '{!Contact.Salutation}' => '',
-                '{!Contact.Password}' => '',
-                '{!Receiving_User.FirstName}' => params.firstName,
-                '{!Receiving_User.LastName}' => params.lastName,
-                '{!Receiving_User.Email}' => params.email,
-                '{!Community_Name}' => '',
-                '{!Community_Url}' => oneTimeLink,
-                '{!$Label.ISSP_Email_Here}' => 'here',
-                '{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply
+                '{!HeaderUrl}'                                   => headerImageUrl,
+                '{!FooterUrl}'                                   => footerImageUrl,
+                '{!Receiving_User.FirstName}'                    => params.Firstname,
+                '{!Community_Url}'                               => oneTimeLink,
+                '{!$Label.ISSP_Email_Here}'                      => Label.ISSP_Email_Here,
+                '{!$Label.ISSP_Email_do_not_reply}'              => Label.ISSP_Email_do_not_reply,
+                '{!$Label.ISSP_Email_Dear_Pre}'                  => Label.ISSP_Email_Dear_Pre,
+                '{!$Label.CSP_Email_Confirmation_Body_Part_1}'   => Label.CSP_Email_Confirmation_Body_Part_1,
+                '{!$Label.CSP_Email_Confirmation_Body_Part_2}'   => Label.CSP_Email_Confirmation_Body_Part_2,
+                '{!$Label.CSP_Email_Confirmation_Body_Part_3}'   => Label.CSP_Email_Confirmation_Body_Part_3,
+                '{!$Label.CSP_Email_Signature_Part_1}'           => Label.CSP_Email_Signature_Part_1,
+                '{!$Label.CSP_Email_Signature_Part_2}'           => Label.CSP_Email_Signature_Part_2
+        };
+
+        return mapBodyParams;
+
+    }
+
+    public static Map<String,String> generateEmailBodyParamsForRegistration(RegistrationParameters params, string communityUrl) {
+
+        String headerImageName = Label.CSP_Email_Header_Image;
+        String footerImageName = Label.CSP_Email_Footer_Image;
+        String headerImageUrl;
+        String footerImageUrl;
+        Map<String,Id> docNameIdMap = new Map<String,Id>();
+
+        for(Document doc : [Select id, name From Document Where name = :headerImageName or name= :footerImageName]){
+            docNameIdMap.put(doc.name,doc.id);
+        }
+
+        if(docNameIdMap.get(headerImageName) != null) headerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(headerImageName)+'&oid='+userinfo.getorganizationid();
+        if(docNameIdMap.get(footerImageName) != null) footerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(footerImageName)+'&oid='+userinfo.getorganizationid();
+
+        Map<String, String> mapBodyParams = new map<String, String>{
+                '{!HeaderUrl}'                                   => headerImageUrl,
+                '{!FooterUrl}'                                   => footerImageUrl,
+                '{!Receiving_User.FirstName}'                    => params.Firstname,
+                '{!Community_Url}'                               => communityUrl,
+                '{!$Label.ISSP_Email_Here}'                      => Label.ISSP_Email_Here,
+                '{!$Label.ISSP_Email_do_not_reply}'              => Label.ISSP_Email_do_not_reply,
+                '{!$Label.ISSP_Email_Dear_Pre}'                  => Label.ISSP_Email_Dear_Pre,
+                '{!$Label.CSP_Email_Welcome_Part_1}'             => Label.CSP_Email_Welcome_Part_1,
+                '{!$Label.CSP_Email_Welcome_Part_2}'             => Label.CSP_Email_Welcome_Part_2,
+                '{!$Label.CSP_Email_Welcome_Part_3}'             => Label.CSP_Email_Welcome_Part_3,
+                '{!$Label.CSP_Email_Welcome_Part_4}'             => Label.CSP_Email_Welcome_Part_4,
+                '{!$Label.CSP_Email_Welcome_Part_5}'             => Label.CSP_Email_Welcome_Part_5,
+                '{!$Label.CSP_Email_Signature_Part_1}'           => Label.CSP_Email_Signature_Part_1,
+                '{!$Label.CSP_Email_Signature_Part_2}'           => Label.CSP_Email_Signature_Part_2
         };
 
         return mapBodyParams;

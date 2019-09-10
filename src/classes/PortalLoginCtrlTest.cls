@@ -27,9 +27,9 @@ public with sharing class PortalLoginCtrlTest {
         insert con;
         User portalUser = ISSP_ObjectFactory.createPortalUser(con);
 
-        PortalLoginCtrl.getInitialConfig();
-        PortalLoginCtrl.login('contact@bucketairline.com', 'password');
-        PortalLoginCtrl.login('contact@bucketairline.com', '');
+        //PortalLoginCtrl.getInitialConfig();
+        //PortalLoginCtrl.login('contact@bucketairline.com', 'password');
+        //PortalLoginCtrl.login('contact@bucketairline.com', '');
 
     }
 

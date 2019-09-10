@@ -3219,6 +3219,38 @@ Payment required on receipt of this Payment Advice
         <value>Cases</value>
     </labels>
     <labels>
+        <fullName>CSP_Change_Email</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Change Email</shortDescription>
+        <value>Change Email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Change_Password_Error</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Change Password Error</shortDescription>
+        <value>Your new password could not be set.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Chg_Pass_Success_Msg_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Chg Pass Success Msg 1</shortDescription>
+        <value>Your new password set successfully.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Chg_Pass_Success_Msg_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Chg Pass Success Msg 2</shortDescription>
+        <value>You can use your new password next time you login.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Community</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3269,6 +3301,38 @@ Payment required on receipt of this Payment Advice
         <value>Complete this field.</value>
     </labels>
     <labels>
+        <fullName>CSP_Create_New_Account_Info</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Create New Account Info</shortDescription>
+        <value>Complete the basic registration process to join IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Create_New_Account_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Create New Account Label</shortDescription>
+        <value>New to the IATA Customer Portal?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Create_Password</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP  Create Password</shortDescription>
+        <value>Create Password</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Create_Password_Error</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Create Password Error</shortDescription>
+        <value>New password could not create.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Deny_User_Access_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3316,6 +3380,174 @@ Payment required on receipt of this Payment Advice
         <value>Publication Countries</value>
     </labels>
     <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1</shortDescription>
+        <value>Thank you for registering to the IATA Customer Portal. You&apos;re just one step away from getting access!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 2</shortDescription>
+        <value>Please confirm your email address by clicking</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 3</shortDescription>
+        <value>For security reasons, this link is valid for 8 hours. After the time limit has expired, you will have to resubmit your request.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Footer_Image</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Footer Image</shortDescription>
+        <value>CSP Email Footer Image</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Header_Image</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Header Image</shortDescription>
+        <value>CSP Email Header Image</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Password_Reset_Body_Part_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Password Reset Body Part 1</shortDescription>
+        <value>We have received your request to reset your IATA Customer Portal password.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Password_Reset_Body_Part_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Password Reset Body Part 2</shortDescription>
+        <value>Please click</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Password_Reset_Body_Part_3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Password Reset Body Part 3</shortDescription>
+        <value>to set a new password.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Password_Reset_Body_Part_4</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Password Reset Body Part 4</shortDescription>
+        <value>For security reasons, this link is valid for 8 hours. After the time limis has expired, you will have to resubmit your request.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Signature_Part_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Signature Part 1</shortDescription>
+        <value>Thanks for being part of IATA.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Signature_Part_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Signature Part 2</shortDescription>
+        <value>IATA</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Welcome_Part_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Welcome Part 1</shortDescription>
+        <value>We are happy to have you with us in our IATA Customer Portal!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Welcome_Part_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Welcome Part 2</shortDescription>
+        <value>The IATA Customer Portal is packed with useful services, product information, useful tips and tricks specially tailored for you. You can use it to contact our Customer Services Team easily, including live chat or directly purchase from our online store. It&apos;s your gate to IATA!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Welcome_Part_3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Welcome Part 3</shortDescription>
+        <value>&lt;a href=&quot;http://portal.iata.org&quot;&gt;Take me to the Portal!&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Welcome_Part_4</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Welcome Part 4</shortDescription>
+        <value>To enhance your IATA Customer Portal experience even more, you can complete your account information whenever you want to. You can easily do so by clicking</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Welcome_Part_5</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Welcome Part 5</shortDescription>
+        <value>We hope you enjoy our IATA Customer Portal!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Existing_User_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Existing User Message</shortDescription>
+        <value>It seems you are already a portal user. Please login with your password.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Expired_Email_Success_Msg</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Expired Email Success Msg</shortDescription>
+        <value>Please check your e-mail and click on the create password link.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Expired_Link_Msg_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Expired Link Msg 1</shortDescription>
+        <value>Your link has expired.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Expired_Link_Msg_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Expired Link Msg 2</shortDescription>
+        <value>Please try to send an email again.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Expired_Reset_Password_Msg</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Expired Reset Password Msg</shortDescription>
+        <value>Please check your e-mail and click on the reset password link.</value>
+    </labels>
+    <labels>
         <fullName>CSP_FAQReachUsBanner_ButtonText</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3346,6 +3578,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_FAQ_HeaderTitle</shortDescription>
         <value>Frequently Asked Questions</value>
+    </labels>
+    <labels>
+        <fullName>CSP_FAQ_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP FAQ Label</shortDescription>
+        <value>Go to our FAQ</value>
     </labels>
     <labels>
         <fullName>CSP_FAQ_Subtitle</fullName>
@@ -3412,6 +3652,62 @@ Payment required on receipt of this Payment Advice
         <value>For You</value>
     </labels>
     <labels>
+        <fullName>CSP_Forgot_Password</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Forgot Password</shortDescription>
+        <value>Forgot Password</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Forgot_Password_Error_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Forgot Password Error Message</shortDescription>
+        <value>Seems we don&apos;t have a user registered for your email. You can easily create a new account.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Forgot_Password_Info</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Forgot Password Info</shortDescription>
+        <value>Please enter your registered e-mail address to reset your password. We&apos;ll send you a reset link to your email.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Forgot_Password_Retry_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Forgot Password Retry Message</shortDescription>
+        <value>Please check your spam folder first. If you can&apos;t find anything in the spam folder, please try to reset your password again clicking Try Again.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Forgot_Password_Retry_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Forgot Password Retry Title</shortDescription>
+        <value>Didn&apos;t receive an email?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Forgot_Password_Success_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Forgot Password Success Message</shortDescription>
+        <value>Please check your email and click on the password reset link</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Frozen_User_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Frozen User Message</shortDescription>
+        <value>Since you have not logged in the last 90 days, we’ve sent you an email with a new password.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Grant_User_Access_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3425,6 +3721,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Home_WelcomeTitle</shortDescription>
         <value>Welcome [username]</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Invalid_Email</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Invalid Email</shortDescription>
+        <value>Invalid email</value>
     </labels>
     <labels>
         <fullName>CSP_LogOut</fullName>
@@ -3529,6 +3833,38 @@ Payment required on receipt of this Payment Advice
         <value>See Monthly</value>
     </labels>
     <labels>
+        <fullName>CSP_Password_Rule_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Password Rule 1</shortDescription>
+        <value>Minimum 10 characters</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Password_Rule_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Password Rule 2</shortDescription>
+        <value>At least 1 upper-case letter</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Password_Rule_3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Password Rule 3</shortDescription>
+        <value>At least 1 number</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Password_Rule_4</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Password Rule 4</shortDescription>
+        <value>At least 1 symbol (! @ # $ % * ( ) _ + ^ &amp;)</value>
+    </labels>
+    <labels>
         <fullName>CSP_PendingCustomerCase_Warning</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3545,11 +3881,30 @@ Payment required on receipt of this Payment Advice
         <value>/s/</value>
     </labels>
     <labels>
+        <fullName>CSP_Portal_Login_Disabled_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Portal Login Disabled Message</shortDescription>
+        <value>Portal Login is currently disabled. Thank you for your understanding.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Portal_Status</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Portal_Status</shortDescription>
         <value>Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Privacy_Policy</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Privacy Policy</shortDescription>
+        <value>I agree with IATA&apos;s
+&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy &lt;/a&gt;
+and &lt;br/&gt;
+&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Terms of Use. &lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Question1</fullName>
@@ -3607,12 +3962,70 @@ Payment required on receipt of this Payment Advice
         <value>Request Service</value>
     </labels>
     <labels>
+        <fullName>CSP_Reset_Password_Info_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Reset Password Info 1</shortDescription>
+        <value>Please enter your new password and confirm it.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Reset_Password_Info_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Reset Password Info 2</shortDescription>
+        <value>The password should contain 10 or more characters including at least an uppercase letter, a number and a symbol (! @ # $ %  * () _ + ^ &amp;)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Reset_Password_Success_Msg_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Reset Password Success Msg 1</shortDescription>
+        <value>Your password has been changed successfully.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Reset_Password_Success_Msg_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Reset Password Success Msg 2</shortDescription>
+        <value>You can login with your new password.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Restricted_Login_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Restricted Login Message</shortDescription>
+        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities. &lt;br/&gt;
+The platform supporting our Customer Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Customer Portal from your current IP address. &lt;br/&gt;
+Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;here&lt;/a&gt; to contact us.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Restricted_Login_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Restricted Login Title</shortDescription>
+        <value>Restricted Login</value>
+    </labels>
+    <labels>
         <fullName>CSP_Save</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Save</shortDescription>
         <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Save_Login</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Save Login</shortDescription>
+        <value>Save &amp; Login</value>
     </labels>
     <labels>
         <fullName>CSP_SearchDocuments</fullName>
@@ -3970,6 +4383,14 @@ Payment required on receipt of this Payment Advice
         <value>Submit</value>
     </labels>
     <labels>
+        <fullName>CSP_Success</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Success</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
         <fullName>CSP_Support</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4018,12 +4439,117 @@ Payment required on receipt of this Payment Advice
         <value>Title</value>
     </labels>
     <labels>
+        <fullName>CSP_Troubleshooting</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting</shortDescription>
+        <value>troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Troubleshooting_Info</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting Info</shortDescription>
+        <value>For more help check</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Try_Again</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Try Again</shortDescription>
+        <value>Try Again</value>
+    </labels>
+    <labels>
         <fullName>CSP_TypeOfCase</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_TypeOfCase</shortDescription>
         <value>Type of case</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_1_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Welcome Panel Bullet 1 Desc</shortDescription>
+        <value>Directly access more than 60 IATA services, specially selected for you.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_1_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Welcome Panel Bullet 1 Title</shortDescription>
+        <value>Access IATA services</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_2_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Welcome Panel Bullet 2 Desc</shortDescription>
+        <value>Easily manage and update your IATA profile.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_2_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Welcome Panel Bullet 2 Title</shortDescription>
+        <value>Stay up to date</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_3_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Welcome Panel Bullet 3 Desc</shortDescription>
+        <value>Discover the selection of publications, trainings and other IATA products and services.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_3_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Welcome Panel Bullet 3 Title</shortDescription>
+        <value>Find special offers</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_4_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Welcome Panel Bullet 4 Desc</shortDescription>
+        <value>Access our extensive collection of questions &amp; answers; and get direct support from IATA.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_4_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Welcome Panel Bullet 4 Title</shortDescription>
+        <value>Get answers</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Info</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Welcome Panel Info</shortDescription>
+        <value>Access and manage all your IATA services. Consult information about different products and get support about any subject. Here, for you.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Welcome Title</shortDescription>
+        <value>Welcome to the&amp;lt;br/&amp;gt;
+IATA Customer Portal</value>
     </labels>
     <labels>
         <fullName>CSP_You_Dont_Have_Announcements</fullName>

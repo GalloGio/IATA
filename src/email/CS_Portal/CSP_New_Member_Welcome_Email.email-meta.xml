@@ -5,22 +5,23 @@
     <name>CSP New Member Welcome Email</name>
     <style>none</style>
     <subject>Welcome to IATA Customer Portal</subject>
-    <textOnly>{!$Label.ISSP_Email_do_not_reply} 
-{!Community_Name} 
+    <textOnly>{!$Label.ISSP_Email_do_not_reply}
 
-Dear {!Contact.Salutation} {!Receiving_User.FirstName} {!Receiving_User.LastName}, 
+Dear {!Receiving_User.FirstName},
 
-Welcome to {!Community_Name}. 
-Your e-mail adress is {!Receiving_User.Email} 
-Temporary password: {!Contact.Password} 
+We are happy to have you with us in our IATA Customer Portal!
 
-Please follow the link below to finalize your registration process: 
+The IATA Customer Portal is packed with useful services, product information, useful tips and tricks specially tailored for you. You can use it to contact our Customer Services Team easily, including live chat or directly purchase from our online store. It&apos;s your gate to IATA!
 
-{!Community_Url} 
+Take me to the Portal!.
 
-Thank you for signing up, 
+To enhance your IATA Customer Portal experience even more, you can complete your account information whenever you want to. You can easily do so by clicking here.
 
-IATA Customer Service</textOnly>
+We hope you enjoy our IATA Customer Portal!
+
+Thanks for being part of IATA.
+
+IATA</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
