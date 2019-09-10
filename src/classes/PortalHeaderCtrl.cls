@@ -65,7 +65,7 @@ public without sharing class PortalHeaderCtrl {
     */
     public static List<Customer_Invoice__c> getCustomerInvoices(String topParentId) {
         List<String> statusList = new List<String>();
-        for(Custom_Invoices_Visible_Status__mdt visibleStatus : [SELECT MasterLabel FROM Custom_Invoices_Visible_Status__mdt]) {
+        for(Customer_Invoices_Visible_Status__mdt visibleStatus : [SELECT MasterLabel FROM Customer_Invoices_Visible_Status__mdt]) {
             statusList.add(visibleStatus.MasterLabel);
         }
         
