@@ -69,6 +69,7 @@ export default class PortalLogin extends LightningElement {
     @track isLoginDisabled = false;
     exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_point.svg';
     alertIcon = CSP_PortalPath + 'alertIcon.png';
+    startURL = "";
 
     _labels = {
         Login,
@@ -113,16 +114,22 @@ export default class PortalLogin extends LightningElement {
 
         this._labels.CSP_Forgot_Password = this._labels.CSP_Forgot_Password + '?';
 
+        let pageParams = getParamsFromPage();
+        console.log('pageParams: ', pageParams);
+
+        if(pageParams !== undefined && pageParams.startURL !== undefined){
+            this.startURL = pageParams.startURL;
+        }
+
         const RegistrationUtilsJs = new RegistrationUtils();
 
         RegistrationUtilsJs.checkUserIsSystemAdmin().then(result=> {
             if(result == false && isGuest == false){
-                navigateToPage(CSP_PortalPath,{});
+                navigateToPage(CSP_PortalPath + this.landingPage,{});
                 return;
             }
         });
 
-        let pageParams = getParamsFromPage();
         if(pageParams !== undefined && pageParams.email !== undefined){
             this.email = decodeURIComponent(pageParams.email);
             this.isEmailFieldReadOnly = true;
@@ -281,9 +288,8 @@ export default class PortalLogin extends LightningElement {
                 this.isLoading = false;
                 return;
             }else{
-                login({username: this.email, password: this.password }).then(result => {
+                login({username: this.email, password: this.password, landingPage: this.startURL }).then(result => {
                     var response = JSON.parse(JSON.stringify(result));
-                    console.log('login response: ' , response);
                     if(response.isSuccess == true){
                         navigateToPage(response.sessionUrl, {});
                     }else{
