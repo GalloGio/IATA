@@ -813,12 +813,12 @@ public class IDCard_RenewalWebServiceTest
             // clone account with different country
             Account a = testData.IDCard_Accounts[0].clone();
             a.BillingCountry = 'USA';
-            insert a;
             // invalidate the existing account
             testData.IDCard_Accounts[0].IATACode__c = 'invalid';
             update testData.IDCard_Accounts[0];
             // switch accounts
             testData.IDCard_Accounts[0] = a;
+            insert a;
         }
 
         // id card application
