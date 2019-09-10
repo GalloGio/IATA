@@ -466,6 +466,52 @@ public class Invite_User_CTRL_TEST {
 
     }
 
+    @IsTest
+    public static void getCurrenthUserInfoTest() {
+
+        User testUser = [SELECT Id FROM User WHERE FirstName='Petr' AND LastName='Novak'];
+
+        User infoUser = null;
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+
+            infoUser = Invite_User_CTRL.getCurrenthUserInfo();
+
+        }
+
+        Test.stopTest();
+
+        System.assertEquals(testUser.Id, infoUser.Id, 'Wrong user info returned!');
+
+    }
+
+
+    @isTest
+    public static void testFindLocation() {
+
+        // Prepare test data
+        ISSP_CS__c setting = new ISSP_CS__c();
+        setting.Name = 'ipinfo_token';
+        setting.Value__c = '871e08ecd39325';
+        insert setting;
+
+        // Start the test
+        Test.startTest();
+
+        // Call linked method
+        Test.setMock(HttpCalloutMock.class, new IpinfoioMockImpl());
+        String returnedValue = Invite_User_CTRL.findLocation();
+
+        // Stop the test
+        Test.stopTest();
+
+        // Check that we have data
+        System.assertNotEquals(returnedValue, null);
+
+    }
+
 
 
 }

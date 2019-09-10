@@ -31,9 +31,11 @@
                     let iataEmailContact = gadmSettings.IATA_Email_Contact__c;
                     if(! $A.util.isEmpty(iataEmailContact)) {
                         let label = $A.get('$Label.c.GADM_Data_Submission_help');
-                        label = label.replace('{0}', iataEmailContact);
-                        component.set('v.iataEmailContact', label);
+                        component.set('v.iataEmailText', label);
+                        component.set('v.iataEmailContact', iataEmailContact);
                     }
+
+
 
                     let credentialsName = gadmSettings.Credentials_Name__c;
 

@@ -246,6 +246,36 @@ public without sharing class Invite_User_CTRL {
 
         return wrapper;
     }
+
+    @AuraEnabled
+    public static String findLocation(){
+
+        String ipAddress = '92.104.157.175';
+
+        if(!Test.isRunningTest()) {
+            Map<String,String> currentSessionAttributes = Auth.SessionManagement.getCurrentSession();
+            ipAddress = currentSessionAttributes.get('SourceIp');
+        }
+
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint('https://ipinfo.io/' + ipAddress + '/json?token=' + ISSP_CS__c.getInstance('ipinfo_token').Value__c);
+        req.setMethod('GET');
+        req.setTimeout(2000);
+        HttpResponse res;
+
+        try{
+            res = new Http().send(req);
+            Map<String, String> response = (Map<String, String>)JSON.deserialize(res.getBody(), Map<String, String>.class);
+            return response.get('country');
+
+        }catch(Exception e){
+            System.debug('Exception findLocation LightningRegistrationProcess...' + e);
+            return e.getMessage();
+        }
+    }
+
+
+
     public class UserInformationWrapper{
         @AuraEnabled
         public boolean createNewInvitation{get;set;}

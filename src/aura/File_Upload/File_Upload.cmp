@@ -8,6 +8,7 @@
     <aura:attribute name="maxFileCount" type="Integer"/>
     <aura:attribute name="credentialsName" type="String"/>
     <aura:attribute name="iataEmailContact" type="String"/>
+    <aura:attribute name="iataEmailText" type="String"/>
     <aura:attribute name="awsLandingFolder" type="String"/>
 
     <!--USER INFO-->
@@ -145,7 +146,9 @@
             <!--HELP TEXT-->
             <aura:if isTrue="{! and(not(empty(v.iataEmailContact)), (v.isExternalUser)) }">
                 <div class="helpEmail slds-col slds-size--1-of-1">
-                    <div>{! v.iataEmailContact}</div>
+
+                    <p>{!v.iataEmailText}<a href ="{! 'mailto:' + v.iataEmailContact}"> &nbsp;{! v.iataEmailContact}</a> </p>
+
                 </div>
             </aura:if>
 

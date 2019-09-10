@@ -84,9 +84,12 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
                 if(detail.Service_Name__c == 'GADM') {
                     if((detail.External_Actor_Id__c != null && detail.External_Actor_Id__c != '')) {
                         toInsert.add(detail);
+                        toInsertGadmAccountServiceDetails.add(detail);
                     }
                     if(detail.Expected_amount_of_data_submissions__c != null) {
-                        toInsertGadmAccountServiceDetails.add(detail);
+                        if(! toInsertGadmAccountServiceDetails.contains(detail)) {
+                            toInsertGadmAccountServiceDetails.add(detail);
+                        }
                     }
                 }
             }
@@ -116,6 +119,10 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
             List<GADM_Account_Service_Detail__c> toDelete = new List<GADM_Account_Service_Detail__c>();
             List<GADM_Account_Service_Detail__c> toInsert = new List<GADM_Account_Service_Detail__c>();
 
+            List<GADM_Account_Service_Detail__c> toUpdateGadmAccountServiceDetails = new List<GADM_Account_Service_Detail__c>();
+            List<GADM_Account_Service_Detail__c> toDeleteGadmAccountServiceDetails = new List<GADM_Account_Service_Detail__c>();
+            List<GADM_Account_Service_Detail__c> toInsertGadmAccountServiceDetails = new List<GADM_Account_Service_Detail__c>();
+
             //events for External_Actor_Id__c
             for(GADM_Account_Service_Detail__c accountServiceDetail : newMap.values()) {
                 if(accountServiceDetail.Service_Name__c != 'GADM') {continue;}
@@ -128,17 +135,17 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
 
                 if((oldObj.External_Actor_Id__c == null || oldObj.External_Actor_Id__c == '') && (accountServiceDetail.External_Actor_Id__c != null && accountServiceDetail.External_Actor_Id__c != '')) {
                     toInsert.add(accountServiceDetail);
+                    toInsertGadmAccountServiceDetails.add(accountServiceDetail);
                 }else if(accountServiceDetail.External_Actor_Id__c == null || accountServiceDetail.External_Actor_Id__c == '') {
                     toDelete.add(accountServiceDetail);
+                    toDeleteGadmAccountServiceDetails.add(accountServiceDetail);
                 }else if(oldObj.External_Actor_Id__c != accountServiceDetail.External_Actor_Id__c) {
                     toUpdate.add(accountServiceDetail);
+                    toUpdateGadmAccountServiceDetails.add(accountServiceDetail);
                 }
 
             }
 
-            List<GADM_Account_Service_Detail__c> toUpdateGadmAccountServiceDetails = new List<GADM_Account_Service_Detail__c>();
-            List<GADM_Account_Service_Detail__c> toDeleteGadmAccountServiceDetails = new List<GADM_Account_Service_Detail__c>();
-            List<GADM_Account_Service_Detail__c> toInsertGadmAccountServiceDetails = new List<GADM_Account_Service_Detail__c>();
 
             //events for Expected_amount_of_data_submissions__c
             for(GADM_Account_Service_Detail__c accountServiceDetail : newMap.values()) {
@@ -151,11 +158,17 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
                 }
 
                 if(oldObj.Expected_amount_of_data_submissions__c == null && accountServiceDetail.Expected_amount_of_data_submissions__c != null) {
-                    toInsertGadmAccountServiceDetails.add(accountServiceDetail);
+                    if(! toInsertGadmAccountServiceDetails.contains(accountServiceDetail)) {
+                        toInsertGadmAccountServiceDetails.add(accountServiceDetail);
+                    }
                 }else if(accountServiceDetail.Expected_amount_of_data_submissions__c == null) {
-                    toDeleteGadmAccountServiceDetails.add(accountServiceDetail);
+                    if(! toDeleteGadmAccountServiceDetails.contains(accountServiceDetail)) {
+                        toDeleteGadmAccountServiceDetails.add(accountServiceDetail);
+                    }
                 }else if(oldObj.Expected_amount_of_data_submissions__c != accountServiceDetail.Expected_amount_of_data_submissions__c) {
-                    toUpdateGadmAccountServiceDetails.add(accountServiceDetail);
+                    if(! toUpdateGadmAccountServiceDetails.contains(accountServiceDetail)) {
+                        toUpdateGadmAccountServiceDetails.add(accountServiceDetail);
+                    }
                 }
             }
 

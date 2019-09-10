@@ -216,13 +216,13 @@
         <fullName>SubmissionCycleEndMonth</fullName>
         <active>true</active>
         <errorConditionFormula>Submission_Cycle_End_Month__c   &lt;  Submission_Cycle_Start_Month__c</errorConditionFormula>
-        <errorMessage>Submission Period End Month must be equal or greater than Submission Period Start Month</errorMessage>
+        <errorMessage>Submission Cycle End Month must be equal or greater than Submission Cycle Start Month</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>SubmissionCycleEndtMonth_PeriondLength</fullName>
         <active>true</active>
         <errorConditionFormula>Submission_Cycle_End_Month__c &gt;  Period_Length__c</errorConditionFormula>
-        <errorMessage>Submission Period End Month must be equal or greater than Period Length</errorMessage>
+        <errorMessage>Submission Cycle End Month must be equal or less than Period Length</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>SubmissionCycleStartDate</fullName>
@@ -240,7 +240,7 @@
         <fullName>SubmissionCycleStartMonth_PeriondLength</fullName>
         <active>true</active>
         <errorConditionFormula>Submission_Cycle_Start_Month__c &gt;  Period_Length__c</errorConditionFormula>
-        <errorMessage>Submission Period Start Month must be equal or greater than Period Length</errorMessage>
+        <errorMessage>Submission Cycle Start Month must be equal or less than Period Length</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Upcoming_notification</fullName>

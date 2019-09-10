@@ -1,20 +1,34 @@
 ({
-    placePhoneFlags : function(country){
-            console.log('XXX');
-            //console.log($('.phoneFormat'));
-            //console.log($('.phoneFormat').intlTelInput);
-            $('.phoneFormat').intlTelInput({
-                initialCountry: country,
-                preferredCountries: [country],
-                placeholderNumberType : 'FIXED_LINE'
-            });
+    placePhoneFlags : function(component, country){
+        let input = document.querySelector("#phone");
+        window.intlTelInput(input, {
+            initialCountry: country,
+            preferredCountries: [country],
+            placeholderNumberType : 'FIXED_LINE',
+        });
 
-            $(".mobileFormat").intlTelInput({
-                initialCountry: country,
-                preferredCountries: [country],
-                placeholderNumberType : 'MOBILE'
-            });
-     },
+        let input2 = document.querySelector("#mobilePhone");
+        window.intlTelInput(input2, {
+            initialCountry: country,
+            preferredCountries: [country],
+            placeholderNumberType : 'MOBILE',
+        });
+
+        let input3 = document.querySelector("#faxPhone");
+        window.intlTelInput(input3, {
+            initialCountry: country,
+            preferredCountries: [country],
+            placeholderNumberType : 'FIXED_LINE',
+        });
+
+        this.adjustPhoneFields(component);
+    },
+
+    validateNumber : function(component, input) {
+        let replaced = input.value.replace(/[^0-9+]|(?!^)\+/g, '');
+        input.value = replaced;
+    },
+
     validateEmail :function(component) {
 		$A.util.addClass(component.find("emailError"), 'slds-hide');
         $A.util.addClass(component.find("emailExists"), 'slds-hide'); 
@@ -39,26 +53,88 @@
     },
     contactLabels: function(component) {
         var action = component.get("c.getContactLabels");
-        action.setCallback(this, function(a) {
-            component.set("v.contactLabels", a.getReturnValue());
+        action.setCallback(this, function(response) {
+            let state = response.getState();
+            if(state === 'SUCCESS') {
+                component.set("v.contactLabels", response.getReturnValue());
+                this.jobFunctionOptions(component);
+            }else{
+               this.toggleSpinner(component);
+               this.showToast(component, 'error', 'Unexpected error.', 'Unable to load data.');
+               console.log('Invite User: contactLabels error') ;
+            }
         });
         $A.enqueueAction(action);
     },
     currentUserType: function(component) {
+        this.toggleSpinner(component);
         var action = component.get("c.getCurrenthUserInfo");
-        action.setCallback(this, function(a) {
-            component.set("v.userType", a.getReturnValue().UserType);
-            this.getActors(component);
+        action.setCallback(this, function(response) {
+            let state = response.getState();
+            if(state === 'SUCCESS') {
+                component.set("v.userType", response.getReturnValue().UserType);
+                this.getActors(component);
+                this.contactLabels(component);
+            }else{
+                this.toggleSpinner(component);
+                this.showToast(component, 'error', 'Unexpected error.', 'Unable to load data.');
+                console.log('Invite User: currentUserType error');
+            }
         });
         $A.enqueueAction(action);
     },
-	
+
+
+    adjustPhoneFields : function(component) {
+        let userType = component.get('v.userType');
+        if('Standard' === userType) {
+            let phones = document.querySelectorAll(".iti");
+            for(let i = 0; i < phones.length; i++) {
+                phones[i].classList.add("phoneInternal");
+            }
+        }
+    },
+
     jobFunctionOptions: function(component) {
         var action = component.get("c.getContactJobFunctionValues");
-        action.setCallback(this, function(a) {
-            component.set("v.jobFunctionOptions", a.getReturnValue());
+        action.setCallback(this, function(response) {
+            let state = response.getState();
+            if(state === 'SUCCESS') {
+                component.set("v.jobFunctionOptions", response.getReturnValue());
+                component.set('v.showPage', true);
+                this.toggleSpinner(component);
+                this.getUserCountry(component);
+            }else{
+                this.toggleSpinner(component);
+                this.showToast(component, 'error', 'Unexpected error.', 'Unable to load data.');
+                console.log('Invite User: jobFunctionOptions error');
+            }
         });
         $A.enqueueAction(action);
+    },
+
+    getUserCountry : function(component) {
+        var action = component.get("c.findLocation");
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                let contactCountry = response.getReturnValue();
+                console.log('contact country: ' + contactCountry);
+                component.set("v.userCountry",contactCountry);
+            }
+            else if (state === "ERROR") {
+                var errors = response.getError();
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        console.error("IP Search: Error message: " + errors[0].message);
+                    }
+                } else {
+                    console.error("IP Search: Unknown error");
+                }
+            }
+        });
+        $A.enqueueAction(action);
+
     },
     
     handleInviteUser : function(component, event) {

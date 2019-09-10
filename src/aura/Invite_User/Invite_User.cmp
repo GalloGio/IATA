@@ -11,6 +11,8 @@
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
     <aura:attribute name="sendNotification" type="Boolean" default="false"/>
     <aura:attribute name="showBack" type="Boolean" default="false"/>
+    <aura:attribute name="userCountry" type="String" />
+    <aura:attribute name="showPage" type="Boolean" default="False"/>
 
     <!--ARE WE IN LIGHTNING OR CLASSIC?-->
     <aura:attribute name="theme" type="String" default="Theme4d"/>
@@ -22,6 +24,7 @@
 
     <!--INIT-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="change" value="{!v.userCountry}" action="{!c.changedCountry}"/>
 
     <!--SPINNER-->
     <aura:if isTrue="{!v.showSpinner}">
@@ -29,8 +32,13 @@
     </aura:if>
 
     <ltng:require
-            styles="{!$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/css/intlTelInput.js'}"
-            afterScriptsLoaded="{!c.jsLoaded}"/>
+            scripts="{!join(',', $Resource.InternationalPhoneNumberFormat2 + '/intl-tel-input-16.0.0/build/js/intlTelInput.js')}"
+            styles="{!$Resource.InternationalPhoneNumberFormat2 + '/intl-tel-input-16.0.0/build/css/intlTelInput.css'}"
+            afterScriptsLoaded="{!c.scriptsLoaded}"
+    />
+
+    <aura:if isTrue="{! v.showPage}">
+
 
 
     <div aura:id="container" class="{!v.userType == 'Standard' ? 'sfContainer slds-container--fluid' : 'slds-container--fluid'}">
@@ -138,19 +146,19 @@
                     <label class="slds-form-element__label">
                             {!v.contactLabels.Phone}
                     </label>
-                    <ui:inputPhone aura:id="contactPhone" value="{!v.invitation.Business_Phone__c}" class="phoneFormat slds-input" updateOn="keyup" keyup="{!c.validateNumber}" />
+                     <input type="tel" id="phone" class="slds-input" value="{!v.invitation.Business_Phone__c}"  onkeyup="{! c.validateNumber}"  onchange="{! c.validateNumber}"/>
                 </div>
 
                 <div aura:id="mobilePhoneContainer" class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
                     <label class="slds-form-element__label">
                             {!v.contactLabels.MobilePhone}
                     </label>
-                    <ui:inputPhone aura:id="contactMobilePhone" value="{!v.invitation.Mobile_Phone__c}" class="mobileFormat slds-input" updateOn="keyup" keyup="{!c.validateNumber}" />
+                     <input type="tel" id="mobilePhone" class="slds-input" value="{!v.invitation.Mobile_Phone__c}" onkeyup="{! c.validateMobileNumber}" onchange="{! c.validateMobileNumber}"/>
                 </div>
 
                 <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
                     <label class="slds-form-element__label">{!v.contactLabels.Fax}</label>
-                    <ui:inputPhone aura:id="contactFaxPhone" value="{!v.invitation.Business_Fax__c}" class="phoneFormat slds-input" updateOn="keyup" keyup="{!c.validateNumber}" />
+                    <input type="tel" id="faxPhone" class="slds-input" value="{!v.invitation.Business_Fax__c}" onkeyup="{! c.validateFaxNumber}" onchange="{! c.validateFaxNumber}"/>
                 </div>
 
                 <!--INVITE BUTTON-->
@@ -216,5 +224,7 @@
 
 
     </div>
+
+    </aura:if>
 
 </aura:component>

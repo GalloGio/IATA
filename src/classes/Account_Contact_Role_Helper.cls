@@ -11,7 +11,16 @@ public without sharing class Account_Contact_Role_Helper {
         for(Account_Contact_Role__c accountContactRole : accountContactRoles) {
 
             if(accountContactRole.Service_Rendered__c == GADM_SERVICE && (accountContactRole.RecordTypeId == functionalRecordTypeId || accountContactRole.RecordTypeId == groupRecordTypeId)) {
-                accountContactRole.UniqueKey__c = GADM_SERVICE + '_' + String.ValueOf(accountContactRole.Account_Role__c).left(15) + '_' + String.ValueOf(accountContactRole.Contact__c).left(15) + '_' + String.valueOf(accountContactRole.Contact_Roles__c).left(15) + '_' + String.valueOf(accountContactRole.RecordTypeId).left(15);
+                if(String.isBlank(accountContactRole.Account_Role__c)) {
+                    accountContactRole.Account_Role__c.addError('Field is empty!');
+                }else if(String.isBlank(accountContactRole.Contact__c)) {
+                    accountContactRole.Contact__c.addError('Field is empty!');
+                }
+                else if(String.isBlank(accountContactRole.Contact_Roles__c)) {
+                    accountContactRole.Contact_Roles__c.addError('Field is empty!');
+                }else {
+                    accountContactRole.UniqueKey__c = GADM_SERVICE + '_' + String.ValueOf(accountContactRole.Account_Role__c).left(15) + '_' + String.ValueOf(accountContactRole.Contact__c).left(15) + '_' + String.valueOf(accountContactRole.Contact_Roles__c).left(15) + '_' + String.valueOf(accountContactRole.RecordTypeId).left(15);
+                }
             }
 
         }

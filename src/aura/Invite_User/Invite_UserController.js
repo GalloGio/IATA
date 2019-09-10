@@ -1,14 +1,23 @@
 ({
     doInit : function(cmp, event, helper) {
     	helper.currentUserType(cmp);
-        helper.contactLabels(cmp);
-    	helper.jobFunctionOptions(cmp);
-        //helper.getActors(cmp);        
 	},
-    validateNumber : function(c, e, h){
-        var input = c.find(e.getSource().getLocalId());
-        input.set("v.value", input.get("v.value").replace(/[^0-9+]|(?!^)\+/g, ''));
+
+    validateNumber : function(component, event, helper){
+        let input = document.querySelector("#phone");
+        helper.validateNumber(component, input);
     },
+
+    validateMobileNumber : function(component, event, helper){
+        let input = document.querySelector("#mobilePhone");
+        helper.validateNumber(component, input);
+    },
+
+    validateFaxNumber : function(component, event, helper){
+        let input = document.querySelector("#faxPhone");
+        helper.validateNumber(component, input);
+    },
+
     back : function(component, event, helper) {        
         let myEvent = component.getEvent("Back_EVT");
         myEvent.setParams({
@@ -17,10 +26,17 @@
         });
         myEvent.fire();
     },
-    jsLoaded: function(c, e , h){
-        console.log('jsloaded');
-        //h.placePhoneFlags('CZE');
+
+    scriptsLoaded: function(component, event, helper){
+        console.log('scripts loaded');
     },
+
+    changedCountry : function(component, event , helper){
+        if(! $A.util.isEmpty(component.get('v.userCountry'))) {
+            helper.placePhoneFlags(component, component.get("v.userCountry"));
+        }
+    },
+
     backToEmailField : function(component, event, helper) {
         $A.util.removeClass(component.find('form'), 'slds-hide');
         $A.util.addClass(component.find('sent'), 'slds-hide');
@@ -39,6 +55,15 @@
     },
 
     inviteUser : function(cmp, event, helper) {
+        let phoneNumber = document.querySelector("#phone").value;
+        let mobileNumber = document.querySelector("#mobilePhone").value;
+        let faxNumber = document.querySelector("#faxPhone").value;
+
+        let invitation = cmp.get('v.invitation');
+        invitation.Business_Phone__c = phoneNumber;
+        invitation.Mobile_Phone__c = mobileNumber;
+        invitation.Business_Fax__c = faxNumber;
+
         helper.handleInviteUser(cmp, event);
 	},
  
@@ -46,52 +71,52 @@
 	    helper.toggleSpinner(cmp);
         if(helper.validateEmail(cmp)){
 
-        var emailCmp = cmp.find("email");
-        var emailValue = emailCmp.get("v.value");
-        var serviceName = "GADM";
+            var emailCmp = cmp.find("email");
+            var emailValue = emailCmp.get("v.value");
+            var serviceName = "GADM";
 
-        if(serviceName == null){
-            console.log('Warning : No service name provided!');
-        }
+            if(serviceName == null){
+                console.log('Warning : No service name provided!');
+            }
 
-        //check if username is available (insert + rollback)
-        var action = cmp.get("c.getUserInformationFromEmail");
+            //check if username is available (insert + rollback)
+            var action = cmp.get("c.getUserInformationFromEmail");
 
-        action.setParams({
-            "email":emailValue,
-            "serviceName": serviceName
-        });
-        action.setCallback(this, function(resp) {
-            var params = resp.getReturnValue();
-            
-            cmp.set("v.contact", params.contact);
-            cmp.set("v.invitation", params.invitation);
+            action.setParams({
+                "email":emailValue,
+                "serviceName": serviceName
+            });
+            action.setCallback(this, function(resp) {
+                var params = resp.getReturnValue();
 
-            if(params.showNotifyButton){
-                $A.util.removeClass(cmp.find("notifyUserButton"), 'slds-hide');
-                let emailField = cmp.find('email');
-                if(! $A.util.isEmpty(emailField)) {
-                    emailField.set('v.disabled', true);
+                cmp.set("v.contact", params.contact);
+                cmp.set("v.invitation", params.invitation);
+
+                if(params.showNotifyButton){
+                    $A.util.removeClass(cmp.find("notifyUserButton"), 'slds-hide');
+                    let emailField = cmp.find('email');
+                    if(! $A.util.isEmpty(emailField)) {
+                        emailField.set('v.disabled', true);
+                    }
+                    cmp.set('v.showBack', true);
+                } else {
+                    $A.util.addClass(cmp.find("notifyUserButton"), 'slds-hide');
                 }
-                cmp.set('v.showBack', true);
-            } else {
-                $A.util.addClass(cmp.find("notifyUserButton"), 'slds-hide');
-            }
-            
-            if(params.createNewInvitation){
-				$A.util.addClass(cmp.find("emailExists"), 'slds-hide'); 
-                $A.util.removeClass(cmp.find("detail"), 'slds-hide');
-                cmp.set('v.sendNotification', false);
-            } else {
-                $A.util.removeClass(cmp.find("emailExists"), 'slds-hide'); 
-                $A.util.addClass(cmp.find("detail"), 'slds-hide');
-                cmp.set('v.sendNotification', true);
-                cmp.set('v.showBack', true);
-            }
 
-            helper.toggleSpinner(cmp);
-        });
-        $A.enqueueAction(action);
+                if(params.createNewInvitation){
+                    $A.util.addClass(cmp.find("emailExists"), 'slds-hide');
+                    $A.util.removeClass(cmp.find("detail"), 'slds-hide');
+                    cmp.set('v.sendNotification', false);
+                } else {
+                    $A.util.removeClass(cmp.find("emailExists"), 'slds-hide');
+                    $A.util.addClass(cmp.find("detail"), 'slds-hide');
+                    cmp.set('v.sendNotification', true);
+                    cmp.set('v.showBack', true);
+                }
+
+                helper.toggleSpinner(cmp);
+            });
+            $A.enqueueAction(action);
         }else{
 
             helper.toggleSpinner(cmp);
