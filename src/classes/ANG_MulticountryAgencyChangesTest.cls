@@ -1179,9 +1179,9 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
 			if(item.acc.Location_Type__c == AMS_Utils.GE){
-				item.selected = true;
-				break;
+				item.main = true;
 			}
+			item.selected = true;
 		}
 
 		IATA_ISO_Country__c ctry = [SELECT id, name FROM IATA_ISO_Country__c WHERE name = 'Portugal' limit 1];
@@ -1234,11 +1234,21 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		insert accountGE;
 
+		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
+			if(item.acc.Location_Type__c == AMS_Utils.AE){
+				item.selected = false;
+			}
+			if(item.acc.Location_Type__c == AMS_Utils.GE){
+				item.selected = false;
+			}
+		}
+
 		//Perform Save
 		con.oscar.New_parent__c = accountGE.id;
+		con.newParent = accountGE; 
+
 		con.save();
 
-		
 		Boolean checkErrorMessage = false;
 		for(ApexPages.Message msg : ApexPages.getMessages()){
 			if(msg.getSummary().contains('You cannot leave an AE account alone in a BSP'))
@@ -1254,6 +1264,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		//Perform Save
 		con.oscar.New_parent__c = heAccount.id;
+		con.newParent = heAccount; 
 		con.save();
 
 		checkErrorMessage = false;

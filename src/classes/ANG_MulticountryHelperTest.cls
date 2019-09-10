@@ -5,6 +5,9 @@ private class ANG_MulticountryHelperTest {
 
 		Test.startTest();
 
+		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+		insert pa;
+
 		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
 			Name = 'BSP-PT',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP
@@ -88,61 +91,61 @@ private class ANG_MulticountryHelperTest {
 			[SELECT 
 				Id 
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE 
-			 	Name IN ('Multicountry HE UK', 'Multicountry GE PT')
+				Name IN ('Multicountry HE UK', 'Multicountry GE PT')
 			 ORDER BY
-			 	Name ASC
+				Name ASC
 			]
 		);
 
 		Account accountHE = accountLst.get(1);
 
 		AMS_Oscar__c oscar = new AMS_OSCAR__c(
-        	RecordTypeId = AMS_Utils.RECTYPE_MCAE,
-        	Account__c = accountHE.Id
-        );
+			RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+			Account__c = accountHE.Id
+		);
 
-        insert oscar;
+		insert oscar;
 
-        Case cse = new Case(
-        	RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
-        	AccountId = accountHE.Id,
-        	Oscar__c = oscar.Id
-        );
+		Case cse = new Case(
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			AccountId = accountHE.Id,
+			Oscar__c = oscar.Id
+		);
 
-        insert cse;
+		insert cse;
 
-        Test.startTest();
+		Test.startTest();
 
-        AMS_OSCAR__c oscarWithRels = [SELECT Account__c, Account__r.Parent.Status__c FROM AMS_OSCAR__c];
+		AMS_OSCAR__c oscarWithRels = [SELECT Account__c, Account__r.Parent.Status__c FROM AMS_OSCAR__c];
 
-        Boolean allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
-       	
-       	System.assert(!allowIATACodeGeneration, 'Should not allow the IATA code generation.');
+		Boolean allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
+		
+		System.assert(!allowIATACodeGeneration, 'Should not allow the IATA code generation.');
 
-       	Account accountGE = accountLst.get(0);
+		Account accountGE = accountLst.get(0);
 
-       	accountGE.Status__c = AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING;
-       	accountGE.IATACode__c = '12345678';
+		accountGE.Status__c = AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING;
+		accountGE.IATACode__c = '12345678';
 
-       	update accountGE;
+		update accountGE;
 
-        Agency_Applied_Change_code__c changeCodeApplied = new Agency_Applied_Change_code__c(
-        	Account__c = accountGE.Id, 
-        	Change_Code__c = 'NEW', 
-        	Sent_to_external_system__c = false
-        );
+		Agency_Applied_Change_code__c changeCodeApplied = new Agency_Applied_Change_code__c(
+			Account__c = accountGE.Id, 
+			Change_Code__c = 'NEW', 
+			Sent_to_external_system__c = false
+		);
 
-        insert changeCodeApplied;
+		insert changeCodeApplied;
 
-        oscarWithRels = [SELECT Account__c, Account__r.Parent.Status__c FROM AMS_OSCAR__c];
+		oscarWithRels = [SELECT Account__c, Account__r.Parent.Status__c FROM AMS_OSCAR__c];
 
-        allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
-       	
-       	System.assert(allowIATACodeGeneration, 'Should allow the IATA code generation.');
+		allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
+		
+		System.assert(allowIATACodeGeneration, 'Should allow the IATA code generation.');
 
-       	Test.stopTest();
+		Test.stopTest();
 
 	}
 
@@ -152,52 +155,52 @@ private class ANG_MulticountryHelperTest {
 			[SELECT 
 				Id 
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE 
-			 	Name IN ('Multicountry AE PT', 'Multicountry GE PT')
+				Name IN ('Multicountry AE PT', 'Multicountry GE PT')
 			 ORDER BY
-			 	Name ASC
+				Name ASC
 			]
 		);
 
 		Account accountAE = accountLst.get(0);
 
-        AMS_Oscar__c oscar = new AMS_OSCAR__c(
-        	RecordTypeId = AMS_Utils.RECTYPE_MCAE,
-        	Account__c = accountAE.Id
-        );
+		AMS_Oscar__c oscar = new AMS_OSCAR__c(
+			RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+			Account__c = accountAE.Id
+		);
 
-        insert oscar;
+		insert oscar;
 
-        Case cse = new Case(
-        	RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
-        	AccountId = accountAE.Id,
-        	Oscar__c = oscar.Id
-        );
+		Case cse = new Case(
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			AccountId = accountAE.Id,
+			Oscar__c = oscar.Id
+		);
 
-        insert cse;
+		insert cse;
 
-        Test.startTest();
+		Test.startTest();
 
-        Boolean allowApproval = ANG_MulticountryHelper.allowApprovalStep(oscar);
-       	
-       	System.assert(!allowApproval, 'Should not allow the approval step.');
+		Boolean allowApproval = ANG_MulticountryHelper.allowApprovalStep(oscar);
+		
+		System.assert(!allowApproval, 'Should not allow the approval step.');
 
-       	Account accountGE = accountLst.get(1);
+		Account accountGE = accountLst.get(1);
 
-        Agency_Applied_Change_code__c changeCodeApplied = new Agency_Applied_Change_code__c(
-        	Account__c = accountGE.Id, 
-        	Change_Code__c = 'FIN', 
-        	Sent_to_external_system__c = false
-        );
+		Agency_Applied_Change_code__c changeCodeApplied = new Agency_Applied_Change_code__c(
+			Account__c = accountGE.Id, 
+			Change_Code__c = 'FIN', 
+			Sent_to_external_system__c = false
+		);
 
-        insert changeCodeApplied;
+		insert changeCodeApplied;
 
-        allowApproval = ANG_MulticountryHelper.allowApprovalStep(oscar);
-       	
-       	System.assert(allowApproval, 'Should allow the approval step.');
+		allowApproval = ANG_MulticountryHelper.allowApprovalStep(oscar);
+		
+		System.assert(allowApproval, 'Should allow the approval step.');
 
-       	Test.stopTest();
+		Test.stopTest();
 
 	}
 
@@ -212,7 +215,7 @@ private class ANG_MulticountryHelperTest {
 			 FROM 
 				IATA_ISO_Country__c 
 			 ORDER BY 
-			 	Name ASC
+				Name ASC
 			]
 		);
 
@@ -225,110 +228,110 @@ private class ANG_MulticountryHelperTest {
 				Id,
 				IATA_ISO_Country__c
 			 FROM
-			 	Account
+				Account
 			 WHERE
-			 	Name IN ('Multicountry GE PT', 'Multicountry HE UK')
+				Name IN ('Multicountry GE PT', 'Multicountry HE UK')
 			 ORDER BY
-			 	Name ASC
+				Name ASC
 			]
 		);
 
 		Account accountGE = accountLst.get(0);
 		Account accountHE = accountLst.get(1);
 		
-        Test.startTest();
+		Test.startTest();
 
-        Account HESameGEBSPCountry = new Account(
-        	Name = 'Trigger HE same bsp than GE',
-        	RecordTypeId = standardAcctRecId,
-            IATA_ISO_Country__c = accountGE.IATA_ISO_Country__c,
-            Location_Type__c = AMS_Utils.HE,
-            Location_Class__c = 'P',
-            ANG_Accreditation_Model__c = 'Multicountry',
-            ParentId = accountGE.Id
-        );
-        
-        try{
-        	insert HESameGEBSPCountry;
-        }
-        catch(Exception e){
-        	Boolean expectedExceptionThrown = e.getMessage().contains(Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error);
-        	System.assert(expectedExceptionThrown, 'Should throw \'' + Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error + '\'.');
-        }
+		Account HESameGEBSPCountry = new Account(
+			Name = 'Trigger HE same bsp than GE',
+			RecordTypeId = standardAcctRecId,
+			IATA_ISO_Country__c = accountGE.IATA_ISO_Country__c,
+			Location_Type__c = AMS_Utils.HE,
+			Location_Class__c = 'P',
+			ANG_Accreditation_Model__c = 'Multicountry',
+			ParentId = accountGE.Id
+		);
+		
+		try{
+			insert HESameGEBSPCountry;
+		}
+		catch(Exception e){
+			Boolean expectedExceptionThrown = e.getMessage().contains(Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error);
+			System.assert(expectedExceptionThrown, 'Should throw \'' + Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error + '\'.');
+		}
 
-        Account HESameCountry = new Account(
-        	Name = 'Validation trigger same HE',
-        	RecordTypeId = standardAcctRecId,
-            IATA_ISO_Country__c = countryUK.Id,
-            Location_Type__c = AMS_Utils.HE,
-            Location_Class__c = 'P',
-            ANG_Accreditation_Model__c = 'Multicountry',
-            ParentId = accountGE.Id
-        );
-        
-        try{        
-        	insert HESameCountry;
-        }
-        catch(Exception e){
-           	Boolean expectedExceptionThrown =  e.getMessage().contains(Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error);
-        	System.assert(expectedExceptionThrown, 'Should throw \'' + Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error + '\'.');
+		Account HESameCountry = new Account(
+			Name = 'Validation trigger same HE',
+			RecordTypeId = standardAcctRecId,
+			IATA_ISO_Country__c = countryUK.Id,
+			Location_Type__c = AMS_Utils.HE,
+			Location_Class__c = 'P',
+			ANG_Accreditation_Model__c = 'Multicountry',
+			ParentId = accountGE.Id
+		);
+		
+		try{        
+			insert HESameCountry;
+		}
+		catch(Exception e){
+			Boolean expectedExceptionThrown =  e.getMessage().contains(Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error);
+			System.assert(expectedExceptionThrown, 'Should throw \'' + Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error + '\'.');
 		} 
-        
-        Account AECountry = new Account(
-        	Name = 'Validation trigger AE with no HE',
-            IATA_ISO_Country__c = countryFR.Id,
-            Location_Type__c = AMS_Utils.AE,
-            Location_Class__c = 'P',
-            ANG_Accreditation_Model__c = 'Multicountry',
-            ParentId = accountGE.Id
-        );
-        
-        try{       
-        	insert AECountry;
-        }
-        catch(Exception e){
-        	Boolean expectedExceptionThrown =  e.getMessage().contains(Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error);
-        	System.assert(expectedExceptionThrown, 'Should throw \'' + Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error + '\'.');
+		
+		Account AECountry = new Account(
+			Name = 'Validation trigger AE with no HE',
+			IATA_ISO_Country__c = countryFR.Id,
+			Location_Type__c = AMS_Utils.AE,
+			Location_Class__c = 'P',
+			ANG_Accreditation_Model__c = 'Multicountry',
+			ParentId = accountGE.Id
+		);
+		
+		try{       
+			insert AECountry;
+		}
+		catch(Exception e){
+			Boolean expectedExceptionThrown =  e.getMessage().contains(Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error);
+			System.assert(expectedExceptionThrown, 'Should throw \'' + Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error + '\'.');
 		}
 
 		accountHE.IATA_ISO_Country__c = countryPT.id;
 
 		try{   
-        	update accountHE;
-        }
-        catch(Exception e){
-        	Boolean expectedExceptionThrown = e.getMessage().contains(Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error);
-        	System.assert(expectedExceptionThrown, 'Should throw \'' + Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error + '\'.');
-        }
+			update accountHE;
+		}
+		catch(Exception e){
+			Boolean expectedExceptionThrown = e.getMessage().contains(Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error);
+			System.assert(expectedExceptionThrown, 'Should throw \'' + Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error + '\'.');
+		}
 
-        // Test country is not a Multicountry Enable 
-        countryPT.Multicountry_Enabled__c = false;
-        update countryPT;
+		// Test country is not a Multicountry Enable 
+		countryPT.Multicountry_Enabled__c = false;
+		update countryPT;
 
-        Account GEnotMulticountryEnabled = new Account(
-        	Name = 'Account GE No Multicountry ',
-        	RecordTypeId = standardAcctRecId,
-            IATA_ISO_Country__c = countryPT.id,
-            Location_Type__c = AMS_Utils.GE,
-            Location_Class__c = 'P',
-            ANG_Accreditation_Model__c = 'Multicountry'
-        );
-        
-        try{
-        	insert GEnotMulticountryEnabled;
-        }
-        catch(Exception e){
-        	Boolean expectedExceptionThrown = e.getMessage().contains('The selected country is not enabled for multicountry');
-        	System.assert(expectedExceptionThrown, 'Should throw The selected country is not enabled for multicountry.');
-        }
+		Account GEnotMulticountryEnabled = new Account(
+			Name = 'Account GE No Multicountry ',
+			RecordTypeId = standardAcctRecId,
+			IATA_ISO_Country__c = countryPT.id,
+			Location_Type__c = AMS_Utils.GE,
+			Location_Class__c = 'P',
+			ANG_Accreditation_Model__c = 'Multicountry'
+		);
+		
+		try{
+			insert GEnotMulticountryEnabled;
+		}
+		catch(Exception e){
+			Boolean expectedExceptionThrown = e.getMessage().contains('The selected country is not enabled for multicountry');
+			System.assert(expectedExceptionThrown, 'Should throw The selected country is not enabled for multicountry.');
+		}
 
-        Test.stopTest();
-    }
+		Test.stopTest();
+	}
 
 
-    @isTest static void testmulticountryAccountHasRemittenceFrequencyEmpty() {
+	@isTest static void testmulticountryAccountHasRemittenceFrequencyEmpty() {
 
-    	List<Account> accountLst = new List<Account>(
+		List<Account> accountLst = new List<Account>(
 			[SELECT Id 
 			 FROM  	Account 
 			 WHERE  Name IN ('Multicountry HE UK')
@@ -338,20 +341,20 @@ private class ANG_MulticountryHelperTest {
 		Account accountHE = accountLst.get(0);
 
 		AMS_Oscar__c oscar = new AMS_OSCAR__c(
-        	RecordTypeId = AMS_Utils.RECTYPE_MCAE,
-        	Account__c = accountHE.Id,
-        	Process__c = AMS_Utils.MCAE
-        );
+			RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+			Account__c = accountHE.Id,
+			Process__c = AMS_Utils.MCAE
+		);
 
-        insert oscar;
+		insert oscar;
 
 		Case cse = new Case(
-        	RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
-        	AccountId = accountHE.Id,
-        	Oscar__c = oscar.Id
-        );
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			AccountId = accountHE.Id,
+			Oscar__c = oscar.Id
+		);
 
-        insert cse;
+		insert cse;
 
 		AMS_Pax_Accreditation_Form__c paxAccreditation = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.Id);
 		insert paxAccreditation; 
@@ -366,12 +369,12 @@ private class ANG_MulticountryHelperTest {
 
 		Boolean hasRF = ANG_MulticountryHelper.multicountryAccountHasRemittenceFrequencyEmpty(oscar2);
 
-    	Test.stopTest();
-    	
-    	//Has empty Remittance Frequency 
-    	System.assert(hasRF); 
+		Test.stopTest();
+		
+		//Has empty Remittance Frequency 
+		System.assert(hasRF); 
 
-    }
+	}
 
 	@isTest static void cloneOwnersFromParentAccountTest() {
 
@@ -379,11 +382,11 @@ private class ANG_MulticountryHelperTest {
 			[SELECT 
 				Id , ParentId, Name
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE 
-			 	Name IN ('Multicountry HE UK', 'Multicountry GE PT')
+				Name IN ('Multicountry HE UK', 'Multicountry GE PT')
 			 ORDER BY
-			 	Name ASC
+				Name ASC
 			]
 		);
 
@@ -391,59 +394,59 @@ private class ANG_MulticountryHelperTest {
 		Account accountAE = accountLst.get(1).Name == 'Multicountry GE PT' ? accountLst.get(0) : accountLst.get(1);
 
 		AMS_Oscar__c oscar = new AMS_OSCAR__c(
-        	RecordTypeId = AMS_Utils.RECTYPE_MCAE,
-        	Account__c = accountGE.Id
-        );
+			RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+			Account__c = accountGE.Id
+		);
 
-        insert oscar;
+		insert oscar;
 
-        Case cse = new Case(
-        	RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
-        	AccountId = accountGE.Id,
-        	Oscar__c = oscar.Id
-        );
+		Case cse = new Case(
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			AccountId = accountGE.Id,
+			Oscar__c = oscar.Id
+		);
 
-        insert cse;
+		insert cse;
 
 		AMS_Pax_Accreditation_Form__c onlineAccreditation  = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', SAAM_Case__c = cse.Id, Account_Name__c = accountGE.Name);
-        insert onlineAccreditation;
+		insert onlineAccreditation;
 
 		System.assertEquals('The Parent Account could not be found.',ANG_MulticountryHelper.cloneOwnersFromParentAccount(onlineAccreditation.Id),'Expecting: The Parent Account could not be found.');
 
-        Contact c1 = new Contact(AccountId = accountGE.id, Firstname = 'firstNAme', Lastname='LastNAme', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		Contact c1 = new Contact(AccountId = accountGE.id, Firstname = 'firstNAme', Lastname='LastNAme', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert c1;
 
-        Id ownerRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
-        
-        AMS_Account_Role__c accountRole = new AMS_Account_Role__c(recordTypeId = ownerRtId, Account__c = accountGE.Id, Person__c = null, Contact__c = c1.Id, Percentage__c=100.0);
-        insert accountRole;
+		Id ownerRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+		
+		AMS_Account_Role__c accountRole = new AMS_Account_Role__c(recordTypeId = ownerRtId, Account__c = accountGE.Id, Person__c = null, Contact__c = c1.Id, Percentage__c=100.0);
+		insert accountRole;
 
 		Test.startTest();
 
-        Contact c2 = new Contact(AccountId = accountAE.id, Firstname = 'firstNAme', Lastname='LastNAme', Phone = '911111111', MobilePhone = '911111111', Email = 'test2@test.com', Financial_Assessment_Contact__c = false);
+		Contact c2 = new Contact(AccountId = accountAE.id, Firstname = 'firstNAme', Lastname='LastNAme', Phone = '911111111', MobilePhone = '911111111', Email = 'test2@test.com', Financial_Assessment_Contact__c = false);
 		insert c2;
-        
-        AMS_Account_Role__c accountRoleAE = new AMS_Account_Role__c(recordTypeId = ownerRtId, Account__c = accountAE.Id, Person__c = null, Contact__c = c1.Id, Percentage__c=100.0);
-        insert accountRoleAE;
+		
+		AMS_Account_Role__c accountRoleAE = new AMS_Account_Role__c(recordTypeId = ownerRtId, Account__c = accountAE.Id, Person__c = null, Contact__c = c1.Id, Percentage__c=100.0);
+		insert accountRoleAE;
 
 		//for the AE
 		AMS_Oscar__c oscarAE = new AMS_OSCAR__c(
-        	RecordTypeId = AMS_Utils.RECTYPE_MCAE,
-        	Account__c = accountAE.Id
-        );
+			RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+			Account__c = accountAE.Id
+		);
 
-        insert oscarAE;
+		insert oscarAE;
 
-        Case cseAE = new Case(
-        	RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
-        	AccountId = accountAE.Id,
-        	Oscar__c = oscarAE.Id
-        );
+		Case cseAE = new Case(
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			AccountId = accountAE.Id,
+			Oscar__c = oscarAE.Id
+		);
 
-        insert cseAE;
+		insert cseAE;
 
 		AMS_Pax_Accreditation_Form__c onlineAccreditationAE  = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', SAAM_Case__c = cseAE.Id, Account_Name__c = accountAE.Name);
-        insert onlineAccreditationAE;
+		insert onlineAccreditationAE;
 
 		String result = ANG_MulticountryHelper.cloneOwnersFromParentAccount(onlineAccreditationAE.Id);
 
@@ -455,34 +458,153 @@ private class ANG_MulticountryHelperTest {
 	}
 
 
-    @isTest static void testGEAccreditationWithoutRequestFinancialSecurityStep() {
+	@isTest static void testGEAccreditationWithoutRequestFinancialSecurityStep() {
 
-        AMS_ChangeCodes__c changeCodeCustomsettings = new AMS_ChangeCodes__c(Name = 'FIN-AMS', Change_Code__c = 'FIN', Reason_Code__c = '', Reason_Code_Description__c = '', Account_status_change__c = '',Integration_RecId__c = 'C');
-        insert changeCodeCustomsettings;
+		AMS_ChangeCodes__c changeCodeCustomsettings = new AMS_ChangeCodes__c(Name = 'FIN-AMS', Change_Code__c = 'FIN', Reason_Code__c = '', Reason_Code_Description__c = '', Account_status_change__c = '',Integration_RecId__c = 'C');
+		insert changeCodeCustomsettings;
 
-        Account accountGE = [SELECT Id, ParentId, Name FROM Account WHERE Name IN ('Multicountry GE PT') Limit 1];
+		Account accountGE = [SELECT Id, ParentId, Name FROM Account WHERE Name IN ('Multicountry GE PT') Limit 1];
 
-        accountGE.IATACode__c = '12345678';
-        update accountGE;
+		accountGE.IATACode__c = '12345678';
+		update accountGE;
 
-        AMS_Oscar__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_MCAE, Account__c = accountGE.Id, STEP6__c = AMS_Utils.PASSED, Process__c = AMS_Utils.NEWGESTANDARD);
+		AMS_Oscar__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_MCAE, Account__c = accountGE.Id, STEP6__c = AMS_Utils.PASSED, Process__c = AMS_Utils.NEWGESTANDARD);
 
-        insert oscar;
+		insert oscar;
 
-        Test.startTest();
+		Test.startTest();
 
-        oscar.STEP10__c = AMS_Utils.PASSED;
-        oscar.Validation_Status__c = AMS_Utils.PASSED;
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        try{
-            update oscar;
-        }catch(Exception ex){
-            Boolean expectedExceptionThrown = ex.getMessage().contains('Approval can\'t be set if Request financial security step is not Passed.');
-            System.assert(expectedExceptionThrown,'Should throw ' +  ex.getMessage());
-        }
+		oscar.STEP10__c = AMS_Utils.PASSED;
+		oscar.Validation_Status__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		try{
+			update oscar;
+		}catch(Exception ex){
+			Boolean expectedExceptionThrown = ex.getMessage().contains('Approval can\'t be set if Request financial security step is not Passed.');
+			System.assert(expectedExceptionThrown,'Should throw ' +  ex.getMessage());
+		}
 
-        Test.stopTest();
-    }
+		Test.stopTest();
+	}
 
+	@isTest static void riskAssessmentCalcNewHeMulticountryTest(){
+
+		AMS_ChangeCodes__c finChgCode = new AMS_ChangeCodes__c(
+			Name = 'FIN-AMS', 
+			Change_Code__c = 'FIN', 
+			Reason_Code__c = '', 
+			Reason_Code_Description__c = '', 
+			Account_status_change__c = '',
+			Integration_RecId__c = 'C'
+		);
+		insert finChgCode;
+
+		List<Account> accountLst = new List<Account>(
+			[SELECT 
+				Id,
+				ISO_State__c,
+				IATA_ISO_Country__c,
+				ANG_HE_RiskHistoryAssessment__c
+			 FROM 
+				Account 
+			 WHERE 
+				Name IN ('Multicountry HE UK', 'Multicountry GE PT')
+			 ORDER BY
+				Name ASC
+			]
+		);
+
+		Account accountGE = accountLst.get(0);
+
+		accountGE.Status__c = AMS_Utils.ACC_S9_APPROVED;
+		accountGE.IATACode__c = '12345678';
+
+		update accountGE;
+
+		Agency_Applied_Change_code__c changeCodeAppliedNew = new Agency_Applied_Change_code__c(
+			Account__c = accountGE.Id, 
+			Change_Code__c = 'NEW', 
+			Sent_to_external_system__c = false
+		);
+
+		Agency_Applied_Change_code__c changeCodeAppliedFin = new Agency_Applied_Change_code__c(
+			Account__c = accountGE.Id, 
+			Change_Code__c = 'FIN', 
+			Sent_to_external_system__c = false
+		);
+
+		insert new List<Agency_Applied_Change_Code__c>{changeCodeAppliedNew, changeCodeAppliedFin};
+
+		Account accountHE = accountLst.get(1);
+
+		AMS_Oscar__c oscar = new AMS_OSCAR__c(
+			RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+			Process__c = AMS_Utils.MCAE,
+			Account__c = accountHE.Id,
+			STEP6__c = AMS_Utils.PASSED,
+			First_Step_Completed__c = true
+		);
+
+		insert oscar;
+
+		Case cse = new Case(
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			AccountId = accountHE.Id,
+			Oscar__c = oscar.Id
+		);
+
+		insert cse;
+	
+		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c();
+		theAccreditation.Account_Name__c='NEWGEN HE';
+		theAccreditation.ISSP_AMS_Legal_Status__c='Association';
+		theAccreditation.Branch_Office_Country__c= accountHE.IATA_ISO_Country__c;
+		theAccreditation.Branch_Office_Street_name_number__c='sdfsdf';
+		theAccreditation.Branch_Office_City__c='City';
+		theAccreditation.IATA_ISO_State__c= accountHE.ISO_State__c;
+		theAccreditation.Branch_Office_Email__c='email@test.com';
+		theAccreditation.Branch_Office_Phone__c='123123123';
+		theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
+		theAccreditation.Abbreviated_name__c='NEWGEN HE';
+		theAccreditation.Abbreviated_Address__c='Street';
+		theAccreditation.Remittance_frequency__c='M';
+		theAccreditation.Solicitation_Flag__c=false;
+		theAccreditation.Location_Class__c='P';
+		theAccreditation.Location_Type__c='HE';
+		theAccreditation.SAAM_Case__c=cse.Id;
+		theAccreditation.ISSP_Branch_AccountId__c = accountHE.Id;		
+		insert theAccreditation; 
+
+		oscar.AMS_Online_Accreditation__c = theAccreditation.id;
+		update oscar;
+
+		accountHE.Status__c = AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING;
+		accountHE.IATACode__c = '92345677';
+
+		update accountHE;
+
+		changeCodeAppliedNew = new Agency_Applied_Change_code__c(
+			Account__c = accountHE.Id, 
+			Change_Code__c = 'NEW', 
+			Sent_to_external_system__c = false
+		);
+
+		insert changeCodeAppliedNew;
+
+		Test.startTest();
+
+		system.assertEquals(accountGE.ANG_HE_RiskHistoryAssessment__c, null, 'The risk assessment information should be empty');
+
+		oscar.Validation_Status__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+
+		update oscar;
+		
+		accountGE = [SELECT Id, ANG_HE_RiskHistoryAssessment__c FROM Account WHERE Id = :accountGE.Id];
+		system.assertEquals(accountGE.ANG_HE_RiskHistoryAssessment__c, 'Passed', 'The risk history assessment should pass');
+
+		Test.stopTest();
+
+	}
 
 }
