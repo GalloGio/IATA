@@ -2318,29 +2318,25 @@
 		}
 
 		if ({!isNoticeOfChange}) {
-			if (typeOfChange !== 'Change of Accreditation Type') {
+			if (typeOfChange !== 'Yes') {
 				$j('[id$=iataChangeAccType]').prop('disabled', true);
 				setWarningBoxOnHoverMC($j('[id$=iataChangeAccType]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
 
-			if (typeOfChange === 'Change of Accreditation Type' && '{!newForm.MultiCountry_Countries_Concerned__c}'.includes(",")) {
+			if ('{!newForm.MultiCountry_Countries_Concerned__c}'.includes(",")) {
+				$j('[id$=notifyChangeLocationCheckbox]').prop('disabled', true);
+				setWarningBoxOnHoverMC($j('[id$=notifyChangeLocationCheckbox]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+
 				$j('[id$=notifyLegalDetailsChange]').prop('disabled', true);
 				setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 				
 				$j('[id$=notifyOwnershipChange]').prop('disabled', true);
 				setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
-
-			if (typeOfChange === 'Change of Accreditation Type' || '{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
-				$j('[id$=notifyChangeLocationCheckbox]').prop('disabled', true);
-				setWarningBoxOnHoverMC($j('[id$=notifyChangeLocationCheckbox]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
-			}
 		}
 		
-		
 		//END - NoC Changes
-			
-						
+							
 		var natmobileacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationItemMobile.locationmobileinput}']");                
 		var mobileacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationmobile}']");
 		

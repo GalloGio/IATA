@@ -22752,6 +22752,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Would you like to change your accreditation type?</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_NOC_GOGLOBAL_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NOC_GOGLOBAL_Info</shortDescription>
+        <value>If selecting more than one country, only Change of Hierarchy and Change of Accreditation Type will be allowed. To access other types of change, please select only one country</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ONE_OR_MORE_AE</fullName>
         <language>en_US</language>
         <protected>false</protected>
