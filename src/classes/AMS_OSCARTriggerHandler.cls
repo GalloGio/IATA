@@ -4320,7 +4320,7 @@ public class AMS_OSCARTriggerHandler {
                 }
 
                 // NEWGEN-2932
-                if(oscarsFromPortal.contains(oscar.Id))
+                if(oscarsFromPortal.contains(oscar.Id) && oscar.Account__r.Is_PCI_compliant__c == 'Yes') //INC483739 -  stop sending automated emails whenever agent is ticked with PCI ''Not-Compliant''
                     AMS_OSCARTriggerHandler.sendEmailAlert(oscar.Id, oscarCaseMap.get(oscar.id), oscar.Process__c, AMS_Utils.PASSED, false);
             
                 for(Id accId: oscarAccountsMap.get(oscar.Id)){
