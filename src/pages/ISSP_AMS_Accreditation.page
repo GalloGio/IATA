@@ -494,7 +494,7 @@
         function multiSelectListAction() {
             setTimeout( function() { 
                 reRenderAccountsNoc();
-                checkSelectedAccounts();
+                reRenderNocMessage();
             }, 500);
         }
 
@@ -547,99 +547,12 @@
             }
         }
 
-        function checkMCNoC() {
-            if ($('[id$="LocationType"]').find("input")[1]) {
-                if ($('[id$=countrySelectedMCNOC]').val() === '{!hqAccount.Country_ISO_Code__c}') {
-                    $('[id$="LocationType"]').find("input")[1].disabled = false;
-                    $('[id$="LocationType"]').find("input")[2].disabled = false;
-                    $('[id$="LocationType"]').find("input")[0].disabled = false;
-                } else {
-                    $('[id$="LocationType"]').find("input")[1].disabled = true;
-                    $('[id$="LocationType"]').find("input")[2].disabled = true;
-                    $('[id$="LocationType"]').find("input")[0].disabled = true;
-                    $('[id$="LocationType"]').find("input")[3].checked = true;
-                }
-            }
-            
-            reRenderAccountsNoc();
-        }
-
-        function checkNoCFirstQuestion() {
-            /*if ($('[id$="typeOfChange"]').find("input")[0]) {
-
-                if ($('[id$="typeOfChange"]').find("input")[0].checked) {
-                    $('[id$="LocationType"]').find("input")[3].disabled = true;
-                    $('[id$="LocationType"]').find("input")[2].disabled = true;
-                    $('[id$="LocationType"]').find("input")[0].disabled = true;
-                    $('[id$="LocationType"]').find("input")[1].checked = true;
-
-                    showCountryMultiSelection();
-
-                    reRenderAccountsNoc();
-                }
-
-                if ($('[id$="typeOfChange"]').find("input")[1].checked) {
-                    showCountryMultiSelection();
-                    enableLocationQuestions();
-                    reRenderAccountsNoc();
-
-                    checkSelectedAccounts();
-                }
-
-                if ($('[id$="typeOfChange"]').find("input")[2].checked) {
-                    $('[id$="countrySelectedMCNOC"]').css('display', 'block');
-                    $('[id$="countryMultiSelection"]').css('display', 'none');
-                    $('[id$="selectAllLabel"]').css('display', 'none');
-                    $('[id$="selectAll"]').css('display', 'none');
-
-                    enableLocationQuestions();
-
-                    if ({!isMCAccredited}) {
-                        checkMCNoC();
-                    }
-                }
-            }*/
-        }
-
-        function checkSelectedAccounts() {
-            /*if ($('[id$="typeOfChange"]').find("input")[1].checked) {
-
-                var countLeft = $('[id$=leftList]').first().children().length;
-                var countRight = $('[id$=rightList]').first().children().length;
-                
-                if (countLeft != 0 && countRight != 0) {
-                    $('[id$="LocationType"]').find("input")[1].disabled = true;
-                    $('[id$="LocationType"]').find("input")[0].checked = true;
-                    
-                    $('[id$="warningNotAllCountriesSelected"]').css('display', 'inline-block');
-                } else {
-                    $('[id$="LocationType"]').find("input")[1].disabled = false;
-                    $('[id$="warningNotAllCountriesSelected"]').css('display', 'none');
-                }
-            }*/
-        }
-
-        /*function enableLocationQuestions() {
-            $('[id$="LocationType"]').find("input")[3].disabled = false;
-            $('[id$="LocationType"]').find("input")[2].disabled = false;
-            $('[id$="LocationType"]').find("input")[0].disabled = false;
-        }*/
-
-        /*function showCountryMultiSelection() {
-            $('[id$="countrySelectedMCNOC"]').css('display', 'none');
-            $('[id$="countryMultiSelection"]').css('display', 'block');
-
-            $('[id$="selectAllLabel"]').css('display', 'inline-block');
-            $('[id$="selectAll"]').css('display', 'inline-block');
-        }*/
-
         function loadPageOptions() {
             if({!isMultiCountryNewAE}) {
                 $('[id$=isSameLegal]').first().insertAfter($('[id$=countrySelection').first());
                 populateLegalAndSeparateFields();
                 enableDisableLegalName();
                 $('[id$=officetypelist]').prop('disabled', true);
-                
             }
 
             if ({!isNoticeOfChange} && {!isStep1}) {
@@ -650,15 +563,8 @@
                     $('[id$="nocThirdQuestion"]').find("input")[0].disabled = true;
                 }
 
-                //aqui
-
-                
-
                 $('[id$="branchaccountsel"]').first().insertAfter($('[id$="nocThirdQuestion"]'));
                 
-                //$('[id$="LocationType"]').find("input").next().append("&nbsp;");
-                //$('[id$="warningNotAllCountriesSelected"]').first().insertAfter($('[id$="LocationType"]').find("input").next()[1]);
-                //checkNoCFirstQuestion();
                 checkLocationQuestion();
             }
         }
@@ -667,49 +573,41 @@
             if ($('[id$="LocationType"]').find("input")[0].checked) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
                     $('[id$="nocThirdQuestion"]').css('display', 'block');
-
                 } else {
                     $('[id$="nocThirdQuestion"]').css('display', 'none');
-                    
                 }
 
-                toggleCountryMultiSelection(true, false, false); 
+                toggleCountryMultiSelection(true, false); 
             }
             
             if ($('[id$="LocationType"]').find("input")[1].checked) {
                 $('[id$="nocThirdQuestion"]').css('display', 'block');
-                
-                if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
 
-                } else {
-                    
-                }
-
-                toggleCountryMultiSelection(true, false, false);
+                toggleCountryMultiSelection(true, false);
             }
 
             if ($('[id$="LocationType"]').find("input")[2].checked) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
                     $('[id$="nocThirdQuestion"]').css('display', 'block');
-                    toggleCountryMultiSelection(false, false, true);
+                    toggleCountryMultiSelection(false, true);
                 } else {
                     $('[id$="nocThirdQuestion"]').css('display', 'none');
-                    toggleCountryMultiSelection(true, false, false);
+                    toggleCountryMultiSelection(true, false);
                 }
             }
 
             if ($('[id$="LocationType"]').find("input")[3].checked) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
                     $('[id$="nocThirdQuestion"]').css('display', 'block');
-                    toggleCountryMultiSelection(false, false, true);
+                    toggleCountryMultiSelection(false, true);
                 } else {
                     $('[id$="nocThirdQuestion"]').css('display', 'none');
-                    toggleCountryMultiSelection(true, false, false);
+                    toggleCountryMultiSelection(true, false);
                 }
             }
         }
 
-        function toggleCountryMultiSelection(countryLabel, singleCountry, multiCountry) {
+        function toggleCountryMultiSelection(countryLabel, multiCountry) {
             if (countryLabel) {
                 $('[id$="brcountry"]').css('display', 'block');
                 $('[id$="brabroadcountries"]').css('display', 'none');
@@ -718,20 +616,10 @@
                 $('[id$="brabroadcountries"]').css('display', 'block');
             }
 
-            if (singleCountry) {
-                $('[id$="countrySelectedMCNOC"]').css('display', 'block');
-            } else {
-                $('[id$="countrySelectedMCNOC"]').css('display', 'none');
-            }
-
             if (multiCountry) {
                 $('[id$="countryMultiSelection"]').css('display', 'block');
-                //$('[id$="selectAll"]').css('display', 'block');
-                //$('[id$="selectAllLabel"]').css('display', 'block');
             } else {
                 $('[id$="countryMultiSelection"]').css('display', 'none');
-                //$('[id$="selectAll"]').css('display', 'none');
-                //$('[id$="selectAllLabel"]').css('display', 'none');
             }
         }
 
@@ -820,6 +708,7 @@
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
                             <apex:actionFunction action="{!resetHierarchy}" name="reRenderAccountsNoc" reRender="branchaccountsel"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions" oncomplete=""/>
+                            <apex:actionFunction name="reRenderNocMessage" reRender="nocMessage"/>
                             
                             <apex:pageBlock id="step1Block" mode="edit" >
                                 <apex:pageBlockButtons location="bottom" style="padding-left:100px">
@@ -845,9 +734,12 @@
                                         $Label.ISSP_AMS_Step1_Two_Weeks_Expiry,
                                         $Label.ISSP_AMS_Noc_StepA_message)}
                                     </div>
-                                    <div class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange), 'block', 'none')}; margin-bottom: 20px;">
-                                        {!$Label.ISSP_AMS_Noc_StepA_message_MC}
-                                    </div>
+                                    <apex:outputPanel id="nocMessage">
+                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange), 'block', 'none')}; margin-bottom: 20px;">
+                                            {!$Label.ISSP_AMS_Noc_StepA_message_MC}<br/><br/>
+                                            {!IF(selectedCountryIsos.size > 1, $Label.ISSP_ANG_NOC_GOGLOBAL_Info, '')}
+                                        </div>
+                                    </apex:outputPanel>
 
                                     <apex:outputPanel style="display:{!IF(newCase.Status!='Open - EDMC', '', 'none')}" rendered="{!NOT(isNoticeOfChange)}">
 
@@ -960,7 +852,6 @@
                                                         <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}" />
                                                         
                                                         <apex:selectOption itemValue="HO - All Branches" itemLabel="{!IF(AND(isMCAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_All_Branches_MC, $Label.ISSP_AMS_NoC_HE_All_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}"/>
-                                                        <apex:image id="warningNotAllCountriesSelected" value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step1_Lang_Display_Help}" html-data-placement="right" html-data-toggle="tooltip" style="display: none;"/>
                                                         
                                                         <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!IF(AND(isMCAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_Some_Branches_MC, $Label.ISSP_AMS_NoC_HE_Some_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" />
                                                         
@@ -1019,14 +910,10 @@
 
                                 <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
                                     <apex:outputPanel rendered="{!AND(isMCAccredited, isNoticeOfChange)}">
-                                        <apex:selectList id="countrySelectedMCNOC" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1" onchange="checkMCNoC(); reRenderAccountsNoc();">
-                                            <apex:selectOptions value="{!mcNocCountryList}"/>
-                                        </apex:selectList>
-
                                         <apex:outputPanel>
                                             <c:MultiselectPicklist id="countryMultiSelection"
                                                                 leftLabel="{!$Label.ISSP_AMS_eBulletin_AvailableCountries}" 
-                                                                leftOptions="{!auxSelectMulipleCountryList}"
+                                                                leftOptions="{!nonSelectedCountryIsos}"
                                                                 rightLabel="{!$Label.ISSP_AMS_eBulletin_SelectedCountries}"
                                                                 rightOptions="{!selectedCountryIsos}"
                                                                 size="8"
@@ -1036,7 +923,7 @@
                                             <apex:outputLabel id="selectAllLabel" value="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}" style="font-weight: 100;"/>&nbsp;
 
                                             <apex:inputCheckBox id="selectAll" value="{!allCountriesSelected}" label="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}">
-                                                <apex:actionSupport event="onchange" action="{!selectAllCountries}" id="cbSAd" reRender="countryMultiSelection" oncomplete="reRenderAccountsNoc(); setArrowListeners(); checkSelectedAccounts();"/>
+                                                <apex:actionSupport event="onchange" action="{!selectAllCountries}" id="cbSAd" reRender="countryMultiSelection" oncomplete="reRenderAccountsNoc(); setArrowListeners(); reRenderNocMessage();"/>
                                             </apex:inputCheckbox>
                                         </apex:outputPanel>
                                     </apex:outputPanel>
