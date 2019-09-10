@@ -3238,6 +3238,13 @@ Payment required on receipt of this Payment Advice
         <value>Welcome [username]</value>
     </labels>
 	<labels>
+        <fullName>CSP_IATA_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_IATA_Country</shortDescription>
+        <value>IATA Country</value>
+    </labels>
+	<labels>
         <fullName>CSP_IMPORTANT</fullName>
         <language>en_US</language>
         <protected>false</protected>
