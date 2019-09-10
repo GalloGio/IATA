@@ -12041,7 +12041,7 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_OPTION_PAX_HE_standard</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Nos dossiers indiquent que vous figurez en tant que Contact IFAP pour votre agence. Si c’est toujours le cas, veuillez demander un Examen financier, ou indiquez le nouveau Contact IFAP sur la page &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Informations sur la société&lt;/a&gt; avant de confirmer votre demande.&quot;</label>
+        <label>Nos dossiers indiquent que vous figurez en tant que Contact IFAP pour votre agence. Si c’est toujours le cas, veuillez demander un Examen financier, ou indiquez le nouveau Contact IFAP sur la page &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Informations sur la société&lt;/a&gt; avant de confirmer votre demande.</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</name>
     </customLabels>
     <customLabels>
@@ -15042,7 +15042,7 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
         <name>ISSP_PCI_Time</name>
     </customLabels>
     <customLabels>
-        <label>Avis d&apos;inactivité</label>
+        <label>Avis d&amp;apos;inactivité</label>
         <name>ISSP_PCI_Title</name>
     </customLabels>
     <customLabels>
