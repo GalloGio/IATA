@@ -199,6 +199,13 @@ export default class PortalCreatePassword extends LightningElement {
         }
     }
 
+    handleFormKeyPress(event) {
+        if(event.keyCode === 13){
+           if(this.buttonDisabled == false){
+               this.handleSavePassword();
+           }
+        }
+    }
 
     changeIsLoading(){
         this.isLoading = !this.isLoading;

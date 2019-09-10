@@ -184,6 +184,14 @@ export default class PortalChangePassword extends LightningElement {
         }
     }
 
+    handleFormKeyPress(event) {
+        if(event.keyCode === 13){
+             if(this.buttonDisabled == false){
+                 this.handleSavePassword();
+             }
+         }
+    }
+
     showNotification() {
         const evt = new ShowToastEvent({
             title: 'Error',

@@ -53,7 +53,7 @@ public without sharing class PortalCreatePasswordController {
 
         if(result.isSuccess == true){
             try{
-                System.PageReference pageRef = Site.login(result.username, password, Label.CSP_PortalPath);
+                System.PageReference pageRef = Site.login(result.username, password, Label.CSP_PortalPath + '?firstLogin=true');
                 result.message = pageRef.getUrl();
             }
             catch(Exception ex){
