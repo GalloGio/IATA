@@ -13,12 +13,12 @@
     <!-- FILTERS -->
     <div if:false={loading} class="customBorderlessCardGray">
         <template for:each={lstTiles} for:item="tile">
-            <div class={tile.class} onclick={categorySelected} key={tile.categoryName} data-item={tile.categoryName}>
-                <lightning-icon class="darkBlueIcon" if:true={tile.open} icon-name="utility:chevrondown" size="xx-small" data-item={tile.categoryName}></lightning-icon>
-                <lightning-icon class="darkBlueIcon" if:false={tile.open} icon-name="utility:chevronright" size="xx-small" data-item={tile.categoryName}></lightning-icon>
-                <span class="slds-p-left_small text-bold" data-item={tile.categoryName}>{tile.categoryName} ({tile.noResults})</span>
+            <div class={tile.class} onclick={categorySelected} key={tile.categoryApiName} data-item={tile.categoryApiName}>
+                <lightning-icon class="darkBlueIcon" if:true={tile.open} icon-name="utility:chevrondown" size="xx-small" data-item={tile.categoryApiName}></lightning-icon>
+                <lightning-icon class="darkBlueIcon" if:false={tile.open} icon-name="utility:chevronright" size="xx-small" data-item={tile.categoryApiName}></lightning-icon>
+                <span class="slds-p-left_small text-bold" data-item={tile.categoryApiName}>{tile.categoryName} ({tile.noResults})</span>
             </div>        
-            <div if:true={tile.open} key={tile.categoryName} data-item={tile.categoryName}>
+            <div if:true={tile.open} key={tile.categoryApiName} data-item={tile.categoryApiName}>
                 <div class="slds-m-around_medium slds-align_absolute-center">
                     <lightning-combobox class="fullWidth" name="documentsProductType" label="Product Type" value="Product Type" options={typePicklistValues} onchange={handleTypePicklist}></lightning-combobox>
                 </div>
