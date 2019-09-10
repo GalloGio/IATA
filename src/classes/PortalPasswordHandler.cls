@@ -97,7 +97,23 @@ public without sharing class PortalPasswordHandler {
         //get contact information
         Contact contactInfo = [SELECT Id,Email, firstName FROM Contact WHERE ID = :user.contactid limit 1];
 
+        String headerImageName = Label.CSP_Email_Header_Image;
+        String footerImageName = Label.CSP_Email_Footer_Image;
+
+        String headerImageUrl;
+        String footerImageUrl;
+
+        Map<String,Id> docNameIdMap = new Map<String,Id>();
+        for(Document doc : [Select id, name From Document Where name = :headerImageName or name= :footerImageName]){
+            docNameIdMap.put(doc.name,doc.id);
+        }
+
+        if(docNameIdMap.get(headerImageName) != null) headerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(headerImageName)+'&oid='+userinfo.getorganizationid();
+        if(docNameIdMap.get(footerImageName) != null) footerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(footerImageName)+'&oid='+userinfo.getorganizationid();
+
         Map<String, String> mapBodyParams = new map<String, String>{
+                '{!HeaderUrl}'                                   => headerImageUrl,
+                '{!FooterUrl}'                                   => footerImageUrl,
                 '{!Receiving_User.FirstName}'                    => contactInfo.Firstname,
                 '{!Community_Url}'                               => link,
                 '{!$Label.ISSP_Email_Here}'                      => Label.ISSP_Email_Here,

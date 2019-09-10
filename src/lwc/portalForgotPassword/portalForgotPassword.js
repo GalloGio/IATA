@@ -77,6 +77,12 @@ export default class ForgotPasswordOneId extends LightningElement {
             submitBtn.classList.add('containedButtonDisabled');
             this.buttonDisabled = true;
         }
+
+        if(event.keyCode === 13){
+            if(submitBtn.disabled == false){
+                this.handleSubmit();
+            }
+        }
     }
 
     navigateToLogin() {

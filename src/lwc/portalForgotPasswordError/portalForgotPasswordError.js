@@ -55,6 +55,12 @@ export default class PortalForgotPasswordError extends LightningElement {
               submitBtn.classList.add('containedButtonDisabled');
               submitBtn.disabled = true;
           }
+
+          if(event.keyCode === 13){
+              if(submitBtn.disabled == false){
+                  this.handleNext();
+              }
+          }
        }
 
        navigateToLogin() {
