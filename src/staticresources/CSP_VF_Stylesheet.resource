@@ -130,6 +130,7 @@ div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
     width: 220px;
     word-break: break-word;
     border: none;
+    border-radius: none;
     padding-left: 1rem;
     padding-right: 1rem;
 }
