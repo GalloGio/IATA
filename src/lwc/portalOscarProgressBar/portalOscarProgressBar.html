@@ -1,51 +1,64 @@
 <template>
-    <div class="customCard slds-align_absolute-center row">
+    <div class="slds-align_absolute-center">
 
-        <div if:true={progressStatusList} class="ANG_progress slds-m-around_large">
+        <div if:true={progressStatusList} class="stepWrap slds-m-around_large">
             <template for:each={progressStatusList} for:item="node">
-                <span key={node.status}>
+                <span class="flex" key={node.status}>
                     <span if:true={node.isDone}>
-                        <div class="circle done">
-                            <span class="label">
-                                <lightning-icon size="small" class="whiteIcon" icon-name="utility:check"
-                                    alternative-text="Check"></lightning-icon>
+                        <span class="step">
+                            <span class="circle circleDone">
+                                <lightning-icon size="x-small" class="greenIcon" icon-name="utility:check"
+                                    alternative-text="Check">
+                                </lightning-icon>
                             </span>
-                            <span class="title">{node.title}</span>
-                        </div>
+                            <span class="notBreak"> {node.title} </span>
+                            <template if:false={node.isLastStatus}>
+                                <span class={node.class}></span>
+                            </template>
+                        </span>
                     </span>
+
                     <span if:true={node.isInProgress}>
-                        <div class="circle inProgress">
-                            <span class="label">
-                                <lightning-icon size="small" class="whiteIcon" icon-name="utility:right"
-                                    alternative-text="In Progress"></lightning-icon>
+                        <span class="step">
+                            <span class="circle circleInProgress">
+                                <lightning-icon size="x-small" class="orangeIcon" icon-name="utility:right"
+                                    alternative-text="Check">
+                                </lightning-icon>
                             </span>
-                            <span class="title">{node.title}</span>
-                        </div>
+                            <span class="notBreak"> {node.title} </span>
+                            <template if:false={node.isLastStatus}>
+                                <span class={node.class}></span>
+                            </template>
+                        </span>
                     </span>
+
                     <span if:true={node.isNotDone}>
-                        <div class="circle notDone">
-                            <span class="label"></span>
-                            <span class="title">{node.title}</span>
-                        </div>
-                    </span>
-                    <span if:true={node.isError}>
-                        <div class="circle error">
-                            <span class="label">
-                                <lightning-icon class="whiteIcon rotateIcon" size="small" icon-name="utility:add"
-                                    alternative-text="In Progress"></lightning-icon>
+                        <span class="step">
+                            <span class="circle circleIsNotDone">
                             </span>
-                            <span class="title">{node.title}</span>
-                        </div>
+                            <span class="notBreak"> {node.title} </span>
+                            <template if:false={node.isLastStatus}>
+                                <span class={node.class}></span>
+                            </template>
+                        </span>
                     </span>
-                    <template if:false={node.isLastStatus}>
-                        <span class="bar inProgress"></span>
-                    </template>
+
+                    <span if:true={node.isError}>
+                        <span class="step">
+                            <span class="circle circleIsError">
+                                <lightning-icon size="x-small" class="redIcon rotateIcon" icon-name="utility:add"
+                                    alternative-text="Check">
+                                </lightning-icon>
+                            </span>
+                            <span class="notBreak"> {node.title} </span>
+                            <template if:false={node.isLastStatus}>
+                                <span class={node.class}></span>
+                            </template>
+                        </span>
+                    </span>
 
                 </span>
-
-
             </template>
         </div>
-
     </div>
 </template>

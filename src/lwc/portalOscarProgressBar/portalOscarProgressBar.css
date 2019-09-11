@@ -1,145 +1,257 @@
-
-
-.ANG_progress {
-  width: 95%;
-  margin: 20px auto;
-  text-align: center;
-  height: auto;
-}
-.ANG_progress .circle,
-.ANG_progress .bar {
-  margin-top: 10px;
-  display: inline-block;
-  background: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  border: 1px solid #848489;
-}
-.ANG_progress .circle.done {
-  margin-top: 10px;
-  display: inline-block;
-  background: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  border: 2px solid #58d152;
-}
-.ANG_progress .circle.inProgress {
-  margin-top: 10px;
-  display: inline-block;
-  background: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  border: 2px solid #f2a635;
+.rotateIcon {
+  transform: rotate(45deg);
 }
 
-.ANG_progress .circle.error {
-  margin-top: 10px;
-  display: inline-block;
-  background: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  border: 2px solid #c81a1a;
+.stepWrap {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.ANG_progress .bar {
+.step {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  width: 80px;
-  height: 6px;
-  margin: 0 5px 32px 5px;
-  border-left: none;
-  border-right: none;
-  border-radius: 0;
 }
-.ANG_progress .circle .label {
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  border-radius: 32px;
 
-  color: #b5b5ba;
-  font-size: 17px;
+.circle {
+  position: relative;
+  background-color: white;
+  z-index: 999;
 }
-.ANG_progress .circle .title {
-  color: #b5b5ba;
-  font-size: 13px;
-  line-height: 30px;
+
+.flex {
+  flex: 1;
+}
+
+.notBreak {
+  white-space: nowrap;
+}
+
+.circleDone {
+  border: 2px solid #289632;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.centerInProgress {
-  top: 5px !important;
-  margin-left: -2px !important;
-}
-.centerOk {
-  top: 5px !important;
-  margin-left: -3px !important;
-}
-.centerError {
-  top: 5px !important;
-  margin-left: -2px !important;
+
+.circleInProgress {
+  border: 2px solid #ed7756;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Done / Active */
-.ANG_progress .bar.done {
-  background: #d3d1d1;
-}
-/*.ANG_progress .circle.done {
-    background: #d3d1d1;
-  }*/
-.ANG_progress .circle.inProgress .label {
-  margin-top: 2px;
-  color: #fff;
-  background: #f2a635;
-}
-.ANG_progress .circle.inProgress .title {
-  color: #444;
-  white-space: nowrap;
-}
-.ANG_progress .circle.done .label {
-  margin-top: 2px;
-  color: #fff;
-  background: #58d152;
-}
-.ANG_progress .circle.done .title {
-  color: #444;
-  white-space: nowrap;
-}
-.ANG_progress .circle.error .label {
-  margin-top: 2px;
-  color: #fff;
-  background: #c81a1a;
-}
-.ANG_progress .circle.error .title {
-  color: #444;
-  white-space: nowrap;
+.circleIsNotDone {
+  border: 2px solid #cccccc;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.ANG_progress .circle.notDone .label {
-  margin-top: 0px;
-  color: #fff;
-}
-.ANG_progress .circle.notDone .title {
-  color: #444;
-  white-space: nowrap;
-}
-
-.ANG_progress .circle.active .label {
-  color: #fff;
-  background: #0c95be;
-}
-.ANG_progress .circle.active .title {
-  color: #0c95be;
-  white-space: nowrap;
+.circleIsError {
+  border: 2px solid red;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.rotateIcon {
-  transform: rotate(45deg);
-  padding-right: 9px;
-  padding-bottom: 9px;
+/******** BAR STYLING ********/
+.bar {
+  position: absolute;
+  width: 80%;
+  top: 30%;
+  left: 60%;
 }
+
+.barIsNotDone {
+  border-bottom: 2px solid #cccccc;
+}
+
+.barDone {
+  border-bottom: 2px solid #289632;
+}
+
+.barInProgress {
+  border-bottom: 2px solid #ed7756;
+}
+
+.barError {
+  border-bottom: 2px solid #ff0000;
+}
+
+/* BAR DONE */
+
+.barDoneIsNotDone {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #289632 0%,
+    #289632 50%,
+    #cccccc 50%,
+    #cccccc 100%
+  );
+  border-image-slice: 1;
+}
+
+.barDoneInProgress {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #289632 0%,
+    #289632 50%,
+    #ed7756 50%,
+    #ed7756 100%
+  );
+  border-image-slice: 1;
+}
+
+.barDoneError {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #289632 0%,
+    #289632 50%,
+    #ff0000 50%,
+    #ff0000 100%
+  );
+  border-image-slice: 1;
+}
+
+/* BAR DONE END */
+
+/* BAR IsNotDone */
+
+.barIsNotDoneDone {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #cccccc 0%,
+    #cccccc 50%,
+    #289632 50%,
+    #289632 100%
+  );
+  border-image-slice: 1;
+}
+
+.barIsNotDoneInProgress {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #cccccc 0%,
+    #cccccc 50%,
+    #ed7756 50%,
+    #ed7756 100%
+  );
+  border-image-slice: 1;
+}
+
+.barIsNotDoneError {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #cccccc 0%,
+    #cccccc 50%,
+    #ff0000 50%,
+    #ff0000 100%
+  );
+  border-image-slice: 1;
+}
+
+/* BAR IsNotDone END */
+
+/* BAR InProgress */
+
+.barInProgressDone {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #ed7756 0%,
+    #ed7756 50%,
+    #289632 50%,
+    #289632 100%
+  );
+  border-image-slice: 1;
+}
+
+.barInProgressIsNotDone {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #ed7756 0%,
+    #ed7756 50%,
+    #cccccc 50%,
+    #cccccc 100%
+  );
+  border-image-slice: 1;
+}
+
+.barInProgressError {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #ed7756 0%,
+    #ed7756 50%,
+    #ff0000 50%,
+    #ff0000 100%
+  );
+  border-image-slice: 1;
+}
+
+/* BAR InProgress END */
+
+/* BAR Error */
+
+.barErrorDone {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #ff0000 0%,
+    #ff0000 50%,
+    #289632 50%,
+    #289632 100%
+  );
+  border-image-slice: 1;
+}
+
+.barErrorIsNotDone {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #ff0000 0%,
+    #ff0000 50%,
+    #cccccc 50%,
+    #cccccc 100%
+  );
+  border-image-slice: 1;
+}
+
+.barErrorInProgress {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #ff0000 0%,
+    #ff0000 50%,
+    #ed7756 50%,
+    #ed7756 100%
+  );
+  border-image-slice: 1;
+}
+
+/* BAR Error END */
+
+/* BAR STYLING END */
