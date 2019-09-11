@@ -76,9 +76,14 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
         ISSP_SIS_AccountHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
     }
 
-	
+
 //Trigger the platform events
-    if(trigger.isAfter)
-    	PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+    if(trigger.isAfter){
+      if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !ANG_ConversionHelper.isMigrationTool && !System.isFuture() && !System.isBatch()) {
+        System.enqueueJob(new PlatformEvents_Helper((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
+      } else {
+    	  PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+      }
+    }
 
 }
