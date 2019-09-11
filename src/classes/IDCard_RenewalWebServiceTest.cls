@@ -26,6 +26,11 @@ public class IDCard_RenewalWebServiceTest
     @isTest
     public static void testValidRequest_RenewalOnNewCard()
     {
+        testValidRequest_RenewalOnNewCard(true);
+    }
+
+    private static void testValidRequest_RenewalOnNewCard(Boolean isTest)
+    {
         RestResponse response = new RestResponse();
         RestContext.response = response;
 
@@ -40,9 +45,16 @@ public class IDCard_RenewalWebServiceTest
 
         setNewCard(false, false, null);
 
-        Test.startTest();
-        IDCard_RenewalWebService.doPost();
-        Test.stopTest();
+        if (isTest)
+        {
+            Test.startTest();
+            IDCard_RenewalWebService.doPost();
+            Test.stopTest();
+        }
+        else
+        {
+            IDCard_RenewalWebService.doPost();
+        }
 
         Object actualResponse = getResponse(response);
         System.assertNotEquals(null, actualResponse);
@@ -63,17 +75,17 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validate(c, caseNumber, idCardApplicationId, false, typeOfCard);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validate(app, uit, typeOfCard, pCode, true, 2, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
-        validate(card, app, contact, true, false, null);
+        validateCard(card, app, contact, true, false, null, false, false);
         validateCardPrinting(card, typeOfCard);
         validateSpecializationFields(card, true, true);
     }
@@ -131,17 +143,128 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validate(c, caseNumber, idCardApplicationId, false, typeOfCard);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validate(app, uit, typeOfCard, pCode, true, 2, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
-        validate(card, app, contact, true, false, null);
+        validateCard(card, app, contact, true, false, null, false, false);
+        validateCardPrinting(card, typeOfCard);
+        validateSpecializationFields(card, true, true);
+    }
+
+    @isTest
+    public static void testValidRequest_RenewalOnRenewedCardFromApp()
+    {
+        String typeOfCard = IDCard_MobileAppRenewalService.CARD_TYPE_PLASTIC;
+        String pCode = null;
+
+        // first renewal
+        Test.startTest();
+        testValidRequest_RenewalOnNewCard(false);
+        Test.stopTest();
+
+        // plastic card - close case to allow the second renewal
+        List<Case> cases = [SELECT Id FROM Case];
+        cases.get(0).Status = 'Closed';
+        update cases.get(0);
+
+        // change the renewal IDCA created on the previous step to be able to check that it was used
+        List<ID_Card_Application__c> apps = [SELECT Id FROM ID_Card_Application__c ORDER BY Name DESC];
+        apps.get(0).Telephone__c = '5145550002';
+        update apps.get(0);
+
+        // second renewal
+        IDCard_RenewalWebService.doPost();
+
+        Object actualResponse = getResponse(RestContext.response);
+        System.assertNotEquals(null, actualResponse);
+        System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
+        
+        Map<String, Object> mapResponse = (Map<String, Object>) actualResponse;
+        System.assert(String.isNotBlank((String)mapResponse.get('caseId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('caseNumber')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('idCardApplicationId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('idCardId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('uir')), mapResponse);
+
+        Id caseId = (Id) mapResponse.get('caseId');
+        String caseNumber = (String) mapResponse.get('caseNumber');
+        Id idCardApplicationId = (Id) mapResponse.get('idCardApplicationId');
+        Id idCardId = (Id) mapResponse.get('idCardId');
+        String uit = (String) mapResponse.get('uir');
+
+        // validate case
+        Case c = getCase(caseId);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
+
+        // validate application
+        ID_Card_Application__c app = getCardApplication(idCardApplicationId);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
+        validatePayment(app, pCode, true, true, true, true, false);
+        validateSpecializationFields(app, true);
+
+        // validate id card
+        ID_Card__c card = getCard(idCardId);
+        validateCard(card, app, contact, true, false, null, true, false);
+        validateCardPrinting(card, typeOfCard);
+        validateSpecializationFields(card, true, true);
+    }
+
+    @isTest
+    public static void testValidRequest_TwoRenewalsFromDifferentClients()
+    {
+        // first client
+        Test.startTest();
+        testValidRequest_RenewalOnNewCard(false);
+        Test.stopTest();
+
+        // second client
+        String typeOfCard = IDCard_MobileAppRenewalService.CARD_TYPE_PLASTIC;
+        String pCode = null;
+
+        RestContext.request.params.put('iataCode', '85500100');
+        RestContext.request.params.put('verNumber', '5990000002');
+
+        setAlternateNewCard();
+
+        IDCard_RenewalWebService.doPost();
+
+        Object actualResponse = getResponse(RestContext.response);
+        System.assertNotEquals(null, actualResponse);
+        System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
+        
+        Map<String, Object> mapResponse = (Map<String, Object>) actualResponse;
+        System.assert(String.isNotBlank((String)mapResponse.get('caseId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('caseNumber')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('idCardApplicationId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('idCardId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('uir')), mapResponse);
+
+        Id caseId = (Id) mapResponse.get('caseId');
+        String caseNumber = (String) mapResponse.get('caseNumber');
+        Id idCardApplicationId = (Id) mapResponse.get('idCardApplicationId');
+        Id idCardId = (Id) mapResponse.get('idCardId');
+        String uit = (String) mapResponse.get('uir');
+
+        // validate case
+        Case c = getCase(caseId);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, true);
+
+        // validate application
+        ID_Card_Application__c app = getCardApplication(idCardApplicationId);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, true);
+        validatePayment(app, pCode, true, true, true, true, false);
+        validateSpecializationFields(app, true);
+
+        // validate id card
+        ID_Card__c card = getCard(idCardId);
+        validateCard(card, app, contact, true, false, null, false, true);
         validateCardPrinting(card, typeOfCard);
         validateSpecializationFields(card, true, true);
     }
@@ -186,17 +309,17 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validate(c, caseNumber, idCardApplicationId, false, typeOfCard);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validate(app, uit, typeOfCard, pCode, true, 2, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
         validatePayment(app, pCode, true, false, true, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
-        validate(card, app, contact, true, false, null);
+        validateCard(card, app, contact, true, false, null, false, false);
         validateCardPrinting(card, typeOfCard);
         validateSpecializationFields(card, true, true);
     }
@@ -242,17 +365,17 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validate(c, caseNumber, idCardApplicationId, false, typeOfCard);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validate(app, uit, typeOfCard, pCode, true, 2, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
         validatePayment(app, pCode, true, false, true, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
-        validate(card, app, contact, true, false, null);
+        validateCard(card, app, contact, true, false, null, false, false);
         validateCardPrinting(card, typeOfCard);
         validateSpecializationFields(card, true, true);
     }
@@ -298,17 +421,17 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validate(c, caseNumber, idCardApplicationId, false, typeOfCard);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validate(app, uit, typeOfCard, pCode, false, 2, false);
+        validateApplication(app, uit, typeOfCard, pCode, false, 2, false, false);
         validatePayment(app, pCode, true, false, true, false, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
-        validate(card, app, contact, false, false, null);
+        validateCard(card, app, contact, false, false, null, false, false);
         validateCardPrinting(card, typeOfCard);
         validateSpecializationFields(card, true, true);
     }
@@ -354,17 +477,17 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validate(c, caseNumber, idCardApplicationId, false, typeOfCard);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validate(app, uit, typeOfCard, pCode, false, 0, false);
+        validateApplication(app, uit, typeOfCard, pCode, false, 0, false, false);
         validatePayment(app, pCode, false, false, false, false, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
-        validate(card, app, contact, false, false, null);
+        validateCard(card, app, contact, false, false, null, false, false);
         validateCardPrinting(card, typeOfCard);
         validateSpecializationFields(card, true, true);
     }
@@ -410,17 +533,17 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validate(c, caseNumber, idCardApplicationId, false, typeOfCard);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validate(app, uit, typeOfCard, pCode, false, 0, false);
+        validateApplication(app, uit, typeOfCard, pCode, false, 0, false, false);
         validatePayment(app, pCode, true, true, false, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
-        validate(card, app, contact, true, false, null);
+        validateCard(card, app, contact, true, false, null, false, false);
         validateCardPrinting(card, typeOfCard);
         validateSpecializationFields(card, true, true);
     }
@@ -465,17 +588,17 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validate(c, caseNumber, idCardApplicationId, false, typeOfCard);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validate(app, uit, typeOfCard, pCode, true, 1, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 1, false, false);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
-        validate(card, app, contact, true, false, null);
+        validateCard(card, app, contact, true, false, null, false, false);
         validateCardPrinting(card, typeOfCard);
         validateSpecializationFields(card, true, true);
     }
@@ -520,17 +643,17 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validate(c, caseNumber, idCardApplicationId, false, typeOfCard);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validate(app, uit, typeOfCard, pCode, true, 2, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, false);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
-        validate(card, app, contact, true, false, null);
+        validateCard(card, app, contact, true, false, null, false, false);
         validateCardPrinting(card, typeOfCard);
         validateSpecializationFields(card, true, false);
     }
@@ -575,17 +698,17 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validate(c, caseNumber, idCardApplicationId, false, typeOfCard);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validate(app, uit, typeOfCard, pCode, true, 2, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, false);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
-        validate(card, app, contact, true, false, null);
+        validateCard(card, app, contact, true, false, null, false, false);
         validateCardPrinting(card, typeOfCard);
         validateSpecializationFields(card, false, true);
     }
@@ -630,19 +753,209 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validate(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL); // forced digital
+        validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false); // forced digital
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validate(app, uit, typeOfCard, pCode, true, 2, true); // forced digital
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false); // forced digital
         validatePayment(app, pCode, true, true, true, true, true);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
-        validate(card, app, contact, true, true, null);
+        validateCard(card, app, contact, true, true, null, false, false);
         validateCardPrinting(card, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL); // forced digital
         validateSpecializationFields(card, true, true);
+
+        // only one contact
+        System.assertEquals(1, [SELECT Id FROM Contact].size());
+    }
+    
+    @isTest
+    public static void testValidRequest_USAgentFromIdCardWithoutContact()
+    {
+        RestResponse response = new RestResponse();
+        RestContext.response = response;
+
+        String typeOfCard = IDCard_MobileAppRenewalService.CARD_TYPE_PLASTIC;
+        String pCode = null;
+
+        RestRequest request = new RestRequest();
+        request.params.put('iataCode', '67504242');
+        request.params.put('verNumber', '5991000001');
+        request.requestBody = Blob.valueOf(makeJson(pCode, typeOfCard, true, true, true, 2, true));
+        RestContext.request = request;
+
+        setNewUSAgentCard(false, 'WSKey');
+
+        Test.startTest();
+        IDCard_RenewalWebService.doPost();
+        Test.stopTest();
+
+        Object actualResponse = getResponse(response);
+        System.assertNotEquals(null, actualResponse);
+        System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
+        
+        Map<String, Object> mapResponse = (Map<String, Object>) actualResponse;
+        System.assert(String.isNotBlank((String)mapResponse.get('caseId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('caseNumber')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('idCardApplicationId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('idCardId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('uir')), mapResponse);
+
+        Id caseId = (Id) mapResponse.get('caseId');
+        String caseNumber = (String) mapResponse.get('caseNumber');
+        Id idCardApplicationId = (Id) mapResponse.get('idCardApplicationId');
+        Id idCardId = (Id) mapResponse.get('idCardId');
+        String uit = (String) mapResponse.get('uir');
+
+        // validate case
+        Case c = getCase(caseId);
+        validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false); // forced digital
+
+        // validate application
+        ID_Card_Application__c app = getCardApplication(idCardApplicationId);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false); // forced digital
+        validatePayment(app, pCode, true, true, true, true, true);
+        validateSpecializationFields(app, true);
+
+        // validate id card
+        ID_Card__c card = getCard(idCardId);
+        validateCard(card, app, contact, true, true, 'WSKey', false, false);
+        validateCardPrinting(card, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL); // forced digital
+        validateSpecializationFields(card, true, true);
+
+        // only one contact
+        System.assertEquals(1, [SELECT Id FROM Contact].size());
+    }
+    
+    @isTest
+    public static void testValidRequest_USAgentFromIdCardWithContact()
+    {
+        RestResponse response = new RestResponse();
+        RestContext.response = response;
+
+        String typeOfCard = IDCard_MobileAppRenewalService.CARD_TYPE_PLASTIC;
+        String pCode = null;
+
+        RestRequest request = new RestRequest();
+        request.params.put('iataCode', '67504242');
+        request.params.put('verNumber', '5991000001');
+        request.requestBody = Blob.valueOf(makeJson(pCode, typeOfCard, true, true, true, 2, true));
+        RestContext.request = request;
+
+        setNewUSAgentCard(true, 'WSKey');
+
+        Test.startTest();
+        IDCard_RenewalWebService.doPost();
+        Test.stopTest();
+
+        Object actualResponse = getResponse(response);
+        System.assertNotEquals(null, actualResponse);
+        System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
+        
+        Map<String, Object> mapResponse = (Map<String, Object>) actualResponse;
+        System.assert(String.isNotBlank((String)mapResponse.get('caseId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('caseNumber')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('idCardApplicationId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('idCardId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('uir')), mapResponse);
+
+        Id caseId = (Id) mapResponse.get('caseId');
+        String caseNumber = (String) mapResponse.get('caseNumber');
+        Id idCardApplicationId = (Id) mapResponse.get('idCardApplicationId');
+        Id idCardId = (Id) mapResponse.get('idCardId');
+        String uit = (String) mapResponse.get('uir');
+
+        // validate case
+        Case c = getCase(caseId);
+        validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false); // forced digital
+
+        // validate application
+        ID_Card_Application__c app = getCardApplication(idCardApplicationId);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false); // forced digital
+        validatePayment(app, pCode, true, true, true, true, true);
+        validateSpecializationFields(app, true);
+
+        // validate id card
+        ID_Card__c card = getCard(idCardId);
+        validateCard(card, app, contact, true, true, 'WSKey', false, false);
+        validateCardPrinting(card, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL); // forced digital
+        validateSpecializationFields(card, true, true);
+
+        // only one contact
+        System.assertEquals(1, [SELECT Id FROM Contact].size());
+    }
+    
+    @isTest
+    public static void testValidRequest_USAgentFromIdCardWithoutContact_hasContactInSystem()
+    {
+        setData(true);
+
+        // there is a "lost" contact in the system for the same email;
+        Contact lostContact = createUSContact();
+        insert lostContact;
+
+        testValidRequest_USAgentFromIdCardWithoutContact();
+    }
+
+    @isTest
+    public static void testValidRequest_USAgentFromIdCardWithoutContact_RenewalOnRenewedCardFromApp()
+    {
+        String typeOfCard = IDCard_MobileAppRenewalService.CARD_TYPE_PLASTIC;
+        String pCode = null;
+
+        // first renewal
+        testValidRequest_USAgentFromIdCardWithoutContact();
+
+        // plastic card - close case to allow the second renewal
+        List<Case> cases = [SELECT Id FROM Case];
+        cases.get(0).Status = 'Closed';
+        update cases.get(0);
+
+        // change the renewal IDCA created on the previous step to be able to check that it was used
+        List<ID_Card_Application__c> apps = [SELECT Id FROM ID_Card_Application__c ORDER BY Name DESC];
+        apps.get(0).Telephone__c = '5145550002';
+        update apps.get(0);
+
+        // second renewal
+        IDCard_RenewalWebService.doPost();
+
+        Object actualResponse = getResponse(RestContext.response);
+        System.assertNotEquals(null, actualResponse);
+        System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
+        
+        Map<String, Object> mapResponse = (Map<String, Object>) actualResponse;
+        System.assert(String.isNotBlank((String)mapResponse.get('caseId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('caseNumber')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('idCardApplicationId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('idCardId')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('uir')), mapResponse);
+
+        Id caseId = (Id) mapResponse.get('caseId');
+        String caseNumber = (String) mapResponse.get('caseNumber');
+        Id idCardApplicationId = (Id) mapResponse.get('idCardApplicationId');
+        Id idCardId = (Id) mapResponse.get('idCardId');
+        String uit = (String) mapResponse.get('uir');
+
+        // validate case
+        Case c = getCase(caseId);
+        validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false); // forced digital
+
+        // validate application
+        ID_Card_Application__c app = getCardApplication(idCardApplicationId);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false); // forced digital
+        validatePayment(app, pCode, true, true, true, true, true);
+        validateSpecializationFields(app, true);
+
+        // validate id card
+        ID_Card__c card = getCard(idCardId);
+        validateCard(card, app, contact, true, true, 'WSKey', true, false);
+        validateCardPrinting(card, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL); // forced digital
+        validateSpecializationFields(card, true, true);
+
+        // only one contact
+        System.assertEquals(1, [SELECT Id FROM Contact].size());
     }
     
     @isTest
@@ -685,17 +998,17 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validate(c, caseNumber, idCardApplicationId, false, typeOfCard);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validate(app, uit, typeOfCard, pCode, true, 2, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, false);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
-        validate(card, app, contact, true, false, 'WSKey');
+        validateCard(card, app, contact, true, false, 'WSKey', false, false);
         validateCardPrinting(card, typeOfCard);
         validateSpecializationFields(card, false, true);
     }
@@ -799,10 +1112,13 @@ public class IDCard_RenewalWebServiceTest
 		'}';
     }
 
-    private static void setNewCard(Boolean setSpecializationFieldsOnIDC, boolean isUSAgent, String webstarKey)
+    private static void setData(Boolean isUSAgent)
     {
-        // misc settings
+        if (testData != null)
+            return;
         testData = new IDCardTestData();
+
+        // misc settings
         testData.IDCards_Price_Tables[0].Profit_Center__c = 'p1';
         testData.IDCards_Price_Tables[1].Profit_Center__c = 'p2';
         update testData.IDCards_Price_Tables;
@@ -820,6 +1136,11 @@ public class IDCard_RenewalWebServiceTest
             testData.IDCard_Accounts[0] = a;
             insert a;
         }
+    }
+
+    private static void setNewCard(Boolean setSpecializationFieldsOnIDC, Boolean isUSAgent, String webstarKey)
+    {
+        setData(isUSAgent);
 
         // id card application
         if (isUSAgent)
@@ -835,17 +1156,12 @@ public class IDCard_RenewalWebServiceTest
         insert testData.IDCards_IDCardApplications[2];
         System.debug('Id Application: ' + testData.IDCards_IDCardApplications[2]);
 
-        ID_Card_Application__c application = [Select VER_Number__c, UIR__c, Type_of_application__c, Title__c, Terms_and_Conditions_Time_Stamp__c, Telephone__c, SystemModstamp, Start_Date_Industry__c, Start_Date_Agency_Year__c, Start_Date_Agency_Month__c, Solicitation_Flag__c, Selected_Preferred_Language__c, Revenue_Confirmation__c, Revenue_Confirmation_Validation_Failed__c, Renewal_From_Replace__c, Regional_Office__c, Promotion_Code__c, Profit_Center__c, Position_in_Current_Agency__c, Position_Code__c, Photo__c, Payment_Type__c, Payment_Transaction_Number__c, Payment_Date__c, Payment_Currency__c, Payment_Credit_Card_Number__c, Payment_Amount__c, Package_of_Travel_Professionals_Course_2__c, Package_of_Travel_Professionals_Course_1__c, OwnerId, Name, Middle_Initial__c, Last_Name__c, LastModifiedDate, LastModifiedById, LastActivityDate, IsDeleted, Id, ITDI_Courses_Fee__c, ID_Card_Fee__c, IDCard_Prefered_Language__c, IDCard_Expedite_Delivery__c, IDCard_Expedite_Delivery_Fee__c, IATA_numeric_code_previous_employer_4__c, IATA_numeric_code_previous_employer_3__c, IATA_numeric_code_previous_employer_2__c, IATA_numeric_code_previous_employer_1__c, IATA_Code_for_previous_agency__c, IATA_Code__c, Hours_worked__c, Hours_Worked_Validation_Failed__c, Hours_Worked_Code__c, Gender__c, First_Name__c, Email_admin__c, Duties_in_Current_Agency__c, Duties_Code__c, Displayed_Name__c, Date_of_Birth__c, CurrencyIsoCode, CreatedDate, CreatedById, Case_Number__c, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Applicable_Fee__c, AgencyShare_Confirmation__c From ID_Card_Application__c WHERE ID = : testData.IDCards_IDCardApplications[2].Id limit 1];
-
         // contact
-        Contact contactId2 = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[2]);
-        Contact relatedContact2 = [SELECT Id, LastName, FirstName, VER_Number__c FROM Contact WHERE Id = :contactId2.Id LIMIT 1];
-        System.debug('Contact: ' + contactId2);
-
-        contact = relatedContact2;
+        contact = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[2]);
+        System.debug('Contact: ' + contact);
 
         // id card
-        Id_Card__c idCard = IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[2], relatedContact2);
+        Id_Card__c idCard = IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[2], contact);
         if (setSpecializationFieldsOnIDC)
         {
             idCard.ASF_Current_Function__c = 'AF1;AF2;AF3';
@@ -861,6 +1177,26 @@ public class IDCard_RenewalWebServiceTest
 
         idCard.WebStar_P00_Key__c = webstarKey;
 
+        System.debug('Id Card: ' + idCard);
+        insert idCard;
+    }
+
+    private static void setAlternateNewCard()
+    {
+        // id card application
+        testData.IDCards_IDCardApplications[5].UIR__c = 'CA000002';
+        testData.IDCards_IDCardApplications[5].Photo__c = 'CA000002.jpg';
+        testData.IDCards_IDCardApplications[5].IATA_Code__c = '85500100';
+        testData.IDCards_IDCardApplications[5].Type_of_application__c = IDCardUtil.APPLICATIONTYPE_NEW;
+        insert testData.IDCards_IDCardApplications[5];
+        System.debug('Id Application: ' + testData.IDCards_IDCardApplications[5]);
+
+        // contact
+        contact = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[5]);
+        System.debug('Contact: ' + contact);
+
+        // id card
+        Id_Card__c idCard = IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[5], contact);
         System.debug('Id Card: ' + idCard);
         insert idCard;
     }
@@ -890,6 +1226,27 @@ public class IDCard_RenewalWebServiceTest
 
         System.debug('Id Card renewal: ' + idCard);
         insert idCard;
+    }
+
+    private static void setNewUSAgentCard(Boolean createContact, String webstarKey)
+    {
+        setData(true);
+
+        // contact
+        if (createContact)
+        {
+            contact = createUSContact();
+            insert contact;
+            System.debug('Contact: ' + contact);
+        }
+
+        // id card
+        Id_Card__c idCard = createUSAgentIdCard(webstarKey);
+        if (createContact)
+            idCard.Related_Contact__c = contact.Id;
+        insert idCard;
+
+        System.debug('US Id Card: ' + idCard);
     }
 
     private static void setPromotion(String promotionCode, Integer percentage)
@@ -943,8 +1300,11 @@ public class IDCard_RenewalWebServiceTest
                 FROM ID_Card__c WHERE Id = :idCardId];
     }
 
-    private static void validate(Case c, String caseNumber, Id idCardApplicationId, Boolean isUSAgent, String typeOfCard)
+    private static void validateCase(Case c, String caseNumber, Id idCardApplicationId, Boolean isUSAgent,
+                                     String typeOfCard, Boolean useAlternateAccount)
     {
+        System.debug('Validating card: ' + c);
+
         System.assertEquals(RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Application'), c.RecordTypeId);
         System.assert(c.Subject.contains('Case for Mobile ID Card Application'));
         System.assertEquals(caseNumber, c.caseNumber);
@@ -952,7 +1312,10 @@ public class IDCard_RenewalWebServiceTest
             System.assertEquals('Closed', c.Status);
         else
             System.assertEquals('Ready for production', c.Status);
-        System.assertEquals(testData.IDCard_Accounts[0].Id, c.AccountId);
+        if (useAlternateAccount)
+            System.assertEquals(testData.IDCard_Accounts[2].Id, c.AccountId);
+        else
+            System.assertEquals(testData.IDCard_Accounts[0].Id, c.AccountId);
         System.assertEquals('ID Card Mobile', c.Origin);
         System.assertEquals(idCardApplicationId, c.Related_ID_Card_Application__c);
         System.assertEquals('Approved', c.ID_Card_Status__c);
@@ -965,9 +1328,11 @@ public class IDCard_RenewalWebServiceTest
         System.assertEquals('Americas', c.Region__c);
     }
 
-    private static void validate(ID_Card_Application__c app, String uit, String typeOfCard, String pCode,
-                                 Boolean hasPayment, Integer hasCourses, Boolean isUSAgent)
+    private static void validateApplication(ID_Card_Application__c app, String uit, String typeOfCard, String pCode,
+                                 Boolean hasPayment, Integer hasCourses, Boolean isUSAgent, Boolean useAlternateAccount)
     {
+        System.debug('Validating id card application: ' + app);
+
         System.assertEquals(RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard'), app.RecordTypeId);
         if (IDCard_MobileAppRenewalService.CARD_TYPE_PLASTIC.equals(typeOfCard) && ! isUSAgent)
             System.assertEquals('Processing Successfull payment', app.Application_Status__c);
@@ -994,12 +1359,12 @@ public class IDCard_RenewalWebServiceTest
             System.assertEquals(null, app.Package_of_Travel_Professionals_Course_1__c);
             System.assertEquals(null, app.Package_of_Travel_Professionals_Course_2__c);
         }
-        System.assertEquals(uit, app.UIR__c);
+        System.assertEquals(uit, app.UIR__c.subString(2));
         if (isUSAgent)
             System.assertEquals('5991000001', app.VER_Number__c);
-        else
-            System.assertEquals('5990000001', app.VER_Number__c);
-        System.assertEquals('67504242', app.IATA_Code__c);
+        else 
+            validateIf(useAlternateAccount, '5990000002', '5990000001', app.VER_Number__c);
+        validateIf(useAlternateAccount, '85500100', '67504242', app.IATA_Code__c);
     }
 
     private static void validatePayment(ID_Card_Application__c app, String pCode,
@@ -1053,60 +1418,86 @@ public class IDCard_RenewalWebServiceTest
         System.assertEquals(pCode, app.Promotion_Code__c);
     }
 
-    private static void validate(ID_Card__c card, ID_Card_Application__c app, Contact contact,
-                                 Boolean hasPayment, Boolean isUSAgent, String webstarKey)
+    private static void validateCard(ID_Card__c card, ID_Card_Application__c app, Contact contact,
+                                 Boolean hasPayment, Boolean isUSAgent, String webstarKey, Boolean useAlternatePhone,
+                                 Boolean useAlternateAccount)
     {
+        System.debug('Validating id card: ' + card);
+
         System.assertEquals(RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS'), card.RecordTypeId);
-        System.assertEquals('67504242', card.Agency_IATA_Code__c);
-        System.assertEquals(testData.IDCard_Accounts[0].Name, card.Agency_Name__c);
+        validateIf(useAlternateAccount, '85500100', '67504242', card.Agency_IATA_Code__c);
+        validateIf(useAlternateAccount, 'ADAMB TRAVEL SERVICES INC.', 'ADAM TRAVEL SERVICES INC.', card.Agency_Name__c);
         System.assertEquals('Manager Name', card.Approving_Manager_s_Name__c);
         System.assertEquals('manager@email.com', card.Approving_Manager_s_Email__c);
         System.assertEquals(false, card.Blacklisted__c);
         System.assertEquals('CAD', card.CurrencyIsoCode);
-        System.assertEquals(date.newInstance(1980, 1, 1), card.Date_of_Birth__c);
+        validateIf(useAlternateAccount, date.newInstance(1971, 10, 16), date.newInstance(1980, 1, 1), card.Date_of_Birth__c);
         System.assertEquals('Administration', card.Duties__c);
         System.assertEquals('johnsonk@iata.org', card.Email__c);
-        if (hasPayment)
-            System.assertEquals(85.00, card.Fee_Applicable__c);
-        else
-            System.assertEquals(0.00, card.Fee_Applicable__c);
-        System.assertEquals('ContactOne', card.FirstName__c);
-        System.assertEquals('M', card.Gender__c);
+        validateIf(hasPayment, 85.00, 0.00, card.Fee_Applicable__c);
+        validateIf(useAlternateAccount, 'MARWA', 'ContactOne', card.FirstName__c);
+        validateIf(useAlternateAccount, 'F', 'M', card.Gender__c);
         System.assertEquals('35h or more', card.Hours_per_week__c);
         System.assertEquals(app.Id, card.ID_Card_Application__c);
         System.assertEquals(false, card.Is_Expedite__c);
-        System.assertEquals('UserOne', card.LastName__c);
-        System.assertEquals('K', card.Middle_Initial__c);
-        System.assertEquals('ContactOne UserOne', card.Name_on_ID_Card__c);
+        validateIf(useAlternateAccount, 'ALLAM', 'UserOne', card.LastName__c);
+        validateIf(useAlternateAccount, null, 'K', card.Middle_Initial__c);
+        validateIf(useAlternateAccount, 'ALLAM MARWA', 'ContactOne UserOne', card.Name_on_ID_Card__c);
         System.assertEquals('Renew', card.Nature_of_ID_Card__c);
-        System.assertEquals('Director', card.Position__c);
+        validateIf(useAlternateAccount, 'Independent Consultant/Broker', 'Director', card.Position__c);
         if (isUSAgent)
             System.assertEquals('US000001.jpg', card.Photo__c);
         else
-            System.assertEquals('CA000001.jpg', card.Photo__c);
+            validateIf(useAlternateAccount, 'CA000002.jpg', 'CA000001.jpg', card.Photo__c);
         System.assertEquals('Digital', card.Photo_Flag__c);
-        System.assertEquals('5145550001', card.Phone__c);
-        if (isUSAgent)
-            System.assertEquals(null, card.Profit_Center__c);
+        if (useAlternatePhone)
+            System.assertEquals('5145550002', card.Phone__c);
         else
-            System.assertEquals('p2', card.Profit_Center__c);
+            validateIf(useAlternateAccount, '514-555-0001', '5145550001', card.Phone__c);
+        validateIf(isUSAgent, (String) null, 'p2', card.Profit_Center__c);
         System.assertEquals('Y', card.Paid__c);
         System.assertEquals(IDCardUtil.PAYMENT_TYPE_CC, card.Payment_Type__c);
         System.assertEquals(false, card.Renewal_From_Replace__c);
-        System.assertEquals('2000', card.Start_Date_Industry__c);
-        System.assertEquals('January', card.Start_Date_Agency_Month__c);
-        System.assertEquals('2003', card.Start_Date_Agency_Year__c);
+        validateIf(useAlternateAccount, '1995', '2000', card.Start_Date_Industry__c);
+        validateIf(useAlternateAccount, 'July', 'January', card.Start_Date_Agency_Month__c);
+        validateIf(useAlternateAccount, '2002', '2003', card.Start_Date_Agency_Year__c);
         System.assertEquals('Passenger', card.Type_of_ID_Card__c);
         System.assertEquals('MRS.', card.Title__c);
         if (isUSAgent)
             System.assertEquals('5991000001', card.VER_Number__c);
         else
-            System.assertEquals('5990000001', card.VER_Number__c);
+            validateIf(useAlternateAccount, '5990000002', '5990000001', card.VER_Number__c);
         System.assertEquals(System.now().date().addMonths(24), card.Valid_To_Date__c);
         System.assertEquals(System.now().date().addMonths(12), card.Valid_From_Date__c);
         System.assertEquals('TACB', card.Card_Code__c);
-        System.assertEquals(contact.Id, card.Related_Contact__c);
+        System.assertNotEquals(null, card.Related_Contact__c);
+        if (contact != null)
+            System.assertEquals(contact.Id, card.Related_Contact__c);
         System.assertEquals(webstarKey, card.WebStar_P00_Key__c);
+    }
+
+    private static void validateIf(Boolean useFirst, String first, String second, String value)
+    {
+        if (useFirst)
+            System.assertEquals(first, value);
+        else
+            System.assertEquals(second, value);
+    }
+
+    private static void validateIf(Boolean useFirst, Decimal first, Decimal second, Decimal value)
+    {
+        if (useFirst)
+            System.assertEquals(first, value);
+        else
+            System.assertEquals(second, value);
+    }
+
+    private static void validateIf(Boolean useFirst, Date first, Date second, Date value)
+    {
+        if (useFirst)
+            System.assertEquals(first, value);
+        else
+            System.assertEquals(second, value);
     }
 
     private static void validateCardPrinting(ID_Card__c card, String typeOfCard)
@@ -1177,6 +1568,53 @@ public class IDCard_RenewalWebServiceTest
             System.assertEquals(null, f7);
             System.assertEquals(null, f8);
         }
+    }
+
+    private static Id_Card__c createUSAgentIdCard(String webstarKey)
+    {
+        Id_Card__c idCard = new Id_Card__c();
+        idCard.Approving_Manager_s_Name__c = 'Manager Name';
+        idCard.Approving_Manager_s_Email__c = 'manager@email.com';
+        idCard.CurrencyIsoCode = 'CAD';
+        idCard.Date_of_Birth__c = date.newInstance(1980, 1, 1);
+        idCard.Duties__c = 'Administration';
+        idCard.Email__c = 'johnsonk@iata.org';
+        idCard.Fee_Applicable__c = 0.00; // unimportant
+        idCard.FirstName__c = 'ContactOne';
+        idCard.Gender__c = 'M';
+        idCard.Hours_per_week__c = '35h or more';
+        idCard.Is_Expedite__c = false;
+        idCard.LastName__c = 'UserOne';
+        idCard.Middle_Initial__c = 'K';
+        idCard.Name_on_ID_Card__c = 'ContactOne UserOne';
+        idCard.Nature_of_ID_Card__c = IDCardUtil.IDCARDNATURE_NEW;
+        idCard.Position__c = 'Director';
+        idCard.Photo__c = 'US000001.jpg';
+        idCard.Phone__c = '5145550001';
+        idCard.Profit_Center__c = '-'; // unimportant
+        idCard.Payment_Type__c = '-'; // unimportant
+        idCard.Renewal_From_Replace__c = true;
+        idCard.Start_Date_Industry__c = '2000';
+        idCard.Start_Date_Agency_Month__c = 'January';
+        idCard.Start_Date_Agency_Year__c = '2003';
+        idCard.Title__c = 'Mrs.';
+        idCard.VER_Number__c = '5991000001';
+        idCard.WebStar_P00_Key__c = webstarKey;
+        idCard.Valid_To_Date__c = System.now().date().addMonths(12);
+        idCard.Valid_From_Date__c = System.now().date().addMonths(0);
+        return idCard;
+    }
+
+    private static Contact createUSContact()
+    {
+        Contact theContact = new Contact();
+        theContact.RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        theContact.AccountId = testData.IDCard_Accounts[0].Id;
+        theContact.LastName = 'UserOne';
+        theContact.IDCard_Email__c = 'johnsonk@iata.org';
+        theContact.FirstName = 'ContactOne';
+        theContact.VER_Number_2__c = '5991000001';
+        return theContact;
     }
 
     private static Object getResponse(RestResponse response)

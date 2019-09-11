@@ -19,6 +19,7 @@ public with sharing class IDCard_MobileAppRenewalService
      *     2.4. update and validate the promotion code
      *     2.5. the docs?
      *   3. create the Case
+     *     3.0. [for US Agents] create a new Contact (if not created before)
      *     3.1. send the case creation email to the Agent
      *     3.2. send post pardot
      *   4. auto approve Case
@@ -33,134 +34,240 @@ public with sharing class IDCard_MobileAppRenewalService
      */
     public static IDCard_ServiceResponse renewCard(String iataCode, String verNumber, IDCard_RenewalRequest request)
     {
+        RequestInformation requestInformation = new RequestInformation(iataCode, verNumber, request);
+
         // 0. validate the input & get auxiliar values
-        if (String.isBlank(iataCode))
+        if (String.isBlank(requestInformation.iataCode))
             return IDCard_ServiceResponse.makeErrorServiceResponse(Label.IDCard_IATACodeRequired);
-        if (iataCode.trim().length() != 8)
+        if (requestInformation.iataCode.length() != 8)
             return IDCard_ServiceResponse.makeErrorServiceResponse(Label.IDCard_IATACodeNot8Digits);
-        if (String.isBlank(verNumber))
+        if (String.isBlank(requestInformation.verNumber))
             return IDCard_ServiceResponse.makeErrorServiceResponse(Label.IDCard_VERrequired);
 
-        iataCode = iataCode.trim();
-        
-        Contact contact = getContact(iataCode, verNumber);
-        
-        String acccountType = getAccountType(contact);
-        IATA_ISO_Country__c contactCountry = getContactCountry(iataCode);
-        
-        checkBlacklistedCard(contact, iataCode, verNumber);
+        requestInformation.contactCountry = getContactCountry(requestInformation.iataCode);
+        requestInformation.isUSAgent = 'US'.equals(requestInformation.contactCountry.ISO_Code__c);
 
-        Price_Table__c prices = getPriceTable(acccountType, contactCountry);
+        // for US Agents
+        if (requestInformation.isUSAgent)
+        {
+            Id_Card__c lastIDC = getLastIdCard(requestInformation);
+            if (lastIDC.ID_Card_Application__c == null) // no IDCA associated, use the US logic (inferes a IDCA)
+                return renewCardForUSAgent(requestInformation, lastIDC.Id);
+            // else, used the NON US Agents
+        }
 
-        if (contact.VER_Number_2__c == null)
-            throw new IDCardException(Label.IDCard_NumericFieldError);
+        // for NON US Agents (clones the previous IDCA)
+        return renewCardForNonUSAgent(requestInformation);
+    }
+
+    public static IDCard_ServiceResponse renewCardForUSAgent(RequestInformation requestInformation, Id lastIDCId)
+    {
+        System.debug('renewCardForUSAgent: ' + lastIDCId + ' ' + requestInformation);
+
+        // 0. validate the input & get auxiliar values - cont.
+        try
+        {
+            requestInformation.contact = getContact(requestInformation.iataCode, requestInformation.verNumber);
+        }
+        catch (Exception e)
+        {
+            // NOTHING - the US Agents might not have a Contact
+        }
+
+        requestInformation.account = IDCardUtil.GetAccountObjectFromIATACode(requestInformation.iataCode);
         
-        checkPendingCases(contact, iataCode, verNumber);
+        requestInformation.accountType = getAccountType(requestInformation.account);
+        
+        checkBlacklistedCard(requestInformation);
+
+        requestInformation.prices = getPriceTable(requestInformation.accountType, requestInformation.contactCountry);
+        
+        //checkPendingCases(requestInformation); // No case in US Agents
 
         // 1. get the current IDCA
-        ID_Card_Application__c currentIdCardApplication = getCurrentIDCA(iataCode, verNumber);
+        requestInformation.lastIDC = getIdCardFromId(lastIDCId);
+        requestInformation.lastIDCA = createIDCAForUSAgent(requestInformation);
+
+        if (requestInformation.contact == null) // because it can only be one Contact per VER#
+            requestInformation.contact = getContact(requestInformation.verNumber);
 
         // 2. create the new IDCA
-        ID_Card_Application__c newIdCardApplication = createNewIDCA(currentIdCardApplication, request);
+        requestInformation.newIDCA = createNewIDCA(requestInformation);
 
         //   2.1. set the agent specialization fields
-        setAgentSpecialization(newIdCardApplication, request);
+        setIDCAAgentSpecialization(requestInformation);
 
         //   2.2. update the payment information
-        setPaymentInformation(newIdCardApplication, request, prices);
+        setPaymentInformation(requestInformation);
 
         //   2.3. update the training courses information
-        setTrainingCourses(newIdCardApplication, request);
+        setTrainingCourses(requestInformation);
 
         //   2.4. update and validate the promotion code
-        setAndValidatePromotion(newIdCardApplication, request);
+        setAndValidatePromotion(requestInformation);
 
         // 3. create the Case
+        //   3.0. [for US Agents] create a new Contact (if not created before)
+        createContactForUSAgent(requestInformation);
+        updateIdCardContact(requestInformation);
+
         //   3.1. send the case creation email to the Agent
-        insert newIdCardApplication;
-        Case c = createCaseAndSendEmail(newIdCardApplication);
+        insert requestInformation.newIDCA;
+        requestInformation.idcaCase = createCaseAndSendEmail(requestInformation);
 
         //   3.2. send post pardot
-        postPardot(newIdCardApplication, request, c);
+        postPardot(requestInformation);
 
         // 4. auto approve Case
         // 5. create the IDC
         //   5.1. define the card dates based on the previous IDC
-        approveCaseAndCreateIDC(newIdCardApplication, c);
-        ID_Card__c idCard = getIdCardFromApplication(newIdCardApplication);
+        approveCaseAndCreateIDC(requestInformation);
+        requestInformation.newIDC = getIdCardFromApplication(requestInformation.newIDCA.Id);
         
         //   5.2. set the printing information based on agent location (US agents = digital)
-        setIdCardType(newIdCardApplication, idCard, contactCountry);
+        setIdCardType(requestInformation);
 
         //   5.3. set the printing information based on the card type (plastic, digital)
-        setIdCardPrintingOptions(idCard);
+        setIdCardPrintingOptions(requestInformation);
 
         //   5.4. set the training courses information based on the related IDCA and previous IDC
-        setAgentSpecialization(idCard, newIdCardApplication, currentIdCardApplication);
+        setIDCAgentSpecialization(requestInformation);
 
         //   5.5. set the WebStar_P00_Key__c field on the new card
-        setWebStarField(idCard, currentIdCardApplication);
+        setWebStarField(requestInformation);
 
         // 6. update the Case to "Closed" on digital cards
-        closeDigitalCase(c, idCard);
+        closeDigitalCase(requestInformation);
 
-        update idCard;
+        update requestInformation.newIDC;
 
-        return makeServiceResponse(newIdCardApplication, idCard, c);
+        return makeServiceResponse(requestInformation);
     }
 
-    private static IDCard_ServiceResponse makeServiceResponse(ID_Card_Application__c newIDCA, Id_Card__c idCard, Case c)
+    public static IDCard_ServiceResponse renewCardForNonUSAgent(RequestInformation requestInformation)
     {
-        c = [SELECT Id, CaseNumber FROM Case WHERE Id = :c.Id];
+        System.debug('renewCardForNonUSAgent: ' + requestInformation);
+
+        // 0. validate the input & get auxiliar values - cont.
+        requestInformation.contact = getContact(requestInformation.iataCode, requestInformation.verNumber);
+        
+        requestInformation.account = IDCardUtil.GetAccountObjectFromIATACode(requestInformation.iataCode);
+        
+        requestInformation.accountType = getAccountType(requestInformation.contact);
+
+        checkBlacklistedCard(requestInformation);
+        
+        requestInformation.prices = getPriceTable(requestInformation.accountType, requestInformation.contactCountry);
+
+        checkPendingCases(requestInformation);
+
+        // 1. get the current IDCA
+        requestInformation.lastIDCA = getCurrentIDCA(requestInformation);
+        requestInformation.lastIDC = getIdCardFromApplication(requestInformation.lastIDCA.Id);
+
+        // 2. create the new IDCA
+        requestInformation.newIDCA = createNewIDCA(requestInformation);
+
+        //   2.1. set the agent specialization fields
+        setIDCAAgentSpecialization(requestInformation);
+
+        //   2.2. update the payment information
+        setPaymentInformation(requestInformation);
+
+        //   2.3. update the training courses information
+        setTrainingCourses(requestInformation);
+
+        //   2.4. update and validate the promotion code
+        setAndValidatePromotion(requestInformation);
+
+        // 3. create the Case
+        //   3.1. send the case creation email to the Agent
+        insert requestInformation.newIDCA;
+        requestInformation.idcaCase = createCaseAndSendEmail(requestInformation);
+
+        //   3.2. send post pardot
+        postPardot(requestInformation);
+
+        // 4. auto approve Case
+        // 5. create the IDC
+        //   5.1. define the card dates based on the previous IDC
+        approveCaseAndCreateIDC(requestInformation);
+        requestInformation.newIDC = getIdCardFromApplication(requestInformation.newIDCA.Id);
+        
+        //   5.2. set the printing information based on agent location (US agents = digital)
+        setIdCardType(requestInformation);
+
+        //   5.3. set the printing information based on the card type (plastic, digital)
+        setIdCardPrintingOptions(requestInformation);
+
+        //   5.4. set the training courses information based on the related IDCA and previous IDC
+        setIDCAgentSpecialization(requestInformation);
+
+        //   5.5. set the WebStar_P00_Key__c field on the new card
+        setWebStarField(requestInformation);
+
+        // 6. update the Case to "Closed" on digital cards
+        closeDigitalCase(requestInformation);
+
+        update requestInformation.newIDC;
+
+        return makeServiceResponse(requestInformation);
+    }
+
+    private static IDCard_ServiceResponse makeServiceResponse(RequestInformation requestInformation)
+    {
+        Case c = [SELECT Id, CaseNumber FROM Case WHERE Id = :requestInformation.idcaCase.Id];
 
         Map<String, Object> values = new Map<String, Object>();
         values.put('caseNumber', c.CaseNumber);
-        values.put('idCardId', idCard.Id);
-        values.put('idCardApplicationId', newIDCA.Id);
+        values.put('idCardId', requestInformation.newIDC.Id);
+        values.put('idCardApplicationId', requestInformation.newIDCA.Id);
         values.put('caseId', c.Id);
 
-        String uir = newIDCA.UIR__c;
-        if (String.isBlank(uir) && String.isNotBlank(idCard.Photo__c))
-            uir = idCard.Photo__c.replaceAll('[^0-9]*', '');
-        values.put('uir', uir);
-        values.put('webstarKey', idCard.WebStar_P00_Key__c);
+        String uir = requestInformation.newIDCA.UIR__c;
+        if (String.isBlank(uir) && String.isNotBlank(requestInformation.newIDC.Photo__c))
+            uir = requestInformation.newIDC.Photo__c;
+        values.put('uir', (String.isBlank(uir) ? '' : uir).replaceAll('[^0-9]*', ''));
+        values.put('webstarKey', requestInformation.newIDC.WebStar_P00_Key__c);
 
         return IDCard_ServiceResponse.makeGenericServiceResponse(values);
     }
 
-    private static void setIdCardPrintingOptions(Id_Card__c idCard)
+    private static void setIdCardPrintingOptions(RequestInformation requestInformation)
     {
-        if (CARD_TYPE_PLASTIC.equals(idCard.Card_Type__c))
+        if (CARD_TYPE_PLASTIC.equals(requestInformation.newIDC.Card_Type__c))
         {
             // already defined on IDCardUtil
         }
-        else if (CARD_TYPE_DIGITAL.equals(idCard.Card_Type__c))
+        else if (CARD_TYPE_DIGITAL.equals(requestInformation.newIDC.Card_Type__c))
         {
-            idCard.MustSyncWithAIMS__c = false;
-            idCard.Card_Status__c = IDCardUtil.CARDSTATUS_VALID;
-            idCard.Sent_to_AIMS_on__c = System.now().date();
-            idCard.Received_From_AIMS__c = System.now().date();
+            requestInformation.newIDC.MustSyncWithAIMS__c = false;
+            requestInformation.newIDC.Card_Status__c = IDCardUtil.CARDSTATUS_VALID;
+            requestInformation.newIDC.Sent_to_AIMS_on__c = System.now().date();
+            requestInformation.newIDC.Received_From_AIMS__c = System.now().date();
         }
     }
 
-    private static void setIdCardType(ID_Card_Application__c newIDCA, Id_Card__c idCard, IATA_ISO_Country__c contactCountry)
+    private static void setIdCardType(RequestInformation requestInformation)
     {
-        String type = newIDCA.Card_Type__c;
-        if ('US'.equals(contactCountry.ISO_Code__c))
+        String type = requestInformation.newIDCA.Card_Type__c;
+        if (requestInformation.isUSAgent)
             type = CARD_TYPE_DIGITAL;
-        idCard.Card_Type__c = type;
-        System.debug('Checking US agent ' + newIDCA.Card_Type__c + ' ' + type + ' ' + contactCountry.ISO_Code__c);
+        requestInformation.newIDC.Card_Type__c = type;
+
+        System.debug('Checking US agent ' + requestInformation.newIDCA.Card_Type__c + ' ' +
+            type + ' ' + requestInformation.contactCountry.ISO_Code__c);
     }
 
-    private static Id_Card__c getIdCardFromApplication(ID_Card_Application__c currentIDCA)
+    private static Id_Card__c getIdCardFromApplication(Id appId)
     {
         List<Id_Card__c> idCards = [SELECT Id, ASF_Current_Function__c, ASF_Percentage_of_Annual_Booking__c,
                                         ASF_Market_Specialization__c, ASF_Market_Specialization_Comment__c,
                                         ASF_Market_Focus__c, ASF_Specializing_on_Destination__c,
                                         ASF_Completed_Travel_Courses__c, ASF_Last_Completed_Travel_Course__c,
-                                        ASF_FAM_Trips__c, WebStar_P00_Key__c
+                                        ASF_FAM_Trips__c, WebStar_P00_Key__c, Photo__c
                                     FROM Id_Card__c
-                                    WHERE ID_Card_Application__c = :currentIDCA.Id];
+                                    WHERE ID_Card_Application__c = :appId];
         
         if (idCards.isEmpty())
             throw new IDCardException('No card from id application found');
@@ -168,9 +275,44 @@ public with sharing class IDCard_MobileAppRenewalService
         return idCards.get(0);
     }
 
-    private static void approveCaseAndCreateIDC(ID_Card_Application__c currentIDCA, Case c)
+    private static Id_Card__c getIdCardFromId(Id idCardId)
     {
-        Case c2 = c;
+        List<Id_Card__c> idCards = [SELECT Id, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Blacklisted__c,
+                                        CurrencyIsoCode, Date_of_Birth__c, Duties__c, Email__c, Fee_Applicable__c,
+                                        FirstName__c, Gender__c, Hours_per_week__c, Is_Expedite__c, LastName__c,
+                                        Middle_Initial__c, Name_on_ID_Card__c, Nature_of_ID_Card__c, Position__c,
+                                        Photo__c, Phone__c, Profit_Center__c, Payment_Type__c, Renewal_From_Replace__c,
+                                        Start_Date_Industry__c, Start_Date_Agency_Month__c, Start_Date_Agency_Year__c,
+                                        Title__c, VER_Number__c, WebStar_P00_Key__c, ASF_Current_Function__c,
+                                        ASF_Percentage_of_Annual_Booking__c, ASF_Market_Specialization__c,
+                                        ASF_Market_Specialization_Comment__c, ASF_Market_Focus__c, ASF_Specializing_on_Destination__c,
+                                        ASF_Completed_Travel_Courses__c, ASF_Last_Completed_Travel_Course__c, ASF_FAM_Trips__c,
+                                        Related_Contact__c
+                                    FROM Id_Card__c
+                                    WHERE Id = :idCardId];
+        
+        if (idCards.isEmpty())
+            throw new IDCardException('No card from id application found');
+        
+        return idCards.get(0);
+    }
+
+    private static Id_Card__c getLastIdCard(RequestInformation requestInformation)
+    {
+        List<Id_Card__c> idCards = [SELECT Id, ID_Card_Application__c, Related_Contact__c, WebStar_P00_Key__c
+                                    FROM Id_Card__c
+                                    WHERE VER_Number__c = :requestInformation.verNumber
+                                    ORDER BY CreatedDate DESC];
+        
+        if (idCards.isEmpty())
+            throw new IDCardException('No card from id application found');
+        
+        return idCards.get(0);
+    }
+
+    private static void approveCaseAndCreateIDC(RequestInformation requestInformation)
+    {
+        Case c2 = requestInformation.idcaCase;
         if (c2.CaseNumber == null)
             c2 = [SELECT Id, CaseNumber, Status FROM Case WHERE Id = :c2.Id];
         
@@ -178,82 +320,132 @@ public with sharing class IDCard_MobileAppRenewalService
         if (! result.contains('true') && ! result.contains('false'))
             throw new IDCardException(result);
         
-        currentIDCA = new ID_Card_Application__c(Id = currentIDCA.Id);
-        currentIDCA.Single_Application_Processing_Step__c = 'Processed';
-        update currentIDCA;
+        ID_Card_Application__c newIDCA = new ID_Card_Application__c(Id = requestInformation.newIDCA.Id);
+        newIDCA.Single_Application_Processing_Step__c = 'Processed';
+        update newIDCA;
     }
 
-    private static void closeDigitalCase(Case c, Id_Card__c idCard)
+    private static void closeDigitalCase(RequestInformation requestInformation)
     {
-        if (CARD_TYPE_DIGITAL.equals(idCard.Card_Type__c))
+        if (CARD_TYPE_DIGITAL.equals(requestInformation.newIDC.Card_Type__c))
         {
-            c = new Case(Id = c.Id);
+            Case c = new Case(Id = requestInformation.idcaCase.Id);
             c.Status = 'Closed';
             update c;
         }
     }
 
-    private static Case createCaseAndSendEmail(ID_Card_Application__c currentIDCA)
+    private static void createContactForUSAgent(RequestInformation requestInformation)
     {
-        Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(currentIDCA.IATA_Code__c);
-        Case c = IDCardUtil.createKeyAccountIdCardApplicationCase(currentIDCA, theAccount);
+        if (requestInformation.contact == null)
+        {
+            Contact theContact = new Contact();
+            theContact.RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+            theContact.AccountId = requestInformation.account.Id;
+            theContact.LastName = requestInformation.lastIDCA.Last_Name__c;
+            theContact.IDCard_Email__c = requestInformation.lastIDCA.Email_admin__c;
+            theContact.Approving_Manager_s_Name__c = requestInformation.lastIDCA.Approving_Manager_s_Name__c;
+            theContact.Approving_Manager_s_Email__c = requestInformation.lastIDCA.Approving_Manager_s_Email__c;
+            theContact.ID_Card_Preferred_Language__c = requestInformation.lastIDCA.IDCard_Prefered_Language__c;
+            theContact.FirstName = requestInformation.lastIDCA.First_Name__c;
+            theContact.Salutation = requestInformation.lastIDCA.Title__c;
+            theContact.Date_of_Birth__c = requestInformation.lastIDCA.Date_of_Birth__c;
+            theContact.Gender__c = requestInformation.lastIDCA.Gender__c;
+            theContact.Middle_Initial__c = requestInformation.lastIDCA.Middle_Initial__c;
+            theContact.Phone = requestInformation.lastIDCA.Telephone__c;
+            theContact.Position__c = requestInformation.lastIDCA.Position_in_Current_Agency__c;
+            theContact.Duties__c = requestInformation.lastIDCA.Duties_in_Current_Agency__c;
+            theContact.Hours_per_week__c = requestInformation.lastIDCA.Hours_worked__c;
+            theContact.Start_Date_Industry__c = Decimal.valueOf(requestInformation.lastIDCA.Start_Date_Industry__c);
+            theContact.Start_Date_Agency_Month__c = requestInformation.lastIDCA.Start_Date_Agency_Month__c;
+            theContact.Start_Date_Agency_Year__c = Decimal.valueOf(requestInformation.lastIDCA.Start_Date_Agency_Year__c);
+            theContact.Solicitation_Flag__c = requestInformation.lastIDCA.Solicitation_Flag__c;
+            theContact.Revenue_Confirmation__c = requestInformation.lastIDCA.Revenue_Confirmation__c;
+            theContact.AgencyShare_Confirmation__c = requestInformation.lastIDCA.AgencyShare_Confirmation__c;
+            theContact.UIR__c = requestInformation.lastIDCA.UIR__c;
+            theContact.VER_Number_2__c = requestInformation.lastIDCA.VER_Number__c;
+            insert theContact;
+
+            requestInformation.contact = [SELECT c.AgencyShare_Confirmation__c,c.ID_Card_Preferred_Language__c,
+                                              c.VER_Number__c, c.Title, c.FirstName, c.Middle_Initial__c, c.LastName,
+                                              c.UIR__c, c.Account.IATACode__c, c.Hours_per_week__c, c.Duties__c,
+                                              c.Position__c, c.Solicitation_Flag__c, c.Revenue_Confirmation__c,
+                                              c.Email
+                                          FROM Contact c 
+                                          WHERE id = :theContact.Id];
+            System.debug('Created new Contact: ' + requestInformation.contact);
+        }
+    }
+
+    private static void updateIdCardContact(RequestInformation requestInformation)
+    {
+        if (requestInformation.lastIDC.Related_Contact__c == null)
+        {
+            requestInformation.lastIDC.Related_Contact__c = requestInformation.contact.Id;
+            Id_Card__c newIDC = new Id_Card__c(Id = requestInformation.lastIDC.Id);
+            newIDC.Related_Contact__c = requestInformation.contact.Id;
+            update newIDC;
+        }
+    }
+
+    private static Case createCaseAndSendEmail(RequestInformation requestInformation)
+    {
+        Case c = IDCardUtil.createKeyAccountIdCardApplicationCase(requestInformation.newIDCA, requestInformation.account);
 
         // update status to send email using workflow rule and "IDCard_ConfirmationEmail" template email
         Case c2 = new Case(Id = c.Id);
-        c2.Subject = 'Case for Mobile ID Card Application ' + [SELECT Name FROM ID_Card_Application__c WHERE Id = :currentIDCA.Id].Name;
+        c2.Subject = 'Case for Mobile ID Card Application ' + [SELECT Name FROM ID_Card_Application__c WHERE Id = :requestInformation.newIDCA.Id].Name;
         c2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Application');
-        c2.OwnerId = System.UserInfo.getUserId();
         c2.Status = 'Agent to be Notified';
         c2.Origin = 'ID Card Mobile';
         update c2;
 
-        //currentIDCA.Case_Number__c = c.CaseNumber; set automatically on the "IDCard_ConfirmationEmail" template email
+        //requestInformation.newIDCA.Case_Number__c = c.CaseNumber; set automatically on the "IDCard_ConfirmationEmail" template email
         return c;
     }
     
-    private static ID_Card_Application__c createNewIDCA(ID_Card_Application__c currentIDCA, IDCard_RenewalRequest request)
+    private static ID_Card_Application__c createNewIDCA(RequestInformation requestInformation)
     {
-        ID_Card_Application__c newIDCA = currentIDCA.clone();
+        ID_Card_Application__c newIDCA = requestInformation.lastIDCA.clone();
         newIDCA.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard');
-        System.debug('currentIDCA RecordTypeId: ' + currentIDCA.RecordTypeId);
+        
+        System.debug('requestInformation.lastIDCA RecordTypeId: ' + requestInformation.lastIDCA.RecordTypeId);
         System.debug('newIDCA RecordTypeId: ' + newIDCA.RecordTypeId);
+
         newIDCA.Application_Status__c = 'Temp';
         newIDCA.Type_of_Application__c = IDCardUtil.APPLICATIONTYPE_RENEWAL;
         newIDCA.Renewal_From_Replace__c = false;
         newIDCA.Single_Application_Processing_Step__c = IDCardUtil.single_application_status_waiting;
 
         newIDCA.Card_Type__c = CARD_TYPE_PLASTIC;
-        if (request.typeOfCard != null)
-            newIDCA.Card_Type__c = request.typeOfCard;
+        if (String.isNotBlank(requestInformation.request.typeOfCard))
+            newIDCA.Card_Type__c = requestInformation.request.typeOfCard;
             
-        newIDCA.Mobile_App_Transaction_Id__c = request.orderId;
-        newIDCA.Mobile_App_Request__c = JSON.serialize(request);
+        newIDCA.Mobile_App_Transaction_Id__c = requestInformation.request.orderId;
+        newIDCA.Mobile_App_Request__c = JSON.serialize(requestInformation.request);
 
         return newIDCA;
     }
 
-    private static void setPaymentInformation(ID_Card_Application__c newIDCA, IDCard_RenewalRequest request,
-                                              Price_Table__c prices)
+    private static void setPaymentInformation(RequestInformation requestInformation)
     {
-        IDCard_RenewalRequest.Payment payment = request.payment;
+        IDCard_RenewalRequest.Payment payment = requestInformation.request.payment;
         if (payment == null)
             throw new IDCardException('No Payment information received');
         
-        Account account = IDCardUtil.GetAccountObjectFromIATACode(newIDCA.IATA_Code__c);
-        
-        newIDCA.Application_Status__c = 'Processing Successfull payment';
+        requestInformation.newIDCA.Application_Status__c = 'Processing Successfull payment';
 
-        newIDCA.Payment_Credit_Card_Number__c = payment.cardNumber;
-        newIDCA.Payment_Transaction_Number__c = payment.transactionNumber;
-        newIDCA.Payment_Amount__c = payment.amount != null ? payment.amount : 0;
-        newIDCA.Payment_Date__c = convertDate(payment.orderDate);
-        newIDCA.Payment_Currency__c = payment.cur != null ? payment.cur.toUpperCase() : null;
-        newIDCA.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_CC;
+        requestInformation.newIDCA.Payment_Credit_Card_Number__c = payment.cardNumber;
+        requestInformation.newIDCA.Payment_Transaction_Number__c = payment.transactionNumber;
+        requestInformation.newIDCA.Payment_Amount__c = payment.amount != null ? payment.amount : 0;
+        requestInformation.newIDCA.Payment_Date__c = convertDate(payment.orderDate);
+        requestInformation.newIDCA.Payment_Currency__c = payment.cur != null ? payment.cur.toUpperCase() : null;
+        requestInformation.newIDCA.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_CC;
 
-        IDCard_RenewalRequest.Items cardRenewal = getRequestItem(request, RENEWAL_ITEM_RENEWAL);
-        IDCard_RenewalRequest.Items shipping = getRequestItem(request, RENEWAL_ITEM_EXPEDITE);
-        IDCard_RenewalRequest.Items training1 = getRequestItem(request, RENEWAL_ITEM_TRAINING_1);
-        IDCard_RenewalRequest.Items training2 = getRequestItem(request, RENEWAL_ITEM_TRAINING_2);
+        IDCard_RenewalRequest.Items cardRenewal = getRequestItem(requestInformation.request, RENEWAL_ITEM_RENEWAL);
+        IDCard_RenewalRequest.Items shipping = getRequestItem(requestInformation.request, RENEWAL_ITEM_EXPEDITE);
+        IDCard_RenewalRequest.Items training1 = getRequestItem(requestInformation.request, RENEWAL_ITEM_TRAINING_1);
+        IDCard_RenewalRequest.Items training2 = getRequestItem(requestInformation.request, RENEWAL_ITEM_TRAINING_2);
 
         Double trainingFee = null;
         if (training1 != null || training2 != null)
@@ -262,14 +454,14 @@ public with sharing class IDCard_MobileAppRenewalService
                           (training2 == null || training2.price == null ? 0 : training2.price);
         }
 
-        newIDCA.IDCard_Expedite_Delivery__c = prices.Expedite_Delivery_added_to_IDCard_Price__c;
-        newIDCA.Applicable_Fee__c = getRequestItemTotalAmount(request);
-        newIDCA.ID_Card_Fee__c = cardRenewal == null ? 0 : cardRenewal.price;
-        newIDCA.IDCard_Expedite_Delivery_Fee__c = shipping == null ? 0 : shipping.price;
-        newIDCA.ITDI_Courses_Fee__c = trainingFee == null ? 0 : trainingFee;
-        newIDCA.CurrencyIsoCode = prices.CurrencyIsoCode;
+        requestInformation.newIDCA.IDCard_Expedite_Delivery__c = requestInformation.prices.Expedite_Delivery_added_to_IDCard_Price__c;
+        requestInformation.newIDCA.Applicable_Fee__c = getRequestItemTotalAmount(requestInformation.request);
+        requestInformation.newIDCA.ID_Card_Fee__c = cardRenewal == null ? 0 : cardRenewal.price;
+        requestInformation.newIDCA.IDCard_Expedite_Delivery_Fee__c = shipping == null ? 0 : shipping.price;
+        requestInformation.newIDCA.ITDI_Courses_Fee__c = trainingFee == null ? 0 : trainingFee;
+        requestInformation.newIDCA.CurrencyIsoCode = requestInformation.prices.CurrencyIsoCode;
 
-        setTaxes(newIDCA, prices, account);
+        setTaxes(requestInformation);
     }
 
     private static String convertDate(String iso8601)
@@ -298,14 +490,16 @@ public with sharing class IDCard_MobileAppRenewalService
         }
     }
 
-    private static void setTaxes(ID_Card_Application__c newIDCA, Price_Table__c prices, Account account)
+    private static void setTaxes(RequestInformation requestInformation)
     {
+        ID_Card_Application__c newIDCA = requestInformation.newIDCA;
         newIDCA.Tax_1_Name__c = null;
         newIDCA.Tax_1_Value__c = null;
         newIDCA.Tax_2_Name__c = null;
         newIDCA.Tax_2_Value__c = null;
 
-        account = [SELECT BillingState, BillingCountry FROM Account WHERE Id = :account.Id];
+        Account account = [SELECT BillingState, BillingCountry FROM Account WHERE Id = :requestInformation.account.Id];
+
         Map<String, String> taxes = IDCardTaxUtil.GetTaxes(account.BillingState, account.BillingCountry);
         List<String> taxNames = new List<String>();
         taxNames.addAll(taxes.keySet());
@@ -337,46 +531,46 @@ public with sharing class IDCard_MobileAppRenewalService
             newIDCA.Tax_2_Value__c = taxAmount2.setScale(2) + ' ' + newIDCA.CurrencyIsoCode;
         }
 
-        newIDCA.Profit_Center__c = prices.Profit_Center__c;
+        newIDCA.Profit_Center__c = requestInformation.prices.Profit_Center__c;
     }
 
-    private static void setAndValidatePromotion(ID_Card_Application__c newIDCA, IDCard_RenewalRequest request)
+    private static void setAndValidatePromotion(RequestInformation requestInformation)
     {
-        if (request.payment == null)
+        if (requestInformation.request.payment == null)
             throw new IDCardException('No Payment information received');
 
         try
         {
-            validatePromotion(newIDCA, request);
+            validatePromotion(requestInformation);
         }
         catch (Exception e)
         {
             // NOTHING - ignored the validation as the promotion was already applied in the payment
         }
 
-        newIDCA.Promotion_Code__c = request.payment.promotionCode;
+        requestInformation.newIDCA.Promotion_Code__c = requestInformation.request.payment.promotionCode;
     }
 
-    private static void validatePromotion(ID_Card_Application__c newIDCA, IDCard_RenewalRequest request)
+    private static void validatePromotion(RequestInformation requestInformation)
     {
         // Promotion code must exists, must be associated to the corresponding Price Table and be between the validity period
-        if (String.isNotBlank(request.payment.promotionCode))
+        if (String.isNotBlank(requestInformation.request.payment.promotionCode))
         {
             List<Promotion__c> promotionLst = [SELECT p.Promotion_Value__c, p.Promotion_Duration_Valid_Up_to__c,
                                                 p.Promotion_Duration_Valid_From__c, p.Promotion_Code__c,
                                                 p.Type_of_Application__c
                                                FROM Promotion__c p
-                                               WHERE p.Promotion_Code__c = :request.payment.promotionCode];
+                                               WHERE p.Promotion_Code__c = :requestInformation.request.payment.promotionCode];
             
             if (promotionLst.isEmpty())
-                throw new IDCardException(String.Format(Label.ID_Card_Invalid_Promotion_Code, new String[] { request.payment.promotionCode }));
+                throw new IDCardException(String.Format(Label.ID_Card_Invalid_Promotion_Code, new String[] { requestInformation.request.payment.promotionCode }));
 
             Boolean hasTypeOfApplication = false;
             for (String typeOfApp : promotionLst.get(0).Type_of_Application__c.split(';'))
             {
-                System.debug('Validating promotion: ' + typeOfApp + ' ' + newIDCA.Type_of_Application__c);
+                System.debug('Validating promotion: ' + typeOfApp + ' ' + requestInformation.newIDCA.Type_of_Application__c);
 
-                if (newIDCA.Type_of_Application__c.equals(typeOfApp))
+                if (requestInformation.newIDCA.Type_of_Application__c.equals(typeOfApp))
                 {
                     hasTypeOfApplication = true;
                     break;
@@ -384,7 +578,7 @@ public with sharing class IDCard_MobileAppRenewalService
             }
 
             if (! hasTypeOfApplication)
-                throw new IDCardException(String.Format(Label.ID_Card_Invalid_Promotion_Code_2, new String[] { request.payment.promotionCode }));
+                throw new IDCardException(String.Format(Label.ID_Card_Invalid_Promotion_Code_2, new String[] { requestInformation.request.payment.promotionCode }));
             if (promotionLst.get(0).Promotion_Duration_Valid_Up_to__c < Date.today())
                 throw new IDCardException(Label.ID_Card_Promotion_Code_No_Longer_Valid);
             if (promotionLst.get(0).Promotion_Duration_Valid_From__c > Date.today())
@@ -392,77 +586,71 @@ public with sharing class IDCard_MobileAppRenewalService
         }
     }
 
-    private static void setAgentSpecialization(ID_Card_Application__c newIDCA, IDCard_RenewalRequest request)
+    private static void setIDCAAgentSpecialization(RequestInformation requestInformation)
     {
-        newIDCA.ASF_Current_Function__c = null;
-        newIDCA.ASF_Percentage_of_Annual_Booking__c = null;
-        newIDCA.ASF_Market_Specialization__c = null;
-        newIDCA.ASF_Market_Specialization_Comment__c = null;
-        newIDCA.ASF_Market_Focus__c = null;
-        newIDCA.ASF_Specializing_on_Destination__c = null;
-        newIDCA.ASF_Completed_Travel_Courses__c = null;
-        newIDCA.ASF_Last_Completed_Travel_Course__c = null;
-        newIDCA.ASF_FAM_Trips__c = null;
+        requestInformation.newIDCA.ASF_Current_Function__c = null;
+        requestInformation.newIDCA.ASF_Percentage_of_Annual_Booking__c = null;
+        requestInformation.newIDCA.ASF_Market_Specialization__c = null;
+        requestInformation.newIDCA.ASF_Market_Specialization_Comment__c = null;
+        requestInformation.newIDCA.ASF_Market_Focus__c = null;
+        requestInformation.newIDCA.ASF_Specializing_on_Destination__c = null;
+        requestInformation.newIDCA.ASF_Completed_Travel_Courses__c = null;
+        requestInformation.newIDCA.ASF_Last_Completed_Travel_Course__c = null;
+        requestInformation.newIDCA.ASF_FAM_Trips__c = null;
 
-        if (request.specializationFields != null)
+        if (requestInformation.request.specializationFields != null)
         {
-            newIDCA.ASF_Current_Function__c = request.specializationFields.ASF_Current_Function;
-            newIDCA.ASF_Percentage_of_Annual_Booking__c = request.specializationFields.ASF_Percentage_of_Annual_Booking;
-            newIDCA.ASF_Market_Specialization__c = request.specializationFields.ASF_Market_Specialization;
-            newIDCA.ASF_Market_Specialization_Comment__c = request.specializationFields.ASF_Market_Specialization_Comment;
-            newIDCA.ASF_Market_Focus__c = request.specializationFields.ASF_Market_Focus;
-            newIDCA.ASF_Specializing_on_Destination__c = request.specializationFields.ASF_Specializing_on_Destination;
-            newIDCA.ASF_Completed_Travel_Courses__c = request.specializationFields.ASF_Completed_Travel_Courses;
-            newIDCA.ASF_Last_Completed_Travel_Course__c = request.specializationFields.ASF_Last_Completed_Travel_Course;
-            newIDCA.ASF_FAM_Trips__c = request.specializationFields.ASF_FAM_Trips;
+            requestInformation.newIDCA.ASF_Current_Function__c = requestInformation.request.specializationFields.ASF_Current_Function;
+            requestInformation.newIDCA.ASF_Percentage_of_Annual_Booking__c = requestInformation.request.specializationFields.ASF_Percentage_of_Annual_Booking;
+            requestInformation.newIDCA.ASF_Market_Specialization__c = requestInformation.request.specializationFields.ASF_Market_Specialization;
+            requestInformation.newIDCA.ASF_Market_Specialization_Comment__c = requestInformation.request.specializationFields.ASF_Market_Specialization_Comment;
+            requestInformation.newIDCA.ASF_Market_Focus__c = requestInformation.request.specializationFields.ASF_Market_Focus;
+            requestInformation.newIDCA.ASF_Specializing_on_Destination__c = requestInformation.request.specializationFields.ASF_Specializing_on_Destination;
+            requestInformation.newIDCA.ASF_Completed_Travel_Courses__c = requestInformation.request.specializationFields.ASF_Completed_Travel_Courses;
+            requestInformation.newIDCA.ASF_Last_Completed_Travel_Course__c = requestInformation.request.specializationFields.ASF_Last_Completed_Travel_Course;
+            requestInformation.newIDCA.ASF_FAM_Trips__c = requestInformation.request.specializationFields.ASF_FAM_Trips;
         }
     }
 
-    private static void setAgentSpecialization(Id_Card__c idCard, ID_Card_Application__c newIDCA, ID_Card_Application__c oldIDCA)
+    private static void setIDCAgentSpecialization(RequestInformation requestInformation)
     {
         // if there is any blank on the request: get the values from the previous IDC
         Id_Card__c oldIdCard = null;
+        ID_Card_Application__c newIDCA = requestInformation.newIDCA;
+
         if (String.isBlank(newIDCA.ASF_Current_Function__c) || String.isBlank(newIDCA.ASF_Percentage_of_Annual_Booking__c)
             || String.isBlank(newIDCA.ASF_Market_Specialization__c) || String.isBlank(newIDCA.ASF_Market_Focus__c)
             || String.isBlank(newIDCA.ASF_Specializing_on_Destination__c) || String.isBlank(newIDCA.ASF_Completed_Travel_Courses__c)
             || String.isBlank(newIDCA.ASF_Last_Completed_Travel_Course__c) || String.isBlank(newIDCA.ASF_FAM_Trips__c))
         {
-            try
-            {
-                oldIdCard = getIdCardFromApplication(oldIDCA);
-            } catch (Exception e) {
-                // NOTHING
-            }
+            oldIdCard = requestInformation.lastIDC;
         }
 
-        idCard.ASF_Current_Function__c = String.isBlank(newIDCA.ASF_Current_Function__c) && oldIdCard != null ? oldIdCard.ASF_Current_Function__c : newIDCA.ASF_Current_Function__c;
-        idCard.ASF_Percentage_of_Annual_Booking__c = String.isBlank(newIDCA.ASF_Percentage_of_Annual_Booking__c) && oldIdCard != null ? oldIdCard.ASF_Percentage_of_Annual_Booking__c : newIDCA.ASF_Percentage_of_Annual_Booking__c;
-        idCard.ASF_Market_Specialization__c = String.isBlank(newIDCA.ASF_Market_Specialization__c) && oldIdCard != null ? oldIdCard.ASF_Market_Specialization__c : newIDCA.ASF_Market_Specialization__c;
-        idCard.ASF_Market_Specialization_Comment__c = String.isBlank(newIDCA.ASF_Market_Specialization_Comment__c) && oldIdCard != null ? oldIdCard.ASF_Market_Specialization_Comment__c : newIDCA.ASF_Market_Specialization_Comment__c;
-        idCard.ASF_Market_Focus__c = String.isBlank(newIDCA.ASF_Market_Focus__c) && oldIdCard != null ? oldIdCard.ASF_Market_Focus__c : newIDCA.ASF_Market_Focus__c;
-        idCard.ASF_Specializing_on_Destination__c = String.isBlank(newIDCA.ASF_Specializing_on_Destination__c) && oldIdCard != null ? oldIdCard.ASF_Specializing_on_Destination__c : newIDCA.ASF_Specializing_on_Destination__c;
-        idCard.ASF_Completed_Travel_Courses__c = String.isBlank(newIDCA.ASF_Completed_Travel_Courses__c) && oldIdCard != null ? oldIdCard.ASF_Completed_Travel_Courses__c : newIDCA.ASF_Completed_Travel_Courses__c;
-        idCard.ASF_Last_Completed_Travel_Course__c = String.isBlank(newIDCA.ASF_Last_Completed_Travel_Course__c) && oldIdCard != null ? oldIdCard.ASF_Last_Completed_Travel_Course__c : newIDCA.ASF_Last_Completed_Travel_Course__c;
-        idCard.ASF_FAM_Trips__c = String.isBlank(newIDCA.ASF_FAM_Trips__c) && oldIdCard != null ? oldIdCard.ASF_FAM_Trips__c : newIDCA.ASF_FAM_Trips__c;
-        update idCard;
+        requestInformation.newIDC.ASF_Current_Function__c = String.isBlank(newIDCA.ASF_Current_Function__c) && oldIdCard != null ? oldIdCard.ASF_Current_Function__c : newIDCA.ASF_Current_Function__c;
+        requestInformation.newIDC.ASF_Percentage_of_Annual_Booking__c = String.isBlank(newIDCA.ASF_Percentage_of_Annual_Booking__c) && oldIdCard != null ? oldIdCard.ASF_Percentage_of_Annual_Booking__c : newIDCA.ASF_Percentage_of_Annual_Booking__c;
+        requestInformation.newIDC.ASF_Market_Specialization__c = String.isBlank(newIDCA.ASF_Market_Specialization__c) && oldIdCard != null ? oldIdCard.ASF_Market_Specialization__c : newIDCA.ASF_Market_Specialization__c;
+        requestInformation.newIDC.ASF_Market_Specialization_Comment__c = String.isBlank(newIDCA.ASF_Market_Specialization_Comment__c) && oldIdCard != null ? oldIdCard.ASF_Market_Specialization_Comment__c : newIDCA.ASF_Market_Specialization_Comment__c;
+        requestInformation.newIDC.ASF_Market_Focus__c = String.isBlank(newIDCA.ASF_Market_Focus__c) && oldIdCard != null ? oldIdCard.ASF_Market_Focus__c : newIDCA.ASF_Market_Focus__c;
+        requestInformation.newIDC.ASF_Specializing_on_Destination__c = String.isBlank(newIDCA.ASF_Specializing_on_Destination__c) && oldIdCard != null ? oldIdCard.ASF_Specializing_on_Destination__c : newIDCA.ASF_Specializing_on_Destination__c;
+        requestInformation.newIDC.ASF_Completed_Travel_Courses__c = String.isBlank(newIDCA.ASF_Completed_Travel_Courses__c) && oldIdCard != null ? oldIdCard.ASF_Completed_Travel_Courses__c : newIDCA.ASF_Completed_Travel_Courses__c;
+        requestInformation.newIDC.ASF_Last_Completed_Travel_Course__c = String.isBlank(newIDCA.ASF_Last_Completed_Travel_Course__c) && oldIdCard != null ? oldIdCard.ASF_Last_Completed_Travel_Course__c : newIDCA.ASF_Last_Completed_Travel_Course__c;
+        requestInformation.newIDC.ASF_FAM_Trips__c = String.isBlank(newIDCA.ASF_FAM_Trips__c) && oldIdCard != null ? oldIdCard.ASF_FAM_Trips__c : newIDCA.ASF_FAM_Trips__c;
+        update requestInformation.newIDC;
     }
 
-    private static void setWebStarField(Id_Card__c idCard, ID_Card_Application__c oldIDCA)
+    private static void setWebStarField(RequestInformation requestInformation)
     {
-        // if there is any blank on the request: get the values from the previous IDC
-        Id_Card__c oldIdCard = getIdCardFromApplication(oldIDCA);
-
-        if (oldIdCard != null && oldIdCard.WebStar_P00_Key__c != null)
+        if (requestInformation.lastIDC != null && requestInformation.lastIDC.WebStar_P00_Key__c != null)
         {
-            idCard.WebStar_P00_Key__c = oldIdCard.WebStar_P00_Key__c;
-            update idCard;
+            requestInformation.newIDC.WebStar_P00_Key__c = requestInformation.lastIDC.WebStar_P00_Key__c;
+            update requestInformation.newIDC;
         }
     }
 
-    private static void setTrainingCourses(ID_Card_Application__c newIDCA, IDCard_RenewalRequest request)
+    private static void setTrainingCourses(RequestInformation requestInformation)
     {
-        IDCard_RenewalRequest.Items training1 = getRequestItem(request, RENEWAL_ITEM_TRAINING_1);
-        IDCard_RenewalRequest.Items training2 = getRequestItem(request, RENEWAL_ITEM_TRAINING_2);
+        IDCard_RenewalRequest.Items training1 = getRequestItem(requestInformation.request, RENEWAL_ITEM_TRAINING_1);
+        IDCard_RenewalRequest.Items training2 = getRequestItem(requestInformation.request, RENEWAL_ITEM_TRAINING_2);
 
         if (training1 == null && training2 != null)
         {
@@ -470,8 +658,8 @@ public with sharing class IDCard_MobileAppRenewalService
             training2 = null;
         }
 
-        newIDCA.Package_of_Travel_Professionals_Course_1__c = training1 == null ? null : training1.training;
-        newIDCA.Package_of_Travel_Professionals_Course_2__c = training2 == null ? null : training2.training;
+        requestInformation.newIDCA.Package_of_Travel_Professionals_Course_1__c = training1 == null ? null : training1.training;
+        requestInformation.newIDCA.Package_of_Travel_Professionals_Course_2__c = training2 == null ? null : training2.training;
     }
 
     private static IDCard_RenewalRequest.Items getRequestItem(IDCard_RenewalRequest request, String code)
@@ -500,8 +688,74 @@ public with sharing class IDCard_MobileAppRenewalService
         return amount;
     }
 
+    private static ID_Card_Application__c createIDCAForUSAgent(RequestInformation requestInformation)
+    {
+        ID_Card__c lastIDCard = requestInformation.lastIDC;
 
-    private static ID_Card_Application__c getCurrentIDCA(String iataCode, String verNumber)
+        ID_Card_Application__c objApp = new ID_Card_Application__c();
+        objApp.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard');
+        objApp.Approving_Manager_s_Name__c = lastIDCard.Approving_Manager_s_Name__c;
+        objApp.Approving_Manager_s_Email__c = lastIDCard.Approving_Manager_s_Email__c;
+        objApp.CurrencyIsoCode = lastIDCard.CurrencyIsoCode;
+        objApp.Date_of_Birth__c = lastIDCard.Date_of_Birth__c;
+        objApp.Duties_in_Current_Agency__c = lastIDCard.Duties__c;
+        objApp.Email_admin__c = lastIDCard.Email__c;
+        objApp.ID_Card_Fee__c = lastIDCard.Fee_Applicable__c;
+        objApp.First_Name__c = lastIDCard.FirstName__c;
+        objApp.Gender__c = lastIDCard.Gender__c;
+        objApp.Hours_worked__c = lastIDCard.Hours_per_week__c;
+        objApp.IDCard_Expedite_Delivery__c = lastIDCard.Is_Expedite__c;
+        objApp.Last_Name__c = lastIDCard.LastName__c;
+        objApp.Middle_Initial__c = lastIDCard.Middle_Initial__c;
+        objApp.Displayed_Name__c = lastIDCard.Name_on_ID_Card__c;
+        objApp.Type_of_application__c = getIdCardApplicationTypeFromNature(lastIDCard.Nature_of_ID_Card__c);
+        objApp.Position_in_Current_Agency__c = lastIDCard.Position__c;
+        objApp.Photo__c = lastIDCard.Photo__c;
+        objApp.Telephone__c = lastIDCard.Phone__c;
+        objApp.Profit_Center__c = lastIDCard.Profit_Center__c;
+        objApp.Payment_Type__c = lastIDCard.Payment_Type__c;
+        objApp.Renewal_From_Replace__c = lastIDCard.Renewal_From_Replace__c;
+        objApp.Start_Date_Industry__c = lastIDCard.Start_Date_Industry__c;
+        objApp.Start_Date_Agency_Month__c = lastIDCard.Start_Date_Agency_Month__c;
+        objApp.Start_Date_Agency_Year__c = lastIDCard.Start_Date_Agency_Year__c;
+        objApp.Title__c = lastIDCard.Title__c;
+        objApp.VER_Number__c = lastIDCard.VER_Number__c;
+        objApp.IATA_Code__c = requestInformation.iataCode;
+        objApp.UIR__c = null;
+        if (String.isNotBlank(objApp.Photo__c))
+        {
+            objApp.UIR__c = objApp.Photo__c;
+            if (objApp.Photo__c.indexOfAny('.') != -1)
+                objApp.UIR__c = objApp.Photo__c.subString(0, objApp.Photo__c.indexOfAny('.'));
+        }
+        objApp.ASF_Current_Function__c = null;
+        objApp.ASF_Percentage_of_Annual_Booking__c = null;
+        objApp.ASF_Market_Specialization__c = null;
+        objApp.ASF_Market_Specialization_Comment__c = null;
+        objApp.ASF_Market_Focus__c = null;
+        objApp.ASF_Specializing_on_Destination__c = null;
+        objApp.ASF_Completed_Travel_Courses__c = null;
+        objApp.ASF_Last_Completed_Travel_Course__c = null;
+        objApp.ASF_FAM_Trips__c = null;
+
+        System.debug('Created IDCA for US Agents: ' + objApp);
+        return objApp;
+    }
+
+    private static String getIdCardApplicationTypeFromNature(String natureOfIdCard)
+    {
+        if (IDCardUtil.IDCARDNATURE_NEW.equals(natureOfIdCard))
+            return IDCardUtil.APPLICATIONTYPE_NEW;
+        else if (IDCardUtil.IDCARDNATURE_REPLACEMENT.equals(natureOfIdCard))
+            return IDCardUtil.APPLICATIONTYPE_REPLACEMENT;
+        else if (IDCardUtil.IDCARDNATURE_RENEWAL.equals(natureOfIdCard))
+            return IDCardUtil.APPLICATIONTYPE_RENEWAL;
+        else if (IDCardUtil.IDCARDNATURE_REISSUE.equals(natureOfIdCard))
+            return IDCardUtil.APPLICATIONTYPE_REISSUE;
+        return null;
+    }
+
+    private static ID_Card_Application__c getCurrentIDCA(RequestInformation requestInformation)
     {
         ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
 
@@ -509,10 +763,10 @@ public with sharing class IDCard_MobileAppRenewalService
                                         i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c, i.ID_Card_Application__c
                                      FROM ID_Card__c i
                                      WHERE i.RecordTypeId = :rectypeid
-                                        AND i.VER_Number__c = :verNumber
+                                        AND i.VER_Number__c = :requestInformation.verNumber
                                         AND i.Card_Status__c != :IDCardUtil.CARDSTATUS_CANCELED
                                         AND i.ID_Card_Application__c != NULL
-                                     ORDER BY i.Valid_To_Date__c DESC
+                                     ORDER BY i.Valid_To_Date__c DESC, i.CreatedDate DESC, i.Name DESC
                                      LIMIT 1];
 
         if (allCards.isEmpty())
@@ -546,21 +800,23 @@ public with sharing class IDCard_MobileAppRenewalService
         return idCard;
     }
     
-    private static void checkPendingCases(Contact contact, String verNumber, String iataCode)
+    private static void checkPendingCases(RequestInformation requestInformation)
     {
         List<Case> pendingCase = [SELECT Id 
                                   FROM Case
                                   WHERE RecordType.Name = 'ID Card Application'
-                                      AND Contact.Id = :contact.Id
+                                      AND Contact.Id = :requestInformation.contact.Id
                                       AND status <> 'Closed'
                                       LIMIT 1];
         
-        String tempVerNumber = 'Z' + verNumber;
+        String tempVerNumber = 'Z' + requestInformation.verNumber;
         List<ID_Card_Application__c> pendingIdCardsApp = [SELECT Id
                                                           FROM ID_Card_Application__c
                                                           WHERE RecordType.Name = 'Single ID Card Operation' 
-                                                                  AND (VER_Number__c = :verNumber OR VER_Number__c = :tempVerNumber)
-                                                                  AND (Application_Status__c = 'Pending' OR Application_Status__c = 'Unpaid')
+                                                                  AND (VER_Number__c = :requestInformation.verNumber
+                                                                       OR VER_Number__c = :tempVerNumber)
+                                                                  AND (Application_Status__c = 'Pending'
+                                                                       OR Application_Status__c = 'Unpaid')
                                                           LIMIT 1];
         if (! pendingCase.isEmpty())
             throw new IDCardException('There is already a pending case application');
@@ -581,18 +837,33 @@ public with sharing class IDCard_MobileAppRenewalService
         return listPriceTables.get(0);
     }
 
-    private static void checkBlacklistedCard(Contact contact, String verNumber, String iataCode)
+    private static void checkBlacklistedCard(RequestInformation requestInformation)
     {
-        for (ID_Card__c aCard : [SELECT Id, Blacklisted__c, Card_Status__c
-                                 FROM ID_Card__c
-                                 WHERE Related_Contact__c = :contact.Id
-                                 ORDER BY CreatedDate DESC])
+        List<ID_Card__c> aCards;
+        if (requestInformation.contact == null)
+        {
+            aCards = [SELECT Id, Blacklisted__c, Card_Status__c
+                      FROM ID_Card__c
+                      WHERE VER_Number__c = :requestInformation.verNumber
+                      ORDER BY CreatedDate DESC];
+        }
+        else
+        {
+            aCards = [SELECT Id, Blacklisted__c, Card_Status__c
+                      FROM ID_Card__c
+                      WHERE Related_Contact__c = :requestInformation.contact.Id
+                      ORDER BY CreatedDate DESC];
+        }
+
+        for (ID_Card__c aCard : aCards)
         {
             if (aCard.Blacklisted__c)
             {
-                mailAlertOnBlackListedConnection(aCard, verNumber, iataCode);
+                mailAlertOnBlackListedConnection(aCard, requestInformation.verNumber, requestInformation.iataCode);
                 throw new IDCardException('Your IATA/IATAN ID Card has been blacklisted. For more information, please kindly contact IATA Customer Service on www.iata.org/cs');
             }
+
+            break;
         }
     }
 
@@ -616,16 +887,16 @@ public with sharing class IDCard_MobileAppRenewalService
         }*/
     }
     
-    private static void postPardot(ID_Card_Application__c currentIDCA, IDCard_RenewalRequest request, Case c)
+    private static void postPardot(RequestInformation requestInformation)
     {
-        if (request.payment == null || ! sendPardot())
+        if (requestInformation.request.payment == null || ! sendPardot())
             return;
 
-        String payLoad = 'email=' + currentIDCA.Email_admin__c;
-        payLoad += '&paymentDate=' + request.payment.orderDate;
-        payLoad += '&paymentAmount=' + request.payment.amount;
-        payLoad += '&paymentCurrency=' + request.payment.cur;
-        payLoad += '&CaseNumber=' + c.CaseNumber;
+        String payLoad = 'email=' + requestInformation.newIDCA.Email_admin__c;
+        payLoad += '&paymentDate=' + requestInformation.request.payment.orderDate;
+        payLoad += '&paymentAmount=' + requestInformation.request.payment.amount;
+        payLoad += '&paymentCurrency=' + requestInformation.request.payment.cur;
+        payLoad += '&CaseNumber=' + requestInformation.idcaCase.CaseNumber;
 
         system.debug('Post pardor payLoad: ' + payLoad);
 
@@ -669,12 +940,17 @@ public with sharing class IDCard_MobileAppRenewalService
 
     public static String getAccountType(Contact contact)
     {
-        return IDCardUtil.GetAgentTypeFromAccountType(contact.Account.Type);
+        return getAccountType(contact.Account);
     }
 
     public static String getAccountType(String iataCode)
     {
         Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(iataCode);
+        return getAccountType(theAccount);
+    }
+
+    public static String getAccountType(Account theAccount)
+    {
         return IDCardUtil.GetAgentTypeFromAccountType(theAccount.Type);
     }
 
@@ -698,9 +974,53 @@ public with sharing class IDCard_MobileAppRenewalService
                                     AND c.Account.type IN :IDCardUtil.ALLOWED_ACCOUNT_TYPES
                                     AND c.VER_Number_2__c = :verNumber];
 
-        if (contacts == null || contacts.size() == 0)
+        if (contacts == null || contacts.isEmpty())
             throw new IDCardException(Label.IDCard_NoContactsFound);
         return contacts.get(0);
+    }
+
+    public static Contact getContact(String verNumber)
+    {
+        System.debug('Looking for any Contact for the ver# ' + verNumber);
+
+        List<Contact> contacts = [SELECT c.VER_Number_2__c, c.FirstName, c.LastName, c.Date_of_Birth__c,
+                                    c.Account.IDCard_Key_Account__c, c.Account.Type, c.Account.Short_Name__c,
+                                    c.Account.Is_AIMS_Account__c , c.Id, c.Account.Status__c, c.Account.IATACode__c,
+                                    c.Account.ID_Card_KeyAccount_features__c
+                                  FROM Contact c
+                                  WHERE c.VER_Number_2__c = :verNumber];
+
+        if (contacts == null || contacts.isEmpty())
+            return null;
+
+        System.debug('Found result: ' + contacts.get(0));
+        return contacts.get(0);
+    }
+
+    private class RequestInformation
+    {
+        public Boolean isUSAgent = false;
+        public String iataCode;
+        public String verNumber;
+        public IDCard_RenewalRequest request;
+        public Contact contact;
+        public IATA_ISO_Country__c contactCountry;
+        public String accountType;
+        public Price_Table__c prices;
+        public Account account;
+        public Case idcaCase;
+
+        ID_Card_Application__c lastIDCA;
+        ID_Card_Application__c newIDCA;
+        ID_Card__c lastIDC;
+        ID_Card__c newIDC;
+
+        public RequestInformation(String iataCode, String verNumber, IDCard_RenewalRequest request)
+        {
+            this.iataCode = iataCode;
+            this.verNumber = verNumber;
+            this.request = request;
+        }
     }
 
     public class IDCardException extends Exception { }
