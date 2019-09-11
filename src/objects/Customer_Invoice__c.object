@@ -428,11 +428,9 @@
         <description>Discount Due Date</description>
         <externalId>false</externalId>
         <label>Discount Due Date</label>
-        <length>7</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Discount_Due_Days__c</fullName>
@@ -601,19 +599,9 @@
                     <label>Partial Payment Accepted as per Dispute</label>
                 </value>
                 <value>
-                    <fullName>Delivered</fullName>
-                    <default>false</default>
-                    <label>Delivered</label>
-                </value>
-                <value>
                     <fullName>Rejected</fullName>
                     <default>false</default>
                     <label>Rejected</label>
-                </value>
-                <value>
-                    <fullName>File Delivered to Billed Member</fullName>
-                    <default>false</default>
-                    <label>File Delivered to Billed Member</label>
                 </value>
                 <value>
                     <fullName>Viewed by Billed Member</fullName>
@@ -624,6 +612,11 @@
                     <fullName>Dispute Resolved</fullName>
                     <default>false</default>
                     <label>Dispute Resolved</label>
+                </value>
+                <value>
+                    <fullName>Unpaid Invoice</fullName>
+                    <default>false</default>
+                    <label>Unpaid Invoice</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
