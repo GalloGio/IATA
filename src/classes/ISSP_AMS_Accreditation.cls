@@ -4450,7 +4450,7 @@ public without sharing class ISSP_AMS_Accreditation {
            query += field + ', ';
         }
 
-        query += 'Branch_Office_Country__r.Name, SAAM_Case__r.Reason1__c, Branch_Office_Country__r.ISO_Code__c, Branch_Office_Country__r.AMS_Settlement_System__c, Same_Legal_Entity_Agency_Form__r.Status__c, Same_Legal_Entity_Agency_Form__r.ISSP_Branch_AccountId__c ';
+        query += 'Branch_Office_Country__r.Name, SAAM_Case__r.Reason1__c, Branch_Office_Country__r.ISO_Code__c, Branch_Office_Country__r.AMS_Settlement_System__c, Same_Legal_Entity_Agency_Form__r.Status__c, Same_Legal_Entity_Agency_Form__r.ISSP_Branch_AccountId__c, SAAM_Case__r.Account.Category__c, Same_Legal_Entity_Agency_Form__r.HO_Account__c ';
         query += 'FROM AMS_Pax_Accreditation_Form__c ';
         
         if (String.isNotBlank(currentMCFormId)) {
@@ -7874,7 +7874,7 @@ public without sharing class ISSP_AMS_Accreditation {
         
         String pageURL = '/';
 
-        if (newForm.HO_Account__c == null) {
+        if (String.isBlank(newForm.Same_Legal_Entity_Agency_Form__r.HO_Account__c)) {
             pageURL += 'ISSP_ANG_PAX_AE?caseId=' + newCase.Id + commParam +'&step=3&isMultiCountryNewAE=true&currentMCFormId=' + newForm.Same_Legal_Entity_Agency_Form__c + '&step=3#nav_three';
         } else {
             pageURL += 'ISSP_ANG_PAX_HE?caseId=' + newCase.Id + commParam +'&step=3&currentMCFormId=' + newForm.Same_Legal_Entity_Agency_Form__c + '&step=3#nav_three';
