@@ -174,13 +174,12 @@ public class HigherLogicIntegrationHelper {
 	* Processes each User/Account pair 
 	* and pushes their detail into HigherLogic
 	*
-	* @param operation: String
+	* @param operation: String . One of 4 possible values: PUSH_MEMBERS, PUSH_INTERNAL_MEMBERS, PUSH_EXISTING_MEMBERS, DISABLE_EXISTING_MEMBERS
 	* @param contactIdSet: Set<Id>
-	* @param provAcctId: Id
 	*
 	*/
 	@future(callout=true)
-	public static void pushPersonCompanyMembers(String operation, Set<Id> contactIdSet, Id provAcctId){
+	public static void pushPersonCompanyMembers(String operation, Set<Id> contactIdSet){
 	
 		String whereClause = '';
 		if (operation == PUSH_INTERNAL_MEMBERS){
@@ -243,11 +242,13 @@ public class HigherLogicIntegrationHelper {
 				continue;	
 			}
 			
-			Id accId = provAcctId;
+			Id accId;
 			
 			if (operation == PUSH_MEMBERS){
 				accId = fetchAssociatedAccountId(newUser);
 			}
+			//Only for Internal users
+			else accId = ProvisionKaviAccess.IATASSWAccount.Id;
 
 			newAccountsIds.add(accId);
 			contactIdMap.put(accId, contactId);

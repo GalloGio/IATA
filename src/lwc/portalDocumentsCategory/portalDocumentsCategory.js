@@ -40,10 +40,11 @@ export default class PortalDocumentsCategory extends LightningElement {
             let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
 
             this._documentObject = _value;
-            if(_value.topResults !== __documentObject.topResults ||
+            if((_value.topResults !== __documentObject.topResults ||
                 _value.searchText !== __documentObject.searchText ||
                 _value.productCategory !== __documentObject.productCategory ||
-                _value.countryOfPublication !== __documentObject.countryOfPublication) {
+                _value.countryOfPublication !== __documentObject.countryOfPublication) ||
+                _value.show !== __documentObject.show) {
 
                 this.resetPagination();
                 this.searchDocuments();
@@ -112,7 +113,7 @@ export default class PortalDocumentsCategory extends LightningElement {
                                 title: docs[el].Title, 
                                 desc: docs[el].Description, 
                                 prodCat: docs[el].Product_Category__c, 
-                                countryPubli: docs[el].Country_of_publication__c.replace(/;/g, ', '), 
+                                countryPubli: docs[el].Country_of_publication__c !== undefined ? docs[el].Country_of_publication__c.replace(/;/g, ', ') : '', 
                                 category: docs[el].Document_Category__c, 
                                 language: docs[el].Language__c, 
                                 filetype: docs[el].FileType, 
@@ -129,8 +130,8 @@ export default class PortalDocumentsCategory extends LightningElement {
                             if(this._documentObject.topResults === false) { // INFINITE SCROLL
                                 this.concatValues = this.concatValues.concat(tempDocs[this._documentObject.name]);
                                 docsList.push({ key: key, value: this.concatValues, noResults: this.totalResults });
-                                    __documentObject.noResults = this.totalResults;
-                                } else {
+                                __documentObject.noResults = this.totalResults;
+                            } else {
                                 let noResults = results.totalItemCount > 10 ? '10+' : results.totalItemCount;
                                 docsList.push({ key: key, value: tempDocs[key], noResults: noResults });
                                 if(__documentObject.name === key) {
@@ -139,7 +140,7 @@ export default class PortalDocumentsCategory extends LightningElement {
                             }
                         }
                     }
-
+                    
                     const selectedEvent = new CustomEvent('categoryfilter', { bubbles: true, detail: __documentObject });
                     this.dispatchEvent(selectedEvent);
 
@@ -210,7 +211,7 @@ export default class PortalDocumentsCategory extends LightningElement {
                     __documentObject.categories[i].countryOfPublication = '';
                 }
             }
-
+    
             const selectedEvent = new CustomEvent('filter', { detail: __documentObject });
             this.dispatchEvent(selectedEvent);
     

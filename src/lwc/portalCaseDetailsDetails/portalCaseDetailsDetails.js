@@ -1,6 +1,11 @@
 import { LightningElement, track, api } from 'lwc';
+
+import { navigateToPage } from 'c/navigationUtils';
+
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import getFieldLabels from '@salesforce/apex/CSP_Utils.getSelectedColumns';
+import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
+import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
 
 import { getParamsFromPage } from 'c/navigationUtils';
 
@@ -9,12 +14,26 @@ import AddDocumentsMsg from '@salesforce/label/c.CSP_No_Documents_Message';
 import DocumentsLabel from '@salesforce/label/c.ISSP_Documents';
 import CaseDetails from '@salesforce/label/c.IDCard_CaseDetails';
 import RelatedAccount from '@salesforce/label/c.csp_CreateNewCaseMainPicklistLabel';
+import ISSP_Survey from '@salesforce/label/c.ISSP_Survey';
+import Open from '@salesforce/label/c.Open';
+
+
+/* PDF Labels */
+import ISSP_AMS_Download_PDF_Copy from '@salesforce/label/c.ISSP_AMS_Download_PDF_Copy';
+import ISSP_AMS_Download_PDF_NOC from '@salesforce/label/c.ISSP_AMS_Download_PDF_NOC';
+
+
+import PDFICON from '@salesforce/resourceUrl/PDF_icon_large';
 
 export default class PortalCaseDetailsDetails extends LightningElement {
 
     @track loading = true;
     @track caseDetails;
     @track caseId;
+    @track optionBuilder;
+    @track surveyLink;
+
+    @track pdfImage = PDFICON;
 
     @track showAddDocsModal = false;
 
@@ -25,7 +44,11 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         AddDocumentsMsg,
         CaseDetails,
         DocumentsLabel,
-        RelatedAccount
+        RelatedAccount,
+        ISSP_AMS_Download_PDF_Copy,
+        ISSP_AMS_Download_PDF_NOC,
+	ISSP_Survey,
+        Open
     };
 
     acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
@@ -41,7 +64,14 @@ export default class PortalCaseDetailsDetails extends LightningElement {
             getCaseById({ caseId: this.pageParams.caseId })
                 .then(results => {
                     this.caseDetails = results;
+
+                    optionBuilder({ caseObj: results })
+                        .then(result => {
+                            this.optionBuilder = result;
+                        });
+
                     this.loading = false;
+                    this.getSurveyLink();
                 })
                 .catch(error => {
                     console.log('error: ', error);
@@ -61,11 +91,11 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
             });
         }
-
+        
     }
 
     renderedCallback() {
-        
+
         if (this.pageParams.Att !== undefined && this.pageParams.Att === "true") {
             //display modal on attachment component
             this.toggleCollapsed('[data-docdiv]', 'collapsed');
@@ -74,6 +104,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
             this.pageParams.Att = "";
             console.log('open sayz me!');
         }
+        
     }
 
     get hasTopic() {
@@ -101,11 +132,114 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     }
 
     get hasDescription() {
-        return this.caseDetails !== undefined && this.caseDetails.Description !== undefined;
+        return this.caseDetails !== undefined && this.caseDetails.Description !== undefined && !(this.caseDetails.RecordType.Name === 'SAAM' || this.caseDetails.RecordType.Name === 'OSCAR Communication' || this.caseDetails.RecordType.Name === 'SIDRA');
     }
+
     get showNrDocs() {
         return this.nrDocs > 0;
     }
+    get hasSurveyLink() {
+        return this.surveyLink !== undefined && this.surveyLink.length > 0;
+    }
+
+    get hasAccount() {
+        return this.caseDetails !== undefined && this.caseDetails.AccountId !== undefined;
+    }
+
+    openCompanyProfile() {
+        navigateToPage("company-profile");
+    }
+
+    get hasContact() {
+        return this.caseDetails !== undefined && this.caseDetails.ContactId !== undefined;
+    }
+
+    openCompanyProfileContactTab() {
+        navigateToPage("company-profile?tab=contact&contactName=" + this.caseDetails.Contact.FirstName + ' ' + this.caseDetails.Contact.LastName);
+    }
+
+    get getDisplayPDF() {
+        let caseDetailsLocal = this.caseDetails;
+
+        if (this.optionBuilder) {
+            return this.optionBuilder.isOnlineOSCARCase && this.optionBuilder.showAccreditation && !this.optionBuilder.isMSOcase && caseDetailsLocal.Reason1__c !== 'FoP Management' && caseDetailsLocal.Reason1__c !== 'PCI DSS Compliant' && caseDetailsLocal.Reason1__c !== 'CLO - Closure' &&
+                caseDetailsLocal.Reason1__c !== 'New MSO' && caseDetailsLocal.Reason1__c !== 'Financial review opt-in / opt-out' &&
+                caseDetailsLocal.Reason1__c !== 'Annual revalidation';
+        }
+        return null;
+    }
+
+    get getPDF1() {
+
+        let caseDetailsLocal = this.caseDetails;
+        if (this.optionBuilder) {
+            return this.optionBuilder.isOnlineOSCARCase && this.optionBuilder.showAccreditation &&
+                caseDetailsLocal.Reason1__c.startsWith('New') && caseDetailsLocal.Reason1__c !== 'New HE standard' &&
+                caseDetailsLocal.Reason1__c !== 'New HE lite' && caseDetailsLocal.Reason1__c !== 'New AE';
+        }
+        return null;
+    }
+
+    get getPDFLink1() {
+        if (this.optionBuilder) {
+            let link = '';
+            if (this.optionBuilder.isTravelAccreditation) {
+                link = '/ISSP_AMS_PDF_ApplicationForm?caseId=' + this.caseDetails.Id;
+            } else {
+                link = '/ISSP_AMS_PDF_CGO?caseId=' + this.caseDetails.Id;
+            }
+
+            return link;
+        }
+        return null;
+    }
+
+    get getPDF2_3() {
+        if (this.caseDetails) {
+            return this.caseDetails.Reason1__c === 'Bank Detail Update' || this.caseDetails.Reason1__c.startsWith('CH') ||
+                this.caseDetails.Reason1__c.startsWith('CL') || this.caseDetails.Reason1__c === 'Major Change';
+        }
+        return null;
+    }
+
+    get getPDFLink2_3() {
+        if (this.optionBuilder) {
+            let link = this.optionBuilder.fullnameNOCFile;
+            return link;
+        }
+        return null;
+    }
+
+    get getPDF4() {
+        if (this.caseDetails) {
+            return this.caseDetails.Reason1__c === 'New HE standard' || this.caseDetails.Reason1__c === 'New HE lite';
+        }
+        return null;
+    }
+
+    get getPDFLink4() {
+        if (this.optionBuilder) {
+            let link = '/ISSP_AMS_PDF_ANG_PAX_HE?caseId=' + this.caseDetails.Id;
+            return link;
+        }
+        return null;
+    }
+
+    get getPDF5() {
+        if (this.caseDetails) {
+            return this.caseDetails.Reason1__c === 'New AE';
+        }
+        return null;
+    }
+
+    get getPDFLink5() {
+        if (this.optionBuilder) {
+            let link = '/ISSP_AMS_PDF_ANG_PAX_AE?caseId=' + this.caseDetails.Id;
+            return link;
+        }
+        return null;
+    }
+
 
     updateNdocs(event) {
         //sets nr of docs in panel
@@ -130,6 +264,16 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     handleClick() {
         //display modal on attachment component
         this.showAddDocsModal = true;
+    }
+
+    getSurveyLink(){
+        getSurveyLink({ caseId: this.caseId })
+            .then(result => {
+                this.surveyLink = result;
+            })
+            .catch(error => {
+                this.surveyLink = undefined;
+            });
     }
 
 }

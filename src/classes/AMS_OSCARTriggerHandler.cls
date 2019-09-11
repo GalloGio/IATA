@@ -132,6 +132,8 @@ public class AMS_OSCARTriggerHandler {
     }
     /*** AMSU-121 End ***/
 
+    public static List<Account> accToGenerateCC = new List<Account>();
+
     //*************************************
     //********* context methods ***********
     //*************************************
@@ -778,7 +780,7 @@ public class AMS_OSCARTriggerHandler {
                     Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
                     Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
                     Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
-                    ,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name
+                    ,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, ISSP_AMS_Total_Current_Ownership__c
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE Id IN :oscarOnlineAccredIds]);
 
@@ -2155,9 +2157,10 @@ public class AMS_OSCARTriggerHandler {
             System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCARTriggerHandler - mergeAccountsToUpdate] a - ' + a);
             if(a!=null) {
 
-                if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(a.Id) ||
-                    (accounts.get(a.Id).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accounts.get(a.Id).Top_Parent__c)))
-                    a.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accounts.get(a.Id).Top_Parent__c == null ? a.Id : accounts.get(a.Id).Top_Parent__c);
+                if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(a.id))
+                    a.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(a.id);
+                else if(a.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(a.Top_Parent__c))
+                    a.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(a.Top_Parent__c);
 
                 mergedAccountsToUpdate.add(a);
             }
@@ -3660,7 +3663,7 @@ public class AMS_OSCARTriggerHandler {
 
 
                 /*** AMSU-31 Start ***/
-                Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD};
+                Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD, AMS_Utils.NEWAE};
                 Set<String> classesToCheck = new Set<String> {'P', 'D'}; 
                 if(classesToCheck.contains(updatedOscar.Location_Class__c) && processesToCheck.contains(updatedOscar.Process__c)) {
                     oscarsToCreateAuth.add(updatedOscar);
@@ -3766,7 +3769,7 @@ public class AMS_OSCARTriggerHandler {
                             Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
                             Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
                             Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, Scope_of_Change__c, 
-                            Link_agent_name__c, Link_agent_name__r.Name  //AMSU-151
+                            Link_agent_name__c, Link_agent_name__r.Name  /*AMSU-151 */ , ISSP_AMS_Total_Current_Ownership__c
                             FROM AMS_Pax_Accreditation_Form__c
                             WHERE Id IN :oscarOnlineAccredIds]);
 
@@ -3965,6 +3968,8 @@ public class AMS_OSCARTriggerHandler {
                         if(isAllHierarchySelected){
                             //agenciesAffected.addAll(accounts.keySet());
                             agenciesAffected.add(hierarchyHO);
+                            //add also the account from the oscar to apply the changes in the oscar's account.
+                            agenciesAffected.add(updatedOscar.Account__c);
                         }
 
                         System.debug('agenciesAffected: ' + agenciesAffected );
@@ -3975,11 +3980,15 @@ public class AMS_OSCARTriggerHandler {
                         System.debug('accountsToUpdate: ' + accountsToUpdate );
 
 
-                        Set<Account> accountToupdateSet = new Set<Account>();                        
-                        for(Id acctId : accountsToUpdate.keySet())
-                        {
+                        Set<Account> accountToupdateSet = new Set<Account>();
+                        List<Account> accountsToUpd = new List<Account>();                    
+                        for(Id acctId : accountsToUpdate.keySet()){
+                            accountsToUpd.add(accounts.get(acctId));
                             accountToupdateSet.add(accounts.get(acctId));
                         }
+                        //Set account to generate Change Code (COR/CAD) - only when an owner has been changed
+                        //related to HK project - When a correction is performed the previous Owner are always deleted and created a new ones
+                        accountToupdateSet.addAll(accToGenerateCC);
 
                         //Go throught all account
                         for(Account forAccount : accountToupdateSet){
@@ -4010,24 +4019,22 @@ public class AMS_OSCARTriggerHandler {
                                 }
                             }
 
-                            if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(forAccount.Id) ||
-                                (accounts.get(forAccount.Id).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accounts.get(forAccount.Id).Top_Parent__c)))
-                                forAccount.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accounts.get(forAccount.Id).Top_Parent__c == null ? forAccount.Id : accounts.get(forAccount.Id).Top_Parent__c);
+                             if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(acct_reason.id))
+                                acct_reason.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(acct_reason.id);
+                            else if(acct_reason.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(acct_reason.Top_Parent__c))
+                                acct_reason.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(acct_reason.Top_Parent__c);
 
                             System.debug('auxChangeCodeHO: ' + auxChangeCodeHO );
                             System.debug('auxChangeCode: ' + auxChangeCode );
 
                             //lChangeCode.add(auxChangeCode);
                             lOscars.add(updatedOscar);
-
                         }
 
+                        List<Account> accToCreateCC = new List<Account>(accountToupdateSet);
+                        AMS_ChangeCodesHelper.createAAChangeCodes(lChangeCode, lOscars, accToCreateCC, true);
 
-                        List<Account> accountsToUpd = new List<Account>(accountToupdateSet);
-
-                        AMS_ChangeCodesHelper.createAAChangeCodes(lChangeCode, lOscars, accountsToUpd, true);
-
-                        update accountsToUpd ;
+                        update accountsToUpd;
 
                     }
                     if(updatedOscar.AMS_Correction_change_code__c == 'LET') {

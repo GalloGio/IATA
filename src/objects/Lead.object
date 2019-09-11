@@ -5552,6 +5552,15 @@ albam@iata.org</description>
         <unique>false</unique>
     </fields>
     <listViews>
+        <fullName>AME_Training_Leads_Lead</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AME Training Leads</label>
+        <queue>AME_Training_Leads</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>CCCLeadsPublications</fullName>
         <booleanFilter>(1 OR 2 )AND 3</booleanFilter>
         <columns>CORE.USERS.LAST_NAME</columns>

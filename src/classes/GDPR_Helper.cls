@@ -19,7 +19,7 @@ public without sharing class GDPR_Helper {
             return UserType.FORBID;
 
         try{
-            searchUsers = [SELECT ID FROM USER WHERE Email = :email ORDER BY LastModifiedDate];        
+            searchUsers = [SELECT ID FROM USER WHERE Email = :email ORDER BY LastModifiedDate DESC];        
             System.debug('[SEARCH USERS] - '+searchUsers);
         }catch(Exception e){
             System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
@@ -165,7 +165,7 @@ public without sharing class GDPR_Helper {
 
                     String token = String.valueOf(System.TODAY()).left(10)+email.toLowerCase(); //Ex: 2018.12.24myemail@gmail.com
                     String encryptedToken = Comm_User_Helper.EncryptString(token);
-                    String link = Label.IATA_GDPR_URL+'/s/guest-information?token='+encryptedToken;
+                    String link = Site.getBaseURL()+'/s/guest-information?token='+encryptedToken;
                     system.debug('link'+link);
                     sendAccessEmailUnknown(email, link);
                     
@@ -201,8 +201,9 @@ public without sharing class GDPR_Helper {
         String str = '<div style="background-color: #1E32FA; margin-bottom: 30px; font-family: Arial, Helvetica, sans-serif;">'+
         '<table style="color:white; font-size: 23px;font-weight: 600;">'+
             '<tr>'+
-            '<td><img style="width:100px;max-width:100%;height:auto; padding: 20px;" src="'+Label.IATA_GDPR_White_Logo+'" </td>'+
-            '<td>Signup &amp; Privacy Portal </td>'+
+            '<td><img style="margin-right:15px;margin-left:40px;margin-top:15px;margin-bottom:15px;width:73px;height:50px;" src="'+Label.IATA_GDPR_White_Logo+'"/></td>'+
+            '<td><hr style="margin-right:15px;height:34px; width:1px;background-color:#A5ADFD;"/></td>'+
+            '<td><p style="font-size:23px;">Signup &amp; Privacy Portal <p></td>'+
             '</tr>'+
         '</table>'+
         '</div>';
@@ -211,11 +212,31 @@ public without sharing class GDPR_Helper {
 
     public static String footerHtml() {
        String str = '<div style="background-color: #535151; margin-top: 30px; font-family: Arial, Helvetica, sans-serif;">'+
-        '<table style="color:white; font-size: 1.5em;">'+
+        '<table style="color:white; font-size: 23px; width:100%;">'+
             '<tr>'+
-            '<td><img style="width:100px;max-width:100%;height:auto; padding: 20px;" src="'+Label.IATA_GDPR_White_Logo+'" </td>'+
-            '<td>Our mission is to represent, lead and serve the airline industry</td>'+
+                '<td style="width:20%"><img style="margin-right:15px;margin-left:40px;margin-top:15px;margin-bottom:15px;width:73px;height:50px;" src="'+Label.IATA_GDPR_White_Logo+'" /></td>'+
+                '<td colspan="2" style="width:80%">Our mission is to represent, lead and serve the airline industry</td>'+            
             '</tr>'+
+            '<tr>'+
+                '<td style="width:100%;" colspan="3">'+
+                    '<hr style="margin-right:40px; margin-left:40px;"/>'+
+                '</td>'+
+            '</tr>'+
+            '<tr >'+
+            
+            '<td style="width:20%; text-align:center;">'+
+                '<span><a style="font-size:15px; text-decoration: none; color:#ffffff;" href="https://www.iata.org" target="_blank">www.IATA.org</a></span>'+
+            '</td>'+
+            '<td style="width:60%; text-align:center;">'+
+                '<span style="font-size:15px;">© International Air Transportation Association (IATA). All rights reserved.</span>'+
+            '</td>'+
+
+            '<td style="width:20%; text-align:center;">'+
+                '<a style="font-size:15px; text-decoration: none; color:#ffffff;" class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">Privacy policy</a>'+            
+            '</td>'+
+            
+          '</tr>'+
+
         '</table>'+
         '</div>';
         return str;
@@ -235,10 +256,10 @@ public without sharing class GDPR_Helper {
         String htmlBody = '<html>'+
                             '<body>'+
                                 headerHtml()+
-                                'Dear user,<br/><br/>'+ 
-                                'Please click on the following <a href="'+link+'">link</a> to complete your Portal registration.<br/><br/>'+
-                                'Best regards,<br/>'+
-                                'IATA Team'+
+                                'Thank you for your interest in IATA.<br/>'+ 
+                                'Please <a href="'+link+'">follow this link</a> to access our Signup & Privacy portal.<br/><br/>'+
+                                'All the best,<br/>'+
+                                'The IATA Team'+
                                     footerHtml()+
                             '</body>'+
                             '</html>';  
@@ -249,10 +270,10 @@ public without sharing class GDPR_Helper {
         String htmlBody = '<html>'+
                             '<body>'+
                                 headerHtml()+
-                                'Dear user,<br/><br/>'+ 
-                                'Please click on the following <a href="'+link+'">link</a> to access the Portal.<br/><br/>'+
-                                'Best regards,<br/>'+
-                                'IATA Team'+
+                                'Thank you for your interest in IATA.<br/>'+ 
+                                'Please <a href="'+link+'">follow this link</a>  to access our Signup & Privacy portal.<br/><br/>'+
+                                'All the best,<br/>'+
+                                'The IATA Team'+
                                 footerHtml()+
                             '</body>'+
                             '</html>';  
@@ -332,7 +353,7 @@ public without sharing class GDPR_Helper {
     private static List<Contact> searchContactsHelper(String email){
         List<Contact> searchContacts = new List<Contact>();
         try{
-            searchContacts = [SELECT ID, LastName, FirstName, IndividualId FROM CONTACT WHERE Email = :email ORDER BY LastModifiedDate];        
+            searchContacts = [SELECT ID, LastName, FirstName, IndividualId FROM CONTACT WHERE Email = :email ORDER BY LastModifiedDate DESC];        
             System.debug('[SEARCH CONTACTS] - '+searchContacts);
         }catch(Exception e){
             System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
@@ -343,7 +364,7 @@ public without sharing class GDPR_Helper {
     private static List<Lead> searchLeadsHelper(String email){
         List<Lead> searchLeads = new List<Lead>();
         try{
-            searchLeads = [SELECT ID, LastName, FirstName, IndividualId FROM LEAD WHERE Email = :email ORDER BY LastModifiedDate];
+            searchLeads = [SELECT ID, LastName, FirstName, IndividualId FROM LEAD WHERE Email = :email ORDER BY pi__url__c ASC NULLS LAST, LastModifiedDate DESC];
             System.debug('[SEARCH LEADS] - '+searchLeads);
         }catch(Exception e){
             System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
@@ -414,7 +435,7 @@ public without sharing class GDPR_Helper {
         String encryptedId = Comm_User_Helper.EncryptString(individualId);
         
         //Send Email
-        String link = Label.IATA_GDPR_URL+'/s/guest?token='+encryptedToken+'&indId='+encryptedId;
+        String link = Site.getBaseURL()+'/s/guest?token='+encryptedToken+'&indId='+encryptedId;
         sendAccessEmailNewVersion(email, link);  
         
         return link;                   

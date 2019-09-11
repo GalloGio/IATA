@@ -5979,11 +5979,12 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <externalId>false</externalId>
         <inlineHelpText>this field is filled by QRM team.</inlineHelpText>
         <label>QRM Analysis Conclusions</label>
-        <required>false</required>
+        <length>32768</length>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>TextArea</type>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Region__c</fullName>

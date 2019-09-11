@@ -1,0 +1,9 @@
+<html>
+<body>
+<p>This is to inform you that according to our Early Detection monitoring activities, we have detected that ##AGENT_NAME## - ##IATA_CODE## has breached ##TRIGGERED_RULES##.</p>
+<p>The agent current standing is:</p>
+##RULES_LIST##
+
+<p>The current RHC Consumed amount in USD is ##OPEN_CASH_POSITION##. A case has been created to initiate an investigation and determine further actions.</p>
+</body>
+</html>

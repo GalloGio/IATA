@@ -48,12 +48,12 @@ private  class AttachmentListCtrlTest {
 
         AttachmentListCtrl.PropertiesWrapper pw= AttachmentListCtrl.getPanelProperties(cse.id, false, '');
 
-        List<WrapperAttach>wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false);
+        List<WrapperAttach>wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false);
         
         wrapperAttach wa= wrlist.get(0);
         AttachmentListCtrl.ReturnWrapper rw=AttachmentListCtrl.changeAttachVisibility(cse.id, wa.id, false, false);
         system.assertEquals(rw.severity,'SUCCESS');
-        wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false);
+        wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false);
         system.assertEquals(wrlist.get(0).permission.ShowToPortalUsers__c,true);
 
     }
@@ -69,7 +69,7 @@ private  class AttachmentListCtrlTest {
 
         AttachmentListCtrl.PropertiesWrapper pw= AttachmentListCtrl.getPanelProperties(cse.id, false, '');
 
-        List<WrapperAttach>wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false);
+        List<WrapperAttach>wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false);
         
         wrapperAttach wa= wrlist.get(0);
         
@@ -103,7 +103,7 @@ private  class AttachmentListCtrlTest {
         AttachmentListCtrl.ReturnWrapper rw=AttachmentListCtrl.makeAllAttachPublic(cse.id, false, false);
 
         integer c=0;
-        for(wrapperAttach wa: AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false)){
+        for(wrapperAttach wa: AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false)){
             if(wa.permission.ShowToPortalUsers__c)c++;
         }
         system.assertEquals(c,2);
@@ -223,7 +223,7 @@ private  class AttachmentListCtrlTest {
         Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         Case cse = new Case();
         cse.recordtypeId=recordTypeId;
-        insert cse;
+        insert cse; 
 
         //Check if case is SAAM or Sidra, should return false
         system.assertEquals(AttachmentListCtrl.checkIfSidraSaam(cse.id),false);

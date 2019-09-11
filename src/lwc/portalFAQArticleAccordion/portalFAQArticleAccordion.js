@@ -8,7 +8,6 @@ import getArticleTitle from '@salesforce/apex/PortalFAQsCtrl.getArticleTitle';
 import getFilteredFAQsResultsPage from '@salesforce/apex/PortalFAQsCtrl.getFilteredFAQsResultsPage';
 
 import { NavigationMixin } from 'lightning/navigation';
-import { navigateToPage } from'c/navigationUtils';
 
 import CSP_ArticleHelpful from '@salesforce/label/c.CSP_ArticleHelpful';
 import CSP_ThanksFeedback from '@salesforce/label/c.CSP_ThanksFeedback';
@@ -17,7 +16,7 @@ import CSP_FeedbackBody from '@salesforce/label/c.CSP_FeedbackBody';
 import CSP_FeedbackBody2 from '@salesforce/label/c.CSP_FeedbackBody2';
 import CSP_Submit from '@salesforce/label/c.CSP_Submit';
 import CSP_Cancel from '@salesforce/label/c.CSP_Cancel';
-import csp_GoToSupport from '@salesforce/label/c.csp_GoToSupport';
+import csp_GoToSupport from '@salesforce/label/c.CSP_Continue';
 import CSP_SearchFAQ from '@salesforce/label/c.CSP_SearchFAQ';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -55,7 +54,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     get topic() {
         return this._topic;
     }
-    set topic(value) {
+    set topic(value) {        
         if(value !== undefined) {
             let topicAux = JSON.parse(JSON.stringify(value));
             
@@ -373,15 +372,6 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         this.renderedModal = !this.renderedModal;
         
         if(this.renderedModal) this.feedbackStatus(event);
-    }
-
-    redirectSupport() {
-        this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
-            attributes: {
-                pageName: "support"
-            }})
-        .then(url => navigateToPage(url, {}));
     }
 
     setCookie(name, value, days) {

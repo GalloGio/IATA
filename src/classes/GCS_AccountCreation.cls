@@ -24,11 +24,6 @@ public without sharing class GCS_AccountCreation{
     public static OneId_RegistrationProcessController.StatesAndAlternateNames getStates(String country){
 		return OneId_RegistrationProcessController.getStates(country);
     }
-    
-    @AuraEnabled
-    public static String getAllCities(String country){
-		return OneId_RegistrationProcessController.getAllCities(country);
-    }
 
     @AuraEnabled
     public static List<OneId_AddressDoctor.AddressInfo> checkAddress(String info) {
