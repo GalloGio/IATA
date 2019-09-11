@@ -155,6 +155,14 @@ body {
   fill: #ed7756;
 }
 
+.greenIcon svg {
+  fill: #289632;
+}
+
+.redIcon svg {
+  fill: red;
+}
+
 .whiteIcon svg {
     fill: #FFFFFF;
 }
