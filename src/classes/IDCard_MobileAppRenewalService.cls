@@ -951,7 +951,25 @@ public with sharing class IDCard_MobileAppRenewalService
 
     public static String getAccountType(Account theAccount)
     {
-        return IDCardUtil.GetAgentTypeFromAccountType(theAccount.Type);
+        String accountType = theAccount.Type;
+
+        // non US
+        if (accountType == IDCardUtil.ACCOUNT_TYPE_PASSENGER)
+            return IDCardUtil.AGENTTYPE_PASSENGER;
+        else if (accountType == IDCardUtil.ACCOUNT_TYPE_TIDS)
+            return IDCardUtil.AGENTTYPE_TIDS;
+        else if (accountType == IDCardUtil.ACCOUNT_TYPE_DOMESTICS_AGENT)
+            return IDCardUtil.AGENTTYPE_DOMESTICS_AGENT;
+        
+        // US
+        if (accountType == AMS_UTILS.IATAN_PASSENGER_SALES_AGENT_USA_ONLY)
+            return IDCardUtil.AGENTTYPE_PASSENGER;
+        else if (accountType == AMS_UTILS.TRAVEL_SERVICE_INTERMEDIATES_TSI_USA_ONLY)
+            return IDCardUtil.AGENTTYPE_TIDS;
+        else if (accountType == AMS_UTILS.ARC_TRAVEL_AGENT_USA_ONLY)
+            return IDCardUtil.AGENTTYPE_DOMESTICS_AGENT;
+
+        throw new IDCardException('Invalid agent type: ' + accountType);
     }
 
     public static Contact getContact(String iataCode, String verNumber)
