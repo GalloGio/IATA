@@ -154,7 +154,7 @@
                 if (event.status) {
                     callback(result);
                 } else {
-                    console.log("ERROR: " + event.message);
+                    console.error("ERROR: " + event.message);
                     callback(false);
                 }
             },
@@ -173,7 +173,7 @@
                 if (event.status) {
                     callback(result);
                 } else {
-                    console.log("ERROR: " + event.message);
+                    console.error("ERROR: " + event.message);
                     callback(false);
                 }
             },
@@ -224,9 +224,6 @@
                         window.onbeforeunload = null;
                     }
 
-                    console.log('File size: '+ data.originalFiles[0]['size']);
-                    console.log('File length: '+ data.originalFiles[0]['name'].length);
-
                     if(data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > {!maxFileSize}) {
                         uploadErrors.push('Filesize is too big');
                         window.onbeforeunload = null;
@@ -270,7 +267,7 @@
 
                     window.onbeforeunload = null;
                     $('.uploadbar-{!reqCnt}').css('width', '100%').addClass('progress-bar progress-bar-danger progress-bar-striped');
-                    console.log("fail section");
+                    console.error("fail section");
                 },
                 done: function (event, data) {
                     //Remove any special characters from file name
