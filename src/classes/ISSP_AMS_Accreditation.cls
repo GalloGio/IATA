@@ -7782,7 +7782,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
 
-            delete formToDelete;
+            deleteFormsAux(new List<AMS_Pax_Accreditation_Form__c>{formToDelete});
 
             multiCountryApplicationForms = new List<AMS_Pax_Accreditation_Form__c>(mCApplicationFormMap.values());
         }
