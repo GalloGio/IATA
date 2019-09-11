@@ -604,6 +604,11 @@
                     <label>Rejected</label>
                 </value>
                 <value>
+                    <fullName>Unpaid Invoice</fullName>
+                    <default>false</default>
+                    <label>Unpaid Invoice</label>
+                </value>
+                <value>
                     <fullName>Viewed by Billed Member</fullName>
                     <default>false</default>
                     <label>Viewed by Billed Member</label>
@@ -612,11 +617,6 @@
                     <fullName>Dispute Resolved</fullName>
                     <default>false</default>
                     <label>Dispute Resolved</label>
-                </value>
-                <value>
-                    <fullName>Unpaid Invoice</fullName>
-                    <default>false</default>
-                    <label>Unpaid Invoice</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
