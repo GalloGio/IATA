@@ -74,7 +74,7 @@ public with sharing class IDCard_MobileAppRenewalService
             // NOTHING - the US Agents might not have a Contact
         }
 
-        requestInformation.account = IDCardUtil.GetAccountObjectFromIATACode(requestInformation.iataCode);
+        requestInformation.account = getAccountObjectFromIATACode(requestInformation.iataCode);
         
         requestInformation.accountType = getAccountType(requestInformation.account);
         
@@ -88,8 +88,12 @@ public with sharing class IDCard_MobileAppRenewalService
         requestInformation.lastIDC = getIdCardFromId(lastIDCId);
         requestInformation.lastIDCA = createIDCAForUSAgent(requestInformation);
 
-        if (requestInformation.contact == null) // because it can only be one Contact per VER#
-            requestInformation.contact = getContact(requestInformation.verNumber);
+        if (requestInformation.contact == null) // try a different search method
+        {
+            requestInformation.contact = getContactAlternativeMethod(requestInformation.iataCode, requestInformation.verNumber);
+            if (requestInformation.contact == null) // because it can only be one Contact per VER#
+                requestInformation.contact = getContact(requestInformation.verNumber);
+        }
 
         // 2. create the new IDCA
         requestInformation.newIDCA = createNewIDCA(requestInformation);
@@ -149,9 +153,25 @@ public with sharing class IDCard_MobileAppRenewalService
         System.debug('renewCardForNonUSAgent: ' + requestInformation);
 
         // 0. validate the input & get auxiliar values - cont.
-        requestInformation.contact = getContact(requestInformation.iataCode, requestInformation.verNumber);
+        try
+        {
+            requestInformation.contact = getContact(requestInformation.iataCode, requestInformation.verNumber);
+        }
+        catch (Exception e)
+        {
+            // because the US accounts are from an "invalid" type, try a different search method
+            if (requestInformation.isUSAgent)
+            {
+                requestInformation.contact = getContactAlternativeMethod(requestInformation.iataCode, requestInformation.verNumber);
+                if (requestInformation.contact == null) // because it can only be one Contact per VER#
+                    requestInformation.contact = getContact(requestInformation.verNumber);
+            }
+            
+            if (requestInformation.contact == null)
+                throw e;
+        }
         
-        requestInformation.account = IDCardUtil.GetAccountObjectFromIATACode(requestInformation.iataCode);
+        requestInformation.account = getAccountObjectFromIATACode(requestInformation.iataCode);
         
         requestInformation.accountType = getAccountType(requestInformation.contact);
 
@@ -316,9 +336,31 @@ public with sharing class IDCard_MobileAppRenewalService
         if (c2.CaseNumber == null)
             c2 = [SELECT Id, CaseNumber, Status FROM Case WHERE Id = :c2.Id];
         
-        String result = IDCardUtil.UpdateCaseToApproved_Rejected(c2.CaseNumber, true);
-        if (! result.contains('true') && ! result.contains('false'))
-            throw new IDCardException(result);
+        String accountType;
+        Savepoint sp = Database.setSavepoint();
+
+        try
+        {
+            accountType = requestInformation.account.Type;
+            Account a = new Account(Id = requestInformation.account.Id);
+            a.Type = mapUSAccountType(requestInformation.account);
+            update a;
+
+            String result = IDCardUtil.UpdateCaseToApproved_Rejected(c2.CaseNumber, true);
+            if (! result.contains('true') && ! result.contains('false'))
+                throw new IDCardException(result);
+        }
+        catch (Exception e)
+        {
+            Database.rollback(sp);
+            throw e;
+        }
+        finally
+        {
+            Account a = new Account(Id = requestInformation.account.Id);
+            a.Type = accountType;
+            update a;
+        }
         
         ID_Card_Application__c newIDCA = new ID_Card_Application__c(Id = requestInformation.newIDCA.Id);
         newIDCA.Single_Application_Processing_Step__c = 'Processed';
@@ -934,7 +976,19 @@ public with sharing class IDCard_MobileAppRenewalService
         }
         catch (Exception e)
         {
-            throw new IDCardException('Please Contact IDCard Support with the following message: ISO Country not found for the following Account: ' + iataCode);
+            // for US agents
+            try
+            {
+                Account theAccount = getAccountObjectFromIATACode(iataCode);
+                IATA_ISO_Country__c[] listCountries = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
+                if (listCountries.isEmpty())
+                    throw new IDCardException(string.format(Label.ID_Card_Invalid_ISO_Country, new string[] { theAccount.BillingCountry }));
+                return listCountries.get(0);
+            }
+            catch (Exception e2)
+            {
+                throw new IDCardException('Please Contact IDCard Support with the following message: ISO Country not found for the following Account: ' + iataCode);
+            }
         }
     }
 
@@ -945,7 +999,7 @@ public with sharing class IDCard_MobileAppRenewalService
 
     public static String getAccountType(String iataCode)
     {
-        Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(iataCode);
+        Account theAccount = getAccountObjectFromIATACode(iataCode);
         return getAccountType(theAccount);
     }
 
@@ -971,6 +1025,19 @@ public with sharing class IDCard_MobileAppRenewalService
 
         throw new IDCardException('Invalid agent type: ' + accountType);
     }
+    
+    public static String mapUSAccountType(Account theAccount)
+    {
+        String accountType = theAccount.Type;
+
+        if (accountType == AMS_UTILS.IATAN_PASSENGER_SALES_AGENT_USA_ONLY)
+            return IDCardUtil.ACCOUNT_TYPE_PASSENGER;
+        else if (accountType == AMS_UTILS.TRAVEL_SERVICE_INTERMEDIATES_TSI_USA_ONLY)
+            return IDCardUtil.ACCOUNT_TYPE_TIDS;
+        else if (accountType == AMS_UTILS.ARC_TRAVEL_AGENT_USA_ONLY)
+            return IDCardUtil.ACCOUNT_TYPE_DOMESTICS_AGENT;
+        return accountType;
+    }
 
     public static Contact getContact(String iataCode, String verNumber)
     {
@@ -992,8 +1059,32 @@ public with sharing class IDCard_MobileAppRenewalService
                                     AND c.Account.type IN :IDCardUtil.ALLOWED_ACCOUNT_TYPES
                                     AND c.VER_Number_2__c = :verNumber];
 
-        if (contacts == null || contacts.isEmpty())
+        if (contacts.isEmpty())
             throw new IDCardException(Label.IDCard_NoContactsFound);
+        return contacts.get(0);
+    }
+
+    public static Contact getContactAlternativeMethod(String iataCode, String verNumber)
+    {
+        System.debug('Looking for any alternative Contact');
+
+        List<Contact> contacts = [SELECT c.VER_Number_2__c, c.FirstName, c.LastName, c.Date_of_Birth__c,
+                                    c.Account.IDCard_Key_Account__c, c.Account.Type, c.Account.Short_Name__c,
+                                    c.Account.Is_AIMS_Account__c , c.Id, c.Account.Status__c, c.Account.IATACode__c,
+                                    c.Account.ID_Card_KeyAccount_features__c
+                                  FROM Contact c
+                                  WHERE c.RecordType.Name = 'Standard'
+                                    AND c.Account.RecordType.Name = 'Agency'
+                                    AND (c.Account.Status__c IN :IDCardUtil.ALLOWED_ACCOUNT_STATUS
+                                         OR Account.Status__c IN ( 'Endorsed', 'Terminated' ))
+                                    AND c.Account.IATACode__c = :iataCode
+                                    AND c.VER_Number_2__c = :verNumber
+                                  ORDER BY CreatedDate DESC];
+
+        if (contacts.isEmpty())
+            return null;
+
+        System.debug('Found result: ' + contacts.get(0));
         return contacts.get(0);
     }
 
@@ -1006,13 +1097,31 @@ public with sharing class IDCard_MobileAppRenewalService
                                     c.Account.Is_AIMS_Account__c , c.Id, c.Account.Status__c, c.Account.IATACode__c,
                                     c.Account.ID_Card_KeyAccount_features__c
                                   FROM Contact c
-                                  WHERE c.VER_Number_2__c = :verNumber];
+                                  WHERE c.VER_Number_2__c = :verNumber
+                                  ORDER BY CreatedDate DESC];
 
         if (contacts == null || contacts.isEmpty())
             return null;
 
         System.debug('Found result: ' + contacts.get(0));
         return contacts.get(0);
+    }
+
+    public static Account getAccountObjectFromIATACode(String iataCode)
+    {
+        Account[] theAccounts = [SELECT IATACode__c, BillingCountry, Type, Id 
+                                 FROM Account
+                                 WHERE RecordType.Name = 'Agency'
+                                    AND IATACode__c = :iataCode
+                                    AND (Status__c IN :IDCARDUtil.ALLOWED_ACCOUNT_STATUS
+                                         OR Status__c IN ( 'Endorsed', 'Terminated' ))
+                                 ORDER BY CreatedDate DESC
+                                 LIMIT 1];
+
+        System.debug(' *** Getting Account ' + theAccounts);
+        if (theAccounts.isEmpty())
+            throw new IDCardException(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + iataCode + '</i>'}));
+        return theAccounts[0];
     }
 
     private class RequestInformation

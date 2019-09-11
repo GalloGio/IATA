@@ -1129,6 +1129,7 @@ public class IDCard_RenewalWebServiceTest
             // clone account with different country
             Account a = testData.IDCard_Accounts[0].clone();
             a.BillingCountry = 'USA';
+            a.Type = 'IATAN Passenger Sales Agent (USA Only)';
             // invalidate the existing account
             testData.IDCard_Accounts[0].IATACode__c = 'invalid';
             update testData.IDCard_Accounts[0];
@@ -1159,6 +1160,14 @@ public class IDCard_RenewalWebServiceTest
         // contact
         contact = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[2]);
         System.debug('Contact: ' + contact);
+        
+        if (isUSAgent)
+        {
+            // Hammer time: update the account to be of a "valid" type
+            Account a = new Account(Id = testData.IDCard_Accounts[0].Id);
+            a.Type = IDCardUtil.ACCOUNT_TYPE_PASSENGER;
+            update a;
+        }
 
         // id card
         Id_Card__c idCard = IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[2], contact);
@@ -1178,7 +1187,17 @@ public class IDCard_RenewalWebServiceTest
         idCard.WebStar_P00_Key__c = webstarKey;
 
         System.debug('Id Card: ' + idCard);
+        if (isUSAgent)
+            idCard.ID_Card_Application__c = null; // any previous US card don't have an IDCA
         insert idCard;
+
+        if (isUSAgent)
+        {
+            // un-hammer
+            Account a = new Account(Id = testData.IDCard_Accounts[0].Id);
+            a.Type = 'IATAN Passenger Sales Agent (USA Only)';
+            update a;
+        }
     }
 
     private static void setAlternateNewCard()
