@@ -72,7 +72,7 @@
                     <!-- <div>
                         <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float: left;"/>
                     </div> -->
-                    <div style="padding-top: 16px; padding-left: 44px;">
+                    <div style="padding-top: 16px;">
                         <h3>{!$Label.ISSP_Financial_Insititutions}</h3>
                         <apex:outputText value="{!$Label.ISSP_Financial_Insititutions_Subheader}" escape="false"/>
                     </div>
@@ -109,7 +109,7 @@
                                 </apex:pageBlockTable>
                             </apex:pageBlockSection>
 
-                            <apex:pageBlockButtons id="pageButtonBlock" location="bottom" rendered="{!financialInstitutionsFound}" style="padding-bottom: 10px; width: 100%;">
+                            <apex:pageBlockButtons id="pageButtonBlock" location="bottom" rendered="{!financialInstitutionsFound}" styleClass="iatabtn iatabtn-default" style="padding-bottom: 10px; width: 100%;">
                                 {!$Label.ANG_ISSP_GDI_Page_Display_Records} &nbsp;
                                 <apex:selectList styleClass="form-control selector" style="width: 10%; display: initial; height: 30px;" value="{!listSize}" size="1" onchange="refreshPageSize();">
                                     <apex:selectOptions value="{!paginationSizeOptions}"/>

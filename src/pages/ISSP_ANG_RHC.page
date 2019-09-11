@@ -277,7 +277,7 @@
   
               <div class="row" style="display: {!IF(isCashless,'none','block')}">
                 <div class="requestbtn-wrapper">
-                  <button id="requestRME" onclick="requestBalanceUpdate();return false;" class="btn iatabtn-main">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
+                  <button id="requestRME" onclick="requestBalanceUpdate();return false;" class="iatabtn-main">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
                 </div>
               <!-- The Modal -->
               <div id="myModal" class="modal">
@@ -478,7 +478,7 @@
             <c:ANG_ProductComparison helperParam="{! helper}"/>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{! $Label.LAQ_Close}</button>
+            <button type="button" class="iatabtn iatabtn-default" data-dismiss="modal">{! $Label.LAQ_Close}</button>
           </div>
         </div>
         </div>
