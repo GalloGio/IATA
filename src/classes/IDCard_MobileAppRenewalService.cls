@@ -89,11 +89,7 @@ public with sharing class IDCard_MobileAppRenewalService
         requestInformation.lastIDCA = createIDCAForUSAgent(requestInformation);
 
         if (requestInformation.contact == null) // try a different search method
-        {
-            requestInformation.contact = getContactAlternativeMethod(requestInformation.iataCode, requestInformation.verNumber);
-            if (requestInformation.contact == null) // because it can only be one Contact per VER#
-                requestInformation.contact = getContact(requestInformation.verNumber);
-        }
+            requestInformation.contact = findAnyContact(requestInformation);
 
         // 2. create the new IDCA
         requestInformation.newIDCA = createNewIDCA(requestInformation);
@@ -159,31 +155,25 @@ public with sharing class IDCard_MobileAppRenewalService
         }
         catch (Exception e)
         {
-            // because the US accounts are from an "invalid" type, try a different search method
-            if (requestInformation.isUSAgent)
-            {
-                requestInformation.contact = getContactAlternativeMethod(requestInformation.iataCode, requestInformation.verNumber);
-                if (requestInformation.contact == null) // because it can only be one Contact per VER#
-                    requestInformation.contact = getContact(requestInformation.verNumber);
-            }
-            
-            if (requestInformation.contact == null)
-                throw e;
+            // NOTHING - the US Agents might not have a Contact
         }
         
         requestInformation.account = getAccountObjectFromIATACode(requestInformation.iataCode);
         
-        requestInformation.accountType = getAccountType(requestInformation.contact);
+        requestInformation.accountType = getAccountType(requestInformation.account);
 
         checkBlacklistedCard(requestInformation);
         
         requestInformation.prices = getPriceTable(requestInformation.accountType, requestInformation.contactCountry);
 
-        checkPendingCases(requestInformation);
-
         // 1. get the current IDCA
         requestInformation.lastIDCA = getCurrentIDCA(requestInformation);
         requestInformation.lastIDC = getIdCardFromApplication(requestInformation.lastIDCA.Id);
+
+        if (requestInformation.contact == null) // try a different search method
+            requestInformation.contact = findAnyContact(requestInformation);
+
+        checkPendingCases(requestInformation);
 
         // 2. create the new IDCA
         requestInformation.newIDCA = createNewIDCA(requestInformation);
@@ -335,32 +325,12 @@ public with sharing class IDCard_MobileAppRenewalService
         Case c2 = requestInformation.idcaCase;
         if (c2.CaseNumber == null)
             c2 = [SELECT Id, CaseNumber, Status FROM Case WHERE Id = :c2.Id];
-        
-        String accountType;
-        Savepoint sp = Database.setSavepoint();
 
-        try
-        {
-            accountType = requestInformation.account.Type;
-            Account a = new Account(Id = requestInformation.account.Id);
-            a.Type = mapUSAccountType(requestInformation.account);
-            update a;
+        String idCardType = getAccountType(requestInformation.account);
 
-            String result = IDCardUtil.UpdateCaseToApproved_Rejected(c2.CaseNumber, true);
-            if (! result.contains('true') && ! result.contains('false'))
-                throw new IDCardException(result);
-        }
-        catch (Exception e)
-        {
-            Database.rollback(sp);
-            throw e;
-        }
-        finally
-        {
-            Account a = new Account(Id = requestInformation.account.Id);
-            a.Type = accountType;
-            update a;
-        }
+        String result = IDCardUtil.UpdateCaseToApproved_Rejected(c2.CaseNumber, true, idCardType);
+        if (! result.contains('true') && ! result.contains('false'))
+            throw new IDCardException(result);
         
         ID_Card_Application__c newIDCA = new ID_Card_Application__c(Id = requestInformation.newIDCA.Id);
         newIDCA.Single_Application_Processing_Step__c = 'Processed';
@@ -395,6 +365,8 @@ public with sharing class IDCard_MobileAppRenewalService
             theContact.Gender__c = requestInformation.lastIDCA.Gender__c;
             theContact.Middle_Initial__c = requestInformation.lastIDCA.Middle_Initial__c;
             theContact.Phone = requestInformation.lastIDCA.Telephone__c;
+            if (theContact.Phone == null)
+                theContact.Email = theContact.IDCard_Email__c; // mandatory Phone or Email fields
             theContact.Position__c = requestInformation.lastIDCA.Position_in_Current_Agency__c;
             theContact.Duties__c = requestInformation.lastIDCA.Duties_in_Current_Agency__c;
             theContact.Hours_per_week__c = requestInformation.lastIDCA.Hours_worked__c;
@@ -844,12 +816,17 @@ public with sharing class IDCard_MobileAppRenewalService
     
     private static void checkPendingCases(RequestInformation requestInformation)
     {
-        List<Case> pendingCase = [SELECT Id 
-                                  FROM Case
-                                  WHERE RecordType.Name = 'ID Card Application'
-                                      AND Contact.Id = :requestInformation.contact.Id
-                                      AND status <> 'Closed'
-                                      LIMIT 1];
+        if (requestInformation.contact != null)
+        {
+            List<Case> pendingCase = [SELECT Id 
+                                    FROM Case
+                                    WHERE RecordType.Name = 'ID Card Application'
+                                        AND Contact.Id = :requestInformation.contact.Id
+                                        AND status <> 'Closed'
+                                        LIMIT 1];
+            if (! pendingCase.isEmpty())
+                throw new IDCardException('There is already a pending case application');
+        }
         
         String tempVerNumber = 'Z' + requestInformation.verNumber;
         List<ID_Card_Application__c> pendingIdCardsApp = [SELECT Id
@@ -860,8 +837,6 @@ public with sharing class IDCard_MobileAppRenewalService
                                                                   AND (Application_Status__c = 'Pending'
                                                                        OR Application_Status__c = 'Unpaid')
                                                           LIMIT 1];
-        if (! pendingCase.isEmpty())
-            throw new IDCardException('There is already a pending case application');
         if (! pendingIdCardsApp.isEmpty())
             throw new IDCardException('There is already a pending application');
     }
@@ -1064,7 +1039,25 @@ public with sharing class IDCard_MobileAppRenewalService
         return contacts.get(0);
     }
 
-    public static Contact getContactAlternativeMethod(String iataCode, String verNumber)
+    private static Contact findAnyContact(RequestInformation requestInformation)
+    {
+        if (requestInformation.contact != null)
+            return requestInformation.contact;
+        
+        Contact c = getContactAlternativeMethod(requestInformation.iataCode, requestInformation.verNumber);
+        if (c != null)
+            return c;
+        
+        c = getContactByVerNumber(requestInformation.verNumber);
+        if (c != null)
+            return c;
+        
+        c = getContactByEmail(requestInformation.lastIDCA.Email_admin__c);
+        
+        return c;
+    }
+
+    private static Contact getContactAlternativeMethod(String iataCode, String verNumber)
     {
         System.debug('Looking for any alternative Contact');
 
@@ -1088,7 +1081,7 @@ public with sharing class IDCard_MobileAppRenewalService
         return contacts.get(0);
     }
 
-    public static Contact getContact(String verNumber)
+    private static Contact getContactByVerNumber(String verNumber)
     {
         System.debug('Looking for any Contact for the ver# ' + verNumber);
 
@@ -1100,7 +1093,26 @@ public with sharing class IDCard_MobileAppRenewalService
                                   WHERE c.VER_Number_2__c = :verNumber
                                   ORDER BY CreatedDate DESC];
 
-        if (contacts == null || contacts.isEmpty())
+        if (contacts.isEmpty())
+            return null;
+
+        System.debug('Found result: ' + contacts.get(0));
+        return contacts.get(0);
+    }
+
+    private static Contact getContactByEmail(String email)
+    {
+        System.debug('Looking for any Contact for the email ' + email);
+
+        List<Contact> contacts = [SELECT c.VER_Number_2__c, c.FirstName, c.LastName, c.Date_of_Birth__c,
+                                    c.Account.IDCard_Key_Account__c, c.Account.Type, c.Account.Short_Name__c,
+                                    c.Account.Is_AIMS_Account__c , c.Id, c.Account.Status__c, c.Account.IATACode__c,
+                                    c.Account.ID_Card_KeyAccount_features__c
+                                  FROM Contact c
+                                  WHERE c.Email = :email
+                                  ORDER BY CreatedDate DESC];
+
+        if (contacts.isEmpty())
             return null;
 
         System.debug('Found result: ' + contacts.get(0));
