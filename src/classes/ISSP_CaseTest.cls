@@ -198,7 +198,7 @@ public class ISSP_CaseTest {
             cttr.edit();
             cttr.save();
             cttr.saveAttach();
-            //cttr.getSelectArtical();
+            cttr.getSelectArtical();
         }
         Test.stopTest();
     }
@@ -297,9 +297,13 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('topic', 'test');
         ApexPages.currentPage().getParameters().put('subtopic', 'test1');
         ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        List<DPCCasePriorityHigh__c> DPCCasePriorityHighEmails = [SELECT Email__c 
+                                                                  FROM DPCCasePriorityHigh__c];
         Test.startTest();
         system.runAs(thisUser){
             ISSP_Case cttr = new ISSP_Case();
+            cttr.pageLoad();
+            cttr.newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
             cttr.pageLoad();
             cttr.DPCCaseScheduleWarning = true;
             cttr.newCase.Region__c = 'Africa & Middle East';
@@ -325,6 +329,8 @@ public class ISSP_CaseTest {
             cttr.saveAttach();
             cttr.isGSAOnly = false;
             cttr.isGSAUser = true;
+            cttr.save();
+            cttr.newCase.Priority = 'High';
             cttr.save();
             cttr.saveAttach();
         }

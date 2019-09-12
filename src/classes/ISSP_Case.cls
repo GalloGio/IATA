@@ -1347,7 +1347,6 @@ public without sharing class ISSP_Case {
         }
         }
         */
-        system.debug('FOUND THIS: ' + selectedArtical.articleText);
         return null;
 
     }
