@@ -260,7 +260,7 @@
                     if (datatype=="date") {
                         return formatDate(data);
                     } else if (datatype == "datetime") {
-                        return formatDateTime(data,"America/Montreal", "YYYY-MM-DD HH:mm:ss Z");
+                        return formatDateTime(data,"America/Montreal", "YYYY-MM-DD HH:mm");
                     } else {
                         return data;
                     }

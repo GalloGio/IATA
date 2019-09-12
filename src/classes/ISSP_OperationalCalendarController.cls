@@ -240,7 +240,7 @@ global without sharing class ISSP_OperationalCalendarController {
                 SELECT frequency_code__c
                 FROM Operational_Calendar__c
                 WHERE RecordTypeId = :RT_SIS_CALENDAR.getRecordTypeId()
-                AND First_Day__c >= LAST_YEAR
+                AND Submission_Open__c >= LAST_YEAR
                 AND Visible_on_the_portal__c=true
                 GROUP BY frequency_code__c
                 ORDER BY frequency_code__c ASC]){
@@ -274,7 +274,7 @@ global without sharing class ISSP_OperationalCalendarController {
                 ( SELECT frequency_code__c, Operation_Currency__c, Operation_Type__c, Operation_Code__c
                     FROM Operational_Calendars__r
                     WHERE RecordTypeId = :RT_ISS_CALENDAR.getRecordTypeId()
-                    AND Submission_Open__c >= LAST_YEAR
+                    AND First_Day__c >= LAST_YEAR
                     AND Visible_on_the_portal__c=true)
             FROM AMS_Settlement_System__c 
         ];
@@ -574,21 +574,21 @@ global without sharing class ISSP_OperationalCalendarController {
             return Database.query(query);
     }
 
-    private static String getBillingPeriodCondition(Integer billingPeriod) {
+    private static String getBillingPeriodCondition(Integer billingPeriod, String fieldName) {
         String query = '';
         if (billingPeriod==null) {
             query = '';
         } else if (billingPeriod==Date.today().year()) {
-            query += ' AND First_Day__c = THIS_YEAR';
+            query += ' AND ' + fieldName + ' = THIS_YEAR';
         } else if (billingPeriod==Date.today().year()+1) {
-            query += ' AND First_Day__c = NEXT_YEAR';
+            query += ' AND ' + fieldName + ' = NEXT_YEAR';
         } else if (billingPeriod==Date.today().year()-1) {
-            query += ' AND First_Day__c = LAST_YEAR';
+            query += ' AND ' + fieldName + ' = LAST_YEAR';
         } else if ( billingPeriod >= 1 && billingPeriod <= 12 ) {
-            query += ' AND First_Day__c = THIS_YEAR';
+            query += ' AND ' + fieldName + ' = THIS_YEAR';
             query += ' AND CALENDAR_MONTH(First_Day__c) = ' + billingPeriod;
         } else {
-            query += ' AND First_Day__c >= LAST_YEAR';
+            query += ' AND ' + fieldName + ' >= LAST_YEAR';
         }
         return query;
     }
@@ -628,7 +628,7 @@ global without sharing class ISSP_OperationalCalendarController {
         if (String.isNotBlank(currencyCode)) {
             query += ' AND Operation_Currency__c = \'' + currencyCode + '\'';
         }
-        query += getBillingPeriodCondition(billingPeriod);
+        query += getBillingPeriodCondition(billingPeriod,'First_Day__c');
         if (IS_AIRLINE) {
             query += ' ORDER BY Settlement_Day__c ASC';
         } else {
@@ -645,7 +645,7 @@ global without sharing class ISSP_OperationalCalendarController {
         if (String.isNotBlank(frequency)) {
             query += ' AND frequency_code__c = \'' + frequency + '\'';
         }
-        query += getBillingPeriodCondition(billingPeriod);
+        query += getBillingPeriodCondition(billingPeriod,'Submission_Open__c');
         return query;
     }
 
@@ -660,7 +660,7 @@ global without sharing class ISSP_OperationalCalendarController {
         if (String.isNotBlank(country)) {
             query += ' AND Country__c = \'' + country + '\'';
         }
-        query += getBillingPeriodCondition(billingPeriod);
+        query += getBillingPeriodCondition(billingPeriod,'First_Day__c');
         query += ' ORDER BY ICCS_Settlement_Date__c ASC';
         return query;
     }
