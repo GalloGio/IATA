@@ -16953,7 +16953,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS IS Legal Name Null</shortDescription>
-        <value>Please select a legal name to copy the owners from if the Associate Entity is not a separate Legal Entity.</value>
+        <value>Please select a Legal Name if the Associate Entity is not a separate Legal Entity.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_IS_Legal_Name_Selected_Blank</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS IS Legal Name Blank</shortDescription>
+        <value>Please provide a Legal Name if the Associate Entity is a separate Legal Entity.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_IS_Separate_Entity_Null</fullName>
@@ -16961,6 +16968,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS IS Separate Entity Null</shortDescription>
         <value>Please select if the Associate Entity is a separate Legal Entity.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Country_Not_Selected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Country Not Selected</shortDescription>
+        <value>Please select a country.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_If_Approved_Gross_Amnt</fullName>

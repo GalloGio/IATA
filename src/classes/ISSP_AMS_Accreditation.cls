@@ -209,6 +209,9 @@ public without sharing class ISSP_AMS_Accreditation {
     public string companyModalNameOfEmployer {get; set;}
     public string companyModalAddress {get; set;}
 
+    public String fetchedHEMCName {get; set;}
+    public String fetchedHEMCAddress {get; set;}
+
     public string roleLabelType {get; set;}
     public string ownerLabelType {get; set;}
     public string roleLabelTypeAfterChange {get; set;}
@@ -447,6 +450,18 @@ public without sharing class ISSP_AMS_Accreditation {
     }
     public List<SelectOption> selectedCountryIsos {get; set;}
     public Boolean allCountriesSelected {get; set;}
+    public String accountToBeFetchedOrRemoved {get; set;}
+    public Account accountToBeConverted {get; set;}
+
+    public List<Account> accountsToBeConverted {
+        get {
+            if (accountsToBeConverted == null) {
+                accountsToBeConverted = new List<Account>();
+            }
+            return accountsToBeConverted;
+        }
+        set;
+    }
     
     public ISSP_AMS_Accreditation() {
         isNewCase = true;
@@ -847,8 +862,14 @@ public without sharing class ISSP_AMS_Accreditation {
                 } else if (stepNumber == '3') {
                     isStep3 = true;
 
-                    if (isNoticeOfChange && con.Account.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_CASH) {
-                        refreshCntIFAPContacts();
+                    if (isNoticeOfChange) {
+                        if (con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH) {
+                            if (newForm.Type_Of_Change__c == 'Yes' && !String.isBlank(newForm.Agency_Codes_Concerned__c)) {
+                                accountsToBeConverted = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
+                            }
+                        } else {
+                            refreshCntIFAPContacts();
+                        }
                     }
 
                     setOwnerAndRoleLabels();
@@ -1834,16 +1855,16 @@ public without sharing class ISSP_AMS_Accreditation {
             }
 
             if (String.isBlank(mcformCountryISO) && isMultiCountryNewAE) {
-                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'country not selected')); //newerror, Giulio to define
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Country_Not_Selected)); //newerror, Giulio to define
                 return null;
             }
 
             if (String.isBlank(newForm.Account_Name__c)) {
                 if ((isMultiCountryNewAE && !isMCAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Form__c)) || (isMCAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Account__c))) {
                     if (newForm.AE_separate_Legal_Entity__c == 'Yes') {
-                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Legal_Name_Selected_Null));
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Legal_Name_Selected_Blank));
                     } else {
-                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'no legal name written')); //newerror, Giulio to define
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Legal_Name_Selected_Null)); //newerror, Giulio to define
                     }
                     return null;
                 }
@@ -5080,6 +5101,59 @@ public without sharing class ISSP_AMS_Accreditation {
         return null;
     }
 
+    public PageReference fetchHeadEntityMC() {
+        fetchedHEMCName = '';
+        fetchedHEMCAddress = '';
+        
+        if (accountToBeFetchedOrRemoved.length() < 7) {
+            return null;
+        }
+
+        String iataCodeToSearch = accountToBeFetchedOrRemoved + '%';
+        
+        List<Account> agency = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
+                            ParentId, Parent.BillingStreet, Parent.BillingCity, Parent.BillingState, Parent.BillingPostalCode, Parent.BillingCountry, Parent.Name, Parent.Location_Type__c, Parent.IATACode__c
+                        FROM Account
+                        WHERE RecordType.DeveloperName = 'IATA_Agency'
+                            AND Sector__c = :AMS_Utils.SECTOR_PASSENGER 
+                            AND IATACode__c LIKE :iataCodeToSearch
+                            AND Type = :AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT
+                            AND Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
+                            AND (Location_Type__c = :AMS_Utils.AE OR Location_Type__c = :AMS_Utils.HE OR Location_Type__c = :AMS_Utils.GE)
+                            LIMIT 1];
+
+        if (!agency.isEmpty()) {
+            Account temp;
+            if (agency[0].Location_Type__c == AMS_Utils.AE) {
+                temp = new Account(Id = agency[0].ParentId,
+                                Name = agency[0].Parent.Name,
+                                BillingCountry = agency[0].Parent.BillingCountry,
+                                IATACode__c = agency[0].Parent.IATACode__c);
+                
+                fetchedHEMCName = agency[0].Parent.Name;
+
+                fetchedHEMCAddress = notNull(agency[0].Parent.BillingStreet) + ' \r\n' +
+                               notNull(agency[0].Parent.BillingCity) + '' + notNull(agency[0].Parent.BillingState) +
+                               ' \r\n' + notNull(agency[0].Parent.BillingCountry);
+            } else {
+                temp = new Account(Id = agency[0].Id,
+                                Name = agency[0].Name,
+                                BillingCountry = agency[0].BillingCountry,
+                                IATACode__c = agency[0].IATACode__c);
+
+                fetchedHEMCName = agency[0].Name;
+
+                fetchedHEMCAddress = notNull(agency[0].BillingStreet) + ' \r\n' +
+                               notNull(agency[0].BillingCity) + '' + notNull(agency[0].BillingState) +
+                               ' \r\n' + notNull(agency[0].BillingCountry);
+            }
+
+            accountToBeConverted = temp;
+        }
+        
+        return null;
+    }
+
     public PageReference fetchAgentDetails() {
         String qCargoCode;
         CargoAgentAccount = new Account();
@@ -8060,5 +8134,31 @@ public without sharing class ISSP_AMS_Accreditation {
 
             selectedCountryIsos.clear();
         }
+    }
+
+    public void addToAccountsToConvert () {
+        if (!accountsToBeConverted.contains(accountToBeConverted)) {
+            if (accountsToBeConverted.isEmpty()) {
+                newForm.Agency_Codes_Concerned__c = accountToBeConverted.IATACode__c;
+            } else {
+                newForm.Agency_Codes_Concerned__c += ',' + accountToBeConverted.IATACode__c;
+            }
+            
+            accountsToBeConverted.add(accountToBeConverted);
+        }
+    }
+
+    public void removeFromAccountsToConvert() {
+        for (Integer i = 0; i < accountsToBeConverted.size(); i++) {
+            if (accountsToBeConverted[i].IATACode__c == accountToBeFetchedOrRemoved) {
+                accountsToBeConverted.remove(i);
+            }
+        }
+
+        if (newForm.Agency_Codes_Concerned__c.contains(accountToBeFetchedOrRemoved + ',')) {
+            newForm.Agency_Codes_Concerned__c.remove(accountToBeFetchedOrRemoved + ',');
+        } else if (newForm.Agency_Codes_Concerned__c.contains(accountToBeFetchedOrRemoved)) {
+            newForm.Agency_Codes_Concerned__c.remove(accountToBeFetchedOrRemoved);
+        } 
     }
 }
