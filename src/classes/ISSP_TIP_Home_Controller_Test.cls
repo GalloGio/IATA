@@ -29,8 +29,8 @@ private class ISSP_TIP_Home_Controller_Test {
         parent.IATACode__c = '1000';
         parent.IATA_ISO_Country__c = country.id;
         parent.category__c = TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER;
-        insert parent;
-
+        insert parent;   
+       
         //create account role
         Account_Role__c ar = new Account_Role__c();
         ar.Provider_Code__c = '1000';
@@ -38,13 +38,13 @@ private class ISSP_TIP_Home_Controller_Test {
         ar.HQ_Location__c = country.Id;
         ar.recordtypeId=TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID;
         insert ar;
-
+        
         Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
         Contact_Roles__c contactRole = new Contact_Roles__c();
         contactRole.Name = 'Test User';
         contactRole.RecordTypeId = externalRecordTypeId;
-        insert contactRole;
-
+        insert contactRole;          
+        
         //create case
         newcase.RecordTypeid = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
         newcase.Reason1__c = TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT;
@@ -88,7 +88,7 @@ private class ISSP_TIP_Home_Controller_Test {
         insert con;
 
         Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
-
+        
         //create account contact role
         Account_Contact_Role__c acr = new Account_Contact_Role__c();
         acr.Account__c = parent.id;

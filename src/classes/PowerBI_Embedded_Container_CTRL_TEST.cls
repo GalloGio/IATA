@@ -306,13 +306,16 @@ public class PowerBI_Embedded_Container_CTRL_TEST {
         List<ContentWorkspacePermission> permissions = [SELECT Id FROM ContentWorkspacePermission WHERE Name = 'Viewer'];
 
         List<PowerBI_Embedded_Container_CTRL.CategoryWrapper> wrappers= new List<PowerBI_Embedded_Container_CTRL.CategoryWrapper>();
-        User myOtherUser = [select Id from User WHERE Profile.Name = 'Developer' AND IsActive = true LIMIT 1];
+        User myOtherUser = [select Id from User WHERE UserRole.Name = 'IATA Information Technology Services' AND IsActive = true AND UserPermissionsSFContentUser=true LIMIT 1];
         Test.startTest();
+        system.debug(myOtherUser);
         System.runAs(myOtherUser) {
-
-            ContentWorkspace workspace = new ContentWorkspace();
-            workspace.Name = 'GADM Public';
-            insert workspace;
+            List<ContentWorkspace> existing = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c];
+            if(existing.isEmpty()) {
+                ContentWorkspace workspace = new ContentWorkspace();
+                workspace.Name = gadmSettings[0].Files_Folder__c;
+                insert workspace;
+            }
         }
         System.runAs(myOtherUser) {
             List<ContentWorkspace> gadmWorkspace = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
@@ -342,7 +345,7 @@ public class PowerBI_Embedded_Container_CTRL_TEST {
 
     @IsTest
     private static void getCategories_noAccessToWorkspaceTest() {
-        List<User> myOtherUser = [select Id from User WHERE Profile.Name = 'Developer' AND IsActive = true LIMIT 2];
+        List<User> myOtherUser = [select Id from User WHERE UserRole.Name = 'IATA Information Technology Services' AND UserPermissionsSFContentUser=true AND IsActive = true LIMIT 2];
         List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
 
         ContentVersion contentVersion1 = new ContentVersion();
@@ -357,9 +360,12 @@ public class PowerBI_Embedded_Container_CTRL_TEST {
         contentVersion1 = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :contentVersion1.Id];
         List<PowerBI_Embedded_Container_CTRL.CategoryWrapper> wrappers= new List<PowerBI_Embedded_Container_CTRL.CategoryWrapper>();
         System.runAs(myOtherUser[0]) {
-            ContentWorkspace workspace = new ContentWorkspace();
-            workspace.Name = 'GADM Public';
-            insert workspace;
+            List<ContentWorkspace> existing = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c];
+            if(existing.isEmpty()) {
+                ContentWorkspace workspace = new ContentWorkspace();
+                workspace.Name = gadmSettings[0].Files_Folder__c;
+                insert workspace;
+            }
         }
 
         System.runAs(myOtherUser[0]) {

@@ -374,15 +374,16 @@ public class ContactRoleServiceAccessTriggerHandlTest {
 
     @IsTest
     private static void grandAccessToGadmCategoryFilesTest() {
+        List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
 
         Portal_Applications__c gadmApp = [SELECT Id FROM Portal_Applications__c WHERE Name = 'GADM'];
         Account_Contact_Role__c accountContactRole = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Roles__r.Name = 'GADM Data Consumer'];
         User testUser = [SELECT Id FROM User WHERE Email = 'testContactRoleServiceAccessTrigger2@test.com'];
 
-        List<ContentWorkspace> existing = [SELECT Id FROM ContentWorkspace WHERE Name = 'GADM Public' LIMIT 1];
+        List<ContentWorkspace> existing = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
         if(existing.isEmpty()) {
             ContentWorkspace workspace = new ContentWorkspace();
-            workspace.Name = 'GADM Public';
+            workspace.Name = gadmSettings[0].Files_Folder__c;
             insert workspace;
 
             existing.add(workspace);
@@ -423,7 +424,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         List<ContentWorkspace> existing = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c];
         if(existing.isEmpty()) {
             ContentWorkspace workspace = new ContentWorkspace();
-            workspace.Name = 'GADM Public';
+            workspace.Name = gadmSettings[0].Files_Folder__c;
             insert workspace;
 
             existing.add(workspace);
@@ -464,7 +465,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         List<ContentWorkspace> existing = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
         if(existing.isEmpty()) {
             ContentWorkspace workspace = new ContentWorkspace();
-            workspace.Name = 'GADM Public';
+            workspace.Name = gadmSettings[0].Files_Folder__c;
             insert workspace;
         }
 
@@ -497,7 +498,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         List<ContentWorkspace> existing = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
         if(existing.isEmpty()) {
             ContentWorkspace workspace = new ContentWorkspace();
-            workspace.Name = 'GADM Public';
+            workspace.Name = gadmSettings[0].Files_Folder__c;
             insert workspace;
         }
 
