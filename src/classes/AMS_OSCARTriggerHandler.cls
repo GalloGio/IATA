@@ -4723,36 +4723,38 @@ public class AMS_OSCARTriggerHandler {
         Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, ParentId, Status__c, Top_Parent__c, Location_Type__c, Location_Class__c,
                                                             Parent.Location_Type__c, Multicountry_Key_Hierarchy__c, Identify_as_Multicountry_Key_Hierarchy__c, 
                                                             IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.Name, Parent.IATA_ISO_Country__r.AMS_Settlement_System__c,
-                                                                (SELECT Id FROM Location_Risk_Events__r)
+                                                            (SELECT Id FROM Location_Risk_Events__r)
                                                             FROM Account
                                                             WHERE (Id IN :idList OR ParentId IN :idList)
                                                             AND (Top_Parent__r.Location_Type__c = :AMS_Utils.GE OR Location_Type__c = :AMS_Utils.GE) ]);
-
+        
         for(Account acc : accountMap.values()){
             if(acc.Identify_as_Multicountry_Key_Hierarchy__c == True) riskEventLst.addAll(acc.Location_Risk_Events__r);
             if(AMS_Utils.ACTIVEAGENCYSTATUS.contains(acc.status__c)) idAccForFopList.add(acc.Id); 
         }
         Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
-		Map<String, Agency_Authorization__c> foPs = new Map<String, Agency_Authorization__c>();
+        Map<String, Agency_Authorization__c> foPs = new Map<String, Agency_Authorization__c>();
         
         for(Agency_Authorization__c foP : [SELECT Id, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__c, Status__c
-                                          FROM Agency_Authorization__c 
-                                          WHERE Account__c IN :idAccForFopList 
-                                          AND RecordTypeId = :formOfPaymentRT 
-                                          AND Authority__c = 'Cash Payment Method']){
-                                              foPs.put(foP.Account__c, foP);
-                                          }
+                                           FROM Agency_Authorization__c 
+                                           WHERE Account__c IN :idAccForFopList 
+                                           AND RecordTypeId = :formOfPaymentRT 
+                                           AND Authority__c = 'Cash Payment Method']){
+                                               foPs.put(foP.Account__c, foP);
+                                           }
         
+        boolean fopToUpdate = false;
         for(Agency_Authorization__c foP : foPs.values()){
             if(fop.Account__r.Location_Type__c != AMS_Utils.GE) {
                 Agency_Authorization__c parentfoP = foPs.get(foP.Account__r.Top_Parent__c);
                 foP.Status__c = parentfoP.Status__c;
+                fopToUpdate = true;
             }
         }
-        update foPs.values();
+        if(fopToUpdate == true) update foPs.values();
         ANG_AgencyChangesHelper.AChangeStructure toReturn = new ANG_AgencyChangesHelper.AChangeStructure();
         toReturn.addRiskEventsToInactivate(riskEventLst);
-                                            
+        
     }
 
     // to be removed
