@@ -135,7 +135,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
                 {label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 135, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'}},
                 {label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 135},
                 {label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 350, typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'}},
-                {label: Created_By, fieldName: 'CreatedBy', type: 'text'},
+                {label: ISSP_Contact, fieldName: 'ContactName', type: 'text'},
                 {label: results.LastModifiedDate, fieldName: 'LastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}},
                 {label: results.Country_concerned__c, fieldName: 'Country', type: 'text'},
                 {label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: {class: {fieldName: 'statusClass'}}}
@@ -228,7 +228,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
                     let row = allDataAux.records[i];
                     row.CaseURL = urlMap[row.Id];
                     row.Country = row.Country_concerned_by_the_query__c;
-                    row.CreatedBy = row.CreatedBy.Name;
+                    row.ContactName = row.Contact.Name;
                     row.statusClass= row.Status.replace(/\s/g, '').replace(/_|-|\./g, '');
                 }
 
