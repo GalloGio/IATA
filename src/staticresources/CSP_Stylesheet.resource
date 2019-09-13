@@ -525,6 +525,12 @@ lightning-datatable .slds-th__action {
     border: none;
 }
 
+@media screen and (max-width: 400px){
+  .reachusButton.containedButton button{
+    width: unset;
+  }
+}
+
 .containedButtonSlim, .containedButtonSlim button, .containedButtonSlim button:active, .containedButtonSlim button:visited, .containedButtonSlim button:focus {
     -webkit-transition-duration: 0.4s; /* Safari */
   	transition-duration: 0.4s;
