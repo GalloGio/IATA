@@ -866,7 +866,7 @@ public class AMS_OSCARTriggerHandler {
         }
     }
 
-        public static void handleConverstionFromSTToMC(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
+    public static void handleConverstionFromSTToMC(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
         for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New){
             if(oscar.process__c == AMS_UTils.NGCONVERSIONTOMULTICOUNTRY && oscar.STEP6__c == AMS_Utils.PASSED && oldMap.get(oscar.Id).STEP6__c != AMS_Utils.PASSED){
                 
@@ -885,7 +885,15 @@ public class AMS_OSCARTriggerHandler {
 
                 system.debug('##ARD parentByBSP:' + parentByBSP);
 
-                Map<ID,Account> hierarchyAccounts = new Map<ID,Account>([SELECT ID, Location_Type__c, iata_iso_country__C, ANG_CashCondition__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, a.IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c FROM ACCOUNT WHERE ID IN :chieldAccountIDs OR ID = :oscar.account__c]);
+                //Change where clause to fetch all accounts, not only the ones on the AMS_Process_Detail. 
+                //We need to remove the top_parent__c and parentid from thoose that aren't in the AMS_Process_Detail but are related to the hierarchies that we are handling
+                //this extra accounts should be terminated and we should leave them alone
+
+                Map<ID,Account> hierarchyAccounts = new Map<ID,Account>([SELECT ID, Location_Type__c, iata_iso_country__C, ANG_CashCondition__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c FROM ACCOUNT 
+                WHERE ID IN :chieldAccountIDs OR ID = :oscar.account__c 
+                OR Top_Parent__c IN :chieldAccountIDs OR Top_Parent__c = :oscar.account__c
+                OR Parentid IN :chieldAccountIDs OR Parentid = :oscar.account__c]);
+                //Map<ID,Account> hierarchyAccounts = new Map<ID,Account>([SELECT ID, Location_Type__c, iata_iso_country__C, ANG_CashCondition__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, a.IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c FROM ACCOUNT WHERE ID IN :chieldAccountIDs OR ID = :oscar.account__c]);
 
                 //adding the GE as parent for GE's country
                 parentByBSP.put(hierarchyAccounts.get(oscar.account__c).IATA_ISO_Country__c, oscar.account__c);
@@ -895,7 +903,7 @@ public class AMS_OSCARTriggerHandler {
                 List<ANG_Risk_Alert__c> riskAlerts = [SELECT ID,ANG_Account__c,ANG_Agent_current_standing__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,ANG_EventId__c,ANG_Open_Cash_Position__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Agent_Sales__c,ANG_Severity__c,ANG_Sidra_Lite__c,ANG_Threshold_Level__c,ANG_Triggered_Rules__c FROM ANG_Risk_Alert__c WHERE ANG_Account__c IN :hierarchyAccounts.keyset() AND ANG_Account__c != :oscar.account__c];
                 List<ANG_Agency_Risk_Event__c> risksToAdd = new List<ANG_Agency_Risk_Event__c>();
                 List<ANG_Risk_Alert__c> alertsToAdd = new List<ANG_Risk_Alert__c>();
-                List<Account> accountsToCreateRHCInfo = new <Account>();
+                List<Account> accountsToCreateRHCInfo = new List<Account>();
                 Map<ID, AMS_Agencies_Hierarchy__c> mapHierarchies = new Map<ID, AMS_Agencies_Hierarchy__c>();
                 List<AMS_Agencies_relationhip__c> relationships = [SELECT id, Hierarchy__c FROM AMS_Agencies_relationhip__c WHERE Parent_Account__c IN :hierarchyAccounts.keySet() OR Child_Account__c IN :hierarchyAccounts.keySet()];
                 for(AMS_Agencies_relationhip__c r : relationships) mapHierarchies.put(r.Hierarchy__c,new AMS_Agencies_Hierarchy__c(id = r.Hierarchy__c));
@@ -926,33 +934,40 @@ public class AMS_OSCARTriggerHandler {
                 List<AMS_Agencies_relationhip__c> relationshipsToInsert = new List<AMS_Agencies_relationhip__c>(); 
 
                 for(Account a :hierarchyAccounts.values()){
-                    a.Location_Type__c = (processDetailsByAccount.containsKey(a.id) ? processDetailsByAccount.get(a.id).ANG_Location_Type_Conversion__c : AMS_Utils.GE);
-                    a.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
-                    a.ANG_FA_Opt_out__c = false;
 
-                    //RF same as GE
-                    //if(a.Location_Type__c != AMS_Utils.GE) a.Remittance_frequency__c = processDetailsByAccount.get(oscar.account__c).Remittance_frequency__c;
-                    if(a.Location_Type__c != AMS_Utils.GE){
-                        a.top_parent__c = oscar.account__c;
-                        if(a.Location_Type__c == AMS_Utils.HE){
-                            relationshipsToInsert.add(new AMS_Agencies_relationhip__c(Parent_Account__c = oscar.account__c, Child_Account__c = a.id, Hierarchy__c = newHierarchy.id));
-                            accountsToCreateRHCInfo.add(a);
-                        } 
-                        if(a.Location_Type__c == AMS_Utils.AE){
-                            
-                            system.debug('##ARD parentByBSP.get(a.IATA_ISO_Country__c)' + parentByBSP.get(a.IATA_ISO_Country__c));
-                            relationshipsToInsert.add(new AMS_Agencies_relationhip__c( Parent_Account__c = parentByBSP.get(a.IATA_ISO_Country__c), Child_Account__c = a.id, Hierarchy__c = newHierarchy.id));
+                    if(chieldAccountIDs.contains(a.id) || a.id == oscar.account__c){
+
+                        a.Location_Type__c = (processDetailsByAccount.containsKey(a.id) ? processDetailsByAccount.get(a.id).ANG_Location_Type_Conversion__c : AMS_Utils.GE);
+                        a.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+                        a.ANG_FA_Opt_out__c = false;
+
+                        //RF same as GE
+                        //if(a.Location_Type__c != AMS_Utils.GE) a.Remittance_frequency__c = processDetailsByAccount.get(oscar.account__c).Remittance_frequency__c;
+                        if(a.Location_Type__c != AMS_Utils.GE){
+                            a.top_parent__c = oscar.account__c;
+                            if(a.Location_Type__c == AMS_Utils.HE){
+                                relationshipsToInsert.add(new AMS_Agencies_relationhip__c(Parent_Account__c = oscar.account__c, Child_Account__c = a.id, Hierarchy__c = newHierarchy.id));
+                                accountsToCreateRHCInfo.add(a);
+                            } 
+                            if(a.Location_Type__c == AMS_Utils.AE){
+                                
+                                system.debug('##ARD parentByBSP.get(a.IATA_ISO_Country__c)' + parentByBSP.get(a.IATA_ISO_Country__c));
+                                relationshipsToInsert.add(new AMS_Agencies_relationhip__c( Parent_Account__c = parentByBSP.get(a.IATA_ISO_Country__c), Child_Account__c = a.id, Hierarchy__c = newHierarchy.id));
+
+                            }
+                            a.Financial_Review_Result__c = '';
+                            a.Assessment_Performed_Date__c = null;
 
                         }
-                        a.Financial_Review_Result__c = '';
-                        a.Assessment_Performed_Date__c = null;
+                        else accountsToCreateRHCInfo.add(a);
 
                     }
-                    else accountsToCreateRHCInfo.add(a);
-
-                    //RHC e filhos
-
-                }
+                    else{
+                        //terminated accounts. Remove parent references
+                        a.top_parent__c = null;
+                        a.parentid = null;
+                    }
+            }
 
                 system.debug('##ARD: relationshipsToInsert: ' + relationshipsToInsert);
                 update new ams_pax_accreditation_form__c(id = oscar.AMS_Online_Accreditation__c, ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
@@ -963,7 +978,7 @@ public class AMS_OSCARTriggerHandler {
                 if(!riskAlerts.isEmpty()) delete riskAlerts;
                 if(!alertsToAdd.isEmpty()) insert alertsToAdd;
                 if(!rhcs.isEmpty()) delete rhcs;
-                if(!createRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(createRHCInfo, false);
+                if(!accountsToCreateRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(accountsToCreateRHCInfo, false);
             
             }
         }
