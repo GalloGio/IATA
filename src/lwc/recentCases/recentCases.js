@@ -81,7 +81,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
                 this.columns = [
                     { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 130, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
                     { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
-                    { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 80, cellAttributes: { class: { fieldName: 'statusClass' } } }
+                    { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 120, cellAttributes: { class: { fieldName: 'statusClass' } } }
                 ];
             }
             
