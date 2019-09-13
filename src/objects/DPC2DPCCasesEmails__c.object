@@ -12,6 +12,16 @@
         <type>Email</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>description__c</fullName>
+        <externalId>false</externalId>
+        <label>description</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>DPC2DPC Cases Emails</label>
     <visibility>Public</visibility>
 </CustomObject>

@@ -362,7 +362,10 @@
                                         var listOfEmails = '';
                                         // parse
                                         obj.forEach(function(item, index) {
-                                            if(item.AccountId === selectedAccount) listOfEmails += item.Email +',';
+                                            if(item.Name === selectedAccount){
+                                                listOfEmails += item.Email__c +',';
+                                                $("[id$='a_idJSONcontactSelected']").val(item.Email__c);
+                                            } 
                                         });
                                         $('input[id$=additionalRecipients]').val(listOfEmails);
 
@@ -383,7 +386,7 @@
                                             </apex:selectlist>
                                         </apex:outputpanel>
                                     </apex:pageblocksectionitem>
-
+                                    <apex:inputHidden value="{!JSONcontactSelected}" id="a_idJSONcontactSelected"/>
                                     <apex:inputField value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" styleclass="form-control" required="true">
                                         <apex:actionSupport event="onchange" reRender="reason1Picklist" rendered="{!NOT(isCloneDPC)}"/>
                                     </apex:inputField>

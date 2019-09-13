@@ -50,6 +50,8 @@ public without sharing class ISSP_Case {
     public String caseAreaa { get; set; }
     public String additionalRecipients { get; set; }
     public String JSONcontacts { get; set; }
+    public String JSONcontactSelected { get; set; }
+    public String JSONcontactsHighPriority { get; set; }
 
     public Id runningUserId {get; set;}
     public Contact con {get; set;}
@@ -711,22 +713,17 @@ public without sharing class ISSP_Case {
                     }
                 }
                 
-                List<DPC2DPCCasesEmails__c> DPC2DPCCasesEmails = [SELECT Email__c 
+                //This custom setting contains emails to be automatically added to the "Additional Recipients" field. 
+                //Before this option was made by a query to the User object.
+                //For this you have to configure the custom setting where the Name field is the account id and the email is the intended email to be added.
+                List<DPC2DPCCasesEmails__c> DPC2DPCCasesEmails = [SELECT Name, Email__c 
                                                                     FROM DPC2DPCCasesEmails__c];
-                List<String> allEmailsDPC2DPCCases = new list<String>();
-                for(DPC2DPCCasesEmails__c ddc : DPC2DPCCasesEmails){
-                    allEmailsDPC2DPCCases.add(ddc.Email__c);
-                }                                            
-                List<Contact> lsContacts = [SELECT id, Name, Email, AccountId 
-                                            FROM Contact 
-                                            WHERE Email IN : allEmailsDPC2DPCCases];
 
-                JSONcontacts = JSON.serialize(lsContacts);
-                System.debug(lsAccounts);
+
+                JSONcontacts = JSON.serialize(DPC2DPCCasesEmails);
                 newCase.ACCA_Owner__c = Userinfo.getUserId();
                 newCase.Status = 'Action Needed';
 
-                System.debug(profileRole);
 
                 this.lst_whoToContact = new list<SelectOption>();
                 this.lst_whoToContact.add(new SelectOption('',''));
@@ -887,28 +884,6 @@ public without sharing class ISSP_Case {
     }
 
     public Pagereference save() {
-        //TF - SP9-C5
-        system.debug('newCase.Classification_SIS__c: ' + newCase.Classification_SIS__c);
-        system.debug('newCase.Defect_Issue__c: ' + newCase.Defect_Issue__c);
-        system.debug('newCase.Type: ' + newCase.Type);
-        system.debug('isGSAOnly: ' + isGSAOnly);
-        //system.debug('IATAcode__c: ' + newCase.IATAcode__c);
-        system.debug('isGSAUser: ' + isGSAUser);
-        system.debug('isFDSRecordType: ' + isFDSRecordType);
-        system.debug('AccountId: ' + accountId);
-
-        if(newCase.Priority == 'High'){
-            List<DPCCasePriorityHigh__c> DPCCasePriorityHighEmails = [SELECT Email__c 
-                                                                    FROM DPCCasePriorityHigh__c];
-            List<String> allEmailsDPCCasePriorityHigh = new List<String>();
-            for(DPCCasePriorityHigh__c dcph : DPCCasePriorityHighEmails){
-                if(this.additionalRecipients == ''){
-                    this.additionalRecipients += dcph.Email__c;
-                }else{
-                    this.additionalRecipients += ','+dcph.Email__c;
-                }
-            }                                            
-        }
         //DPC
         if(isDPCUser) {
             Boolean isIATA = false;
@@ -1598,6 +1573,20 @@ public without sharing class ISSP_Case {
             lsCaseTeamMembers.add(teammember);
             lsNewEmails.add(user.Email);
             setEmail.remove(user.Email);
+        }
+
+        //On DPC case creation with Priority = "High", automatically add additional recipients
+        if(newCase.Priority == 'High'){
+            List<DPCCasePriorityHigh__c> DPCCasePriorityHighEmails = [SELECT Email__c 
+                                                                    FROM DPCCasePriorityHigh__c];
+            List<String> allEmailsDPCCasePriorityHigh = new List<String>();
+            for(DPCCasePriorityHigh__c dcph : DPCCasePriorityHighEmails){
+                lsNewEmails.add(dcph.Email__c);
+            }                                            
+        }
+
+        if(JSONcontactSelected != null && JSONcontactSelected != ''){
+            lsNewEmails.add(JSONcontactSelected);
         }
         // Find the contacts for the emails not found
         if (!setEmail.isEmpty()) {
