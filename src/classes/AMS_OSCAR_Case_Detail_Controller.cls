@@ -207,9 +207,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         //if(fieldName == 'Location_Class__c' && isNewGenProcess) return false;
         //if(fieldName == 'Location_Type__c' && isNewGenProcess) return false;
         if(fieldName == 'ANG_Accreditation_Type__c' && isNewGenProcess && !isAgencyChanges) return false;  
-        if(fieldName == 'Remittance_frequency__c' && isNewGenProcess && (oscarObj.Process__c == AMS_Utils.NEWAE || (oscarObj.Process__c == AMS_Utils.MCAE && isAEAccount))) return false;     
+        if(fieldName == 'Remittance_frequency__c' && isNewGenProcess  && this.oscarObj.process__c != 'ANG.CONVERT.ST.TO.MC' && (oscarObj.Process__c == AMS_Utils.NEWAE || (oscarObj.Process__c == AMS_Utils.MCAE && isAEAccount))) return false;     
 		if(fieldName == 'Location_Type__c' && !isAgencyChanges && accreditationObj.Location_Type__c == AMS_Utils.HO && !String.isBlank(accreditationObj.IATACode__c)) return false; //AC-ENHC0012276
-        if(!isAgencyChanges && !isAgencyCorrection) return true;
+        if(!isAgencyChanges && !isAgencyCorrection  && this.oscarObj.process__c != 'ANG.CONVERT.ST.TO.MC') return true;
 
         //check per field
         return editableFields.contains(fieldName);
