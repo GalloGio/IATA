@@ -218,6 +218,7 @@
 
 		// checks initial state
 		showForms();
+		checkGoGlobal();
 	});
 
 	var ownerRecType;
@@ -622,6 +623,14 @@
 			$j(".PostalArea").val($j(".PhysicalArea").val());
 		}
 	}
+
+	function checkGoGlobal() {
+		if ($j('[id$=allowedAccreditationModelSelect]')[0].selectedOptions[0].value == 'Multicountry') {
+			$j('[id$=novaCena]').css('display', 'block');
+		} else {
+			$j('[id$=novaCena]').css('display', 'none');
+		}
+	}
 	
 	</script>
 	
@@ -727,7 +736,10 @@
                 <apex:param name="travelAgentCode" assignTo="{!iatacode}" value=""/>
                 <apex:param name="AgentSector" assignTo="{!agentsector}" value="Both"/>
                 <apex:param name="isAddCompanyModal" assignTo="{!isAddCompanyModal}" value="true"/>
-            </apex:actionFunction>
+			</apex:actionFunction>
+			<apex:actionFunction name="fetchHeadEntity" action="{!fetchHeadEntityMC}" status="loadingHEAgencyMC" reRender="HEAgencyMC">
+				<apex:param name="travelAgentCode" assignTo="{!iatacode}" value=""/>
+			</apex:actionFunction>
 					
 			<apex:pageBlock id="AMSBlock">
 			<div class="alert alert-info" role="alert" style="margin-bottom: {!IF(AND(isMCAccredited, isNoticeOfChange), '5px !important', '20px;')}">
@@ -791,7 +803,7 @@
 								
 								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Accreditation_Type__c.Label}" style="color:black;font-size:110%"/>
 							</apex:outputPanel>
-							<apex:inputCheckbox id="iataChangeAccType" value="{!newForm.Notify_Change_Accreditation_Type__c}" onchange="accreditationModelChanged(this)" disabled="{!!CanChangeAccreditationType}"/>
+							<apex:inputCheckbox id="iataChangeAccType" value="{!newForm.Notify_Change_Accreditation_Type__c}" onchange="accreditationModelChanged(this); checkGoGlobal();" disabled="{!!CanChangeAccreditationType}"/>
 						</apex:pageBlockSectionItem>						
 
 						<apex:pageBlockSection columns="1">	
@@ -805,8 +817,45 @@
 							<apex:outputPanel id="allowedAccreditationModelSelectPanel" style="display : {!IF(newForm.Notify_Change_Accreditation_Type__c == true, '', 'none')}">
 								<apex:pageBlockSectionItem labelStyle="width:26%;display: {!IF(newForm.Notify_Change_Accreditation_Type__c, '', 'none')}" dataStyle="display: {!IF(newForm.Notify_Change_Accreditation_Type__c, '', 'none')}">
 									<apex:outputLabel style="font-size: 12px; padding-right: 20px;" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ANG_Accreditation_Model_to_Change__c.Label}" styleClass="agencyAccreditationTypeComponent"/>
-									<apex:inputField id="allowedAccreditationModelSelect" value="{!newForm.ANG_Accreditation_Model_to_Change__c}" styleClass="agencyAccreditationTypeComponent" onchange="accreditationModelChanged(this)"></apex:inputField>
+									<apex:inputField id="allowedAccreditationModelSelect" value="{!newForm.ANG_Accreditation_Model_to_Change__c}" styleClass="agencyAccreditationTypeComponent" onchange="accreditationModelChanged(this); checkGoGlobal();"></apex:inputField>
 								</apex:pageBlockSectionItem>
+
+								<apex:outputPanel id="novaCena" style="display: none;">
+									<apex:outputLabel value="Please enter the IATA Code of the Head Entity you wish to add" style="font-size: 12px;" styleClass="agencyAccreditationTypeComponent"/>
+									<apex:inputText value="{!accountToBeFetchedOrRemoved}" onblur="fetchHeadEntity(this.value.trim())"/>
+								</apex:outputPanel>
+
+								<apex:outputPanel id="HEAgencyMC">
+									<apex:actionStatus id="loadingHEAgencyMC" startStyleClass="bg-info">
+										<apex:facet name="start" >
+											{!$Label.ISSP_Loading_Travel_Agency_Details}
+										</apex:facet>
+									</apex:actionStatus>
+									<apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(fetchedHEMCName == '', accountToBeFetchedOrRemoved != '')}"/>	
+									<apex:outputPanel style="display: flex;">
+										<apex:outputPanel rendered="{!AND(fetchedHEMCName != '', iatacode != '')}">
+											<span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_Agency_name} </span>{!fetchedHEMCName} <br/>
+											<span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_AMS_Address} </span> {!fetchedHEMCAddress}
+										</apex:outputPanel>
+										<apex:commandLink action="{!addToAccountsToConvert}" styleClass="glyphicon glyphicon-ok" rerender="accountsToBeConvertedPanel" rendered="{!AND(fetchedHEMCName != '', accountToBeFetchedOrRemoved != '')}"/>
+									</apex:outputPanel>
+								</apex:outputPanel>
+
+								<apex:outputPanel id="accountsToBeConvertedPanel" style="margin">
+									<apex:pageBlockTable value="{!accountsToBeConverted}" var="acc" rendered="{!accountsToBeConverted.size > 0}" style="margin-top: 20px;">
+										<apex:column value="{!acc.Name}"/>
+										<apex:column value="{!acc.IATACode__c}"/>
+										<apex:column value="{!acc.BillingCountry}"/>
+										<apex:column>
+											<apex:commandLink action="{!removeFromAccountsToConvert}" styleClass="glyphicon glyphicon-trash" rerender="accountsToBeConvertedPanel">
+												<apex:param value="{!acc.IATACode__c}" name="recordId" assignTo="{!accountToBeFetchedOrRemoved}" />
+											</apex:commandLink>
+										</apex:column>
+									</apex:pageBlockTable>
+								</apex:outputPanel>
+
+								
+
 								<!-- Remove the current accreditation model from the picklist -->
 								<!-- It does not make sense the user change the accretitation model to the current one -->
 								<script type="text/javascript">
