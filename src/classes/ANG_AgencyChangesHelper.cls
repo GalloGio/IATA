@@ -213,7 +213,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			system.debug('oscar status after: '+ oscar.Status__c);
 		}
 
-		if((oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION) && oscar.ANG_Type_Of_Change__c != null){
+		if((oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY) && oscar.ANG_Type_Of_Change__c != null){
 
 			System.debug('[ANG_AgencyChangesHelper][handleNewGenChangesProcess] -- PROCESSING agency changes');
 
@@ -267,7 +267,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				System.debug('[ANG_AgencyChangesHelper] Checkpoint1 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
 
 				//if(Pattern.matches(AMS_Utils.ANG_ACCREDITATION_TYPE, oscar.ANG_Type_Of_Change__c))				
-				if(containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c))
+				if(containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c) && oscar.Process__c != AMS_Utils.NGCONVERSIONTOMULTICOUNTRY )
 					changesContainer = applyChangeOfAccreditationType(oscar, accountIdsInvolvedSet, changesContainer);
 					
 				//Set default value as "Not Applicable" 	
@@ -336,6 +336,19 @@ public with sharing class ANG_AgencyChangesHelper {
                             else changesContainer.accountsMap.get(oscar.Account__c).Due_Diligence_Status__c = AMS_Utils.IN_PROGRESS;
                         }
                     }
+
+				}
+
+				if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
+
+					//To generate Change Codes when performing Convertion from standard to Multicountry hierarchy
+					if(config == null) config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
+
+					if(containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c)){
+						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
+					}
+
+					System.debug('[ANG_AgencyChangesHelper - NGCONVERSIONTOMULTICOUNTRY] - Change Codes generated: ' + changesContainer.changeCodesToCreateDef);
 
 				}
 
@@ -457,7 +470,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					}
 
 				//NEWGEN-1088 apply FA opt-out = false when changing to cash or to cashless
-				} else if (containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c)) {
+				} else if (containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c) && oscar.Process__c != AMS_Utils.NGCONVERSIONTOMULTICOUNTRY) {
 
 	    			changesContainer= applyFAOptOut(oscar, changesContainer, changesContainer.accountsMap.values(), FALSE);
 	    		
