@@ -153,83 +153,79 @@
           </table>
           <br/>
         </apex:outputPanel>
-        <apex:outputPanel rendered="{!AND(sectorValue=='Travel_Agent', OR(newForm.Notify_Change_Accreditation_Type__c, newForm.Notify_Change_Location__c, newForm.Notify_Change_Ownership__c))}">
-            <apex:repeat value="{!List_PreviousCompaniesOwners}" var="transferorOwner">
-                <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
-                    <table border="0" cellpadding="3">
-                        <tr>
-                            <th colspan="2">{!IF(newForm.Notify_Change_Ownership__c,$Label.ISSP_AMS_NoC_Transferor , $Label.ISSP_AMS_NoC_Authorized_Signature)}</th>
-                        </tr>
-                        <tr>
-                            <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
-                            <td>________________________</td>
-                        </tr>
-                        <tr>
-                            <td style="padding-bottom:15px">{!$Label.IFAP_name}</td>
-                            <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding-bottom:30px"><apex:outputText value="{!$Label.ISSP_AMS_NoC_title_or_capacity}" escape="false"/></td>
-                            <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
-                        </tr>
-                        <tr>
-                            <td>{!$Label.ISSP_Date}</td>
-                            <td>________________________</td>
-                        </tr>
-                    </table>
-                </div>
-            </apex:repeat>
-            <apex:repeat value="{!List_CurrentCompaniesOwners}" var="transfereeOwner">
-                <div class="row" style="width:50%; float:right; page-break-inside:avoid; margin-top:20px;">
-                    <table border="0" cellpadding="3">
-                        <tr>
-                            <th colspan="2">{!$Label.ISSP_AMS_NoC_Transferee}</th>
-                        </tr>
-                        <tr>
-                            <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
-                            <td>________________________</td>
-                        </tr>
-                        <tr>
-                            <td style="padding-bottom:15px">{!$Label.IFAP_name}</td>
-                            <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding-bottom:30px"><apex:outputText value="{!$Label.ISSP_AMS_NoC_title_or_capacity}" escape="false"/></td>
-                            <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
-                        </tr>
-                        <tr>
-                            <td>{!$Label.ISSP_Date}</td>
-                            <td>________________________</td>
-                        </tr>
-                    </table>
-                </div>
-            </apex:repeat>
-                <div class="row" style="width:100%; float:left; page-break-inside:avoid; margin-top:20px;">
-                    <table border="0" cellpadding="3">
-                        <tr>
-                            <th colspan="2">{!$Label.ISSP_AMS_NoC_Witness}</th>
-                        </tr>
-                        <tr>
-                            <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
-                            <td>________________________</td>
-                        </tr>
-                        <tr>
-                            <td style="padding-bottom:15px">{!$Label.ISSP_AMS_NoC_Name_address}</td>
-                            <td>________________________</td>
-                        </tr>
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td>________________________</td>
-                        </tr>
-                        <tr>
-                            <td>{!$Label.ISSP_Date}</td>
-                            <td>________________________</td>
-                        </tr>
-                    </table>
-                </div>
-        </apex:outputPanel>
-        <apex:outputPanel rendered="{!AND(sectorValue=='Travel_Agent', newForm.Notify_Change_Legal_Details__c, NOT(OR(newForm.Notify_Change_Accreditation_Type__c, newForm.Notify_Change_Location__c, newForm.Notify_Change_Ownership__c)))}">
+        <apex:outputPanel rendered="{!AND(sectorValue=='Travel_Agent', OR(newForm.Notify_Change_Accreditation_Type__c, newForm.Notify_Change_Ownership__c))}">
+            <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
+                <table border="0" cellpadding="3">
+                    <tr>
+                        <th colspan="2">{!$Label.ISSP_AMS_NoC_Transferor}</th>
+                    </tr>
+                    <tr>
+                        <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:15px">{!$Label.IFAP_name}</td>
+                        <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:30px"><apex:outputText value="{!$Label.ISSP_AMS_NoC_title_or_capacity}" escape="false"/></td>
+                        <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
+                    </tr>
+                    <tr>
+                        <td>{!$Label.ISSP_Date}</td>
+                        <td>________________________</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="row" style="width:50%; float:right; page-break-inside:avoid; margin-top:20px;">
+                <table border="0" cellpadding="3">
+                    <tr>
+                        <th colspan="2">{!$Label.ISSP_AMS_NoC_Transferee}</th>
+                    </tr>
+                    <tr>
+                        <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:15px">{!$Label.IFAP_name}</td>
+                        <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:30px"><apex:outputText value="{!$Label.ISSP_AMS_NoC_title_or_capacity}" escape="false"/></td>
+                        <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
+                    </tr>
+                    <tr>
+                        <td>{!$Label.ISSP_Date}</td>
+                        <td>________________________</td>
+                    </tr>
+                </table>
+            </div>
             <div class="row" style="width:100%; float:left; page-break-inside:avoid; margin-top:20px;">
+                <table border="0" cellpadding="3">
+                    <tr>
+                        <th colspan="2">{!$Label.ISSP_AMS_NoC_Witness}</th>
+                    </tr>
+                    <tr>
+                        <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:15px">{!$Label.ISSP_AMS_NoC_Name_address}</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td>{!$Label.ISSP_Date}</td>
+                        <td>________________________</td>
+                    </tr>
+                </table>
+            </div>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!AND(sectorValue=='Travel_Agent', newForm.Notify_Change_Legal_Details__c, NOT(OR(newForm.Notify_Change_Accreditation_Type__c, newForm.Notify_Change_Ownership__c)))}">
+            <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
                 <table border="0" cellpadding="3">
                     <tr>
                         <th colspan="2">{!$Label.ISSP_AMS_NoC_Authorized_Signature}</th>
@@ -252,37 +248,38 @@
                     </tr>
                 </table>
             </div>
-            <div class="row" style="width:100%; float:left; page-break-inside:avoid; margin-top:20px;">
-                    <table border="0" cellpadding="3">
-                        <tr>
-                            <th colspan="2">{!$Label.ISSP_AMS_NoC_Witness}</th>
-                        </tr>
-                        <tr>
-                            <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
-                            <td>________________________</td>
-                        </tr>
-                        <tr>
-                            <td style="padding-bottom:15px">{!$Label.ISSP_AMS_NoC_Name_address}</td>
-                            <td>________________________</td>
-                        </tr>
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td>________________________</td>
-                        </tr>
-                        <tr>
-                            <td>{!$Label.ISSP_Date}</td>
-                            <td>________________________</td>
-                        </tr>
-                    </table>
-                </div>
+            <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
+                <table border="0" cellpadding="3">
+                    <tr>
+                        <th colspan="2">{!$Label.ISSP_AMS_NoC_Witness}</th>
+                    </tr>
+                    <tr>
+                        <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:15px">{!$Label.ISSP_AMS_NoC_Name_address}</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td>{!$Label.ISSP_Date}</td>
+                        <td>________________________</td>
+                    </tr>
+                </table>
+            </div>
         </apex:outputPanel>
 
         <div class="row" style="width: 100%; float:left; page-break-inside:avoid; margin-top:30px;">
-          <table style="border:1px solid #000;" cellpadding="3" width="100%">
-              <tr style="border:none;font-weight:bold;color:red"><td>{!$Label.ISSP_AMS_NoC_IATA_Only}</td></tr>
-              <tr style="border:none"><th>{!$Label.ISSP_AMS_NoC_IATA_Acknowledged}</th></tr>
-              <tr style="border:none"><td>____________________<br/>{!$Label.ISSP_AMS_NoC_IATA_Admin}</td></tr>
-              <tr style="border:none"><td>____________________<br/>{!$Label.ISSP_Date}</td></tr>
+          <table style="border:1px solid #000;" cellpadding="4" width="100%">
+                <tr style="border:none;font-weight:bold;color:red"><td>{!$Label.ISSP_AMS_NoC_IATA_Only}</td></tr>
+                <tr style="border:none"><th>{!$Label.ISSP_AMS_NoC_IATA_Acknowledged}</th></tr>
+                <tr style="border:none"><td>____________________<br/>{!$Label.ISSP_AMS_NoC_IATA_Admin}</td></tr>
+                <tr style="border:none"><td>____________________<br/>{!$Label.ISSP_Date}<br/></td></tr>
+                <tr style="border:none"><td><br/></td></tr>
           </table>
         </div>
 
