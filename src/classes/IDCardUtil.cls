@@ -1236,6 +1236,45 @@ global with sharing class IDCardUtil {
         return newCase;
     }
 
+    public static Case createMobileIdCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount)
+    {
+        // Create the case
+        Case newCase = new Case();
+        newCase.RecordTypeId = IDCardcaseRecordTypeID;
+        newCase.Subject = 'Case for Mobile ID Card Application ' + [SELECT Name FROM ID_Card_Application__c WHERE Id = :idCardApp.Id].Name;
+
+        newCase.Status = 'Agent to be Notified';
+        newCase.OwnerId = System.Userinfo.getUserId();
+
+        newCase.AccountId = theAccount.Id;
+        newCase.Origin = 'ID Card Mobile';
+        newCase.Related_ID_Card_Application__c = idCardApp.Id;
+        newCase.SuppliedEmail = idCardApp.Email_admin__c;
+        newCase.ID_Card_Status__c = CASECARDSTATUS_PENDING;
+        newCase.CaseArea__c = 'Accreditation';
+        newCase.Reason1__c  = 'ID Card';
+
+        if (idCardApp.IDCard_Expedite_Delivery__c)
+            newCase.Priority = 'Low';
+
+        List<IATA_ISO_Country__c> isoCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
+
+        if (isoCountry[0].Case_BSP_Country__c != null && isoCountry[0].Case_BSP_Country__c != '')
+            newCase.BSPCountry__c = isoCountry[0].Case_BSP_Country__c;
+        if (isoCountry[0].Region__c != null && isoCountry[0].Region__c != '')
+            newCase.Region__c = isoCountry[0].Region__c;
+
+        // set contact
+        if (idCardApp.VER_Number__c != null && idCardApp.VER_Number__c != '') {
+            Contact associatedContact = GetAssociatedContact(idCardApp.VER_Number__c);
+            newCase.ContactId = associatedContact.Id;
+        }
+
+        insert newCase;
+
+        return newCase;
+    }
+
     public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, Boolean isPaidByCheque, Boolean SendEmail) {
         // Get recordtype ID
 

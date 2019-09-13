@@ -75,11 +75,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false, ! isTest);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, ! isTest);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, true);
 
@@ -143,11 +143,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, true);
 
@@ -201,11 +201,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false, true);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, true);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, true);
 
@@ -254,11 +254,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, true);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, true, true);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, true);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, true, true);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, true);
 
@@ -309,11 +309,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false);
         validatePayment(app, pCode, true, false, true, true, false);
         validateSpecializationFields(app, true);
 
@@ -365,11 +365,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false);
         validatePayment(app, pCode, true, false, true, true, false);
         validateSpecializationFields(app, true);
 
@@ -421,11 +421,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, false, 2, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, false, 2, false, false, false);
         validatePayment(app, pCode, true, false, true, false, false);
         validateSpecializationFields(app, true);
 
@@ -477,11 +477,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, false, 0, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, false, 0, false, false, false);
         validatePayment(app, pCode, false, false, false, false, false);
         validateSpecializationFields(app, true);
 
@@ -533,11 +533,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, false, 0, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, false, 0, false, false, false);
         validatePayment(app, pCode, true, true, false, true, false);
         validateSpecializationFields(app, true);
 
@@ -588,11 +588,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 1, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 1, false, false, false);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, true);
 
@@ -643,11 +643,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, false);
 
@@ -698,11 +698,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, false);
 
@@ -753,11 +753,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false); // forced digital
+        validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false, false); // forced digital
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false); // forced digital
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, false); // forced digital
         validatePayment(app, pCode, true, true, true, true, true);
         validateSpecializationFields(app, true);
 
@@ -811,11 +811,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false); // forced digital
+        validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false, false); // forced digital
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false); // forced digital
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, false); // forced digital
         validatePayment(app, pCode, true, true, true, true, true);
         validateSpecializationFields(app, true);
 
@@ -869,11 +869,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false); // forced digital
+        validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false, false); // forced digital
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false); // forced digital
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, false); // forced digital
         validatePayment(app, pCode, true, true, true, true, true);
         validateSpecializationFields(app, true);
 
@@ -940,11 +940,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false); // forced digital
+        validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false, true); // forced digital
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false); // forced digital
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, true); // forced digital
         validatePayment(app, pCode, true, true, true, true, true);
         validateSpecializationFields(app, true);
 
@@ -998,11 +998,11 @@ public class IDCard_RenewalWebServiceTest
 
         // validate case
         Case c = getCase(caseId);
-        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false);
+        validateCase(c, caseNumber, idCardApplicationId, false, typeOfCard, false, false);
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, false);
 
@@ -1320,24 +1320,28 @@ public class IDCard_RenewalWebServiceTest
     }
 
     private static void validateCase(Case c, String caseNumber, Id idCardApplicationId, Boolean isUSAgent,
-                                     String typeOfCard, Boolean useAlternateAccount)
+                                     String typeOfCard, Boolean useAlternateAccount, Boolean skipCaseStatus)
     {
         System.debug('Validating card: ' + c);
 
         System.assertEquals(RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Application'), c.RecordTypeId);
         System.assert(c.Subject.contains('Case for Mobile ID Card Application'));
         System.assertEquals(caseNumber, c.caseNumber);
-        if (IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL.equals(typeOfCard))
-            System.assertEquals('Closed', c.Status);
-        else
-            System.assertEquals('Ready for production', c.Status);
+        if (! skipCaseStatus)
+        {
+            if (IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL.equals(typeOfCard))
+                System.assertEquals('Closed', c.Status);
+            else
+                System.assertEquals('Ready for production', c.Status);
+        }
         if (useAlternateAccount)
             System.assertEquals(testData.IDCard_Accounts[2].Id, c.AccountId);
         else
             System.assertEquals(testData.IDCard_Accounts[0].Id, c.AccountId);
         System.assertEquals('ID Card Mobile', c.Origin);
         System.assertEquals(idCardApplicationId, c.Related_ID_Card_Application__c);
-        System.assertEquals('Approved', c.ID_Card_Status__c);
+        if (! skipCaseStatus)
+            System.assertEquals('Approved', c.ID_Card_Status__c);
         System.assertEquals('Accreditation', c.CaseArea__c);
         System.assertEquals('ID Card', c.Reason1__c);
         if (isUSAgent)
@@ -1348,7 +1352,8 @@ public class IDCard_RenewalWebServiceTest
     }
 
     private static void validateApplication(ID_Card_Application__c app, String uit, String typeOfCard, String pCode,
-                                 Boolean hasPayment, Integer hasCourses, Boolean isUSAgent, Boolean useAlternateAccount)
+                                 Boolean hasPayment, Integer hasCourses, Boolean isUSAgent, Boolean useAlternateAccount,
+                                 Boolean skipCaseStatus)
     {
         System.debug('Validating id card application: ' + app);
 
@@ -1359,7 +1364,8 @@ public class IDCard_RenewalWebServiceTest
             System.assertEquals('Completed', app.Application_Status__c);
         System.assertEquals(IDCardUtil.APPLICATIONTYPE_RENEWAL, app.Type_of_application__c);
         System.assertEquals(false, app.Renewal_From_Replace__c);
-        System.assertEquals('Processed', app.Single_Application_Processing_Step__c);
+        if (! skipCaseStatus)
+            System.assertEquals('Processed', app.Single_Application_Processing_Step__c);
         System.assertEquals(typeOfCard, app.Card_Type__c);
         System.assertEquals('some id', app.Mobile_App_Transaction_Id__c);
         System.assertNotEquals(null, app.Mobile_App_Request__c);
@@ -1481,7 +1487,7 @@ public class IDCard_RenewalWebServiceTest
         validateIf(useAlternateAccount, 'July', 'January', card.Start_Date_Agency_Month__c);
         validateIf(useAlternateAccount, '2002', '2003', card.Start_Date_Agency_Year__c);
         System.assertEquals('Passenger', card.Type_of_ID_Card__c);
-        System.assertEquals('MRS.', card.Title__c);
+        System.assertEquals('MRS.', (card.Title__c == null ? null : card.Title__c.toUpperCase()));
         if (isUSAgent)
             System.assertEquals('5991000001', card.VER_Number__c);
         else
@@ -1534,8 +1540,8 @@ public class IDCard_RenewalWebServiceTest
             System.assertEquals(IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, card.Card_Type__c);
             System.assertEquals(IDCardUtil.CARDSTATUS_VALID, card.Card_Status__c);
             System.assertEquals(false, card.MustSyncWithAIMS__c);
-            System.assertEquals(System.now().date(), card.Sent_to_AIMS_on__c);
-            System.assertEquals(System.now().date(), card.Received_From_AIMS__c);
+            System.assertEquals(System.now().date(), (card.Sent_to_AIMS_on__c == null ? null : card.Sent_to_AIMS_on__c.date()));
+            System.assertEquals(System.now().date(), (card.Received_From_AIMS__c == null ? null : card.Received_From_AIMS__c.date()));
         }
     }
 

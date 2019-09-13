@@ -137,7 +137,7 @@ public with sharing class IDCard_MobileAppRenewalService
         setWebStarField(requestInformation);
 
         // 6. update the Case to "Closed" on digital cards
-        closeDigitalCase(requestInformation);
+        //closeDigitalCase(requestInformation);
 
         update requestInformation.newIDC;
 
@@ -217,7 +217,7 @@ public with sharing class IDCard_MobileAppRenewalService
         setWebStarField(requestInformation);
 
         // 6. update the Case to "Closed" on digital cards
-        closeDigitalCase(requestInformation);
+        //closeDigitalCase(requestInformation);
 
         update requestInformation.newIDC;
 
@@ -253,8 +253,8 @@ public with sharing class IDCard_MobileAppRenewalService
         {
             requestInformation.newIDC.MustSyncWithAIMS__c = false;
             requestInformation.newIDC.Card_Status__c = IDCardUtil.CARDSTATUS_VALID;
-            requestInformation.newIDC.Sent_to_AIMS_on__c = System.now().date();
-            requestInformation.newIDC.Received_From_AIMS__c = System.now().date();
+            requestInformation.newIDC.Sent_to_AIMS_on__c = System.now();
+            requestInformation.newIDC.Received_From_AIMS__c = System.now();
         }
     }
 
@@ -322,28 +322,50 @@ public with sharing class IDCard_MobileAppRenewalService
 
     private static void approveCaseAndCreateIDC(RequestInformation requestInformation)
     {
+        String idCardType = getAccountType(requestInformation.account);
+
+        insert IDCardUtil.CreateIDCardObjectFromApplication(
+            requestInformation.newIDCA, requestInformation.contact, idCardType);
+
+        Boolean closeCase = CARD_TYPE_DIGITAL.equals(requestInformation.newIDCA.Card_Type__c) || requestInformation.isUSAgent;
+
         Case c2 = requestInformation.idcaCase;
         if (c2.CaseNumber == null)
             c2 = [SELECT Id, CaseNumber, Status FROM Case WHERE Id = :c2.Id];
+        approveCaseAndCreateIDC(c2.Id, c2.CaseNumber, idCardType, requestInformation.newIDCA.Id, closeCase);
+    }
 
-        String idCardType = getAccountType(requestInformation.account);
-
-        String result = IDCardUtil.UpdateCaseToApproved_Rejected(c2.CaseNumber, true, idCardType);
+    @Future
+    private static void approveCaseAndCreateIDC(Id caseId, String caseNumber, String idCardType, Id newIDCAId, Boolean closeCase)
+    {
+        String result = IDCardUtil.UpdateCaseToApproved_Rejected(caseNumber, true, idCardType);
         if (! result.contains('true') && ! result.contains('false'))
             throw new IDCardException(result);
         
-        ID_Card_Application__c newIDCA = new ID_Card_Application__c(Id = requestInformation.newIDCA.Id);
-        newIDCA.Single_Application_Processing_Step__c = 'Processed';
-        update newIDCA;
+        ID_Card_Application__c app = [SELECT Single_Application_Processing_Step__c FROM ID_Card_Application__c WHERE Id = :newIDCAId];
+        if (IDCardUtil.single_application_status_waiting.equals(app.Single_Application_Processing_Step__c))
+        {
+            ID_Card_Application__c newIDCA = new ID_Card_Application__c(Id = newIDCAId);
+            newIDCA.Single_Application_Processing_Step__c = 'Processed';
+            update newIDCA;
+        }
+
+        if (closeCase)
+            closeDigitalCase(caseId);
     }
 
-    private static void closeDigitalCase(RequestInformation requestInformation)
+    private static void closeDigitalCase(Id caseId)
     {
-        if (CARD_TYPE_DIGITAL.equals(requestInformation.newIDC.Card_Type__c))
+        try
         {
-            Case c = new Case(Id = requestInformation.idcaCase.Id);
+            Case c = new Case(Id = caseId);
+            c.OwnerId = System.UserInfo.getUserId();
             c.Status = 'Closed';
             update c;
+        }
+        catch (EXception e)
+        {
+            // NOTHING - not a "breakable" issue
         }
     }
 
@@ -404,17 +426,9 @@ public with sharing class IDCard_MobileAppRenewalService
 
     private static Case createCaseAndSendEmail(RequestInformation requestInformation)
     {
-        Case c = IDCardUtil.createKeyAccountIdCardApplicationCase(requestInformation.newIDCA, requestInformation.account);
-
-        // update status to send email using workflow rule and "IDCard_ConfirmationEmail" template email
-        Case c2 = new Case(Id = c.Id);
-        c2.Subject = 'Case for Mobile ID Card Application ' + [SELECT Name FROM ID_Card_Application__c WHERE Id = :requestInformation.newIDCA.Id].Name;
-        c2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Application');
-        c2.Status = 'Agent to be Notified';
-        c2.Origin = 'ID Card Mobile';
-        update c2;
-
+        Case c = IDCardUtil.createMobileIdCardApplicationCase(requestInformation.newIDCA, requestInformation.account);
         //requestInformation.newIDCA.Case_Number__c = c.CaseNumber; set automatically on the "IDCard_ConfirmationEmail" template email
+
         return c;
     }
     
@@ -1103,6 +1117,8 @@ public with sharing class IDCard_MobileAppRenewalService
     private static Contact getContactByEmail(String email)
     {
         System.debug('Looking for any Contact for the email ' + email);
+        if (String.isBlank(email))
+            return null;
 
         List<Contact> contacts = [SELECT c.VER_Number_2__c, c.FirstName, c.LastName, c.Date_of_Birth__c,
                                     c.Account.IDCard_Key_Account__c, c.Account.Type, c.Account.Short_Name__c,
