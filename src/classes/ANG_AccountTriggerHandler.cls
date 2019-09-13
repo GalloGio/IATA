@@ -147,11 +147,11 @@ public class ANG_AccountTriggerHandler {
 
 			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A && acc.ANG_CashCondition__c == oldMap.get(acc.Id).ANG_CashCondition__c){
 				downGradeAtoB.add(acc);
-				changeCodesForRiskChangesLst.add(acc.Id);
+				if(acc.ANG_RiskStatus__c != AMS_UTils.NOT_APPLICABLE) changeCodesForRiskChangesLst.add(acc.Id);
 			}
 			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B){
 				downGradeBtoC.add(acc);
-				changeCodesForRiskChangesLst.add(acc.Id);
+				if(acc.ANG_RiskStatus__c != AMS_UTils.NOT_APPLICABLE) changeCodesForRiskChangesLst.add(acc.Id);
 			}
 			if(isExpiration && acc.Guaranteed_amount__c == 0 && acc.ANG_HE_CashCondition__c && !oldMap.get(acc.Id).ANG_HE_CashCondition__c) createFOP.add(acc);
 		}
