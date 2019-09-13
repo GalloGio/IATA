@@ -2,33 +2,55 @@
         <div style={backgroundStyle}>
             <c-portal-page-container>
                 <span slot="componentContent">
-                    <div style="position:relative;">
-                        <c-portal-breadcrumbs show-in-white=true></c-portal-breadcrumbs>
-    
-                        <div class="slds-p-vertical_x-large text-white text-xlarge text-bold headerContainerShadow">
-                            <div>{label.CSP_Support_HeaderTitle}</div>
-                        </div>
-    
+                    <lightning-layout multiple-rows horizontal-align="spread">
+                        <lightning-layout-item flexibility="auto" >
+                            <c-portal-breadcrumbs show-in-white=true></c-portal-breadcrumbs>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto" >
+                            <template if:true={guestUser}>
+                                <lightning-combobox 
+                                    name="userLang" 
+                                    value={language} 
+                                    options={langOptions}
+                                    onchange={handleChangeLang}
+                                    class="slds-p-bottom_x-small languageSelection borderlessCombobox">
+                                </lightning-combobox>
+                            </template>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    
+                    <div class="slds-p-vertical_x-large text-white text-xlarge text-bold headerContainerShadow">
+                        <div>{label.CSP_Support_HeaderTitle}</div>
                     </div>
                 </span>
             </c-portal-page-container>
         </div>
-    
+        
         <c-portal-page-container>
             <span slot="componentContent">
                 <div style="position:relative;">
                     <!-- SEARCH BAR -->
                     <div class="background-white" style="position:relative;margin-top:-37px;">
-                        <c-portal-search-bar-global-component 
-                            search-bar-placeholder={label.CSP_Search_Support_Placeholder} 
-                            show-f-a-qs
-                            show-documents>
-                        </c-portal-search-bar-global-component>
+                        <template if:true={guestUser}>
+                            <c-portal-search-bar-global-component 
+                                search-bar-placeholder={label.CSP_Search_Support_Placeholder} 
+                                show-f-a-qs
+                                language={language}>
+                            </c-portal-search-bar-global-component>
+                        </template>
+                        <template if:true={internalUser}>
+                            <c-portal-search-bar-global-component 
+                                search-bar-placeholder={label.CSP_Search_Support_Placeholder} 
+                                show-f-a-qs
+                                show-documents
+                                show-advanced-search>
+                            </c-portal-search-bar-global-component>
+                        </template>
                     </div>
                 </div>
             </span>
         </c-portal-page-container>
-    
+
         <!-- Empty space after search bar -->
         <div style="height:50px;">&nbsp;</div>
         

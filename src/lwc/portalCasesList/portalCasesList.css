@@ -27,6 +27,13 @@
     vertical-align: middle;
 }
 
+.noPadding {
+    padding: 0px;
+}
+
+.filterButton{
+    padding-left: 5px;
+}
 
 /* MODAL */
 

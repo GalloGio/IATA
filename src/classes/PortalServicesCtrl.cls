@@ -892,13 +892,73 @@ public static String serviceWrapperRedirect(String serviceId){
 }
 
 
-//gets Portal ADmins - Method based on existing funcionality ANG_RHCAlertTriggerHandler.sendAlertNotification
-@AuraEnabled(cacheable=true)
-public static list<contact> getPortalAdmins(){
-	User u=DAL_ISSP.getUser(UserInfo.getUserId());
+	/**
+	* getPortalAdmins - Method based on existing functionality on ISSP__PersonalInformationWithoutSharing.loadPortalAdmins
+	* @return   returns Administrator contacts based on AccountTeamMembers
+	*/
+	@AuraEnabled(cacheable=true)
+	public static List<AccountTeamMember> getPortalAdmins() {
+        User currentUser = DAL_ISSP.getUser(Userinfo.getUserId());
+        Contact currentUserContact = DAL_ISSP.getContact(currentUser.ContactId);
 
-	return [SELECT Id,name,email FROM Contact WHERE User_Portal_Status__c = : ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (Account.Top_Parent__c =: u.contact.AccountId OR AccountId = : u.contact.AccountId)];
-}
+		List<AccountTeamMember> portalAdmins = new List<AccountTeamMember>();
+		Map<Id, AccountTeamMember> portalAdminMap = new Map<Id, AccountTeamMember>();
+
+		if (currentUserContact == null 
+			|| 
+				(currentUserContact.User_Portal_Status__c != 'Active'
+				&& currentUserContact.User_Portal_Status__c != 'Regional Administrator'
+				&& currentUserContact.User_Portal_Status__c != 'Approved User'
+				&& currentUserContact.User_Portal_Status__c != 'Pending Approval')
+			)
+			return new List<AccountTeamMember>();
+			
+		try {
+			String currentUserProfile = '';
+			List<AccountTeamMember> teamMembers = ISSP_PersonalInformationWithoutSharing.getPortalAdmins(new Id[] { currentUserContact.AccountId, currentUserContact.Account.ParentId });
+			
+			for (AccountTeamMember teamMember : teamMembers) {
+				if(currentUserContact.Id == teamMember.User.ContactId) {
+					if(currentUserProfile == '') {
+						currentUserProfile = teamMember.TeamMemberRole;
+					}
+					else if(currentUserProfile == 'Portal Administrator') {
+						if(teamMember.TeamMemberRole != 'Portal Administrator' ) {
+							currentUserProfile = teamMember.TeamMemberRole;
+						}
+					}
+					else if(currentUserProfile == 'Portal Regional Administrator') {
+						if(teamMember.TeamMemberRole != 'Portal Administrator' && teamMember.TeamMemberRole != 'Portal Regional Administrator'){
+							currentUserProfile = teamMember.TeamMemberRole;
+						}
+					}
+				}
+			}
+
+			// fill admins contacts lists
+			for (AccountTeamMember teamMember : teamMembers) {
+				if(currentUserProfile == '' || currentUserProfile == 'Manager' || currentUserProfile == 'Collaborator') {
+					if(teamMember.TeamMemberRole == 'Portal Regional Administrator') {
+						portalAdminMap.put(teamMember.User.ContactId, teamMember);
+					}
+				}
+			}
+			if (portalAdminMap.size() == 0) {
+				for (AccountTeamMember teamMember : teamMembers) {
+					if (teamMember.TeamMemberRole == 'Portal Administrator') {
+						portalAdminMap.put(teamMember.User.ContactId, teamMember);
+					}
+				}
+			} 
+			
+			portalAdmins = portalAdminMap.values(); 
+			
+		} catch (Exception e) {
+			ISSP_Utilities.log(e);
+		}
+
+		return portalAdmins;
+	}
 
 /**
     Returns a list of all visible application names for the input account

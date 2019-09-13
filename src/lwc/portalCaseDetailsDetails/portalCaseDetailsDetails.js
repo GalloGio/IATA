@@ -2,6 +2,8 @@ import { LightningElement, track, api } from 'lwc';
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import getFieldLabels from '@salesforce/apex/CSP_Utils.getSelectedColumns';
 import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
+import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
+
 
 import { getParamsFromPage } from 'c/navigationUtils';
 
@@ -13,6 +15,12 @@ import RelatedAccount from '@salesforce/label/c.csp_CreateNewCaseMainPicklistLab
 import ISSP_Survey from '@salesforce/label/c.ISSP_Survey';
 import Open from '@salesforce/label/c.Open';
 
+import Email from '@salesforce/label/c.Email';
+import CSP_Remittantce_Date from '@salesforce/label/c.CSP_Remittantce_Date';
+import CSP_Case_Currency from '@salesforce/label/c.CSP_Case_Currency';
+import ISSP_SIDRA_Irregularity_Date from '@salesforce/label/c.ISSP_SIDRA_Irregularity_Date';
+import CSP_IATA_Country from '@salesforce/label/c.CSP_IATA_Country';
+
 
 export default class PortalCaseDetailsDetails extends LightningElement {
 
@@ -20,6 +28,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track caseDetails;
     @track caseId;
     @track surveyLink;
+    @track optionBuilder;
 
     @track showAddDocsModal = false;
 
@@ -33,6 +42,11 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         RelatedAccount,
         ISSP_Survey,
         Open
+        Email,
+        CSP_Remittantce_Date,
+        CSP_Case_Currency,
+        ISSP_SIDRA_Irregularity_Date,
+        CSP_IATA_Country
     };
 
     acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
@@ -48,6 +62,12 @@ export default class PortalCaseDetailsDetails extends LightningElement {
             getCaseById({ caseId: this.pageParams.caseId })
                 .then(results => {
                     this.caseDetails = results;
+
+                    optionBuilder({ caseObj: results })
+                        .then(result => {
+                            this.optionBuilder = result;
+                        });
+
                     this.loading = false;
                     this.getSurveyLink();
                 })

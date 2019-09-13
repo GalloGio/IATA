@@ -1,70 +1,84 @@
 <template>
     <div class="bottomLightGrayBorder slds-m-around_small">
         <img src={searchIconUrl}>
-        <lightning-input name="newRecipientTextInput"
-            placeholder={label.CSP_SearchFAQ}
+        <lightning-input name="newRecipientTextInput" placeholder={label.CSP_SearchFAQ}
             class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchStyle"
-            value={searchText}
-            onchange={onInputChange}>
+            value={searchText} onchange={onInputChange}>
         </lightning-input>
     </div>
     <!-- ARTICLES -->
-    <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite">  
-        <template if:true={hasArticles} for:each={articles} for:item="article">
-            <div class="slds-p-vertical_medium slds-m-around_small borderStyle" key={article.id}>
-                <div class="customCardTitleBox cursorPointer" onclick={articleSelected} data-item={article.label} data-id={article.id}>
-                    <lightning-icon class="darkBlueIcon" if:true={article.open} icon-name="utility:chevrondown" size="xx-small" data-item={article.label} data-id={article.id}></lightning-icon>
-                    <lightning-icon class="darkBlueIcon" if:false={article.open} icon-name="utility:chevronright" size="xx-small" data-item={article.label} data-id={article.id}></lightning-icon>
-                    <span class="slds-p-left_small text-bold" data-item={article.label} data-id={article.id}>{article.label}</span>
-                </div>        
-                <div if:true={article.open} class="slds-p-vertical_x-large text-xsmall" style="transition: height 0.3s ease;" data-item={article.label}>
-                    <!-- ARTICLE -->
-                    <div class="slds-m-bottom_medium">
-                        <lightning-formatted-rich-text value={article.value}></lightning-formatted-rich-text>
-                    </div>
-                    
-                    <!-- FEEDBACK -->
-                    <div if:false={article.feedback} class="slds-m-vertical_x-large slds-p-horizontal_x-large slds-p-vertical_medium WarningRectangle">
-                        <lightning-layout horizontal-align="spread">
-                            <lightning-layout-item class="text-bold text-xsmall text-darkGray slds-p-vertical_x-small">
-                                {label.CSP_ArticleHelpful}
-                            </lightning-layout-item>
-                            <lightning-layout-item class="cursorPointer slds-p-vertical_xx-small">
-                                <lightning-icon class="slds-p-around_xx-small cursorPointerColor slds-current-color" icon-name="utility:up" size="small"
-                                    onclick={feedbackStatus} data-item={article.id} data-title={article.label}
-                                    data-number={article.number} data-option="true"></lightning-icon>
-                                <lightning-icon class="slds-p-around_xx-small cursorPointerColor slds-current-color" icon-name="utility:down" size="small"
-                                    onclick={renderModal} data-item={article.id} data-title={article.label}
-                                    data-number={article.number} data-option="false"></lightning-icon>
-                            </lightning-layout-item>
-                        </lightning-layout>
-                    </div>
+    <div if:true={loading} class="spinnerContainer">
+        <lightning-spinner size="medium"></lightning-spinner>
+    </div>
 
-                    <div if:true={article.feedback} class="slds-m-vertical_x-large slds-p-around_large WarningRectangle">
-                        <lightning-layout horizontal-align="spread">
-                            <lightning-layout-item>
-                                {label.CSP_ThanksFeedback}
-                            </lightning-layout-item>
-                        </lightning-layout>
+    <div if:false={loading}>
+        <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite">
+            <template if:true={hasArticles} for:each={articles} for:item="article">
+                <div class="slds-p-vertical_medium slds-m-around_small borderStyle" key={article.id}>
+                    <div class="customCardTitleBox cursorPointer" onclick={articleSelected} data-item={article.label}
+                        data-id={article.id}>
+                        <lightning-icon class="darkBlueIcon" if:true={article.open} icon-name="utility:chevrondown"
+                            size="xx-small" data-item={article.label} data-id={article.id}></lightning-icon>
+                        <lightning-icon class="darkBlueIcon" if:false={article.open} icon-name="utility:chevronright"
+                            size="xx-small" data-item={article.label} data-id={article.id}></lightning-icon>
+                        <span class="slds-p-left_small text-bold" data-item={article.label}
+                            data-id={article.id}>{article.label}</span>
                     </div>
+                    <div if:true={article.open} class="slds-p-vertical_x-large text-xsmall"
+                        style="transition: height 0.3s ease;" data-item={article.label}>
+                        <!-- ARTICLE -->
+                        <div class="slds-m-bottom_medium">
+                            <lightning-formatted-rich-text value={article.value}></lightning-formatted-rich-text>
+                        </div>
 
-                    <!-- RELATED ARTICLES -->
-                    <div class="slds-p-vertical_x-large">
-                        <c-portal-f-a-q-related-article article={articleInfo}></c-portal-f-a-q-related-article>
+                        <!-- FEEDBACK -->
+                        <div if:false={article.feedback}
+                            class="slds-m-vertical_x-large slds-p-horizontal_x-large slds-p-vertical_medium WarningRectangle">
+                            <lightning-layout horizontal-align="spread">
+                                <lightning-layout-item class="text-bold text-xsmall text-darkGray slds-p-vertical_x-small">
+                                    {label.CSP_ArticleHelpful}
+                                </lightning-layout-item>
+                                <lightning-layout-item class="cursorPointer slds-p-vertical_xx-small">
+                                    <lightning-icon class="slds-p-around_xx-small cursorPointerColor slds-current-color" icon-name="utility:up" size="small"
+                                        onclick={feedbackStatus} data-item={article.id} data-title={article.label}
+                                        data-number={article.number} data-option="true"></lightning-icon>
+                                    <lightning-icon class="slds-p-around_xx-small cursorPointerColor slds-current-color" icon-name="utility:down" size="small"
+                                        onclick={renderModal} data-item={article.id} data-title={article.label}
+                                        data-number={article.number} data-option="false"></lightning-icon>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+
+                        <div if:true={article.feedback}
+                            class="slds-m-vertical_x-large slds-p-around_medium WarningRectangle">
+                            <lightning-layout horizontal-align="spread" class="slds-p-horizontal_medium">
+                                <lightning-layout-item class="text-bold text-xsmall text-darkGray slds-p-vertical_x-small">
+                                    {label.CSP_ThanksFeedback}
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+
+                        <!-- RELATED ARTICLES -->
+                        <div class="slds-p-vertical_x-large">
+                            <c-portal-f-a-q-related-article article={articleInfo} user-info={userInfo}></c-portal-f-a-q-related-article>
+                        </div>
+                        <!-- REACHS US BANNER -->
+                        <div class="slds-p-vertical_x-large">
+                            <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic}>
+                            </c-portal-f-a-q-reach-us-banner>
+                        </div>
                     </div>
-                    <!-- REACHS US BANNER -->
-                    <div class="slds-p-vertical_x-large">
-                        <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic}></c-portal-f-a-q-reach-us-banner>
-                    </div> 
                 </div>
-            </div>
-        </template>
-        <template if:false={hasArticles}>
-            <!-- REACHS US BANNER -->
-            <div class="slds-p-vertical_x-large">
-                <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic}></c-portal-f-a-q-reach-us-banner>
-            </div>
-        </template>
+            </template>
+
+            <template if:false={hasArticles}>
+                <!-- REACHS US BANNER -->
+                <div class="slds-p-vertical_x-large">
+                    <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic}>
+                    </c-portal-f-a-q-reach-us-banner>
+                </div>
+            </template>
+        </div>
     </div>
 
     <!-- FEEDBACK DOWN OPTION -->
@@ -75,34 +89,34 @@
                 <div class="slds-p-around_medium modalHeader">
                     {label.CSP_FeedbackTitle}
                 </div>
-                
+
                 <!-- BODY -->
                 <div class="slds-p-around_medium customWhiteBackground">
                     <div class="slds-p-vertical_large modalBody">
                         {label.CSP_FeedbackBody}
-                    </div>                        
+                    </div>
                 </div>
 
-                <div class="aroundLightGrayBorder slds-p-around_small" >
-                    <lightning-textarea
-                        class="hideInputLabel borderlessInput grayInputPlaceholder"
-                        value={articleComments}
-                        onchange={feedbackComments}>
+                <div class="aroundLightGrayBorder slds-p-around_small">
+                    <lightning-textarea class="hideInputLabel borderlessInput grayInputPlaceholder"
+                        value={articleComments} onchange={feedbackComments}>
                     </lightning-textarea>
                 </div>
 
                 <!-- FOOTER -->
                 <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground">
                     <div class="slds-m-around_xxx-small">
-                            <div class="slds-grid slds-gutters">
-                                <div class="slds-col">
-                                    <button class="uiButton containedButton containedButton-size" onclick={saveFeedback}>{label.CSP_Submit}</button>
-                                </div>
-                                <div class="slds-col">
-                                    <button class="containedButtonAlt uiButton" onclick={renderModal}>{label.CSP_Cancel}</button>
-                                </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <button class="uiButton containedButton containedButton-size"
+                                    onclick={saveFeedback}>{label.CSP_Submit}</button>
                             </div>
-                    </div>        
+                            <div class="slds-col">
+                                <button class="containedButtonAlt uiButton"
+                                    onclick={renderModal}>{label.CSP_Cancel}</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -112,24 +126,17 @@
     <template if:true={renderConfirmation}>
         <div class="slds-backdrop slds-backdrop_open">
             <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open"
-                style="text-align: center;">
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="text-align: center;">
                 <div class="dot-lightgreen overlap-top-center">
                     <div class="dot-green dot-allign">
                         <div class="dot-white-small dot-allign">
-                            <lightning-icon icon-name="utility:check" variant="success"
-                                alternative-text="Approved" size="medium"
-                                class="dot-allign slds-current-color success-variant">
+                            <lightning-icon icon-name="utility:check" variant="success" alternative-text="Approved"
+                                size="medium" class="dot-allign slds-current-color success-variant">
                             </lightning-icon>
                         </div>
                     </div>
                 </div>
                 <div class="slds-modal__container customModal">
-                    <div class="slds-float_right close-modal">
-                        <lightning-icon icon-name="utility:close" variant="" alternative-text="Close" size="medium"
-                            class="slds-current-color slds-p-around_medium slds-text-link_reset" onclick={closeModal}>
-                        </lightning-icon>
-                    </div>
                     <div>
                         <h2 id="modal-heading-01"
                             class="slds-text-heading_medium slds-hyphenate slds-align_absolute-center slds-p-top_xx-large">
@@ -144,8 +151,7 @@
                     <div class="slds-align_absolute-center slds-m-around_x-large">
                         <div class="slds-grid slds-gutters">
                             <div class="slds-col">
-                                <button class="containedButtonAlt"
-                                    onclick={redirectSupport}>
+                                <button class="containedButtonAlt" onclick={closeModal}>
                                     {label.csp_GoToSupport}
                                 </button>
                             </div>
@@ -154,5 +160,5 @@
                 </div>
             </section>
         </div>
-    </template>    
+    </template>
 </template>

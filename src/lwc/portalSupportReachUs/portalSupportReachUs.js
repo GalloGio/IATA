@@ -89,6 +89,8 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     @track showModal = false;
     @track callUsPhoneNumberConfigs;
     @track phoneNumber = [];
+
+    @track showHideRecentCasesList = false;
     //@track suggestion;
 
     //global variables
@@ -572,7 +574,13 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //Shows Options Panel
         let showOptionsPanel = new Promise((resolve, reject) => {
-            const showoptions = new CustomEvent('showoptions');
+            const showoptions = new CustomEvent('showoptions', { 
+                detail: {
+                    topic: this.topic,
+                    subtopic: this.subTopic,
+                    category: this.category
+                }
+            });
             // Fire the custom event
             this.dispatchEvent(showoptions);
 
@@ -864,5 +872,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                         && item.DeveloperName === 'LVA_CallUs_GEN'); // ---- Seventh Condition ------//
             });
         }
+    }
+
+    hideRecentCasesList() {
+        this.showHideRecentCasesList = true;
     }
 }

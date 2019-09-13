@@ -1,0 +1,121 @@
+<template>
+
+    <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+        <div class="modal">
+            <div class="customPopupInteriorHalfScreenCentered">
+
+                <!-- Popup Header -->
+                <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
+                    <span class="modalTitle">{titleLabel}</span>
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                            onclick={closeModal}></lightning-icon>
+                    </span>
+                </div>
+                <template if:false={resultMessage}>
+                    <div class="slds-is-relative">
+                        <template if:true={loading}>
+                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                        </template>
+
+                        <div class="customWhiteBackground">
+
+                            <div class="slds-grid slds-wrap slds-p-around_large">
+
+                                <div class="slds-col slds-size_1-of-1">
+                                    <lightning-layout-item size="7" flexibility="auto" padding="around-small">
+                                        <lightning-combobox name="AccountSelected" label={label.ISSP_Relocate_Move_To}
+                                            placeholder={label.ISSP_Relocate_Select_Account} value={relatedAccountValue}
+                                            options={relatedAccountOptions} dropdown-alignment="auto"
+                                            onchange={handleRelatedAccountChange} required>
+                                        </lightning-combobox>
+                                    </lightning-layout-item>
+                                </div>
+                            </div>
+
+                            <template if:true={showAccountInfo}>
+                                <lightning-record-view-form record-id={AccountInfo.Id} object-api-name="Account">
+                                    <div class="slds-box">
+                                        <lightning-output-field field-name="Name">
+                                        </lightning-output-field>
+                                        <lightning-output-field field-name="Site">
+                                        </lightning-output-field>
+                                        <lightning-output-field field-name="IATA_ISO_Country__r.Name">
+                                        </lightning-output-field>
+                                        <lightning-output-field field-name="Location_Type__c">
+                                        </lightning-output-field>
+                                        <lightning-output-field field-name="BillingStreet">
+                                        </lightning-output-field>
+                                        <lightning-output-field field-name="BillingCity">
+                                        </lightning-output-field>
+                                        <lightning-output-field field-name="BillingPostalCode">
+                                        </lightning-output-field>
+                                        <lightning-output-field field-name="BillingState">
+                                        </lightning-output-field>
+                                        <lightning-output-field field-name="BillingCountry">
+                                        </lightning-output-field>
+                                    </div>
+                                </lightning-record-view-form>
+                            </template>
+
+                            <!-- BUTTON -->
+                            <div class="slds-align_absolute-center slds-p-around_large topLightGrayBorder">
+                                <lightning-button variant="neutral" class="slds-m-right_medium containedButtonWhite" name="closeModal"
+                                    label={label.cancelLABEL} title={label.cancelLABEL} onclick={closeModal}>
+                                </lightning-button>
+                                
+                                <lightning-button variant="brand" class="containedButton"
+                                    name="sendPasswordbtn" label={label.submitLABEL} title={label.submitLABEL}
+                                    onclick={submitAction} disabled={noSelected}>
+                                </lightning-button>
+
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Success Modal -->
+                <template if:true={resultMessage}>
+                    <div class="slds-backdrop slds-backdrop_open">
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="text-align: center;">
+                            <div class="dot-lightgreen overlap-top-center">
+                                <div class="dot-green dot-allign">
+                                    <div class="dot-white-small dot-allign">
+                                        <lightning-icon icon-name="utility:check" variant="success" alternative-text="Approved"
+                                            size="medium" class="dot-allign slds-current-color success-variant">
+                                        </lightning-icon>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-modal__container customModal">
+                                <div>
+                                    <h2 id="modal-heading-01"
+                                        class="slds-text-heading_medium slds-hyphenate slds-align_absolute-center slds-p-top_xx-large">
+                                        {titleLabel}
+                                    </h2>
+                                </div>
+                                <div class="slds-align_absolute-center slds-p-around_large">
+                                    <h2 class="text-xxsmall slds-p-top_small slds-align_absolute-center darkgrey-text">
+                                        {resultMessageLabel}
+                                    </h2>
+                                </div>
+                                <div class="slds-p-around_large topLightGrayBorder">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-align_absolute-center">
+                                            <lightning-button variant="brand" class="containedButton"
+                                                name="Continuebtn" label={label.ContinueLabel} title={label.ContinueLabel}
+                                                onclick={closeModal}>
+                                            </lightning-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </template>
+
+            </div>
+        </div>
+    </section>
+</template>

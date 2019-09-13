@@ -114,7 +114,7 @@ private class PortalCasesCtrlTest {
                 
                 PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
                 
-                PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false);
+                PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
                 
                 PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
                 
@@ -151,7 +151,7 @@ private class PortalCasesCtrlTest {
                                         Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
                 insert newCase4;
                 
-                PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(true, true);
+                PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(true, true, true);
                 
                 PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
                 

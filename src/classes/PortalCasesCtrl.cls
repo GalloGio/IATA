@@ -44,6 +44,7 @@ public with sharing class PortalCasesCtrl {
     private static PortalSearchFilterWrapper filtersWrapper;
     private static Integer requestedPageNumber;
 
+    private static Boolean isCaseFromReachUs = false;
     /*
     *
     *
@@ -70,14 +71,16 @@ public with sharing class PortalCasesCtrl {
 
         String queryConditions = getQueryConditions();
 
-        String queryString = 'SELECT CreatedBy.Id creatorid, CreatedBy.Name creatorname FROM Case ' + queryConditions + ' GROUP BY CreatedBy.Id, CreatedBy.Name ORDER BY CreatedBy.Name ASC ';
+        String queryString = 'SELECT ContactId creatorid, Contact.Name creatorname FROM Case ' + queryConditions + ' GROUP BY ContactId, Contact.Name ORDER BY Contact.Name ASC ';
 
         List<Aggregateresult> lstCases = Database.query(queryString);
 
         List<CSP_Utils.PickListWrapper> lstPickValues = new List<CSP_Utils.PickListWrapper>();
 
         for(Aggregateresult caseAux : lstCases){
-            lstPickValues.add(new CSP_Utils.PickListWrapper(caseAux.get('creatorid') + '', caseAux.get('creatorname')+''));
+            if(caseAux.get('creatorid') != null) {
+                lstPickValues.add(new CSP_Utils.PickListWrapper(caseAux.get('creatorid') + '', caseAux.get('creatorname')+''));
+            }
         }
 
         return lstPickValues;
@@ -89,9 +92,9 @@ public with sharing class PortalCasesCtrl {
     * @return List<Case>
     */
     @AuraEnabled(cacheable=true)
-    public static PagedResult getRecentCases(Boolean limitView, Boolean seeAll) {
+    public static PagedResult getRecentCases(Boolean limitView, Boolean seeAll, Boolean specialCaseOption) {
         seeAllCases = seeAll;
-
+        isCaseFromReachUs = specialCaseOption;
         initialization();
 
         return getCases(limitView);
@@ -211,7 +214,7 @@ public with sharing class PortalCasesCtrl {
             fieldPathSet.add(f.getFieldPath());
         }
 
-        String query = ' CaseArea__c, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name ';
+        String query = ' BSP_CASS__c, IATA_Code__c, Remittance_period__c, CaseArea__c, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name ';
         Boolean hasStatus = false;
         
         for(String fieldPath : fieldPathSet) {
@@ -230,7 +233,9 @@ public with sharing class PortalCasesCtrl {
         String queryLimit = '';
 
         if(filtersWrapper == null) {
-            if(limitView) {
+            if (isCaseFromReachUs){
+                queryLimit += 'LIMIT 3';
+            } else if(limitView) {
                 queryLimit += 'LIMIT 4';
             } else {
                 queryLimit += 'LIMIT 2000';
@@ -263,11 +268,29 @@ public with sharing class PortalCasesCtrl {
                 }
                 if(filtersWrapper.casesComponent.caseContactFilter != null && filtersWrapper.casesComponent.caseContactFilter != ''){
                     if(queryConditions == ''){
-                        queryConditions = ' WHERE CreatedById = \'' + filtersWrapper.casesComponent.caseContactFilter + '\' ';
+                        queryConditions = ' WHERE ContactId = \'' + filtersWrapper.casesComponent.caseContactFilter + '\' ';
                     }else{
-                        queryConditions += ' AND CreatedById = \'' + filtersWrapper.casesComponent.caseContactFilter + '\' ';
+                        queryConditions += ' AND ContactId = \'' + filtersWrapper.casesComponent.caseContactFilter + '\' ';
                     }
                 }
+                if(filtersWrapper.casesComponent.dateFromFilter != null && filtersWrapper.casesComponent.dateFromFilter != ''){
+                    String dateFrom = CSP_Utils.toDatetime(Date.valueOf(filtersWrapper.casesComponent.dateFromFilter));
+
+                    if(queryConditions == ''){
+                        queryConditions = ' WHERE CreatedDate >= ' + dateFrom + ' ';
+                    }else{
+                        queryConditions += ' AND CreatedDate >= ' + dateFrom + ' ';
+                    }
+                }
+                if(filtersWrapper.casesComponent.dateToFilter != null && filtersWrapper.casesComponent.dateToFilter != ''){
+                    String dateTo = CSP_Utils.toDatetime(Date.valueOf(filtersWrapper.casesComponent.dateToFilter));
+
+                    if(queryConditions == ''){
+                        queryConditions = ' WHERE CreatedDate <= ' + dateTo + ' ';
+                    }else{
+                        queryConditions += ' AND CreatedDate <= ' + dateTo + ' ';
+                    }
+                }                
             }
 
             //pagination 
@@ -276,10 +299,24 @@ public with sharing class PortalCasesCtrl {
 
         }
 
+        if(isCaseFromReachUs) {
+            if(queryConditions == ''){
+                queryConditions = ' WHERE IsClosed != true AND Portal_Case_Status__c != \'Draft\'';
+            }else{
+                queryConditions += ' AND IsClosed != true AND Portal_Case_Status__c != \'Draft\'';
+            }
+        }
+        
         queryString = 'SELECT ' + query.substring(1) + ' FROM Case ' + queryConditions + ' ORDER BY LastModifiedDate DESC ' + queryLimit;
 
         result = new PagedResult();
         result.records = Database.query(queryString);
+
+        for(Case c : (List<Case>) result.records){
+            if (c.RecordType.Name.contains('SIDRA') ) {
+                c = buildSubject(c);
+            }
+        }
 
         if(filtersWrapper == null){
             result.totalItemCount = result.records.size();
@@ -607,7 +644,7 @@ public with sharing class PortalCasesCtrl {
         }
         seeAllCases = isAdmin;
         
-        PagedResult pages = getRecentCases(false, isAdmin);
+        PagedResult pages = getRecentCases(false, isAdmin, false);
 
         return pages;
     }
@@ -625,15 +662,33 @@ public with sharing class PortalCasesCtrl {
     */
     @AuraEnabled
     public static Case getCaseById(String caseId) {
-        Case caseAux = [SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c, 
+        Case caseAux = [SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c,
+                        Remittance_Date__c, CurrencyIsoCode, Update_AIMS_IRR__c, BSP_CASS__c, IATA_Code__c, Remittance_period__c,
                         CreatedDate, CreatedBy.Name,LastModifiedDate, Portal_Case_Status__c,Topic__c,
-                        Subtopic__c, Region__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
+                        Subtopic__c, Region__c, Reason1__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
                         Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,
-                        RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c,
-                        ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone
+                        RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
+                        Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone
                         FROM Case 
                         WHERE Id = :caseId];
 
+        if ( caseAux.RecordType__c.contains('SIDRA') ) {
+            caseAux = buildSubject(caseAux);
+        }
+        return caseAux;
+    }
+
+    private Static Case buildSubject(Case caseAux){
+        String subJ = '';
+        
+        subJ += (caseAux.BSP_CASS__c != null) ? caseAux.BSP_CASS__c + ' ' + System.Label.CSP_Payment + ' - ' : '';
+        subJ += (caseAux.IATA_Code__c != null) ? System.Label.ICCS_IATA_Code + ': ' + caseAux.IATA_Code__c + ' - ' : '';
+        subJ += (caseAux.Remittance_period__c != null) ? System.Label.CSP_Period + ' ' +  caseAux.Remittance_period__c : '';
+        if ( subJ.length() > 0 ) {
+            caseAux.Subject =  System.Label.CSP_IMPORTANT + ': ' + subJ;
+        } else {
+            caseAux.Subject =  (caseAux.Subject != null) ? System.Label.CSP_IMPORTANT + ': ' + caseAux.Subject : '';
+        }
         return caseAux;
     }
 
@@ -882,6 +937,109 @@ public with sharing class PortalCasesCtrl {
         }
 
         return returnWrapper;
+    }
+
+    public static String fullnameNOCFile(Case caseObj) {
+
+            String folderName = '500/' + caseObj.Id + '/';
+            String fileName = 'Notice_of_Change_form.pdf';
+            String fullname = folderName + fileName;
+
+            List<AmazonFile__c> amazonfilesList = [SELECT Id, Full_Name_Unique__c FROM AmazonFile__c WHERE Case__c = :caseObj.Id];
+            Boolean hasFile = false;
+            for(AmazonFile__c af : amazonfilesList) {
+                if(af.Full_Name_Unique__c == fullname) {
+                    hasFile = true;
+                    break;
+                }
+            }
+
+            if(hasFile){
+                String link = ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fullname);
+
+                return link;
+            } else {
+
+                Boolean isBankAccountChange = false;
+
+                if(caseObj.Reason1__c == 'Bank Detail Update')
+                    isBankAccountChange = true;
+
+                return '/ISSP_AMS_PDF_NOC?caseId=' + caseObj.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+            }
+    }
+
+    @AuraEnabled
+    public static OptionWrapper optionBuilder(Case caseObj) {
+        Boolean isAdmin = CSP_Utils.isAdmin();
+
+        Boolean isOnlineOSCARCase = false;
+        Boolean isTravelAccreditation = false;
+        Boolean isSidraCase = false;
+
+        List <AMS_Pax_Accreditation_Form__c> amsList = [SELECT Id, Operation_Type__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseObj.Id];
+        if (!amsList.isEmpty()){
+            isOnlineOSCARCase = true;
+            if (amsList[0].Operation_Type__c != null && amsList[0].Operation_Type__c.StartsWith('Travel_Agent')) {
+                isTravelAccreditation = true;
+            }
+        }
+
+        Boolean showAccreditation = false;
+        List <Portal_Application_Right__c> appRightList = [SELECT Id FROM Portal_Application_Right__c
+                                                            WHERE Contact__c = :myUser.ContactId AND
+                                                            Right__c = 'Access Granted'  AND
+                                                            Portal_Application__c = :AGENT_ACCREDITATION_PORTAL_SERVICE];
+        if (!appRightList.isEmpty())
+            showAccreditation = true;
+
+        Boolean isMSOcase = false;
+        String caseType = ISSP_Constant.caseTypeMap.get(caseObj.RecordType.Name);
+        if (caseType == 'OSCAR' && (caseObj.Reason1__c == 'GSA / MSO / Handling Agent' || caseObj.Subject.startsWith('MSO code ')))
+            isMSOcase = true;
+        
+        String fullnameNOCFile = fullnameNOCFile(caseObj);
+
+        if ( caseObj.RecordType__c.contains('SIDRA') ) {
+            isSidraCase = true;
+        }
+
+        OptionWrapper optToReturn = new OptionWrapper(isAdmin, isOnlineOSCARCase, showAccreditation, isMSOcase, isTravelAccreditation, fullnameNOCFile, isSidraCase);
+        return optToReturn;
+    }
+
+    public class OptionWrapper {
+
+        @AuraEnabled
+        public Boolean isAdmin {get; set;}
+
+        @AuraEnabled
+        public Boolean isOnlineOSCARCase {get; set;}
+
+        @AuraEnabled
+        public Boolean showAccreditation {get; set;}
+
+        @AuraEnabled
+        public Boolean isMSOcase {get; set;}
+
+        @AuraEnabled
+        public Boolean isTravelAccreditation {get; set;}
+
+        @AuraEnabled
+        public String fullnameNOCFile {get; set;}
+
+        @AuraEnabled
+        public Boolean isSidraCase {get; set;}
+
+        public OptionWrapper(Boolean isAdmin, Boolean isOnlineOSCARCase, Boolean showAccreditation, Boolean isMSOcase, Boolean isTravelAccreditation, String fullnameNOCFile, Boolean isSidraCase){
+            this.isAdmin = isAdmin;
+            this.isOnlineOSCARCase = isOnlineOSCARCase;
+            this.showAccreditation = showAccreditation;
+            this.isMSOcase = isMSOcase;
+            this.isTravelAccreditation = isTravelAccreditation;
+            this.fullnameNOCFile = fullnameNOCFile;
+            this.isSidraCase = isSidraCase;
+        }
     }
 
     /*

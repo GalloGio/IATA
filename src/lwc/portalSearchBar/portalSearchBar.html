@@ -1,5 +1,4 @@
 <template>
-    
     <div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" onclick={closeSearch}></div>
 
     <div class="mainContentDiv">
@@ -29,7 +28,7 @@
                 </span>
             </div>
             <div>
-                <lightning-button class="outlinedButton slds-p-right_small" variant="neutral" 
+                <lightning-button if:true={filteringObject.advancedSearch} class="outlinedButton slds-p-right_small" variant="neutral" 
                     label={label.CSP_Search_AdvancedSearch} title={label.CSP_Search_AdvancedSearch} 
                     icon-name="utility:settings" icon-position="right" onclick={goToAdvancedSearch}>
                 </lightning-button>
@@ -85,6 +84,4 @@
         </div>
 
     </div>
-
-
 </template>

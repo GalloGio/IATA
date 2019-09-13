@@ -1207,6 +1207,10 @@
             width: calc(100% - 50px);
             max-height: 36px;
             font-family: DaMaWebFont;
+            width: 108%;
+            margin-right: -100px;
+            padding-right: 70px;
+            overflow-y: scroll !important;
             }
             
             button.liveAgentChatElement.liveAgentSendButton {

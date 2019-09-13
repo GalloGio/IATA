@@ -187,7 +187,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     //IEP Rolelist
     @track roleList;
     @track isIEPService = false;
-    @track radioOption;
+    @track radioOption = '';
     @track serviceFullName;
 
 
@@ -734,33 +734,29 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.contactsToAdd = [];
         this.radioOption = '';
         if (this.showAddUserModal) {
-            if (this.showAddUserModal) {
-                this.isIEPService = false;
-                if (this.serviceName.includes('IATA EasyPay')) {
-                    this.isIEPService = true;
-                    getUserOptions({ portalUser: this.userID })
-                        .then(useropts => {
-                            let userOptions = JSON.parse(JSON.stringify(useropts));
-                            if (userOptions.IEP_Status === 'Open') {
-                                availableIEPPortalServiceRoles({ serviceId: this.serviceId })
-                                    .then(data => {
-                                        let roleslist = JSON.parse(JSON.stringify(data));
-                                        this.roleList = roleslist;
-                                        this.roleList = this.roleList.filter(obj => obj.Connected_App__c === this.serviceFullName);
-                                        this.roleList = this.roleList.sort((a, b) => (a.Order__c > b.Order__c) ? 1 : -1);
-                                        for (const item of this.roleList) {
-                                            let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
-                                            item.label = this.label[newlabel];
-                                        }
-                                    }).catch(error => {
-                                        console.log(error);
-                                    });
-                            } else {
-                                this.showAddUserModal = !this.showAddUserModal;
-                                this.IEPDeniedModal = true;
-                            }
-                        });
-                }
+            this.isIEPService = false;
+            if (this.serviceName.includes('IATA EasyPay')) {
+                this.isIEPService = true;
+                getUserOptions({ portalUser: this.userID })
+                    .then(useropts => {
+                        let userOptions = JSON.parse(JSON.stringify(useropts));
+                        if (userOptions.IEP_Status === 'Open') {
+                            availableIEPPortalServiceRoles({ serviceId: this.serviceId })
+                                .then(data => {
+                                    let roleslist = JSON.parse(JSON.stringify(data));
+                                    this.roleList = roleslist;
+                                    this.roleList = this.roleList.filter(obj => obj.Connected_App__c === this.serviceFullName);
+                                    this.roleList = this.roleList.sort((a, b) => (a.Order__c > b.Order__c) ? 1 : -1);
+                                    for (const item of this.roleList) {
+                                        let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
+                                        item.label = this.label[newlabel];
+                                    }
+                                });
+                        } else {
+                            this.showAddUserModal = !this.showAddUserModal;
+                            this.IEPDeniedModal = true;
+                        }
+                    });
             }
         }
     }
@@ -781,7 +777,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     confirmAddUser() {
 
-        if (this.isIEPService && (this.radioOption === undefined || this.radioOption === null)) {
+        if (this.isIEPService && (this.radioOption === undefined || this.radioOption === null || this.radioOption === '')) {
 
             this.dispatchEvent(
                 new ShowToastEvent({

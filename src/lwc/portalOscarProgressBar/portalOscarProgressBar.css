@@ -1,0 +1,257 @@
+.rotateIcon {
+  transform: rotate(45deg);
+}
+
+.stepWrap {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.circle {
+  position: relative;
+  background-color: white;
+  z-index: 999;
+}
+
+.flex {
+  flex: 1;
+}
+
+.notBreak {
+  white-space: nowrap;
+}
+
+.circleDone {
+  border: 2px solid #289632;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circleInProgress {
+  border: 2px solid #ed7756;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circleIsNotDone {
+  border: 2px solid #cccccc;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circleIsError {
+  border: 2px solid red;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/******** BAR STYLING ********/
+.bar {
+  position: absolute;
+  width: 80%;
+  top: 30%;
+  left: 60%;
+}
+
+.barIsNotDone {
+  border-bottom: 2px solid #cccccc;
+}
+
+.barDone {
+  border-bottom: 2px solid #289632;
+}
+
+.barInProgress {
+  border-bottom: 2px solid #ed7756;
+}
+
+.barError {
+  border-bottom: 2px solid #ff0000;
+}
+
+/* BAR DONE */
+
+.barDoneIsNotDone {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #289632 0%,
+    #289632 50%,
+    #cccccc 50%,
+    #cccccc 100%
+  );
+  border-image-slice: 1;
+}
+
+.barDoneInProgress {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #289632 0%,
+    #289632 50%,
+    #ed7756 50%,
+    #ed7756 100%
+  );
+  border-image-slice: 1;
+}
+
+.barDoneError {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #289632 0%,
+    #289632 50%,
+    #ff0000 50%,
+    #ff0000 100%
+  );
+  border-image-slice: 1;
+}
+
+/* BAR DONE END */
+
+/* BAR IsNotDone */
+
+.barIsNotDoneDone {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #cccccc 0%,
+    #cccccc 50%,
+    #289632 50%,
+    #289632 100%
+  );
+  border-image-slice: 1;
+}
+
+.barIsNotDoneInProgress {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #cccccc 0%,
+    #cccccc 50%,
+    #ed7756 50%,
+    #ed7756 100%
+  );
+  border-image-slice: 1;
+}
+
+.barIsNotDoneError {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #cccccc 0%,
+    #cccccc 50%,
+    #ff0000 50%,
+    #ff0000 100%
+  );
+  border-image-slice: 1;
+}
+
+/* BAR IsNotDone END */
+
+/* BAR InProgress */
+
+.barInProgressDone {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #ed7756 0%,
+    #ed7756 50%,
+    #289632 50%,
+    #289632 100%
+  );
+  border-image-slice: 1;
+}
+
+.barInProgressIsNotDone {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #ed7756 0%,
+    #ed7756 50%,
+    #cccccc 50%,
+    #cccccc 100%
+  );
+  border-image-slice: 1;
+}
+
+.barInProgressError {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #ed7756 0%,
+    #ed7756 50%,
+    #ff0000 50%,
+    #ff0000 100%
+  );
+  border-image-slice: 1;
+}
+
+/* BAR InProgress END */
+
+/* BAR Error */
+
+.barErrorDone {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #ff0000 0%,
+    #ff0000 50%,
+    #289632 50%,
+    #289632 100%
+  );
+  border-image-slice: 1;
+}
+
+.barErrorIsNotDone {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #ff0000 0%,
+    #ff0000 50%,
+    #cccccc 50%,
+    #cccccc 100%
+  );
+  border-image-slice: 1;
+}
+
+.barErrorInProgress {
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    #ff0000 0%,
+    #ff0000 50%,
+    #ed7756 50%,
+    #ed7756 100%
+  );
+  border-image-slice: 1;
+}
+
+/* BAR Error END */
+
+/* BAR STYLING END */

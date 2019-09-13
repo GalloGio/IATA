@@ -20,6 +20,12 @@ import CSP_SearchingOn from '@salesforce/label/c.CSP_SearchingOn';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import CSP_Filter from '@salesforce/label/c.CSP_Filter';
 import CSP_Filtered from '@salesforce/label/c.CSP_Filtered';
+import CSP_Search_Case_Country from '@salesforce/label/c.CSP_Search_Case_Country';
+import ISSP_Contact from '@salesforce/label/c.ISSP_Contact';
+import CSP_DateFrom from '@salesforce/label/c.CSP_DateFrom';
+import CSP_DateTo from '@salesforce/label/c.CSP_DateTo';
+import CSP_RemoveAllFilters from '@salesforce/label/c.CSP_RemoveAllFilters';
+import CSP_Apply from '@salesforce/label/c.CSP_Apply';
 
 export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
@@ -31,11 +37,18 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         CSP_CompanyCases,
         CSP_SearchingOn,
         CSP_Filter,
-        CSP_Filtered
+        CSP_Filtered,
+        CSP_Search_Case_Country,
+        ISSP_Contact,
+        CSP_DateFrom,
+        CSP_DateTo,
+        CSP_RemoveAllFilters,
+        CSP_Apply
     };
 
     searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
     filterIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/filter.svg';
+    filteredIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/filtered.svg';
 
     fieldLabels = [
         'CaseNumber', 'Type_of_case_Portal__c', 'Subject', 'Country_concerned__c', 'LastModifiedDate', 'Portal_Case_Status__c'
@@ -51,7 +64,9 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
             nrResults : 0, 
             caseTypeFilter : "",
             caseCountryFilter : "",
-            caseContactFilter : ""
+            caseContactFilter : "",
+            dateFromFilter : "",
+            dateToFilter : ""
         }
     };
 
@@ -83,10 +98,6 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         return this.normalView === true && this.isAdminUser === true;
     }
 
-    get isFiltered() {
-        return this.isAdminUser && this.filtered;
-    }
-
     get viewContactsFilterPicklist(){
         return this.isAdminUser === true && this.adminView === true;
     }
@@ -109,6 +120,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
             //used to order alphabetically
             auxmyCountryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
             myCountryOptions = myCountryOptions.concat(auxmyCountryOptions);
+            
             this.countryPickOptions = this.getPickWithAllValue(myCountryOptions);
         });
 
@@ -121,11 +133,11 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         .then(results => {
             this.columns = [
                 {label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 135, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'}},
-                {label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 135},
-                {label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 350, typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'}},
+                {label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 135, cellAttributes: {class: 'cellHidden'}},
+                {label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 350, typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black cellHidden'}},
                 {label: Created_By, fieldName: 'CreatedBy', type: 'text'},
-                {label: results.LastModifiedDate, fieldName: 'LastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}},
-                {label: results.Country_concerned__c, fieldName: 'Country', type: 'text'},
+                {label: results.LastModifiedDate, fieldName: 'LastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}, cellAttributes: {class: 'cellHidden'}},
+                {label: results.Country_concerned__c, fieldName: 'Country', type: 'text', cellAttributes: {class: 'cellHidden'}},
                 {label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: {class: {fieldName: 'statusClass'}}}
             ];
             /*Column 'Created By' is only visible by Portal Admin on list 'My Company Cases'*/
@@ -297,6 +309,8 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
     //used to store the filter options while the popup is open
     countryFiltersTemp = '';
     contactFiltersTemp = '';
+    dateFromFiltersTemp = '';
+    dateToFiltersTemp = '';
 
     openCasesFilterModal(){
         this.viewCasesFiltersModal = true;
@@ -317,13 +331,25 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         this.contactFiltersTemp = selectedValue;
     }
 
-    applyFilters(event){
+    dateFromOnchangeHandler(event) {
+        let selectedValue = event.detail.value;        
+        this.dateFromFiltersTemp = selectedValue;
+    }
+
+    dateToOnchangeHandler(event) {
+        let selectedValue = event.detail.value;
+        this.dateToFiltersTemp = selectedValue;
+    }    
+
+    applyFilters(){
         this.filtered = true;
 
         //update filtering object
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
         filteringObjectAux.casesComponent.caseCountryFilter = this.countryFiltersTemp;
         filteringObjectAux.casesComponent.caseContactFilter = this.contactFiltersTemp;
+        filteringObjectAux.casesComponent.dateFromFilter = this.dateFromFiltersTemp;
+        filteringObjectAux.casesComponent.dateToFilter = this.dateToFiltersTemp;
         this.filteringObject = filteringObjectAux;
 
         //close modal
@@ -334,7 +360,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         this.searchWithNewFilters();
     }
 
-    resetFilters(event){
+    resetFilters(){
         this.filtered = false;
 
         this.resetFiltersMethod();
@@ -350,12 +376,16 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
     resetFiltersMethod(){
         this.countryFiltersTemp = '';
         this.contactFiltersTemp = '';
+        this.dateFromFiltersTemp = '';
+        this.dateToFiltersTemp = '';
 
         //update filtering object
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
         filteringObjectAux.searchText = '';
         filteringObjectAux.casesComponent.caseCountryFilter = this.countryFiltersTemp;
         filteringObjectAux.casesComponent.caseContactFilter = this.contactFiltersTemp;
+        filteringObjectAux.casesComponent.dateFromFilter = this.dateFromFiltersTemp;
+        filteringObjectAux.casesComponent.dateToFilter = this.dateToFiltersTemp;
         this.filteringObject = filteringObjectAux;
     }
 
