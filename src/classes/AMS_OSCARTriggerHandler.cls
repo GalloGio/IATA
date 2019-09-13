@@ -916,26 +916,29 @@ public class AMS_OSCARTriggerHandler {
                 insert newHierarchy;
 
                 for(ANG_Agency_Risk_Event__c re : riskEvents){
-                    ANG_Agency_Risk_Event__c clonedRe = re.clone(false,false,false,false);
+
+                    /*ANG_Agency_Risk_Event__c clonedRe = re.clone(false,false,false,false);
                     clonedRe.ANG_HE_AccountId__c = clonedRe.ANG_AccountId__c;
                     clonedRe.ANG_AccountId__c = oscar.account__c;
                     clonedRe.ANG_Event_Status__c = 'Inactive_CHO';
+                    risksToAdd.add(clonedRe);*/
+                    re.ANG_HE_AccountId__c = oscar.account__c;
+                    re.ANG_Event_Status__c = 'Inactive_CHO';
 
-                    risksToAdd.add(clonedRe);
                 }
 
-                for(ANG_Risk_Alert__c ra : riskAlerts){
-                    ANG_Risk_Alert__c cloneRa = ra.clone(false,false,false,false);
-                    cloneRa.Monitored_Account__c = cloneRa.ANG_Account__c;
-                    cloneRa.ANG_Account__c = oscar.account__c;
-                    alertsToAdd.add(cloneRa);
-                }
+                    for(ANG_Risk_Alert__c ra : riskAlerts){
+                        ANG_Risk_Alert__c cloneRa = ra.clone(false,false,false,false);
+                        cloneRa.Monitored_Account__c = cloneRa.ANG_Account__c;
+                        cloneRa.ANG_Account__c = oscar.account__c;
+                        alertsToAdd.add(cloneRa);
+                    }
 
                 List<AMS_Agencies_relationhip__c> relationshipsToInsert = new List<AMS_Agencies_relationhip__c>(); 
 
                 for(Account a :hierarchyAccounts.values()){
 
-                    if(chieldAccountIDs.contains(a.id) || a.id == oscar.account__c){
+                    if(chieldAccountIDs.contains(a.id)|| a.id == oscar.account__c){
 
                         a.Location_Type__c = (processDetailsByAccount.containsKey(a.id) ? processDetailsByAccount.get(a.id).ANG_Location_Type_Conversion__c : AMS_Utils.GE);
                         a.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
@@ -947,7 +950,8 @@ public class AMS_OSCARTriggerHandler {
                             a.top_parent__c = oscar.account__c;
                             if(a.Location_Type__c == AMS_Utils.HE){
                                 relationshipsToInsert.add(new AMS_Agencies_relationhip__c(Parent_Account__c = oscar.account__c, Child_Account__c = a.id, Hierarchy__c = newHierarchy.id));
-                                accountsToCreateRHCInfo.add(a);
+                                //Create RHC only on the GE
+                                //accountsToCreateRHCInfo.add(a);
                             } 
                             if(a.Location_Type__c == AMS_Utils.AE){
                                 
@@ -973,8 +977,11 @@ public class AMS_OSCARTriggerHandler {
                 update new ams_pax_accreditation_form__c(id = oscar.AMS_Online_Accreditation__c, ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
                 update hierarchyAccounts.values();
                 if(!relationshipsToInsert.isEmpty()) insert relationshipsToInsert;
-                if(!riskEvents.isEmpty()) delete riskEvents;
-                if(!risksToAdd.isEmpty()) insert risksToAdd;
+                if(!riskEvents.isEmpty()) update riskEvents;
+                
+                /*if(!riskEvents.isEmpty()) delete riskEvents;
+                if(!risksToAdd.isEmpty()) insert risksToAdd;*/
+                
                 if(!riskAlerts.isEmpty()) delete riskAlerts;
                 if(!alertsToAdd.isEmpty()) insert alertsToAdd;
                 if(!rhcs.isEmpty()) delete rhcs;
