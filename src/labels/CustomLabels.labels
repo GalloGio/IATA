@@ -16790,7 +16790,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step1_PCI</shortDescription>
-        <value>A. IATA Code Selection</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;IATA Code Selection</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_ProgressBar</fullName>
@@ -16870,7 +16870,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step2_PCI</shortDescription>
-        <value>B. Upload File</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;B&lt;/span&gt;Upload File</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step2_ProgressBar</fullName>
@@ -17709,7 +17709,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_PCI</shortDescription>
-        <value>C. Submit to IATA</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;C&lt;/span&gt;Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_PersonModal_CheckBoxes</fullName>

@@ -35,7 +35,7 @@
 			}
 
 			body {
-				font-family: DaMaWebFont !important;
+				/*font-family: DaMaWebFont !important;*/
 				color: #333;
 			}
 
@@ -47,16 +47,26 @@
 				font-size: small;
 			}
 
-			.mytabheadercontainer {}
+			.mytabheadercontainer {
+				margin: 10px 0;
+			}
 
 			.mytabheader {
 				display: inline-block;
 				border: 1px solid rgb(240, 242, 245);
-				background: white;
+				/*background: white;*/
 				padding: 0.5em;
 				/* margin-left: 0.1em; */
 				font-weight: bold;
 				cursor: pointer;
+            	background-image: none !important;
+           	 	background-color: #f0f2f5;
+				border-bottom: none !important;
+				color: #1e32fa;
+			}
+
+			.mytabheader:hover{
+				text-decoration: underline;
 			}
 
 			.mytabheader.active {
@@ -66,8 +76,12 @@
 				border: 1px solid #1e32fa;
 			}
 
+			.mytabheader.active:hover{
+				text-decoration: unset !important;
+			}
+
 			.mytabcontainer {
-				border: 1px solid lightgrey;
+				/*border: 1px solid lightgrey;*/
 				/* border-radius: 5px; */
 				/* border-top-left-radius: 0; */
 				margin-left: 1px;
@@ -107,7 +121,8 @@
 
 			.mytabcontainer .mytabheader {
 				border-radius: 0px;
-				width: 49.8%;
+				width: 50%;
+				text-align: center;
 				/* margin: 1px; */
 			}
 
@@ -135,6 +150,37 @@
 				padding: 1em;
 				border-radius: 5px;
 			}
+
+			.progress{
+            background-image: none;
+            height: unset;
+            background-color: #fff;
+            box-shadow: none;
+            margin-bottom: 0 !important;
+        	}
+        
+        .progress-bar {
+            padding: 5px;
+            color: #fff;
+            font-weight: bold;
+            font-size:inherit;
+            background-image: none;
+            /*background-color: #1e32fa;*/
+            box-shadow: none;
+		}
+		
+		input[type=search]{
+			-webkit-appearance: searchfield;
+			font-weight: normal;
+		}
+
+		thead th{
+			background-color: rgb(234, 234, 234) !important;
+		}
+
+		.dataTables_wrapper{
+			font-size: 13px;
+		}
 
 		</style>
 	</head>
@@ -309,11 +355,17 @@
 					<apex:form >
 
 						<apex:pageBlock >
-							<h2>{!acc.Name} / {!acc.Airline_designator__c} / {!acc.IATACode__c}</h2>
-							<br/>
+							<div class="panel-primary">
+								<div class="panel-heading head_panel_green" id="container">
+									<div id="left"><h3 class="panel-title">MITA agreements / {!acc.Name} / {!acc.Airline_designator__c} / {!acc.IATACode__c}</h3></div>
+										
+								</div>
+								<div class="panel-body" id="body-enquiries">
+							<!--<h2>MITA agreements / {!acc.Name} / {!acc.Airline_designator__c} / {!acc.IATACode__c}</h2>-->
+							
 							<!-- CUSTOM TAB HEADER -->
 							<div class="mytabheadercontainer level1" style="padding-left: 2px;">
-								<div class="mytabheader level1 active" id="hdExisting" onclick="showTab('Existing')">{!$Label.ISSP_Existing_Agreements}</div>
+								<div class="mytabheader level1 active" id="hdExisting" onclick="showTab('Existing')" style="float: left;">{!$Label.ISSP_Existing_Agreements}</div>
 								<div class="mytabheader level1" id="hdAdd" onclick="showTab('Add')">{!$Label.ISSP_Agreements_available}</div>
 							</div>
 
@@ -322,14 +374,18 @@
 
 								<!-- FIRST EXTERNAL TAB: EXISTING AGREEMENTS -->
 								<div class="mytab level1 active" id="tabExisting">
-
-									<div class="mytabheadercontainer level2" style="background-color: transparent;">
+										<div class="progress mytabheadercontainer">
+												<div class="level2 mytabheader {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" style="float:left; width:50%" id="hdMITA" onclick="showTab('Existing','MITA')">MITA</div>
+												<div class="level2 mytabheader {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}"  style="float:right; width:50%" id="hdBIETA"
+										 onclick="showTab('Existing','BIETA')">BIETA</div>
+											</div>
+									<!--<div class="mytabheadercontainer level2" style="background-color: transparent;">
 										<div class="mytabheader level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" style="float:left;" id="hdMITA" onclick="showTab('Existing','MITA')">MITA</div>
 										<div class="mytabheader level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}"  style="float:right;" id="hdBIETA"
 										 onclick="showTab('Existing','BIETA')">BIETA</div>
-									</div>
+									</div>-->
 
-									<div class="mytabcontainer level2" style="border: lightgrey solid 1px; background-color: #fff;">
+									<div class="mytabcontainer level2" style="background-color: #fff;">
 										<!-- FIRST INTERNAL TAB: MITA -->
 										<div class="mytab level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}"  id="tabMITA">
 
@@ -736,8 +792,8 @@
 							<br/>
 							<br/>
 
-
-
+								</div>
+							</div>
 						</apex:pageBlock>
 
 						<apex:actionFunction name="deleteMITAAgremeent" action="{!deleteMITAAgreement}" rerender="MITAWithdrawalPanel,MITAagreementSearchPanel, messages"

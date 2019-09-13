@@ -26,7 +26,7 @@
         padding-left:10px !important;    
        }
             
-       .pbBody a{color:#337ab7 !important}
+       /*.pbBody a{color:#337ab7 !important}*/
                
         .bPageBlock {
             border-top-width : thin !important;
@@ -74,18 +74,29 @@
         
         .errorMsg {color:#d74c3b}
             
-        .progress-bar-off {
+        /*.progress-bar-off {
                 color:#6BBBEA;
                 font-weight:bold;
                 background-image:none !important;
                 background-color:transparent !important;
                 border-right:2px solid white;
+        }*/
+
+        .progress-bar{
+            background-color: unset !important;
+        }
+
+        .progress-bar a{
+            color: gray !important;
         }
         
         body .bPageBlock .pbBody .pbSubheader{
                 background-image: url('') !important;
                 background-color:  #1797c0;
                 color: #fff;
+        }
+        body .bPageBlock{
+            margin-bottom: unset;
         }
 
         body .bPageBlock .pbBody .summary-subsection .pbSubheader{
@@ -150,8 +161,18 @@
 
              .btn {
         		background:none;
-    		}
+            }
+            
+            .layout{
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            td.pbTitle {
+                display: none;
+            }
     </style>
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
     <script type="text/javascript">
     var operationType = '{!sectorvalue}';
 
@@ -202,10 +223,10 @@
     }
 
     </script>
-            
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
      <div class="container">
        <div id="contentWrapper">
-           <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+           
             
     
 <!--       -->
@@ -222,20 +243,21 @@
 				    	<apex:form id="step1Form" styleClass="form-horizontal">
 				    	<apex:pageBlock id="step1Block" mode="edit" >
 				    	    <!--Step Progress bar start -->
-			      			<div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                                    {!$Label.ISSP_AMS_Step1_PCI}
+			      			<div class="progress iata-tabs">
+                                <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
+                                    <apex:outputText value="{!$Label.ISSP_AMS_Step1_PCI}" escape="false"/>
                                 </div>
 
-                                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                                    <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');" value="{!$Label.ISSP_AMS_Step2_PCI}" id="Next2">
-                                        <apex:param value="2" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
+                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+                                    <apex:commandLink styleclass="" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');" id="Next2">
+                                        <apex:outputText value="{!$Label.ISSP_AMS_Step2_PCI}" escape="false"/>
+                                    <apex:param value="2" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                                     </apex:commandLink> 
                                 </div>
                                 
-                                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%}">
-                                    <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '3');" value="{!$Label.ISSP_AMS_Step3_PCI}" id="Next3">					   
-
+                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
+                                    <apex:commandLink styleclass="" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '3');" id="Next3">					   
+                                        <apex:outputText value="{!$Label.ISSP_AMS_Step3_PCI}" escape="false"/>
                                     <apex:param value="3" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                                 </apex:commandLink>
                                 </div>
@@ -258,7 +280,7 @@
                                 <apex:outputPanel id="branchaccountsel">                                
                                     <div class="form-group">
                                         <label for="approval focus" class="col-lg-3 control-label"></label>
-                                        <div class="col-lg-9">
+                                        <div class="col-lg-12">
                                         	<br></br>
                                             <apex:outputPanel >
                                                 <c:MultiselectPicklist leftLabel="{!$Label.ISSP_ANG_PCI_Choose_IATA_Code}" 
@@ -276,16 +298,16 @@
                             </apex:outputPanel>
                             <!--Multi select picklist End -->
 				        	
-				            	<apex:pageBlockButtons location="bottom" style="padding-left:218px">
+				            	<apex:pageBlockButtons location="bottom">
 				                	<apex:actionStatus id="buttonLoadingStep1">
 				                    	<apex:facet name="stop"><apex:outputPanel >
-				                        	<apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"/>
-				                        	<apex:commandButton styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');" value="{!$Label.ISSP_Next}" status="buttonLoadingStep1" reRender="step1Form"/>
-				                    	</apex:outputPanel></apex:facet>
-										<apex:facet name="start"><apex:outputPanel >
-					                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>					                        
-					                        <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_Next}..." disabled="true" reRender="step1Form"/>
-					                    </apex:outputPanel></apex:facet>					                               
+				                        	<apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');" value="{!$Label.ISSP_Next}" status="buttonLoadingStep1" reRender="step1Form"/>
+                                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"/>
+                                        </apex:outputPanel></apex:facet>
+										<apex:facet name="start"><apex:outputPanel >					                        
+					                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" value="{!$Label.ISSP_Next}..." disabled="true" reRender="step1Form"/>
+                                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
+                                        </apex:outputPanel></apex:facet>					                               
 				                	</apex:actionStatus>
 				            	</apex:pageBlockButtons>
 				         		
@@ -307,15 +329,19 @@
 	    	<div class="panel-body" id="body-enquiries">
 	    		
 		    	<apex:form id="form">
-		    		<div class="progress">
-		    			<div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-	                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_AMS_Step1_PCI}" id="Prev1"/>
+		    		<div class="progress iata-tabs">
+		    			<div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+	                        <apex:commandLink action="{!goToStep1}" id="Prev1">
+                                    <apex:outputText value="{!$Label.ISSP_AMS_Step1_PCI}" escape="false"/>
+                            </apex:commandLink>
 	                    </div>
-	                    <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
-	                        {!$Label.ISSP_AMS_Step2_PCI}
+	                    <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+                            <apex:outputText value="{!$Label.ISSP_AMS_Step2_PCI}" escape="false"/>
 	                    </div>
-	                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-	                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!$Label.ISSP_AMS_Step3_PCI}" id="Next3"/>
+	                    <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+	                        <apex:commandLink action="{!goToStep3}" id="Next3">
+                                <apex:outputText value="{!$Label.ISSP_AMS_Step3_PCI}" escape="false"/>
+                            </apex:commandLink>
 	                    </div>			                    
 		    		</div>
 		    	</apex:form>				    		
@@ -349,9 +375,9 @@
 			   	<apex:form id="UploadForm">
 			        <apex:pageBlock >
 			            <apex:pageBlockButtons location="bottom">
-			    	        <apex:commandButton styleClass="btn" action="{!goToStep1}" value="{!$Label.ISSP_Back}"/>&nbsp;
-			                <apex:commandButton styleClass="btn" action="{!goToStep3}" value="{!$Label.ISSP_Next}" />
-			                <apex:commandButton styleclass="btn btn-default" action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />			                
+                            <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-right" action="{!goToStep3}" value="{!$Label.ISSP_Next}" />&nbsp;
+                            <apex:commandButton styleClass="iatabtn iatabtn-danger iatabtn-right" action="{!goToStep1}" value="{!$Label.ISSP_Back}"/>
+			                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-left" action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}"/>			                
 			            </apex:pageBlockButtons>
 			        </apex:pageBlock>
 			    </apex:form>
@@ -370,15 +396,19 @@
 			</div>
 			<div class="panel-body" id="body-enquiries">
 				<apex:form >
-		    		<div class="progress">
-		    			<div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-	                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_AMS_Step1_PCI}" id="Prev1Submit"/>
+		    		<div class="progress iata-tabs">
+		    			<div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+	                        <apex:commandLink action="{!goToStep1}" id="Prev1Submit">
+                                <apex:outputText value="{!$Label.ISSP_AMS_Step1_PCI}" escape="false"/>
+                            </apex:commandLink>
 	                    </div>
-	                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
-	                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep2}" value="{!$Label.ISSP_AMS_Step2_PCI}" id="Prev2Submit"/> 
+	                    <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+	                        <apex:commandLink action="{!goToStep2}" id="Prev2Submit">
+                                <apex:outputText value="{!$Label.ISSP_AMS_Step2_PCI}" escape="false"/>
+                            </apex:commandLink> 
 	                    </div>
-	                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-	                        {!$Label.ISSP_AMS_Step3_PCI}
+	                    <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+                            <apex:outputText value="{!$Label.ISSP_AMS_Step3_PCI}" escape="false"/>
 	                    </div>			                    
 		    		</div>
 		    	</apex:form>                     
@@ -397,17 +427,17 @@
 				<apex:form id="tCondiForm">
 						<apex:pageMessages />
 						<apex:pageBlock >
-							<apex:pageBlockButtons location="bottom" style="padding-left:100px">
+							<apex:pageBlockButtons location="bottom">
 			                	<apex:actionStatus id="buttonLoadingStep3">
 			                    	<apex:facet name="stop"><apex:outputPanel >
-			                        	<apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!goToStep2}" value="{!$Label.ISSP_Back}" immediate="true" status="buttonLoadingStep3" reRender="tCondiForm"/>
-			                        	<apex:commandButton styleclass="btn btn-default" action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep3" reRender="tCondiForm"/>
-			                        	<apex:commandButton styleclass="btn btn-default" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep3" reRender="tCondiForm"/>
+                                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep3" reRender="tCondiForm"/>
+			                        	<apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" style="margin-right:8px" action="{!goToStep2}" value="{!$Label.ISSP_Back}" immediate="true" status="buttonLoadingStep3" reRender="tCondiForm"/>
+			                        	<apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-left" action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" status="buttonLoadingStep3" reRender="tCondiForm"/>
 			                    	</apex:outputPanel></apex:facet>
 									<apex:facet name="start"><apex:outputPanel >
-				                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Back}..." disabled="true" reRender="tCondiForm"/>
-				                        <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="tCondiForm"/>
-				                        <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_Save_Draft}..." disabled="true" style="float:right" reRender="tCondiForm" />
+                                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="tCondiForm"/>
+				                        <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" style="margin-right:8px" value="{!$Label.ISSP_Back}..." disabled="true" reRender="tCondiForm"/>
+				                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-left" value="{!$Label.ISSP_Save_Draft}..." disabled="true" reRender="tCondiForm" />
 				                    </apex:outputPanel></apex:facet>					                               
 			                	</apex:actionStatus>
 			            	</apex:pageBlockButtons>
@@ -418,9 +448,9 @@
 	</apex:outputText>
            
      </div>
-     <c:ISSP_CustomFooter communityName="{!communityName}"/>
+     
      </div>
-       
+     <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </body>  
 </html>
 
