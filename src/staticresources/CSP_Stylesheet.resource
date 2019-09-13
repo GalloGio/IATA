@@ -675,6 +675,10 @@ lightning-datatable .slds-th__action {
   height: 30px;
 }
 
+.rowHeight .slds-table_header-fixed_container.slds-scrollable_x {
+  overflow: unset;
+}
+
 .text-black lightning-formatted-url a {
     color: #000000;
 }
