@@ -25987,7 +25987,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP File Exists</shortDescription>
-        <value>The following file already exists:</value>
+        <value>This file already exists</value>
     </labels>
     <labels>
         <fullName>ISSP_File_Extension</fullName>
