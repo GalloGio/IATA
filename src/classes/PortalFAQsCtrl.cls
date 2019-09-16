@@ -2,83 +2,28 @@ public with sharing class PortalFAQsCtrl {
 
     public static Integer RESULTS_PER_PAGE = 10;
 
-    public static PortalFAQs__mdt portalFaqCMTD{
-        get{            
-            if(portalFaqCMTD==null){
-                if(!Test.isRunningTest()){
-                    portalFaqCMTD=[SELECT DataCategoryVisibility__c FROM PortalFAQs__mdt WHERE DeveloperName ='PortalFAQs' LIMIT 1];
-                }else{
-                    portalFaqCMTD=new  PortalFAQs__mdt(DataCategoryVisibility__c='[{"topicName":"Accreditation_Travel_Agent","topicLabel":"Accreditation Travel Agent","childs":{"IATA ID Card":"ID_Card","Irregularities & Defaults":"PAX_Irregularities_Defaults"}}]');
-                }
-            }
-            return portalFaqCMTD;
-        }
-        set;
-    } 
-
-    @AuraEnabled(cacheable=true)    
-    public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getCategoryTiles() {
-        List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstOriginal = PortalFAQsCtrl.getFAQsInfo();
-
-        List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstAux = new List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
-        
-        for(DescribeDataCategoryGroupStructures.DataCategoryWrapper globalWrapperAux : lstOriginal){
-
-            Boolean found = false;
-
-            for(DescribeDataCategoryGroupStructures.DataCategoryWrapper wrapperAux : lstAux){
-                if(wrapperAux.categoryName == globalWrapperAux.categoryName){
-                    found = true;
-                    break;
-                }
-            }
-
-            if(!found){
-                if(globalWrapperAux.categoryName != 'All'){
-                    lstAux.add(globalWrapperAux);
-                }
-            }
-
-
-        }
-
-
-
-        return lstAux;               
-    }
-
     @AuraEnabled(cacheable=true)    
     public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getFAQsInfo() {
-        List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> userAccess = DescribeDataCategoryGroupStructures.describeDataCategoryGroupStructureResults();
+        return convertStructure(DescribeDataCategoryGroupStructures.getFaqsStructure());               
+    }
 
-        
-        List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> faqList = (List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>) JSON.deserialize(portalFaqCMTD.DataCategoryVisibility__c, List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>.class);
+    private static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> convertStructure(List<DescribeDataCategoryGroupStructures.FAQCategoryWrapper> lstToConvert){
+        List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstToReturn = new List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
 
-        Set<String> hasTopicAccess = new Set<String>();
-        for(DescribeDataCategoryGroupStructures.DataCategoryWrapper dctw2 : userAccess) {
-            for(String st : dctw2.childs.keySet()) {
-                hasTopicAccess.add(dctw2.childs.get(st));
-            }
-        }
-
-        Map<String, DescribeDataCategoryGroupStructures.DataCategoryWrapper> subTopicDataCategoryMap = new Map<String, DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
-        for(DescribeDataCategoryGroupStructures.DataCategoryWrapper dcwTopic : faqList) {
-            if(!dcwTopic.childs.keySet().isEmpty()) {
-                for(String dcwSubTopic : dcwTopic.childs.keySet()) {
-                    if(hasTopicAccess.contains(dcwTopic.childs.get(dcwSubTopic))) {
-                        if(!subTopicDataCategoryMap.containsKey(dcwTopic.topicName)) {
-                            subTopicDataCategoryMap.put(dcwTopic.topicName, new DescribeDataCategoryGroupStructures.DataCategoryWrapper(dcwTopic.topicName, dcwTopic.topicLabel, dcwTopic.categoryName, dcwTopic.categoryLabel, new Map<String, String>()));
-                        }
-
-                        subTopicDataCategoryMap.get(dcwTopic.topicName).childs.put(dcwSubTopic, dcwTopic.childs.get(dcwSubTopic));
-                    }
+        for(DescribeDataCategoryGroupStructures.FAQCategoryWrapper categoryAux : lstToConvert){
+            for(DescribeDataCategoryGroupStructures.FAQTopicWrapper topicAux : categoryAux.lstTopics){
+                Map<String,String> mapSubtopics = new Map<String,String>();
+                for(DescribeDataCategoryGroupStructures.FAQSubtopicWrapper subtopicAux : topicAux.lstSubtopics){
+                    mapSubtopics.put(subtopicAux.subtopicLabel, subtopicAux.subtopicName);
                 }
+
+                lstToReturn.add(new DescribeDataCategoryGroupStructures.DataCategoryWrapper(topicAux.topicName, topicAux.topicLabel, 
+                                                                                            categoryAux.categoryName, categoryAux.categoryLabel,
+                                                                                            mapSubtopics));
             }
         }
 
-        System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getFAQsInfo] subTopicDataCategoryMap - ' + subTopicDataCategoryMap.values());
-
-        return subTopicDataCategoryMap.values();               
+        return lstToReturn;
     }
 
     @AuraEnabled(cacheable=true)
@@ -158,18 +103,22 @@ public with sharing class PortalFAQsCtrl {
                 }
             }
 
-            String levels = '(' + String.join(subtopics,' , ') + ' ) ';
+            String levels = '';
+            if(!subtopics.isEmpty()) levels = '(' + String.join(subtopics,' , ') + ' ) ';
             
             String queryPartOne = 'FIND \'' + String.escapeSingleQuotes(filtersWrapper.searchText) + '\' IN ALL FIELDS '+
-                           'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\' ';
-            String queryPartTwo = ' ) WITH DATA CATEGORY FAQs__c BELOW ' + levels ;
+                           'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\'';
+            String queryPartTwo = ' WITH DATA CATEGORY FAQs__c BELOW ' + levels ;
 
 
             //Since SOSL don't have count, the first requested page is queried to all records
             //and then the count is retrived from the returned results list. For the next pages
             //limit and offset is used to improve loading times. 
             if(requestedPageAux == 0){
-                String finalQuery = queryPartOne + queryPartTwo;
+                String finalQuery = queryPartOne + ')';
+                if(String.isNotBlank(levels)) finalQuery += queryPartTwo;
+
+                System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] finalQuery - ' + finalQuery);
                 List<List<SObject>> searchList = Search.query(finalQuery);
                 List<FAQ__kav> tmpList = (List<FAQ__kav>)searchList[0];
 
@@ -181,9 +130,12 @@ public with sharing class PortalFAQsCtrl {
                 result.totalItemCount = tmpList.size();
             }else{
                 Integer offset = requestedPageAux * PortalFAQsCtrl.RESULTS_PER_PAGE;
-                String offsetQuery = ' LIMIT ' + PortalFAQsCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ' ';
+                String offsetQuery = ' LIMIT ' + PortalFAQsCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ')';
 
-                String finalQuery = queryPartOne + offsetQuery + queryPartTwo;
+                String finalQuery = queryPartOne + offsetQuery;
+                if(String.isNotBlank(queryPartTwo)) finalQuery += queryPartTwo;
+                
+				System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] finalQuery - ' + finalQuery);
 
                 List<List<SObject>> searchList = Search.query(finalQuery);
                 List<FAQ__kav> tmpList = (List<FAQ__kav>)searchList[0];
