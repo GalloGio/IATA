@@ -23435,6 +23435,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <columns>ACCOUNT.PHONE1</columns>
         <columns>ACCOUNT.TYPE</columns>
         <columns>CORE.USERS.ALIAS</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>ACCOUNT.RECORDTYPE</field>
