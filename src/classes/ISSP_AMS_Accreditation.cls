@@ -7751,12 +7751,10 @@ public without sharing class ISSP_AMS_Accreditation {
         if (formToDelete != null) {
             mCApplicationFormMap.remove(mcFormIdToDelete);
 
-            if (formToDelete.Status__c == 'InProgress') {
-                if (mCApplicationFormMap.values().size() == 1) {
-                    mcAbleToSubmit = false;
-                } else {
-                    checkSubmitMC(mCApplicationFormMap.values());
-                }
+            if (mCApplicationFormMap.values().size() == 1) {
+                mcAbleToSubmit = false;
+            } else {
+                checkSubmitMC(mCApplicationFormMap.values());
             }
 
             if (formToDelete.AE_separate_Legal_Entity__c == 'Yes') {
