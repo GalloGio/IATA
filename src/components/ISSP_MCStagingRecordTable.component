@@ -1,8 +1,8 @@
 <apex:component controller="ISSP_AMS_Accreditation" allowDML="true">
 	<div class="row" style="padding-top: 20px">
         <div class="col-md-12">
-            <apex:pageBlock>
-                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms" status="loadStatusSpinner">
+            <apex:pageBlock >
+                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms, jsFunctions" status="loadStatusSpinner" oncomplete="onCompleteHandler()">
                     <apex:param value="" name="mcFormNumber" assignTo="{!mcFormIdToDelete}"/>
                 </apex:actionFunction>
 
@@ -62,4 +62,15 @@
             <apex:outputLink value="/faq_home?MainNav=resources&subNav=faq&mid=M2S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}&q=GoGlobal" target="_blank">{!$Label.ANG_ISSP_ProductComparisonViewHere}</apex:outputLink>
         </div>
     </div>
+    
+    <apex:outputPanel id="jsFunctions">
+    <script>
+    function onCompleteHandler() {
+        if ("{!mcAbleToSubmit}" == 'false') {
+            $('#submitMCButton').attr('disabled', 'true');
+        } else {
+            $('#submitMCButton').attr('disabled', 'false');
+    }
+    </script>
+    </apex:outputPanel>
 </apex:component>
