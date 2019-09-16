@@ -2,6 +2,8 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Accept_Case</customButtons>
     <customButtons>E2CP__New_Comment</customButtons>
+    <customButtons>unbabelsc__Unbabel_Translate_Case</customButtons>
+    <customButtons>Translate_Last_Customer_Comment</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Change_Routing</customButtons>
@@ -76,6 +78,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Description</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>unbabelsc__Unbabel_Translated_Description__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>unbabelsc__Unbabel_Language__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -455,11 +465,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Case.Close_case_global</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -480,54 +485,69 @@
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Escalate_within_IATA_lightning</actionName>
-            <actionType>QuickAction</actionType>
+            <actionName>unbabelsc__Unbabel_Translate_Case</actionName>
+            <actionType>CustomButton</actionType>
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Log_Phone_case_lightning</actionName>
-            <actionType>QuickAction</actionType>
+            <actionName>Translate_Last_Customer_Comment</actionName>
+            <actionType>CustomButton</actionType>
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.New_Copy_Parent_Details_Global</actionName>
+            <actionName>Case.Escalate_within_IATA_lightning</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Send_to_Recycle_Bin</actionName>
+            <actionName>Case.Log_Phone_case_lightning</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.dgec__SendEmail</actionName>
+            <actionName>Case.New_Copy_Parent_Details_Global</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>9</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Log_a_call_lightning</actionName>
+            <actionName>Case.Send_to_Recycle_Bin</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>10</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewTask</actionName>
+            <actionName>Case.dgec__SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>11</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.E2CP__Answer_Customer</actionName>
+            <actionName>Case.Log_a_call_lightning</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>12</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>NewTask</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>13</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.E2CP__Answer_Customer</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>14</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Share</actionName>
             <actionType>StandardButton</actionType>
-            <sortOrder>13</sortOrder>
+            <sortOrder>15</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Escalate_within_IATA</actionName>
             <actionType>CustomButton</actionType>
-            <sortOrder>14</sortOrder>
+            <sortOrder>16</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>0</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
