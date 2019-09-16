@@ -89,6 +89,7 @@
             .customlink {
                 cursor: pointer;
                 color: #337ab7;
+            }
             .content-box {
                 box-shadow: 5px 5px 20px #e2e2e2;
                 background-color: white;
