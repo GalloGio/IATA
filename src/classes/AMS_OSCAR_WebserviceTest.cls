@@ -144,6 +144,7 @@ public class AMS_OSCAR_WebserviceTest {
         AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '9', true);
         AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '11', true);
         AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '12', true);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '13', true);
         AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '14', true);
         AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '26', true);
         AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, 'RPM', true);
@@ -155,6 +156,7 @@ public class AMS_OSCAR_WebserviceTest {
         
         setup();
         oscar6.Step6__c='Failed';
+        //oscar6.Reason_for_unsuccessful_application__c = 'Incomplete Documentation';
         update oscar6;
         
         oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS1).get(0);
@@ -172,6 +174,7 @@ public class AMS_OSCAR_WebserviceTest {
         oscar6.STEP12__c = 'Passed';
         oscar6.Validation_Status__c = 'Passed';
         oscar6.RPM_Approval__c='Authorize Disapproval';
+        oscar6.Bank_Guarantee_Requested__c = Date.today();
         update oscar6;
         
         oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS1).get(0);
@@ -193,6 +196,7 @@ public class AMS_OSCAR_WebserviceTest {
         Test.startTest();
         AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, 'DGR', true);
         oscar6.Step6__c='Failed';
+        //oscar6.Reason_for_unsuccessful_application__c = 'Incomplete Documentation';
         update oscar6;
         AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, 'DGR', true);
         AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id, 'DGR');
@@ -203,6 +207,7 @@ public class AMS_OSCAR_WebserviceTest {
         
         setup();
         oscar6.Step6__c='Failed';
+        //oscar6.Reason_for_unsuccessful_application__c = 'Incomplete Documentation';
         update oscar6;
         
         oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS2).get(0);
@@ -219,6 +224,22 @@ public class AMS_OSCAR_WebserviceTest {
             System.assert(true);
         }
         AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id, '6');
+        Test.stopTest();
+    }
+
+    static testMethod void test_createSidraLite7() {
+        
+        setup();
+        oscar6.Step44__c='Passed';
+        //oscar6.Reason_for_unsuccessful_application__c = 'Incomplete Documentation';
+        update oscar6;
+        
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '44', true);
+        oscar6.Process__c = AMS_Utils.NGANNUALREVAL;
+        oscar6.Step44__c='Failed';
+        update oscar6;
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id, '44', true);
         Test.stopTest();
     }
 

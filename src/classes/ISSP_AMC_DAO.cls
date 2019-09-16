@@ -2088,7 +2088,7 @@ public class ISSP_AMC_DAO {
         Id participationId;
         for(Case eachExistingCase : AMCDraftCases){
             for(Participation_Online_Application__c participation : eachExistingCase.Participation_Online_Applications__r){
-                if (eachExistingCase.Reason1__c == caseReasonForm && eachExistingCase.Status != 'Closed') {
+                if (eachExistingCase.Reason1__c == caseReasonForm && eachExistingCase.Status != 'Closed' && eachExistingCase.Status != 'Closed_Rejected') {
                     participationId = participation.Id;
                 }
             }
@@ -2147,7 +2147,7 @@ public class ISSP_AMC_DAO {
                     FROM 
                         Case
                     WHERE 
-                        Status != 'Closed'
+                        (Status != 'Closed' AND Status != 'Closed_Rejected')
                     AND
                         RecordTypeId = :recordTypeId
                     AND 
