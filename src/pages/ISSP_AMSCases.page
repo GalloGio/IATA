@@ -89,12 +89,19 @@
             .customlink {
                 cursor: pointer;
                 color: #337ab7;
+            .content-box {
+                box-shadow: 5px 5px 20px #e2e2e2;
+                background-color: white;
+                height: 100%;
             }
 
             .customlink:hover {
                 cursor: pointer;
                 color: #337ab7;
                 text-decoration: underline;
+            .mainRows{
+                display: flex;
+                flex-direction: row;
             }
         </style>
         <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
@@ -259,6 +266,7 @@
 
                 <div class="container" style="width: 100%">
                     <div class="row">
+                <div class="row mainRows">
                         <section name="left-side-agency-accred" class="col-md-7" style="min-height: 350px;">
                             <div class="content-box">
                                 <header>
@@ -401,6 +409,7 @@
                         </section>
 
                         <div class="row">
+                <div class="row mainRows">
                             <!-- Ongoing Applications & Changes -->
                             <section name="left-side-ongoing-apps" class="col-md-7" style="min-height: 130px; padding-top: 20px">
                                 <div class="content-box">
