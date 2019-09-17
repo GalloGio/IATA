@@ -11,9 +11,9 @@
 .step {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   position: relative;
+  height: 100%;
 }
 
 .circle {
@@ -24,6 +24,10 @@
 
 .flex {
   flex: 1;
+}
+
+.flexGrow {
+  flex-grow: 1;
 }
 
 .notBreak {
@@ -74,7 +78,7 @@
 .bar {
   position: absolute;
   width: 80%;
-  top: 30%;
+  top: 12px;
   left: 60%;
 }
 
