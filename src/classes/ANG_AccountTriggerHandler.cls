@@ -147,11 +147,11 @@ public class ANG_AccountTriggerHandler {
 
 			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A && acc.ANG_CashCondition__c == oldMap.get(acc.Id).ANG_CashCondition__c){
 				downGradeAtoB.add(acc);
-				if(acc.ANG_RiskStatus__c != AMS_UTils.NOT_APPLICABLE) changeCodesForRiskChangesLst.add(acc.Id);
+				changeCodesForRiskChangesLst.add(acc.Id);
 			}
 			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B){
 				downGradeBtoC.add(acc);
-				if(acc.ANG_RiskStatus__c != AMS_UTils.NOT_APPLICABLE) changeCodesForRiskChangesLst.add(acc.Id);
+				changeCodesForRiskChangesLst.add(acc.Id);
 			}
 			if(isExpiration && acc.Guaranteed_amount__c == 0 && acc.ANG_HE_CashCondition__c && !oldMap.get(acc.Id).ANG_HE_CashCondition__c) createFOP.add(acc);
 		}
@@ -206,6 +206,14 @@ public class ANG_AccountTriggerHandler {
 			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW10',e);
 		}
 
+        //Get all account data that we need to make the validations requested.
+
+		Map<Id,Account> accountDataMap = new Map<Id,Account>();
+
+		if(!downGradeBtoC.isEmpty() || isLastFinancialReviewUpgrade){
+			accountDataMap = fetchAccountData(changeCodesForRiskChangesLst);
+		}
+        
 		//downgrade from B to C
 		if(!downGradeBtoC.isEmpty()) createVMFROscars(downGradeBtoC, rhcContacts);
 
@@ -222,6 +230,11 @@ public class ANG_AccountTriggerHandler {
 
 			for(Id accId : changeCodesForRiskChangesLst){
 
+                if(accountDataMap.get(accId).ANG_RiskStatus__c == AMS_UTils.NOT_APPLICABLE){
+					System.debug('Skipping account ' + accId + ' from Change code Creation because the risk status is not available.');
+					continue; // no need to generate Change code.
+				}
+                
 				List<Agency_Authorization__c> activeOrAuthorizedFoPLst = getActiveOrAuthorizedFoPs(accId);
 
 				Account acc = newMap.get(accId);
@@ -245,6 +258,20 @@ public class ANG_AccountTriggerHandler {
 
 	}
 
+	public Map<Id,Account> fetchAccountData(Set<Id> accountIds){
+
+		if(accountIds.isEmpty())
+			return new Map<Id,Account>();
+
+		return new Map<Id,Account>([Select Id, BillingCountry, Region_formula__c, Abbreviated_address__c, Abbreviated_name__c,
+                    Name, BillingState, BillingCity, IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode,
+                    BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, License_Number__c, VAT_Number__c,
+                    Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, Location_Type__c, Mobile__c,
+                    Operation__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
+                    Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c,
+					ANG_RiskStatus__c from Account where Id in :accountIds ]);
+	}
+    
 	//the testing for this method is made on the ANG_ActivateDeactivateREBatch_Test class
 	private void manageUpgrades() {
 		if(!isExpiration && !isLastFinancialReviewUpgrade) return;
@@ -282,8 +309,17 @@ public class ANG_AccountTriggerHandler {
 		List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>();
 		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
+		Map<Id,Account> accountDataMap = new Map<Id,Account>();
+
+		accountDataMap = fetchAccountData(toChangeCode);
+
 		for(Id accId : toChangeCode){
 			
+			if(accountDataMap.get(accId).ANG_RiskStatus__c == AMS_UTils.NOT_APPLICABLE){
+				System.debug('Skipping account ' + accId + ' from Change code Creation because the risk status is not available.');
+				continue; // no need to generate Change code.
+			}
+
 			List<Agency_Authorization__c> activeOrAuthorizedFoPLst = getActiveOrAuthorizedFoPs(accId);
 
 			Account acc = newMap.get(accId);
