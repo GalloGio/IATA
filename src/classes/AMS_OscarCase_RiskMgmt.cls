@@ -198,7 +198,7 @@ public class AMS_OscarCase_RiskMgmt {
 				}
 
 				if(ccConfig.Field7__c != NULL && ccToBeGenerated){
-					ccToBeGenerated = bCheckCondition(c, ccConfig.Field7__c, ccConfig.Field7Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
+					ccToBeGenerated = bCheckCondition(c, ccConfig.Field7__c, ccConfig.Field7Values__c.toUpperCase(), mapExistingChangeCodes);
 				}
 
 				if(ccToBeGenerated){
