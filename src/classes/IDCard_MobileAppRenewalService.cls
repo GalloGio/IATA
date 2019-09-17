@@ -16,7 +16,7 @@ public with sharing class IDCard_MobileAppRenewalService
         'MP', // Northern Mariana Islands (unincorporated territory)
         'PR', // Puerto Rico (unincorporated territory)
         'VI', // Virgin Islands (unincorporated territory)
-        'PQ', // Palau (associated state)
+        'PW', // Palau (associated state)
         'MH', // Marshall Islands (associated state)
         'FM'  // Federated States of Micronesia (associated state)
     };
