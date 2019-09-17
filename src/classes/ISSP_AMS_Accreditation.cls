@@ -1566,7 +1566,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
                     if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD ) {
                         newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
-                        newForm.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
+                        //NEWGEN-6033-BUGFIX Do not inherit remittance frequency from parent account for BSP Brazil
+                        if(!hqAccount.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c) newForm.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
 
                         SYSTEM.DEBUG('Set BR Abroad Legal Name: ' + hqAccount.Name + ' newForm.AE_separate_Legal_Entity__c ' + newForm.AE_separate_Legal_Entity__c + ' hqAccount.Name ' + hqAccount.Name);
                         if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newForm.AE_separate_Legal_Entity__c == 'No'){  //Legal name is editable for BR Abroad, so set default value
@@ -2132,7 +2133,9 @@ public without sharing class ISSP_AMS_Accreditation {
         SFDCAccount.BillingStreet = newForm.Branch_Office_Street_name_number__c;
         SFDCAccount.BillingPostalCode = newForm.Branch_Office_Postal_code__c;
         SFDCAccount.BillingCountry = isocountry.Name;
-        SFDCAccount.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
+        //NEWGEN-6033-BUGFIX Do not inherit remittance frequency from parent account for BSP Brazil
+        if(!hqAccount.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c) SFDCAccount.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
+
     }
 
     private void createHOAccount(Account parentHO) {
@@ -3895,7 +3898,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, Country_ISO_Code__c
+                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, Country_ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c
                         FROM Account
                         WHERE Id = :vHQAccountId
                                    LIMIT 1
