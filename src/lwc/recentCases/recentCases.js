@@ -48,7 +48,6 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
     @track rowHeight = "";
 
     connectedCallback() {
-        console.log('HomePage: ', this.homePageLocal);
 
         this[NavigationMixin.GenerateUrl]({
             type: "standard__namedPage",

@@ -215,13 +215,13 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
         let params = { searchKey : JSON.stringify(filteringObjectAux) , requestedPage : requestedPageNumber+'' , isAdminUser : this.adminView };
-        //console.log(params);
+		
         getFilteredCasesResultsPage(params)
         .then(results => {
 
             if(results.records && results.records.length > 0) {
                 let allDataAux = JSON.parse(JSON.stringify(results));
-                //console.log(allDataAux);
+				
                 let urlMap = JSON.parse(allDataAux.url);
 
                 for(let i = 0; i < allDataAux.records.length; i++) {
