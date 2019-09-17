@@ -304,8 +304,7 @@ public class ANG_AccountTriggerHandler {
 			}
 		}
 
-		//if(toChangeCode.isEmpty() && toNotify.isEmpty()) return;
-		if(toChangeCode.isEmpty()) return;
+		if(toChangeCode.isEmpty() /*&& toNotify.isEmpty()*/) return;
 
 		List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>();
 		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
