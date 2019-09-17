@@ -264,6 +264,7 @@ public with sharing class IDCard_MobileAppRenewalService
         }
         else if (CARD_TYPE_DIGITAL.equals(requestInformation.newIDC.Card_Type__c))
         {
+            requestInformation.newIDC.Is_Expedite__c = false;
             requestInformation.newIDC.MustSyncWithAIMS__c = false;
             requestInformation.newIDC.Card_Status__c = IDCardUtil.CARDSTATUS_VALID;
             requestInformation.newIDC.Sent_to_AIMS_on__c = System.now();
@@ -504,7 +505,8 @@ public with sharing class IDCard_MobileAppRenewalService
                           (training2 == null || training2.price == null ? 0 : training2.price);
         }
 
-        requestInformation.newIDCA.IDCard_Expedite_Delivery__c = requestInformation.prices.Expedite_Delivery_added_to_IDCard_Price__c;
+        requestInformation.newIDCA.IDCard_Expedite_Delivery__c = 
+            requestInformation.prices.Expedite_Delivery_added_to_IDCard_Price__c || shipping != null;
         requestInformation.newIDCA.Applicable_Fee__c = getRequestItemTotalAmount(requestInformation.request);
         requestInformation.newIDCA.ID_Card_Fee__c = cardRenewal == null ? 0 : cardRenewal.price;
         requestInformation.newIDCA.IDCard_Expedite_Delivery_Fee__c = shipping == null ? 0 : shipping.price;

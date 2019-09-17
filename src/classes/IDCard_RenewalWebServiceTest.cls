@@ -79,14 +79,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, ! isTest);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, ! isTest, true);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, false, null, false, false);
-        validateCardPrinting(card, typeOfCard);
+        validateCardPrinting(card, typeOfCard, true);
         validateSpecializationFields(card, true, true);
     }
 
@@ -147,14 +147,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false, true);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, false, null, false, false);
-        validateCardPrinting(card, typeOfCard);
+        validateCardPrinting(card, typeOfCard, true);
         validateSpecializationFields(card, true, true);
     }
 
@@ -205,14 +205,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, true);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, true, true);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, false, null, true, false);
-        validateCardPrinting(card, typeOfCard);
+        validateCardPrinting(card, typeOfCard, true);
         validateSpecializationFields(card, true, true);
     }
 
@@ -258,14 +258,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, true, true);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, true, true, true);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, false, null, false, true);
-        validateCardPrinting(card, typeOfCard);
+        validateCardPrinting(card, typeOfCard, true);
         validateSpecializationFields(card, true, true);
     }
 
@@ -313,14 +313,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false, false);
         validatePayment(app, pCode, true, false, true, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, false, null, false, false);
-        validateCardPrinting(card, typeOfCard);
+        validateCardPrinting(card, typeOfCard, false);
         validateSpecializationFields(card, true, true);
     }
 
@@ -369,14 +369,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false, false);
         validatePayment(app, pCode, true, false, true, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, false, null, false, false);
-        validateCardPrinting(card, typeOfCard);
+        validateCardPrinting(card, typeOfCard, false);
         validateSpecializationFields(card, true, true);
     }
 
@@ -425,14 +425,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, false, 2, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, false, 2, false, false, false, false);
         validatePayment(app, pCode, true, false, true, false, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, false, false, null, false, false);
-        validateCardPrinting(card, typeOfCard);
+        validateCardPrinting(card, typeOfCard, false);
         validateSpecializationFields(card, true, true);
     }
 
@@ -481,14 +481,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, false, 0, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, false, 0, false, false, false, false);
         validatePayment(app, pCode, false, false, false, false, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, false, false, null, false, false);
-        validateCardPrinting(card, typeOfCard);
+        validateCardPrinting(card, typeOfCard, false);
         validateSpecializationFields(card, true, true);
     }
 
@@ -537,14 +537,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, false, 0, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, false, 0, false, false, false, true);
         validatePayment(app, pCode, true, true, false, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, false, null, false, false);
-        validateCardPrinting(card, typeOfCard);
+        validateCardPrinting(card, typeOfCard, true);
         validateSpecializationFields(card, true, true);
     }
 
@@ -592,14 +592,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 1, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 1, false, false, false, true);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, false, null, false, false);
-        validateCardPrinting(card, typeOfCard);
+        validateCardPrinting(card, typeOfCard, true);
         validateSpecializationFields(card, true, true);
     }
 
@@ -647,14 +647,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false, true);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, false);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, false, null, false, false);
-        validateCardPrinting(card, typeOfCard);
+        validateCardPrinting(card, typeOfCard, true);
         validateSpecializationFields(card, true, false);
     }
 
@@ -702,14 +702,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false, true);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, false);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, false, null, false, false);
-        validateCardPrinting(card, typeOfCard);
+        validateCardPrinting(card, typeOfCard, true);
         validateSpecializationFields(card, false, true);
     }
     
@@ -757,14 +757,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, false); // forced digital
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, false, true); // forced digital
         validatePayment(app, pCode, true, true, true, true, true);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, true, null, false, false);
-        validateCardPrinting(card, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL); // forced digital
+        validateCardPrinting(card, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false); // forced digital
         validateSpecializationFields(card, true, true);
 
         // only one contact
@@ -815,14 +815,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, false); // forced digital
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, false, true); // forced digital
         validatePayment(app, pCode, true, true, true, true, true);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, true, 'WSKey', false, false);
-        validateCardPrinting(card, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL); // forced digital
+        validateCardPrinting(card, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false); // forced digital
         validateSpecializationFields(card, true, true);
 
         // only one contact
@@ -873,14 +873,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, false); // forced digital
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, false, true); // forced digital
         validatePayment(app, pCode, true, true, true, true, true);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, true, 'WSKey', false, false);
-        validateCardPrinting(card, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL); // forced digital
+        validateCardPrinting(card, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false); // forced digital
         validateSpecializationFields(card, true, true);
 
         // only one contact
@@ -944,14 +944,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, true); // forced digital
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, true, true); // forced digital
         validatePayment(app, pCode, true, true, true, true, true);
         validateSpecializationFields(app, true);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, true, 'WSKey', true, false);
-        validateCardPrinting(card, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL); // forced digital
+        validateCardPrinting(card, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false); // forced digital
         validateSpecializationFields(card, true, true);
 
         // only one contact
@@ -1002,14 +1002,14 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false, true);
         validatePayment(app, pCode, true, true, true, true, false);
         validateSpecializationFields(app, false);
 
         // validate id card
         ID_Card__c card = getCard(idCardId);
         validateCard(card, app, contact, true, false, 'WSKey', false, false);
-        validateCardPrinting(card, typeOfCard);
+        validateCardPrinting(card, typeOfCard, true);
         validateSpecializationFields(card, false, true);
     }
 
@@ -1353,7 +1353,7 @@ public class IDCard_RenewalWebServiceTest
 
     private static void validateApplication(ID_Card_Application__c app, String uit, String typeOfCard, String pCode,
                                  Boolean hasPayment, Integer hasCourses, Boolean isUSAgent, Boolean useAlternateAccount,
-                                 Boolean skipCaseStatus)
+                                 Boolean skipCaseStatus, Boolean isToPrint)
     {
         System.debug('Validating id card application: ' + app);
 
@@ -1390,6 +1390,7 @@ public class IDCard_RenewalWebServiceTest
         else 
             validateIf(useAlternateAccount, '5990000002', '5990000001', app.VER_Number__c);
         validateIf(useAlternateAccount, '85500100', '67504242', app.IATA_Code__c);
+        System.assertEquals(isToPrint, app.IDCard_Expedite_Delivery__c);
     }
 
     private static void validatePayment(ID_Card_Application__c app, String pCode,
@@ -1438,7 +1439,6 @@ public class IDCard_RenewalWebServiceTest
         }
 
         System.assertEquals(IDCardUtil.PAYMENT_TYPE_CC, app.Payment_Type__c);
-        System.assertEquals(false, app.IDCard_Expedite_Delivery__c);
         System.assertEquals('CAD', app.CurrencyIsoCode);
         System.assertEquals(pCode, app.Promotion_Code__c);
     }
@@ -1464,7 +1464,6 @@ public class IDCard_RenewalWebServiceTest
         validateIf(useAlternateAccount, 'F', 'M', card.Gender__c);
         System.assertEquals('35h or more', card.Hours_per_week__c);
         System.assertEquals(app.Id, card.ID_Card_Application__c);
-        System.assertEquals(false, card.Is_Expedite__c);
         validateIf(useAlternateAccount, 'ALLAM', 'UserOne', card.LastName__c);
         validateIf(useAlternateAccount, null, 'K', card.Middle_Initial__c);
         validateIf(useAlternateAccount, 'ALLAM MARWA', 'ContactOne UserOne', card.Name_on_ID_Card__c);
@@ -1525,7 +1524,7 @@ public class IDCard_RenewalWebServiceTest
             System.assertEquals(second, value);
     }
 
-    private static void validateCardPrinting(ID_Card__c card, String typeOfCard)
+    private static void validateCardPrinting(ID_Card__c card, String typeOfCard, Boolean isToPrint)
     {
         if (IDCard_MobileAppRenewalService.CARD_TYPE_PLASTIC.equals(typeOfCard))
         {
@@ -1543,6 +1542,7 @@ public class IDCard_RenewalWebServiceTest
             System.assertEquals(System.now().date(), (card.Sent_to_AIMS_on__c == null ? null : card.Sent_to_AIMS_on__c.date()));
             System.assertEquals(System.now().date(), (card.Received_From_AIMS__c == null ? null : card.Received_From_AIMS__c.date()));
         }
+        System.assertEquals(isToPrint, card.Is_Expedite__c);
     }
 
     private static void validateSpecializationFields(ID_Card_Application__c app, Boolean specializationsSet)
