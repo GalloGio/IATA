@@ -1534,6 +1534,7 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.saveAMSFormAndGoForward();
             ctrl.saveAMSFormAndGoBack();
             ctrl.saveAMSFormAndLeave();
+            Test.stopTest();
             ctrl.setPageLegalStatusAfterChangeLabels();
 
             ctrl.legalStatusAfterChange = 'association';
@@ -1945,7 +1946,7 @@ private class ISSP_AMS_Accreditation_Test {
 
             ctrl.newCase.Region__c = 'Africa & Middle East';
             ctrl.getRegionalQueue();
-
+            Test.stopTest();
             ctrl.getAmsAllLangCountryLabel(new IATA_ISO_Country__c(), 'es');
 
             ctrl.newCase.BSPCountry__c = 'Spain';

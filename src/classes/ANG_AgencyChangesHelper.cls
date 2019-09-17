@@ -2,6 +2,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static Boolean testRunnningForNonBackup = false;
 	public static Boolean isMigrationRunning = false;
+	private static final Integer CHANGECODES_THRESHOLD = 25;
+
 
 	public class AChangeStructure{
 
@@ -1931,13 +1933,20 @@ public with sharing class ANG_AgencyChangesHelper {
 		if(changesContainer.changeCodesToCreate != null && !changesContainer.changeCodesToCreate.isEmpty())
 		{
 			system.debug('changeCodesToCreate: ' + changesContainer.changeCodesToCreate);
-			insert changesContainer.changeCodesToCreate;
+
+			if(changesContainer.changeCodesToCreate.size() < CHANGECODES_THRESHOLD || (Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) <= 0){
+
+				insert changesContainer.changeCodesToCreate;
+
+				//create history for ebulletin
+				AMS_ChangeCodesHelper.createAAChangeCodesHistory(changesContainer.changeCodesToCreate, aaccHistoryToProcess.values());
+
+			} else {
+
+				System.enqueueJob(new ANG_ChangeCodesCreation(changesContainer.changeCodesToCreate, aaccHistoryToProcess.values()));
+			}
 
 		}
-
-		//create history for ebulletin
-		AMS_ChangeCodesHelper.createAAChangeCodesHistory( changesContainer.changeCodesToCreate, aaccHistoryToProcess.values());
-		System.debug('[ANG_AgencyChangesHelper] Checkpoint4 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
 
 		return changesContainer;
 	}

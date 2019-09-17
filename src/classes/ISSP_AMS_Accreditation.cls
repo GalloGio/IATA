@@ -2000,7 +2000,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
                     if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE)) {
                         newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
-                        newForm.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
+                        //NEWGEN-6033-BUGFIX Do not inherit remittance frequency from parent account for BSP Brazil
+                        if(!hqAccount.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c) newForm.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
 
                         if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || (newForm.AE_separate_Legal_Entity__c == 'No' || newForm.AE_separate_Legal_Entity__c == null)){  //Legal name is editable for BR Abroad, so set default value
                             newForm.Account_Name__c = hqAccount.Name;                        
@@ -2579,7 +2580,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
         SFDCAccount.Top_Parent__c = hqAccount.ParentId;
         SFDCAccount.BillingCountry = isocountry.Name;
-        SFDCAccount.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
+        //NEWGEN-6033-BUGFIX Do not inherit remittance frequency from parent account for BSP Brazil
+        if(!hqAccount.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c) SFDCAccount.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
 
         SFDCAccount.Phone = newForm.Branch_Office_Phone__c;
         SFDCAccount.Fax = newForm.Branch_Office_FAX__c;
@@ -2589,6 +2591,7 @@ public without sharing class ISSP_AMS_Accreditation {
         SFDCAccount.BillingState = newForm.State_Province__c;
         SFDCAccount.BillingStreet = newForm.Branch_Office_Street_name_number__c;
         SFDCAccount.BillingPostalCode = newForm.Branch_Office_Postal_code__c;
+
     }
 
     private void copyOwnersFromSelectedLegalName(Account newAcc, String parentAccId) {
@@ -2625,6 +2628,7 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         return accId;
+
     }
 
     private void createHOAccount(Account parentHO) {
@@ -4455,7 +4459,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, 
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, IATA_ISO_Country__r.AMS_Settlement_System__c, Country_ISO_Code__c,
+                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, IATA_ISO_Country__r.AMS_Settlement_System__c, Country_ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c,
                         (SELECT Id, Status, Reason1__c, IFAP_Country_ISO__c, Applicable_to_Which_Version_s__c, ContactId, AccountId
                          FROM Cases 
                          WHERE AccountId = :vHQAccountId 
@@ -4469,6 +4473,7 @@ public without sharing class ISSP_AMS_Accreditation {
             isMultiCountryStarted = true;
             newCase = hqAccount.Cases[0];
         }
+
     }
 
     public void fetchAccountConcernedDetails () {
