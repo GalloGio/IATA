@@ -16,6 +16,7 @@ public with sharing class DownloadAgentsCtrl {
     public String targetFinancialYear   {get; set;}
     public String exclOpenCases         {get; set;}
     public String exclClosedCases       {get; set;}
+    public String exclFAOptOut          {get; set;}
 
     public DownloadAgentsCtrl () {
 
@@ -28,7 +29,7 @@ public with sharing class DownloadAgentsCtrl {
         targetFinancialYear = Apexpages.currentPage().getParameters().get('targetFinancialYear');  // phase 4
         exclOpenCases = Apexpages.currentPage().getParameters().get('exclOpenCases');  // phase 4
         exclClosedCases = Apexpages.currentPage().getParameters().get('exclClosedCases');  // phase 4
-
+        exclFAOptOut = Apexpages.currentPage().getParameters().get('exclFAOptOut');
         runSearch();
 
     }
@@ -102,7 +103,10 @@ public with sharing class DownloadAgentsCtrl {
             else if (exclOpenCases.equals('false'))
                 soql += ' and (Account.Has_Financial_Review_Open_Cases__c = true or Account.Has_Financial_Review_Open_Cases__c = false)';
 
-            soql += ' and (((Account.Reinstated_Date__c = null or Account.Reinstated_Date__c < :sixMonthsAgo) and Account.Category__c = \'IATA Passenger Sales Agent\') or Account.Category__c != \'IATA Passenger Sales Agent\') ';
+           if(exclFAOptOut.equals('true'))
+                soql += ' and Account.ANG_FA_Opt_out__c = false';
+            soql += ' and (((Account.Reinstated_Date__c = null or Account.Reinstated_Date__c < :sixMonthsAgo) and Account.Category__c = \'IATA Passenger Sales Agent\') or Account.Category__c != \'IATA Passenger Sales Agent\'  or ((Account.Default_date__c >= :sixMonthsAgo or Account.Reinstated_Date__c >= :sixMonthsAgo) and Account.ANG_IsNewGenAgency__c = true ))';
+            soql += ' and Account.ANG_Accreditation_Model__c <> \'Cashless\''; // NEWGEN-1079';
 
 
             // run the query again

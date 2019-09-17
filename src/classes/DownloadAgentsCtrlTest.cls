@@ -47,8 +47,8 @@ private class DownloadAgentsCtrlTest {
         PageReference pageRef = Page.DownloadAgents;
         Test.setCurrentPage(pageRef);
         
-         ApexPages.currentPage().getParameters().put('agentStatus','Approved');
-         ApexPages.currentPage().getParameters().put('agentType','IATA Cargo Agent');
+         ApexPages.currentPage().getParameters().put('agentStatus','Approved-Active');
+         ApexPages.currentPage().getParameters().put('agentType','IATA Cargo Agent-IATA Passenger Sales Agent');
          //ApexPages.currentPage().getParameters().put('country','suisse');
          ApexPages.currentPage().getParameters().put('ISOcountry',isoCountry.id);
          ApexPages.currentPage().getParameters().put('email','Available');
@@ -56,6 +56,7 @@ private class DownloadAgentsCtrlTest {
          ApexPages.currentPage().getParameters().put('exclOpenCases','false');
          ApexPages.currentPage().getParameters().put('targetFinancialYear','String.valueOF(date.today().Year())');
          ApexPages.currentPage().getParameters().put('yearend','--All--');
+         ApexPages.currentPage().getParameters().put('exclFAOptOut','true');
                  
         DownloadAgentsCtrl crtl = new DownloadAgentsCtrl();
         system.assertEquals(crtl.displayList.size(),1);

@@ -840,6 +840,7 @@
     <alerts>
         <fullName>IATA_iiNet_Service_Now</fullName>
         <ccEmails>iata@service-now.com</ccEmails>
+        <ccEmails>iinetcare@iata.org</ccEmails>
         <description>IATA iiNet Service Now</description>
         <protected>false</protected>
         <senderAddress>noreply@iata.org</senderAddress>

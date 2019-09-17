@@ -13,7 +13,6 @@ global class ISSP_AmazonS3_Ctrl {
     public String caseStatus;
 
     String storageFolder;
-    String uniqueFileNames;
 
     public Id id {get; set;}
 
@@ -268,102 +267,13 @@ global class ISSP_AmazonS3_Ctrl {
             Integer amazonS3MaxFileSize = Integer.valueOf(ISSP_CS__c.getValues('ISSP AMS AMAZON S3 MAX FILE SIZE').Value__c);
 
             String policyString =
-                        '{ "expiration": "'+formattedexpire+'","conditions": [ {"bucket": "'+
-                        CREDENTIALS.Bucket +'" } ,'+
-                        // '{"content-type":"application/pdf"},'+
-                       //'{"content-type": "' + contentType + '" },'+
-                       '{"acl":"private"},'+
-                       '{"success_action_status": "' + actionStatus + '" },'+
-                        '["starts-with", "$key", ""] ]}';
-                        //'["content-length-range", 0, 10485760] ]}'; // 10 megabyte
-                        //'["content-length-range", 0, "' + amazonS3MaxFileSize + '"] ]}';
+                '{ "expiration": "'+formattedexpire+'","conditions": [ {"bucket": "'+ CREDENTIALS.Bucket +'" } ,'+
+                '{"acl":"private"},'+
+                '{"success_action_status": "' + actionStatus + '" },'+
+                '["starts-with", "$key", ""] ]}';
             policy = EncodingUtil.base64Encode(Blob.valueOf(policyString));
             signedPolicy = make_sig(EncodingUtil.base64Encode(Blob.valueOf(policyString)));
         }
-
-    /**
-        Get the information of files linked to current case stored in S3 bucket
-    **/
-    /**
-    public Pagereference refreshListDoc() {
-        String FOLDER = getStorageFolder();
-        String folderName = '';
-        String reqIdentifier = '';
-
-        map<String,AmazonFile__c> mapAmazonFiles = getMapAmazonFile();
-
-        system.debug('id before: ' + id);
-        system.debug('cse: ' + cse);
-
-        system.debug('Storage FOLDER: ' + FOLDER);
-
-        list<AmazonRest.S3File> dirtyList = AmazonRest.getListFiles(FOLDER,CREDENTIALS);
-        this.listFile = new list<AmazonFile>();
-
-        system.debug('listFile: ' + listFile);
-        fileMap = new Map<String, list<AmazonFile>>();
-        reqIdentifierList = new List<String>();
-        for(AmazonRest.S3File s3File : dirtyList ){
-            String name = s3File.getname();
-            AmazonFile newAmazonFile;
-            SYSTEM.debug('Amazon S3 Full Name:' + s3File.getFullName());
-            AmazonFile__c amazonFile = mapAmazonFiles.get(s3File.getFullName());
-            if(amazonFile != null) {  //AmazonFile already exists for this file in Amazon S3
-                newAmazonFile = new AmazonFile( s3File, amazonFile);
-                reqIdentifier = newAmazonFile.getFileIdentifier();
-
-                listFile.add(newAmazonFile);
-            } else if(uploadedFileName!=null) { //AmazonFile does not exist for this file on upload (STEP D) so need to create it
-                amazonFile = new AmazonFile__c(
-                Name = uploadedFileName,
-                Full_Name_Unique__c = FOLDER + uploadedFileName,
-                File_Identifier__c = uploadedFileIdentifier,
-                Size_MB__c = uploadedFileSize* 0.000001, //convert to MB
-                isPublic__c = true,
-                Case__c = Id
-                );
-
-                try {
-                    insert amazonFile;
-                } catch(DmlException ex) {
-                    ApexPages.addMessages(ex);
-                }
-
-                newAmazonFile = new AmazonFile( s3File, amazonFile);
-                reqIdentifier =  uploadedFileIdentifier;
-                listFile.add(newAmazonFile);
-            }
-
-            if (fileMap.containsKey(reqIdentifier)){
-                fileMap.get(reqIdentifier).add(newAmazonFile);
-            } else {
-                fileMap.put(reqIdentifier, new List<AmazonFile>{newAmazonFile});
-                reqIdentifierList.add(reqIdentifier);
-            }
-
-        }
-
-        return null;
-    }
-**/
-
-    private map<String,AmazonFile__c> getMapAmazonFile() {
-        System.DEBUG('Get File Map Case Id: ' + this.cse.Id);
-
-        list<AmazonFile__c> listAmazonFile = [
-            Select Size_MB__c, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c , File_Identifier__c, Review_Status__c
-            From AmazonFile__c
-            Where Case__c = :this.cse.Id AND isPublic__c = true
-        ];
-
-        SYSTEM.DEBUG('RETRIEVED listAmazonFile size:' + listAmazonFile.size());
-
-        map<String,AmazonFile__c> mapAmazonFile = new map<String,AmazonFile__c>();
-        for ( AmazonFile__c amazonFile: listAmazonFile) {
-            mapAmazonFile.put(amazonFile.Full_Name_Unique__c, amazonFile);
-        }
-        return mapAmazonFile;
-    }
 
     public map<String, List<AmazonFileAMS>> refreshAmazonFileMap() {
 
@@ -518,6 +428,54 @@ global class ISSP_AmazonS3_Ctrl {
         return ufn;
     }
 
+    /**
+        Check is file Name is already in the related files
+    **/
+    @RemoteAction
+    global static Boolean isFileNameUnique(Id caseId, String filename) {
+        list<AmazonFile__c> listAmazonFile = [
+            SELECT Id
+            FROM AmazonFile__c
+            WHERE Case__c = :caseId
+            AND Name = :filename
+        ];
+        return listAmazonFile.isEmpty();
+    }
+
+    /**
+        Creates a new Amazon file record for the related Case
+    **/
+    @RemoteAction
+    global static Boolean createAmazonFileObject(Id caseId, String filename, Long fielsize, String fileid) {
+        try {
+            Case cse = [SELECT Id, Status FROM Case WHERE Id = :caseId];
+
+            String baseFolder = FOLDER_STEM + String.valueOf(caseId) + '/';
+
+            AmazonFile__c amazonFile = new AmazonFile__c(
+                Name = filename,
+                Full_Name_Unique__c = baseFolder + filename,
+                File_Identifier__c = fileid,
+                File_Identifier_picklist__c = fileid,
+                Review_Status__c = 'Pending',
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'AMS_File'),
+                Size_MB__c = fielsize* 0.000001, //convert to MB
+                isPublic__c = true,
+                Case__c = cse.Id
+            );
+            insert amazonFile;
+
+            if(cse.Status!='Draft') {
+                cse.New_interaction__c = 'New Attachment';
+                cse.New_Attachment_From_Portal_User__c = true;
+                update cse;
+            }
+            return true;
+        } catch ( Exception e) {
+            System.debug('Error creating an AmazonFile__c object: ' + e.getMessage());
+            return false;
+        }
+    }
 
      public void createAmazonFileObject() {
         String FOLDER = getStorageFolder();
