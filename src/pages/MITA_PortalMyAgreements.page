@@ -49,6 +49,7 @@
 
 			.mytabheadercontainer {
 				margin: 10px 0;
+				border-radius: 0;
 			}
 
 			.mytabheader {
@@ -174,12 +175,20 @@
 			font-weight: normal;
 		}
 
+		input[type=checkbox], input[type=radio]{
+			margin-right: 4px;
+		}
+
 		thead th{
 			background-color: rgb(234, 234, 234) !important;
 		}
 
 		.dataTables_wrapper{
 			font-size: 13px;
+		}
+
+		.agreementsTable{
+			width: 100% !important;
 		}
 
 		</style>
@@ -603,7 +612,7 @@
 											<!-- FIRST INTERNAL TAB: NEW MITA -->
 											<div class="mytab level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" id="tabNewMITA">
 
-												<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
+												<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
 													<apex:outputText value="{!MITASuggestionTypes}" escape="false" />
 												</div>
 
@@ -695,7 +704,7 @@
 											<!-- SECOND INTERNAL TAB: NEW BIETA -->
 											<div class="mytab level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" id="tabNewBIETA">
 
-												<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
+												<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
 													<apex:outputText value="{!BIETASuggestionTypes}" escape="false" />
 												</div>
 
