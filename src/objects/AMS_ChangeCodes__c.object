@@ -613,7 +613,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>NG_RB</fullName>
+        <fullName>NewGen</fullName>
         <columns>NAME</columns>
         <columns>Change_Code__c</columns>
         <columns>Record_Type__c</columns>
@@ -629,7 +629,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
             <operation>contains</operation>
             <value>ANG</value>
         </filters>
-        <label>NG_RB</label>
+        <label>NewGen</label>
         <language>en_US</language>
     </listViews>
     <listViews>

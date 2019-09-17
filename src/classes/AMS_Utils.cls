@@ -492,17 +492,6 @@ public without sharing class AMS_Utils {
         private set;
     }
 
-    public static List<AMS_ChangeCodes_Integration__c> CUSTOM_CHANGECODES_INTEGRATION {
-        get {
-            if(CUSTOM_CHANGECODES_INTEGRATION == null){
-                CUSTOM_CHANGECODES_INTEGRATION = [SELECT RecId_A__c,RecId_B__c,RecId_Res__c FROM AMS_ChangeCodes_Integration__c];
-
-            }
-            return CUSTOM_CHANGECODES_INTEGRATION;
-        }
-        private set;
-    }
-
     //20-06-2017 - AMSU-93
     public static Map<String, String> JsonSpecialChars{
         get {
@@ -664,25 +653,9 @@ public without sharing class AMS_Utils {
 
         //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
 
-        String sRes = '';
+        AMS_ChangeCodes_Integration__c ccInt = AMS_ChangeCodes_Integration__c.getValues(sRecIdA + '_' + sRecIdB);
 
-        for (AMS_ChangeCodes_Integration__c cc : CUSTOM_CHANGECODES_INTEGRATION ){
-
-            if(cc.RecId_A__c.equalsIgnoreCase(sRecIdA)){
-                if(cc.RecId_B__c.equalsIgnoreCase(sRecIdB)){
-                    sRes = cc.RecId_Res__c;
-                    break;
-                }
-            }
-
-        }
-
-        //Just in case we don't get a result, we set the value for the most common RecId - "C"
-        if( sRes == ''){
-            sRes = 'C';
-        }
-
-        return sRes;
+        return ccInt == null ? 'C' : ccInt.RecId_Res__c;
     }
 
     public static Boolean isAddressEmpty(Account acc, String addressType) {
