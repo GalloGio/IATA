@@ -626,9 +626,11 @@
 
 	function checkGoGlobal() {
 		if ($j('[id$=allowedAccreditationModelSelect]')[0].selectedOptions[0].value == 'Multicountry') {
-			$j('[id$=novaCena]').css('display', 'block');
+			$j('[id$=selectHEForConversion]').css('display', 'block');
+			$j('[id$=accountsToBeConvertedPanel]').css('display', 'block');
 		} else {
-			$j('[id$=novaCena]').css('display', 'none');
+			$j('[id$=selectHEForConversion]').css('display', 'none');
+			$j('[id$=accountsToBeConvertedPanel]').css('display', 'none');
 		}
 	}
 	
@@ -820,7 +822,7 @@
 									<apex:inputField id="allowedAccreditationModelSelect" value="{!newForm.ANG_Accreditation_Model_to_Change__c}" styleClass="agencyAccreditationTypeComponent" onchange="accreditationModelChanged(this); checkGoGlobal();"></apex:inputField>
 								</apex:pageBlockSectionItem>
 
-								<apex:outputPanel id="novaCena" style="display: none;">
+								<apex:outputPanel id="selectHEForConversion" style="display: none;">
 									<apex:outputLabel value="Please enter the IATA Code of the Head Entity you wish to add" style="font-size: 12px;" styleClass="agencyAccreditationTypeComponent"/>
 									<apex:inputText value="{!accountToBeFetchedOrRemoved}" onblur="fetchHeadEntity(this.value.trim())"/>
 								</apex:outputPanel>
@@ -841,7 +843,7 @@
 									</apex:outputPanel>
 								</apex:outputPanel>
 
-								<apex:outputPanel id="accountsToBeConvertedPanel" style="margin">
+								<apex:outputPanel id="accountsToBeConvertedPanel">
 									<apex:pageBlockTable value="{!accountsToBeConverted}" var="acc" rendered="{!accountsToBeConverted.size > 0}" style="margin-top: 20px;">
 										<apex:column value="{!acc.Name}"/>
 										<apex:column value="{!acc.IATACode__c}"/>
