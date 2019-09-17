@@ -8,6 +8,19 @@ public with sharing class IDCard_MobileAppRenewalService
     public static final String CARD_TYPE_PLASTIC = 'plastic';
     public static final String CARD_TYPE_DIGITAL = 'digital';
 
+    public static final List<String> US_COUNTRY_ISO_CODES = new List<String>
+    {
+        'US', // United States of America
+        'AS', // American Samoa (unincorporated territory)
+        'GU', // Guam (unincorporated territory)
+        'MP', // Northern Mariana Islands (unincorporated territory)
+        'PR', // Puerto Rico (unincorporated territory)
+        'VI', // Virgin Islands (unincorporated territory)
+        'PQ', // Palau (associated state)
+        'MH', // Marshall Islands (associated state)
+        'FM'  // Federated States of Micronesia (associated state)
+    };
+
     /**
      * Rewal process workflow:
      *   0. validate the input & get auxiliar values
@@ -45,7 +58,7 @@ public with sharing class IDCard_MobileAppRenewalService
             return IDCard_ServiceResponse.makeErrorServiceResponse(Label.IDCard_VERrequired);
 
         requestInformation.contactCountry = getContactCountry(requestInformation.iataCode);
-        requestInformation.isUSAgent = 'US'.equals(requestInformation.contactCountry.ISO_Code__c);
+        requestInformation.isUSAgent = isUSISOCountry(requestInformation.contactCountry.ISO_Code__c);
 
         // for US Agents
         if (requestInformation.isUSAgent)
@@ -116,7 +129,7 @@ public with sharing class IDCard_MobileAppRenewalService
         requestInformation.idcaCase = createCaseAndSendEmail(requestInformation);
 
         //   3.2. send post pardot
-        postPardot(requestInformation);
+        //postPardot(requestInformation);
 
         // 4. auto approve Case
         // 5. create the IDC
@@ -196,7 +209,7 @@ public with sharing class IDCard_MobileAppRenewalService
         requestInformation.idcaCase = createCaseAndSendEmail(requestInformation);
 
         //   3.2. send post pardot
-        postPardot(requestInformation);
+        //postPardot(requestInformation);
 
         // 4. auto approve Case
         // 5. create the IDC
@@ -332,10 +345,19 @@ public with sharing class IDCard_MobileAppRenewalService
         Case c2 = requestInformation.idcaCase;
         if (c2.CaseNumber == null)
             c2 = [SELECT Id, CaseNumber, Status FROM Case WHERE Id = :c2.Id];
-        approveCaseAndCreateIDC(c2.Id, c2.CaseNumber, idCardType, requestInformation.newIDCA.Id, closeCase);
+        
+        String pardotBody = getPardotBody(requestInformation);
+        futureLogicOnMobileRenewal(c2.Id, c2.CaseNumber, idCardType, requestInformation.newIDCA.Id, closeCase, pardotBody);
     }
 
-    @Future
+    @Future(Callout=true)
+    private static void futureLogicOnMobileRenewal(Id caseId, String caseNumber, String idCardType, Id newIDCAId,
+                            Boolean closeCase, String pardotBody)
+    {
+        approveCaseAndCreateIDC(caseId, caseNumber, idCardType, newIDCAId, closeCase);
+        postPardot(pardotBody);
+    }
+
     private static void approveCaseAndCreateIDC(Id caseId, String caseNumber, String idCardType, Id newIDCAId, Boolean closeCase)
     {
         String result = IDCardUtil.UpdateCaseToApproved_Rejected(caseNumber, true, idCardType);
@@ -918,26 +940,26 @@ public with sharing class IDCard_MobileAppRenewalService
         }*/
     }
     
-    private static void postPardot(RequestInformation requestInformation)
+    private static String getPardotBody(RequestInformation requestInformation)
     {
         if (requestInformation.request.payment == null || ! sendPardot())
-            return;
+            return null;
 
         String payLoad = 'email=' + requestInformation.newIDCA.Email_admin__c;
         payLoad += '&paymentDate=' + requestInformation.request.payment.orderDate;
         payLoad += '&paymentAmount=' + requestInformation.request.payment.amount;
         payLoad += '&paymentCurrency=' + requestInformation.request.payment.cur;
         payLoad += '&CaseNumber=' + requestInformation.idcaCase.CaseNumber;
+        return payLoad;
+    }
+
+    private static void postPardot(String payLoad)
+    {
+        if (Test.isRunningTest() || String.isBlank(payLoad))
+            return;
 
         system.debug('Post pardor payLoad: ' + payLoad);
 
-        if (! Test.isRunningTest())
-            postPardot(payLoad);
-    }
-
-    @Future(Callout=true)
-    private static void postPardot(String payLoad)
-    {
         Http h = new Http();
         HttpRequest req = new HttpRequest();
         req.setEndpoint('http://go.updates.iata.org/l/123902/2017-02-09/7kl76z/');
@@ -1150,6 +1172,11 @@ public with sharing class IDCard_MobileAppRenewalService
         if (theAccounts.isEmpty())
             throw new IDCardException(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + iataCode + '</i>'}));
         return theAccounts[0];
+    }
+
+    private static Boolean isUSISOCountry(String isoCountryCode)
+    {
+        return US_COUNTRY_ISO_CODES.contains(isoCountryCode);
     }
 
     private class RequestInformation
