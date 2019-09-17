@@ -1,9 +1,11 @@
 public with sharing class SIDRARepaymentInstalmentsController {
-	
+    
     public static final Id RT_REPAYMENT_INSTALMENT_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Detail__c', 'Repayment_Instalment');
+    public static final Id RT_REPAYM_INSTAL_DETAILS_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Detail__c', 'Repayment_Instalment_Details');  //ACAMBAS - WMO-546
     public static final Integer REPAYMENT_INSTALMENTS_QUANTITY = 6;
 
     public Case cs {get; set;}
+    public Case_Detail__c instalmentsDetails {get; set;}    //ACAMBAS - WMO-546
     public list<Case_Detail__c> lstRepaymentInstalments {get; set;}
     public Boolean isEditMode {get; set;}
     public String strAddNewLabel {get{
@@ -34,6 +36,7 @@ public with sharing class SIDRARepaymentInstalmentsController {
     public SIDRARepaymentInstalmentsController (final ApexPages.StandardController controller) {
         if (controller.getRecord().Id != null ) {
             this.cs = [SELECT Id, Currency__c FROM Case WHERE Id = :controller.getRecord().Id];
+            this.instalmentsDetails = getInstalmentsDetails(this.cs.Id); //ACAMBAS - WMO-546
             this.lstRepaymentInstalments = getListInstalments(this.cs.Id);
             this.isEditMode = ApexPages.currentPage().getParameters().get('isEditMode') == 'true';
             
@@ -54,6 +57,21 @@ public with sharing class SIDRARepaymentInstalmentsController {
             AND RecordTypeId = :RT_REPAYMENT_INSTALMENT_ID
             ORDER BY CreatedDate ASC, Id ASC];
     }
+
+    //ACAMBAS - WMO-546: Begin
+    private static Case_Detail__c getInstalmentsDetails(Id caseId) {
+        List<Case_Detail__c> instalmentDetails = [SELECT Id, Interest_Amount__c
+                                                  FROM Case_Detail__c 
+                                                  WHERE Case__c = :caseId AND 
+                                                        RecordTypeId = :RT_REPAYM_INSTAL_DETAILS_ID];
+        if(instalmentDetails.size() > 0) {
+            return instalmentDetails[0];
+        }
+        else {
+            return null;
+        }
+    }
+    //ACAMBAS - WMO-546: End
     
     /**
         Go to edit mode
@@ -67,6 +85,7 @@ public with sharing class SIDRARepaymentInstalmentsController {
     **/
     public PageReference Cancel () {
         this.lstRepaymentInstalments = getListInstalments(this.cs.Id);
+        this.instalmentsDetails = getInstalmentsDetails(this.cs.Id); //ACAMBAS - WMO-546
         this.isEditMode = false;
         return null;
     }
@@ -86,9 +105,19 @@ public with sharing class SIDRARepaymentInstalmentsController {
         
         try {
             upsert lstRepaymentInstalments;
+
+            //ACAMBAS - WMO-546: Begin         
+            Case_Detail__c oldInstalmentDetails = this.cs != null ? getInstalmentsDetails(this.cs.Id) : null;
+
+            if(oldInstalmentDetails == null) {
+                if(this.instalmentsDetails != null) {
+                    insert this.instalmentsDetails;
+                }     
+            }
             this.isEditMode = false;
-            
-        } catch (DMLException e) {
+            //ACAMBAS - WMO-546: End        
+        } 
+        catch (DMLException e) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
         }
         return null;
@@ -104,6 +133,16 @@ public with sharing class SIDRARepaymentInstalmentsController {
             if (instalmentToDelete.Id != null) {
                 delete instalmentToDelete;
             }
+
+            //ACAMBAS - WMO-546: Begin
+            if(this.lstRepaymentInstalments.size() == 0) {
+                if(this.instalmentsDetails != null) {
+                    delete this.instalmentsDetails;
+                    this.instalmentsDetails = null;
+                }     
+            }
+            //ACAMBAS - WMO-546: End
+
         } catch (Exception e) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR! Invalid Repayment Instalment index. The operation could not be completed, no record has been deleted.'));
         }
@@ -129,6 +168,16 @@ public with sharing class SIDRARepaymentInstalmentsController {
                 );
                 this.lstRepaymentInstalments.add(rpi);
             }
+
+            //ACAMBAS - WMO-546: Begin
+            if(quantityToCreate == Integer.valueOf(REPAYMENT_INSTALMENTS_QUANTITY)) {
+                this.instalmentsDetails = new Case_Detail__c(
+                                                    Case__c = cs.Id,
+                                                    RecordTypeId = RT_REPAYM_INSTAL_DETAILS_ID
+                );
+            }
+            //ACAMBAS - WMO-546: End
+
             this.isEditMode = true;
             
         } catch (Exception e) {
