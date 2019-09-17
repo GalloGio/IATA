@@ -17,6 +17,7 @@ import getUserInformationFromEmail              from '@salesforce/apex/PortalReg
 import register                                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.simulateRegister';
 import getCustomerTypePicklists                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getCustomerTypePicklists';
 import getMetadataCustomerType                  from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getMetadataCustomerType';
+import getDomainAccounts                        from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getDomainAccounts';
 import isGuest                                  from '@salesforce/user/isGuest';
 
 /* ==============================================================================================================*/
@@ -30,26 +31,23 @@ import jQuery                                   from '@salesforce/resourceUrl/jQ
 /* ==============================================================================================================*/
 /* Custom Labels
 /* ==============================================================================================================*/
-import InvalidMailFormatLabel                   from '@salesforce/label/c.ISSP_AMS_Invalid_Email';
-import LoginLabel                               from '@salesforce/label/c.Login';
-import EmailLabel                               from '@salesforce/label/c.Email';
-import CreateNewAccountLabel                    from '@salesforce/label/c.OneId_Account_Creation';
-import NextLabel                                from '@salesforce/label/c.ISSP_Next';
-import SubmitLabel                              from '@salesforce/label/c.CSP_Submit';
-import AcceptTermsLabel                         from '@salesforce/label/c.ISSP_Registration_acceptGeneralConditions';
-import AcceptTermsErrorLabel                    from '@salesforce/label/c.CSP_Accept_Terms_Error';
-import TouLabel                                 from '@salesforce/label/c.CSP_Privacy_Policy';
-import RegistrationCompleteLabel                from '@salesforce/label/c.OneId_RegistrationComplete';
-import CheckEmailLabel                          from '@salesforce/label/c.OneId_CheckEmail';
+import Login                                    from '@salesforce/label/c.login';
+import CSP_Create_New_Account_Info              from '@salesforce/label/c.CSP_Create_New_Account_Info'
+import CSP_Change_Email                         from '@salesforce/label/c.CSP_Change_Email';
+import CSP_Invalid_Email                        from '@salesforce/label/c.CSP_Invalid_Email';
+import ISSP_Next                                from '@salesforce/label/c.ISSP_Next';
+import OneId_Account_Creation                   from '@salesforce/label/c.OneId_Account_Creation';
+import CSP_Registration_Existing_User_Message   from '@salesforce/label/c.CSP_Registration_Existing_User_Message';
+import CSP_Privacy_Policy                       from '@salesforce/label/c.CSP_Privacy_Policy';
+import OneId_CheckEmail                         from '@salesforce/label/c.OneId_CheckEmail';
+import CSP_Registration_Disabled_Message        from '@salesforce/label/c.CSP_Registration_Disabled_Message';
+import CSP_Submit                               from '@salesforce/label/c.CSP_Submit';
+import CSP_Success                              from '@salesforce/label/c.CSP_Success';
+import CSP_Forgot_Password_Retry_Title          from '@salesforce/label/c.CSP_Forgot_Password_Retry_Title';
+import CSP_Registration_Retry_Message           from '@salesforce/label/c.CSP_Registration_Retry_Message';
+import CSP_Try_Again                            from '@salesforce/label/c.CSP_Try_Again';
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
-import TroubleshootingLabel                     from '@salesforce/label/c.OneId_CSP_Troubleshooting';
-import successLabel                             from '@salesforce/label/c.CSP_Success';
-import createNewAccountLabel                    from '@salesforce/label/c.OneId_CreateNewAccount';
-import successMessageLabel                      from '@salesforce/label/c.CSP_Forgot_Password_Success_Message';
-import retryTitleLabel                          from '@salesforce/label/c.CSP_Forgot_Password_Retry_Title';
-import retryMessageLabel                        from '@salesforce/label/c.CSP_Forgot_Password_Retry_Message';
-import tryAgainLabel                            from '@salesforce/label/c.CSP_Try_Again';
-import newAccountMessageLabel                   from '@salesforce/label/c.CSP_Create_New_Account_Label';
+
 
 export default class PortalRegistrationFirstLevel extends LightningElement {
 
@@ -77,7 +75,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                                 "extraChoice" : "",
                                 "language" : "",
                                 "selectedCustomerType" : "",
-                                "termsAndUsage" : false
+                                "termsAndUsage" : false,
+                                "domainAccountId" : ""
                               };
     @track errorMessage = "";
     @track displayError = false;
@@ -86,6 +85,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     @track isFrozen = false;
     @track countryOptions = [];
     @track languageOptions = [];
+    @track companyOptions = [];
     //@track phoneInitialized = false;
     @track isSelfRegistrationDisabled = false;
     @track sector = { label : "", options : [], display : false };
@@ -96,27 +96,26 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     successIcon = CSP_PortalPath + 'check2xGreen.png';
     @track jsLoaded = false;
 
+
     _labels = {
-        LoginLabel,
-        EmailLabel,
-        CreateNewAccountLabel,
-        NextLabel,
-        SubmitLabel,
-        AcceptTermsLabel,
-        AcceptTermsErrorLabel,
-        TouLabel,
-        RegistrationCompleteLabel,
-        CheckEmailLabel,
-        DisabledRegistrationLabel : 'Portal Registration is currently disabled. Thank you for your understanding.',
-        TroubleshootingLabel,
-        successLabel,
-        tryAgainLabel,
-        retryTitleLabel,
-        retryMessageLabel,
-        successMessageLabel,
-        createNewAccountLabel,
-        newAccountMessageLabel
+        Login,
+        CSP_Create_New_Account_Info,
+        CSP_Change_Email,
+        CSP_Invalid_Email,
+        ISSP_Next,
+        OneId_Account_Creation,
+        CSP_Registration_Existing_User_Message,
+        CSP_Privacy_Policy,
+        OneId_CheckEmail,
+        CSP_Registration_Disabled_Message,
+        CSP_Submit,
+        CSP_Success,
+        CSP_Forgot_Password_Retry_Title,
+        CSP_Registration_Retry_Message,
+        CSP_Try_Again,
+        CSP_PortalPath
     }
+
     get labels() {
         return this._labels;
     }
@@ -126,6 +125,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
     get displayToU(){
         if(this.displayContactForm || this.displayTermsAndUsage){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    get displayCompanyCbx(){
+        if(this.userInfo.hasExistingContact == false && this.companyOptions.length > 1){
             return true;
         }else{
             return false;
@@ -241,8 +248,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                         var config = JSON.parse(JSON.stringify(result));
                         console.log('config: ', config);
                         this.config = config;
-                        this._renderCountryOptions(config.countryInfo.countryList);
-                        this._renderLanguageOptions(config.languageList);
+                        this._formatCountryOptions(config.countryInfo.countryList);
+                        this.languageOptions = config.languageList;
                         this.isSelfRegistrationEnabled = config.isSelfRegistrationEnabled;
                         if(this.isSelfRegistrationEnabled == false){
                             this.isSelfRegistrationDisabled = true;
@@ -368,14 +375,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         RegistrationUtilsJs.checkEmailIsValid(`${this.registrationForm.email}`).then(result=> {
             console.log('result: ', result);
             if(result == false){
-                this._showEmailValidationError(true, InvalidMailFormatLabel);
+                this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
                 this.isLoading = false;
             }else{
                 let anonymousEmail = 'iata' + this.registrationForm.email.substring(this.registrationForm.email.indexOf('@'));
                 RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result=> {
                     if(result == 'true'){
                        //todo:disposable email alert!
-                        this._showEmailValidationError(true, InvalidMailFormatLabel);
+                        this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
                         this.isLoading = false;
                     }else{
                         //todo:check if the email address is associated to a contact and/or a user
@@ -398,8 +405,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                                     navigateToPage(CSP_PortalPath + 'login',params);
                                     */
                                     //todo: display message of existing user
-                                    this._showEmailValidationError(true, 'You are trying to register with an existing user,'
-                                        + ' please change the email or click login button to go to the login page');
+                                    this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
                                     this.isLoading = false;
                                 }else{
                                     //todo:show Terms and Usage field to proceed submit
@@ -419,9 +425,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                                     this.isEmailFieldReadOnly = true;
                                     this.isLoading = false;
                                     this._initializePhoneInput();
+                                    getDomainAccounts({ email : this.registrationForm.email}).then(result => {
+                                        var domainAccounts = JSON.parse(JSON.stringify(result));
+                                        console.log('domainAccounts: ', domainAccounts);
+                                        this.companyOptions = domainAccounts;
+                                    });
                                 }else{
-                                    //todo: inform user to pick another email??s
-                                    this._showEmailValidationError(true, InvalidMailFormatLabel);
+                                    //todo: inform user to pick another email
+                                    this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
                                     this.isLoading = false;
                                 }
                             }
@@ -444,10 +455,21 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         this.isLoading = true;
         //todo: validate & add country code to the phone number
 
+        var contactId = this.userInfo.contactId;
+        var accountId = this.userInfo.accountId;
+        //if there is an account selection based on the email domain, use it for registration.
+        if(this.registrationForm.domainAccountId.length > 0){
+            accountId = this.registrationForm.domainAccountId;
+        }else{
+            if(this.userInfo.hasExistingContact == false && this.companyOptions.length == 1){
+                accountId = this.companyOptions[0].value;
+            }
+        }
+
         register({ registrationForm : JSON.stringify(this.registrationForm),
                    customerType : JSON.stringify(this.selectedMetadataCustomerType),
-                   contactId : this.userInfo.contactId,
-                   accountId : this.userInfo.accountId
+                   contactId : contactId,
+                   accountId : accountId
                  }).then(result => {
             var dataAux = JSON.parse(JSON.stringify(result));
             console.log('dataAux: ', dataAux);
@@ -472,6 +494,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
     handleCountryChange(event){
         this.registrationForm.country = event.detail.value;
+        this._checkForMissingFields();
+    }
+
+    handleCompanyChange(event){
+        this.registrationForm.domainAccountId = event.detail.value;
         this._checkForMissingFields();
     }
 
@@ -518,10 +545,12 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                     this._showSubmitError(false,"");
                 }
             }
+            this.registrationForm.sector = this.selectedCustomerType;
+        }else{
+            this.registrationForm.sector = "";
         }
 
         this.registrationForm.selectedCustomerType = this.selectedCustomerType;
-        this.registrationForm.sector = this.selectedCustomerType;
         this.registrationForm.category = "";
         this.registrationForm.extraChoice = "";
 
@@ -539,7 +568,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         if(this.selectedCustomerType == event.target.value){
             this.registrationForm.category = this.selectedCustomerType;
             this._checkForMissingFields();
-            this.isLoading = false;
             return;
         }
 
@@ -645,7 +673,10 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                 selectedCustomerType : this.selectedCustomerType,
                 selectedMetadataCustomerType : this.selectedMetadataCustomerType,
                 userCountry : this.userCountry,
-                userCountryCode : this.userCountryCode
+                userCountryCode : this.userCountryCode,
+                isRegistrationComplete : this.isRegistrationComplete,
+                companyOptions : this.companyOptions,
+                userInfo : this.userInfo
             };
 
             localStorage.setItem("registrationState", JSON.stringify(registrationState));
@@ -682,7 +713,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         }
     }
 
-    _renderCountryOptions(options){
+    _formatCountryOptions(options){
         let dataList = JSON.parse(JSON.stringify(options));
         let optionList = [];
         //optionList.push({ 'label': '', 'value': '' });
@@ -690,14 +721,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             optionList.push({ 'label': data.Name, 'value': data.Id });
         });
         this.countryOptions = optionList;
-    }
-
-    _renderLanguageOptions(options){
-        var lowerCaseLangOpts = options.map(function(a) {
-            a.value = a.value.toLowerCase();
-            return a;
-        });
-        this.languageOptions = lowerCaseLangOpts;
     }
 
     _clearForm(email){
@@ -716,7 +739,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                                   "extraChoice" : "",
                                   "language" : this.registrationForm.language,
                                   "selectedCustomerType" : "",
-                                  "termsAndUsage" : false
+                                  "termsAndUsage" : false,
+                                  "domainAccountId" : ""
                                 };
 
         this.selectedCustomerType = null;
@@ -739,6 +763,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         this.selectedMetadataCustomerType = registrationState.selectedMetadataCustomerType;
         this.userCountry = registrationState.userCountry;
         this.userCountryCode = registrationState.userCountryCode;
+        this.isRegistrationComplete = registrationState.isRegistrationComplete;
+        this.userInfo = registrationState.userInfo;
+        this.companyOptions = registrationState.companyOptions;
         this.isLoading = false;
 
         if(this.displayContactForm){
@@ -752,7 +779,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
         let isValid = true;
         let form = this.registrationForm;
-        if(this.userInfo.hasExistingContact){
+        if(this.userInfo.hasExistingContact == true){
             if(form.email.length < 1 || form.termsAndUsage != true){
                 isValid = false;
             }
@@ -761,6 +788,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                 || form.termsAndUsage != true || form.sector.length < 1){
                     isValid = false;
             }
+
+            if(this.displayCompanyCbx == true && form.domainAccountId.length < 1){
+                isValid = false;
+            }
+
             if(form.sector == 'General_Public_Sector' && form.extraChoice.length < 1){
                 isValid = false;
             }else if(form.sector != 'General_Public_Sector' && form.category.length < 1){

@@ -13,14 +13,14 @@
                     <c-portal-custom-card-container>
 
                         <span slot="cardTitle">
-                            <span class="text-medium">{labels.CreateNewAccountLabel}</span>
+                            <span class="text-medium">{labels.OneId_Account_Creation}</span>
                         </span>
 
                         <span slot="cardBody">
                             <div class="slds-card__body" style="margin-bottom:140px;" onkeypress={handleFormKeyPress}>
                                 <lightning-layout multiple-rows vertical-align="end">
                                     <lightning-layout-item size="12">
-                                        <span class="fixed-text">Complete the basic registration process to join IATA Customer Portal.</span>
+                                        <span class="fixed-text">{labels.CSP_Create_New_Account_Info}</span>
                                         <div style="height:40px;"></div>
                                     </lightning-layout-item>
 
@@ -37,8 +37,8 @@
                                             </div>
                                             <div if:true={isEmailFieldReadOnly} class="text-xxsmall" >
                                                 <lightning-button variant="base"
-                                                                  label="Change Email"
-                                                                  title="Change Email"
+                                                                  label={labels.CSP_Change_Email}
+                                                                  title={labels.CSP_Change_Email}
                                                                   onclick={handleChangeEmail}
                                                                   class="blueCustomButtonLinkSmall">
                                                 </lightning-button>
@@ -64,7 +64,7 @@
                                     <template if:false={displayToU}>
                                         <lightning-layout-item size="12">
                                             <div style="height:8px;"></div>
-                                            <lightning-button disabled data-id="nextButton" class="containedButtonDisabled" onclick={handleNext} label={labels.NextLabel}></lightning-button>
+                                            <lightning-button disabled data-id="nextButton" class="containedButtonDisabled" onclick={handleNext} label={labels.ISSP_Next}></lightning-button>
                                         </lightning-layout-item>
                                     </template>
                                     <template if:true={displayContactForm}>
@@ -138,6 +138,34 @@
                                             <div class="formElementSpacer">
                                             </div>
                                         </lightning-layout-item>
+                                        <!------------------------------------------      Companies      --------------------------------------------->
+                                        <template if:true={displayCompanyCbx}>
+                                            <lightning-layout-item size="12">
+                                                <div class="formElementContainer">
+                                                    <div class="formLabelContainer">
+                                                        <div style="width:100%;" class="text-xxsmall">
+                                                            <abbr class="slds-required" title="required">*</abbr>
+                                                            Company
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="12">
+                                                <div class="slds-form-element__control registrationComboBox custTextInputSmall">
+                                                    <lightning-combobox class="" placeholder=" "
+                                                                        name="" label="" required
+                                                                        variant="label-hidden"
+                                                                        value={registrationForm.accountDomainId}
+                                                                        options={companyOptions}
+                                                                        onchange={handleCompanyChange}>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="12">
+                                                <div class="formElementSpacer">
+                                                </div>
+                                            </lightning-layout-item>
+                                        </template>
                                         <!------------------------------------------      Phone      --------------------------------------------->
                                         <lightning-layout-item size="12">
                                             <div class="formElementContainer">
@@ -286,7 +314,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="text-small" style="margin-left:12px; width:100%;">
-                                                    <lightning-formatted-rich-text value={labels.TouLabel} class="text-small text-gray"></lightning-formatted-rich-text>
+                                                    <lightning-formatted-rich-text value={labels.CSP_Privacy_Policy} class="text-small text-gray"></lightning-formatted-rich-text>
                                                 </div>
                                             </div>
                                         </lightning-layout-item>
@@ -297,7 +325,7 @@
                                         <!------------------------------------------      Submit Button      --------------------------------------------->
                                         <lightning-layout-item size="12">
                                             <div>
-                                                <lightning-button disabled data-id="submitButton" class="containedButtonDisabled" onclick={handleSubmit} label={labels.SubmitLabel}></lightning-button>
+                                                <lightning-button disabled data-id="submitButton" class="containedButtonDisabled" onclick={handleSubmit} label={labels.CSP_Submit}></lightning-button>
                                                 <!--
                                                 <div style="min-height:40px;">
                                                     <div if:true={displaySubmitError}>
@@ -322,7 +350,7 @@
                         </span>
 
                         <span slot="cardButton">
-                            <lightning-button variant="base" label={labels.LoginLabel} class="slds-p-right_small blueCustomButtonLinkSmall" onclick={handleNavigateToLogin}></lightning-button>
+                            <lightning-button variant="base" label={labels.Login} class="slds-p-right_small blueCustomButtonLinkSmall" onclick={handleNavigateToLogin}></lightning-button>
                         </span>
 
                     </c-portal-custom-card-container>
@@ -330,7 +358,7 @@
                 <template if:true={isSelfRegistrationDisabled}>
                     <c-portal-informative-message-box>
                         <span slot="message">
-                            <lightning-formatted-rich-text value={labels.DisabledRegistrationLabel} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                            <lightning-formatted-rich-text value={labels.CSP_Registration_Disabled_Message} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
                         </span>
                     </c-portal-informative-message-box>
                 </template>
@@ -351,12 +379,12 @@
                             <div class="slds-card__body">
                                 <div class="slds-p-bottom_x-small">
                                     <span class="text-medium text-darkGray text-bold">
-                                        <span>{labels.successLabel}</span>
+                                        <span>{labels.CSP_Success}</span>
                                     </span>
                                 </div>
                                 <div class="slds-p-bottom_x-small">
                                     <div class="slds-p-bottom_large">
-                                        <span class="fixed-text text-gray">{labels.successMessageLabel}</span>
+                                        <span class="fixed-text text-gray">{labels.OneId_CheckEmail}</span>
                                     </div>
 
                                     <div  class="slds-p-bottom_large">
@@ -364,12 +392,12 @@
                                     </div>
 
                                     <div  class="slds-p-bottom_large">
-                                        <p class="text-bold text-darkGray text-xsmall slds-p-bottom_medium">{labels.retryTitleLabel}</p>
-                                        <span class="fixed-text text-gray">{labels.retryMessageLabel}</span>
+                                        <p class="text-bold text-darkGray text-xsmall slds-p-bottom_medium">{labels.CSP_Forgot_Password_Retry_Title}</p>
+                                        <span class="fixed-text text-gray">{labels.CSP_Registration_Retry_Message}</span>
                                     </div>
 
                                     <div class="slds-p-bottom_x-large">
-                                        <lightning-button class="outlinedButtonLogin" label={labels.tryAgainLabel} onclick={handleSubmit}></lightning-button>
+                                        <lightning-button class="outlinedButtonLogin" label={labels.CSP_Try_Again} onclick={handleSubmit}></lightning-button>
                                     </div>
                                 </div>
                             </div>
@@ -383,7 +411,7 @@
 
     <div data-id="spinnerId" class="slds-spinner_container" if:true={isLoading}>
         <div class="slds-spinner slds-spinner_medium" role="status">
-            <span class="slds-assistive-text">{labels.LoadingLabel}</span>
+            <span class="slds-assistive-text"></span>
             <div class="slds-spinner__dot-a"></div>
             <div class="slds-spinner__dot-b"></div>
         </div>

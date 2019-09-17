@@ -3,7 +3,17 @@
  */
 
 public without sharing class PortalRegistrationFirstLevelCtrl {
-    
+
+    public class CountryInformation {
+        @AuraEnabled public Map<Id, IATA_ISO_Country__c> countryMap { get; private set; }
+        @AuraEnabled public List<IATA_ISO_Country__c> countryList { get; private set; }
+
+        public CountryInformation(List<IATA_ISO_Country__c> countryList){
+            this.countryList = countryList;
+            this.countryMap = new Map<Id, IATA_ISO_Country__c>(countryList);
+        }
+    }
+
     public class RegistrationConfig{
         @AuraEnabled
         public Boolean isSelfRegistrationEnabled{get;set;}
@@ -36,6 +46,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         public string category{get;set;}
         @AuraEnabled
         public string extraChoice{get;set;}
+        @AuraEnabled
+        public boolean isGeneralPublic{get;set;}
     }
 
     public class RegistrationResult{
@@ -73,6 +85,19 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         public string registrationTime {get;set;}
     }
 
+    public class UserInformation {
+        @AuraEnabled
+        public Boolean hasExistingContact {get; set;}
+        @AuraEnabled
+        public Boolean hasExistingUser{get;set;}
+        @AuraEnabled
+        public Boolean isEmailAddressAvailable{get; set;}
+        @AuraEnabled
+        public Id contactId{get;set;}
+        @AuraEnabled
+        public Id accountId{get;set;}
+    }
+
     @AuraEnabled(cacheable=true)
     public static RegistrationConfig getConfig(){
         RegistrationConfig config = new RegistrationConfig();
@@ -81,7 +106,12 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         config.contactLabelMap = getContactLabels();
         config.accountLabelMap = getAccountLabels();
         config.countryInfo = getISOCountries();
-        config.languageList = CSP_Utils.getCommunityAvailableLanguages(null,null);
+        config.languageList = new List<CSP_Utils.PickListWrapper>();
+        for(CSP_Utils.PickListWrapper wrapper : CSP_Utils.getCommunityAvailableLanguages(null,null)){
+            wrapper.value = wrapper.value.toLowerCase();
+            config.languageList.add(wrapper);
+        }
+
         return config;
     }
 
@@ -150,22 +180,12 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         return new CountryInformation(countries);
     }
 
-    public class CountryInformation {
-        @AuraEnabled public Map<Id, IATA_ISO_Country__c> countryMap { get; private set; }
-        @AuraEnabled public List<IATA_ISO_Country__c> countryList { get; private set; }
-
-        public CountryInformation(List<IATA_ISO_Country__c> countryList){
-            this.countryList = countryList;
-            this.countryMap = new Map<Id, IATA_ISO_Country__c>(countryList);
-        }
-    }
-
     @AuraEnabled//(cacheable=true)
     public static RegistrationConfirmationConfig getRegistrationConfirmationConfig(){
         RegistrationConfirmationConfig config = new RegistrationConfirmationConfig();
 
         User loggedUser = CSP_Utils.getLoggedUser();
-        List<Contact> contactList = [SELECT Id, Email, FirstName, LastName, Phone, Preferred_Language__c, ISO_Country__c, Account.Sector__c, Account.Category__c FROM Contact WHERE Id =:loggedUser.contactId LIMIT 1];
+        List<Contact> contactList = [SELECT Id, Email, FirstName, LastName, Phone, Preferred_Language__c, ISO_Country__c, Account.Sector__c, Account.Category__c, Account.is_General_Public_Account__c FROM Contact WHERE Id =:loggedUser.contactId LIMIT 1];
         if(!contactList.isEmpty()){
             config.contact = contactList.get(0);
             system.debug('config.contact: ' + config.contact);
@@ -186,27 +206,20 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 config.category = selectedMetadataCustomerType.Filter_on_Category__c;
                 config.extraChoice = selectedMetadataCustomerType.DeveloperName;
             }
+            config.isGeneralPublic = config.contact.Account.is_General_Public_Account__c;
         }
         config.contactLabelMap = getContactLabels();
         config.accountLabelMap = getAccountLabels();
         config.countryInfo = getISOCountries();
-        config.languageList = CSP_Utils.getCommunityAvailableLanguages(null,null);
+        config.languageList = new List<CSP_Utils.PickListWrapper>();
+
+        for(Preferred_Language_on_ISS_Portal__c portalLang : Preferred_Language_on_ISS_Portal__c.getAll().values()) {
+            CSP_Utils.PickListWrapper wrapper = new CSP_Utils.PickListWrapper(portalLang.Language__c, portalLang.Language__c);
+            config.languageList.add(wrapper);
+        }
+
         return config;
 
-    }
-
-
-    public class UserInformation {
-        @AuraEnabled
-        Boolean hasExistingContact {get; set;}
-        @AuraEnabled
-        Boolean hasExistingUser{get;set;}
-        @AuraEnabled
-        Boolean isEmailAddressAvailable{get; set;}
-        @AuraEnabled
-        Id contactId{get;set;}
-        @AuraEnabled
-        Id accountId{get;set;}
     }
 
     @AuraEnabled
@@ -278,6 +291,17 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         }
     }
 
+    @AuraEnabled
+    public static List<CSP_Utils.PickListWrapper> getDomainAccounts(string email){
+        String domain = email.split('@').get(1);
+        List<CSP_Utils.PickListWrapper> accList = new List<CSP_Utils.PickListWrapper>();
+        for(Account_Domain__c dom : [SELECT Account__r.Name, Account__r.Id FROM Account_Domain__c WHERE Name = :domain]){
+            CSP_Utils.PickListWrapper wrapper = new CSP_Utils.PickListWrapper(dom.Account__r.Id, dom.Account__r.Name);
+            accList.add(wrapper);
+        }
+        return accList;
+    }
+
     public static boolean sendConfirmationEmail(RegistrationParameters params){
 
         Boolean result = false;
@@ -334,6 +358,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             params.selectedCustomerType = (inputMap.get('selectedCustomerType') != null) ? string.valueOf(inputMap.get('selectedCustomerType')) : '';
             params.registrationTime = string.valueOf(DateTime.Now());
 
+
             if(params.contactId.length() < 1){
                 if(params.email.length() < 1 || params.firstName.length() < 1 || params.lastName.length() < 1){
                     result.isSuccess = false;
@@ -354,6 +379,14 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                     params.accountId = bucketAccount.acc.Id;
                     params.isNewAccount = bucketAccount.isNewAccount;
                 }
+            }else{
+                //if the account is selected from email domain, find specific branch of the selected country if possible
+                if(params.contactId.length() < 1 && params.country.length() > 0){
+                    List<Account> accountList = getBranchAccounts(params.accountId, params.country);
+                    if(!accountList.isempty()){
+                        params.accountId = accountList.get(0).Id;
+                    }
+                }
             }
 
 
@@ -362,7 +395,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             if(params.contactId.length() < 1){
                 con = createContact(params);
             }else{
-                con = [SELECT Id, AccountId, firstName, LastName, Phone, Email FROM Contact WHERE ID=: contactId LIMIT 1];
+                con = [SELECT Id, AccountId, firstName, LastName, Phone, Email, Preferred_Language__c FROM Contact WHERE ID=: contactId LIMIT 1];
+                params.firstName = con.firstName;
             }
 
             if(con == null){
@@ -374,7 +408,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             //Create User
             OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
-            NewUserDetail usr = createNewUser(con, string.valueOf(mode), params.language, null);
+            NewUserDetail usr = createNewUser(con, string.valueOf(mode), con.Preferred_Language__c, null, false);
 
             if(usr.userId!= null) {
                 Database.rollback(sp);
@@ -383,6 +417,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 result.userName = usr.userName;
 
                 //Send Confirmation Email
+                system.debug('params: ' + params);
                 result.isSuccess = sendConfirmationEmail(params);
                 if(result.isSuccess == false){
                     result.message = 'Error sending Confirmation Email';
@@ -403,9 +438,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         }
 
     }
-
-
-
 
     @AuraEnabled
     public static RegistrationResult register(RegistrationParameters params, string password){
@@ -431,10 +463,17 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             //Create or find Contact
             Contact con;
+            Boolean registrationRequired = false;
             if(params.contactId == null || params.contactId == ''){
                 con = createContact(params);
             }else{
-                con = [SELECT Id, AccountId, firstName, LastName, Phone, Email FROM Contact WHERE ID=: params.contactId LIMIT 1];
+                con = [SELECT Id, AccountId, firstName, LastName, Phone, Email, Preferred_Language__c FROM Contact WHERE ID=: params.contactId LIMIT 1];
+                params.firstName = con.firstName;
+                //if the account is a bucket account, force user to confirm L1 on the portal when loggedin
+                //Boolean isGeneralPublic = [SELECT is_General_Public_Account__c FROM Account WHERE Id = :params.accountId LIMIT 1].is_General_Public_Account__c;
+                //if(isGeneralPublic == true){
+                registrationRequired = true;
+                //}
             }
 
             if(con == null){
@@ -445,7 +484,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             //Create User
             OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
-            NewUserDetail usr = createNewUser(con, string.valueOf(mode), params.language, password);
+            NewUserDetail usr = createNewUser(con, string.valueOf(mode), con.Preferred_Language__c, password, registrationRequired);
 
             system.debug('userId: ' + usr.userId);
             if(usr.userId != null) {
@@ -458,7 +497,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 if(result.isSuccess == false){
                     result.message = 'Error sending Registration Email';
                 }
-
                 return result;
             }else{
                 Database.rollback(sp);
@@ -703,7 +741,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     }
 
-    public static NewUserDetail createNewUser(Contact con, string community, string lang, string password){
+    public static NewUserDetail createNewUser(Contact con, string community, string lang, string password, boolean registrationRequired){
 
         NewUserDetail usr = new NewUserDetail();
         usr.userId = null;
@@ -722,6 +760,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             u.LastName = con.lastName;
             u.Date_ToU_accepted__c = system.Now();//TF - Accept Terms
             u.ToU_accepted__c = true;//TF - Accept Terms
+            u.Portal_Registration_Required__c = registrationRequired;
             String thisNickname;
             if (con.lastName.length() > 3)
                 thisNickname = con.lastName.substring(0,3)+Datetime.now().formatLong();
@@ -746,20 +785,16 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 password = Comm_User_Helper.generateRandomString(6) + '1a';
             }
 
+            string langKey = 'en_US';
             if (lang != null && lang != ''){
-                Map<string,string> langMap = ISSP_Constant.languageMap;
-                Map<string,string> lowercaseLangMap = new Map<string,string>();
-                for(string key : langMap.keySet()){
-                    lowercaseLangMap.put(key.toLowerCase(),key);
+                for(Preferred_Language_on_ISS_Portal__c portalLang : Preferred_Language_on_ISS_Portal__c.getAll().values()){
+                    if(portalLang.language__c == lang){
+                        langKey = portalLang.languageLocalKey__c;
+                    }
                 }
-
-                if (!lowercaseLangMap.containsKey(lang)){
-                    lang = 'en_US';
-                }else{
-                    u.languagelocalekey = lowercaseLangMap.get(lang);
-                }
-
             }
+
+            u.languagelocalekey = langKey;
 
             system.debug('user to be created: ' + u);
             usr.userId = Site.createPortalUser(u, accountId, password, false);
@@ -1039,6 +1074,21 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         }
 
         return orderedPicklists;
+    }
+
+    public static List<Account> getBranchAccounts(Id accountId, Id countryId){
+
+        List<Account> accList  = new List<Account>();
+        accList = [SELECT Id FROM Account
+                    WHERE ( Id = :accountId AND IATA_ISO_Country__c = :countryId )
+                    OR ( ParentId = :accountId AND IATA_ISO_Country__c = :countryId )
+                    OR ( Parent.ParentId = :accountId AND IATA_ISO_Country__c = :countryId )
+                    OR ( Parent.Parent.ParentId = :accountId AND IATA_ISO_Country__c = :countryId )
+                    OR ( Parent.Parent.Parent.ParentId = :accountId AND IATA_ISO_Country__c = :countryId )
+                    OR ( Parent.Parent.Parent.Parent.ParentId = :accountId AND IATA_ISO_Country__c = :countryId )];
+
+        return accList;
+
     }
 
 

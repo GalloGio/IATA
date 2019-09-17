@@ -25,9 +25,8 @@ import jQuery                                   from '@salesforce/resourceUrl/jQ
 /* ==============================================================================================================*/
 /* Custom Labels
 /* ==============================================================================================================*/
-import LoginLabel                               from '@salesforce/label/c.Login';
-import EmailLabel                               from '@salesforce/label/c.Email';
-import SubmitLabel                              from '@salesforce/label/c.CSP_Submit';
+import CSP_Submit                               from '@salesforce/label/c.CSP_Submit';
+import ISSP_Registration_MyInformation          from '@salesforce/label/c.ISSP_Registration_MyInformation';
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalRegistrationFirstLevelConfirmation extends LightningElement {
@@ -74,6 +73,27 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
     @track selectedMetadataCustomerType = {};
     countryCode = '';
     initialLoad = true;
+
+    _labels = {
+        CSP_Submit,
+        ISSP_Registration_MyInformation,
+        CSP_PortalPath
+    }
+
+    get labels() {
+        return this._labels;
+    }
+    set labels(value) {
+        this._labels = value;
+    }
+
+    get customerTypeSelectionEnabled(){
+        if(this.config.isGeneralPublic == true){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
     @wire(getCustomerTypePicklists, {leaf:'$selectedCustomerType'})
     getPickLists({ error, data }){
@@ -244,12 +264,12 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
             console.log('dataAux: ', dataAux);
             if(dataAux.isSuccess == true){
                 //todo: show success message
-                this.dispatchEvent(new CustomEvent('hideregistrationpopup'));
-                this.isLoading = false;
+                this.dispatchEvent(new CustomEvent('confirmregistration'));
+                //this.isLoading = false;
             }else{
                 this._showSubmitError(true, 'Error Updating Contact');
                 this.isLoading = false;
-                //this.dispatchEvent(new CustomEvent('hideregistrationpopup'));
+                this.dispatchEvent(new CustomEvent('hideregistrationpopup'));
             }
         })
         .catch(error => {
@@ -298,10 +318,12 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
                     this._showSubmitError(false,"");
                 }
             }
+            this.registrationForm.sector = this.selectedCustomerType;
+        }else{
+            this.registrationForm.sector = "";
         }
 
         this.registrationForm.selectedCustomerType = this.selectedCustomerType;
-        this.registrationForm.sector = this.selectedCustomerType;
         this.registrationForm.category = "";
         this.registrationForm.extraChoice = "";
 
@@ -319,7 +341,6 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
         if(this.selectedCustomerType == event.target.value){
             this.registrationForm.category = this.selectedCustomerType;
             this._checkForMissingFields();
-            this.isLoading = false;
             return;
         }
 
@@ -467,11 +488,7 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
     }
 
     _renderLanguageOptions(options){
-        var lowerCaseLangOpts = options.map(function(a) {
-            a.value = a.label;
-            return a;
-        });
-        this.languageOptions = lowerCaseLangOpts;
+        this.languageOptions = options;
     }
 
     async _initializePhoneInput(){

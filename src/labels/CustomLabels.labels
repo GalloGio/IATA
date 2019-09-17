@@ -3232,7 +3232,23 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Change Password Error</shortDescription>
-        <value>Your new password could not be set.</value>
+        <value>Your new password could not be set. Please try again.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Change_Password_Info_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Change Password Info 1</shortDescription>
+        <value>Please enter your current password, then set a new one and confirm it.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Change_Password_Info_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Change Password Info 2</shortDescription>
+        <value>The password should contain 10 or more characters including at least an uppercase letter, a number and a symbol (! @ # $ %  * () _ + ^ &amp;)</value>
     </labels>
     <labels>
         <fullName>CSP_Chg_Pass_Success_Msg_1</fullName>
@@ -3248,7 +3264,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Chg Pass Success Msg 2</shortDescription>
-        <value>You can use your new password next time you login.</value>
+        <value>You can use your new password to log in.</value>
     </labels>
     <labels>
         <fullName>CSP_Community</fullName>
@@ -3271,6 +3287,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_CompanyProfile</shortDescription>
         <value>Company Profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Complete_Profile</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Complete Profile</shortDescription>
+        <value>Complete Your Profile</value>
     </labels>
     <labels>
         <fullName>CSP_Confirm_Deny_User_Access</fullName>
@@ -3330,7 +3354,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Create Password Error</shortDescription>
-        <value>New password could not create.</value>
+        <value>Your new password could not be set. Please try again.</value>
     </labels>
     <labels>
         <fullName>CSP_Deny_User_Access_Title</fullName>
@@ -3529,7 +3553,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Expired Link Msg 1</shortDescription>
-        <value>Your link has expired.</value>
+        <value>The verification link has expired.</value>
     </labels>
     <labels>
         <fullName>CSP_Expired_Link_Msg_2</fullName>
@@ -3537,7 +3561,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Expired Link Msg 2</shortDescription>
-        <value>Please try to send an email again.</value>
+        <value>For security reasons, the verification link expires after 8 hours.</value>
     </labels>
     <labels>
         <fullName>CSP_Expired_Reset_Password_Msg</fullName>
@@ -3642,6 +3666,22 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_FeedbackTitle</shortDescription>
         <value>Feedback</value>
+    </labels>
+    <labels>
+        <fullName>CSP_First_Login_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP First Login Desc</shortDescription>
+        <value>Your account is created successfully. You can discover the portal features now. Please complete your profile to get more personalized content</value>
+    </labels>
+    <labels>
+        <fullName>CSP_First_Login_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP First Login Title</shortDescription>
+        <value>Welcome on board</value>
     </labels>
     <labels>
         <fullName>CSP_ForYou</fullName>
@@ -3902,7 +3942,7 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP Privacy Policy</shortDescription>
         <value>I agree with IATA&apos;s
-&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy &lt;/a&gt;
+&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy &lt;/a&gt;
 and &lt;br/&gt;
 &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Terms of Use. &lt;/a&gt;</value>
     </labels>
@@ -3947,6 +3987,30 @@ and &lt;br/&gt;
         <value>Recent Cases</value>
     </labels>
     <labels>
+        <fullName>CSP_Registration_Disabled_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Disabled Message</shortDescription>
+        <value>Portal Registration is currently disabled. Thank you for your understanding.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_User_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing User Message</shortDescription>
+        <value>You are trying to register with an existing user, please change the email or click login button to go to the login page</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Retry_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Retry Message</shortDescription>
+        <value>Please check your spam folder first. If you can&apos;t find anything in the spam folder, please try to register again by clicking Try Again button.</value>
+    </labels>
+    <labels>
         <fullName>CSP_RelatedArticles</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3962,12 +4026,20 @@ and &lt;br/&gt;
         <value>Request Service</value>
     </labels>
     <labels>
+        <fullName>CSP_Resend_Verification_Email</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Resend Verification Email</shortDescription>
+        <value>Resend Verification Mail</value>
+    </labels>
+    <labels>
         <fullName>CSP_Reset_Password_Info_1</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Reset Password Info 1</shortDescription>
-        <value>Please enter your new password and confirm it.</value>
+        <value>Please enter your new password.</value>
     </labels>
     <labels>
         <fullName>CSP_Reset_Password_Info_2</fullName>
@@ -3975,7 +4047,7 @@ and &lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Reset Password Info 2</shortDescription>
-        <value>The password should contain 10 or more characters including at least an uppercase letter, a number and a symbol (! @ # $ %  * () _ + ^ &amp;)</value>
+        <value>The password should contain:</value>
     </labels>
     <labels>
         <fullName>CSP_Reset_Password_Success_Msg_1</fullName>
@@ -4365,6 +4437,14 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <protected>false</protected>
         <shortDescription>CSP_Settings</shortDescription>
         <value>Settings</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Skip</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Skip</shortDescription>
+        <value>Skip For Now</value>
     </labels>
     <labels>
         <fullName>CSP_Status</fullName>
