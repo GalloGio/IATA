@@ -69,3 +69,8 @@
 .heightCreateContact {
   height: 100%;
 }
+
+.adminContactsTable {
+    max-height: 330px;
+    display: flex;
+}
