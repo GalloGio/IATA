@@ -197,15 +197,6 @@
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>DataCategoryVisibility__c</fullName>
-        <externalId>false</externalId>
-        <fieldManageability>DeveloperControlled</fieldManageability>
-        <label>Data Category Visibility</label>
-        <length>32768</length>
-        <type>LongTextArea</type>
-        <visibleLines>5</visibleLines>
-    </fields>
-    <fields>
         <fullName>DataSubtopicName__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
@@ -237,7 +228,7 @@
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Country Codes 1</label>
-        <length>255</length>
+        <length>100</length>
         <required>false</required>
         <type>Text</type>
         <unique>false</unique>
@@ -248,7 +239,7 @@
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Country Codes 2</label>
-        <length>255</length>
+        <length>100</length>
         <required>false</required>
         <type>Text</type>
         <unique>false</unique>
@@ -259,7 +250,7 @@
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Country Codes 3</label>
-        <length>255</length>
+        <length>100</length>
         <required>false</required>
         <type>Text</type>
         <unique>false</unique>
@@ -398,6 +389,27 @@
         <columns>ISO_Country_Codes1__c</columns>
         <filterScope>Everything</filterScope>
         <label>Portal FAQs</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>TIESS</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>DataCategoryName__c</columns>
+        <columns>DataSubtopicName__c</columns>
+        <columns>FAQsStructure__c</columns>
+        <columns>Account_Sector__c</columns>
+        <columns>Account_Categories__c</columns>
+        <columns>SectorExceptions__c</columns>
+        <columns>CategoryExceptions__c</columns>
+        <columns>NamespacePrefix</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>DataTopicName__c</field>
+            <operation>equals</operation>
+            <value>TIESS</value>
+        </filters>
+        <label>TIESS</label>
         <language>en_US</language>
     </listViews>
 </CustomObject>
