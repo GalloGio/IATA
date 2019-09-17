@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Progress Bar Settings</description>
+    <label>Progress Bar Setting</label>
+    <pluralLabel>ANG_ProgressBarSettings</pluralLabel>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Condition__c</fullName>
+        <description>SQL code to describe which kind of cases are assigned to this progress bar</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Condition</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RecordType__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>RecordType</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>DeveloperName</columns>
+        <columns>RecordType__c</columns>
+        <columns>MasterLabel</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+</CustomObject>

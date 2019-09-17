@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>ISSP_IDFS_Title_08</label>
+    <protected>false</protected>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">ISSP_IDFS_Description_08</value>
+    </values>
+    <values>
+        <field>IconError__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>IconNotDone__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>IconOk__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>IconProgress__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Is_Visible__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:type="xsd:double">8.0</value>
+    </values>
+    <values>
+        <field>Parent__c</field>
+        <value xsi:type="xsd:string">IDFS_Airline</value>
+    </values>
+    <values>
+        <field>ValueError__c</field>
+        <value xsi:type="xsd:string">Status=&#39;Closed_rejected&#39; AND R_S_Confirmation__c=null</value>
+    </values>
+    <values>
+        <field>ValueOk__c</field>
+        <value xsi:type="xsd:string">IRIS_tool_updated__c!=null
+AND R_S_Confirmation__c!=null</value>
+    </values>
+    <values>
+        <field>ValueProgress__c</field>
+        <value xsi:type="xsd:string">IRIS_tool_updated__c!=null
+AND R_S_Confirmation__c=null</value>
+    </values>
+</CustomMetadata>

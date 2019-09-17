@@ -23359,6 +23359,86 @@ this is the tiess topic help</value>
         <shortDescription>ISSP_MyProfile</shortDescription>
         <value>ID Card Valid to</value>
     </labels>
+	<labels>
+        <fullName>ISSP_IDFS_Title_01</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_01</shortDescription>
+        <value>Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_02</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_02</shortDescription>
+        <value>Eligibility validation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_03</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_03</shortDescription>
+        <value>Validation of&lt;br/&gt;Resolutions&lt;br/&gt; Agreements</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_04</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_04</shortDescription>
+        <value>Country Requirement&lt;br/&gt;Review &amp; Fulfillment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_05</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_05</shortDescription>
+        <value>Bank Instructions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_06</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_06</shortDescription>
+        <value>Cass Test File</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_07</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_07</shortDescription>
+        <value>Compliance Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_08</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_08</shortDescription>
+        <value>Penny test</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_09</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_09</shortDescription>
+        <value>Joining fee</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_10</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_10</shortDescription>
+        <value>System Activation</value>
+    </labels>
     <labels>
         <fullName>ISSP_IFACP_Endorsement_Changes</fullName>
         <categories>ISSP</categories>
@@ -25495,6 +25575,84 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP_ProductSubcategory</shortDescription>
         <value>Product Subcategory</value>
+    </labels>
+	<labels>
+        <fullName>ISSP_ProgressBar_Agreement</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Agreement</shortDescription>
+        <value>Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_ApplicationProcessing</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_ApplicationProcessing</shortDescription>
+        <value>Application Processing</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Application_Approved</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Application_Approved</shortDescription>
+        <value>Application Approved</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Application_Review</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Application_Review</shortDescription>
+        <value>Application Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_ChangeProcessing</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_ChangeProcessing</shortDescription>
+        <value>Change Processing</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_FinalValidation</fullName>
+        <categories>ISSP: ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_FinalValidation</shortDescription>
+        <value>Final&lt;br/&gt;Validation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Financial_Security</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Financial_Security</shortDescription>
+        <value>Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Payment</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Payment</shortDescription>
+        <value>Payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_SanityCheck</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_SanityCheck</shortDescription>
+        <value>Sanity Check</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Submitted</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Submitted</shortDescription>
+        <value>Submitted</value>
     </labels>
     <labels>
         <fullName>ISSP_Public</fullName>
@@ -30338,6 +30496,22 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>My_Renewals</shortDescription>
         <value>Renewals &gt; Publications</value>
+    </labels>
+	<labels>
+        <fullName>NEW_HO_SanityCheck</fullName>
+        <categories>NEW_HO_SanityCheck</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NEW_HO_SanityCheck</shortDescription>
+        <value>Sanity Check</value>
+    </labels>
+    <labels>
+        <fullName>NEW_HO_Submitted</fullName>
+        <categories>NEW_HO_Submitted</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NEW_HO_Submitted</shortDescription>
+        <value>Submitted</value>
     </labels>
     <labels>
         <fullName>New</fullName>
