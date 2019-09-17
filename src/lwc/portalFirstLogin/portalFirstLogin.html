@@ -9,7 +9,7 @@
 
         <div if:true={isLoading}>
             <div class="modalSpinnerContainer">
-                <lightning-spinner class="" alternative-text="Loading" size="medium">
+                <lightning-spinner class="" alternative-text="" size="medium">
                 </lightning-spinner>
             </div>
         </div>
@@ -33,19 +33,19 @@
 
                                 <div class="slds-p-bottom_x-small">
                                     <span class="text-medium text-darkGray text-bold">
-                                        <span>Welcome on board {userName}</span>
+                                        <span>{labels.CSP_First_Login_Title} {userName}</span>
                                     </span>
                                 </div>
 
                                 <div class="slds-p-bottom_x-large">
-                                    <span class="fixed-text text-gray">Your account is created successfully. You can discover the portal features now. Please complete your profile to get more personalized content.</span>
+                                    <span class="fixed-text text-gray">{labels.CSP_First_Login_Desc}</span>
                                 </div>
 
                                 <div class="slds-p-bottom_large">
-                                    <lightning-button class="outlinedButtonLogin" label="Skip" onclick={handleCloseModal}></lightning-button>
+                                    <lightning-button class="outlinedButtonLogin" label={labels.CSP_Skip} onclick={handleCloseModal}></lightning-button>
                                 </div>
                                 <div class="slds-p-bottom_large">
-                                    <lightning-button class="containedButtonLogin" label="Submit" onclick={handleAccept} ></lightning-button>
+                                    <lightning-button class="containedButtonLogin" label={labels.CSP_Complete_Profile} onclick={handleAccept} ></lightning-button>
                                 </div>
 
                             </div>
