@@ -94,6 +94,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
     // ------------------- //
 
 
+    IATA_INVOICE_TYPE = 'IATA OFFICE'; //WMO-627 - ACAMBAS
+    EF_INVOICE_TYPE = 'E&F AIRPORT'; //WMO-627 - ACAMBAS
 
     get noAccount() {
         return (this.loggedUser == null || this.loggedUser.Contact == null || this.loggedUser.Contact.AccountId == null);
