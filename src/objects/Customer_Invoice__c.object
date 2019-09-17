@@ -738,7 +738,7 @@
         <picklistValues>
             <picklist>Billing_Member_IS_Sub_Status__c</picklist>
             <values>
-                <fullName>E%26F AIRPORT</fullName>
+                <fullName>E&amp;F AIRPORT</fullName>
                 <default>false</default>
             </values>
             <values>
