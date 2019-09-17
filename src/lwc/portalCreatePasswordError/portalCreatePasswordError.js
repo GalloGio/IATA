@@ -10,7 +10,7 @@ import successLabel         from '@salesforce/label/c.CSP_Success';
 import errorMessage1Label   from '@salesforce/label/c.CSP_Expired_Link_Msg_1';
 import errorMessage2Label   from '@salesforce/label/c.CSP_Expired_Link_Msg_2';
 import sendEmailLabel       from '@salesforce/label/c.PKB2_send_mail';
-import loginNowLabel        from '@salesforce/label/c.IDCard_Verify';
+import loginNowLabel        from '@salesforce/label/c.CSP_Resend_Verification_Email';
 import successMessageLabel  from '@salesforce/label/c.CSP_Expired_Email_Success_Msg';
 
 export default class PortalCreatePasswordError extends LightningElement {
