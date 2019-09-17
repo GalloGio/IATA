@@ -15,7 +15,7 @@
             <criteriaItems>
                 <field>Account.Name</field>
                 <operation>equals</operation>
-                <value>Emirates</value>
+                <value>Emirates,Singapore Airlines</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.Sector__c</field>
@@ -40,7 +40,7 @@
             <criteriaItems>
                 <field>Account.Site</field>
                 <operation>startsWith</operation>
-                <value>CA 999</value>
+                <value>CA 999,SQ 618</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>

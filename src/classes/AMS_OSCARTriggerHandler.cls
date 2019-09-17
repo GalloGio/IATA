@@ -674,8 +674,6 @@ public class AMS_OSCARTriggerHandler {
         Set<AMS_Oscar__c> oscarsToCreateAuth = new Set<AMS_Oscar__c>();
         /*** AMSU-31 End ***/
 
-        List<AMS_OSCAR__c> oscarsToProcessMulticountryApproval = new List<AMS_OSCAR__c>();
-
         for (AMS_OSCAR__c updatedOSCAR : oscarsToInsert) {
             AMS_OSCAR__c oldOSCAR = oldOscars.get(updatedOSCAR.Id);
 
@@ -707,9 +705,6 @@ public class AMS_OSCARTriggerHandler {
 
                 if (updatedOSCAR.get(step + '__c') <> oldOSCAR.get(step + '__c')) {
 
-                    if((step + '__c') == 'STEP2__c'){
-                        oscarsToProcessMulticountryApproval.add(updatedOSCAR);
-                    }
                     if (helper == null) {
                         helper = new AMS_OSCAR_JSONHelper();
                         resultLoad = helper.loadJsonResource('JSON_OSCAR_Process');
@@ -746,9 +741,6 @@ public class AMS_OSCARTriggerHandler {
             //NEWGE-4332
             if(updatedOSCAR.ANG_Share_documentation_with_vendor__c <> oldOSCAR.ANG_Share_documentation_with_vendor__c) updatedOSCAR.ANG_shared_documentation_with_vendor__c = (updatedOSCAR.ANG_Share_documentation_with_vendor__c ? Date.today() : null);
 
-        }
-        if(!oscarsToProcessMulticountryApproval.isEmpty()){
-            handleMulticountryApproval(oscarsToProcessMulticountryApproval);
         }
 
         /*** AMSU-31 Start ***/
@@ -1023,6 +1015,7 @@ public class AMS_OSCARTriggerHandler {
     }
 
     public static void handleConverstionFromSTToMC(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
+        List<AMS_OSCAR__c> oscarsToProcessMulticountryApproval = new List<AMS_OSCAR__c>();
         for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New){
             if(oscar.process__c == AMS_UTils.NGCONVERSIONTOMULTICOUNTRY && oscar.STEP6__c == AMS_Utils.PASSED && oldMap.get(oscar.Id).STEP6__c != AMS_Utils.PASSED){
                 
@@ -1144,6 +1137,13 @@ public class AMS_OSCARTriggerHandler {
                 if(!accountsToCreateRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(accountsToCreateRHCInfo, false);
             
             }
+
+            if(oscar.process__c == AMS_UTils.NGCONVERSIONTOMULTICOUNTRY && oscar.STEP2__c == AMS_Utils.PASSED && oldMap.get(oscar.Id).STEP2__c != AMS_Utils.PASSED){
+                oscarsToProcessMulticountryApproval.add(oscar);
+            }
+        }
+        if(!oscarsToProcessMulticountryApproval.isEmpty()){
+            handleConversionToMulticountryApproval(oscarsToProcessMulticountryApproval);
         }
     }
 
@@ -4996,7 +4996,7 @@ public class AMS_OSCARTriggerHandler {
         
     }
 
-    public static void handleMulticountryApproval(List<AMS_OSCAR__c> oscarList){
+    public static void handleConversionToMulticountryApproval(List<AMS_OSCAR__c> oscarList){
         Set<Id> idList = new Set<Id>();
         Set<Id> idAccForFopList = new Set<Id>();
         List<ANG_Agency_Risk_Event__c> riskEventLst = new List<ANG_Agency_Risk_Event__c>();
@@ -5035,8 +5035,10 @@ public class AMS_OSCARTriggerHandler {
             }
         }
         if(fopToUpdate == true) update foPs.values();
-        ANG_AgencyChangesHelper.AChangeStructure toReturn = new ANG_AgencyChangesHelper.AChangeStructure();
-        toReturn.addRiskEventsToInactivate(riskEventLst);
+        for(ANG_Agency_Risk_Event__c riskEvent : riskEventLst){
+            riskEvent.ANG_Event_Status__c = ANG_Risk_Helper.STATUS_CHANGE_OWNERSHIP;
+        }
+        if(!riskEventLst.isEmpty()) update riskEventLst;
         
     }
 
