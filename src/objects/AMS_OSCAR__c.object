@@ -3267,7 +3267,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             <filterItems>
                 <field>Account.Status__c</field>
                 <operation>notEqual</operation>
-                <value>Listed, Not accreditated, Not in operation, Terminated</value>
+                <value>Listed, Not accreditated, Not in operation, Terminated,</value>
             </filterItems>
             <filterItems>
                 <field>$Source.Process__c</field>

@@ -150,6 +150,8 @@ public class AMS_OSCARTriggerHandler {
         handleSanityCheckValidations(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
         handleChangesProcess(oscars);
+        
+        handleConverstionFromSTToMC(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
         ANG_AgencyChangesHelper.handleNewGenChangesProcess(oscars);
 
@@ -671,6 +673,9 @@ public class AMS_OSCARTriggerHandler {
         /*** AMSU-31 Start ***/
         Set<AMS_Oscar__c> oscarsToCreateAuth = new Set<AMS_Oscar__c>();
         /*** AMSU-31 End ***/
+
+        List<AMS_OSCAR__c> oscarsToProcessMulticountryApproval = new List<AMS_OSCAR__c>();
+
         for (AMS_OSCAR__c updatedOSCAR : oscarsToInsert) {
             AMS_OSCAR__c oldOSCAR = oldOscars.get(updatedOSCAR.Id);
 
@@ -702,7 +707,9 @@ public class AMS_OSCARTriggerHandler {
 
                 if (updatedOSCAR.get(step + '__c') <> oldOSCAR.get(step + '__c')) {
 
-
+                    if((step + '__c') == 'STEP2__c'){
+                        oscarsToProcessMulticountryApproval.add(updatedOSCAR);
+                    }
                     if (helper == null) {
                         helper = new AMS_OSCAR_JSONHelper();
                         resultLoad = helper.loadJsonResource('JSON_OSCAR_Process');
@@ -739,6 +746,9 @@ public class AMS_OSCARTriggerHandler {
             //NEWGE-4332
             if(updatedOSCAR.ANG_Share_documentation_with_vendor__c <> oldOSCAR.ANG_Share_documentation_with_vendor__c) updatedOSCAR.ANG_shared_documentation_with_vendor__c = (updatedOSCAR.ANG_Share_documentation_with_vendor__c ? Date.today() : null);
 
+        }
+        if(!oscarsToProcessMulticountryApproval.isEmpty()){
+            handleMulticountryApproval(oscarsToProcessMulticountryApproval);
         }
 
         /*** AMSU-31 Start ***/
@@ -1011,6 +1021,132 @@ public class AMS_OSCARTriggerHandler {
                 processAgencyChanges(oscarsToProcess);
         }
     }
+
+    public static void handleConverstionFromSTToMC(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
+        for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New){
+            if(oscar.process__c == AMS_UTils.NGCONVERSIONTOMULTICOUNTRY && oscar.STEP6__c == AMS_Utils.PASSED && oldMap.get(oscar.Id).STEP6__c != AMS_Utils.PASSED){
+                
+                Map<ID, ID> parentByBSP = new Map<ID, ID>();
+                Map<ID, AMS_Process_Detail__c> processDetailsByAccount = new Map<ID, AMS_Process_Detail__c>();
+                
+                Set<ID> chieldAccountIDs = new Set<ID>(); 
+
+                for (AMS_Process_Detail__c pd :[SELECT ID, OSCAR__c, ANG_Location_Type_Conversion__c, Account__c, Account__r.IATA_ISO_Country__c 
+                                                FROM AMS_Process_Detail__c WHERE OSCAR__c = :oscar.id]){
+                    
+                    processDetailsByAccount.put(pd.account__c, pd);                                                        
+                    chieldAccountIDs.add(pd.Account__c);
+                    if(pd.ANG_Location_Type_Conversion__c == AMS_Utils.HE) parentByBSP.put(pd.Account__r.IATA_ISO_Country__c, pd.Account__c);
+                } 
+
+                system.debug('##ARD parentByBSP:' + parentByBSP);
+
+                //Change where clause to fetch all accounts, not only the ones on the AMS_Process_Detail. 
+                //We need to remove the top_parent__c and parentid from thoose that aren't in the AMS_Process_Detail but are related to the hierarchies that we are handling
+                //this extra accounts should be terminated and we should leave them alone
+
+                Map<ID,Account> hierarchyAccounts = new Map<ID,Account>([SELECT ID, Location_Type__c, iata_iso_country__C, ANG_CashCondition__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c FROM ACCOUNT 
+                WHERE ID IN :chieldAccountIDs OR ID = :oscar.account__c 
+                OR Top_Parent__c IN :chieldAccountIDs OR Top_Parent__c = :oscar.account__c
+                OR Parentid IN :chieldAccountIDs OR Parentid = :oscar.account__c]);
+                //Map<ID,Account> hierarchyAccounts = new Map<ID,Account>([SELECT ID, Location_Type__c, iata_iso_country__C, ANG_CashCondition__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, a.IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c FROM ACCOUNT WHERE ID IN :chieldAccountIDs OR ID = :oscar.account__c]);
+
+                //adding the GE as parent for GE's country
+                parentByBSP.put(hierarchyAccounts.get(oscar.account__c).IATA_ISO_Country__c, oscar.account__c);
+
+                List<ANG_RHC_Information__c> rhcs = [SELECT ID FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :hierarchyAccounts.keyset()];
+                List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT ID,ANG_AccountId__c,ANG_Cash_Conditions_Activation__c,ANG_Risk_Configuration__c,ANG_Created_from__c,ANG_Expiration_Date__c,ANG_Expired__c,ANG_Issued_Date__c,ANG_Limit_Cash_Conditions__c,ANG_Remarks__c,ANG_CaseId__c,ANG_ChangeCode__c,ANG_OscarId__c,ANG_Risk_Type__c FROM ANG_Agency_Risk_Event__c WHERE ANG_AccountId__c IN :hierarchyAccounts.keyset() AND ANG_AccountId__c != :oscar.account__c];
+                List<ANG_Risk_Alert__c> riskAlerts = [SELECT ID,ANG_Account__c,ANG_Agent_current_standing__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,ANG_EventId__c,ANG_Open_Cash_Position__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Agent_Sales__c,ANG_Severity__c,ANG_Sidra_Lite__c,ANG_Threshold_Level__c,ANG_Triggered_Rules__c FROM ANG_Risk_Alert__c WHERE ANG_Account__c IN :hierarchyAccounts.keyset() AND ANG_Account__c != :oscar.account__c];
+                List<ANG_Agency_Risk_Event__c> risksToAdd = new List<ANG_Agency_Risk_Event__c>();
+                List<ANG_Risk_Alert__c> alertsToAdd = new List<ANG_Risk_Alert__c>();
+                List<Account> accountsToCreateRHCInfo = new List<Account>();
+                Map<ID, AMS_Agencies_Hierarchy__c> mapHierarchies = new Map<ID, AMS_Agencies_Hierarchy__c>();
+                List<AMS_Agencies_relationhip__c> relationships = [SELECT id, Hierarchy__c FROM AMS_Agencies_relationhip__c WHERE Parent_Account__c IN :hierarchyAccounts.keySet() OR Child_Account__c IN :hierarchyAccounts.keySet()];
+                for(AMS_Agencies_relationhip__c r : relationships) mapHierarchies.put(r.Hierarchy__c,new AMS_Agencies_Hierarchy__c(id = r.Hierarchy__c));
+                delete mapHierarchies.values();
+                //should not be required since Hierarchy__c is master detail
+                //delete relationships;
+
+
+                AMS_Agencies_Hierarchy__c newHierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+                insert newHierarchy;
+
+                for(ANG_Agency_Risk_Event__c re : riskEvents){
+
+                    /*ANG_Agency_Risk_Event__c clonedRe = re.clone(false,false,false,false);
+                    clonedRe.ANG_HE_AccountId__c = clonedRe.ANG_AccountId__c;
+                    clonedRe.ANG_AccountId__c = oscar.account__c;
+                    clonedRe.ANG_Event_Status__c = 'Inactive_CHO';
+                    risksToAdd.add(clonedRe);*/
+                    re.ANG_HE_AccountId__c = oscar.account__c;
+                    re.ANG_Event_Status__c = 'Inactive_CHO';
+
+                }
+
+                    for(ANG_Risk_Alert__c ra : riskAlerts){
+                        ANG_Risk_Alert__c cloneRa = ra.clone(false,false,false,false);
+                        cloneRa.Monitored_Account__c = cloneRa.ANG_Account__c;
+                        cloneRa.ANG_Account__c = oscar.account__c;
+                        alertsToAdd.add(cloneRa);
+                    }
+
+                List<AMS_Agencies_relationhip__c> relationshipsToInsert = new List<AMS_Agencies_relationhip__c>(); 
+
+                for(Account a :hierarchyAccounts.values()){
+
+                    if(chieldAccountIDs.contains(a.id)|| a.id == oscar.account__c){
+
+                        a.Location_Type__c = (processDetailsByAccount.containsKey(a.id) ? processDetailsByAccount.get(a.id).ANG_Location_Type_Conversion__c : AMS_Utils.GE);
+                        a.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+                        a.ANG_FA_Opt_out__c = false;
+
+                        //RF same as GE
+                        //if(a.Location_Type__c != AMS_Utils.GE) a.Remittance_frequency__c = processDetailsByAccount.get(oscar.account__c).Remittance_frequency__c;
+                        if(a.Location_Type__c != AMS_Utils.GE){
+                            a.top_parent__c = oscar.account__c;
+                            if(a.Location_Type__c == AMS_Utils.HE){
+                                relationshipsToInsert.add(new AMS_Agencies_relationhip__c(Parent_Account__c = oscar.account__c, Child_Account__c = a.id, Hierarchy__c = newHierarchy.id));
+                                //Create RHC only on the GE
+                                //accountsToCreateRHCInfo.add(a);
+                            } 
+                            if(a.Location_Type__c == AMS_Utils.AE){
+                                
+                                system.debug('##ARD parentByBSP.get(a.IATA_ISO_Country__c)' + parentByBSP.get(a.IATA_ISO_Country__c));
+                                relationshipsToInsert.add(new AMS_Agencies_relationhip__c( Parent_Account__c = parentByBSP.get(a.IATA_ISO_Country__c), Child_Account__c = a.id, Hierarchy__c = newHierarchy.id));
+
+                            }
+                            a.Financial_Review_Result__c = '';
+                            a.Assessment_Performed_Date__c = null;
+
+                        }
+                        else accountsToCreateRHCInfo.add(a);
+
+                    }
+                    else{
+                        //terminated accounts. Remove parent references
+                        a.top_parent__c = null;
+                        a.parentid = null;
+                    }
+            }
+
+                system.debug('##ARD: relationshipsToInsert: ' + relationshipsToInsert);
+                update new ams_pax_accreditation_form__c(id = oscar.AMS_Online_Accreditation__c, ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
+                update hierarchyAccounts.values();
+                if(!relationshipsToInsert.isEmpty()) insert relationshipsToInsert;
+                if(!riskEvents.isEmpty()) update riskEvents;
+                
+                /*if(!riskEvents.isEmpty()) delete riskEvents;
+                if(!risksToAdd.isEmpty()) insert risksToAdd;*/
+                
+                if(!riskAlerts.isEmpty()) delete riskAlerts;
+                if(!alertsToAdd.isEmpty()) insert alertsToAdd;
+                if(!rhcs.isEmpty()) delete rhcs;
+                if(!accountsToCreateRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(accountsToCreateRHCInfo, false);
+            
+            }
+        }
+    }
+
 
     public static boolean validateTypeOfChange(List<AMS_OSCAR__c> oscars) {
 
@@ -3058,7 +3194,7 @@ public class AMS_OSCARTriggerHandler {
             Boolean isAMSProcess = AMS_Utils.oscarAMSProcesses_ValidateOwnership.contains(oscar.Process__c);//AMSU-180
             Boolean run_validation = !((oscar.Location_Class__c == 'G') || (oscar.Location_Class__c == 'M') || (oscar.Location_Class__c == 'R')) && ((isAMSProcess && oscar.Process__c <> AMS_Utils.new_TIDS) || (oscar.Process__c == AMS_Utils.new_TIDS && oscar.Location_Type__c == 'HO'));
 
-            if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && (isNewGenProcess || run_validation) && oscar.ANG_Type_Of_Change__c <> AMS_Utils.ANG_VMFR && oscar.Type_of_change__c <> AMS_Utils.VFMR){
+            if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && (isNewGenProcess || run_validation) && oscar.ANG_Type_Of_Change__c <> AMS_Utils.ANG_VMFR && oscar.Type_of_change__c <> AMS_Utils.VFMR && oscar.process__c <> AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
 
                 if(contacts == null){
                     contacts = getAccreditationContacts(oscars);
@@ -4858,7 +4994,51 @@ public class AMS_OSCARTriggerHandler {
         for(String key : iataCodes.keySet())
             ANG_RME_Alert_Service.requestGDIEndorsementCertificate(key,iataCodes.get(key));
         
-    }         
+    }
+
+    public static void handleMulticountryApproval(List<AMS_OSCAR__c> oscarList){
+        Set<Id> idList = new Set<Id>();
+        Set<Id> idAccForFopList = new Set<Id>();
+        List<ANG_Agency_Risk_Event__c> riskEventLst = new List<ANG_Agency_Risk_Event__c>();
+        for(AMS_OSCAR__c oscar : oscarList){
+            idList.add(oscar.Account__c);
+        }
+        Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, ParentId, Status__c, Top_Parent__c, Location_Type__c, Location_Class__c,
+                                                            Parent.Location_Type__c, Multicountry_Key_Hierarchy__c, Identify_as_Multicountry_Key_Hierarchy__c, 
+                                                            IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.Name, Parent.IATA_ISO_Country__r.AMS_Settlement_System__c,
+                                                            (SELECT Id FROM Location_Risk_Events__r)
+                                                            FROM Account
+                                                            WHERE (Id IN :idList OR ParentId IN :idList)
+                                                            AND (Top_Parent__r.Location_Type__c = :AMS_Utils.GE OR Location_Type__c = :AMS_Utils.GE) ]);
+        
+        for(Account acc : accountMap.values()){
+            if(acc.Identify_as_Multicountry_Key_Hierarchy__c == True) riskEventLst.addAll(acc.Location_Risk_Events__r);
+            if(AMS_Utils.ACTIVEAGENCYSTATUS.contains(acc.status__c)) idAccForFopList.add(acc.Id); 
+        }
+        Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+        Map<String, Agency_Authorization__c> foPs = new Map<String, Agency_Authorization__c>();
+        
+        for(Agency_Authorization__c foP : [SELECT Id, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__c, Status__c
+                                           FROM Agency_Authorization__c 
+                                           WHERE Account__c IN :idAccForFopList 
+                                           AND RecordTypeId = :formOfPaymentRT 
+                                           AND Authority__c = 'Cash Payment Method']){
+                                               foPs.put(foP.Account__c, foP);
+                                           }
+        
+        boolean fopToUpdate = false;
+        for(Agency_Authorization__c foP : foPs.values()){
+            if(fop.Account__r.Location_Type__c != AMS_Utils.GE) {
+                Agency_Authorization__c parentfoP = foPs.get(foP.Account__r.Top_Parent__c);
+                foP.Status__c = parentfoP.Status__c;
+                fopToUpdate = true;
+            }
+        }
+        if(fopToUpdate == true) update foPs.values();
+        ANG_AgencyChangesHelper.AChangeStructure toReturn = new ANG_AgencyChangesHelper.AChangeStructure();
+        toReturn.addRiskEventsToInactivate(riskEventLst);
+        
+    }
 
     // to be removed
   public void fakeMethod(){

@@ -160,10 +160,10 @@ public with sharing class ANG_Risk_Helper{
 		private set;
 	}
 
-	public static void inactivateRisk (List<ANG_Agency_Risk_Event__c> riskEvents){
+	public static void inactivateRisk (List<ANG_Agency_Risk_Event__c> riskEvents, Id newParent){
 		if(!riskEvents.isEmpty()){
 			for(ANG_Agency_Risk_Event__c riskEvent : riskEvents){
-				riskEvent.ANG_HE_AccountId__c = null;
+				riskEvent.ANG_HE_AccountId__c = newParent;
 				riskEvent.ANG_Event_Status__c = STATUS_CHANGE_OWNERSHIP;
 			}
 
@@ -298,11 +298,13 @@ public with sharing class ANG_Risk_Helper{
 		private List<ANG_Agency_Risk_Event__c> riskList;
 		private Map<Id,Id> riskMap;
 		private String process;
+		private Id newParent;
 		
 		
-		public FutureHandler (List<ANG_Agency_Risk_Event__c> riskEvents){          
+		public FutureHandler (List<ANG_Agency_Risk_Event__c> riskEvents, Id newParentId){          
 			this.riskList = riskEvents;
 			process = 'Inactivate Risk Events';
+			this.newParent = newParentId;
 		}
 
 		public FutureHandler(Map<Id,Id> newParents){
@@ -311,7 +313,7 @@ public with sharing class ANG_Risk_Helper{
 		}
 
 		public void execute (QueueableContext context){
-			if(process == 'Inactivate Risk Events') inactivateRisk(riskList);
+			if(process == 'Inactivate Risk Events') inactivateRisk(riskList, newParent);
 			if(process == 'Change of Ownership - Risk') moveRiskHE(riskMap);
 		}
 	}
