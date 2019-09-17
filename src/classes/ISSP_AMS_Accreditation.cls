@@ -951,6 +951,11 @@ public without sharing class ISSP_AMS_Accreditation {
                     setOwnerAndRoleLabels();
                     setContextualHelp(userInfo.getLanguage());
                     isStep5 = true;
+
+                    if (newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry' && isNoticeOfChange) {
+                        accountsToBeConverted = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
+                    }
+
                 } else {
                     fetchAMSProcessForm();
                     if (newForm.ISSP_AMS_Legal_Status__c != null) {
@@ -3506,6 +3511,18 @@ public without sharing class ISSP_AMS_Accreditation {
                 } else {
                     newForm.ANG_Accreditation_type__c = newForm.ANG_Accreditation_Model_to_Change__c;
                 }
+
+                if (newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry') {
+                    if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
+                        newForm.Agency_Codes_Concerned__c += ',';
+                    }
+
+                    for (Account a: getBranchList(true)) {
+                        newForm.Agency_Codes_Concerned__c += a.IataCode__c + ',';
+                    }
+
+                    newForm.Agency_Codes_Concerned__c += hqAccount.Id;
+                }
             }
 
             newForm.Submitted_to_IATA__c = true;
@@ -3580,7 +3597,11 @@ public without sharing class ISSP_AMS_Accreditation {
             } else if (isNoticeOfChange && !isBankAccountChange) {
                 //NEWGEN 683
                 if (getIsAccreditationModelNotNullOrLegacy()) {
-                    typeOfProcess = AMS_UTILS.NGCHANGES;
+                    if (newForm.Type_Of_Change__c == 'Yes' && newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry') {
+                        typeOfProcess = AMS_Utils.NGCONVERSIONTOMULTICOUNTRY;
+                    } else {
+                        typeOfProcess = AMS_Utils.NGCHANGES;
+                    }
                 } else if(newCase.Reason1__c == AMS_Utils.CASE_REASON_CHG_DATA_MAINTENANCE) {
                     typeOfProcess = AMS_Utils.COR;  
                 } else {
@@ -3600,7 +3621,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && !isMultiCountry) {
                 OSCARIntegration(accountId, newForm.Id, typeOfProcess, newCase.Id);
-            }
+            }            
 
             //Create child OSCAR Comm cases for Change of Bank details where one or more (but not all) Branches are involved
             if (isNoticeOfChange && isBankAccountChange && (newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c=='Selected Branches Only')){

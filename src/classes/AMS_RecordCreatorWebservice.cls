@@ -30,6 +30,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static string OPTINOPTOUT = 'ANG.FS.OPTINOUT';
     public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
     private static String NEWNGLOBAL = 'ANG.NEW.GE.STANDARD.1.0';
+    public static String CONVERT_TO_MC = 'ANG.CONVERT.ST.TO.MC';
 
     public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV, AMS_Utils.new_PASS_BR};
 
@@ -101,7 +102,7 @@ global without sharing class AMS_RecordCreatorWebservice {
                 }
             }
 
-
+            
 
             if(!cases.isEmpty()){
 
@@ -134,6 +135,25 @@ global without sharing class AMS_RecordCreatorWebservice {
         // Rollback to the previous null value
 
 
+    }
+
+    public static void createProcessDetailsForConversion(String oscarId, List<Account> accounts) { //rui
+        Id rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
+
+		List<AMS_Process_Detail__c> processDetailLst = new List<AMS_Process_Detail__c>();
+
+        System.debug('ola' + accounts);
+
+		for (Account acc: accounts) {
+            System.debug('ola');
+            AMS_Process_Detail__c pd = new AMS_Process_Detail__c();
+            pd.Oscar__c = oscarId;
+            pd.Account__c = acc.Id;
+            pd.RecordTypeId = rtAgencyInvolved;
+            processDetailLst.add(pd);
+		}
+        
+		insert processDetailLst;
     }
 
     private static String fetchRealAccountId(String typeOfProcess,String accountId,String caseId){
@@ -327,11 +347,17 @@ global without sharing class AMS_RecordCreatorWebservice {
             return AMS_Utils.RECTYPE_NEWGE;
         }
 	
-        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGGDI))
+        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGGDI)) {
             return AMS_Utils.RECTYPE_GDI;
+        }
 
-        if(typeOfProcess.equalsIgnoreCase(AMS_UTILS.MCAE))
+        if(typeOfProcess.equalsIgnoreCase(AMS_UTILS.MCAE)) {
             return AMS_Utils.RECTYPE_MCAE;
+        }
+
+        if (typeOfProcess.equalsIgnoreCase(CONVERT_TO_MC)) {
+            return AMS_Utils.RECTYPE_NGCONVERSIONTOMULTICOUNTRY;
+        }
             
         return null;
     }
@@ -434,8 +460,20 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
+
+        if (processType.equalsIgnoreCase(CONVERT_TO_MC)) {
+            accreditationObj = fetchAccreditationObject(accreditationId);
+            createProcessDetailsForConversion(oscar.Id, getSelectedBranchList(accreditationObj.Agency_Codes_Concerned__c.split(',')));
+        }
         
         return oscar.id;
+    }
+
+    private static List<Account> getSelectedBranchList(List<String> branchCodes) {
+        return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
+                FROM Account
+                WHERE IATACode__c IN :branchCodes
+                ORDER BY Name, IATACode__c];
     }
 
     public static void fillNewAEFieldsFromParent(String parentId, String accountId, String accreditationId){
