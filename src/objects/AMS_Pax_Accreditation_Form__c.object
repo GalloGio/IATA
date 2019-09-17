@@ -6171,15 +6171,14 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                     <default>false</default>
                     <label>Change of Accreditation Type</label>
                 </value>
-                <value>
-                    <fullName>Other Changes</fullName>
+                    <fullName>Yes</fullName>
                     <default>false</default>
-                    <label>Other Changes</label>
+                    <label>Yes</label>
                 </value>
                 <value>
-                    <fullName>Other Changes (without Change of Hierarchy)</fullName>
+                    <fullName>No</fullName>
                     <default>false</default>
-                    <label>Other Changes (without Change of Hierarchy)</label>
+                    <label>No</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
