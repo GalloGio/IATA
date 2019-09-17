@@ -2,7 +2,7 @@ import { LightningElement, track, wire, api } from 'lwc';
 
 //navigation
 import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
-import { navigateToPage, getPageName } from 'c/navigationUtils';
+import { navigateToPage, getPageName, getParamsFromPage } from 'c/navigationUtils';
 import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs';
 
 //notification apex method
@@ -48,21 +48,40 @@ import { getRecord } from 'lightning/uiRecordApi';
 import Id from '@salesforce/user/Id';
 import User_ToU_accept from '@salesforce/schema/User.ToU_accepted__c';
 import AccountSector from '@salesforce/schema/User.Contact.Account.Sector__c';
+import Portal_Registration_Required from '@salesforce/schema/User.Portal_Registration_Required__c';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 
 export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track displayAcceptTerms = true;
+    @track displayRegistrationConfirmation = false;
+    @track displayFirstLogin = false;
+    @track firstLogin = false;
 
-    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept] })
+    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept, Portal_Registration_Required] })
     WiregetUserRecord(result) {
         if (result.data) {
             let user = JSON.parse(JSON.stringify(result.data));
             let acceptTerms = user.fields.ToU_accepted__c.value;
+            let registrationRequired = user.fields.Portal_Registration_Required__c.value;
             let currentURL = window.location.href;
             if (currentURL.includes(this.labels.PortalName)) {
                 this.displayAcceptTerms = acceptTerms;
+            }
+
+            console.log('displayAcceptTerms: ', this.displayAcceptTerms);
+            console.log('firstLogin: ', this.firstLogin);
+            console.log('registrationRequired: ', registrationRequired);
+
+            if(acceptTerms == true){
+                if(registrationRequired == true){
+                    this.displayRegistrationConfirmation = true;
+                }else{
+                    if(this.firstLogin == true){
+                        this.displayFirstLogin = true;
+                    }
+                }
             }
 
         }
@@ -189,6 +208,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.userAdmin = result;
         });
 
+        let pageParams = getParamsFromPage();
+        if(pageParams !== undefined && pageParams.firstLogin !== undefined){
+            if(pageParams.firstLogin == "true"){
+                this.firstLogin = true;
+            }
+        }
+
         this.redirectChangePassword();
 
         getNotifications().then(result => {
@@ -304,9 +330,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     }
 
+    navigateToCspChangePassword() {
+        this.navigationCheck("changePassword", "changePassword");
+    }
+
     //user logout
     logOut() {
-        navigateToPage("/secur/logout.jsp");
+        navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "login");
     }
 
 
@@ -468,12 +498,34 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     }
 
+    confirmRegistration() {
+        const fields = {};
+        fields.Id = Id;
+        fields.Portal_Registration_Required__c = false;
+        const recordInput = { fields };
+
+        updateRecord(recordInput)
+            .then(() => {
+                window.location.reload();
+                //this.displayRegistrationConfirmation = false;
+        });
+    }
+
     close() {
         if (this.openNotifications) {
             this.openNotifications = true;
             this.toggleNotifications();
         }
 
+    }
+
+    hideRegistration() {
+        this.displayRegistrationConfirmation = false;
+    }
+
+    hideFirstLogin() {
+        this.displayFirstLogin = false;
+        this.firstLogin = false;
     }
 
     get totalNotification() {
