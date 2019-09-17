@@ -142,10 +142,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 		List<AMS_Process_Detail__c> processDetailLst = new List<AMS_Process_Detail__c>();
 
-        System.debug('ola' + accounts);
-
 		for (Account acc: accounts) {
-            System.debug('ola');
             AMS_Process_Detail__c pd = new AMS_Process_Detail__c();
             pd.Oscar__c = oscarId;
             pd.Account__c = acc.Id;
