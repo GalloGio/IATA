@@ -1,0 +1,26 @@
+.modalTitle {
+  font-size: 20px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: #333;
+}
+
+.form-label {
+  color: black;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.wrapContent {
+  flex: auto;
+}
+
+.fieldError {
+  font-size: 0.75rem;
+  color: rgb(194, 57, 52);
+  margin-left: 5px;
+  margin-top: -10px;
+}

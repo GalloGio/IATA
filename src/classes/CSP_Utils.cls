@@ -1,5 +1,11 @@
 public with sharing class CSP_Utils {
 
+    public static String toDatetime(Date dte) {
+        DateTime dtAndTime = DateTime.newInstanceGmt(dte.year(), dte.month(), dte.day(), 0, 0, 0);
+
+        return dtAndTime.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'');
+    }
+
     /* 
     * @description Return field labels. It needs to pass the sObject and the necessary fields to retrieve
     * @params String sObjectType, List<String> sObjectFields
@@ -31,8 +37,8 @@ public with sharing class CSP_Utils {
     @AuraEnabled
     public static User getLoggedUser() {
         
-        User loggedUser = [SELECT Id, Profile.Name, contactId, Contact.Account.Top_Parent__c,Contact.Account.Category__c, 
-                                    Contact.Account.Parent.Category__c, Contact.Account.Top_Parent__r.Category__c, 
+        User loggedUser = [SELECT Id, Profile.Name, contactId, Contact.Account.Top_Parent__c, Contact.Account.Category__c, 
+                                    Contact.Account.Sector__c, Contact.Account.Parent.Category__c, Contact.Account.Top_Parent__r.Category__c, 
                                     Contact.Account.ParentId, Contact.Account.RecordType.DeveloperName, Contact.Account.Status__c, 
                                     Contact.AccountId, Contact.User_Portal_Status__c  
                            FROM User
