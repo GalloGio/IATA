@@ -120,21 +120,36 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
     }
 
     navigateToBreadcrumb(event){
-        let clickedBreadcrumbName = event.target.dataset.item;
-
+        let clickedBreadcrumbName = event.target.dataset.item;        
+        
         // if guest user, redirect to public page
-        if(clickedBreadcrumbName === 'support' && this.guestUser) {
-            clickedBreadcrumbName = 'faq';
+        if(this.guestUser) {
+            if(clickedBreadcrumbName === 'home') {
+                window.location = 'https://www.iata.org';
+            }
+
+            if(clickedBreadcrumbName === 'support') {
+                clickedBreadcrumbName = 'faq';
+
+                clickedBreadcrumbName = clickedBreadcrumbName.split('_').join('-');
+
+                this[NavigationMixin.GenerateUrl]({
+                    type: "standard__namedPage",
+                    attributes: {
+                        pageName: clickedBreadcrumbName
+                    }})
+                .then(url => navigateToPage(url, {}));
+            }
+        } else {
+            clickedBreadcrumbName = clickedBreadcrumbName.split('_').join('-');
+
+            this[NavigationMixin.GenerateUrl]({
+                type: "standard__namedPage",
+                attributes: {
+                    pageName: clickedBreadcrumbName
+                }})
+            .then(url => navigateToPage(url, {}));
         }
-
-        clickedBreadcrumbName = clickedBreadcrumbName.split('_').join('-');
-
-        this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
-            attributes: {
-                pageName: clickedBreadcrumbName
-            }})
-        .then(url => navigateToPage(url, {}));
     }
 
 }
