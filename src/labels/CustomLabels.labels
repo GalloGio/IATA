@@ -17230,6 +17230,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Ownership or Shareholding or Legal Status</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Partner</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Partner</shortDescription>
+        <value>Authorised signature of Partner</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_PDF_Title</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -17537,7 +17545,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Transferee</shortDescription>
-        <value>Transferee:</value>
+        <value>Authorised Signature of Transferee (In case of corporation or sole owner)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Transferor</fullName>
@@ -17545,7 +17553,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Transferor</shortDescription>
-        <value>Transferor:</value>
+        <value>Authorised Signature of Agent (Transferor)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Type_Of_Person</fullName>
@@ -17638,7 +17646,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_title_or_capacity</shortDescription>
-        <value>Title or capacity</value>
+        <value>Title/Position</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_type_or_print</fullName>
