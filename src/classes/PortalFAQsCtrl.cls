@@ -24,14 +24,9 @@ public with sharing class PortalFAQsCtrl {
         return convertStructure(DescribeDataCategoryGroupStructures.getPublicFaqsStructure(lang));               
     }
 
-    @AuraEnabled(cacheable=false)    
-    public static List<DescribeDataCategoryGroupStructures.FAQCategoryWrapper> getFaqsStructureForEditing() {
-        return DescribeDataCategoryGroupStructures.getFAQDataCategorySetupStructure();               
-    }
-
     @AuraEnabled(cacheable=false)
     public static void updateMetadata(String strNewMetadata){
-        List<PortalFAQsCTRL.MetadataWrapper> lstNewMetadata =  (List<MetadataWrapper>)JSON.deserialize(strNewMetadata , List<PortalFAQsCTRL.MetadataWrapper>.class);
+        List<MetadataWrapper> lstNewMetadata =  (List<MetadataWrapper>)JSON.deserialize(strNewMetadata , List<MetadataWrapper>.class);
 
         List<PortalFAQs__mdt> lstCurrentMetadata = DescribeDataCategoryGroupStructures.getAllFAQs();
         List<DescribeDataCategoryGroupStructures.FAQCategoryWrapper> lstFAQsStructure = DescribeDataCategoryGroupStructures.getFAQDataCategorySetupStructure();
@@ -39,14 +34,13 @@ public with sharing class PortalFAQsCtrl {
 
         List<CustomMetadataCallback.CustomMetadataType> customMetadataToUpsert = new List<CustomMetadataCallback.CustomMetadataType>();
 
-        for(PortalFAQsCTRL.MetadataWrapper metaAux : lstNewMetadata){
-
+        for(MetadataWrapper metaAux : lstNewMetadata){
             PortalFAQs__mdt metaFound = null;
 
             for(PortalFAQs__mdt currentMetaAux : lstCurrentMetadata){                
-                if( (!String.isEmpty(metaAux.categoryName) && String.isEmpty(metaAux.topicName) && String.isEmpty(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName) ||
-                    (!String.isEmpty(metaAux.categoryName) && !String.isEmpty(metaAux.topicName) && String.isEmpty(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName && currentMetaAux.DataTopicName__c == metaAux.topicName) || 
-                    (!String.isEmpty(metaAux.categoryName) && !String.isEmpty(metaAux.topicName) && !String.isEmpty(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName && currentMetaAux.DataTopicName__c == metaAux.topicName && currentMetaAux.DataSubtopicName__c == metaAux.subtopicName)
+                if( (String.isNotBlank(metaAux.categoryName) && String.isBlank(metaAux.topicName) && String.isBlank(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName) ||
+                    (String.isNotBlank(metaAux.categoryName) && String.isNotBlank(metaAux.topicName) && String.isBlank(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName && currentMetaAux.DataTopicName__c == metaAux.topicName) || 
+                    (String.isNotBlank(metaAux.categoryName) && String.isNotBlank(metaAux.topicName) && String.isNotBlank(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName && currentMetaAux.DataTopicName__c == metaAux.topicName && currentMetaAux.DataSubtopicName__c == metaAux.subtopicName)
                 ){
                     metaFound = currentMetaAux; 
                     break;
@@ -57,16 +51,16 @@ public with sharing class PortalFAQsCtrl {
             if(metaFound != null){
                 // update just the order and active fields, because the other are the same
                 CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType(); 
-                cmdtDT.strMDTAndRecord = metaFound.DeveloperName;
+                cmdtDT.strMDTAndRecord = 'PortalFAQs__mdt.' + metaFound.DeveloperName;
                 cmdtDT.strMasterLabel = metaFound.MasterLabel;
-                cmdtDT.fieldLIST = new List<String>{ 'Order__c', 'Active__c', 'Label'};
-                cmdtDT.valueLIST = new List<Object>{ Integer.valueof(metaAux.order), true, metaFound.Label};
+                cmdtDT.fieldLIST = new List<String>{ 'Order__c', 'Active__c'};
+                cmdtDT.valueLIST = new List<Object>{ Integer.valueof(metaAux.order), true};
                 customMetadataToUpsert.add(cmdtDT);
             }else{
                 //insert new meta
                 
                 //new category
-                if(!String.isEmpty(metaAux.categoryName) && String.isEmpty(metaAux.topicName) && String.isEmpty(metaAux.subtopicName)){
+                if(String.isNotBlank(metaAux.categoryName) && String.isBlank(metaAux.topicName) && String.isBlank(metaAux.subtopicName)){
                     
                     String hashBase64SHA1 = EncodingUtil.convertToHex(Crypto.generateDigest('SHA1',Blob.valueOf(metaAux.categoryName)));
                     String label = DescribeDataCategoryGroupStructures.getLabelFromDescribe('' + metaAux.categoryName, null, null, 'category', lstFAQsStructure );
@@ -81,7 +75,7 @@ public with sharing class PortalFAQsCtrl {
                 }
 
                 //new topic
-                if(!String.isEmpty(metaAux.categoryName) && !String.isEmpty(metaAux.topicName) && String.isEmpty(metaAux.subtopicName)){
+                if(String.isNotBlank(metaAux.categoryName) && String.isNotBlank(metaAux.topicName) && String.isBlank(metaAux.subtopicName)){
                     
                     String hashBase64SHA1 = EncodingUtil.convertToHex(Crypto.generateDigest('SHA1', Blob.valueOf(metaAux.categoryName + metaAux.topicName)));
                     String label = DescribeDataCategoryGroupStructures.getLabelFromDescribe('' + metaAux.categoryName, '' + metaAux.topicName, null, 'topic', lstFAQsStructure );
@@ -96,7 +90,7 @@ public with sharing class PortalFAQsCtrl {
                 }
 
                 //new subtopic
-                if(!String.isEmpty(metaAux.categoryName) && !String.isEmpty(metaAux.topicName) && !String.isEmpty(metaAux.subtopicName)){
+                if(String.isNotBlank(metaAux.categoryName) && String.isNotBlank(metaAux.topicName) && String.isNotBlank(metaAux.subtopicName)){
                     
                     String hashBase64SHA1 = EncodingUtil.convertToHex(Crypto.generateDigest('SHA1',Blob.valueOf(metaAux.categoryName + metaAux.topicName + metaAux.subtopicName)));
                     String label = DescribeDataCategoryGroupStructures.getLabelFromDescribe('' + metaAux.categoryName, '' + metaAux.topicName, '' + metaAux.subtopicName, 'subtopic', lstFAQsStructure );
@@ -215,7 +209,7 @@ public with sharing class PortalFAQsCtrl {
     public static PagedResult getFilteredFAQsResultsPage(String searchKey, String requestedPage){
         PortalSearchFilterWrapper filtersWrapper = (PortalSearchFilterWrapper) JSON.deserialize(searchKey, PortalSearchFilterWrapper.class);
         Integer requestedPageAux = integer.valueof(requestedPage);
-
+        System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] filtersWrapper - ' + filtersWrapper);
         List<FAQ__kav> lstToReturn = new List<FAQ__kav>();
         //Create an empty default return object
         PagedResult result = new PagedResult();
@@ -227,7 +221,7 @@ public with sharing class PortalFAQsCtrl {
             List<String> subtopics = new List<String>();
             if(filtersWrapper.faqsComponent == null || filtersWrapper.faqsComponent.faqSubtopicsList == null || filtersWrapper.faqsComponent.faqSubtopicsList.isEmpty()){
                 List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstStructure = new List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
-                //Get necessary 
+                //Get FAQ structure based on the user visibility
                 if(String.isNotBlank(filtersWrapper.language)) {
                     lstStructure = PortalFAQsCtrl.getFAQsInfoByLanguage(filtersWrapper.language);
                 } else {
