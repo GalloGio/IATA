@@ -1,6 +1,6 @@
 <aura:component controller="PowerBI_Embedded_Container_CTRL" description="PowerBI_Embedded_Container">
 
-    <aura:attribute name="selectedDashboardCategory" type="List"/>
+    <aura:attribute name="selectedDashboardCategory" type="Object"/>
     <aura:attribute name="categories" type="List"/>
 
     <!--SHOW ATTRIBUTES-->
@@ -38,6 +38,7 @@
                             <aura:set attribute="else">
                                 <lightning:layoutItem size="4" padding="around-small">
                                     <div id="{! key}" class="no_image" onclick="{! c.showCategory}">
+
                                         <span>{! category.name}</span>
                                     </div>
                                 </lightning:layoutItem>
@@ -65,9 +66,7 @@
 
         <!--DASHBOARD CATEGORY-->
         <aura:if isTrue="{! v.showDashboardCategory}">
-
-            <c:PowerBI_Embedded_Dashboard_List dashboards="{! v.selectedDashboardCategory}"/>
-
+            <c:PowerBI_Embedded_Dashboard_List category="{! v.selectedDashboardCategory}"/>
         </aura:if>
 
 

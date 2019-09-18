@@ -40,7 +40,7 @@
 
     handleShowCategory : function(component, event) {
         let key = event.currentTarget.id;
-        component.set('v.selectedDashboardCategory', component.get('v.categories')[key].permissions);
+        component.set('v.selectedDashboardCategory', component.get('v.categories')[key]);
 
         component.set('v.showCategories', false);
         component.set('v.showDashboardCategory', true);

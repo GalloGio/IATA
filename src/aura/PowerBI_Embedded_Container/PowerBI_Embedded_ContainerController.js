@@ -6,6 +6,8 @@
     showCategory : function(component, event, helper) {
         helper.handleShowCategory(component, event);
         let key = event.currentTarget.id;
+         console.log('>>>>');
+        console.log(component.get('v.selectedDashboardCategory'));
         helper.handleTrackUsage(component, event, component.get('v.categories')[key].name);
     },
 
@@ -17,5 +19,4 @@
         component.set('v.showDashboard', false);
         component.set('v.showCategories', true);
     },
-
 })

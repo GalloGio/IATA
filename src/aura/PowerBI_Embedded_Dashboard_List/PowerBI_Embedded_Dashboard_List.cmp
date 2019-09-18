@@ -1,37 +1,43 @@
 <aura:component description="PowerBI_Embedded_Dashboard_List">
 
-    <aura:attribute name="dashboards" type="List"/>
+    <aura:attribute name="category" type="Object"/>
     <aura:attribute name="selectedDashboard" type="Object"/>
 
     <!--SHOW ATTRIBUTES-->
     <aura:attribute name="showDashboards" type="Boolean" default="true"/>
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
 
+
     <!--EVENTS-->
     <aura:registerEvent name="backListEvent" type="c:PowerBI_Embedded_Dashboard_List_Back_EVT"/>
     <aura:handler name="backEvent" event="c:PowerBI_Embedded_Dashboard_Back_EVT" action="{!c.backEvent}"/>
 
-    <aura:attribute name="cssStyle" type="String" />
+    <aura:attribute name="cssStyle" type="String"/>
     <style>{!v.cssStyle}</style>
 
     <aura:handler name="init" value="{! this}" action="{! c.init}"/>
     <lightning:overlayLibrary aura:id="overlayLib"/>
+    <lightning:overlayLibrary aura:id="overlayLibDocs"/>
     <div class="slds-container--fluid">
 
         <aura:if isTrue="{! v.showDashboards}">
 
-            <h3>Dashboards</h3>
+            <aura:iteration items="{! v.category.permissions}" var="dashboard" indexVar="key">
+                <div class="{!key%2==0 ? 'line' : 'line lineTwoPlus'}">
+                    <div style="margin-left: 1rem;" class ="slds-align_absolute-center">
+                        <h2>{! dashboard.permission.Name}</h2>
+                    </div>
+                    <span style="float:right;">
+                            <button id="{!key}" class="btn btn-primary btn-grey"  style="margin-top: 0px !important;" onclick="{!c.show}">Show</button>
 
-            <ul class="IATA_UlLi">
+                                 <button id="{!key}" class="btn btn-primary btn-grey" disabled ="{!not(dashboard.hasFilesAttached)}" style="margin-left: 0.5rem; margin-top: 0px !important;" onclick="{!c.showDocuments}">Documents</button>
 
-                <aura:iteration items="{! v.dashboards}" var="dashboard" indexVar="key">
-
-                    <li>
-                        <a id="{! key}" onclick="{! c.show}">{! dashboard.Name}</a>
-                    </li>
-
-                </aura:iteration>
-            </ul>
+                         </span>
+                </div>
+            </aura:iteration>
+            <div class="body_container">
+                <c:GADM_RelatedFilesCategorizedLists objectIds="{!v.category.categoryIds}"/>
+            </div>
             <div class="back_button">
                 <button class="btn btn-primary btn-grey" onclick="{! c.listBack}">Back</button>
             </div>
@@ -41,8 +47,6 @@
         <aura:if isTrue="{! v.showSpinner}">
             <lightning:spinner alternativeText="Loading"/>
         </aura:if>
-
-
     </div>
 
 </aura:component>

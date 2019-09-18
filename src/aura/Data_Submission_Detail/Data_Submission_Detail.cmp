@@ -8,13 +8,9 @@
 
         <div class="slds-grid slds-wrap">
 
-            <div class="slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-small-size--1-of-12">
-                <!--LEFT COLUMN-->
-            </div>
-
-            <div class="slds-large-size--6-of-12 slds-medium-size--6-of-12 slds-small-size--10-of-12">
+            <div class="slds-large-size--12-of-12 slds-medium-size--12-of-12 slds-small-size--12-of-12">
                 <!-- MAIN CONTENT-->
-                <div class="slds-col--padded slds-size--12-of-12 slds-small-size--10-of-12">
+                <div class="slds-col--padded slds-size--12-of-12 slds-small-size--12-of-12">
                     <h2>Detail Information</h2>
                 </div>
 
@@ -57,9 +53,7 @@
 
             </div>
 
-            <div class="slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-small-size--1-of-12">
-                <!--RIGHT COLUMN-->
-            </div>
+
 
 
         </div>

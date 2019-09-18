@@ -1,6 +1,7 @@
 ({
 
     init: function(component, event) {
+        console.log(component.get("v.category"));
     },
 
     listBack : function(component, event, helper) {
@@ -14,4 +15,7 @@
     show : function(component, event, helper) {
         helper.handleShowDashboard(component, event);
     },
+    showDocuments : function(component, event, helper) {
+            helper.handleShowDocuments(component, event);
+     },
 })

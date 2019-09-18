@@ -125,7 +125,7 @@
         switch(tab.get('v.id')) {
 
             case "1" :
-                this.createNewComponent('c:Service_Notification_List', tab);
+                this.createNewComponent('c:GADM_HomePageContainer', tab);
                 break;
 
             case "2" :
@@ -145,7 +145,6 @@
                 break;
         }
     },
-
 
     createNewComponent : function(name, target) {
         let self = this;

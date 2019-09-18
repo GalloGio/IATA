@@ -1,0 +1,19 @@
+/**
+ * Created by ppop on 9/5/2019.
+ */
+.THIS ul.slds-tabs_scoped__nav {
+    margin-bottom: 0rem;
+}
+
+.THIS .fileline:hover{
+    background-color:#f8f8f8;
+}
+
+.THIS .fileline a {
+    color: #1e32fa !important;
+}
+
+.THIS .fileline {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+}

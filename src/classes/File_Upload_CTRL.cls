@@ -74,12 +74,16 @@ public without sharing class File_Upload_CTRL {
     public static boolean checkForInternalUserPermissionSet(Id userId) {
         boolean hasPermissionSet = false;
         if(String.isNotBlank(userId)) {
+            Set<Id> adminProfileIds = new Set<Id>();
+            List<Profile> adminProfiles = [SELECT Id FROM Profile WHERE Name = 'System Administrator' OR Name = 'Developer'];
+            for(Profile prf: adminProfiles){
+                adminProfileIds.add(prf.Id);
+            }
 
-            Profile adminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
             Id userProfileId = UserInfo.getProfileId();
 
             List<PermissionSetAssignment> assignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :userId AND PermissionSet.Name = 'GADM_Data_Submissions'];
-            hasPermissionSet = ((adminProfile.Id == userProfileId) || (assignments.size() > 0));
+            hasPermissionSet = ((adminProfileIds.contains(userProfileId)) || (assignments.size() > 0));
         }
         return hasPermissionSet;
     }

@@ -1,0 +1,47 @@
+<!--
+ - Created by ppop on 8/7/2019.
+ -->
+<aura:component description="GADM_RelatedFilesCategorizedLists" controller="GADM_RelatedFilesCategorizedLists_CTRL" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="fileCategories" type="Set"/>
+    <aura:attribute name="files" type="List"/>
+    <aura:attribute name="objectIds" type="List"/>
+    <aura:attribute name="isPopup" type="boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.initializeComponent}"/>
+
+    <aura:attribute name="cssStyle" type="String"/>
+    <style>{!v.cssStyle}</style>
+    <aura:if isTrue="{!not(empty(v.fileCategories))}">
+            <lightning:tabset variant="scoped">
+                <aura:iteration items="{!v.fileCategories}" var="category">
+                    <lightning:tab label="{!category}">
+                        <div style="height:10rem;overflow:auto;">
+                            <aura:iteration items="{!v.files}" var="file" indexVar="key">
+                                <aura:if isTrue="{!file.category == category}">
+                                    <div class="fileline">
+                                        <span><lightning:icon  size="small" iconName="{!file.fileType}" alternativeText="Audio file"/></span>
+
+                                        <span style="margin-left: 1rem;">{!file.fileName}</span>
+                                        <span style="margin-left: 1rem;float:right;"><a href="{!file.link}">
+                                            download
+                                           <!-- <lightning:icon iconName="utility:save" alternativeText="Download" size="small" title="Download" />-->
+                                        </a>
+
+                                        </span>
+                                        <aura:if isTrue="{!file.preview != ''}">
+                                        <span style="margin-left: 1rem;float:right;">
+                                            <a href="{!file.preview}" target="_blank">
+                                                <!-- <lightning:icon iconName="utility:preview" alternativeText="Preview" size="small" title="Preview" />-->
+                                                preview
+                                                </a>
+                                        </span>
+                                        </aura:if>
+                                    </div>
+                                </aura:if>
+                            </aura:iteration>
+                        </div>
+                    </lightning:tab>
+                </aura:iteration>
+            </lightning:tabset>
+    </aura:if>
+</aura:component>

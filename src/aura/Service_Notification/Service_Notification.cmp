@@ -13,7 +13,6 @@
         <div class="bodyText">
             <lightning:formattedRichText value="{! v.bodyText}"></lightning:formattedRichText>
         </div>
-
     </div>
 
 </aura:component>
