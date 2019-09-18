@@ -577,13 +577,15 @@
                     $('[id$="nocThirdQuestion"]').css('display', 'none');
                 }
 
-                toggleCountryMultiSelection(true, false); 
+                toggleCountryMultiSelection(true, false);
+                $('#brcountry').text("{!amsAllLangCountryLabel}");
             }
             
-            if ($('[id$="LocationType"]').find("input")[1].checked) {
+            if ($('[id$="LocationType"]').find("input")[1].checked) { 
                 $('[id$="nocThirdQuestion"]').css('display', 'block');
 
                 toggleCountryMultiSelection(true, false);
+                $('#brcountry').text("{!$Label.ISSP_AMS_NOC_All_Countries}");
             }
 
             if ($('[id$="LocationType"]').find("input")[2].checked) {
@@ -593,6 +595,7 @@
                 } else {
                     $('[id$="nocThirdQuestion"]').css('display', 'none');
                     toggleCountryMultiSelection(true, false);
+                    $('#brcountry').text("{!amsAllLangCountryLabel}");
                 }
             }
 
@@ -603,6 +606,7 @@
                 } else {
                     $('[id$="nocThirdQuestion"]').css('display', 'none');
                     toggleCountryMultiSelection(true, false);
+                    $('#brcountry').text("{!amsAllLangCountryLabel}");
                 }
             }
         }
@@ -610,9 +614,11 @@
         function toggleCountryMultiSelection(countryLabel, multiCountry) {
             if (countryLabel) {
                 $('[id$="brcountry"]').css('display', 'block');
+                
                 $('[id$="brabroadcountries"]').css('display', 'none');
             } else {
                 $('[id$="brcountry"]').css('display', 'none');
+                
                 $('[id$="brabroadcountries"]').css('display', 'block');
             }
 
@@ -707,7 +713,7 @@
                             <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" oncomplete="populateLegalAndSeparateFields();" />
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
                             <apex:actionFunction action="{!resetHierarchy}" name="reRenderAccountsNoc" reRender="branchaccountsel"/>
-                            <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions" oncomplete=""/>
+                            <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions, nocFormQuestions" oncomplete=""/>
                             <apex:actionFunction name="reRenderNocMessage" reRender="nocMessage"/>
                             
                             <apex:pageBlock id="step1Block" mode="edit" >
@@ -735,9 +741,9 @@
                                         $Label.ISSP_AMS_Noc_StepA_message)}
                                     </div>
                                     <apex:outputPanel id="nocMessage">
-                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange), 'block', 'none')}; margin-bottom: 20px;">
+                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange), 'flex', 'none')}; margin-bottom: 20px;">
                                             {!$Label.ISSP_AMS_Noc_StepA_message_MC}<br/><br/>
-                                            {!IF(selectedCountryIsos.size > 1, $Label.ISSP_ANG_NOC_GOGLOBAL_Info, '')}
+                                            {!IF(AND(selectedCountryIsos.size > 1, newForm.Scope_Of_Change__c != "HO Only", newForm.Scope_Of_Change__c != "HO - All Branches"), $Label.ISSP_ANG_NOC_GOGLOBAL_Info, '')}
                                         </div>
                                     </apex:outputPanel>
 
@@ -848,14 +854,14 @@
                                                 </apex:outputPanel>
 
                                                 <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptions">    
-                                                    <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}'); checkLocationQuestion();">
+                                                    <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}'); checkLocationQuestion(); reRenderNocMessage();">
                                                         <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}" />
                                                         
-                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!IF(AND(isMCAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_All_Branches_MC, $Label.ISSP_AMS_NoC_HE_All_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}"/>
+                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_All_Branches}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}"/>
                                                         
-                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!IF(AND(isMCAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_Some_Branches_MC, $Label.ISSP_AMS_NoC_HE_Some_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" />
+                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_Some_Branches}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" />
                                                         
-                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!IF(AND(isMCAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_Associate_Entity_MC, $Label.ISSP_AMS_NoC_Associate_Entity)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" />
+                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Associate_Entity}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" />
                                                     </apex:selectRadio>
 
                                                 </apex:outputPanel>
@@ -887,9 +893,9 @@
                                                 <apex:column value="{!hi.acc['Name']}"/>
                                                 <apex:column value="{!hi.acc['IATACode__c']}"/>
                                                 <apex:column value="{!hi.acc['BillingCity']}"/>
-                                                <apex:column value="{!hi.acc['BillingState']}"/>
                                                 <apex:column headerValue="{!$Label.ISSP_Country}" value="{!hi.acc['IATA_ISO_Country__r.Name']}"/>
-                                                
+                                                <apex:column value="{!hi.acc['BillingState']}"/>
+
                                             </apex:pageBlockTable>
                                             <apex:actionStatus id="blockEditing">
                                                 <apex:facet name="start">
