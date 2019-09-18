@@ -1575,14 +1575,31 @@ public without sharing class ISSP_Case {
             setEmail.remove(user.Email);
         }
 
-        //On DPC case creation with Priority = "High", automatically add additional recipients
-        if(newCase.Priority == 'High'){
-            List<DPCCasePriorityHigh__c> DPCCasePriorityHighEmails = [SELECT Email__c 
-                                                                    FROM DPCCasePriorityHigh__c];
-            List<String> allEmailsDPCCasePriorityHigh = new List<String>();
-            for(DPCCasePriorityHigh__c dcph : DPCCasePriorityHighEmails){
-                lsNewEmails.add(dcph.Email__c);
-            }                                            
+        //On DPC case creation with Priority, automatically add additional recipients
+        
+        List<DPCCasePriorityHigh__c> DPCCasePriorityEmails = [SELECT Priority__c, Email__c 
+                                                                FROM DPCCasePriorityHigh__c 
+                                                                WHERE Priority__c =: newCase.Priority];
+        if(!DPCCasePriorityEmails.isEmpty()){
+            Set<String> setEmailPriority = new Set<String>();
+            for(DPCCasePriorityHigh__c dcph : DPCCasePriorityEmails){
+                setEmailPriority.add(dcph.Email__c);
+            }   
+            if(!setEmailPriority.isEmpty()){
+                List<User> lsUsersPriority =
+                            [SELECT Id, Name, Email, AccountId, Contact.AccountId
+                            FROM User
+                            WHERE Email IN :setEmailPriority];
+                for(User user : lsUsersPriority) {
+                    CaseTeamMember teammember = new CaseTeamMember(
+                        ParentId = newCase.Id,
+                        MemberId = user.Id,
+                        TeamRoleId = PARTNER_USER_ROLE);
+                    lsCaseTeamMembers.add(teammember);
+                    lsNewEmails.add(user.Email);
+                    setEmail.remove(user.Email);
+                }
+            }                                         
         }
 
         if(JSONcontactSelected != null && JSONcontactSelected != ''){

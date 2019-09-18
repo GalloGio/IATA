@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <customSettingsType>List</customSettingsType>
-    <description>DPC case creation with Priority = &quot;High&quot;</description>
+    <description>DPC case creation with Priority</description>
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>Email__c</fullName>
@@ -10,6 +10,16 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Priority__c</fullName>
+        <externalId>false</externalId>
+        <label>Priority</label>
+        <length>50</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <label>DPC Case Priority High</label>
