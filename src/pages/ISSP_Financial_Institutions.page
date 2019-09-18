@@ -56,6 +56,14 @@
                 function navigateToGDIPortal() {
                     window.open('{!gdiPortalAppURL}', '_blank')
                 }
+
+                function openLearnMore() {
+                    $('[id$="learnMoreModal"]').css('display', 'block'); rui
+                }
+
+                function closeLearnMore() {
+                    $('[id$="learnMoreModal"]').css('display', 'none'); rui
+                }
             </script>
 
             <div class="container">
@@ -93,13 +101,15 @@
                                         
                                         <apex:outputText value="{!financialInstitution.Name}" rendered="{!financialInstitution.Website__c == ''}"/>
                                         
-                                        <apex:commandButton styleClass="btn_iata_primary btn" value="{!$Label.ANG_ISSP_GDI_Apply}" onclick="showTermsAndConditionsModal(); return false;" reRender="" rendered="{!AND(userCanRequestGDI, CONTAINS(financialInstitution.Name, 'Euler Hermes'))}" style="float: right;"/>
+                                        <apex:commandButton styleClass="btn_iata_primary btn" value="{!$Label.ANG_ISSP_GDI_Apply}" onclick="showTermsAndConditionsModal(); return false;" reRender="" rendered="{!AND(userCanRequestGDI, CONTAINS(financialInstitution.Name, 'Euler Hermes'), NOT(countryIsMulticountryEnabled))}" style="float: right;"/>
 
                                         <apex:outputText value="{!$Label.ISSP_Access_Denied}" rendered="{!AND(gdiAppRightDenied, CONTAINS(financialInstitution.Name, 'Euler Hermes'))}" style="float: right;"/>
 
                                         <apex:outputText value="{!$Label.ISSP_Access_Requested}" rendered="{!AND(gdiAppRightRequested, CONTAINS(financialInstitution.Name, 'Euler Hermes'))}" style="float: right;"/>
 
-                                        <apex:commandButton styleClass="btn_iata_primary btn" value="{!$Label.ANG_ISSP_GDI_Navigate_Portal}" onclick="navigateToGDIPortal();" reRender="" rendered="{!AND(gdiAppRightGranted, CONTAINS(financialInstitution.Name, 'Euler Hermes'))}" style="float: right;"/>
+                                        <apex:commandButton styleClass="btn_iata_primary btn" value="{!$Label.ANG_ISSP_GDI_Navigate_Portal}" onclick="navigateToGDIPortal();" reRender="" rendered="{!AND(gdiAppRightGranted, CONTAINS(financialInstitution.Name, 'Euler Hermes'), NOT(countryIsMulticountryEnabled))}" style="float: right;"/>
+
+                                        <apex:commandButton styleClass="btn_iata_primary btn" value="{!$Label.ANG_ISSP_GDI_Learn_More}" onclick="openLearnMore();" reRender="" rendered="{!countryIsMulticountryEnabled}" style="float: right;"/> rui
                                         
                                         <apex:facet name="header">
                                             <apex:outputText escape="false" value="{!$ObjectType.Financial_Institution__c.fields.Name.Label}"/>
@@ -165,7 +175,29 @@
                                 </div>
                             </apex:outputPanel>
                         </div>
-                        <!-- End Modal GDI Portal App Request --> 
+                        <!-- End Modal GDI Portal App Request -->
+
+                        <!-- Modal Learn More --> 
+                        <div class="modal" id="learnMoreModal" tabindex="-1" role="dialog">
+                            <apex:outputPanel layout="block" id="leranMoreModalContent"> 
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button id="learnMoreModalCloseButtonSecondary" type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="closeLearnMoreModal();">&times;</button>
+                                            <h4 class="modal-title">{!$Label.OneId_TermsAndConditions}</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><b>
+                                                    <apex:outputText value="Linda will provide the final version of this text" style="color: red;"/>
+                                            </b></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                        <!-- End Modal Learn More -->
                     </apex:form>
                 </div>
                 <c:ISSP_CustomFooter />

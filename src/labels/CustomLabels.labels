@@ -1551,6 +1551,14 @@ IATA Customer Service</value>
         <value>The list of Financial Institutions providing Financial Security Insurance in your country</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_GDI_Learn_More</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Learn_More</shortDescription>
+        <value>Learn More</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_GDI_Navigate_Portal</fullName>
         <categories>ISSP, ANG, GDI</categories>
         <language>en_US</language>
