@@ -79,6 +79,10 @@
         <value xsi:type="xsd:string">Platforms</value>
     </values>
     <values>
+        <field>DataCategoryVisibility__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:type="xsd:string">Update_Account_Details_CargoIS</value>
     </values>

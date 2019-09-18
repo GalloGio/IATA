@@ -79,6 +79,10 @@
         <value xsi:type="xsd:string">Travel</value>
     </values>
     <values>
+        <field>DataCategoryVisibility__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:type="xsd:string">TASF_Refunds_Voids_or_Reports</value>
     </values>

@@ -79,6 +79,10 @@
         <value xsi:type="xsd:string">Data_Products</value>
     </values>
     <values>
+        <field>DataCategoryVisibility__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:type="xsd:string">Subscriptions_and_Orders_MarketIS</value>
     </values>

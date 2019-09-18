@@ -36,7 +36,7 @@
     </values>
     <values>
         <field>DataCategoryLabel_fr__c</field>
-        <value xsi:type="xsd:string">Droits d&#39;accréditation</value>
+        <value xsi:type="xsd:string">Droits d&apos;accréditation</value>
     </values>
     <values>
         <field>DataCategoryLabel_in__c</field>
@@ -77,6 +77,10 @@
     <values>
         <field>DataCategoryName__c</field>
         <value xsi:type="xsd:string">Travel</value>
+    </values>
+    <values>
+        <field>DataCategoryVisibility__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>DataSubtopicName__c</field>

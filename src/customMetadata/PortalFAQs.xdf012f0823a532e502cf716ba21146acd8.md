@@ -79,6 +79,10 @@
         <value xsi:type="xsd:string">Publications</value>
     </values>
     <values>
+        <field>DataCategoryVisibility__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:type="xsd:string">Other_I_ASC_IATA_Safety_Culture_Survey</value>
     </values>

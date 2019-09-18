@@ -3039,7 +3039,7 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP Accept Terms Error</shortDescription>
         <value>Accept the Terms before you proceed.</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_Account_Domain_Created</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3092,7 +3092,7 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Apply</shortDescription>
         <value>Apply</value>
-    </labels> 
+    </labels>
     <labels>
         <fullName>CSP_ArticleHelpful</fullName>
         <categories>CS Portal</categories>
@@ -3312,7 +3312,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Confirmed_Requested_Service_Message</shortDescription>
-        <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be fund under your </value>
+        <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be fund under your</value>
     </labels>
     <labels>
         <fullName>CSP_Continue</fullName>
@@ -3344,7 +3344,7 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_DateTo</shortDescription>
         <value>Creation Date (to)</value>
-    </labels>    
+    </labels>
     <labels>
         <fullName>CSP_Deny_User_Access_Title</fullName>
         <language>en_US</language>
@@ -3524,7 +3524,7 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Filtered</shortDescription>
         <value>Filtered</value>
-    </labels>        
+    </labels>
     <labels>
         <fullName>CSP_ForYou</fullName>
         <categories>CS Portal</categories>
@@ -3618,7 +3618,7 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_NewServiceUserMessage</shortDescription>
         <value>You can search and add new portal users to this service. If the user you are looking for is not a portal contact yet, you can create for them</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_New_Email_Domain</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3783,21 +3783,21 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_RecentCases</shortDescription>
         <value>Recent Cases</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_RecentCases_HelpText</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP RecentCases HelpText</shortDescription>
         <value>On Going</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_RecentCases_Support</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Recent Cases Support</shortDescription>
         <value>Recent Cases</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_Record_Deleted</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3819,7 +3819,7 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_RemoveAllFilters</shortDescription>
         <value>Remove All Filters</value>
-    </labels>    
+    </labels>
     <labels>
         <fullName>CSP_RemoveContact_Reason</fullName>
         <language>en_US</language>
@@ -4203,7 +4203,7 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP Success</shortDescription>
         <value>Success</value>
-    </labels>    
+    </labels>
     <labels>
         <fullName>CSP_Support</fullName>
         <categories>CS Portal</categories>
@@ -19953,7 +19953,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1 ProgressBar</shortDescription>
-        <value><![CDATA[<span class="progress-tab-step">A</span>]]>Select Agency Type &amp; Location</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;Select Agency Type &amp; Location</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_ProgressBar_New</fullName>
@@ -20033,7 +20033,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step2 ProgressBar</shortDescription>
-        <value><![CDATA[<span class="progress-tab-step">B</span>]]>Review Country Requirements</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;B&lt;/span&gt;Review Country Requirements</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_3_1_Title</fullName>
@@ -20887,7 +20887,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 ProgressBar</shortDescription>
-        <value><![CDATA[<span class="progress-tab-step">C</span>]]>Complete Application Form</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;C&lt;/span&gt;Complete Application Form</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Save_Anytime</fullName>
@@ -20911,7 +20911,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step4 ProgressBar</shortDescription>
-        <value><![CDATA[<span class="progress-tab-step">D</span>]]>Upload Files</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;D&lt;/span&gt;Upload Files</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step4_Upload_Continue</fullName>
@@ -20943,7 +20943,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step5 ProgressBar</shortDescription>
-        <value><![CDATA[<span class="progress-tab-step">E</span>]]>Submit to IATA</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;E&lt;/span&gt;Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ProgressBar_CNS</fullName>
@@ -38397,6 +38397,14 @@ title,Title,Name</value>
         <value>contacting us.</value>
     </labels>
     <labels>
+        <fullName>csp_AccountRelocateSuccess</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Relocation</shortDescription>
+        <value>Contact relocated successfully.</value>
+    </labels>
+    <labels>
         <fullName>csp_Accreditation_Process</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -38435,14 +38443,6 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Request New Service</shortDescription>
         <value>Agency Read Only</value>
-    </labels>
-    <labels>
-        <fullName>csp_AccountRelocateSuccess</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Account Relocation</shortDescription>
-        <value>Contact relocated successfully.</value>
     </labels>
     <labels>
         <fullName>csp_Basics_Section_label</fullName>

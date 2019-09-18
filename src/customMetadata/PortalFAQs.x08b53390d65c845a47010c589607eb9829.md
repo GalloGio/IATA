@@ -79,6 +79,10 @@
         <value xsi:type="xsd:string">Financial_Services</value>
     </values>
     <values>
+        <field>DataCategoryVisibility__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:type="xsd:string">Management_Information_Reports_MIR</value>
     </values>

@@ -79,6 +79,10 @@
         <value xsi:type="xsd:string">Platforms</value>
     </values>
     <values>
+        <field>DataCategoryVisibility__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:type="xsd:string">Receiving_Invoices_Output_Files_from_SIS</value>
     </values>

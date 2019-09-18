@@ -79,6 +79,10 @@
         <value xsi:type="xsd:string">Travel</value>
     </values>
     <values>
+        <field>DataCategoryVisibility__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:type="xsd:string">Subscriptions_and_Orders_Agency_Database_Files</value>
     </values>
