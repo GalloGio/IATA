@@ -211,10 +211,13 @@
         </apex:outputPanel>
         <apex:outputPanel rendered="{!AND(sectorValue=='Travel_Agent', newForm.Notify_Change_Ownership__c)}">
             <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
+                <apex:outputText value="{!$Label.ISSP_AMS_NoC_Transferor}" />
+            </div>
+            <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
+                <apex:outputText value="{!$Label.ISSP_AMS_NoC_Transferee}" />
+            </div>
+            <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;font-size:13px;">
                 <table border="0" cellpadding="3">
-                    <tr>
-                        <th colspan="2" style="padding-bottom:30px">{!$Label.ISSP_AMS_NoC_Transferor}</th>
-                    </tr>
                     <tr>
                         <td style="padding-bottom:15px">{!$Label.IFAP_name}</td>
                         <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
@@ -228,16 +231,17 @@
                         <td>________________________</td>
                     </tr>
                     <tr>
-                        <td>{!$Label.ISSP_Date}</td>
+                        <td>&nbsp;</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td><apex:outputText value="Signature of Witness & Date" escape="false"/></td>
                         <td>________________________</td>
                     </tr>
                 </table>
             </div>
-            <div class="row" style="width:50%; float:right; page-break-inside:avoid; margin-top:20px;">
+            <div class="row" style="width:50%; float:right; page-break-inside:avoid; margin-top:20px;font-size:13px;">
                 <table border="0" cellpadding="3">
-                    <tr>
-                        <th colspan="2">{!$Label.ISSP_AMS_NoC_Transferee}</th>
-                    </tr>
                     <tr>
                         <td style="padding-bottom:15px">{!$Label.IFAP_name}</td>
                         <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
@@ -251,7 +255,11 @@
                         <td>________________________</td>
                     </tr>
                     <tr>
-                        <td>{!$Label.ISSP_Date}</td>
+                        <td>&nbsp;</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td><apex:outputText value="Signature of Witness & Date" escape="false"/></td>
                         <td>________________________</td>
                     </tr>
                 </table>
@@ -259,7 +267,7 @@
             <div class="row" style="width:100%; float:left; page-break-inside:avoid; margin-top:20px;">
                 <apex:outputText value="In case of Partnership:" />
             </div>
-            <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
+            <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;font-size:13px;">
                 <table border="0" cellpadding="3">
                     <tr>
                         <th colspan="2">{!$Label.ISSP_AMS_NoC_Partner}</th>
@@ -277,12 +285,16 @@
                         <td>________________________</td>
                     </tr>
                     <tr>
-                        <td>{!$Label.ISSP_Date}</td>
+                        <td>&nbsp;</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td><apex:outputText value="Signature of Witness & Date" escape="false"/></td>
                         <td>________________________</td>
                     </tr>
                 </table>
             </div>
-            <div class="row" style="width:50%; float:right; page-break-inside:avoid; margin-top:20px;">
+            <div class="row" style="width:50%; float:right; page-break-inside:avoid; margin-top:20px;font-size:13px;">
                 <table border="0" cellpadding="3">
                     <tr>
                         <th colspan="2">{!$Label.ISSP_AMS_NoC_Partner}</th>
@@ -300,7 +312,11 @@
                         <td>________________________</td>
                     </tr>
                     <tr>
-                        <td>{!$Label.ISSP_Date}</td>
+                        <td>&nbsp;</td>
+                        <td>________________________</td>
+                    </tr>
+                    <tr>
+                        <td><apex:outputText value="Signature of Witness & Date" escape="false"/></td>
                         <td>________________________</td>
                     </tr>
                 </table>
