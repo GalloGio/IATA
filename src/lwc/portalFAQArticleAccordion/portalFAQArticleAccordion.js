@@ -101,7 +101,6 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     connectedCallback() {
         this.userInfo.language = this.language;
         this.userInfo.guestUser = this.language !== undefined ? true : false;
-        console.log('user ', JSON.parse(JSON.stringify(this.userInfo)));
         
         let cookie = this.getCookie('PKB2SessionId');
         
@@ -159,10 +158,11 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
     // RELATED TO SUPPORT VIEW CATEGORY PAGE, GETTING THE DEEPEST SUBTOPICS TO RENDER ARTICLES FOR A SPECIFIC CATEGORY
     renderFAQs() {
-        getFAQsInfoByLanguage({ language : this.language })
+        
+        getFAQsInfoByLanguage({ lang : this.language })
             .then(results => {
                 let result = JSON.parse(JSON.stringify(results));
-                
+
                 let childs = [];
                 
                 let tempCategoryName = this.category; //Contains selected category from portalFAQPage
