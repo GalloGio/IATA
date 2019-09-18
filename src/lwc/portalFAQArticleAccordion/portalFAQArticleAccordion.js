@@ -1,12 +1,11 @@
 import { LightningElement, api, track } from 'lwc';
-import getArticles from '@salesforce/apex/PortalFAQsCtrl.getArticlesByLanguage';
-import getFAQsInfo from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
+import getArticlesByLanguage from '@salesforce/apex/PortalFAQsCtrl.getArticlesByLanguage';
+import getFAQsInfoByLanguage from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfoByLanguage';
 import createFeedback from '@salesforce/apex/PortalFAQsCtrl.createFeedback';
 import getArticlesFeedback from '@salesforce/apex/PortalFAQsCtrl.getArticlesFeedback';
 import randomUUID from '@salesforce/apex/CSP_Utils.randomUUID';
 import getArticleTitle from '@salesforce/apex/PortalFAQsCtrl.getArticleTitle';
 import getFilteredFAQsResultsPage from '@salesforce/apex/PortalFAQsCtrl.getFilteredFAQsResultsPage';
-import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
 
 import { NavigationMixin } from 'lightning/navigation';
 
@@ -124,7 +123,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
     // DEFINE WHICH METHOD TO LOAD BASED ON CATEGORY, A SPECIFIC ARTICLE OR FROM SEARCH PARAM
     redirectionTo() {
-        if(this.category !== undefined) {
+        if(this.category !== undefined) {            
             this.renderFAQs(); // RENDER ARTICLES FROM DEEPEST SUBTOPICS
         } else if(this.articleView !== undefined) {
             if(this.articleView.q !== undefined) {
@@ -148,6 +147,8 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
                     .then(resultsTitle => {
                         let filteringObject = {};
                         filteringObject.searchText = resultsTitle;
+                        filteringObject.language = this.language;
+                        filteringObject.guestUser = this.language !== undefined ? true : false;
 
                         this.renderSearchArticles(JSON.stringify(filteringObject));
                     });
@@ -157,9 +158,11 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
     // RELATED TO SUPPORT VIEW CATEGORY PAGE, GETTING THE DEEPEST SUBTOPICS TO RENDER ARTICLES FOR A SPECIFIC CATEGORY
     renderFAQs() {
-        getFAQsInfo()
+        
+        getFAQsInfoByLanguage({ lang : this.language })
             .then(results => {
                 let result = JSON.parse(JSON.stringify(results));
+
                 let childs = [];
                 
                 let tempCategoryName = this.category; //Contains selected category from portalFAQPage
@@ -248,7 +251,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
     // GET SPECIFIC ARTICLES FOR A GIVEN CATEGORY/TOPIC/SUBTOPIC
     getArticlesFromParams(selectedParams) {
-        getArticles({ selectedParams : selectedParams, lang : this.language })
+        getArticlesByLanguage({ selectedParams : selectedParams, lang : this.language })
             .then(result => {
                 this.articles = [];
                 if(result.length) {
