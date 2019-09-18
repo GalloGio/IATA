@@ -6738,18 +6738,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>IATA</controllingFieldValue>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>IATA Cargo Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>IATA</controllingFieldValue>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <valueName>IATA Head Office</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>IATA</controllingFieldValue>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <valueName>IATA Local office</valueName>
             </valueSettings>
             <valueSettings>
@@ -6854,41 +6846,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <valueName>Airline Point of Sale</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>CASS Associate</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Courier</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <valueName>Domestic Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <valueName>ERSP Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>General Sales Agent</controllingFieldValue>
-                <valueName>GSA General Sales Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <controllingFieldValue>General Sales Agent</controllingFieldValue>
-                <valueName>GSSA Cargo</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Handling Agent</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
@@ -6896,34 +6854,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <valueName>IATA Regional Office</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>General Sales Agent</controllingFieldValue>
-                <valueName>IBCS consolidator</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Import Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <valueName>MSO Member Sales Office</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Non-IATA Cargo Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <valueName>Non-IATA Passenger Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <valueName>Non-IATA Travel Agent</valueName>
             </valueSettings>
             <valueSettings>
@@ -7031,6 +6965,30 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <valueName>Travel Agency Association</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>CASS Associate</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Courier</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Handling Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>IATA Cargo Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Import Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Non-IATA Cargo Agent</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Training</controllingFieldValue>
                 <valueName>Academic/Research Body</valueName>
             </valueSettings>
@@ -7077,6 +7035,14 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <valueName>Payment Provider</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>General Sales Agent</controllingFieldValue>
+                <valueName>GSA General Sales Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>General Sales Agent</controllingFieldValue>
+                <valueName>GSSA Cargo</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
@@ -23469,6 +23435,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <columns>ACCOUNT.PHONE1</columns>
         <columns>ACCOUNT.TYPE</columns>
         <columns>CORE.USERS.ALIAS</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>ACCOUNT.RECORDTYPE</field>

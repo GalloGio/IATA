@@ -548,7 +548,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // WMO-517 exclued cases in recycle bin
                     if (c.RecordTypeId == AirlineCodingRTId && mapACCasesPerAccountId.get(c.AccountId) != null) {
                         system.debug('##ROW##');
-                        set<String> setInvalidReasons = new set<String>{'Baggage Tag Identifier Codes','Designator Form'};
+                        set<String> setInvalidReasons = new set<String>{'Baggage Tag Identifier Codes','Designator Form', '3 Digit Form', 'Location ID Form'};
                         for (Case cse: mapACCasesPerAccountId.get(c.AccountId) ) {
                             if (cse.Reason1__c == c.Reason1__c && cse.Id != c.Id && setInvalidReasons.contains(c.Reason1__c) && !cse.Owner.Name.contains('Recycle')) {
                                 c.addError('There is already an open Airline Coding Application case with Reason "' + c.Reason1__c + '" on the selected Account. There can be only one open case of this type on an Account.');
@@ -907,6 +907,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             System.debug('____ [cls CaseBeforeTrigger - trgCase Trigger.isInsert]');
             SidraLiteManager.insertSidraLiteCases(Trigger.new);
             DPCCasesUtil.addAdditionalContactsBefore(Trigger.new);
+            CNSCaseManager.insertCNSCases(Trigger.new); //ACAMBAS - WMO-482
         }
         /*trgCase Trigger.isInsert*/
 
@@ -1451,8 +1452,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
         if (trgCase){
             System.debug('____ [cls CaseBeforeTrigger - trgCase Trigger.isUpdate]');
-            SidraLiteManager.updateSidraLiteCases(Trigger.new, Trigger.old);
+            SidraLiteManager.updateSidraLiteCases(Trigger.newMap, Trigger.oldMap); //ACAMBAS - WMO-483: Changed parameters from lists to maps
             CaseDueDiligence.beforeUpdate(Trigger.newMap, Trigger.oldMap);
+            CNSCaseManager.updateCNSCases(Trigger.new, Trigger.oldMap); //ACAMBAS - WMO-482
         }
 
         /*trgProcessISSCase Trigger.isUpdate*/

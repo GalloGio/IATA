@@ -468,7 +468,7 @@ lightning-datatable .slds-th__action {
     color: #ffffff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
 }
 .containedButton button:hover {
@@ -485,7 +485,7 @@ lightning-datatable .slds-th__action {
     color: #ffffff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
 }
 
@@ -1174,13 +1174,56 @@ lightning-datatable .slds-th__action {
 }
 
 .labelValue .slds-checkbox .slds-form-element__label {
-    font-size: 14px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 2.4;
-    letter-spacing: normal;
-    color: #525252;
+    display:none;
+}
+
+.textValue .slds-checkbox_standalone {
+  cursor: pointer;
+}
+
+.textValue input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.textValue .slds-checkbox_standalone input{
+  font-size: 1rem;
+  opacity: 0;
+  position: absolute;
+}
+
+.textValue .slds-checkbox_faux {
+	border-radius:0;
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    right: 2px;
+    top: -4px;
+    vertical-align: middle;
+    background-color: inherit;
+    color: blue;
+    border: 1px solid blue;
+}
+
+.textValue .slds-checkbox_standalone input:checked + .slds-checkbox_faux:after{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background-color: blue;
+  transform:none;
+}
+
+.textValue .slds-checkbox_standalone input:checked + .slds-checkbox_faux{
+  border-color: blue;
+}
+
+.textValue .slds-checkbox_faux{
+  transform: scale(0.75);
 }
 
 .textValue .slds-form-element__static {
@@ -1417,8 +1460,8 @@ visibility: hidden;
 }
 
 /* USER INACTIVE POPUP */
-#div>.siteforcePanelsContainer{
-    z-index: 5000;
+.siteforcePanelsContainer>div{
+    z-index: 5000 !important;
 }
 
 .headerContainerShadow {
@@ -1441,4 +1484,63 @@ visibility: hidden;
     z-index: 0;
     opacity: 0.1;
     background-image: linear-gradient(256deg, rgba(0, 0, 0, 0), #000000);
+}
+
+/* Mobile side menu select language styles */
+
+.sideBar .langSelect,
+.sideBar .langSelect input[role="textbox"],
+.sideBar .langSelect div[role="listbox"] {
+    background-color: #1e32fa;
+    border-radius: 0;
+}
+
+.sideBar .langSelect input[role="textbox"] {
+    border: 0;
+    cursor: pointer;
+    width: 140px;
+    text-align: center;
+}
+
+.sideBar .langSelect div[role="listbox"] {
+    max-width: unset;
+    width: 140px;
+}
+
+.sideBar .changingLangSpinner .slds-spinner_container {
+   position: fixed;
+}
+
+.sideBar .langSelect .slds-form-element__label {
+   display: none;
+}
+
+.sideBar .slds-combobox_container lightning-base-combobox-item:hover,
+.sideBar .slds-combobox_container lightning-base-combobox-item[aria-selected="true"] {
+    color: #1e32fa;
+}
+
+.sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon:before {
+    border-top: 6px solid #fff;
+    border-bottom: 0;
+}
+.sideBar .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:before {
+    border-bottom: 6px solid #fff;
+    border-top: 0;
+}
+.sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon:after {
+    border-top: 6px solid #1e32fa;
+    border-bottom: 0;
+}
+.sideBar .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:after {
+    border-bottom: 6px solid #1e32fa;
+    border-top: 0;
+}
+
+.sideBar .slds-combobox_container input[role="textbox"] {
+	height: 32px;
+}
+
+.sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon svg {
+    fill: #fff;
 }

@@ -211,7 +211,9 @@ public without sharing class AMS_Utils {
     public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
     public static final String SECTOR_CARGO = 'Cargo Agent';
     public static final String SECTOR_PASSENGER = 'Travel Agent';
-    public static final String CATEGORY_CASSASSOCIATE = 'CASS Associate';
+    public static final String SECTOR_AIRLINE = 'Airline';
+    public static final String SECTOR_INFRASTRUCTURE = 'Infrastructure Partner';
+    public static final String SECTOR_IATA = 'IATA';
 
     public static final String NEWFORM_AGENTTYPE_CASH = 'Standard with Cash';
     public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
@@ -248,11 +250,22 @@ public without sharing class AMS_Utils {
 
     public static final String CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT = 'IATA Travel Agent';
 
-    public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
+    public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';// To replaces uses with SECTOR_PASSENGER
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
+    public static final String CATEGORY_NON_IATA_PASSENGER = 'Non-IATA Passenger Agent';
+    public static final String CATEGORY_NON_IATA_TRAVEL = 'Non-IATA Travel Agent';
+    public static final String CATEGORY_PASSENGER_ONLY = 'Passenger Only';
     public static final String CATEGORY_DOMESTIC_AGENT = 'Domestic Agent';
     public static final String CATEGORY_IMPORT_AGENT = 'Import Agent';
     public static final String CATEGORY_COURIER = 'Courier';
+    public static final String CATEGORY_IATA_CARGO_AGENT = 'IATA Cargo Agent';
+    public static final String CATEGORY_CASSASSOCIATE = 'CASS Associate';
+    public static final String CATEGORY_ANSP = 'ANSP';
+    public static final String CATEGORY_AIRPORT_AUTHORITY = 'Airport Authority';
+    public static final String CATEGORY_AIRPORT_CONCESSIONAIRE = 'Airport Concessionaire';
+    public static final String CATEGORY_AIRPORT_OPERATOR = 'Airport Operator';
+	public static final String CATEGORY_TOUR_OPERATOR = 'Tour Operator';
+  	public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
 
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
@@ -468,17 +481,6 @@ public without sharing class AMS_Utils {
         private set;
     }
 
-    public static List<AMS_ChangeCodes_Integration__c> CUSTOM_CHANGECODES_INTEGRATION {
-        get {
-            if(CUSTOM_CHANGECODES_INTEGRATION == null){
-                CUSTOM_CHANGECODES_INTEGRATION = [SELECT RecId_A__c,RecId_B__c,RecId_Res__c FROM AMS_ChangeCodes_Integration__c];
-
-            }
-            return CUSTOM_CHANGECODES_INTEGRATION;
-        }
-        private set;
-    }
-
     //20-06-2017 - AMSU-93
     public static Map<String, String> JsonSpecialChars{
         get {
@@ -640,25 +642,9 @@ public without sharing class AMS_Utils {
 
         //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
 
-        String sRes = '';
+        AMS_ChangeCodes_Integration__c ccInt = AMS_ChangeCodes_Integration__c.getValues(sRecIdA + '_' + sRecIdB);
 
-        for (AMS_ChangeCodes_Integration__c cc : CUSTOM_CHANGECODES_INTEGRATION ){
-
-            if(cc.RecId_A__c.equalsIgnoreCase(sRecIdA)){
-                if(cc.RecId_B__c.equalsIgnoreCase(sRecIdB)){
-                    sRes = cc.RecId_Res__c;
-                    break;
-                }
-            }
-
-        }
-
-        //Just in case we don't get a result, we set the value for the most common RecId - "C"
-        if( sRes == ''){
-            sRes = 'C';
-        }
-
-        return sRes;
+        return ccInt == null ? 'C' : ccInt.RecId_Res__c;
     }
 
     public static Boolean isAddressEmpty(Account acc, String addressType) {
@@ -1231,9 +1217,10 @@ public without sharing class AMS_Utils {
 
                 for(Account accToUpdate : accountsToUpdate) {
 
-                    if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.Id) ||
-                       (accToUpdate.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.Top_Parent__c)) )
-                        accToUpdate.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accToUpdate.Top_Parent__c == null ? accToUpdate.Id : accToUpdate.Top_Parent__c);
+                    if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.id))
+                        accToUpdate.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accToUpdate.id);
+                    else if(accToUpdate.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.Top_Parent__c))
+                        accToUpdate.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accToUpdate.Top_Parent__c);
                 }
             }
 
@@ -1432,6 +1419,7 @@ public without sharing class AMS_Utils {
         Map<String, String> fieldsMapping = new Map<String, String>(fieldsMap.clone());
         fieldsMapping.put('Link_agent_name__c', 'Link_agent_name__c');
         fieldsMapping.put('Short_Name__c', 'Short_Name__c');
+        fieldsMapping.put('Covered_Ownership__c', 'ISSP_AMS_Total_Current_Ownership__c'); //Account -> Pax Accreditation  
 
         //AMSU-151
         fieldsMapping.put('In_a_Airport__c', 'ISSP_AMS_Premises_located_at_airport__c');
@@ -1470,7 +1458,7 @@ public without sharing class AMS_Utils {
             Set<Id> accountIds = new Set<Id>();
             accountIds.add(oscar.Account__c); 
             accountIds.addAll(accounts.keySet());
-            String query = 'SELECT id,recordTypeID,ParentId,Is_Branch_Abroad__c,IATA_ISO_Country__r.ISO_Code__c, Link_agent_name__r.Name, Reason__c, ';
+            String query = 'SELECT id,recordTypeID,ParentId,Is_Branch_Abroad__c,IATA_ISO_Country__r.ISO_Code__c, Link_agent_name__r.Name, Reason__c,  Top_Parent__c, CNS_Agency__c, Status__c,';
             if(!fieldsINtheQuery.contains('Location_Type__c')){
                 query += 'Location_Type__c, ';                
             }
@@ -1575,19 +1563,17 @@ public without sharing class AMS_Utils {
                         
                         system.debug('DDD oldValue:' + oldValue);
                         system.debug('DDD newValue:' + newValue);
-                        
-                        if (oldValue != newValue)
-                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
-                            
+                                                    
+                        if (oldValue != newValue || (accFieldApiName == 'Covered_Ownership__c' && AMS_AccountRoleCreator.isAccountRoleCreationRunning) ) //Correction with Change of Ownership
+                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));                       
 
                         acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
                     }
 
                 if(!objectChangesList.isEmpty()) { //AMSU-151
                     AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
-
                     accountsToUpdate.put(acc.Id,acctChangesStruct);
-                }
+                }else if(objectChangesList.isEmpty() && AMS_AccountRoleCreator.isAccountRoleCreationRunning) AMS_OSCARTriggerHandler.accToGenerateCC.add(acc);
             }
 
         }
@@ -2614,8 +2600,15 @@ public without sharing class AMS_Utils {
     *   Method that validates if the record fields contain only latin characters
     **/
     public static List<String> validateCharacters(sObject record, List<Schema.FieldSetMember> fieldsToCheck) {
+        //WMO-538
+		Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
+        String ISO_8859_1_regEx = regExCS != null && String.isNotBlank(regExCS.Text_1__c) ? regExCS.Text_1__c : '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        return validateCharacters(record, fieldsToCheck, ISO_8859_1_regEx);
+    }
+
+    public static List<String> validateCharacters(sObject record, List<Schema.FieldSetMember> fieldsToCheck,  String ISO_8859_1_regEx) {
         List<String> res = new List<String>();
-        String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
         for(Schema.FieldSetMember field : fieldsToCheck) {
@@ -2652,8 +2645,15 @@ public without sharing class AMS_Utils {
     *   Method that validates if the record fields contain only latin characters
     **/
     public static List<String> cleanAndUpdateSpecialChars(sObject record, List<Schema.FieldSetMember> fieldsToCheck, Boolean toUpdate) {
+        //WMO-538
+		Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
+        String ISO_8859_1_regEx = regExCS != null && String.isNotBlank(regExCS.Text_1__c) ? regExCS.Text_1__c : '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        return cleanAndUpdateSpecialChars(record, fieldsToCheck, toUpdate, ISO_8859_1_regEx);
+    }
+
+    public static List<String> cleanAndUpdateSpecialChars(sObject record, List<Schema.FieldSetMember> fieldsToCheck, Boolean toUpdate, String ISO_8859_1_regEx) {
         List<String> res = new List<String>();
-        String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
         for(Schema.FieldSetMember field : fieldsToCheck) {

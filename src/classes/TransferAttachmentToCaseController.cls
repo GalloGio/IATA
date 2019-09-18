@@ -99,6 +99,13 @@ public with sharing class TransferAttachmentToCaseController {
             return;
         }
 
+        set<id> contentDocSet= new set<id>();
+        for(WrapperAttach wa:listAttachmentSelected){
+            if(wa.sfdcContext == 'content') contentDocSet.add(wa.id);
+        }
+
+        map<id,contentVersion> cvBodyMap= wrapperAttach.getContentVersionWithVersionData(contentDocSet);
+
         // check if there is any target case selected
         list<CaseWrapper> listTargetCaseSelected = getTargetCaseSelected();
         if (listTargetCaseSelected.isEmpty() ) {
@@ -128,10 +135,21 @@ public with sharing class TransferAttachmentToCaseController {
 
                 // if is a regular attachment, clone it
                 if (attach.getIsSalesforce() ) {
-                    Attachment newAtt = attach.fileAttachment.clone();
-                    newAtt.Body = attach.fileAttachment.Body;
-                    newAtt.ParentId = cw.CaseRecord.Id;
-                    newAtt.OwnerId = UserInfo.getUserId();//added by MGO INC254433
+                    Attachment newAtt = new Attachment();
+                    if(attach.getIsContent()){
+                        
+                        newAtt.name = attach.name;
+                        newAtt.description = attach.description;
+                        newAtt.Body =cvBodyMap.get(attach.id).versionData;
+                        newAtt.ParentId = cw.CaseRecord.Id;
+                        newAtt.OwnerId = UserInfo.getUserId();//added by MGO INC254433
+                    }else{
+                        newAtt = attach.fileAttachment.clone();
+                        newAtt.Body = attach.fileAttachment.Body;
+                        newAtt.ParentId = cw.CaseRecord.Id;
+                        newAtt.OwnerId = UserInfo.getUserId();//added by MGO INC254433
+                        
+                    }
                     lstNewAttachments.add(newAtt);
                 }
                 /*

@@ -28,6 +28,10 @@
                 <behavior>Edit</behavior>
                 <field>Kavi_user__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Terms_Acceptance__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
