@@ -79,10 +79,6 @@
         <value xsi:nil="true"/>
     </values>
     <values>
-        <field>DataCategoryVisibility__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:nil="true"/>
     </values>

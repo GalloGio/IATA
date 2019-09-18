@@ -79,10 +79,6 @@
         <value xsi:type="xsd:string">Travel</value>
     </values>
     <values>
-        <field>DataCategoryVisibility__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:type="xsd:string">Invoicing_Global_Agency_Directory</value>
     </values>

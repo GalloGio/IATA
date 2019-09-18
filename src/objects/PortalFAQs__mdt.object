@@ -194,15 +194,6 @@
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>DataCategoryVisibility__c</fullName>
-        <externalId>false</externalId>
-        <fieldManageability>DeveloperControlled</fieldManageability>
-        <label>Data Category Visibility</label>
-        <length>32768</length>
-        <type>LongTextArea</type>
-        <visibleLines>5</visibleLines>
-    </fields>
-    <fields>
         <fullName>DataSubtopicName__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
