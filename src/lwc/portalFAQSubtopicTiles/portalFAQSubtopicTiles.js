@@ -69,7 +69,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         });
 
         this.subTopicTiles = [];
-        this.subTopicTiles = tempSubTopics.reverse();
+        this.subTopicTiles = tempSubTopics;
 
         //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected topic  
         let topicInfo = {
@@ -94,7 +94,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         });
 
         this.subTopicTiles = [];
-        this.subTopicTiles = tempSubTopics.reverse();      
+        this.subTopicTiles = tempSubTopics;      
         
         //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected subtopic
         let subtopicInfo = {

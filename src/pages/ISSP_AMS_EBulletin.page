@@ -59,6 +59,10 @@
         .bPageBlock {
             border-top-width : thin !important;
         }
+
+        .bPageBlock .labelCol, body .print .topics-label{
+            text-align: left;
+        }
         
         .labelCol{
             font-weight:normal !important;
@@ -92,6 +96,14 @@
             border: 1px solid transparent !important;
             /*background: */
         }
+
+        .btn.iatabtn.iatabtn-default.iatabtn-edit{
+            margin: 30px 0;
+        }
+
+        .btn.iatabtn.iatabtn-default.iatabtn-download{
+            margin-left: 0;
+        }
         
         .tb-header {
             padding-right:20px;
@@ -114,16 +126,29 @@
         
         .errorMsg {color:#d74c3b}
             
-        .progress-bar-off {
-                color:#6BBBEA;
-                font-weight:bold;
-                background-image:none !important;
-                background-color:transparent !important;
-                border-right:2px solid white;
+        .progress{
+            background-image: none;
+            height: unset;
+            background-color: #fff;
+            box-shadow: none;
+            margin-bottom: 0 !important;
         }
         
         .progress-bar {
-                font-size:inherit;
+            padding: 5px;
+            color: #fff;
+            font-weight: bold;
+            font-size:inherit;
+            background-image: none;
+            background-color: #1e32fa;
+            box-shadow: none;
+        }
+
+        .progress-bar-off {
+            font-weight: bold;
+            background-image: none !important;
+            background-color: #f0f2f5 !important;
+            border-bottom: none !important;
         }
         
         .data2Col {
@@ -134,7 +159,7 @@
 
         
         .pbSubheader {
-            background-color:  #1797c0 !important;
+            background-color:  #1e32fa !important;
             color: #fff;
             font-weight:bold;
             font-size:15px;
@@ -194,7 +219,8 @@
              .row1 {padding-bottom:16px; vertical-align: text-top;}
 
         #container{width:100%;height: 40px;}
-        #right{float:right;width:30%;}
+        #right{float:right;}
+        #right .panel-title a{color:#FFF !important;}
         #right:hover a{
             color:#FFF;
         }
@@ -229,12 +255,12 @@
 
         .title{
             font-weight:bold !important;
-            color:rgb(51, 122, 183) !important;
+            color: #1e32fa !important;
         }
 
         .h4, h4 {
             font-size: 18px;
-            color:rgb(51, 122, 183) ;
+            /*color:#1e32fa;*/
         }
 
         .h5, h5 {
@@ -246,7 +272,7 @@
             color:#4a4a56 !important;
         }
     </style>
-    
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
     <script>
             
             function isInArray(arr, val) {
@@ -500,10 +526,10 @@
       }
       </script>
     </apex:outputPanel>
-            
+    <c:ISSP_CustomNavigation />
      <div class="container">
        <div id="contentWrapper">
-           <c:ISSP_CustomNavigation />
+           
             
    
             
@@ -867,11 +893,11 @@
                             <apex:pageBlockSection columns="1">
                                 <apex:pageBlockSectionItem dataStyle="text-align:right; width: 25%;" rendered="{!isStep1_1}">
                                     <apex:outputPanel >
-                                        <apex:commandButton action="{!goToStepHome}" value="{!$Label.ISSP_Cancel}" />
+                                        <apex:commandButton styleClass="iatabtn iatabtn-danger" action="{!goToStepHome}" value="{!$Label.ISSP_Cancel}" />
                                         &nbsp;&nbsp;
-                                        <apex:commandButton action="{!saveAMSFormAndGoSideways}" value="{!$Label.ISSP_AMS_eBulletin_WEEKLY_Setup}"  rendered="{!newFormDaily.Opt_in__c}"/>
+                                        <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndGoSideways}" value="{!$Label.ISSP_AMS_eBulletin_WEEKLY_Setup}"  rendered="{!newFormDaily.Opt_in__c}"/>
                                         &nbsp;&nbsp;
-                                        <apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormDaily.Opt_in__c}"/>
+                                        <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormDaily.Opt_in__c}"/>
                                     </apex:outputPanel>
                                 </apex:pageBlockSectionItem>
                             </apex:pageBlockSection>
@@ -1169,11 +1195,11 @@
                             <apex:pageBlockSection columns="1">
                                 <apex:pageBlockSectionItem dataStyle="text-align:right; width: 50%;" rendered="{!isStep1_2}">
                                     <apex:outputPanel >
-                                        <apex:commandButton action="{!goToStepHome}" value="{!$Label.ISSP_Cancel}" />
+                                        <apex:commandButton styleClass="iatabtn iatabtn-danger" action="{!goToStepHome}" value="{!$Label.ISSP_Cancel}" />
                                         &nbsp;&nbsp;
-                                        <apex:commandButton action="{!saveAMSFormAndGoSideways}" value="{!$Label.ISSP_AMS_eBulletin_DAILY_Setup}"  rendered="{!newFormWeekly.Opt_in__c}"/>
+                                        <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndGoSideways}" value="{!$Label.ISSP_AMS_eBulletin_DAILY_Setup}"  rendered="{!newFormWeekly.Opt_in__c}"/>
                                         &nbsp;&nbsp;
-                                        <apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormWeekly.Opt_in__c}"/>
+                                        <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormWeekly.Opt_in__c}"/>
                                     </apex:outputPanel>    
                                 </apex:pageBlockSectionItem>
                             </apex:pageBlockSection>
@@ -1285,7 +1311,9 @@
                                             <tr>
                                                 <td>
                                                     <apex:outputpanel >
-                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsDaily}</span> <apex:commandButton action="{!goToStep1_1}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}" style="margin-left:30px;vertical-align:bottom !important"/>
+                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsDaily}</span>
+                                                        <br/>
+                                                        <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-edit" action="{!goToStep1_1}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}"/>
                                                     </apex:outputpanel>
                                                 </td>
                                             </tr>
@@ -1521,7 +1549,7 @@
                                                             </div>
                                                         </apex:pageBlockSectionItem>
                                                     </apex:outputPanel>
-                                                    <apex:commandButton id="btnDailyDownload" action="{!dailyReportDownload}" onclick="planeStartDaily();" reRender="batchStatusPollerDaily" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadDailyReport}" disabled="{!IF(AND(newFormDaily.Opt_in__c, NOT(isGettingReportDaily)) ,'false','true')}"/>
+                                                    <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-download" id="btnDailyDownload" action="{!dailyReportDownload}" onclick="planeStartDaily();" reRender="batchStatusPollerDaily" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadDailyReport}" disabled="{!IF(AND(newFormDaily.Opt_in__c, NOT(isGettingReportDaily)) ,'false','true')}"/>
                                                     <apex:outputPanel id="batchStatusPollerDaily">
                                                         <apex:actionPoller reRender="reportsDailyTable,newWindow,theMessages,waitingPlaneDaily,btnDailyDownload" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
                                                     </apex:outputPanel>
@@ -1609,7 +1637,9 @@
                                             <tr>
                                                 <td>
                                                 <apex:outputpanel >
-                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsWeekly}</span> <apex:commandButton action="{!goToStep1_2}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}" style="margin-left:20px;vertical-align:bottom !important"/>
+                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsWeekly}</span> 
+                                                        <br/>
+                                                        <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-edit" action="{!goToStep1_2}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}"/>
                                                     </apex:outputpanel>
                                                </td>
                                             </tr>
@@ -1827,7 +1857,7 @@
                                                                         </div>
                                                                     </apex:pageBlockSectionItem>
                                                                 </apex:outputPanel>
-                                                                <apex:commandButton id="btnWeeklyDownload" action="{!weeklyReportDownload}" onclick="planeStartWeekly();" reRender="batchStatusPollerWeekly" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadWeeklyReport}" disabled="{!IF(AND(newFormWeekly.Opt_in__c, NOT(isGettingReportWeekly)) ,'false','true')}"/>
+                                                                <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-download" id="btnWeeklyDownload" action="{!weeklyReportDownload}" onclick="planeStartWeekly();" reRender="batchStatusPollerWeekly" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadWeeklyReport}" disabled="{!IF(AND(newFormWeekly.Opt_in__c, NOT(isGettingReportWeekly)) ,'false','true')}"/>
                                                                 <apex:outputPanel id="batchStatusPollerWeekly">
                                                                     <apex:actionPoller reRender="newWindow,theMessages,waitingPlaneWeekly,btnWeeklyDownload,reportsWeeklyTable" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
                                                                 </apex:outputPanel>
@@ -1905,9 +1935,9 @@
 
            
          </div>
-         <c:ISSP_CustomFooter />
+         
          </div>
-       
+         <c:ISSP_CustomFooter />
     </body>  
 </html>
 
