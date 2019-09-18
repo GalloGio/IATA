@@ -28,8 +28,14 @@ export default class PortalSupportPageHeader extends NavigationMixin(LightningEl
 
     //links for images
     backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/FAQsBackground.jpg';
+    backgroundPublicKB = CSP_PortalPath + 'CSPortal/Images/Backgrounds/PublicKnowledgeBackground.jpg';
 
     @track backgroundStyle;
+
+    get getBackgroundClass() {
+        if(this.guestUser) return 'background-image: url("' + this.backgroundPublicKB + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:230px;'
+        if(this.internalUser) return 'background-image: url("' + this.backgroundIcon + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:230px;'
+    }
 
     connectedCallback() {
         let pageParams = getParamsFromPage();
@@ -52,8 +58,6 @@ export default class PortalSupportPageHeader extends NavigationMixin(LightningEl
             }).catch(error => {
                 this.loadingLangs = false;
         });
-
-        this.backgroundStyle = 'background-image: url("' + this.backgroundIcon + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:230px;'
     }
 
     handleChangeLang(event) {
