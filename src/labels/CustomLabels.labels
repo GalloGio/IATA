@@ -1551,6 +1551,14 @@ IATA Customer Service</value>
         <value>The list of Financial Institutions providing Financial Security Insurance in your country</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_GDI_Learn_More</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Learn_More</shortDescription>
+        <value>Learn More</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_GDI_Navigate_Portal</fullName>
         <categories>ISSP, ANG, GDI</categories>
         <language>en_US</language>
@@ -18042,6 +18050,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>September</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NOC_All_Countries</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NOC_All_Countries</shortDescription>
+        <value>All countries in the hierarchy</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NOC_Current_Legal_details</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -18201,13 +18217,6 @@ For each section below either:&lt;br/&gt;
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC Associate Entity</shortDescription>
         <value>Associate Entities, excluding Head Entity</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_NoC_Associate_Entity_MC</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS NoC Associate Entity MC</shortDescription>
-        <value>Associate Entities from the selected country</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Authorized_Signature</fullName>
@@ -18472,25 +18481,11 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Head Entity &amp; All Associate Entities</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_NoC_HE_All_Branches_MC</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS NoC HE All Branches MC</shortDescription>
-        <value>Head Entity &amp; All Associate Entities from the selected country</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_NoC_HE_Some_Branches</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC HE Some Branches</shortDescription>
         <value>Head Entity &amp; one or more Associate Entities</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_NoC_HE_Some_Branches_MC</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS NoC HE Some Branches</shortDescription>
-        <value>Head Entity &amp; one or more Associate Entities from the selected country</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_HO_All_Branches</fullName>

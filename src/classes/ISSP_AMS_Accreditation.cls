@@ -697,7 +697,7 @@ public without sharing class ISSP_AMS_Accreditation {
         if(isBankAccountChange) {
             newForm.Is_change_bank_account_details__c = true;
         } else {
-            newForm.Type_of_Change__c = 'Change of Accreditation Type';
+            newForm.Type_of_Change__c = 'Yes';
             newForm.Scope_of_Change__c = isHOcontact ? 'HO Only' : 'Selected Branches Only'; //Set default
             newForm.Is_change_legal_name__c = true;
             newForm.Is_change_location__c = true;
@@ -2080,25 +2080,23 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.CaseArea__c = 'Accreditation Process';
             newcase.Case_Language__c = applyLanguage;
             newCase.Visible_on_ISS_Portal__c = true;
+            
+            if (isMCAccredited) {
+                Boolean first = false;
+                String countriesMC;
 
-            if ((newForm.Type_Of_Change__c == 'Change of Accreditation Type' || newForm.Type_Of_Change__c == 'Other Changes') && isMCAccredited) {
-                if (isMCAccredited) {
-                    Boolean first = false;
-                    String countriesMC;
-
-                    for (SelectOption country: selectedCountryIsos) {
-                        if (first) {
-                            countriesMC = country.getValue();
-                            first = false;
-                        } else {
-                            countriesMC += ',' + country.getValue();
-                        }
+                for (SelectOption country: selectedCountryIsos) {
+                    if (first) {
+                        countriesMC = country.getValue();
+                        first = false;
+                    } else {
+                        countriesMC += ',' + country.getValue();
                     }
-
-                    newForm.MultiCountry_Countries_Concerned__c = countriesMC;
                 }
-            }
 
+                newForm.MultiCountry_Countries_Concerned__c = countriesMC;
+            }
+            
             if (newForm.Scope_of_Change__c=='HO Only' || newForm.Scope_of_Change__c=='HO - All Branches') {
                 if (newCase.Account_Concerned__c != null) {
                     changeOfAccountConcerned = true;
@@ -5146,6 +5144,7 @@ public without sharing class ISSP_AMS_Accreditation {
                             AND Type = :AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT
                             AND Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
                             AND (Location_Type__c = :AMS_Utils.AE OR Location_Type__c = :AMS_Utils.HE OR Location_Type__c = :AMS_Utils.GE)
+                            AND IATA_ISO_Country__r.Multicountry_Enabled__c = true
                             LIMIT 1];
 
         if (!agency.isEmpty()) {
