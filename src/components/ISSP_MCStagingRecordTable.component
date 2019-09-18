@@ -70,6 +70,7 @@
             $('#submitMCButton').attr('disabled', 'true');
         } else {
             $('#submitMCButton').attr('disabled', 'false');
+        }
     }
     </script>
     </apex:outputPanel>
