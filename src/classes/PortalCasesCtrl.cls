@@ -676,7 +676,7 @@ public with sharing class PortalCasesCtrl {
         if(newCase.status != 'Closed'){
             return null;
         }
-
+        
         Id profileId = Userinfo.getProfileId();
         String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
         ClosedSurvey__c csValues = ClosedSurvey__c.getInstance(newCase.RecordType__c);
@@ -692,6 +692,7 @@ public with sharing class PortalCasesCtrl {
         Boolean isToShowSurveyBtn = csValues != null && csValues.RolesAvailable__c.contains(userRole) || csValues.RolesAvailable__c.contains('All');
         Boolean matchingCaseType = caseType == null;
         Boolean surveyCompleted = false;
+        Boolean validCloseDate = newCase.ClosedDate < Date.today().addDays(-14);
 
         List<Instant_Surveys__c> Survey_List = new List<Instant_Surveys__c>([SELECT Case_ID__c
         FROM Instant_Surveys__c
@@ -702,7 +703,7 @@ public with sharing class PortalCasesCtrl {
             surveyCompleted = true ;
         }
 
-        Boolean showLink = matchingStatus && !isPWCCase && !isDPCuser && isToShowSurveyBtn && matchingCaseType && !surveyCompleted;
+        Boolean showLink = matchingStatus && !isPWCCase && !isDPCuser && isToShowSurveyBtn && matchingCaseType && !surveyCompleted && validCloseDate;
 
         if(!showLink){
             return null;
