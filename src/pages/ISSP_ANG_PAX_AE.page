@@ -1081,6 +1081,53 @@
                             <apex:inputfield id="date-license-granted" value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" rendered="{!countryCheckList.License_required__c==true}"/>
                             <apex:inputfield id="date-reg-granted" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" rendered="{!countryCheckList.Registration_required__c==true}"/>
                           </apex:pageBlockSection>
+
+                          <apex:pageBlockSection columns="2" collapsible="false" rendered="{!isocountry.Local_language_Agency_details_required__c}">
+                            <apex:facet name="header">
+                                <apex:outputpanel >
+                                    {!txtLocalAgencyDetailsTitle}
+                                </apex:outputpanel>
+                            </apex:facet>
+                            <apex:outputText value="{!txtLocalAgencyDetailsPleaseEnter}"/>
+                            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                            <apex:pageBlockSectionItem labelStyle="width:10%;text-align:left" dataStyle="width:20%">
+                                <apex:outputLabel value="{!txtLocalAgencyDetailsLegalName}"/>
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!newForm.Local_Legally_Registered_Name__c}" />
+                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoCompany}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>                   
+                            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                            <input type="checkbox" id="copyCheckBox" onChange="copyPhysicalAddress()"/>
+                            <label for="copyCheckBox">{!txtLocalAgencyDetailsCopyAddress}</label> 
+                            
+                            <apex:pageBlockSection columns="1">    
+                                <apex:outputText value="{!txtLocalAgencyDetailsPhysicalAddress}" style="font-weight:bold; font-size:110%"/>
+                                <apex:pageBlockSectionItem labelStyle="width:35%">
+                                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Street__c.Label}"/>
+                                    <apex:inputField value="{!newForm.Local_Physical_Address_Street__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalStreet"/>
+                                </apex:pageBlockSectionItem>  
+                                <apex:inputField value="{!newForm.Local_Physical_Address_City__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalCity"/>
+                                <apex:inputField value="{!newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode"/>
+                                <apex:inputField value="{!newForm.Local_Physical_Address_Province__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalProvince"/>
+                                <apex:inputField value="{!newForm.Local_Physical_Address_Area__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalArea"/>
+                                <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                            </apex:pageBlockSection>
+                          
+                            <apex:pageBlockSection columns="1">
+                                <apex:outputText value="{!txtLocalAgencyDetailsCorrespondenceAddress}" style="font-weight:bold; font-size:110%"/>
+                                <apex:pageBlockSectionItem labelStyle="width:30%">
+                                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Street__c.Label}"/>
+                                    <apex:inputField value="{!newForm.Local_Postal_Address_Street__c}" styleClass="PostalStreet"/>
+                                </apex:pageBlockSectionItem>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_City__c}" styleClass="PostalCity"/>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode"/>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince"/>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
+                                <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                            </apex:pageBlockSection>
+                        </apex:pageBlockSection>
                   </apex:pageblock>
                   <script>
                     $j( document ).ready(function() {
@@ -1160,7 +1207,7 @@
                             <apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!txtHelpAuthorisedSig}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip" /></apex:outputText>
                         </apex:facet>
                       </apex:column>
-                      <apex:column value="{!agencycon.Financial_Assessment_Contact__c}" style="text-align:center" rendered="{!IF(AND(amsOfficeType=='HO', newForm.Agent_Type__c!='Standard no Cash'),true,false)}">
+                      <apex:column value="{!agencycon.Financial_Assessment_Contact__c}" style="text-align:center" rendered="{!IF(AND(amsOfficeType=='HO', newForm.Agent_Type__c!='Standard no Cash', AND(newform.Local_Agent_Type__c != 'Domestic', isocountry.ISO_Code__c == 'CN')),true,false)}">
                         <apex:facet name="header">
                           <apex:outputText escape="false" style="float:left" value="&nbsp;{!$Label.ISSP_AMS_Fin_Contact}">
                             <apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!txtHelpFinContact}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip" /></apex:outputText>
@@ -1910,7 +1957,7 @@
                             <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Authorised_signatory__c.Label}</apex:outputLabel>
                             <apex:inputField value="{!newContact.Authorised_signatory__c}" />
                           </apex:pageBlockSectionItem>
-                          <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" rendered="{!amsOfficeType=='HO'}">
+                          <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" rendered="{!AND(amsOfficeType=='HO', newForm.Local_Agent_Type__c != 'Domestic')}">
                             <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}</apex:outputLabel>
                             <apex:inputField value="{!newContact.Financial_Assessment_Contact__c}" />
                           </apex:pageBlockSectionItem>
