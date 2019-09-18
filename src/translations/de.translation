@@ -1745,6 +1745,10 @@
         <name>CSP_Accept_Terms_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Account Domain Created --></label>
+        <name>CSP_Account_Domain_Created</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Add_All --></label>
         <name>CSP_Add_All</name>
     </customLabels>
@@ -1763,6 +1767,10 @@
     <customLabels>
         <label>Ankündigung</label>
         <name>CSP_Announcement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Apply --></label>
+        <name>CSP_Apply</name>
     </customLabels>
     <customLabels>
         <label>War dieser Artikel hilfreich?</label>
@@ -1889,6 +1897,14 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
+    </customLabels>
+    <customLabels>
         <label>Benutzerzugriff verweigern</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1913,8 +1929,20 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Domain Error Message --></label>
+        <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
         <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
         <label>Kontaktieren Sie uns</label>
@@ -1959,6 +1987,14 @@
     <customLabels>
         <label><!-- CSP_FeedbackTitle --></label>
         <name>CSP_FeedbackTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filter --></label>
+        <name>CSP_Filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filtered --></label>
+        <name>CSP_Filtered</name>
     </customLabels>
     <customLabels>
         <label>Für Sie</label>
@@ -2009,6 +2045,10 @@
         <name>CSP_NewServiceUserMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP New Email Domain --></label>
+        <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
         <label>Kein zugehöriges Konto zur Anzeige.</label>
         <name>CSP_NoAccount</name>
     </customLabels>
@@ -2043,6 +2083,10 @@
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
         <name>CSP_PortalPath</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Portal_Administrators --></label>
+        <name>CSP_Portal_Administrators</name>
     </customLabels>
     <customLabels>
         <label>Portalstatus</label>
@@ -2085,8 +2129,24 @@
         <name>CSP_RecentCases</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP RecentCases HelpText --></label>
+        <name>CSP_RecentCases_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Recent Cases Support --></label>
+        <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Record Deleted --></label>
+        <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
         <label>Ähnliche Themen</label>
         <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveAllFilters --></label>
+        <name>CSP_RemoveAllFilters</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_RemoveContact_Reason --></label>
@@ -2279,6 +2339,10 @@
     <customLabels>
         <label>Einreichen</label>
         <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Success --></label>
+        <name>CSP_Success</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Support --></label>
@@ -20142,6 +20206,10 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
     <customLabels>
         <label><!-- Contacting us --></label>
         <name>contacting_us</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Relocation --></label>
+        <name>csp_AccountRelocateSuccess</name>
     </customLabels>
     <customLabels>
         <label>Akkreditierungsprozess</label>

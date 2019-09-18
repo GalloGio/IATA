@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label>Portal FAQs</label>
-    <pluralLabel>Portal FAQs</pluralLabel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Account_Categories__c</fullName>
         <externalId>false</externalId>
@@ -215,10 +212,10 @@
     <fields>
         <fullName>FAQsStructure__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>Determinates if it&#39;s a element from the data category setup hierarchie.</description>
+        <description>Determinates if it&apos;s a element from the data category setup hierarchie.</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
-        <inlineHelpText>Determinates if it&#39;s a element from the data category setup hierarchie.</inlineHelpText>
+        <inlineHelpText>Determinates if it&apos;s a element from the data category setup hierarchie.</inlineHelpText>
         <label>FAQsStructure</label>
         <type>Checkbox</type>
     </fields>
@@ -289,6 +286,7 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <label>Portal FAQs</label>
     <listViews>
         <fullName>FAQs_Structure</fullName>
         <columns>MasterLabel</columns>
@@ -412,4 +410,6 @@
         <label>TIESS</label>
         <language>en_US</language>
     </listViews>
+    <pluralLabel>Portal FAQs</pluralLabel>
+    <visibility>Public</visibility>
 </CustomObject>
