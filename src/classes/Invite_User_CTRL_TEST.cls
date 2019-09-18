@@ -469,7 +469,7 @@ public class Invite_User_CTRL_TEST {
     @IsTest
     public static void getCurrenthUserInfoTest() {
 
-        User testUser = [SELECT Id FROM User WHERE FirstName='Petr' AND LastName='Novak'];
+        User testUser = [SELECT Id, Email FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
 
         User infoUser = null;
 
