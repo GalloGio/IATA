@@ -103,6 +103,10 @@ public with sharing class ANG_AgencyChangesHelper {
 			calculateRiskAssessmentMap.put(accountId, null);
 		}
 
+		public void addAccountsToRecalculateFsAmounts(Id accountId){
+			accountsToRecalculateFsAmounts.add(accountId);
+		}
+
 		public Boolean runUpsert(){
 
 			System.debug('[ANG_AgencyChangesHelper] Running upsert'); 
@@ -149,10 +153,6 @@ public with sharing class ANG_AgencyChangesHelper {
 			AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
 
 			System.debug('[ANG_AgencyChangesHelper] Upsert has run.');
-			
-			public void addAccountsToRecalculateFsAmounts(Id accountId){
-				accountsToRecalculateFsAmounts.add(accountId);
-			}
 
 			if(deactivateRhcInformationLst != NULL && !deactivateRhcInformationLst.isEmpty()){
 				ANG_RHCHelper.deactivateRHCInfo(deactivateRhcInformationLst);
