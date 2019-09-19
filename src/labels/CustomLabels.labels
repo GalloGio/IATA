@@ -1241,6 +1241,7 @@ Please issue a Credit Note in order to refund the change fee.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_BOP_China_URL</fullName>
+        <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_BOP_China_URL</shortDescription>
