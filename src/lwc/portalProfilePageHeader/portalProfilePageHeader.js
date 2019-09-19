@@ -4,23 +4,14 @@
 
 import { LightningElement, track } from 'lwc';
 
-import { NavigationMixin } from 'lightning/navigation';
-import { getParamsFromPage } from'c/navigationUtils';
-import { getRecord} from 'lightning/uiRecordApi';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent'
-
 //User and company details
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import getCompanyInfo from '@salesforce/apex/PortalProfileCtrl.getCompanyInfo';
-import getCategoryTiles from '@salesforce/apex/PortalFAQsCtrl.getCategoryTiles';
-
 
 //Import custom labels
 import csp_Profile_CompanyEmail from '@salesforce/label/c.csp_Profile_CompanyEmail';
 import csp_Profile_IATACode from '@salesforce/label/c.csp_Profile_IATACode';
 import csp_Profile_Website from '@salesforce/label/c.csp_Profile_Website';
-import ISSP_ANG_GenericError from '@salesforce/label/c.ISSP_ANG_GenericError';
-
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 
@@ -34,10 +25,7 @@ export default class PortalProfilePageHeader extends LightningElement {
 
         @track backgroundStyle;
         @track profileDivStyle;
-        @track category = '';
-        @track profilePhotoStyle
-        @track portalImg;
-        @track iconLink;
+        @track profilePhotoStyle;
         @track error;
 
         //Account fields
@@ -48,8 +36,7 @@ export default class PortalProfilePageHeader extends LightningElement {
         _labels = {
             csp_Profile_CompanyEmail,
             csp_Profile_IATACode,
-            csp_Profile_Website,
-            ISSP_ANG_GenericError
+            csp_Profile_Website
             };
 
         get labels() {
@@ -98,50 +85,15 @@ export default class PortalProfilePageHeader extends LightningElement {
 
             this.backgroundStyle = 'background-image: url("' + this.backgroundIcon + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:170px;'
             this.profileDivStyle = 'background-image: url("' + this.backgroundIcon + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:170px; width: 196px; height: 196px; position: absolute; top: 72px; left: 32px; border-radius: 50%;  box-shadow: 0px 1px 12px 0px #827f7f; background-color:white;';
-
-            //get the parameters for this page
-            this.pageParams = getParamsFromPage();
-
-            if(this.pageParams.category !== undefined && this.pageParams.category !== ''){
-                //this.category = this.pageParams.category;
-                getCategoryTiles({})
-                .then(results => {
-                    //because proxy.......
-                    let resultsAux = JSON.parse(JSON.stringify(results));
-
-                    if(resultsAux !== undefined && resultsAux !== null && resultsAux.length > 0){
-                        let i;
-                        for(i = 0; i < resultsAux.length; i++){
-                            if(resultsAux[i].categoryName === this.pageParams.category){
-                                this.category = resultsAux[i].categoryLabel;
-                                this.iconLink = CSP_PortalPath + 'CSPortal/Images/FAQ/' + this.pageParams.category + '.svg';
-                                break;
-                            }
-                        }
-                        this.lstTiles = resultsAux;
-                    }
-                })
-                .catch(error => {
-                    const showError = new ShowToastEvent({
-                    title: 'Error',
-                    message: this.labels.ISSP_ANG_GenericError+' ' + error.getMessage,
-                    variant: 'error',
-                });
-                this.dispatchEvent(showError);
-                });
-            }
         }
 
+        getPrettyLink(url){
+            let pretty;
 
-
-
-             getPrettyLink(url){
-                 let pretty;
-
-                 if(url != null && url.length > 0){
-                     pretty = url.replace(/((^\w+:|^)\/\/)/, '');
-                     return pretty;
-                 }
-                 return '';
-             }
+            if(url != null && url.length > 0){
+                pretty = url.replace(/((^\w+:|^)\/\/)/, '');
+                return pretty;
+            }
+            return '';
+        }
 }
