@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
     <fields>
         <fullName>Category__c</fullName>
         <externalId>false</externalId>
@@ -87,7 +88,16 @@
     <label>Contact Role Service Permission</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Url__c</columns>
+        <columns>Category__c</columns>
+        <columns>Contact_Role_Service__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>Url__c</field>
+            <operation>contains</operation>
+            <value>https</value>
+        </filters>
         <label>All</label>
     </listViews>
     <nameField>

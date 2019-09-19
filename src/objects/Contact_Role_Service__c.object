@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
     <fields>
         <fullName>Contact_Role__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -83,6 +84,11 @@
         <columns>Contact_Role__c</columns>
         <columns>Service__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>GADM</value>
+        </filters>
         <label>All</label>
     </listViews>
     <nameField>
