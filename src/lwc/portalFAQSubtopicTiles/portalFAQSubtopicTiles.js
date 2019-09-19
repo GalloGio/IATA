@@ -24,9 +24,10 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
                 let tempCategoryName = this.category; //Contains selected category from portalFAQPage
         
                 Object.keys(result).forEach(function (el) {                
-                    tempAccordionMap[result[el].topicName] = result[el];
+                    
 
                     if(tempCategoryName === result[el].categoryName) {
+                        tempAccordionMap[result[el].topicName] = result[el];
                         tempTopicOptions.push({ label: result[el].topicLabel, value: result[el].topicName, open: false, class: 'slds-p-around_medium customCardTitleBox cursorPointer borderStyle cardStyle' });
                     }
                 });
