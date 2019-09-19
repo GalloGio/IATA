@@ -1,0 +1,64 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+    
+    <div class="">
+    	<div style="float:left;">
+            <a href="https://www.iata.org"><img id="imgHome" class="homeIcon" src="{!$Resource.commIcons + '/toplogo.png'}" title="IATA Home" /></a>
+        </div>
+        <div style="background-color:#e7e7e7;height:127px;">
+        	<div>
+            	<ul style="list-style-type: none;padding:21px 0px 10px 40px;">
+                    <li style="float: left;">
+                        <a class="toplink" href="https://www.iata.org/about/pages/index.aspx">About Us</a>
+                    </li>
+                    <li style="float: left;">
+                        <img src="{!$Resource.commIcons + '/top-menu-separator.png'}"/>
+                    </li>
+                    <li style="float: left;">
+                        <a class="toplink" href="https://www.iata.org/hc/pages/index.aspx">Careers</a>
+                    </li>
+                    <li style="float: left;">
+                        <img src="{!$Resource.commIcons + '/top-menu-separator.png'}"/>
+                    </li>
+                    <li style="float: left;">
+                        <a class="toplink" href="https://www.iata.org/pages/contact.aspx">Contact &amp; Support</a>
+                    </li>
+                </ul>
+            </div>
+            <div style="font-size:12px;margin-top: 62px;">
+            	<ul style="list-style-type: none;">
+                    <li style="float: left;border-left: 1px solid #e7e7e7;border-right: 1px solid #cdcdcd;">
+                        <a class="bottomlink" style="padding: 15px 17px 15px 17px;" href="https://www.iata.org/whatwedo/pages/index.aspx">PROGRAMS</a>
+                    </li>
+                    <li style="float: left;border-left: 1px solid #cdcdcd;border-right: 1px solid #cdcdcd;">
+                        <a class="bottomlink" style="padding: 15px 17px 15px 17px;" href="https://www.iata.org/policy/pages/default.aspx">POLICY</a>
+                    </li>
+                    <li style="float: left;border-left: 1px solid #cdcdcd;border-right: 1px solid #cdcdcd;">
+                        <a class="bottomlink" style="padding: 15px 17px 15px 17px;" href="https://www.iata.org/publications/pages/index.aspx">PUBLICATIONS</a>
+                    </li>
+                    <li style="float: left;border-left: 1px solid #cdcdcd;border-right: 1px solid #cdcdcd;">
+                        <a class="bottomlink" style="padding: 15px 17px 15px 17px;" href="https://www.iata.org/services/pages/index.aspx">SERVICES</a>
+                    </li>
+                    <li style="float: left;border-left: 1px solid #cdcdcd;border-right: 1px solid #cdcdcd;">
+                        <a class="bottomlink" style="padding: 15px 17px 15px 17px;" href="https://www.iata.org/training/pages/index.aspx">TRAINING</a>
+                    </li>
+                    <li style="float: left;border-left: 1px solid #cdcdcd;border-right: 1px solid #cdcdcd;">
+                        <a class="bottomlink" style="padding: 15px 17px 15px 17px;" href="https://www.iata.org/events/pages/index.aspx">EVENTS</a>
+                    </li>
+                    <li style="float: left;border-left: 1px solid #cdcdcd;border-right: 1px solid #e7e7e7;">
+                        <a class="bottomlink" style="padding: 15px 17px 15px 17px;" href="https://www.iata.org/pressroom/pages/index.aspx">PRESSROOM</a>
+                    </li>
+                    
+                    <li style="float: right;">
+                        <a class="bottomlinkright" style="padding: 15px 17px 15px 17px;" href="https://www.iata.org/pages/default.aspx">You &amp; IATA</a>
+                    </li>
+                </ul>
+            </div> 
+        </div>
+        
+    </div>
+    
+    <div class="backgroundheader">
+    	&nbsp;
+    </div>
+   
+</aura:component>

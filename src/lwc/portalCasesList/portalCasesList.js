@@ -133,12 +133,12 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         .then(results => {
             this.columns = [
                 {label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 135, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'}},
-                {label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 135},
+                {label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 135, cellAttributes: {class: 'cellHidden'}},
                 {label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 350, typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'}},
                 {label: ISSP_Contact, fieldName: 'ContactName', type: 'text'},
-                {label: results.LastModifiedDate, fieldName: 'LastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}},
-                {label: results.Country_concerned__c, fieldName: 'Country', type: 'text'},
-                {label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: {class: {fieldName: 'statusClass'}}}
+                {label: results.LastModifiedDate, fieldName: 'LastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}, cellAttributes: {class: 'cellHidden'}},
+                {label: results.Country_concerned__c, fieldName: 'Country', type: 'text', cellAttributes: {class: 'cellHidden'}},
+                {label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, typeAttributes: {label: {fieldName: 'statusClass'}, target:'_self'}, cellAttributes: {class: 'cellHidden'}}
             ];
             /*Column 'Created By' is only visible by Portal Admin on list 'My Company Cases'*/
             this.columnsAux = this.columns[3];
@@ -332,7 +332,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
     }
 
     dateFromOnchangeHandler(event) {
-        let selectedValue = event.detail.value;        
+        let selectedValue = event.detail.value;
         this.dateFromFiltersTemp = selectedValue;
     }
 
@@ -393,5 +393,5 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         let picklistAux = [{checked: false, label: 'All', value: ''}];
         return picklistAux.concat(picklist);
     }
-    
+
 }

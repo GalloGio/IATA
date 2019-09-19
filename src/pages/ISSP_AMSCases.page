@@ -1,11 +1,10 @@
-<apex:page controller="ISSP_AMS_Accreditation" cache="false" 
-           sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" 
-           standardStylesheets="false" language="{!displayLanguage}">
+<apex:page controller="ISSP_AMS_Accreditation" cache="false" sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false"
+    standardStylesheets="false" language="{!displayLanguage}">
     <html>
     <c:ISSP_Header />
 
-        <body>
-        <script src="{!URLFOR($Resource.bootbox)}"/>
+    <body>
+        <script src="{!URLFOR($Resource.bootbox)}" />
         <style>
             .section-header {
                 background-color: #1e32fa;
@@ -16,7 +15,8 @@
                 border-top: 1px solid #ddd;
             }
 
-            body, div.container {
+            body,
+            div.container {
                 background-color: rgb(240, 242, 245) !important;
             }
 
@@ -34,10 +34,10 @@
             }
 
             .tableFormat {
-                padding-left : 5px !important;
-                padding-right : 15px !important;
+                padding-left: 5px !important;
+                padding-right: 15px !important;
                 padding-bottom: 2px !important;
-                padding-top :  2px !important;
+                padding-top: 2px !important;
                 vertical-align: middle !important;
             }
 
@@ -49,18 +49,18 @@
                 font-size: 12px;
             }
 
-            .borderless > thead > tr > th,
-            .borderless > tbody > tr > th,
-            .borderless > tfoot > tr > th,
-            .borderless > thead > tr > td,
-            .borderless > tbody > tr > td,
-            .borderless > tfoot > tr > td {
+            .borderless>thead>tr>th,
+            .borderless>tbody>tr>th,
+            .borderless>tfoot>tr>th,
+            .borderless>thead>tr>td,
+            .borderless>tbody>tr>td,
+            .borderless>tfoot>tr>td {
                 border-top: none;
-            }      
+            }
 
-            input + label {
+            input+label {
                 font-weight: normal;
-            } 
+            }
 
             .overlay {
                 display: none;
@@ -77,7 +77,7 @@
                 -khtml-opacity: 0.3;
                 z-index: 1000;
             }
-        
+
             .loader {
                 background: url('/img/loading32.gif') scroll no-repeat 0 0;
                 width: 32px;
@@ -86,14 +86,27 @@
                 left: 50%;
             }
 
+            .customlink {
+                cursor: pointer;
+                color: #337ab7;
+            }
             .content-box {
                 box-shadow: 5px 5px 20px #e2e2e2;
                 background-color: white;
+                height: 100%;
             }
-            
-            .content-box > .row {
+		.content-box > .row {
                 padding-left: 15px;
                 padding-right: 15px;
+            }
+
+            .customlink:hover {
+                cursor: pointer;
+                color: #337ab7;
+                text-decoration: underline;
+            .mainRows{
+                display: flex;
+                flex-direction: row;
             }
 
             .padded-on-top {
@@ -135,7 +148,7 @@
             }
 
         </style>
-        <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
+        <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
 
         <script type="text/javascript">
             var typeAccredSelected = '';
@@ -144,23 +157,23 @@
                 $('[data-toggle="tooltip"]').tooltip();
             })
 
-            function checkEligibility(isBankAccountChange){
-                if ('{!isHOAccredited}'=='false') {
+            function checkEligibility(isBankAccountChange) {
+                if ('{!isHOAccredited}' == 'false') {
                     bootbox.alert("{!if(communityName=='CNS', $Label.ISSP_AMS_NoC_Message_Accredited_Agent_CNS, $Label.ISSP_AMS_NoC_Message_Accredited_Agent)}");
                 } else if ('{!con.Account.Location_Type__c}' == 'AE' && isBankAccountChange === 'false') {
                     bootbox.alert('{!$Label.ISSP_AMS_Cases_Notify_IATA_Changes_Error}');
                 } else {
-                    navigateToUrl('/ISSP_AMS_Accreditation?isNoticeOfChange=true&isBankAccountChange='+isBankAccountChange + '{!commParam}' +'&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                    navigateToUrl('/ISSP_AMS_Accreditation?isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '{!commParam}' + '&retUrl=/ISSP_HomePage', 'LIST_VIEW', 'newCase');
                 }
             }
 
-            function proofOfPCI(){
-                navigateToUrl('/ISSP_ANG_PCI?&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+            function proofOfPCI() {
+                navigateToUrl('/ISSP_ANG_PCI?&retUrl=/ISSP_HomePage', 'LIST_VIEW', 'newCase');
             }
 
             function proceedToVMFR() {
-                bootbox.confirm("{!JSENCODE($Label.ISSP_AMS_Step0_Proceed_VMFR)}", function(result) {
-                    if(result) {
+                bootbox.confirm("{!JSENCODE($Label.ISSP_AMS_Step0_Proceed_VMFR)}", function (result) {
+                    if (result) {
                         window.open('{!portalRedirectToSupport}', '_self');
                     }
                 });
@@ -168,21 +181,24 @@
 
             function proceedToVR() {
                 if ('{!con.Authorized_Signatory__c}' == 'false' && '{!con.User_Portal_Status__c}' == 'Approved Admin') {
-                    if( {!isNewPortal} ){
-                        bootbox.alert("{!JSENCODE($Label.CSP_ANG_Portal_Admin_Authorized_Signature)}");
-                    } else {
-                        bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin_Authorized_Signature}');
-                    }                
-                } else if ('{!con.Authorized_Signatory__c}' == 'false' && '{!con.User_Portal_Status__c}' != 'Approved Admin') {
-                    if( {!isNewPortal} ){
-                        bootbox.alert("{!JSENCODE($Label.CSP_ANG_Portal_Admin)}");
-                    }
-                    else {
-                        bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin}');
-                    }
+                    if ({
+                            !isNewPortal
+                }) {
+                    bootbox.alert("{!JSENCODE($Label.CSP_ANG_Portal_Admin_Authorized_Signature)}");
                 } else {
-                    navigateToUrl('/ISSP_ANG_VoluntaryRelinquishment','_self');
+                    bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin_Authorized_Signature}');
                 }
+            } else if ('{!con.Authorized_Signatory__c}' == 'false' && '{!con.User_Portal_Status__c}' != 'Approved Admin') {
+                if ({
+                            !isNewPortal
+            }) {
+                bootbox.alert("{!JSENCODE($Label.CSP_ANG_Portal_Admin)}");
+            } else {
+                bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin}');
+            }
+                } else {
+                navigateToUrl('/ISSP_ANG_VoluntaryRelinquishment', '_self');
+            }
             }
 
             function redirectToMyProfileJs() {
@@ -203,11 +219,11 @@
                     navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Cargo_Agent');
                 } else if ('{!sector}' == 'Cargo Agent') {
                     if ('{!namEnabled}' == 'true') {
-                        navigateToUrl('/ISSP_ANG_ProductComparison','LIST_VIEW','newCase');
+                        navigateToUrl('/ISSP_ANG_ProductComparison', 'LIST_VIEW', 'newCase');
                     } else {
-                        navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent'); 
+                        navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent');
                     }
-                } 
+                }
                 return false;
             }
 
@@ -218,19 +234,22 @@
             function redirectAccreditationType() {
                 typeAccredSelected = $('input[type=radio]:checked').val();
 
-                if(typeAccredSelected == '') {
+                if (typeAccredSelected == '') {
                     document.querySelector("[Id$='accreditationTypeRequired']").style.display = '';
                 } else {
-                    if(typeAccredSelected == 'Travel_Agent') {
-                        navigateToUrl('/ISSP_ANG_ProductComparison','LIST_VIEW','newCase');
+                    if (typeAccredSelected == 'Travel_Agent') {
+                        navigateToUrl('/ISSP_ANG_ProductComparison', 'LIST_VIEW', 'newCase');
                     } else {
-                        navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage&sectorValue=Cargo_Agent','LIST_VIEW','newCase');
+                        navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='
+                            CNS ', '
+                            CommunityName = CNS & ', '
+                            ')}retUrl=/ISSP_HomePage&sectorValue=Cargo_Agent', 'LIST_VIEW', 'newCase');
                     }
                 }
             }
 
             function optInOut() {
-                if('{!isIFAPContact}' == 'true') {
+                if ('{!isIFAPContact}' == 'true') {
                     $('#ModalOptInOut').modal('toggle');
                 } else {
                     bootbox.alert("{!optInOutMessage}");
@@ -255,12 +274,12 @@
             function startLoading() {
                 $('.loadingBox').show();
             }
-                
+
             function endLoading() {
                 $('.loadingBox').hide();
             }
 
-            function redirectToCompanyInformationJs(){
+            function redirectToCompanyInformationJs() {
                 window.open('{!portalRedirectToCompanyProfile}', '_self');
             }
 
@@ -282,7 +301,7 @@
             <apex:actionFunction action="{!runOptInOut}" name="runOptInOut" oncomplete="onCompleteOptInOut();" rerender="DraftCases" />
             
             <div class="" style="width: 100%">
-                <div class="row">
+                <div class="row mainRows">
                     <section name="left-side-agency-accred" class="col-md-7" style="min-height: 350px;">
 				<div class="content-box">
                         <header>
@@ -385,7 +404,7 @@
                         </section>
                 </div>
                 
-                <div class="row">
+                <div class="row mainRows">
                     <section name="left-side-ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px">
                         <header>
                             <div class="section-header">
@@ -524,5 +543,6 @@
 
         <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </body>
+
     </html>
 </apex:page>

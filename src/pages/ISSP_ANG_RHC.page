@@ -7,21 +7,12 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-    <c:ISSP_Header></c:ISSP_Header>
+    <c:ISSP_Header ></c:ISSP_Header>
     <c:iss_ap_css />
   </head>
 
   <body>
     <style>
-      .section-header {
-        background-color: rgb(43, 120, 228);
-        color: white;
-        line-height: 1.42857143;
-        padding: 8px;
-        vertical-align: top;
-        border-top: 1px solid #ddd;
-      }
-
       .section-header>i {
         color: black;
         margin-right: 5px;
@@ -35,10 +26,6 @@
         width: 95%;
         max-width: 100%;
         margin-bottom: 20px;
-      }
-
-      main {
-        background-color: white;
       }
 
       td>img {
@@ -187,292 +174,297 @@
           cursor: pointer;
       }
 
+      .row-main{
+        margin-bottom: 20px;
+      }
+
+      .requestbtn-wrapper{
+        display: flex;
+        justify-content: center;
+        margin: 15px 0;
+      }
+
+      .col-md-4.col-sm-12.text-center img{
+        height: 80px;
+        width: 80px;
+      }
+
+      .table>tbody>tr>td{
+        border-top: none !important;
+      }
+
     </style>
-    <main class="container">
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
       <c:ISSP_CustomNavigation />
+      <div class="container">     
       <apex:form id="mainFrm">
-      <div class="row">
-        <!--
-                LEFT SECTION
-        -->
-        <section name="left-side" class="col-md-8 col-sm-12">
-
-          <!--
-                RHC SECTION
-          -->
-
-          <section name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')}; min-height: 350px;">
-            <header class="col-xs-12">
-              <div class="section-header">
-                <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
-                <!--i class="fa fa-line-chart" aria-hidden="true"></--> 
-                <strong>{!$Label.ISSP_RHC_HUB}</strong>
+      
+      <div class="row row-main">
+          <section name="remittance-holding" class="col-md-8" style="display: {!IF(isCashless,'none','block')}; min-height: 350px;">
+              <div class="content-box">
+              <header>
+                <div class="section-header">
+                  <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
+                  <!--i class="fa fa-line-chart" aria-hidden="true"></--> 
+                  <strong>{!$Label.ISSP_RHC_HUB}</strong>
+                </div>
+              </header>
+              <apex:outputPanel layout="block" id="rhcInfoPanel" styleClass="row" style="margin-right: 15px;">
+                <section id="remittance-holding-table" class="col-md-8 col-sm-12">
+                  <table class="table borderless" style="margin-left: 13px;">
+                    <tr style="display: {!IF(isCashless,'none','table-row')}">
+                      <td>
+                        {!$ObjectType.ANG_RHC_Information__c.fields.ANG_RHC_Amount__c.label}
+                        <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_RHCAmountTooltip}" />
+                      </td>
+                      <td>
+                        {!rhcInfo.CurrencyIsoCode} 
+                        <apex:outputText value="{0, number, ###,##0.##}">
+                          <apex:param value="{!rhcInfo.ANG_RHC_Amount__c}"/>
+                        </apex:outputText>
+                      </td>
+                    </tr>
+                    <tr style="display: {!IF(isCashless,'none','table-row')}">
+                      <td>
+                        {!$Label.ISSP_RHC_HUB_Current_Usage}
+                        <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_HUB_Current_UsageTooltip}" />
+                      </td>
+                      <td>
+                        {!rhcInfo.CurrencyIsoCode}
+                        <apex:outputText value="{0, number, ###,##0.##}">
+                          <apex:param value="{!rhcInfo.ANG_ConsumedRHC__c}"/>
+                        </apex:outputText>
+                      </td>
+                    </tr>
+                    <tr style="display: table-row;">
+                      <td>
+                        {!$Label.ISSP_RHC_HUB_Curr_Financial_Security}
+                      </td>
+                      <td style="text-align: left !important;">
+                        {!rhcInfo.CurrencyIsoCode}
+                        <apex:outputText value="{0, number, ###,##0.##}">
+                          <apex:param value="{!rhcInfo.ANG_Financial_Security__c}"/>
+                        </apex:outputText>
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr style="display: {!IF(isCashless,'none','table-row')}">
+                      <td>
+                        {!$ObjectType.Account.fields.Remittance_frequency__c.label}
+                      </td>
+                      <td>{!contact.Account.Remittance_frequency__c}</td>
+                    </tr>
+                  </table>
+                </section>
+                <section id="gaugeSection" class="col-md-4 col-sm-12" style="display: {!IF(isCashless,'none','block')}">
+                  <canvas id="percentageUsageGauge"></canvas>
+                  <br/>
+                  <span>
+                    <strong>
+                      <apex:outputText value="{!$Label.ISSP_RHC_HUB_Percentage_Usage} : {0, number, 0}%">
+                        <apex:param value="{!rhcInfo.ANG_ConsumedRHC_Percent__c}"/>
+                      </apex:outputText>
+                    </strong>
+                  </span>
+                  <span class="last-updated">
+                    <strong>{!$Label.ISSP_RHC_HUB_Last_Updated}</strong>
+                    <apex:outputText value="{0, date, EEE, d MMM yyyy}">
+                      <apex:param value="{!rhcInfo.ANG_ConsumedRHC_Last_Update__c}" />
+                    </apex:outputText>
+                  </span>
+                </section>
+              </apex:outputPanel>
+  
+              <div class="row" style="display: {!IF(isCashless,'none','block')}">
+                <div class="requestbtn-wrapper">
+                  <button id="requestRME" onclick="requestBalanceUpdate();return false;" class="iatabtn-main">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
+                </div>
+              <!-- The Modal -->
+              <div id="myModal" class="modal">
+  
+                <!-- Modal content -->
+                <div id="modal-content-ErrorHandling" class="modal-content">
+                  <span id="closeModal-ErrorHandling" class="closeModal">&times;</span>
+                  <p>There was an error in updating your balance. Please try again and if the issue persists contact <b><a href="/ISSP_FAQ2Case">customer support.</a></b></p>
+                </div>
+  
               </div>
-            </header>
-            <apex:outputPanel layout="block" id="rhcInfoPanel" styleClass="row" style="margin-right: 15px;">
-              <section id="remittance-holding-table" class="col-md-8 col-sm-12">
-                <table class="table borderless" style="margin-left: 13px;">
-                  <tr style="display: {!IF(isCashless,'none','table-row')}">
+              </div>
+  
+              <div class="row" style="display: {!IF(isCashless,'none','block')}">
+                <div class="col-xs-12 text-center" style="padding-top: 20px; padding-bottom: 20px;">
+                  <apex:outputLink value="/ISSP_AccountStatements?retURL=/ISSP_Homepage" rendered="{!hasRightAccessIceService}">{!$Label.ISSP_Account_Statements}</apex:outputLink>
+                  <apex:outputText escape="false" value="{!$Label.ANG_ISSP_RHC_Request_ICE}" rendered="{!NOT(hasRightAccessIceService)}"></apex:outputText>
+                  <!--apex:outputLink value="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1" rendered="{!NOT(hasRightAccessIceService)}">ANG_ISSP_RHC_Request_ICE Request access to {!$Label.ISSP_Account_Statements}</apex:outputLink-->
+                </div>            
+              </div>
+            </div>
+            </section>
+
+            <section class="col-md-4">
+              <div class="content-box">
+                <div style="display: {!IF(isCashless,'none','block')}; min-height: 350px;">
+                  <c:AFP_Component wrapperClass="{!afpWrapper}"/>
+                </div>
+              </div>
+            </section>
+            
+          </div>
+
+      <div class="row row-main">
+          <section name="remittance-holding" class="col-md-8" style="display: {!IF(isCashless,'none','block')};">
+              <div class="content-box">
+              <header>
+                <div class="section-header">
+                  <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RiskEventsHistory.png')}"/>
+                  <!--i class="fa fa-line-chart" aria-hidden="true"></i-->
+                  <strong>{!$Label.ISSP_RHC_HUB_RH}</strong>
+                </div>
+              </header>
+  
+              <!--<body class="col-xs-12">-->
+                <table class="table" style="margin-left: 15px;">
+                  <tr>
                     <td>
-                      {!$ObjectType.ANG_RHC_Information__c.fields.ANG_RHC_Amount__c.label}
-                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_RHCAmountTooltip}" />
+                      <div class="customTable2">
+                        <div>
+                          <strong>{!$Label.ISSP_ANG_RHC_Risk_Event_Status}</strong>
+                        </div>
+                        <div>  
+                          <apex:outputPanel layout="block" styleClass="text-normal">
+                              <apex:selectRadio value="{!riskStatusFilter}" layout="pageDirection" id="riskStatusFilter" onchange="riskStatusFilterChange();">
+                                <apex:selectOption itemValue="Active" itemLabel="{!$Label.ISSP_AMS_eBulletin_Enabled}"/>
+                                <apex:selectOption itemValue="Expired" itemLabel="{!$Label.Warning_Expired}"/>
+                                <apex:selectOption itemValue="Inactive" itemLabel="{!$Label.ISSP_AMS_eBulletin_Disabled}"/>
+                                <apex:selectOption itemValue="All" itemLabel="{!$Label.ISSP_All}"/>
+                              </apex:selectRadio>
+                          </apex:outputPanel>
+                          <apex:actionFunction action="{!refreshRiskEventsTable}" name="riskStatusFilterChange" rerender="refreshRiskEventsTableId">
+                          </apex:actionFunction>                  
+                        </div>
+                      </div>                
+                      <div class="customTable3" id='bla'>
+                        <apex:outputPanel id="refreshRiskEventsTableId">
+                          <apex:pageBlock >
+                          
+                            <table id="riskHistoryTable" class="table table-striped " cellspacing="0" width="100%">
+                              <thead>
+                                  <tr>
+                                      <th class="tableFormat">{!$Label.ANG_ISSP_REH_RiskDescription}</th>
+                                      <th class="tableFormat" style="display:{!IF(isAll,'','none')}">{!$Label.ISSP_Status}</th>
+                                      <th class="tableFormat">{!$ObjectType.ANG_Agency_Risk_Event__c.fields.ANG_Issued_Date__c.Label}</th>
+                                      <th class="tableFormat">{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4}</th>
+                                      <th class="tableFormat">{!$Label.IDCard_IATA_Code_Of_Location}</th>
+                                      <th class="tableFormat">{!$Label.ISSP_CaseNumber}</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                <apex:repeat value="{! riskEventList}" var="riskEvent">
+                                  <tr>                            
+                                    <td class="tableFormat">{! riskEvent.description}</td>
+                                    <td class="tableFormat" style="display:{!IF(isAll,'','none')}">{! riskEvent.status}</td>
+                                    <td class="tableFormat">
+                                      <apex:outputText value="{0, date, d MMM yyyy}">
+                                        <apex:param value="{! riskEvent.dateAssigned}" />
+                                      </apex:outputText>
+                                    </td>
+                                    <td class="tableFormat">
+                                      <apex:outputText value="{0, date, d MMM yyyy}">
+                                        <apex:param value="{! riskEvent.dateExpired}" />
+                                      </apex:outputText>
+                                    </td>
+                                    <td class="tableFormat">{! riskEvent.iataCode}</td>
+                                    <td class="tableFormat">
+                                      <apex:outputText escape="false" value="{! riskEvent.caseNumberLink}"></apex:outputText>
+                                    </td>
+                                  </tr>                            
+                                </apex:repeat>
+                              </tbody>
+                            </table>
+                            <script type="text/javascript">
+                              $('#riskHistoryTable').dataTable( {
+                                "pageLength": 5,
+                                "lengthMenu": [ 5, 10, 25, 50 ],
+                                "searching": false
+                              } );                      
+                            </script>
+                          </apex:pageBlock>
+                        </apex:outputPanel>                
+                      </div>                  
                     </td>
-                    <td>
-                      {!rhcInfo.CurrencyIsoCode} 
-                      <apex:outputText value="{0, number, ###,##0.##}">
-                        <apex:param value="{!rhcInfo.ANG_RHC_Amount__c}"/>
-                      </apex:outputText>
-                    </td>
-                  </tr>
-                  <tr style="display: {!IF(isCashless,'none','table-row')}">
-                    <td>
-                      {!$Label.ISSP_RHC_HUB_Current_Usage}
-                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_HUB_Current_UsageTooltip}" />
-                    </td>
-                    <td>
-                      {!rhcInfo.CurrencyIsoCode}
-                      <apex:outputText value="{0, number, ###,##0.##}">
-                        <apex:param value="{!rhcInfo.ANG_ConsumedRHC__c}"/>
-                      </apex:outputText>
-                    </td>
-                  </tr>
-                  <tr style="display: table-row;">
-                    <td>
-                      {!$Label.ISSP_RHC_HUB_Curr_Financial_Security}
-                    </td>
-                    <td style="text-align: left !important;">
-                      {!rhcInfo.CurrencyIsoCode}
-                      <apex:outputText value="{0, number, ###,##0.##}">
-                        <apex:param value="{!rhcInfo.ANG_Financial_Security__c}"/>
-                      </apex:outputText>
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr style="display: {!IF(isCashless,'none','table-row')}">
-                    <td>
-                      {!$ObjectType.Account.fields.Remittance_frequency__c.label}
-                    </td>
-                    <td>{!contact.Account.Remittance_frequency__c}</td>
                   </tr>
                 </table>
-              </section>
-              <section id="gaugeSection" class="col-md-4 col-sm-12" style="display: {!IF(isCashless,'none','block')}">
-                <canvas id="percentageUsageGauge"></canvas>
-                <br/>
-                <span>
-                  <strong>
-                    <apex:outputText value="{!$Label.ISSP_RHC_HUB_Percentage_Usage} : {0, number, 0}%">
-                      <apex:param value="{!rhcInfo.ANG_ConsumedRHC_Percent__c}"/>
-                    </apex:outputText>
-                  </strong>
-                </span>
-                <span class="last-updated">
-                  <strong>{!$Label.ISSP_RHC_HUB_Last_Updated}</strong>
-                  <apex:outputText value="{0, date, EEE, d MMM yyyy}">
-                    <apex:param value="{!rhcInfo.ANG_ConsumedRHC_Last_Update__c}" />
-                  </apex:outputText>
-                </span>
-              </section>
-            </apex:outputPanel>
-
-            <div class="row" style="display: {!IF(isCashless,'none','block')}">
-              <div class="col-col-xs-12 col-md-8 col-md-offset-2">
-                <button id="requestRME" onclick="requestBalanceUpdate();return false;" class="btn btn-block btn_iata_primary">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
+              <!--</body>-->
               </div>
-            <!-- The Modal -->
-            <div id="myModal" class="modal">
+            </section>
 
-              <!-- Modal content -->
-              <div id="modal-content-ErrorHandling" class="modal-content">
-                <span id="closeModal-ErrorHandling" class="closeModal">&times;</span>
-                <p>There was an error in updating your balance. Please try again and if the issue persists contact <b><a href="/ISSP_FAQ2Case">customer support.</a></b></p>
-              </div>
-
-            </div>
-            </div>
-
-            <div class="row" style="display: {!IF(isCashless,'none','block')}">
-              <div class="col-xs-12 text-center" style="padding-top: 20px; padding-bottom: 20px;">
-                <apex:outputLink value="/ISSP_AccountStatements?retURL=/ISSP_Homepage" rendered="{!hasRightAccessIceService}">{!$Label.ISSP_Account_Statements}</apex:outputLink>
-                <apex:outputText escape="false" value="{!$Label.ANG_ISSP_RHC_Request_ICE}" rendered="{!NOT(hasRightAccessIceService)}"></apex:outputText>
-                <!--apex:outputLink value="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1" rendered="{!NOT(hasRightAccessIceService)}">ANG_ISSP_RHC_Request_ICE Request access to {!$Label.ISSP_Account_Statements}</apex:outputLink-->
-              </div>            
-            </div>
-
-          </section>
-
-          <!-- Risk Event History -->
-
-          <!--section name="right-side" class="col-md-6 col-sm-12" -->
-
-          <section name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')};">
-
-            <header class="col-xs-12">
-              <div class="section-header">
-                <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RiskEventsHistory.png')}"/>
-                <!--i class="fa fa-line-chart" aria-hidden="true"></i-->
-                <strong>{!$Label.ISSP_RHC_HUB_RH}</strong>
-              </div>
-            </header>
-
-            <body class="col-xs-12">
-              <table class="table" style="margin-left: 15px;">
-                <tr>
-                  <td>
-                    <div class="customTable2">
-                      <div>
-                        <strong>{!$Label.ISSP_ANG_RHC_Risk_Event_Status}</strong>
+            <section name="risk-profile" class="col-md-4" style="margin-right: 0px; margin-left: 0px; min-height: 350px;">
+                <div class="content-box">
+                <table class="table" style="width: 100%">
+                  <tr>
+                    <th class="section-header">
+                      <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RiskProfile.png')}"/>
+                      <strong>{!$Label.ISSP_RHC_HUB_RP}</strong>
+                      <!--i class="fa fa-user-md" aria-hidden="true"></i> {!$Label.ISSP_RHC_HUB_RP}-->
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="customTable">
+                        <div>
+                          <strong> {!$ObjectType.Account.fields.ANG_Accreditation_Model__c.Label} </strong>
+                          <a href="#"
+                            data-toggle="modal" data-target="#ModalProductComparison">
+                            <apex:image value="/img/msg_icons/info16.png"
+                              html-data-html="true" html-data-placement="right"
+                              html-data-toggle="tooltip"
+                              title="{!$Label.ISSP_AMS_Compare_Accreditation_Types_RHC}" />
+                          </a>
+                        </div>
+                        <div>
+                          {! accreditationType}
+                        </div>
                       </div>
-                      <div>  
-                        <apex:outputPanel layout="block" styleClass="text-normal">
-                            <apex:selectRadio value="{!riskStatusFilter}" layout="pageDirection" id="riskStatusFilter" onchange="riskStatusFilterChange();">
-                              <apex:selectOption itemValue="Active" itemLabel="{!$Label.ISSP_AMS_eBulletin_Enabled}"/>
-                              <apex:selectOption itemValue="Expired" itemLabel="{!$Label.Warning_Expired}"/>
-                              <apex:selectOption itemValue="Inactive" itemLabel="{!$Label.ISSP_AMS_eBulletin_Disabled}"/>
-                              <apex:selectOption itemValue="All" itemLabel="{!$Label.ISSP_All}"/>
-                            </apex:selectRadio>
-                        </apex:outputPanel>
-                        <apex:actionFunction action="{!refreshRiskEventsTable}" name="riskStatusFilterChange" rerender="refreshRiskEventsTableId">
-                        </apex:actionFunction>                  
+                    </td>
+                  </tr>
+                  <tr style="display: {!IF(isCashless,'none','table-row')}">
+                    <td>
+                      <div class="customTable">
+    
+                        <div>
+                          <strong> {!$ObjectType.Account.fields.ANG_RiskStatus__c.Label} </strong>
+                          <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_RiskStatusTooltip}" />
+                        </div>
+                        <div>
+                          {! riskStatus}
+                        </div>
+    
+                        <!--div style="padding-left: 30px" class="customTable">
+                          {!$Label.ANG_ISSP_RP_Cash_Conditions}
+                        </div>
+                        <div>
+                          {! cashConditions}
+                        </div-->
+    
+                        <div style="padding-left: 30px" class="customTable">
+                          {!$Label.ANG_ISSP_RP_Financial_Review}                    
+                        </div>
+                        <div>
+                          {! financialReviewResult}
+                        </div>
+    
+                        <div style="padding-left: 30px" class="customTable">
+                          {!$Label.ANG_ISSP_RP_Risk_History} 
+                        </div>
+                        <div>
+                          {! riskHistoryAssessment}
+                        </div>
                       </div>
-                    </div>                
-                    <div class="customTable3" id='bla'>
-                      <apex:outputPanel id="refreshRiskEventsTableId">
-                        <apex:pageBlock >
-                        
-                          <table id="riskHistoryTable" class="table table-striped " cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th class="tableFormat">{!$Label.ANG_ISSP_REH_RiskDescription}</th>
-                                    <th class="tableFormat" style="display:{!IF(isAll,'','none')}">{!$Label.ISSP_Status}</th>
-                                    <th class="tableFormat">{!$ObjectType.ANG_Agency_Risk_Event__c.fields.ANG_Issued_Date__c.Label}</th>
-                                    <th class="tableFormat">{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4}</th>
-                                    <th class="tableFormat">{!$Label.IDCard_IATA_Code_Of_Location}</th>
-                                    <th class="tableFormat">{!$Label.ISSP_CaseNumber}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                              <apex:repeat value="{! riskEventList}" var="riskEvent">
-                                <tr>                            
-                                  <td class="tableFormat">{! riskEvent.description}</td>
-                                  <td class="tableFormat" style="display:{!IF(isAll,'','none')}">{! riskEvent.status}</td>
-                                  <td class="tableFormat">
-                                    <apex:outputText value="{0, date, d MMM yyyy}">
-                                      <apex:param value="{! riskEvent.dateAssigned}" />
-                                    </apex:outputText>
-                                  </td>
-                                  <td class="tableFormat">
-                                    <apex:outputText value="{0, date, d MMM yyyy}">
-                                      <apex:param value="{! riskEvent.dateExpired}" />
-                                    </apex:outputText>
-                                  </td>
-                                  <td class="tableFormat">{! riskEvent.iataCode}</td>
-                                  <td class="tableFormat">
-                                    <apex:outputText escape="false" value="{! riskEvent.caseNumberLink}"></apex:outputText>
-                                  </td>
-                                </tr>                            
-                              </apex:repeat>
-                            </tbody>
-                          </table>
-                          <script type="text/javascript">
-                            $('#riskHistoryTable').dataTable( {
-                              "pageLength": 5,
-                              "lengthMenu": [ 5, 10, 25, 50 ],
-                              "searching": false
-                            } );                      
-                          </script>
-                        </apex:pageBlock>
-                      </apex:outputPanel>                
-                    </div>                  
-                  </td>
-                </tr>
-              </table>
-            </body>
-          </section>
-
-          <div style="display: {!IF(isCashless,'block','none')}; min-height: 350px;">
-            <c:AFP_Component wrapperClass="{!afpWrapper}"/>
-          </div>
-
-        </section> <!-- Left -->
-
-        <section name="right-side" class="col-md-4 col-sm-12">
-          <!-- Available forms of payment-->
-
-          <div style="display: {!IF(isCashless,'none','block')}; min-height: 350px;">
-            <c:AFP_Component wrapperClass="{!afpWrapper}"/>
-          </div>
-
-          <!-- Risk Profile-->
-
-          <section name="risk-profile" class="row" style="margin-right: 0px; margin-left: 0px; min-height: 350px;">
-
-            <table class="table" style="width: 100%">
-              <tr>
-                <th class="section-header">
-                  <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RiskProfile.png')}"/>
-                  <strong>{!$Label.ISSP_RHC_HUB_RP}</strong>
-                  <!--i class="fa fa-user-md" aria-hidden="true"></i> {!$Label.ISSP_RHC_HUB_RP}-->
-                </th>
-              </tr>
-              <tr>
-                <td>
-                  <div class="customTable">
-                    <div>
-                      <strong> {!$ObjectType.Account.fields.ANG_Accreditation_Model__c.Label} </strong>
-                      <a href="#"
-                        data-toggle="modal" data-target="#ModalProductComparison">
-                        <apex:image value="/img/msg_icons/info16.png"
-                          html-data-html="true" html-data-placement="right"
-                          html-data-toggle="tooltip"
-                          title="{!$Label.ISSP_AMS_Compare_Accreditation_Types_RHC}" />
-                      </a>
-                    </div>
-                    <div>
-                      {! accreditationType}
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr style="display: {!IF(isCashless,'none','table-row')}">
-                <td>
-                  <div class="customTable">
-
-                    <div>
-                      <strong> {!$ObjectType.Account.fields.ANG_RiskStatus__c.Label} </strong>
-                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_RiskStatusTooltip}" />
-                    </div>
-                    <div>
-                      {! riskStatus}
-                    </div>
-
-                    <!--div style="padding-left: 30px" class="customTable">
-                      {!$Label.ANG_ISSP_RP_Cash_Conditions}
-                    </div>
-                    <div>
-                      {! cashConditions}
-                    </div-->
-
-                    <div style="padding-left: 30px" class="customTable">
-                      {!$Label.ANG_ISSP_RP_Financial_Review}                    
-                    </div>
-                    <div>
-                      {! financialReviewResult}
-                    </div>
-
-                    <div style="padding-left: 30px" class="customTable">
-                      {!$Label.ANG_ISSP_RP_Risk_History} 
-                    </div>
-                    <div>
-                      {! riskHistoryAssessment}
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </table>
-          </section>
-        </section> <!-- right -->        
-
+                    </td>
+                  </tr>
+                </table>
+                </div>
+              </section>
       </div>
 
       <div class="modal fade" id="ModalProductComparison" role="dialog">
@@ -486,7 +478,7 @@
             <c:ANG_ProductComparison helperParam="{! helper}"/>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{! $Label.LAQ_Close}</button>
+            <button type="button" class="iatabtn iatabtn-default" data-dismiss="modal">{! $Label.LAQ_Close}</button>
           </div>
         </div>
         </div>
@@ -494,8 +486,9 @@
 
       </apex:form>
 
-      <c:ISSP_CustomFooter />
-    </main>
+      
+    </div>
+    <c:ISSP_CustomFooter />
 
     <script src="../../soap/ajax/41.0/connection.js" type="text/javascript" ></script>
     <script src="../../soap/ajax/41.0/apex.js" type="text/javascript" ></script>
