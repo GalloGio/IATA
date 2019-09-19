@@ -891,6 +891,7 @@ lightning-datatable .slds-th__action {
     left: 0px;
 }
 .slds-combobox_container .slds-input__icon_right lightning-primitive-icon:after{
+    content: "";
     position: absolute;
     border-top: 6px solid #fff;
     border-bottom: 0;
@@ -900,6 +901,7 @@ lightning-datatable .slds-th__action {
     left: 0px;
 }
 .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:after{
+    content: "";
     position: absolute;
     border-top: 0;
     border-bottom: 6px solid #fff;
@@ -908,6 +910,33 @@ lightning-datatable .slds-th__action {
     top: 8px;
     left: 0px;
 }
+
+.languageSelection .slds-combobox_container
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+    content: "";
+    position: absolute;
+    border-top: 0;
+    border-bottom: 6px solid transparent;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: 8px;
+    left: 0px;
+  }
+
+.languageSelection .slds-combobox_container
+  .slds-is-open
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+    content: "";
+    position: absolute;
+    border-top: 0;
+    border-bottom: 6px solid transparent;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: 8px;
+    left: 0px;
+  }
 
 .slds-combobox_container lightning-base-combobox-item:hover,
 .slds-combobox_container lightning-base-combobox-item[aria-selected="true"] {
