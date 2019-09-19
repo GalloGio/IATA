@@ -87,7 +87,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		}
 
 		if (isChinaAgent) {
-			this.iepLink = 'https://www.dovepay.com/dovePay/default.jsp#proPay';
+			this.iepLink = Label.ANG_ISSP_BOP_China_URL;
 		} else if (this.iepModel == 'Banking Model') {
 			this.iepLink = '#';
 			this.iepLinkLabel = Label.ANG_ISSP_IEP_ModelBanking_link;
