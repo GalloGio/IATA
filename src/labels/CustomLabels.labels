@@ -1240,6 +1240,13 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <value>Access BOP</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_BOP_China_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_BOP_China_URL</shortDescription>
+        <value>https://www.dovepay.com/dovePay/default.jsp#proPay</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_CASE_REASON_OPT_OUT</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
