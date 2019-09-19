@@ -49,6 +49,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		changeLocationType.TCA_Sanity_check__c = 'CAD';
 		changeLocationType.TCA_Application_withdrawal__c = 'CWD';
 		changeLocationType.TCA_Not_Applicable_Steps__c = 'STEP17';
+		changeLocationType.Valid_Accreditation_Models__c='ALL';
 
 		ANG_AgencyChangesConfig__c changeLocationTypeDiffLegalEnt = new ANG_AgencyChangesConfig__c();
 		changeLocationTypeDiffLegalEnt.Name = 'ChangeLocationTypeDifferentLegalEntity';
@@ -56,6 +57,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		changeLocationTypeDiffLegalEnt.TCA_Sanity_check__c = 'CDL';
 		changeLocationTypeDiffLegalEnt.TCA_Manager_approval__c = 'CDF';
 		changeLocationTypeDiffLegalEnt.TCA_Application_withdrawal__c = 'CWD';
+		changeLocationTypeDiffLegalEnt.Valid_Accreditation_Models__c='ALL';
 
 		ANG_AgencyChangesConfig__c changeHierarchy = new ANG_AgencyChangesConfig__c();
 		changeHierarchy.Name = 'ChangeHierarchy';
@@ -63,7 +65,8 @@ private class ANG_MulticountryAgencyChangesTest {
 		changeHierarchy.TCA_Sanity_check__c = 'CHH';
 		changeHierarchy.TCA_Manager_approval__c = 'HCF';
 		changeHierarchy.TCA_Application_withdrawal__c = 'CWD';
-
+		changeHierarchy.Valid_Accreditation_Models__c='ALL';
+		
 		insert new List<ANG_AgencyChangesConfig__c>{changeLocationType, changeLocationTypeDiffLegalEnt, changeHierarchy};
 
 		AMS_ChangeCodes__c cadCode = new AMS_ChangeCodes__c(
