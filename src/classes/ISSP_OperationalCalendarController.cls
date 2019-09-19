@@ -1,5 +1,5 @@
 /**
-    Controlelr class used in three different pages:
+    Controller class used in three different pages:
     ISSP_OperationalCaledar: showing the Operational calendar records in a big Calendar
     ISSP_OperationalCaledarMini: showing the Operational calendar records in a mini Calendar
     ISSP_OperationalCaledarDetail: showing the Operational calendar records in a table
@@ -15,11 +15,6 @@ global without sharing class ISSP_OperationalCalendarController {
     // all fields in object operational calendar in a string ready for a query
     public static final String ALL_FIELDS = String.join(new list<String>(SObjectType.operational_Calendar__c.fields.getMap().keyset()),',');
 
-    public static final list<String> LIST_CALENDAR_TYPES = new list<String>{
-        'BSP/CASS',
-        'SIS',
-        'ICCS'
-    };
     public static final set<String> SIS_SUBSTATUS = new set<String>{'ISPA Airline','ISPA Supplier','ISUA Airline','ISUA Supplier'};
     public static final list<String> LIST_MULTIDOWNALOAD_TYPES = new list<String>{
         'BSP International',
@@ -175,7 +170,8 @@ global without sharing class ISSP_OperationalCalendarController {
                 Contact.Account.SIS_Status__c,
                 Contact.Account.SIS_Sub_Status__c,
                 Contact.Account.ICH_Member__c,
-                Contact.Account.ACH_Member__c
+                Contact.Account.ACH_Member__c,
+                Contact.CNS_Contact__c
             FROM User
             WHERE Id = :UserInfo.getUserId()];
         this.contact = this.user.contact;
@@ -296,6 +292,11 @@ global without sharing class ISSP_OperationalCalendarController {
                     //special case for CNS, instead of being CASS it is marked as CNS
                     if (SET_CNS_COUNTRIES.contains(countryId) && operation.Operation_Type__c.contains('CASS')) {
                         groupType = 'CNS';
+                        if (IS_AGENT && this.user.Contact.CNS_Contact__c) {
+                            this.defaultOperationType = 'CNS';
+                            this.defaultOperationSubtype = operation.Operation_Type__c;
+                            this.defaultCountry = countryId;
+                        }
                     }
                     // special case for caribean countries, use only currencies from operations 
                     //with the OperationCode starting with the country Code
@@ -689,7 +690,7 @@ global without sharing class ISSP_OperationalCalendarController {
         String currencyCode = null;
         Integer period = null;
         list<Operational_Calendar__c> listOperations = new list<Operational_Calendar__c>();
-        for (String operationType: LIST_CALENDAR_TYPES) {
+        for (String operationType: LIST_MULTIDOWNALOAD_TYPES) {
             listOperations.addAll(queryListOperations(operationType, cycle, country, frequency, currencyCode,null));
         }
         list<EventWrapper> listEvents = getOperationalCalendarEvents(listOperations, true, null);

@@ -19,6 +19,7 @@
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.print.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.colVis.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/iata_logo.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/cns_logo.js')}"></script>
 <apex:includeScript value="{!URLFOR($Resource.jszip, '/FileSaver.min.js')}"/>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
@@ -293,14 +294,14 @@
             doc.content.splice( 0, 0, {
                 margin: [ 0, 0, 0, 0 ],
                 alignment: 'center',
-                image: iata_logo
+                image: getLogo()
             });
             doc['footer']=(function(page, pages) {
                 return {
                     columns: [
                         '\n{!$Label.ISSP_OperationalCalendar_DownloadDate}: ' + moment().format('D MMM YYYY'),
                         '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: ' + formatDate(getLastModifiedDate()),
-                        '\n{!$Label.ISSP_OperationalCalendar_Timezone_Disclaimer}',
+                        '\n'+ getDiscalimer(),
                         {
                             alignment: 'right',
                             text: ['\n',{ text: page.toString() },  ' / ', { text: pages.toString() }]
@@ -311,7 +312,21 @@
             });
         }
     };
-    
+
+    function getDiscalimer() {
+        if (nvl($("#typeFilter").val()) == "SIS") {
+            return '{!$Label.ISSP_OperationalCalendar_Timezone_Disclaimer}';
+        }
+        return '';
+    }
+
+    function getLogo() {
+        if (nvl($("#typeFilter").val())=="CNS") {
+            return cns_logo;
+        }
+        return iata_logo;
+    }
+
     function getLastModifiedDate() {
         var table = $('.table-pagination').DataTable();
         var lastModifiedDate = null;
@@ -650,10 +665,9 @@
             filename += $("#countryFilter option:selected").text();
         } 
         filename += "-" + $("#typeFilter option:selected").text();
-        filename += " " + $("#billingPeriodFilter option:selected").text();
+        filename += " " + $("#billingPeriodFilter option:selected").text().replace("Billing Period", "");
         return filename;
     }
-    
     function formatDate(str){
         try {
             if (str==null) return '';
@@ -908,7 +922,7 @@
             content: [
                 {
                     alignment: "center",
-                    image: iata_logo,
+                    image: getLogo(),
                     margin: [0,0,0,0]
                 },
                 {

@@ -538,21 +538,6 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>CASS_reports_Availability__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Agent_Correction_Cut_Off__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Airline_Correction_Response_Cut_Off__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
             <field>Billing_Availability__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -583,17 +568,7 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>CASS_reports_Availability__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Agent_Correction_Cut_Off__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Airline_Correction_Response_Cut_Off__c</field>
+            <field>Rebill_Period__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
