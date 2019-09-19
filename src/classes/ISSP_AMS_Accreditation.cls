@@ -462,6 +462,8 @@ public without sharing class ISSP_AMS_Accreditation {
         }
         set;
     }
+
+    public String selectedCoutriesForNoCMC {get; set;}
     
     public ISSP_AMS_Accreditation() {
         isNewCase = true;
@@ -857,6 +859,21 @@ public without sharing class ISSP_AMS_Accreditation {
                     amsIsGSA = 'NO';
                     setOwnerAndRoleLabels();
                     setContextualHelp(userInfo.getLanguage());
+
+                    if (isNoticeOfChange && isMCAccredited && !String.isBlank(newForm.MultiCountry_Countries_Concerned__c)) { //rui lembrar de mudar hierarchy cenas e por os vistos nos sitios certos
+                        List<String> isosMC = newForm.MultiCountry_Countries_Concerned__c.split(',');
+
+                        for (Integer i = 0; i < nonSelectedCountryIsos.size(); i++) {
+                            if (isosMC.contains(nonSelectedCountryIsos[i].getValue())) {
+                                selectedCountryIsos.add(nonSelectedCountryIsos[i]);
+                                nonSelectedCountryIsos.remove(i);
+                            }
+                        }
+
+                        resetHierarchy();
+                        //populateSelectCheckbox();
+                    }
+
                 } else if (stepNumber == '2') {
                     isStep2 = true;
                 } else if (stepNumber == '3') {
@@ -954,6 +971,14 @@ public without sharing class ISSP_AMS_Accreditation {
 
                     if (newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry' && isNoticeOfChange) {
                         accountsToBeConverted = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
+
+                        selectedCoutriesForNoCMC = '';
+                        
+                        for (Account a: accountsToBeConverted) {
+                            selectedCoutriesForNoCMC += a.IATA_ISO_Country__r.Name + ', ';
+                        }
+
+                        selectedCoutriesForNoCMC += hqAccount.IATA_ISO_Country__r.Name;
                     }
 
                 } else {
@@ -2056,7 +2081,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 agencyCodesConcerned = getAgencyCodesConcerned();
             }
 
-            if ((newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c == 'Selected Branches Only')  && agencyCodesConcerned.size()==0) {
+            if ((newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c == 'Selected Branches Only')  && agencyCodesConcerned.size()==0) { //rui
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, (getIsAccreditationModelNotNullOrLegacy() ? Label.ISSP_NoC_Least_One_AE : Label.ISSP_NoC_Least_One_BO)));
                 return null;
             }
@@ -2081,10 +2106,13 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.Visible_on_ISS_Portal__c = true;
             
             if (isMCAccredited) {
-                Boolean first = false;
-                String countriesMC;
+                Boolean first = true;
+                String countriesMC = '';
+
+                //System.debug('ola2: ' + selectedCountryIsos);
 
                 for (SelectOption country: selectedCountryIsos) {
+                    System.debug('ola3: ' + country);
                     if (first) {
                         countriesMC = country.getValue();
                         first = false;
@@ -2093,7 +2121,10 @@ public without sharing class ISSP_AMS_Accreditation {
                     }
                 }
 
+                System.debug('ola4: ' + countriesMC);
+
                 newForm.MultiCountry_Countries_Concerned__c = countriesMC;
+                System.debug('ola5: ' + newForm.MultiCountry_Countries_Concerned__c);
             }
             
             if (newForm.Scope_of_Change__c=='HO Only' || newForm.Scope_of_Change__c=='HO - All Branches') {
@@ -4451,7 +4482,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
-                        Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, 
+                        Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, IATA_ISO_Country__r.Name,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
                         IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, IATA_ISO_Country__r.AMS_Settlement_System__c, Country_ISO_Code__c,
                         (SELECT Id, Status, Reason1__c, IFAP_Country_ISO__c, Applicable_to_Which_Version_s__c, ContactId, AccountId
@@ -7993,7 +8024,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     mcCountryIsos.add(country.getValue());
                 }
                 
-                for(Account a : getBranchList(false)){
+                for(Account a : getBranchList(true)){
                     branchAccountCount++;
                     Boolean isSelected = false;
 

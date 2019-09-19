@@ -747,7 +747,7 @@
 			<div class="alert alert-info" role="alert" style="margin-bottom: {!IF(AND(isMCAccredited, isNoticeOfChange), '5px !important', '20px;')}">
 				{!$Label.ISSP_AMS_NoC_StepB_message}
 			</div>
-			<div class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange), 'block', 'none')}; margin-bottom: 20px;">
+			<div class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange, CONTAINS(newForm.MultiCountry_Countries_Concerned__c, ',')), 'block', 'none')}; margin-bottom: 20px;">
                 {!$Label.ISSP_AMS_Noc_StepA_message_MC}
             </div>
 			<apex:pageBlockButtons >
@@ -2370,9 +2370,8 @@
 		}
 
 		if ({!isNoticeOfChange}) {
-			if (typeOfChange !== 'Yes') {
+			if (typeOfChange !== 'Yes' && {!CanChangeAccreditationType}) {
 				$j('[id$=iataChangeAccType]').prop('disabled', true);
-				setWarningBoxOnHoverMC($j('[id$=iataChangeAccType]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
 
 			if ('{!newForm.MultiCountry_Countries_Concerned__c}'.includes(",")) {
