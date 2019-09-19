@@ -1509,7 +1509,8 @@
 							                    <apex:column value="{!agencycon.Registration_number__c}" />
 							                    <apex:column value="{!agencycon.Agency_owner__c}" />
 							                    <apex:column value="{!agencycon.Financial_interest__c}" />
-							                    <apex:column rendered="{!NOT(AND(OR(AND(amsOfficeType='Branch', NOT(isMCAccredited)), newCase.Reason1__c=='New BR Abroad'), agencycon.Agency_owner__c))}">
+							                    <apex:column>
+													<!--rendered="{!NOT(AND(OR(AND(amsOfficeType='Branch', NOT(isMCAccredited)), newCase.Reason1__c=='New BR Abroad'), agencycon.Agency_owner__c))}"-->
 							                        <apex:commandLink action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewCompanyDialog();" rerender="companyList, newCompany, multi-owners, noCompanyInfo">
 							                            <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
 							                        </apex:commandLink>
