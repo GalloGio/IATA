@@ -51,6 +51,11 @@
             emailField.set('v.disabled', false);
         }
         component.set('v.showBack', false);
+        $A.util.addClass(component.find("emailError"), 'slds-hide');
+
+        //reset the combo-box error message
+        component.set('v.showActors', false);
+        component.set('v.showActors', true);
 
     },
 
