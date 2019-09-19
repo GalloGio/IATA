@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>CategoryExceptions__c</field>
-        <value xsi:type="xsd:string">IATA Cargo Agent</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>DataCategoryLabel_TR__c</field>
@@ -112,6 +112,6 @@
     </values>
     <values>
         <field>SectorExceptions__c</field>
-        <value xsi:type="xsd:string">Freight Forwarder</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>

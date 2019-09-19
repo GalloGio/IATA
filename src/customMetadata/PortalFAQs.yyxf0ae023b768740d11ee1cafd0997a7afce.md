@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>CategoryExceptions__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Airline Global Card Acquirer;Banking Service;Card Brand;Lessor;Other;Payment Provider</value>
     </values>
     <values>
         <field>DataCategoryLabel_TR__c</field>
@@ -112,6 +112,6 @@
     </values>
     <values>
         <field>SectorExceptions__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Financial Institutions</value>
     </values>
 </CustomMetadata>
