@@ -658,7 +658,7 @@ public with sharing class PortalCasesCtrl {
     @AuraEnabled
     public static Case getCaseById(String caseId) {
         Case caseAux = [SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c, 
-                        CreatedDate, CreatedBy.Name,LastModifiedDate, Portal_Case_Status__c,Topic__c,
+                        CreatedDate, CreatedBy.Name,LastModifiedDate, ClosedDate, Portal_Case_Status__c,Topic__c,
                         Subtopic__c, Region__c, Reason1__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
                         Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,
                         RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
