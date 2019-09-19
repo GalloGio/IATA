@@ -20,10 +20,10 @@
      <apex:form id="FinalForm">
         <apex:pageBlock rendered="{!isStep4}" title="" mode="edit">
             
-            <apex:pageBlockButtons id="buttonSection">
-                <apex:commandButton styleclass="apbutton" action="{!goToStep3}" value="Previous" html-novalidate="" html-formnovalidate=""/>&nbsp;
-                <apex:commandButton styleclass="apbutton" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}" status="WaitingStatus"/>
-                <apex:commandButton styleclass="apbutton" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave" style="float:right" html-novalidate="" html-formnovalidate=""/>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!goToStep3}" value="Previous" html-novalidate="" html-formnovalidate="" />
+                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave" html-novalidate="" html-formnovalidate="" />
+                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}" status="WaitingStatus" />
             </apex:pageBlockButtons>
             
             <apex:pageMessages />

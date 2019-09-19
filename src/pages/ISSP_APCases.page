@@ -61,6 +61,7 @@
       left: 50%;
     }
   </style>
+  <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
 
   <script>
     var optInOut;
@@ -181,9 +182,14 @@
 
   </script>
 
-	<div class="container">
+	
     <c:ISSP_CustomNavigation />
-    <h3>{!app.ServiceName__c}</h3>
+ <div class="container" style="min-height: 500px;">
+      <div class="panel-primary">
+        <div class="panel-heading head_panel_green">
+          <h3 class="panel-title">{!app.ServiceName__c}</h3>
+        </div>
+        <div class="panel-body">
     <p/>
       <apex:outputText rendered="{!dupeDraftExists}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} for {!apCountry} was already created for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"/>
     <p/>
@@ -195,7 +201,7 @@
     <apex:pageBlock rendered="{!IsNotEmpty}">
       <apex:pageBlockButtons location="top" style="Width:100%;margin-top:20px;">
         <apex:form >
-          <center>
+          <center style="padding-top:15px;">
             <apex:commandButton rendered="{!strAreaType='Airline Joining'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Joining Application" style="margin-right: 30px;"/>
             <apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=chg&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Change Request" style="margin-right: 30px;"/>
             <apex:commandButton rendered="{!APprocess=='bnk'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=bnk&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Change of bank details"/>
@@ -225,14 +231,15 @@
         <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000zGve&oid=00D2000000008TF&lastMod=1401896785000"/><br/>
         <h3>You don't have any pending Airline Participation {!IF(APprocess=='chg', 'Change Requests', IF(APprocess=='bnk', 'change of bank account details', 'Joining Processes'))}</h3><br/>
         <div class="row">
-          <a class="btn btn-primary" href="/ISSP_APProcess?proc={!APprocess}&retURL=/ISSP_APCases">New {!IF(APprocess=='chg', 'Changing', 'Joining')} Request</a>&nbsp;
-          <button style="display: {!IF(APprocess=='chg','','none')};" type="button" id="modalButton" onclick="optInOut();" class="btn btn-primary">IATA EasyPay Opt-In / Opt-Out</button>
+          <a class="iatabtn iatabtn-default" href="/ISSP_APProcess?proc={!APprocess}&retURL=/ISSP_APCases">New {!IF(APprocess=='chg', 'Changing', 'Joining')} Request</a>&nbsp;
+          <button style="display: {!IF(APprocess=='chg','','none')};" type="button" id="modalButton" onclick="optInOut();" class="iatabtn iatabtn-default">IATA EasyPay Opt-In / Opt-Out</button>
         </div>
       </div>
     </apex:pageBlock>
-
+	</div>
+      </div>
+    </div>
     <c:ISSP_CustomFooter />
-  </div><!-- end container-->
 
   <!-- Modal -->
   <div id="optInOut" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
@@ -338,14 +345,9 @@
         </div>
         
         <div class="modal-footer">
-          <div class="row">
-            <div class="col-md-6">
-              <button type="button" id="cancelBtn" class="btn btn-danger btn-block" data-dismiss="modal">Cancel</button>
-            </div>
-            <div class="col-md-6">
-              <button type="button" id="submitOptInOutBtn" onclick="submitOptInOut(); return false;" class="btn btn-success btn-block" style="display: none">Submit Request to IATA</button>
-            </div>
-          </div>
+              <button type="button" id="cancelBtn" class="iatabtn iatabtn-danger" data-dismiss="modal">Cancel</button>           
+              <button type="button" id="submitOptInOutBtn" onclick="submitOptInOut(); return false;" class="iatabtn iatabtn-default" style="display: none">Submit Request to IATA</button>
+           
         </div>
       </div>
     </div>

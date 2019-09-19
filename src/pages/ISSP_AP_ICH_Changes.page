@@ -510,20 +510,17 @@
                         <apex:actionStatus id="blockButtons">
                             <apex:facet name="start">
                                 <apex:outputPanel layout="none">
-                                    <apex:commandButton disabled="true" value="Previous" />
-                                    <apex:commandButton disabled="true" value="Next" />
-                                    <apex:commandButton disabled="true" value="Save Draft and Leave" />
+                                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" disabled="true" value="Next" />
+                                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" disabled="true" value="Previous"/>
+                                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-save" disabled="true" value="Save Draft and Leave"/>
                                 </apex:outputPanel>
                             </apex:facet>
 
                             <apex:facet name="stop">
                                 <apex:outputPanel layout="none">
-                                    <apex:commandButton action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous" html-novalidate="" html-formnovalidate=""
-                                    />
-                                    <!--<apex:commandButton action="{!saveBSPFormAndGoForward}" status="blockButtons" value="Next" onclick="showInvalidSections();"/>-->
-                                    <input type="button" value="Next" class="btn" onclick="saveFormAndGoForward();" />
-                                    <apex:commandButton action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave" html-novalidate=""
-                                        html-formnovalidate="" />
+                                    <input type="button" value="Next" class="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" onclick="saveFormAndGoForward();"/>
+                                    <apex:commandButton action="{!saveBSPFormAndGoBack}" styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" status="blockButtons" value="Previous" html-novalidate="" html-formnovalidate="" />
+                                    <apex:commandButton action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave" styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-save" html-novalidate="" html-formnovalidate="" />
                                 </apex:outputPanel>
                             </apex:facet>
                         </apex:actionStatus>
@@ -615,9 +612,8 @@
                             </apex:pageBlockSection>
                             <!-- BUTTON SECTION -->
                             <apex:pageBlockButtons location="bottom">
-                                <input type="button" class="btn" value="Save" onclick="saveContact();" />
-                                <apex:commandButton action="{!exitContact}" value="Cancel" html-novalidate="" html-formnovalidate="" rerender="ICHForm" status="WaitingStatus"
-                                />
+                                <input type="button" class="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" value="Save" onclick="saveContact();"/>
+                                <apex:commandButton action="{!exitContact}" styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" value="Cancel" html-novalidate="" html-formnovalidate="" rerender="ICHForm" status="WaitingStatus" />
                             </apex:pageBlockButtons>
                         </apex:pageBlock>
                     </div>

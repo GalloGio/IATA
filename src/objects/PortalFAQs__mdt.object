@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Portal FAQs</label>
+    <pluralLabel>Portal FAQs</pluralLabel>
+    <visibility>Public</visibility>
     <fields>
         <fullName>Account_Categories__c</fullName>
         <externalId>false</externalId>
@@ -22,13 +25,202 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>DataCategoryVisibility__c</fullName>
+        <fullName>CategoryExceptions__c</fullName>
+        <description>Use this field to exclude account categories from this data category</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
-        <label>Data Category Visibility</label>
-        <length>32768</length>
-        <type>LongTextArea</type>
-        <visibleLines>5</visibleLines>
+        <inlineHelpText>Use this field to exclude account categories from this data category</inlineHelpText>
+        <label>CategoryExceptions</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_TR__c</fullName>
+        <description>Label for TR</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for TR</inlineHelpText>
+        <label>DataCategoryLabel_TR</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_ar__c</fullName>
+        <description>Label for ar</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for ar</inlineHelpText>
+        <label>DataCategoryLabel_ar</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_de__c</fullName>
+        <description>Label for de</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for de</inlineHelpText>
+        <label>DataCategoryLabel_de</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_en_US__c</fullName>
+        <description>Label for en_US</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for en_US</inlineHelpText>
+        <label>DataCategoryLabel_en_US</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_es__c</fullName>
+        <description>Label for es</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for es</inlineHelpText>
+        <label>DataCategoryLabel_es</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_fr__c</fullName>
+        <description>Label for fr</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for fr</inlineHelpText>
+        <label>DataCategoryLabel_fr</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_in__c</fullName>
+        <description>Label for in</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for in</inlineHelpText>
+        <label>DataCategoryLabel_in</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_it__c</fullName>
+        <description>Label for it</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for it</inlineHelpText>
+        <label>DataCategoryLabel_it</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_ja__c</fullName>
+        <description>Label for ja</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for ja</inlineHelpText>
+        <label>DataCategoryLabel_ja</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_ko__c</fullName>
+        <description>Label for ko</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for ko</inlineHelpText>
+        <label>DataCategoryLabel_ko</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_pt_BR__c</fullName>
+        <description>Label for pt_BR</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for pt_BR</inlineHelpText>
+        <label>DataCategoryLabel_pt_BR</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_ru__c</fullName>
+        <description>Label for ru</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for ru</inlineHelpText>
+        <label>DataCategoryLabel_ru</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_th__c</fullName>
+        <description>Label for th</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for th</inlineHelpText>
+        <label>DataCategoryLabel_th</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_vi__c</fullName>
+        <description>Label for vi</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for vi</inlineHelpText>
+        <label>DataCategoryLabel_vi</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryLabel_zh_CN__c</fullName>
+        <description>Label for zh_CN</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Label for zh_CN</inlineHelpText>
+        <label>DataCategoryLabel_zh_CN</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataCategoryName__c</fullName>
+        <description>Name of the category in the structure</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Name of the category in the structure</inlineHelpText>
+        <label>DataCategoryName</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataSubtopicName__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>DataSubtopicName</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DataTopicName__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>DataTopicName</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>FAQsStructure__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Determinates if it&#39;s a element from the data category setup hierarchie.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Determinates if it&#39;s a element from the data category setup hierarchie.</inlineHelpText>
+        <label>FAQsStructure</label>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>ISO_Country_Codes1__c</fullName>
@@ -36,7 +228,7 @@
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Country Codes 1</label>
-        <length>255</length>
+        <length>100</length>
         <required>false</required>
         <type>Text</type>
         <unique>false</unique>
@@ -47,7 +239,7 @@
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Country Codes 2</label>
-        <length>255</length>
+        <length>100</length>
         <required>false</required>
         <type>Text</type>
         <unique>false</unique>
@@ -58,9 +250,20 @@
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Country Codes 3</label>
-        <length>255</length>
+        <length>100</length>
         <required>false</required>
         <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Order</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -74,7 +277,108 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <label>Portal FAQs</label>
+    <fields>
+        <fullName>SectorExceptions__c</fullName>
+        <description>Use this field to exclude account sectors from this data category</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Use this field to exclude account sectors from this data category</inlineHelpText>
+        <label>SectorExceptions</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <listViews>
+        <fullName>FAQs_Structure</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DataCategoryName__c</columns>
+        <columns>DataTopicName__c</columns>
+        <columns>DataSubtopicName__c</columns>
+        <columns>SectorExceptions__c</columns>
+        <columns>CategoryExceptions__c</columns>
+        <columns>DataCategoryLabel_en_US__c</columns>
+        <columns>DataCategoryLabel_es__c</columns>
+        <columns>DataCategoryLabel_fr__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>FAQsStructure__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>FAQs Structure</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>FAQs_Structure_Categories_Only</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DataCategoryName__c</columns>
+        <columns>DataCategoryLabel_en_US__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>FAQsStructure__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>DataTopicName__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>DataSubtopicName__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>FAQs Structure Categories Only</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>FAQs_Structure_SubTopics_Only</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DataCategoryName__c</columns>
+        <columns>DataTopicName__c</columns>
+        <columns>DataSubtopicName__c</columns>
+        <columns>DataCategoryLabel_en_US__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>DataCategoryName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>DataSubtopicName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>DataTopicName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>FAQs Structure SubTopics Only</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>FAQs_Structure_Topics_Only</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DataCategoryName__c</columns>
+        <columns>DataTopicName__c</columns>
+        <columns>DataCategoryLabel_en_US__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>DataCategoryName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>DataTopicName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>DataSubtopicName__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>FAQs Structure Topics Only</label>
+        <language>en_US</language>
+    </listViews>
     <listViews>
         <fullName>Portal_FAQs</fullName>
         <columns>MasterLabel</columns>
@@ -87,6 +391,25 @@
         <label>Portal FAQs</label>
         <language>en_US</language>
     </listViews>
-    <pluralLabel>Portal FAQs</pluralLabel>
-    <visibility>Public</visibility>
+    <listViews>
+        <fullName>TIESS</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>DataCategoryName__c</columns>
+        <columns>DataSubtopicName__c</columns>
+        <columns>FAQsStructure__c</columns>
+        <columns>Account_Sector__c</columns>
+        <columns>Account_Categories__c</columns>
+        <columns>SectorExceptions__c</columns>
+        <columns>CategoryExceptions__c</columns>
+        <columns>NamespacePrefix</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>DataTopicName__c</field>
+            <operation>equals</operation>
+            <value>TIESS</value>
+        </filters>
+        <label>TIESS</label>
+        <language>en_US</language>
+    </listViews>
 </CustomObject>

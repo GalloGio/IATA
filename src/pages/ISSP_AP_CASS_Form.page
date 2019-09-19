@@ -178,17 +178,17 @@
                         <apex:actionStatus id="blockButtons">
                             <apex:facet name="start">
                                 <apex:outputPanel layout="none">
-                                    <apex:commandButton disabled="true" value="Previous"/>
-                                    <apex:commandButton disabled="true" value="Next"/>
-                                    <apex:commandButton disabled="true" value="Save Draft and Leave"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" disabled="true" value="Next"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" disabled="true" value="Previous"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" disabled="true" value="Save Draft and Leave"/>
                                 </apex:outputPanel>
                             </apex:facet>
                             
                             <apex:facet name="stop">
                                 <apex:outputPanel layout="none">
-                                    <apex:commandButton action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous"/>   
-                                    <apex:commandButton action="{!saveBSPFormAndGoForward}" status="blockButtons" value="Next"/>
-                                    <apex:commandButton action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave"/>                
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!saveBSPFormAndGoForward}" status="blockButtons" value="Next"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous"/> 
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave"/>                
                                 </apex:outputPanel>
                             </apex:facet>
                         </apex:actionStatus>      

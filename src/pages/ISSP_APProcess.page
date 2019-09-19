@@ -15,12 +15,13 @@
             <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
             
             <style>
-                .pbTitle {
-                    {!IF(isstep2,'width: 90% !important','width: 40% !important')};
-                }
+                .pbBottomButtons .pbTitle {
+                	display: none;
+                	width: {!IF(isstep2,'90% !important','40% !important')};
+            	}
             
             .bPageBlock {
-                border-top : 0px;
+                border-top-width : thin !important;
             }
             
             ul li, ol li {
@@ -34,7 +35,7 @@
             
             .errorMsg {color:#d74c3b}
             
-            .row {
+	    .row {
               display: flex;
             }
             .col {
@@ -57,7 +58,9 @@
                 -moz-box-shadow:0px 0px 12px 1px #808080 ;
                 box-shadow:0px 0px 12px 1px #808080 ;
             }
-            </style>
+                       </style>
+                       <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
+                
                        <script>
                        $(document).ready(function() {
                            $(".cass-airlines-select").select2({width : "resolve"});
@@ -74,10 +77,10 @@
                            ISSP_APProcess.updateGuideCounter("{!newCase.Id}",function(result, event) {});
                        }
                        </script>
-            
+            <c:ISSP_CustomNavigation />
             <div class="container">
                 <div id="contentWrapper">
-                    <c:ISSP_CustomNavigation />
+                    
                     
                     <c:ISSP_WaitingStatus />
 
@@ -97,22 +100,22 @@
                                     areaType="{!strAreaType}"
                                     changeType="{!strChangeType}"
                                     isSIS="{!OR(isISPAActive,isISUAActive)}" />
-
                                 <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
                                     Any doubts? Please check out our&nbsp;
                                     <apex:outputLink value="{!DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
                                 </apex:outputPanel>
-
+                                
                                 <apex:form id="step1-form" styleClass="form-horizontal">
 
                                     <apex:actionFunction action="{!null}" name="refreshCASSAirlineList" reRender="cassAirlineList" oncomplete="$('.cass-airlines-select').select2({width : 'resolve'});">
                                         <apex:param value="" assignTo="{!gssaCountryISOCode}" name="gssaCountryISOCode"/>
                                     </apex:actionFunction>
                                     <apex:pageBlock mode="edit">
-                                        <apex:pageBlockButtons location="bottom" style="padding-left:100px">
-                                            <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true"/>&nbsp;
-                                            <apex:commandButton styleclass="btn btn-default" action="{!save}" value="Continue"/>
-                                        </apex:pageBlockButtons>
+                                       <apex:pageBlockButtons location="bottom" style="padding-left:100px">
+                                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" value="Continue" />&nbsp;
+                                        <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}"
+                                            immediate="true" />
+                                    </apex:pageBlockButtons>
                                         <apex:pageMessages ></apex:pageMessages>
                                         <div class="alert alert-info" role="alert">You can save your {!CASE(APProcess, 'chg', 'change request', 'bnk', 'change of bank account', 'joining form')} at anytime and come back later to complete it.</div>
                                         <div class="alert alert-warning" role="alert">{!IF(strAreaType=='Airline Joining', 'Online Joining Applications', IF(strChangeType=='Minor database changes','Online Change Requests','Online changes of bank details'))} must be submitted within 8 weeks, otherwise you will need to restart the process for each participation type and country.
@@ -243,19 +246,18 @@
                                 <h3 class="panel-title">{!PageTitle}</h3>
                             </div>
                             <div class="panel-body" id="body-enquiries">
-
                                 <c:ISSP_AP_Country_Reqs_Modal ctrl="{!thisController}"/>
-                                
-                                <apex:form >
-                                    <center>
-                                        <apex:pageBlock mode="edit">
-                                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep1}" value="Previous" id="Previous"/>&nbsp;
-                                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3}" value="Next" id="Next"/>
-                                        </apex:pageBlock>
-                                    </center>
-                                </apex:form>
-                                
-                            </div>   
+                            </div>
+                            <apex:form >
+                                <center>
+                                    <apex:pageBlock mode="edit">
+                                        <apex:pageBlockButtons location="bottom">
+                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!goToStep3}" value="Next" id="Next"/>&nbsp;
+                                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!goToStep1}" value="Previous" id="Previous" />
+                                        </apex:pageBlockButtons>
+                                    </apex:pageBlock>
+                                </center>
+                            </apex:form>
                         </div>
                     </apex:outputText>
                     
@@ -280,12 +282,13 @@
                     <!-- ------------------------------- -->
                     <!--STEP 3 Display BSP/CASS/ICH FORM -->
                     <!-- ------------------------------- -->
+                    
                     <apex:include pageName="ISSP_AP_BSP_Form" rendered="{!AND(strAreaType=='Airline Joining', isBSP, isStep3)}"/>     
                     <apex:include pageName="ISSP_AP_CASS_Form" rendered="{!AND(strAreaType=='Airline Joining', isCASS, isStep3)}"/>
                     <apex:include pageName="ISSP_AP_Changes" rendered="{!AND(strAreaType=='Airline Change', OR(isBSP,isCASS),isStep3)}"/>
                     <apex:include pageName="ISSP_AP_ICH_Form" rendered="{!AND(isICH, strAreaType=='Airline Joining', isStep3)}"/>
                     <apex:include pageName="ISSP_AP_ICH_Changes" rendered="{!AND(isICH, strAreaType=='Airline Change', isStep3)}" />
-                    
+
                     <!-- ----------------- -->
                     <!--STEP 4 Validation-->
                     <!-- ----------------- --> 
@@ -323,10 +326,9 @@
                         </div>
                     </apex:pageBlock>
                 </div>
-                <c:ISSP_CustomFooter />
-            </div>
-            
-        </body>  
+                </div>
+        <c:ISSP_CustomFooter />
+    </body>
     </html>
     
 </apex:page>

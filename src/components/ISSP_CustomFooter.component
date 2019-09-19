@@ -71,8 +71,22 @@ font-size:85%;
 
 </style>
 
+<apex:outputPanel rendered="{!isPortalNavigationBar}">
+    <apex:includeScript value="/lightning/lightning.out.js" />
+    <script>
+        $Lightning.use("c:pageBuilderApp", function () {
+            $Lightning.createComponent(
+                "c:portalFooter",
+                { },
+                "footerBar",
+                function (cmp) {
+                });
+        });
+    </script>
+    <div id="footerBar" />
+</apex:outputPanel>
 
-<apex:outputPanel>
+<apex:outputPanel rendered="{!NOT(isPortalNavigationBar)}">
     <div> 
         <div class="topborder">
             <div id="footerImg" style="display:{!if(OR(communityName== null, communityName=='ISS'),'','none')}">
