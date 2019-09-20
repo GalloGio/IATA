@@ -32,7 +32,7 @@
             <tr>
                <td colspan="3">
                     <p>{!$Label.CSP_Email_Confirmation_Body_Part_1}</p>
-                   <p>{!$Label.CSP_Email_Confirmation_Body_Part_2} <a href="{!Community_Url}">{!$Label.ISSP_Email_Here}</a>.</p>
+                   <p>{!$Label.CSP_Email_Confirmation_Body_Part_2}<b> <a href="{!Community_Url}">{!$Label.ISSP_Email_Here}</a></b>.</p>
                   <p>{!$Label.CSP_Email_Confirmation_Body_Part_3}</p>
                 </td>
             </tr>
@@ -42,7 +42,6 @@
                     <p>{!$Label.CSP_Email_Signature_Part_2}</p>
                </td>
             </tr>
-            <br/>
             <tr>
                <td colspan="3"><img src="{!FooterUrl}"/></td>
            </tr>

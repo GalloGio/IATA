@@ -291,17 +291,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         }
     }
 
-    @AuraEnabled
-    public static List<CSP_Utils.PickListWrapper> getDomainAccounts(string email){
-        String domain = email.split('@').get(1);
-        List<CSP_Utils.PickListWrapper> accList = new List<CSP_Utils.PickListWrapper>();
-        for(Account_Domain__c dom : [SELECT Account__r.Name, Account__r.Id FROM Account_Domain__c WHERE Name = :domain]){
-            CSP_Utils.PickListWrapper wrapper = new CSP_Utils.PickListWrapper(dom.Account__r.Id, dom.Account__r.Name);
-            accList.add(wrapper);
-        }
-        return accList;
-    }
-
     public static boolean sendConfirmationEmail(RegistrationParameters params){
 
         Boolean result = false;
@@ -378,14 +367,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 }else{
                     params.accountId = bucketAccount.acc.Id;
                     params.isNewAccount = bucketAccount.isNewAccount;
-                }
-            }else{
-                //if the account is selected from email domain, find specific branch of the selected country if possible
-                if(params.contactId.length() < 1 && params.country.length() > 0){
-                    List<Account> accountList = getBranchAccounts(params.accountId, params.country);
-                    if(!accountList.isempty()){
-                        params.accountId = accountList.get(0).Id;
-                    }
                 }
             }
 
@@ -1075,21 +1056,5 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
         return orderedPicklists;
     }
-
-    public static List<Account> getBranchAccounts(Id accountId, Id countryId){
-
-        List<Account> accList  = new List<Account>();
-        accList = [SELECT Id FROM Account
-                    WHERE ( Id = :accountId AND IATA_ISO_Country__c = :countryId )
-                    OR ( ParentId = :accountId AND IATA_ISO_Country__c = :countryId )
-                    OR ( Parent.ParentId = :accountId AND IATA_ISO_Country__c = :countryId )
-                    OR ( Parent.Parent.ParentId = :accountId AND IATA_ISO_Country__c = :countryId )
-                    OR ( Parent.Parent.Parent.ParentId = :accountId AND IATA_ISO_Country__c = :countryId )
-                    OR ( Parent.Parent.Parent.Parent.ParentId = :accountId AND IATA_ISO_Country__c = :countryId )];
-
-        return accList;
-
-    }
-
 
 }

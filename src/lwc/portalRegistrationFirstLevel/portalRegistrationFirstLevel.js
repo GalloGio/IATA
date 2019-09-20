@@ -17,7 +17,6 @@ import getUserInformationFromEmail              from '@salesforce/apex/PortalReg
 import register                                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.simulateRegister';
 import getCustomerTypePicklists                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getCustomerTypePicklists';
 import getMetadataCustomerType                  from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getMetadataCustomerType';
-import getDomainAccounts                        from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getDomainAccounts';
 import isGuest                                  from '@salesforce/user/isGuest';
 
 /* ==============================================================================================================*/
@@ -75,8 +74,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                                 "extraChoice" : "",
                                 "language" : "",
                                 "selectedCustomerType" : "",
-                                "termsAndUsage" : false,
-                                "domainAccountId" : ""
+                                "termsAndUsage" : false
                               };
     @track errorMessage = "";
     @track displayError = false;
@@ -85,7 +83,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     @track isFrozen = false;
     @track countryOptions = [];
     @track languageOptions = [];
-    @track companyOptions = [];
     //@track phoneInitialized = false;
     @track isSelfRegistrationDisabled = false;
     @track sector = { label : "", options : [], display : false };
@@ -125,14 +122,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
     get displayToU(){
         if(this.displayContactForm || this.displayTermsAndUsage){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    get displayCompanyCbx(){
-        if(this.userInfo.hasExistingContact == false && this.companyOptions.length > 1){
             return true;
         }else{
             return false;
@@ -425,11 +414,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                                     this.isEmailFieldReadOnly = true;
                                     this.isLoading = false;
                                     this._initializePhoneInput();
-                                    getDomainAccounts({ email : this.registrationForm.email}).then(result => {
-                                        var domainAccounts = JSON.parse(JSON.stringify(result));
-                                        console.log('domainAccounts: ', domainAccounts);
-                                        this.companyOptions = domainAccounts;
-                                    });
                                 }else{
                                     //todo: inform user to pick another email
                                     this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
@@ -457,14 +441,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
         var contactId = this.userInfo.contactId;
         var accountId = this.userInfo.accountId;
-        //if there is an account selection based on the email domain, use it for registration.
-        if(this.registrationForm.domainAccountId.length > 0){
-            accountId = this.registrationForm.domainAccountId;
-        }else{
-            if(this.userInfo.hasExistingContact == false && this.companyOptions.length == 1){
-                accountId = this.companyOptions[0].value;
-            }
-        }
 
         register({ registrationForm : JSON.stringify(this.registrationForm),
                    customerType : JSON.stringify(this.selectedMetadataCustomerType),
@@ -494,11 +470,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
     handleCountryChange(event){
         this.registrationForm.country = event.detail.value;
-        this._checkForMissingFields();
-    }
-
-    handleCompanyChange(event){
-        this.registrationForm.domainAccountId = event.detail.value;
         this._checkForMissingFields();
     }
 
@@ -675,7 +646,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                 userCountry : this.userCountry,
                 userCountryCode : this.userCountryCode,
                 isRegistrationComplete : this.isRegistrationComplete,
-                companyOptions : this.companyOptions,
                 userInfo : this.userInfo
             };
 
@@ -739,8 +709,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                                   "extraChoice" : "",
                                   "language" : this.registrationForm.language,
                                   "selectedCustomerType" : "",
-                                  "termsAndUsage" : false,
-                                  "domainAccountId" : ""
+                                  "termsAndUsage" : false
                                 };
 
         this.selectedCustomerType = null;
@@ -765,7 +734,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         this.userCountryCode = registrationState.userCountryCode;
         this.isRegistrationComplete = registrationState.isRegistrationComplete;
         this.userInfo = registrationState.userInfo;
-        this.companyOptions = registrationState.companyOptions;
         this.isLoading = false;
 
         if(this.displayContactForm){
@@ -787,10 +755,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             if(form.email.length < 1 || form.firstName.length < 1 || form.lastName.length < 1 || form.language.length < 1
                 || form.termsAndUsage != true || form.sector.length < 1){
                     isValid = false;
-            }
-
-            if(this.displayCompanyCbx == true && form.domainAccountId.length < 1){
-                isValid = false;
             }
 
             if(form.sector == 'General_Public_Sector' && form.extraChoice.length < 1){

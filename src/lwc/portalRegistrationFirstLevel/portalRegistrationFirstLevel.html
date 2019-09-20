@@ -138,34 +138,6 @@
                                             <div class="formElementSpacer">
                                             </div>
                                         </lightning-layout-item>
-                                        <!------------------------------------------      Companies      --------------------------------------------->
-                                        <template if:true={displayCompanyCbx}>
-                                            <lightning-layout-item size="12">
-                                                <div class="formElementContainer">
-                                                    <div class="formLabelContainer">
-                                                        <div style="width:100%;" class="text-xxsmall">
-                                                            <abbr class="slds-required" title="required">*</abbr>
-                                                            Company
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </lightning-layout-item>
-                                            <lightning-layout-item size="12">
-                                                <div class="slds-form-element__control registrationComboBox custTextInputSmall">
-                                                    <lightning-combobox class="" placeholder=" "
-                                                                        name="" label="" required
-                                                                        variant="label-hidden"
-                                                                        value={registrationForm.accountDomainId}
-                                                                        options={companyOptions}
-                                                                        onchange={handleCompanyChange}>
-                                                    </lightning-combobox>
-                                                </div>
-                                            </lightning-layout-item>
-                                            <lightning-layout-item size="12">
-                                                <div class="formElementSpacer">
-                                                </div>
-                                            </lightning-layout-item>
-                                        </template>
                                         <!------------------------------------------      Phone      --------------------------------------------->
                                         <lightning-layout-item size="12">
                                             <div class="formElementContainer">
