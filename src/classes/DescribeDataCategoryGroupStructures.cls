@@ -52,11 +52,11 @@ public with sharing class DescribeDataCategoryGroupStructures {
                         //if the map does not contain this topic yet, then insert the topic and a new list of subtopics with just this subtopic
                         if(!mapCategoryNameTopicNameAndLstSubtopics.containsKey(categoryAndTopicNames)) {
                             List<FAQSubtopicWrapper> lstAux = new List<FAQSubtopicWrapper>();
-                            lstAux.add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqSubtopicAux )));
+                            lstAux.add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqSubtopicAux ), getFAQLabelWithUserLanguage('en_US', faqSubtopicAux )));
                             mapCategoryNameTopicNameAndLstSubtopics.put(categoryAndTopicNames, lstAux);
                         } else {
                             //else, insert into the existing map
-                            mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames).add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqSubtopicAux )));
+                            mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames).add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqSubtopicAux ), getFAQLabelWithUserLanguage('en_US', faqSubtopicAux )));
                         }
                     }
                 }
@@ -79,11 +79,11 @@ public with sharing class DescribeDataCategoryGroupStructures {
                         //checks if there is already a category in the map
                         if(!mapCategoryNameAndLstTopics.containsKey(faqTopicAux.DataCategoryName__c)) {
                             List<FAQTopicWrapper> lstAux = new List<FAQTopicWrapper>();
-                            lstAux.add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqTopicAux ), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
+                            lstAux.add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqTopicAux ), getFAQLabelWithUserLanguage('en_US', faqTopicAux ), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
                             mapCategoryNameAndLstTopics.put(faqTopicAux.DataCategoryName__c, lstAux);
                         } else {
                             //else, insert into the existing map
-                            mapCategoryNameAndLstTopics.get(faqTopicAux.DataCategoryName__c).add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqTopicAux ), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
+                            mapCategoryNameAndLstTopics.get(faqTopicAux.DataCategoryName__c).add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqTopicAux ), getFAQLabelWithUserLanguage('en_US', faqTopicAux ), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
                         }
                     }
                 }
@@ -103,7 +103,7 @@ public with sharing class DescribeDataCategoryGroupStructures {
 
                     //if the map from the previous iteration contains the category, then process it
                     if(mapCategoryNameAndLstTopics.containsKey(faqCategoryAux.DataCategoryName__c)) {
-                        lstFinalCategories.add(new FAQCategoryWrapper(faqCategoryAux.DataCategoryName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqCategoryAux ), mapCategoryNameAndLstTopics.get(faqCategoryAux.DataCategoryName__c)));
+                        lstFinalCategories.add(new FAQCategoryWrapper(faqCategoryAux.DataCategoryName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqCategoryAux ), getFAQLabelWithUserLanguage('en_US', faqCategoryAux ), mapCategoryNameAndLstTopics.get(faqCategoryAux.DataCategoryName__c)));
                     }
                 }
             }
@@ -128,11 +128,11 @@ public with sharing class DescribeDataCategoryGroupStructures {
                         //if the map does not contain this topic yet, then insert the topic and a new list of subtopics with just this subtopic
                         if(!mapCategoryNameTopicNameAndLstSubtopics.containsKey(categoryAndTopicNames)) {
                             List<FAQSubtopicWrapper> lstAux = new List<FAQSubtopicWrapper>();
-                            lstAux.add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqSubtopicAux)));
+                            lstAux.add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqSubtopicAux), getFAQLabelWithUserLanguage('en_US', faqSubtopicAux )));
                             mapCategoryNameTopicNameAndLstSubtopics.put(categoryAndTopicNames, lstAux);
                         } else {
                             //else, insert into the existing map
-                            mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames).add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqSubtopicAux)));
+                            mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames).add(new FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqSubtopicAux), getFAQLabelWithUserLanguage('en_US', faqSubtopicAux )));
                         }
                 }
             }
@@ -152,11 +152,11 @@ public with sharing class DescribeDataCategoryGroupStructures {
                         //checks if there is already a category in the map
                         if(!mapCategoryNameAndLstTopics.containsKey(faqTopicAux.DataCategoryName__c)) {
                             List<FAQTopicWrapper> lstAux = new List<FAQTopicWrapper>();
-                            lstAux.add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqTopicAux), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
+                            lstAux.add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqTopicAux), getFAQLabelWithUserLanguage('en_US', faqTopicAux ), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
                             mapCategoryNameAndLstTopics.put(faqTopicAux.DataCategoryName__c, lstAux);
                         } else {
                             //else, insert into the existing map
-                            mapCategoryNameAndLstTopics.get(faqTopicAux.DataCategoryName__c).add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqTopicAux), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
+                            mapCategoryNameAndLstTopics.get(faqTopicAux.DataCategoryName__c).add(new FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqTopicAux), getFAQLabelWithUserLanguage('en_US', faqTopicAux ), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
                         }
                     }
                 }
@@ -174,7 +174,7 @@ public with sharing class DescribeDataCategoryGroupStructures {
 
                     //if the map from the previous iteration contains the category, then process it
                     if(mapCategoryNameAndLstTopics.containsKey(faqCategoryAux.DataCategoryName__c)) {
-                        lstFinalCategories.add(new FAQCategoryWrapper(faqCategoryAux.DataCategoryName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqCategoryAux), mapCategoryNameAndLstTopics.get(faqCategoryAux.DataCategoryName__c)));
+                        lstFinalCategories.add(new FAQCategoryWrapper(faqCategoryAux.DataCategoryName__c, getFAQLabelWithUserLanguage(LANGUAGE, faqCategoryAux), getFAQLabelWithUserLanguage('en_US', faqCategoryAux ), mapCategoryNameAndLstTopics.get(faqCategoryAux.DataCategoryName__c)));
                     }
                 }
             }
@@ -462,9 +462,10 @@ public with sharing class DescribeDataCategoryGroupStructures {
 
         public FAQCategoryWrapper(){}
 
-        public FAQCategoryWrapper(String categoryName, String categoryLabel, List<FAQTopicWrapper> lstTopics){
+        public FAQCategoryWrapper(String categoryName, String categoryLabel,String categoryLabelEn, List<FAQTopicWrapper> lstTopics){
             this.categoryName = categoryName;
             this.categoryLabel = categoryLabel;
+			this.categoryLabelEn = categoryLabelEn;
             this.lstTopics = lstTopics;
         }
     }
@@ -475,11 +476,13 @@ public with sharing class DescribeDataCategoryGroupStructures {
         @AuraEnabled
         public String topicLabel {get;set;}
         @AuraEnabled
+		public String topicLabelEn {get;set;}
+		@AuraEnabled
         public List<FAQSubtopicWrapper> lstSubtopics {get;set;}
 
         public FAQTopicWrapper(){}
 
-        public FAQTopicWrapper(String topicName, String topicLabel, List<FAQSubtopicWrapper> lstSubtopics){
+        public FAQTopicWrapper(String topicName, String topicLabel, String topicLabelEn, List<FAQSubtopicWrapper> lstSubtopics){
             this.topicName = topicName;
             this.topicLabel = topicLabel;
             this.topicLabelEn = topicLabelEn;
