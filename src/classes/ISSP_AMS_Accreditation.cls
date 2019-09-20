@@ -1343,12 +1343,8 @@ public without sharing class ISSP_AMS_Accreditation {
             for (Account a: mcHierarchyAccounts) {
                 if (a.Status__c == 'Approved') {
                     if (countryNameByIsoCode.get(a.IATA_ISO_Country__r.Name) == null) {
-                        if (a.Location_Type__c == 'GE') {
-                            countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name + ' - Head Entity Country', a.Country_ISO_Code__c);
-                        } else {
-                            if (!countryNameByIsoCode.values().contains(a.Country_ISO_Code__c)) {
-                                countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name, a.Country_ISO_Code__c);
-                            }
+                        if (!countryNameByIsoCode.values().contains(a.Country_ISO_Code__c)) {
+                            countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name, a.Country_ISO_Code__c);
                         }
                     }
                 }
@@ -2121,10 +2117,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     }
                 }
 
-                System.debug('ola4: ' + countriesMC);
-
                 newForm.MultiCountry_Countries_Concerned__c = countriesMC;
-                System.debug('ola5: ' + newForm.MultiCountry_Countries_Concerned__c);
             }
             
             if (newForm.Scope_of_Change__c=='HO Only' || newForm.Scope_of_Change__c=='HO - All Branches') {
@@ -5162,7 +5155,7 @@ public without sharing class ISSP_AMS_Accreditation {
         String iataCodeToSearch = accountToBeFetchedOrRemoved + '%';
         
         List<Account> agency = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
-                            ParentId, Parent.BillingStreet, Parent.BillingCity, Parent.BillingState, Parent.BillingPostalCode, Parent.BillingCountry, Parent.Name, Parent.Location_Type__c, Parent.IATACode__c
+                            Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c
                         FROM Account
                         WHERE RecordType.DeveloperName = 'IATA_Agency'
                             AND Sector__c = :AMS_Utils.SECTOR_PASSENGER 
@@ -5175,17 +5168,17 @@ public without sharing class ISSP_AMS_Accreditation {
 
         if (!agency.isEmpty()) {
             Account temp;
-            if (agency[0].Location_Type__c == AMS_Utils.AE) {
-                temp = new Account(Id = agency[0].ParentId,
-                                Name = agency[0].Parent.Name,
-                                BillingCountry = agency[0].Parent.BillingCountry,
-                                IATACode__c = agency[0].Parent.IATACode__c);
+            if (!String.isBlank(agency[0].Top_Parent__c)) {
+                temp = new Account(Id = agency[0].Top_Parent__r.Id,
+                                Name = agency[0].Top_Parent__r.Name,
+                                BillingCountry = agency[0].Top_Parent__r.BillingCountry,
+                                IATACode__c = agency[0].Top_Parent__r.IATACode__c);
                 
-                fetchedHEMCName = agency[0].Parent.Name;
+                fetchedHEMCName = agency[0].Top_Parent__r.Name;
 
-                fetchedHEMCAddress = notNull(agency[0].Parent.BillingStreet) + ' \r\n' +
-                               notNull(agency[0].Parent.BillingCity) + '' + notNull(agency[0].Parent.BillingState) +
-                               ' \r\n' + notNull(agency[0].Parent.BillingCountry);
+                fetchedHEMCAddress = notNull(agency[0].Top_Parent__r.BillingStreet) + ' \r\n' +
+                               notNull(agency[0].Top_Parent__r.BillingCity) + '' + notNull(agency[0].Top_Parent__r.BillingState) +
+                               ' \r\n' + notNull(agency[0].Top_Parent__r.BillingCountry);
             } else {
                 temp = new Account(Id = agency[0].Id,
                                 Name = agency[0].Name,

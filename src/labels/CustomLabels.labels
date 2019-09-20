@@ -1416,6 +1416,14 @@ IATA Customer Service</value>
         <value>Country Concerned</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_CountryConcerned_AEs</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_CountryConcerned_AEs</shortDescription>
+        <value>Country concerned (Associate Entities)</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_CountryRequirementsGoBack</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -18858,6 +18866,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Role(s)</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Search_Entity_Conversion</fullName>
+        <categories>ISSP AMS NoC ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Search_Entity_Conversion</shortDescription>
+        <value>Please select the Head Entity IATA code of the hierarchy you wish to add:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Signature</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -19689,6 +19705,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Select Accounts</shortDescription>
         <value>Select Target Accounts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Select_AEs</fullName>
+        <categories>ISSP, AMS, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Select AEs</shortDescription>
+        <value>Select Associate Entities</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Selected_Associate_Entities</fullName>
@@ -22765,7 +22789,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NOC_GOGLOBAL_Info</shortDescription>
-        <value>If selecting more than one country, only Change of Hierarchy and Change of Accreditation Type will be allowed. To access other types of change, please select only one country</value>
+        <value>Please note that by selecting multiple countries not all changes can be processed in the same Notice of Change</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ONE_OR_MORE_AE</fullName>
@@ -28045,7 +28069,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP NoC HE with AEs Warning</shortDescription>
-        <value>the change will only be effective if only agencies belonging to the same legal structure have been selected.</value>
+        <value>The change will only be effective if only agencies belonging to the same legal structure have been selected.</value>
     </labels>
     <labels>
         <fullName>ISSP_NoC_Head_Entity_Becoming_a_AE</fullName>
