@@ -1,10 +1,10 @@
 import { LightningElement, track } from 'lwc';
 import { ShowToastEvent }          from 'lightning/platformShowToastEvent';
 import { navigateToPage }          from 'c/navigationUtils';
-import saveLabel                   from '@salesforce/label/c.ISSP_Save';
-import passwordLabel               from '@salesforce/label/c.OneId_Password'
+import saveLabel                   from '@salesforce/label/c.CSP_Save';
+import passwordLabel               from '@salesforce/label/c.CSP_Password'
 import confirmPasswordLabel        from '@salesforce/label/c.Confirm_password';
-import resetPasswordLabel          from '@salesforce/label/c.ISSP_Reset_Password';
+import resetPasswordLabel          from '@salesforce/label/c.CSP_Reset_Password';
 import changePasswordInfoLabel     from '@salesforce/label/c.CSP_Reset_Password_Info_1';
 import changePasswordInfo2Label    from '@salesforce/label/c.CSP_Reset_Password_Info_2';
 import passwordRule1Label          from '@salesforce/label/c.CSP_Password_Rule_1';

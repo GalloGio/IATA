@@ -6,8 +6,8 @@ import ChangePassword           from '@salesforce/apex/PortalPasswordHandler.cha
 import confirmPasswordLabel     from '@salesforce/label/c.Confirm_password';
 import newPasswordLabel         from '@salesforce/label/c.New_password';
 import currentPasswordLabel     from '@salesforce/label/c.Current_password';
-import saveLabel                from '@salesforce/label/c.ISSP_Save';
-import changePasswordLabel      from '@salesforce/label/c.ISSP_ChangePassword';
+import saveLabel                from '@salesforce/label/c.CSP_Save';
+import changePasswordLabel      from '@salesforce/label/c.CSP_Change_Password';
 import changePasswordInfoLabel  from '@salesforce/label/c.CSP_Change_Password_Info_1';
 import changePasswordInfo2Label from '@salesforce/label/c.CSP_Change_Password_Info_2';
 import passwordRule1Label       from '@salesforce/label/c.CSP_Password_Rule_1';

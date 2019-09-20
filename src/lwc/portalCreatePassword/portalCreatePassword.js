@@ -3,9 +3,8 @@ import { navigateToPage }           from 'c/navigationUtils';
 import { ShowToastEvent }           from 'lightning/platformShowToastEvent';
 import { reduceErrors }             from 'c/ldsUtils';
 import RegistrationUtils            from 'c/registrationUtils';
-import emailLabel                   from '@salesforce/label/c.Email';
-import passwordLabel                from '@salesforce/label/c.OneId_Password'
-import invalidMailFormat            from '@salesforce/label/c.ISSP_AMS_Invalid_Email';
+import emailLabel                   from '@salesforce/label/c.CSP_Email';
+import passwordLabel                from '@salesforce/label/c.CSP_Password'
 import CSP_PortalPath               from '@salesforce/label/c.CSP_PortalPath';
 import confirmPasswordLabel         from '@salesforce/label/c.Confirm_password';
 import createPasswordLabel          from '@salesforce/label/c.CSP_Create_Password';
@@ -16,6 +15,7 @@ import passwordRule4Label           from '@salesforce/label/c.CSP_Password_Rule_
 import saveLoginLabel               from '@salesforce/label/c.CSP_Save_Login';
 import changePasswordInfoLabel      from '@salesforce/label/c.CSP_Reset_Password_Info_1';
 import changePasswordInfo2Label     from '@salesforce/label/c.CSP_Reset_Password_Info_2';
+import errorMessageLabel            from '@salesforce/label/c.CSP_Create_Password_Error';
 import getParameters                from '@salesforce/apex/portalCreatePasswordController.getParameters';
 import createUser                   from '@salesforce/apex/portalCreatePasswordController.createUserAndSetPassword';
 
@@ -188,12 +188,12 @@ export default class PortalCreatePassword extends LightningElement {
                     navigateToPage(result.message, {});
                  }
                  else{
-                    this.message = result.message;
+                    this.message = errorMessageLabel;
                     this.showNotification();
                  }
              })
               .catch(error => {
-                 this.message = reduceErrors(error).join(', ');
+                 this.message = errorMessageLabel;
                  this.showNotification();
               });
         }
