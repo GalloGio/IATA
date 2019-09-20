@@ -15770,6 +15770,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <default>false</default>
                     <label>Daily</label>
                 </value>
+                <value>
+                    <fullName>L</fullName>
+                    <default>false</default>
+                    <label>Long Daily</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>10</visibleLines>

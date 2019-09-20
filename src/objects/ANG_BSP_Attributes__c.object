@@ -776,6 +776,10 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
                 <default>false</default>
             </values>
             <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>M</fullName>
                 <default>false</default>
             </values>
