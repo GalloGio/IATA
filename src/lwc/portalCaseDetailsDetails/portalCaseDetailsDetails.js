@@ -56,8 +56,8 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         RelatedAccount,
         ISSP_AMS_Download_PDF_Copy,
         ISSP_AMS_Download_PDF_NOC,
-	ISSP_Survey,
-        Open
+		ISSP_Survey,
+        Open,
         Email,
         CSP_Remittantce_Date,
         CSP_Case_Currency,
