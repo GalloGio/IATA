@@ -11,4 +11,5 @@ export default class PortalPublicFooter extends LightningElement {
     twitterIcon = CSP_PortalPath + 'CSPortal/Images/Icons/twitter-icon-kb.svg';
     linkedinIcon = CSP_PortalPath + 'CSPortal/Images/Icons/linkedin-icon-kb.svg';
     youtubeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youtube-icon-kb.svg';
+    rssIcon = CSP_PortalPath + 'CSPortal/Images/Icons/rss_icon.svg';
 }

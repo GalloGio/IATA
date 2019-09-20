@@ -3823,7 +3823,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_ThanksFeedback</shortDescription>
-        <value>The recipient has not been added. Please press the Add button.</value>
+        <value>Thanks for your feedback!</value>
     </labels>
     <labels>
         <fullName>CSP_Title</fullName>
