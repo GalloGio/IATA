@@ -34246,22 +34246,6 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>https://identity.iata.org/s/troubleshooting?serviceName=NDCMM</value>
     </labels>
     <labels>
-        <fullName>NEW_HO_SanityCheck</fullName>
-        <categories>NEW_HO_SanityCheck</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NEW_HO_SanityCheck</shortDescription>
-        <value>Sanity Check</value>
-    </labels>
-    <labels>
-        <fullName>NEW_HO_Submitted</fullName>
-        <categories>NEW_HO_Submitted</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NEW_HO_Submitted</shortDescription>
-        <value>Submitted</value>
-    </labels>
-    <labels>
         <fullName>New</fullName>
         <language>en_US</language>
         <protected>false</protected>
