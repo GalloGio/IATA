@@ -1,39 +1,4 @@
 ({
-    handleTrackUsage : function(component, event) {
-            var userId = $A.get("$SObjectType.CurrentUser.Id");
-            let dashboard = component.get('v.dashboard');
-            var action = component.get('c.checkSessionCache');
-            let key = dashboard.Id;
-            action.setParams({
-                'userId' : userId,
-                'key' : key
-            });
-            action.setCallback(this, function(response){
-                var state = response.getState();
-                if(state === 'SUCCESS') {
-                    var isKeyInCache = response.getReturnValue();
-                    if(! isKeyInCache) {
-                        //key not yet present in cache - fire event
-                        var trackUsageEvent = component.getEvent('serviceUsageEvent');
-                        trackUsageEvent.setParams({
-                            'UserId' : userId,
-                            'Key' : dashboard.Id,
-                            'Target' : dashboard.Name,
-                            'Service' : 'GADM',
-                            'Type' : 'Dashboard'
-                        });
-                        trackUsageEvent.fire();
-                    }else{
-                       //key is present in cache
-                       console.log('key present in session cache');
-                    }
-                } else {
-                    console.log('handleTrackUsage error');
-                }
-            });
-            $A.enqueueAction(action);
-    },
-
 
     getReportDetails : function(component, event, dashboard) {
         this.toggleSpinner(component, event);

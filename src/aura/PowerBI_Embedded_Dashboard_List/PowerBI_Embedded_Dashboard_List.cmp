@@ -1,4 +1,4 @@
-<aura:component description="PowerBI_Embedded_Dashboard_List">
+<aura:component controller="PowerBI_Embedded_Dashboard_CTRL" description="PowerBI_Embedded_Dashboard_List">
 
     <aura:attribute name="category" type="Object"/>
     <aura:attribute name="selectedDashboard" type="Object"/>
@@ -10,6 +10,7 @@
 
     <!--EVENTS-->
     <aura:registerEvent name="backListEvent" type="c:PowerBI_Embedded_Dashboard_List_Back_EVT"/>
+    <aura:registerEvent name="serviceUsageEvent" type="c:Service_Usage_Event"/>
     <aura:handler name="backEvent" event="c:PowerBI_Embedded_Dashboard_Back_EVT" action="{!c.backEvent}"/>
 
     <aura:attribute name="cssStyle" type="String"/>

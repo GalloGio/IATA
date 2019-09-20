@@ -8,7 +8,6 @@
 
     <!--EVENTS-->
     <aura:registerEvent name="backEvent" type="c:PowerBI_Embedded_Dashboard_Back_EVT"/>
-    <aura:registerEvent name="serviceUsageEvent" type="c:Service_Usage_Event"/>
     <aura:attribute name="cssStyle" type="String" />
     <!--HANDLER-->
     <aura:handler name="init" value="{!this}" action="{! c.init}"/>

@@ -14,8 +14,6 @@
         let key = event.currentTarget.id;
         component.set('v.selectedDashboard', component.get('v.category').permissions[key]);
 
-        //component.set('v.showDashboards', false);
-        //component.set('v.showDashboard', true);
         this.handleShowModal(component, event);
 
     },
@@ -23,15 +21,52 @@
             let key = event.currentTarget.id;
             component.set('v.selectedDashboard', component.get('v.category').permissions[key]);
 
-            //component.set('v.showDashboards', false);
-            //component.set('v.showDashboard', true);
             this.handleShowModalDocuments(component, event);
      },
+
+     handleTrackDashboardUsage : function(component, event) {
+         console.log('handling dashboard usage from modal');
+         var userId = $A.get("$SObjectType.CurrentUser.Id");
+         let dashboard = component.get('v.selectedDashboard').permission;
+         var action = component.get('c.checkSessionCache');
+         let key = dashboard.Id;
+         action.setParams({
+             'userId' : userId,
+             'key' : key
+         });
+         action.setCallback(this, function(response){
+             var state = response.getState();
+             if(state === 'SUCCESS') {
+                 var isKeyInCache = response.getReturnValue();
+                 if(! isKeyInCache) {
+                     //key not yet present in cache - fire event
+                     var trackUsageEvent = component.getEvent('serviceUsageEvent');
+                     trackUsageEvent.setParams({
+                         'UserId' : userId,
+                         'Key' : dashboard.Id,
+                         'Target' : dashboard.Name,
+                         'Service' : 'GADM',
+                         'Type' : 'Dashboard'
+                     });
+                     trackUsageEvent.fire();
+                 }else{
+                    //key is present in cache
+                    console.log('key present in session cache');
+                 }
+             } else {
+                 console.log('handleTrackUsage error');
+             }
+         });
+         $A.enqueueAction(action);
+     },
+
     toggleSpinner : function(component) {
         component.set('v.showSpinner', ! component.get('v.showSpinner'));
     },
+
     handleShowModal: function(component, evt) {
         var modalBody;
+        let self = this;
         $A.createComponent("c:PowerBI_Embedded_Dashboard", {dashboard:component.get('v.selectedDashboard').permission},
            function(content, status) {
                if (status === "SUCCESS") {
@@ -45,6 +80,8 @@
                            component.set("v.cssStyle", ".uiMenu {z-index:10} .oiHeader a.homeIcon {z-index:9} .forceIcon .slds-icon_xx-small {width: 0.875rem; height: 0.875rem} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton {padding: 7px 16px !important;} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton, input.uiButton {margin-top: 15px; background-color: #eb3014;}");
                        }
                    })
+                   //track dashboard usage
+                   self.handleTrackDashboardUsage(component, event);
                }
            });
     },
