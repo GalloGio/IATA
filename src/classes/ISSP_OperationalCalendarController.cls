@@ -140,14 +140,42 @@ global without sharing class ISSP_OperationalCalendarController {
         list<String> listSisTypes = new list<String>();
         if (getIsSISAccount()) {
             listSisTypes.add('SIS');
-            if (this.account.ICH_Member__c) listSisTypes.add('SIS+ICH');
-            if (this.account.ACH_Member__c) listSisTypes.add('SIS+ACH');
+            if (getIsSISICHAccount()) listSisTypes.add('SIS+ICH');
+            if (getIsSISACHAccount()) listSisTypes.add('SIS+ACH');
         }
         return JSON.serialize(listSisTypes,true);
     }
+
+    /**
+        True if this account is able to see SIS information
+     */
     public Boolean getIsSISAccount() {
-        return this.account.SIS_Status__c == 'Active' &&
-            SIS_SUBSTATUS.contains(this.account.SIS_Sub_Status__c);
+        return (this.account.SIS_Status__c == 'Active' && SIS_SUBSTATUS.contains(this.account.SIS_Sub_Status__c))
+            || (this.account.Top_Parent__r.SIS_Status__c == 'Active' && SIS_SUBSTATUS.contains(this.account.Top_Parent__r.SIS_Sub_Status__c));
+    }
+
+    /**
+        True if this account is able to see ACH information
+     */
+    public Boolean getIsSISICHAccount() {
+        return (this.account.ICH_Member__c || this.account.Top_Parent__r.ICH_Member__c);
+    }
+
+    /**
+        True if this account is able to see ICH information
+     */
+    public Boolean getIsSISACHAccount() {
+        return (this.account.ACH_Member__c || this.account.Top_Parent__r.ACH_Member__c);
+    }
+
+    /**
+        True if this account is able to see ICCS information
+     */
+    public Boolean getIsICCSAccount() {
+        return this.account.ICCS_Membership_Status__c == 'Active'
+            || this.account.ICCS_Membership_Status__c == 'Member'
+            || this.account.Top_Parent__r.ICCS_Membership_Status__c == 'Active'
+            || this.account.Top_Parent__r.ICCS_Membership_Status__c == 'Member';
     }
 
     /**** END GETTERS ****/
@@ -162,7 +190,10 @@ global without sharing class ISSP_OperationalCalendarController {
     /**** CONTROLLER ****/
     public ISSP_OperationalCalendarController() {
         this.user = [
-            SELECT Id, Profile.Name, ContactId, Contact.Id, Contact.AccountId,
+            SELECT Id, Profile.Name,
+                ContactId, Contact.Id,
+                Contact.CNS_Contact__c,
+                Contact.AccountId,
                 Contact.Account.Id,
                 Contact.Account.IATA_ISO_Country__c,
                 Contact.Account.Remittance_frequency__c,
@@ -171,7 +202,12 @@ global without sharing class ISSP_OperationalCalendarController {
                 Contact.Account.SIS_Sub_Status__c,
                 Contact.Account.ICH_Member__c,
                 Contact.Account.ACH_Member__c,
-                Contact.CNS_Contact__c
+                Contact.Account.ICCS_Membership_Status__c,
+                Contact.Account.Top_Parent__r.SIS_Status__c,
+                Contact.Account.Top_Parent__r.SIS_Sub_Status__c,
+                Contact.Account.Top_Parent__r.ICH_Member__c,
+                Contact.Account.Top_Parent__r.ACH_Member__c,
+                Contact.Account.Top_Parent__r.ICCS_Membership_Status__c
             FROM User
             WHERE Id = :UserInfo.getUserId()];
         this.contact = this.user.contact;
@@ -197,11 +233,7 @@ global without sharing class ISSP_OperationalCalendarController {
 
     public String getDescription() {
         String translatedCountry = MAP_COUNTRIES.get(this.defaultcountry);
-        if (IS_AIRLINE) {
-            return translatedCountry + ' - BSP/CASS Calendar';
-        } else {
-            return translatedCountry + ' ' + this.defaultOperationType;
-        }
+        return translatedCountry;
     }
 
     /**
@@ -210,23 +242,29 @@ global without sharing class ISSP_OperationalCalendarController {
     **/
     public void initPicklistValues() {
         this.setFilter = new set<String>();
+        // first BSP/CASS + CNS
+        initPicklistValuesBSPCASS();
+        // next ICCS
+        if (getIsICCSAccount()) {
+            this.defaultOperationType='ICCS';
+            initPicklistValuesICCS();
+        }
+        // finally SIS
         if (getIsSISAccount())  {
             list<String> listResult = initPicklistValuesSIS();
             if (!listResult.isEmpty()) {
                 this.setFilter.addAll(listResult);
                 // set default values for filters
                 this.defaultOperationType = 'SIS';
-                if (this.account.ICH_Member__c && !this.account.ACH_Member__c) {
+                if (getIsSISICHAccount()) {
                     this.defaultOperationSubtype = 'SIS+ICH';
-                } else if (!this.account.ICH_Member__c && this.account.ACH_Member__c) {
+                } else if (getIsSISACHAccount()) {
                     this.defaultOperationSubtype = 'SIS+ACH';
                 } else {
                     this.defaultOperationSubtype = 'SIS';
                 }
             } 
         }
-        initPicklistValuesICCS();
-        initPicklistValuesBSPCASS();
     }
 
     public list<String> initPicklistValuesSIS() {
@@ -685,12 +723,28 @@ global without sharing class ISSP_OperationalCalendarController {
     public String getListEventsJSONGrouped() {
         String country = this.defaultCountry;
         String frequency = this.defaultFrequency;
-        //String operationType = IS_AIRLINE? null: this.defaultOperationType;
         String cycle = null;
         String currencyCode = null;
         Integer period = null;
         list<Operational_Calendar__c> listOperations = new list<Operational_Calendar__c>();
-        for (String operationType: LIST_MULTIDOWNALOAD_TYPES) {
+        list<String> listTypes = new list<String>();
+        listTypes.add('BSP International');
+        listTypes.add('BSP Domestic');
+        listTypes.add('CASS Export');
+        listTypes.add('CASS Import');
+        if (getIsSISAccount()) {
+            if (getIsSISICHAccount()) {
+                listTypes.add('SIS+ICH');
+            } else if (getIsSISACHAccount()) {
+                listTypes.add('SIS+ACH');
+            } else {
+                listTypes.add('SIS');
+            }
+        }
+        if (getIsICCSAccount()) {
+            listTypes.add('ICCS');
+        }
+        for (String operationType: listTypes) {
             listOperations.addAll(queryListOperations(operationType, cycle, country, frequency, currencyCode,null));
         }
         list<EventWrapper> listEvents = getOperationalCalendarEvents(listOperations, true, null);
