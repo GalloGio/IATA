@@ -125,7 +125,7 @@ export default class PortalLogin extends LightningElement {
 
         RegistrationUtilsJs.checkUserIsSystemAdmin().then(result=> {
             if(result == false && isGuest == false){
-                navigateToPage(CSP_PortalPath + this.landingPage,{});
+                navigateToPage(CSP_PortalPath + this.startURL,{});
                 return;
             }
         });
