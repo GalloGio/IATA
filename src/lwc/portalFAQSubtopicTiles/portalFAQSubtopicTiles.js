@@ -32,9 +32,9 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
                     }
                 });
     
-                this.topicTiles = tempTopicOptions;                
+                this.topicTiles = tempTopicOptions;
                 this.accordionMap = tempAccordionMap;
-
+    
                 this.loading = false;
             })
             .catch(error => {

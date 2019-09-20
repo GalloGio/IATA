@@ -432,7 +432,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //first element on the picklist
         for (const item of this.myResult) {
-            if (!map.has(item.childs) && item.topicName === this.topic) {
+            if (!map.has(item.childs) && item.topicName === this.topic && item.categoryName === this.category) {
                 Object.keys(item.childs).forEach(function (el) {
                     mySubTopicOptionsAux.push({
                         label: el, value: item.childs[el]

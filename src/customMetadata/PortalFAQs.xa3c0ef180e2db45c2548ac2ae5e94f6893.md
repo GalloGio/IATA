@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>CategoryExceptions__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Caterer;Consultancy Firm;Fuel Supplier;Maintenance;Repair;Overhaul;Security;Processor;System Solutions Provider;Global Distribution System</value>
     </values>
     <values>
         <field>DataCategoryLabel_TR__c</field>
@@ -112,6 +112,6 @@
     </values>
     <values>
         <field>SectorExceptions__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Airline Supplier</value>
     </values>
 </CustomMetadata>

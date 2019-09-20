@@ -131,13 +131,15 @@ public with sharing class PortalFAQsCtrl {
         for(DescribeDataCategoryGroupStructures.FAQCategoryWrapper categoryAux : lstToConvert){
             for(DescribeDataCategoryGroupStructures.FAQTopicWrapper topicAux : categoryAux.lstTopics){
                 Map<String,String> mapSubtopics = new Map<String,String>();
+                Map<String,String> mapSubtopicsEn = new Map<String,String>();
                 for(DescribeDataCategoryGroupStructures.FAQSubtopicWrapper subtopicAux : topicAux.lstSubtopics){
                     mapSubtopics.put(subtopicAux.subtopicLabel, subtopicAux.subtopicName);
+                    mapSubtopicsEn.put(subtopicAux.subtopicName, subtopicAux.subtopicLabelEn);
                 }
 
-                lstToReturn.add(new DescribeDataCategoryGroupStructures.DataCategoryWrapper(topicAux.topicName, topicAux.topicLabel, 
-                                                                                            categoryAux.categoryName, categoryAux.categoryLabel,
-                                                                                            mapSubtopics));
+                lstToReturn.add(new DescribeDataCategoryGroupStructures.DataCategoryWrapper(topicAux.topicName, topicAux.topicLabel, topicAux.topicLabelEn,
+                                                                                            categoryAux.categoryName, categoryAux.categoryLabel, categoryAux.categoryLabelEn,
+                                                                                            mapSubtopics, mapSubtopicsEn));
             }
         }
 

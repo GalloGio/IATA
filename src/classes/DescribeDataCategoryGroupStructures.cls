@@ -426,18 +426,27 @@ public with sharing class DescribeDataCategoryGroupStructures {
         @AuraEnabled
         public String topicLabel {get;set;} 
         @AuraEnabled
+        public String topicLabelEn {get;set;} 
+        @AuraEnabled
         public String categoryName {get;set;}
         @AuraEnabled
         public String categoryLabel {get;set;}
         @AuraEnabled
+        public String categoryLabelEn {get;set;}
+        @AuraEnabled
         public Map<String, String> childs {get;set;}
+        @AuraEnabled
+        public Map<String, String> childsEn {get; set;}
 
-        public DataCategoryWrapper(String topicName, String topicLabel, String categoryName, String categoryLabel, Map<String, String> childs) {
+        public DataCategoryWrapper(String topicName, String topicLabel,String topicLabelEn, String categoryName, String categoryLabel, String categoryLabelEn, Map<String, String> childs, Map<String, String> childsEn) {
             this.topicName = topicName;
             this.topicLabel = topicLabel;
+            this.topicLabelEn = topicLabelEn;
             this.categoryName = categoryName;
             this.categoryLabel = categoryLabel;
+            this.categoryLabelEn = categoryLabelEn;
             this.childs = childs;
+            this.childsEn = childsEn;
         }                
     }
 
@@ -447,7 +456,9 @@ public with sharing class DescribeDataCategoryGroupStructures {
         @AuraEnabled
         public String categoryLabel {get;set;}
         @AuraEnabled
-        public List<FAQTopicWrapper> lstTopics {get;set;}
+        public String categoryLabelEn {get; set;}
+        @AuraEnabled
+        public List<DescribeDataCategoryGroupStructures.FAQTopicWrapper> lstTopics {get;set;}
 
         public FAQCategoryWrapper(){}
 
@@ -471,6 +482,7 @@ public with sharing class DescribeDataCategoryGroupStructures {
         public FAQTopicWrapper(String topicName, String topicLabel, List<FAQSubtopicWrapper> lstSubtopics){
             this.topicName = topicName;
             this.topicLabel = topicLabel;
+            this.topicLabelEn = topicLabelEn;
             this.lstSubtopics = lstSubtopics;
         }
     }
@@ -480,12 +492,15 @@ public with sharing class DescribeDataCategoryGroupStructures {
         public String subtopicName {get;set;}
         @AuraEnabled
         public String subtopicLabel {get;set;}
+        @AuraEnabled
+        public String subtopicLabelEn {get;set;}
 
         public FAQSubtopicWrapper(){}
 
-        public FAQSubtopicWrapper(String subtopicName, String subtopicLabel){
+        public FAQSubtopicWrapper(String subtopicName, String subtopicLabel, String subtopicLabelEn){
             this.subtopicName = subtopicName;
             this.subtopicLabel = subtopicLabel;
+            this.subtopicLabelEn = subtopicLabelEn;
         }
     }
 
