@@ -142,6 +142,10 @@ public class ANG_RiskEventGenerator {
 					}
 				}
 			}
+
+			//INC-484721
+			if(!reQuery && o.getSObjectType() == Schema.AMS_Oscar__c.getSObjectType() && o.get('ANG_Type_Of_Change__c') == AMS_Utils.ANG_HIERARCHY)	reQuery = true;
+
 		}
 
 		if(objToEvaluate.isEmpty()) return; //No objects found with the correct record type, no need to match further (or no configs...)
@@ -149,7 +153,7 @@ public class ANG_RiskEventGenerator {
 		if(reQuery){
 			// if any of the conditions fields includes a relationship (.) requery de object to get the relationships
 			try{
-				objToEvaluate = Database.query('SELECT Id, RecordTypeId, CreatedDate, '+(objectName == 'Case' ? 'ParentId, Parent.RecordTypeId, ':'')+ String.join(new List<String>(fields), ', ')+' FROM '+objectName+' WHERE Id IN :objectIds');
+				objToEvaluate = Database.query('SELECT Id, RecordTypeId, CreatedDate, '+(objectName == 'Case' ? 'ParentId, Parent.RecordTypeId, ':'')+ String.join(new List<String>(fields), ', ')+' , (SELECT ID, Account__c FROM AMS_Process_Detail__r) FROM '+objectName+' WHERE Id IN :objectIds');
 			}catch(System.QueryException e){
 				if(!e.getMessage().startsWith('No such column ')) throw e; 
 				else {
@@ -218,8 +222,9 @@ public class ANG_RiskEventGenerator {
 						if(config.ANG_Activate_In__c != null) risk.ANG_Issued_Date__c = System.today().addDays(Integer.valueOf(config.ANG_Activate_In__c));
 
 						//NEWGEN-2719 prevent "Fail Financial Statement" risk event creation for agents with previous ifap status = "Closed_Non compliance" 
-						if(config.ANG_Risk_Event_Type__r.Name != ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS || objectName != 'Case' || !previousIFAPsByAccount.containsKey(String.valueOf(o.get('AccountId'))) 
-							|| previousIFAPsByAccount.isEmpty() || !IFAP_BusinessRules.isPreviousIFAPStatusEquals(previousIFAPsByAccount.get(String.valueOf(o.get('AccountId'))),'Closed_Non compliance')){
+						if((config.ANG_Risk_Event_Type__r.Name != ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS || objectName != 'Case' || !previousIFAPsByAccount.containsKey(String.valueOf(o.get('AccountId'))) 
+							|| previousIFAPsByAccount.isEmpty() || !IFAP_BusinessRules.isPreviousIFAPStatusEquals(previousIFAPsByAccount.get(String.valueOf(o.get('AccountId'))),'Closed_Non compliance') )
+							&& allowToGenerateRiskEventForChangeOfHierarchy(o)){
 							riskEvents.add(risk);
 						}else{
 							System.debug('____ [cls ANG_RiskEventGenerator - generate: NOT creating "Fail Financial Statement" risk event');
@@ -273,6 +278,30 @@ public class ANG_RiskEventGenerator {
 		if(!riskEvents.isEmpty()) update riskEvents;
 		if(!notifications.isEmpty()) insert notifications;
 	}
+
+	/**
+	 * Allow to check if when proceeding with a change of Hierarchy 
+	 * the current location to be moved are creating a new hierarchy
+	 */
+	private Boolean allowToGenerateRiskEventForChangeOfHierarchy(SObject obj){
+
+		if(obj.getSObjectType() == Schema.AMS_Oscar__c.getSObjectType()){
+			
+			AMS_Oscar__c oscar = (AMS_OSCAR__C) obj;
+			
+			if(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY){
+				for(AMS_Process_Detail__c  processDetail : oscar.AMS_Process_Detail__r){
+					if(oscar.New_Parent__c == processDetail.Account__c) return true;
+				}
+				if(oscar.New_Parent__c == oscar.Account__c) return true;
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 
 	public void loadInitialInformations(){		
 		Set<Id> riskTypes = new Set<Id>();
