@@ -1,7 +1,7 @@
 import { LightningElement, track, api } from 'lwc';
 import { navigateToPage }     from 'c/navigationUtils';
-import emailLabel             from '@salesforce/label/c.Email';
-import nextLabel              from '@salesforce/label/c.PKB2_Next_Link';
+import emailLabel             from '@salesforce/label/c.CSP_Email';
+import nextLabel              from '@salesforce/label/c.CSP_Next';
 import loginLabel             from '@salesforce/label/c.Login';
 import invalidMailFormat      from '@salesforce/label/c.CSP_Invalid_Email';
 import createNewAccountLabel  from '@salesforce/label/c.OneId_CreateNewAccount';
