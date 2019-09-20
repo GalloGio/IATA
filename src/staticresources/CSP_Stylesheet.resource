@@ -425,10 +425,10 @@ lightning-datatable .slds-th__action {
     vertical-align: middle;
 }
 /* ############################################## */
-  .casesListWrapper thead{
+@media only screen and (max-device-width: 480px){
+  td.cellHidden{
     display: none;
   }
-
   .casesListWrapper .slds-scrollable_y{
     width: unset !important;
   }
