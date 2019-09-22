@@ -1085,14 +1085,18 @@
                       				<script type="text/javascript">
 			                            function copyBranchAddress() {
 					                        var checkBox = document.getElementById('copyCheckBoxBranch');
-					                        if (checkBox.checked){
+											var countryMap = JSON.parse(JSON.stringify({!mapToReturn}));
+
+											if (checkBox.checked){
 					                            $(".shipping_street__c").val($(".branch_office_street_name_number__c").val());
 					                            $(".shipping_city__c").val($(".branch_office_city__c").val());
 					                            $(".shipping_postal_code__c").val($(".branch_office_postal_code__c").val());
 					                            $(".shipping_state__c").val($(".state_province__c").val());
 					                            
-					                            $('[id$="ShippingCountryList"]').val($(".country__c").val().toUpperCase());
-					                            $('#shipping_country__c > input').val($(".country__c").val().toUpperCase());
+												var countrySelected = countryMap[$(".country__c").val().toUpperCase()];
+                                    
+												$('[id$="ShippingCountryList"]').val(countrySelected);
+												$('#shippingcountry > input').val(countrySelected);
 
                                       /*$(".shipping_street__c").keyup();
 					                            //$(".shipping_street__c").attr('disabled', 'disabled');

@@ -297,6 +297,16 @@ public without sharing class ISSP_AMS_Accreditation {
 		set;
     }
 
+    public String mapToReturn { get {
+        Map<String, String> countryMap = new Map<String, String>();
+        Set<String> isoCodesToExclude = new Set<String>{'IO','TF','GS','UM','UP','VI'};
+        for (IATA_ISO_Country__c cnt: IATAIsoCountryDAO.getIsoCountries()) {
+            if (cnt.Region__c == null || isoCodesToExclude.contains(cnt.Iso_Code__c)) continue;
+            countryMap.put(cnt.Name.toUpperCase(), cnt.Informatica_Value__c.toUpperCase());
+        }
+        return JSON.serialize(countryMap);
+    } set;}
+
     public List<SelectOption> countryList {
         get {
             if (countryList == null) {

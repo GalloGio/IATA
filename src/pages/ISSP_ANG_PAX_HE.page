@@ -1063,14 +1063,18 @@
 
                             function copyBillingAddress() {
                                 var checkBox = document.getElementById('copyCheckBoxBranch');
+                                var countryMap = JSON.parse(JSON.stringify({!mapToReturn}));
+
                                 if (checkBox.checked){
                                     $(".shippingstreet").val($(".billingstreet").val());
                                     $(".shippingcity").val($(".billingcity").val());
                                     $(".shippingpostalcode").val($(".billingpostalcode").val());
                                     $(".shippingstate").val($(".billingstate").val());
 
-                                    $('[id$="ShippingCountryList"]').val($(".billingcountry").val().toUpperCase());
-                                    $('#shippingcountry > input').val($(".billingcountry").val().toUpperCase());
+                                    var countrySelected = countryMap[$(".billingcountry").val().toUpperCase()];
+                                    
+                                    $('[id$="ShippingCountryList"]').val(countrySelected);
+                                    $('#shippingcountry > input').val(countrySelected);
 
                                     /*$(".shippingstreet").attr('disabled', 'disabled');
                                     $(".shippingcity").attr('disabled', 'disabled');
