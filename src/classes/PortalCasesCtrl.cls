@@ -308,7 +308,7 @@ public with sharing class PortalCasesCtrl {
             }
         }
         
-        queryString = 'SELECT ' + query.substring(1) + ' FROM Case ' + queryConditions + ' ORDER BY LastModifiedDate DESC ' + queryLimit;
+        queryString = 'SELECT ' + query+ ' FROM Case ' + queryConditions + ' ORDER BY LastModifiedDate DESC ' + queryLimit;
 
         result = new PagedResult();
         result.records = Database.query(queryString);
