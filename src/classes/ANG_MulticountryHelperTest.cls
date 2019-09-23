@@ -81,9 +81,87 @@ private class ANG_MulticountryHelperTest {
 
 		insert new List<Account>{accountHE, accountAE};
 
+		createStandardHierarchy(countryPT, countryUK, countryFR);
+		createMulticountryHierarchy(countryPT, countryUK, countryFR);
+
 		Test.stopTest();
 
-	} 	
+	}
+
+	/*
+	 * S Account HE UK
+	 *	|_ S Account AE UK
+	 *	|_ S Account 2 AE UK
+	 */
+	private static void createStandardHierarchy(
+		IATA_ISO_Country__c countryPT, IATA_ISO_Country__c countryUK, IATA_ISO_Country__c countryFR)
+	{
+		Id standardAcctRecId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account accountHEUK = makeAccount('S Account HE UK', (Id) null, AMS_Utils.HE, countryUK.Id,
+			'12341234', ANG_Risk_Helper.RISK_STATUS_B);
+		insert accountHEUK;
+
+		Account accountAEUK = makeAccount('S Account AE UK', accountHEUK.Id, AMS_Utils.AE, countryUK.Id,
+			'12341235', ANG_Risk_Helper.RISK_STATUS_B);
+		insert accountAEUK;
+		
+		Account accountAEUK2 = makeAccount('S Account 2 AE UK', accountHEUK.Id, AMS_Utils.AE, countryUK.Id,
+			'12341236', ANG_Risk_Helper.RISK_STATUS_B);
+		insert accountAEUK2;
+	}
+
+	/*
+	 * MC Account GE PT
+	 *	|_ MC Account AE PT
+	 *  |_ MC Account HE UK
+	 *  |   |_ MC Account AE UK
+	 *  |   |_ MC Account 2 AE UK
+	 */
+	private static void createMulticountryHierarchy(
+		IATA_ISO_Country__c countryPT, IATA_ISO_Country__c countryUK, IATA_ISO_Country__c countryFR)
+	{
+		Id standardAcctRecId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account accountGEPT = makeAccount('MC Account GE PT', (Id) null, AMS_Utils.GE, countryPT.Id,
+			'12312345', ANG_Risk_Helper.RISK_STATUS_B);
+		insert accountGEPT;
+
+		Account accountAEPT = makeAccount('MC Account AE PT', accountGEPT.Id, AMS_Utils.AE, countryPT.Id,
+			'12312346', ANG_Risk_Helper.RISK_STATUS_B);
+		insert accountAEPT;
+
+		Account accountHEUK = makeAccount('MC Account HE UK', accountGEPT.Id, AMS_Utils.HE, countryUK.Id,
+			'12312347', ANG_Risk_Helper.RISK_STATUS_B);
+		insert accountHEUK;
+
+		Account accountAEUK = makeAccount('MC Account AE UK', accountHEUK.Id, AMS_Utils.AE, countryUK.Id,
+			'12312348', ANG_Risk_Helper.RISK_STATUS_B);
+		insert accountAEUK;
+		
+		Account accountAEUK2 = makeAccount('MC Account 2 AE UK', accountHEUK.Id, AMS_Utils.AE, countryUK.Id,
+			'12312349', ANG_Risk_Helper.RISK_STATUS_B);
+		insert accountAEUK2;
+	}
+
+	private static Account makeAccount(String name, Id parent, String location, Id country, String iataCode, String risk)
+	{
+		Account acct = new Account();
+		acct.Name = name;
+		acct.ParentId = parent;
+		acct.Location_Type__c = location;
+		acct.Location_Class__c = 'P';
+		acct.IATA_ISO_Country__c = country;
+		acct.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		acct.IATACode__c = iataCode;
+		acct.Status__c = AMS_Utils.ACC_S9_APPROVED;
+		acct.ANG_HE_RiskStatus__c = risk;
+		acct.Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY;
+		acct.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
+		acct.ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED;
+		acct.ANG_HE_CashCondition__c = false;
+		return acct;
+	}
 
 	@isTest static void allowIATACodeGenerationTest(){
 
@@ -477,6 +555,7 @@ private class ANG_MulticountryHelperTest {
 		oscar.STEP10__c = AMS_Utils.PASSED;
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		oscar.First_Step_Completed__c = true;
 		try{
 			update oscar;
 		}catch(Exception ex){
@@ -605,6 +684,89 @@ private class ANG_MulticountryHelperTest {
 
 		Test.stopTest();
 
+	}
+
+	@isTest
+	public static void testGetChildHEAccounts()
+	{
+		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account 
+			 							  					WHERE Name IN ('MC Account GE PT', 'S Account HE UK')]);
+
+		Test.startTest();
+		Map<Id, Account> accounts = ANG_MulticountryHelper.getChildHEAccounts(accountIds.keySet());
+		Test.stopTest();
+
+		System.assertEquals(1, accounts.size()); // the 1 HE child for PT GE
+
+		List<String> names = new List<String>();
+		for (Account a : accounts.values())
+			names.add(a.Name);
+		
+		System.assert(names.contains('MC Account HE UK'), '"MC Account HE UK" account not found');
+	}
+
+	@isTest
+	public static void testMulticountryDowngrade_Event()
+	{
+		List<Account> accounts = [SELECT Id FROM Account 
+								  WHERE Name IN ('MC Account GE PT')
+								  ORDER BY Name ASC];
+
+		Account accountGE = accounts.get(0);
+		accountGE.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
+		accountGE.ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C;
+		
+		Test.startTest();
+		update accountGE;
+		Test.stopTest();
+
+		// the child cases are created from the batch which is not executed, but have to be registered
+		List<AsyncApexJob> batches = [SELECT Id, Status, MethodName, ApexClass.Name, createddate
+									  FROM AsyncApexJob
+									  WHERE ApexClass.Name = 'ANG_MulticoutryGEDowngradeBatch'];
+		System.assertEquals(1, batches.size(), 'Should have scheduled a Batch job');
+
+		List<Case> cases = [SELECT Id, Account_Concerned__c FROM Case];
+		System.assertEquals(1, cases.size()); // 1 for each GE
+
+		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account 
+										   WHERE Name IN ('MC Account GE PT')]);
+		
+		for (Case c : cases)
+		{
+			System.assert(accountIds.keySet().contains(c.Account_Concerned__c),
+				'The cases were not associated with the right accounts');
+		}
+	}
+
+	@isTest
+	public static void testMulticountryDowngrade_Batch()
+	{
+		List<Account> accounts = [SELECT Id FROM Account 
+								  WHERE Name IN ('MC Account GE PT')
+								  ORDER BY Name ASC];
+
+		Account accountGE = accounts.get(0);
+		accountGE.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
+		accountGE.ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C;
+		update accountGE;
+		
+		Test.startTest();
+		ANG_MulticoutryGEDowngradeBatch batch = new ANG_MulticoutryGEDowngradeBatch(new Set<Id> { accounts.get(0).Id });
+		Id batchId = Database.executeBatch(batch);
+		Test.stopTest();
+
+		List<Case> cases = [SELECT Id, Account_Concerned__c FROM Case];
+		System.assertEquals(2, cases.size()); // 1 for each GE and 1 for each child HE accounts
+
+		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account 
+										   WHERE Name IN ('MC Account GE PT', 'MC Account HE UK')]);
+		
+		for (Case c : cases)
+		{
+			System.assert(accountIds.keySet().contains(c.Account_Concerned__c),
+				'The cases were not associated with the right accounts');
+		}
 	}
 
 }

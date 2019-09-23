@@ -814,4 +814,41 @@ public class ANG_MulticountryHelper {
 		return fieldsOfObject;
 	}
 
+	public static Boolean isMulticountryAccount(Account acct)
+	{
+		return acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+	}
+
+	/**
+	 * Returns a list of HE account child to the given list of accounts.
+	 * 
+	 * @param	accountIds			List of parent accounts
+	 * @return	Map<Id, Account>	List of child HE accounts
+	 */
+	public static Map<Id, Account> getChildHEAccounts(Set<Id> accountIds)
+	{
+		if (accountIds.isEmpty())
+			return new Map<Id, Account>();
+
+		return new Map<Id, Account>(
+			   [SELECT Id, BillingCountry, Region_formula__c, Abbreviated_address__c, Abbreviated_name__c,
+					Name, BillingState, BillingCity, IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode,
+					BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, License_Number__c, VAT_Number__c,
+					Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, Location_Type__c, Mobile__c,
+					Operation__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
+					Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c,
+					ANG_RiskStatus__c, ANG_Accreditation_Model__c
+				FROM Account
+				WHERE ParentId IN :accountIds
+					AND Location_Type__c = :AMS_Utils.HE
+					AND Status__c NOT IN (
+						'', NULL,
+						:AMS_Utils.ACC_S4_LISTED,
+						:AMS_Utils.ACC_S0_TERMINATED, 
+						:AMS_Utils.ACC_S1_NOTACCREDITED, 
+						:AMS_Utils.ACC_S3_NOTINOPERATION
+					)
+			   ]);
+	}
+
 }
