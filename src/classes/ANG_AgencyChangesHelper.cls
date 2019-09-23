@@ -278,7 +278,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if (oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
 
-                if(!validateTypeOfChange(oscar))
+                if(!validateTypeOfChange(oscar,changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c))
                     return;
                     
 				if(!sanityCheckValidations(oscar, changesContainer, oscarOnlineAccreditation))
@@ -335,7 +335,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				if(oscar.Process__c == AMS_Utils.NGCHANGES){
 					
-					if(config == null) config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
+					if(config == null) config = ANG_AgencyChangesConfigHelper.getConfig(oscar,changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c);
 
 					if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE},oscar.ANG_Type_Of_Change__c))
 						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSetAux, changesContainer);
@@ -447,7 +447,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				Map<Id,Account> hierarchyAccs;
 
 				if(config == null)
-					config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
+					config = ANG_AgencyChangesConfigHelper.getConfig(oscar,changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c);
 
 				/** NEWGEN-5848 PREVENT Copy Data to Account if Multicountry Change of Hierarchy*/
 				if(!(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY && oscarOnlineAccreditation != null && oscarOnlineAccreditation.ANG_Accreditation_type__c == 'Multicountry'))
@@ -498,7 +498,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
 
 				if(config == null)
-					config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
+					config = ANG_AgencyChangesConfigHelper.getConfig(oscar,changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c);
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.WITHDRAWAL, accountIdsInvolvedSet, changesContainer);
 
@@ -509,7 +509,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			}else if(oldOSCAR.Status__c != AMS_Utils.OSCAR_CLOSED && oscar.Status__c == AMS_Utils.OSCAR_CLOSED){
 
 				if(config == null)
-					config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
+					config = ANG_AgencyChangesConfigHelper.getConfig(oscar,changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c);
 
 				validationBeforeClosure(oscar);
 
@@ -1802,7 +1802,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	}
 
-	public static boolean validateTypeOfChange(AMS_OSCAR__c oscar) {
+	public static boolean validateTypeOfChange(AMS_OSCAR__c oscar, String accreditationModel) {
 
 		System.debug('[ANG_AgencyChangesHelper] Validating type of change for ANG Changes process.');
 
@@ -1817,7 +1817,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		}
 
 		if (oscar.ANG_Type_Of_Change__c <> oldMap.get(oscar.Id).ANG_Type_Of_Change__c || oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
-			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
+			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar,accreditationModel);
 			if (config != null){
 					ANG_AgencyChangesConfigHelper.setNotApplicableSteps(config.config, oscar);
 			} else return false;
