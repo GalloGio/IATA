@@ -2249,6 +2249,10 @@
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>Завершите базовый процесс регистрации, чтобы присоединиться к клиентскому порталу Международной ассоциации воздушного транспорта (ИАТА).</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Регистрация на портале в настоящее время отключена. Благодарим за понимание.</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>

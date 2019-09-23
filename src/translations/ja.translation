@@ -2254,6 +2254,10 @@
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>IATAカスタマーポータルへ参加するには、基本的な登録処理を完了してください。</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>ポータルの登録は現在無効になっております。ご理解いただきありがとうございます。</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>

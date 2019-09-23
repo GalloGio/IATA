@@ -2251,6 +2251,10 @@ ve &lt;br/&gt;
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>IATA Müşteri Portalı&apos;na katılmak için temel kayıt işlemini tamamlayın.</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Portal Kaydı şu anda devre dışıdır. Anlayışınız için teşekkür ederiz.</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>

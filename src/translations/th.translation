@@ -2251,6 +2251,10 @@
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>ทำการลงทะเบียนตามกระบวนการพื้นฐานให้เสร็จสมบูรณ์ เพื่อเข้าร่วมพอร์ทัลสำหรับลูกค้าของ IATA</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>การลงทะเบียนพอร์ทัลถูกปิดใช้งานในขณะนี้ ขอขอบคุณสำหรับความเข้าใจของคุณ</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>

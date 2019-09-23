@@ -2256,6 +2256,10 @@ und &lt;br/&gt;
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>Schließen Sie den grundlegenden Registrierungsprozess ab, um dem IATA-Kundenportal beizutreten.</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Die Portalregistrierung ist derzeit deaktiviert. Danke für Ihr Verständnis.</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>
@@ -20653,6 +20657,10 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
     <customLabels>
         <label>Funktionsbezeichnung</label>
         <name>csp_My_Profile_Job_Title</name>
+s    </customLabels>
+    <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>

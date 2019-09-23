@@ -2255,6 +2255,10 @@ e os &lt;br/&gt;
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>Conclua o processo básico de registro para ingressar no Portal do cliente IATA.</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>O cadastro do portal está desativado no momento. Obrigado por sua compreensão.</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>
@@ -3280,6 +3284,7 @@ e os &lt;br/&gt;
     </customLabels>
     <customLabels>
         <label><!-- Current password --></label>
+        <label>Senha atual</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>

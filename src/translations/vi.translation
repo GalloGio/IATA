@@ -2254,6 +2254,10 @@ và &lt;br/&gt;
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>Hoàn tất quy trình đăng ký cơ bản để tham gia Cổng thông tin Khách hàng của IATA.</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Tính năng Đăng ký cổng thông tin hiện đang bị vô hiệu hóa. Xin cảm ơn sự thông cảm của quý khách.</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>

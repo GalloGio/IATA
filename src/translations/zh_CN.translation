@@ -2249,6 +2249,10 @@
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>完成基本注册流程以加入 IATA 客户门户。</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>门户网站注册目前已停用。感谢您的理解。</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>
@@ -3273,7 +3277,7 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>当前密码</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>

@@ -2252,6 +2252,10 @@
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>기본 등록 절차를 완료하여 국제항공운송협회 (IATA) 고객 포털에 가입하세요.</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>포털 등록이 현재 비활성화되어 있습니다. 이해해 주셔서 감사합니다.</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>

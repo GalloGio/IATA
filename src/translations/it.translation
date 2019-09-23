@@ -2256,6 +2256,10 @@ ed i &lt;br/&gt;
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>Completi il processo di registrazione di base per accedere al Portale Clienti IATA.</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>La registrazione al portale è attualmente disabilitata. Grazie per la comprensione.</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>

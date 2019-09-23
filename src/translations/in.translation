@@ -2254,6 +2254,10 @@ dan &lt;br/&gt;
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>Selesaikan proses pendaftaran dasar untuk bergabung dengan Portal Pelanggan IATA.</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Portal Pendaftaran saat ini dinonaktifkan. Terima kasih atas pengertian Anda.</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>

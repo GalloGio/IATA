@@ -2249,6 +2249,10 @@
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>قوموا بإكمال عملية التسجيل الأساسية للانضمام إلى بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA).</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>تم تعطيل تسجيل البوابة حاليًا. شكرًا لكم على تفهمكم!</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>

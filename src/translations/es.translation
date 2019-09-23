@@ -2254,6 +2254,10 @@ y las &lt;br/&gt;
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>Complete el proceso de registro básico para poder acceder al portal del cliente de IATA.</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Actualmente, el registro en el portal está desactivado. Gracias por su comprensión.</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>
@@ -20676,6 +20680,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label>Título del puesto</label>
         <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>

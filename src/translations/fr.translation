@@ -2255,6 +2255,10 @@ et&lt;br/&gt;
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
+        <label>Terminez le processus d&apos;inscription de base pour rejoindre le portail client IATA.</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
         <label>L&apos;enregistrement du portail est actuellement désactivé. Merci de votre compréhension.</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>
