@@ -16,16 +16,16 @@ import login from '@salesforce/apex/PortalLoginCtrl.login';
 /* Custom Labels
 /* ==============================================================================================================*/
 import Login                                from '@salesforce/label/c.login';
-import Email                                from '@salesforce/label/c.Email';
+import CSP_Email                            from '@salesforce/label/c.CSP_Email';
 import OneId_Password                       from '@salesforce/label/c.OneId_Password';
 import CSP_Change_Email                     from '@salesforce/label/c.CSP_Change_Email';
 import CSP_Forgot_Password                  from '@salesforce/label/c.CSP_Forgot_Password';
 import CSP_Troubleshooting_Info             from '@salesforce/label/c.CSP_Troubleshooting_Info';
 import CSP_Troubleshooting                  from '@salesforce/label/c.CSP_Troubleshooting';
+import CSP_Create_New_Account_Info          from '@salesforce/label/c.CSP_Create_New_Account_Info';
 import CSP_Create_New_Account_Label         from '@salesforce/label/c.CSP_Create_New_Account_Label';
 import CSP_Frozen_User_Message              from '@salesforce/label/c.CSP_Frozen_User_Message';
 import CSP_Portal_Login_Disabled_Message    from '@salesforce/label/c.CSP_Portal_Login_Disabled_Message';
-import OneId_CreateNewAccount               from '@salesforce/label/c.OneId_CreateNewAccount';
 import CSP_Invalid_Email                    from '@salesforce/label/c.CSP_Invalid_Email';
 import OneId_CSP_Troubleshooting_Link       from '@salesforce/label/c.OneId_CSP_Troubleshooting_Link';
 import CSP_Existing_User_Message            from '@salesforce/label/c.CSP_Existing_User_Message';
@@ -73,16 +73,16 @@ export default class PortalLogin extends LightningElement {
 
     _labels = {
         Login,
-        Email,
+        CSP_Email,
         OneId_Password,
         CSP_Change_Email,
         CSP_Forgot_Password,
         CSP_Troubleshooting_Info,
         CSP_Troubleshooting,
+        CSP_Create_New_Account_Info,
         CSP_Create_New_Account_Label,
         CSP_Frozen_User_Message,
         CSP_Portal_Login_Disabled_Message,
-        OneId_CreateNewAccount,
         CSP_Invalid_Email,
         OneId_CSP_Troubleshooting_Link,
         CSP_Existing_User_Message,
@@ -111,8 +111,6 @@ export default class PortalLogin extends LightningElement {
     /* ==============================================================================================================*/
 
     connectedCallback() {
-
-        this._labels.CSP_Forgot_Password = this._labels.CSP_Forgot_Password + '?';
 
         let pageParams = getParamsFromPage();
         console.log('pageParams: ', pageParams);
