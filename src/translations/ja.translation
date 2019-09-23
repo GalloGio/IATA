@@ -1836,6 +1836,38 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>メールを変更する</label>
+        <name>CSP_Change_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Change Password --></label>
+        <name>CSP_Change_Password</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Change Password Error --></label>
+        <name>CSP_Change_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Change Password Info 1 --></label>
+        <name>CSP_Change_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Change Password Info 2 --></label>
+        <name>CSP_Change_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>メールを確認してアクセスの詳細を取得してください</label>
+        <name>CSP_Check_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Chg Pass Success Msg 1 --></label>
+        <name>CSP_Chg_Pass_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>您可以使用新密码登录。</label>
+        <name>CSP_Chg_Pass_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
         <label>コミュニティ</label>
         <name>CSP_Community</name>
     </customLabels>
@@ -1846,6 +1878,10 @@
     <customLabels>
         <label>会社概要</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Complete Profile --></label>
+        <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
         <label>&lt; b &gt; {1} &lt; / b &gt; のために &lt;b&gt; {0} &lt; / b &gt;へのアクセスを拒否してもよろしいですか。</label>
@@ -1862,6 +1898,22 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルは初めてですか？</label>
+        <name>CSP_Create_New_Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>新しいアカウントを作成する</label>
+        <name>CSP_Create_New_Account_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP  Create Password --></label>
+        <name>CSP_Create_Password</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Create Password Error --></label>
+        <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
         <label>ユーザーアクセスを拒否する</label>
@@ -1888,6 +1940,94 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label>メール</label>
+        <name>CSP_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 2 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 3 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Footer Image --></label>
+        <name>CSP_Email_Footer_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image --></label>
+        <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 1 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 2 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 3 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 4 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 1 --></label>
+        <name>CSP_Email_Signature_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 --></label>
+        <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 1 --></label>
+        <name>CSP_Email_Welcome_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 2 --></label>
+        <name>CSP_Email_Welcome_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 3 --></label>
+        <name>CSP_Email_Welcome_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 4 --></label>
+        <name>CSP_Email_Welcome_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 5 --></label>
+        <name>CSP_Email_Welcome_Part_5</name>
+    </customLabels>
+    <customLabels>
+        <label>既にポータルユーザーであるようです。パスワードでログインしてください。</label>
+        <name>CSP_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Expired Email Success Msg --></label>
+        <name>CSP_Expired_Email_Success_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Expired Link Msg 1 --></label>
+        <name>CSP_Expired_Link_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Expired Link Msg 2 --></label>
+        <name>CSP_Expired_Link_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Expired Reset Password Msg --></label>
+        <name>CSP_Expired_Reset_Password_Msg</name>
+    </customLabels>
+    <customLabels>
         <label>弊社までご連絡ください</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
@@ -1902,6 +2042,10 @@
     <customLabels>
         <label>よくあるご質問</label>
         <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>よくある質問にアクセスする</label>
+        <name>CSP_FAQ_Label</name>
     </customLabels>
     <customLabels>
         <label>主なカテゴリーを1つ選択</label>
@@ -1932,8 +2076,44 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP First Login Desc --></label>
+        <name>CSP_First_Login_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP First Login Title --></label>
+        <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>あなた様に</label>
         <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>パスワードをお忘れですか？</label>
+        <name>CSP_Forgot_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>メールでユーザーが登録されていないようです。新しいアカウントを簡単に作成することが出来ます。</label>
+        <name>CSP_Forgot_Password_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>登録したメールアドレスを入力してパスワードをリセットしてください。リセットリンクをメールでお送りします。</label>
+        <name>CSP_Forgot_Password_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>最初にスパムフォルダーを確認してください。スパムフォルダーで見つからない場合は、「再試行する」をクリックしてパスワードをリセットしてください。</label>
+        <name>CSP_Forgot_Password_Retry_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>メールを受信しませんでしたか？</label>
+        <name>CSP_Forgot_Password_Retry_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>メールを確認し、パスワードリセットリンクをクリックしてください</label>
+        <name>CSP_Forgot_Password_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>過去90日間ログインしていないため、新しいパスワードをメールでお送りしました。</label>
+        <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
         <label>ユーザーアクセス権を付与する</label>
@@ -1944,8 +2124,16 @@
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>
+        <label>無効なメール</label>
+        <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
         <label>ログアウト</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Login Now --></label>
+        <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
         <label>以下のリストからユーザーを管理することができます。</label>
@@ -1966,6 +2154,10 @@
     <customLabels>
         <label>名前</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>次へ</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label>表示する関連のあるアカウントはありません。</label>
@@ -1996,6 +2188,26 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Password --></label>
+        <name>CSP_Password</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Password Rule 1 --></label>
+        <name>CSP_Password_Rule_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Password Rule 2 --></label>
+        <name>CSP_Password_Rule_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Password Rule 3 --></label>
+        <name>CSP_Password_Rule_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Password Rule 4 --></label>
+        <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
         <label>お客様の案件を進めさせていただく際に、お客様のご意見が必要です。</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
@@ -2004,8 +2216,18 @@
         <name>CSP_PortalPath</name>
     </customLabels>
     <customLabels>
+        <label>ポータルログインは現在無効になっています。ご理解いただきありがとうございます。</label>
+        <name>CSP_Portal_Login_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
         <label>ポータルのステータス</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAの &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;プライバシーポリシー &lt;/a&gt;
+と &lt;br/&gt;
+&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;利用規約&lt;/a&gt;に同意します。&lt;/a&gt;</label>
+        <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
         <label>案件はどの様なもので、いつそちらが必要になりますか。</label>
@@ -2028,6 +2250,22 @@
         <name>CSP_RecentCases</name>
     </customLabels>
     <customLabels>
+        <label>登録が正常に完了しました</label>
+        <name>CSP_Registration_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>ポータルの登録は現在無効になっております。ご理解いただきありがとうございます。</label>
+        <name>CSP_Registration_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>既存のユーザーを使用して登録しようとしています。メールアドレスを変更するか、ログインボタンをクリックして、ログインページに移動してください</label>
+        <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Retry Message --></label>
+        <name>CSP_Registration_Retry_Message</name>
+    </customLabels>
+    <customLabels>
         <label>関連記事</label>
         <name>CSP_RelatedArticles</name>
     </customLabels>
@@ -2036,8 +2274,44 @@
         <name>CSP_Request_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Resend Verification Email --></label>
+        <name>CSP_Resend_Verification_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Reset Password --></label>
+        <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Reset Password Info 1 --></label>
+        <name>CSP_Reset_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Reset Password Info 2 --></label>
+        <name>CSP_Reset_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Reset Password Success Msg 1 --></label>
+        <name>CSP_Reset_Password_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Reset Password Success Msg 2 --></label>
+        <name>CSP_Reset_Password_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>お使いのコンピューターのIPは、米国当局による通商禁止としてリストされている国のいずれかを起源としていることが確認されました。カスタマーポータルをサポートするプラットフォームはこの米国の規制に準拠しているため、現在のIPアドレスからカスタマーポータルへのアクセスを提供することはできません。こちらをクリックしてお問い合わせください。</label>
+        <name>CSP_Restricted_Login_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>制限付きログイン</label>
+        <name>CSP_Restricted_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>保存する</label>
         <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Save Login --></label>
+        <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
         <label>文書の詳細で検索する</label>
@@ -2212,12 +2486,20 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Skip --></label>
+        <name>CSP_Skip</name>
+    </customLabels>
+    <customLabels>
         <label>ステータス</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
         <label>送信</label>
         <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>成功</label>
+        <name>CSP_Success</name>
     </customLabels>
     <customLabels>
         <label>サポート</label>
@@ -2244,8 +2526,60 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>トラブルシューティングをご確認ください</label>
+        <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>その他のヘルプは</label>
+        <name>CSP_Troubleshooting_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>再試行する</label>
+        <name>CSP_Try_Again</name>
+    </customLabels>
+    <customLabels>
         <label>案件の種類</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>お客様の為に特別に選択された、60を超えるIATAサービスに直接アクセスすることが出来ます。</label>
+        <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAのサービスにアクセスする</label>
+        <name>CSP_Welcome_Panel_Bullet_1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAのプロファイルを簡単に管理、および更新することが出来ます。</label>
+        <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>最新情報を得る</label>
+        <name>CSP_Welcome_Panel_Bullet_2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>出版物、トレーニング、その他のIATA製品とサービスをご覧ください。</label>
+        <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>スペシャルオファーを見つける</label>
+        <name>CSP_Welcome_Panel_Bullet_3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>豊富な質問と回答にアクセスし、IATAから直接サポートをお受けください。</label>
+        <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>回答を得る</label>
+        <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>全てのIATAサービスにアクセスして管理してください。様々な製品に関する情報を参照し、あらゆるトピックに関するサポートをお受けください。こちらになります。</label>
+        <name>CSP_Welcome_Panel_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルへようこそ</label>
+        <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -17676,7 +18010,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Login --></label>
+        <label>ログイン</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -17884,7 +18218,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Account Creation --></label>
+        <label>アカウントの作成</label>
         <name>OneId_Account_Creation</name>
     </customLabels>
     <customLabels>
@@ -17948,7 +18282,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CreateNewAccount --></label>
+        <label>新しいアカウントを作成する</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -18352,7 +18686,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_LoginFail --></label>
+        <label>ログインに失敗しました。メールとパスワードが正しいことを確認してください。</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
@@ -18424,7 +18758,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Password --></label>
+        <label>パスワード</label>
         <name>OneId_Password</name>
     </customLabels>
     <customLabels>
@@ -20313,6 +20647,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label>肩書</label>
         <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>

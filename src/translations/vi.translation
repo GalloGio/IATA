@@ -1835,6 +1835,38 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>Thay đổi e-mail</label>
+        <name>CSP_Change_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Đổi mật khẩu</label>
+        <name>CSP_Change_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Mật khẩu mới của quý khách không được thiết lập thành công.</label>
+        <name>CSP_Change_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng nhập mật khẩu hiện tại của quý khách, sau đó thiết lập mật khẩu mới và xác nhận lại mật khẩu.</label>
+        <name>CSP_Change_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Mật khẩu phải chứa 10 ký tự trở lên, bao gồm ít nhất một chữ cái viết hoa, một chữ số và một ký tự đặc biệt (! @ # $% * () _ + ^ &amp;)</label>
+        <name>CSP_Change_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Quý khách vui lòng kiểm tra Email của mình để nhận chi tiết lịch sử truy cập của quý khách</label>
+        <name>CSP_Check_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Thay đổi mật khẩu thành công.</label>
+        <name>CSP_Chg_Pass_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Bây giờ quý khách có thể sử dụng mật khẩu mới để đăng nhập vào hệ thống.</label>
+        <name>CSP_Chg_Pass_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
         <label>Cộng đồng</label>
         <name>CSP_Community</name>
     </customLabels>
@@ -1845,6 +1877,10 @@
     <customLabels>
         <label>Hồ sơ công ty</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Complete Profile --></label>
+        <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
         <label>Bạn có chắc chắn muốn từ chối quyền truy cập vào &lt; b &gt; {0} &lt; / b &gt; cho &lt; b &gt; {1} &lt; / b &gt; không?</label>
@@ -1861,6 +1897,22 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn mới biết đến Cổng thông tin Khách hàng của IATA?</label>
+        <name>CSP_Create_New_Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Tạo tài khoản mới</label>
+        <name>CSP_Create_New_Account_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Tạo mật khẩu</label>
+        <name>CSP_Create_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Mật khẩu mới của quý khách không được tạo thành công. Xin quý khách vui lòng thử lại!</label>
+        <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
         <label>Từ chối quyền truy cập của người dùng</label>
@@ -1887,6 +1939,94 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email --></label>
+        <name>CSP_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 2 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 3 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Footer Image --></label>
+        <name>CSP_Email_Footer_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image --></label>
+        <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 1 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 2 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 3 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 4 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 1 --></label>
+        <name>CSP_Email_Signature_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 --></label>
+        <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 1 --></label>
+        <name>CSP_Email_Welcome_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 2 --></label>
+        <name>CSP_Email_Welcome_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 3 --></label>
+        <name>CSP_Email_Welcome_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 4 --></label>
+        <name>CSP_Email_Welcome_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 5 --></label>
+        <name>CSP_Email_Welcome_Part_5</name>
+    </customLabels>
+    <customLabels>
+        <label>Có vẻ như bạn đã là một người dùng cổng thông tin. Vui lòng đăng nhập bằng mật khẩu của bạn.</label>
+        <name>CSP_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng kiểm tra E-mail của mình và nhấn vào liên kết tạo mật khẩu.</label>
+        <name>CSP_Expired_Email_Success_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>Đường dẫn xác minh đã hết hạn.</label>
+        <name>CSP_Expired_Link_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Vì lý do bảo mật, đường dẫn xác minh sẽ hết hạn sau 8 giờ.</label>
+        <name>CSP_Expired_Link_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng kiểm tra E-mail của mình và nhấn vào liên kết tạo mật khẩu.</label>
+        <name>CSP_Expired_Reset_Password_Msg</name>
+    </customLabels>
+    <customLabels>
         <label>Liên lạc với chúng tôi</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
@@ -1901,6 +2041,10 @@
     <customLabels>
         <label>Các câu hỏi thường gặp</label>
         <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Chuyển đến Câu hỏi thường gặp của chúng tôi</label>
+        <name>CSP_FAQ_Label</name>
     </customLabels>
     <customLabels>
         <label>Chọn một trong các loại chính</label>
@@ -1931,8 +2075,44 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP First Login Desc --></label>
+        <name>CSP_First_Login_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP First Login Title --></label>
+        <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Cho bạn</label>
         <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>Quên mật khẩu?</label>
+        <name>CSP_Forgot_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Có vẻ như chúng tôi không có người dùng đăng ký bằng email của bạn. Bạn có thể dễ dàng tạo một tài khoản mới.</label>
+        <name>CSP_Forgot_Password_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng nhập địa chỉ email đã đăng ký của bạn để đặt lại mật khẩu của bạn. Chúng tôi sẽ gửi cho bạn một liên kết thiết lập lại email của bạn.</label>
+        <name>CSP_Forgot_Password_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng kiểm tra thư mục rác của bạn trước. Trong trường hợp quý khách không thể tìm thấy bất cứ điều gì trong thư mục thư rác, xin quý khách vui lòng thử đặt lại mật khẩu của tài khoản của mình một lần nữa bằng cách nhấn chọn mục Thử lại.</label>
+        <name>CSP_Forgot_Password_Retry_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Không nhận được email?</label>
+        <name>CSP_Forgot_Password_Retry_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng kiểm tra email của bạn và nhấp vào liên kết đặt lại mật khẩu</label>
+        <name>CSP_Forgot_Password_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Vì bạn đã không đăng nhập trong 90 ngày qua, chúng tôi đã gửi cho bạn một email với mật khẩu mới.</label>
+        <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
         <label>Cấp quyền truy cập người dùng</label>
@@ -1943,8 +2123,16 @@
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>
+        <label>Email không hợp lệ</label>
+        <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
         <label>Đăng xuất</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Đăng nhập ngay bây giờ</label>
+        <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
         <label>Bạn có thể quản lý người dùng từ danh sách dưới đây.</label>
@@ -1965,6 +2153,10 @@
     <customLabels>
         <label>Tên</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Kế tiếp</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label>Không có tài khoản liên quan để hiển thị.</label>
@@ -1995,6 +2187,26 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
+        <label>Mật khẩu</label>
+        <name>CSP_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Tối thiểu 10 ký tự</label>
+        <name>CSP_Password_Rule_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Bao gồm ít nhất một chữ cái viết hoa</label>
+        <name>CSP_Password_Rule_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Bao gồm ít nhất một chữ số</label>
+        <name>CSP_Password_Rule_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Bao gồm ít nhất một ký tự đặc biệt (! @ # $% * () _ + ^ &amp;)</label>
+        <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
         <label>Chúng tôi cần ý kiến đóng góp của bạn để tiến hành với trường hợp của bạn.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
@@ -2003,8 +2215,19 @@
         <name>CSP_PortalPath</name>
     </customLabels>
     <customLabels>
+        <label>Cổng thông tin đăng nhập hiện đang bị vô hiệu hóa. Cảm ơn bạn đã thông cảm.</label>
+        <name>CSP_Portal_Login_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Trạng thái cổng thông tin</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Tôi đồng ý với 
+&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Chính sách bảo mật &lt;/a&gt;
+và &lt;br/&gt;
+&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Điều khoản sử dụng. &lt;/a&gt; của IATA</label>
+        <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
         <label>Một trường hợp là gì và khi nào tôi cần nó?</label>
@@ -2027,6 +2250,22 @@
         <name>CSP_RecentCases</name>
     </customLabels>
     <customLabels>
+        <label>Đăng ký thành công.</label>
+        <name>CSP_Registration_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>Tính năng Đăng ký cổng thông tin hiện đang bị vô hiệu hóa. Xin cảm ơn sự thông cảm của quý khách.</label>
+        <name>CSP_Registration_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Quý khách đang cố gắng đăng ký một tài khoản mới trùng với một tài khoản đăng nhập khác sẵn có, xin vui lòng thay đổi địa chỉ Email đăng ký hoặc nhấn vào nút đăng nhập để đi đến trang đăng nhập</label>
+        <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Retry Message --></label>
+        <name>CSP_Registration_Retry_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Những bài viết liên quan</label>
         <name>CSP_RelatedArticles</name>
     </customLabels>
@@ -2035,8 +2274,44 @@
         <name>CSP_Request_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Resend Verification Email --></label>
+        <name>CSP_Resend_Verification_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Đặt lại mật khẩu</label>
+        <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng nhập mật khẩu mới của mình.</label>
+        <name>CSP_Reset_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Mật khẩu phải bao gồm:</label>
+        <name>CSP_Reset_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Mật khẩu của quý khách đã được thay đổi thành công.</label>
+        <name>CSP_Reset_Password_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Quý khách có thể đăng nhập bằng mật khẩu mới.</label>
+        <name>CSP_Reset_Password_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>IP máy tính của bạn đã được xác định là bắt nguồn từ một trong những quốc gia nằm trong sanh sách bị cấm vận bởi chính quyền Hoa Kỳ. Nền tảng hỗ trợ Cổng thông tin Khách hàng của chúng tôi tuân thủ các quy định này của Hoa Kỳ và do đó, chúng tôi hiện không thể cung cấp quyền truy cập vào Cổng thông tin Khách hàng từ địa chỉ IP hiện tại của bạn. Nhấn vào đây để liên hệ với chúng tôi.</label>
+        <name>CSP_Restricted_Login_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Hạn chế đăng nhập</label>
+        <name>CSP_Restricted_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Tiết kiệm</label>
         <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>Lưu &amp; đăng nhập</label>
+        <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
         <label>Tìm kiếm theo chi tiết tài liệu</label>
@@ -2211,12 +2486,20 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Skip --></label>
+        <name>CSP_Skip</name>
+    </customLabels>
+    <customLabels>
         <label>Trạng thái</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
         <label>Gửi đi</label>
         <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>Thành công</label>
+        <name>CSP_Success</name>
     </customLabels>
     <customLabels>
         <label>Ủng hộ</label>
@@ -2243,8 +2526,60 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>xử lý sự cố</label>
+        <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Để được trợ giúp kiểm tra thêm</label>
+        <name>CSP_Troubleshooting_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách thử làm lại thao tác trên</label>
+        <name>CSP_Try_Again</name>
+    </customLabels>
+    <customLabels>
         <label>Loại trường hợp</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Truy cập trực tiếp hơn 60 dịch vụ IATA, được lựa chọn đặc biệt cho bạn.</label>
+        <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Truy cập dịch vụ IATA</label>
+        <name>CSP_Welcome_Panel_Bullet_1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Dễ dàng quản lý và cập nhật hồ sơ IATA của bạn.</label>
+        <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Hãy luôn cập nhật</label>
+        <name>CSP_Welcome_Panel_Bullet_2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Khám phá việc lựa chọn các ấn phẩm, khóa đào tạo và các sản phẩm và dịch vụ khác của IATA.</label>
+        <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm ưu đãi đặc biệt</label>
+        <name>CSP_Welcome_Panel_Bullet_3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Truy cập bộ sưu tập lớn các câu hỏi &amp; câu trả lời của chúng tôi; và nhận hỗ trợ trực tiếp từ IATA.</label>
+        <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Nhận câu trả lời</label>
+        <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Truy cập và quản lý tất cả các dịch vụ IATA của bạn. Tham khảo thông tin về các sản phẩm khác nhau và nhận hỗ trợ về bất kỳ chủ đề nào. Của bạn đây.</label>
+        <name>CSP_Welcome_Panel_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Chào mừng bạn đến với Cổng thông tin Khách hàng của IATA</label>
+        <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -2427,7 +2762,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirm password --></label>
+        <label>Xác nhận mật khẩu</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -2943,7 +3278,7 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>Mật khẩu hiện tại</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>
@@ -17676,7 +18011,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Login --></label>
+        <label>Đăng nhập</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -17796,7 +18131,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label><!-- New password --></label>
+        <label>Mật khẩu mới</label>
         <name>New_password</name>
     </customLabels>
     <customLabels>
@@ -17884,7 +18219,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Account Creation --></label>
+        <label>Tạo mới tài khoản</label>
         <name>OneId_Account_Creation</name>
     </customLabels>
     <customLabels>
@@ -17948,7 +18283,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CreateNewAccount --></label>
+        <label>Tạo tài khoản mới</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -18352,7 +18687,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_LoginFail --></label>
+        <label>Nỗ lực đăng nhập của bạn đã thất bại. Hãy chắc chắn rằng email và mật khẩu là chính xác.</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
@@ -18424,7 +18759,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Password --></label>
+        <label>Mật khẩu</label>
         <name>OneId_Password</name>
     </customLabels>
     <customLabels>
@@ -19251,7 +19586,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>PKB2_search_to_long</name>
     </customLabels>
     <customLabels>
-        <label><!-- PKB2: Contact Us Send Email --></label>
+        <label>Gửi lại mail xác minh mật khẩu</label>
         <name>PKB2_send_mail</name>
     </customLabels>
     <customLabels>
@@ -20313,6 +20648,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label>Chức danh công việc</label>
         <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>

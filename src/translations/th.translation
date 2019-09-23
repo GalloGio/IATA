@@ -1833,6 +1833,38 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>เปลี่ยนอีเมล</label>
+        <name>CSP_Change_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>เปลี่ยนรหัสผ่าน</label>
+        <name>CSP_Change_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่สามารถตั้งรหัสผ่านชุดใหม่ได้</label>
+        <name>CSP_Change_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณาป้อนรหัสผ่านปัจจุบันของคุณ จากนั้นตั้งรหัสผ่านชุดใหม่และทำการยืนยัน</label>
+        <name>CSP_Change_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>รหัสผ่านควรมีอักขระอย่างน้อย 10 ตัว และมีอักษรตัวพิมพ์ใหญ่ ตัวเลข และสัญลักษณ์ (! @ # $% * () _ + ^ &amp;) อย่างน้อยหนึ่งตัว</label>
+        <name>CSP_Change_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบอีเมลของคุณเพื่อรับทราบรายละเอียดสำหรับการเข้าถึงของคุณ</label>
+        <name>CSP_Check_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>ตั้งรหัสผ่านสำเร็จแล้ว</label>
+        <name>CSP_Chg_Pass_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถใช้รหัสผ่านชุดใหม่เพื่อเข้าสู่ระบบ</label>
+        <name>CSP_Chg_Pass_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
         <label>ชุมชน</label>
         <name>CSP_Community</name>
     </customLabels>
@@ -1843,6 +1875,10 @@
     <customLabels>
         <label>ข้อมูลบริษัท</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Complete Profile --></label>
+        <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
         <label>คุณแน่ใจหรือไม่ว่าต้องการปฏิเสธการเข้าถึง &lt;b&gt;{0}&lt;/b&gt; สำหรับ &lt;b&gt;{1}&lt;/b&gt;?</label>
@@ -1859,6 +1895,22 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>ยังใหม่กับพอร์ทัลสำหรับลูกค้าของ IATA ใช่ไหม?</label>
+        <name>CSP_Create_New_Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างบัญชีใหม่</label>
+        <name>CSP_Create_New_Account_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างรหัสผ่าน</label>
+        <name>CSP_Create_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่สามารถตั้งรหัสผ่านชุดใหม่ได้ กรุณาลองใหม่อีกครั้ง</label>
+        <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
         <label>ปฏิเสธการเข้าถึงของผู้ใช้</label>
@@ -1885,6 +1937,94 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label>อีเมล</label>
+        <name>CSP_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 2 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 3 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Footer Image --></label>
+        <name>CSP_Email_Footer_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image --></label>
+        <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 1 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 2 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 3 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 4 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 1 --></label>
+        <name>CSP_Email_Signature_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 --></label>
+        <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 1 --></label>
+        <name>CSP_Email_Welcome_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 2 --></label>
+        <name>CSP_Email_Welcome_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 3 --></label>
+        <name>CSP_Email_Welcome_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 4 --></label>
+        <name>CSP_Email_Welcome_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 5 --></label>
+        <name>CSP_Email_Welcome_Part_5</name>
+    </customLabels>
+    <customLabels>
+        <label>ดูเหมือนว่าคุณเป็นผู้ใช้พอร์ทัลอยู่แล้ว โปรดเข้าสู่ระบบด้วยรหัสผ่านของคุณ</label>
+        <name>CSP_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบอีเมลของคุณและคลิกที่ลิงค์สำหรับสร้างรหัสผ่าน</label>
+        <name>CSP_Expired_Email_Success_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>ลิงค์สำหรับยืนยันหมดอายุแล้ว</label>
+        <name>CSP_Expired_Link_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>เพื่อเป็นการรักษาความปลอดภัย ลิงค์สำหรับยืนยันจะหมดอายุเมื่อเกิน 8 ชั่วโมง</label>
+        <name>CSP_Expired_Link_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบอีเมลของคุณและคลิกที่ลิงค์สำหรับสร้างรหัสผ่าน</label>
+        <name>CSP_Expired_Reset_Password_Msg</name>
+    </customLabels>
+    <customLabels>
         <label>ติดต่อเรา</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
@@ -1899,6 +2039,10 @@
     <customLabels>
         <label>คำถามที่พบบ่อย</label>
         <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่คำถามที่พบบ่อยของเรา</label>
+        <name>CSP_FAQ_Label</name>
     </customLabels>
     <customLabels>
         <label>เลือกหนึ่งในหมวดหมู่หลัก</label>
@@ -1929,8 +2073,44 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP First Login Desc --></label>
+        <name>CSP_First_Login_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP First Login Title --></label>
+        <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>สำหรับคุณ</label>
         <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>ลืมรหัสผ่าน?</label>
+        <name>CSP_Forgot_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>ดูเหมือนว่าเราไม่มีผู้ใช้ที่ลงทะเบียนด้วยอีเมลของคุณ คุณสามารถสร้างบัญชีใหม่ได้อย่างง่ายดาย</label>
+        <name>CSP_Forgot_Password_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดป้อนที่อยู่อีเมลที่ได้ลงทะเบียนไว้ เพื่อรีเซ็ตรหัสผ่านของคุณ เราจะส่งลิงก์รีเซ็ตให้คุณทางอีเมล</label>
+        <name>CSP_Forgot_Password_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบโฟลเดอร์สแปมของคุณก่อน หากคุณไม่พบสิ่งใดในโฟลเดอร์สแปม โปรดลองรีเซ็ตรหัสผ่านอีกครั้ง โดยการคลิกที่ลองอีกครั้ง (Try Again)</label>
+        <name>CSP_Forgot_Password_Retry_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่ได้รับอีเมลใช่ไหม?</label>
+        <name>CSP_Forgot_Password_Retry_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบอีเมลของคุณ และคลิกที่ลิงก์รีเซ็ตรหัสผ่าน</label>
+        <name>CSP_Forgot_Password_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>เนื่องจากคุณไม่ได้ลงชื่อเข้าใช้ใน 90 วันที่ผ่านมา เราจึงส่งอีเมลพร้อมรหัสผ่านใหม่ให้คุณ</label>
+        <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
         <label>ให้สิทธิ์การเข้าถึงของผู้ใช้</label>
@@ -1941,8 +2121,16 @@
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>
+        <label>อีเมลไม่ถูกต้อง</label>
+        <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
         <label>ออกจากระบบ</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>ลงชื่อเข้าใช้ทันที</label>
+        <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
         <label>คุณสามารถจัดการผู้ใช้ จากรายการด้านล่างนี้</label>
@@ -1963,6 +2151,10 @@
     <customLabels>
         <label>ชื่อ</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>ต่อไป</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label>ไม่ปรากฏบัญชีที่เกี่ยวข้อง</label>
@@ -1993,6 +2185,26 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
+        <label>รหัสผ่าน</label>
+        <name>CSP_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>อักขระขั้นต่ำ 10 ตัว</label>
+        <name>CSP_Password_Rule_1</name>
+    </customLabels>
+    <customLabels>
+        <label>อักษรตัวพิมพ์ใหญ่ อย่างน้อย 1 ตัว</label>
+        <name>CSP_Password_Rule_2</name>
+    </customLabels>
+    <customLabels>
+        <label>ตัวเลข อย่างน้อย 1 ตัว</label>
+        <name>CSP_Password_Rule_3</name>
+    </customLabels>
+    <customLabels>
+        <label>สัญลักษณ์ อย่างน้อย 1 ตัว (! @ # $% * () _ + ^ &amp;)</label>
+        <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
         <label>เราต้องการข้อมูลของคุณ เพื่อดำเนินการกับคำร้องของ คุณ</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
@@ -2001,8 +2213,18 @@
         <name>CSP_PortalPath</name>
     </customLabels>
     <customLabels>
+        <label>การเข้าสู่ระบบพอร์ทัลปิดใช้งานอยู่ในขณะนี้ ขอขอบคุณสำหรับความเข้าใจของคุณ</label>
+        <name>CSP_Portal_Login_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
         <label>สถานะพอร์ทัล</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้าพเจ้าเห็นด้วยกับ
+&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;นโยบายความเป็นส่วนตัว&lt;/a&gt; และ &lt;br/&gt;
+&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;เงื่อนไขการใช้งาน&lt;/a&gt; ของ IATA</label>
+        <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
         <label>คำร้องคืออะไร และเมื่อใดที่ฉันต้องการ?</label>
@@ -2025,6 +2247,22 @@
         <name>CSP_RecentCases</name>
     </customLabels>
     <customLabels>
+        <label>การลงทะเบียนเสร็จสมบูรณ์แล้ว</label>
+        <name>CSP_Registration_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>การลงทะเบียนพอร์ทัลถูกปิดใช้งานในขณะนี้ ขอขอบคุณสำหรับความเข้าใจของคุณ</label>
+        <name>CSP_Registration_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณกำลังพยายามลงทะเบียนด้วยชื่อผู้ใช้ที่มีอยู่แล้ว โปรดเปลี่ยนอีเมลหรือคลิกที่ปุ่มเข้าสู่ระบบ เพื่อไปยังหน้าลงทะเบียนสำหรับเข้าสู่ระบบ</label>
+        <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Retry Message --></label>
+        <name>CSP_Registration_Retry_Message</name>
+    </customLabels>
+    <customLabels>
         <label>บทความที่เกี่ยวข้อง</label>
         <name>CSP_RelatedArticles</name>
     </customLabels>
@@ -2033,8 +2271,44 @@
         <name>CSP_Request_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Resend Verification Email --></label>
+        <name>CSP_Resend_Verification_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>ตั้งรหัสผ่านชุดใหม่</label>
+        <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณาป้อนรหัสผ่านชุดใหม่ของคุณ</label>
+        <name>CSP_Reset_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>รหัสผ่านควรมี:</label>
+        <name>CSP_Reset_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>เปลี่ยนรหัสผ่านของคุณสำเร็จแล้ว</label>
+        <name>CSP_Reset_Password_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถเข้าสู่ระบบด้วยรหัสผ่านชุดใหม่ของคุณ</label>
+        <name>CSP_Reset_Password_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>มีการระบุว่า IP ของคอมพิวเตอร์ของคุณมีแหล่งที่มาจากหนึ่งในประเทศที่อยู่ในรายการที่ถูกระงับโดยหน่วยงานในสหรัฐอเมริกา แพลตฟอร์มที่สนับสนุนพอร์ทัลสำหรับลูกค้าของเรานั้น ปฏิบัติตามกฎระเบียบของสหรัฐอเมริกา และด้วยเหตุนี้ เราจึงไม่สามารถให้การเข้าถึงพอร์ทัลสำหรับลูกค้าจากที่อยู่ IP ปัจจุบันของคุณได้ คลิกที่นี่เพื่อติดต่อเรา</label>
+        <name>CSP_Restricted_Login_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>การเข้าสู่ระบบที่จำกัด</label>
+        <name>CSP_Restricted_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>บันทึก</label>
         <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>บันทึก &amp; เข้าสู่ระบบ</label>
+        <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
         <label>ค้นหาด้วยรายละเอียดเอกสาร</label>
@@ -2209,12 +2483,20 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Skip --></label>
+        <name>CSP_Skip</name>
+    </customLabels>
+    <customLabels>
         <label>สถานะ</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
         <label>ส่ง</label>
         <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>ความสำเร็จ</label>
+        <name>CSP_Success</name>
     </customLabels>
     <customLabels>
         <label>บริการช่วยเหลือ</label>
@@ -2241,8 +2523,60 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>การแก้ไขปัญหา</label>
+        <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>สำหรับความช่วยเหลือเพิ่มเติม กรุณาดูที่</label>
+        <name>CSP_Troubleshooting_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>ลองอีกครั้ง</label>
+        <name>CSP_Try_Again</name>
+    </customLabels>
+    <customLabels>
         <label>ประเภทของคำร้อง</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>เข้าถึงบริการของ IATA มากกว่า 60 รายการโดยตรง คัดสรรมาเพื่อคุณโดยเฉพาะ</label>
+        <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>เข้าถึงบริการของ IATA</label>
+        <name>CSP_Welcome_Panel_Bullet_1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>จัดการและปรับปรุงโปรไฟล์ IATA ของคุณได้อย่างง่ายดาย</label>
+        <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>ติดตามข่าวสารล่าสุดอยู่เสมอ</label>
+        <name>CSP_Welcome_Panel_Bullet_2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>พบกับตัวเลือกสำหรับสิ่งพิมพ์, การฝึกอบรม, รวมทั้งผลิตภัณฑ์และบริการอื่น ๆ ของ IATA</label>
+        <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหาข้อเสนอพิเศษ</label>
+        <name>CSP_Welcome_Panel_Bullet_3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>เข้าถึงชุดคำถามและคำตอบที่กว้างขวางครอบคลุม และรับบริการช่วยเหลือจาก IATA โดยตรง</label>
+        <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>รับคำตอบ</label>
+        <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>เข้าถึงและจัดการบริการของ IATA ทั้งหมดของคุณ ปรึกษาข้อมูลเกี่ยวกับผลิตภัณฑ์ต่าง ๆ และรับบริการช่วยเหลือในเรื่องใด ๆ ก็ตาม อยู่ตรงนี้ เพื่อคุณ</label>
+        <name>CSP_Welcome_Panel_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>ยินดีต้อนรับเข้าสู่พอร์ทัลสำหรับลูกค้าของ IATA</label>
+        <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -2425,7 +2759,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirm password --></label>
+        <label>ยืนยันรหัสผ่าน</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -2941,7 +3275,7 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>รหัสผ่านปัจจุบัน</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>
@@ -17677,7 +18011,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Login --></label>
+        <label>เข้าสู่ระบบ</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -17797,7 +18131,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label><!-- New password --></label>
+        <label>รหัสผ่านชุดใหม่</label>
         <name>New_password</name>
     </customLabels>
     <customLabels>
@@ -17885,7 +18219,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Account Creation --></label>
+        <label>การสร้างบัญชี</label>
         <name>OneId_Account_Creation</name>
     </customLabels>
     <customLabels>
@@ -17949,7 +18283,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CreateNewAccount --></label>
+        <label>สร้างบัญชีใหม่</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -18353,7 +18687,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_LoginFail --></label>
+        <label>ความพยายามในการเข้าสู่ระบบของคุณล้มเหลว ตรวจสอบให้แน่ใจว่าอีเมลและรหัสผ่านถูกต้อง</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
@@ -18425,7 +18759,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Password --></label>
+        <label>รหัสผ่าน</label>
         <name>OneId_Password</name>
     </customLabels>
     <customLabels>
@@ -19252,7 +19586,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_search_to_long</name>
     </customLabels>
     <customLabels>
-        <label><!-- PKB2: Contact Us Send Email --></label>
+        <label>ส่งอีเมลยืนยันอีกครั้ง</label>
         <name>PKB2_send_mail</name>
     </customLabels>
     <customLabels>
@@ -20314,6 +20648,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>ตำแหน่งงาน</label>
         <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>

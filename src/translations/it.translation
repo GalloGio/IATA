@@ -1837,6 +1837,38 @@ la seguente procedura per completarlo :
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>Modifica dell&apos;email</label>
+        <name>CSP_Change_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Cambia password</label>
+        <name>CSP_Change_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Impossibile impostare la nuova password.</label>
+        <name>CSP_Change_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Inserisca la password attuale, quindi ne imposti una nuova e la confermi.</label>
+        <name>CSP_Change_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>La password deve contenere 10 o più caratteri tra cui almeno una lettera maiuscola, un numero e un simbolo (! @ # $ % * () _ + ^ &amp;).</label>
+        <name>CSP_Change_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Controlli la sua posta elettronica per ricevere i dettagli di accesso</label>
+        <name>CSP_Check_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Password impostata correttamente.</label>
+        <name>CSP_Chg_Pass_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Può utilizzare la nuova password per accedere.</label>
+        <name>CSP_Chg_Pass_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Community --></label>
         <name>CSP_Community</name>
     </customLabels>
@@ -1847,6 +1879,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label>Profilo aziendale</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Complete Profile --></label>
+        <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
         <label>Vuole davvero negare l&apos;accesso a &lt;b&gt;{0}&lt;/b&gt; per &lt;b&gt;{1}&lt;/b&gt;?</label>
@@ -1863,6 +1899,22 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>Non conosce il Portale Clienti IATA?</label>
+        <name>CSP_Create_New_Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Crei un nuovo account</label>
+        <name>CSP_Create_New_Account_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Crea password</label>
+        <name>CSP_Create_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Impossibile impostare la nuova password. La preghiamo di riprovare.</label>
+        <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
         <label>Nega l&apos;accesso all&apos;utente</label>
@@ -1889,6 +1941,94 @@ la seguente procedura per completarlo :
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email --></label>
+        <name>CSP_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 2 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 3 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Footer Image --></label>
+        <name>CSP_Email_Footer_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image --></label>
+        <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 1 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 2 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 3 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 4 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 1 --></label>
+        <name>CSP_Email_Signature_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 --></label>
+        <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 1 --></label>
+        <name>CSP_Email_Welcome_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 2 --></label>
+        <name>CSP_Email_Welcome_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 3 --></label>
+        <name>CSP_Email_Welcome_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 4 --></label>
+        <name>CSP_Email_Welcome_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 5 --></label>
+        <name>CSP_Email_Welcome_Part_5</name>
+    </customLabels>
+    <customLabels>
+        <label>Sembra che lei sia già un utente del portale. Effettui il login con la sua password.</label>
+        <name>CSP_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Controlli la sua e-mail e clicchi sul link &quot;Crea password&quot;.</label>
+        <name>CSP_Expired_Email_Success_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>Il link di verifica è scaduto.</label>
+        <name>CSP_Expired_Link_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Per motivi di sicurezza, il link di verifica scade dopo 8 ore.</label>
+        <name>CSP_Expired_Link_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Controlli la sua e-mail e clicchi sul link &quot;Crea password&quot;.</label>
+        <name>CSP_Expired_Reset_Password_Msg</name>
+    </customLabels>
+    <customLabels>
         <label>Contattaci</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
@@ -1903,6 +2043,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label>Domande frequenti</label>
         <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Vada alle nostre FAQ</label>
+        <name>CSP_FAQ_Label</name>
     </customLabels>
     <customLabels>
         <label>Seleziona una delle categorie principali</label>
@@ -1933,8 +2077,44 @@ la seguente procedura per completarlo :
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP First Login Desc --></label>
+        <name>CSP_First_Login_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP First Login Title --></label>
+        <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Per lei</label>
         <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>Password dimenticata?</label>
+        <name>CSP_Forgot_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Non ci risulta alcun utente registrato con tale indirizzo email. Può creare facilmente un nuovo account.</label>
+        <name>CSP_Forgot_Password_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Inserisca il suo indirizzo e-mail registrato per reimpostare la password. Le invieremo un link di ripristino al suo indirizzo email.</label>
+        <name>CSP_Forgot_Password_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Controlli prima la sua cartella spam. Se non riesce a trovarla nella cartella spam, provi a reimpostare nuovamente la password cliccando su &quot;Riprova&quot;.</label>
+        <name>CSP_Forgot_Password_Retry_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Non ha ricevuto un&apos;email?</label>
+        <name>CSP_Forgot_Password_Retry_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Controlli la sua e-mail e faccia clic sul link di reimpostazione della password</label>
+        <name>CSP_Forgot_Password_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Visto che non ha effettuato nessun accesso negli ultimi 90 giorni, le abbiamo inviato un&apos;email con una nuova password.</label>
+        <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
         <label>Concedi l&apos;accesso all&apos;utente</label>
@@ -1945,8 +2125,16 @@ la seguente procedura per completarlo :
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>
+        <label>E-mail non valida</label>
+        <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
         <label>Uscire</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Accedi ora</label>
+        <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
         <label>Gli utenti possono essere gestiti dalla lista qui sotto.</label>
@@ -1967,6 +2155,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label>Nome</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Successivo</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label>Nessun account correlato da visualizzare.</label>
@@ -1997,6 +2189,26 @@ la seguente procedura per completarlo :
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
+        <label>Password</label>
+        <name>CSP_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Minimo 10 caratteri</label>
+        <name>CSP_Password_Rule_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Almeno una lettera maiuscola</label>
+        <name>CSP_Password_Rule_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Almeno un numero</label>
+        <name>CSP_Password_Rule_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Almeno un simbolo (! @ # $ % * () _ + ^ &amp;)</label>
+        <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
         <label>Abbiamo bisogno del suo contributo per procedere con il suo caso.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
@@ -2005,8 +2217,19 @@ la seguente procedura per completarlo :
         <name>CSP_PortalPath</name>
     </customLabels>
     <customLabels>
+        <label>L&apos;accesso al portale è attualmente disabilitato. Grazie per la sua comprensione.</label>
+        <name>CSP_Portal_Login_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Stato del portale</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Sono d&apos;accordo con l&apos;
+&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Informativa sulla privacy &lt;/a&gt;
+ed i &lt;br/&gt;
+&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Termini di utilizzo &lt;/a&gt;  di IATA.</label>
+        <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
         <label>Che cos&apos;è un caso e quando ne ho bisogno?</label>
@@ -2029,6 +2252,22 @@ la seguente procedura per completarlo :
         <name>CSP_RecentCases</name>
     </customLabels>
     <customLabels>
+        <label>Registrazione completata correttamente</label>
+        <name>CSP_Registration_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>La registrazione al portale è attualmente disabilitata. Grazie per la comprensione.</label>
+        <name>CSP_Registration_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Sta tentando di registrarsi con un utente esistente, la preghiamo di cambiare l&apos;email o cliccare sul pulsante di accesso per passare alla pagina di login</label>
+        <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Retry Message --></label>
+        <name>CSP_Registration_Retry_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Articoli correlati</label>
         <name>CSP_RelatedArticles</name>
     </customLabels>
@@ -2037,8 +2276,44 @@ la seguente procedura per completarlo :
         <name>CSP_Request_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Resend Verification Email --></label>
+        <name>CSP_Resend_Verification_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Reimposta password</label>
+        <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Inserisca la nuova password.</label>
+        <name>CSP_Reset_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>La password deve contenere:</label>
+        <name>CSP_Reset_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>La password è stata modificata correttamente.</label>
+        <name>CSP_Reset_Password_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Può accedere con la nuova password.</label>
+        <name>CSP_Reset_Password_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>L&apos;IP del suo computer è stato identificato come proveniente da uno dei Paesi elencati come sotto embargo dalle autorità statunitensi. La piattaforma che supporta il nostro Portale Clienti è conforme alle normative statunitensi e pertanto non siamo attualmente in grado di fornire l&apos;accesso al Portale Clienti dal suo attuale indirizzo IP. Clicchi qui per contattarci.</label>
+        <name>CSP_Restricted_Login_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Accesso limitato</label>
+        <name>CSP_Restricted_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Salva</label>
         <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>Salva e accedi</label>
+        <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
         <label>Ricerca sulla base delle informazioni del documento</label>
@@ -2213,12 +2488,20 @@ la seguente procedura per completarlo :
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Skip --></label>
+        <name>CSP_Skip</name>
+    </customLabels>
+    <customLabels>
         <label>Stato</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
         <label>Invia</label>
         <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>Successo</label>
+        <name>CSP_Success</name>
     </customLabels>
     <customLabels>
         <label>Assistenza</label>
@@ -2245,8 +2528,60 @@ la seguente procedura per completarlo :
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>alla risoluzione dei problemi</label>
+        <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Per ulteriori informazioni, dia un&apos;occhiata</label>
+        <name>CSP_Troubleshooting_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Riprova</label>
+        <name>CSP_Try_Again</name>
+    </customLabels>
+    <customLabels>
         <label>Tipo di caso</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Acceda direttamente a più di 60 servizi IATA, appositamente selezionati per lei.</label>
+        <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Acceda ai servizi IATA</label>
+        <name>CSP_Welcome_Panel_Bullet_1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Gestisca e aggiorni facilmente il suo profilo IATA.</label>
+        <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Rimanga aggiornato</label>
+        <name>CSP_Welcome_Panel_Bullet_2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Scopra l&apos;ampia selezione dedita alle pubblicazioni, ai corsi di formazione e agli altri prodotti e servizi IATA.</label>
+        <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Individui offerte speciali</label>
+        <name>CSP_Welcome_Panel_Bullet_3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Acceda alla nostra vasta raccolta dedicata alle domande e alle risposte, e riceva assistenza diretta da IATA.</label>
+        <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Ottenga risposte</label>
+        <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Acceda e gestisca tutti i suoi servizi IATA. Consulti le informazioni sui diversi prodotti e ottenga assistenza su qualsiasi argomento. Qui per lei.</label>
+        <name>CSP_Welcome_Panel_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Benvenuto nel Portale Clienti IATA</label>
+        <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -2429,7 +2764,7 @@ la seguente procedura per completarlo :
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirm password --></label>
+        <label>Conferma password</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -2945,7 +3280,7 @@ la seguente procedura per completarlo :
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>Password attuale</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>
@@ -17800,7 +18135,7 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label><!-- New password --></label>
+        <label>Nuova password</label>
         <name>New_password</name>
     </customLabels>
     <customLabels>
@@ -17888,7 +18223,7 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Account Creation --></label>
+        <label>Creazione conto</label>
         <name>OneId_Account_Creation</name>
     </customLabels>
     <customLabels>
@@ -17952,7 +18287,7 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CreateNewAccount --></label>
+        <label>Crei un nuovo account</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -18356,7 +18691,7 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_LoginFail --></label>
+        <label>Il suo tentativo di accesso non è riuscito. Si assicuri che l&apos;email e la password siano corrette.</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
@@ -19255,7 +19590,7 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>PKB2_search_to_long</name>
     </customLabels>
     <customLabels>
-        <label><!-- PKB2: Contact Us Send Email --></label>
+        <label>Invia di nuovo l&apos;e-mail di verifica</label>
         <name>PKB2_send_mail</name>
     </customLabels>
     <customLabels>
@@ -20317,6 +20652,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label>Figura professionale</label>
         <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>

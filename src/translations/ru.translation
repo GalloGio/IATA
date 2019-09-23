@@ -1833,6 +1833,38 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>Изменить электронную почту</label>
+        <name>CSP_Change_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Смена пароля</label>
+        <name>CSP_Change_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Ваш новый пароль не может быть установлен.</label>
+        <name>CSP_Change_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, сначала введите ваш текущий пароль, после чего установите новый и подтвердите его.</label>
+        <name>CSP_Change_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Необходимо чтобы пароль имел длину 10 или более символов, и содержал как минимум одну заглавную букву, цифру и один из следующих символов: (! @ # $% * () _ + ^ &amp;)</label>
+        <name>CSP_Change_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, проверьте свою электронную почту, чтобы получить Ваши данные для доступа</label>
+        <name>CSP_Check_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Пароль успешно установлен.</label>
+        <name>CSP_Chg_Pass_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы можете использовать свой новый пароль для входа в систему.</label>
+        <name>CSP_Chg_Pass_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
         <label>Сообщество</label>
         <name>CSP_Community</name>
     </customLabels>
@@ -1843,6 +1875,10 @@
     <customLabels>
         <label>Профиль компании</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Complete Profile --></label>
+        <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
         <label>Вы уверены, что хотите запретить доступ к &lt;b&gt;{0}&lt;/b&gt; на &lt;b&gt;{1}&lt;/b&gt;?</label>
@@ -1859,6 +1895,22 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы новичок на клиентском портале Международной ассоциации воздушного транспорта (ИАТА)?</label>
+        <name>CSP_Create_New_Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Создать новый аккаунт</label>
+        <name>CSP_Create_New_Account_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Создать пароль</label>
+        <name>CSP_Create_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Ваш новый пароль не может быть установлен. Пожалуйста, попробуйте еще раз.</label>
+        <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
         <label>Запретить доступ пользователя</label>
@@ -1885,6 +1937,94 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label>Электронный адрес</label>
+        <name>CSP_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 2 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 3 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Footer Image --></label>
+        <name>CSP_Email_Footer_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image --></label>
+        <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 1 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 2 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 3 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Password Reset Body Part 4 --></label>
+        <name>CSP_Email_Password_Reset_Body_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 1 --></label>
+        <name>CSP_Email_Signature_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 --></label>
+        <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 1 --></label>
+        <name>CSP_Email_Welcome_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 2 --></label>
+        <name>CSP_Email_Welcome_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 3 --></label>
+        <name>CSP_Email_Welcome_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 4 --></label>
+        <name>CSP_Email_Welcome_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Welcome Part 5 --></label>
+        <name>CSP_Email_Welcome_Part_5</name>
+    </customLabels>
+    <customLabels>
+        <label>Кажется, Вы уже являетесь пользователем портала. Пожалуйста, войдите, используя свой пароль.</label>
+        <name>CSP_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, проверьте свой адрес электронной почты и нажмите на ссылку для создания пароля.</label>
+        <name>CSP_Expired_Email_Success_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>Срок действия ссылки верификации истек.</label>
+        <name>CSP_Expired_Link_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>По соображениям безопасности срок действия ссылки верификации истекает через 8 часов.</label>
+        <name>CSP_Expired_Link_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, проверьте свой адрес электронной почты и нажмите на ссылку для создания пароля.</label>
+        <name>CSP_Expired_Reset_Password_Msg</name>
+    </customLabels>
+    <customLabels>
         <label>Связаться с нами</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
@@ -1899,6 +2039,10 @@
     <customLabels>
         <label>Часто задаваемые вопросы</label>
         <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Перейти к нашей секции ЧаВо (FAQ)</label>
+        <name>CSP_FAQ_Label</name>
     </customLabels>
     <customLabels>
         <label>Выбрать одну из основных категорий</label>
@@ -1929,8 +2073,44 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP First Login Desc --></label>
+        <name>CSP_First_Login_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP First Login Title --></label>
+        <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Для вас</label>
         <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>Забыли пароль?</label>
+        <name>CSP_Forgot_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Кажется, у нас нет зарегистрированного пользователя для Вашей электронной почты. Вы можете легко создать новую учетную запись.</label>
+        <name>CSP_Forgot_Password_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, введите Ваш зарегистрированный адрес электронной почты, чтобы сбросить пароль. Мы вышлем Вам ссылку для сброса на Ваш адрес электронной почты.</label>
+        <name>CSP_Forgot_Password_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, сначала проверьте папку со спамом. Если Вы не можете найти что-либо в папке со спамом, пожалуйста, попробуйте сбросить пароль еще раз, нажав &quot;Попробовать еще раз&quot;.</label>
+        <name>CSP_Forgot_Password_Retry_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Не получили письмо?</label>
+        <name>CSP_Forgot_Password_Retry_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, проверьте свою электронную почту и нажмите на ссылку для сброса пароля</label>
+        <name>CSP_Forgot_Password_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Поскольку Вы не входили в систему в течение последних 90 дней, мы отправили Вам электронное письмо с новым паролем.</label>
+        <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
         <label>Предоставить доступ пользователю</label>
@@ -1941,8 +2121,16 @@
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>
+        <label>Неверный адрес электронной почты</label>
+        <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
         <label>Выйти</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Войти сейчас</label>
+        <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
         <label>Вы можете управлять пользователями из списка ниже.</label>
@@ -1963,6 +2151,10 @@
     <customLabels>
         <label>Название</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Далее</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label>Нет связанной учетной записи для отображения.</label>
@@ -1993,6 +2185,26 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
+        <label>Пароль</label>
+        <name>CSP_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Минимум 10 символов</label>
+        <name>CSP_Password_Rule_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Как минимум 1 заглавная буква</label>
+        <name>CSP_Password_Rule_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Хотя бы 1 цифра</label>
+        <name>CSP_Password_Rule_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Как минимум один из следующих символов: !@ # $% * () _ + ^ &amp;</label>
+        <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
         <label>Нам нужно ваше мнение, чтобы продолжить изучение вашего случая.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
@@ -2001,8 +2213,16 @@
         <name>CSP_PortalPath</name>
     </customLabels>
     <customLabels>
+        <label>Вход в портал в настоящее время отключен. Благодарим за понимание.</label>
+        <name>CSP_Portal_Login_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Статус портала</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Privacy Policy --></label>
+        <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
         <label>Что такое случай и когда он мне нужен?</label>
@@ -2025,6 +2245,22 @@
         <name>CSP_RecentCases</name>
     </customLabels>
     <customLabels>
+        <label>Регистрация прошла успешно</label>
+        <name>CSP_Registration_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>Регистрация на портале в настоящее время отключена. Благодарим за понимание.</label>
+        <name>CSP_Registration_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы пытаетесь зарегистрировать данные уже существующего пользователя, пожалуйста, измените адрес электронной почты или нажмите на кнопку входа, чтобы перейти на страницу входа</label>
+        <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Retry Message --></label>
+        <name>CSP_Registration_Retry_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Статьи по теме</label>
         <name>CSP_RelatedArticles</name>
     </customLabels>
@@ -2033,8 +2269,44 @@
         <name>CSP_Request_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Resend Verification Email --></label>
+        <name>CSP_Resend_Verification_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Сброс пароля</label>
+        <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, введите ваш новый пароль.</label>
+        <name>CSP_Reset_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Пароль должен содержать:</label>
+        <name>CSP_Reset_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Ваш пароль был успешно изменен.</label>
+        <name>CSP_Reset_Password_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы можете войти в систему используя свой новый пароль.</label>
+        <name>CSP_Reset_Password_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>IP вашего компьютера был определен как источник из одной из стран, указанных властями США в качестве эмбарго. Платформа, поддерживающая наш клиентский портал, соответствует правилам США, поэтому в настоящее время мы не можем предоставить доступ к клиентскому порталу с Вашего текущего IP-адреса. Нажмите здесь, чтобы связаться с нами.</label>
+        <name>CSP_Restricted_Login_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Ограниченный вход</label>
+        <name>CSP_Restricted_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Сохранить</label>
         <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>Сохранить и войти</label>
+        <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
         <label>Поиск по деталям документа</label>
@@ -2209,12 +2481,20 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Skip --></label>
+        <name>CSP_Skip</name>
+    </customLabels>
+    <customLabels>
         <label>Статус</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
         <label>Отправить</label>
         <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>Успешно!</label>
+        <name>CSP_Success</name>
     </customLabels>
     <customLabels>
         <label>Поддержка</label>
@@ -2241,8 +2521,60 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>поиск решений проблемы</label>
+        <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Для получения дополнительной помощи проверьте</label>
+        <name>CSP_Troubleshooting_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Попробовать еще раз</label>
+        <name>CSP_Try_Again</name>
+    </customLabels>
+    <customLabels>
         <label>Тип случая</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Прямой доступ к более чем 60 услугам Международной ассоциации воздушного транспорта (ИАТА), отобранным специально для вас.</label>
+        <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Доступ к сервисам Международной ассоциации воздушного транспорта (ИАТА)</label>
+        <name>CSP_Welcome_Panel_Bullet_1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Легко управляйте и обновляйте свой профиль Международной ассоциации воздушного транспорта (ИАТА).</label>
+        <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Будьте в курсе событий.</label>
+        <name>CSP_Welcome_Panel_Bullet_2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Откройте для себя выбор публикаций, тренингов и других продуктов и услуг Международной ассоциации воздушного транспорта (ИАТА).</label>
+        <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Находите специальные предложения</label>
+        <name>CSP_Welcome_Panel_Bullet_3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Получите доступ к нашей обширной коллекции вопросов и ответов; а также получите прямую поддержку от Международной ассоциации воздушного транспорта (ИАТА).</label>
+        <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Получите ответы на свои вопросы</label>
+        <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Доступ и управление всеми вашими сервисами Международной ассоциации воздушного транспорта (ИАТА). Обратитесь к информации о различных продуктах и получите поддержку по любому вопросу. Здесь для вас.</label>
+        <name>CSP_Welcome_Panel_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Добро пожаловать в клиентский портал Международной ассоциации воздушного транспорта (ИАТА)</label>
+        <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -2425,7 +2757,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirm password --></label>
+        <label>Подтверждение пароля</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -2941,7 +3273,7 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>Текущий пароль</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>
@@ -17684,7 +18016,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Login --></label>
+        <label>Войти в систему</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -17804,7 +18136,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label><!-- New password --></label>
+        <label>Новый пароль</label>
         <name>New_password</name>
     </customLabels>
     <customLabels>
@@ -17892,7 +18224,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Account Creation --></label>
+        <label>Создание аккаунта</label>
         <name>OneId_Account_Creation</name>
     </customLabels>
     <customLabels>
@@ -17956,7 +18288,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CreateNewAccount --></label>
+        <label>Создать новый аккаунт</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -18360,7 +18692,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_LoginFail --></label>
+        <label>Ваша попытка входа не удалась. Убедитесь, что адрес электронной почты и пароль верны.</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
@@ -18432,7 +18764,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Password --></label>
+        <label>Пароль</label>
         <name>OneId_Password</name>
     </customLabels>
     <customLabels>
@@ -19259,7 +19591,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>PKB2_search_to_long</name>
     </customLabels>
     <customLabels>
-        <label><!-- PKB2: Contact Us Send Email --></label>
+        <label>Повторно отправить электронное письмо для верификации</label>
         <name>PKB2_send_mail</name>
     </customLabels>
     <customLabels>
@@ -20323,6 +20655,10 @@ IATA Treasury Dashboard — динамичный информационный в
     <customLabels>
         <label>Должность</label>
         <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>
