@@ -2867,6 +2867,9 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.SANITYCHECK) templateId                  = 'ANG_Changes_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && wasApproved) templateId      = 'ANG_Changes_APP';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && !wasApproved) templateId     = 'ANG_Changes_DIS';
+        else if(agencyType == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY && step == AMS_Utils.SANITYCHECK) templateId = 'Conversion_GoStandard_to_GoGlobal_SanityCheck_Passed';
+        else if(agencyType == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY && step == AMS_Utils.APPROVAL && wasApproved) templateId = 'Conversion_GoStandard_to_GoGlobal_APP';
+        else if(agencyType == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY && step == AMS_Utils.APPROVAL && !wasApproved) templateId = 'Conversion_GoStandard_to_GoGlobal_DIS';
         else if(agencyType == AMS_Utils.IEPMODELAACCOUNTSETUP && step == 'Creation') templateId    = 'IEP_Model_A_Creation';
         else if(agencyType == AMS_Utils.IEPMODELAACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'IEP_Model_A_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == 'Creation_IATA EasyPay (EDENRED)') templateId    = 'ANG_IEP_Model_B_Creation_EDENRED';
