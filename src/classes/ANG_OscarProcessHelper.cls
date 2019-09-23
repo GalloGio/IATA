@@ -329,7 +329,7 @@ global class ANG_OscarProcessHelper {
 
 			if(changeCodeCreated){
 				System.debug('[ANG_OscarProcessHelper] Preparing to create an Agency Update.');
-				AMS_AgencyUpdateHelper.agencyUpdate( [Select Id, Change_Code__c, Account__c, Oscar__c, Active__c from Agency_Applied_Change_code__c where Account__c = :accountId AND Change_Code__c = 'NEW' and Oscar__c = :oscarId LIMIT 1]);
+				AMS_AgencyUpdateHelper.agencyUpdate( [Select Id, Change_Code__c, Account__c, Oscar__c, Active__c, Skip_Agency_Update__c from Agency_Applied_Change_code__c where Account__c = :accountId AND Change_Code__c = 'NEW' and Oscar__c = :oscarId LIMIT 1]);
 			}
 		}
 		else{

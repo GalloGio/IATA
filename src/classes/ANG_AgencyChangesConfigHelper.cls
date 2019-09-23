@@ -39,11 +39,11 @@ public class ANG_AgencyChangesConfigHelper{
 		return tocList.equals(config.changeCombination);
 	}
 
-	public static ChangesConfig getConfig(AMS_OSCAR__c oscar) {
+	public static ChangesConfig getConfig(AMS_OSCAR__c oscar, String accreditationModel) {
 
 		if(oscar.Process__c == 'BANK.ACCOUNT.CHANGES') return null;
 		else{
-			ChangesConfig c = getConfig(oscar.ANG_Type_Of_Change__c);
+			ChangesConfig c = getConfig(oscar.ANG_Type_Of_Change__c, accreditationModel);
 
 			if(c == null) oscar.addError('Type of Change contains an invalid combination of values.');
 
@@ -51,11 +51,17 @@ public class ANG_AgencyChangesConfigHelper{
 		}
 	}
 
-	public static ChangesConfig getConfig(String typesOfChange) {
+	public static ChangesConfig getConfig(String typesOfChange, String accreditationModel) {
+
 
 		System.debug(loggingLevel.FINE, '____ [cls AMS_AgencyChangesConfigHelper - getConfig] oscar.Type_of_change__c - ' + typesOfChange);
 		for (ChangesConfig config : agencyChangesConfigData) {
-			if (isSelectedTypeOfChangeValid(typesOfChange, config)) return config;
+
+
+
+			if (isSelectedTypeOfChangeValid(typesOfChange, config) && (config.config.Valid_Accreditation_Models__c == 'ALL' || config.config.Valid_Accreditation_Models__c.split(';').contains(accreditationModel) ) ) {
+				return config;	
+			}
 		}
 		return null;
 	}

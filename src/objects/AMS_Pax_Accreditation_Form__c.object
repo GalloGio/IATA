@@ -945,43 +945,8 @@
         <label>NG Hierarchy</label>
     </fieldSets>
     <fieldSets>
-        <fullName>ANG_hierarchy_CONVERSION</fullName>
+        <fullName>ANG_accreditationtype_CONVERSION</fullName>
         <description>fields to be migrated when we have a change of hierarchy</description>
-        <displayedFields>
-            <field>Account_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ISSP_AMS_Legal_Status__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Country__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Local_Physical_Address_Street__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Local_Postal_Address_City__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Branch_Office_Email__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Branch_Office_Phone__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
         <displayedFields>
             <field>Remittance_frequency__c</field>
             <isFieldManaged>false</isFieldManaged>
@@ -16125,6 +16090,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

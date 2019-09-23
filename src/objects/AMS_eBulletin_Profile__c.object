@@ -389,6 +389,7 @@
         <columns>Opt_out_Bulletin__c</columns>
         <columns>StatusDisplay__c</columns>
         <columns>Suspend_Subscription__c</columns>
+        <columns>CountriesList__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

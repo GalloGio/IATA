@@ -12013,7 +12013,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_OPTION_PAX_HE_standard</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Sesuai dengan data kami, Anda terdaftar sebagai Kontak IFAP untuk agensi Anda. Jika ini masih berlaku, silakan lanjutkan untuk memilih proses Tinjauan Keuangan, atau tugaskan personel yang benar sebagai kontak IFAP di halaman &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Informasi Perusahaan&lt;/a&gt; dan lanjutkan dengan permintaan ini.&quot;</label>
+        <label>Sesuai dengan data kami, Anda terdaftar sebagai Kontak IFAP untuk agensi Anda. Jika ini masih berlaku, silakan lanjutkan untuk memilih proses Tinjauan Keuangan, atau tugaskan personel yang benar sebagai kontak IFAP di halaman &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Informasi Perusahaan&lt;/a&gt; dan lanjutkan dengan permintaan ini.</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</name>
     </customLabels>
     <customLabels>
