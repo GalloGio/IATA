@@ -650,7 +650,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer.addAccount(acct);	
 
-				//Fetch all child accounts that are terminated
+				//Fetch all child accounts that are inactive (terminated, not in operation, not accreditated, listed, blank)
 				List<Account> childAcctsLst = (List<Account>) acct.getSObjects('ChildAccounts');
 				
 				if(childAcctsLst != NULL && !childAcctsLst.isEmpty()){
@@ -679,8 +679,56 @@ public with sharing class ANG_AgencyChangesHelper {
 			changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, allAccountsInvolvedSet, changesContainer);
 
 		}
-		else if(oscar.STEP2__c == AMS_Utils.PASSED && oldOscar.STEP2__c != AMS_Utils.PASSED){
-			//TODO
+		else if( oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL && oldOSCAR.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL){
+
+			Set<Id> allAccountsInvolvedSet = fetchAccountIdsToBeProcessed(oscar.Id);
+			allAccountsInvolvedSet.add(oscar.Account__c);
+
+			changesContainer.accountsMap = getAccounts(allAccountsInvolvedSet);
+
+			Account accountGE = changesContainer.accountsMap.get(oscar.Account__c);
+
+			Agency_Authorization__c geCashMethodFoP = NULL;
+
+			List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) accountGE.getSObjects('Agency_Authorizations__r');
+
+			if(formOfPaymentsLst != NULL && !formOfPaymentsLst.isEmpty()){
+				//Fetch cash form of payment from GE
+				for(Agency_Authorization__c aa : formOfPaymentsLst){
+					if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA){
+						geCashMethodFoP = aa;
+						break;
+					}
+				}
+			}
+
+			for(Account acct : changesContainer.accountsMap.values()){
+
+				if(acct.Identify_as_Multicountry_Key_Hierarchy__c){
+					
+					List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
+
+					if(riskEventsLst != NULL && !riskEventsLst.isEmpty()){
+						changesContainer.addRiskEventsToInactivate(riskEventsLst, accountGE.Id);
+					}
+
+				}
+
+				//Update cash form of payments according to the GE cash FoP status
+				if(acct.Id != accountGE.Id && geCashMethodFoP != NULL){
+					formOfPaymentsLst = (List<Agency_Authorization__c>) acct.getSObjects('Agency_Authorizations__r');
+
+					for(Agency_Authorization__c aa : formOfPaymentsLst){
+						if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA){
+							aa.Status__c = geCashMethodFoP.Status__c;
+							changesContainer.addAgencyAuthorizationToUpdate(aa);
+							break;
+						}
+					}
+				}
+
+			}
+
 		}
 
 		if(changesContainer.changesStruct != NULL){
@@ -1955,7 +2003,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				Identify_as_Multicountry_Key_Hierarchy__c, Multicountry_Key_Hierarchy__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.ANG_RHC_LocationType__c, 
 				(SELECT Id, ANG_AccountId__c FROM RHC_Informations__r), (SELECT Id FROM Location_Risk_Events__r), (SELECT Id FROM Main_Accounts__r), (SELECT Id, ANG_Account__c FROM Risk_Alerts__r),
 				(SELECT Id FROM ChildAccounts WHERE Status__c IN ('', NULL, :AMS_Utils.ACC_S0_TERMINATED, :AMS_Utils.ACC_S1_NOTACCREDITED, :AMS_Utils.ACC_S3_NOTINOPERATION)),
-				(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true)
+				(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true),
+				(SELECT Id, Account__c, Status__c, RecordTypeId, ANG_FormOfPayment_ID__c FROM Agency_Authorizations__r WHERE RecordType.DeveloperName = 'FormOfPayment')
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
