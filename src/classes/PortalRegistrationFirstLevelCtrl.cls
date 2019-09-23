@@ -130,7 +130,9 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             Contact.MobilePhone,
             Contact.Fax,
             Contact.Preferred_Language__c,
-            Contact.Membership_Function__c
+            Contact.Membership_Function__c,
+            Contact.ISO_country__c,
+            Contact.Country__c
         };
 
         Map<String,String> labels = new Map<String,String>();

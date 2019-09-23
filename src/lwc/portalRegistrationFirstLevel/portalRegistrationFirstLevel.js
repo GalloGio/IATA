@@ -31,14 +31,15 @@ import jQuery                                   from '@salesforce/resourceUrl/jQ
 /* Custom Labels
 /* ==============================================================================================================*/
 import Login                                    from '@salesforce/label/c.login';
+import CSP_Email                                from '@salesforce/label/c.CSP_Email';
 import CSP_Create_New_Account_Info              from '@salesforce/label/c.CSP_Create_New_Account_Info'
 import CSP_Change_Email                         from '@salesforce/label/c.CSP_Change_Email';
 import CSP_Invalid_Email                        from '@salesforce/label/c.CSP_Invalid_Email';
-import ISSP_Next                                from '@salesforce/label/c.ISSP_Next';
+import CSP_Next                                 from '@salesforce/label/c.CSP_Next';
 import OneId_Account_Creation                   from '@salesforce/label/c.OneId_Account_Creation';
 import CSP_Registration_Existing_User_Message   from '@salesforce/label/c.CSP_Registration_Existing_User_Message';
 import CSP_Privacy_Policy                       from '@salesforce/label/c.CSP_Privacy_Policy';
-import OneId_CheckEmail                         from '@salesforce/label/c.OneId_CheckEmail';
+import CSP_Check_Email                          from '@salesforce/label/c.CSP_Check_Email';
 import CSP_Registration_Disabled_Message        from '@salesforce/label/c.CSP_Registration_Disabled_Message';
 import CSP_Submit                               from '@salesforce/label/c.CSP_Submit';
 import CSP_Success                              from '@salesforce/label/c.CSP_Success';
@@ -96,14 +97,15 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
     _labels = {
         Login,
+        CSP_Email,
         CSP_Create_New_Account_Info,
         CSP_Change_Email,
         CSP_Invalid_Email,
-        ISSP_Next,
+        CSP_Next,
         OneId_Account_Creation,
         CSP_Registration_Existing_User_Message,
         CSP_Privacy_Policy,
-        OneId_CheckEmail,
+        CSP_Check_Email,
         CSP_Registration_Disabled_Message,
         CSP_Submit,
         CSP_Success,

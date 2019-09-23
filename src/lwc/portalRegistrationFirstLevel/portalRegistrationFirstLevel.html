@@ -32,7 +32,7 @@
                                             <div class="formLabelContainer">
                                                 <div style="width:100%;" class="text-xxsmall">
                                                     <!--<abbr class="slds-required" title="required">*</abbr>-->
-                                                    {config.contactLabelMap.Email}
+                                                    {labels.CSP_Email}
                                                 </div>
                                             </div>
                                             <div if:true={isEmailFieldReadOnly} class="text-xxsmall" >
@@ -64,7 +64,7 @@
                                     <template if:false={displayToU}>
                                         <lightning-layout-item size="12">
                                             <div style="height:8px;"></div>
-                                            <lightning-button disabled data-id="nextButton" class="containedButtonDisabled" onclick={handleNext} label={labels.ISSP_Next}></lightning-button>
+                                            <lightning-button disabled data-id="nextButton" class="containedButtonDisabled" onclick={handleNext} label={labels.CSP_Next}></lightning-button>
                                         </lightning-layout-item>
                                     </template>
                                     <template if:true={displayContactForm}>
@@ -119,7 +119,7 @@
                                             <div class="formElementContainer">
                                                 <div class="formLabelContainer">
                                                     <div style="width:100%;" class="text-xxsmall">
-                                                        {config.accountLabelMap.Services_Rendered_Country__c}
+                                                        {config.contactLabelMap.Country__c}
                                                     </div>
                                                 </div>
                                             </div>
@@ -356,7 +356,7 @@
                                 </div>
                                 <div class="slds-p-bottom_x-small">
                                     <div class="slds-p-bottom_large">
-                                        <span class="fixed-text text-gray">{labels.OneId_CheckEmail}</span>
+                                        <span class="fixed-text text-gray">{labels.CSP_Check_Email}</span>
                                     </div>
 
                                     <div  class="slds-p-bottom_large">
