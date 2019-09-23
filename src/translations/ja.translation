@@ -1840,19 +1840,19 @@
         <name>CSP_Change_Email</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Change Password --></label>
+        <label>パスワードの変更</label>
         <name>CSP_Change_Password</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Change Password Error --></label>
+        <label>新しいパスワードを設定できませんでした。</label>
         <name>CSP_Change_Password_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Change Password Info 1 --></label>
+        <label>現在のパスワードを入力してから、新しいパスワードを設定して確認してください。</label>
         <name>CSP_Change_Password_Info_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Change Password Info 2 --></label>
+        <label>パスワードは10文字以上で、大文字、数字、記号（！ @＃$％*（）_ + ^ &amp;）が最低1つずつ必要です。</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
@@ -1860,11 +1860,11 @@
         <name>CSP_Check_Email</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Chg Pass Success Msg 1 --></label>
+        <label>パスワードが正常に設定されました。</label>
         <name>CSP_Chg_Pass_Success_Msg_1</name>
     </customLabels>
     <customLabels>
-        <label>您可以使用新密码登录。</label>
+        <label>新しいパスワードでログインできます。</label>
         <name>CSP_Chg_Pass_Success_Msg_2</name>
     </customLabels>
     <customLabels>
@@ -1908,11 +1908,11 @@
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP  Create Password --></label>
+        <label>パスワードの作成</label>
         <name>CSP_Create_Password</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Create Password Error --></label>
+        <label>新しいパスワードを設定できませんでした。もう一度やり直してください。</label>
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
@@ -2012,19 +2012,19 @@
         <name>CSP_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Expired Email Success Msg --></label>
+        <label>メールを確認して、パスワードの作成リンクをクリックしてください。</label>
         <name>CSP_Expired_Email_Success_Msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Expired Link Msg 1 --></label>
+        <label>確認リンクの有効期限が切れています。</label>
         <name>CSP_Expired_Link_Msg_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Expired Link Msg 2 --></label>
+        <label>セキュリティのため、確認リンクは8時間経過すると無効になります。</label>
         <name>CSP_Expired_Link_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Expired Reset Password Msg --></label>
+        <label>メールを確認して、パスワードの作成リンクをクリックしてください。</label>
         <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
@@ -2132,7 +2132,7 @@
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Login Now --></label>
+        <label>ログインする</label>
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
@@ -2188,23 +2188,23 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Password --></label>
+        <label>パスワード</label>
         <name>CSP_Password</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Password Rule 1 --></label>
+        <label>10文字以上</label>
         <name>CSP_Password_Rule_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Password Rule 2 --></label>
+        <label>大文字1つ以上</label>
         <name>CSP_Password_Rule_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Password Rule 3 --></label>
+        <label>数字1つ以上</label>
         <name>CSP_Password_Rule_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Password Rule 4 --></label>
+        <label>記号（！ @＃$％*（）_ + ^ &amp;）1つ以上</label>
         <name>CSP_Password_Rule_4</name>
     </customLabels>
     <customLabels>
@@ -2278,23 +2278,23 @@
         <name>CSP_Resend_Verification_Email</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Reset Password --></label>
+        <label>パスワードを再設定する</label>
         <name>CSP_Reset_Password</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Reset Password Info 1 --></label>
+        <label>新しいパスワードを入力してください。</label>
         <name>CSP_Reset_Password_Info_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Reset Password Info 2 --></label>
+        <label>パスワードには以下を含める必要があります:</label>
         <name>CSP_Reset_Password_Info_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Reset Password Success Msg 1 --></label>
+        <label>パスワードが正常に変更されました。</label>
         <name>CSP_Reset_Password_Success_Msg_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Reset Password Success Msg 2 --></label>
+        <label>新しいパスワードでログインできます。</label>
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
@@ -2310,7 +2310,7 @@
         <name>CSP_Save</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Save Login --></label>
+        <label>保存してログイン</label>
         <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
@@ -2762,7 +2762,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirm password --></label>
+        <label>パスワードを確認する</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -3278,7 +3278,7 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>現在のパスワード</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>
@@ -18130,7 +18130,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label><!-- New password --></label>
+        <label>新しいパスワード</label>
         <name>New_password</name>
     </customLabels>
     <customLabels>
@@ -19585,7 +19585,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>PKB2_search_to_long</name>
     </customLabels>
     <customLabels>
-        <label><!-- PKB2: Contact Us Send Email --></label>
+        <label>確認メールの再送信</label>
         <name>PKB2_send_mail</name>
     </customLabels>
     <customLabels>

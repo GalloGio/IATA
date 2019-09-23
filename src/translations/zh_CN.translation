@@ -1861,7 +1861,7 @@
         <name>CSP_Chg_Pass_Success_Msg_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Chg Pass Success Msg 2 --></label>
+        <label>您可以使用新密码登录。</label>
         <name>CSP_Chg_Pass_Success_Msg_2</name>
     </customLabels>
     <customLabels>
