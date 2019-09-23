@@ -46,6 +46,8 @@ export default class PortalAdvancedSearchPage extends LightningElement {
     backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/AdvancedSearchBackground.jpg';
     @track backgroundStyle;
 
+    @track showCross = false;
+
     connectedCallback(){
 
         this.backgroundStyle = 'background-image: url("' + this.backgroundIcon + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:230px;';
@@ -135,6 +137,11 @@ export default class PortalAdvancedSearchPage extends LightningElement {
         //update temporary search term until times out
         this.searchText = event.target.value;
 
+        if (this.searchText.length > 0) {
+            this.showCross = true;
+        } else {
+            this.showCross = false;
+        }
         // Clear the timeout if it has already been set.
         // This will prevent the previous task from executing
         // if it has been less than <MILLISECONDS>
@@ -213,5 +220,11 @@ export default class PortalAdvancedSearchPage extends LightningElement {
                 this.emptySearchStringClass = 'display: none;';
             }
         }
+    }
+
+    removeTextSearch() {
+        this.filteringObject.searchText = '';
+        this.searchText = '';
+        this.showCross = false;
     }
 }

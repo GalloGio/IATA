@@ -33,6 +33,11 @@
                             </lightning-input>
                         </div>
                     </div>
+
+                    <div if:true={showCross} class="searchBarIcon slds-m-right--large">
+                        <lightning-icon class="cursorPointer rotateIcon" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
+                    </div>
+
                     <div>
                         <span if:true={loadingTypehead} class="smallSearchSpinner">
                             <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
