@@ -3283,7 +3283,6 @@ e os &lt;br/&gt;
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
         <label>Senha atual</label>
         <name>Current_password</name>
     </customLabels>
