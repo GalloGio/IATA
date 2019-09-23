@@ -3346,7 +3346,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Create New Account Info</shortDescription>
-        <value>Complete the basic registration process to join IATA Customer Portal.</value>
+        <value>New to the IATA Customer Portal?</value>
     </labels>
     <labels>
         <fullName>CSP_Create_New_Account_Label</fullName>
@@ -3354,7 +3354,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Create New Account Label</shortDescription>
-        <value>New to the IATA Customer Portal?</value>
+        <value>Create New Account</value>
     </labels>
     <labels>
         <fullName>CSP_Create_Password</fullName>
@@ -3721,7 +3721,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Forgot Password</shortDescription>
-        <value>Forgot Password</value>
+        <value>Forgot Password?</value>
     </labels>
     <labels>
         <fullName>CSP_Forgot_Password_Error_Message</fullName>
@@ -4041,6 +4041,14 @@ and &lt;br/&gt;
         <protected>false</protected>
         <shortDescription>CSP Registration Complete</shortDescription>
         <value>Registration completed successfully</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Description</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Description</shortDescription>
+        <value>Complete the basic registration process to join IATA Customer Portal.</value>
     </labels>
     <labels>
         <fullName>CSP_Registration_Disabled_Message</fullName>

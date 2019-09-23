@@ -32,7 +32,7 @@ import jQuery                                   from '@salesforce/resourceUrl/jQ
 /* ==============================================================================================================*/
 import Login                                    from '@salesforce/label/c.login';
 import CSP_Email                                from '@salesforce/label/c.CSP_Email';
-import CSP_Create_New_Account_Info              from '@salesforce/label/c.CSP_Create_New_Account_Info'
+import CSP_Registration_Description             from '@salesforce/label/c.CSP_Registration_Description'
 import CSP_Change_Email                         from '@salesforce/label/c.CSP_Change_Email';
 import CSP_Invalid_Email                        from '@salesforce/label/c.CSP_Invalid_Email';
 import CSP_Next                                 from '@salesforce/label/c.CSP_Next';
@@ -98,7 +98,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     _labels = {
         Login,
         CSP_Email,
-        CSP_Create_New_Account_Info,
+        CSP_Registration_Description,
         CSP_Change_Email,
         CSP_Invalid_Email,
         CSP_Next,
