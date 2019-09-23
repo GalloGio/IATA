@@ -8021,6 +8021,10 @@ public without sharing class ISSP_AMS_Accreditation {
                     branchAccountCount++;
                     Boolean isSelected = false;
 
+                    if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
+                        isSelected = newForm.Agency_Codes_Concerned__c.contains(a.IATACode__c);
+                    }
+
                     if (isMCAccredited) {
                         if (isNoticeOfChange && !mcCountryIsos.contains(a.Country_ISO_Code__c)) {
                             continue;
@@ -8031,7 +8035,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         }
                     }
 
-                    hierarchy.put(a.Id, new HierarchyItem(a,isSelected));
+                    hierarchy.put(a.Id, new HierarchyItem(a, isSelected));
                 }                           
             }
             return hierarchy;

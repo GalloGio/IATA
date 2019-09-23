@@ -484,10 +484,16 @@
         function setArrowListeners() {
             $('[id$=rightList]').on('DOMNodeInserted', function(e) {
                 multiSelectListAction();
+
+                if ($('[id$=leftList]')[0].children.length === 0) {
+                    $('[id$=selectAll]')[0].checked = true;
+                }
             });
 
             $('[id$=rightList]').on('DOMNodeRemoved', function(e) {
                 multiSelectListAction();
+
+                $('[id$=selectAll]')[0].checked = false;
             });
         }
 
