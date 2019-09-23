@@ -638,7 +638,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				changesContainer.addAccount(acct);	
 
 				//Fetch all child accounts that are inactive (terminated, not in operation, not accreditated, listed, blank)
-				List<Account> childAcctsLst = (List<Account>) acct.getSObjects('InactiveChildAccounts');
+				List<Account> childAcctsLst = (List<Account>) acct.getSObjects('ChildAccounts');
 				
 				if(childAcctsLst != NULL && !childAcctsLst.isEmpty()){
 					for(Account childAcct : childAcctsLst){
@@ -677,7 +677,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			Agency_Authorization__c geCashMethodFoP = NULL;
 
-			List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) accountGE.getSObjects('AssociatedFormOfPayments');
+			List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) accountGE.getSObjects('Agency_Authorizations__r');
 
 			if(formOfPaymentsLst != NULL && !formOfPaymentsLst.isEmpty()){
 				//Fetch cash form of payment from GE
@@ -703,7 +703,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				//Update cash form of payments according to the GE cash FoP status
 				if(acct.Id != accountGE.Id && geCashMethodFoP != NULL){
-					formOfPaymentsLst = (List<Agency_Authorization__c>) acct.getSObjects('AssociatedFormOfPayments');
+					formOfPaymentsLst = (List<Agency_Authorization__c>) acct.getSObjects('Agency_Authorizations__r');
 
 					for(Agency_Authorization__c aa : formOfPaymentsLst){
 						if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA){
@@ -1989,9 +1989,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		        ANG_IEP_Status__c, ANG_HE_RiskStatus__c, ANG_IEP_HE_AccntNum__c, ANG_HE_CashCondition__c, Financial_Review_Result__c, ANG_HE_RiskHistoryAssessment__c, Financial_Assessment_Points__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c,
 				Identify_as_Multicountry_Key_Hierarchy__c, Multicountry_Key_Hierarchy__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.ANG_RHC_LocationType__c, 
 				(SELECT Id, ANG_AccountId__c FROM RHC_Informations__r), (SELECT Id FROM Location_Risk_Events__r), (SELECT Id FROM Main_Accounts__r), (SELECT Id, ANG_Account__c FROM Risk_Alerts__r),
-				(SELECT Id FROM ChildAccounts WHERE Status__c IN ('', NULL, :AMS_Utils.ACC_S0_TERMINATED, :AMS_Utils.ACC_S1_NOTACCREDITED, :AMS_Utils.ACC_S3_NOTINOPERATION)) InactiveChildAccounts,
+				(SELECT Id FROM ChildAccounts WHERE Status__c IN ('', NULL, :AMS_Utils.ACC_S0_TERMINATED, :AMS_Utils.ACC_S1_NOTACCREDITED, :AMS_Utils.ACC_S3_NOTINOPERATION)),
 				(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true),
-				(SELECT Id, Account__c, Status__c, RecordTypeId, ANG_FormOfPayment_ID__c FROM Agency_Authorizations__r WHERE RecordType.DeveloperName = 'FormOfPayment') AssociatedFormOfPayments
+				(SELECT Id, Account__c, Status__c, RecordTypeId, ANG_FormOfPayment_ID__c FROM Agency_Authorizations__r WHERE RecordType.DeveloperName = 'FormOfPayment')
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
