@@ -11,6 +11,8 @@ import { navigateToPage } from 'c/navigationUtils';
 
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
+import isCountryEligibleForPaymentLink from '@salesforce/apex/PortalProfileCtrl.isCountryEligibleForPaymentLink'; //WMO-699 - ACAMBAS
+import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect'; //WMO-699 - ACAMBAS
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
@@ -24,6 +26,7 @@ import IdCardNumber from '@salesforce/label/c.ISSP_IDCard_VER_Number';
 import IdCardValidTo from '@salesforce/label/c.ISSP_IDCard_Valid_To';
 import CSP_Error_Message_Mandatory_Fields_Contact from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
 
+import See_Bank_Account_Details from '@salesforce/label/c.See_Bank_Account_Details'; //WMO-699 - ACAMBAS
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
@@ -57,6 +60,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track fieldsValid = true;
     @track fieldsLocal;
     @track jobFunctions;
+    @track isEligibleForPaymentLink; //WMO-699 - ACAMBAS
+    @track paymentLinkURL; //WMO-699 - ACAMBAS
 
     timeout = null;
 
@@ -71,7 +76,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get fields() { return this.fieldsLocal; }
     set fields(value) { this.fieldsLocal = value; }
 
-    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area, ServicesTitle, InvalidValue, CompleteField, IdCardNumber, IdCardValidTo, CSP_Error_Message_Mandatory_Fields_Contact };
+    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area, ServicesTitle, InvalidValue, CompleteField, IdCardNumber, IdCardValidTo, See_Bank_Account_Details };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -89,8 +94,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                 if (contact.Area__c != null) {
 
                     let values = contact.Area__c.split(";");
-                    values.forEach(function (value) {
-                        options.forEach(function (option) {
+                    values.forEach(function(value) {
+                        options.forEach(function(option) {
                             if (option.label == value) { option.checked = true; selectedV.push(option.value); }
                         });
                     });
@@ -112,9 +117,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                 if (contact.Membership_Function__c != null) {
 
                     let values = contact.Membership_Function__c.split(";");
-                    values.forEach(function (value) {
+                    values.forEach(function(value) {
                         functions.push(value);
-                        options.forEach(function (option) {
+                        options.forEach(function(option) {
                             if (option.label == value) { option.checked = true; selectedV.push(option.value); }
                         });
                     });
@@ -130,6 +135,24 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
         }
 
+        //WMO-699 - ACAMBAS: Begin
+        isCountryEligibleForPaymentLink().then(result => {
+            this.isEligibleForPaymentLink = result;
+        });
+
+
+        paymentLinkRedirect().then(result => {
+            let myUrl;
+            if (result !== undefined && result !== '') {
+                myUrl = result;
+                if (!myUrl.startsWith('http')) {
+                    myUrl = window.location.protocol + '//' + myUrl;
+                }
+            }
+            this.paymentLinkURL = myUrl;
+        });
+        //WMO-699 - ACAMBAS: End
+
     }
 
     get accessibilityGetter() {
@@ -137,10 +160,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         let contactTypeStatus = [];
         let contactType = [];
         let fieldsToIterate = JSON.parse(JSON.stringify(this.fields));
-        fieldsToIterate.forEach(function (item) {
+        fieldsToIterate.forEach(function(item) {
             if (item.isAccessibility) {
                 contactType = item.accessibilityList;
-                item.accessibilityList.forEach(function (acc) {
+                item.accessibilityList.forEach(function(acc) {
                     if (acc.checked) {
                         contactTypeStatus.push(acc.label);
                     }
@@ -197,6 +220,21 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get isContact() {
         return this.objectName != null && this.objectName.toLowerCase() == 'contact';
     }
+
+    //WMO-699 - ACAMBAS: Begin
+    get isCustomerInvoice() {
+        return this.objectName != null && this.objectName.toLowerCase() == 'customer_invoice__c';
+    }
+
+    get displayPaymentLinkLabel() {
+        let isCustomerInvoiceObject = this.objectName != null && this.objectName.toLowerCase() == 'customer_invoice__c';
+        return this.isEligibleForPaymentLink && isCustomerInvoiceObject;
+    }
+
+    get getPaymentLinkURL() {
+            return this.paymentLinkURL;
+        }
+        //WMO-699 - ACAMBAS: End
 
     get showAreas() {
         return this.showarea;
@@ -347,11 +385,11 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             let canSave = true;
             let selectedV = JSON.parse(JSON.stringify(this.selectedvalues));
             let selected = '';
-            selectedV.forEach(function (item) { selected += item + ';'; });
+            selectedV.forEach(function(item) { selected += item + ';'; });
 
             let selectedFunction = JSON.parse(JSON.stringify(this.selectedValuesFunction));
             let selectedF = '';
-            selectedFunction.forEach(function (item) { selectedF += item + ';'; });
+            selectedFunction.forEach(function(item) { selectedF += item + ';'; });
 
             let fields = event.detail.fields;
             fields.accountId = this.accountId;
@@ -391,7 +429,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             if (listSelected.length > 0) {
                 let contactTypeStatusLocal = JSON.parse(JSON.stringify(this.contactTypeStatus));
 
-                contactTypeStatusLocal.forEach(function (item) {
+                contactTypeStatusLocal.forEach(function(item) {
                     if (listSelected.includes(item.label)) {
                         fields[item.APINAME] = true;
                     } else {
@@ -402,7 +440,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             }
 
             if (canSave) {
-                this.template.querySelector('lightning-record-edit-form').submit(fields);
+            this.template.querySelector('lightning-record-edit-form').submit(fields);
             } else {
                 this.isSaving = false;
             }
@@ -420,14 +458,14 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
         if (!selectedV.includes(selected)) {
             selectedV.push(selected);
-            options.forEach(function (option) {
+            options.forEach(function(option) {
                 if (option.value == selected) { option.checked = true; }
             });
         } else {
             let index = selectedV.indexOf(selected);
             if (index > -1) {
                 selectedV.splice(index, 1);
-                options.forEach(function (option) {
+                options.forEach(function(option) {
                     if (option.value == selected) { option.checked = false; }
                 });
             }
@@ -451,11 +489,11 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         event.preventDefault();
         event.stopPropagation();
         this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
-            attributes: {
-                pageName: "manage-service"
-            }
-        })
+                type: "standard__namedPage",
+                attributes: {
+                    pageName: "manage-service"
+                }
+            })
             .then(url => navigateToPage(url, params));
 
     }
