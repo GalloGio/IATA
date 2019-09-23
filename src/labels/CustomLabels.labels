@@ -3227,6 +3227,14 @@ Payment required on receipt of this Payment Advice
         <value>Change Email</value>
     </labels>
     <labels>
+        <fullName>CSP_Change_Password</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Change Password</shortDescription>
+        <value>Change Password</value>
+    </labels>
+    <labels>
         <fullName>CSP_Change_Password_Error</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3249,6 +3257,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP Change Password Info 2</shortDescription>
         <value>The password should contain 10 or more characters including at least an uppercase letter, a number and a symbol (! @ # $ %  * () _ + ^ &amp;)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Check_Email</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Check Email</shortDescription>
+        <value>Please check your email to get your access details.</value>
     </labels>
     <labels>
         <fullName>CSP_Chg_Pass_Success_Msg_1</fullName>
@@ -3402,6 +3418,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Documents_PubliCountry</shortDescription>
         <value>Publication Countries</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email</shortDescription>
+        <value>Email</value>
     </labels>
     <labels>
         <fullName>CSP_Email_Confirmation_Body_Part_1</fullName>
@@ -3779,6 +3803,14 @@ Payment required on receipt of this Payment Advice
         <value>Log Out</value>
     </labels>
     <labels>
+        <fullName>CSP_Login_Now</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Login Now</shortDescription>
+        <value>Login Now</value>
+    </labels>
+    <labels>
         <fullName>CSP_Manage_Portal_Users</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3815,6 +3847,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Name</shortDescription>
         <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Next</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Next</shortDescription>
+        <value>Next</value>
     </labels>
     <labels>
         <fullName>CSP_NoAccount</fullName>
@@ -3871,6 +3911,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_OperationalCalendar_SeeMonthlyLink</shortDescription>
         <value>See Monthly</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Password</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Password</shortDescription>
+        <value>Password</value>
     </labels>
     <labels>
         <fullName>CSP_Password_Rule_1</fullName>
@@ -3987,6 +4035,14 @@ and &lt;br/&gt;
         <value>Recent Cases</value>
     </labels>
     <labels>
+        <fullName>CSP_Registration_Complete</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Complete</shortDescription>
+        <value>Registration completed successfully</value>
+    </labels>
+    <labels>
         <fullName>CSP_Registration_Disabled_Message</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4032,6 +4088,14 @@ and &lt;br/&gt;
         <protected>false</protected>
         <shortDescription>CSP Resend Verification Email</shortDescription>
         <value>Resend Verification Mail</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Reset_Password</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Reset Password</shortDescription>
+        <value>Reset Password</value>
     </labels>
     <labels>
         <fullName>CSP_Reset_Password_Info_1</fullName>
@@ -39248,6 +39312,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>csp My Profile Job Title</shortDescription>
         <value>Job Title</value>
+    </labels>
+    <labels>
+        <fullName>csp_Next_Step_Account_Selection</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Next_Step_Account_Selection</shortDescription>
+        <value>Next Step / Account Selection</value>
     </labels>
     <labels>
         <fullName>csp_NoPortalServiceNameFound</fullName>

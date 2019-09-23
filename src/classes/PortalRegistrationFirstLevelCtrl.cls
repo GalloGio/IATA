@@ -59,6 +59,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         public Id portalUserId{get;set;}
         @AuraEnabled
         public String userName{get;set;}
+        @AuraEnabled
+        public boolean isGeneralPublicAccount{get;set;}
     }
 
     public class NewUserDetail{
@@ -462,6 +464,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 result.message = 'Failed to create contact';
                 return result;
             }
+
+            result.isGeneralPublicAccount = [SELECT is_general_public_account__c FROM Account WHERE ID =: params.accountId LIMIT 1].is_general_public_account__c;
 
             //Create User
             OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
