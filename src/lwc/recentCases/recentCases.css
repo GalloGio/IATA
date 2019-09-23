@@ -1,0 +1,17 @@
+.cardBodyContent {
+  min-height: 318px;
+}
+
+.cardBodyContentSmall {
+  min-height: 120px;
+}
+
+.removeFontWeight {
+  font-weight: 400;
+}
+
+.noRecentCases {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

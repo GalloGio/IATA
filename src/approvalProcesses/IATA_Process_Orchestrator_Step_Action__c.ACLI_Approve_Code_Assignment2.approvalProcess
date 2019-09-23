@@ -3,6 +3,10 @@
     <active>true</active>
     <allowRecall>true</allowRecall>
     <allowedSubmitters>
+        <submitter>amerz@iata.org</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <submitter>bricenoa@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>

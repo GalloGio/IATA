@@ -15,7 +15,17 @@ public without sharing class ISSP_AMS_Accreditation {
     private static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
     private static final String OTHERS = 'OTHERS';
     //private static final string ISO_8859_1_regEx = '^[0-9\\\\A-z\\u00C0-\\u00ff\\s\\.,-\\/#!$%\\^&\\*;:{}=\\-_`~()]+$';
-    private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
+    private static final string ISO_8859_1_regEx { //Reg exp to limit inputted chars to ISO-8859-1
+        get{
+            if(ISO_8859_1_regEx == null) {
+                //WMO-538
+		        Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
+                ISO_8859_1_regEx = regExCS != null && String.isNotBlank(regExCS.Text_1__c) ? regExCS.Text_1__c : '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+            } 
+            return ISO_8859_1_regEx;
+        }
+        set;
+    }
     private String vSAAMCaseId;
     private Boolean isScopeOfChangeChanged = false;
     public String hqCountryISOCode;
@@ -242,17 +252,97 @@ public without sharing class ISSP_AMS_Accreditation {
     public Boolean revCaseOpen {
         get{
             List<Case> revCases = [SELECT Id 
-                                FROM Case 
-                                WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
-                                    AND Reason1__c = 'Annual revalidation' 
-                                    AND Status != 'Closed' 
-                                    AND Status != 'Closed_Rejected' 
-                                    AND Status != 'Closed_Withdrawn'];
+                                   FROM Case 
+                                   WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
+                                   AND Reason1__c = 'Annual revalidation' 
+                                   AND Status != 'Closed' 
+                                   AND Status != 'Closed_Rejected' 
+                                   AND Status != 'Closed_Withdrawn'
+                                   AND Status != 'Closed_ Not Accepted'];
             
             return !revCases.isEmpty();
         } 
         set;
     }
+
+    public Boolean isNewPortal {
+    get {
+        if(isNewPortal == null) {
+            User usr = [SELECT Id, Profile.Name, CNS_Account_or_Agency__c FROM User WHERE Id =: UserInfo.getUserId()];
+            isNewPortal = CSP_Utils.isNewPortalActive();
+         }
+         
+        return isNewPortal;
+    }
+    set;
+    }
+
+    public String portalRedirectToCase {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_Case?caseId=' + newCase.Id + (communityName == 'CNS' ? '&CommunityName=' + communityName : '');
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('case-details');
+            return url + '?caseId=' + newCase.Id;
+        }
+        
+    }
+    set;
+    }
+
+    public String portalRedirectToCaseList {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_CaseList' + (communityName == 'CNS' ? '&CommunityName=' + communityName : '');
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('cases-list');
+            return url;
+        }
+    }
+    set;
+    }
+
+    public String portalRedirectToSupport {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1';
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('support-reach-us');
+            return url;
+        }
+    }
+    set;
+    }
+
+    public String portalRedirectToCompanyProfile {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_CompanyInformation?mid=M5S2';
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('company-profile');
+            return url;
+        }
+    }
+    set;
+    }
+
+    public String portalRedirectToMyProfile {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_ContactList?MainNav=Admin';
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('my-profile');
+            return url;
+        }
+    }
+    set;
+    }
+    
 
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
@@ -2919,6 +3009,11 @@ public without sharing class ISSP_AMS_Accreditation {
                     system.DEBUG('IATA_ISO_State__c + Shipping_ISO_State__c: ' + newForm.IATA_ISO_State__c + newForm.Shipping_ISO_State__c);
                     newForm.Shipping_ISO_State__c = newForm.IATA_ISO_State__c;
                 }
+                //INC484624-START
+                if(newForm.Shipping_Street__c == null)  newForm.Shipping_Street__c = newForm.Branch_Office_Street_name_number__c;
+                if(newForm.Shipping_Postal_Code__c == null) newForm.Shipping_Postal_Code__c = newForm.Branch_Office_Postal_code__c;
+                if(newForm.Shipping_City__c == null) newForm.Shipping_City__c = newForm.Branch_Office_City__c;    
+                //INC484624-END
             }
 
             if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && (newCase.Reason1__c == 'Major Change')) {
@@ -2929,6 +3024,12 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (newForm.Shipping_ISO_State__c == null) {
                     newForm.Shipping_ISO_State__c = accountConcerned.IATA_ISO_Shipping_State__c;
                 }
+                //INC484624-START
+                if(newForm.Shipping_Street__c == null) newForm.Shipping_Street__c = accountConcerned.ShippingStreet;
+                if(newForm.Shipping_Postal_Code__c == null) newForm.Shipping_Postal_Code__c = accountConcerned.ShippingPostalCode;
+                if(newForm.Shipping_City__c == null) newForm.Shipping_City__c = accountConcerned.ShippingCity;
+                //INC484624-END
+
             }
 
             upsert newForm;
@@ -7425,8 +7526,8 @@ system.debug('aqui sectorValue ' + sectorValue);
                 Position__c,RecordTypeId,Title__c,Valid__c,
                 Person__c,Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Email__c,
                 Contact__c,Contact__r.FirstName,Contact__r.LastName,Contact__r.Email,Contact__r.Phone,
-                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry, Contact__r.OtherState,
-                Legacy_External_ID__c
+                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry,
+                Legacy_External_ID__c, Contact__r.OtherState
                 FROM AMS_Account_Role__c
                 where Account__c = :lAccountConcerned
                 and RecordTypeId = :rtAccRoleOwnership

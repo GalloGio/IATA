@@ -1,0 +1,64 @@
+<template>
+    <div class="slds-grid slds-wrap slds-gutters_medium">
+        <div class="slds-col slds-size_1-of-1">
+            <!-- RESULTS -->
+            <template if:true={documentsResults}>
+                <div class="slds-grid slds-wrap slds-gutters_xx-small slds-p-vertical_xxx-small">
+                    <template for:each={documentsList} for:item="keyValue" for:index="keyValueIndex">
+                        <c-portal-custom-card-container class="slds-p-bottom_medium" key={keyValue.key}>
+
+                            <span slot="cardTitle" class="cursorPointer" onclick={categorySelected} data-item={keyValue.key}>
+                                {keyValue.key} ({keyValue.noResults})
+                            </span>
+
+                            <template for:each={keyValue.value} for:item="record">
+                                <span slot="cardBody" key={record.id}>
+                                    <table class="slds-col slds-size_1-of-1 slds-m-vertical_medium slds-table tableStyle" key={record.id}>
+                                        <tbody key={record.id}>
+                                            <tr>
+                                                <td class="underLinded firstColInfo">
+                                                    <div class="cursorPointer" onclick={openRecordDetail} data-item={record.id}>
+                                                        <lightning-icon class="darkBlueIcon" if:true={record.open} icon-name="utility:chevrondown" size="xx-small" data-item={record.id}></lightning-icon>
+                                                        <lightning-icon class="darkBlueIcon" if:false={record.open} icon-name="utility:chevronright" size="xx-small" data-item={record.id}></lightning-icon>
+                                                    </div>
+                                                </td>
+                                                <td key={record.id} class="underLinded secColInfo"><button class="cursorPointer buttonInfo" data-name={record.title} data-item={record.id} onclick={viewDocument}>{label.CurrencyCenter_Open}</button></td>
+                                                <td key={record.id} class="slds-text-title_bold text-black underLinded thirdColInfo">{record.title}</td>
+                                                <td key={record.id} class="underLinded fourthColInfo">{record.language}</td>
+                                                <td key={record.id} class="underLinded fourthColInfo">{record.filetype}</td>
+                                                <td key={record.id} class="underLinded"><lightning-icon class="darkBlueIcon cursorPointer" icon-name="utility:download" size="xx-small" data-name={record.title} data-item={record.id} onclick={downloadDocument}></lightning-icon></td>
+                                            </tr>
+                                            <tr if:true={record.open} data-item={record.id}>
+                                                <td class="recordDetail noPadding" colspan="6">
+                                                    <div class="slds-p-horizontal_large slds-p-vertical_large">
+                                                        <div class="slds-p-around_medium">
+                                                            <div class="text-xxsmall textInfo">{label.IDCard_Description}</div>
+                                                            <div class="text-xsmall">{record.desc}</div>
+                                                        </div>
+                                                        <div class="slds-p-around_medium">
+                                                            <div class="text-xxsmall textInfo">{label.CSP_Search_Documents_ProdType}</div>
+                                                            <div class="text-xsmall">{record.prodCat}</div>
+                                                        </div>
+                                                        <div class="slds-p-around_medium">
+                                                            <div class="text-xxsmall textInfo">{label.CSP_Documents_PubliCountry}</div>
+                                                            <div class="text-xsmall">{record.countryPubli}</div>
+                                                        </div>                                                                                                                
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </span>
+                            </template>
+
+                        </c-portal-custom-card-container>
+                    </template>
+                    <div class="endOfTable"></div>
+                    <div if:true={loadingMoreResults} class="spinnerContainer">
+                        <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+                    </div>                        
+                </div>
+            </template>                                                  
+        </div>
+    </div>
+</template>

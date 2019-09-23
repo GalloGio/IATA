@@ -33,7 +33,7 @@ public  class ISSP_TC_Accept {
     
     //Language picklist
     public String selectedLanguage {get;set;}
-    
+
     public List<SelectOption> languages {
     get {
         List<SelectOption> options = new List<selectOption>();
@@ -53,7 +53,20 @@ public  class ISSP_TC_Accept {
     }
     set;
     }
-    
+
+    public Boolean isPortalNavigationBar {
+    get {
+        if(isPortalNavigationBar == null) {
+            User usr = [SELECT Id, Profile.Name, CNS_Account_or_Agency__c FROM User WHERE Id =: UserInfo.getUserId()];
+
+            isPortalNavigationBar = CSP_Utils.isNewPortalActive();
+         }
+
+        system.debug('SS## isPortalNavigationBar: ' + isPortalNavigationBar);
+        return isPortalNavigationBar;
+    }
+    set;
+    }
 
     public ISSP_TC_Accept(){
         isBSP = false;

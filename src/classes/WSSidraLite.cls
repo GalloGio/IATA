@@ -14,10 +14,11 @@ global class WSSidraLite {
                 ContactId, IFAP_Agent_Type__c, AccountId, CaseNumber, Origin, Subject, IFAP_Agent_Code__c, Region__c, Account_Billing_Country__c, BSPCountry__c,
                 RecordtypeId, Reason1__c, Decision__c, Suspension_Date__c, Bank_Guarantee_deadline__c, SAAM_Deadline_Date__c,
                 BSP_CASS__c, Termination_date_manual_entry__c, Termination_date__c, New_IFAP_Deadline_date__c, Documentation_Complete__c,
-                Bank_Guarantee_received__c, Has_the_agent_paid_invoice__c, isClosed, Comments__c,
+                Bank_Guarantee_received__c, Has_the_agent_paid_invoice__c, isClosed, Comments__c, Parent.RecordtypeId,
                 Account.Id, Account.Type, Account.Status__c, Account.Accumulated_Irregularities__c, Account.Category__c,
                 OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.Step6__c, OSCAR__r.Step9__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step13__c, OSCAR__r.Step14__c,
-                OSCAR__r.Step26__c, OSCAR__r.Step35__c, Oscar__r.Step44__c, GDI_Premium__c, Short_Payment_Amount__c, IATA_Charges__c, Agency_Fees__c, Account.ANG_IsNewGenAgency__c, Financial_Review_Result__c, Assessment_Performed_Date__c,
+                OSCAR__r.Step26__c, OSCAR__r.Step35__c, Oscar__r.Step44__c, GDI_Premium__c, Short_Payment_Amount__c, IATA_Charges__c, Agency_Fees__c, BusinessHoursId,
+                Account.ANG_IsNewGenAgency__c, Financial_Review_Result__c, Assessment_Performed_Date__c,
                 (Select Id, SIDRA_lite_Reason__c, Status, ParentId, RecordtypeId,
                     FA_Letter_Sent__c, Deadline_Date__c, firstFAnonComplianceDate__c, FA_Second_Deadline_Date__c, FA_Third_Deadline_Date__c, secondFAnonComplianceDate__c,
                     FS_Letter_Sent__c, FS_Deadline_Date__c, firstFSnonComplianceDate__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, secondFSnonComplianceDate__c,
@@ -130,6 +131,10 @@ global class WSSidraLite {
             return SidraLiteHelperForOSCAR.createDummyCaseFirstNonCompliance(parentCase);
         } else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_SIDRA) {
             return SidraLiteHelperForSIDRA.createDummyCaseFirstNonCompliance(parentCase);
+        //ACAMBAS - WMO-483 - Begin
+        } else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_CNS) {
+            return SidraLiteHelperForCNS.createDummyCaseFirstNonCompliance(parentCase);
+        //ACAMBAS - WMO-483 - End       
         }
         return null;
     }
@@ -172,6 +177,10 @@ global class WSSidraLite {
             SidraLiteHelperForSMAP.throwPopUpMessage(parentCase);
         } else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_OSCAR) {
             SidraLiteHelperForOSCAR.throwPopUpMessage(parentCase);
+        //ACAMBAS - WMO-483: Begin
+        } else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_CNS) {
+            SidraLiteHelperForCNS.throwPopUpMessage(parentCase);
+        //ACAMBAS - WMO-483: End
         } else {
             throw new SidraLiteException('Case recordtype not valid');
         }
@@ -181,18 +190,23 @@ global class WSSidraLite {
         if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_IFAP) {
             return SidraLiteHelperForIFAP.updateSidraLiteAndParent(parentCase, childCase);
         }
-        if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_SAAM) {
+        else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_SAAM) {
             return SidraLiteHelperForSAAM.updateSidraLiteAndParent(parentCase, childCase);
         }
-        if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_INVOICING) {
+        else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_INVOICING) {
             return SidraLiteHelperForInvoicing.updateSidraLiteAndParent(parentCase, childCase);
         }
-        if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_SMAP) {
+        else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_SMAP) {
             return SidraLiteHelperForSMAP.updateSidraLiteAndParent(parentCase, childCase);
         }
-        if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_OSCAR) {
+        else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_OSCAR) {
             return SidraLiteHelperForOSCAR.updateSidraLiteAndParent(parentCase, childCase);
         }
+        //ACAMBAS - WMO-483: Begin
+        else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_CNS) {
+            return SidraLiteHelperForCNS.updateSidraLiteAndParent(parentCase, childCase);
+        }
+        //ACAMBAS - WMO-483: End
 
         return null;
     }

@@ -30,8 +30,8 @@ private  class AttachmentListCtrlTest {
 
 	static testMethod void testGetters() {
 
-       List<AttachmentListCtrl.PickListWrapper> identifierList=  AttachmentListCtrl.getFileIdentifierPickValues();
-       List<AttachmentListCtrl.PickListWrapper> reviewStatusList=  AttachmentListCtrl.getReviewStatusPickValues();
+       List<CSP_Utils.PickListWrapper> identifierList=  AttachmentListCtrl.getFileIdentifierPickValues();
+       List<CSP_Utils.PickListWrapper> reviewStatusList=  AttachmentListCtrl.getReviewStatusPickValues();
 
  
     }
@@ -48,12 +48,12 @@ private  class AttachmentListCtrlTest {
 
         AttachmentListCtrl.PropertiesWrapper pw= AttachmentListCtrl.getPanelProperties(cse.id, false, '');
 
-        List<WrapperAttach>wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false);
+        List<WrapperAttach>wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false);
         
         wrapperAttach wa= wrlist.get(0);
         AttachmentListCtrl.ReturnWrapper rw=AttachmentListCtrl.changeAttachVisibility(cse.id, wa.id, false, false);
         system.assertEquals(rw.severity,'SUCCESS');
-        wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false);
+        wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false);
         system.assertEquals(wrlist.get(0).permission.ShowToPortalUsers__c,true);
 
     }
@@ -69,7 +69,7 @@ private  class AttachmentListCtrlTest {
 
         AttachmentListCtrl.PropertiesWrapper pw= AttachmentListCtrl.getPanelProperties(cse.id, false, '');
 
-        List<WrapperAttach>wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false);
+        List<WrapperAttach>wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false);
         
         wrapperAttach wa= wrlist.get(0);
         
@@ -103,7 +103,7 @@ private  class AttachmentListCtrlTest {
         AttachmentListCtrl.ReturnWrapper rw=AttachmentListCtrl.makeAllAttachPublic(cse.id, false, false);
 
         integer c=0;
-        for(wrapperAttach wa: AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false)){
+        for(wrapperAttach wa: AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false)){
             if(wa.permission.ShowToPortalUsers__c)c++;
         }
         system.assertEquals(c,2);
@@ -216,5 +216,58 @@ private  class AttachmentListCtrlTest {
         insert cse;
 
         ApexMessageHandling attMsg=AttachmentListCtrl.createAttachment(cse.id, 'asdasd', 'File1',12, 'text');
+     }
+
+    static testMethod void testCheckTypeOfcase() {
+
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+        Case cse = new Case();
+        cse.recordtypeId=recordTypeId;
+        insert cse; 
+
+        //Check if case is SAAM or Sidra, should return false
+        system.assertEquals(AttachmentListCtrl.checkIfSidraSaam(cse.id),false);
+
+        //Check if case is SAAM , Sidra or Oscar, should return true
+        system.assertEquals(AttachmentListCtrl.checkIfSidraSaamOSCAR(cse.id),true);
+
+     }
+
+     static testMethod void testGetContenDocumentDetails() {
+        Case c = new Case();
+        insert c;
+
+        Test.startTest();
+            ContentVersion contentVersionInsert = new ContentVersion(
+                Title = 'Test',
+                PathOnClient = 'Test.jpg',
+                VersionData = Blob.valueOf('Test Doc'),
+                IsMajorVersion = true
+            );
+            insert contentVersionInsert;
+
+            List<ContentDocument> contentDocList = [SELECT Id, Title, LatestPublishedVersionId FROM ContentDocument];
+
+            ContentDocumentLink contentlink=new ContentDocumentLink();
+            contentlink.ShareType= 'V';
+            contentlink.LinkedEntityId = c.Id; 
+            contentlink.ContentDocumentId=contentDocList[0].Id;
+            contentlink.Visibility = 'AllUsers'; 
+            insert contentlink; 
+
+            List<WrapperAttach> wra=AttachmentListCtrl.getContentDetails(new list<id>{contentDocList.get(0).id});
+            system.AssertEquals(wra.size(),1);
+
+
+            //get Link
+
+           String fileLink= AttachmentListCtrl.getExpiringLinkWithRecId(contentDocList.get(0).id);
+           system.AssertEquals(fileLink==null,false);
+
+           // delete Content Document
+
+           AttachmentListCtrl.ReturnWrapper res= AttachmentListCtrl.deleteAttachment(contentDocList.get(0).id,'');
+           system.AssertEquals(res.severity=='SUCCESS',true);
+        Test.stopTest();
      }
 }

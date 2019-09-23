@@ -71,6 +71,20 @@ public with sharing class ISSP_Homepage {
 
         UserLanguage = UserLanguage();
     }
+    
+    public Boolean isPortalNavigationBar {
+    get {
+        if(isPortalNavigationBar == null) {
+            User usr = [SELECT Id, Profile.Name FROM User WHERE Id =: UserInfo.getUserId()];
+
+            isPortalNavigationBar = ISSP_CS__c.getValues('CS Portal Redirect') == null || usr.Profile.Name.toUpperCase().contains('DPC') || usr.Profile.Name.toUpperCase().contains('PWC');
+        }
+
+        system.debug('SS## isPortalNavigationBar: ' + isPortalNavigationBar);
+        return isPortalNavigationBar;
+    }
+    set;
+    }
 
     public void populateVariables(){
         sidraCaseIdToShow='';
@@ -251,6 +265,10 @@ public with sharing class ISSP_Homepage {
             return new Pagereference('https://' + host+ '/ISSP_Login');
         }
         else{
+
+            if (  CSP_Utils.isNewPortalActive() ) {
+                return CSP_Utils.redirectToNewPortalPage('');
+            }
             //TF - force logout for TD
             PageReference newPR = ISSP_TD.toLogout_TD();
             if (newPR != null){

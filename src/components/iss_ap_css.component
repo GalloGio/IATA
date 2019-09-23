@@ -25,11 +25,15 @@ ul li, ol li {
         }
        
         .ap-required {
-    		color:#a31717 !important;
-    	}
+            color: #a31717;
+            font-weight: bold;
+        }
+        .ap-required:before {
+            content: "*&nbsp;";
+        }
         
         .apcontainer div {
-        border-top: 0px !important;
+        border-top: 0px;
         }
         
         .col1 {
@@ -54,9 +58,9 @@ ul li, ol li {
         }
         
         body .bPageBlock .pbBody .pbSubheader {
-        	background-image: url('') !important;
-        	background-color:  #1797C0 !important;
-        	color: #fff !important;
+            background-image: none !important;
+            background-color: #1e32fa;
+            color: #fff;
         }
         
         .bPageBlock {
@@ -137,45 +141,62 @@ div.footer {display: block;padding: 5px;position: running(footer);}
 td.hactive {font-size: 14pt; color: green; border-bottom: 5px solid green !important; padding-left: 20px;margin-left: 20px;background-color: #fff !important;}
 td.hactivered {font-size: 14pt; color: #C90435; border-bottom: 5px solid #C90435 !important; padding-left: 20px;margin-left: 20px;background-color: #fff !important;}
 td.hinactive {font-size: 14pt; color: #000; border-bottom: 0px !important; padding-left: 20px;margin-left: 20px;background-color: #fff !important;}
-
+.red-box {
+    color: #a31717;
+    border: 1px solid #a31717 !important;
+    margin: 10px;
+    padding: 10px;
+}
 .pageNav {
     font-size: 9pt;
     top: 100px;
     left: 0px;
-    height: 420px;
+    /*height: 420px;*/
+    padding-bottom: 20px;
     margin-bottom: 0;
     margin-left: 0px;
     margin-right: 0;
-    margin-top: -40px;
-    padding-bottom: 0;
-    padding-left: 0px;
-    padding-right: 10px;
-    padding-top: 3px;
+    margin-top: 13px;
     position: fixed;
-    width: 7%;
+    width: 10%;
+    min-width: 150px;
+    max-width: 250px;
     z-index: 100;
     color: #fff;
-    padding: 4px 6px;
-    background-color: #1797c0;
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
+    background-color: #fff;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
     font-weight: normal;
+    box-shadow: 5px 5px 20px #e2e2e2;
 }
 
 .pageNav a {
-    color: #fff !important;
+    color: #000 !important;
     text-decoration: none !important;
 }
-        
-p.LOB {
 
-    color: #fff !important;
-	font-size: 120%;
-	font-weight: bold;
-	text-align: center;
+.pageNav * {
+    margin: 10px 10px 0 10px;
+    list-style-position: inside;
+    text-indent: -0.8em;
 }
 
-        
+p.LOB {
+    border-top-right-radius: 3px;
+    padding: 8px 5px;
+    margin: 0 !important;
+    color: #fff !important;
+	font-size: 120%;
+    text-align: center;
+    background-color: #1e32fa;
+    font-size: 16px;
+}
+
+.pageNav div p{
+    font-weight: bold;
+    color: #000;
+}
+
 .close {
         float: right;
         font-size: 21px;

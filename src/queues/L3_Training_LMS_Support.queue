@@ -6,6 +6,10 @@
         <publicGroups>
             <publicGroup>L3_Training_LMS_Support</publicGroup>
         </publicGroups>
+        <users>
+            <user>karlssonb@iata.org</user>
+            <user>waddellj@iata.org</user>
+        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

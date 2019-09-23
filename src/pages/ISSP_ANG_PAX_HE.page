@@ -42,17 +42,8 @@
            padding-left:30px;
          }
         .pbTitle {
+            display: none;
             width: {!IF(isstep2,'90% !important','40% !important')};
-        }
-       
-       .pbBody {
-        padding-left:10px !important;    
-       }
-            
-       .pbBody a{color:#337ab7 !important}
-               
-        .bPageBlock {
-            border-top-width : thin !important;
         }
         
         .bEditBlock input {
@@ -69,7 +60,6 @@
             background-color: #337ab7 !important;
             border-color: #2e6da4 !important;
             border: 1px solid transparent !important;
-            /*background: */
         }
         
         .tb-header {
@@ -99,12 +89,6 @@
                 background-image:none !important;
                 background-color:transparent !important;
                 border-right:2px solid white;
-        }
-        
-        body .bPageBlock .pbBody .pbSubheader{
-                background-image: url('') !important;
-                background-color:  #1797c0;
-                color: #fff;
         }
 
         body .bPageBlock .pbBody .summary-subsection .pbSubheader{
@@ -222,6 +206,7 @@
            }
 
     </style>
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
     
     <script type="text/javascript">
     var $j = jQuery.noConflict();
@@ -695,9 +680,9 @@
     
     </script>
      <c:MutationObserverPolyfill ></c:MutationObserverPolyfill>       
+     <c:ISSP_CustomNavigation />    
      <div class="container">
        <div id="contentWrapper">
-           <c:ISSP_CustomNavigation />    
     <div class="pageNav" style="display:{!IF(isStep3,'inline-block','none')}">
         <p class="LOB">{!$Label.ISSP_Travel_Agent}</p>
         <div style="border-top: 1px #fff dotted; padding-bottom: 3px;">
@@ -717,21 +702,29 @@
         </div>
     <div class="panel-body" id="body-enquiries">
         <apex:form id="AMSForm">
-        <div class="progress">
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                <apex:commandLink styleclass="btn btn-default" action="{!saveAMSFormAndGoToStep1}" value="{!lblStepA}" id="Prev1"/>
+        <div class="progress iata-tabs">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep1}" id="Prev1">
+                    <apex:outputText value="{!lblStepA}" escape="false"/>
+                </apex:commandLink>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-                <apex:commandLink styleclass="btn btn-default" action="{!saveAMSFormAndGoBack}" value="{!lblStepB}" id="Prev2"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
+                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoBack}" id="Prev2">
+                    <apex:outputText value="{!lblStepB}" escape="false"/>
+                </apex:commandLink>
             </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                {!lblStepC}
+            <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                <apex:outputText value="{!lblStepC}" escape="false"/>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;">
-                <apex:commandLink styleclass="btn btn-default" action="{!saveAMSFormAndGoForward}" value="{!lblStepD}" id="Next4"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;">
+                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoForward}" id="Next4">
+                    <apex:outputText value="{!lblStepD}" escape="false"/>
+                </apex:commandLink>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                <apex:commandLink styleclass="btn btn-default" action="{!saveAMSFormAndGoToStep5}" value="{!lblStepE}" id="Next5"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
+                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep5}" id="Next5">
+                    <apex:outputText value="{!lblStepE}" escape="false"/>
+                </apex:commandLink>
             </div>
         </div>
         
@@ -766,9 +759,9 @@
                 {!$Label.ISSP_AMS_Step3_Save_Anytime}
             </div>
             <apex:pageBlockButtons >
-                <apex:commandButton action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}"/>&nbsp;
-                <apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}" />
-                <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
+                <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-right" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}"/>
+                <apex:commandButton styleClass="iatabtn iatabtn-danger iatabtn-right" action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}"/>
+                <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-left" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" />
             </apex:pageBlockButtons>
             <apex:PageMessages id="msgs"/>
             <div class="apcontainer" style="border: 1px solid #ececec;">
@@ -1906,13 +1899,13 @@
       
       <div class="modal-footer">
         <!-- <apex:commandButton action="{!createAgencyContact}" value="{!$Label.PKB2_Submit}" oncomplete="closeModal(); setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');" reRender="contactList, ownerList"> -->
-        <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+        <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="iatabtn iatabtn-default" value="{!$Label.ISSP_Submit}"
             oncomplete="if ({!contactSaved==true}){closeModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');"
             onclick="this.disabled='disabled';"
             reRender="contactList, ownerList, theMessages">
             <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
          </apex:commandButton>&nbsp;
-        <button type="button" class="btn btn-default" onclick="cancelAgentUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+        <button type="button" class="iatabtn iatabtn-danger" onclick="cancelAgentUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
       </div>
         
         <script>
@@ -2016,13 +2009,13 @@
       </div>
       
       <div class="modal-footer">
-        <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+        <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="iatabtn iatabtn-default" value="{!$Label.ISSP_Submit}"
             oncomplete="if ({!contactSaved==true}){closeUpdateOwnerModal(); cancelOwnerUpdate();} this.removeAttribute('disabled');setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');"
             onclick="this.disabled='disabled';"
             reRender="contactList, ownerList, theMessages">
             <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
          </apex:commandButton>&nbsp;
-        <button type="button" class="btn btn-default" onclick="cancelOwnerUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+        <button type="button" class="iatabtn iatabtn-danger" onclick="cancelOwnerUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
       </div>
               
     </div>
@@ -2081,11 +2074,11 @@
       </div>
       
       <div class="modal-footer">
-          <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+          <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="iatabtn iatabtn-default" value="{!$Label.ISSP_Submit}"
             oncomplete="if ({!contactSaved==true}){closeModal2(); cancelCompanyUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="companyList, ownerList, companyMessages">
             <apex:param value="Company" name="companytype" assignTo="{!contactType}" />
          </apex:commandButton>&nbsp;
-        <button type="button" class="btn btn-default" onclick="cancelCompanyUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+        <button type="button" class="iatabtn iatabtn-danger" onclick="cancelCompanyUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
       </div>
     </div>
   </div>
@@ -2097,8 +2090,8 @@
      </div>
            
          </div>
-         <c:ISSP_CustomFooter />
-         </div>
+        </div>
+        <c:ISSP_CustomFooter />
        
     </body>  
 </html>

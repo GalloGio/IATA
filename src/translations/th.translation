@@ -169,71 +169,75 @@
         <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Check --></label>
+        <label>เราไม่สามารถตรวจสอบที่อยู่ในตำแหน่งที่ระบุได้</label>
         <name>AMS_DQ_Cannot_Check</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Find --></label>
+        <label>เราไม่พบที่อยู่ดังกล่าว หากคุณแน่ใจว่าข้อมูลของคุณนั้นถูกต้อง คุณยังสามารถส่งได้</label>
         <name>AMS_DQ_Cannot_Find</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City --></label>
+        <label>เราไม่สามารถตรวจสอบความถูกต้องของที่อยู่ได้ โดยไม่มีเมือง {0} โปรดกรอกลงในช่อง</label>
         <name>AMS_DQ_Cannot_Validate_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City and Street --></label>
+        <label>เราไม่สามารถตรวจสอบความถูกต้องของที่อยู่ได้ โดยไม่มีเมือง {0} และถนน โปรดกรอกลงในช่อง</label>
         <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate Street --></label>
+        <label>เราไม่สามารถตรวจสอบความถูกต้องของที่อยู่ได้ โดยไม่มีถนน {0} โปรดกรอกลงในช่อง</label>
         <name>AMS_DQ_Cannot_Validate_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Check Addr --></label>
+        <label>ตรวจสอบที่อยู่</label>
         <name>AMS_DQ_Check_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Cumpulsory --></label>
+        <label>เมือง {0} เป็นภาคบังคับ โปรดกรอกข้อมูลลงในช่องเมือง {1}</label>
         <name>AMS_DQ_City_Cumpulsory</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Not in Database --></label>
+        <label>เมือง {0} ไม่ได้อยู่ในฐานข้อมูลของเรา (หรือสะกดแตกต่างกัน)</label>
         <name>AMS_DQ_City_Not_in_Database</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another Country --></label>
+        <label>เมือง {0} อยู่ในฐานข้อมูลของเรา แต่ปรากฏว่าอยู่ในประเทศอื่น ตามฐานข้อมูลของเรา</label>
         <name>AMS_DQ_City_in_Another_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another State --></label>
+        <label>เมือง {0} อยู่ในฐานข้อมูลของเรา แต่อยู่ในรัฐ / จังหวัดอื่น</label>
         <name>AMS_DQ_City_in_Another_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Enter Valid City --></label>
+        <label>ป้อนเมืองที่ถูกต้อง</label>
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Found Addr --></label>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
+        <label>พบที่อยู่ที่ตรงกัน</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review City --></label>
+        <label>ตรวจสอบชื่อเมือง หากคุณแน่ใจว่าข้อมูลของคุณนั้นถูกต้อง ให้คลิกส่ง</label>
         <name>AMS_DQ_Review_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review Country or City --></label>
+        <label>ตรวจสอบชื่อประเทศ และ / หรือชื่อเมือง หากคุณแน่ใจว่าข้อมูลของคุณนั้นถูกต้อง ให้คลิกส่ง</label>
         <name>AMS_DQ_Review_Country_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State --></label>
+        <label>ตรวจสอบชื่อรัฐ / ชื่อจังหวัด และ / หรือชื่อเมือง</label>
         <name>AMS_DQ_Review_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State or City --></label>
+        <label>ตรวจสอบชื่อรัฐ / ชื่อจังหวัด และ / หรือชื่อเมือง หากคุณแน่ใจว่าข้อมูลของคุณนั้นถูกต้อง ให้คลิกส่ง</label>
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Street Compulsory --></label>
+        <label>ถนน {0} เป็นภาคบังคับ กรุณากรอกข้อมูลในช่องถนน {1}</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
     <customLabels>
@@ -1461,7 +1465,7 @@
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label>โปรดตรวจสอบที่อยู่สำหรับเรียกเก็บเงินใน Billing และ ที่อยู่สำหรับการจัดส่งเอกสาร โดยคลิกที่ปุ่ม &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <label>โปรดตรวจสอบที่อยู่สำหรับการเรียกเก็บเงินและการจัดส่ง โดยคลิกที่ปุ่มตรวจสอบที่อยู่</label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>
@@ -1519,6 +1523,14 @@
     <customLabels>
         <label><!-- AirlineSuspensionEmailRecipientsEurope --></label>
         <name>AirlineSuspensionEmailRecipientsEurope</name>
+    </customLabels>
+    <customLabels>
+        <label>การแจ้งเตือนทั้งหมด</label>
+        <name>All_Notifications_Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>การประกาศ</label>
+        <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- Ask Delete Attachment --></label>
@@ -1709,23 +1721,707 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Community --></label>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin --></label>
+        <name>CSP_ANG_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin_Authorized_Signature --></label>
+        <name>CSP_ANG_Portal_Admin_Authorized_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label>เกี่ยวกับ</label>
+        <name>CSP_About</name>
+    </customLabels>
+    <customLabels>
+        <label>ยอมรับข้อตกลงก่อนที่คุณจะดำเนินการต่อ</label>
+        <name>CSP_Accept_Terms_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Account Domain Created --></label>
+        <name>CSP_Account_Domain_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_All --></label>
+        <name>CSP_Add_All</name>
+    </customLabels>
+    <customLabels>
+        <label>เพิ่มเอกสารใหม่</label>
+        <name>CSP_Add_New_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_New_User --></label>
+        <name>CSP_Add_New_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_User --></label>
+        <name>CSP_Add_User</name>
+    </customLabels>
+    <customLabels>
+        <label>การประกาศ</label>
+        <name>CSP_Announcement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Apply --></label>
+        <name>CSP_Apply</name>
+    </customLabels>
+    <customLabels>
+        <label>บทความนี้ช่วยได้หรือไม่?</label>
+        <name>CSP_ArticleHelpful</name>
+    </customLabels>
+    <customLabels>
+        <label>สำนักงานสาขา</label>
+        <name>CSP_Branch_Offices</name>
+    </customLabels>
+    <customLabels>
+        <label>การค้นหาขั้นสูง</label>
+        <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลบริษัท</label>
+        <name>CSP_Breadcrumb_CompanyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>คำถามที่พบบ่อย</label>
+        <name>CSP_Breadcrumb_FAQ_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>หน้าแรก</label>
+        <name>CSP_Breadcrumb_Home_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการ</label>
+        <name>CSP_Breadcrumb_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_Support_CreateNewCase --></label>
+        <name>CSP_Breadcrumb_Support_CreateNewCase</name>
+    </customLabels>
+    <customLabels>
+        <label>ติดต่อเรา</label>
+        <name>CSP_Breadcrumb_Support_ReachUs</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการช่วยเหลือ</label>
+        <name>CSP_Breadcrumb_Support_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
+        <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ยกเลิก</label>
+        <name>CSP_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>ยกเลิกบริการ {0}</label>
+        <name>CSP_CancelServiceActionLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถยกเลิกการเข้าถึง {0}</label>
+        <name>CSP_CancelServiceMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการเข้าถึง {0}?</label>
+        <name>CSP_Cancel_Access_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ยกเลิกการเข้าถึง</label>
+        <name>CSP_Cancel_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ยกเลิกการขอ</label>
+        <name>CSP_Cancel_Request</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถรับและส่งข้อความถึงฝ่ายบริการลูกค้าของ IATA เกี่ยวกับคำร้องนี้</label>
+        <name>CSP_CaseMessage_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>พิมพ์ความคิดเห็นของคุณที่นี่</label>
+        <name>CSP_CaseMessage_InputPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>ความคิดเห็น</label>
+        <name>CSP_CaseMessage_MessageTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>เพิ่มความคิดเห็นสำเร็จแล้ว</label>
+        <name>CSP_CaseMessage_SubmitSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>หมายเลขคำร้อง</label>
+        <name>CSP_CaseNumber</name>
+    </customLabels>
+    <customLabels>
+        <label>คำร้อง</label>
+        <name>CSP_Cases</name>
+    </customLabels>
+    <customLabels>
+        <label>ชุมชน</label>
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Portal_Status --></label>
+        <label>ดูคำร้องของบริษัทของฉัน</label>
+        <name>CSP_CompanyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลบริษัท</label>
+        <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณแน่ใจหรือไม่ว่าต้องการปฏิเสธการเข้าถึง &lt;b&gt;{0}&lt;/b&gt; สำหรับ &lt;b&gt;{1}&lt;/b&gt;?</label>
+        <name>CSP_Confirm_Deny_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณแน่ใจหรือไม่ว่าต้องการให้สิทธิ์การเข้าถึง &lt;b&gt;{0}&lt;/b&gt; สำหรับ &lt;b&gt;{1}&lt;/b&gt;?</label>
+        <name>CSP_Confirm_Grant_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>คำขอเข้าถึง {0} ของคุณถูกส่งไปยังผู้ดูแลพอร์ทัลแล้ว หากคุณมีคำถามหรือคำขอเกี่ยวกับกระบวนการ คุณ สามารถติดต่อผู้ดูแลระบบ ตามด้านล่างนี้:</label>
+        <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Continue --></label>
+        <name>CSP_Continue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Create_Contact_Complete_Field --></label>
+        <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
+    </customLabels>
+    <customLabels>
+        <label>ปฏิเสธการเข้าถึงของผู้ใช้</label>
+        <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>เอกสาร</label>
+        <name>CSP_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label>เอกสารทั้งหมด</label>
+        <name>CSP_DocumentsAll</name>
+    </customLabels>
+    <customLabels>
+        <label>เอกสาร</label>
+        <name>CSP_DocumentsLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดเลือกหมวดหมู่ของเอกสารที่คุณกำลังค้นหาอยู่</label>
+        <name>CSP_DocumentsSelCat</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเทศที่ตีพิมพ์</label>
+        <name>CSP_Documents_PubliCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Domain Error Message --></label>
+        <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
+    </customLabels>
+    <customLabels>
+        <label>ติดต่อเรา</label>
+        <name>CSP_FAQReachUsBanner_ButtonText</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างคำร้อง, สนทนากับตัวแทน IATA โดยตรง, หรือโทรหาเรา</label>
+        <name>CSP_FAQReachUsBanner_Text</name>
+    </customLabels>
+    <customLabels>
+        <label>ต้องการความช่วยเหลือเพิ่มเติมหรือไม่?</label>
+        <name>CSP_FAQReachUsBanner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>คำถามที่พบบ่อย</label>
+        <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือกหนึ่งในหมวดหมู่หลัก</label>
+        <name>CSP_FAQ_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>คำถามที่พบบ่อย</label>
+        <name>CSP_FAQs_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการที่ชื่นชอบ</label>
+        <name>CSP_FavoriteServices_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณลักษณะ</label>
+        <name>CSP_Features_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>บอกเราว่า เราจะทำให้บทความนี้เป็นประโยชน์มากขึ้นได้อย่างไรบ้าง</label>
+        <name>CSP_FeedbackBody</name>
+    </customLabels>
+    <customLabels>
+        <label>เราให้ความสำคัญกับข้อคิดเห็นของคุณ เพื่อช่วยให้เรา ได้ปรับปรุงคุณภาพของบทความของเรา</label>
+        <name>CSP_FeedbackBody2</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อคิดเห็น</label>
+        <name>CSP_FeedbackTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filter --></label>
+        <name>CSP_Filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filtered --></label>
+        <name>CSP_Filtered</name>
+    </customLabels>
+    <customLabels>
+        <label>สำหรับคุณ</label>
+        <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>ให้สิทธิ์การเข้าถึงของผู้ใช้</label>
+        <name>CSP_Grant_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ยินดีต้อนรับ [username]</label>
+        <name>CSP_Home_WelcomeTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>ออกจากระบบ</label>
+        <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถจัดการผู้ใช้ จากรายการด้านล่างนี้</label>
+        <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>จัดการบริการ</label>
+        <name>CSP_Manage_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>จัดการบริการ</label>
+        <name>CSP_Manage_Services</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Manage_Services --></label>
+        <name>CSP_Manage_Services_NoIEPAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>ดูคำร้องของฉัน</label>
+        <name>CSP_MyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>ชื่อ</label>
+        <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewServiceUserMessage --></label>
+        <name>CSP_NewServiceUserMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP New Email Domain --></label>
+        <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่ปรากฏบัญชีที่เกี่ยวข้อง</label>
+        <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณไม่มีคำร้องใด ๆ ในขณะนี้</label>
+        <name>CSP_NoCases1</name>
+    </customLabels>
+    <customLabels>
+        <label>แต่เมื่อคุณมี คุณจะเห็นรายการล่าสุดที่นี่</label>
+        <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่มีผลลัพธ์</label>
+        <name>CSP_NoSearchResults</name>
+    </customLabels>
+    <customLabels>
+        <label>หากจำเป็น คุณสามารถเพิ่มเอกสารลงในคำร้องได้</label>
+        <name>CSP_No_Documents_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ปฏิทินรายสัปดาห์</label>
+        <name>CSP_OperationalCalendar_HomeTileTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>ดูแบบรายเดือน</label>
+        <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
+    </customLabels>
+    <customLabels>
+        <label>เราต้องการข้อมูลของคุณ เพื่อดำเนินการกับคำร้องของ คุณ</label>
+        <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PortalPath --></label>
+        <name>CSP_PortalPath</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Portal_Administrators --></label>
+        <name>CSP_Portal_Administrators</name>
+    </customLabels>
+    <customLabels>
+        <label>สถานะพอร์ทัล</label>
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_SelectCommunity --></label>
+        <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
+        <name>CSP_Profile_PrivacyManagement_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Text --></label>
+        <name>CSP_Profile_PrivacyManagement_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Title --></label>
+        <name>CSP_Profile_PrivacyManagement_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_URL --></label>
+        <name>CSP_Profile_PrivacyManagement_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>คำร้องคืออะไร และเมื่อใดที่ฉันต้องการ?</label>
+        <name>CSP_Question1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question1URL --></label>
+        <name>CSP_Question1URL</name>
+    </customLabels>
+    <customLabels>
+        <label>ฉันจะดูและอัปเดตรายละเอียดของคำร้องได้อย่างไร?</label>
+        <name>CSP_Question2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question2URL --></label>
+        <name>CSP_Question2URL</name>
+    </customLabels>
+    <customLabels>
+        <label>คำร้องล่าสุด</label>
+        <name>CSP_RecentCases</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP RecentCases HelpText --></label>
+        <name>CSP_RecentCases_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Recent Cases Support --></label>
+        <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Record Deleted --></label>
+        <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>บทความที่เกี่ยวข้อง</label>
+        <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveAllFilters --></label>
+        <name>CSP_RemoveAllFilters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveContact_Reason --></label>
+        <name>CSP_RemoveContact_Reason</name>
+    </customLabels>
+    <customLabels>
+        <label>ขอรับบริการ</label>
+        <name>CSP_Request_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>บันทึก</label>
+        <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหาด้วยรายละเอียดเอกสาร</label>
+        <name>CSP_SearchDocuments</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหาด้วยรายละเอียดคำถามที่พบบ่อย</label>
+        <name>CSP_SearchFAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>การค้นหาขั้นสูง</label>
+        <name>CSP_Search_AdvancedSearch</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเทศ</label>
+        <name>CSP_Search_Case_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเภท</label>
+        <name>CSP_Search_Case_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>หมวดหมู่</label>
+        <name>CSP_Search_Documents_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเภทผลิตภัณฑ์</label>
+        <name>CSP_Search_Documents_ProdType</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเทศที่เผยแพร่</label>
+        <name>CSP_Search_Documents_PubCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>หมวดหมู่</label>
+        <name>CSP_Search_FAQ_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>หัวข้อย่อย</label>
+        <name>CSP_Search_FAQ_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>หัวข้อ</label>
+        <name>CSP_Search_FAQ_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;ค้นหาบริการ, คำร้อง, การบริการช่วยเหลือ, และอื่น ๆ&quot;</label>
+        <name>CSP_Search_Home_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหาผู้ใช้บริการ</label>
+        <name>CSP_Search_In_Contacts_In_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่มีผลการค้นหา</label>
+        <name>CSP_Search_NoResults_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>ขออภัย ไม่พบผลลัพธ์สำหรับ</label>
+        <name>CSP_Search_NoResults_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>ตรวจสอบการสะกดคำค้นหาหลักของคุณ หรือลองอีกครั้งด้วยคำใหม่</label>
+        <name>CSP_Search_NoResults_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหาบริการ</label>
+        <name>CSP_Search_Services_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหาบริการช่วยเหลือ</label>
+        <name>CSP_Search_Support_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>ผลลัพธ์อันดับแรก</label>
+        <name>CSP_Search_TopResults</name>
+    </customLabels>
+    <customLabels>
+        <label>พิมพ์คำค้นหาของคุณ</label>
+        <name>CSP_Search_TypeIn_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณาพิมพ์มากกว่า 2 ตัวอักษรเพื่อเริ่มการค้นหา</label>
+        <name>CSP_Search_TypeIn_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือกตัวกรองเพื่อปรับปรุงผลการค้นหาของคุณเพิ่มเติม</label>
+        <name>CSP_Search_TypeIn_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;การค้นหาหมายเลขคำร้อง, หัวเรื่อง, หรือคำอธิบาย&quot;</label>
+        <name>CSP_SearchingOn</name>
+    </customLabels>
+    <customLabels>
+        <label>ดูทั้งหมด</label>
+        <name>CSP_SeeAll</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือกชุมชน</label>
         <name>CSP_SelectCommunity</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_SelectPortalStatus --></label>
+        <label>เลือกสถานะพอร์ทัล</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_selectReason --></label>
+        <label>การเข้าถึงบริการ</label>
+        <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>มีการขอการเข้าถึง</label>
+        <name>CSP_Services_AccessRequested</name>
+    </customLabels>
+    <customLabels>
+        <label>มีการขอการเข้าถึง</label>
+        <name>CSP_Services_AccessRequestedTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการทั้งหมดที่มีให้สำหรับบริษัทของคุณ ได้ระบุไว้ตามด้านล่างนี้</label>
+        <name>CSP_Services_AvailableServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการที่มี</label>
+        <name>CSP_Services_AvailableServicesTabTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่บริการ</label>
+        <name>CSP_Services_GoToService</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่บริการ</label>
+        <name>CSP_Services_GoToServices</name>
+    </customLabels>
+    <customLabels>
+        <label>กำลังมองหาบริการอยู่ใช่ไหม?</label>
+        <name>CSP_Services_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>จัดการบริการ</label>
+        <name>CSP_Services_ManageService</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการของบริษัทของคุณ ได้ระบุไว้ตามด้านล่างนี้</label>
+        <name>CSP_Services_MyServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการของฉัน</label>
+        <name>CSP_Services_MyServicesTabTile</name>
+    </customLabels>
+    <customLabels>
+        <label>ดูบริการที่มี</label>
+        <name>CSP_Services_RequestServiceBannerButton</name>
+    </customLabels>
+    <customLabels>
+        <label>ดูข้อมูลบริการแบบละเอียด และขอเข้าถึงบริการที่มี</label>
+        <name>CSP_Services_RequestServiceBannerSubtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>การขอใช้บริการ</label>
+        <name>CSP_Services_RequestServiceBannerTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลการบริการ</label>
+        <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการ</label>
+        <name>CSP_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>การตั้งค่า</label>
+        <name>CSP_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label>สถานะ</label>
+        <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>ส่ง</label>
+        <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Success --></label>
+        <name>CSP_Success</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการช่วยเหลือ</label>
+        <name>CSP_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>เราจะช่วยคุณได้อย่างไรบ้าง?</label>
+        <name>CSP_Support_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถอัปโหลดไฟล์ pdf, jpeg, jpg, png, ppt, pptx, xls, xlsx, tif, tiff และ zip ขนาดควรเล็กกว่า 50 MB</label>
+        <name>CSP_Supported_File_Extensions</name>
+    </customLabels>
+    <customLabels>
+        <label>งาน</label>
+        <name>CSP_Task</name>
+    </customLabels>
+    <customLabels>
+        <label>ขอขอบคุณสำหรับข้อคิดเห็นของคุณ!</label>
+        <name>CSP_ThanksFeedback</name>
+    </customLabels>
+    <customLabels>
+        <label>หัวข้อ</label>
+        <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเภทของคำร้อง</label>
+        <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Announcements --></label>
+        <name>CSP_You_Dont_Have_Announcements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Notifications --></label>
+        <name>CSP_You_Dont_Have_Notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Tasks --></label>
+        <name>CSP_You_Dont_Have_Tasks</name>
+    </customLabels>
+    <customLabels>
+        <label>ความเสี่ยงด้านเครดิตของตัวแทน</label>
+        <name>CSP_cpcc_Agent_Credit_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label>ผู้มีอำนาจลงนาม</label>
+        <name>CSP_cpcc_Authorised_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>ผู้ติดต่อด้านการชำระเงินผ่าน BSP/CASS</label>
+        <name>CSP_cpcc_BSP_CASS_Payment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>สถานะของประเภทการติดต่อ</label>
+        <name>CSP_cpcc_Contact_Type_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>ผู้ติดต่อด้านการประเมินภาคการเงิน</label>
+        <name>CSP_cpcc_Financial_Assessment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>ผู้ติดต่อด้านใบแจ้งหนี้</label>
+        <name>CSP_cpcc_Invoice_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรไฟล์ผู้ติดต่อใหม่</label>
+        <name>CSP_cpcc_New_Contact_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>ผู้ดูแลพอร์ทัล</label>
+        <name>CSP_cpcc_Portal_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label>พื้นที่ทำงาน</label>
+        <name>CSP_cpcc_Working_Areas</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือกเหตุผล</label>
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
@@ -1977,6 +2673,10 @@
         <name>CurrencyCenter_BSP_CASS_Proffile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_ICCS_Availability --></label>
+        <name>CurrencyCenter_BSP_ICCS_Availability</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -2007,6 +2707,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_CASS --></label>
         <name>CurrencyCenter_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_CASS_ICCS_Availability --></label>
+        <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
@@ -3397,7 +4101,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>ข้อมูลส่วนตัว</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -8673,6 +9377,14 @@ and
         <name>ISSP_AMS_Local_Details_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator --></label>
+        <name>ISSP_AMS_MSO_Aggregator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator_Info --></label>
+        <name>ISSP_AMS_MSO_Aggregator_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_MSO_Alternatively --></label>
         <name>ISSP_AMS_MSO_Alternatively</name>
     </customLabels>
@@ -11454,7 +12166,7 @@ and
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;จัดการบัญชีกองทุนสำรองที่กำหนดไว้&lt;/li&gt; &lt;li&gt;จัดการ “ผู้ออกตั๋ว” ผู้เข้าใช้ระบบ IATA EasyPay และกองทุนสำรอง&lt;/li&gt; &lt;li&gt;สร้างหมายเลข IATA EasyPay จากกองทุนที่กำหนดไว้ให้ใช้เพื่อการออกตั๋วผ่านระบบ GDS&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;สร้างหมายเลข IATA EasyPay จากกองทุนใดก็ตามที่กำหนดไว้ให้ใช้เพื่อการออกตั๋วผ่านระบบ GDS&lt;/li&gt;&lt;/ul&gt;</label>
@@ -12277,6 +12989,10 @@ and
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
+    </customLabels>
+    <customLabels>
         <label>ข้อมูลการติดต่อ</label>
         <name>ISSP_Contact_Information</name>
     </customLabels>
@@ -12977,6 +13693,14 @@ and
         <name>ISSP_EnterValidString</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
+    </customLabels>
+    <customLabels>
         <label>ใส่ข้อความ</label>
         <name>ISSP_Enter_Value</name>
     </customLabels>
@@ -13497,6 +14221,10 @@ and
         <name>ISSP_IATA_Designator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_IATA_Location_Code --></label>
+        <name>ISSP_IATA_Location_Code</name>
+    </customLabels>
+    <customLabels>
         <label>&quot;ไม่มีรหัส IATA นี้ กรุณากรอกรหัส IATA ที่ถูกต้อง ถ้าคุณไม่มีรหัส IATA กรุณาเลือก &quot;&quot;อื่น ๆ&quot;&quot; ใน &quot;&quot;ประเภทลูกค้า&quot;&quot;&quot;</label>
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
@@ -13865,7 +14593,7 @@ and
         <name>ISSP_MyOutstandingPaymentsCases</name>
     </customLabels>
     <customLabels>
-        <label>โปรไฟล์ของฉัน</label>
+        <label>ข้อมูลส่วนตัวของฉัน</label>
         <name>ISSP_MyProfile</name>
     </customLabels>
     <customLabels>
@@ -14786,6 +15514,10 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
     <customLabels>
         <label>โปรดป้อนนามสกุลของคุณ</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>โปรดเลือกประเทศ</label>
@@ -15717,6 +16449,10 @@ GSA - ตัวอักษร 3 ตัว
     <customLabels>
         <label><!-- ISSP Status change to Inactive --></label>
         <name>ISSP_Status_change_to_Inactive</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
     </customLabels>
     <customLabels>
         <label>แยกย่อย</label>
@@ -17117,6 +17853,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
+        <label>ทำเครื่องหมายว่าอ่านแล้ว</label>
+        <name>MarkAsRead_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -17249,6 +17989,22 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Not_Applicable</name>
     </customLabels>
     <customLabels>
+        <label><!-- Not In CNS Group Error --></label>
+        <name>Not_In_CNS_Group_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Notification --></label>
+        <name>Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>การแจ้งเตือน</label>
+        <name>NotificationCenter_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>รายละเอียดการแจ้งเตือน</label>
+        <name>NotificationDetail_Detail</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Notions_Essentl_Tarif_Billet_Description --></label>
         <name>Notions_Essentl_Tarif_Billet_Description</name>
     </customLabels>
@@ -17299,6 +18055,18 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>โปรดเลือกประเภท</label>
@@ -18784,6 +19552,18 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Please_select_the_target_Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- PortalAccess --></label>
+        <name>PortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal Name to Redirect --></label>
+        <name>PortalNameRedirect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PortalService --></label>
+        <name>PortalService</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>
@@ -19136,6 +19916,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>ShoppingCartQtyMsg</name>
     </customLabels>
     <customLabels>
+        <label><!-- Error displayed when a RO field is changed in a SIDRA Lite case --></label>
+        <name>SidraLiteROFieldError</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SignIn --></label>
         <name>SignIn</name>
     </customLabels>
@@ -19224,6 +20008,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label>งาน</label>
+        <name>Tasks_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Taxes --></label>
         <name>Taxes</name>
     </customLabels>
@@ -19280,6 +20068,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
+        <label>{0} ได้ขอการเข้าถึงพอร์ทัล</label>
+        <name>UserRequestPortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} ได้ขอการเข้าถึงบริการ {1}</label>
+        <name>UserRequestServiceAccess</name>
+    </customLabels>
+    <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
     </customLabels>
@@ -19306,6 +20102,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- ViewCart --></label>
         <name>ViewCart</name>
+    </customLabels>
+    <customLabels>
+        <label>ดูรายละเอียด</label>
+        <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- View_6_more --></label>
@@ -19402,6 +20202,498 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Contacting us --></label>
         <name>contacting_us</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Relocation --></label>
+        <name>csp_AccountRelocateSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>กระบวนการรับรอง</label>
+        <name>csp_Accreditation_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือกหมวดหมู่หลัก</label>
+        <name>csp_ActionForCategoryPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการการเข้าถึง</label>
+        <name>csp_ActionForTopicPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>กรอกแบบฟอร์ม เพื่อดูตัวเลือกบริการช่วยเหลือที่แนะนำ</label>
+        <name>csp_ActionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label>บริษัทตัวแทนอ่านอย่างเดียว</label>
+        <name>csp_AgencyReadOnly</name>
+    </customLabels>
+    <customLabels>
+        <label>ขั้นพื้นฐาน</label>
+        <name>csp_Basics_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label>โทรหาเรา</label>
+        <name>csp_Call_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>ระยะเวลา:</label>
+        <name>csp_Call_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>ตัวแทน IATA จะเริ่มดำเนินการในเรื่องนี้</label>
+        <name>csp_CaseBeingWorked</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างคำร้องสำเร็จแล้ว</label>
+        <name>csp_CaseCreatedSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณจะได้รับคำตอบในไม่ช้า</label>
+        <name>csp_CaseResponseGuarantee</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;คุณสามารถเพิ่มความคิดเห็น, เอกสาร, และผู้รับได้ ในกรณีที่มีการอัปเดต คุณสามารถติดตามสถานะและทำการอัปเดตได้&quot;</label>
+        <name>csp_CaseTracking</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างคำร้อง</label>
+        <name>csp_Case_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>บอกเราว่า เราจะช่วยคุณได้อย่างไรบ้าง</label>
+        <name>csp_Case_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>แชทกับเรา</label>
+        <name>csp_Chat_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>แชทกับตัวแทน IATA</label>
+        <name>csp_Chat_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>รับบริการช่วนเหลือโดยตรงผ่านพอร์ทัล IATA ทางโทรศัพท์หรือทางแชท</label>
+        <name>csp_ChooseOption</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลติดต่อบริษัท</label>
+        <name>csp_CompanyContact_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Complete required field label --></label>
+        <name>csp_CompleteField</name>
+    </customLabels>
+    <customLabels>
+        <label>ขอบคุณที่กรุณาแบ่งปัน</label>
+        <name>csp_Compliment</name>
+    </customLabels>
+    <customLabels>
+        <label>ที่ IATA เรามุ่งมั่นที่จะให้บริการที่เป็นเลิศแก่ลูกค้า และ เป็นรางวัลตอบแทนที่ได้รับรู้ว่า คุณก็ใส่ใจเช่นกัน เราคำนึงถึงทุก ๆ ข้อคิดเห็นที่คุณมีให้กับเรา</label>
+        <name>csp_ComplimentInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>คำชม</label>
+        <name>csp_Compliment_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>การร้องเรียน</label>
+        <name>csp_Concern</name>
+    </customLabels>
+    <customLabels>
+        <label>การร้องเรียน</label>
+        <name>csp_Concern_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือกประเทศหรือภูมิภาคของข้อสอบถามของคุณ</label>
+        <name>csp_CountryOrRegionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างคำร้องและเพิ่มไฟล์แนบ</label>
+        <name>csp_CreateNewCaseAddAttachment</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดระบุรายละเอียดทั้งหมดที่จะช่วยให้เราตรวจสอบ ข้อสอบถามของคุณ</label>
+        <name>csp_CreateNewCaseMainInputBoxSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>คำอธิบาย</label>
+        <name>csp_CreateNewCaseMainInputBoxTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>เพิ่มผู้ใช้พอร์ทัลรายอื่น</label>
+        <name>csp_CreateNewCaseMainInputEmailsSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>ผู้รับเพิ่มเติม</label>
+        <name>csp_CreateNewCaseMainInputEmailsTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>คำถามของคุณเกี่ยวกับอะไร?</label>
+        <name>csp_CreateNewCaseMainInputSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>หัวเรื่อง</label>
+        <name>csp_CreateNewCaseMainInputTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>รหัสบัญชีที่เกี่ยวข้อง</label>
+        <name>csp_CreateNewCaseMainPicklistLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างคำร้อง</label>
+        <name>csp_CreateNewCaseTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณได้เลือก</label>
+        <name>csp_CreateNewCaseTopSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณาให้ข้อมูลเพิ่มเติมกับเรา</label>
+        <name>csp_CreateNewCaseTopSubSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างผู้ติดต่อใหม่</label>
+        <name>csp_CreateNewContact</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อสอบถามในกรณีฉุกเฉิน</label>
+        <name>csp_Emergency_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>การตรวจสอบทางการเงิน</label>
+        <name>csp_Financial_Review</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหาสาขา</label>
+        <name>csp_Find_Branch</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหาข้อมูลการติดต่อ</label>
+        <name>csp_Find_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Facebook_URL --></label>
+        <name>csp_Footer_Facebook_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>ร้านค้าของ IATA</label>
+        <name>csp_Footer_IATA_Store</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_IataStore_URL --></label>
+        <name>csp_Footer_IataStore_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Legal_URL --></label>
+        <name>csp_Footer_Legal_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Linkedin_URL --></label>
+        <name>csp_Footer_Linkedin_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Privacy_URL --></label>
+        <name>csp_Footer_Privacy_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Twitter_URL --></label>
+        <name>csp_Footer_Twitter_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Youtube_URL --></label>
+        <name>csp_Footer_Youtube_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่โฮมเพจ</label>
+        <name>csp_GoToHomepage</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่บริการช่วยเหลือ</label>
+        <name>csp_GoToSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>การชำระเงิน IATA</label>
+        <name>csp_IATA_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label>ผู้ดูแลระบบ IEP</label>
+        <name>csp_IEPAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label>ติดต่อฝ่ายบริการช่วยเหลือ</label>
+        <name>csp_IntentionOnThisPage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_InvalidPhoneValue --></label>
+        <name>csp_InvalidPhoneValue</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อสอบถามของคุณเป็นกรณีฉุกเฉินหรือไม่?</label>
+        <name>csp_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>เข้าสู่ระบบครั้งล่าสุด</label>
+        <name>csp_LastLoginDate</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่สามารถใช้การแชทได้ กรุณาโทร หรือสร้างคำร้อง</label>
+        <name>csp_LiveAgentBadConfig</name>
+    </customLabels>
+    <customLabels>
+        <label>หมดเวลาเชื่อมต่อการแชทแล้ว คุณสามารถรีเฟรชหน้าเว็บ หรือสร้างคำร้อง</label>
+        <name>csp_LiveAgentTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>หมดเวลาเชื่อมต่อของ Live Agent โปรดรีเฟรชหน้าเว็บ หรือติดต่อฝ่ายบริการช่วยเหลือ</label>
+        <name>csp_LiveTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>ผู้จัดการกระเป๋าเงินหลัก</label>
+        <name>csp_MasterWalletManager</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเภทงาน</label>
+        <name>csp_MembershipFunction</name>
+    </customLabels>
+    <customLabels>
+        <label>บริษัท</label>
+        <name>csp_My_Profile_Company</name>
+    </customLabels>
+    <customLabels>
+        <label>อีเมล</label>
+        <name>csp_My_Profile_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>ตำแหน่งงาน</label>
+        <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_NoPortalServiceNameFound</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือกตัวเลือกบริการช่วยเหลือที่คุณต้องการ</label>
+        <name>csp_Options_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>กระบวนการ</label>
+        <name>csp_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลติดต่อทางธุรกิจ</label>
+        <name>csp_Profile_BusinessContact</name>
+    </customLabels>
+    <customLabels>
+        <label>อีเมลบริษัท</label>
+        <name>csp_Profile_CompanyEmail</name>
+    </customLabels>
+    <customLabels>
+        <label>รหัส IATA</label>
+        <name>csp_Profile_IATACode</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลติดต่อส่วนบุคคล</label>
+        <name>csp_Profile_PersonalContact</name>
+    </customLabels>
+    <customLabels>
+        <label>ความสามารถในการเข้าถึงพอร์ทัล</label>
+        <name>csp_Profile_PortalAccessibility</name>
+    </customLabels>
+    <customLabels>
+        <label>มืออาชีพ</label>
+        <name>csp_Profile_Professional</name>
+    </customLabels>
+    <customLabels>
+        <label>เว็บไซต์</label>
+        <name>csp_Profile_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการช่วยเหลือ</label>
+        <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;ริษัทตัวแทนของคุณยังไม่ได้เปิดบัญชี IATA EasyPay ในขณะนี้&lt;br/&gt;&lt;br/&gt;โปรดติดต่อผู้มีอำนาจลงนามผูกพันบริษัทสำนักงาน ใหญ่ของคุณ เพื่อขอให้ทางหน่วยงานเปิดบัญชี IATA EasyPay ในฐานะผู้ดูแลระบบพอร์ทัล คุณสามารถอัปเดต &lt;a href=&quot;&quot;/my-profile&quot;&quot;&gt;ข้อมูลส่วนตัว&lt;/a&gt;ของคุณ เพื่อกำหนดให้ตัวคุณเองเป็นผู้มีอำนาจลงนามผูกพัน ตามกฎหมาย หรือมอบหมายผู้ดูแลระบบพอร์ทัลที่ เหมาะสมจากหน้า &lt;a href=&quot;&quot;/company-profile&quot;&quot;&gt;การจัดการของ บริษัท -&gt; ผู้ติดต่อ&lt;/a&gt; และขอให้พวกเขาเปิดบัญชี EasyPay ของคุณ โปรด&lt;a href=&quot;&quot;/Support-Reach-Us&quot;&quot;&gt;ติดต่อฝ่ายบริการช่วยเหลือ&lt;/a&gt; หากคุณต้องการความช่วยเหลือ&quot;</label>
+        <name>csp_RequestService_ContactPortalAdmin_Alt</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;บริษัทตัวแทนของคุณยังไม่ได้เปิดบัญชี IATAEasyPay ในขณะนี้ &lt;br/&gt;&lt;br/&gt;โปรดติดต่อผู้มีอำนาจลงนาม&lt;a href=&quot;&quot;/Support-Reach-Us&quot;&quot;&gt;ติดต่อฝ่ายบริการช่วยเหลือ&lt;/a&gt;; หากคุณต้องการความช่วยเหลือ&quot;</label>
+        <name>csp_RequestService_ContactPortalAdmin_LegalAuth</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_RequestService_ContactSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>ผู้มีอำนาจลงนามผูกพันองค์กรหลักของคุณได้เริ่มเปิด บัญชี IEP ของบริษัทตัวแทนของคุณแล้ว เมื่อมีการเปิดบัญชี IEP สำเร็จแล้ว คุณจะสามารถเข้าถึง บริการนี้ได้</label>
+        <name>csp_RequestService_IEPAccountOpenInProgress</name>
+    </customLabels>
+    <customLabels>
+        <label>ขณะนี้คุณจะถูกนำไปยังพอร์ทัล EasyPay ที่ซึ่งคุณสามารถกรอกใบสมัครเพื่อเปิดบัญชี IATA EasyPay ของบริษัทตัวแทนของคุณได้ &lt;br/&gt;&lt; br/&gt;ในการดำเนินการต่อ คุณตกลงยอมรับเงื่อนไขของ IATA ในการส่งชื่อ นามสกุล ที่อยู่อีเมล และรหัส IATA ของคุณ รวมถึงข้อมูลส่วนบุคคลอื่น ๆ ที่เกี่ยวข้อง ให้แก่ซัปพลายเออร์ของ IATA EasyPay ข้อมูลนี้จะใช้โดยซัปพลายเออร์ของ IATA EasyPay เท่านั้น เพื่อจุดประสงค์ในการเปิดบัญชีและจัดการบัญชี EasyPay ของคุณ และเพื่อดำเนินการบริการ EasyPay โดยทั่วไป หรือตามที่กฎหมายกำหนด &lt;br/&gt;&lt;br/&gt;คุณต้องการดำเนินการต่อหรือไม่?</label>
+        <name>csp_RequestService_ProceedIEPAccountOpen</name>
+    </customLabels>
+    <customLabels>
+        <label>ขอการเข้าถึง</label>
+        <name>csp_Request_New_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>การชำระเงินจากการขาย</label>
+        <name>csp_Sales_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_SearchNotPerformed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceAccessConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceRequestConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label>หัวข้อย่อย</label>
+        <name>csp_Sub_Topic_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>หัวข้อย่อย</label>
+        <name>csp_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อเสนอแนะ</label>
+        <name>csp_Suggest_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>สิ่งเหล่านี้อาจช่วยได้</label>
+        <name>csp_Suggestion_label</name>
+    </customLabels>
+    <customLabels>
+        <label>เราพร้อมให้ความช่วยเหลือ</label>
+        <name>csp_SupportCategoriesInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>คำถาม</label>
+        <name>csp_SupportReachUs_AskTile</name>
+    </customLabels>
+    <customLabels>
+        <label>เราพร้อมให้ความช่วยเหลือ</label>
+        <name>csp_SupportReachUs_BasicInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>หมวดหมู่</label>
+        <name>csp_SupportReachUs_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>คำชม</label>
+        <name>csp_SupportReachUs_ComplimentTile</name>
+    </customLabels>
+    <customLabels>
+        <label>การร้องเรียน</label>
+        <name>csp_SupportReachUs_ConcernTile</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเทศ</label>
+        <name>csp_SupportReachUs_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อสอบถามของคุณเป็นกรณีฉุกเฉินหรือไม่?</label>
+        <name>csp_SupportReachUs_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>รับบริการช่วยเหลือโดยตรงผ่านพอร์ทัล IATA ทางโทรศัพท์หรือทางแชท</label>
+        <name>csp_SupportReachUs_PlzChoosePath</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือกหมวดหมู่หลัก</label>
+        <name>csp_SupportReachUs_SelectCategory</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือกประเทศหรือภูมิภาคของข้อสอบถามของคุณ</label>
+        <name>csp_SupportReachUs_SelectCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือกหัวข้อ</label>
+        <name>csp_SupportReachUs_SelectTopic</name>
+    </customLabels>
+    <customLabels>
+        <label>แสดงตัวเลือกของบริการช่วยเหลือ</label>
+        <name>csp_SupportReachUs_ShowSupportOptions</name>
+    </customLabels>
+    <customLabels>
+        <label>กรอกแบบฟอร์มเพื่อดูตัวเลือกบริการช่วยเหลือที่แนะนำ</label>
+        <name>csp_SupportReachUs_SpecifyCaseDetails</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อเสนอแนะ</label>
+        <name>csp_SupportReachUs_SuggestTile</name>
+    </customLabels>
+    <customLabels>
+        <label>หัวข้อ</label>
+        <name>csp_SupportReachUs_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>ติดต่อเรา</label>
+        <name>csp_SupportReachUs_WhatDoYouWant</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการช่วยเหลือ</label>
+        <name>csp_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>แผงควบคุมนี้ ช่วยให้ทีมบริหารการเงินของแต่ละสาย การบินสามารถมองเห็นรายได้ส่วนที่มาจากยอดขาย ผ่านบัตรเครดิตของตนได้อย่างเต็มที่ และรวมถึง รายงานแบบดาวน์โหลดได้ของยอดขายผ่านบัตรเครดิตที่เกี่ยวข้อง นอกจากนี้ ยังสามารถดูกระแสเงินสด ที่ดำเนินการโดยระบบชำระเงินหลักแต่ละระบบของ IATA ได้แก่: BSP, CASS, ICCS (บริการจัดการเงินตรา) และ ICH (สำนักหักบัญชีของ IATA)</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel1</name>
+    </customLabels>
+    <customLabels>
+        <label>สำหรับข้อมูลเพิ่มเติม เข้าชมได้ที่: www.iata.org/treasurydashboard</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel2</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;คุณกำลังจะขอข้อมูลเพิ่มเติมเกี่ยวกับบริการเชิงพาณิชย์ของ IATA โดยการคลิกที่ &quot;&quot;ยืนยัน&quot;&quot; คุณจะได้รับรายละเอียดทั้งหมด เกี่ยวกับวิธีการสมัครรับบริการแผงควบคุมการบริหาร การเงินของ IATA ระดับพรีเมียม (IATA Treasury Dashboard Premium) แบบรายเดือน&quot;</label>
+        <name>csp_TDP_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;คุณกำลังจะขอข้อมูลเพิ่มเติมเกี่ยวกับบริการเชิงพาณิชย์ของ IATA โดยการคลิกที่ &quot;&quot;ยืนยัน&quot;&quot; คุณจะได้รับรายละเอียดทั้งหมด เกี่ยวกับวิธีการสมัครรับบริการแผงควบคุมการบริหาร การเงินของ IATA (IATA Treasury Dashboard) แบบรายเดือน&quot;</label>
+        <name>csp_TD_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>ผู้ออกตั๋ว</label>
+        <name>csp_TicketIssuer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_TimeoutIEP</name>
+    </customLabels>
+    <customLabels>
+        <label>ยังไม่ได้เพิ่มผู้รับ กรุณากดปุ่มเพิ่ม</label>
+        <name>csp_ToastWarningRecipientNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label>ดูสรุปคำร้อง</label>
+        <name>csp_ViewCaseSummary</name>
+    </customLabels>
+    <customLabels>
+        <label>พื้นที่ทำงาน</label>
+        <name>csp_WorkingAreas</name>
+    </customLabels>
+    <customLabels>
+        <label>แสดงตัวเลือกของบริการช่วยเหลือ</label>
+        <name>csp_btn_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>เกิดข้อผิดพลาดในการสร้างคำร้อง</label>
+        <name>csp_errorCreatingCase</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหาด้วยชื่อหรืออีเมล</label>
+        <name>csp_searchEmailRecipientPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหาด้วยรหัส IATA, ตำแหน่งตั้ง, หรือชื่อ</label>
+        <name>csp_searchIataCodeLocationNamePlaceHolder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_toSelectSubTopic</name>
     </customLabels>
     <customLabels>
         <label><!-- days left --></label>

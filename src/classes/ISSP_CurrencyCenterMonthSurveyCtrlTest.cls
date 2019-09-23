@@ -1,5 +1,8 @@
 @isTest
 public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
+
+	public static final Id RT_CURRENCY_CENTER_ID = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Currency_Center_Bank').getRecordTypeId();
+
 	public ISSP_CurrencyCenterMonthSurveyCtrlTest() {
 		
 	}
@@ -303,6 +306,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 					insert reportType;
 
 					Financial_Institution__c bank = new Financial_Institution__c(Name = 'Novo Banco', 
+																					RecordTypeId = RT_CURRENCY_CENTER_ID,
 																					Region__c = 'Europe', 
 																					Country__c = reportType.Country_Name__c, 
 																					Institution_Type__c = 'Bank');
@@ -382,12 +386,14 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 					insert reportTypeRecord;
 
 					Financial_Institution__c bank = new Financial_Institution__c(Name = 'Novo Banco', 
+																					RecordTypeId = RT_CURRENCY_CENTER_ID,
 																					Region__c = 'Europe', 
 																					Country__c = reportTypeRecord.Country_Name__c, 
 																					Institution_Type__c = 'Bank');
 					insert bank;
 
 					Financial_Institution__c bank2 = new Financial_Institution__c(Name = 'Mau Banco', 
+																					RecordTypeId = RT_CURRENCY_CENTER_ID,
 																					Region__c = 'Europe', 
 																					Country__c = reportTypeRecord.Country_Name__c, 
 																					Institution_Type__c = 'Bank');
@@ -556,6 +562,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 					insert reportType;
 
 					Financial_Institution__c bank = new Financial_Institution__c(Name = 'Novo Banco', 
+																					RecordTypeId = RT_CURRENCY_CENTER_ID,
 																					Region__c = 'Europe', 
 																					Country__c = reportType.Country_Name__c, 
 																					Institution_Type__c = 'Bank');

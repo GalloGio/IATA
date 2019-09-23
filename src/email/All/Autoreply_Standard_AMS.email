@@ -5,4 +5,4 @@ Case number: {!Case.CaseNumber}
 
 Best regards,
 IATA Customer Service Center
-Case Thread ID
+Case Thread ID: {!Case.Thread_Id}

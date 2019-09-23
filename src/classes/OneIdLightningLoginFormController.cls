@@ -5,6 +5,13 @@ public without sharing class OneIdLightningLoginFormController {
     public static String country {get; set;}
     //public static string ipAddress {get; set;}
     public static string siteCompleteUrl {get; set;}
+    public static set<string> oldPortalRedirectSet {
+        get{
+            if(oldPortalRedirectSet==null){
+                oldPortalRedirectSet = new set<string>{'ISS Portal DPC','ISS Portal DPC Admin','ISS Portal PwC2'};
+            }
+            return oldPortalRedirectSet;
+    } set;}
     
     public class CountryConfigException extends Exception {}
     
@@ -28,18 +35,19 @@ public without sharing class OneIdLightningLoginFormController {
     * @example
     * changeLanguage('paulo.bastos@rightisservices.com','asdsawqe','home');
     */
-    @AuraEnabled
+   @AuraEnabled
     public static String login(String username, 
                                String password, 
                                String startUrl,
                                String serviceName) {
         User oneUser;
-        String pageLink='';        
+        String pageLink = startUrl == null || startUrl.equalsIgnoreCase('undefined') ? '' : startUrl;
         //Clear spaces
         username = (null != username) ? username.trim() : username;
                                    
         try{
-            System.debug('Controller.login.Begin');            
+            System.debug('Controller.login.Begin');     
+            System.debug('serviceName'+serviceName);            
             list<User> userList = DAL_ISSP.getUserListByNameOrEmail(username);
             system.debug('userList: ' + userList);
             system.debug('username: ' + username);
@@ -61,10 +69,6 @@ public without sharing class OneIdLightningLoginFormController {
                      LightningRegistrationProcess.assignIdentityPermissionSet(oneUser.Id);
                 }
 
-
-                //Assign GDPR Permission set when user logs in. No matter the service
-                LightningRegistrationProcess.assignGDPRPermissionSet(oneUser.Id);
-
 //to developer Testing user frozen reactivate user reset password and send password email  - uncoment line below
 //oneUser.Portal_User_Frozen_Checkbox__c=true; 
                 
@@ -72,15 +76,17 @@ public without sharing class OneIdLightningLoginFormController {
                 system.debug('contact id: ' + oneUser.ContactId);
                 system.debug('Portal_User_Frozen_Checkbox__c: ' + oneUser.Portal_User_Frozen_Checkbox__c);                
                 
-                
+
                 //sometimes, javascript from component is passing "undefined". Must be interpreted as NULL
+                // redirect to landing vfp replaced by direct community access
                 if(String.isNotBlank(startUrl) && !startUrl.equalsIgnoreCase('undefined')){
+
                     //if login is from mobileApp we do not redirect
                     if(startUrl != 'mobileApp') pageLink = startUrl;
 
                     if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
-			//pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
-			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
+                    //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
+                        pageLink = '/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
                     }
 
                     if( String.isNotBlank(serviceName) && serviceName == 'NDCMM'){
@@ -113,20 +119,39 @@ public without sharing class OneIdLightningLoginFormController {
             if (relayState!=null)
                 pageLink = '/ISSP_Homepage?kaviURL='+ relayState.remove('https://').remove('http://');
             */
+
+
+            // if PWC or DPC user
+            if(oldPortalRedirectSet.contains(oneUser.profile.Name)){ //overrides to old portal
+               serviceName='ISSP';
+               startUrl ='/ISSP_Homepage';
+            }
                 
             username=null != oneUser ? oneUser.Username : username;
             system.debug('pageLink: ' + pageLink);
             system.debug('Used Username: '+username);
             
-            //Login on the portal community using a portal URL
-            if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
-                 String s = startUrl != null ? startUrl : '/ISSP_Homepage';
-                 ApexPages.PageReference lgnPortal = Site.login(username, password, OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP,s));
-            }
+           
             
-            //login in siteCompleteUrl
-            ApexPages.PageReference lgn = Site.login(username, password, pageLink);
+            
+            OneIdUtils.Mode mode=null;
 
+            if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
+                mode=OneIdUtils.Mode.ISSP;
+            }
+
+            if( String.isNotBlank(serviceName) && serviceName == 'CSP'){
+                mode=OneIdUtils.Mode.CSP;
+            }
+
+            //login in siteCompleteUrl
+			ApexPages.PageReference lgn;
+            if(mode != null){
+            	lgn = Site.login(username, password, OneIdUtils.getCommunityRedirection(mode,startUrl));
+            }
+            else{
+            	lgn = Site.login(username, password, pageLink);
+            }
             system.debug('page reference return from login: '+lgn);
                         
             List<User> userListConfirmTempPassword = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId
@@ -139,11 +164,19 @@ public without sharing class OneIdLightningLoginFormController {
                 String serviceNameParam = String.isEmpty(serviceName) ? '' : '?serviceName='+serviceName;
                 lgn = Site.login(username, password, OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/OneId_ChangePassword'+serviceNameParam));
             }
-            
+
+
+            //Check user permissions for FAQs, reassign if needed
+            try{
+                PortalFAQsSharingCtrl.validateUserFAQsPermissions(oneUser.Id);
+            }catch(Exception e){
+                System.debug('Unable to validate FAQs permissions assignments. \n'+e);
+            }
+
             //redirect to startUrl or some other page returned from the login 
             //for different login cases scenarios
             aura.redirect(lgn);
-            
+
             //return null in case of login success
             return null;
         }
@@ -158,12 +191,20 @@ public without sharing class OneIdLightningLoginFormController {
         thisUser.IsActive = true;
         thisUser.Portal_User_Frozen_Checkbox__c = false;
         update thisUser;
+
+        if(serviceName == 'CSP'){
+            serviceName = 'ISSP';
+        }
+
+        String community = serviceName == 'ISSP' ? Comm_User_Helper.ISSP : Comm_User_Helper.ONEIDENTITY;
+
         Boolean success = Comm_User_Helper.resetPassword(thisUser.email, 
-                                                         Comm_User_Helper.ONEIDENTITY, 
+                                                         community,
                                                          false,
                                                          serviceName);
     }
 
+    
     
     public static void findLocationCaller(){        
         getFindLocation(true,'');

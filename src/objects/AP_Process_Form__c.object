@@ -2338,6 +2338,20 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         </valueSet>
     </fields>
     <fields>
+        <fullName>Download_Guide_Counter__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>This filed allows to control how many time the guide was downloaded from a specific form</description>
+        <externalId>false</externalId>
+        <label>Download Guide Counter</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ETSP_Contact_Address__c</fullName>
         <externalId>false</externalId>
         <label>ETSP Contact Address</label>
@@ -2911,6 +2925,11 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                     <fullName>E-mail and Download</fullName>
                     <default>false</default>
                     <label>E-mail and Download</label>
+                </value>
+                <value>
+                    <fullName>Not required</fullName>
+                    <default>false</default>
+                    <label>Not required</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -3521,6 +3540,11 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                     <fullName>YES - Remittance Period HOT</fullName>
                     <default>false</default>
                     <label>YES - Remittance Period HOT</label>
+                </value>
+                <value>
+                    <fullName>Not required</fullName>
+                    <default>false</default>
+                    <label>Not required</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -7782,6 +7806,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                 <fullName>E-mail and Download</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Not required</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
@@ -7956,6 +7984,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             <picklist>Receive_HOT_files__c</picklist>
             <values>
                 <fullName>NO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not required</fullName>
                 <default>false</default>
             </values>
             <values>

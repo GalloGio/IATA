@@ -1,0 +1,20 @@
+<apex:page showHeader="false" id="downtimepage">
+            
+
+    <apex:outputPanel id="iataoutput" layout="block" style="display: none;">
+        <apex:iframe src="{!URLFOR($Resource.GCSDowntime, 'Downtime.htm')}" height="1000px"/>
+    </apex:outputPanel>
+    <apex:outputPanel id="csnoutput" layout="block" style="display: none;">
+        <apex:iframe src="{!URLFOR($Resource.GCSDowntime, 'DowntimeCNS2.htm')}" height="1000px"/>
+    </apex:outputPanel>
+
+    <script>
+        var url = window.location.href;
+
+        if(url != '' && (url.includes("CNS") || url.includes("cns"))){
+            document.getElementById("downtimepage:csnoutput").style.display = 'block';
+        }else{
+            document.getElementById("downtimepage:iataoutput").style.display = 'block';
+        }
+    </script>
+</apex:page>

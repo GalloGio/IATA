@@ -3,9 +3,9 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>L3-Training-ProductMgmt-Eli Mandelawy</name>
     <queueMembers>
-        <users>
-            <user>mandelawye@iata.org</user>
-        </users>
+        <publicGroups>
+            <publicGroup>L3_Training_ProductMgmt_Eli_Mandelawy</publicGroup>
+        </publicGroups>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

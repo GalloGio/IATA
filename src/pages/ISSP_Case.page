@@ -691,7 +691,7 @@
                                             <apex:outputlink value="/ISSP_CompanyInformation?id={!newCase.AccountId}&mid=M5S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}">{!newCase.Account.Name + IF(AND(newCase.IATA_Code__c!=null,newCase.Account.Status__c!='New application pending'), ' (' + newCase.IATA_Code__c + ')', '')} ({!newCase.Account.Location_Type__c})</apex:outputlink>
                                         </apex:outputtext>
                                         <apex:outputtext label="{!$Label.Contact_Name}" rendered="{!NOT(OR(caseType == 'PWC', caseType =='ACR', caseType =='DPCSR', caseType=='IFAP'))}">
-                                            <apex:outputlink value="/ISSP_Contact?id={!newCase.ContactId}&mid=M1S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}">{!newCase.Contact.Name}</apex:outputlink>
+                                            <apex:outputlink value="{!portalRedirectToUserProfile}">{!newCase.Contact.Name}</apex:outputlink>
                                         </apex:outputtext>
                                         <apex:outputField value="{!newCase.Contact.Email}" rendered="{!caseType =='SIDRA'}"/>
 

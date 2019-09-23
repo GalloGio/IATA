@@ -13,20 +13,22 @@ private class AMS_AlignOwnersInHierarchyTest {
         insert portugal;
 
         // create test account1
-        Account account1 = new Account();
-        account1.Name = 'Test account 1';
-        account1.IATACode__c = '1234567';
-        account1.Type = 'IATA Travel Agent';
-        account1.BillingCity = 'Lisboa';
-        account1.BillingCountry = 'Portugal';
-        account1.BillingStreet = 'some street';
-        account1.Location_Type__c = 'HO';
-        account1.Accreditation_date__c = myDate1;
-        account1.recordTypeId = rtAgency;
-        account1.IATA_ISO_Country__c = portugal.Id;
-        account1.Location_Class__c = 'P';
-        account1.Purge_Flag__c = false;
-
+        Account account1 = new Account(
+                                Name = 'Test account 1',
+                                IATACode__c = '1234567',
+                                Type = 'IATA Travel Agent',
+                                Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+                                BillingCity = 'Lisboa',
+                                BillingCountry = 'Portugal',
+                                BillingStreet = 'some street',
+                                Location_Type__c = 'HO',
+                                Accreditation_date__c = myDate1,
+                                recordTypeId = rtAgency,
+                                IATA_ISO_Country__c = portugal.Id,
+                                Location_Class__c = 'P',
+                                Purge_Flag__c = false
+		);
         insert account1;
 
         AMS_Agencies_Hierarchy__c h1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'H1');
@@ -35,37 +37,41 @@ private class AMS_AlignOwnersInHierarchyTest {
         insert h2;
 
         // create test account2
-        Account account2 = new Account();
-        account2.Name = 'Test account 2';
-        account2.IATACode__c = '1234789';
-        account2.Type = 'IATA Travel Agent';
-        account2.BillingCity = 'Lisboa';
-        account2.BillingCountry = 'Portugal';
-        account2.BillingStreet = 'some street';
-        account2.Location_Type__c = 'HO';
-        account2.Accreditation_date__c = myDate1;
-        account2.recordTypeId = rtAgency;
-        account2.IATA_ISO_Country__c = portugal.Id;
-        account2.Location_Class__c = 'P';
-        account2.Purge_Flag__c = false;
-
+        Account account2 = new Account(
+                                Name = 'Test account 2',
+                                IATACode__c = '1234789',
+                                Type = 'IATA Travel Agent',
+                                Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+                                BillingCity = 'Lisboa',
+                                BillingCountry = 'Portugal',
+                                BillingStreet = 'some street',
+                                Location_Type__c = 'HO',
+                                Accreditation_date__c = myDate1,
+                                recordTypeId = rtAgency,
+                                IATA_ISO_Country__c = portugal.Id,
+                                Location_Class__c = 'P',
+                                Purge_Flag__c = false
+		);
         insert account2;
 
         // create test account3
-        Account account3 = new Account();
-        account3.Name = 'Test account 3';
-        account3.IATACode__c = '12347890';
-        account3.Type = 'IATA Travel Agent';
-        account3.BillingCity = 'Lisboa';
-        account3.BillingCountry = 'Portugal';
-        account3.BillingStreet = 'some street';
-        account3.Location_Type__c = 'HO';
-        account3.Accreditation_date__c = myDate1;
-        account3.recordTypeId = rtAgency;
-        account3.IATA_ISO_Country__c = portugal.Id;
-        account3.Location_Class__c = 'P';
-        account3.Purge_Flag__c = false;
-
+        Account account3 = new Account(
+                                Name = 'Test account 3',
+                                IATACode__c = '12347890',
+                                Type = 'IATA Travel Agent',
+                                Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+                                BillingCity = 'Lisboa',
+                                BillingCountry = 'Portugal',
+                                BillingStreet = 'some street',
+                                Location_Type__c = 'HO',
+                                Accreditation_date__c = myDate1,
+                                recordTypeId = rtAgency,
+                                IATA_ISO_Country__c = portugal.Id,
+                                Location_Class__c = 'P',
+                                Purge_Flag__c = false
+		);
         insert account3;
 
         List<Account> brAccounts = new List<Account>();
@@ -74,21 +80,23 @@ private class AMS_AlignOwnersInHierarchyTest {
 
         for(integer i=0 ; i < 4 ; i++){
 
-            Account acct = new Account();
-            acct.Name = 'Test account 2';
-            acct.IATACode__c = '123478'+i;
-            acct.Type = 'IATA Travel Agent';
-            acct.BillingCity = 'Lisboa';
-            acct.BillingCountry = 'Portugal';
-            acct.BillingStreet = 'some street';
-            acct.Location_Type__c = 'BR';
-            acct.ParentId = account1.Id;
-            acct.Accreditation_date__c = myDate1;
-            acct.RecordTypeId = rtAgency;
-            acct.IATA_ISO_Country__c = portugal.Id;
-            acct.Location_Class__c = 'P';
-            acct.Purge_Flag__c = false;
-
+            Account acct = new Account(
+                                Name = 'Test account 2',
+                                IATACode__c = '123478'+i,
+                                Type = 'IATA Travel Agent',
+                				Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+                                BillingCity = 'Lisboa',
+                                BillingCountry = 'Portugal',
+                                BillingStreet = 'some street',
+                                Location_Type__c = 'BR',
+                                ParentId = account1.Id,
+                                Accreditation_date__c = myDate1,
+                                RecordTypeId = rtAgency,
+                                IATA_ISO_Country__c = portugal.Id,
+                                Location_Class__c = 'P',
+                                Purge_Flag__c = false
+			);
 
 
             brAccounts.add(acct);
@@ -96,21 +104,23 @@ private class AMS_AlignOwnersInHierarchyTest {
 
         for(integer i=0 ; i < 4 ; i++){
 
-            Account acct = new Account();
-            acct.Name = 'Test account 2';
-            acct.IATACode__c = '12347'+i+i;
-            acct.Type = 'IATA Travel Agent';
-            acct.BillingCity = 'Lisboa';
-            acct.BillingCountry = 'Portugal';
-            acct.BillingStreet = 'some street';
-            acct.Location_Type__c = 'BR';
-            acct.ParentId = account2.Id;
-            acct.Accreditation_date__c = myDate1;
-            acct.RecordTypeId = rtAgency;
-            acct.IATA_ISO_Country__c = portugal.Id;
-            acct.Location_Class__c = 'P';
-            acct.Purge_Flag__c = false;
-
+            Account acct = new Account(
+                                Name = 'Test account 2',
+                                IATACode__c = '12347'+i+i,
+                                Type = 'IATA Travel Agent',
+                				Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+                                BillingCity = 'Lisboa',
+                                BillingCountry = 'Portugal',
+                                BillingStreet = 'some street',
+                                Location_Type__c = 'BR',
+                                ParentId = account2.Id,
+                                Accreditation_date__c = myDate1,
+                                RecordTypeId = rtAgency,
+                                IATA_ISO_Country__c = portugal.Id,
+                                Location_Class__c = 'P',
+                                Purge_Flag__c = false
+			);
             brAccounts.add(acct);
         }
 
@@ -181,8 +191,6 @@ private class AMS_AlignOwnersInHierarchyTest {
         insert rolesToInsert;
 
         System.assertEquals(16,rolesToInsert.size());
-
-
     }
 
     @isTest static void test_method_one() {
@@ -274,7 +282,6 @@ private class AMS_AlignOwnersInHierarchyTest {
 
     @isTest static void test_method_three() {
 
-    
         Test.startTest();
 
         AMS_AlignOwnersInHierarchy auxOwners = new AMS_AlignOwnersInHierarchy();
@@ -292,12 +299,5 @@ private class AMS_AlignOwnersInHierarchyTest {
         // 4 for each HO (8) and 4 for each of the accounts BR's (4*4*2)
 
         System.assertEquals(28,rolesFromAllAccounts.size());
-
-  
-
-
- 
-    }
-    
-    
+    }  
 }

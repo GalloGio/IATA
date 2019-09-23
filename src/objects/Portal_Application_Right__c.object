@@ -473,6 +473,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Last_Visit_Date__c</fullName>
+        <description>Last time when user visited this service</description>
+        <externalId>false</externalId>
+        <label>Last Visit Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Last_modified_by_internal_user__c</fullName>
         <description>This is a helper field used by the Process Builder</description>
         <externalId>false</externalId>
@@ -1176,7 +1186,9 @@ NOT(BEGINS($Profile.Name, &apos;identity&apos;))
         <active>true</active>
         <description>Internal users must not be able to assign an IATA EasyPay portal service with Access Status = Access Requested to a contact.</description>
         <errorConditionFormula>and(
+OR(
 Text(Right__c) = &apos;Access Requested&apos;,
+Text(Right__c) = &apos;Access Granted&apos;),
 CONTAINS(Application_Name__c, &apos;IATA EasyPay&apos;),
 NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)),
 $Profile.Name != &apos;ISS Portal Agency Delegated Admin User&apos;,

@@ -99,7 +99,7 @@
     </fields>
     <label>AMS2GDP Log</label>
     <listViews>
-        <fullName>All_Logs_with_Details</fullName>
+        <fullName>ALL</fullName>
         <columns>NAME</columns>
         <columns>Job_Name__c</columns>
         <columns>Message__c</columns>
@@ -107,7 +107,7 @@
         <columns>GDP_Record_Id__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
-        <label>All Logs with Details</label>
+        <label>ALL</label>
         <language>en_US</language>
     </listViews>
     <listViews>

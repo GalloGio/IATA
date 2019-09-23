@@ -229,6 +229,15 @@
         <externalId>false</externalId>
         <inlineHelpText>It is mandatory to link the security with an institution. If the institution does not exist, create it first and then create the security related to it</inlineHelpText>
         <label>Financial Institution</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Financial_Institution__c.RecordType.Name</field>
+                <operation>equals</operation>
+                <value>Generic FI</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>Financial_Institution__c</referenceTo>
         <relationshipLabel>Financial Securities</relationshipLabel>
         <relationshipName>Financial_Securities</relationshipName>
@@ -2493,6 +2502,25 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         <errorConditionFormula>AND(OR(ISNEW(),ISCHANGED(Financial_Institution__c)), ISPICKVAL(Financial_Institution__r.Institution_Status__c, &quot;Inactive&quot;))</errorConditionFormula>
         <errorDisplayField>Financial_Institution__c</errorDisplayField>
         <errorMessage>Financial institution is not active. Please request agent to submit a financial security from alternative provider.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Expiry_date_greater_than_validity_start</fullName>
+        <active>true</active>
+        <description>Rule to ensure that the expiry date of FS is greater than validity start date</description>
+        <errorConditionFormula>OR(
+  AND(
+    ISNEW(),
+    Unlimited_Security__c = false,
+    Expiry_Date__c &lt;=  Validity_Start_Date__c 
+  ),
+  AND(
+    ISCHANGED(Expiry_Date__c) ,
+    Unlimited_Security__c = false,
+    Expiry_Date__c &lt;=  Validity_Start_Date__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>Expiry_Date__c</errorDisplayField>
+        <errorMessage>Expiry date of the Financial Security can&apos;t be less than the Validity start date.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Financial_Security_Validation_is_mandato</fullName>

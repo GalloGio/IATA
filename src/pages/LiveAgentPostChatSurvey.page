@@ -1,168 +1,328 @@
-<apex:page showHeader="false" sidebar="false" language="{!lang}" controller="LiveAgentPostChatController" standardStylesheets="false">
-    <c:ISSP_Header />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript"></script>
-    <style>
+<apex:page showHeader="false" applyHtmlTag="false" applyBodyTag="false"  sidebar="false" language="{!lang}" controller="LiveAgentPostChatController" standardStylesheets="false">
+    <html style="overflow-x: hidden;width:100%;height: 100%;">
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+            <link rel="shortcut icon" href="https://www.iata.org/Style%20Library/IATA.org-v1/Core/Images/Icons/favicon.ico" type="image/x-icon"/>
+        </head>
+        <c:ISSP_Header />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript"></script>
+        
+        <style>
+            
+            @font-face {
+                font-family: 'DaMaWebFont';
+                font-weight: 400;
+                font-style: normal;
+                src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot')}"); /* IE9 Compat Modes */
+                src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot?#iefix')}") format('embedded-opentype'), /* IE6-IE8 */
+                    url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff2')}") format('woff2'), /* Super Modern Browsers */
+                    url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff')}") format('woff'); /* Pretty Modern Browsers */
+            }
+        
+        @font-face {
+            font-family: 'DaMaWebFont';
+            font-weight: 500;
+            font-style: normal;
+            src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot')}"); /* IE9 Compat Modes */
+            src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot?#iefix')}") format('embedded-opentype'), /* IE6-IE8 */
+                url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff2')}") format('woff2'), /* Super Modern Browsers */
+                url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff')}") format('woff'); /* Pretty Modern Browsers */
+        }
+        
+        body {
+            background-color: white;
+            font-family: DaMaWebFont;
+            color: #333;
+            
+            
+        }
+        
+        body *{
+            font-family: DaMaWebFont;
+        }
+        
         .iataLogo {
             margin: 5px;
         }
+        .logo {
+            width: 100%;
+            text-align: center;
+        }
         .btn_iata_primary {
-          border: none;
-          color: white;
-          background-color: #5cb85c;
-          margin: 5px;
-          width: 90px;
+            border: none;
+            color: white;
+            background-color: #1e32fa;
+            margin: 5px;
+            width: 90px;
+            border-radius: 1px;
         }
         .btn_thumbs_down {
-          border: none;
-          color: white;
-          background-color: #d9534f;
-          margin: 5px;
-          width: 50px;
-          height: 30px;
+            border: none;
+            color: white;
+            background-color: #f04632;
+            margin: 5px;
+            width: 50px;
+            height: 30px;
+            border-radius: 1px;
         }
         .btn_thumbs_up {
-          border: none;
-          color: white;
-          background-color: #5cb85c;
-          margin: 5px;
-          width: 50px;
-          height: 30px;
+            border: none;
+            color: white;
+            background-color: #289632;
+            margin: 5px;
+            width: 50px;
+            height: 30px;
+            border-radius: 1px;
         }
-        .postChatForm{
+        .postChatForm {
             margin: 5px;
         }
-        .selectOptRadBtn{
-          margin: 5px;
-          font-stretch: semi-expanded;
+        .selectOptRadBtn {
+            margin: 5px;
+            font-stretch: semi-expanded;
         }
-        .selectOptRadBtn label{
-          font-weight: normal;
+        .selectOptRadBtn label {
+            font-weight: normal;
         }
-        .selectOptRadBtn input{
-          margin: 7px;
+        .selectOptRadBtn input {
+            margin: 7px;
         }
-        .questionLbl{
-          margin-left: 5px;
+        .questionLbl {
+            margin-left: 5px;
         }
-        .requiredFieldLbl{
-          color: #d9534f;
-          font-size: 25px;
-          font-weight: bolder;
+        .requiredFieldLbl {
+            color: #d9534f;
+            font-size: 25px;
+            font-weight: bolder;
         }
-        .thanksMessages{
-          font-size: 13px;
-          font-weight: bold;
-          margin-left: -60px;
-          margin-top: 30px;
-          position: fixed;
+        .contentPanel {
+            font-size: 13px;
+            margin-top: 30px;
+            position: fixed;
+            margin: 10px;
+            text-align: center;
+            font-family: DaMaWebFont;
+            max-width: 600px;
+            padding-left: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-right: 20px;
         }
         .inputField {
-            border-color: #337ab7;
-            border-radius: 4px;
+            border-color: lightgray;
+            border-radius: 0px;
             margin: 5px;
             width: calc(100% - 22px);
             padding: 6px;
             height: 100px;
             overflow-y: hidden;
         }
-    </style>
+        
+        .container{
+            border: darkgrey 1px solid;
+            max-width: 600px;
+        }
+        
+        .panel{
+            margin-bottom: 0px; 
+            background-color: #fff;
+            border: 0px solid transparent; 
+            border-radius: 0px;
+            -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0); 
+            box-shadow: 0 0px 0px rgba(0,0,0,0); 
+        }
 
-    <script>
-      $(document).ready(function(){
-        $('[id$="commentInput"]').attr("placeholder","{!$Label.LiveAgentPostChatPlaceHolder}");
-
-        $("input[name='agentRadio']").change(function(){
-          var selected_value = $("input[name='agentRadio']:checked").val();
-          $("[id$='hidInp'").val(selected_value);
-          if (selected_value == "Yes"){
-            $(".glyphicon-thumbs-up").css("color","#255");
-            $(".glyphicon-thumbs-down").css("color","#ffffff");
-          }else if (selected_value == "No"){
-            $(".glyphicon-thumbs-up").css("color","#ffffff");
-            $(".glyphicon-thumbs-down").css("color","#255");
-          }
+        .panel-lexheading {
+            color: #fff;
+            background-color: #1e32fa;
+            border-color: #1e32fa;
+            border-radius: 1px;
+            padding: 10px 15px;
+            border-bottom: 1px solid transparent;
+        }
+        
+        .outter-container{
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 600px;
+            border: 0.1px solid  #337ab7;
+            -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+        .btn.focus, .btn:focus, .btn:hover {
+            color: #fff !important;
+        }       
+        
+        #headercontainer {
+        display:block;
+        z-index:99999;
+        height:100%;
+        padding-left: 0px;
+        padding-right: 0px;
+        color: #0a3e75;
+        }
+        
+        #headerbackground {
+        overflow: hidden;
+        margin: 0 auto;
+        overflow-y: auto;
+        height: 100%;
+        }
+        
+        #headerImage {
+        width: 100%;
+        height: 50px;
+        margin: auto;
+        display: inline-flex;
+        position: relative;
+        box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.08), 0 1px 4px 0 rgba(0, 0, 0, 0.04);
+        }
+        
+        #divImage {
+        padding: 10px;
+        background-color: white;
+        z-index: 1;
+        position: absolute;
+        display: inline-flex;
+        margin-top: 5px;
+        margin-left: 5px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+        
+        #divImage {
+        display: none;
+        }
+        
+        #livechat {
+        width: 100%;
+        color: #fff;
+        text-decoration-color: white;
+        padding: 12px 16px;
+        font-size: 18px;
+        text-align: left;
+        font-weight: 500;
+        background-color: #1e32fa;
+        position: absolute;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: DaMaWebFont;
+        
+        }
+        </style>
+        
+        <script>
+            $(document).ready(function(){
+            $('[id$="commentInput"]').attr("placeholder","{!$Label.LiveAgentPostChatPlaceHolder}");
+            
+            $("input[name='agentRadio']").change(function(){
+                var selected_value = $("input[name='agentRadio']:checked").val();
+                $("[id$='hidInp'").val(selected_value);
+                if (selected_value == "Yes"){
+                    $(".glyphicon-thumbs-up").css("color","#255");
+                    $(".glyphicon-thumbs-down").css("color","#ffffff");
+                }else if (selected_value == "No"){
+                    $(".glyphicon-thumbs-up").css("color","#ffffff");
+                    $(".glyphicon-thumbs-down").css("color","#255");
+                }
+            });
         });
-      });
-    </script>
-<!--onload=" resizeTo(400,680);"-->
-    <body >
-        <apex:form >
-            <apex:image url="{!$Resource.IATAlogo}" width="65" height="40" styleClass="iataLogo"/>
-            <apex:outputPanel id="surveyPanel" layout="none">
-                <apex:outputPanel layout="block" rendered="{!AND(caseId != null,AND(NOT(isSuccess),NOT(isResubmission),NOT(isIncomplete)))}" styleclass="postChatForm">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h class="panel-title">{!$Label.LiveAgentPostChatTitle}</h>
+        </script>
+        <body>
+            <!--link rel="shortcut icon" href="{!$Resource.IATAlogo}" type="image/x-icon"/-->
+            <div class="outter-container">
+                <div id="headercontainer" class="container">
+                    <div id="headerbackground" class="row">
+                        <div id="headerImage">
+                            <div id="divImage">
+                                <apex:image url="{!$Resource.IATAlogo}" width="80" height="50" styleClass="iataLogo"/>
+                            </div>
+                            <div id="livechat">
+                                <span>IATA Live Chat</span>
+                            </div>
                         </div>
-                        <div class="questionLbl">
+                    </div>
+                </div>
+                <apex:form >
+                    <apex:outputPanel styleclass="contentPanel" id="surveyPanel" layout="none">
+                        <apex:outputPanel layout="block" styleclass="postChatForm" rendered="{!AND(caseId != null,AND(NOT(isSuccess),NOT(isResubmission),NOT(isIncomplete)))}">
+                            <div class="panel panel-primary">
+                                <div class="panel-lexheading">
+                                    <h class="panel-title">{!$Label.LiveAgentPostChatTitle}</h>
+                                </div>
+                                <div class="questionLbl">
+                                    <br/>
+                                    <b>{!$Label.LiveAgentPostChatExperienceAnswer} {!agent.FirstName} ?</b>
+                                    <apex:outputText value="*" rendered="{!AND(isSubmitted,OR(agentExperienceAnswer == null,agentExperienceAnswer == ''))}" styleclass="requiredFieldLbl"/>
+                                </div>
+                                
+                                <div class="selectOptRadBtn" >
+                                    
+                                    <label>
+                                        <span class="btn btn-block btn_thumbs_up btn-sm">
+                                            <span class="glyphicon glyphicon-thumbs-up" style="font-size: 20px;">
+                                                <input type="radio" style="visibility:hidden; position:absolute;" name="agentRadio" id="optionUp" Value="Yes"/>
+                                            </span>
+                                        </span>
+                                    </label>
+                                    
+                                    <label>
+                                        <span class="btn btn-block btn_thumbs_down btn-sm">
+                                            <span class="glyphicon glyphicon-thumbs-down" style="font-size: 20px;">
+                                                <input type="radio" style="visibility:hidden; position:absolute;" name="agentRadio" id="optionDown" Value="No"/>
+                                            </span>
+                                        </span>
+                                    </label>
+                                    
+                                    <apex:inputHidden id="hidInp" value="{!agentExperienceAnswer}"/>
+                                    
+                                </div>
+                                
+                                <br/>
+                                <div class="questionLbl">
+                                    <b>{!$Label.LiveAgentPostChatChannelQuestion}</b>
+                                    <apex:outputText value="*" rendered="{!AND(isSubmitted, OR(channelAnswer == null, channelAnswer == ''))}" styleclass="requiredFieldLbl"/>
+                                </div>
+                                <apex:selectRadio styleClass="selectOptRadBtn" layout="pageDirection" value="{!channelAnswer}">
+                                    <apex:selectOptions value="{!channel}"/>
+                                </apex:selectRadio>
+                                <br/>
+                                
+                                <div class="questionLbl">
+                                    <b>{!$Label.LiveAgentPostChatComments}</b>
+                                </div>
+                                <apex:inputTextarea id="commentInput" styleClass="inputField" value="{!commentAnswer}"/>
+                                
+                                <br/>
+                                <apex:outputText value="*{!$Label.LiveAgentPostChatFieldsRequired}" rendered="{!AND(isSubmitted,OR(OR(channelAnswer == null, channelAnswer == ''), OR(agentExperienceAnswer == null, agentExperienceAnswer == '')))}" style="font-size: 13px; margin: 5px; right: 5px; position: absolute;" styleclass="requiredFieldLbl"/>
+                                <button onClick="subm(); return false;" class="btn btn-block btn_iata_primary">{!$Label.LiveAgentPostChatSubmitButton}</button>
+                                <apex:actionFunction action="{!submit}" name="subm" rerender="radbtns,surveyPanel,successPanel"/>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    <apex:outputPanel styleclass="contentPanel" rendered="{!OR(caseId == null,isIncomplete)}">
+                        <br/>
+                        <br/>
+                        {!$Label.LiveAgentPostChatThankContact}
+                    </apex:outputPanel>
+                    <apex:outputPanel id="successPanel" layout="none">
+                        <apex:outputPanel styleclass="contentPanel" rendered="{!isSuccess}">
                             <br/>
-                            <b>{!$Label.LiveAgentPostChatExperienceAnswer} {!agent.FirstName} ?</b>
-                            <apex:outputText value="*" rendered="{!AND(isSubmitted,OR(agentExperienceAnswer == null,agentExperienceAnswer == ''))}" styleclass="requiredFieldLbl"/>
-                        </div>
-
-                        <div class="selectOptRadBtn" >
-
-                        <label>
-                          <span class="btn btn-block btn_thumbs_up btn-sm">
-                            <span class="glyphicon glyphicon-thumbs-up" style="font-size: 20px;">
-                              <input type="radio" style="visibility:hidden; position:absolute;" name="agentRadio" id="optionUp" Value="Yes"/>
-                            </span>
-                          </span>
-                        </label>
-
-                        <label>
-                          <span class="btn btn-block btn_thumbs_down btn-sm">
-                            <span class="glyphicon glyphicon-thumbs-down" style="font-size: 20px;">
-                              <input type="radio" style="visibility:hidden; position:absolute;" name="agentRadio" id="optionDown" Value="No"/>
-                            </span>
-                          </span>
-                        </label>
-
-                        <apex:inputHidden id="hidInp" value="{!agentExperienceAnswer}"/>
-
-                        </div>
-
-                        <br/>
-                        <div class="questionLbl">
-                          <b>{!$Label.LiveAgentPostChatChannelQuestion}</b>
-                          <apex:outputText value="*" rendered="{!AND(isSubmitted, OR(channelAnswer == null, channelAnswer == ''))}" styleclass="requiredFieldLbl"/>
-                        </div>
-                        <apex:selectRadio styleClass="selectOptRadBtn" layout="pageDirection" value="{!channelAnswer}">
-                          <apex:selectOptions value="{!channel}"/>
-                        </apex:selectRadio>
-                        <br/>
-
-                        <div class="questionLbl">
-                          <b>{!$Label.LiveAgentPostChatComments}</b>
-                        </div>
-                        <apex:inputTextarea id="commentInput" styleClass="inputField" value="{!commentAnswer}"/>
-
-                        <br/>
-                        <apex:outputText value="*{!$Label.LiveAgentPostChatFieldsRequired}" rendered="{!AND(isSubmitted,OR(OR(channelAnswer == null, channelAnswer == ''), OR(agentExperienceAnswer == null, agentExperienceAnswer == '')))}" style="font-size: 13px; margin: 5px; right: 5px; position: absolute;" styleclass="requiredFieldLbl"/>
-                        <button onClick="subm(); return false;" class="btn btn-block btn_iata_primary">{!$Label.LiveAgentPostChatSubmitButton}</button>
-                        <apex:actionFunction action="{!submit}" name="subm" rerender="radbtns,surveyPanel,successPanel"/>
-                  </div>
-                </apex:outputPanel>
-            </apex:outputPanel>
-            <apex:outputPanel styleclass="thanksMessages" rendered="{!OR(caseId == null,isIncomplete)}">
-                <br/>
-                <br/>
-                {!$Label.LiveAgentPostChatThankContact}
-            </apex:outputPanel>
-            <apex:outputPanel id="successPanel" layout="none">
-                <apex:outputPanel styleclass="thanksMessages" rendered="{!isSuccess}">
-                    <br/>
-                    <br/>
-                    {!$Label.LiveAgentPostChatThankFeedback}
-                </apex:outputPanel>
-                <apex:outputPanel styleclass="thanksMessages" rendered="{!isResubmission}">
-                    <br/>
-                    <br/>
-                    {!$Label.LiveAgentPostChatResubmission}
-                </apex:outputPanel>
-            </apex:outputPanel>
-        </apex:form>
-    </body>
+                            <br/>
+                            {!$Label.LiveAgentPostChatThankFeedback}
+                        </apex:outputPanel>
+                        <apex:outputPanel styleclass="contentPanel" rendered="{!isResubmission}">
+                            <br/>
+                            <br/>
+                            {!$Label.LiveAgentPostChatResubmission}
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:form>
+            </div>
+            
+        </body>
+    </html>
+    
 </apex:page>

@@ -142,15 +142,20 @@
                 </aura:if>
             </div>
             
-        </div>
-		
+        </div>  
 		<aura:set attribute="else">
 			<c:OneId_AccountCreation aura:id="creationComponent"
 				account="{!v.account}"
 				country="{!v.country}"
 				changeName="{! !(v.sector == 'Airline' &amp;&amp; !empty(v.account.IATA_ISO_Country__c) &amp;&amp; v.account.IATA_ISO_Country__c != v.selectedCountry)}"
 				changeSector="{! false}"
-				changeCategory="{! false}"
+				changeCategory="{! false}"                 
+                countryShipping="{!v.countryShipping}"
+              	billingCityId="{!v.billingCityId}"
+                billingStateId="{!v.billingStateId}"
+                shippingCityId="{!v.shippingCityId}"
+                shippingStateId="{!v.shippingStateId}"               
+                countryInformation = "{!v.countryInformation}"
 			/>
 		</aura:set>
 	</aura:if>

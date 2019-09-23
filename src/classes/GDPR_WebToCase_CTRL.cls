@@ -90,6 +90,11 @@ global without sharing class GDPR_WebToCase_CTRL {
         
         return isDPO;
     }
+
+    @AuraEnabled
+    public static string getTACN(){
+        return [SELECT Contact.Account.IATACode__c FROM User WHERE Id = :UserInfo.getUserId()].Contact.Account.IATACode__c;
+    }
     
     global class PickListWrapper{
         @AuraEnabled
