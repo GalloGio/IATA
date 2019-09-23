@@ -6,7 +6,6 @@ import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import getFieldLabels from '@salesforce/apex/CSP_Utils.getSelectedColumns';
 import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
 import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
-import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
 
 
 import { getParamsFromPage } from 'c/navigationUtils';
@@ -38,7 +37,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track loading = true;
     @track caseDetails;
     @track caseId;
-    @track optionBuilder;
     @track surveyLink;
     @track optionBuilder;
 
