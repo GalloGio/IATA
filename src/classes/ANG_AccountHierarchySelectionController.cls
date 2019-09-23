@@ -229,6 +229,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
                     'Multicountry GE selected performing change of hierarchy',
                     'You cannot leave an HE or AE account alone in a multicountry hierarchy. Please choose all the accounts from the hierarchy.'
                 );
+
+                errorMessages.put(
+                    'Invalid Changes Combination',
+                    'Please check the Accreditation Model in the Account and Available types of changes.'
+                );
                 
             }
             return errorMessages;
@@ -696,6 +701,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
             errorChecks.put('Require Location Class Domestic', true);
         }
 
+        ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar,oscar.Account__r.ANG_Accreditation_Model__c);
+
+        if(config == null){
+            errorChecks.put('Invalid Changes Combination', true);
+        }
         //retrieve error messages
         List<String> errors = new List<String>();
 
@@ -1053,7 +1063,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
         if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && locationTypeSet.contains(AMS_Utils.GE) && selectedCount != hierarchySize){
             errorChecks.put('Multicountry GE selected performing change of hierarchy', true);
         }
-
+        
     }
 
 
