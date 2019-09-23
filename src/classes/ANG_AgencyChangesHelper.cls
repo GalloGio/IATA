@@ -264,7 +264,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			Boolean isMulticountry = (oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
 
-			//map accountId -> active change code
+			
 			Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
 
 			Set<Id> accountIdsInvolvedSetAux = new Set<Id>();
@@ -273,8 +273,8 @@ public with sharing class ANG_AgencyChangesHelper {
 			if(changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c != null)
 				accountIdsInvolvedSetAux.add(changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c);
 
-			for (Agency_Applied_Change_code__c changeCode : [SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIdsInvolvedSetAux AND Active__c = true])
-				accountsCurrentChangeCode.put(changeCode.Account__c, changeCode);
+			//Fetch active change codes for each account (added subquery on getAccounts() method): map accountId -> active change code
+			Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode = fetchActiveChangeCodesFromAccounts(changesContainer.accountsMap.values());
 
 			if (oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
 
@@ -536,6 +536,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		AChangeStructure changesContainer = new AChangeStructure();
 
+		Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
+
 		if(oscar.STEP6__c == AMS_Utils.PASSED && oldOSCAR.STEP6__c != AMS_Utils.PASSED){
 			
 			Map<Id, Id> topEntityPerBspMap = new Map<Id, Id>();
@@ -649,6 +651,12 @@ public with sharing class ANG_AgencyChangesHelper {
 					}
 				}
 
+				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
+
+				if(activeChgCode != NULL){
+					accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
+				}
+
 			}
 
 			update new AMS_PAX_Accreditation_Form__c(
@@ -656,9 +664,17 @@ public with sharing class ANG_AgencyChangesHelper {
 				ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
 			);
 
+			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
+
+			changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, allAccountsInvolvedSet, changesContainer);
+
 		}
 		else if(oscar.STEP2__c == AMS_Utils.PASSED && oldOscar.STEP2__c != AMS_Utils.PASSED){
 			//TODO
+		}
+
+		if(changesContainer.changesStruct != NULL){
+			changesContainer = ANGcreateAAChangeCodes(changesContainer.changesStruct.values(), changesContainer.changeCodesToCreateDef, new List<AMS_OSCAR__c> {oscar}, changesContainer.accountsToApplyChangeCodes, false, changesContainer);
 		}
 
 		if(changesContainer != NULL){
@@ -1928,7 +1944,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		        ANG_IEP_Status__c, ANG_HE_RiskStatus__c, ANG_IEP_HE_AccntNum__c, ANG_HE_CashCondition__c, Financial_Review_Result__c, ANG_HE_RiskHistoryAssessment__c, Financial_Assessment_Points__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c,
 				Identify_as_Multicountry_Key_Hierarchy__c, Multicountry_Key_Hierarchy__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.ANG_RHC_LocationType__c, 
 				(SELECT Id, ANG_AccountId__c FROM RHC_Informations__r), (SELECT Id FROM Location_Risk_Events__r), (SELECT Id FROM Main_Accounts__r), (SELECT Id, ANG_Account__c FROM Risk_Alerts__r),
-				(SELECT Id FROM ChildAccounts WHERE Status__c IN ('', NULL, :AMS_Utils.ACC_S0_TERMINATED, :AMS_Utils.ACC_S1_NOTACCREDITED, :AMS_Utils.ACC_S3_NOTINOPERATION))
+				(SELECT Id FROM ChildAccounts WHERE Status__c IN ('', NULL, :AMS_Utils.ACC_S0_TERMINATED, :AMS_Utils.ACC_S1_NOTACCREDITED, :AMS_Utils.ACC_S3_NOTINOPERATION)),
+				(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true)
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
@@ -2171,4 +2188,27 @@ public with sharing class ANG_AgencyChangesHelper {
         }
 
     }
+
+		private static Agency_Applied_Change_Code__c fetchActiveChangeCodeFromAccount(Account acct){
+			List<Agency_Applied_Change_code__c> changeCodeLst = (List<Agency_Applied_Change_code__c>) acct.getSObjects('Agencies_Applied_Change_Codes__r');
+			if(changeCodeLst != NULL && !changeCodeLst.isEmpty()){
+				return changeCodeLst.get(0);
+			}
+			return null;
+		}
+
+		private static Map<Id, Agency_Applied_Change_Code__c> fetchActiveChangeCodesFromAccounts(List<Account> accountLst){
+			
+			Map<Id, Agency_Applied_Change_Code__c> accountsCurrentChangeCode = new Map<Id, Agency_Applied_Change_Code__c>();
+
+			for(Account acct : accountLst){
+				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
+				if(activeChgCode != NULL){
+					accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
+				}
+			}
+
+			return accountsCurrentChangeCode;
+
+		}
 }
