@@ -85,12 +85,12 @@ public with sharing class DescribeDataCategoryGroupStructures {
                     if(!mapCategoryNameTopicNameAndLstSubtopics.containsKey(categoryAndTopicNames)){
                         
                         List<DescribeDataCategoryGroupStructures.FAQSubtopicWrapper> lstAux = new List<DescribeDataCategoryGroupStructures.FAQSubtopicWrapper>();
-                        lstAux.add(new DescribeDataCategoryGroupStructures.FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(userLanguage, faqSubtopicAux )));
+                        lstAux.add(new DescribeDataCategoryGroupStructures.FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(userLanguage, faqSubtopicAux ), getFAQLabelWithUserLanguage('en_US', faqSubtopicAux )));
                         mapCategoryNameTopicNameAndLstSubtopics.put(categoryAndTopicNames, lstAux);
 
                     }else{
                         //else, insert into the existing map
-                        mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames).add(new DescribeDataCategoryGroupStructures.FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(userLanguage, faqSubtopicAux )));
+                        mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames).add(new DescribeDataCategoryGroupStructures.FAQSubtopicWrapper(faqSubtopicAux.DataSubtopicName__c, getFAQLabelWithUserLanguage(userLanguage, faqSubtopicAux ), getFAQLabelWithUserLanguage('en_US', faqSubtopicAux )));
                     }
                 }
             }
@@ -118,12 +118,12 @@ public with sharing class DescribeDataCategoryGroupStructures {
                     if(!mapCategoryNameAndLstTopics.containsKey(faqTopicAux.DataCategoryName__c)){
                         
                         List<DescribeDataCategoryGroupStructures.FAQTopicWrapper> lstAux = new List<DescribeDataCategoryGroupStructures.FAQTopicWrapper>();
-                        lstAux.add(new DescribeDataCategoryGroupStructures.FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(userLanguage, faqTopicAux ), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
+                        lstAux.add(new DescribeDataCategoryGroupStructures.FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(userLanguage, faqTopicAux ), getFAQLabelWithUserLanguage('en_US', faqTopicAux ),  mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
                         mapCategoryNameAndLstTopics.put(faqTopicAux.DataCategoryName__c, lstAux);
 
                     }else{
                         //else, insert into the existing map
-                        mapCategoryNameAndLstTopics.get(faqTopicAux.DataCategoryName__c).add(new DescribeDataCategoryGroupStructures.FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(userLanguage, faqTopicAux ), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
+                        mapCategoryNameAndLstTopics.get(faqTopicAux.DataCategoryName__c).add(new DescribeDataCategoryGroupStructures.FAQTopicWrapper(faqTopicAux.DataTopicName__c, getFAQLabelWithUserLanguage(userLanguage, faqTopicAux ), getFAQLabelWithUserLanguage('en_US', faqTopicAux ), mapCategoryNameTopicNameAndLstSubtopics.get(categoryAndTopicNames)));
                     }
 
                 }
@@ -149,7 +149,7 @@ public with sharing class DescribeDataCategoryGroupStructures {
                 //if the map from the previous iteration contains the category, then process it
                 if(mapCategoryNameAndLstTopics.containsKey(faqCategoryAux.DataCategoryName__c)){
 
-                    lstFinalCategories.add(new DescribeDataCategoryGroupStructures.FAQCategoryWrapper(faqCategoryAux.DataCategoryName__c, getFAQLabelWithUserLanguage(userLanguage, faqCategoryAux ), mapCategoryNameAndLstTopics.get(faqCategoryAux.DataCategoryName__c)));
+                    lstFinalCategories.add(new DescribeDataCategoryGroupStructures.FAQCategoryWrapper(faqCategoryAux.DataCategoryName__c, getFAQLabelWithUserLanguage(userLanguage, faqCategoryAux ), getFAQLabelWithUserLanguage('en_US', faqCategoryAux ), mapCategoryNameAndLstTopics.get(faqCategoryAux.DataCategoryName__c)));
 
                 }
             }
@@ -208,18 +208,27 @@ public with sharing class DescribeDataCategoryGroupStructures {
         @AuraEnabled
         public String topicLabel {get;set;} 
         @AuraEnabled
+        public String topicLabelEn {get;set;} 
+        @AuraEnabled
         public String categoryName {get;set;}
         @AuraEnabled
         public String categoryLabel {get;set;}
         @AuraEnabled
+        public String categoryLabelEn {get;set;}
+        @AuraEnabled
         public Map<String, String> childs {get;set;}
+        @AuraEnabled
+        public Map<String, String> childsEn {get; set;}
 
-        public DataCategoryWrapper(String topicName, String topicLabel, String categoryName, String categoryLabel, Map<String, String> childs) {
+        public DataCategoryWrapper(String topicName, String topicLabel,String topicLabelEn, String categoryName, String categoryLabel, String categoryLabelEn, Map<String, String> childs, Map<String, String> childsEn) {
             this.topicName = topicName;
             this.topicLabel = topicLabel;
+            this.topicLabelEn = topicLabelEn;
             this.categoryName = categoryName;
             this.categoryLabel = categoryLabel;
+            this.categoryLabelEn = categoryLabelEn;
             this.childs = childs;
+            this.childsEn = childsEn;
         }                
     }
 
@@ -229,13 +238,16 @@ public with sharing class DescribeDataCategoryGroupStructures {
         @AuraEnabled
         public String categoryLabel {get;set;}
         @AuraEnabled
+        public String categoryLabelEn {get; set;}
+        @AuraEnabled
         public List<DescribeDataCategoryGroupStructures.FAQTopicWrapper> lstTopics {get;set;}
 
         public FAQCategoryWrapper(){}
 
-        public FAQCategoryWrapper(String categoryName, String categoryLabel, List<DescribeDataCategoryGroupStructures.FAQTopicWrapper> lstTopics){
+        public FAQCategoryWrapper(String categoryName, String categoryLabel, String categoryLabelEn, List<DescribeDataCategoryGroupStructures.FAQTopicWrapper> lstTopics){
             this.categoryName = categoryName;
             this.categoryLabel = categoryLabel;
+            this.categoryLabelEn = categoryLabelEn;
             this.lstTopics = lstTopics;
         }
     }
@@ -246,13 +258,16 @@ public with sharing class DescribeDataCategoryGroupStructures {
         @AuraEnabled
         public String topicLabel {get;set;}
         @AuraEnabled
+        public String topicLabelEn {get;set;}
+        @AuraEnabled
         public List<DescribeDataCategoryGroupStructures.FAQSubtopicWrapper> lstSubtopics {get;set;}
 
         public FAQTopicWrapper(){}
 
-        public FAQTopicWrapper(String topicName, String topicLabel, List<DescribeDataCategoryGroupStructures.FAQSubtopicWrapper> lstSubtopics){
+        public FAQTopicWrapper(String topicName, String topicLabel, String topicLabelEn, List<DescribeDataCategoryGroupStructures.FAQSubtopicWrapper> lstSubtopics){
             this.topicName = topicName;
             this.topicLabel = topicLabel;
+            this.topicLabelEn = topicLabelEn;
             this.lstSubtopics = lstSubtopics;
         }
     }
@@ -262,12 +277,15 @@ public with sharing class DescribeDataCategoryGroupStructures {
         public String subtopicName {get;set;}
         @AuraEnabled
         public String subtopicLabel {get;set;}
+        @AuraEnabled
+        public String subtopicLabelEn {get;set;}
 
         public FAQSubtopicWrapper(){}
 
-        public FAQSubtopicWrapper(String subtopicName, String subtopicLabel){
+        public FAQSubtopicWrapper(String subtopicName, String subtopicLabel, String subtopicLabelEn){
             this.subtopicName = subtopicName;
             this.subtopicLabel = subtopicLabel;
+            this.subtopicLabelEn = subtopicLabelEn;
         }
     }
 
