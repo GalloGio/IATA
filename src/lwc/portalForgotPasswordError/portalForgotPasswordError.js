@@ -6,7 +6,7 @@ import loginLabel             from '@salesforce/label/c.Login';
 import invalidMailFormat      from '@salesforce/label/c.CSP_Invalid_Email';
 import createNewAccountLabel  from '@salesforce/label/c.OneId_CreateNewAccount';
 import errorMessageLabel      from '@salesforce/label/c.CSP_Forgot_Password_Error_Message';
-import newAccountInfoLabel    from '@salesforce/label/c.CSP_Create_New_Account_Info';
+import newAccountInfoLabel    from '@salesforce/label/c.CSP_Registration_Description';
 
 export default class PortalForgotPasswordError extends LightningElement {
 

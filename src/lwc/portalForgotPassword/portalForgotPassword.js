@@ -5,7 +5,7 @@ import invalidMailFormat        from '@salesforce/label/c.ISSP_AMS_Invalid_Email
 import emailLabel               from '@salesforce/label/c.CSP_Email';
 import loginLabel               from '@salesforce/label/c.Login';
 import submitLabel              from '@salesforce/label/c.CSP_Submit';
-import createNewAccountLabel    from '@salesforce/label/c.OneId_CreateNewAccount';
+import createNewAccountLabel    from '@salesforce/label/c.CSP_Create_New_Account_Info';
 import troubleshootingLabel     from '@salesforce/label/c.CSP_Troubleshooting';
 import forgotPasswordLabel      from '@salesforce/label/c.CSP_Forgot_Password';
 import passwordInfoLabel        from '@salesforce/label/c.CSP_Forgot_Password_Info';
