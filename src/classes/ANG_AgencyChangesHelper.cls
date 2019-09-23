@@ -677,7 +677,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			Agency_Authorization__c geCashMethodFoP = NULL;
 
-			List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) acct.getSObjects('AssociatedFormOfPayments');
+			List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) accountGE.getSObjects('AssociatedFormOfPayments');
 
 			if(formOfPaymentsLst != NULL && !formOfPaymentsLst.isEmpty()){
 				//Fetch cash form of payment from GE
@@ -691,7 +691,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			for(Account acct : changesContainer.accountsMap.values()){
 
-				if(acc.Identify_as_Multicountry_Key_Hierarchy__c){
+				if(acct.Identify_as_Multicountry_Key_Hierarchy__c){
 					
 					List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
 
