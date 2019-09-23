@@ -1001,7 +1001,7 @@ public with sharing class PortalCasesCtrl {
         
         String fullnameNOCFile = fullnameNOCFile(caseObj);
 
-        if ( caseObj.RecordType__c.contains('SIDRA') ) {
+        if ( caseObj.RecordType__c!=null && caseObj.RecordType__c.contains('SIDRA') ) {
             isSidraCase = true;
         }
 
