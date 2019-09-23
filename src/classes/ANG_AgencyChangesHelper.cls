@@ -666,7 +666,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, allAccountsInvolvedSet, changesContainer);
 
 		}
-		else if( oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL && oldOSCAR.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL){
+		else if(oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL && oldOSCAR.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL){
 
 			Set<Id> allAccountsInvolvedSet = fetchAccountIdsToBeProcessed(oscar.Id);
 			allAccountsInvolvedSet.add(oscar.Account__c);
@@ -714,10 +714,42 @@ public with sharing class ANG_AgencyChangesHelper {
 					}
 				}
 
+				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
+
+				if(activeChgCode != NULL){
+					accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
+				}
+
 			}
 
-		}
+			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
 
+			changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, allAccountsInvolvedSet, changesContainer);
+
+		}
+		else if(oscar.STEP4__c == AMS_Utils.PASSED && oldOSCAR.STEP4__c != AMS_Utils.PASSED){
+			
+			Set<Id> allAccountsInvolvedSet = fetchAccountIdsToBeProcessed(oscar.Id);
+			allAccountsInvolvedSet.add(oscar.Account__c);
+
+			changesContainer.accountsMap = getAccounts(allAccountsInvolvedSet);
+
+			for(Account acct : changesContainer.accountsMap.values()){
+
+				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
+
+				if(activeChgCode != NULL){
+					accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
+				}
+
+			}
+
+			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
+			
+			changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.WITHDRAWAL, allAccountsInvolvedSet, changesContainer);
+
+		}
+		
 		if(changesContainer.changesStruct != NULL){
 			changesContainer = ANGcreateAAChangeCodes(changesContainer.changesStruct.values(), changesContainer.changeCodesToCreateDef, new List<AMS_OSCAR__c> {oscar}, changesContainer.accountsToApplyChangeCodes, false, changesContainer);
 		}
