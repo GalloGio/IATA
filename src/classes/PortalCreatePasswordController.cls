@@ -51,9 +51,14 @@ public without sharing class PortalCreatePasswordController {
         PortalRegistrationFirstLevelCtrl.RegistrationParameters params = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(paramStr, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
         PortalRegistrationFirstLevelCtrl.RegistrationResult result     = PortalRegistrationFirstLevelCtrl.register(params, password);
 
+        String startUrl = Label.CSP_PortalPath;
         if(result.isSuccess == true){
             try{
-                System.PageReference pageRef = Site.login(result.username, password, Label.CSP_PortalPath + '?firstLogin=true');
+                if(result.isGeneralPublicAccount == true){
+                    startUrl += '?firstLogin=true';
+                }
+
+                System.PageReference pageRef = Site.login(result.username, password, startUrl);
                 result.message = pageRef.getUrl();
             }
             catch(Exception ex){
