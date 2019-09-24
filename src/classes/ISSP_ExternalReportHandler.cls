@@ -57,10 +57,10 @@ public class ISSP_ExternalReportHandler {
                 }
                  
                 //Get all users related to contacts
-                List<User> UserSharing_List = new List<User>([SELECT ID,EMAIL FROM User WHERE contactid IN: contactIds_haveAccess]);
+                Map<Id,User> UserSharing_List = new Map<Id,User>([SELECT Id FROM User WHERE contactid IN: contactIds_haveAccess]);
 
                 //Give access to specific record to User or Group of Users  
-                ExternalFilesUtils.setExternalReportsSharingSetting(UserSharing_List, er, 'Read');
+                ExternalFilesUtils.setExternalReportsSharingSetting(UserSharing_List.keySet(), er.Id, 'Read');
                 
             }
         }

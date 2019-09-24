@@ -26,13 +26,17 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_BUSINESS_CONTACT = System.label.csp_Profile_BusinessContact;
     PRIVATE STATIC FINAL STRING LABEL_ACCESSIBILITY = System.label.csp_Profile_PortalAccessibility;
     PRIVATE STATIC FINAL STRING LABEL_PROFESSIONAL = System.label.csp_Profile_Professional;
-
+    
+    PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTITLE = System.Label.CSP_Profile_PrivacyManagement_Title;
+    PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTEXT = System.label.CSP_Profile_PrivacyManagement_Text;
+    PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTLINK = System.label.CSP_Profile_PrivacyManagement_Link;
 
     PRIVATE STATIC FINAL STRING LABEL_FIRST_NAME = System.label.First_name;
     PRIVATE STATIC FINAL STRING LABEL_LAST_NAME = System.label.Last_name;
     PRIVATE STATIC FINAL STRING LABEL_LOCATION_CODE = System.label.ISSP_IATA_Location_Code;
     PRIVATE STATIC FINAL STRING LABEL_CITY = System.label.City;
     PRIVATE STATIC FINAL STRING LABEL_STATUS = System.label.Status;
+    PRIVATE STATIC FINAL STRING LABEL_PORTAL_STATUS = System.label.CSP_Portal_Status;
 
     PRIVATE STATIC FINAL STRING LABEL_NAME = System.label.ISSP_Local_Groups_Contact_Name;
     PRIVATE STATIC FINAL STRING LABEL_EMAIL = System.label.Email;
@@ -50,12 +54,19 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL INTEGER CONTACT_BATCH= 15;
     PRIVATE STATIC FINAL INTEGER BRANCH_BATCH = 15;
 
-    public static Contact contactInfo = new Contact();
+public static final Id RECORDTYPE_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+public static final Id RECORDTYPE_AIRLINE_BR = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+public static final Id RECORDTYPE_AIRLINE_HQ = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+public static final list<Id> VALID_ACCOUNT_RT = new list<String> {RECORDTYPE_AGENCY, RECORDTYPE_AIRLINE_BR, RECORDTYPE_AIRLINE_HQ};
+
+	public class PortalProfileException extends Exception {}
+
+public static Contact contactInfo = new Contact();
 
     public static User myUser {
         get {
             if(myUser == null) {
-                myUser = DAL_ISSP.getUser(UserInfo.getUserId());
+                myUser = CSP_Utils.getLoggedUser();
             }
             return myUser;
         }
@@ -72,6 +83,16 @@ public with sharing class PortalProfileCtrl {
 
         set;
     }
+
+    public static Boolean isAccountDomain {
+		get {
+			Boolean issp_AccountDomain = ISSP_AccountDomainPermission__c.getInstance(myUser.Contact.Account.RecordType.DeveloperName) != null;
+			Boolean isAdmin = CSP_Utils.isAdmin();
+
+			return issp_AccountDomain && isAdmin;
+		}
+		set;
+	}
 
     /**
     * Todo: Implement contact search.
@@ -192,66 +213,101 @@ public with sharing class PortalProfileCtrl {
         public List<PortalServicesCtrl.ServiceWrapper> services;
     }
 
+    public class CardWrapper{
+
+        @AuraEnabled
+        public String cardTitle;
+
+        @AuraEnabled
+        public List<FieldWrapper> lstFieldWrapper;
+
+        @AuraEnabled
+        public Boolean isEditable;
+
+        public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux){
+            this.cardTitle = cardTitleAux;
+            this.lstFieldWrapper = lstFieldWrapperAux;
+            this.isEditable = isEditableAux;
+        }
+
+
+    }
+
 
     // OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
-    public static Map<String,List<FieldWrapper>> ContactFields() {
+    public static List<CardWrapper> ContactFields() {
 
         User loggedUser = CSP_Utils.getLoggedUser();
         contactInfo = DAL_ISSP.getContact(loggedUser.contactId);
 
+        //stores each card
+        List<CardWrapper> lstCardWrapper = new List<CardWrapper>();
+
+        //BASICS CARD
+        List<FieldWrapper> lstfw1 = new List<FieldWrapper>();
+        lstfw1.add(new FieldWrapper('Name',true,true));
+        lstfw1.add(new FieldWrapper('Birthdate',true,true));
+        lstfw1.add(new FieldWrapper('Title',true,true));
+        lstfw1.add(new FieldWrapper('Preferred_Language__c',true,true));
+        lstCardWrapper.add(new CardWrapper(LABEL_BASICS, lstfw1, true));
+
+        //PERSONAL CARD
+        List<FieldWrapper> lstfw2 = new List<FieldWrapper>();
+        lstfw2.add(new FieldWrapper('Email',false,true));
         FieldWrapper fw;
-
-        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
-        wrapperMap.put(LABEL_BASICS,new List<FieldWrapper>());
-        wrapperMap.put(LABEL_PERSONAL_CONTACT,new List<FieldWrapper>());
-        wrapperMap.put(LABEL_ACCESSIBILITY,new List<FieldWrapper>());
-        wrapperMap.put(LABEL_PROFESSIONAL,new List<FieldWrapper>());
-
-        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Name',true,true));
-        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Birthdate',true,true));
-        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Title',true,true));
-        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Preferred_Language__c',true,true));
-
-        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('Email',false,true));
-
         fw = new FieldWrapper('Phone',true,true);
         fw.isRequired = true;
-        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(fw);
-        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MobilePhone',true,true));
-        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingCountry',true,true));
-        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingCity',true,true));
-        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingState',true,true));
-        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingStreet',true,true));
-        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingPostalCode',true,true));
+        lstfw2.add(fw);
+        lstfw2.add(new FieldWrapper('MobilePhone',true,true));
+        lstfw2.add(new FieldWrapper('MailingCountry',true,true));
+        lstfw2.add(new FieldWrapper('MailingCity',true,true));
+        lstfw2.add(new FieldWrapper('MailingState',true,true));
+        lstfw2.add(new FieldWrapper('MailingStreet',true,true));
+        lstfw2.add(new FieldWrapper('MailingPostalCode',true,true));
+        lstCardWrapper.add(new CardWrapper(LABEL_PERSONAL_CONTACT, lstfw2, true));
 
-        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('User_Portal_Status__c',false,true));
-        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Authorization',false,true));
+        //ACCESSIBILITY CARD
+        List<FieldWrapper> lstfw3 = new List<FieldWrapper>();
+        lstfw3.add(new FieldWrapper('User_Portal_Status__c',false,true));
+        lstfw3.add(new FieldWrapper('Authorization',false,true));
+        lstCardWrapper.add(new CardWrapper(LABEL_ACCESSIBILITY, lstfw3, true));
 
+        //PROFESSIONAL CARD
+        List<FieldWrapper> lstfw4 = new List<FieldWrapper>();
         fw = new FieldWrapper('ID_CARD',false,true,true);
         fw.isIdCardInfo = true;
-        wrapperMap.get(LABEL_PROFESSIONAL).add(fw);
-
+        lstfw4.add(fw);
         fw = new FieldWrapper('Membership_Function__c',false,true,true);
         fw.isJobFunction = true;
-        wrapperMap.get(LABEL_PROFESSIONAL).add(fw);
+        lstfw4.add(fw);
+        lstCardWrapper.add(new CardWrapper(LABEL_PROFESSIONAL, lstfw4, true));
 
-        return wrapperMap;
+        //PRIVACY CARD
+        List<FieldWrapper> lstfw5 = new List<FieldWrapper>();
+        lstfw5.add(new FieldWrapper(LABEL_PRIVACYMANAGEMENTTITLE, LABEL_PRIVACYMANAGEMENTTEXT, LABEL_PRIVACYMANAGEMENTLINK ));
+        lstCardWrapper.add(new CardWrapper(LABEL_PRIVACYMANAGEMENTTITLE, lstfw5, false));
+
+        return lstCardWrapper;
     }
 
     // OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
-    public static Map<String, List<FieldWrapper>> ContactFieldsAcc() {
-        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
-        wrapperMap.put(LABEL_BUSINESS_CONTACT,new List<FieldWrapper>());
+    public static List<CardWrapper> ContactFieldsAcc() {
 
-        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Phone_Number__c',true,true));
-        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Phone',true,true));
-        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Fax',true,true));
-        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingCountry',false,true));
-        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingState',false,true));
-        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingStreet',false,true));
-        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingPostalCode',false,true));
+        //stores each card
+        List<CardWrapper> lstCardWrapper = new List<CardWrapper>();
 
-        return wrapperMap;
+        //BASICS CARD
+        List<FieldWrapper> lstfw1 = new List<FieldWrapper>();
+        lstfw1.add(new FieldWrapper('Phone_Number__c',true,true));
+        lstfw1.add(new FieldWrapper('Phone',true,true));
+        lstfw1.add(new FieldWrapper('Fax',true,true));
+        lstfw1.add(new FieldWrapper('BillingCountry',false,true));
+        lstfw1.add(new FieldWrapper('BillingState',false,true));
+        lstfw1.add(new FieldWrapper('BillingStreet',false,true));
+        lstfw1.add(new FieldWrapper('BillingPostalCode',false,true));
+        lstCardWrapper.add(new CardWrapper(LABEL_BUSINESS_CONTACT, lstfw1, true));
+
+        return lstCardWrapper;
     }
 
     @AuraEnabled
@@ -268,12 +324,12 @@ public with sharing class PortalProfileCtrl {
     }
 
 
-    public static Map<String,List<FieldWrapper>> AccountFields() { return getFieldsByRecordType();}
+    public static List<CardWrapper> AccountFields() { return getFieldsByRecordType();}
 
     @AuraEnabled
-    public static Map<String, List<FieldWrapper>> getFieldsMap (String type){
+    public static List<CardWrapper> getFieldsMap (String type){
         // CHECK IF ITS AN ACCOUNT OR CONTACT!!
-        Map<String, List<FieldWrapper>> sectionMap = new  Map<String, List<FieldWrapper>>();
+        List<CardWrapper> sectionMap = new  List<CardWrapper>();
 
         List<String[]> fieldsList = new List<String[]>();
         if ( type == 'MyProfile' ){
@@ -287,7 +343,11 @@ public with sharing class PortalProfileCtrl {
         return sectionMap;
     }
 
-
+    @AuraEnabled
+    public static Boolean isGDPOptInDisplayed(){
+        Set<String> possibleGDPLocationTypes = new Set<String>{'C', 'D', 'G', 'M', 'P', 'R', 'T', 'V', 'X'};
+        return possibleGDPLocationTypes.contains(myContact.Account.Location_Class__c);
+    }
 
     @AuraEnabled
     public static Account getCompanyInfo(String accountId){
@@ -305,6 +365,28 @@ public with sharing class PortalProfileCtrl {
         return rType == 'IATA_Agency';
     }
 
+    @AuraEnabled
+    public static Boolean hasAnnualRevalidation(){
+        String rType = myContact.Account.RecordType.DeveloperName;
+        return rType =='IATA_Agency' && hasRevCases();
+    }
+
+    @AuraEnabled
+    public static boolean hasRevCases(){
+
+        if(myContact.AccountId != null){
+            List<Case> revCases = [SELECT Id FROM Case
+            WHERE (AccountId = :myContact.AccountId OR AccountId = :myContact.Account.Top_Parent__c)
+            AND Reason1__c = 'Annual revalidation'
+            AND Status != 'Closed'
+            AND Status != 'Closed_Rejected'
+            AND Status != 'Closed_Withdrawn'];
+
+            return !revCases.isEmpty();
+        }
+        return false;
+    }
+
 
     /**
     *
@@ -314,11 +396,7 @@ public with sharing class PortalProfileCtrl {
     * Field access should be handled by field-level security, here it can be only more restrictive
     *                   with 'editable' attribute when editable by FL security.
     * */
-    private static Map<String,List<FieldWrapper>> getFieldsByRecordType(){
-        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
-        wrapperMap.put(LABEL_BASICS,new List<FieldWrapper>());
-        wrapperMap.put(LABEL_COMPANY_CONTACT,new List<FieldWrapper>());
-
+    private static List<CardWrapper> getFieldsByRecordType(){
 
         String rType = myContact.Account.RecordType.DeveloperName;
         Boolean newGen = myContact.Account.ANG_IsNewGenAgency__c;
@@ -337,6 +415,11 @@ public with sharing class PortalProfileCtrl {
         List<Schema.FieldSetMember>  contactFields = fieldsets.get(FIELDSET_CONTACT).getFields();
 
 
+        //stores each card
+        List<CardWrapper> lstCardWrapper = new List<CardWrapper>();
+
+        //BASICS CARD
+        List<FieldWrapper> lstfw1 = new List<FieldWrapper>();
         for(Schema.FieldSetMember f : basicsFields) {
             Boolean editable = true;
             String fieldName = f.getFieldPath();
@@ -350,20 +433,37 @@ public with sharing class PortalProfileCtrl {
             }
 
             if(f.getFieldPath() == 'Legal_Name__c' && !String.isBlank(legalName) || f.getFieldPath() != 'Legal_Name__c'){
-                wrapperMap.get(LABEL_BASICS).add(new FieldWrapper(f.getFieldPath(),editable,true));
+                lstfw1.add(new FieldWrapper(f.getFieldPath(),editable,true));
             }
         }
+        lstCardWrapper.add(new CardWrapper(LABEL_BASICS, lstfw1, true));
 
+        if (isAccountDomain) {
+			lstfw1.add(new FieldWrapper('AccountDomainPermission',false,false));
+		}
 
+        //COMPANY CONTACT CARD
+        List<FieldWrapper> lstfw2 = new List<FieldWrapper>();
         for(Schema.FieldSetMember f : contactFields) {
             Boolean editable = true;
-            if(f.getFieldPath().toLowerCase() =='billingcountry' || (f.getFieldPath().toLowerCase().contains('billing') && rType != 'Standard_Account')){
+            
+            if(f.getFieldPath().toLowerCase() == 'billingcountry' || (f.getFieldPath().toLowerCase().contains('billing') && rType != 'Standard_Account')) {
                 editable = false;
             }
-            wrapperMap.get(LABEL_COMPANY_CONTACT).add(new FieldWrapper(f.getFieldPath(),editable,true));
+
+            if(hasAnnualRevalidation() && ('phone'.equals(f.getFieldPath().toLowerCase())  || 'fax'.equals(f.getFieldPath().toLowerCase())  || 'email__c'.equals(f.getFieldPath().toLowerCase())  || 'website'.equals(f.getFieldPath().toLowerCase()) )) {
+                editable = false;
+            }
+
+            lstfw2.add(new FieldWrapper(f.getFieldPath(), editable, true));
         }
 
-        return wrapperMap;
+        if(isGDPOptInDisplayed()){
+            lstfw2.add(new FieldWrapper('GDP_Opt_In__c',true,true));
+        }
+        lstCardWrapper.add(new CardWrapper(LABEL_COMPANY_CONTACT, lstfw2, true));
+
+        return lstCardWrapper;
 
     }
 
@@ -410,10 +510,29 @@ public with sharing class PortalProfileCtrl {
         public Boolean isContactServices;
 
         @AuraEnabled
+        public Boolean isLastLogin;
+
+        @AuraEnabled
         public Boolean isRequired;
 
         @AuraEnabled
         public List<accessibilityWrapper> accessibilityList;
+
+        
+        @AuraEnabled
+        public String link;
+
+        @AuraEnabled 
+        public Boolean isPrivacyManagement;
+
+        @AuraEnabled
+        public Boolean isAccountDomainPermission;
+
+        public FieldWrapper(String title, String label, String link){
+            this.label = label;
+            this.link = link;
+            this.isPrivacyManagement = true;
+        }
 
         public FieldWrapper (String fieldName, Boolean fullSize) {
             this.fieldName = fieldName;
@@ -441,6 +560,7 @@ public with sharing class PortalProfileCtrl {
             this.visible = visible;
             this.labeled = false;
             this.isAccessibility = (fieldName == 'Authorization' ? true : false);
+            this.isAccountDomainPermission = (fieldName == 'AccountDomainPermission' ? true : false);
             if (fieldName == 'Authorization') {
                 this.accessibilityList = new List<accessibilityWrapper>{
                         new accessibilityWrapper(false, LABEL_INVOICE_CONTACT, 'Invoicing_Contact__c'),
@@ -511,7 +631,14 @@ public with sharing class PortalProfileCtrl {
         String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
 
 
-        List<String> toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode','LastLogin'};
+        List<String> toRow;
+
+        if(rType == 'IATA_Agency' && myContact.Account.Status__c != AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) {
+            toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode','PortalStatus'};
+        }else{
+            toRow = new List<String>{'Name','Email','Type_of_Contact__c','PortalStatus'};
+        }
+
         Map<String,String> fieldLabels = new Map<String,String>();
 
         FieldWrapper fw;
@@ -522,7 +649,7 @@ public with sharing class PortalProfileCtrl {
         fieldLabels.put('Type_of_Contact__c',LABEL_CONTACT_TYPE);
         fieldLabels.put('Name',LABEL_NAME);
         fieldLabels.put('LocationCode',LABEL_LOCATION_CODE);
-        fieldLabels.put('LastLogin',LABEL_LAST_LOGIN);
+        fieldLabels.put('PortalStatus',LABEL_PORTAL_STATUS);
 
         for(String fieldName: toRow){
             if(!fieldLabels.containsKey(fieldName)){ fieldLabels.put(fieldName,fieldName);}
@@ -557,6 +684,11 @@ public with sharing class PortalProfileCtrl {
         }
 
         wrapperMap.get(viewFields).add(new FieldWrapper('Authorized_Signatory__c',true,true));
+
+        fw = new FieldWrapper('LastLogin',false,true,true);
+        fw.isLastLogin = true;
+        wrapperMap.get(viewFields).add(fw);
+
 
         //EDIT
         wrapperMap.get(editFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));
@@ -683,6 +815,119 @@ public with sharing class PortalProfileCtrl {
             return false;
         }
  
+    }
+
+    @AuraEnabled
+    public static String goToOldIFAP(Boolean hasContact, String contactId, String contactName){
+        Id accountID = (myUser.Contact.Account.Top_Parent__c != null  ? myUser.Contact.Account.Top_Parent__c : myUser.Contact.AccountId);
+
+        if (hasContact){
+            return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_AssignFinancialContact' + '?id=' + accountID + '&vContactId=' + contactId + '&vContactName=' + contactName);
+        } else {
+            return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_AssignFinancialContact' + '?id=' + accountID);
+        }
+    }
+
+    @AuraEnabled
+    public static Boolean isAdminAndIATAAgencyAcct(){
+        Boolean isIATAAgencyAcct = false;
+        Boolean isAdmin = CSP_Utils.isAdmin();
+
+        String categoryAcc = (myUser.Contact.Account.Top_Parent__c == null ? myUser.Contact.Account.Category__c : myUser.Contact.Account.Top_Parent__r.Category__c);
+
+        isIATAAgencyAcct = categoryAcc == 'IATA Passenger Sales Agent' || categoryAcc == 'IATA Cargo Agent';
+
+        return isIATAAgencyAcct && isAdmin;
+
+    }
+
+
+    @AuraEnabled
+    public static String goToPrivacyPortal(){
+        return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.GDPR, '');
+    }
+
+    @AuraEnabled
+	public static List<Account_Domain__c> getAccountDomains(Id accountId){
+		return [SELECT Id, Name, CreatedDate, Account__c, Account__r.Name FROM Account_Domain__c WHERE Account__c =: accountId];
+	}
+
+	@AuraEnabled
+	public static Boolean isAccountDomain(){
+		return isAccountDomain;
+	}
+
+	@AuraEnabled
+	public static List<Account> getMapHierarchyAccounts(Id contactId) {
+		if(contactId == null) 
+			return new list<Account>();
+
+		Contact con = [Select id, AccountId from Contact where id = :contactId];
+
+		Account account = [
+					Select id, Name,
+					ParentId,
+					Parent.ParentId,
+					Parent.Parent.ParentId,
+					Parent.Parent.Parent.ParentId,
+					Parent.Parent.Parent.Parent.ParentId
+					From Account
+					Where id = :con.AccountId ];
+
+				// find the top parent
+				Id parentId = null;
+				if (account.ParentId == null ) {
+					parentId = account.Id;
+				} else if (account.Parent.ParentId == null ) {
+					parentId = account.ParentId;
+				} else if (account.Parent.Parent.ParentId == null ) {
+					parentId = account.Parent.ParentId;
+				} else if (account.Parent.Parent.Parent.ParentId == null ) {
+					parentId = account.Parent.Parent.ParentId;
+				} else if (account.Parent.Parent.Parent.Parent.ParentId == null ) {
+					parentId = account.Parent.Parent.Parent.ParentId;
+				} else {
+					parentId = account.Parent.Parent.Parent.Parent.ParentId;
+				}
+
+		// Get all account in the hierarchy
+		return new List<Account>([
+			SELECT Id,Name, Site, IATA_ISO_Country__c, Location_Type__c, BillingStreet, IsPartner,
+				BillingCity, BillingPostalCode, BillingState, BillingCountry, IATA_ISO_Country__r.Name
+			FROM Account
+			WHERE RecordTypeId IN :VALID_ACCOUNT_RT
+			AND Status__c != 'Terminated'
+			AND Id != :con.AccountId 
+			AND ( Id = :parentId
+			OR ParentId = :parentId
+			OR Parent.ParentId = :parentId
+			OR Parent.Parent.ParentId = :parentId
+			OR Parent.Parent.Parent.ParentId = :parentId
+			OR Parent.Parent.Parent.Parent.ParentId = :parentId)]);
+	}
+
+	@AuraEnabled
+	public static void relocateContact(Account acc, String contactId) {
+        try {
+            Contact con = [SELECT Id, AccountId FROM Contact where Id =: contactId];
+            
+			// set  parent account as partner user 
+            if (!acc.IsPartner) {
+                acc.IsPartner = true;
+                update acc;
+            }
+
+            // relocate contact
+            con.AccountId = acc.Id;
+            update con;
+
+        } catch (DMLException e) {
+            System.debug('DML ERROR RelocateContact ' + e.getMessage());
+			throw new PortalProfileException(Label.ISSP_Relocate_Failed + ' - ' + e.getMessage());
+        } catch (Exception e) {
+            System.debug('ERROR RelocateContact ' + e.getMessage());
+			throw new PortalProfileException(Label.ISSP_Relocate_Failed + ' - ' + e.getMessage());
+        }
     }
 
 }

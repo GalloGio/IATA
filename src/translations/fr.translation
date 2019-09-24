@@ -1744,12 +1744,32 @@
         <name>CSP_Accept_Terms_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Account Domain Created --></label>
+        <name>CSP_Account_Domain_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_All --></label>
+        <name>CSP_Add_All</name>
+    </customLabels>
+    <customLabels>
         <label>Ajouter de nouveaux documents</label>
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Add_New_User --></label>
+        <name>CSP_Add_New_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_User --></label>
+        <name>CSP_Add_User</name>
+    </customLabels>
+    <customLabels>
         <label>Annonce</label>
         <name>CSP_Announcement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Apply --></label>
+        <name>CSP_Apply</name>
     </customLabels>
     <customLabels>
         <label>Cet article a-t-il été utile ?</label>
@@ -1868,8 +1888,20 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Continue --></label>
+        <name>CSP_Continue</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
         <label>Refuser l&apos;accès utilisateur</label>
@@ -1896,8 +1928,20 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Domain Error Message --></label>
+        <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
         <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
         <label>Nous contacter</label>
@@ -1944,6 +1988,14 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Filter --></label>
+        <name>CSP_Filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filtered --></label>
+        <name>CSP_Filtered</name>
+    </customLabels>
+    <customLabels>
         <label>Pour vous</label>
         <name>CSP_ForYou</name>
     </customLabels>
@@ -1972,12 +2024,28 @@
         <name>CSP_Manage_Services</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Manage_Services --></label>
+        <name>CSP_Manage_Services_NoIEPAccount</name>
+    </customLabels>
+    <customLabels>
         <label>Voir mes cas</label>
         <name>CSP_MyCases</name>
     </customLabels>
     <customLabels>
         <label>Nom</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewServiceUserMessage --></label>
+        <name>CSP_NewServiceUserMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP New Email Domain --></label>
+        <name>CSP_New_Email_Domain</name>
     </customLabels>
     <customLabels>
         <label>Aucun compte associé à afficher.</label>
@@ -2016,8 +2084,28 @@
         <name>CSP_PortalPath</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Portal_Administrators --></label>
+        <name>CSP_Portal_Administrators</name>
+    </customLabels>
+    <customLabels>
         <label>Statut du portail</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
+        <name>CSP_Profile_PrivacyManagement_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Text --></label>
+        <name>CSP_Profile_PrivacyManagement_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Title --></label>
+        <name>CSP_Profile_PrivacyManagement_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_URL --></label>
+        <name>CSP_Profile_PrivacyManagement_URL</name>
     </customLabels>
     <customLabels>
         <label>Qu&apos;est-ce qu&apos;un dossier et quand en ai-je besoin ?</label>
@@ -2040,8 +2128,28 @@
         <name>CSP_RecentCases</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP RecentCases HelpText --></label>
+        <name>CSP_RecentCases_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Recent Cases Support --></label>
+        <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Record Deleted --></label>
+        <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
         <label>Articles apparentés</label>
         <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveAllFilters --></label>
+        <name>CSP_RemoveAllFilters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveContact_Reason --></label>
+        <name>CSP_RemoveContact_Reason</name>
     </customLabels>
     <customLabels>
         <label>Demander un service</label>
@@ -2232,6 +2340,10 @@
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Success --></label>
+        <name>CSP_Success</name>
+    </customLabels>
+    <customLabels>
         <label>Assistance</label>
         <name>CSP_Support</name>
     </customLabels>
@@ -2258,6 +2370,10 @@
     <customLabels>
         <label>Type de cas</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -11989,7 +12105,7 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_OPTION_PAX_HE_standard</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Nos dossiers indiquent que vous figurez en tant que Contact IFAP pour votre agence. Si c’est toujours le cas, veuillez demander un Examen financier, ou indiquez le nouveau Contact IFAP sur la page &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Informations sur la société&lt;/a&gt; avant de confirmer votre demande.&quot;</label>
+        <label>Nos dossiers indiquent que vous figurez en tant que Contact IFAP pour votre agence. Si c’est toujours le cas, veuillez demander un Examen financier, ou indiquez le nouveau Contact IFAP sur la page &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Informations sur la société&lt;/a&gt; avant de confirmer votre demande.</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</name>
     </customLabels>
     <customLabels>
@@ -14990,7 +15106,7 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
         <name>ISSP_PCI_Time</name>
     </customLabels>
     <customLabels>
-        <label>Avis d&apos;inactivité</label>
+        <label>Avis d&amp;apos;inactivité</label>
         <name>ISSP_PCI_Title</name>
     </customLabels>
     <customLabels>
@@ -15066,8 +15182,8 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
         <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
-        <label>Payment Link peut Être utilisé pour payer les factures IATA par carte de crédit&lt;br/&gt;
-&lt;b&gt;Attention!&lt;/b&gt;&lt;br/&gt;
+        <label>Payment Link peut Être utilisé pour payer les factures IATA par carte de crédit&amp;nbsp;
+&lt;b&gt;Attention!&lt;/b&gt;&amp;nbsp;
 Veuillez noter que de nombreuses factures de IATA pour les agents accrédités sont collectés par le BSP / CASS. Vous devriez vérifier vos détails de la facture pour vous assurer qu&apos;il n&apos;a pas été déjà compensé avant de procéder au paiement par carte de crédit.</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
@@ -20127,6 +20243,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>contacting_us</name>
     </customLabels>
     <customLabels>
+        <label><!-- Account Relocation --></label>
+        <name>csp_AccountRelocateSuccess</name>
+    </customLabels>
+    <customLabels>
         <label>Processus d&apos;accréditation</label>
         <name>csp_Accreditation_Process</name>
     </customLabels>
@@ -20457,6 +20577,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customLabels>
         <label>Paiement des ventes</label>
         <name>csp_Sales_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_SearchNotPerformed</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>

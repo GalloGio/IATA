@@ -145,7 +145,8 @@ public class UserProvisioningRequestHandler {
                         //Because received a synchronous response saying user is already active (isUserActive=true)
                         //in the external entity side
                         if (myAppsUsersMap.containsKey(myAppUserMappKey)
-                                && myAppsUsersMap.get(myAppUserMappKey).Portal_Service_Access__c != null) {
+                                && myAppsUsersMap.get(myAppUserMappKey).Portal_Service_Access__c != null 
+                                    && myAppsUsersMap.get(myAppUserMappKey).App_Name__c != null && myAppsUsersMap.get(myAppUserMappKey).App_Name__c.contains('IFG')) {
                             SCIMServProvManager.setPortalAccessRightProvTechStatus(uprov.SalesforceUserId,
                                     anAppkey,
                                     SCIMServProvManager.TECH_STS_EXT_ACCESS_GRANTED);

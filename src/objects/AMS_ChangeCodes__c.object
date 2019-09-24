@@ -591,7 +591,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>NG_RB</fullName>
+        <fullName>NewGen</fullName>
         <columns>NAME</columns>
         <columns>Change_Code__c</columns>
         <columns>Record_Type__c</columns>
@@ -607,7 +607,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
             <operation>contains</operation>
             <value>ANG</value>
         </filters>
-        <label>NG_RB</label>
+        <label>NewGen</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -798,6 +798,19 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
     <listViews>
         <fullName>TER</fullName>
         <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Field2__c</columns>
+        <columns>Field2Values__c</columns>
+        <columns>Field3__c</columns>
+        <columns>Field3Values__c</columns>
+        <columns>Field4__c</columns>
+        <columns>Field4Values__c</columns>
+        <columns>Field5__c</columns>
+        <columns>Field5Values__c</columns>
+        <columns>Field6__c</columns>
+        <columns>Field6Values__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Change_Code__c</field>
