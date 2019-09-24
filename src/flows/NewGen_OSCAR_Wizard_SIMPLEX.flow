@@ -3,7 +3,7 @@
     <actionCalls>
         <name>AMSFillAccreditationLegalStatus</name>
         <label>AMSFillAccreditationLegalStatus</label>
-        <locationX>562</locationX>
+        <locationX>896</locationX>
         <locationY>1084</locationY>
         <actionName>AMS_FillAMSAccreditationLegalStatus</actionName>
         <actionType>apex</actionType>
@@ -24,7 +24,7 @@
     <actionCalls>
         <name>FillAMSAccreditationGDS</name>
         <label>FillAMSAccreditationGDS</label>
-        <locationX>394</locationX>
+        <locationX>728</locationX>
         <locationY>1085</locationY>
         <actionName>AMS_FillAMSAccreditationGDS</actionName>
         <actionType>apex</actionType>
@@ -42,36 +42,32 @@
             <name>output</name>
         </outputParameters>
     </actionCalls>
-    <apexPluginCalls>
-        <name>AMS_FillCaseTypeOfCustomer</name>
-        <label>AMS_FillCaseTypeOfCustomer</label>
-        <locationX>900</locationX>
-        <locationY>819</locationY>
-        <apexClass>AMS_FillCaseTypeOfCustomer</apexClass>
+    <actionCalls>
+        <description>FillCaseTypeCustomer</description>
+        <name>FillCaseTypeCustomer</name>
+        <label>FillCaseTypeCustomer</label>
+        <locationX>1305</locationX>
+        <locationY>793</locationY>
+        <actionName>ANG_FillCaseTypeOfCustomer</actionName>
+        <actionType>apex</actionType>
         <connector>
             <targetReference>OscarCaseCreation</targetReference>
         </connector>
         <inputParameters>
-            <name>Category_Input</name>
+            <name>accountId</name>
             <value>
-                <elementReference>AccountToProcess.Category__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>LocationType_Input</name>
-            <value>
-                <elementReference>AccountToProcess.Location_Type__c</elementReference>
+                <elementReference>AccountToProcess.Id</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
             <assignToReference>CaseTypeOfCustomer</assignToReference>
-            <name>typeOfCustomer</name>
+            <name>output</name>
         </outputParameters>
-    </apexPluginCalls>
+    </actionCalls>
     <assignments>
         <name>AccountToCopyOwnersFrom</name>
         <label>AccountToCopyOwnersFrom</label>
-        <locationX>710</locationX>
+        <locationX>1044</locationX>
         <locationY>1449</locationY>
         <assignmentItems>
             <assignToReference>AccountToCopyOwners</assignToReference>
@@ -87,7 +83,7 @@
     <assignments>
         <name>AccountToCopyOwnersFrom1</name>
         <label>AccountToCopyOwnersFrom</label>
-        <locationX>1139</locationX>
+        <locationX>1473</locationX>
         <locationY>1338</locationY>
         <assignmentItems>
             <assignToReference>AccountToCopyOwners</assignToReference>
@@ -103,7 +99,7 @@
     <assignments>
         <name>AssignContactNotFoundMessage</name>
         <label>AssignContactNotFoundMessage</label>
-        <locationX>1087</locationX>
+        <locationX>1421</locationX>
         <locationY>706</locationY>
         <assignmentItems>
             <assignToReference>errormessagecontactlookup</assignToReference>
@@ -119,8 +115,8 @@
     <assignments>
         <name>AssignProcessVariables</name>
         <label>AssignProcessVariables</label>
-        <locationX>433</locationX>
-        <locationY>507</locationY>
+        <locationX>849</locationX>
+        <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>NewProcessHEValue</assignToReference>
             <operator>Assign</operator>
@@ -198,8 +194,8 @@
     <assignments>
         <name>ChangeFieldsAccreditationType</name>
         <label>ChangeFieldsAccreditationType</label>
-        <locationX>262</locationX>
-        <locationY>701</locationY>
+        <locationX>591</locationX>
+        <locationY>792</locationY>
         <assignmentItems>
             <assignToReference>AccountAccreditationType</assignToReference>
             <operator>Assign</operator>
@@ -214,7 +210,7 @@
     <assignments>
         <name>ChangeFieldsAssignmentAccountToProcess</name>
         <label>ChangeFieldsAssignmentAccountToProcess</label>
-        <locationX>728</locationX>
+        <locationX>1062</locationX>
         <locationY>411</locationY>
         <assignmentItems>
             <assignToReference>AccountName</assignToReference>
@@ -384,7 +380,7 @@
     <assignments>
         <name>ChangeFieldsAssignmentAccountToProcess_0</name>
         <label>ChangeFieldsAssignmentAccountToProcess</label>
-        <locationX>1130</locationX>
+        <locationX>1464</locationX>
         <locationY>512</locationY>
         <assignmentItems>
             <assignToReference>AccountName</assignToReference>
@@ -547,7 +543,7 @@
     <assignments>
         <name>ParentFieldsAssignment</name>
         <label>ParentFieldsAssignment</label>
-        <locationX>914</locationX>
+        <locationX>1248</locationX>
         <locationY>517</locationY>
         <assignmentItems>
             <assignToReference>AccountName</assignToReference>
@@ -652,23 +648,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>TradeNameAssignment</name>
-        <label>TradeNameAssignment</label>
-        <locationX>1730</locationX>
-        <locationY>12</locationY>
-        <assignmentItems>
-            <assignToReference>AccountTradeName</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>AccountToProcess.TradeName__c</elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
         <name>TypeOfOscarProcessAssigment</name>
         <label>TypeOfOscarProcessAssigment</label>
-        <locationX>527</locationX>
-        <locationY>343</locationY>
+        <locationX>760</locationX>
+        <locationY>327</locationY>
         <assignmentItems>
             <assignToReference>Type_of_OSCAR_process_man</assignToReference>
             <operator>Assign</operator>
@@ -683,8 +666,8 @@
     <assignments>
         <name>TypeOfOscarProcessAssigment_0</name>
         <label>TypeOfOscarProcessAssigment</label>
-        <locationX>296</locationX>
-        <locationY>379</locationY>
+        <locationX>485</locationX>
+        <locationY>405</locationY>
         <assignmentItems>
             <assignToReference>Type_of_OSCAR_process_man</assignToReference>
             <operator>Assign</operator>
@@ -697,10 +680,42 @@
         </connector>
     </assignments>
     <assignments>
+        <name>TypeOfOscarProcessAssigmentNoFOP</name>
+        <label>TypeOfOscarProcessAssigmentNoFOP</label>
+        <locationX>180</locationX>
+        <locationY>440</locationY>
+        <assignmentItems>
+            <assignToReference>Type_of_OSCAR_process_man</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TypeOfOscarNoFOP</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ChangeFieldsAssignmentAccountToProcess</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>TypeOfOscarProcessAssigmentNoFOP2</name>
+        <label>TypeOfOscarProcessAssigment</label>
+        <locationX>1148</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>Type_of_OSCAR_process_man</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Type_of_OSCAR_changeNOFOP</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ChangeFieldsAssignmentAccountToProcess</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>TypeOfOscarProcessAssignment_acc</name>
         <label>TypeOfOscarProcessAssignment</label>
-        <locationX>879</locationX>
-        <locationY>299</locationY>
+        <locationX>1347</locationX>
+        <locationY>364</locationY>
         <assignmentItems>
             <assignToReference>Type_of_OSCAR_process_man</assignToReference>
             <operator>Assign</operator>
@@ -713,25 +728,9 @@
         </connector>
     </assignments>
     <assignments>
-        <name>TypeOfOscarProcessAssignment_acc_china</name>
-        <label>TypeOfOscarProcessAssignment</label>
-        <locationX>1017</locationX>
-        <locationY>420</locationY>
-        <assignmentItems>
-            <assignToReference>Type_of_OSCAR_process_man</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Type_of_HE_Process_China</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>ChangeFieldsAssignmentAccountToProcess</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>TypeOfOscarProcessAssignment_not</name>
         <label>TypeOfOscarProcessAssignment</label>
-        <locationX>1572</locationX>
+        <locationX>1906</locationX>
         <locationY>266</locationY>
         <assignmentItems>
             <assignToReference>Type_of_OSCAR_process_man</assignToReference>
@@ -920,34 +919,12 @@
     <decisions>
         <name>AccountLocationType</name>
         <label>AccountLocationType</label>
-        <locationX>1116</locationX>
+        <locationX>1450</locationX>
         <locationY>185</locationY>
         <defaultConnector>
             <targetReference>No_Process_Available</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
-        <rules>
-            <name>HEAccountChina</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>AccountToProcess.Location_Type__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>HE</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>accountToProcessCountryRec.Enable_NewGen_Pilot__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Process_Chooser_HE_China</targetReference>
-            </connector>
-            <label>HEAccountChina</label>
-        </rules>
         <rules>
             <name>HEAccount</name>
             <conditionLogic>and</conditionLogic>
@@ -989,7 +966,7 @@
     <decisions>
         <name>CheckIfEmailIsFound</name>
         <label>CheckIfEmailIsFound</label>
-        <locationX>1330</locationX>
+        <locationX>1664</locationX>
         <locationY>628</locationY>
         <defaultConnector>
             <targetReference>ContactChooserScreen</targetReference>
@@ -1014,7 +991,7 @@
     <decisions>
         <name>DoesHierarchyExist</name>
         <label>DoesHierarchyExist</label>
-        <locationX>1325</locationX>
+        <locationX>1659</locationX>
         <locationY>370</locationY>
         <defaultConnector>
             <targetReference>AMS_Agencies_relationship_Creator</targetReference>
@@ -1037,12 +1014,64 @@
         </rules>
     </decisions>
     <decisions>
-        <name>IsAccountCashAndHE</name>
-        <label>IsAccountCashAndHE</label>
-        <locationX>468</locationX>
-        <locationY>113</locationY>
+        <description>Is Account on China ?</description>
+        <name>Is_Account_on_China</name>
+        <label>Is Account on China</label>
+        <locationX>355</locationX>
+        <locationY>161</locationY>
+        <defaultConnector>
+            <targetReference>Process_Chooser_Changes_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Account_is_From_China</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountFromChina</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>No_FOP_Choice</targetReference>
+            </connector>
+            <label>Account is From China</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Is Account on China ?</description>
+        <name>Is_Account_on_China_2</name>
+        <label>Is Account on China</label>
+        <locationX>767</locationX>
+        <locationY>212</locationY>
         <defaultConnector>
             <targetReference>Process_Chooser_Changes</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Account_is_From_China2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountFromChina</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Process_Chooser_ChangesNoChina</targetReference>
+            </connector>
+            <label>Account is From China</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>IsAccountCashAndHE</name>
+        <label>IsAccountCashAndHE</label>
+        <locationX>1065</locationX>
+        <locationY>113</locationY>
+        <defaultConnector>
+            <targetReference>Is_Account_on_China_2</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
         <rules>
@@ -1063,7 +1092,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Process_Chooser_Changes_0</targetReference>
+                <targetReference>Is_Account_on_China</targetReference>
             </connector>
             <label>AccountIsCashandisHE</label>
         </rules>
@@ -1071,7 +1100,7 @@
     <decisions>
         <name>isAccountSuitableForAccreditation</name>
         <label>isAccountSuitableForAccreditation</label>
-        <locationX>770</locationX>
+        <locationX>1367</locationX>
         <locationY>21</locationY>
         <defaultConnector>
             <targetReference>No_Process_Available</targetReference>
@@ -1140,7 +1169,7 @@
     <decisions>
         <name>IsAeWithParentAccount</name>
         <label>IsAeWithParentAccount</label>
-        <locationX>1320</locationX>
+        <locationX>1654</locationX>
         <locationY>167</locationY>
         <defaultConnector>
             <targetReference>Process_Chooser_AE</targetReference>
@@ -1180,8 +1209,8 @@
     <decisions>
         <name>IsNewProcessOscar</name>
         <label>IsNewProcessOscar</label>
-        <locationX>261</locationX>
-        <locationY>580</locationY>
+        <locationX>559</locationX>
+        <locationY>606</locationY>
         <defaultConnector>
             <targetReference>NeedsContactInput</targetReference>
         </defaultConnector>
@@ -1212,7 +1241,7 @@
     <decisions>
         <name>IsOscarCorrectionProcess</name>
         <label>IsOscarCorrectionProcess</label>
-        <locationX>1405</locationX>
+        <locationX>1739</locationX>
         <locationY>937</locationY>
         <defaultConnector>
             <targetReference>OSCARCreation</targetReference>
@@ -1237,7 +1266,7 @@
     <decisions>
         <name>IsProcessNewAE</name>
         <label>IsProcessNewAE</label>
-        <locationX>1131</locationX>
+        <locationX>1465</locationX>
         <locationY>1093</locationY>
         <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
         <rules>
@@ -1274,7 +1303,7 @@
     <decisions>
         <name>IsToCopyOwners</name>
         <label>IsToCopyOwners</label>
-        <locationX>861</locationX>
+        <locationX>1195</locationX>
         <locationY>1306</locationY>
         <defaultConnector>
             <targetReference>AMSOSCARAccreditationObjectUpdate</targetReference>
@@ -1321,7 +1350,7 @@
     <decisions>
         <name>NeedsContactInput</name>
         <label>NeedsContactInput</label>
-        <locationX>510</locationX>
+        <locationX>844</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>OscarRecordTypeLookup</targetReference>
@@ -1346,7 +1375,7 @@
     <decisions>
         <name>NeedsStagingArea</name>
         <label>NeedsStagingArea</label>
-        <locationX>218</locationX>
+        <locationX>552</locationX>
         <locationY>973</locationY>
         <defaultConnector>
             <targetReference>FillAMSAccreditationGDS</targetReference>
@@ -1396,7 +1425,8 @@
             <label>StagingAreaNotNeeded</label>
         </rules>
     </decisions>
-    <description>China Pilot Release
+    <description>China Pilot Release - REVERTED (NEWGEN-5092)
+China Pilot Release
 NewGen - Sprint 12 - OPT IN OUT
 NewGen - Sprint 7 - Release 3 
 
@@ -1442,6 +1472,12 @@ NEWGEN-1963 - FOP
         <name>AccountForTheCase</name>
         <dataType>String</dataType>
         <expression>{!AccountToProcess.Id}</expression>
+    </formulas>
+    <formulas>
+        <description>Is account from China</description>
+        <name>AccountFromChina</name>
+        <dataType>Boolean</dataType>
+        <expression>{!AccountToProcess.IATA_ISO_Country__r.AMS_Settlement_System__r.Name} = &apos;BSP-CN&apos;</expression>
     </formulas>
     <formulas>
         <name>AccountRoleFirstName</name>
@@ -1596,7 +1632,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <loops>
         <name>CreateAccreditationContactsLoop</name>
         <label>CreateAccreditationContactsLoop</label>
-        <locationX>915</locationX>
+        <locationX>1249</locationX>
         <locationY>1665</locationY>
         <assignNextValueToReference>AMSAccountRoleToProcess</assignNextValueToReference>
         <collectionReference>AccountRoles</collectionReference>
@@ -1618,7 +1654,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordCreates>
         <name>AMS_Agencies_relationship_Creator</name>
         <label>AMS Agencies relationship Creator</label>
-        <locationX>1323</locationX>
+        <locationX>1657</locationX>
         <locationY>509</locationY>
         <assignRecordIdToReference>HierarchyRelationshipId</assignRecordIdToReference>
         <connector>
@@ -1653,7 +1689,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordCreates>
         <name>AMS_Hierarchy_Creator</name>
         <label>AMS Hierarchy Creator</label>
-        <locationX>1551</locationX>
+        <locationX>1885</locationX>
         <locationY>493</locationY>
         <assignRecordIdToReference>HierarchyId</assignRecordIdToReference>
         <connector>
@@ -1670,7 +1706,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordCreates>
         <name>AMSOnlineAccreditationContactCreationLoop</name>
         <label>AMSOnlineAccreditationContactCreationLoop</label>
-        <locationX>1134</locationX>
+        <locationX>1468</locationX>
         <locationY>1665</locationY>
         <assignRecordIdToReference>AccreditationContactId</assignRecordIdToReference>
         <connector>
@@ -1765,7 +1801,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordCreates>
         <name>AMSOnlineAccreditationCreation</name>
         <label>AMSOnlineAccreditationCreation</label>
-        <locationX>858</locationX>
+        <locationX>1192</locationX>
         <locationY>1184</locationY>
         <assignRecordIdToReference>AMSOnlineAccreditationId</assignRecordIdToReference>
         <connector>
@@ -2016,7 +2052,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordCreates>
         <name>AMSOnlineAccreditationCreationAE</name>
         <label>AMSOnlineAccreditationCreationAE</label>
-        <locationX>1132</locationX>
+        <locationX>1466</locationX>
         <locationY>1215</locationY>
         <assignRecordIdToReference>AMSOnlineAccreditationId</assignRecordIdToReference>
         <connector>
@@ -2267,7 +2303,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordCreates>
         <name>OscarCaseCreation</name>
         <label>OscarCaseCreation</label>
-        <locationX>710</locationX>
+        <locationX>1044</locationX>
         <locationY>758</locationY>
         <assignRecordIdToReference>OscarCaseId</assignRecordIdToReference>
         <connector>
@@ -2356,7 +2392,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordCreates>
         <name>OSCARCreation</name>
         <label>OSCARCreation</label>
-        <locationX>1096</locationX>
+        <locationX>1430</locationX>
         <locationY>987</locationY>
         <assignRecordIdToReference>OscarId</assignRecordIdToReference>
         <connector>
@@ -2403,7 +2439,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordCreates>
         <name>OSCARCreation_0</name>
         <label>OSCARCreation</label>
-        <locationX>1097</locationX>
+        <locationX>1431</locationX>
         <locationY>896</locationY>
         <assignRecordIdToReference>OscarId</assignRecordIdToReference>
         <connector>
@@ -2450,7 +2486,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>AccountRoleOwnerLookup</name>
         <label>AccountRoleOwnerLookup</label>
-        <locationX>910</locationX>
+        <locationX>1244</locationX>
         <locationY>1442</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2486,8 +2522,8 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>AccountToProcessCountryLookup</name>
         <label>AccountToProcessCountryLookup</label>
-        <locationX>504</locationX>
-        <locationY>33</locationY>
+        <locationX>924</locationX>
+        <locationY>19</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>isAccountSuitableForAccreditation</targetReference>
@@ -2508,7 +2544,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>AccountToProcessLookup_0</name>
         <label>AccountToProcessLookup</label>
-        <locationX>879</locationX>
+        <locationX>1213</locationX>
         <locationY>1083</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2573,8 +2609,8 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>AccountToProcessLookup_1</name>
         <label>AccountToProcessLookup</label>
-        <locationX>180</locationX>
-        <locationY>9</locationY>
+        <locationX>562</locationX>
+        <locationY>33</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ParentAccountToProcessLookup</targetReference>
@@ -2647,7 +2683,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>AccreditationContCompanyLookup</name>
         <label>AccreditationContCompanyLookup</label>
-        <locationX>1082</locationX>
+        <locationX>1416</locationX>
         <locationY>1441</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2683,7 +2719,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>AccreditationContPersonLookup</name>
         <label>AccreditationContPersonLookup</label>
-        <locationX>1107</locationX>
+        <locationX>1441</locationX>
         <locationY>1553</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2719,7 +2755,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>AMSOnlineAccreditationRecordTypeLookup</name>
         <label>AMSOnlineAccreditationRecordTypeLookup</label>
-        <locationX>725</locationX>
+        <locationX>1059</locationX>
         <locationY>1083</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2755,11 +2791,11 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>CaseRecordTypeOSCARLookup</name>
         <label>CaseRecordTypeOSCARLookup</label>
-        <locationX>902</locationX>
+        <locationX>1236</locationX>
         <locationY>934</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AMS_FillCaseTypeOfCustomer</targetReference>
+            <targetReference>FillCaseTypeCustomer</targetReference>
         </connector>
         <filters>
             <field>DeveloperName</field>
@@ -2791,7 +2827,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>ContactLookup</name>
         <label>ContactLookup</label>
-        <locationX>1586</locationX>
+        <locationX>1920</locationX>
         <locationY>796</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2833,7 +2869,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>ContactRecordLookup</name>
         <label>ContactRecordLookup</label>
-        <locationX>1081</locationX>
+        <locationX>1415</locationX>
         <locationY>611</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2855,7 +2891,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>OSCARCreatedLookup</name>
         <label>OSCARCreatedLookup</label>
-        <locationX>398</locationX>
+        <locationX>732</locationX>
         <locationY>1194</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2877,7 +2913,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>OscarRecordTypeLookup</name>
         <label>OscarRecordTypeLookup</label>
-        <locationX>1411</locationX>
+        <locationX>1745</locationX>
         <locationY>799</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2913,7 +2949,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>Parent_Account_Hierarchy_Lookup</name>
         <label>Parent Account Hierarchy Lookup</label>
-        <locationX>1322</locationX>
+        <locationX>1656</locationX>
         <locationY>263</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2935,7 +2971,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>ParentAccountToProcessLookup</name>
         <label>ParentAccountToProcessLookup</label>
-        <locationX>361</locationX>
+        <locationX>695</locationX>
         <locationY>9</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2970,7 +3006,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordLookups>
         <name>SearchAccountRolesOwners</name>
         <label>SearchAccountRolesOwners</label>
-        <locationX>912</locationX>
+        <locationX>1246</locationX>
         <locationY>1561</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3014,7 +3050,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordUpdates>
         <name>AMSOSCARAccreditationObjectUpdate</name>
         <label>AMSOSCARAccreditationObjectUpdate</label>
-        <locationX>564</locationX>
+        <locationX>898</locationX>
         <locationY>1194</locationY>
         <connector>
             <targetReference>OSCARCreatedLookup</targetReference>
@@ -3043,7 +3079,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordUpdates>
         <name>AMSOSCARAccreditationObjectUpdate_0</name>
         <label>AMSOSCARAccreditationObjectUpdate</label>
-        <locationX>217</locationX>
+        <locationX>551</locationX>
         <locationY>1183</locationY>
         <connector>
             <targetReference>ResultPage</targetReference>
@@ -3066,7 +3102,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordUpdates>
         <name>PortalAdministratorAMSOnlineAccreditationUpdate</name>
         <label>PortalAdministratorAMSOnlineAccreditationUpdate</label>
-        <locationX>568</locationX>
+        <locationX>902</locationX>
         <locationY>1649</locationY>
         <connector>
             <targetReference>AMSOSCARAccreditationObjectUpdate</targetReference>
@@ -3089,7 +3125,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <recordUpdates>
         <name>UpdateAeWithHeAccType</name>
         <label>UpdateAeWithHeAccType</label>
-        <locationX>691</locationX>
+        <locationX>1025</locationX>
         <locationY>509</locationY>
         <connector>
             <targetReference>AssignProcessVariables</targetReference>
@@ -3112,7 +3148,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <screens>
         <name>AeWithInvalidParent</name>
         <label>AeWithInvalidParent</label>
-        <locationX>1566</locationX>
+        <locationX>1900</locationX>
         <locationY>11</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
@@ -3128,7 +3164,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <screens>
         <name>AEWithoutParent</name>
         <label>AEWithoutParent</label>
-        <locationX>1319</locationX>
+        <locationX>1653</locationX>
         <locationY>38</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
@@ -3144,7 +3180,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <screens>
         <name>ContactChooser</name>
         <label>ContactChooser</label>
-        <locationX>851</locationX>
+        <locationX>1185</locationX>
         <locationY>635</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3179,7 +3215,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <screens>
         <name>ContactChooserScreen</name>
         <label>ContactChooserScreen</label>
-        <locationX>1592</locationX>
+        <locationX>2189</locationX>
         <locationY>631</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3204,9 +3240,46 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <description>No FOP Choice</description>
+        <name>No_FOP_Choice</name>
+        <label>No FOP Choice</label>
+        <locationX>185</locationX>
+        <locationY>246</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>TypeOfOscarProcessAssigmentNoFOP</targetReference>
+        </connector>
+        <fields>
+            <name>NOFOPDisplayText</name>
+            <fieldText>OSCAR WIZARD
+              
+This is a wizard designed to help you create a new OSCAR process.
+
+OSCAR stands for Online Solution for Customer Application Request, and must be linked to an existing Account.</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>TypeOfOscarNoFOP</name>
+            <choiceReferences>Agency_Changes</choiceReferences>
+            <choiceReferences>VoluntaryRelinquishment</choiceReferences>
+            <choiceReferences>NewProcessCertificate</choiceReferences>
+            <choiceReferences>NewProcessOscarCorrection</choiceReferences>
+            <choiceReferences>NewProcessBankAccount</choiceReferences>
+            <choiceReferences>NewProcessOPTINOUT</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Please choose a process :</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>No_Process_Available</name>
         <label>No Process Available</label>
-        <locationX>1125</locationX>
+        <locationX>1722</locationX>
         <locationY>8</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
@@ -3222,7 +3295,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <screens>
         <name>Process_Chooser_AE</name>
         <label>Process Chooser - AE</label>
-        <locationX>1570</locationX>
+        <locationX>2167</locationX>
         <locationY>144</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3253,8 +3326,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
     <screens>
         <name>Process_Chooser_Changes</name>
         <label>Process Chooser - Changes</label>
-        <locationX>522</locationX>
-        <locationY>242</locationY>
+        <locationX>605</locationX>
+        <locationY>260</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3289,8 +3362,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
     <screens>
         <name>Process_Chooser_Changes_0</name>
         <label>Process Chooser - Changes</label>
-        <locationX>284</locationX>
-        <locationY>246</locationY>
+        <locationX>502</locationX>
+        <locationY>258</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3324,10 +3397,45 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Process_Chooser_ChangesNoChina</name>
+        <label>Process Chooser - Changes</label>
+        <locationX>983</locationX>
+        <locationY>238</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>TypeOfOscarProcessAssigmentNoFOP2</targetReference>
+        </connector>
+        <fields>
+            <name>ProcessChooserChanges2</name>
+            <fieldText>OSCAR WIZARD
+              
+This is a wizard designed to help you create a new OSCAR process.
+
+OSCAR stands for Online Solution for Customer Application Request, and must be linked to an existing Account.</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Type_of_OSCAR_changeNOFOP</name>
+            <choiceReferences>Agency_Changes</choiceReferences>
+            <choiceReferences>VoluntaryRelinquishment</choiceReferences>
+            <choiceReferences>NewProcessCertificate</choiceReferences>
+            <choiceReferences>NewProcessOscarCorrection</choiceReferences>
+            <choiceReferences>NewProcessBankAccount</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Please choose a process :</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Process_Chooser_HE</name>
         <label>Process Chooser - HE</label>
-        <locationX>831</locationX>
-        <locationY>192</locationY>
+        <locationX>1306</locationX>
+        <locationY>190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3356,40 +3464,9 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Process_Chooser_HE_China</name>
-        <label>Process Chooser - HE CHINA</label>
-        <locationX>1101</locationX>
-        <locationY>305</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>TypeOfOscarProcessAssignment_acc_china</targetReference>
-        </connector>
-        <fields>
-            <name>ProcessChooserAccredited_0_0</name>
-            <fieldText>OSCAR WIZARD
-              
-This is a wizard designed to help you create a new OSCAR process.
-
-OSCAR stands for Online Solution for Customer Application Request, and must be linked to an existing Account.</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Type_of_HE_Process_China</name>
-            <choiceReferences>NewProcessHE</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Please choose a process :</fieldText>
-            <fieldType>RadioButtons</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
         <name>ResultPage</name>
         <label>ResultPage</label>
-        <locationX>398</locationX>
+        <locationX>732</locationX>
         <locationY>1349</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
