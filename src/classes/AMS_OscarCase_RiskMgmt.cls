@@ -75,7 +75,7 @@ public class AMS_OscarCase_RiskMgmt {
 								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, External_ID__c, ParentId, Parent.RecordtypeId, Parent.AccountId,
 								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c,
 								  Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c, Account.ANG_IsNewGenAgency__c, 
-								  Account.ParentId, Account.Parent.ParentId, Account.Parent.Parent.ParentId, Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c, Parent.IFAP_Financial_Year__c,
+								  Account.ParentId, Account.Parent.ParentId, Account.Parent.Parent.ParentId, Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c, Parent.IFAP_Financial_Year__c, Group_Single_Agent__c,
 								  (SELECT Id, HOId__c, Case__c, Account__c FROM Hierarchy_Account_Selections__r)
 								  FROM Case WHERE Id IN: mapTrgNew.keySet()]);
 
@@ -163,7 +163,7 @@ public class AMS_OscarCase_RiskMgmt {
 					continue;
 
 				//Check that the same change code does not exists generated from the same SIDRA (Lite)
-				Boolean ccToBeGenerated = CheckOldNewValues(c, mapTrgOld.get(c.Id), ccConfig.Field1__c, ccConfig.Field2__c, ccConfig.Field3__c, ccConfig.Field4__c, ccConfig.Field5__c, ccConfig.Field6__c);
+				Boolean ccToBeGenerated = CheckOldNewValues(c, mapTrgOld.get(c.Id), ccConfig.Field1__c, ccConfig.Field2__c, ccConfig.Field3__c, ccConfig.Field4__c, ccConfig.Field5__c, ccConfig.Field6__c, ccConfig.Field7__c);
 
 				if(ccToBeGenerated)
 					ccToBeGenerated = bCheckCondition(c, null, 'NOT EXISTS:' + ccConfig.Change_Code__c, mapExistingChangeCodes);
@@ -195,6 +195,10 @@ public class AMS_OscarCase_RiskMgmt {
 						generateNOTnotification = false;
 						notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = 'NOT change code'));
 					}
+				}
+
+				if(ccConfig.Field7__c != NULL && ccToBeGenerated){
+					ccToBeGenerated = bCheckCondition(c, ccConfig.Field7__c, ccConfig.Field7Values__c.toUpperCase(), mapExistingChangeCodes);
 				}
 
 				if(ccToBeGenerated){
@@ -300,10 +304,10 @@ public class AMS_OscarCase_RiskMgmt {
 								lsAACC.add(aaccAux);
 							}
 						}
+
 						//add the extra memo text just for the HO
 						String extraMemoText = allHierarchyPerParent.get(caseHOId).size() > 1 ? ccToCreate.Extra_memo_text_for_HO__c : '';
 						aacc.Bulletin_Information__c = extraMemoText != null ? (aacc.Bulletin_Information__c + ' ' + extraMemoText) : aacc.Bulletin_Information__c;
-
 					}
 
 				} else if(currentAcc.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && currentAcc.Location_Type__c != AMS_Utils.GE && ccToCreate.Apply_to_hierarchy__c == false){
@@ -890,7 +894,7 @@ public class AMS_OscarCase_RiskMgmt {
 
 
 	//Check if there all the fields that lead to generation of change code had a change
-	private static boolean CheckOldNewValues(case NewCaseValues, case OldCaseValues, string Field1, string Field2, string Field3, string Field4, string Field5, string Field6){
+	private static boolean CheckOldNewValues(case NewCaseValues, case OldCaseValues, string Field1, string Field2, string Field3, string Field4, string Field5, string Field6, String Field7){
 
 		if(OldCaseValues!=null){
 			if( ((Field1==null || Field1.toUpperCase() == 'PARENT.STATUS' || Field1.toUpperCase() ==  'CHANGECODE' || Field1.toUpperCase()== 'EXISTS') || (Field1 != null && NewCaseValues.get(Field1) == OldCaseValues.get(Field1))) &&
@@ -899,7 +903,8 @@ public class AMS_OscarCase_RiskMgmt {
 				((Field4==null || Field4.toUpperCase() == 'PARENT.STATUS' || Field4.toUpperCase() ==  'CHANGECODE' || Field4.toUpperCase()== 'EXISTS') || (Field4 != null && NewCaseValues.get(Field4) == OldCaseValues.get(Field4))) &&
 				((Field5==null || Field5.toUpperCase() == 'PARENT.STATUS' || Field5.toUpperCase() ==  'CHANGECODE' || Field5.toUpperCase()== 'EXISTS') || (Field5 != null && NewCaseValues.get(Field5) == OldCaseValues.get(Field5))) &&
 				//NEWGEN-5318 - avoid validation when Field6 Value = LASTYEARIFAP.STATUS
-				((Field6==null || Field6.toUpperCase() == 'PARENT.STATUS' || Field6.toUpperCase() ==  'CHANGECODE' || Field6.toUpperCase()== 'EXISTS') || (Field6 != null && Field6.toUpperCase() != 'LASTYEARIFAP.STATUS' && NewCaseValues.get(Field6) == OldCaseValues.get(Field6)))
+				((Field6==null || Field6.toUpperCase() == 'PARENT.STATUS' || Field6.toUpperCase() ==  'CHANGECODE' || Field6.toUpperCase()== 'EXISTS') || (Field6 != null && Field6.toUpperCase() != 'LASTYEARIFAP.STATUS' && NewCaseValues.get(Field6) == OldCaseValues.get(Field6))) &&
+				((Field7==null || Field7.toUpperCase() == 'PARENT.STATUS' || Field7.toUpperCase() ==  'CHANGECODE' || Field7.toUpperCase()== 'EXISTS') || (Field7 != null && NewCaseValues.get(Field7) == OldCaseValues.get(Field7)))
 				)
 				return false;
 		}

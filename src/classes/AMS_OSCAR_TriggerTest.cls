@@ -782,7 +782,7 @@
 
         AMS_OSCARTriggerHandler.allOnlineAccr = null;
 
-        loadCredentials();
+		loadCredentials();
 
         insert new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Test Combination', TC_Name__c = true);
 
@@ -1054,7 +1054,7 @@
 
         AMS_OSCARTriggerHandler.allOnlineAccr = null;
 
-        loadCredentials();
+		loadCredentials();
 
         Test.startTest();
 
@@ -1147,8 +1147,19 @@
 
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name = 'Test_state', IATA_ISO_Country__c = ctry.Id, ISO_Code__c = 'FR');
         insert stt;
-                
-        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+		        
+    //I wonder why this is being called here - what does this oscar has to do with Change of Ownership to IATA ?! .......   
+        //AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Location_Type__c = 'HO', IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency', Status__c = AMS_Utils.ACC_S9_APPROVED, Location_Class__c = 'R');
+
+        insert a1;
+
+		Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Location_Type__c = 'BR', IATACode__c='9876543',Name='Test2 Agency',Short_Name__c='Test2 Agency', ParentId = a1.Id);
+
+        insert a2;
 
         AMS_OSCARTriggerHandler.allOnlineAccr = null;
 
@@ -1241,7 +1252,7 @@
 
         AMS_OSCARTriggerHandler.allOnlineAccr = null;
 
-        loadCredentials();
+		loadCredentials();
 
         Test.startTest();
 
@@ -1551,12 +1562,21 @@
     
     /*** AMSU-193 ***/
     @isTest static void prepopulateRF() {
+        AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
+			Name = 'BSP-SG',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			ANG_RHC_Amount_Equals_FS__c = true
+		);
+
+        insert bspSG;
+
         IATA_ISO_Country__c country = new IATA_ISO_Country__c();
         country.Name = 'Portugal';
         country.ISO_Code__c = 'PT';
         country.ISO_Code_Numeric__c = 11;
         country.Case_BSP_Country__c = 'Test';
         country.AMS_Default_State__c = 'FR';
+        country.AMS_Settlement_System__c = bspSG.Id;
         insert country;
 
 
@@ -1582,7 +1602,7 @@
         AMS_OSCAR__c oscar = new AMS_OSCAR__c();  
         oscar.Account__c = agency.Id;
         oscar.OwnerId = UserInfo.getUserId();
-        oscar.Process__c = AMS_Utils.new_HO;    
+        oscar.Process__c = AMS_Utils.new_HO;  
         oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         insert oscar;
 
@@ -1639,14 +1659,6 @@
         operation.Settlement__c = issOperation.Id;
         operation.Name = 'TEST';
         insert operation;
-
-        AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
-            Name = 'BSP-SG',
-            RecordTypeId = AMS_Utils.RECTYPE_BSP,
-            ANG_RHC_Amount_Equals_FS__c = true
-        );
-
-        insert bspSG;
 
         ANG_BSP_Attributes__c attribute = new ANG_BSP_Attributes__c();
         attribute.BSP__c = bspSG.Id;

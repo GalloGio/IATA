@@ -3472,6 +3472,21 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Previous_HE__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Stores the reference for the previous HE account when performing a change of location type. This field is set when the sanity check step is passed.</description>
+        <externalId>false</externalId>
+        <label>Previous HE</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>OSCARs (Previous HE)</relationshipLabel>
+        <relationshipName>Previous_HE_Accounts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Process_Start_Date__c</fullName>
         <description>To be used for Accreditation in &quot;Process&quot; Record Type</description>
         <externalId>false</externalId>

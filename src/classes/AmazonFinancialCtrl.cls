@@ -26,8 +26,8 @@ global class AmazonFinancialCtrl {
   public boolean canUploadAndDelete {
     get {
       if (cse == null || cse.id == null) return true;
-      Case thiscse = [Select id, Status from Case where id = :cse.id];
-      return caseStatusUploadAllowed.contains(thiscse.Status);
+      Case thiscse = [Select id, Status, Financial_Review_type__c from Case where id = :cse.id];
+      return caseStatusUploadAllowed.contains(thiscse.Status);// && (thiscse.Financial_Review_type__c == 'Multicountry Annual' && acc.); //falar com a Irene
     }
     set;
   }

@@ -580,6 +580,41 @@ private class ANG_AccountTriggerHandlerTest {
         System.assertEquals(2, [SELECT Id FROM AMS_Agency_Updates__c WHERE Change_Code__c = 'MAPDF' OR Change_Code__c ='MBDIL'].size());
     }
 
+	@isTest static void testChangeFOPsStatusAccordingly(){
+
+        List<Agency_Authorization__c> fops = new List<Agency_Authorization__c>();
+        Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+        Account a = [SELECT Id,Is_PCI_compliant__c FROM Account WHERE Name = 'Test'];
+        
+        Agency_Authorization__c cashfop = new Agency_Authorization__c(Account__c = a.id, ANG_FormOfPayment_ID__c = 'CA', RecordTypeId = formOfPaymentRT);
+           fops.add(cashfop);
+
+           Agency_Authorization__c creditCardfop = new Agency_Authorization__c(Account__c = a.id, ANG_FormOfPayment_ID__c = 'CC', RecordTypeId = formOfPaymentRT);
+           fops.add(creditCardfop);
+           
+           Agency_Authorization__c bopMethod = new Agency_Authorization__c(Account__c = a.id, ANG_FormOfPayment_ID__c = 'EP', RecordTypeId = formOfPaymentRT);
+           fops.add(bopMethod);
+           insert fops;
+
+        a.Status__c = AMS_Utils.ACC_S0_TERMINATED;
+        update a;
+
+        for(Agency_Authorization__c aa : [SELECT Status__c FROM Agency_Authorization__c ]){
+            system.assertEquals(aa.Status__c, 'Non-Active');
+        }
+
+        a.Status__c = AMS_Utils.ACC_S9_APPROVED;
+        update a;
+
+        for(Agency_Authorization__c aa : [SELECT ANG_FormOfPayment_ID__c, Status__c FROM Agency_Authorization__c ]){
+            
+            if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CC)
+            	system.assertEquals(aa.Status__c, 'Non-Active');
+            else
+            	system.assertEquals(aa.Status__c, 'Active');
+        }
+    }
+
 	@isTest static void dueDiligenceModelBPlusTest(){
 		
 		List<Account> accs = [SELECT Id, ANG_IEP_Status__c FROM Account WHERE Name = 'UK Test'];
@@ -739,7 +774,7 @@ private class ANG_AccountTriggerHandlerTest {
         integer i=0;
         for (Account a :accs){
 			a.Is_PCI_compliant__c = (Math.mod(i, 2) == 0) ? 'Corporate Card' : 'Nil CC';
-        	a.ANG_IEP_Status__c = 'No IEP Account';
+        	a.ANG_IEP_Status__c = (Math.mod(i, 2) == 0) ? 'No IEP Account' : NULL;
 			i++;
         }
 

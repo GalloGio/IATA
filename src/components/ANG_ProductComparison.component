@@ -60,7 +60,14 @@
           <p><b>{! $Label.ANG_ISSP_ProductComparisonTitle2}</b></p>
         </div>
 
-        <div class="panel-body scrollBar" id="body-results">
+        <div class="row" style="padding-top: 22px; text-align: center;">
+	        <div class="col-md-12" id="McQuestions" style="margin-bottom: -18px; padding-left: {!IF(helper.multiCountryEnabled, '200px;', '255px;')}">
+	            <apex:outputText value="{!$Label.ISSP_AMS_Info_Accreditation_Types}"/> &nbsp;
+	            <apex:outputLink value="https://newgeniss.iata.org/" target="_blank" >{!$Label.ANG_ISSP_ProductComparisonViewHere}</apex:outputLink>
+	        </div>
+	    </div>
+
+        <div class="panel-body scrollBar" id="body-results" style="padding-top: -20px;">
 			<div class="ProdCompwrapper">
 				<table>
 					<tr>
@@ -83,7 +90,7 @@
 							<apex:outputPanel rendered="{! cell.name == 'applyNow'}">
 								<td>
 									<apex:outputLink styleClass="btn btn_iata_primary" 
-										value="/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent&accredType={! cell.attribute}">{! $Label.ANG_ISSP_ProductComparisonApplyNow}</apex:outputLink>
+										value="/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent&accredType={! cell.attribute}{!IF(helper.chinaAgent, '&typeOfAgency=' + helper.chinaLocClass, '')}">{! $Label.ANG_ISSP_ProductComparisonApplyNow}</apex:outputLink>
 								</td>
 							</apex:outputPanel>
 
@@ -95,7 +102,7 @@
 
 							<apex:outputPanel rendered="{! cell.name == 'link'}">
 								<td>
-									<a href="/ISSP_Country_Requirements?comp=true&accredType={! cell.attribute}">{! $Label.ANG_ISSP_ProductComparisonViewHere}</a>
+									<a href="/ISSP_Country_Requirements?comp=true&accredType={! cell.attribute}{!IF(helper.chinaAgent, '&chinaAccred=' + helper.chinaLocClass, '')}">{! $Label.ANG_ISSP_ProductComparisonViewHere}</a>
 								</td>
 							</apex:outputPanel>
 
@@ -103,7 +110,7 @@
 								<apex:outputPanel rendered="{! cell.name == 'Cost'}">
 									<td style="text-align: left; vertical-align: top; padding-right: 10px; padding-left: 10px;">
 										<apex:outputLabel value="{! cell.slabel}"/>
-										<apex:outPutpanel rendered="{!!(helper.costTooltip == '')}">
+										<apex:outPutpanel rendered="{!AND(NOT(helper.costTooltip == ''), NOT(AND(helper.chinaAgent, helper.chinaLocClass == 'Domestic')))}">
 
 											<a href="#" data-html="true" data-toggle="popover" data-trigger="hover" 
 											   title="{!cell.slabel}" data-content="<div escape='false'>{!helper.costTooltip}</div>">
@@ -167,7 +174,7 @@
 
 										<p><b>{! $Label.ANG_ISSP_AssociateEntity}</b></p>
 										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_AE_Application_Registration_Fees__c.Label}: {! cell.fees.AE_Application_Registration_Fees}</p>
-										<p style="padding-left: 20px">{!helper.prodCompAnnualFeesFormattedLabel}: </p>
+										<p style="padding-left: 20px">{!helper.prodCompAnnualFeesFormattedLabel}: {! cell.fees.AE_Annual_Fees}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_First_10_locations__c.Label}: {! cell.fees.AE_Fees_First_10_locations}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Next_15_Locations__c.Label}: {! cell.fees.AE_Fees_Next_15_Locations}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Additional_Locations__c.Label}: {! cell.fees.AE_Fees_Additional_Locations}</p>
