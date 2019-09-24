@@ -32,23 +32,10 @@
       }
 
       .pbTitle {
-        width: {
-          !IF(isstep2, '90% !important', '40% !important')
-        }
-        ;
+        display: none;
+        width: {!IF(isstep2,'90% !important','40% !important')};
       }
 
-      .pbBody {
-        padding-left: 10px !important;
-      }
-
-      .pbBody a {
-        color: #337ab7 !important
-      }
-
-      .bPageBlock {
-        border-top-width: thin !important;
-      }
 
       .bEditBlock input {
         vertical-align: top !important;
@@ -107,11 +94,6 @@
         border-right: 2px solid white;
       }
 
-      body .bPageBlock .pbBody .pbSubheader {
-        background-image: url('') !important;
-        background-color: #1797c0;
-        color: #fff;
-      }
 
       body .bPageBlock .pbBody .summary-subsection .pbSubheader {
         background-image: url('') !important;
@@ -238,6 +220,7 @@
                     padding-left: 22px !important;
         }
     </style>
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
 
     <script type="text/javascript">
       var $j = jQuery.noConflict();
@@ -709,9 +692,9 @@
     </script>
     <c:MutationObserverPolyfill ></c:MutationObserverPolyfill>
 
+    <c:ISSP_CustomNavigation />
     <div class="container">
       <div id="contentWrapper">
-        <c:ISSP_CustomNavigation />
 
         <div class="pageNav" style="display:{!IF(isStep3,'inline-block','none')}">
           <p class="LOB">{!$Label.ISSP_Travel_Agent}</p>
@@ -732,21 +715,29 @@
           </div>
           <div class="panel-body" id="body-enquiries">
             <apex:form id="AMSForm">
-              <div class="progress">
-                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                  <apex:commandLink styleclass="btn btn-default" action="{!saveAMSFormAndGoToStep1}" value="{!lblStepA}" id="Prev1" />
+              <div class="progress iata-tabs">
+                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                  <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep1}" id="Prev1">
+                    <apex:outputText value="{!lblStepA}" escape="false"/>
+                  </apex:commandLink>
                 </div>
-                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-                  <apex:commandLink styleclass="btn btn-default" action="{!saveAMSFormAndGoBack}" value="{!lblStepB}" id="Prev2" />
+                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
+                  <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoBack}"  id="Prev2">
+                    <apex:outputText value="{!lblStepB}" escape="false"/>
+                  </apex:commandLink>
                 </div>
-                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                  {!lblStepC}
+                <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                  <apex:outputText value="{!lblStepC}" escape="false"/>
                 </div>
-                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;">
-                  <apex:commandLink styleclass="btn btn-default" action="{!saveAMSFormAndGoForward}" value="{!lblStepD}" id="Next4" />
+                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;">
+                  <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoForward}" id="Next4">
+                    <apex:outputText value="{!lblStepD}" escape="false"/>
+                  </apex:commandLink>
                 </div>
-                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                  <apex:commandLink styleclass="btn btn-default" action="{!saveAMSFormAndGoToStep5}" value="{!lblStepE}" id="Next5" />
+                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
+                  <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep5}" id="Next5">
+                    <apex:outputText value="{!lblStepE}" escape="false"/>
+                  </apex:commandLink>
                 </div>
               </div>
 
@@ -781,9 +772,9 @@
                   {!$Label.ISSP_AMS_Step3_Save_Anytime}
                 </div>
                 <apex:pageBlockButtons >
-                  <apex:commandButton action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}" />&nbsp;
-                  <apex:commandButton id="nextFormRip" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}"/>
-                  <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
+                  <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" id="nextFormRip" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}"/>&nbsp;
+                  <apex:commandButton styleClass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}"/>
+                  <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}"/>
                 </apex:pageBlockButtons>
                 <apex:PageMessages id="msgs" />
 
@@ -1090,6 +1081,53 @@
                             <apex:inputfield id="date-license-granted" value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" rendered="{!countryCheckList.License_required__c==true}"/>
                             <apex:inputfield id="date-reg-granted" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" rendered="{!countryCheckList.Registration_required__c==true}"/>
                           </apex:pageBlockSection>
+
+                          <apex:pageBlockSection columns="2" collapsible="false" rendered="{!isocountry.Local_language_Agency_details_required__c}">
+                            <apex:facet name="header">
+                                <apex:outputpanel >
+                                    {!txtLocalAgencyDetailsTitle}
+                                </apex:outputpanel>
+                            </apex:facet>
+                            <apex:outputText value="{!txtLocalAgencyDetailsPleaseEnter}"/>
+                            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                            <apex:pageBlockSectionItem labelStyle="width:10%;text-align:left" dataStyle="width:20%">
+                                <apex:outputLabel value="{!txtLocalAgencyDetailsLegalName}"/>
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!newForm.Local_Legally_Registered_Name__c}" />
+                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoCompany}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>                   
+                            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                            <input type="checkbox" id="copyCheckBox" onChange="copyPhysicalAddress()"/>
+                            <label for="copyCheckBox">{!txtLocalAgencyDetailsCopyAddress}</label> 
+                            
+                            <apex:pageBlockSection columns="1">    
+                                <apex:outputText value="{!txtLocalAgencyDetailsPhysicalAddress}" style="font-weight:bold; font-size:110%"/>
+                                <apex:pageBlockSectionItem labelStyle="width:35%">
+                                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Street__c.Label}"/>
+                                    <apex:inputField value="{!newForm.Local_Physical_Address_Street__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalStreet"/>
+                                </apex:pageBlockSectionItem>  
+                                <apex:inputField value="{!newForm.Local_Physical_Address_City__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalCity"/>
+                                <apex:inputField value="{!newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode"/>
+                                <apex:inputField value="{!newForm.Local_Physical_Address_Province__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalProvince"/>
+                                <apex:inputField value="{!newForm.Local_Physical_Address_Area__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalArea"/>
+                                <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                            </apex:pageBlockSection>
+                          
+                            <apex:pageBlockSection columns="1">
+                                <apex:outputText value="{!txtLocalAgencyDetailsCorrespondenceAddress}" style="font-weight:bold; font-size:110%"/>
+                                <apex:pageBlockSectionItem labelStyle="width:30%">
+                                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Street__c.Label}"/>
+                                    <apex:inputField value="{!newForm.Local_Postal_Address_Street__c}" styleClass="PostalStreet"/>
+                                </apex:pageBlockSectionItem>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_City__c}" styleClass="PostalCity"/>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode"/>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince"/>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
+                                <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                            </apex:pageBlockSection>
+                        </apex:pageBlockSection>
                   </apex:pageblock>
                   <script>
                     $j( document ).ready(function() {
@@ -1169,7 +1207,7 @@
                             <apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!txtHelpAuthorisedSig}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip" /></apex:outputText>
                         </apex:facet>
                       </apex:column>
-                      <apex:column value="{!agencycon.Financial_Assessment_Contact__c}" style="text-align:center" rendered="{!IF(AND(amsOfficeType=='HO', newForm.Agent_Type__c!='Standard no Cash'),true,false)}">
+                      <apex:column value="{!agencycon.Financial_Assessment_Contact__c}" style="text-align:center" rendered="{!IF(AND(amsOfficeType=='HO', newForm.Agent_Type__c!='Standard no Cash', AND(newform.Local_Agent_Type__c != 'Domestic', isocountry.ISO_Code__c == 'CN')),true,false)}">
                         <apex:facet name="header">
                           <apex:outputText escape="false" style="float:left" value="&nbsp;{!$Label.ISSP_AMS_Fin_Contact}">
                             <apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!txtHelpFinContact}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip" /></apex:outputText>
@@ -1820,10 +1858,10 @@
 
                     <div class="modal-footer">
                       <!-- <apex:commandButton action="{!createAgencyContact}" value="{!$Label.PKB2_Submit}" oncomplete="closeModal(); setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');" reRender="contactList, ownerList"> -->
-                      <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled';" reRender="contactList, ownerList, theMessages">
+                      <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="iatabtn iatabtn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled';" reRender="contactList, ownerList, theMessages">
                         <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
                       </apex:commandButton>&nbsp;
-                      <button type="button" class="btn btn-default" onclick="cancelAgentUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+                      <button type="button" class="iatabtn iatabtn-danger" onclick="cancelAgentUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
                     </div>
 
                       <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"/>
@@ -1919,7 +1957,7 @@
                             <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Authorised_signatory__c.Label}</apex:outputLabel>
                             <apex:inputField value="{!newContact.Authorised_signatory__c}" />
                           </apex:pageBlockSectionItem>
-                          <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" rendered="{!amsOfficeType=='HO'}">
+                          <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" rendered="{!AND(amsOfficeType=='HO', newForm.Local_Agent_Type__c != 'Domestic')}">
                             <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}</apex:outputLabel>
                             <apex:inputField value="{!newContact.Financial_Assessment_Contact__c}" />
                           </apex:pageBlockSectionItem>
@@ -1928,10 +1966,10 @@
                     </div>
                     <div class="modal-footer">
 
-                      <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeUpdateOwnerModal(); cancelOwnerUpdate();} this.removeAttribute('disabled');setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');" onclick="this.disabled='disabled';" reRender="contactList, ownerList, theMessages">
+                      <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="iatabtn iatabtn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeUpdateOwnerModal(); cancelOwnerUpdate();} this.removeAttribute('disabled');setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');" onclick="this.disabled='disabled';" reRender="contactList, ownerList, theMessages">
                         <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
                       </apex:commandButton>&nbsp;
-                      <button type="button" class="btn btn-default" onclick="cancelOwnerUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+                      <button type="button" class="iatabtn iatabtn-danger" onclick="cancelOwnerUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
                     </div>
 
                   </div>
@@ -1990,10 +2028,10 @@
                     </div>
 
                     <div class="modal-footer">
-                      <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeModal2(); cancelCompanyUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="companyList, ownerList, companyMessages">
+                      <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="iatabtn iatabtn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeModal2(); cancelCompanyUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="companyList, ownerList, companyMessages">
                         <apex:param value="Company" name="companytype" assignTo="{!contactType}" />
                       </apex:commandButton>&nbsp;
-                      <button type="button" class="btn btn-default" onclick="cancelCompanyUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+                      <button type="button" class="iatabtn iatabtn-danger" onclick="cancelCompanyUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
                     </div>
                   </div>
                 </div>
@@ -2032,9 +2070,9 @@
                     </div>
 
                     <div class="modal-footer">
-                      <apex:commandButton action="{!createInternationalSales}" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!salesSaved}){closeModal4();cancelSalesUpdate();}this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="salesList, salesMessages">
+                      <apex:commandButton action="{!createInternationalSales}" styleClass="iatabtn iatabtn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!salesSaved}){closeModal4();cancelSalesUpdate();}this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="salesList, salesMessages">
                       </apex:commandButton>&nbsp;
-                      <button type="button" class="btn btn-default" onclick="cancelSalesUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+                      <button type="button" class="iatabtn iatabtn-danger" onclick="cancelSalesUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
                     </div>
                   </div>
                 </div>
@@ -2095,8 +2133,8 @@
         </div>
 
       </div>
-      <c:ISSP_CustomFooter />
     </div>
+    <c:ISSP_CustomFooter />
   </body>
 
   </html>

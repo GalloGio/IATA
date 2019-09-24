@@ -17,14 +17,19 @@ public with sharing class ISSP_ANG_RHC {
 	public ANG_ProductComparisonHelper helper {get; set;}
 	@TestVisible private static final String ICE_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().ICE_E_Statements__c;
 	public ANG_RHC_Information__c rhcInfo {get;set;}
-	public Boolean hasRightAccessIceService { get {
-		if (hasRightAccessIceService != null) {
-			return hasRightAccessIceService;
-		} else {
-			hasRightAccessIceService = hasRightAccess(ICE_SERVICE);
-			return hasRightAccessIceService;
+	public Boolean hasRightAccessIceService { 
+		get {
+			if (hasRightAccessIceService != null) {
+				return hasRightAccessIceService;
+			} else {
+				hasRightAccessIceService = hasRightAccess(ICE_SERVICE);
+				return hasRightAccessIceService;
+			} 
 		} 
-	} set;}
+		set;
+	}
+	public Boolean isChinaAgent {get; set;}
+	public String remFrequency {get; set;}
 
 	public ISSP_ANG_RHC() {
 		this.riskStatusFilter = 'Active';
@@ -74,18 +79,21 @@ public with sharing class ISSP_ANG_RHC {
 
 		this.contact = contactList.isEmpty() ? null : contactList[0];
 
-		if(this.contact != null) {
+		if (this.contact != null) {
 			accountId = this.contact.Account.id;
 			if(this.contact.Account.Top_Parent__c != null) {
 				accountIdTP = this.contact.Account.Top_Parent__c;
 			} else {
 				accountIdTP = this.contact.Account.id;
 			}
-		}
 
-		this.isCashless = (this.contact != null && 
-				   		   this.contact.Account.ANG_Accreditation_Model__c != null && 
-				   		   this.contact.Account.ANG_Accreditation_Model__c == 'Cashless');
+			this.isCashless = (this.contact.Account.ANG_Accreditation_Model__c != null 
+				&& this.contact.Account.ANG_Accreditation_Model__c == 'Cashless');
+
+			isChinaAgent = this.contact.Account.IATA_ISO_Country__r.ISO_Code__c == 'CN';
+
+			remFrequency = this.contact.Account.Remittance_frequency__c;
+		}
 	}	
 
 	private void initFormsOfPayment() {
@@ -207,9 +215,7 @@ public with sharing class ISSP_ANG_RHC {
 		List<ANG_Agency_Risk_Event__c> events = Database.query(soqlStr);
 
 		for(ANG_Agency_Risk_Event__c event : events) {
-			//
 			// If the case is not visible in the portal then we do not show the link to it.
-			//
 			if(event.ANG_CaseId__c != null && !event.ANG_CaseId__r.Visible_on_ISS_Portal__c) {
 				event.ANG_CaseId__c = null;
 			}

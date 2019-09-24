@@ -53,11 +53,24 @@
     justify-content: center;
 }
 
-.slds-form-element__label{
-    display:none;
+.searchContainer{
+    display: flex;
+    align-items: end;
 }
 
-.borderedSearch{
-    width:30%;
-    border-bottom: solid #e2e4e8 2px;
+.displayFlex {
+  display: flex;
+}
+
+.marginRight {
+  margin-right: 10px;
+}
+
+.heightCreateContact {
+  height: 100%;
+}
+
+.adminContactsTable {
+    max-height: 330px;
+    display: flex;
 }

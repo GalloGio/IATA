@@ -1692,10 +1692,17 @@ global without sharing class ISSP_APProcess {
     }
 
     /**
+        Returns true if meets the conditions to show Bank Mandate Section
+    **/
+    public Boolean getShowBankMandateSection() { 
+        return (strAreaType=='Airline Joining' || strChangeType=='Bank Account Instructions');    
+    }
+
+    /**
         Returns true if the account meets the conditions to show the field Airline_wish_to_join_ICCS__c
     **/
-    public Boolean getShowJoinICCSQuestion() {
-        return ICCSProductCountry!=null;
+    public Boolean getShowJoinICCSQuestion() { 
+        return (getShowBankMandateSection() && ICCSProductCountry!=null);  
     }
 
     /**
@@ -1720,7 +1727,7 @@ global without sharing class ISSP_APProcess {
         Returns true if the account meets the conditions to show Upload Bank Mandate section
     **/
     public Boolean getShowUploadBankMandate() {
-        return !getShowJoinICCSQuestion() || this.newForm.Airline_wish_to_join_ICCS__c == 'No';
+        return getShowBankMandateSection() && (!getShowJoinICCSQuestion() || this.newForm.Airline_wish_to_join_ICCS__c == 'No');
     }
     /**
         Returns true if the account meets the conditions to show CounterIndemnity section

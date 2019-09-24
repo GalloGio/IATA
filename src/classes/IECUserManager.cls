@@ -113,7 +113,13 @@ public without sharing class IECUserManager {
 
         // check if SalesForce is redirecting the customer to the Change password page
       if(firstLogin ){
-          System.debug('IECUserManager.login end');
+          IEC_Cart storeCart = IEC_Cart.getInstance();
+          List<IEC_Cart.CartItem> cartContent = storeCart.getCartContent();
+          system.debug('cartContent : ' + cartContent );
+       
+          Customer_DTO.setLoginEvent(userList[0].ContactId);      
+          storeCart.loginUserEvent();
+          System.debug('IECUserManager.login (first login) end');
 
               return pr;
 

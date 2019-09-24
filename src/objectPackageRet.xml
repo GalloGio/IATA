@@ -11,6 +11,7 @@
         <members>Activity</members>
         <members>Asset</members>
         <members>Campaign</members>
+        <members>CampaignMember</members>
         <members>Case</members>
         <members>CaseContactRole</members>
         <members>Contact</members>

@@ -6,6 +6,7 @@ Public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
 Public static final String PORTAL_ACCESS_DENIED='Access Denied';
 Public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
 Public static final String PORTAL_USER_APPROVED='Approved User';
+Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
 Public static final String PORTAL_EXTERNAL_ACCESS_GRANTED='External Access Granted';
 Public static final String WILDCARD = 'ALL';
 
@@ -48,12 +49,18 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 	portalApplicationList.addAll(requestableAppList);
 
 	for (Portal_Applications__c pApp: portalApplicationList) {
+		if(pApp.Name.contains('Paypal') && pApp.VisibleCNS__c) {
+			continue;
+		}		
+		if((pApp.Name == 'Trained Staff Certification' || pApp.Name == 'Local Industry Groups') && con.User_Portal_Status__c != PORTAL_ADMIN_APPROVED) {
+			continue;
+		}
 		if (pApp.Name == 'Insurance Providers' || pApp.Name == 'Financial Securities') {
 			if (((con.Account.Sector__c == 'Travel Agent' || con.Account.Sector__c == 'Cargo Agent')
 			     && con.Account.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) &&
 			    (allowedLocTypes.contains(con.Account.Location_Type__c) || con.Account.Is_Branch_Abroad__c == 'Yes') &&
 			    (AMS_Utils.ACTIVEAGENCYSTATUS.contains(con.Account.Status__c) || con.Account.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) &&
-			    (con.Financial_Assessment_Contact__c || con.User_Portal_Status__c == 'Approved Admin')) {
+			    (con.Financial_Assessment_Contact__c || con.User_Portal_Status__c == PORTAL_ADMIN_APPROVED)) {
 				externalLinksList.add(pApp);
 			}
 		} else if (pApp.ANG_Flag_Restrict_Accredited_Agent__c && pApp.ANG_Flag_Restrict_Sector__c) {
@@ -406,6 +413,20 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 		}
 	}
 
+	User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
+	String contactId = userAux.ContactId;
+
+	List<Portal_Applications__c> lstPA = getNonRequestableServicesList(contactId);
+	List<ServiceWrapper> lstServiceWrapper = new List<ServiceWrapper>();
+
+	if(!lstPA.isEmpty()) {
+		Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
+		for(Portal_Applications__c portalAppAux : lstPA) {
+			lstServiceWrapper.add(new ServiceWrapper(portalAppAux, false, '', false, ''));
+		}
+		lstToReturn.addAll(lstServiceWrapper);
+	}
+
 	return lstToReturn;
 }
 
@@ -637,6 +658,8 @@ public boolean hasNoContact {get; set;}
 
 
 public ContactWrapper(Portal_Application_Right__c par){
+	String accountLocation = String.isNotBlank(par.Contact__r.Account.BillingCity) ? ' (' + par.Contact__r.Account.BillingCity + ')' : '';
+
 	this.contactId=par.contact__c;
 	this.contactName=par.contact__r.name;
 	this.emailAddress=par.contact__r.email;
@@ -748,11 +771,13 @@ public ServiceWrapper(Portal_Applications__c recordService, Boolean isAdmin, Str
 		this.addUsersEnable =  isAdmin;
 		this.accountNotOpenError = false;
 	}
-
+	
 	alignStatus(this,status);
 }
 
 }
+
+
 
 /**
    Returns true if current user is a Portal Admin
@@ -868,7 +893,19 @@ public static List<Connected_App_Roles__c> availableICCSPortalServiceRoles(){
 }
 
 @AuraEnabled
-public static String newAppsRequest2(String applicationId, String applicationName, String contactId, String portalServiceRole, Boolean flagUseDefaultRole, String defaultPortalUserRole){
+public static String newAppsRequest2(String applicationId, String applicationName, String contactId, String portalServiceRole, Boolean flagUseDefaultRole){
+	String defaultPortalUserRole = '';
+	if(flagUseDefaultRole){
+		List<Connected_App_Roles__c> lstConAppRoles = availableIEPPortalServiceRoles(applicationId);
+		for(Connected_App_Roles__c car : lstConAppRoles){
+			if(car.Default_User_Role__c && car.Connected_App__c == applicationName){
+				defaultPortalUserRole = car.Role__c;
+			}
+		}
+		if(defaultPortalUserRole == ''){
+			return null;
+		}
+	}
 	return ISSP_AvailableServices.newAppsRequest2(applicationId, applicationName, contactId, portalServiceRole, flagUseDefaultRole, defaultPortalUserRole);
 }
 
@@ -893,7 +930,7 @@ public static String serviceWrapperRedirect(String serviceId){
 	                          WHERE id =: UserInfo.getUserId()];
 
 
-	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == 'Approved Admin');
+	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == PORTAL_ADMIN_APPROVED);
 
 	List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([SELECT id,Application_icon__c, Application_URL__c,
 	                                                                                 Confirm_Box__c, Confirm_Text__c, Description__c,Name,
@@ -906,13 +943,74 @@ public static String serviceWrapperRedirect(String serviceId){
 }
 
 
-//gets Portal ADmins - Method based on existing funcionality ANG_RHCAlertTriggerHandler.sendAlertNotification
-@AuraEnabled(cacheable=true)
-public static list<contact> getPortalAdmins(){
-	User u=DAL_ISSP.getUser(UserInfo.getUserId());
+	/**
+	* getPortalAdmins - Method based on existing functionality on ISSP__PersonalInformationWithoutSharing.loadPortalAdmins
+	* @return   returns Administrator contacts based on AccountTeamMembers
+	*/
+	@AuraEnabled(cacheable=true)
+	public static List<AccountTeamMember> getPortalAdmins() {
+        User currentUser = DAL_ISSP.getUser(Userinfo.getUserId());
+        Contact currentUserContact = DAL_ISSP.getContact(currentUser.ContactId);
 
-	return [SELECT Id,name,email FROM Contact WHERE User_Portal_Status__c = : ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (Account.Top_Parent__c =: u.contact.AccountId OR AccountId = : u.contact.AccountId)];
-}
+		List<AccountTeamMember> portalAdmins = new List<AccountTeamMember>();
+		Map<Id, AccountTeamMember> portalAdminMap = new Map<Id, AccountTeamMember>();
+
+		if (currentUserContact == null 
+			|| 
+				(currentUserContact.User_Portal_Status__c != 'Active'
+				&& currentUserContact.User_Portal_Status__c != 'Approved Admin' //WMO-386  
+				&& currentUserContact.User_Portal_Status__c != 'Regional Administrator'
+				&& currentUserContact.User_Portal_Status__c != 'Approved User'
+				&& currentUserContact.User_Portal_Status__c != 'Pending Approval')
+			)
+			return new List<AccountTeamMember>();
+			
+		try {
+			String currentUserProfile = '';
+			List<AccountTeamMember> teamMembers = ISSP_PersonalInformationWithoutSharing.getPortalAdmins(new Id[] { currentUserContact.AccountId, currentUserContact.Account.ParentId });
+			
+			for (AccountTeamMember teamMember : teamMembers) {
+				if(currentUserContact.Id == teamMember.User.ContactId) {
+					if(currentUserProfile == '') {
+						currentUserProfile = teamMember.TeamMemberRole;
+					}
+					else if(currentUserProfile == 'Portal Administrator') {
+						if(teamMember.TeamMemberRole != 'Portal Administrator' ) {
+							currentUserProfile = teamMember.TeamMemberRole;
+						}
+					}
+					else if(currentUserProfile == 'Portal Regional Administrator') {
+						if(teamMember.TeamMemberRole != 'Portal Administrator' && teamMember.TeamMemberRole != 'Portal Regional Administrator'){
+							currentUserProfile = teamMember.TeamMemberRole;
+						}
+					}
+				}
+			}
+
+			// fill admins contacts lists
+			for (AccountTeamMember teamMember : teamMembers) {
+				if(currentUserProfile == '' || currentUserProfile == 'Manager' || currentUserProfile == 'Collaborator') {
+					if(teamMember.TeamMemberRole == 'Portal Regional Administrator') {
+						portalAdminMap.put(teamMember.User.ContactId, teamMember);
+					}
+				}
+			}
+			if (portalAdminMap.size() == 0) {
+				for (AccountTeamMember teamMember : teamMembers) {
+					if (teamMember.TeamMemberRole == 'Portal Administrator') {
+						portalAdminMap.put(teamMember.User.ContactId, teamMember);
+					}
+				}
+			} 
+			
+			portalAdmins = portalAdminMap.values(); 
+			
+		} catch (Exception e) {
+			ISSP_Utilities.log(e);
+		}
+
+		return portalAdmins;
+	}
 
 /**
     Returns a list of all visible application names for the input account
@@ -990,7 +1088,7 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 		System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactId : ' + contactId + '] ');
 		throw new portalServiceException(Label.ISSP_ANG_GenericError);
 	}
-	
+
 	Portal_Application_Right__c psa=psal.get(0);
 
 
@@ -1038,5 +1136,236 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 	}
 
 }
+    @AuraEnabled
+    public static List<PortalLookupSearchResult> getContactsForServiceAssignment(String serviceId,String queryString){
+
+        List<Contact> contacts = new List<Contact>();
+        List<PortalLookupSearchResult> results = new List<PortalLookupSearchResult>();
+
+        User u = [SELECT id, contact.account.ANG_IEP_Status_FF__c, contact.Authorized_Signatory__c, contact.User_Portal_Status__c
+        FROM User
+        WHERE id =: UserInfo.getUserId()];
+
+        List<Id> alreadyAssignedContactIds = new List<Id>();
+
+
+        List<Portal_Application_Right__c> existingRights = [SELECT Id,Contact__c
+        FROM Portal_Application_Right__c
+        WHERE ((Contact__r.Account.Top_Parent__c =: u.contact.AccountId OR Contact__r.AccountId = : u.contact.AccountId) OR Right__c !=: PORTAL_ACCESS_GRANTED)
+        AND Portal_Application__c =: serviceId];
+
+        for(Portal_Application_Right__c right:existingRights) {
+            alreadyAssignedContactIds.add(right.Contact__c);
+        }
+        
+
+        String contactsQuery = 'SELECT Id, Name , AccountId, Email, User_Portal_Status__c, '+
+            '(select id, Right__c from Portal_Application_Rights__r where Portal_Application__c =\''+ ServiceId + '\'),'+
+            ' Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,'+
+            ' Account.IATACode__c  from Contact' +
+            ' WHERE User_Portal_Status__c NOT IN (\'Inactive\', \'Rejected\', \'Deactivated\')' +
+            ' AND Community__c != null' +
+            ' AND Email != null' +
+			' AND Id NOT IN :alreadyAssignedContactIds ';
+			
+        if(!String.isBlank(queryString)){
+            contactsQuery += ' AND (Name LIKE \'%'+queryString+'%\' ) ';
+        }
+
+        contactsQuery+=' ORDER BY NAME LIMIT 20';
+
+        contacts = Database.query(contactsQuery);
+
+        // Extract Contacts & convert them into PortalLookupSearchResult (check this class for more info)
+        String contactIcon = 'standard:contact';
+        Map<String,String> extraFields;
+
+        for (Contact contact : contacts) {
+            PortalLookupSearchResult res = new PortalLookupSearchResult(contact.Id, 'Contact', contactIcon, contact.Name, contact.Email);
+            String iataCodeLocation = contact.Account.iataCode__c+' ('+contact.Account.BillingCity+')';
+
+            extraFields = new Map<String,String>();
+
+            extraFields.put('iataCodeLocation',iataCodeLocation);
+            extraFields.put('status',contact.User_Portal_Status__c);
+            res.setExtraFields(extraFields);
+
+            results.add(res);
+        }
+
+        return results;
+    }
+
+    @AuraEnabled
+    public static void grantAccessToContacts(List<String> contactIds, String serviceId){
+        List<Portal_Application_Right__c> existingRights = [SELECT Id,Right__c,Contact__c from Portal_Application_Right__c WHERE Contact__c IN:contactIds AND Portal_Application__c=:serviceid];
+
+        List <Contact> processContactList = [SELECT Id, User_Portal_Status__c, Name FROM Contact WHERE Id IN :contactIds];
+        List <String> activateIdList = new List <String>();
+        Set <Id> createIdSet = new Set <Id>();
+        for (Contact thisContact : processContactList){
+            if (thisContact.User_Portal_Status__c == 'Pending Approval'){
+                activateIdList.add(thisContact.Id);
+                thisContact.User_Portal_Status__c = 'Approved User';
+            }
+            else if (thisContact.User_Portal_Status__c == '' || thisContact.User_Portal_Status__c == null){
+                createIdSet.add(thisContact.Id);
+            }
+        }
+
+        if (!activateIdList.isEmpty()){
+            ISSP_EditPortalServiceAccessExt.updateUserProfiles(activateIdList);
+            update processContactList;
+        }
+
+        if (!createIdSet.isEmpty()){
+            ISSP_ContactList ctrl = new ISSP_ContactList();
+            ctrl.processMultiplePortalUserStatusChange(createIdSet, 'Approved User', 'Active');
+        }
+
+        Set<Id> toUpdateIds = new Set<Id>();
+
+
+        if(!existingRights.isEmpty()){
+            for(Portal_Application_Right__c right:existingRights){
+                right.Right__c = 'Access Granted';
+                toUpdateIds.add(right.Contact__c);
+            }
+
+            update existingRights;
+        }
+
+        List<Portal_Application_Right__c> newRights = new List<Portal_Application_Right__c>();
+
+        for(String contactId : contactIds){
+            if(!toUpdateIds.contains(contactId)){
+                Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = contactId, Portal_Application__c = serviceid, Right__c = 'Access Granted');
+                newRights.add(appRight);
+            }
+        }
+
+        if(!newRights.isEmpty()){
+            insert newRights;
+        }
+
+    }
+
+    /**
+   Returns true if the service can be requested and granted without any approval
+   To have this the requester must be an admin user and the app service must have
+   Cannot_be_managed_by_portal_admin__c = false. Also, there is an exception for IATA EasyPay services, which can be requested even when flag is false.
+    **/
+    @AuraEnabled
+    public static Boolean newUserRequestableWithoutApproval(Boolean isAdmin, String serviceId) {
+
+        List<Portal_Applications__c> portalServices = [SELECT Id,Name,Cannot_be_managed_by_portal_admin__c FROM Portal_Applications__c WHERE Id=:serviceId];
+
+        if(!portalServices.isEmpty()){
+            Boolean isEasyPay = portalServices[0].Name.contains('IATA EasyPay');
+
+            Boolean canManage = portalServices[0].Cannot_be_managed_by_portal_admin__c == false || isEasyPay;
+
+            return isAdmin && canManage;
+        }
+
+        return false;
+    }
+
+	//Activates old Iata Easy Pay users that were disabled after some time (Add users in Manage Portal Service)
+	@AuraEnabled
+	public static void ActivateIEPUsers(List<String> contactIds){
+		try{
+			DAL_WithoutSharing.ActivateIEPUsers(contactIds);
+		}catch(Exception e) {
+			throw new portalServiceException(Label.ISSP_ANG_GenericError);
+		}
+	
+	}
+
+	@AuraEnabled
+	public static string CreateNewPortalAccess(List<String> ContactIds, String ServiceId, String PortalServiceRole){
+
+		if(ContactIds.size()>0) {
+
+			List<Portal_Application_Right__c> ContactToAdd_Lst = new List<Portal_Application_Right__c>();
+
+			Set <String> contactIdSet = new Set <String>();
+
+			String auxRight = PORTAL_ACCESS_REQUESTED;
+
+			List<Portal_Application_Right__c> existPSA_Lst = new List<Portal_Application_Right__c>(
+				[Select p.Name, p.Application_Name__c, p.Right__c,p.PortalServiceTranslatedName__c,  p.Portal_Application__r.Description__c, p.Portal_Application__r.Cannot_be_managed_by_portal_admin__c, p.Portal_Application__r.Requestable__c, p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,
+				 p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c,p.Contact__r.Name, p.Contact__r.AccountId, p.Application_Start_URL__c,
+				 p.Case_creation_record_Type__c,p.Access_Status_Reason__c
+				 From Portal_Application_Right__c p
+				 where p.Contact__c IN: ContactIds AND
+				 p.Portal_Application__c =: ServiceId]
+				);
+
+			for(String ContactId : ContactIds) {
+
+				contactIdSet.add(ContactId.trim());
+
+				Boolean isUpdated = false;
+				if(existPSA_Lst != null & existPSA_Lst.size() > 0 ) {
+					for(Portal_Application_Right__c itemPSA : existPSA_Lst) {
+						itemPSA.Right__c = auxRight;
+						isUpdated = true;
+						itemPSA.ANG_Portal_Service_Role__c = PortalServiceRole;
+					}
+				}
+
+				if(isUpdated == false) {
+					Portal_Application_Right__c PSAitem = new Portal_Application_Right__c();
+
+					PSAitem.Portal_Application__c = ServiceId;
+					PSAitem.Right__c = auxRight;
+					PSAitem.ANG_Portal_Service_Role__c = PortalServiceRole;
+					PSAitem.Contact__c = Id.valueOf(ContactId.trim());
+
+					ContactToAdd_Lst.add(PSAitem);
+				}
+			}
+
+			List <Contact> processContactList = [SELECT Id, User_Portal_Status__c, Name FROM Contact WHERE Id IN :contactIdSet];
+			List <String> activateIdList = new List <String>();
+			Set <Id> createIdSet = new Set <Id>();
+			for (Contact thisContact : processContactList) {
+				if (thisContact.User_Portal_Status__c == PORTAL_USER_PENDING_APPR) {
+					activateIdList.add(thisContact.Id);
+					thisContact.User_Portal_Status__c = PORTAL_USER_APPROVED;
+				}
+				else if (thisContact.User_Portal_Status__c == '' || thisContact.User_Portal_Status__c == null) {
+					createIdSet.add(thisContact.Id);
+				}
+			}
+
+			if (!activateIdList.isEmpty()) {
+				ISSP_EditPortalServiceAccessExt.updateUserProfiles(activateIdList);
+				update processContactList;
+			}
+
+			if (!createIdSet.isEmpty()) {
+				ISSP_ContactList ctrl = new ISSP_ContactList();
+				ctrl.processMultiplePortalUserStatusChange(createIdSet, PORTAL_USER_APPROVED, 'Active');
+			}
+
+			//
+			// Save all the Portal_Application_Right__c after creating the users.
+			// This is important for all EASY PAY services because they need to have the portal users.
+			//
+			if(ContactToAdd_Lst != null && ContactToAdd_Lst.size() > 0) {
+				insert ContactToAdd_Lst;
+			}
+
+			if(existPSA_Lst != null && existPSA_Lst.size() > 0) {
+				update existPSA_Lst;
+			}
+			return 'Success';
+
+		}else{
+			return 'Failure';
+		}
+	}
 
 }

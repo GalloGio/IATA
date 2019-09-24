@@ -147,6 +147,14 @@ body {
     fill: #1e32fa;
 }
 
+.blackIcon svg {
+  fill: black;
+}
+
+.orangeIcon svg {
+  fill: #ed7756;
+}
+
 .whiteIcon svg {
     fill: #FFFFFF;
 }
@@ -425,7 +433,7 @@ lightning-datatable .slds-th__action {
 
 .modal {
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 2; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   padding-bottom: 50px;
   left: 0;
@@ -440,11 +448,23 @@ lightning-datatable .slds-th__action {
 
 .customPopupInteriorHalfScreenCentered {
     background-color: #F7F8FA;
-    width: 50%;
+    width: 35%;
     margin: auto;
     box-shadow: 5px 5px 20px #808080;
     border-radius: 1px;
     border: solid 1px #e2e2e2;
+}
+
+@media only screen and (max-width: 1000px) {
+    .customPopupInteriorHalfScreenCentered {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .customPopupInteriorHalfScreenCentered {
+        width: 90%;
+    }
 }
 
 /* ############################################## */
@@ -468,7 +488,7 @@ lightning-datatable .slds-th__action {
     color: #ffffff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
 }
 .containedButton button:hover {
@@ -485,8 +505,14 @@ lightning-datatable .slds-th__action {
     color: #ffffff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
+}
+
+.containedButton button:disabled, .containedButton button:disabled:hover, .containedButton:disabled, .containedButton.disabledButton {
+    background-color: #f7f8fa;
+    color: #999999;
+    box-shadow: none;
 }
 
 .containedButtonSlim, .containedButtonSlim button, .containedButtonSlim button:active, .containedButtonSlim button:visited, .containedButtonSlim button:focus {
@@ -550,37 +576,28 @@ lightning-datatable .slds-th__action {
     width: 200px;
 }
 
-.filterButton, .filterButton button, .filterButton button:active, .filterButton button:visited, .filterButton button:focus{
-    -webkit-transition-duration: 0.4s; /* Safari */
-  	transition-duration: 0.4s;
-    border-radius: 2px;
-  	background-color: #D0D6FA;
-    font-size: 14px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.71;
-    letter-spacing: normal;
-    text-align: left;
-    color: #3333ff;
-    min-height: 40px;
-    word-break: break-all;
-    border: none;
+.filterButton,
+.filterButton button,
+.filterButton button:active {
+  background-color: #d0d6fa;
+  transition-duration: 0.4s;
+  border-radius: 1px;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #3333ff;
+  min-height: 40px;
+  width: 220px;
+  word-break: break-all;
+  border: none;
 }
-.filterButton button:hover {
-	border-radius: 2px;
-    background-color: #D0D6FF;
-    font-size: 14px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.71;
-    letter-spacing: normal;
-    text-align: left;
-    color: #3333ff;
-    min-height: 40px;
-    word-break: break-all;
-    border: none;
+
+.fullWidth, .fullWidth button, .fullWidth button:active, .fullWidth button:visited, .fullWidth button:focus, .fullWidth button:hover {
+    width: 100%;
 }
 
 .outlinedButton, .outlinedButton button, .outlinedButton button:active, .outlinedButton button:visited, .outlinedButton button:focus{
@@ -652,6 +669,14 @@ lightning-datatable .slds-th__action {
 
 .slds-hint-parent {
   height: 66px;
+}
+
+.rowHeight .slds-hint-parent {
+  height: 30px;
+}
+
+.rowHeight .slds-table_header-fixed_container.slds-scrollable_x {
+  overflow: unset;
 }
 
 .text-black lightning-formatted-url a {
@@ -1174,13 +1199,56 @@ lightning-datatable .slds-th__action {
 }
 
 .labelValue .slds-checkbox .slds-form-element__label {
-    font-size: 14px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 2.4;
-    letter-spacing: normal;
-    color: #525252;
+    display:none;
+}
+
+.textValue .slds-checkbox_standalone {
+  cursor: pointer;
+}
+
+.textValue input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.textValue .slds-checkbox_standalone input{
+  font-size: 1rem;
+  opacity: 0;
+  position: absolute;
+}
+
+.textValue .slds-checkbox_faux {
+	border-radius:0;
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    right: 2px;
+    top: -4px;
+    vertical-align: middle;
+    background-color: inherit;
+    color: blue;
+    border: 1px solid blue;
+}
+
+.textValue .slds-checkbox_standalone input:checked + .slds-checkbox_faux:after{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background-color: blue;
+  transform:none;
+}
+
+.textValue .slds-checkbox_standalone input:checked + .slds-checkbox_faux{
+  border-color: blue;
+}
+
+.textValue .slds-checkbox_faux{
+  transform: scale(0.75);
 }
 
 .textValue .slds-form-element__static {
@@ -1323,6 +1391,14 @@ lightning-datatable .slds-th__action {
     box-shadow: none;
 }
 
+/* Date input */
+.dateField input {
+    background-color: #f7f8fa;
+    border-radius: 1px;
+    cursor: pointer;
+    border-color: #d4d4d4;
+}
+
 /* Custom card sizing Support Reach Us*/
 .cardSizing {
     width: 270px;
@@ -1417,8 +1493,8 @@ visibility: hidden;
 }
 
 /* USER INACTIVE POPUP */
-#div>.siteforcePanelsContainer{
-    z-index: 5000;
+.siteforcePanelsContainer>div{
+    z-index: 5000 !important;
 }
 
 .headerContainerShadow {
@@ -1441,4 +1517,63 @@ visibility: hidden;
     z-index: 0;
     opacity: 0.1;
     background-image: linear-gradient(256deg, rgba(0, 0, 0, 0), #000000);
+}
+
+/* Mobile side menu select language styles */
+
+.sideBar .langSelect,
+.sideBar .langSelect input[role="textbox"],
+.sideBar .langSelect div[role="listbox"] {
+    background-color: #1e32fa;
+    border-radius: 0;
+}
+
+.sideBar .langSelect input[role="textbox"] {
+    border: 0;
+    cursor: pointer;
+    width: 140px;
+    text-align: center;
+}
+
+.sideBar .langSelect div[role="listbox"] {
+    max-width: unset;
+    width: 140px;
+}
+
+.sideBar .changingLangSpinner .slds-spinner_container {
+   position: fixed;
+}
+
+.sideBar .langSelect .slds-form-element__label {
+   display: none;
+}
+
+.sideBar .slds-combobox_container lightning-base-combobox-item:hover,
+.sideBar .slds-combobox_container lightning-base-combobox-item[aria-selected="true"] {
+    color: #1e32fa;
+}
+
+.sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon:before {
+    border-top: 6px solid #fff;
+    border-bottom: 0;
+}
+.sideBar .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:before {
+    border-bottom: 6px solid #fff;
+    border-top: 0;
+}
+.sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon:after {
+    border-top: 6px solid #1e32fa;
+    border-bottom: 0;
+}
+.sideBar .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:after {
+    border-bottom: 6px solid #1e32fa;
+    border-top: 0;
+}
+
+.sideBar .slds-combobox_container input[role="textbox"] {
+	height: 32px;
+}
+
+.sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon svg {
+    fill: #fff;
 }

@@ -44,7 +44,7 @@ public static Map<String, String> getUserOptions(String portalUser){
 			if(u.Contact.Account.Top_Parent__c != null) {
 				if(u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c == null) {
 					userOptions.put('User_ICCS_Membership_Status', u.Contact.Account.ICCS_Membership_Status__c);
-    				}else if(u.Account.Top_Parent__r.ICCS_Membership_Status__c != null) {
+				}else if(u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c != null) {
 					userOptions.put('User_ICCS_Membership_Status', u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c);
 				}
 			}
@@ -61,8 +61,9 @@ public static List<Contact> getContactsByAccountId(Id accountId, Integer offset,
 	List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
 	                          OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
 	                          User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
-                Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name
-        from Contact where AccountId IN:allBranches.keySet() ORDER BY Name ASC LIMIT:batchSize OFFSET :offset ];
+	                          Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name,
+                              Account_site__c, Account.RecordTypeId, Account.RecordType.Name, Account.BillingCity 
+	                          from Contact where AccountId IN:allBranches.keySet() and Status__c = 'Active' ORDER BY Name ASC LIMIT:batchSize OFFSET :offset ];
 
 	if(!contacts.isEmpty()) {
 		return contacts;
@@ -81,10 +82,11 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
 	List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
 	                          OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
 	                          User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
-	                          Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name
+	                          Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name,Account.RecordTypeId,Account.RecordType.Name
 	                          from Contact
 	                          where AccountId IN:allBranches.keySet()
 	                          and (FirstName LIKE :wildString OR LastName LIKE :wildString OR Name LIKE :wildString OR Email LIKE :wildString OR Name = :queryString)
+                              and Status__c = 'Active'
 	                          ORDER BY Name ASC LIMIT:batchSize OFFSET :offset ];
 
 	if(!contacts.isEmpty()) {
@@ -93,10 +95,36 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
 
 	return new List<Contact>();
 }
+	  @AuraEnabled
+    public static List<Account> getRelatedAccounts(String finalQuery){
+
+	    return Database.query(finalQuery);
+    }
 
 	//returns user Information wihtout visibility control
 	@AuraEnabled
 	public static user getUserDetails(Id userId){
 		return [select id,userRoleId, UserRole.Name from user where id=:userId];
+	}
+
+	@AuraEnabled
+	public static void ActivateIEPUsers(List<String> contactIds){
+	
+		List<User> usersList = [select id, isActive, contactId from User where contactId in : contactIds];
+		if(!usersList.isEmpty()) {
+			List<User> usersToActivate = new List<User>();
+	
+			for(User user : usersList) {
+				if(!user.isActive) {
+					user.isActive = true;
+					usersToActivate.add(user);
+				}
+			}
+	
+			if(usersToActivate.size() != 0) {
+				update usersToActivate;
+			}
+		}
+	
 	}
 }

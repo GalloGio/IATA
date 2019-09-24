@@ -213,6 +213,10 @@
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
         <label>Địa chỉ phù hợp đã được tìm thấy.</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
@@ -1719,6 +1723,10 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ANG_Portal_Admin --></label>
         <name>CSP_ANG_Portal_Admin</name>
     </customLabels>
@@ -1735,12 +1743,32 @@
         <name>CSP_Accept_Terms_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Account Domain Created --></label>
+        <name>CSP_Account_Domain_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_All --></label>
+        <name>CSP_Add_All</name>
+    </customLabels>
+    <customLabels>
         <label>Thêm tài liệu mới</label>
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Add_New_User --></label>
+        <name>CSP_Add_New_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_User --></label>
+        <name>CSP_Add_User</name>
+    </customLabels>
+    <customLabels>
         <label>Thông báo</label>
         <name>CSP_Announcement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Apply --></label>
+        <name>CSP_Apply</name>
     </customLabels>
     <customLabels>
         <label>Bài viết này hữu ích không?</label>
@@ -1859,8 +1887,20 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Continue --></label>
+        <name>CSP_Continue</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
         <label>Từ chối quyền truy cập của người dùng</label>
@@ -1887,8 +1927,20 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Domain Error Message --></label>
+        <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
         <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
         <label>Liên lạc với chúng tôi</label>
@@ -1935,6 +1987,14 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Filter --></label>
+        <name>CSP_Filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filtered --></label>
+        <name>CSP_Filtered</name>
+    </customLabels>
+    <customLabels>
         <label>Cho bạn</label>
         <name>CSP_ForYou</name>
     </customLabels>
@@ -1963,12 +2023,28 @@
         <name>CSP_Manage_Services</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Manage_Services --></label>
+        <name>CSP_Manage_Services_NoIEPAccount</name>
+    </customLabels>
+    <customLabels>
         <label>Xem trường hợp của tôi</label>
         <name>CSP_MyCases</name>
     </customLabels>
     <customLabels>
         <label>Tên</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewServiceUserMessage --></label>
+        <name>CSP_NewServiceUserMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP New Email Domain --></label>
+        <name>CSP_New_Email_Domain</name>
     </customLabels>
     <customLabels>
         <label>Không có tài khoản liên quan để hiển thị.</label>
@@ -2007,8 +2083,28 @@
         <name>CSP_PortalPath</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Portal_Administrators --></label>
+        <name>CSP_Portal_Administrators</name>
+    </customLabels>
+    <customLabels>
         <label>Trạng thái cổng thông tin</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
+        <name>CSP_Profile_PrivacyManagement_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Text --></label>
+        <name>CSP_Profile_PrivacyManagement_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Title --></label>
+        <name>CSP_Profile_PrivacyManagement_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_URL --></label>
+        <name>CSP_Profile_PrivacyManagement_URL</name>
     </customLabels>
     <customLabels>
         <label>Một trường hợp là gì và khi nào tôi cần nó?</label>
@@ -2031,8 +2127,28 @@
         <name>CSP_RecentCases</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP RecentCases HelpText --></label>
+        <name>CSP_RecentCases_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Recent Cases Support --></label>
+        <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Record Deleted --></label>
+        <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
         <label>Những bài viết liên quan</label>
         <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveAllFilters --></label>
+        <name>CSP_RemoveAllFilters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveContact_Reason --></label>
+        <name>CSP_RemoveContact_Reason</name>
     </customLabels>
     <customLabels>
         <label>Yêu cầu dịch vụ</label>
@@ -2223,6 +2339,10 @@
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Success --></label>
+        <name>CSP_Success</name>
+    </customLabels>
+    <customLabels>
         <label>Ủng hộ</label>
         <name>CSP_Support</name>
     </customLabels>
@@ -2249,6 +2369,10 @@
     <customLabels>
         <label>Loại trường hợp</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -11943,7 +12067,7 @@ and
         <name>ISSP_ANG_OPTION_PAX_HE_standard</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Theo hồ sơ của chúng tôi, bạn được chỉ định là Người liên hệ IFAP cho đại lý của bạn. Nếu đúng, xin vui lòng đăng ký tham gia  quy trình Đánh giá Tài chính, nếu không phải, xin hãy chỉ định đúng Người liên hệ IFAP ở &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;trang Thông tin Công ty&lt;/a&gt; và đề nghị họ tiếp tục yêu cầu.&quot;</label>
+        <label>Theo hồ sơ của chúng tôi, bạn được chỉ định là Người liên hệ IFAP cho đại lý của bạn. Nếu đúng, xin vui lòng đăng ký tham gia  quy trình Đánh giá Tài chính, nếu không phải, xin hãy chỉ định đúng Người liên hệ IFAP ở &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;trang Thông tin Công ty&lt;/a&gt; và đề nghị họ tiếp tục yêu cầu.</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</name>
     </customLabels>
     <customLabels>
@@ -15389,6 +15513,10 @@ Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều đư�
     <customLabels>
         <label>Xin vui lòng nhập họ của bạn</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>Xin vui lòng chọn quốc gia của bạn</label>
@@ -20075,6 +20203,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>contacting_us</name>
     </customLabels>
     <customLabels>
+        <label><!-- Account Relocation --></label>
+        <name>csp_AccountRelocateSuccess</name>
+    </customLabels>
+    <customLabels>
         <label>Quy trình công nhận</label>
         <name>csp_Accreditation_Process</name>
     </customLabels>
@@ -20405,6 +20537,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label>Thanh toán bán hàng</label>
         <name>csp_Sales_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_SearchNotPerformed</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>
