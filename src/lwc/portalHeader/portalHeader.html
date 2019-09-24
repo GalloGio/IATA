@@ -302,6 +302,13 @@
                                     <span class="text-xsmall text-white slds-p-right_x-small tabText">{labels.CSP_Support}</span>
                                 </div>
                             </div>
+                            <!-- You & IATA link -->
+                            <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small spacer-border">
+                                <div class={buttonSideMenuYouIATAStyle} onclick={navigateToYouIata}>
+                                    <img class="slds-m-right_small" src={youAndIATA} />
+                                    <span class="text-xsmall text-white slds-p-right_x-small tabText">{labels.CSP_YouAndIATA}</span>
+                                </div>
+                            </div>
                             <!-- search link -->
                             <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small spacer-border">
                                 <div class={buttonSideMenuSearchStyle} onclick={goToAdvancedSearchPage}>
@@ -404,6 +411,12 @@
                             <div class={buttonSupportStyle} onclick={navigateToSupport}>
                                 <img class="slds-m-right_small" src={supportIcon} />
                                 <span class="text-xsmall text-white slds-p-right_x-small tabText slds-show_large">{labels.CSP_Support}</span>
+                            </div>
+
+                            <!-- You & IATA tab -->
+                            <div class={buttonYouIATAStyle} onclick={navigateToYouIata}>
+                                <img class="slds-m-right_small" src={youAndIATA} />
+                                <span class="text-xsmall text-white slds-p-right_x-small tabText slds-show_large">{labels.CSP_YouAndIATA}</span>
                             </div>
     
                             <!-- profile menu -->
