@@ -41,7 +41,6 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_TRADE_NAME = System.label.ISSP_MyProfile_TradeName;
     PRIVATE STATIC FINAL STRING LABEL_ISO_COUNTRY = System.label.Country;
 
-
     PRIVATE STATIC FINAL STRING LABEL_INVOICE_CONTACT = System.label.CSP_cpcc_Invoice_Contact;
     PRIVATE STATIC FINAL STRING LABEL_AUTHORISED_SIGNATORY = System.label.CSP_cpcc_Authorised_Signatory;
     PRIVATE STATIC FINAL STRING LABEL_PAYMENT_CONTACT = System.label.CSP_cpcc_BSP_CASS_Payment_Contact;
@@ -63,7 +62,7 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL INTEGER BRANCH_BATCH = 15;
     PRIVATE STATIC FINAL INTEGER INVOICE_BATCH = 15; //WMO-627 - ACAMBAS
 
-    PRIVATE STATIC FINAL STRING IATA_INVOICE_TYPE = 'IATA_OFFICE'; //WMO-627 - ACAMBAS
+    PUBLIC STATIC FINAL STRING IATA_INVOICE_TYPE = 'IATA OFFICE'; //WMO-627 - ACAMBAS
 
     public static Contact contactInfo = new Contact();
 
@@ -290,9 +289,6 @@ public with sharing class PortalProfileCtrl {
         // CHECK IF ITS AN ACCOUNT OR CONTACT!!
         Map<String, List<FieldWrapper>> sectionMap = new  Map<String, List<FieldWrapper>>();
 
-        system.debug('---getFieldsMap - type: ' + type);
-
-        //List<String[]> fieldsList = new List<String[]>();
         if ( type == 'MyProfile' ){
             sectionMap = ContactFields();
         } else if (type == 'MyProfileAccFields') {
@@ -692,10 +688,7 @@ public with sharing class PortalProfileCtrl {
     /** Outstanding Invoices section */
 
     @AuraEnabled
-    public static Map<String,List<FieldWrapper>> getInvoicesListFields(String invoiceType){
-
-        //String rType = myContact.Account.RecordType.DeveloperName;
-
+    public static Map<String,List<FieldWrapper>> getInvoicesListFields(String invoiceType) {
         String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
         String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
         String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
@@ -712,8 +705,6 @@ public with sharing class PortalProfileCtrl {
 
         Map<String,String> fieldLabels = new Map<String,String>();
 
-        //FieldWrapper fw;
-
         fieldLabels.put('Invoice_Number__c', LABEL_INVOICE_NUMBER);
         fieldLabels.put('Invoice_Status__c', LABEL_INVOICE_STATUS);
         fieldLabels.put('Total_Amount__c', LABEL_INVOICE_AMOUNT);
@@ -723,10 +714,6 @@ public with sharing class PortalProfileCtrl {
         fieldLabels.put('Billing_Member_Name__c', LABEL_BILLING_MEMBER_NAME);
         fieldLabels.put('Invoice_Date__c', LABEL_INVOICE_DATE);
         fieldLabels.put('Fee_Codes_Display__c', LABEL_FEE_CODES);
-
-        /*for(String fieldName: toRow){
-            if(!fieldLabels.containsKey(fieldName)){ fieldLabels.put(fieldName,fieldName);}
-        }*/
 
         Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
 
@@ -746,11 +733,6 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(viewFields).add(new FieldWrapper('Branch_Code__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_No__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_Name__c',false,true,true));
-
-        //EDIT
-        //wrapperMap.get(editFields).add(new FieldWrapper('Invoice_Number__c',true,true,true));
-        //wrapperMap.get(editFields).add(new FieldWrapper('Invoice_Status__c',true,true));
-        //wrapperMap.get(editFields).add(new FieldWrapper('Total_Amount__c',true,true));
 
         return wrapperMap;
     }
@@ -786,17 +768,12 @@ public with sharing class PortalProfileCtrl {
     public static Boolean isCountryEligibleForPaymentLink() {
         String isoCountry = myContact.Account.IATA_ISO_Country__r.ISO_Code__c;
 
-        system.debug('ACAMBAS - isoCountry: ' + isoCountry);
-
         List<String> eligibleCountryList = new List<String>();
-        /*for(Customer_Invoice_Payment_Link__mdt eligibleCountry : [SELECT DeveloperName FROM Customer_Invoice_Payment_Link__mdt]) {
+        for(Customer_Invoice_Payment_Link__mdt eligibleCountry : [SELECT DeveloperName FROM Customer_Invoice_Payment_Link__mdt]) {
             eligibleCountryList.add(eligibleCountry.DeveloperName);
-        }*/
-
-        system.debug('ACAMBAS - eligibleCountryList: ' + eligibleCountryList);
+        }
 
         if(eligibleCountryList.contains(isoCountry)) {
-            system.debug('ACAMBAS - ELIGIBLE COUNTRY!');
             return true;
         }
         else {

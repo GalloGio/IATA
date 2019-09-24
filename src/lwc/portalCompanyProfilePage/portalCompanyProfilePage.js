@@ -1,5 +1,3 @@
-/* eslint-disable no-alert */
-/* eslint-disable no-unused-vars */
 /**
  * Created by pvavruska on 5/23/2019.
  */
@@ -225,46 +223,29 @@ export default class PortalCompanyProfilePage extends LightningElement {
         });
     }
 
-    //WMO-699 - ACAMBAS: Begin
-    /*let getIATAInvoices = new Promise((resolve, reject) => {
-        getInvoices({ offset: 0, type: this.IATA_INVOICE_TYPE }).then(result => {
-            this.IATAInvoicesNum = result.length;
-
-            let error = false;
-            if (!error)
-                resolve();
-            else
-                reject();
-        });
-    });*/
-
-
-    //WMO-699 - ACAMBAS: End
-
     displaySubTabs() {
         //Check if there are E&F Invoices
         getInvoices({ offset: 0, type: this.EF_INVOICE_TYPE }).then(result => {
 
             this.EFInvoicesNum = result.length; //WMO-699 - ACAMBAS
 
-            //this.isFetching = false;
             let subTabsAux = [];
-            let subTabNames = [];
+            let subTabNamesAux = [];
 
             //WMO-699 - ACAMBAS: Begin
             if (this.IATAInvoicesNum > 0) {
-                subTabNames.push(this.labels.IATA_Invoices);
+                subTabNamesAux.push(this.labels.IATA_Invoices);
             }
             if (this.EFInvoicesNum > 0) {
-                subTabNames.push(this.labels.EF_Invoices);
+                subTabNamesAux.push(this.labels.EF_Invoices);
             }
             //WMO-699 - ACAMBAS: End
 
-            for (let i = 0; i < subTabNames.length; i++) {
+            for (let i = 0; i < subTabNamesAux.length; i++) {
                 let subTabAux = {};
 
                 subTabAux = {
-                    label: subTabNames[i],
+                    label: subTabNamesAux[i],
                     id: i,
                     class: "slds-p-around_small cursorPointer text-darkGray"
                 };
@@ -285,55 +266,14 @@ export default class PortalCompanyProfilePage extends LightningElement {
     }
 
     getInvoicesData() {
-        console.log('this.IATAInvoicesNum: ' + this.IATAInvoicesNum);
-        console.log('this.EFInvoicesNum: ' + this.EFInvoicesNum);
-
-
         if (this.IATAInvoicesNum > 0) {
-            //this.iataInvoicesLoaded = false;
             this.retrieveInvoices(this.IATA_INVOICE_TYPE);
         } else if (this.EFInvoicesNum > 0) {
-            console.log('EF!!!!');
-            //this.efInvoicesLoaded = false;
             this.retrieveInvoices(this.EF_INVOICE_TYPE);
-            this.efInvoicesLoaded = true;
-            //this.retrieveInvoices(this.IATA_INVOICE_TYPE);
         }
-        //
 
         this.isFetching = true;
     }
-
-    // let displayInvoices = function() {
-    //     /*Promise.all([
-    //         isInvoicesTabToBeDisplayed, //WMO-696 - ACAMBAS
-    //         displayTabs,
-    //         getIATAInvoices, //WMO-699 - ACAMBAS
-    //         displaySubTabs,
-    //         getInvoicesData
-    //     ]);*/
-
-    //     isInvoicesTabToBeDisplayed
-    //         .then(displayTabs)
-    //         .then(getIATAInvoices)
-    //         .then(displaySubTabs)
-    //         .then(getInvoicesData);
-
-    //     //alert('this.IATAInvoicesNum222: ' + this.IATAInvoicesNum);
-    // }
-
-    // displayInvoices();
-
-
-
-    //WMO-627 - ACAMBAS: end
-
-
-
-
-
-
-
 
     refreshview() {
         //For contacts tab
@@ -523,16 +463,13 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 }
                 //WMO-627 - ACAMBAS: Begin
                 else if (i == 3) {
-                    if (this.lstSubTabs[0] != null && this.lstSubTabs[0].active && !this.iataInvoicesLoaded) {
-                        //IATA Invoices
-                        //this.iataInvoicesLoaded = false;
+                    if (this.lstSubTabs[0] != null && this.lstSubTabs[0].active && this.IATAInvoicesNum > 0) {
+                        this.iataInvoicesLoaded = false;
                         this.retrieveInvoices(this.IATA_INVOICE_TYPE);
-                    } else if (!this.efInvoicesLoaded) {
-                        //E&F Invoices
-                        //this.efInvoicesLoaded = false;
+                    } else {
+                        this.efInvoicesLoaded = false;
                         this.retrieveInvoices(this.EF_INVOICE_TYPE);
                     }
-
                 }
                 //WMO-627 - ACAMBAS: End
             } else {
@@ -541,7 +478,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
         }
 
         this.lstTabs = tabsAux;
-
     }
 
     //WMO-627 - ACAMBAS: Begin
@@ -560,11 +496,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
                     if (i == 0 && !this.iataInvoicesLoaded) {
                         //IATA Invoices
-                        //this.iataInvoicesLoaded = false;
                         this.retrieveInvoices(this.IATA_INVOICE_TYPE);
                     } else if (i == 1 && !this.efInvoicesLoaded) {
                         //E&F Invoices
-                        //this.efInvoicesLoaded = false;
                         this.retrieveInvoices(this.EF_INVOICE_TYPE);
                     }
                 } else {
@@ -705,23 +639,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
             getInvoices({ offset: offset, type: type }).then(result => {
                 this.isFetching = false;
-
-                console.log('result.length: ' + result.length);
-
-                /*if (result.length == 0) {
-                    this.invoicesEnded = true;
-
-                    if (type == 'IATA_OFFICE') {
-                        this.iataInvoicesLoaded = true;
-                        this.efInvoicesLoaded = false;
-                    } else {
-                        this.iataInvoicesLoaded = false;
-                        this.efInvoicesLoaded = true;
-                    }
-
-                    return;
-                }*/
-
                 this.invoicesOffset = offset + result.length;
                 let existingInvoices = offset != 0 ? JSON.parse(JSON.stringify(this.invoices)) : [];
                 let invoices = JSON.parse(JSON.stringify(result));
@@ -983,7 +900,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
     get tab4Active() { return this.lstTabs[4] != null && this.lstTabs[4].active; }
     get tab5Active() { return this.lstTabs[5] != null && this.lstTabs[5].active; }
 
-    get subTab0Active() { return this.lstSubTabs[0] != null && this.lstSubTabs[0].active; }
-    get subTab1Active() { return this.lstSubTabs[1] != null && this.lstSubTabs[1].active; }
+    get subTab0Active() { return this.lstSubTabs[0] != null && this.lstSubTabs[0].active && this.IATAInvoicesNum > 0 }
+    get subTab1Active() { return (this.lstSubTabs[0] != null && this.lstSubTabs[0].active && this.IATAInvoicesNum == 0 && this.EFInvoicesNum > 0) || (this.lstSubTabs[1] != null && this.lstSubTabs[1].active); }
     get hasNoInvoices() { return (this.IATAInvoicesNum + this.EFInvoicesNum) === 0; } //WMO-699 - ACAMBAS
 }
