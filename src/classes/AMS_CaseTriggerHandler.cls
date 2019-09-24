@@ -23,66 +23,93 @@ public class AMS_CaseTriggerHandler {
         if(!lsSidraLiteCases.isEmpty())
         	SelectAgencyOnSidraCase(lsSidraLiteCases);
     }
+
+    public static Map<Id,List<AMS_Process_Detail__c>> SelectAgencyOnSidraCase(List<Case> cases){
+        return SelectAgencyOnSidraCase(cases, new Map<Id,Id>());
+    }
     
-    public static void SelectAgencyOnSidraCase(list<case> Cases){
-    	map<id, id> AccntFromCases = new map<id, id>();
+    public static Map<Id,List<AMS_Process_Detail__c>> SelectAgencyOnSidraCase(List<Case> cases, Map<Id,Id> casePerParent){
     	
-    	for(case c:cases){
-    		AccntFromCases.put(c.AccountId, c.id);
-    	}
+        if(casePerParent.isEmpty()){
+            Map<Id,Id> accntFromCases = new Map<Id,Id>();
+        	
+        	for(Case c : cases){
+				if(c.AccountId != null)
+        			accntFromCases.put(c.AccountId, c.Id);
+        	}
+    		
+    		//get all HOId, up to 3 levels of hierarchy
+        	for(Account a : [SELECT Id, ParentId, Parent.ParentId, Parent.Parent.ParentId FROM Account WHERE Id IN:accntFromCases.Keyset() ORDER BY ParentId, Parent.ParentId, Parent.Parent.ParentId NULLS LAST]){
+        		if(a.ParentId == null){	//HO
+        			casePerParent.put(a.Id, accntFromCases.get(a.Id));
+        			continue;
+        		}
+        		
+        		if(a.ParentId!=null && a.Parent.ParentId==null){	//BR
+        			casePerParent.put(a.ParentId, accntFromCases.get(a.Id));
+        			continue;
+        		}
+        		
+        		if(a.ParentId!=null && a.Parent.ParentId!=null){	//BR
+        			casePerParent.put(a.Parent.ParentId, accntFromCases.get(a.Id));
+        			continue;
+        		}
+        	}
+        }
+    	
+    	Set<String> setStatusToInclude = new Set<String>{'Approved','Cash basis/no commission','Cash basis/with commission','Changes processed','Listed','Under review'};
+    	
+        Map<Id,List<AMS_Process_Detail__c>> hierarchySelectionToInsert = new Map<Id,List<AMS_Process_Detail__c>>();
+        
+        if(casePerParent.isEmpty()) return hierarchySelectionToInsert;
+       
+		ID RTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'CaseRelatedAgencies');
+        List<AMS_Process_Detail__c> listToInsert = new List<AMS_Process_Detail__c>();
+        Set<Id> casePerParentKeys = casePerParent.keyset();
 		
-		//get all HOId, up to 3 levels of hierarchy
-    	map<id, id> mapAccntHO = new map<id, id>();
-    	for(Account a:[select id, ParentId, Parent.ParentId, parent.parent.parentId from Account where id in:AccntFromCases.Keyset() order by ParentId, Parent.ParentId, parent.parent.parentId NULLS LAST]){
-    		if(a.ParentId==null){	//HO
-    			mapAccntHO.put(a.Id, AccntFromCases.get(a.Id));
-    			continue;
-    		}
-    		
-    		if(a.ParentId!=null && a.Parent.ParentId==null){	//BR
-    			mapAccntHO.put(a.ParentId, AccntFromCases.get(a.Id));
-    			continue;
-    		}
-    		
-    		if(a.ParentId!=null && a.Parent.ParentId!=null){	//BR
-    			mapAccntHO.put(a.Parent.ParentId, AccntFromCases.get(a.Id));
-    			continue;
-    		}
+        for(Account a : [SELECT Id, Status__c
+						, ParentId, Parent.Status__c
+						, Parent.ParentId, Parent.Parent.Status__c 
+					   FROM Account 
+					   WHERE (Id IN: casePerParentKeys
+					   OR ParentId IN: casePerParentKeys
+					   OR Parent.ParentId IN: casePerParentKeys)
+					   AND Status__c IN: setStatusToInclude]){
+			
+			if(a.ParentId == null && casePerParent.containsKey(a.Id)){ //HO
+                Id cseAux = casePerParent.get(a.Id);
+                if(!hierarchySelectionToInsert.containsKey(cseAux))
+                    hierarchySelectionToInsert.put(cseAux, new List<AMS_Process_Detail__c>());
+				AMS_Process_Detail__c pd = new AMS_Process_Detail__c(Case__c = cseAux, Account__c = a.Id, RecordTypeId = RTId);
+                hierarchySelectionToInsert.get(cseAux).add(pd);
+                listToInsert.add(pd);
+				continue;
+			}
+			
+			if(a.ParentId != null && a.Parent.ParentId == null && casePerParent.containsKey(a.ParentId)){ //BR
+                Id cseAux = casePerParent.get(a.ParentId);
+				if(!hierarchySelectionToInsert.containsKey(cseAux))
+                    hierarchySelectionToInsert.put(cseAux, new List<AMS_Process_Detail__c>());
+                AMS_Process_Detail__c pd = new AMS_Process_Detail__c(Case__c = cseAux, Account__c = a.Id, RecordTypeId = RTId);
+                hierarchySelectionToInsert.get(cseAux).add(pd);
+                listToInsert.add(pd);
+				continue;
+			}
+			
+			if(a.ParentId != null && a.Parent.ParentId != null && casePerParent.containsKey(a.Parent.ParentId)){ //SA
+                Id cseAux = casePerParent.get(a.Parent.ParentId);
+				if(!hierarchySelectionToInsert.containsKey(cseAux))
+                    hierarchySelectionToInsert.put(cseAux, new List<AMS_Process_Detail__c>());
+                AMS_Process_Detail__c pd = new AMS_Process_Detail__c(Case__c = cseAux, Account__c = a.Id, RecordTypeId = RTId);
+                hierarchySelectionToInsert.get(cseAux).add(pd);
+				listToInsert.add(pd);
+                continue;
+			}
     	}
     	
-    	system.debug('DTULLO 57 --> ' + mapAccntHO.keyset());
-    	set<string> setStatusToInclude = new set<string>{'Approved','Cash basis/no commission','Cash basis/with commission','Changes processed','Listed','Under review'};
-    	
-    	if(!mapAccntHO.isEmpty()){
-    		ID RTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'CaseRelatedAgencies');
-    		list<AMS_Process_Detail__c> lsToInsert = new list<AMS_Process_Detail__c>();
-    		for(Account a:[select id, status__c
-    						, ParentId, Parent.Status__c
-    						, Parent.ParentId, Parent.Parent.Status__c 
-    					   from Account 
-    					   where (id in:mapAccntHO.keyset()
-    					   or parentid in :mapAccntHO.keyset()
-    					   or parent.parentId in:mapAccntHO.keyset())
-    					   and status__c in:setStatusToInclude]){
-    			system.debug('DTULLO 81 --> ' + a.ID + ' - ' + a.Status__c + '; ' + a.ParentId + ' - ' + a.Parent.Status__c + '; ' + a.Parent.ParentId + ' - ' + a.Parent.Parent.Status__c + '; ');
-    			if(a.ParentId==null && mapAccntHO.containsKey(a.Id)){ //HO
-    				lsToInsert.add(new AMS_Process_Detail__c(Case__c = mapAccntHO.get(a.Id), Account__c = a.Id, RecordTypeId = RTId));
-    				continue;
-    			}
-    			
-    			if(a.ParentId!=null && a.Parent.ParentId==null && mapAccntHO.containsKey(a.ParentId)){ //BR
-    				lsToInsert.add(new AMS_Process_Detail__c(Case__c = mapAccntHO.get(a.ParentId), Account__c = a.Id, RecordTypeId = RTId));
-    				continue;
-    			}
-    			
-    			if(a.ParentId!=null && a.Parent.ParentId!=null && mapAccntHO.containsKey(a.Parent.ParentId)){ //SA
-    				lsToInsert.add(new AMS_Process_Detail__c(Case__c = mapAccntHO.get(a.Parent.ParentId), Account__c = a.Id, RecordTypeId = RTId));
-    				continue;
-    			}
-	    	}
-	    	
-	    	if(!lsToInsert.isEmpty())
-	    		insert lsToInsert;
-    	}
+    	if(!hierarchySelectionToInsert.isEmpty())
+    		insert listToInsert;
+
+        return hierarchySelectionToInsert;
     }
 }

@@ -18,7 +18,13 @@
                 position: relative;
                 bottom: 246px;
             }
+            .iatabtn.iatabtn-ctn{
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
         </style>
+        <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
         <c:ISSP_Header ></c:ISSP_Header>    
         <body>
         <script src="{!URLFOR($Resource.bootbox)}" />
@@ -29,21 +35,22 @@
                     $j('[data-toggle="tooltip"]').tooltip();
                 })
         </script>
-    
+    <c:ISSP_CustomNavigation />
     <div class="container">   
-        <c:ISSP_CustomNavigation />
+       <!-- 
     <div>
         <img src="/resource/1440419254000/IATA_Logo_Large" width="138" height="102" style="float:left"/>
     </div>
-    <div style="padding-top:16px;padding-left:60px">
-        <h3>{!$Label.ISSP_AMS_eBulletin_Title}</h3>
+--><div class="panel-primary">
+        <div class="panel-heading head_panel_green">
+            <h3 class="panel-title">{!$Label.ISSP_AMS_eBulletin_Title}</h3>
         <!-- <apex:outputText value="{!$Label.ISSP_AMS_Step0_Intro}" escape="false"/> -->
     </div>
-    <div style="padding-left:138px">
+    <div class="panel-body">
        <apex:form rendered="{!isocountry.EBulletin_enabled__c}">
         <table width="100%">
             <tr>
-                <td colspan="2" style="width:45%;font-size:125%;padding-top:60px;padding-bottom:60px"><apex:outputText value="{!$Label.ISSP_AMS_eBulletin_Description}"/></td>
+                <td colspan="2" style="width:45%;font-size:125%; padding-bottom:30px;"><apex:outputText value="{!$Label.ISSP_AMS_eBulletin_Description}"/></td>
             </tr>
             	<tr>
                     <td><apex:outputText style="font-weight:600;font-size:115%" value="{!$Label.ISSP_AMS_eBulletin_Instructions}" /></td>
@@ -60,7 +67,7 @@
                     </td>
                     <td style="padding-top:12px">
                         <apex:outputText escape="false" style="font-size:110%" value="{!$Label.ISSP_AMS_eBulletin_home_lbl3}"/><br/>
-                        <input type="button" class="btn btn_iata_primary" onClick="window.location.assign('/ISSP_AMS_EBulletin');return false;" value="{!$Label.ISSP_AMS_eBulletin_home_btn}"/>
+                        <input type="button" class="iatabtn iatabtn-default iatabtn-ctn" onClick="window.location.assign('/ISSP_AMS_EBulletin');return false;" value="{!$Label.ISSP_AMS_eBulletin_home_btn}"/>
                     </td>
             </tr>
         </table>
@@ -69,11 +76,10 @@
         <apex:outputPanel layout="block" style="padding-top:100px" rendered="{!NOT(isocountry.EBulletin_enabled__c)}">
         <apex:outputText value="{!$Label.ISSP_AMS_eBulletin_Unavailable}"/>
         </apex:outputPanel>
-   </div>
-    
-    <c:ISSP_CustomFooter />
+        </div>
+    </div>
 </div><!-- end container-->
-        
+<c:ISSP_CustomFooter />
   </body>  
 </html>
 </apex:page>

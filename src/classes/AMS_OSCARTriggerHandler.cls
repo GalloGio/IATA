@@ -3663,7 +3663,7 @@ public class AMS_OSCARTriggerHandler {
 
 
                 /*** AMSU-31 Start ***/
-                Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD};
+                Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD, AMS_Utils.NEWAE};
                 Set<String> classesToCheck = new Set<String> {'P', 'D'}; 
                 if(classesToCheck.contains(updatedOscar.Location_Class__c) && processesToCheck.contains(updatedOscar.Process__c)) {
                     oscarsToCreateAuth.add(updatedOscar);
@@ -4322,7 +4322,7 @@ public class AMS_OSCARTriggerHandler {
                 }
 
                 // NEWGEN-2932
-                if(oscarsFromPortal.contains(oscar.Id))
+                if(oscarsFromPortal.contains(oscar.Id) && oscar.Account__r.Is_PCI_compliant__c == 'Yes') //INC483739 -  stop sending automated emails whenever agent is ticked with PCI ''Not-Compliant''
                     AMS_OSCARTriggerHandler.sendEmailAlert(oscar.Id, oscarCaseMap.get(oscar.id), oscar.Process__c, AMS_Utils.PASSED, false);
             
                 for(Id accId: oscarAccountsMap.get(oscar.Id)){

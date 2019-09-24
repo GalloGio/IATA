@@ -45,6 +45,7 @@ public with sharing class PortalCasesCtrl {
     private static Integer requestedPageNumber;
 
     private static String AGENT_ACCREDITATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AgencyAccreditation__c;
+    private static Boolean isCaseFromReachUs = false;
     /*
     *
     *
@@ -64,15 +65,37 @@ public with sharing class PortalCasesCtrl {
         return lstPickValues;
     }
 
+    @AuraEnabled
+    public static List<CSP_Utils.PickListWrapper> companyCasesContactsPicklist(){
+        seeAllCases = true;
+        initialization();
+
+        String queryConditions = getQueryConditions();
+
+        String queryString = 'SELECT ContactId creatorid, Contact.Name creatorname FROM Case ' + queryConditions + ' GROUP BY ContactId, Contact.Name ORDER BY Contact.Name ASC ';
+
+        List<Aggregateresult> lstCases = Database.query(queryString);
+
+        List<CSP_Utils.PickListWrapper> lstPickValues = new List<CSP_Utils.PickListWrapper>();
+
+        for(Aggregateresult caseAux : lstCases){
+            if(caseAux.get('creatorid') != null) {
+                lstPickValues.add(new CSP_Utils.PickListWrapper(caseAux.get('creatorid') + '', caseAux.get('creatorname')+''));
+            }
+        }
+
+        return lstPickValues;
+    }
+
     /* 
     * @description Main method that returns a list of cases 
     * @params
     * @return List<Case>
     */
     @AuraEnabled(cacheable=true)
-    public static PagedResult getRecentCases(Boolean limitView, Boolean seeAll) {
+    public static PagedResult getRecentCases(Boolean limitView, Boolean seeAll, Boolean specialCaseOption) {
         seeAllCases = seeAll;
-
+        isCaseFromReachUs = specialCaseOption;
         initialization();
 
         return getCases(limitView);
@@ -192,7 +215,7 @@ public with sharing class PortalCasesCtrl {
             fieldPathSet.add(f.getFieldPath());
         }
 
-        String query = ' CaseArea__c, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name ';
+        String query = ' CaseArea__c, Contact.Name, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name ';
         Boolean hasStatus = false;
         
         for(String fieldPath : fieldPathSet) {
@@ -211,7 +234,9 @@ public with sharing class PortalCasesCtrl {
         String queryLimit = '';
 
         if(filtersWrapper == null) {
-            if(limitView) {
+            if (isCaseFromReachUs){
+                queryLimit += 'LIMIT 3';
+            } else if(limitView) {
                 queryLimit += 'LIMIT 4';
             } else {
                 queryLimit += 'LIMIT 2000';
@@ -237,11 +262,36 @@ public with sharing class PortalCasesCtrl {
                 }
                 if(filtersWrapper.casesComponent.caseCountryFilter != null && filtersWrapper.casesComponent.caseCountryFilter != ''){
                     if(queryConditions == ''){
-                        queryConditions = ' WHERE Country_concerned__c includes (\'' + filtersWrapper.casesComponent.caseCountryFilter + '\') ';
+                        queryConditions = ' WHERE IFAP_Country_ISO__c = \'' + filtersWrapper.casesComponent.caseCountryFilter + '\' ';
                     }else{
-                        queryConditions += ' AND Country_concerned__c includes (\'' + filtersWrapper.casesComponent.caseCountryFilter + '\') ';
+                        queryConditions += ' AND IFAP_Country_ISO__c = \'' + filtersWrapper.casesComponent.caseCountryFilter + '\' ';
                     }
                 }
+                if(filtersWrapper.casesComponent.caseContactFilter != null && filtersWrapper.casesComponent.caseContactFilter != ''){
+                    if(queryConditions == ''){
+                        queryConditions = ' WHERE ContactId = \'' + filtersWrapper.casesComponent.caseContactFilter + '\' ';
+                    }else{
+                        queryConditions += ' AND ContactId = \'' + filtersWrapper.casesComponent.caseContactFilter + '\' ';
+                    }
+                }
+                if(filtersWrapper.casesComponent.dateFromFilter != null && filtersWrapper.casesComponent.dateFromFilter != ''){
+                    String dateFrom = CSP_Utils.toDatetime(Date.valueOf(filtersWrapper.casesComponent.dateFromFilter));
+
+                    if(queryConditions == ''){
+                        queryConditions = ' WHERE CreatedDate >= ' + dateFrom + ' ';
+                    }else{
+                        queryConditions += ' AND CreatedDate >= ' + dateFrom + ' ';
+                    }
+                }
+                if(filtersWrapper.casesComponent.dateToFilter != null && filtersWrapper.casesComponent.dateToFilter != ''){
+                    String dateTo = CSP_Utils.toDatetime(Date.valueOf(filtersWrapper.casesComponent.dateToFilter));
+
+                    if(queryConditions == ''){
+                        queryConditions = ' WHERE CreatedDate <= ' + dateTo + ' ';
+                    }else{
+                        queryConditions += ' AND CreatedDate <= ' + dateTo + ' ';
+                    }
+                }                
             }
 
             //pagination 
@@ -250,6 +300,14 @@ public with sharing class PortalCasesCtrl {
 
         }
 
+        if(isCaseFromReachUs) {
+            if(queryConditions == ''){
+                queryConditions = ' WHERE IsClosed != true AND Portal_Case_Status__c != \'Draft\'';
+            }else{
+                queryConditions += ' AND IsClosed != true AND Portal_Case_Status__c != \'Draft\'';
+            }
+        }
+        
         queryString = 'SELECT ' + query.substring(1) + ' FROM Case ' + queryConditions + ' ORDER BY LastModifiedDate DESC ' + queryLimit;
 
         result = new PagedResult();
@@ -264,8 +322,7 @@ public with sharing class PortalCasesCtrl {
         }
         result.userAdmin = adminProfile;
 
-        System.debug(LoggingLevel.FINE, '____ [cls PortalCasesCtrl - getCases] queryString - ' + queryString);
-        System.debug('____ [cls PortalCasesCtrl - getCases] queryResult - ' + result.records.size() + ' record(s) - ' + result.records);
+        System.debug('____ [cls PortalCasesCtrl - getCases] queryString - ' + queryString);
 
         /* Generate Case URL */
         result.url = JSON.serialize(setCaseURLs((List<Case>)result.records));
@@ -559,8 +616,8 @@ public with sharing class PortalCasesCtrl {
     * @params String searchKey
     * @return List<Case>
     */
-    @AuraEnabled(cacheable=true)
-    public static PagedResult getFilteredCasesResultsPage(String searchKey, String requestedPage) {
+    @AuraEnabled(cacheable=false)
+    public static PagedResult getFilteredCasesResultsPage(String searchKey, String requestedPage, Boolean isAdminUser) {
 
         PortalSearchFilterWrapper filterWrapperAux = (PortalSearchFilterWrapper) JSON.deserialize(searchKey, PortalSearchFilterWrapper.class);
         System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] filterWrapperAux - ' + filterWrapperAux);
@@ -572,10 +629,17 @@ public with sharing class PortalCasesCtrl {
 
         requestedPageNumber = requestedPageAux;
 
-        Boolean isAdmin = ISSP_Constant.adminIdSet.contains(UserInfo.getProfileId());
-        System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] isAdmin - ' + isAdmin);
-
-        PagedResult pages = getRecentCases(false, isAdmin);
+        Boolean isAdmin = false;
+        if(isAdminUser == null ){
+            isAdmin = CSP_Utils.isAdmin();
+            System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] isAdmin - ' + isAdmin);
+        }else{
+            isAdmin = isAdminUser;
+            System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] isAdminUser - ' + isAdminUser);
+        }
+        seeAllCases = isAdmin;
+        
+        PagedResult pages = getRecentCases(false, isAdmin, false);
 
         return pages;
     }

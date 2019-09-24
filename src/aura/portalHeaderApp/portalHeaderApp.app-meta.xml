@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<AuraDefinitionBundle xmlns="urn:metadata.tooling.soap.sforce.com" fqn="portalHeaderApp">
-    <apiVersion>45.0</apiVersion>
-    <description>This is the application for Portal Header. This was created to open it from a VisualForce page.</description>
-</AuraDefinitionBundle>

@@ -57,6 +57,16 @@
                             <template for:each={record.rowValues} for:item="rowValue">
                                 <td key={rowValue.value} class={rowValue.className} onclick={openRecordDetail} data-item={index}>
                                     <span>{rowValue.value}</span>
+                                    <span if:true={rowValue.emailHasError}>
+                                        <span if:true={rowValue.showIcon}>
+                                            <lightning-helptext icon-name="utility:warning" 
+                                                content={labels.ISSP_ContactList_HoverPopup_Text}
+                                                class="orangeIcon">
+                                            </lightning-helptext>
+                                        </span>
+                                        <span>{rowValue.email}</span>
+                                        <span class={rowValue.emailClass}>{rowValue.domain}</span>
+                                    </span>
                                 </td>
                             </template>
 
@@ -91,8 +101,8 @@
                                         <template if:false={isAccount}>
                                             <c-portal-record-form-wrapper object-name={objectName} record-id={record.Id}
                                                 edit-fields={fieldsList.EDITS} static-fields={record}
-                                                fields={fieldsList.VIEW} show-edit="true"
-                                                header-class="slds-float_right" showfunction="true"
+                                                fields={fieldsList.VIEW} show-edit="true" allow-contact-delete="true"
+                                                header-class="slds-float_right" showfunction="true" 
                                                 onrefreshview={refreshview} services={record.services}
                                                 section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
                                             </c-portal-record-form-wrapper>
@@ -121,7 +131,13 @@
         <!-- NO RECORDS -->
         <template if:false={hasRecords}>
             <div class="text-medium text-bold slds-p-top_xx-large text-darkGray centered">
-                {labels.CSP_NoSearchResults}
+                <div class="slds-p-vertical_medium slds-text-align_center">
+                        <img src={searchIconNoResultsUrl} />
+                        <div class="text-small text-bold text-linkBlue">
+                            {_labels.CSP_Search_NoResults_text1}</div>
+                        <div class="text-xxsmall text-gray">{_labels.CSP_Search_NoResults_text2} <span
+                                class="text-bold text-darkGray">"{_searchKey}"</span></div>
+                    </div>
             </div>
         </template>
 

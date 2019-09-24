@@ -1,20 +1,40 @@
-<apex:page standardcontroller="Case" extensions="SIDRARepaymentInstalmentsController">
-    <apex:pageMessages ></apex:pageMessages>
+<apex:page standardcontroller="Case" extensions="SIDRARepaymentInstalmentsController" id="page">
+    
     
     <script>
         function confirmDeleteInstalment() {
-            return confirm('Are you sure you want to delete this Repayment Instalment ?');
+            return confirm('Are you sure you want to delete this Repayment Instalment?');
         }
+
         function redirect(url) {
             window.top.location=url;
+        }
+
+        function trysave() {        
+            interest_amount_elem = document.getElementById('page:mainform:pageblock:total_interest_amount');
+
+            if(interest_amount_elem != null) { //Check if the input was found
+                if(interest_amount_elem.value == null || interest_amount_elem.value == '' || interest_amount_elem.value < 0) {
+                    alert('Total interest amount is mandatory!');
+                }
+                else {
+                    if(confirm('Total interest amount cannot be changed afterwards. Are you sure you want to proceed?')){
+                        saveDetails();
+                    }
+                }
+            }
+            else {
+                saveDetails();        
+            }
         }
     </script>
     
     <apex:form id="mainform">
-        <apex:pageBlock >
-        
+        <apex:pageBlock id="pageblock">
+            <apex:pageMessages ></apex:pageMessages>
             <apex:pageBlockButtons location="top">
-                <apex:commandButton value="Save" action="{!Save}" rendered="{! isEditMode }" rerender="mainform"/>
+                <apex:actionFunction name="saveDetails" action="{!Save}" rerender="mainform"/>
+                <apex:commandButton value="Save" rendered="{! isEditMode }" rerender="mainform" onclick="return trysave();"/>
                 <apex:commandButton value="Cancel" action="{!Cancel}" rendered="{! isEditMode }" rerender="mainform" immediate="true"/>
                 <apex:commandButton value="Edit" action="{!Edit}" rendered="{! AND(NOT(isEditMode),isUpdateable,lstRepaymentInstalments.size>0) }" rerender="mainform"/>
                 <apex:commandButton value="{!strAddNewLabel}" action="{!AddNewPaymentInstalment}" rendered="{! AND(NOT(isEditMode),isCreateable) }" rerender="mainform"/>
@@ -46,8 +66,8 @@
                 </apex:column>
                 
                 <apex:column headerValue="Due Date">
-                    <apex:inputField value="{!ri.Due_Date__c}" rendered="{! isEditMode }" />
-                    <apex:outputField value="{!ri.Due_Date__c}" rendered="{! NOT(isEditMode) }" />
+                    <apex:inputField value="{!ri.Due_date__c}" rendered="{! isEditMode }" />
+                    <apex:outputField value="{!ri.Due_date__c}" rendered="{! NOT(isEditMode) }" />
                 </apex:column>
                 
                 <apex:column headerValue="Status">
@@ -76,7 +96,35 @@
                     <apex:outputText value="{0, number, #,##0.00}">
                         <apex:param value="{!netBalance}" />
                     </apex:outputText></p>
+
+                <!-- ACAMBAS - WMO-546 - Begin -->
+                <p style="font-weight: bold;">Total interest amount: {!cs.Currency__c} 
+                    <apex:outputText value="{0, number, #,##0.00}">
+                        <apex:param value="{!IF(instalmentsDetails == null, 0, instalmentsDetails.Interest_Amount__c)}" />
+                    </apex:outputText></p>
+                  <!-- ACAMBAS - WMO-546 - End -->
             </apex:outputPanel>
+
+            <!-- ACAMBAS - WMO-546 - Begin -->
+            <apex:outputPanel rendered="{!isEditMode && (instalmentsDetails.Interest_Amount__c == null)}">
+                <p>
+                    <span style="font-weight: bold;">Total interest amount*:</span>&nbsp; <apex:inputField id="total_interest_amount" value="{!instalmentsDetails.Interest_Amount__c}"/>&nbsp;&nbsp;&nbsp; 
+                    <span style="font-weight: bold;">Interest currency:</span>&nbsp;{!cs.Currency__c}&nbsp;&nbsp;&nbsp; 
+                    (Interest on repayment plan to be paid to Finance once recovered)
+                </p>
+                <br/>
+                *Value is mandatory and cannot be changed afterwards!
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!isEditMode && (instalmentsDetails.Interest_Amount__c != null)}">
+                <p><span style="font-weight: bold;">Total interest amount: </span>{!cs.Currency__c}
+                    <apex:outputText value="{0, number, #,##0.00}">
+                        <apex:param value="{!instalmentsDetails.Interest_Amount__c}" /> 
+                    </apex:outputText>*
+                </p>
+                <br/>
+                *Value cannot be changed. Any update should be requested to SF team.
+            </apex:outputPanel>
+            <!-- ACAMBAS - WMO-546 - End -->
             
         </apex:pageBlock>
     </apex:form>

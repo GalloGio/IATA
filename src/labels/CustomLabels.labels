@@ -136,6 +136,13 @@
         <value>Enter a valid city.</value>
     </labels>
     <labels>
+        <fullName>AMS_DQ_First_Suggestion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ First Suggestion</shortDescription>
+        <value>The selected city is {0}</value>
+    </labels>
+    <labels>
         <fullName>AMS_DQ_Found_Addr</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3033,6 +3040,21 @@ Payment required on receipt of this Payment Advice
         <value>Accept the Terms before you proceed.</value>
     </labels>
     <labels>
+        <fullName>CSP_Account_Domain_Created</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Account Domain Created</shortDescription>
+        <value>Account Domain created</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Add_All</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Add_All</shortDescription>
+        <value>Add All</value>
+    </labels>
+    <labels>
         <fullName>CSP_Add_New_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3041,11 +3063,35 @@ Payment required on receipt of this Payment Advice
         <value>Add New Documents</value>
     </labels>
     <labels>
+        <fullName>CSP_Add_New_User</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Add_New_User</shortDescription>
+        <value>Add New User</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Add_User</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Add_User</shortDescription>
+        <value>Add User</value>
+    </labels>
+    <labels>
         <fullName>CSP_Announcement</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Announcement</shortDescription>
         <value>Announcement</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Apply</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Apply</shortDescription>
+        <value>Apply</value>
     </labels>
     <labels>
         <fullName>CSP_ArticleHelpful</fullName>
@@ -3266,7 +3312,15 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Confirmed_Requested_Service_Message</shortDescription>
-        <value>Your {0} access request has been delivered to portal administrators. If you have any questions or requests about the process, you can contact an administrator below :</value>
+        <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be fund under your</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Continue</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Continue</shortDescription>
+        <value>Continue</value>
     </labels>
     <labels>
         <fullName>CSP_Create_Contact_Complete_Field</fullName>
@@ -3274,6 +3328,22 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>Create_Contact_Complete_Field</shortDescription>
         <value>Complete this field.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DateFrom</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DateFrom</shortDescription>
+        <value>Creation Date (from)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DateTo</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DateTo</shortDescription>
+        <value>Creation Date (to)</value>
     </labels>
     <labels>
         <fullName>CSP_Deny_User_Access_Title</fullName>
@@ -3323,12 +3393,33 @@ Payment required on receipt of this Payment Advice
         <value>Publication Countries</value>
     </labels>
     <labels>
+        <fullName>CSP_Email_Domain_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Domain Error Message</shortDescription>
+        <value>* Add Domains without &quot;@&quot;.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Error_Creating_Record</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Error Creating Record</shortDescription>
+        <value>Error Creating Record</value>
+    </labels>
+    <labels>
         <fullName>CSP_Error_Message_Mandatory_Fields_Contact</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Error_Message_Mandatory_Fields_Contact</shortDescription>
         <value>Please fill all the mandatory fields</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Error_while_delete_record</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Error while delete record</shortDescription>
+        <value>Error While Deleting Record</value>
     </labels>
     <labels>
         <fullName>CSP_FAQReachUsBanner_ButtonText</fullName>
@@ -3419,6 +3510,22 @@ Payment required on receipt of this Payment Advice
         <value>Feedback</value>
     </labels>
     <labels>
+        <fullName>CSP_Filter</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Filter</shortDescription>
+        <value>Filter</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Filtered</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Filtered</shortDescription>
+        <value>Filtered</value>
+    </labels>
+    <labels>
         <fullName>CSP_ForYou</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3473,6 +3580,14 @@ Payment required on receipt of this Payment Advice
         <value>Manage Services</value>
     </labels>
     <labels>
+        <fullName>CSP_Manage_Services_NoIEPAccount</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Manage_Services</shortDescription>
+        <value>Your IATA Easy Pay Status is not &quot;Open&quot;. Please contact Support.</value>
+    </labels>
+    <labels>
         <fullName>CSP_MyCases</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3486,6 +3601,29 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Name</shortDescription>
         <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NewContactProfile</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NewContactProfile</shortDescription>
+        <value>a new contact profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NewServiceUserMessage</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NewServiceUserMessage</shortDescription>
+        <value>You can search and add new portal users to this service. If the user you are looking for is not a portal contact yet, you can create for them</value>
+    </labels>
+    <labels>
+        <fullName>CSP_New_Email_Domain</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP New Email Domain</shortDescription>
+        <value>New email domain</value>
     </labels>
     <labels>
         <fullName>CSP_NoAccount</fullName>
@@ -3560,11 +3698,50 @@ Payment required on receipt of this Payment Advice
         <value>/s/</value>
     </labels>
     <labels>
+        <fullName>CSP_Portal_Administrators</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Portal_Administrators</shortDescription>
+        <value>Portal Administrators</value>
+    </labels>
+    <labels>
         <fullName>CSP_Portal_Status</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Portal_Status</shortDescription>
         <value>Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Profile_PrivacyManagement_Link</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Profile_PrivacyManagement_Link</shortDescription>
+        <value>Go to Subscriptions &amp; Privacy</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Profile_PrivacyManagement_Text</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Profile_PrivacyManagement_Text</shortDescription>
+        <value>Manage your subscriptions to IATA’s newsletters, blogs, press releases, products and services. You can also reach out directly to Privacy Officer for more information about your data privacy rights.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Profile_PrivacyManagement_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Profile_PrivacyManagement_Title</shortDescription>
+        <value>Subscriptions &amp; Privacy</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Profile_PrivacyManagement_URL</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Profile_PrivacyManagement_URL</shortDescription>
+        <value>/dataprivacy/s/landing</value>
     </labels>
     <labels>
         <fullName>CSP_Question1</fullName>
@@ -3607,12 +3784,48 @@ Payment required on receipt of this Payment Advice
         <value>Recent Cases</value>
     </labels>
     <labels>
+        <fullName>CSP_RecentCases_HelpText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP RecentCases HelpText</shortDescription>
+        <value>On Going</value>
+    </labels>
+    <labels>
+        <fullName>CSP_RecentCases_Support</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Recent Cases Support</shortDescription>
+        <value>Recent Cases</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Record_Deleted</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Record Deleted</shortDescription>
+        <value>Account Domain is Deleted</value>
+    </labels>
+    <labels>
         <fullName>CSP_RelatedArticles</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_RelatedArticles</shortDescription>
         <value>Related Articles</value>
+    </labels>
+    <labels>
+        <fullName>CSP_RemoveAllFilters</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_RemoveAllFilters</shortDescription>
+        <value>Remove All Filters</value>
+    </labels>
+    <labels>
+        <fullName>CSP_RemoveContact_Reason</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_RemoveContact_Reason</shortDescription>
+        <value>Please select why you want to remove this contact.</value>
     </labels>
     <labels>
         <fullName>CSP_Request_Service</fullName>
@@ -3985,6 +4198,13 @@ Payment required on receipt of this Payment Advice
         <value>Submit</value>
     </labels>
     <labels>
+        <fullName>CSP_Success</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Success</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
         <fullName>CSP_Support</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4022,7 +4242,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_ThanksFeedback</shortDescription>
-        <value>The recipient has not been added. Please press the Add button.</value>
+        <value>Thanks for your feedback!</value>
     </labels>
     <labels>
         <fullName>CSP_Title</fullName>
@@ -4039,6 +4259,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_TypeOfCase</shortDescription>
         <value>Type of case</value>
+    </labels>
+    <labels>
+        <fullName>CSP_User</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_User</shortDescription>
+        <value>User</value>
     </labels>
     <labels>
         <fullName>CSP_You_Dont_Have_Announcements</fullName>
@@ -5992,7 +6220,7 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IATA GDPR White Logo</shortDescription>
-        <value>https://iata--c.eu12.content.force.com/servlet/servlet.ImageServer?id=0151r0000066HTS&amp;amp;oid=00D2000000008TF&amp;amp;lastMod=1554880895000</value>
+        <value>https://iata--c.eu12.content.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Png&amp;versionId=0681r00000BTmVA&amp;operationContext=DELIVERY&amp;contentId=05T1r00000dOEHZ&amp;page=0&amp;d=/a/1r000000EU6r/LOi9lDSOQ.C8HaVJIasBLxLjxSbtA35uT1V0eFm8.Wc&amp;oid=00D2000000008TF&amp;dpt=null&amp;viewId=</value>
     </labels>
     <labels>
         <fullName>ICAddressDoctor_adns</fullName>
@@ -19725,7 +19953,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1 ProgressBar</shortDescription>
-        <value>A. Select Agency Type &amp; Location</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;Select Agency Type &amp; Location</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_ProgressBar_New</fullName>
@@ -19805,7 +20033,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step2 ProgressBar</shortDescription>
-        <value>B. Review Country Requirements</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;B&lt;/span&gt;Review Country Requirements</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_3_1_Title</fullName>
@@ -20659,7 +20887,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 ProgressBar</shortDescription>
-        <value>C. Complete Application Form</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;C&lt;/span&gt;Complete Application Form</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Save_Anytime</fullName>
@@ -20683,7 +20911,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step4 ProgressBar</shortDescription>
-        <value>D. Upload Files</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;D&lt;/span&gt;Upload Files</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step4_Upload_Continue</fullName>
@@ -20715,7 +20943,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step5 ProgressBar</shortDescription>
-        <value>E. Submit to IATA</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;E&lt;/span&gt;Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ProgressBar_CNS</fullName>
@@ -25877,7 +26105,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP File Exists</shortDescription>
-        <value>The following file already exists:</value>
+        <value>This file already exists</value>
     </labels>
     <labels>
         <fullName>ISSP_File_Extension</fullName>
@@ -28404,8 +28632,8 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Payment_Link_Description</shortDescription>
-        <value>Payment Link can be used to pay IATA invoices by credit card.&lt;br/&gt;
-&lt;b&gt;Warning!&lt;/b&gt;&lt;br/&gt;
+        <value>Payment Link can be used to pay IATA invoices by credit card.&amp;nbsp;
+&lt;b&gt;Warning!&lt;/b&gt;&amp;nbsp;
 Please note that many IATA invoices for accredited agents are collected through the BSP/CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
     </labels>
     <labels>
@@ -29115,6 +29343,14 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP_Registration_Error_LastName</shortDescription>
         <value>Please enter your last name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_Error_LegalName</fullName>
+        <categories>ISSP, login</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Registration Error LegalName</shortDescription>
+        <value>Please enter your legal name</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_Error_Location</fullName>
@@ -31663,7 +31899,7 @@ CNS Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Topics To Exclude Country PL</shortDescription>
-        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,TACT__c,Weblink__c,NDClink__c</value>
+        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,Weblink__c,NDClink__c,TACT__c,IATA_Financial_Gateway_IFG__c</value>
     </labels>
     <labels>
         <fullName>ISSP_Tracking_ID</fullName>
@@ -38161,6 +38397,14 @@ title,Title,Name</value>
         <value>contacting us.</value>
     </labels>
     <labels>
+        <fullName>csp_AccountRelocateSuccess</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Relocation</shortDescription>
+        <value>Contact relocated successfully.</value>
+    </labels>
+    <labels>
         <fullName>csp_Accreditation_Process</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -38182,7 +38426,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Access Service</value>
+        <value>Select the topic covering the problem.</value>
     </labels>
     <labels>
         <fullName>csp_ActionIndicator</fullName>
@@ -38827,6 +39071,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Sales Payment</shortDescription>
         <value>Sales Payment</value>
+    </labels>
+    <labels>
+        <fullName>csp_SearchNotPerformed</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Search could not be performed</value>
     </labels>
     <labels>
         <fullName>csp_ServiceAccessConfirm</fullName>

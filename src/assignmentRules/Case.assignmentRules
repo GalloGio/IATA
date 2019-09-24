@@ -15,7 +15,7 @@
             <criteriaItems>
                 <field>Account.Name</field>
                 <operation>equals</operation>
-                <value>Emirates</value>
+                <value>Emirates,Singapore Airlines</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.Sector__c</field>
@@ -40,7 +40,7 @@
             <criteriaItems>
                 <field>Account.Site</field>
                 <operation>startsWith</operation>
-                <value>CA 999</value>
+                <value>CA 999,SQ 618</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -3637,6 +3637,20 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Cases_Legal</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Legal</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>L3_CDS_AMS</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>ISPICKVAL(Origin, &quot;Email - Publications AMS Orders&quot;)  &amp;&amp;  RecordType.Name = &quot;Process&quot;</formula>
@@ -3961,12 +3975,12 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             <criteriaItems>
                 <field>Case.CaseArea__c</field>
                 <operation>equals</operation>
-                <value>E&amp;F Operations,E&amp;F Services</value>
+                <value>E&amp;F Operations</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Discrepancies,Payments,Transfer of collections</value>
+                <value>Payments</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -3980,12 +3994,12 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             <criteriaItems>
                 <field>Case.CaseArea__c</field>
                 <operation>equals</operation>
-                <value>E&amp;F Operations,E&amp;F Services</value>
+                <value>E&amp;F Operations</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Billing Query,Billing rerun,Monthly Report</value>
+                <value>Billing Query,Billing rerun</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -4004,7 +4018,7 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Airlines reconciliation,Debt Recovery,Unpaid invoices</value>
+                <value>Airlines reconciliation,Debt Recovery,Invoice information query</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -4023,7 +4037,7 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Airline/Operator Data Changes,Dispute,Invoice information query,New Airline/Operator,Other,Portal,User management</value>
+                <value>Airline/Operator Data Changes,Dispute,New Airline/Operator,User management</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -4471,7 +4485,10 @@ OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
 AND( 
 ISPICKVAL(Origin,&quot;Escalation&quot;), 
-Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+OR( 
+Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
+ISPICKVAL(Priority,&quot;High&quot;) 
+) 
 ) 
 ), 
 RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, 
@@ -4491,7 +4508,9 @@ OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
 AND( 
 ISPICKVAL(Origin,&quot;Escalation&quot;), 
-Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
+ISPICKVAL(Priority,&quot;High&quot;) 
+) 
 ) 
 ), 
 OR( 
@@ -4509,7 +4528,9 @@ OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
 AND( 
 ISPICKVAL(Origin,&quot;Escalation&quot;), 
-Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
+ISPICKVAL(Priority,&quot;High&quot;) 
+) 
 ) 
 ), 
 OR( 
@@ -4523,7 +4544,9 @@ OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
 AND( 
 ISPICKVAL(Origin,&quot;Escalation&quot;), 
-Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
+ISPICKVAL(Priority,&quot;High&quot;) 
+) 
 ) 
 ), 
 OR( 
@@ -4547,7 +4570,9 @@ OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
 AND( 
 ISPICKVAL(Origin,&quot;Escalation&quot;), 
-Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
+ISPICKVAL(Priority,&quot;High&quot;) 
+) 
 ) 
 ), 
 OR( 
@@ -4564,7 +4589,9 @@ OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
 AND( 
 ISPICKVAL(Origin,&quot;Escalation&quot;), 
-Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
+ISPICKVAL(Priority,&quot;High&quot;) 
+) 
 ) 
 ), 
 OR( 
@@ -6324,13 +6351,27 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>ACCA_Bug_Fix</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - ACCA Bug Fix</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>ACCA Bug Fix</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>OperationalManagementHeadOffice</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 OR 2 OR 5) OR (3 AND 4)</booleanFilter>
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - ISDM,E-mail to Case - Cargolink,E-mail to Case - ACCA Bug Fix</value>
+                <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - ISDM,E-mail to Case - Cargolink</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordType__c</field>
