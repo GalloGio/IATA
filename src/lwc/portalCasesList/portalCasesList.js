@@ -393,5 +393,14 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         let picklistAux = [{checked: false, label: 'All', value: ''}];
         return picklistAux.concat(picklist);
     }
+	
+	openReachUs() {
+        this[NavigationMixin.Navigate]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "support-reach-us"
+            },
+        });
+    }
     
 }
