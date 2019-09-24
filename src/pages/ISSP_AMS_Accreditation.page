@@ -484,10 +484,16 @@
         function setArrowListeners() {
             $('[id$=rightList]').on('DOMNodeInserted', function(e) {
                 multiSelectListAction();
+
+                if ($('[id$=leftList]')[0].children.length === 0) {
+                    $('[id$=selectAll]')[0].checked = true;
+                }
             });
 
             $('[id$=rightList]').on('DOMNodeRemoved', function(e) {
                 multiSelectListAction();
+
+                $('[id$=selectAll]')[0].checked = false;
             });
         }
 
@@ -563,51 +569,52 @@
                     $('[id$="nocThirdQuestion"]').find("input")[0].disabled = true;
                 }
 
-                $('[id$="branchaccountsel"]').first().insertAfter($('[id$="nocThirdQuestion"]'));
+                $('[id$="branchaccountsel"]').first().insertAfter($('[id$="langGSA"]'));
                 
                 checkLocationQuestion();
+
+                reRenderAccountsNoc();
             }
         }
 
         function checkLocationQuestion() {
             if ($('[id$="LocationType"]').find("input")[0].checked) {
-                if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
-                    $('[id$="nocThirdQuestion"]').css('display', 'block');
-                } else {
-                    $('[id$="nocThirdQuestion"]').css('display', 'none');
-                }
-
+                $('[id$="nocThirdQuestion"]').css('display', 'none');
                 toggleCountryMultiSelection(true, false);
                 $('#brcountry').text("{!amsAllLangCountryLabel}");
             }
             
             if ($('[id$="LocationType"]').find("input")[1].checked) { 
-                $('[id$="nocThirdQuestion"]').css('display', 'block');
-
                 toggleCountryMultiSelection(true, false);
-                $('#brcountry').text("{!$Label.ISSP_AMS_NOC_All_Countries}");
+
+                if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
+                    $('#brcountry').text("{!$Label.ISSP_AMS_NOC_All_Countries}");
+                    $('[id$="nocThirdQuestion"]').css('display', 'none');
+                } else {
+                    $('[id$="nocThirdQuestion"]').css('display', 'block');
+                }
             }
 
             if ($('[id$="LocationType"]').find("input")[2].checked) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
-                    $('[id$="nocThirdQuestion"]').css('display', 'block');
                     toggleCountryMultiSelection(false, true);
                 } else {
-                    $('[id$="nocThirdQuestion"]').css('display', 'none');
                     toggleCountryMultiSelection(true, false);
                     $('#brcountry').text("{!amsAllLangCountryLabel}");
                 }
+
+                $('[id$="nocThirdQuestion"]').css('display', 'none');
             }
 
             if ($('[id$="LocationType"]').find("input")[3].checked) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
-                    $('[id$="nocThirdQuestion"]').css('display', 'block');
                     toggleCountryMultiSelection(false, true);
                 } else {
-                    $('[id$="nocThirdQuestion"]').css('display', 'none');
                     toggleCountryMultiSelection(true, false);
                     $('#brcountry').text("{!amsAllLangCountryLabel}");
                 }
+
+                $('[id$="nocThirdQuestion"]').css('display', 'none');
             }
         }
 
@@ -870,7 +877,7 @@
                                     </div>
                                      <!--##RN INC463820  -->
                                     <apex:outputPanel id="branchaccountsel" style="display:{!IF(OR(newForm.Scope_of_Change__c=='HO - Selected Branches', newForm.Scope_of_Change__c=='Selected Branches Only'), '', 'none')}">
-                                        <apex:pageBlockSection id="table" columns="1" title="Select Accounts" rendered="{!hierarchyValues.size > 0}">
+                                        <apex:pageBlockSection id="table" columns="1" title="{!$Label.ISSP_AMS_Select_AEs}" rendered="{!hierarchyValues.size > 0}">
 
                                             <apex:outputPanel id="buttonPanel">
                                                 <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>
@@ -892,8 +899,8 @@
 
                                                 <apex:column value="{!hi.acc['Name']}"/>
                                                 <apex:column value="{!hi.acc['IATACode__c']}"/>
-                                                <apex:column value="{!hi.acc['BillingCity']}"/>
                                                 <apex:column headerValue="{!$Label.ISSP_Country}" value="{!hi.acc['IATA_ISO_Country__r.Name']}"/>
+                                                <apex:column value="{!hi.acc['BillingCity']}"/>
                                                 <apex:column value="{!hi.acc['BillingState']}"/>
 
                                             </apex:pageBlockTable>
@@ -912,7 +919,7 @@
                             </apex:outputpanel>
 
                             <div class="form-group" id="countrySelection">
-                                <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
+                                <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ANG_ISSP_CountryConcerned_AEs}</label>
 
                                 <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
                                     <apex:outputPanel rendered="{!AND(isMCAccredited, isNoticeOfChange)}">

@@ -80,7 +80,8 @@
                             <apex:outputtext rendered="{!OR(newForm.Scope_of_Change__c=='HO - Selected Branches',newForm.Scope_of_Change__c=='Selected Branches Only')}">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATACode__c.Label}</apex:outputtext>
                             <apex:outputText rendered="{!OR(newForm.Scope_of_Change__c=='HO - Selected Branches',newForm.Scope_of_Change__c=='Selected Branches Only')}" value="{!IF(newForm.Scope_of_Change__c=='HO - Selected Branches', accountConcerned.IATACode__c + ', ' + agencyCodesConcernedForPDF, agencyCodesConcernedForPDF)}"/>         
                             <apex:outputText value="{!$Label.ISSP_CountryConcerned}"/> 
-                            <apex:outputText value="{!amsAllLangCountryLabel}"/> 
+                            <apex:outputText value="{!amsAllLangCountryLabel}" rendered="{!newForm.ANG_Accreditation_Model_to_Change__c != 'Multicountry'}"/>
+                            <apex:outputText value="{!selectedCoutriesForNoCMC}" rendered="{!newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry'}"/>
                     </apex:panelGrid>
               </apex:pageBlockSection>
         

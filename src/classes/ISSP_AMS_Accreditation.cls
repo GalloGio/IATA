@@ -472,6 +472,8 @@ public without sharing class ISSP_AMS_Accreditation {
         }
         set;
     }
+
+    public String selectedCoutriesForNoCMC {get; set;}
     
     public ISSP_AMS_Accreditation() {
         isNewCase = true;
@@ -867,6 +869,21 @@ public without sharing class ISSP_AMS_Accreditation {
                     amsIsGSA = 'NO';
                     setOwnerAndRoleLabels();
                     setContextualHelp(userInfo.getLanguage());
+
+                    if (isNoticeOfChange && isMCAccredited && !String.isBlank(newForm.MultiCountry_Countries_Concerned__c)) { //rui lembrar de mudar hierarchy cenas e por os vistos nos sitios certos
+                        List<String> isosMC = newForm.MultiCountry_Countries_Concerned__c.split(',');
+
+                        for (Integer i = 0; i < nonSelectedCountryIsos.size(); i++) {
+                            if (isosMC.contains(nonSelectedCountryIsos[i].getValue())) {
+                                selectedCountryIsos.add(nonSelectedCountryIsos[i]);
+                                nonSelectedCountryIsos.remove(i);
+                            }
+                        }
+
+                        resetHierarchy();
+                        //populateSelectCheckbox();
+                    }
+
                 } else if (stepNumber == '2') {
                     isStep2 = true;
                 } else if (stepNumber == '3') {
@@ -964,6 +981,14 @@ public without sharing class ISSP_AMS_Accreditation {
 
                     if (newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry' && isNoticeOfChange) {
                         accountsToBeConverted = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
+
+                        selectedCoutriesForNoCMC = '';
+                        
+                        for (Account a: accountsToBeConverted) {
+                            selectedCoutriesForNoCMC += a.IATA_ISO_Country__r.Name + ', ';
+                        }
+
+                        selectedCoutriesForNoCMC += hqAccount.IATA_ISO_Country__r.Name;
                     }
 
                 } else {
@@ -1329,12 +1354,8 @@ public without sharing class ISSP_AMS_Accreditation {
             for (Account a: mcHierarchyAccounts) {
                 if (a.Status__c == 'Approved') {
                     if (countryNameByIsoCode.get(a.IATA_ISO_Country__r.Name) == null) {
-                        if (a.Location_Type__c == 'GE') {
-                            countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name + ' - Head Entity Country', a.Country_ISO_Code__c);
-                        } else {
-                            if (!countryNameByIsoCode.values().contains(a.Country_ISO_Code__c)) {
-                                countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name, a.Country_ISO_Code__c);
-                            }
+                        if (!countryNameByIsoCode.values().contains(a.Country_ISO_Code__c)) {
+                            countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name, a.Country_ISO_Code__c);
                         }
                     }
                 }
@@ -2068,7 +2089,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 agencyCodesConcerned = getAgencyCodesConcerned();
             }
 
-            if ((newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c == 'Selected Branches Only')  && agencyCodesConcerned.size()==0) {
+            if ((newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c == 'Selected Branches Only')  && agencyCodesConcerned.size()==0) { //rui
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, (getIsAccreditationModelNotNullOrLegacy() ? Label.ISSP_NoC_Least_One_AE : Label.ISSP_NoC_Least_One_BO)));
                 return null;
             }
@@ -2093,10 +2114,13 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.Visible_on_ISS_Portal__c = true;
             
             if (isMCAccredited) {
-                Boolean first = false;
-                String countriesMC;
+                Boolean first = true;
+                String countriesMC = '';
+
+                //System.debug('ola2: ' + selectedCountryIsos);
 
                 for (SelectOption country: selectedCountryIsos) {
+                    System.debug('ola3: ' + country);
                     if (first) {
                         countriesMC = country.getValue();
                         first = false;
@@ -4466,7 +4490,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
-                        Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, 
+                        Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, IATA_ISO_Country__r.Name,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
                         IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, IATA_ISO_Country__r.AMS_Settlement_System__c, Country_ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c,
                         (SELECT Id, Status, Reason1__c, IFAP_Country_ISO__c, Applicable_to_Which_Version_s__c, ContactId, AccountId
@@ -5147,7 +5171,7 @@ public without sharing class ISSP_AMS_Accreditation {
         String iataCodeToSearch = accountToBeFetchedOrRemoved + '%';
         
         List<Account> agency = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
-                            ParentId, Parent.BillingStreet, Parent.BillingCity, Parent.BillingState, Parent.BillingPostalCode, Parent.BillingCountry, Parent.Name, Parent.Location_Type__c, Parent.IATACode__c
+                            Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c
                         FROM Account
                         WHERE RecordType.DeveloperName = 'IATA_Agency'
                             AND Sector__c = :AMS_Utils.SECTOR_PASSENGER 
@@ -5160,17 +5184,17 @@ public without sharing class ISSP_AMS_Accreditation {
 
         if (!agency.isEmpty()) {
             Account temp;
-            if (agency[0].Location_Type__c == AMS_Utils.AE) {
-                temp = new Account(Id = agency[0].ParentId,
-                                Name = agency[0].Parent.Name,
-                                BillingCountry = agency[0].Parent.BillingCountry,
-                                IATACode__c = agency[0].Parent.IATACode__c);
+            if (!String.isBlank(agency[0].Top_Parent__c)) {
+                temp = new Account(Id = agency[0].Top_Parent__r.Id,
+                                Name = agency[0].Top_Parent__r.Name,
+                                BillingCountry = agency[0].Top_Parent__r.BillingCountry,
+                                IATACode__c = agency[0].Top_Parent__r.IATACode__c);
                 
-                fetchedHEMCName = agency[0].Parent.Name;
+                fetchedHEMCName = agency[0].Top_Parent__r.Name;
 
-                fetchedHEMCAddress = notNull(agency[0].Parent.BillingStreet) + ' \r\n' +
-                               notNull(agency[0].Parent.BillingCity) + '' + notNull(agency[0].Parent.BillingState) +
-                               ' \r\n' + notNull(agency[0].Parent.BillingCountry);
+                fetchedHEMCAddress = notNull(agency[0].Top_Parent__r.BillingStreet) + ' \r\n' +
+                               notNull(agency[0].Top_Parent__r.BillingCity) + '' + notNull(agency[0].Top_Parent__r.BillingState) +
+                               ' \r\n' + notNull(agency[0].Top_Parent__r.BillingCountry);
             } else {
                 temp = new Account(Id = agency[0].Id,
                                 Name = agency[0].Name,
@@ -8007,9 +8031,13 @@ public without sharing class ISSP_AMS_Accreditation {
                     mcCountryIsos.add(country.getValue());
                 }
                 
-                for(Account a : getBranchList(false)){
+                for(Account a : getBranchList(true)){
                     branchAccountCount++;
                     Boolean isSelected = false;
+
+                    if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
+                        isSelected = newForm.Agency_Codes_Concerned__c.contains(a.IATACode__c);
+                    }
 
                     if (isMCAccredited) {
                         if (isNoticeOfChange && !mcCountryIsos.contains(a.Country_ISO_Code__c)) {
@@ -8021,7 +8049,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         }
                     }
 
-                    hierarchy.put(a.Id, new HierarchyItem(a,isSelected));
+                    hierarchy.put(a.Id, new HierarchyItem(a, isSelected));
                 }                           
             }
             return hierarchy;
