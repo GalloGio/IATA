@@ -1,11 +1,12 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 import { navigateToPage } from 'c/navigationUtils';
 
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import getFieldLabels from '@salesforce/apex/CSP_Utils.getSelectedColumns';
-import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
 import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
+import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
+
 
 import { getParamsFromPage } from 'c/navigationUtils';
 
@@ -17,11 +18,26 @@ import RelatedAccount from '@salesforce/label/c.csp_CreateNewCaseMainPicklistLab
 import ISSP_Survey from '@salesforce/label/c.ISSP_Survey';
 import Open from '@salesforce/label/c.Open';
 
+import Email from '@salesforce/label/c.Email';
+import CSP_Remittantce_Date from '@salesforce/label/c.CSP_Remittantce_Date';
+import CSP_Case_Currency from '@salesforce/label/c.CSP_Case_Currency';
+import ISSP_SIDRA_Irregularity_Date from '@salesforce/label/c.ISSP_SIDRA_Irregularity_Date';
+import CSP_IATA_Country from '@salesforce/label/c.CSP_IATA_Country';
+import CSP_AdditionalDetails from '@salesforce/label/c.csp_AdditionalDetails';
+import ISSP_Description from '@salesforce/label/c.ISSP_Description';
+
 
 /* PDF Labels */
 import ISSP_AMS_Download_PDF_Copy from '@salesforce/label/c.ISSP_AMS_Download_PDF_Copy';
 import ISSP_AMS_Download_PDF_NOC from '@salesforce/label/c.ISSP_AMS_Download_PDF_NOC';
 
+
+/*
+Email,
+CSP_Remittantce_Date,
+CSP_Case_Currency,
+ISSP_SIDRA_Irregularity_Date
+*/
 
 import PDFICON from '@salesforce/resourceUrl/PDF_icon_large';
 
@@ -30,28 +46,37 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track loading = true;
     @track caseDetails;
     @track caseId;
-    @track optionBuilder;
     @track surveyLink;
+    @track optionBuilder;
 
     @track pdfImage = PDFICON;
 
     @track showAddDocsModal = false;
 
-
     @track nrDocs = 0;
+
+    @track showNewDescriptionSection = false;
+    @track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
 
     @track labels = {
         AddDocumentsMsg,
         CaseDetails,
         DocumentsLabel,
         RelatedAccount,
+        ISSP_Survey,
+        Open,
         ISSP_AMS_Download_PDF_Copy,
         ISSP_AMS_Download_PDF_NOC,
-	ISSP_Survey,
-        Open
+        Email,
+        CSP_Remittantce_Date,
+        CSP_Case_Currency,
+        ISSP_SIDRA_Irregularity_Date,
+        CSP_IATA_Country,
+        CSP_AdditionalDetails,
+        ISSP_Description
     };
 
-    acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
+    acceptedFormats = '.pdf, .jpeg, .jpg, .png, .ppt, .pptx, .xls, .xlsx, .tif, .tiff, .zip';
 
 
 
@@ -64,6 +89,19 @@ export default class PortalCaseDetailsDetails extends LightningElement {
             getCaseById({ caseId: this.pageParams.caseId })
                 .then(results => {
                     this.caseDetails = results;
+
+                    console.log(JSON.parse(JSON.stringify(results)));
+
+                    this.showNewDescriptionSection = this.caseDetails.RecordType__c === 'Cases - Africa & Middle East'
+                        || this.caseDetails.RecordType__c === 'Cases - Americas'
+                        || this.caseDetails.RecordType__c === 'Cases - Asia & Pacific'
+                        || this.caseDetails.RecordType__c === 'Cases - China & North Asia'
+                        || this.caseDetails.RecordType__c === 'Cases - Europe'
+                        || this.caseDetails.RecordType__c === 'Cases - Global'
+                        || this.caseDetails.RecordType__c === 'Complaint (IDFS ISS)'
+                        || this.caseDetails.RecordType__c === 'Process';
+
+                    this.isCollapsedWhenNewDescriptionInPlace = this.showNewDescriptionSection ? "slds-p-around_medium collapsed " : "slds-p-around_medium ";
 
                     optionBuilder({ caseObj: results })
                         .then(result => {
@@ -91,7 +129,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
             });
         }
-        
+
     }
 
     renderedCallback() {
@@ -102,9 +140,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
             this.toggleCollapsed('[data-docicon]', 'arrowExpanded');
             this.showAddDocsModal = true;
             this.pageParams.Att = "";
-            console.log('open sayz me!');
         }
-        
     }
 
     get hasTopic() {
@@ -257,6 +293,11 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         this.showAddDocsModal = false;
     }
 
+    toggleDescriptionSection() {
+        this.toggleCollapsed('[data-detdiv]', 'collapsed');
+        this.toggleCollapsed('[data-deticon]', 'arrowExpanded');
+    }
+
     toggleCollapsed(elem, cssclass) {
         this.template.querySelector(elem).classList.toggle(cssclass);
     }
@@ -266,7 +307,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         this.showAddDocsModal = true;
     }
 
-    getSurveyLink(){
+    getSurveyLink() {
         getSurveyLink({ caseId: this.caseId })
             .then(result => {
                 this.surveyLink = result;
