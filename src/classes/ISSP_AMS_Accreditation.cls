@@ -1231,7 +1231,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if (accountsByBSP.get(selectedBSP) != null) {
                 for (AgencyInfoByISOWrapper agency: accountsByBSP.get(selectedBSP)) {
-                    options.add(new SelectOption(agency.accId, agency.legalName));
+                    if(agency.locType != AMS_Utils.AE)
+                        options.add(new SelectOption(agency.accId, agency.legalName));
                 }
             }
 
@@ -2602,7 +2603,7 @@ public without sharing class ISSP_AMS_Accreditation {
         String accId;
 
         for (Account a: mcHierarchyAccounts) {
-            if (a.IATA_ISO_Country__r.AMS_Settlement_System__c == countryBSP) {
+            if (a.IATA_ISO_Country__r.AMS_Settlement_System__c == countryBSP && a.Location_Type__c != AMS_Utils.AE) {
                 accId = a.Id;
                 break;
             }
