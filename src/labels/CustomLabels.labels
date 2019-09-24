@@ -3317,6 +3317,13 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_CaseNumber</shortDescription>
         <value>Case Number</value>
     </labels>
+        <labels>
+        <fullName>CSP_Case_Currency</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Case_Currency</shortDescription>
+        <value>Case Currency</value>
+    </labels>
     <labels>
         <fullName>CSP_Cases</fullName>
         <categories>CS Portal</categories>
@@ -3603,6 +3610,13 @@ Payment required on receipt of this Payment Advice
         <value>Welcome [username]</value>
     </labels>
     <labels>
+        <fullName>CSP_IATA_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_IATA_Country</shortDescription>
+        <value>IATA Country</value>
+    </labels>
+    <labels>
         <fullName>CSP_LogOut</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3865,6 +3879,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_RelatedArticles</shortDescription>
         <value>Related Articles</value>
+    </labels>
+        <labels>
+        <fullName>CSP_Remittantce_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Remittantce_Date</shortDescription>
+        <value>Remittantce Date</value>
     </labels>
     <labels>
         <fullName>CSP_RemoveAllFilters</fullName>
@@ -39477,6 +39498,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Select the topic covering the problem.</value>
+    </labels>
+        <labels>
+        <fullName>csp_AdditionalDetails</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Details Details page</shortDescription>
+        <value>Additonal Details</value>
     </labels>
     <labels>
         <fullName>days_left</fullName>
