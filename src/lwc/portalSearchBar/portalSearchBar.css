@@ -52,3 +52,12 @@
 .slds-backdrop{
     z-index: 4000;
 }
+
+.rotateIcon {
+    transform: rotate(45deg);
+  }
+  
+  .marginTop {
+    margin-top: 3px;
+  }
+  

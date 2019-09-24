@@ -20,6 +20,7 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
     }
     set filteringObjectParent(value) {
         this.filteringObject = value;
+        
         this.setColumnsClass();
     }
 
@@ -51,10 +52,10 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
     @track leftColumnClass = '';
     @track rightColumnClass = '';
 
-
     @track noResultsClass = 'display: none;';
     @track resultsClass = 'display: none;';
 
+    @track showCross = false;
 
     setColumnsClass(){
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
@@ -120,6 +121,12 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
     }
     onchangeSearchInput(event){
         this.searchText = event.target.value;
+        
+        if (this.searchText.length > 0) {
+            this.showCross = true;
+        } else {
+            this.showCross = false;
+        }
 
         // Clear the timeout if it has already been set.
         // This will prevent the previous task from executing
@@ -178,6 +185,12 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
             this.resultsClass = '';
         }
         
+    }
+
+    removeTextSearch() {
+        this.filteringObject.searchText = '';
+        this.searchText = '';
+        this.showCross = false;
     }
 
 }
