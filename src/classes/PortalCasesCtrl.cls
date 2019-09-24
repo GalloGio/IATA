@@ -727,29 +727,52 @@ public with sharing class PortalCasesCtrl {
     /*
     * Returns the comments for a case, given the case id
     */
-    @AuraEnabled 
-    public static List<MessageWrapper> getCaseMessages(String caseId){
-        List<MessageWrapper> lstToReturn = new List<MessageWrapper>();
+    @AuraEnabled
+public static List<MessageWrapper> getCaseMessages(String caseId){
+	List<MessageWrapper> lstToReturn = new List<MessageWrapper>();
 
-        List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished, 
-                                                CreatedDate, CreatedById , CreatedBy.Name , IsDeleted
-                                                FROM CaseComment
-                                                WHERE ParentId = :caseId AND IsDeleted = false
-                                                ORDER BY CreatedDate ASC];
-        
-        if(lstCaseCommentsAux != null && !lstCaseCommentsAux.isEmpty()){
-            for(CaseComment caseCommentAux : lstCaseCommentsAux){
-                Boolean isSelfAux = caseCommentAux.CreatedById == UserInfo.getUserId();
-                lstToReturn.add(new MessageWrapper(caseCommentAux.CommentBody, 
-                                                    caseCommentAux.CreatedDate, 
-                                                    caseCommentAux.CreatedBy.Name, 
-                                                    isSelfAux, 
-                                                    caseCommentAux.Id));
-            }
-        }
+	Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate FROM Case WHERE Id =:caseId];
 
-        return lstToReturn;
-    }
+	List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
+	                                        CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
+	                                        FROM CaseComment
+	                                        WHERE ParentId = :caseId AND IsDeleted = false
+	                                                                                 ORDER BY CreatedDate ASC];
+
+
+	String type='Case';
+
+	Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+	Schema.SObjectType leadSchema = schemaMap.get(type);
+	Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
+
+	String labelDescription = fieldMap.get('Description').getDescribe().getLabel();         //It provides to get the object fields label.
+
+	String caseDescription = caseToFirstComment.Description;
+
+	if(caseDescription.contains(labelDescription + ' - ')) {
+		caseDescription = caseDescription.substringAfter(labelDescription + ' - ');
+	}
+
+	lstToReturn.add(new MessageWrapper(caseDescription,
+	                                   caseToFirstComment.CreatedDate,
+	                                   caseToFirstComment.CreatedBy.Name,
+	                                   true,
+	                                   caseToFirstComment.Id));
+
+	if(lstCaseCommentsAux != null && !lstCaseCommentsAux.isEmpty()) {
+		for(CaseComment caseCommentAux : lstCaseCommentsAux) {
+			Boolean isSelfAux = caseCommentAux.CreatedById == UserInfo.getUserId();
+			lstToReturn.add(new MessageWrapper(caseCommentAux.CommentBody,
+			                                   caseCommentAux.CreatedDate,
+			                                   caseCommentAux.CreatedBy.Name,
+			                                   isSelfAux,
+			                                   caseCommentAux.Id));
+		}
+	}
+
+	return lstToReturn;
+}
 
     @AuraEnabled
     public static ReturnWrapper submitNewMessage(String caseId, String messageTextAux){
