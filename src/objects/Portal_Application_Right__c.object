@@ -582,7 +582,7 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 &quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
 &quot;MSO Management&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
-&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;Risk Profile and RHC&quot;, IF(Contact__r.Account.IATA_ISO_Country__r.ISO_Code__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
 &quot;ICCS&quot;, &quot;ICCS&quot;,
 Application_Name__c
 )</formula>

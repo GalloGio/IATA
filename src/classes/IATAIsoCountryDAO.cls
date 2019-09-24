@@ -63,14 +63,14 @@ public class IATAIsoCountryDAO {
                                                  LVA_CountryLanguage__c, CNS_Country__c, ANG_Portal_Service__c, Airline_EasyPay_Opt_Out_Date__c,
                                                  State_Province_Picklist__c, ANG_IEP_Model__c, 
 												 Region_Province_and_Cities_Enabled__c,
-						AMS_Settlement_System__r.Name,
-                                                 
+						AMS_Settlement_System__r.Name, AMS_Settlement_System__r.Remittance_Frequency_per_State__c,                                                 
                                                  (SELECT Id, Name, ISO_Code__c, IEC_Valid_SAP__c
                                                   FROM IATA_ISO_States__r
                                                   ORDER BY Name),
                                                  
                                                  (SELECT Id, Minimum_DGR_BR__c, Minimum_DGR_HO__c, Location_Class__c, RecordType.Name, 
-                                                  		 Threshold__c, RecordType.DeveloperName, CurrencyIsoCode, ANG_Minimum_RHC_Amount__c
+                                                  Threshold__c, RecordType.DeveloperName, Block_notification_on_RHC_amount_update__c, 
+                                                        		Block_notification_on_Risk_Status_update__c, CurrencyIsoCode, ANG_Minimum_RHC_Amount__c
                                                   FROM AMS_Country_Specific_Attributes__r)
                                                  
                                                  FROM IATA_ISO_Country__c ]);
