@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>CategoryExceptions__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">GSSA Cargo</value>
     </values>
     <values>
         <field>DataCategoryLabel_TR__c</field>
@@ -112,6 +112,6 @@
     </values>
     <values>
         <field>SectorExceptions__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">General Sales Agent</value>
     </values>
 </CustomMetadata>

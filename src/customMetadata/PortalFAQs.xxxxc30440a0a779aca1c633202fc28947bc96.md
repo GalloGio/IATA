@@ -112,6 +112,6 @@
     </values>
     <values>
         <field>SectorExceptions__c</field>
-        <value xsi:type="xsd:string">Freight Forwarder</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>

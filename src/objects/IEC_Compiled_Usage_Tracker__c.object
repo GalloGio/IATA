@@ -271,6 +271,25 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>YY_By_Related_Application</fullName>
+        <columns>NAME</columns>
+        <columns>CAC_Subscription_Detail__c</columns>
+        <columns>Related_Application__c</columns>
+        <columns>Related_Client__c</columns>
+        <columns>Counter__c</columns>
+        <columns>Date__c</columns>
+        <columns>Validation_Result__c</columns>
+        <columns>Validation_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Related_Application__c</field>
+            <operation>equals</operation>
+            <value>CACSWS,CACEWS</value>
+        </filters>
+        <label>YY-By Related Application</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>ZZ_By_Related_Client</fullName>
         <columns>NAME</columns>
         <columns>CAC_Subscription_Detail__c</columns>

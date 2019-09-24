@@ -223,6 +223,10 @@
                 } else {
                     if(typeAccredSelected == 'Travel_Agent') {
                         navigateToUrl('/ISSP_ANG_ProductComparison','LIST_VIEW','newCase');
+                    } else if (typeAccredSelected == 'China_Domestic') {
+                        navigateToUrl('/ISSP_ANG_ProductComparison?chinaAccred=Domestic','LIST_VIEW','newCase');
+                    } else if (typeAccredSelected == 'China_International') {
+                        navigateToUrl('/ISSP_ANG_ProductComparison?chinaAccred=International','LIST_VIEW','newCase');
                     } else {
                         navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage&sectorValue=Cargo_Agent','LIST_VIEW','newCase');
                     }
@@ -306,7 +310,7 @@
                                         
                                 <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /><br/>
                                         
-                                <apex:commandLink action="{!redirectToCountryRequirementPage}" value="{!$Label.ISSP_ANG_Country_Req}" id="countryReq" rendered="{!OR(con.Account.Category__c == 'IATA Passenger Sales Agent',con.Account.Category__c == 'Non-IATA Travel Agent')}"/><br/><br/>
+                                <apex:commandLink action="{!redirectToCountryRequirementPage}" value="{!$Label.ISSP_ANG_Country_Req}" id="countryReq" rendered="{!OR(con.Account.Category__c == 'IATA Passenger Sales Agent',con.Account.Category__c == 'Non-IATA Travel Agent', AND(con.Account.Category__c == 'Domestic Agent', isoCountry.ISO_Code__c == 'CN'))}"/><br/><br/>
                             </div>
                                     
                             <div class="col-md-5">
@@ -420,7 +424,7 @@
                             
                     </section>
 
-                    <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(isUserAccAccredited, '','none')}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
+                    <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(AND(con.Account.Category__c == 'Domestic Agent', NOT(isocountry.ANG_Enable_NewGen__c)), 'none', IF(isUserAccAccredited, '', 'none'))}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
 			<div class="content-box">
                             <header>
                                 <div class="section-header">
@@ -466,12 +470,25 @@
                         <div class="row" id="modalChooseAccreditationRow">
                             <apex:outputPanel layout="block" styleClass="col-md-12 text-normal" id="modalChooseAccreditationPanel">
                                 <apex:selectRadio value="{!accredidationType}" layout="pageDirection" id="accredTypeId">
-                                    <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" />
+                                    <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" rendered="{!hqAccount.Country_ISO_Code__c != 'CN'}"/>
+
+                                    <apex:selectOption itemValue="China_Domestic" itemLabel="{!$Label.ISSP_China_Domestic}" id="chinaDomesticCheck" rendered="{!hqAccount.Country_ISO_Code__c == 'CN'}"/>
+                                
+                                    <apex:selectOption itemValue="China_International" itemLabel="{!$Label.ISSP_China_International}" id="chinaInternationalCheck" rendered="{!hqAccount.Country_ISO_Code__c == 'CN'}"/> 
+
                                     <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck"/>
                                 </apex:selectRadio>
                             </apex:outputPanel>
                         </div>
                     </div>
+
+                    <!--<script type="text/javascript">
+                        $('[value="China_International"]').parent().append($('<apex:image/>',{id: 'dasd', value: '/img/msg_icons/info16.png',
+                                                html-data-html: 'true',
+                                                html-data-placement: 'right',
+                                                html-data-toggle: 'tooltip',
+                                                title: '{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}'}));
+                    </script>-->
 
                     <div class="modal-footer">
                         <div class="col-md-12">
