@@ -68,8 +68,6 @@
     function onCompleteHandler() {
         if ("{!mcAbleToSubmit}" == 'false') {
             $('#submitMCButton').attr('disabled', 'true');
-        } else {
-            $('#submitMCButton').attr('disabled', 'false');
         }
     }
     </script>

@@ -300,6 +300,16 @@ public without sharing class ISSP_AMS_Accreditation {
 		set;
     }
 
+    public String mapToReturn { get {
+        Map<String, String> countryMap = new Map<String, String>();
+        Set<String> isoCodesToExclude = new Set<String>{'IO','TF','GS','UM','UP','VI'};
+        for (IATA_ISO_Country__c cnt: IATAIsoCountryDAO.getIsoCountries()) {
+            if (cnt.Region__c == null || isoCodesToExclude.contains(cnt.Iso_Code__c)) continue;
+            countryMap.put(cnt.Name.toUpperCase(), cnt.Informatica_Value__c.toUpperCase());
+        }
+        return JSON.serialize(countryMap);
+    } set;}
+
     public List<SelectOption> countryList {
         get {
             if (countryList == null) {
@@ -1247,7 +1257,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if (accountsByBSP.get(selectedBSP) != null) {
                 for (AgencyInfoByISOWrapper agency: accountsByBSP.get(selectedBSP)) {
-                    options.add(new SelectOption(agency.accId, agency.legalName));
+                    if(agency.locType != AMS_Utils.AE)
+                        options.add(new SelectOption(agency.accId, agency.legalName));
                 }
             }
 
@@ -2619,7 +2630,7 @@ public without sharing class ISSP_AMS_Accreditation {
         String accId;
 
         for (Account a: mcHierarchyAccounts) {
-            if (a.IATA_ISO_Country__r.AMS_Settlement_System__c == countryBSP) {
+            if (a.IATA_ISO_Country__r.AMS_Settlement_System__c == countryBSP && a.Location_Type__c != AMS_Utils.AE) {
                 accId = a.Id;
                 break;
             }
@@ -7966,7 +7977,7 @@ public without sharing class ISSP_AMS_Accreditation {
             delete [SELECT Id FROM Account WHERE Id = :newForm.Same_Legal_Entity_Agency_Form__r.ISSP_Branch_AccountId__c];
 
             update new AMS_Pax_Accreditation_Form__c(Id = newform.Same_Legal_Entity_Agency_Form__c,
-                                                    Status__c = 'InProgress');
+                                                    Status__c = 'InProgress', ISSP_Branch_AccountId__c = null);
         }
         
         String pageURL = '/';
