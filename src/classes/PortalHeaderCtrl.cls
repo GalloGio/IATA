@@ -81,7 +81,7 @@ public without sharing class PortalHeaderCtrl {
     */
     @AuraEnabled
     public static List<NotificationItem> getNotifications() {
-
+        
         User loggedUser = CSP_Utils.getLoggedUser();
         Boolean isAdmin = loggedUser.Contact.User_Portal_Status__c == 'Approved Admin';
 
@@ -95,7 +95,7 @@ public without sharing class PortalHeaderCtrl {
 
         if ( isAdmin ) {
             String topParentId = loggedUser.Contact.Account.Top_Parent__c == null ? loggedUser.Contact.AccountId : loggedUser.Contact.Account.Top_Parent__c;
-            
+
             userPortalAccessRequestList = getContactsToApprove(topParentId);
             userPortalServiceAccessRequestList = getPortalAppRightsToApprove(topParentId);
             customerInvoicesList = getCustomerInvoices(topParentId); //ACAMBAS - WMO-628 
@@ -104,15 +104,7 @@ public without sharing class PortalHeaderCtrl {
                 // USER ACCESS (CONTACT)
 
                 // Contactid, Contact.Name, Contact.User_Portal_Status__c, CreatedDate 
-                NotificationItem notif = new NotificationItem(contact.Contactid, 
-                                                                String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Contact.Name}), 
-                                                                contact.CreatedDate, 
-                                                                false, 
-                                                                System.label.CSP_Task, 
-                                                                String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Contact.Name}), 
-                                                                false, 
-                                                                'Portal Access', 
-                                                                contact.Contact.Name);
+                NotificationItem notif = new NotificationItem(contact.Contactid, String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Contact.Name}), contact.CreatedDate, false, System.label.CSP_Task, String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Contact.Name}), false, 'Portal Access', contact.Contact.Name);
                 notificationItemList.add(notif);
             }
             
@@ -128,7 +120,7 @@ public without sharing class PortalHeaderCtrl {
                                                                 'Portal Service', 
                                                                 application.Contact__r.Name);
                 notificationItemList.add(notif);
-                }
+            }
 
             
             if(showIATAInvoices()) {  //ACAMBAS - WMO-696
