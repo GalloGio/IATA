@@ -11,7 +11,7 @@ import passwordRule1Label          from '@salesforce/label/c.CSP_Password_Rule_1
 import passwordRule2Label          from '@salesforce/label/c.CSP_Password_Rule_2';
 import passwordRule3Label          from '@salesforce/label/c.CSP_Password_Rule_3';
 import passwordRule4Label          from '@salesforce/label/c.CSP_Password_Rule_4';
-import errorMessageLabel           from '@salesforce/label/c.CSP_Change_Password_Error';
+import errorMessageLabel           from '@salesforce/label/c.CSP_Create_Password_Error';
 import CSP_PortalPath              from '@salesforce/label/c.CSP_PortalPath';
 import RegistrationUtils           from 'c/registrationUtils';
 import { reduceErrors }            from 'c/ldsUtils';
