@@ -557,7 +557,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			topEntityPerBspMap.put(accountGE.IATA_ISO_Country__r.AMS_Settlement_System__c, accountGE.Id);
 			
-			AMS_Agencies_Hierarchy__c newHierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+			AMS_Agencies_Hierarchy__c newHierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'NewGen Hierarchy', Main_Account__c = accountGE.Id);
 			insert newHierarchy;
 
 			AMS_Pax_Accreditation_Form__c stagingArea = getAccreditation(oscar.AMS_Online_Accreditation__c);
@@ -1110,7 +1110,8 @@ public with sharing class ANG_AgencyChangesHelper {
 			
 			oscarToProcess.Generate_risk_event_MC__c = true;
 			AMS_Agencies_Hierarchy__c newHierarchy = new AMS_Agencies_Hierarchy__c();
-			newHierarchy.Hierarchy_Name__c = 'Hierarchy';
+			newHierarchy.Hierarchy_Name__c = 'NewGen Hierarchy';
+			newHierarchy.Main_Account__c = oscarToProcess.New_parent__c;
 			insert newHierarchy;
 
 			thw = new ANG_MulticountryHelper.TargetHierarchyWrapper();
@@ -1232,11 +1233,12 @@ public with sharing class ANG_AgencyChangesHelper {
 			if(hierarchyId == null){
 
 				newH = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Newgen Hierarchy');
+				/** NEWGEN-5751 */
+				newH.Main_Account__c = oscarToProcess.New_parent__c;
 				insert newH;
 
 				hierarchyId = newH.Id;
-				/** NEWGEN-5751 */
-				newH.Main_Account__c = oscarToProcess.New_parent__c;
+				
 
 				System.debug('[ANG_AgencyChangesHelper] Inserted new Hierarchy with Id:' + newH.Id + ' since the destination account is a single Account.');
 			}
