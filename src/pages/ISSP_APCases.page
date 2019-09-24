@@ -213,7 +213,7 @@
         <div class="panel-body">
           <apex:pageBlockTable value="{!APDraftCases}" var="MyIFAPCases" styleClass="table">
             <apex:column headerValue="{!$Label.ISSP_CaseNumber}">
-              <apex:outputLink value="/ISSP_APProcess?caseId={!MyIFAPCases.Id}&step=2">{!MyIFAPCases.CaseNumber}</apex:outputLink>
+              <apex:outputLink value="/ISSP_APProcess2?caseId={!MyIFAPCases.Id}&step=2">{!MyIFAPCases.CaseNumber}</apex:outputLink>
             </apex:column>
             <apex:column value="{!MyIFAPCases.Account_Concerned__r.Site}"/>
             <apex:column value="{!MyIFAPCases.Subject}"/>

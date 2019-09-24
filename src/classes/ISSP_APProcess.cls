@@ -1093,18 +1093,18 @@ global without sharing class ISSP_APProcess {
 
     public Pagereference goToStep2(){
         if(countryRequirementFound) {
-            return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=2');
+            return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=2');
         } else { //No case created if Country Reqs are not found
-            return new Pagereference('/ISSP_APProcess?step=2&ctryreq=false&country=' + apCountry + '&lob=' + strLOB);
+            return new Pagereference('/ISSP_APProcess2?step=2&ctryreq=false&country=' + apCountry + '&lob=' + strLOB);
         }
     }
 
     public Pagereference goToStep3(){
-        return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=3');
+        return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3');
     }
 
     public Pagereference goToStep4(){
-        return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=4');
+        return new Pagereference('/ISSP_APProcess4?caseId='+newCase.Id+'&step=4');
     }
 
     public Pagereference goToFinalStep(){
@@ -1151,7 +1151,7 @@ global without sharing class ISSP_APProcess {
 
             sendConfirmationEmail(newCase);
 
-            return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=Final');
+            return new Pagereference('/ISSP_APProcess5?caseId='+newCase.Id+'&step=Final');
         } catch (DmlException ex) {
             newForm.Submitted_to_IATA__c = FALSE;
             ApexPages.addMessages(ex);
