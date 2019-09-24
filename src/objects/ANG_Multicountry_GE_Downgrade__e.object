@@ -17,5 +17,5 @@
     </fields>
     <label>Multicountry GE Downgrade</label>
     <pluralLabel>Multicountry GE Downgrades</pluralLabel>
-    <publishBehavior>PublishImmediately</publishBehavior>
+    <publishBehavior>PublishAfterCommit</publishBehavior>
 </CustomObject>
