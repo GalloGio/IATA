@@ -46,8 +46,8 @@ public with sharing class SidraLiteHelperForIFAP {
     }
 
     public static void verifyNewgenBusinessRules(Case parentCase){
-        boolean firstRule = parentCase.FA_Second_Deadline_Date__c < System.today();
-        boolean secondRule = STATUS_FOR_FA.contains(parentCase.Status);
+        boolean firstRule =  parentCase.Financial_Review_Result__c <> null && parentCase.Financial_Review_Result__c <> '';
+        boolean secondRule = parentCase.Assessment_Performed_Date__c > parentCase.FA_Second_Deadline_Date__c;
 
         Account acct= [Select Id, ANG_IsNewGenAgency__c,ANG_CashCondition__c, (Select Id from Financial_Securities__r where Security_Status__c IN ('Active','Close to Expiry Date')) from Account where Id=:parentCase.accountId];
 
