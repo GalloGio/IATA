@@ -24,9 +24,10 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
                 let tempCategoryName = this.category; //Contains selected category from portalFAQPage
         
                 Object.keys(result).forEach(function (el) {                
-                    tempAccordionMap[result[el].topicName] = result[el];
+                    
 
                     if(tempCategoryName === result[el].categoryName) {
+                        tempAccordionMap[result[el].topicName] = result[el];
                         tempTopicOptions.push({ label: result[el].topicLabel, value: result[el].topicName, open: false, class: 'slds-p-around_medium customCardTitleBox cursorPointer borderStyle cardStyle' });
                     }
                 });
@@ -69,7 +70,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         });
 
         this.subTopicTiles = [];
-        this.subTopicTiles = tempSubTopics.reverse();
+        this.subTopicTiles = tempSubTopics;
 
         //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected topic  
         let topicInfo = {
@@ -94,7 +95,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         });
 
         this.subTopicTiles = [];
-        this.subTopicTiles = tempSubTopics.reverse();      
+        this.subTopicTiles = tempSubTopics;      
         
         //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected subtopic
         let subtopicInfo = {
