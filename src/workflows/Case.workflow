@@ -3904,9 +3904,9 @@
         <ccEmails>ganeaa@iata.org</ccEmails>
         <description>Send Email to Online store support</description>
         <protected>false</protected>
-        <senderAddress>onlinestoresupport@iata.org</senderAddress>
+        <senderAddress>iatacustomerservice@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>Vendor_Templates/Contact_Vendor</template>
+        <template>Vendor_Templates/Contact_SNOW_ecommercecs</template>
     </alerts>
     <alerts>
         <fullName>Send_a_notification_to_SIS_Customer_Support_when_a_SIS_E_Joining_form_is_submitt</fullName>
