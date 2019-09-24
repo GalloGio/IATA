@@ -3,23 +3,14 @@
     <available>true</available>
     <encodingKey>UTF-8</encodingKey>
     <letterhead>IATADynamicSkyLetterhead</letterhead>
-    <name>ANG New GE Cash Sanity Check Passed EN</name>
+    <name>Conversion GoStandard to GoGlobal Approval EN</name>
     <style>freeForm</style>
-    <subject>Ref nr {!AMS_OSCAR__c.Name} – Accreditation GoGlobal accepted</subject>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Agency changes Approved</subject>
     <textOnly>Dear Sir/Madam,
 
-
-
-The documentation for your accreditation process (GoGlobal) has been accepted and the application is going to be processed 
-
-
-
-
-
+Your Conversion GoStandard to GoGlobal process has been approved.
 
 Yours faithfully,
-
-,
 
 Agency Management
 International Air Transport Association

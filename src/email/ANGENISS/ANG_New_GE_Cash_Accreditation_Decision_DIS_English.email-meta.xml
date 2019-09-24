@@ -5,12 +5,11 @@
     <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>ANG New GE Cash Accreditation Decision Disapproval EN</name>
     <style>freeForm</style>
-    <subject>Ref nr {!AMS_OSCAR__c.Name} – Accreditation GoLite disapproved</subject>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Accreditation GoGlobal disapproved</subject>
     <textOnly>Dear Sir/Madam,
 
 
-Your accreditation process (GoLite) has been disapproved. (Email for GE)
-
+Your accreditation process (GoGlobal) has been disapproved.
 
 
 

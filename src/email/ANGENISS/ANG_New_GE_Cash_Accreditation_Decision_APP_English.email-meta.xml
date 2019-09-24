@@ -5,12 +5,11 @@
     <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>ANG New GE Cash Accreditation Decision Approval EN</name>
     <style>freeForm</style>
-    <subject>Ref nr {!AMS_OSCAR__c.Name} – Accreditation GoStandard Approved</subject>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Accreditation GoGlobal Approved</subject>
     <textOnly>Dear Sir/Madam,
 
 
-Your accreditation process (GoStandard) has been approved. (Email for GE)
-
+Your accreditation process (GoGlobal) has been approved.
 
 
 Yours faithfully,

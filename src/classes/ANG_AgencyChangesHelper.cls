@@ -1107,7 +1107,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		Boolean isHierarchySplit = accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c);
 
 		if(isHierarchySplit){
-		
+			
+			oscarToProcess.Generate_risk_event_MC__c = true;
 			AMS_Agencies_Hierarchy__c newHierarchy = new AMS_Agencies_Hierarchy__c();
 			newHierarchy.Hierarchy_Name__c = 'Hierarchy';
 			insert newHierarchy;
