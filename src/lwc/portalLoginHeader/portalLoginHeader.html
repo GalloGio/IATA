@@ -5,8 +5,9 @@
 <!-- Portal Login Header -->
 <template>
 
-    <lightning-layout vertical-align="end" horizontal-align="end">
-        <div class="slds-p-bottom_xx-large">
+    <lightning-layout vertical-align="end" horizontal-align="end" class="loginHeaderWrapper">
+        <img src={logoIcon} class="logoMobile">
+        <div class="slds-p-bottom_xx-large selectorContainer">
             <lightning-layout-item>
                 <div if:true={chagingLang} class="changingLangSpinner">
                     <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
@@ -16,7 +17,7 @@
                         <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
                     </template>
                     <!--if:false={loadingLangs}-->
-                    <div class="languageSelection borderlessCombobox">
+                    <div class="languageSelection borderlessCombobox languageSelectWrapper">
                         <lightning-combobox
                                 name="language"
                                 dropdown-alignment="auto"

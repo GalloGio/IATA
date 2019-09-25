@@ -1,20 +1,27 @@
 <template>
     <div class="slds-grid slds-wrap containerHeight">
-        <div class="slds-col slds-large-size_1-of-4 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-order--1 slds-large-order--1 slds-medium-order--1" >
+        <div class="slds-col slds-large-size_5-of-12 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-order--1 slds-large-order--1 slds-medium-order--1 welcomePanelContainer" >
             <!-- <img src="/csportal/s/left_panel.png" class="fixedPosition"/>-->
             <div class="fixedPosition">
-                <c-portal-welcome-panel></c-portal-welcome-panel>
+                <c-portal-welcome-panel class="welcomePanel"></c-portal-welcome-panel>
             </div>
         </div>
 
-        <div class="slds-col slds-large-size_3-of-4 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-order--2 slds-large-order--2 slds-medium-order--2 bodyContent" >
-            <div>
+        <div class="slds-col slds-large-size_7-of-12 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-order--2 slds-large-order--2 slds-medium-order--2 bodyContent" >
+            <div class="contentWrapper">
                 <div class="customPaddingHeader">
                     <c-portal-login-header onlanguagechange={handleLanguageChange} preventrefresh={preventrefresh}></c-portal-login-header>
                 </div>
                 <div class="slds-grid slds-grid_align-center">
-                    <div style="max-width:448px; max-height:708px" class="customPadding">
+                    <div style="max-width:448px;" class="customPadding">
                         <slot name="pageBody"></slot>
+                    </div>
+                </div>
+                <div class="loginFooter">
+                    <div class="footerlinks">
+                        <a class="leftLink" href={labels.csp_Footer_Privacy_URL}>{labels.ISSP_Registration_Privacy}</a>
+                        <span>|</span>
+                        <a class="rightLink" href={labels.csp_Footer_Legal_URL}>{labels.ISSP_Registration_Legal}</a>
                     </div>
                 </div>
             </div>

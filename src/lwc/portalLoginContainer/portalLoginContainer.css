@@ -3,8 +3,8 @@
        padding-top: 0px !important;
    }
    .containerHeight{
-       height:925px;
-       /*min-height:2500px;*/
+       /*height:925px;
+       min-height:2500px;*/
    }
 
 }
@@ -14,8 +14,8 @@
        padding-top: 15px !important;
    }
    .containerHeight{
-       height:925px;
-       /*min-height:2500px;*/
+       /*height:925px;
+       min-height:2500px;*/
    }
 }
 
@@ -33,11 +33,88 @@
        /*position: fixed; */
    }
    .containerHeight{
-       height:925px;
-       /*min-height:2000px;*/
+       /*height:925px;
+       min-height:2000px;*/
    }
    .bodyContent{
-       overflow-y: scroll;
-       height: 925px;
+       /*overflow-y: scroll;
+       height: 925px;*/
+       flex-grow: 1;
+       overflow: auto;
    }
+
+   .welcomePanelContainer{
+    max-width: 550px;
+    }
+}
+
+@media only screen and (max-width: 770px) {
+   .welcomePanelContainer{
+       display: none;
+   }
+}
+
+.containerHeight{
+    align-items: stretch;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+} 
+
+.contentWrapper{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: stretch;
+}
+
+.bodyContent{
+    background-color: #f0f2f5;
+}
+
+.fixedPosition{
+    position: fixed;
+    left: 0;
+    width: inherit;
+    max-width: inherit;
+}
+
+
+
+/*----Footer----*/
+.loginFooter{
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+    align-items: flex-end;
+    padding-top: 10px;
+}
+
+.footerlinks{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    font-size: 14px;
+}
+
+@media only screen and (max-width: 500px) {
+    .loginFooter{
+        justify-content: center;
+    }
+}
+
+.leftLink{
+    padding-right: 10px;
+}
+
+.rightLink{
+    padding-left: 10px;
+}
+
+.welcomePanel{
+    display: flex;
+    height: 100%;
 }
