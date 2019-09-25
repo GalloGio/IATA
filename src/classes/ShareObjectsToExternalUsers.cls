@@ -2,7 +2,7 @@
  * Created by ppop on 6/6/2019.
  */
 
-public with sharing class ShareObjectsToExternalUsers {
+public without sharing class ShareObjectsToExternalUsers {
     public static void reshareNotificationsWithUsers(List<Service_Notification_Role__c> notificationRolesNew, Map<Id, Service_Notification_Role__c> notificationRolesOld){
         List<Id> rolesNotToBeReshared = new List<Id>();
         List<Id> NotificationsToBeReshared = new List<Id>();
@@ -458,7 +458,7 @@ public with sharing class ShareObjectsToExternalUsers {
         system.debug(shareContactRole);
 
         Map<Id, List<string>> accountContactRolesAccessStatus = new Map<Id, List<string>>();
-        List<Contact_Role_Service_Access__c> accesses = [SELECT Id, Contact_Role__r.Contact_Roles__c, Status__c FROM Contact_Role_Service_Access__c WHERE Id =: roles];
+        List<Contact_Role_Service_Access__c> accesses = [SELECT Id, Contact_Role__r.Contact_Roles__c, Status__c FROM Contact_Role_Service_Access__c WHERE Contact_Role__r.Contact_Roles__c =: roles];
         for(Contact_Role_Service_Access__c access: accesses){
             List<string> statusses = accountContactRolesAccessStatus.get(access.Contact_Role__c);
             if(statusses == null){
