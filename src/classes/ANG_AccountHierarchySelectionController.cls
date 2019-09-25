@@ -232,7 +232,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
                 errorMessages.put(
                     'Invalid Changes Combination',
-                    'Please check the Accreditation Model in the Account and Available types of changes.'
+                    'You cannot select the change of hierarchy in combination with any other agency change for a multicountry hierarchy.'
                 );
                 
             }
