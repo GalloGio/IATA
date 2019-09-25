@@ -26,7 +26,7 @@
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (component.isValid() && state === "SUCCESS") {
-                var path = '/'+ response.getReturnValue() +'?isdtp=p1&pv0=' + accountId + '&pv1=' + accountId + '&pv2=' + accountId + '&pv3=' + accountId + '&export=1&enc=UTF-8&xf=xls';
+                var path = '/'+ response.getReturnValue() +'?isdtp=p1&pv0=' + accountId + '&pv1=' + accountId + '&pv2=' + accountId + '&export=1&enc=UTF-8&xf=xls';
                 var popup = component.find('popup-warning');
                 $A.util.addClass(popup, 'slds-hide');
                 window.open(path, '_blank');
