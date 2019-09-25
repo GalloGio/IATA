@@ -4,9 +4,9 @@ import { navigateToPage } from 'c/navigationUtils';
 
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import getFieldLabels from '@salesforce/apex/CSP_Utils.getSelectedColumns';
+import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
 import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
 import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
-
 
 import { getParamsFromPage } from 'c/navigationUtils';
 
@@ -32,13 +32,6 @@ import ISSP_AMS_Download_PDF_Copy from '@salesforce/label/c.ISSP_AMS_Download_PD
 import ISSP_AMS_Download_PDF_NOC from '@salesforce/label/c.ISSP_AMS_Download_PDF_NOC';
 
 
-/*
-Email,
-CSP_Remittantce_Date,
-CSP_Case_Currency,
-ISSP_SIDRA_Irregularity_Date
-*/
-
 import PDFICON from '@salesforce/resourceUrl/PDF_icon_large';
 
 export default class PortalCaseDetailsDetails extends LightningElement {
@@ -46,17 +39,15 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track loading = true;
     @track caseDetails;
     @track caseId;
-    @track surveyLink;
     @track optionBuilder;
+    @track surveyLink;
 
     @track pdfImage = PDFICON;
 
     @track showAddDocsModal = false;
 
-    @track nrDocs = 0;
 
-    @track showNewDescriptionSection = false;
-    @track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
+    @track nrDocs = 0;
 
     @track labels = {
         AddDocumentsMsg,
@@ -76,7 +67,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         ISSP_Description
     };
 
-    acceptedFormats = '.pdf, .jpeg, .jpg, .png, .ppt, .pptx, .xls, .xlsx, .tif, .tiff, .zip';
+    acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
 
 
 
@@ -89,8 +80,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
             getCaseById({ caseId: this.pageParams.caseId })
                 .then(results => {
                     this.caseDetails = results;
-
-                    console.log(JSON.parse(JSON.stringify(results)));
 
                     this.showNewDescriptionSection = this.caseDetails.RecordType__c === 'Cases - Africa & Middle East'
                         || this.caseDetails.RecordType__c === 'Cases - Americas'
@@ -129,7 +118,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
             });
         }
-
+        
     }
 
     renderedCallback() {
@@ -141,6 +130,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
             this.showAddDocsModal = true;
             this.pageParams.Att = "";
         }
+        
     }
 
     get hasTopic() {
@@ -307,7 +297,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         this.showAddDocsModal = true;
     }
 
-    getSurveyLink() {
+    getSurveyLink(){
         getSurveyLink({ caseId: this.caseId })
             .then(result => {
                 this.surveyLink = result;
