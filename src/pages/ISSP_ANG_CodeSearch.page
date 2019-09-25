@@ -211,6 +211,24 @@
                         </td>
                       </tr>
 
+                      <tr>
+                        <td>
+                          <apex:outputLabel value="{!$Label.Accreditation_date}"/>
+                        </td>
+                        <td>
+                          <apex:outputText style="margin-left: 15px;" value="{!AccreditationDateFormated}"/>
+                        </td>
+                      </tr>
+
+                      <tr style="display:{!IF(OR(agency.Location_Class__c == 'P', agency.Location_Class__c == 'D'),'','none')}">
+                        <td>
+                          <apex:outputLabel value="{!$Label.Remittance_frequency}"/>
+                        </td>
+                        <td>
+                          <apex:outputText style="margin-left: 15px;" value="{! agency.Remittance_frequency__c}"/>
+                        </td>
+                      </tr>
+                      
                       <tr style="display:{!IF(AND(agency.ANG_IsNewGenAgency__c, isTravel),'','none')}">
                         <td>
                           <apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType}"/>
