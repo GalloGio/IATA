@@ -65026,8 +65026,19 @@ NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account
     )
 )</errorConditionFormula>
         <errorDisplayField>Status__c</errorDisplayField>
-        <errorMessage>This type of change doesn&#39;t require validation or approval</errorMessage>
+        <errorMessage>This type of change doesn&quot;t require validation or approval</errorMessage>
     </validationRules>
+	<validationRules>
+		<fullName>Payment_received_validation</fullName>
+		<active>false</active>
+		<description>Payment received can&quot;t be empty if there&quot;s no data in Payment requested</description>
+		<errorConditionFormula>AND(
+		ISNULL(Payment_requested__c),
+		NOT(ISNULL(Proof_of_payment_received__c )),
+		NOT(RecordType.Name = &quot;CERTIFICATE&quot;)
+		)</errorConditionFormula>
+		<errorMessage>Please fill the &quot;Payment requested&quot; date before populating the &quot;Payment received&quot;</errorMessage>
+	</validationRules>
     <validationRules>
         <fullName>RPM_Approval_only_after_Validation</fullName>
         <active>false</active>
@@ -65039,6 +65050,20 @@ NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account
 )</errorConditionFormula>
         <errorDisplayField>RPM_Approval__c</errorDisplayField>
         <errorMessage>The manager Approval / Disapproval cannot happen before the assistant manager&#39;s Validation.</errorMessage>
+    </validationRules>
+	<validationRules>
+        <fullName>STEP12_BG_Requested_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR (AND(
+        ISPICKVAL(STEP12__c, &quot;In Progress&quot;),
+        ISNULL(Bank_Guarantee_requested__c)
+	),
+	AND(
+        ISPICKVAL(STEP34__c, &quot;Passed&quot;),
+        ISNULL(Bank_Guarantee_requested__c)
+	)
+)</errorConditionFormula>
+        <errorMessage>Manage Financial Security cannot be in progress without a bank guarantee request date.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Use_OSCAR_only_on_Agency_Accounts</fullName>
