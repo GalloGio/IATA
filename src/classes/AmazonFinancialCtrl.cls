@@ -28,7 +28,7 @@ global class AmazonFinancialCtrl {
       if (cse == null || cse.id == null) return true;
       Case thiscse = [Select id, Status, Financial_Review_type__c from Case where id = :cse.id];
       if (thiscse.Financial_Review_type__c == 'Multicountry Annual') return false;
-      return caseStatusUploadAllowed.contains(thiscse.Status);// && (thiscse.Financial_Review_type__c == 'Multicountry Annual' && acc.); //falar com a Irene
+      return caseStatusUploadAllowed.contains(thiscse.Status);
     }
     set;
   }
