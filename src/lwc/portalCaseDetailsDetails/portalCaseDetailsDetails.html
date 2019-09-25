@@ -23,15 +23,21 @@
           </div>
         </div>
       </div>
+      <div class="topLightGrayBorder">
+        <c-portal-case-details-messaging></c-portal-case-details-messaging>
+      </div>
       <!-- Additinal details accordion  MTSL-811 -->
       <div class="topLightGrayBorder">
-        <div class="slds-p-around_medium customCardTitleBox cursorPointer" onclick={toggleCaseDetailsSection} if:true={showNewDescriptionSection}>
+        <div class="slds-p-around_medium customCardTitleBox cursorPointer" onclick={toggleCaseDetailsSection}
+          if:true={showNewDescriptionSection}>
           <lightning-icon data-caseicon class="darkBlueIcon" icon-name="utility:chevronright" size="xx-small">
           </lightning-icon>
           <span class="slds-p-left_large">{labels.CSP_AdditionalDetails}</span>
         </div>
-        <div class="slds-p-around_medium customCardTitleBox cursorPointer" onclick={toggleCaseDetailsSection} if:false={showNewDescriptionSection}>
-          <lightning-icon data-caseicon class="darkBlueIcon arrowExpanded" icon-name="utility:chevronright" size="xx-small">
+        <div class="slds-p-around_medium customCardTitleBox cursorPointer" onclick={toggleCaseDetailsSection}
+          if:false={showNewDescriptionSection}>
+          <lightning-icon data-caseicon class="darkBlueIcon arrowExpanded" icon-name="utility:chevronright"
+            size="xx-small">
           </lightning-icon>
           <span class="slds-p-left_large">{labels.CSP_AdditionalDetails}</span>
         </div>
@@ -58,10 +64,10 @@
             <div if:true={hasCountryConcerned}
               class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
               <span class="grey">{labels.Country_concerned__c}</span><br />
-              <span>{caseDetails.Country_concerned__c}</span>
+                            <span>{caseDetails.Country_concerned_by_the_query__c}</span>
             </div>
 
-            <!-- ROW 3 -->
+                        <!-- ROW 2 -->
             <div if:true={hasAccountConcerned}
               class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
               <span class="grey">{labels.RelatedAccount}</span><br />
@@ -73,42 +79,39 @@
               <span>{caseDetails.Type_of_case_Portal__c}</span>
             </div>
 
-            <!-- ROW 4 -->
-            <div if:false={showNewDescriptionSection}>
+                        <!-- ROW 3 -->
               <div if:true={hasDescription}
-                class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
                 <span class="grey">{labels.Description}</span><br />
-                <span>
-                  <lightning-formatted-text value={caseDetails.Description}></lightning-formatted-text>
-                </span>
+                            <span>{caseDetails.Description}</span>
               </div>
             </div>
 
             <!-- ROW 5 -->
-            <div if:true={hasContact}
+                        <div if:true={hasAccount}
               class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
-              <span class="grey">Contact Name</span><br />
+                            <span class="grey">Account Name</span><br />
               <span if:true={optionBuilder}>
-                <span if:true={optionBuilder.isAdmin} onclick={openCompanyProfileContactTab}
-                  class="text-blue linkColor">
-                  <span>{caseDetails.Contact.FirstName}
-                    {caseDetails.Contact.LastName}</span>
+                                <span if:true={optionBuilder.isAdmin} onclick={openCompanyProfile} class="linkColor">
+                                    {caseDetails.Account.Name}
                 </span>
                 <span if:false={optionBuilder.isAdmin}>
-                  <span>{caseDetails.Contact.FirstName}
-                    {caseDetails.Contact.LastName}</span>
+                                    {caseDetails.Account.Name}
                 </span>
               </span>
             </div>
 
             <!-- ROW 6 -->
-            <div if:true={optionBuilder}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
-              <div if:true={optionBuilder.isSidraCase}>
-                <span class="grey">{labels.Email}</span><br />
-                <span>
-                  <lightning-formatted-email value={caseDetails.Contact.Email}>
-                  </lightning-formatted-email>
+                        <div if:true={hasContact}
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
+                            <span class="grey">Contact Name</span><br />
+                            <span if:true={optionBuilder}>
+                                <span if:true={optionBuilder.isAdmin} onclick={openCompanyProfileContactTab}
+                                    class="linkColor">
+                                    <span>{caseDetails.Contact.FirstName} {caseDetails.Contact.LastName}</span>
+                                </span>
+                                <span if:false={optionBuilder.isAdmin}>
+                                    <span>{caseDetails.Contact.FirstName} {caseDetails.Contact.LastName}</span>
                 </span>
               </div>
             </div>
@@ -139,58 +142,63 @@
 
             <!-- ROW Survey Link -->
             <div if:true={hasSurveyLink}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
+                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
               <span class="grey">{labels.ISSP_Survey}</span><br />
               <a class="text-blue" href={surveyLink} target="_blank">{labels.Open}</a>
             </div>
 
-            <!-- ROW PDF - Display PDF -->
+                        <!-- ROW 7 Display PDF -->
             <div if:true={getDisplayPDF}
               class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
-              <img src={pdfImage} />
+                            <img src={pdfImage}>
 
               <span if:true={getPDF1}>
                 <a class="linkColor" href={getPDFLink1} target="_new">
-                  {labels.ISSP_AMS_Download_PDF_Copy}
-                </a>
+                                    {labels.ISSP_AMS_Download_PDF_Copy} </a>
               </span>
 
               <span if:true={getPDF2_3}>
                 <a class="linkColor" href={getPDFLink2_3} target="_new">
-                  {labels.ISSP_AMS_Download_PDF_NOC}
-                </a>
+                                    {labels.ISSP_AMS_Download_PDF_NOC} </a>
               </span>
 
               <span if:true={getPDF4}>
                 <a class="linkColor" href={getPDFLink4} target="_new">
-                  {labels.ISSP_AMS_Download_PDF_Copy}
-                </a>
+                                    {labels.ISSP_AMS_Download_PDF_Copy} </a>
               </span>
 
               <span if:true={getPDF5}>
                 <a class="linkColor" href={getPDFLink5} target="_new">
-                  {labels.ISSP_AMS_Download_PDF_Copy}
-                </a>
+                                    {labels.ISSP_AMS_Download_PDF_Copy} </a>
               </span>
+
             </div>
+
           </div>
         </div>
       </div>
 
+
       <!-- Documents accordion -->
       <div class="topLightGrayBorder">
-        <div class="slds-p-around_medium customCardTitleBox cursorPointer" onclick={toggleDocumentsDetailsSection}>
+                <div  class="slds-p-around_medium customCardTitleBox cursorPointer"
+                    onclick={toggleDocumentsDetailsSection}>                  
           <lightning-icon data-docicon class="darkBlueIcon" if:false={showDocumentsSection}
             icon-name="utility:chevronright" size="xx-small"></lightning-icon>
           <span class="slds-p-left_large">{labels.DocumentsLabel}</span><span if:true={showNrDocs}>({nrDocs})</span>
         </div>
-        <div data-docdiv class="slds-p-around_medium slds-medium-size_1-of-1 slds-m-around-large collapsed"
-          style="transition: height 0.8s ease;">
-          <c-attachment-list-cmp shownorecords="false" parentid={caseId} isportal="true" show-modal={showAddDocsModal}
-            no-attachment-msg={labels.AddDocumentsMsg} onupdateddocs={updateNdocs} accepted-formats={acceptedFormats}>
+                <div data-docdiv class="slds-p-around_medium slds-medium-size_1-of-1 slds-m-around-large collapsed" style="transition: height 0.8s ease;">
+                    <c-attachment-list-cmp shownorecords=false parentid={caseId} isportal=true
+                        show-modal={showAddDocsModal} 
+                        no-attachment-msg={labels.AddDocumentsMsg} 
+                        onupdateddocs={updateNdocs}
+                        accepted-formats={acceptedFormats}>
           </c-attachment-list-cmp>
+
         </div>
       </div>
+
     </template>
   </div>
+
 </template>
