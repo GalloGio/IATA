@@ -39478,6 +39478,14 @@ title,Title,Name</value>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Select the topic covering the problem.</value>
     </labels>
+        <labels>
+        <fullName>csp_AdditionalDetails</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Details Details page</shortDescription>
+        <value>Additonal Details</value>
+    </labels>
     <labels>
         <fullName>days_left</fullName>
         <language>en_US</language>
