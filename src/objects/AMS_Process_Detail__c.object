@@ -197,21 +197,6 @@ Account__c))</formula>
         <active>true</active>
         <description>Used for agencies</description>
         <label>CaseRelatedAgencies</label>
-        <picklistValues>
-            <picklist>ANG_Location_Type_Conversion__c</picklist>
-            <values>
-                <fullName>AE</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GE</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>HE</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Multicountry_Yearly_Financial_Review</fullName>
