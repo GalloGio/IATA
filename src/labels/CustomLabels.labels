@@ -4467,6 +4467,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <shortDescription>Creation date</shortDescription>
         <value>Creation date</value>
     </labels>
+	<labels>
+        <fullName>Credit_Card_Payment_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit_Card_Payment_Link</shortDescription>
+        <value>For credit card payment please click &lt;a href=&quot;{1}&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;.</value>
+    </labels>
     <labels>
         <fullName>Credit_card_payment_msg</fullName>
         <language>en_US</language>

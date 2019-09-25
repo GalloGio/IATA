@@ -27,6 +27,7 @@ import IdCardValidTo from '@salesforce/label/c.ISSP_IDCard_Valid_To';
 import CSP_Error_Message_Mandatory_Fields_Contact from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
 
 import See_Bank_Account_Details from '@salesforce/label/c.See_Bank_Account_Details'; //WMO-699 - ACAMBAS
+import Credit_Card_Payment_Link from '@salesforce/label/c.Credit_Card_Payment_Link'; //WMO-699 - ACAMBAS
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
@@ -76,7 +77,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get fields() { return this.fieldsLocal; }
     set fields(value) { this.fieldsLocal = value; }
 
-    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area, ServicesTitle, InvalidValue, CompleteField, IdCardNumber, IdCardValidTo, See_Bank_Account_Details };
+    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area, ServicesTitle, InvalidValue, CompleteField, IdCardNumber, IdCardValidTo, See_Bank_Account_Details, Credit_Card_Payment_Link };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -150,6 +151,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                 }
             }
             this.paymentLinkURL = myUrl;
+
+            let creditCardPaymentLink = Credit_Card_Payment_Link.replace('{1}', this.paymentLinkURL);
+            this._labels.Credit_Card_Payment_Link = creditCardPaymentLink;
         });
         //WMO-699 - ACAMBAS: End
 
