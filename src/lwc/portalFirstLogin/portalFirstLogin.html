@@ -15,11 +15,20 @@
         </div>
 
         <div class="modal">
-
-            <div class="registrationPopup">
+            <div class="welcomePopup">
 
                 <div class="customWhiteBackground">
 
+                    <div class="slds-p-right_large slds-p-top_medium headerTitle">
+                        <span class="slds-p-left_large">
+                            <span><img src={successIcon} height="55" width="55" class=""></span>
+                        </span>
+                        <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                                            onclick={handleCloseModal}></lightning-icon>
+                        </span>
+                    </div>
+                    <!--
                     <div class="slds-p-top_x-large slds-p-bottom_x-small">
                         <div style="width:100%;">
                             <span class="slds-p-left_large">
@@ -27,25 +36,34 @@
                             </span>
                         </div>
                     </div>
-                    <div class="slds-m-horizontal_x-large">
+                    -->
+                    <div class="slds-m-horizontal_large slds-p-bottom_large">
                         <div class="cardBodyContent">
                             <div class="slds-card__body">
 
                                 <div class="slds-p-bottom_x-small">
                                     <span class="text-medium text-darkGray text-bold">
-                                        <span>{labels.CSP_First_Login_Title} {userName}</span>
+                                        <span>{labels.CSP_First_Login_Title}</span>
+                                        <br/>
+                                        <span>{userName}</span>
                                     </span>
                                 </div>
 
-                                <div class="slds-p-bottom_x-large">
-                                    <span class="fixed-text text-gray">{labels.CSP_First_Login_Desc}</span>
-                                </div>
+                                <div class="slds-p-bottom_xx-large">
 
-                                <div class="slds-p-bottom_large">
-                                    <lightning-button class="outlinedButtonLogin" label={labels.CSP_Skip} onclick={handleCloseModal}></lightning-button>
-                                </div>
-                                <div class="slds-p-bottom_large">
-                                    <lightning-button class="containedButtonLogin" label={labels.CSP_Complete_Profile} onclick={handleAccept} ></lightning-button>
+                                    <div class="slds-p-bottom_x-large" style="max-width: 480px;">
+                                        <lightning-formatted-rich-text value={labels.CSP_First_Login_Desc} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                                        <!--<span class="fixed-text text-gray">{labels.CSP_First_Login_Desc}</span>-->
+                                    </div>
+
+                                    <div class="slds-p-bottom_large slds-float_left" style="width:48%;">
+                                        <lightning-button class="outlinedButtonLogin buttonHeight" label={labels.CSP_Skip} onclick={handleCloseModal}></lightning-button>
+                                    </div>
+
+                                    <div class="slds-p-bottom_large slds-float_right" style="width:49%;">
+                                        <lightning-button class="containedButtonLogin" label={labels.CSP_Complete_Profile} onclick={handleAccept} ></lightning-button>
+                                    </div>
+
                                 </div>
 
                             </div>

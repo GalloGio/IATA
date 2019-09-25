@@ -68,7 +68,6 @@ export default class PortalLogin extends LightningElement {
     @track isFrozen = false;
     @track isLoginDisabled = false;
     exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_point.svg';
-    alertIcon = CSP_PortalPath + 'alertIcon.png';
     startURL = "";
 
     _labels = {
@@ -103,7 +102,7 @@ export default class PortalLogin extends LightningElement {
     }
 
     get svgURL(){
-        return CSP_PortalPath + 'show_blue.png';
+        return CSP_PortalPath + 'CSPortal/Images/Icons/show_blue.png';
     }
 
     /* ==============================================================================================================*/

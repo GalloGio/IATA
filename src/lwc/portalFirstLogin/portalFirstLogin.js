@@ -23,7 +23,7 @@ export default class PortalFirstLogin extends LightningElement {
     /* ==============================================================================================================*/
     /* Attributes
     /* ==============================================================================================================*/
-    successIcon = CSP_PortalPath + 'check2xGreen.png';
+    successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/success.png';
     @track isLoading = false;
     @track userName = "";
 

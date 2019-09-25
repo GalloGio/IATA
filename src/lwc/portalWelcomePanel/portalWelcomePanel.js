@@ -49,12 +49,12 @@ export default class PortalWelcomePanel extends LightningElement {
     }
 
     logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
-    serviceIcon = CSP_PortalPath + 'service_recolor.png';
-    uptodateIcon = CSP_PortalPath + 'uptodate_recolor.png';
-    offerIcon = CSP_PortalPath + 'offer_recolor.png';
-    supportIcon = CSP_PortalPath + 'support_recolor.png';
-    arrowIcon = CSP_PortalPath + 'arrow_right_recolor.png';
-    bgImage = CSP_PortalPath + 'left_panel.png';
+    serviceIcon = CSP_PortalPath + 'CSPortal/Images/Icons/service_recolor.png';
+    uptodateIcon = CSP_PortalPath + 'CSPortal/Images/Icons/uptodate_recolor.png';
+    offerIcon = CSP_PortalPath + 'CSPortal/Images/Icons/offer_recolor.png';
+    supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support_recolor.png';
+    arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow_right_recolor.png';
+    bgImage = CSP_PortalPath + 'CSPortal/Images/Backgrounds/WelcomePanelBackground.png';
     @track backgroundStyle;
 
     connectedCallback() {

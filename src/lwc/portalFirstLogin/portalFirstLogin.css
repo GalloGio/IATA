@@ -110,3 +110,7 @@ input[type="checkbox"] {
 .inputBackgroundGrey{
     background-color: #f7f8fa !important;
 }
+
+.slds-button{
+    height: 56px !important;
+}
