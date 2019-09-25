@@ -9,7 +9,7 @@
 <apex:image value="{!if(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000')}"/>
 {!$Label.ISSP_Email_aNewComment}
 <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
-<a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/s/case-details?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">{!relatedTo.CaseNumber}</a>.
+<a href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">{!relatedTo.CaseNumber}</a>.
 </apex:outputPanel>
 <apex:outputPanel rendered="{!!relatedTo.Visible_on_ISS_Portal__c}">
 {!relatedTo.CaseNumber}
@@ -30,7 +30,7 @@
 <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
 <br/><br/><center>
 <a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
-href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/s/case-details?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">{!if(relatedTo.CNSCase__c, $Label.ISSP_Email_CNS_Portal, $Label.ISSP_Email_IataPortal)}</a>
+href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">{!if(relatedTo.CNSCase__c, $Label.ISSP_Email_CNS_Portal, $Label.ISSP_Email_IataPortal)}</a>
 </center>
 </apex:outputPanel>
 <br/>
