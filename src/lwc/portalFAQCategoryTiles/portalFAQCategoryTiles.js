@@ -71,7 +71,7 @@ export default class PortalFAQCategoryTiles extends NavigationMixin(LightningEle
                 let resultsAux = JSON.parse(JSON.stringify(results));
                 
                 for(let i = 0; i < resultsAux.length; i++){
-                    if(i === 0 || i === 1){
+                    if(i === 0 || i === 1 || i == 2 || i == 3){
                         resultsAux[i].class = 'slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-vertical_xx-small slds-text-align_center';
                     }else{
                         resultsAux[i].class = 'slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3 slds-p-vertical_xx-small slds-text-align_center';

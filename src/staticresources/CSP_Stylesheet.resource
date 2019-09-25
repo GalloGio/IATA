@@ -938,6 +938,23 @@ lightning-datatable .slds-th__action {
     left: 0px;
   }
 
+.languageSelection .slds-combobox_container input[role="textbox"]{
+    border:none;
+    background-color: transparent;
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: transparent;
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"] {
+    height: 32px;
+    color: #3333ff;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+
 .slds-combobox_container lightning-base-combobox-item:hover,
 .slds-combobox_container lightning-base-combobox-item[aria-selected="true"] {
     background-color: #f7f8fa !important;
