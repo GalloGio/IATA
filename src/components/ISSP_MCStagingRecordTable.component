@@ -1,7 +1,11 @@
 <apex:component controller="ISSP_AMS_Accreditation" allowDML="true">
 	<div class="row" style="padding-top: 20px">
         <div class="col-md-12">
-            <apex:pageBlock>
+            <apex:pageBlock >
+                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms, jsFunctions" status="loadStatusSpinner" oncomplete="onCompleteHandler()">
+                    <apex:param value="" name="mcFormNumber" assignTo="{!mcFormIdToDelete}"/>
+                </apex:actionFunction>
+
                 <apex:pageBlockTable id="onGoingMultiCountryForms" value="{!multiCountryApplicationForms}" var="mcForm" styleClass="table" rendered="{!mcApplicationFormsFound}">
                     
                     <apex:column headerValue="">
@@ -12,9 +16,11 @@
                         <apex:commandLink immediate="true" onfocus="confirmMCFormDelete('{!mcForm.Id}'); return false;" rendered="{!mcForm.HO_Account__c == null}" reRender="">Remove</apex:commandLink>
                     </apex:column>
 
-                    <apex:column headerValue="{!$ObjectType.Case.fields.Subject.label}" style="margin-left: {!IF(mcForm.HO_Account__c == null, '40px', 'none')};">
+                    <apex:column headerValue="{!$ObjectType.Case.fields.Subject.label}">
                         <apex:outputText value="New Associate Entity - {!mcForm.Branch_Office_Country__r.Name}" rendered="{!mcForm.HO_Account__c == null}"/>
-                        <apex:outputField value="{!mcForm.SAAM_Case__r.Subject}" rendered="{!mcForm.HO_Account__c != null}"/>
+                        <apex:outputField value="{!mcForm.SAAM_Case__r.Subject}" rendered="{!mcForm.HO_Account__c != null}"/> <br/>
+
+                        <apex:outputText value="{!mcForm.Full_Address__c}" style="color: grey; font-size: 12px;"/>
                     </apex:column>
 
                     <apex:column headerValue="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Status__c.label}">
@@ -25,14 +31,45 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-4" id="submitMC">
-            <input type="button" class="btn btn_iata_primary" onClick="showTermsAndConditionsModal(); return false;" value="Submit Multicountry Application to IATA" id="submitMCButton"/>
-        </div>
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4">
-            <input type="button" class="btn btn_iata_primary" onClick="discardMultiCountry();" value="Discard Application" style="float: right;"/>
+    <div class="row" style="padding-top: 10px;">
+        <div class="col-md-12 alert alert-warning" id="AccreditationAlert" role="alert">
+            {!$Label.ISSP_AMS_Step1_Two_Weeks_Expiry}
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-4" id="submitMC">
+            <input type="button" class="btn btn_iata_primary" onClick="showTermsAndConditionsModal(); return false;" value="{!$Label.ISSP_AMS_Multicountry_Submit_Button}" id="submitMCButton"/>
+        </div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <input type="button" class="btn btn_iata_primary" onClick="discardMCApplication();" value="Discard Application" style="float: right;"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8" id="infoSubmitMC">
+            <apex:outputText value="{!$Label.ANG_ISSP_Multicountry_Submit_Message1}"/>
+            &nbsp;
+            <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ANG_ISSP_Multicountry_Submit_Message2}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+        </div>
+    </div>
+
+    <div class="row" style="padding-top: 10px;">
+        <div class="col-md-12" id="McQuestions">
+            <apex:outputText value="{!$Label.ANG_ISSP_Multicountry_Question}"/> &nbsp;
+            <apex:outputLink value="/faq_home?MainNav=resources&subNav=faq&mid=M2S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}&q=GoGlobal" target="_blank">{!$Label.ANG_ISSP_ProductComparisonViewHere}</apex:outputLink>
+        </div>
+    </div>
+    
+    <apex:outputPanel id="jsFunctions">
+    <script>
+    function onCompleteHandler() {
+        if ("{!mcAbleToSubmit}" == 'false') {
+            $('#submitMCButton').attr('disabled', 'true');
+        }
+    }
+    </script>
+    </apex:outputPanel>
 </apex:component>

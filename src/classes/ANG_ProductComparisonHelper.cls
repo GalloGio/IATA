@@ -13,7 +13,26 @@ public with sharing class ANG_ProductComparisonHelper {
     set<Id> setProdId = new set<id>();
     public String type {get; set;}
     public String costTooltip {get; set;}
-    public Boolean multiCountryEnabled {get; set;}
+    private User currentUser {get; set;}
+    public String chinaLocClass {
+    	get {
+    		if (chinaLocClass == null) {
+				String chinaTypeOfAccred = '';
+
+				if (ApexPages.currentPage().getParameters().containsKey('chinaAccred')) {
+					chinaTypeOfAccred = ApexPages.currentPage().getParameters().get('chinaAccred');
+				}
+
+				return chinaTypeOfAccred;
+			}
+
+    		return chinaLocClass;
+    	}
+    	set;
+    }
+
+    public Boolean chinaAgent {get; set;}
+	public Boolean multiCountryEnabled {get; set;}
     public String currentYear {
     	get {
     		return String.valueOf(Date.today().year());
@@ -37,6 +56,22 @@ public with sharing class ANG_ProductComparisonHelper {
     	lsAllFeatures = new List<string>();
     	mapProd = new Map<string, Product2>();
     	mapFeatures = new Map<string, Product_Component__c>();
+
+    	currentUser = [SELECT Contact.Account.Country_ISO_Code__c, Contact.Account.Status__c, 
+    					Contact.Account.RecordTypeId, Contact.Account.Category__c
+					FROM User 
+					WHERE Id = :UserInfo.getUserId() 
+					LIMIT 1];
+
+		chinaAgent = currentUser.Contact.Account.Country_ISO_Code__c == 'CN';
+
+		if (AMS_Utils.ACTIVEAGENCYSTATUS.contains(currentUser.Contact.Account.Status__c)) {
+			if (currentUser.Contact.Account.Category__c == 'Domestic Agent') {
+				chinaLocClass = 'Domestic';
+			} else {
+				chinaLocClass = 'International';
+			}
+		}
 
     	Map<String, String> mapProductLabels = new Map<String, String>();
     	Map<String, String> mapTooltipLabels = new Map<String, String>();
@@ -65,16 +100,37 @@ public with sharing class ANG_ProductComparisonHelper {
 	    	
 	    	if(!setProdId.isEmpty()) {
 	    		List<Product2> lsProd = new List<Product2>();
-	    		for (Product2 p2: [SELECT Id, Name, ANG_Description_Label__c, ANG_Tooltip__c,
-	    							ANG_HE_Annual_fees__c, ANG_AE_Annual_fees__c,
-									ANG_HE_Application_Registration_Fees__c, ANG_HE_AnnualFees_Small_Agents__c, ANG_HE_AnnualFees_Medium_Agents__c,
-									ANG_HE_AnnualFees_Large_Agents__c, ANG_AE_Application_Registration_Fees__c, ANG_AE_Fees_First_10_locations__c,
-									ANG_AE_Fees_Next_15_Locations__c, ANG_AE_Fees_Additional_Locations__c,
-									ANG_Fees_GoStandard_GoLite__c, ANG_Fees_GoLite_GoStandard__c, ANG_Fees_GoGlobal_GoLite__c, ANG_Fees_GoGlobal_GoStandard__c, ANG_Fees_GoLite_GoGlobal__c, ANG_Fees_GoStandard_GoGlobal__c,
-	    							(SELECT id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c, Order__c from Product_BOM__r ORDER BY Order__c)
-	    						FROM Product2 WHERE Id IN :setProdId ORDER BY Name DESC]) {
-					if (!this.multiCountryEnabled && p2.Name == 'Multicountry Accreditation') continue;
-					lsProd.add(p2);
+	    		for (Product2 p2: [SELECT Id, Name, ANG_Description_Label__c, ANG_Tooltip__c, ANG_HE_Annual_fees__c, ANG_AE_Annual_fees__c,
+								ANG_HE_Application_Registration_Fees__c, ANG_HE_AnnualFees_Small_Agents__c, ANG_HE_AnnualFees_Medium_Agents__c,
+								ANG_HE_AnnualFees_Large_Agents__c, ANG_AE_Application_Registration_Fees__c, ANG_AE_Fees_First_10_locations__c,
+								ANG_AE_Fees_Next_15_Locations__c, ANG_AE_Fees_Additional_Locations__c, ANG_Fees_GoStandard_GoLite__c, 
+								ANG_Fees_GoLite_GoStandard__c,
+	    							(SELECT id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c, Order__c 
+	    							FROM Product_BOM__r 
+	    							ORDER BY Order__c)
+	    						FROM Product2 
+	    						WHERE Id IN :setProdId 
+	    						ORDER BY Name DESC]) {
+					
+					if (!chinaAgent) {
+						if (p2.Name == 'Standard Accreditation with no Cash' || p2.Name == 'Standard Accreditation with Cash') {
+							lsProd.add(p2);
+						}
+						
+						if (p2.Name == 'Multicountry Accreditation' && this.multiCountryEnabled){ 
+							lsProd.add(p2);
+						}
+					} else {
+						if (chinaLocClass == 'Domestic') {
+							if (p2.Name == 'Domestic With Cash' || p2.Name == 'Domestic With No Cash') {
+								lsProd.add(p2);
+							}
+						} else {
+							if (p2.Name == 'International With Cash' || p2.Name == 'International With No Cash') {
+								lsProd.add(p2);
+							}
+						}
+					}
 				}
 	    		
 	    		if(!lsProd.isEmpty()) {

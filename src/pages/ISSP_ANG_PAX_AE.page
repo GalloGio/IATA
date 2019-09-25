@@ -235,6 +235,11 @@
                 text-align: left !important;
                 padding-left: 22px !important;
         	}
+
+          	[id$=legalStatusandIATACode] > div > table > tbody > tr > th {
+            	text-align: left !important;
+                padding-left: 22px !important;
+          	}
     </style>
 
     <script type="text/javascript">
@@ -259,12 +264,25 @@
 	        $j(".labelText").hide();
 	        $j("#phone").hide();
 	        $j("#branch_office_phone__c").hide();
+
+          $j('[id$="shipping_city__c"]').parent().prev().children().text(function () {
+            return $j(this).text().replace("*", "") + " *";
+          });
+
+          $j('[id$="shipping_street__c"]').parent().prev().children().text(function () {
+            return $j(this).text().replace("*", "") + " *";
+          });
+
+          $j('[id$="shipping_country__c"]').parent().prev().children().text(function () {
+            return $j(this).text().replace("*", "") + " *";
+          });
       	});
 
       	function closeModal() {
         	$j(function () {
           		$j('#addNewContactModal').modal('hide');
           		clearForm('{!$Component.newContact}', '{!$Component.newContact.contactBlock.contactcountry}');
+          		reRenderImportOwnersMCModal();
         	});
       	}
 
@@ -286,6 +304,7 @@
         	$j(function () {
           		$j('#addNewCompanyModal').modal('hide');
           		clearForm('{!$Component.newCompany}', '{!$Component.newContact.contactBlock.contactcountry}');
+          		reRenderImportOwnersMCModal();
         	});
       	}
 
@@ -763,6 +782,7 @@
                 			<apex:param name="vatno" value="" assignto="{!vatNUmber}" />
               			</apex:actionfunction>
               			<apex:actionFunction name="updateStatus" action="{!updateStatusMCForm}" rerender=""/>
+						<apex:actionFunction name="reRenderImportOwnersMCModal" rerender="importOwnersMCModal, ownershipLinks"/>
 
               			<apex:pageBlock id="AMSBlock">
                 			<div class="alert alert-info" role="alert">
@@ -809,19 +829,25 @@
 	                        				</apex:pageBlockSectionItem>
 	                      				</apex:pageBlockSection>
 
+                                <apex:pageBlockSection id="legalStatusandIATACode" columns="1">
+
+                                  <apex:outputField value="{!newForm.Map_Company_Type_to_Legal_Status__c}"/>
+                                  <apex:outputField value="{!hqAccount.IATACode__c}"/>
+
+                                </apex:pageBlockSection>
+
 	                      				<apex:pageBlockSection id="hqAccountDetails" columns="1">
+                                  
 	                        				<apex:outputText value="{0}<br/>{1}<br/>{2}" escape="false" label="{!$Label.ISSP_AN_Step1_AE_Full_Address}">
 	                          					<apex:param value="{!hqAccount.BillingStreet}" />
 	                          					<apex:param value="{!hqAccount.BillingCity}{!IF(hqAccount.BillingPostalCode!='', ', ' + hqAccount.BillingPostalCode, '')}" />
 	                          					<apex:param value="{!IF(hqAccount.BillingState!='',hqAccount.BillingState + ',&nbsp;','')}{!hqAccount.BillingCountry}" />
 	                        				</apex:outputText>
-	                        				<apex:outputField value="{!hqAccount.Website}"/>
-	                        				<apex:outputField value="{!hqAccount.Phone}" label="{!$Label.ISSP_Registration_BusinessPhone}"/>
-	                        				<apex:outputField value="{!hqAccount.Email__c}" label="{!SUBSTITUTE($Label.ISSP_Office_Email, "*", "")}"/>
+                                  <apex:outputField value="{!hqAccount.Phone}" label="{!$Label.ISSP_Office_Phone}"/>
 					                        <apex:outputField value="{!hqAccount.Mobile__c}"/>
 					                        <apex:outputField value="{!hqAccount.Fax}"/>
-					                        <apex:outputField value="{!hqAccount.IATACode__c}"/>
-					                        <apex:outputField value="{!newForm.Map_Company_Type_to_Legal_Status__c}"/>
+                                  <apex:outputField value="{!hqAccount.Email__c}" label="{!SUBSTITUTE($Label.ISSP_Office_Email, "*", "")}"/>
+					                        <apex:outputField value="{!hqAccount.Website}"/>
 	                      				</apex:pageBlockSection>
 	                   				 </apex:outputPanel>
 	                 	 		</apex:pageBlock>
@@ -908,7 +934,8 @@
                                 				</div>
                                 				<apex:outputPanel layout="none">
                                   					<div class="field-wrapper">
-                                    					<apex:outputField value="{!hqAccount.name}" style="width:174.4px" />
+                                    					<apex:outputField value="{!hqAccount.name}" style="width:174.4px" rendered="{!NOT(isMultiCountryNewAE)}"/>
+                                              <apex:outputField value="{!newForm.Account_Name__c}" style="width:174.4px" rendered="{!isMultiCountryNewAE}"/>
                                   					</div>
                                 				</apex:outputPanel>
                               				</apex:outputPanel>
@@ -921,7 +948,8 @@
 			                                	</div>
 			                                	<apex:outputPanel layout="none">
 			                                  		<div>
-			                                    		<apex:outputField value="{!hqAccount.TradeName__c}" style="width:174.4px" />                                    
+			                                    		<apex:outputField value="{!hqAccount.TradeName__c}" style="width:174.4px" rendered="{!NOT(isMultiCountryNewAE)}"/>
+                                              <apex:outputField value="{!newForm.Trade_Name__c}" style="width:174.4px" rendered="{!isMultiCountryNewAE}"/>                                    
 			                                  		</div>
 			                                	</apex:outputPanel>
 			                              	</apex:outputPanel>
@@ -935,8 +963,8 @@
 				                                	</div>
 			                                	<apex:outputPanel layout="none">
 			                                  		<div class="field-wrapper">
-			                                    		<apex:outputField value="{!newForm.ISSP_AMS_Legal_Status__c}" style="width:174.4px" rendered="{!NOT(isMultiCountryNewAE)}"/>
-			                                    		<apex:outputLabel value="{!$Label.ANG_ISSP_ProductMulticountry}" style="width:174.4px" rendered="{!isMultiCountryNewAE}"/> <!--rui label -->
+			                                    		<apex:outputField value="{!newForm.ISSP_AMS_Legal_Status__c}" style="width:174.4px"/>
+			                                    		
 			                                  		</div>
 			                                	</apex:outputPanel>
 			                              	</apex:outputPanel>
@@ -964,7 +992,7 @@
                     					<apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
                     						<apex:outputLabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" for="VATInput"/>
                     						<apex:outputpanel id="VATNumberInput">
-                        						<span style="margin-left:{!If(isEUcountry,'-28px', '-9px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
+                        						<span style="margin-left:{!If(isEUcountry,'-28px', '-9px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!isocountry.ISO_Code__c}" rendered="{!isEUcountry}" /></span>
                         						<apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" id="VATInput" style="width:178px"/>
                         						<apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
 					            				<apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
@@ -976,90 +1004,132 @@
                 						</apex:pageblocksectionitem>
                						</apex:pageBlockSection>            
 
-                      				<apex:pageBlockSection columns="2" id="branchphonefax">
+                      				<apex:pageBlockSection columns="2" id="branch">
                         				<apex:outputText value="{!$Label.ISSP_ANG_Branch_Office_address_details}" style="font-weight:bold" />
                         				<apex:outputtext/>
                         
                          				<apex:pageBlockSection columns="1">
-                         					<apex:outputPanel layout="block" style="height: 27px;"/>
-			                              	<DSE:DS_DataQuality id="BranchAddress" RecordRef="{!newForm}" FieldGroupName="Branch Address" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label address-label" InputStyle="test-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
-                         				</apex:pageBlockSection> <!-- rui -->
+                         					<apex:outputPanel styleClass="agencyLocationComponent" id="billingAddressTitle" layout="block">
+							                    <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.Billing_address}"/>
+							                </apex:outputPanel>
+                         					<apex:pageBlockSectionItem> 
+			                              		<DSE:DS_DataQuality id="BranchAddress" RecordRef="{!newForm}" FieldGroupName="Branch Address" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label address-label" InputStyle="test-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
+			                              	</apex:pageBlockSectionItem>
+                         				</apex:pageBlockSection>
                         
                         				<apex:pageBlockSection columns="1" id="subbranchsection">
                         					<apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
-							                    <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
+							                    <apex:outputLabel style="color:black; font-size:110%; margin-right: 10px;" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
 							                    <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBranchAddress()" />
 							                </apex:outputPanel>
                         					<apex:pageBlockSectionItem> 
 	                    						<DSE:DS_DataQuality id="ShippingAddress" RecordRef="{!newForm}" FieldGroupName="Shipping Address" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label address-label" InputStyle="test-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
 	                    					</apex:pageBlockSectionItem>
 
-                          					<apex:pageBlockSectionItem id="branchphonefields">
-                          						<apex:outputPanel >
-                          							<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left: 7px;">
-                            							<apex:outputText id="office-phone-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}"/>
-                          							</div>
-                            						<apex:outputPanel layout="none">
-                            							<apex:inputHidden value="{!newForm.Branch_Office_Phone__c}" id="phonebranch" />
-                            							<div style="width:174.4px; float:left;">
-                              								<apex:inputField id="natphonebranch" html-placeholder="" onblur="setInternationalBranchPhoneNo('phone');$j('.branch_office_phone__c').change();" value="{!newForm.Branch_Office_Phone_National__c}" style="width:174.4px;"/>
-                            							</div>
-                            							<div id="div-verify-office-phone" style="float:left; width: 16px; margin-left: 6px;"/>
-                            						</apex:outputPanel>
-                            					</apex:outputPanel> 
-                          					</apex:pageBlockSectionItem>
-
-                          					<apex:pageBlockSectionItem id="branchfaxfields">
-                           						<apex:outputPanel >
-                          							<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left:9px;">
-                            							<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_FAX__c.Label}" />
-                          							</div>
-                            						<apex:outputPanel layout="none">
-                              							<apex:inputHidden value="{!newForm.Branch_Office_FAX__c}" id="faxbranch" />
-                            							<div style="width:174.4px; float:left;">
-                              								<apex:inputField id="natfaxbranch" html-placeholder="" onblur="setInternationalBranchPhoneNo('fax');" value="{!newForm.Branch_Office_Fax_National__c}" style="width:174.4px;" />
-                            							</div>
-                            						</apex:outputPanel>
-                            					</apex:outputPanel>
-                          					</apex:pageBlockSectionItem>
-
-                          					<DSE:DS_DataQuality id="BranchEmail" RecordRef="{!newForm}" FieldGroupName="Branch Email" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label text-label-no-margin office-email" InputStyle="test-input email-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
-
-                          					<apex:pageBlockSectionItem id="branchwebsitefields">
-                           						<apex:outputPanel >
-				                              		<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left:9px;">
-				                                		<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Website__c.Label}" />
-				                              		</div>
-                            						<apex:outputPanel layout="none">
-                              							<div style="width:174.4px; float:left;">
-                                							<apex:inputField value="{!newForm.Website__c}" style="width:174.4px" />
-                              							</div>
-                            						</apex:outputPanel>
-                            					</apex:outputPanel>
-                          					</apex:pageBlockSectionItem>
-
-                          					<DSE:DS_DataQuality id="BranchPhone" RecordRef="{!newForm}" FieldGroupName="Branch Phone" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="labelCol col-lg-6 labelText" InputStyle="col-lg-5" StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1 statusBox" FormControlStyle="apcontainer"/>
-
-                          					<apex:selectList id="ShippingCountryList" size="1" value="{!newform.Shipping_Country__c}" style="width:80%" onchange="copyToADShippingCntr();">
+	                    					<apex:selectList id="ShippingCountryList" size="1" value="{!newform.Shipping_Country__c}" style="width:80%" onchange="copyToADShippingCntr();">
 							                        <apex:selectOptions value="{!countryList}"/>
 							                    </apex:selectList>
-
                         				</apex:pageBlockSection>
+                      				</apex:pageBlockSection>
+
+                      				<apex:pageBlockSection columns="1" id="phonefax">
+                      					<apex:outputText value="{!$Label.ISSP_ANG_Branch_Office_contact_details}" style="font-weight:bold"/>
+                        				<apex:outputtext/>
+                      					<apex:pageBlockSectionItem id="branchphonefields">
+                      						<apex:outputPanel >
+                      							<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left: 7px;">
+                        							<apex:outputText id="office-phone-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}"/>
+                      							</div>
+                        						<apex:outputPanel layout="none">
+                        							<apex:inputHidden value="{!newForm.Branch_Office_Phone__c}" id="phonebranch" />
+                        							<div style="width:174.4px; float:left;">
+                          								<apex:inputField id="natphonebranch" html-placeholder="" onblur="setInternationalBranchPhoneNo('phone');$j('.branch_office_phone__c').change();" value="{!newForm.Branch_Office_Phone_National__c}" style="width:174.4px;"/>
+                        							</div>
+                        							<div id="div-verify-office-phone" style="float:left; width: 16px; margin-left: 6px;"/>
+                        						</apex:outputPanel>
+                        					</apex:outputPanel> 
+                      					</apex:pageBlockSectionItem>
+
+                      					<apex:pageBlockSectionItem id="branchfaxfields">
+                       						<apex:outputPanel >
+                      							<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left:9px;">
+                        							<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_FAX__c.Label}" />
+                      							</div>
+                        						<apex:outputPanel layout="none">
+                          							<apex:inputHidden value="{!newForm.Branch_Office_FAX__c}" id="faxbranch" />
+                        							<div style="width:174.4px; float:left;">
+                          								<apex:inputField id="natfaxbranch" html-placeholder="" onblur="setInternationalBranchPhoneNo('fax');" value="{!newForm.Branch_Office_Fax_National__c}" style="width:174.4px;" />
+                        							</div>
+                        						</apex:outputPanel>
+                        					</apex:outputPanel>
+                      					</apex:pageBlockSectionItem>
+
+                      					<DSE:DS_DataQuality id="BranchEmail" RecordRef="{!newForm}" FieldGroupName="Branch Email" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label text-label-no-margin office-email" InputStyle="test-input email-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
+
+                      					<apex:pageBlockSectionItem id="branchwebsitefields">
+                       						<apex:outputPanel >
+			                              		<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left:9px;">
+			                                		<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Website__c.Label}" />
+			                              		</div>
+                        						<apex:outputPanel layout="none">
+                          							<div style="width:174.4px; float:left;">
+                            							<apex:inputField value="{!newForm.Website__c}" style="width:174.4px" />
+                          							</div>
+                        						</apex:outputPanel>
+                        					</apex:outputPanel>
+                      					</apex:pageBlockSectionItem>
+
+                      					<DSE:DS_DataQuality id="BranchPhone" RecordRef="{!newForm}" FieldGroupName="Branch Phone" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="labelCol col-lg-6 labelText" InputStyle="col-lg-5" StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1 statusBox" FormControlStyle="apcontainer"/>
                       				</apex:pageBlockSection>
 
                       				<script type="text/javascript">
 			                            function copyBranchAddress() {
 					                        var checkBox = document.getElementById('copyCheckBoxBranch');
-					                        if (checkBox.checked){
+											var countryMap = JSON.parse(JSON.stringify({!mapToReturn}));
+
+											if (checkBox.checked){
 					                            $(".shipping_street__c").val($(".branch_office_street_name_number__c").val());
 					                            $(".shipping_city__c").val($(".branch_office_city__c").val());
 					                            $(".shipping_postal_code__c").val($(".branch_office_postal_code__c").val());
 					                            $(".shipping_state__c").val($(".state_province__c").val());
 					                            
-					                            $('[id$="ShippingCountryList"]').val($(".country__c").val().toUpperCase());
-					                            $('#shipping_country__c > input').val($(".country__c").val().toUpperCase());
-					                        }
+												var countrySelected = countryMap[$(".country__c").val().toUpperCase()];
+                                    
+												$('[id$="ShippingCountryList"]').val(countrySelected);
+												$('#shippingcountry > input').val(countrySelected);
+
+                                      /*$(".shipping_street__c").keyup();
+					                            //$(".shipping_street__c").attr('disabled', 'disabled');
+                                      $(".shipping_city__c").keyup();
+					                            //$(".shipping_city__c").attr('disabled', 'disabled');
+                                      $(".shipping_postal_code__c").keyup();
+					                            //$(".shipping_postal_code__c").attr('disabled', 'disabled');
+                                      $(".shipping_state__c").keyup();
+					                            //$(".shipping_state__c").attr('disabled', 'disabled');
+                                      $('[id$="ShippingCountryList"]').change();
+                                      $('[id$="ShippingCountryList"]').keyup();
+					                            //$('[id$="ShippingCountryList"]').attr('disabled', 'disabled');*/
+                                      
+					                        } /*else {
+					                        	$(".shipping_street__c").removeAttr('disabled');
+					                            $(".shipping_city__c").removeAttr('disabled');
+					                            $(".shipping_postal_code__c").removeAttr('disabled');
+					                            $(".shipping_state__c").removeAttr('disabled');
+					                            $('[id$="ShippingCountryList"]').removeAttr('disabled');
+					                        }*/
 					                    }
+
+					                    $(".branch_office_street_name_number__c").css("width", "174.4px");
+					                    $(".branch_office_city__c").css("width", "174.4px");
+					                    $(".branch_office_postal_code__c").css("width", "174.4px");
+					                    $(".state_province__c").css("width", "174.4px");
+					                    $('[id$="ShippingCountryList"]').css("width", "174.4px");
+					                    
+					                    $(".shipping_street__c").css("width", "174.4px");
+					                    $(".shipping_city__c").css("width", "174.4px");
+					                    $(".shipping_postal_code__c").css("width", "174.4px");
+					                    $(".shipping_state__c").css("width", "174.4px");
+					                    $(".country__c").css("width", "174.4px");
 
 					                    $(".branch_office_street_name_number__c").change(function () {
 					                        copyBranchAddress();
@@ -1085,62 +1155,109 @@
                         				<apex:inputField value="{!newForm.ISSP_AMS_Principal_business_Org__c}" style="width: 250px;" />
                       				</apex:pageBlockSection>
 
-                          			<apex:pageBlockSection columns="2" id="agencydates">
-                            			<apex:inputField showDatePicker="true" id="dateOpenedAsTravelAgency" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}"/>
-                            			<apex:outputText/>
+                          <apex:pageBlockSection columns="2" id="agencydates">
+                            <apex:inputField showDatePicker="true" id="dateOpenedAsTravelAgency" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}"/>
+                            <apex:outputtext >
+                              <!--empty: move following field to next row -->
+                            </apex:outputtext>
+                            <apex:outputPanel rendered="{!NOT(countryCheckList.License_required__c)}"></apex:outputPanel>
+                            <apex:inputfield id="license-no" value="{!newForm.ISSP_AMS_License_No__c}" rendered="{!countryCheckList.License_required__c==true}"/>
+                            <apex:inputfield id="trade-reg-no" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" rendered="{!countryCheckList.Registration_required__c==true}"/>
+                            <apex:inputfield id="date-license-granted" value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" rendered="{!countryCheckList.License_required__c==true}"/>
+                            <apex:inputfield id="date-reg-granted" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" rendered="{!countryCheckList.Registration_required__c==true}"/>
+                          </apex:pageBlockSection>
 
-                            			<apex:outputPanel rendered="{!NOT(countryCheckList.License_required__c)}"/>
-                            			<apex:inputfield id="license-no" value="{!newForm.ISSP_AMS_License_No__c}" rendered="{!countryCheckList.License_required__c==true}"/>
-                            			<apex:inputfield id="trade-reg-no" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" rendered="{!countryCheckList.Registration_required__c==true}"/>
-                            			<apex:inputfield id="date-license-granted" value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" rendered="{!countryCheckList.License_required__c==true}"/>
-                            			<apex:inputfield id="date-reg-granted" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" rendered="{!countryCheckList.Registration_required__c==true}"/>
-                          			</apex:pageBlockSection>
-                  				</apex:pageblock>
-                  				<script>
-						            $( document ).ready(function() {
-						                $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c');
-						                var oldElemt = $('#shipping_country__c > input');
-						                oldElemt.attr('style', 'display: none;');
-						                $('#shipping_country__c').css("padding-right", 0);
+                          <apex:pageBlockSection columns="2" collapsible="false" rendered="{!isocountry.Local_language_Agency_details_required__c}">
+                            <apex:facet name="header">
+                                <apex:outputpanel >
+                                    {!txtLocalAgencyDetailsTitle}
+                                </apex:outputpanel>
+                            </apex:facet>
+                            <apex:outputText value="{!txtLocalAgencyDetailsPleaseEnter}"/>
+                            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                            <apex:pageBlockSectionItem labelStyle="width:10%;text-align:left" dataStyle="width:20%">
+                                <apex:outputLabel value="{!txtLocalAgencyDetailsLegalName}"/>
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!newForm.Local_Legally_Registered_Name__c}" />
+                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoCompany}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>                   
+                            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                            <input type="checkbox" id="copyCheckBox" onChange="copyPhysicalAddress()"/>
+                            <label for="copyCheckBox">{!txtLocalAgencyDetailsCopyAddress}</label> 
+                            
+                            <apex:pageBlockSection columns="1">    
+                                <apex:outputText value="{!txtLocalAgencyDetailsPhysicalAddress}" style="font-weight:bold; font-size:110%"/>
+                                <apex:pageBlockSectionItem labelStyle="width:35%">
+                                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Street__c.Label}"/>
+                                    <apex:inputField value="{!newForm.Local_Physical_Address_Street__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalStreet"/>
+                                </apex:pageBlockSectionItem>  
+                                <apex:inputField value="{!newForm.Local_Physical_Address_City__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalCity"/>
+                                <apex:inputField value="{!newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode"/>
+                                <apex:inputField value="{!newForm.Local_Physical_Address_Province__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalProvince"/>
+                                <apex:inputField value="{!newForm.Local_Physical_Address_Area__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalArea"/>
+                                <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                            </apex:pageBlockSection>
+                          
+                            <apex:pageBlockSection columns="1">
+                                <apex:outputText value="{!txtLocalAgencyDetailsCorrespondenceAddress}" style="font-weight:bold; font-size:110%"/>
+                                <apex:pageBlockSectionItem labelStyle="width:30%">
+                                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Street__c.Label}"/>
+                                    <apex:inputField value="{!newForm.Local_Postal_Address_Street__c}" styleClass="PostalStreet"/>
+                                </apex:pageBlockSectionItem>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_City__c}" styleClass="PostalCity"/>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode"/>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince"/>
+                                <apex:inputField value="{!newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
+                                <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                            </apex:pageBlockSection>
+                        </apex:pageBlockSection>
+                  </apex:pageblock>
+                  <script>
+					            $( document ).ready(function() {
+					                $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c');
+					                var oldElemt = $('#shipping_country__c > input');
+					                oldElemt.attr('style', 'display: none;');
+					                $('#shipping_country__c').css("padding-right", 0);
 
-						                $('[id$="subbranchsection"]').children().children().children().children().last().remove();
+					                $('[id$="subbranchsection"]').children().children().children().children().last().remove();
 
-						                if ($('[id$="ShippingCountryList"]').parent().find('.errorMsg').length > 0) {
-						                    $('[id$="ShippingCountryList"]').addClass('error');
-						                }
+					                if ($('[id$="ShippingCountryList"]').parent().find('.errorMsg').length > 0) {
+					                    $('[id$="ShippingCountryList"]').addClass('error');
+					                }
 
-						                $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
-						                    return "* " + $(this).text();
-						                });
-						         
-						                $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
-						                    return "* " + $(this).text();
-						                });
-						                
-						                $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
-						                    return "* " + $(this).text();
-						                });
-						            });
+					                $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
+					                    return "* " + $(this).text();
+					                });
+					         
+					                $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
+					                    return "* " + $(this).text();
+					                });
+					                
+					                $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
+					                    return "* " + $(this).text();
+					                });
+					            });
 
-						            function copyToADShippingCntr(){
-						                $('#shipping_country__c > input').val($('[id$="ShippingCountryList"]').val());
-						                $('#shipping_country__c > input').change();
-						            }
-						        </script>
-	                  
-                  				<script>
-                    				$j( document ).ready(function() {
-                      					var dateOpenedAsTravelAgency = $j('[for$=dateOpenedAsTravelAgency]')[0],
-				                        licenseNo = $j('[for$=license-no]')[0],
-				                        tradeRegNo = $j('[for$=trade-reg-no]')[0],
-				                        dateLicenseGranted = $j('[for$=date-license-granted]')[0],
-				                        dateRegGranted = $j('[for$=date-reg-granted]')[0],
-				                        vatLabel = $j('[for$=VATInput]')[0],
-				                        officePhoneLabel = $j('[id$=office-phone-label]')[0],
-				                        officeEmail = $j('.office-email')[0].childNodes[0],
-				                        labelBillStreet = $j('.address-label')[0].childNodes[0],
-				                        labelBillCity = $j('.address-label')[1].childNodes[0],
-				                        legalStatusLabel = $j('.LegalStatusLabel')[0].childNodes[0];
+					            function copyToADShippingCntr(){
+					                $('#shipping_country__c > input').val($('[id$="ShippingCountryList"]').val());
+					                $('#shipping_country__c > input').change();
+					            }
+					        </script>
+                  <script>
+                    $j( document ).ready(function() {
+                      var dateOpenedAsTravelAgency = $j('[for$=dateOpenedAsTravelAgency]')[0],
+                         licenseNo = $j('[for$=license-no]')[0],
+                         tradeRegNo = $j('[for$=trade-reg-no]')[0],
+                         dateLicenseGranted = $j('[for$=date-license-granted]')[0],
+                         dateRegGranted = $j('[for$=date-reg-granted]')[0],
+                         vatLabel = $j('[for$=VATInput]')[0],
+                         officePhoneLabel = $j('[id$=office-phone-label]')[0],
+                         officeEmail = $j('.office-email')[0].childNodes[0],
+                         labelBillStreet = $j('.address-label')[0].childNodes[0],
+                         labelBillCity = $j('.address-label')[1].childNodes[0],
+                         legalStatusLabel = $j('.LegalStatusLabel')[0].childNodes[0];
                          
                          
 	                        			if(dateOpenedAsTravelAgency) {
@@ -1205,13 +1322,21 @@
 
                     					<apex:outputText value="{!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'),$Label.ISSP_AMS_Step3_4_People,$Label.ISSP_AMS_Step3_4_Branch_People)}" styleClass="col-md-12" escape="false" />
 
+                              			<apex:outputText rendered="{!AND(OR(isMultiCountryNewAE, isMCAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}" value="Text message (missing)" style="color: red;" styleClass="col-md-12" escape="false"/>
+
 					                    <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
 					                      {!$Label.ISSP_AMS_Not_Listed_Msg}
 					                    </div>
 
-                    					<apex:outputText rendered="{!AND(OR(isMultiCountryNewAE, isMCNewAEAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}" value="hello"/> <!-- rui -->
-                    
-                    					<apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person)}</apex:commandLink>
+                              			<apex:outputPanel id="ownershipLinks">
+                                    <div style="width: 100%; display: flex; justify-content: space-between;">
+                                      <div style="width: 100%;">
+                            						<apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(AND(isMultiCountryNewAE, NOT(isHOAccredited)), $Label.ISSP_AMS_Add_Contact, IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person))}</apex:commandLink>
+
+                            						<apex:commandLink onfocus="showOwnersMulticountry();" style="float: right; {!IF(ownersFromMainLegalEntity.size == 0,'pointer-events: none !important; cursor: default; color: gray !important;','')}" rendered="{!AND(OR(isMultiCountry || isMultiCountryNewAE || isMCAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}"><span class="glyphicon glyphicon-arrow-down"></span>&nbsp;{!IF(isHOAccredited, $Label.ISSP_ANG_View_Owners, $Label.ISSP_ANG_View_And_Modify_Owners)}</apex:commandLink>
+                                      </div>
+                                    </div>
+                              			</apex:outputPanel>
 
                     					<apex:pageBlockTable value="{!List_AgencyContacts}" var="agencycon" id="contactList" styleClass="table-hover table table-condensed table-responsive">
 					                      	<apex:column ><span class="glyphicon glyphicon-plus" onclick="toggleContactDetails(this)" id="tog{!agencycon.Id}" /></apex:column>
@@ -1232,7 +1357,7 @@
 					                            	</apex:outputText>
 					                        	</apex:facet>
 					                      	</apex:column>
-                      						<apex:column value="{!agencycon.Financial_Assessment_Contact__c}" style="text-align:center" rendered="{!IF(AND(amsOfficeType=='HO', newForm.Agent_Type__c!='Standard no Cash'),true,false)}">
+                      						<apex:column value="{!agencycon.Financial_Assessment_Contact__c}" style="text-align:center" rendered="{!IF(AND(amsOfficeType=='HO', newForm.Agent_Type__c!='Standard no Cash', AND(newform.Local_Agent_Type__c != 'Domestic', isocountry.ISO_Code__c == 'CN')),true,false)}">
                         						<apex:facet name="header">
                           							<apex:outputText escape="false" style="float:left" value="&nbsp;{!$Label.ISSP_AMS_Fin_Contact}">
                             							<apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!txtHelpFinContact}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip" />
@@ -1253,15 +1378,16 @@
 						                            	<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {!$Label.ISSP_AMS_Loading_Contact}
 						                          	</apex:facet>
 						                        </apex:actionStatus>
-                       							<apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewContactDialog();" rerender="contactList, newContact" rendered="{!OR(newForm.AE_separate_Legal_Entity__c == 'Yes',AND(newForm.AE_separate_Legal_Entity__c == 'No',NOT(agencycon.Agency_owner__c)))}">
+                       							<apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewContactDialog(); reRenderImportOwnersMCModal();" rerender="contactList, newContact" rendered="{!OR(newForm.AE_separate_Legal_Entity__c == 'Yes',AND(newForm.AE_separate_Legal_Entity__c == 'No',NOT(agencycon.Agency_owner__c)))}">
                           							<apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
                         						</apex:commandLink>
 
-                        						<apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showUpdateOwnerDialog();" rerender="contactList, updateOwner" rendered="{!AND(newForm.AE_separate_Legal_Entity__c == 'No',agencycon.Agency_owner__c)}">
+                        						<apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showUpdateOwnerDialog(); reRenderImportOwnersMCModal();" rerender="contactList, updateOwner" rendered="{!AND(newForm.AE_separate_Legal_Entity__c == 'No',agencycon.Agency_owner__c)}">
 						                          	<apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
 						                        </apex:commandLink>
                       						</apex:column>
-                      						<apex:column rendered="{!OR(newForm.AE_separate_Legal_Entity__c == 'Yes',AND(newForm.AE_separate_Legal_Entity__c == 'No',NOT(agencycon.Agency_owner__c)))}">
+											<apex:column>
+                                                <!-- rendered="{!OR(newForm.AE_separate_Legal_Entity__c == 'Yes',AND(newForm.AE_separate_Legal_Entity__c == 'No',NOT(agencycon.Agency_owner__c)))}"-->
                         						<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash" />
                       						</apex:column>
                       						<apex:column breakBefore="true" colspan="12" style="display:none; background-color:RGB(236, 246, 249)" styleClass="tog{!agencycon.Id}" id="contactDetails">
@@ -1368,7 +1494,8 @@
 				                        		<apex:outputLabel id="previous-default-details-label" value="{!$Label.ISSP_AMS_Previous_Default_Details}" style="width:95%; text-align: justify;"/>
 				                        		<apex:inputField value="{!newForm.ISSP_AMS_Prev_default_explanation__c}" style="width:95%" />
 				                      		</apex:pageBlockSectionItem>
-				                    	</apex:pageBlockSection>
+										</apex:pageBlockSection>
+										
 				                  	</div>
 
                   					<div id="multi-owners" style="{!IF(AND(newForm.ISSP_AMS_Legal_Status__c != 'Sole Proprietorship', newForm.ISSP_AMS_Legal_Status__c !=null), 'border: 0px !important;', 'display:none')}">
@@ -1377,25 +1504,28 @@
 					                      	<div class="col-md-12">
 					                        	<apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies}" escape="false" />
 					                      	</div>
-                      						<apex:commandLink id="addcompany" style="margin-right:5px" onfocus="showNewCompanyDialog();" rendered="{!newForm.AE_separate_Legal_Entity__c != 'No'}"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}</apex:commandLink>
-                      						<apex:outputText value="{!$Label.ISSP_AMS_NoC_No_Company_Owners}" styleClass="alert alert-info" rendered="{!newForm.AE_separate_Legal_Entity__c == 'Yes'}" />
+                      						<apex:commandLink id="addcompany" style="margin-right:5px" onfocus="showNewCompanyDialog();" rendered="{!OR(newForm.AE_separate_Legal_Entity__c != 'No', isMCAccredited)}"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}</apex:commandLink>
+											<apex:outputPanel id="noCompanyInfo">
+												<apex:outputText value="{!$Label.ISSP_AMS_NoC_No_Company_Owners}" styleClass="alert alert-info" rendered="{!OR(AND(newForm.AE_separate_Legal_Entity__c == 'Yes', NOT(isMCAccredited)), AND(OR(amsOfficeType='Branch',newCase.Reason1__c=='New BR Abroad'), List_AgencyCompanies.size==0, isMCAccredited))}" />
+											</apex:outputPanel>  
                       						<apex:pageBlockTable value="{!List_AgencyCompanies}" var="agencycon" id="companyList" styleClass="table-hover table table-condensed table-responsive">
 						                        <apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Company_Name_Local__c + ')','')}" />
 							                    <apex:column value="{!agencycon.Registration_number__c}" />
-							                    <apex:column value="{!agencycon.IATACode__c}" />
+							                    <apex:column value="{!agencycon.Agency_owner__c}" />
 							                    <apex:column value="{!agencycon.Financial_interest__c}" />
-							                    <apex:column rendered="{!NOT(AND(OR(amsOfficeType='Branch',newCase.Reason1__c=='New BR Abroad'), agencycon.Agency_owner__c))}">
-							                        <apex:commandLink action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewCompanyDialog();" rerender="companyList, newCompany">
+							                    <apex:column>
+													<!--rendered="{!NOT(AND(OR(AND(amsOfficeType='Branch', NOT(isMCAccredited)), newCase.Reason1__c=='New BR Abroad'), agencycon.Agency_owner__c))}"-->
+							                        <apex:commandLink action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewCompanyDialog();" rerender="companyList, newCompany, multi-owners, noCompanyInfo">
 							                            <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
 							                        </apex:commandLink>
 							                    </apex:column>
                         						<apex:column>
-                          							<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'company')" styleClass="glyphicon glyphicon-trash" rerender="companyList" />
-                        						</apex:column>
+                          							<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'company')" styleClass="glyphicon glyphicon-trash" rerender="companyList, multi-owners, noCompanyInfo" />
+                        						</apex:column> 
                       						</apex:pageBlockTable>
-                      						<apex:actionFunction name="deleteContact" action="{!deleteAgencyContact}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" rerender="contactList,companyList,ownerList">
+                      						<apex:actionFunction name="deleteContact" action="{!deleteAgencyContact}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" rerender="contactList,companyList,ownerList, importOwnersMCModal, ownershipLinks, multi-owners, noCompanyInfo">
                         						<apex:param value="" name="recordId" assignTo="{!editContactId}" />
-                      						</apex:actionFunction>
+											  </apex:actionFunction>
                    			 			</apex:pageBlockSection>
                     					<apex:pageBlockSection columns="1">
                       						<div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_3}</strong></div>
@@ -1417,11 +1547,11 @@
 				                         	prevDef = $j('[id$=previous-default-label]')[0];
 				                      	
 				                      	if (prevDef) {
-				                        	prevDef.textContent = prevDef.textContent.replace('* ', '') + ' *';
+				                        	prevDef.textContent = prevDef.textContent.replace('*', '') + ' *';
 				                      	}
 
 				                      	if (prevDefDetLabel) {
-				                        	prevDefDetLabel.textContent = prevDefDetLabel.textContent.replace('* ', '') + ' *';
+				                        	prevDefDetLabel.textContent = prevDefDetLabel.textContent.replace('*', '') + ' *';
 				                      	}
 				                    });
 				                </script>
@@ -1489,7 +1619,7 @@
 							                    </apex:pageBlockSectionItem>
 
 							                    <apex:pageBlockSectionItem id="a" rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
-							                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" />
+							                        <apex:outputLabel id="section5-first-year-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" />
 							                        <apex:outputPanel >
 							                          	<apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
 							                          	<apex:outputText id="y1CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
@@ -1497,9 +1627,9 @@
 							                    </apex:pageBlockSectionItem>  
 
 							                    <apex:pageBlockSectionItem id="b" rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
-							                        <apex:outputLabel id="section5-second-year" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" />
+							                        <apex:outputLabel id="section5-second-year-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" />
 							                        <apex:outputPanel >
-							                          	<apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
+							                          	<apex:inputField id="section5-second-year" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
 							                          	<apex:outputText id="y2CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
 							                        </apex:outputPanel>
 							                    </apex:pageBlockSectionItem>
@@ -1586,7 +1716,9 @@
 				                       		isAgencyIatan = $j('[id$=is-agency-iatan-label]')[0],
 				                       		iatanCode = $j('[id$=iatan-code-label]')[0],
 				                       		isCargo = $j('[id$=is-cargo-label]')[0],
-				                       		cargoCode = $j('[id$=cargo-code-label]')[0];
+				                       		cargoCode = $j('[id$=cargo-code-label]')[0],
+				                       		firstYear = $j('[id$=section5-first-year-label]')[0],
+				                       		secondYear = $j('[id$=section5-second-year-label]')[0];
 				                    
 					                    if (dgsLabel) {
 					                      	dgsLabel.textContent = dgsLabel.textContent.replace('* ', '') + ' *';
@@ -1606,6 +1738,14 @@
 
 					                    if (cargoCode) {
 					                      	cargoCode.textContent = cargoCode.textContent.replace('* ', '') + ' *';
+					                    }
+
+					                    if (firstYear) {
+					                      	firstYear.textContent = firstYear.textContent.replace('* ', '') + ' *';
+					                    }
+
+					                    if (secondYear) {
+					                      	secondYear.textContent = secondYear.textContent.replace('* ', '') + ' *';
 					                    }
 				                  	});
 				              	</script>
@@ -1894,7 +2034,7 @@
             		</div>
 
 		            <div class="modal-footer">
-		              	<apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled';" reRender="contactList, ownerList, theMessages">
+		              	<apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled';" reRender="contactList, ownerList, theMessages, noCompanyInfo">
 		                	<apex:param value="Person" name="persontype" assignTo="{!contactType}" />
 		              	</apex:commandButton>&nbsp;
 		              	<button type="button" class="btn btn-default" onclick="cancelAgentUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
@@ -1975,38 +2115,41 @@
 
             		<apex:pageMessages id="theMessages" />
 
-		            <div class="modal-body">
-		             	<apex:pageBlock id="contactBlock">
-		                	<apex:pageBlockSection id="contactSection" columns="4">
-		                  		<apex:pageBlockSectionItem id="contactItemOwner" labelStyle="font-size:110%" dataStyle="width:15%">
-		                    		<apex:outputLabel id="ownerContactTitle">{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}</apex:outputLabel>
-		                    		<apex:inputCheckBox value="{!newContact.Agency_owner__c}" disabled="true" />
-		                  		</apex:pageBlockSectionItem>
-		                  		<apex:pageBlockSectionItem id="contactItemDom" labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
-		                   		 	<apex:outputLabel id="roleContactTitle" escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}" />
-		                    		<apex:inputField value="{!newContact.Agency_role__c}" id="dom" onclick="toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}','{!$Component.dom}', '{!$Component.newContact.contactBlock.prevWorkedFor}')" />
-		                  		</apex:pageBlockSectionItem>
-		                  		<apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
-		                    		<apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Authorised_signatory__c.Label}</apex:outputLabel>
-		                    		<apex:inputField value="{!newContact.Authorised_signatory__c}" />
-		                  		</apex:pageBlockSectionItem>
-		                  		<apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" rendered="{!amsOfficeType=='HO'}">
-		                    		<apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}</apex:outputLabel>
-		                    		<apex:inputField value="{!newContact.Financial_Assessment_Contact__c}" />
-		                  		</apex:pageBlockSectionItem>
-		                	</apex:pageBlockSection>
-		              	</apex:pageBlock>
-		            </div>
-            		<div class="modal-footer">
-              			<apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeUpdateOwnerModal(); cancelOwnerUpdate();} this.removeAttribute('disabled');setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');" onclick="this.disabled='disabled';" reRender="contactList, ownerList, theMessages">
-                			<apex:param value="Person" name="persontype" assignTo="{!contactType}" />
-              			</apex:commandButton>&nbsp;
-              			<button type="button" class="btn btn-default" onclick="cancelOwnerUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
-            		</div>
-          		</div>
-        	</div>
-      	</div>
-    </apex:form>
+                    <div class="modal-body">
+                      <apex:pageBlock id="contactBlock">
+                        <apex:pageBlockSection id="contactSection" columns="4">
+                          <apex:pageBlockSectionItem id="contactItemOwner" labelStyle="font-size:110%" dataStyle="width:15%">
+                            <apex:outputLabel id="ownerContactTitle">{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}</apex:outputLabel>
+                            <apex:inputCheckBox value="{!newContact.Agency_owner__c}" disabled="true" />
+                          </apex:pageBlockSectionItem>
+                          <apex:pageBlockSectionItem id="contactItemDom" labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+                            <apex:outputLabel id="roleContactTitle" escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}" />
+                            <apex:inputField value="{!newContact.Agency_role__c}" id="dom" onclick="toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}','{!$Component.dom}', '{!$Component.newContact.contactBlock.prevWorkedFor}')" />
+                          </apex:pageBlockSectionItem>
+                          <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+                            <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Authorised_signatory__c.Label}</apex:outputLabel>
+                            <apex:inputField value="{!newContact.Authorised_signatory__c}" />
+                          </apex:pageBlockSectionItem>
+                          <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" rendered="{!AND(amsOfficeType=='HO', newForm.Local_Agent_Type__c != 'Domestic')}">
+                            <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}</apex:outputLabel>
+                            <apex:inputField value="{!newContact.Financial_Assessment_Contact__c}" />
+                          </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                      </apex:pageBlock>
+                    </div>
+                    <div class="modal-footer">
+
+                      <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeUpdateOwnerModal(); cancelOwnerUpdate();} this.removeAttribute('disabled');setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');" onclick="this.disabled='disabled';" reRender="contactList, ownerList, theMessages">
+                        <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
+                      </apex:commandButton>&nbsp;
+                      <button type="button" class="btn btn-default" onclick="cancelOwnerUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </apex:form>
 
     <!-- Modal New Agency Contact - Company -->
     <apex:form id="newCompany">
@@ -2056,7 +2199,7 @@
             		</div>
 
             		<div class="modal-footer">
-              			<apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeModal2(); cancelCompanyUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="companyList, ownerList, companyMessages">
+              			<apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeModal2(); cancelCompanyUpdate(); reRenderImportOwnersMCModal();} this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="companyList, ownerList, companyMessages, noCompanyInfo">
                 			<apex:param value="Company" name="companytype" assignTo="{!contactType}" />
               			</apex:commandButton>&nbsp;
               			<button type="button" class="btn btn-default" onclick="cancelCompanyUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
@@ -2148,6 +2291,8 @@
 	        }
 	    </script>
     </apex:form>
+
+    <c:ISSP_ANG_ImportOwnersMCModal id="importOwnersMCModal"/> <!-- Modal Copy Owners MultiCountry -->
 
 						</div>
 					</div>

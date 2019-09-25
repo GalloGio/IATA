@@ -81,7 +81,7 @@ private class ISSP_AMS_Accreditation_Test {
                                         ANG_Accreditation_Model__c = 'Multicountry');
 
         Account mcbranchAcc = new Account(Name = 'MultiBranch',
-                                        Location_Type__c = 'AE',
+                                        Location_Type__c = 'HE',
                                         Location_Class__c = 'P',
                                         Sector__c = AMS_Utils.SECTOR_PASSENGER,
                                         BillingCountry = 'Portugal',
@@ -115,15 +115,6 @@ private class ISSP_AMS_Accreditation_Test {
                                                 IATACode__c = '1000000',
                                                 IATA_ISO_Country__c = country.Id);
 
-        Account child = new Account(BillingCity = 'test2',
-                                    Name = 'childAccount',
-                                    Site = 'headSite',
-                                    Sector__c = AMS_Utils.SECTOR_PASSENGER,
-                                    IATA_ISO_Country__c = country.Id,
-                                    RecordTypeId = rtIdBr,
-                                    IATACode__c = '2000000',
-                                    Location_Type__c = 'BR');
-
         Account parentAccIcc = new Account(BillingCity = 'test',
                                         Name = 'parentAccIcc',
                                         Sector__c = AMS_Utils.SECTOR_PASSENGER,
@@ -139,7 +130,7 @@ private class ISSP_AMS_Accreditation_Test {
                                         RecordTypeId = rtIdBr,
                                         IATACode__c = '100');
 
-        insert new List<Account>{parentAccountTravel, parentAccountCargo, child, optOutAcc, parentAccIcc, basicParent, mcParentAcc, mcbranchAcc};
+        insert new List<Account>{parentAccountTravel, parentAccountCargo, optOutAcc, parentAccIcc, basicParent, mcParentAcc, mcbranchAcc};
 
         Account childAccIcc = new Account(BillingCity = 'test2',
                                         Name = 'childAccIcc',
@@ -147,7 +138,8 @@ private class ISSP_AMS_Accreditation_Test {
                                         Sector__c = AMS_Utils.SECTOR_PASSENGER,
                                         Top_Parent__c = parentAccIcc.Id,
                                         IATA_ISO_Country__c = country.Id,
-                                        RecordTypeId = rtIdBr);
+                                        RecordTypeId = rtIdBr,
+                                        ParentId = parentAccIcc.Id);
 
         Account basicChild = new Account(BillingCity = 'test2',
                                         Name = 'basicChild',
@@ -155,7 +147,8 @@ private class ISSP_AMS_Accreditation_Test {
                                         Sector__c = 'Travel Agent',
                                         Top_Parent__c = basicParent.Id,
                                         IATA_ISO_Country__c = country.Id,
-                                        RecordTypeId = rtIdBr);
+                                        RecordTypeId = rtIdBr,
+                                        ParentId = basicParent.Id);
 
         insert new List<Account>{childAccIcc, basicChild};
 
@@ -170,10 +163,6 @@ private class ISSP_AMS_Accreditation_Test {
         Contact conCargo = ISSP_ObjectFactory.createNewContact();
         conCargo.AccountId = parentAccountCargo.Id;
         conCargo.Email = 'parentcargo@test11.com';
-
-        Contact conChild = ISSP_ObjectFactory.createNewContact();
-        conChild.AccountId = child.Id;
-        conChild.Email = 'child@test11.com';
 
         Contact conChildIcc = ISSP_ObjectFactory.createNewContact();
         conChildIcc.AccountId = childAccIcc.Id;
@@ -192,7 +181,7 @@ private class ISSP_AMS_Accreditation_Test {
         conBasicChild.AccountId = basicChild.Id;
         conBasicChild.Email = 'conBasicChild@test11.com';
 
-        insert new List<Contact>{conTravel, conCargo, conChild, conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry};
+        insert new List<Contact>{conTravel, conCargo, conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry};
 
         User userIcc = ISSP_ObjectFactory.createPortalUser(conChildIcc);
         conChildIcc.OwnerId = userIcc.Id;
@@ -706,8 +695,6 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.goToFinalStep();
             ctrl.isTerminatedAgent = false;
 
-            ctrl.getIsEmpty();
-            ctrl.getIsNotEmpty();
             ctrl.getPrevWorkedForItems();
 
             ctrl.cancel();
@@ -1547,6 +1534,7 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.saveAMSFormAndGoForward();
             ctrl.saveAMSFormAndGoBack();
             ctrl.saveAMSFormAndLeave();
+            Test.stopTest();
             ctrl.setPageLegalStatusAfterChangeLabels();
 
             ctrl.legalStatusAfterChange = 'association';
@@ -1958,7 +1946,7 @@ private class ISSP_AMS_Accreditation_Test {
 
             ctrl.newCase.Region__c = 'Africa & Middle East';
             ctrl.getRegionalQueue();
-
+            Test.stopTest();
             ctrl.getAmsAllLangCountryLabel(new IATA_ISO_Country__c(), 'es');
 
             ctrl.newCase.BSPCountry__c = 'Spain';
@@ -2074,6 +2062,8 @@ private class ISSP_AMS_Accreditation_Test {
         parent.IATACode__c = '10090909';
         parent.Type = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
 
+        insert parent;
+
         Account branch = ISSP_ObjectFactory.createNewAccount();
         branch.BillingCity = 'test';
         branch.Name = 'test';
@@ -2082,8 +2072,9 @@ private class ISSP_AMS_Accreditation_Test {
         branch.RecordTypeId = rtIdBr;
         branch.IATACode__c = '10090908';
         branch.Type = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
+        branch.ParentId = parent.Id;
 
-        insert new List<Account>{parent, branch};
+        insert branch;
 
         Account child = ISSP_ObjectFactory.createNewAccount();
         child.BillingCity = 'test2';
@@ -2653,27 +2644,39 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country = fetchCountry('testOptOut');
 
         Account parent;
-        Account child;
 
         for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
                         FROM Account
-                        WHERE Name = 'parentAccountTravel' 
-                            OR Name = 'childAccount']) {
-            if (a.Name == 'parentAccountTravel') parent = a;
-            else if (a.Name == 'childAccount') child = a;
+                        WHERE Name = 'parentAccountTravel']) {
+            if (a.Name == 'parentAccountTravel') {
+                parent = a;
+            }
         }
+
+        Account child = new Account(BillingCity = 'test2',
+                                    Name = 'childAccount',
+                                    Site = 'headSite',
+                                    Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                    IATA_ISO_Country__c = country.Id,
+                                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+                                    IATACode__c = '2000000',
+                                    Location_Type__c = 'BR');
 
         parent.IATACode__c = '100';
         child.IATACode__c = '200';
         child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
-        update new List<Account>{parent, child};
+        upsert new List<Account>{parent, child};
+
+        Contact conChild = ISSP_ObjectFactory.createNewContact();
+        conChild.AccountId = child.Id;
+        conChild.Email = 'child@test11.com';
 
         Contact con = fetchContact('parenttravel@test11.com');
 
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         con.OwnerId = newUser.Id;
-        update con;
+        upsert new List<Contact>{con, conChild};
 
         AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = [SELECT Id, AMS_Accreditation_Country_CheckList__c, Language__c,
                                                                             Location_type__c, Requirement_text__c, Sort_Order__c, Name
@@ -2700,23 +2703,35 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country = fetchCountry('testOptOut');
 
         Account parent;
-        Account child;
 
         for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
                         FROM Account
-                        WHERE Name = 'parentAccountTravel' 
-                            OR Name = 'childAccount']) {
-            if (a.Name == 'parentAccountTravel') parent = a;
-            else if (a.Name == 'childAccount') child = a;
+                        WHERE Name = 'parentAccountTravel']) {
+            if (a.Name == 'parentAccountTravel') {
+                parent = a;
+            }
         }
+
+        Account child = new Account(BillingCity = 'test2',
+                                    Name = 'childAccount',
+                                    Site = 'headSite',
+                                    Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                    IATA_ISO_Country__c = country.Id,
+                                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+                                    IATACode__c = '2000000',
+                                    Location_Type__c = 'BR');
 
         parent.IATACode__c = '100';
         child.IATACode__c = '200';
         child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
-        update new List<Account>{parent, child};
+        upsert new List<Account>{parent, child};
 
-        Contact con = fetchContact('child@test11.com');
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = child.Id;
+        con.Email = 'child@test11.com';
+
+        insert con;
 
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         con.OwnerId = newUser.Id;
@@ -2749,25 +2764,37 @@ private class ISSP_AMS_Accreditation_Test {
         update country;
 
         Account parent;
-        Account child;
 
         for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
                         FROM Account
-                        WHERE Name = 'parentAccountTravel' 
-                            OR Name = 'childAccount']) {
-            if (a.Name == 'parentAccountTravel') parent = a;
-            else if (a.Name == 'childAccount') child = a;
+                        WHERE Name = 'parentAccountTravel']) {
+            if (a.Name == 'parentAccountTravel') {
+                parent = a;
+            }
         }
+
+        Account child = new Account(BillingCity = 'test2',
+                                    Name = 'childAccount',
+                                    Site = 'headSite',
+                                    Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                    IATA_ISO_Country__c = country.Id,
+                                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+                                    IATACode__c = '2000000',
+                                    Location_Type__c = 'BR');
 
         child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
-        update child;
+        insert child;
+
+        Contact conChild = ISSP_ObjectFactory.createNewContact();
+        conChild.AccountId = child.Id;
+        conChild.Email = 'child@test11.com';
 
         Contact con = fetchContact('parenttravel@test11.com');
 
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         con.OwnerId = newUser.Id;
-        update con;
+        upsert new List<Contact>{con, conChild};
 
         AMS_Person__c p1 = new AMS_Person__c(Name = 'Test1 Person', User__c = newUser.Id, Lastname__c = 'person', Phone__c = '123123123');
         insert p1;
@@ -2918,25 +2945,36 @@ private class ISSP_AMS_Accreditation_Test {
         update country;
         
         Account parent;
-        Account child;
 
         for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
                         FROM Account
-                        WHERE Name = 'parentAccountCargo' 
-                            OR Name = 'childAccount']) {
-            if (a.Name == 'parentAccountCargo') parent = a;
-            else if (a.Name == 'childAccount') child = a;
+                        WHERE Name = 'parentAccountCargo']) {
+            if (a.Name == 'parentAccountCargo') {
+                parent = a;
+            }
         }
 
-        child.ParentId = parent.Id;
-        child.Top_Parent__c = parent.Id;
-        update child;
+        Account child = new Account(BillingCity = 'test2',
+                                    Name = 'childAccount',
+                                    Site = 'headSite',
+                                    Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                    IATA_ISO_Country__c = country.Id,
+                                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+                                    IATACode__c = '2000000',
+                                    Location_Type__c = 'BR',
+                                    ParentId = parent.Id,
+                                    Top_Parent__c = parent.Id);
+        insert child;
+
+        Contact conChild = ISSP_ObjectFactory.createNewContact();
+        conChild.AccountId = child.Id;
+        conChild.Email = 'child@test11.com';
 
         Contact con = fetchContact('parentcargo@test11.com');
 
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         con.OwnerId = newUser.Id;
-        update con;
+        upsert new List<Contact>{con, conChild};
 
         AMS_Person__c p1 = new AMS_Person__c(Name = 'Test1 Person', User__c = newUser.Id);
         insert p1;
@@ -2988,25 +3026,37 @@ private class ISSP_AMS_Accreditation_Test {
         update country;
 
         Account parent;
-        Account child;
 
         for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
                         FROM Account
-                        WHERE Name = 'parentAccountTravel' 
-                            OR Name = 'childAccount']) {
-            if (a.Name == 'parentAccountTravel') parent = a;
-            else if (a.Name == 'childAccount') child = a;
+                        WHERE Name = 'parentAccountTravel']) {
+            if (a.Name == 'parentAccountTravel') {
+                parent = a;
+            }
         }
+
+        Account child = new Account(BillingCity = 'test2',
+                                    Name = 'childAccount',
+                                    Site = 'headSite',
+                                    Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                    IATA_ISO_Country__c = country.Id,
+                                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+                                    IATACode__c = '2000000',
+                                    Location_Type__c = 'BR');
 
         child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
-        update child;
+        insert child;
+
+        Contact conChild = ISSP_ObjectFactory.createNewContact();
+        conChild.AccountId = child.Id;
+        conChild.Email = 'child@test11.com';
 
         Contact con = fetchContact('parenttravel@test11.com');
 
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         con.OwnerId = newUser.Id;
-        update con;
+        upsert new List<Contact>{con, conChild};
 
         AMS_Person__c p1 = new AMS_Person__c(Name = 'Test1 Person', User__c = newUser.Id);
         insert p1;
@@ -3093,28 +3143,37 @@ private class ISSP_AMS_Accreditation_Test {
         update country;
 
         Account parent;
-        Account child;
 
         for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
                         FROM Account
-                        WHERE Name = 'parentAccountTravel' 
-                            OR Name = 'childAccount']) {
-            if (a.Name == 'parentAccountTravel') parent = a;
-            else if (a.Name == 'childAccount') child = a;
+                        WHERE Name = 'parentAccountTravel']) {
+            if (a.Name == 'parentAccountTravel') {
+                parent = a;
+            }
         }
 
+        Account child = new Account(BillingCity = 'test2',
+                                    Name = 'childAccount',
+                                    Site = 'headSite',
+                                    Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                    IATA_ISO_Country__c = country.Id,
+                                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+                                    IATACode__c = '2000000',
+                                    Location_Type__c = 'BR');
         child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
-        update child;
+        insert child;
 
-        Contact con = fetchContact('child@test11.com');
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = child.Id;
+        con.Email = 'child@test11.com';
 
         Contact con_adm = ISSP_ObjectFactory.createNewContact();
         con_adm.AccountId= parent.Id;
         con_adm.Email = 'Test2@test22.com';
         con_adm.User_Portal_Status__c = 'Approved Admin';
 
-        insert con_adm;
+        insert new List<Contact>{con_adm, con};
 
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         con.OwnerId = newUser.Id;
@@ -3328,28 +3387,40 @@ private class ISSP_AMS_Accreditation_Test {
         update country;
 
         Account parent;
-        Account child;
 
         for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
                         FROM Account
-                        WHERE Name = 'parentAccountTravel' 
-                            OR Name = 'childAccount']) {
-            if (a.Name == 'parentAccountTravel') parent = a;
-            else if (a.Name == 'childAccount') child = a;
+                        WHERE Name = 'parentAccountTravel']) {
+            if (a.Name == 'parentAccountTravel') {
+                parent = a;
+            }
         }
+
+        Account child = new Account(BillingCity = 'test2',
+                                    Name = 'childAccount',
+                                    Site = 'headSite',
+                                    Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                    IATA_ISO_Country__c = country.Id,
+                                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+                                    IATACode__c = '2000000',
+                                    Location_Type__c = 'BR');
 
         parent.IATA_ISO_Shipping_Country__c = country.Id;
 
         child.ParentId = parent.Id;
         child.Top_Parent__c = parent.Id;
 
-        update new List<Account>{parent, child};
+        upsert new List<Account>{parent, child};
+
+        Contact conChild = ISSP_ObjectFactory.createNewContact();
+        conChild.AccountId = child.Id;
+        conChild.Email = 'child@test11.com';
 
         Contact con = fetchContact('parenttravel@test11.com');
 
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         con.OwnerId = newUser.Id;
-        update con;
+        upsert new List<Contact>{con, conChild};
 
         AMS_Person__c p1 = new AMS_Person__c(Name = 'Test1 Person', User__c = newUser.Id);
         insert p1;
@@ -3744,7 +3815,7 @@ private class ISSP_AMS_Accreditation_Test {
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.newCase = testCase;
             ctrl.pEfectiveDateStr = '2018-03-31';
-            List<Case> lc = ctrl.getAMSDraftCases();
+            List<Case> lc = ctrl.populateAMSDraftCases();
             ctrl.runOptInOut();
         }
         Test.stopTest();
@@ -3851,7 +3922,7 @@ private class ISSP_AMS_Accreditation_Test {
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.newCase = testCase;
             ctrl.pEfectiveDateStr = '2018-03-31';
-            List<Case> lc = ctrl.getAMSDraftCases();
+            List<Case> lc = ctrl.populateAMSDraftCases();
             ctrl.runOptInOut();
         }
         Test.stopTest();
@@ -3860,7 +3931,7 @@ private class ISSP_AMS_Accreditation_Test {
     private static void optOutBasicTestContent() {
         ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
         ctrl.pEfectiveDateStr = '2018-03-31';
-        List<Case> lc = ctrl.getAMSDraftCases();
+        List<Case> lc = ctrl.populateAMSDraftCases();
         ctrl.runOptInOut();
     }
 
@@ -4093,7 +4164,7 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.newCase.IFAP_Country_ISO__c = 'pt';
             ctrl.mcformCountryISO = 'pt';
 
-            ctrl.getLegalNameOptions();
+            //ctrl.getLegalNameOptions();
             String hierarchyIsoCodesString = ctrl.hierarchyIsoCodesString;
 
             ctrl.save();
@@ -4221,6 +4292,8 @@ private class ISSP_AMS_Accreditation_Test {
 
             ctrl.mcFormIdToDelete = aeForms[2].Id;
             ctrl.deleteMCForm();
+
+            ctrl.termsAndConditionsMC = true;
 
             ctrl.submitMultiCountryApplication();
         }
