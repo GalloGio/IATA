@@ -3438,14 +3438,21 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP RecentCases HelpText</shortDescription>
-        <value>On Going</value>
+        <value>Is your question related to an ongoing case?</value>
+    </labels>
+	<labels>
+        <fullName>CSP_RecentCases_HelpText2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP RecentCases HelpText 2</shortDescription>
+        <value>If not, scroll down to contact us.</value>
     </labels>
 	<labels>
         <fullName>CSP_RecentCases_Support</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Recent Cases Support</shortDescription>
-        <value>Recent Cases</value>
+        <value>Ongoing Cases</value>
     </labels>
 	<labels>
         <fullName>CSP_Record_Deleted</fullName>
