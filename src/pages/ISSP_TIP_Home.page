@@ -318,7 +318,6 @@
                             <apex:pageBlock>
                                 <apex:form>
                                     <apex:actionFunction action="{!startEnrolmentAccount}" name="navigateToEnrolmentPage"></apex:actionFunction>
-                                    <hr />
                                     <apex:pageBlockTable value="{!cases}" var="item" styleClass="table-hover table table-condensed table-responsive">
                                         <apex:column>
                                             <apex:facet name="header">
@@ -444,7 +443,6 @@
                                         </div>
                                     </header>
                                 </section>
-                                <br/>
                                 <apex:pageBlock>
                                     <div>
                                         <label>{!$label.ISSP_TIP_PRIMARY_CONTACTS}</label>
@@ -479,10 +477,12 @@
             </div>
 
             <!-- ACAMBAS - TIP-241 Start -->
-            <apex:form>
-                <apex:pageblock>
+            <apex:form id="myModal" aria-hidden="true">
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <apex:pageblock>
+                    
                     <!-- ------------MODAL WIDOWN -------------------  -->
-                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div>
                         <apex:outputPanel id="modalContentoutpanel">
                             <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent3">
                                 <div class="modal-content">
@@ -575,8 +575,8 @@
                         </apex:outputPanel>
                         <!-- /.modal-dialog -->
                     </div>
-                </apex:pageblock>
-
+                    </apex:pageblock>
+                </div>
             </apex:form>
             <!-- ACAMBAS - TIP-241 End -->
 

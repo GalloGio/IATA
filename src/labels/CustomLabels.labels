@@ -31915,7 +31915,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG1</shortDescription>
-        <value>You can view your account details on the &lt;a style=&quot;color:blue &quot; href=&quot;/apex/ISSP_CompanyInformation?mid=M5S2&quot;&gt;Company Information&lt;/a&gt; page.</value>
+        <value>You can view your account details on the &lt;a style=&quot;color:blue &quot; href=&quot;/csportal/s/company-profile&quot;&gt;Company Information&lt;/a&gt; page.</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2</fullName>
