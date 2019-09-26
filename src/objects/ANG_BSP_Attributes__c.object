@@ -205,6 +205,19 @@ J-Joint Vent</inlineHelpText>
         <type>Percent</type>
     </fields>
     <fields>
+        <fullName>ISO_State__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ISO State</label>
+        <referenceTo>IATA_ISO_State__c</referenceTo>
+        <relationshipLabel>BSP Attributes</relationshipLabel>
+        <relationshipName>BSP_Attributes</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Limit_Cash_Condition__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Has Limit Cash Condition?</description>
@@ -297,7 +310,7 @@ J-Joint Vent</inlineHelpText>
         <fullName>Remittances_Per_Year__c</fullName>
         <description>Number of remittances per year to compute the most frequence value.</description>
         <externalId>false</externalId>
-        <formula>IF(Operation__r.Country__r.ISO_Code__c &lt;&gt; &apos;CN&apos;, 
+        <formula>IF(BSP__r.Name &lt;&gt; &apos;BSP-CN&apos;, 
 
 CASE( (TEXT(Remittance_Frequency__c)) , 
 
@@ -828,7 +841,8 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
         <description>Prevent the creation of a BSP Attribute without a BSP value</description>
         <errorConditionFormula>AND( 
     OR(RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;, 
-       RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;)
+       RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;,
+						 RecordType.DeveloperName = &apos;Remittance_Frequency&apos;)
 , 
     ISBLANK(BSP__c)
 )</errorConditionFormula>
@@ -920,15 +934,6 @@ ISPICKVAL(RHC_Amnt_Calc_Type__c, &quot;Fixed Percentage&quot;),
         ISPICKVAL(Class_Type__c, &apos;&apos;)
 )</errorConditionFormula>
         <errorMessage>Class Type is a required field for Record Type Remittance_Frequency</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Remittance_Frequency_Required_Operation</fullName>
-        <active>true</active>
-        <description>Prevent the creation of BSP Attribute &apos;Remittance_Frequency&apos; without Operation field</description>
-        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;Remittance_Frequency&apos;, 
-ISBLANK(Operation__c)
-)</errorConditionFormula>
-        <errorMessage>Operation is a required field for Record Type Remittance_Frequency</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Remittance_Frequency_Required_RF</fullName>

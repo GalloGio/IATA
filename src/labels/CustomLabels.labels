@@ -1176,6 +1176,14 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <value>&lt;a href=&quot;/ISSP_ANG_PCI?&amp;retUrl=/ISSP_HomePage&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ASD_HelpText</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ASD_HelpText</shortDescription>
+        <value>Please access ASD to view more details on the Remittance Holding Capacity</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_AccreditationType</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -1214,6 +1222,30 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_AssociateEntity</shortDescription>
         <value>Associate Entity(s) :</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_BOP</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BOP</shortDescription>
+        <value>BOP</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_BOP_Access</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BOP Access Link</shortDescription>
+        <value>Access BOP</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_BOP_China_URL</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_BOP_China_URL</shortDescription>
+        <value>https://www.dovepay.com/dovePay/default.jsp#proPay</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_CASE_REASON_OPT_OUT</fullName>
@@ -1892,6 +1924,14 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Feature 10 Tooltip</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature11</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature11</shortDescription>
+        <value>BOP</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature1Tooltip</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -2180,6 +2220,13 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>ANG ISSP RHC Information</shortDescription>
         <value>Risk Profile and RHC</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_RHC_Information_China</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RHC Information China</shortDescription>
+        <value>Risk Profile</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_RHC_Request_Balance_Update</fullName>
@@ -18607,6 +18654,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>NOTICE OF CHANGE</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Partner</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Partner</shortDescription>
+        <value>Authorised signature of Partner</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Percent_Ownership</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -18906,7 +18961,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Transferee</shortDescription>
-        <value>Transferee:</value>
+        <value>Authorised Signature of Transferee (In case of corporation or sole owner)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Transferor</fullName>
@@ -18914,7 +18969,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Transferor</shortDescription>
-        <value>Transferor:</value>
+        <value>Authorised Signature of Agent (Transferor)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Type_Of_Person</fullName>
@@ -19007,7 +19062,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_title_or_capacity</shortDescription>
-        <value>Title or capacity</value>
+        <value>Title/Position</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_type_or_print</fullName>
@@ -22332,6 +22387,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>View Country Requirements</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Country_Reqs_Type_Of_Agency</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Type of Agency</shortDescription>
+        <value>Type of Agency:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ENTIRE_HIERARCHY</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -22814,7 +22877,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompAnnualFees</shortDescription>
-        <value>Annual fees for 2018</value>
+        <value>Annual fees for YYYY</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompCostTooltip</fullName>
@@ -24176,6 +24239,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP Change Request Description</shortDescription>
         <value>This service allows you to change your BSP / CASS Participation details - Local address, Tax number or Financial / Admin Contact (MasterTable) and IATA Easy Pay opt-in or opt-out</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_China_Domestic</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP China Domestic</shortDescription>
+        <value>Travel Agent - Domestic</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_China_International</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP China International</shortDescription>
+        <value>Travel Agent - International</value>
     </labels>
     <labels>
         <fullName>ISSP_ClickHereLogIn</fullName>
@@ -29141,6 +29220,14 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <value>Cash</value>
     </labels>
     <labels>
+        <fullName>ISSP_RHC_HUB_AFP_China</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP China</shortDescription>
+        <value>Authorized Forms of Payment</value>
+    </labels>
+    <labels>
         <fullName>ISSP_RHC_HUB_AFP_Credit_Card</fullName>
         <categories>ISSP,RHC</categories>
         <language>en_US</language>
@@ -31899,7 +31986,7 @@ CNS Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Topics To Exclude Country PL</shortDescription>
-        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,Weblink__c,NDClink__c,TACT__c,IATA_Financial_Gateway_IFG__c</value>
+        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,Weblink__c,NDClink__c,TACT__c,IATA_Financial_Gateway_IFG__c,Timatic_Solutions__c</value>
     </labels>
     <labels>
         <fullName>ISSP_Tracking_ID</fullName>
