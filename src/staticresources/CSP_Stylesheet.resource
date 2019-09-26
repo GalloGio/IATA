@@ -1605,7 +1605,7 @@ visibility: hidden;
 .outlinedButtonLogin button, .outlinedButtonLogin button:hover, .outlinedButtonLogin button:focus, .outlinedButtonLogin button:active{
     -webkit-transition-duration: 0.4s; /* Safari */
   	transition-duration: 0.4s;
-    min-height: 48px;
+    min-height: 56px;
     word-break: break-all;
     border-radius: 1px;
   	border: solid 1px #1e32fa;
@@ -1709,4 +1709,12 @@ visibility: hidden;
 
 .registrationComboBox .slds-combobox_container input[role="textbox"]{
 	border-color: #e6e6e6;
+}
+.welcomePopup {
+	background-color: #F7F8FA;
+    width: 100%;
+    max-width: 544px;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
 }

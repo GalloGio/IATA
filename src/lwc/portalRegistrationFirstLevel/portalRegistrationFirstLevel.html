@@ -12,7 +12,7 @@
                 <template if:true={isSelfRegistrationEnabled}>
                     <c-portal-custom-card-container>
 
-                        <span slot="cardTitle">
+                        <span slot="cardTitle" data-id="snackbar">
                             <span class="text-medium">{labels.OneId_Account_Creation}</span>
                         </span>
 
@@ -24,6 +24,20 @@
                                         <div style="height:40px;"></div>
                                     </lightning-layout-item>
 
+                                    <div if:true={displaySubmitError}>
+                                        <div class="snackbar text-xxsmall" style="display: flex;">
+                                            <div style="flex: 1;">
+                                                <span><img src={exclamationIcon}></span>
+                                            </div>
+                                            <div style="flex: 15;">
+                                                An unexpected error occured! {labels.CSP_Troubleshooting_Info} <a style="color: #fff; text-decoration: underline;" href={labels.OneId_CSP_Troubleshooting_Link}>{labels.CSP_Troubleshooting}</a>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <span class="cancelIconContainer"><img src={cancelIcon} class="cancelIcon" onclick={handleSnackbarCancel}></span>
+                                            </div>
+                                        </div>
+                                        <div style="height:40px;"></div>
+                                    </div>
 
 
                                     <!------------------------------------------      E-Mail      --------------------------------------------->
@@ -298,22 +312,12 @@
                                         <lightning-layout-item size="12">
                                             <div>
                                                 <lightning-button disabled data-id="submitButton" class="containedButtonDisabled" onclick={handleSubmit} label={labels.CSP_Submit}></lightning-button>
-                                                <!--
-                                                <div style="min-height:40px;">
-                                                    <div if:true={displaySubmitError}>
-                                                        <div class="slds-form-element__help" style="padding:5px; text-align:center;">{errorMessage}</div>
-                                                    </div>
-                                                </div>
-                                                -->
                                             </div>
                                         </lightning-layout-item>
                                     </template>
 
                                     <lightning-layout-item size="12">
-                                        <div class="formElementSpacer" data-id="submitDiv">
-                                            <div if:true={displaySubmitError}>
-                                                <div class="slds-form-element__help text-xxsmall" style="padding:5px; text-align:center;">{errorMessage}</div>
-                                            </div>
+                                        <div class="formElementSpacer">
                                         </div>
                                     </lightning-layout-item>
 
@@ -327,17 +331,20 @@
 
                     </c-portal-custom-card-container>
                 </template>
+
                 <template if:true={isSelfRegistrationDisabled}>
-                    <c-portal-informative-message-box>
-                        <span slot="message">
-                            <lightning-formatted-rich-text value={labels.CSP_Registration_Disabled_Message} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
-                        </span>
-                    </c-portal-informative-message-box>
+                    <div style="padding-top:100px;">
+                        <c-portal-informative-message-box>
+                            <span slot="message">
+                                <lightning-formatted-rich-text value={labels.CSP_Registration_Disabled_Message} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                            </span>
+                        </c-portal-informative-message-box>
+                    </div>
                 </template>
             </template>
 
             <template if:true={isRegistrationComplete}>
-                <div class="customLightShadow background-white" style="min-width:448px;">
+                <div class="customLightShadow background-white" style="max-width:448px;">
                     <div class="slds-p-top_x-large slds-p-bottom_x-small">
                         <div style="width:100%;">
                             <span class="slds-p-left_large">

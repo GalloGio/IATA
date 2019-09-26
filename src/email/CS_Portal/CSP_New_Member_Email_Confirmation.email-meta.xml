@@ -5,19 +5,17 @@
     <name>CSP New Member Email Confirmation</name>
     <style>none</style>
     <subject>IATA Customer Portal Email Confirmation</subject>
-    <textOnly>{!$Label.ISSP_Email_do_not_reply}
+    <textOnly>{!$Label.CSP_Dear} {!Receiving_User.FirstName},
 
-Dear {!Receiving_User.FirstName},
+{!$Label.CSP_Email_Confirmation_Body_Part_1}
 
-Thank you for registering to the IATA Customer Portal. You&apos;re just one step away from getting access!
+{!$Label.CSP_Email_Confirmation_Body_Part_2} {!$Label.CSP_Email_Here}.
 
-Please confirm your email address by clicking here.
+{!$Label.CSP_Email_Confirmation_Body_Part_3}
 
-For security reasons, this link is valid from 8 hours. After the time limit has expired, you will have to resubmut your request.
+{!$Label.CSP_Email_Signature_Part_1}
 
-Thanks for being part of IATA.
-
-IATA</textOnly>
+{!$Label.CSP_Email_Signature_Part_2}</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

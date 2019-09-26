@@ -3373,6 +3373,14 @@ Payment required on receipt of this Payment Advice
         <value>Your new password could not be set. Please try again.</value>
     </labels>
     <labels>
+        <fullName>CSP_Dear</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Dear</shortDescription>
+        <value>Dear</value>
+    </labels>
+    <labels>
         <fullName>CSP_Deny_User_Access_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3466,6 +3474,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP Email Header Image</shortDescription>
         <value>CSP Email Header Image</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Here</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Email_Here</shortDescription>
+        <value>here</value>
     </labels>
     <labels>
         <fullName>CSP_Email_Password_Reset_Body_Part_1</fullName>
@@ -3697,7 +3713,9 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP First Login Desc</shortDescription>
-        <value>Your account is created successfully. You can discover the portal features now. Please complete your profile to get more personalized content</value>
+        <value>Your personal account is created successfully. You can now discover the IATA portal.
+&lt;br/&gt; &lt;br/&gt;
+Take a few minutes to complete your profile and enjoy personalized services from IATA!</value>
     </labels>
     <labels>
         <fullName>CSP_First_Login_Title</fullName>
@@ -3849,6 +3867,14 @@ Payment required on receipt of this Payment Advice
         <value>Name</value>
     </labels>
     <labels>
+        <fullName>CSP_New_Account_To_Address</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP New Account To Address</shortDescription>
+        <value>test</value>
+    </labels>
+    <labels>
         <fullName>CSP_Next</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3990,9 +4016,9 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP Privacy Policy</shortDescription>
         <value>I agree with IATA&apos;s
-&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy &lt;/a&gt;
-and &lt;br/&gt;
-&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Terms of Use. &lt;/a&gt;</value>
+&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy&lt;/a&gt;
+ and &lt;br/&gt;
+&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Terms of Use.&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Question1</fullName>
@@ -4516,7 +4542,7 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Skip</shortDescription>
-        <value>Skip For Now</value>
+        <value>Skip for Now</value>
     </labels>
     <labels>
         <fullName>CSP_Status</fullName>

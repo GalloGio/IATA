@@ -534,8 +534,13 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                     return result;
                 }else{
                     con.AccountId = bucketAccount.acc.Id;
-                    if((inputMap.get('country') != null)){
+                    if(inputMap.get('country') != null && inputMap.get('country') != ''){
                         con.ISO_Country__c = string.valueOf(inputMap.get('country'));
+                    }else{
+                        List<IATA_ISO_Country__c> countryList = [SELECT ID FROM IATA_ISO_Country__c WHERE Name = 'NO COUNTRY' LIMIT 1];
+                        if(!countryList.isEmpty()){
+                            con.ISO_Country__c = countryList.get(0).Id;
+                        }
                     }
                 }
             }
@@ -841,9 +846,9 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 '{!FooterUrl}'                                   => footerImageUrl,
                 '{!Receiving_User.FirstName}'                    => params.Firstname,
                 '{!Community_Url}'                               => oneTimeLink,
-                '{!$Label.ISSP_Email_Here}'                      => Label.ISSP_Email_Here,
+                '{!$Label.CSP_Email_Here}'                       => Label.CSP_Email_Here,
                 '{!$Label.ISSP_Email_do_not_reply}'              => Label.ISSP_Email_do_not_reply,
-                '{!$Label.ISSP_Email_Dear_Pre}'                  => Label.ISSP_Email_Dear_Pre,
+                '{!$Label.CSP_Dear}'                             => Label.CSP_Dear,
                 '{!$Label.CSP_Email_Confirmation_Body_Part_1}'   => Label.CSP_Email_Confirmation_Body_Part_1,
                 '{!$Label.CSP_Email_Confirmation_Body_Part_2}'   => Label.CSP_Email_Confirmation_Body_Part_2,
                 '{!$Label.CSP_Email_Confirmation_Body_Part_3}'   => Label.CSP_Email_Confirmation_Body_Part_3,
@@ -875,9 +880,9 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 '{!FooterUrl}'                                   => footerImageUrl,
                 '{!Receiving_User.FirstName}'                    => params.Firstname,
                 '{!Community_Url}'                               => communityUrl,
-                '{!$Label.ISSP_Email_Here}'                      => Label.ISSP_Email_Here,
+                '{!$Label.CSP_Email_Here}'                       => Label.CSP_Email_Here,
                 '{!$Label.ISSP_Email_do_not_reply}'              => Label.ISSP_Email_do_not_reply,
-                '{!$Label.ISSP_Email_Dear_Pre}'                  => Label.ISSP_Email_Dear_Pre,
+                '{!$Label.CSP_Dear}'                             => Label.CSP_Dear,
                 '{!$Label.CSP_Email_Welcome_Part_1}'             => Label.CSP_Email_Welcome_Part_1,
                 '{!$Label.CSP_Email_Welcome_Part_2}'             => Label.CSP_Email_Welcome_Part_2,
                 '{!$Label.CSP_Email_Welcome_Part_3}'             => Label.CSP_Email_Welcome_Part_3,
