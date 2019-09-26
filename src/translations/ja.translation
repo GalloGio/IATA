@@ -1916,6 +1916,10 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
+        <label>こんにちは。</label>
+        <name>CSP_Dear</name>
+    </customLabels>
+    <customLabels>
         <label>ユーザーアクセスを拒否する</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1944,15 +1948,15 @@
         <name>CSP_Email</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <label>IATAカスタマーポータルにご登録いただきありがとうございます。アクセスを得るまで、あともう一歩です。</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 2 --></label>
+        <label>以下をクリックして、メールアドレスをご確認ください</label>
         <name>CSP_Email_Confirmation_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 3 --></label>
+        <label>セキュリティ上の理由により、このリンクの有効期限は8時間です。有効期限が切れた後は、リクエストを再送信していだく必要がございます。</label>
         <name>CSP_Email_Confirmation_Body_Part_3</name>
     </customLabels>
     <customLabels>
@@ -1964,23 +1968,27 @@
         <name>CSP_Email_Header_Image</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 1 --></label>
+        <label>こちらです</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルのパスワードをリセットするためのリクエストを受け取りました。</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 2 --></label>
+        <label>新しいパスワードを設定するには、</label>
         <name>CSP_Email_Password_Reset_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 3 --></label>
+        <label>してください。</label>
         <name>CSP_Email_Password_Reset_Body_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 4 --></label>
+        <label>セキュリティ上の理由により、このリンクの有効期限は8時間です。有効期限が切れた後は、リクエストを再送信していただく必要がございます。</label>
         <name>CSP_Email_Password_Reset_Body_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Signature Part 1 --></label>
+        <label>IATAをご利用いただきありがとうございます。</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
@@ -1988,23 +1996,23 @@
         <name>CSP_Email_Signature_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 1 --></label>
+        <label>IATAカスタマーポータルをご利用いただきありがとうございます。</label>
         <name>CSP_Email_Welcome_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 2 --></label>
+        <label>IATAカスタマーポータルでは、便利なサービス、製品に関する情報、お客様の用途に応じた有益なヒントやこつを満載しております。ライブチャット、もしくはオンラインストアからの直接購入などに使用し、カスタマーサービスチームまで簡単にご連絡いただけます。お客様のIATAへのゲートです</label>
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 3 --></label>
+        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;ポータルに連れて行ってください&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 4 --></label>
+        <label>IATAカスタマーポータルでのご体験を更に向上させるため、いつでもアカウント情報を完了していただくことができます。以下をクリックして簡単に行っていただけます</label>
         <name>CSP_Email_Welcome_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 5 --></label>
+        <label>IATAカスタマーポータルを気に入っていただければ幸いです。</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
@@ -2224,9 +2232,8 @@
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
-        <label>IATAの &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;プライバシーポリシー &lt;/a&gt;
-と &lt;br/&gt;
-&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;利用規約&lt;/a&gt;に同意します。&lt;/a&gt;</label>
+        <label>IATAの &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;プライバシーポリシー&lt;/a&gt;
+と &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;利用規約&lt;/a&gt;に同意します。&lt;/a&gt;</label>
         <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>

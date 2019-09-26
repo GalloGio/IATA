@@ -18,7 +18,7 @@ export default class PortalResetPasswordError extends LightningElement {
     @api user;
     @api password;
     @track success = false;
-    logoIcon = CSP_PortalPath + 'check2xGreen.png';
+    successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/success.png';
 
     labels = {
         successLabel,

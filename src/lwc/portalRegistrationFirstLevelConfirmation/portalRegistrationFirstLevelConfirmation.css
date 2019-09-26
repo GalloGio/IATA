@@ -110,3 +110,26 @@ input[type="checkbox"] {
 .inputBackgroundGrey{
     background-color: #f7f8fa !important;
 }
+
+.snackbar {
+  width: 100%;
+  background-color: #333; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+}
+
+.snackbar .a {
+    color: #fff; /* White text color */
+    text-decoration: underline;
+}
+
+.cancelIcon {
+    cursor: pointer;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}

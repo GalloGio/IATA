@@ -1,21 +1,19 @@
 <template>
     <div class="slds-grid slds-wrap containerHeight">
-        <div class="slds-col bodyContent">
-            <div class="customPaddingHeader">
-                <c-portal-login-header onlanguagechange={handleLanguageChange} forcerefresh=true></c-portal-login-header>
-            </div>
-            <div class="slds-grid slds-grid_align-center">
-                <div style="max-width:448px; max-height:662px" class="customPadding">
-                    <slot name="pageBody"></slot>
+        <div class="slds-col slds-large-size_1-of-1 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-order--1 slds-large-order--1 slds-medium-order--1 bodyContent" >
+            <div class="contentWrapper">
+                <div class="customPaddingHeader">
+                    <c-portal-login-header onlanguagechange={handleLanguageChange} preventrefresh={preventrefresh}></c-portal-login-header>
+                </div>
+                <div class="slds-grid slds-grid_align-center">
+                    <div style="max-width:448px; width:100%;" class="customPadding">
+                        <div class="slds-p-bottom_large logoMobile">
+                            <img src={logoIcon}/>
+                        </div>
+                        <slot name="pageBody"></slot>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <lightning-layout vertical-align="end" horizontal-align="end">
-        <div class="slds-p-bottom_xx-large slds-p-right--large">
-            <lightning-layout-item>
-                <slot name="pageFooter"></slot>
-            </lightning-layout-item>
-        </div>
-    </lightning-layout>
 </template>

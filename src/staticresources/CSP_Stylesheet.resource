@@ -1613,7 +1613,7 @@ visibility: hidden;
 .outlinedButtonLogin button, .outlinedButtonLogin button:hover, .outlinedButtonLogin button:focus, .outlinedButtonLogin button:active{
     -webkit-transition-duration: 0.4s; /* Safari */
   	transition-duration: 0.4s;
-    min-height: 48px;
+    min-height: 56px;
     word-break: break-all;
     border-radius: 1px;
   	border: solid 1px #1e32fa;

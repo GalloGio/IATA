@@ -46,6 +46,9 @@ import CSP_Success                              from '@salesforce/label/c.CSP_Su
 import CSP_Forgot_Password_Retry_Title          from '@salesforce/label/c.CSP_Forgot_Password_Retry_Title';
 import CSP_Registration_Retry_Message           from '@salesforce/label/c.CSP_Registration_Retry_Message';
 import CSP_Try_Again                            from '@salesforce/label/c.CSP_Try_Again';
+import CSP_Troubleshooting_Info                 from '@salesforce/label/c.CSP_Troubleshooting_Info';
+import CSP_Troubleshooting                      from '@salesforce/label/c.CSP_Troubleshooting';
+import OneId_CSP_Troubleshooting_Link           from '@salesforce/label/c.OneId_CSP_Troubleshooting_Link';
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
 
 
@@ -90,8 +93,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     @track category = { label : "", options : [], display : false };
     @track extraQuestion = { label : "", options : [], display : false };
     phoneInputInitialized = false;
-    exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_point.svg';
-    successIcon = CSP_PortalPath + 'check2xGreen.png';
+    exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_mark_white.svg';
+    successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/success.png';
+    cancelIcon = CSP_PortalPath + 'CSPortal/Images/Icons/cancel_white.svg';
     @track jsLoaded = false;
 
 
@@ -112,6 +116,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         CSP_Forgot_Password_Retry_Title,
         CSP_Registration_Retry_Message,
         CSP_Try_Again,
+        CSP_Troubleshooting_Info,
+        CSP_Troubleshooting,
+        OneId_CSP_Troubleshooting_Link,
         CSP_PortalPath
     }
 
@@ -656,6 +663,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         location.search = search;
     }
 
+    handleSnackbarCancel(){
+        this.errorMessage = "";
+        this.displaySubmitError = false;
+    }
+
 
     /* ==============================================================================================================*/
     /* Helper Methods
@@ -674,14 +686,12 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     }
 
     _showSubmitError(state, message){
-        var submitDiv = this.template.querySelector('[data-id="submitDiv"]');
         this.errorMessage = message;
         this.displaySubmitError = state;
 
         if(state == true){
-            submitDiv.classList.add('slds-has-error');
-        }else{
-            submitDiv.classList.remove('slds-has-error');
+            let scrollobjective = this.template.querySelector('[data-id="snackbar"]');
+            scrollobjective.scrollIntoView({ behavior: 'smooth' });
         }
     }
 

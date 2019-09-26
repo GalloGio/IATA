@@ -27,6 +27,9 @@ import jQuery                                   from '@salesforce/resourceUrl/jQ
 /* ==============================================================================================================*/
 import CSP_Submit                               from '@salesforce/label/c.CSP_Submit';
 import ISSP_Registration_MyInformation          from '@salesforce/label/c.ISSP_Registration_MyInformation';
+import CSP_Troubleshooting_Info                 from '@salesforce/label/c.CSP_Troubleshooting_Info';
+import CSP_Troubleshooting                      from '@salesforce/label/c.CSP_Troubleshooting';
+import OneId_CSP_Troubleshooting_Link           from '@salesforce/label/c.OneId_CSP_Troubleshooting_Link';
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalRegistrationFirstLevelConfirmation extends LightningElement {
@@ -73,10 +76,15 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
     @track selectedMetadataCustomerType = {};
     countryCode = '';
     initialLoad = true;
+    exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_mark_white.svg';
+    cancelIcon = CSP_PortalPath + 'CSPortal/Images/Icons/cancel_white.svg';
 
     _labels = {
         CSP_Submit,
         ISSP_Registration_MyInformation,
+        CSP_Troubleshooting_Info,
+        CSP_Troubleshooting,
+        OneId_CSP_Troubleshooting_Link,
         CSP_PortalPath
     }
 
@@ -234,6 +242,7 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
     }
 
     handleSubmit(){
+
         //update contact
         var customerTypeChanged = false;
         this.isLoading = true;
@@ -418,6 +427,11 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
         this._checkForMissingFields();
     }
 
+    handleSnackbarCancel(){
+        this.errorMessage = "";
+        this.displaySubmitError = false;
+    }
+
     /* ==============================================================================================================*/
     /* Helper Methods
     /* ==============================================================================================================*/
@@ -466,14 +480,12 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
     }
 
     _showSubmitError(state, message){
-        var submitDiv = this.template.querySelector('[data-id="submitDiv"]');
         this.errorMessage = message;
         this.displaySubmitError = state;
 
         if(state == true){
-            submitDiv.classList.add('slds-has-error');
-        }else{
-            submitDiv.classList.remove('slds-has-error');
+            let scrollobjective = this.template.querySelector('[data-id="snackbar"]');
+            scrollobjective.scrollIntoView({ behavior: 'smooth' });
         }
     }
 

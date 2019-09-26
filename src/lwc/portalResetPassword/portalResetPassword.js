@@ -29,11 +29,14 @@ export default class PortalResetPassword extends LightningElement {
       @track passwordInputType = "password";
       @track success           = false;
       @track isExpired         = false;
+      @track showErrorMessage  = false;
       @track user;
 
       @track isSanctioned;
 
-      logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
+      logoIcon        = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
+      cancelIcon      = CSP_PortalPath + 'CSPortal/Images/Icons/cancel_white.svg';
+      exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_mark_white.svg';
 
       labels = {
           saveLabel,
@@ -50,7 +53,7 @@ export default class PortalResetPassword extends LightningElement {
       }
 
       get svgURL(){
-          return CSP_PortalPath + 'show_blue.png';
+          return CSP_PortalPath + 'CSPortal/Images/Icons/show_blue.png';
       }
 
       get isPasswordIconDisabled(){
@@ -193,13 +196,13 @@ export default class PortalResetPassword extends LightningElement {
                    }
                    else{
                        this.message = errorMessageLabel;
-                       this.showNotification();
+                       this.showErrorMessage = true;
                        this.changeIsLoading();
                    }
                 })
                 .catch(error => {
                    this.message = errorMessageLabel;
-                   this.showNotification();
+                   this.showErrorMessage = true;
                    this.changeIsLoading();
                 });
           }
@@ -213,13 +216,7 @@ export default class PortalResetPassword extends LightningElement {
           }
       }
 
-      showNotification() {
-          const evt = new ShowToastEvent({
-              title: 'Error',
-              message: this.message,
-              variant: 'error',
-          });
-          this.dispatchEvent(evt);
+      handleSnackbarCancel() {
+          this.showErrorMessage = false;
       }
-
 }

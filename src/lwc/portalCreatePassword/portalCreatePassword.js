@@ -28,13 +28,16 @@ export default class PortalCreatePassword extends LightningElement {
     @track passwordFormat    = false;
     @track buttonDisabled    = true;
     @track emailDisabled     = true;
+    @track showErrorMessage  = false;
     @track passwordInputType = "password";
 
     @track message;
     @track isSanctioned;
     @track registrationParams;
 
-    logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
+    logoIcon        = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
+    cancelIcon      = CSP_PortalPath + 'CSPortal/Images/Icons/cancel_white.svg';
+    exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_mark_white.svg';
 
     labels = {
         emailLabel,
@@ -51,7 +54,7 @@ export default class PortalCreatePassword extends LightningElement {
     };
 
     get svgURL(){
-        return CSP_PortalPath + 'show_blue.png';
+        return CSP_PortalPath + 'CSPortal/Images/Icons/show_blue.png';
     }
 
     get isPasswordIconDisabled(){
@@ -189,12 +192,12 @@ export default class PortalCreatePassword extends LightningElement {
                  }
                  else{
                     this.message = errorMessageLabel;
-                    this.showNotification();
+                    this.showErrorMessage = true;
                  }
              })
               .catch(error => {
                  this.message = errorMessageLabel;
-                 this.showNotification();
+                 this.showErrorMessage = true;
               });
         }
     }
@@ -211,13 +214,8 @@ export default class PortalCreatePassword extends LightningElement {
         this.isLoading = !this.isLoading;
     }
 
-    showNotification() {
-        const evt = new ShowToastEvent({
-            title: 'Error',
-            message: this.message,
-            variant: 'error',
-        });
-        this.dispatchEvent(evt);
+    handleSnackbarCancel() {
+        this.showErrorMessage = false;
     }
 
 }
