@@ -323,6 +323,11 @@
             <actionType>CustomButton</actionType>
             <sortOrder>7</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Escalate_within_IATA_lightning</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>8</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <quickActionList/>
     <relatedContent>
@@ -339,6 +344,9 @@
             </layoutItem>
         </relatedContentItems>
     </relatedContent>
+    <relatedLists>
+        <relatedList>RelatedFileList</relatedList>
+    </relatedLists>
     <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
     </relatedLists>

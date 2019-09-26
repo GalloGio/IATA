@@ -1,0 +1,33 @@
+<template>
+
+    <div class={backgroundClass}>
+    
+        <!-- Service image area -->
+        <div class="imageContainer slds-m-around_medium background-superLightGray">
+            <img class="slds-p-around_small serviceImageStyles" src={imageUrl}/>
+        </div>
+
+        <!-- Service title, description and actions-->
+        <div class="textGridContainer slds-p-around_medium" >
+            <div class="textGridContainerInner">
+
+                <!-- Title and Description -->
+                <div><p class="text-small text-bold slds-truncate text-darkGray"><slot name="serviceName"></slot></p></div>
+                <div class={fadeClass}><slot name="serviceDescription"></slot></div>
+
+                <!-- Actions -->
+                <div class="slds-grid slds-wrap actionsGridContainer ">
+                    <div class="slds-col slds-size_1-of-2 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-align_absolute-center">
+                        <slot name="leftButton"></slot>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-align_absolute-center">
+                        <slot name="rightButton"></slot>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    
+</template>

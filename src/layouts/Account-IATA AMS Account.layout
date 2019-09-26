@@ -3,7 +3,6 @@
     <customButtons>Detailed_Hierarchy_View</customButtons>
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
-    <customButtons>China_Pilot_Conversion_Wizard</customButtons>
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>
@@ -892,8 +891,9 @@
         <fields>ANG_Severity__c</fields>
         <fields>ANG_Agent_Sales__c</fields>
         <fields>ANG_RHC_Information__c</fields>
-        <fields>CREATED_DATE</fields>
         <fields>ANG_Direction__c</fields>
+        <fields>ANG_Triggered_Rules__c</fields>
+        <fields>CREATED_DATE</fields>
         <fields>ANG_Threshold_Level__c</fields>
         <relatedList>ANG_Risk_Alert__c.ANG_Account__c</relatedList>
         <sortField>CREATED_DATE</sortField>

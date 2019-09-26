@@ -80,7 +80,7 @@
         <fullName>Auto_fill_OI_subject</fullName>
         <description>used to fill in CPS issue check subject with a standard naming convention</description>
         <field>Subject__c</field>
-        <formula>TEXT(Region__c) &amp; &quot; - &quot; &amp; TEXT(  OperationCPS__c ) &amp; &quot; - &quot; &amp; text(Country__c) &amp; &quot; - &quot;  &amp; &quot; - &quot; &amp; TEXT(YEAR( Reporting_Month__c )) &amp; &quot;/&quot; &amp; IF(MONTH(Reporting_Month__c)&lt;10,&quot;0&quot;&amp; TEXT(MONTH(Reporting_Month__c)),TEXT(MONTH(Reporting_Month__c))) &amp; &quot; - &quot; &amp; TEXT( Issue_Categorization__c )&amp; &quot; - &quot; &amp;TEXT( Issue_Sub_Category__c ) &amp; &quot; - USD &quot; &amp; TEXT( Amount_USD_auto__c )</formula>
+        <formula>TEXT(Region__c) &amp; &quot; - &quot; &amp; TEXT(  OperationCPS__c ) &amp; &quot; - &quot; &amp; text(Country__c) &amp; &quot; - &quot;  &amp; &quot; - &quot; &amp; TEXT(YEAR( Reporting_Month__c )) &amp; &quot;/&quot; &amp; IF(MONTH(Reporting_Month__c)&lt;10,&quot;0&quot;&amp; TEXT(MONTH(Reporting_Month__c)),TEXT(MONTH(Reporting_Month__c))) &amp; &quot; - &quot; &amp; TEXT( Issue_Categorization__c )&amp; &quot; - &quot; &amp;TEXT( Issue_Sub_Category__c ) &amp; &quot; - USD &quot; &amp; TEXT( ROUND( Amount_USD_auto__c, 2 ) )</formula>
         <name>Auto fill OI subject</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -253,7 +253,7 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         </actions>
         <active>true</active>
         <description>sets the approval date as blank when certain parameters of the CPS issue are edited. since they require further approval.</description>
-        <formula>and( RecordType.DeveloperName = &quot;CPS_Checks&quot;, or (ischanged(Issue_Categorization__c ), ISCHANGED( Issue_Sub_Category__c ), ISCHANGED( Amount_LC__c ), ISCHANGED( Back_Valued__c ) , ISCHANGED( Back_Valuation_Date__c ), ISCHANGED( OperationCPS__c ), ISCHANGED( Country__c ), ISCHANGED( Region__c )))</formula>
+        <formula>and( RecordType.DeveloperName = &quot;CPS_Checks&quot;,  OR ( ISNEW(), ischanged(Issue_Categorization__c ),  ISCHANGED( Issue_Sub_Category__c ),  ISCHANGED( Amount_LC__c ),  ISCHANGED( Back_Valued__c ) ,  ISCHANGED( OperationCPS__c ),  ISCHANGED( Country__c ),  ISCHANGED( Region__c ),  ISCHANGED (Currency__c),   ISCHANGED(Back_Valuation_Date__c),  ISCHANGED(Back_Valuation_Reporting_Month__c),  ISCHANGED(Reporting_Month__c)))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

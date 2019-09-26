@@ -19,6 +19,25 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>BSPLink_ACR_shared_with_NDC_and_IFG_teams</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>BSPLink ACR shared with NDC and IFG teams</description>
+        <label>BSPLink ACR shared with NDC and IFG teams</label>
+        <sharedTo>
+            <group>iiNET_and_IFG</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Application Change Request (DPC System),Application Change Request (DPC Systems) - ACCA,Application Change Request (DPC Systems - locked)</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>DPC_Software__c</field>
+            <operation>equals</operation>
+            <value>BSPlink</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>DPC_Accelya_Maestro</fullName>
         <accessLevel>Edit</accessLevel>
         <label>DPC Accelya Maestro</label>
@@ -307,6 +326,19 @@
         <label>L3 Process RT</label>
         <sharedTo>
             <group>L3_All_Users</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Process</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>New_Agent_Experience</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>New Agent Experience</label>
+        <sharedTo>
+            <role>External_Salesforce</role>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>

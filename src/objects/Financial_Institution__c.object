@@ -466,6 +466,11 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
             <operation>equals</operation>
             <value>Africa &amp; Middle East</value>
         </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Financial_Institution__c.Generic_FI</value>
+        </filters>
         <label>AME Financial Institutions</label>
         <language>en_US</language>
         <sharedTo>
@@ -487,6 +492,11 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
         <filters>
             <field>Country__c</field>
             <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Financial_Institution__c.Generic_FI</value>
         </filters>
         <label>A&amp;P Financial Institutions</label>
         <language>en_US</language>
@@ -510,10 +520,38 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
             <field>Country__c</field>
             <operation>notEqual</operation>
         </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Financial_Institution__c.Generic_FI</value>
+        </filters>
         <label>C&amp;NA Financial Institutions</label>
         <language>en_US</language>
         <sharedTo>
             <group>IDFSAllusersexcludingIWandACCA</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Currency_Center_Financial_Institutions</fullName>
+        <columns>NAME</columns>
+        <columns>Country__c</columns>
+        <columns>Institution_Status__c</columns>
+        <columns>Institution_Type__c</columns>
+        <columns>Region__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>Contact_Person__c</columns>
+        <columns>Credit_Rating__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Financial_Institution__c.Currency_Center_Bank</value>
+        </filters>
+        <label>Currency Center Financial Institutions</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>ICCS_Administrator</group>
         </sharedTo>
     </listViews>
     <listViews>
@@ -531,6 +569,11 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
         <filters>
             <field>Country__c</field>
             <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Financial_Institution__c.Generic_FI</value>
         </filters>
         <label>EUR Financial Institutions</label>
         <language>en_US</language>
@@ -555,6 +598,11 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
             <operation>equals</operation>
             <value>Portugal</value>
         </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Financial_Institution__c.Generic_FI</value>
+        </filters>
         <label>EUR PT Financial Institutions</label>
         <language>en_US</language>
         <sharedTo>
@@ -570,6 +618,11 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
         <columns>CREATEDBY_USER</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Financial_Institution__c.Generic_FI</value>
+        </filters>
         <label>Financial Institutions</label>
         <language>en_US</language>
         <sharedTo>
@@ -590,6 +643,11 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
             <operation>contains</operation>
             <value>test</value>
         </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Financial_Institution__c.Generic_FI</value>
+        </filters>
         <label>Financial Institutions test</label>
         <language>en_US</language>
         <sharedTo>
@@ -607,6 +665,11 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
             <field>Region__c</field>
             <operation>equals</operation>
             <value>Americas</value>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Financial_Institution__c.Generic_FI</value>
         </filters>
         <label>Americas Financial Institutions</label>
         <language>en_US</language>

@@ -627,10 +627,10 @@
         <label>Emails</label>
         <layoutColumns>
             <layoutItems>
-                <height>200</height>
+                <height>300</height>
                 <page>EmailMessagesView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
@@ -644,9 +644,9 @@
         <layoutColumns>
             <layoutItems>
                 <height>200</height>
-                <page>CaseAttachmentsView</page>
+                <page>GenericAttachmentListCase</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
@@ -654,6 +654,31 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Close_case_global</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Clone</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>2</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>MassAccept</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>E2CP__New_Comment_Lightning</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>4</sortOrder>
+        </platformActionListItems>
         <platformActionListItems>
             <actionName>Case.Escalate_within_IATA_lightning</actionName>
             <actionType>QuickAction</actionType>
@@ -700,11 +725,6 @@
             <sortOrder>13</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>E2CP__New_Comment_Lightning</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>4</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Submit</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>14</sortOrder>
@@ -723,26 +743,6 @@
             <actionName>Create_SAAM_Case</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>17</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.Close_case_global</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Clone</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>2</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>MassAccept</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>3</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>

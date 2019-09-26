@@ -2346,6 +2346,16 @@
                     <default>false</default>
                     <label>Weblink</label>
                 </value>
+                <value>
+                    <fullName>BIS</fullName>
+                    <default>false</default>
+                    <label>BIS</label>
+                </value>
+                <value>
+                    <fullName>Treasury Dashboard</fullName>
+                    <default>false</default>
+                    <label>Treasury Dashboard</label>
+                </value>				
             </valueSetDefinition>
         </valueSet>
     </fields>

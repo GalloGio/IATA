@@ -169,71 +169,75 @@
         <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Check --></label>
+        <label>ご指定の場所にご住所をご確認することができません。</label>
         <name>AMS_DQ_Cannot_Check</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Find --></label>
+        <label>ご指定の住所が見つかりませんでした。 お客様のご入力にお間違いがない場合、そのままご提出できます。</label>
         <name>AMS_DQ_Cannot_Find</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City --></label>
+        <label>市名 {0} がないと住所を検証できません。 入力欄にご記入ください。</label>
         <name>AMS_DQ_Cannot_Validate_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City and Street --></label>
+        <label>{0} 市名と番地がない場合、ご住所をご確認できません。 入力欄にご記入ください。</label>
         <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate Street --></label>
+        <label>{0}番地 がない場合ご住所をご確認できません。 入力欄にご記入ください。</label>
         <name>AMS_DQ_Cannot_Validate_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Check Addr --></label>
+        <label>ご住所をご確認します</label>
         <name>AMS_DQ_Check_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Cumpulsory --></label>
+        <label>{0} 市名は必須事項です。 {1} 市名入力欄にご記入ください。</label>
         <name>AMS_DQ_City_Cumpulsory</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Not in Database --></label>
+        <label>{0}市は弊社データベースにございません（またはつづりが異なっています）。</label>
         <name>AMS_DQ_City_Not_in_Database</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another Country --></label>
+        <label>{0}市は弊社データベースにございますが、弊社データベースによると別の国に属しているようです。</label>
         <name>AMS_DQ_City_in_Another_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another State --></label>
+        <label>{0}市は弊社データベースにございますが、別の州/県と関連付けられています。</label>
         <name>AMS_DQ_City_in_Another_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Enter Valid City --></label>
+        <label>有効な市名をご入力ください。</label>
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Found Addr --></label>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
+        <label>一致するアドレスが見つかりました。</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review City --></label>
+        <label>市名をご確認ください。 ご入力が正しいことをご確認しましたら、送信をクリックしてください。</label>
         <name>AMS_DQ_Review_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review Country or City --></label>
+        <label>国や都市名をご確認ください。 ご入力が正しいことをご確認されましたら、送信をクリックしてください。</label>
         <name>AMS_DQ_Review_Country_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State --></label>
+        <label>都道府県名と/または市区町村名をご確認ください。</label>
         <name>AMS_DQ_Review_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State or City --></label>
+        <label>都道府県名と/または市区町村名をご確認ください。 ご入力が正しいことをご確認されましたら、送信をクリックしてください。</label>
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Street Compulsory --></label>
+        <label>{0}番地は必須です。 {1} 番地欄にご入力ください。</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
     <customLabels>
@@ -1464,7 +1468,7 @@
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label>こちらの&lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;ボタンをクリックの上、あなたの請求/送付先住所をご確認下さい。</label>
+        <label>ご住所の確認ボタンをクリックして、請求先と配送先住所をご確認ください。</label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>
@@ -1522,6 +1526,14 @@
     <customLabels>
         <label><!-- AirlineSuspensionEmailRecipientsEurope --></label>
         <name>AirlineSuspensionEmailRecipientsEurope</name>
+    </customLabels>
+    <customLabels>
+        <label>すべての通知</label>
+        <name>All_Notifications_Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>お知らせ</label>
+        <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- Ask Delete Attachment --></label>
@@ -1712,23 +1724,707 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Community --></label>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin --></label>
+        <name>CSP_ANG_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin_Authorized_Signature --></label>
+        <name>CSP_ANG_Portal_Admin_Authorized_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_About --></label>
+        <name>CSP_About</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Accept Terms Error --></label>
+        <name>CSP_Accept_Terms_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Account Domain Created --></label>
+        <name>CSP_Account_Domain_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_All --></label>
+        <name>CSP_Add_All</name>
+    </customLabels>
+    <customLabels>
+        <label>新しい文書を追加</label>
+        <name>CSP_Add_New_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_New_User --></label>
+        <name>CSP_Add_New_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_User --></label>
+        <name>CSP_Add_User</name>
+    </customLabels>
+    <customLabels>
+        <label>お知らせ</label>
+        <name>CSP_Announcement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Apply --></label>
+        <name>CSP_Apply</name>
+    </customLabels>
+    <customLabels>
+        <label>こちらの記事が参考になりましたでしょうか。</label>
+        <name>CSP_ArticleHelpful</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Branch Offices --></label>
+        <name>CSP_Branch_Offices</name>
+    </customLabels>
+    <customLabels>
+        <label>高度な検索</label>
+        <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>会社概要</label>
+        <name>CSP_Breadcrumb_CompanyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_FAQ_Title --></label>
+        <name>CSP_Breadcrumb_FAQ_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ホーム</label>
+        <name>CSP_Breadcrumb_Home_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>サービス内容</label>
+        <name>CSP_Breadcrumb_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_Support_CreateNewCase --></label>
+        <name>CSP_Breadcrumb_Support_CreateNewCase</name>
+    </customLabels>
+    <customLabels>
+        <label>弊社までご連絡ください</label>
+        <name>CSP_Breadcrumb_Support_ReachUs</name>
+    </customLabels>
+    <customLabels>
+        <label>サポート</label>
+        <name>CSP_Breadcrumb_Support_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
+        <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>キャンセル</label>
+        <name>CSP_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスをキャンセル{0}する</label>
+        <name>CSP_CancelServiceActionLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} へのアクセスをキャンセルしていただけます</label>
+        <name>CSP_CancelServiceMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} へのアクセスをキャンセルしてよろしいですか。</label>
+        <name>CSP_Cancel_Access_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>アクセスをキャンセルする</label>
+        <name>CSP_Cancel_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>リクエストをキャンセルする</label>
+        <name>CSP_Cancel_Request</name>
+    </customLabels>
+    <customLabels>
+        <label>こちらの件に関して、IATAカスタマーサービスにメッセージを送受信していただけます。</label>
+        <name>CSP_CaseMessage_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>こちらにコメントを入力してください</label>
+        <name>CSP_CaseMessage_InputPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>メッセージ</label>
+        <name>CSP_CaseMessage_MessageTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>コメントが追加完了されました</label>
+        <name>CSP_CaseMessage_SubmitSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>案件番号</label>
+        <name>CSP_CaseNumber</name>
+    </customLabels>
+    <customLabels>
+        <label>案件</label>
+        <name>CSP_Cases</name>
+    </customLabels>
+    <customLabels>
+        <label>コミュニティ</label>
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Portal_Status --></label>
+        <label>会社案件一覧を表示</label>
+        <name>CSP_CompanyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>会社概要</label>
+        <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt; b &gt; {1} &lt; / b &gt; のために &lt;b&gt; {0} &lt; / b &gt;へのアクセスを拒否してもよろしいですか。</label>
+        <name>CSP_Confirm_Deny_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt; b &gt; {1} &lt; / b &gt;のために&lt; b &gt; {0} &lt; / b &gt;へのアクセスを許可しますか。</label>
+        <name>CSP_Confirm_Grant_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>{0}アクセスのリクエストがポータル管理者に配信されました。プロセスについてご質問やご要望がございましたら、以下の管理者までご連絡ください。</label>
+        <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Continue --></label>
+        <name>CSP_Continue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Create_Contact_Complete_Field --></label>
+        <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
+    </customLabels>
+    <customLabels>
+        <label>ユーザーアクセスを拒否する</label>
+        <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>文書</label>
+        <name>CSP_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label>全ての文書</label>
+        <name>CSP_DocumentsAll</name>
+    </customLabels>
+    <customLabels>
+        <label>文書</label>
+        <name>CSP_DocumentsLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>探している文書が属するカテゴリを選択してください。</label>
+        <name>CSP_DocumentsSelCat</name>
+    </customLabels>
+    <customLabels>
+        <label>出版国</label>
+        <name>CSP_Documents_PubliCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Domain Error Message --></label>
+        <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
+    </customLabels>
+    <customLabels>
+        <label>弊社までご連絡ください</label>
+        <name>CSP_FAQReachUsBanner_ButtonText</name>
+    </customLabels>
+    <customLabels>
+        <label>案件を作成するか、IATAの担当者と直接チャットするか、もしくは、弊社にお電話ください。</label>
+        <name>CSP_FAQReachUsBanner_Text</name>
+    </customLabels>
+    <customLabels>
+        <label>その他にお手伝いが必要ですか。</label>
+        <name>CSP_FAQReachUsBanner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>よくあるご質問</label>
+        <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>主なカテゴリーを1つ選択</label>
+        <name>CSP_FAQ_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_FAQs_Title --></label>
+        <name>CSP_FAQs_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>お気に入りのサービス</label>
+        <name>CSP_FavoriteServices_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>機能</label>
+        <name>CSP_Features_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>こちらの記事をより実用的なものにするにはどうすれば良いか、お知らせください。</label>
+        <name>CSP_FeedbackBody</name>
+    </customLabels>
+    <customLabels>
+        <label>弊社記事の内容向上の為、お客様のフィードバックを重宝させていただきます。</label>
+        <name>CSP_FeedbackBody2</name>
+    </customLabels>
+    <customLabels>
+        <label>フィードバック</label>
+        <name>CSP_FeedbackTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filter --></label>
+        <name>CSP_Filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filtered --></label>
+        <name>CSP_Filtered</name>
+    </customLabels>
+    <customLabels>
+        <label>あなた様に</label>
+        <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>ユーザーアクセス権を付与する</label>
+        <name>CSP_Grant_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>こんにちは</label>
+        <name>CSP_Home_WelcomeTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>ログアウト</label>
+        <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>以下のリストからユーザーを管理することができます。</label>
+        <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスを管理する</label>
+        <name>CSP_Manage_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスを管理する</label>
+        <name>CSP_Manage_Services</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Manage_Services --></label>
+        <name>CSP_Manage_Services_NoIEPAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>案件一覧を表示</label>
+        <name>CSP_MyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>名前</label>
+        <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewServiceUserMessage --></label>
+        <name>CSP_NewServiceUserMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP New Email Domain --></label>
+        <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label>表示する関連のあるアカウントはありません。</label>
+        <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>現在お客様の案件はございません。</label>
+        <name>CSP_NoCases1</name>
+    </customLabels>
+    <customLabels>
+        <label>しかし、一旦ご入手いただきましたら、こちらで最新のものをご覧いただけます。</label>
+        <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>結果なし</label>
+        <name>CSP_NoSearchResults</name>
+    </customLabels>
+    <customLabels>
+        <label>必要に応じて、案件に文書を追加していただけます。</label>
+        <name>CSP_No_Documents_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>週間カレンダー</label>
+        <name>CSP_OperationalCalendar_HomeTileTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>月ごとに表示</label>
+        <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
+    </customLabels>
+    <customLabels>
+        <label>お客様の案件を進めさせていただく際に、お客様のご意見が必要です。</label>
+        <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PortalPath --></label>
+        <name>CSP_PortalPath</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Portal_Administrators --></label>
+        <name>CSP_Portal_Administrators</name>
+    </customLabels>
+    <customLabels>
+        <label>ポータルのステータス</label>
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_SelectCommunity --></label>
+        <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
+        <name>CSP_Profile_PrivacyManagement_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Text --></label>
+        <name>CSP_Profile_PrivacyManagement_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Title --></label>
+        <name>CSP_Profile_PrivacyManagement_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_URL --></label>
+        <name>CSP_Profile_PrivacyManagement_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>案件はどの様なもので、いつそちらが必要になりますか。</label>
+        <name>CSP_Question1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question1URL --></label>
+        <name>CSP_Question1URL</name>
+    </customLabels>
+    <customLabels>
+        <label>案件の詳細を確認したり更新したりするにはどうすればよいですか。</label>
+        <name>CSP_Question2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question2URL --></label>
+        <name>CSP_Question2URL</name>
+    </customLabels>
+    <customLabels>
+        <label>最近の案件</label>
+        <name>CSP_RecentCases</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP RecentCases HelpText --></label>
+        <name>CSP_RecentCases_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Recent Cases Support --></label>
+        <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Record Deleted --></label>
+        <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>関連記事</label>
+        <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveAllFilters --></label>
+        <name>CSP_RemoveAllFilters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveContact_Reason --></label>
+        <name>CSP_RemoveContact_Reason</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスをリクエストする</label>
+        <name>CSP_Request_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>保存する</label>
+        <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>文書の詳細で検索する</label>
+        <name>CSP_SearchDocuments</name>
+    </customLabels>
+    <customLabels>
+        <label>FAQの詳細で検索する</label>
+        <name>CSP_SearchFAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>高度な検索</label>
+        <name>CSP_Search_AdvancedSearch</name>
+    </customLabels>
+    <customLabels>
+        <label>国</label>
+        <name>CSP_Search_Case_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>種類</label>
+        <name>CSP_Search_Case_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>カテゴリー</label>
+        <name>CSP_Search_Documents_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>製品の種類</label>
+        <name>CSP_Search_Documents_ProdType</name>
+    </customLabels>
+    <customLabels>
+        <label>公開された国</label>
+        <name>CSP_Search_Documents_PubCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>カテゴリー</label>
+        <name>CSP_Search_FAQ_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>サブトピック</label>
+        <name>CSP_Search_FAQ_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>トピック</label>
+        <name>CSP_Search_FAQ_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>サービス、案件、サポートその他を探す</label>
+        <name>CSP_Search_Home_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスユーザーを探す</label>
+        <name>CSP_Search_In_Contacts_In_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>検索結果はありません</label>
+        <name>CSP_Search_NoResults_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>申し訳ございません、結果はありません。</label>
+        <name>CSP_Search_NoResults_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>キーワードのつづりを確認するか、新しいキーワードで再度お試しください。</label>
+        <name>CSP_Search_NoResults_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスを検索</label>
+        <name>CSP_Search_Services_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>サポートを検索</label>
+        <name>CSP_Search_Support_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>上位の結果</label>
+        <name>CSP_Search_TopResults</name>
+    </customLabels>
+    <customLabels>
+        <label>検索語を入力してください</label>
+        <name>CSP_Search_TypeIn_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>検索を開始するには、2文字以上入力してください。</label>
+        <name>CSP_Search_TypeIn_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>検索結果を更に向上させるには、フィルタセクションを選択してください。</label>
+        <name>CSP_Search_TypeIn_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>ケース番号、件名、または説明の検索</label>
+        <name>CSP_SearchingOn</name>
+    </customLabels>
+    <customLabels>
+        <label>すべて表示</label>
+        <name>CSP_SeeAll</name>
+    </customLabels>
+    <customLabels>
+        <label>コミュニティを選択</label>
         <name>CSP_SelectCommunity</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_SelectPortalStatus --></label>
+        <label>ポータルステータスを選択</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_selectReason --></label>
+        <label>サービスアクセス</label>
+        <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>アクセスが要求されました</label>
+        <name>CSP_Services_AccessRequested</name>
+    </customLabels>
+    <customLabels>
+        <label>アクセスがリクエストされました</label>
+        <name>CSP_Services_AccessRequestedTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>貴社のご利用可能な全サービスは以下の通りです。</label>
+        <name>CSP_Services_AvailableServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>ご利用可能なサービス</label>
+        <name>CSP_Services_AvailableServicesTabTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスへ</label>
+        <name>CSP_Services_GoToService</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスへアクセスする</label>
+        <name>CSP_Services_GoToServices</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスをお探しですか。</label>
+        <name>CSP_Services_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスを管理</label>
+        <name>CSP_Services_ManageService</name>
+    </customLabels>
+    <customLabels>
+        <label>貴社のサービスは以下の通りです。</label>
+        <name>CSP_Services_MyServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>マイサービス</label>
+        <name>CSP_Services_MyServicesTabTile</name>
+    </customLabels>
+    <customLabels>
+        <label>利用可能なサービスを表示</label>
+        <name>CSP_Services_RequestServiceBannerButton</name>
+    </customLabels>
+    <customLabels>
+        <label>詳細なサービス情報を表示し、利用可能なサービスへのアクセスを要求。</label>
+        <name>CSP_Services_RequestServiceBannerSubtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスリクエスト</label>
+        <name>CSP_Services_RequestServiceBannerTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>サービス情報</label>
+        <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>サービス内容</label>
+        <name>CSP_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>設定</label>
+        <name>CSP_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label>ステータス</label>
+        <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>送信</label>
+        <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Success --></label>
+        <name>CSP_Success</name>
+    </customLabels>
+    <customLabels>
+        <label>サポート</label>
+        <name>CSP_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>何かお困りですか。</label>
+        <name>CSP_Support_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>pdf、jpeg、jpg、png、ppt、pptx、xls、xlsx、tif、tiff、zipファイルをアップロードしていただけます。サイズは50MB未満でなければなりません。</label>
+        <name>CSP_Supported_File_Extensions</name>
+    </customLabels>
+    <customLabels>
+        <label>タスク</label>
+        <name>CSP_Task</name>
+    </customLabels>
+    <customLabels>
+        <label>ご意見をお寄せいただきありがとうございました。</label>
+        <name>CSP_ThanksFeedback</name>
+    </customLabels>
+    <customLabels>
+        <label>タイトル</label>
+        <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>案件の種類</label>
+        <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Announcements --></label>
+        <name>CSP_You_Dont_Have_Announcements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Notifications --></label>
+        <name>CSP_You_Dont_Have_Notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Tasks --></label>
+        <name>CSP_You_Dont_Have_Tasks</name>
+    </customLabels>
+    <customLabels>
+        <label>エージェント信用リスク</label>
+        <name>CSP_cpcc_Agent_Credit_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label>署名権者</label>
+        <name>CSP_cpcc_Authorised_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>請求及び決済プラン/貨物口座決済システム（CASS)支払い連絡先</label>
+        <name>CSP_cpcc_BSP_CASS_Payment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>連絡先タイプの状況</label>
+        <name>CSP_cpcc_Contact_Type_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>財務評価連絡先</label>
+        <name>CSP_cpcc_Financial_Assessment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>請求書連絡先</label>
+        <name>CSP_cpcc_Invoice_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>新しい連絡先プロフィール</label>
+        <name>CSP_cpcc_New_Contact_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>ポータル管理者</label>
+        <name>CSP_cpcc_Portal_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label>ワーキングエリア</label>
+        <name>CSP_cpcc_Working_Areas</name>
+    </customLabels>
+    <customLabels>
+        <label>理由を選択</label>
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
@@ -1980,6 +2676,10 @@
         <name>CurrencyCenter_BSP_CASS_Proffile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_ICCS_Availability --></label>
+        <name>CurrencyCenter_BSP_ICCS_Availability</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -2010,6 +2710,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_CASS --></label>
         <name>CurrencyCenter_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_CASS_ICCS_Availability --></label>
+        <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
@@ -3400,7 +4104,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>プロフィール</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -8677,6 +9381,14 @@ and
         <name>ISSP_AMS_Local_Details_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator --></label>
+        <name>ISSP_AMS_MSO_Aggregator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator_Info --></label>
+        <name>ISSP_AMS_MSO_Aggregator_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_MSO_Alternatively --></label>
         <name>ISSP_AMS_MSO_Alternatively</name>
     </customLabels>
@@ -11458,7 +12170,7 @@ and
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;割り当てられたサブウォレットの資金を管理&lt;/li&gt; &lt;li&gt;「チケット発行者」IATA EasyPay ユーザーのアクセスとサブウォレットの管理&lt;/li&gt; &lt;li&gt;割り当てられたウォレットからGDS を介した発券に使われる IATA EasyPay 番号を作成&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;いずれかの割り当てられたウォレットからGDS を介した発券に使われる IATA EasyPay 番号を作成&lt;/li&gt;&lt;/ul&gt;</label>
@@ -12279,6 +12991,10 @@ and
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
+    </customLabels>
+    <customLabels>
         <label>連絡先情報</label>
         <name>ISSP_Contact_Information</name>
     </customLabels>
@@ -12979,6 +13695,14 @@ and
         <name>ISSP_EnterValidString</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
+    </customLabels>
+    <customLabels>
         <label>文字を入力</label>
         <name>ISSP_Enter_Value</name>
     </customLabels>
@@ -13499,6 +14223,10 @@ and
         <name>ISSP_IATA_Designator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_IATA_Location_Code --></label>
+        <name>ISSP_IATA_Location_Code</name>
+    </customLabels>
+    <customLabels>
         <label>既存のIATAコードがありません。正しいIATAコードを記入してください。IATAコードをお持ちでない場合は、［顧客タイプ］に［その他］を選択してください。</label>
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
@@ -13867,7 +14595,7 @@ and
         <name>ISSP_MyOutstandingPaymentsCases</name>
     </customLabels>
     <customLabels>
-        <label>マイプロファイル</label>
+        <label>私のプロフィール</label>
         <name>ISSP_MyProfile</name>
     </customLabels>
     <customLabels>
@@ -14787,6 +15515,10 @@ IATA公認代理店の多くのIATA請求書はBSP/CASSを通して徴収しま�
     <customLabels>
         <label>姓を入力してください</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>国をお選びください</label>
@@ -15717,6 +16449,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
     <customLabels>
         <label><!-- ISSP Status change to Inactive --></label>
         <name>ISSP_Status_change_to_Inactive</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
     </customLabels>
     <customLabels>
         <label>サブタイプ</label>
@@ -17116,6 +17852,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
+        <label>既読にする</label>
+        <name>MarkAsRead_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -17248,6 +17988,22 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Not_Applicable</name>
     </customLabels>
     <customLabels>
+        <label><!-- Not In CNS Group Error --></label>
+        <name>Not_In_CNS_Group_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>通知</label>
+        <name>Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>通知</label>
+        <name>NotificationCenter_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>通知の詳細</label>
+        <name>NotificationDetail_Detail</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Notions_Essentl_Tarif_Billet_Description --></label>
         <name>Notions_Essentl_Tarif_Billet_Description</name>
     </customLabels>
@@ -17298,6 +18054,18 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>カテゴリーをお選びください</label>
@@ -18783,6 +19551,18 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Please_select_the_target_Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- PortalAccess --></label>
+        <name>PortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal Name to Redirect --></label>
+        <name>PortalNameRedirect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PortalService --></label>
+        <name>PortalService</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>
@@ -19135,6 +19915,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>ShoppingCartQtyMsg</name>
     </customLabels>
     <customLabels>
+        <label><!-- Error displayed when a RO field is changed in a SIDRA Lite case --></label>
+        <name>SidraLiteROFieldError</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SignIn --></label>
         <name>SignIn</name>
     </customLabels>
@@ -19223,6 +20007,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label>タスク</label>
+        <name>Tasks_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Taxes --></label>
         <name>Taxes</name>
     </customLabels>
@@ -19279,6 +20067,14 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
+        <label>{0}がポータルへのアクセスを要求しました。</label>
+        <name>UserRequestPortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label>{0}が{1}サービスへのアクセスを要求しました</label>
+        <name>UserRequestServiceAccess</name>
+    </customLabels>
+    <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
     </customLabels>
@@ -19305,6 +20101,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label><!-- ViewCart --></label>
         <name>ViewCart</name>
+    </customLabels>
+    <customLabels>
+        <label>詳細を見る</label>
+        <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- View_6_more --></label>
@@ -19401,6 +20201,498 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label><!-- Contacting us --></label>
         <name>contacting_us</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Relocation --></label>
+        <name>csp_AccountRelocateSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>認定プロセス</label>
+        <name>csp_Accreditation_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>主なカテゴリーを選択</label>
+        <name>csp_ActionForCategoryPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスにアクセス</label>
+        <name>csp_ActionForTopicPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>推奨サポートオプションをご覧いただくにはフォームにご記入ください</label>
+        <name>csp_ActionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_AgencyReadOnly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Profile section label --></label>
+        <name>csp_Basics_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label>お電話ください</label>
+        <name>csp_Call_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>ご利用可能期間：</label>
+        <name>csp_Call_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAの担当者がそちらに取り組ませていただきます。</label>
+        <name>csp_CaseBeingWorked</name>
+    </customLabels>
+    <customLabels>
+        <label>案件は作成完了されました。</label>
+        <name>csp_CaseCreatedSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>すぐにご返答差し上げます。</label>
+        <name>csp_CaseResponseGuarantee</name>
+    </customLabels>
+    <customLabels>
+        <label>更新の際にはコメント、文書、受信者を追加することができます。状況を追跡し、更新を行うことができます。</label>
+        <name>csp_CaseTracking</name>
+    </customLabels>
+    <customLabels>
+        <label>案件を作成</label>
+        <name>csp_Case_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>何かお手伝いさせていただくことはございますか</label>
+        <name>csp_Case_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>弊社担当者とチャット</label>
+        <name>csp_Chat_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAの担当者とチャット</label>
+        <name>csp_Chat_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>電話またはチャットで、IATAポータルから直接サポートを受けてください。</label>
+        <name>csp_ChooseOption</name>
+    </customLabels>
+    <customLabels>
+        <label>会社の連絡先</label>
+        <name>csp_CompanyContact_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Complete required field label --></label>
+        <name>csp_CompleteField</name>
+    </customLabels>
+    <customLabels>
+        <label>共有していただきありがとうございます。</label>
+        <name>csp_Compliment</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAでは優れた顧客サービスをご提供する事に励んでおり、お客様も同じようにお考えであることにやりがいを感じております。当社はお寄せいただいたどのようなご意見も検討させて頂きます。</label>
+        <name>csp_ComplimentInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>賞賛</label>
+        <name>csp_Compliment_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>苦情</label>
+        <name>csp_Concern</name>
+    </customLabels>
+    <customLabels>
+        <label>苦情</label>
+        <name>csp_Concern_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>お問い合わせの国または地域を選択してください</label>
+        <name>csp_CountryOrRegionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label>ケースを作成して添付を追加する</label>
+        <name>csp_CreateNewCaseAddAttachment</name>
+    </customLabels>
+    <customLabels>
+        <label>お問い合わせ内容の調査に参考となる詳細を全てご記入ください</label>
+        <name>csp_CreateNewCaseMainInputBoxSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>説明</label>
+        <name>csp_CreateNewCaseMainInputBoxTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>別のポータルユーザーを追加</label>
+        <name>csp_CreateNewCaseMainInputEmailsSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>追加の受信者</label>
+        <name>csp_CreateNewCaseMainInputEmailsTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>ご質問は何に関するものですか。</label>
+        <name>csp_CreateNewCaseMainInputSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>件名</label>
+        <name>csp_CreateNewCaseMainInputTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>関連アカウントコード</label>
+        <name>csp_CreateNewCaseMainPicklistLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>案件を作成</label>
+        <name>csp_CreateNewCaseTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>選択されました</label>
+        <name>csp_CreateNewCaseTopSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>より詳しい情報をご提供ください。</label>
+        <name>csp_CreateNewCaseTopSubSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>新しい連絡先を作成する</label>
+        <name>csp_CreateNewContact</name>
+    </customLabels>
+    <customLabels>
+        <label>お急ぎのお問い合わせ</label>
+        <name>csp_Emergency_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>財務概況</label>
+        <name>csp_Financial_Review</name>
+    </customLabels>
+    <customLabels>
+        <label>支店を探す</label>
+        <name>csp_Find_Branch</name>
+    </customLabels>
+    <customLabels>
+        <label>連絡先を探す</label>
+        <name>csp_Find_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Facebook_URL --></label>
+        <name>csp_Footer_Facebook_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAストア</label>
+        <name>csp_Footer_IATA_Store</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_IataStore_URL --></label>
+        <name>csp_Footer_IataStore_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Legal_URL --></label>
+        <name>csp_Footer_Legal_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Linkedin_URL --></label>
+        <name>csp_Footer_Linkedin_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Privacy_URL --></label>
+        <name>csp_Footer_Privacy_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Twitter_URL --></label>
+        <name>csp_Footer_Twitter_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Youtube_URL --></label>
+        <name>csp_Footer_Youtube_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>ホームページへアクセスする</label>
+        <name>csp_GoToHomepage</name>
+    </customLabels>
+    <customLabels>
+        <label>サポートへ</label>
+        <name>csp_GoToSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAの支払い</label>
+        <name>csp_IATA_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label>IEP管理者</label>
+        <name>csp_IEPAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label>お問い合わせ</label>
+        <name>csp_IntentionOnThisPage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_InvalidPhoneValue --></label>
+        <name>csp_InvalidPhoneValue</name>
+    </customLabels>
+    <customLabels>
+        <label>お急ぎのお問い合わせですか。</label>
+        <name>csp_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>前回のログイン</label>
+        <name>csp_LastLoginDate</name>
+    </customLabels>
+    <customLabels>
+        <label>そちらのチャットはご利用いただけません。お電話いただくか、案件を作成してください。</label>
+        <name>csp_LiveAgentBadConfig</name>
+    </customLabels>
+    <customLabels>
+        <label>チャット接続がタイムアウトになりました。ページを更新いただくか、案件を作成していただけます</label>
+        <name>csp_LiveAgentTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>ライブ エージェントの接続タイムアウト ページを更新するか、お問い合わせください</label>
+        <name>csp_LiveTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>マスターウォレットマネージャー</label>
+        <name>csp_MasterWalletManager</name>
+    </customLabels>
+    <customLabels>
+        <label>職務権限</label>
+        <name>csp_MembershipFunction</name>
+    </customLabels>
+    <customLabels>
+        <label>企業</label>
+        <name>csp_My_Profile_Company</name>
+    </customLabels>
+    <customLabels>
+        <label>メール</label>
+        <name>csp_My_Profile_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>肩書</label>
+        <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_NoPortalServiceNameFound</name>
+    </customLabels>
+    <customLabels>
+        <label>ご希望のサポートオプションを選択してください</label>
+        <name>csp_Options_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>プロセス</label>
+        <name>csp_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>業務連絡先</label>
+        <name>csp_Profile_BusinessContact</name>
+    </customLabels>
+    <customLabels>
+        <label>会社のメール</label>
+        <name>csp_Profile_CompanyEmail</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAコード</label>
+        <name>csp_Profile_IATACode</name>
+    </customLabels>
+    <customLabels>
+        <label>個人連絡先</label>
+        <name>csp_Profile_PersonalContact</name>
+    </customLabels>
+    <customLabels>
+        <label>ポータルのアクセス可能性</label>
+        <name>csp_Profile_PortalAccessibility</name>
+    </customLabels>
+    <customLabels>
+        <label>プロフェッショナル</label>
+        <name>csp_Profile_Professional</name>
+    </customLabels>
+    <customLabels>
+        <label>ウェブサイト</label>
+        <name>csp_Profile_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>サポート</label>
+        <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>「代理店は、現在IATAEasyPayアカウントをお持ちでないようです。&lt;br/&gt; &lt;br/&gt;本社の署名権者に連絡を取り、IATA EasyPayアカウントの開設をリクエストしてください。ポータル管理者として、 &lt;a href=&quot;/my-profile&quot;&gt;個人情報&lt;/a&gt;を更新して ご自身を法的署名権者として指定するか、または &lt;a href=&quot;/company-profile&quot;&gt;会社の管理- &gt;連絡先&lt;/a&gt;のページから適切なポータル管理者を指定し、 ページを開いてEasyPayアカウントの開設をリクエストすることができます。&lt;br/&gt;&lt;br/&gt;お手伝いが必要な場合はお問い合わせください。&lt;a href=&quot;/Support-Reach-Us&quot;&gt;顧客サポート&lt;/a&gt;</label>
+        <name>csp_RequestService_ContactPortalAdmin_Alt</name>
+    </customLabels>
+    <customLabels>
+        <label>代理店は、現在IATAEasyPayアカウントをお持ちでないようです。&lt;br/&gt;&lt;br/&gt;本社の署名権者に連絡を取り、IATAEasyPayアカウントの開設をリクエストしてください。IATA EasyPayアカウントを開設するには、代理店に対してポータル管理者と署名権者の両方である必要があります。&lt;br/&gt;&lt;br/&gt;お手伝いが必要な場合はお問い合わせください。&lt;a href=&quot;/Support-Reach-Us&quot;&gt;顧客サポート&lt;/a&gt;</label>
+        <name>csp_RequestService_ContactPortalAdmin_LegalAuth</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_RequestService_ContactSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>本社から承認された署名権者は、エージェンシーのIEPアカウントの開設を既に開始しています。IEPアカウントが正常に開設されると、このサービスにアクセスできるようになります。</label>
+        <name>csp_RequestService_IEPAccountOpenInProgress</name>
+    </customLabels>
+    <customLabels>
+        <label>これでEasyPayポータルで代理店のIATAEasyPayアカウントの開設の申し込み書を完了させることができます。&lt;br/&gt; &lt;br/&gt;手続きを進めることにより、あなたはお名前、名字、メールアドレス、IATAコード、およびIATAEasyPayのサプライヤーに利用可能な他の関連する個人情報をIATAに提出することに同意します。この情報は、EasyPayアカウントを開設および管理し、EasyPayサービスを一般的に操作する目的で、または法律で要求される場合にのみIATA EasyPayサプライヤーによって使用されます。&lt;br/&gt;&lt;br/&gt;続行してもよろしいですか。</label>
+        <name>csp_RequestService_ProceedIEPAccountOpen</name>
+    </customLabels>
+    <customLabels>
+        <label>アクセスをリクエスト</label>
+        <name>csp_Request_New_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>売上金入金</label>
+        <name>csp_Sales_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_SearchNotPerformed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceAccessConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceRequestConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label>サブトピック</label>
+        <name>csp_Sub_Topic_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>サブトピック</label>
+        <name>csp_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>提案</label>
+        <name>csp_Suggest_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>これらが参考になるかもしれません</label>
+        <name>csp_Suggestion_label</name>
+    </customLabels>
+    <customLabels>
+        <label>いつでもお手伝いさせていただきます。</label>
+        <name>csp_SupportCategoriesInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>ご質問</label>
+        <name>csp_SupportReachUs_AskTile</name>
+    </customLabels>
+    <customLabels>
+        <label>いつでもお手伝いさせていただきます。</label>
+        <name>csp_SupportReachUs_BasicInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>カテゴリー</label>
+        <name>csp_SupportReachUs_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>賞賛</label>
+        <name>csp_SupportReachUs_ComplimentTile</name>
+    </customLabels>
+    <customLabels>
+        <label>苦情</label>
+        <name>csp_SupportReachUs_ConcernTile</name>
+    </customLabels>
+    <customLabels>
+        <label>国</label>
+        <name>csp_SupportReachUs_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>お急ぎのお問い合わせですか。</label>
+        <name>csp_SupportReachUs_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>電話またはチャットで、IATAポータルから直接サポートを受けてください。</label>
+        <name>csp_SupportReachUs_PlzChoosePath</name>
+    </customLabels>
+    <customLabels>
+        <label>主なカテゴリーを選択</label>
+        <name>csp_SupportReachUs_SelectCategory</name>
+    </customLabels>
+    <customLabels>
+        <label>お問い合わせの国または地域を選択してください</label>
+        <name>csp_SupportReachUs_SelectCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>トピックを選択</label>
+        <name>csp_SupportReachUs_SelectTopic</name>
+    </customLabels>
+    <customLabels>
+        <label>サポートオプションを表示</label>
+        <name>csp_SupportReachUs_ShowSupportOptions</name>
+    </customLabels>
+    <customLabels>
+        <label>推奨されるサポートオプションを見るためにフォームに記入してください</label>
+        <name>csp_SupportReachUs_SpecifyCaseDetails</name>
+    </customLabels>
+    <customLabels>
+        <label>提案</label>
+        <name>csp_SupportReachUs_SuggestTile</name>
+    </customLabels>
+    <customLabels>
+        <label>トピック</label>
+        <name>csp_SupportReachUs_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>お問い合わせ</label>
+        <name>csp_SupportReachUs_WhatDoYouWant</name>
+    </customLabels>
+    <customLabels>
+        <label>サポート</label>
+        <name>csp_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>このダッシュボードにより、請求及び決済プラン、貨物口座決済システム（CASS)、ICCS（通貨クリアランスサービス）、ICH（IATAクリアリングハウス）などのIATAの各主要決済システムで処理されているキャッシュフローを表示する事に加え、各航空会社の財務チームは、受信したクレジットカードの売上、および関連するダウンロード可能なクレジットカード売上レポートの全容を見ることが可能となります。</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel1</name>
+    </customLabels>
+    <customLabels>
+        <label>詳細は www.iata.org/treasurydashboard をご覧ください。</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel2</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA商用サービスに関する詳しい情報をリクエストしようとしています。「確認」をクリックすると、毎月発行のIATA財務ダッシュボードプレミアムの購読方法に関する全ての詳細が送られてきます。</label>
+        <name>csp_TDP_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA商用サービスに関する詳しい情報をリクエストしようとしています。「確認」 をクリックすると、毎月発行のIATA財務ダッシュボードの購読方法に関する全ての詳細が送られてきます。</label>
+        <name>csp_TD_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>チケット発行者</label>
+        <name>csp_TicketIssuer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_TimeoutIEP</name>
+    </customLabels>
+    <customLabels>
+        <label>受信者は追加されていません。「追加」ボタンを押してください。</label>
+        <name>csp_ToastWarningRecipientNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label>ケース概要を表示</label>
+        <name>csp_ViewCaseSummary</name>
+    </customLabels>
+    <customLabels>
+        <label>ワーキングエリア</label>
+        <name>csp_WorkingAreas</name>
+    </customLabels>
+    <customLabels>
+        <label>サポートオプションを表示</label>
+        <name>csp_btn_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>エラーを作成するケース</label>
+        <name>csp_errorCreatingCase</name>
+    </customLabels>
+    <customLabels>
+        <label>名前またはEメールで検索</label>
+        <name>csp_searchEmailRecipientPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAコード、場所、または名前で検索</label>
+        <name>csp_searchIataCodeLocationNamePlaceHolder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_toSelectSubTopic</name>
     </customLabels>
     <customLabels>
         <label><!-- days left --></label>

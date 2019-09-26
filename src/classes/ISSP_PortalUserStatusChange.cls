@@ -233,6 +233,11 @@ public with sharing class ISSP_PortalUserStatusChange {
         } 
         return new map<String, String> { 'status' => 'ok' };
     }
+
+    @AuraEnabled
+    public static  map<String,String> preformActionNewPortal (string contactId,string portalStatus,string oldPortalStatus){
+        return preformAction(contactId, portalStatus, oldPortalStatus);
+    }
     
     public static  map<String,String> preformActionImmediate(string contactId,string portalStatus,string oldPortalStatus){
         string actionName = getActionName(portalStatus,oldPortalStatus);

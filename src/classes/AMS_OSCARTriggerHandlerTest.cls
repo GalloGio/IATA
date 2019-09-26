@@ -94,7 +94,7 @@ private class AMS_OSCARTriggerHandlerTest {
         update cse;
 
         // Create a new Financial Institution
-        Financial_Institution__c fi = new Financial_Institution__c(Name = 'Test FI', Region__c = 'Americas', Country__c = 'Canada', Institution_Type__c = 'Bank');
+        Financial_Institution__c fi = new Financial_Institution__c(Name = 'Test FI', Region__c = 'Americas', Country__c = 'Canada', Institution_Type__c = 'Bank', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Financial_Institution__c', 'Generic_FI'));
         insert fi;
 
         // Create a new Financial Security

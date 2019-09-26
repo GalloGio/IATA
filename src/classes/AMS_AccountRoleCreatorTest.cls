@@ -6,10 +6,22 @@ public with sharing class AMS_AccountRoleCreatorTest {
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
+        IATA_ISO_Country__c nG_isoc = new IATA_ISO_Country__c(
+			Name= 'Testland',
+			Region__c = 'Americas',
+			Iso_code__c = 'TL',
+			ISO_Code_Numeric__c=99,
+			BSP__c = 'Yes',
+			ANG_Enable_NewGen__c = true,
+			OSCAR_enabled__c = true
+		);
+
+		insert nG_isoc;
+
         Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account HO1, BR1, BR2, BR3, HO2, BR4;
+        Account HO1, BR1, BR2, BR3, HO2, BR4, HE1;
 
         String SECTORPAX = 'Travel Agent';
         String CATEGORYPAX = 'IATA Passenger Sales Agent';
@@ -27,7 +39,9 @@ public with sharing class AMS_AccountRoleCreatorTest {
                         Location_Type__c = 'HO', Location_Class__c = LOCCLASSPAX, Sector__c = SECTORPAX, Category__c = CATEGORYPAX, IATA_ISO_Country__c = isoc.id, 
                         IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
 
-        List<Account> accs = new List<Account>{HO1, HO2};
+        HE1 = new Account(IATACode__c = '1234567', IATA_ISO_Country__c = nG_isoc.id, RecordTypeId = accountRT, Name='NewGenAgency', Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'T');
+
+        List<Account> accs = new List<Account>{HO1, HO2, HE1};
         insert accs;
         //Create the 4 branches
         BR1 = new Account(RecordTypeId = agencyRT, Name = 'My Travels', IATAcode__c = '1111111', IATA_ISO_Country__c = isoc.id, 
@@ -63,8 +77,9 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = HO2.Id);
         AMS_OSCAR__c oscar2 = new AMS_OSCAR__c(Account__c = HO1.Id);
+        AMS_OSCAR__c oscar3 = new AMS_OSCAR__c(Account__c = HE1.Id);
         
-        list<AMS_OSCAR__c> oscars = new list<AMS_OSCAR__c>{oscar, oscar2};
+        list<AMS_OSCAR__c> oscars = new list<AMS_OSCAR__c>{oscar, oscar2, oscar3};
         insert oscars;
         
         Case testCase = ISSP_ObjectFactory.createNewCase();
@@ -92,13 +107,27 @@ public with sharing class AMS_AccountRoleCreatorTest {
         testCase2.IFAP_Country_ISO__c = 'tq';
         testCase2.AccountId = HO1.id;
         testCase2.Oscar__c = oscar2.Id;
+
+        Case testCase3 = ISSP_ObjectFactory.createNewCase();
+        testCase3.BSPCountry__c = 'Hong Kong (SAR), China';
+        testCase3.Reason1__c = 'Agency';
+        testCase3.Customer_recovery__c = false;
+        testCase3.BounceEmailCounter__c = 0.0;
+        testCase3.Case_Language__c = 'English';
+        testCase3.Subject = 'Test 006';
+        testCase3.Reopened_case__c = 0.0;
+        testCase3.Account_Concerned__c = HE1.Id;
+        testCase3.IFAP_Country_ISO__c = 'tq';
+        testCase3.AccountId = HE1.id;
+        testCase3.Oscar__c = oscar3.Id;
         
-        list<Case> testCases = new list<Case>{testCase, testCase2};
+        list<Case> testCases = new list<Case>{testCase, testCase2, testCase3};
         insert testCases;
         
         AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase2.Id, Account_Name__c = HO1.Name);
         AMS_Pax_Accreditation_Form__c onlineAccreditation2 = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id, Account_Name__c = HO2.Name);
-        list<AMS_Pax_Accreditation_Form__c> onlineAccreditations = new list<AMS_Pax_Accreditation_Form__c>{onlineAccreditation, onlineAccreditation2};
+        AMS_Pax_Accreditation_Form__c onlineAccreditation3 = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = NG_isoc.CurrencyIsoCode, SAAM_Case__c = testCase3.Id, Account_Name__c = HE1.Name);
+        list<AMS_Pax_Accreditation_Form__c> onlineAccreditations = new list<AMS_Pax_Accreditation_Form__c>{onlineAccreditation, onlineAccreditation2, onlineAccreditation3};
         insert onlineAccreditations;
 
         AMS_Accreditation_Contact__c accContact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, 
@@ -112,10 +141,13 @@ public with sharing class AMS_AccountRoleCreatorTest {
         Contact c2 = new Contact(AccountId = HO2.id, Firstname = 'linkedContact', Lastname='c2LastName', Phone = '922222222', MobilePhone = '922222222', Email = 'linkedContact@email.com', Financial_Assessment_Contact__c = false);
         Contact c3 = new Contact(AccountId = HO1.id, Firstname = 'contact', Lastname='c3LastName', Phone = '933333333', MobilePhone = '933333333', Email = 'contact@email.com', Financial_Assessment_Contact__c = false);
         
+        Contact c4 = new Contact(AccountId = HE1.id, Firstname = 'contact', Lastname='c4LastName', Phone = '944444444', MobilePhone = '944444444', Email = 'contacthe@email.com', Financial_Assessment_Contact__c = false);
+
         List<Contact> listOfContacts = new List<Contact>();
         listOfContacts.add(c1);
         listOfContacts.add(c2);
         listOfContacts.add(c3);
+        listOfContacts.add(c4);
         insert listOfContacts;
 
         AMS_Account_Role__c owner = new AMS_Account_Role__c(Account__c = HO1.Id, Contact__c = c1.Id, Owner_Sequence__c = 1, Percentage__c = 100, recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'));
@@ -129,6 +161,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         insert p3;
 
         upsert new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'CADM', Change_Code__c = 'CAD');
+        upsert new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'CCR', Change_Code__c = 'CCR', Billable__c = true, Bulletin_Memo_Text__c = 'meh', Reason_Code__c = 'meh', Reason_Code_Description__c = 'meh');
 
     }
 
@@ -265,8 +298,11 @@ public with sharing class AMS_AccountRoleCreatorTest {
         //get oscar for new application
         Map<Id,Account> accountsInvolved = new Map<Id,Account>([SELECT Id FROM Account WHERE Name = 'My Travels']); 
         Map<Id,AMS_OSCAR__c> oscars = new Map<Id,AMS_OSCAR__c>([SELECT Id, STEP10__c, STEP6__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c FROM AMS_OSCAR__c WHERE Account__r.Name = 'My Travels' AND Account__r.Location_Type__c = 'HO' LIMIT 1]);
+
+        System.debug('TA-303 - oscars :: '+oscars.values().get(0).Account__c);
         Contact con = [SELECT Id, Email, Firstname, Lastname FROM Contact WHERE Email = 'linkedContact@email.com' LIMIT 1];
         AMS_Pax_Accreditation_Form__c onlineAccreditation = [SELECT id, SAAM_Case__r.AccountId FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__r.AccountId =: oscars.values().get(0).Account__c LIMIT 1];
+        System.debug('TA-303 - onlineAccreditation :: '+onlineAccreditation);
         AMS_Account_Role__c previousOwner = [SELECT Id, Percentage__c, RecordTypeId, Contact__c, Contact__r.Firstname, Contact__r.Lastname, Contact__r.Email FROM AMS_Account_Role__c LIMIT 1];
 
         oscars.values().get(0).Process__c = AMS_Utils.AGENCYCHANGES;
@@ -307,7 +343,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         System.assertEquals(13, allAccountRoles.size());
         System.assertEquals(12, activeAccountRoles.size());
-        System.assertEquals(4, contactsAfter.size());
+        System.assertEquals(5, contactsAfter.size());
        
     }
 
@@ -360,7 +396,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         System.assertEquals(13, allAccountRoles.size());
         System.assertEquals(12, activeAccountRoles.size());
-        System.assertEquals(4, contactsAfter.size());
+        System.assertEquals(5, contactsAfter.size());
        
     }
 
@@ -460,7 +496,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         Test.stopTest();
 
         System.assertEquals(3, accountRoles.size());
-        System.assertEquals(4, contactsAfter.size());
+        System.assertEquals(5, contactsAfter.size());
         System.assertEquals(true, personsAfter.isEmpty());
 
     }
@@ -649,6 +685,75 @@ public with sharing class AMS_AccountRoleCreatorTest {
         oscar.STEP6__c = 'Passed';
         oscar.AMS_Correction_change_code__c = 'CAD';
         System.debug('test_CADCCCorrectionProcess oscar: ' + oscar);
+
+        update oscar;
+
+        Test.stopTest();
+    }
+
+    @isTest static void test_NGCorrectionProcess(){
+        
+        Test.startTest();
+        
+        Id correctionOSCARRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
+
+        AMS_OSCAR__c oscar = [select Id, Account__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Account__r.Name = 'NewGenAgency' limit 1];
+        System.debug('test_CADCCCorrectionProcess oscar: ' + oscar);
+
+        AMS_HierarchyHelper.createProcessDetailForFullHierarchy(oscar.Id, oscar.Account__c);
+
+        //List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
+        Case c = [SELECT Id FROM Case WHERE Oscar__c = :oscar.Id];
+
+        AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(
+            SAAM_Case__c = c.id,
+            Account_Name__c = 'NewGenAgency',
+            //CASS_Number__c = '125',
+            Location_Class__c = 'P',
+            //IATA_ISO_State__c = [SELECT Id FROM IATA_ISO_State__c LIMIT 1][0].Id,
+            Branch_Office_Country__c = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1][0].Id
+        );
+        insert accre;
+
+        AMS_Accreditation_Contact__c owner3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accre.Id, Agency_Owner__c = true, Financial_interest__c = 100,
+                                                                                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner'), 
+                                                                                Last_name__c = 'New Owner', First_Name__c = 'New ContactHE', Email__c = 'newContacthe@newOwner.test');
+        insert owner3;
+
+        System.debug('test_CADCCCorrectionProcess accre: ' + accre);
+
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test ownerHE',
+            First_name__c= 'test',
+            Last_name__c = 'ownerHE',
+            Email__c= 'owner.testHE@test.com',
+            Phone__c= '123456798',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+        oscar.RecordTypeId = correctionOSCARRecTypeId;
+        //oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;
+        oscar.AMS_Online_Accreditation__c = accre.Id;
+        oscar.STEP6__c = 'Passed';
+        System.debug('test_CADCCCorrectionProcess oscar: ' + oscar);
+
+        update oscar;
+
+        Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = oscar.Account__c, Change_Code__c = 'CCR',  Sent_to_external_system__c = false);
+
+        insert aacc1;
+
+        oscar.STEP40__c = 'Passed';
+        oscar.ANG_Sanity_checks__c = 'Passed';
+        oscar.Is_PCI_compliant__c = 'Yes';
+        oscar.Type_of_change__c = AMS_Utils.COR;
+        oscar.Process__c = AMS_Utils.NGCORRECTION;
+        oscar.AMS_Correction_change_code__c = 'COR';
+        oscar.ANG_PCI_compliance_expiry_date__c = Date.Today();
 
         update oscar;
 

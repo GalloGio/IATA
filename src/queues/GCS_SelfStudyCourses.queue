@@ -3,10 +3,9 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>GCS-SelfStudyCourses</name>
     <queueMembers>
-        <users>
-            <user>siddiqia@iata.org</user>
-            <user>cespedesy@iata.org</user>
-        </users>
+        <publicGroups>
+            <publicGroup>GCSSelfStudyCourses</publicGroup>
+        </publicGroups>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

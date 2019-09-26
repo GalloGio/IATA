@@ -1,0 +1,37 @@
+.customTriangle {
+    border-width: 2px;
+    position: relative;
+    box-shadow: none;
+}
+
+.customTriangle::before {
+    content:"";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 150px 150px;
+    position: absolute;
+    border-color: transparent transparent #f0f2f5 transparent;
+    bottom: -2px;
+    right: -2px;
+}
+
+.titlePadding {
+    padding-top:102px;
+}
+
+.searchDivStyle {
+    position:relative;
+}
+
+.componentLoadingSpinner{
+    position: relative;
+    display: inline-block;
+    margin: 6px 8px;
+    width: 16px;
+    vertical-align: middle;
+}
+
+.headerContainerShadow::after{
+    height: 305px;
+}

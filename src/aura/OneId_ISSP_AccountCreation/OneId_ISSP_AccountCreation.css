@@ -1,0 +1,62 @@
+.THIS li.form-element__help {
+	padding-top: 0px; 
+}
+
+.THIS .intl-tel-input{
+	display: block;
+}
+
+.THIS .text-warning{
+	color: orange;
+}
+
+.THIS .text-header{
+	color: blue;
+}
+
+.THIS .button-bordered{
+	border: 1px solid rgb(217, 219, 221);
+	padding: 3px;
+}
+
+.THIS .slds-icon-action-minority{
+	background-color: blue;
+	color: white;
+}
+
+.THIS .suggestion-list{
+	display: contents;
+}
+
+.THIS .autocomplete-active {
+  background-color: DodgerBlue;
+  color: #ffffff; 
+}
+
+.THIS .check_addr_msg{
+	margin: 0px;
+}
+
+.THIS .errorMsg{
+	color: rgb(194, 57, 52);
+    font-size: .75rem;
+}
+
+.THIS .validMsg{
+	color: rgb(57, 194, 52);
+    font-size: .75rem;
+}
+
+.THIS .warningMsg{
+	color: rgb(194, 150, 0);
+    font-size: .75rem;
+}
+
+.THIS.warningBox{
+	border: 2px solid orange; 
+	border-radius: 5px; 
+	padding:5px; 
+	margin:auto;
+	color:#706e6b;
+	font-size: .75rem;
+}

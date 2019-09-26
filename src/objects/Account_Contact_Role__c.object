@@ -49,7 +49,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -256,7 +256,7 @@
     <label>Account Contact Role</label>
     <nameField>
         <displayFormat>ACR-{000000000}</displayFormat>
-        <label>Account Contact Role Name</label>
+        <label>Account Contact Role Id</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>

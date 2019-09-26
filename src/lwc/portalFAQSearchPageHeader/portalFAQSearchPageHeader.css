@@ -1,0 +1,25 @@
+.breadcrumbsHeight{
+    height: 69px;
+}
+
+.headerContainer{
+    display: flex;
+    width:100%;
+}
+
+.headerTextContainer{
+    display: flex;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.headerTextAlign {
+    width: 100%;
+}
+
+.mainDiv {
+    background-color: #1e32fa;
+    background-size: cover;
+    height: 184px;
+}

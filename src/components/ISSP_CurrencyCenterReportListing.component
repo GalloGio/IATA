@@ -34,10 +34,10 @@
     <div style="height: 490px;">
         <div id="reportList">
             <!-- Currency Repatriation -->
-            <apex:repeat var="sectionTitle" value="{!setOfSections}">
+            <apex:repeat var="sectionTitle" value="{!listOfSections}">
                 <h3> {!sectionTitle}</h3>
                 <div id="yearList">
-                    <apex:repeat var="yearTitle" value="{!setOfYearsSection}">
+                    <apex:repeat var="yearTitle" value="{!listOfYearsSection}">
                         <h3>{!yearTitle}</h3>
                         <div  class="collapse test2" aria-expanded="false">
                             <apex:repeat var="reportsmonth" value="{!mapOfYearsSection[yearTitle]}">

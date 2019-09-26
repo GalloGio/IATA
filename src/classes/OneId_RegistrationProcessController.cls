@@ -363,7 +363,7 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     public static Account returnRelatedAcc(Id accID){
-        return [SELECT id, Name, ParentId, Ownerid, Recordtypeid, Category__c, Category_Other_Value__c, BillingCountry, IATA_ISO_Country__c, IATA_ISO_Shipping_Country__c, Sector__c, Reason_for_creation__c FROM Account WHERE ID =: accID];
+        return [SELECT id, Name, ParentId, Ownerid, Recordtypeid, Category__c, Category_Other_Value__c, BillingCountry, IATA_ISO_Country__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c, Sector__c, Reason_for_creation__c FROM Account WHERE ID =: accID];
     }
 
 
@@ -440,12 +440,12 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     @AuraEnabled
-    public static List<String> getContactJobFunctionValues(){
-        List<String> values =  new  List<String>();
+    public static List<PicklistEntry> getContactJobFunctionValues(){
+        List<PicklistEntry> values =  new  List<PicklistEntry>();
 
         List<Schema.PicklistEntry> controllingFieldValues = Schema.Contact.Function__c.getDescribe().getPickListValues();
         for (Schema.PicklistEntry p : controllingFieldValues){
-           values.add(p.getLabel());
+           values.add(new PicklistEntry(p.getLabel(), p.getValue()));
         }
         return values;
     }
@@ -549,7 +549,7 @@ public without sharing class OneId_RegistrationProcessController {
             serviceName = 'IDENTITY';
 
         //it's general public account? create contact / user
-        if(acc.Sector__c == 'General Public'){
+        if(acc.Id == null && acc.Sector__c == 'General Public'){
             List<Account> gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and  IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];
             if(!gpAccount.isEmpty()) acc.Id  = gpAccount[0].Id;
         }
@@ -932,7 +932,7 @@ public without sharing class OneId_RegistrationProcessController {
     }
    @AuraEnabled
     public static StatesAndAlternateNames getStates(String country){
-        List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, (SELECT IATA_ISO_State__r.Name, GeonameHierarchy_label__c, Name FROM IATA_ISO_Cities__r ) FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
+        List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, (SELECT IATA_ISO_State__r.Name, GeonameName__c, GeonameHierarchy_label__c, Name FROM IATA_ISO_Cities__r ) FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
         Map<ID, IATA_ISO_City__c> ma = new Map<ID,IATA_ISO_City__c>([SELECT GeonameAlternateNames__c FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name = :country]);
         StatesAndAlternateNames states = new StatesAndAlternateNames(liis, ma);
 
@@ -954,18 +954,6 @@ public without sharing class OneId_RegistrationProcessController {
         
     }
 
-    @AuraEnabled
-    public static String getAllCities(String country){
-        String allCities = '';
-        
-        for(IATA_ISO_City__c iic : [SELECT Name FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name != :country] ){
-            allCities += iic.Name+', ';
-        }
-        
-        Integer allCitiesSize = allCities.length(); 
-        
-        return allCitiesSize > 0 ? allCities.substring(0,allCitiesSize-2):null;
-    } 
     /* Manuel Conde commented this... 
 
     public static void increaseCodeCoverage(){

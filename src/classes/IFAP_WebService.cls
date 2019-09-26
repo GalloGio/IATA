@@ -21,9 +21,9 @@ global class IFAP_WebService {
     @TestVisible private static final String INVALID_ACTION_REINSTATE_AGENT = 'Invalid action, you need to reinstate the agent from the SIDRA lite related case.';
     @TestVisible private static final String INVALID_ACTION_REMOVE_CASH_CONDITIONS = 'Invalid action, you need to remove Cash conditions using the appropriate button.';
     @TestVisible private static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY = 'Conditions are not satisfied to apply Cash Condition on the agent.';
-    @TestVisible private static final String CASH_CONDITION_SUCCESSFULLY_APPLIED = 'Cash condition applied successfully on the agent.';
+    @TestVisible private static final String CASH_CONDITION_SUCCESSFULLY_APPLIED = 'Second non-compliance was successfully applied.';
     @TestVisible private static final String UNABLE_TO_APPLY_CASH_CONDITION = 'Unable to apply cash condition on the agent.';
-    @TestVisible private static final String CASH_CONDITION_SUCCESSFULLY_REMOVED = 'Cash condition successfully removed from the agent.';
+    @TestVisible private static final String CASH_CONDITION_SUCCESSFULLY_REMOVED = 'Agent reinstated successfully after second non-compliance.';
     @TestVisible private static final String UNABLE_TO_REMOVE_CASH_CONDITION = 'Unable to remove cash condition from the agent.';
     @TestVisible private static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE = 'Conditions are not satisfied to remove Cash Condition from the agent.';
     @TestVisible private static final String AGENT_DOES_NOT_HAVE_CASH_CONDITION = 'Agent does not have cash condition.';
@@ -144,40 +144,55 @@ global class IFAP_WebService {
 
     }
 
-    WebService static String generateURLForNewCaseFromSAAM(String saamCaseId) {
+    WebService static String generateURLForNewCaseFromSAAM(String caseId) {
 
         ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+        ID CNScaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CNS_Collection_Process');
 
-        String url = '/500/e?retURL=/' + saamCaseId + '&RecordType=' + IFAPcaseRecordTypeID;
+        String url = '/500/e?retURL=/' + caseId + '&RecordType=' + IFAPcaseRecordTypeID;
 
-        // find the SAAM case
-        Case saamCase = [Select c.Id, c.CaseNumber, c.Account.Id from Case c where c.Id = :saamCaseId limit 1];
-        if (saamCase == null) {
-            return 'ERROR: The SAAM case with Id ' + saamCaseId + ' was not found.';
-            //throw new IFAPException('The SAAM case with Id ' + saamCaseId + ' was not found.');
+        // find the case
+        Case cse = [Select Id, CaseNumber, Account.Id, RecordTypeId, BusinessHoursId from Case where Id = :caseId limit 1];
+        if (cse == null) {
+            return 'ERROR: The case with Id ' + caseId + ' was not found.';
         }
 
         // find the IFAP contact associated to the Account
-        List<Contact> ifapContact = [Select c.Id from Contact c where c.Account.Id = : saamCase.Account.Id and c.Financial_Assessment_Contact__c = true];
+        List<Contact> ifapContact = [Select c.Id from Contact c where c.Account.Id = : cse.Account.Id and c.Financial_Assessment_Contact__c = true];
         if (ifapContact == null || ifapContact.size() == 0) {
             return 'ERROR: Account selected does not have an IATA Financial Assessment contact assigned.';
         }
 
         // check if there already was an IFAP case associated to the SAAM case
-        List<Case> existingIFAPCases = [Select c.Id, c.Subject from Case c where c.ParentId = :saamCaseId and c.RecordTypeId = :IFAPcaseRecordTypeID];
+        List<Case> existingIFAPCases = [Select c.Id, c.Subject from Case c where c.ParentId = :caseId and c.RecordTypeId = :IFAPcaseRecordTypeID];
         if (existingIFAPCases != null && existingIFAPCases.size() > 0) {
-            return 'ERROR: The SAAM case already has an IFAP case related to it';
+            return 'ERROR: This case already has an IFAP case related to it.';
         }
 
         // set the parent case
-        url += '&cas28=' + EncodingUtil.urlEncode(saamCase.CaseNumber, 'UTF-8');
+        url += '&cas28=' + EncodingUtil.urlEncode(cse.CaseNumber, 'UTF-8');
 
         // set the account
-        url += '&cas4_lkid=' + EncodingUtil.urlEncode(saamCase.Account.Id, 'UTF-8');
+        url += '&cas4_lkid=' + EncodingUtil.urlEncode(cse.Account.Id, 'UTF-8');
 
         // set the contact
         url += '&cas3_lkid=' + EncodingUtil.urlEncode(ifapContact[0].Id, 'UTF-8');
 
+        //ACAMBAS - WMO-484: Begin
+        if(cse.RecordTypeId == CNScaseRecordTypeID) {
+            // set the finantial review type
+            url += '&00N20000003JdqT=' + EncodingUtil.urlEncode('CNS Collection Process', 'UTF-8');
+
+            // set the FA Deadline Date
+            Date deadlineDate = BusinessHours.nextStartDate(cse.BusinessHoursId, Date.today().addDays(30)).date();
+            String deadlineDateStr = deadlineDate.month() + '/' + deadlineDate.day() + '/' + deadlineDate.year();
+            url += '&00N20000001G2Tq=' + EncodingUtil.urlEncode(deadlineDateStr, 'UTF-8');
+
+            // set CNS Case flag
+            url += '&00Nw00000094hq4=1';      
+        }
+        //ACAMBAS - WMO-484: End
+        
         return url;
     }
 
@@ -281,7 +296,19 @@ global class IFAP_WebService {
 					Id,
 					ANG_IsNewgenAgency__c,
                     ANG_HE_CashCondition__c,
-					(SELECT
+                    (SELECT
+                        Id,
+                        ANG_Limit_Cash_Conditions__c
+                     FROM
+                        Location_Risk_Events__r
+                     WHERE
+                        ANG_Risk_Type__r.Name = 'Fail Financial Statements'
+                     AND
+                        ANG_Event_Status__c IN ('Active', 'Inactive_Revoked')
+                     ORDER BY LastModifiedDate DESC
+                     LIMIT 1
+                    ),
+                    (SELECT
 						Id,
 						Status,
                         Deadline_Date__c,
@@ -341,7 +368,9 @@ global class IFAP_WebService {
 				return message;
 			}
 
-			message = applyCashConditionAction(acct, cse);
+            ANG_Agency_Risk_Event__c riskEvent = acct.Location_Risk_Events__r.get(0);
+
+			message = applyCashConditionAction(riskEvent, cse);
 
 			if(message != 'SUCCESS'){
 				return UNABLE_TO_APPLY_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(message) + '.';
@@ -358,13 +387,13 @@ global class IFAP_WebService {
 
 	}
 
-	private static String applyCashConditionAction(Account acct, Case cse){
+	private static String applyCashConditionAction(ANG_Agency_Risk_Event__c riskEvent, Case cse){
 
 		Savepoint sp = Database.setSavePoint();
 
 		try {
-			acct.ANG_HE_CashCondition__c = true;
-			update acct;
+			riskEvent.ANG_Limit_Cash_Conditions__c = true;
+			update riskEvent;
 
 			cse.secondFAnonComplianceDate__c = System.today();
 			cse.FA_Third_Deadline_Date__c    = cse.Deadline_Date__c.addDays(365);
@@ -421,7 +450,9 @@ global class IFAP_WebService {
             return message;
         }
 
-        message = removeCashConditionAction(acct);
+		ANG_Agency_Risk_Event__c riskEvent = acct.Location_Risk_Events__r.get(0);
+
+        message = removeCashConditionAction(riskEvent);
 
         if(message != 'SUCCESS'){
             return UNABLE_TO_REMOVE_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(message) + '.';
@@ -449,11 +480,11 @@ global class IFAP_WebService {
 
     }
 
-    private static String removeCashConditionAction(Account acct){
+    private static String removeCashConditionAction(ANG_Agency_Risk_Event__c riskEvent){
 
 		try {
-			acct.ANG_HE_CashCondition__c = false;
-			update acct;
+			riskEvent.ANG_Limit_Cash_Conditions__c = false;
+			update riskEvent;
 		}
 		catch(Exception e){
 			system.debug(LoggingLevel.ERROR, e.getStackTraceString());

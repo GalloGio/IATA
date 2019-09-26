@@ -6,8 +6,6 @@
             '../OneIdResources/css/salesforce-lightning-design-system-ltng.css')}"
     />
 
-    
-
     <aura:attribute type="String" name="greeting" default="OneId" access="global" />
 
     <aura:attribute type="Boolean" name="loaded" default="false" />
@@ -35,12 +33,12 @@
                 <aura:if isTrue="{!v.blockLogo}">
                     <a class="homeIcon loginIcon" >
                         <span class="icon icon-logo"></span>
-                        <span class="{!'subLogo' + v.serviceName}"></span>
+                        <span class="{!(v.serviceName == 'CSP') ? 'subLogoISSP' : 'subLogo' + v.serviceName}"></span>
                     </a>
                     <aura:set attribute="else">
                         <a class="homeIcon loginIcon" href="{!'/' + $Label.c.OneId_Community_Name + '/login/?language=' + v.selectedLanguage + '&amp;' + (empty(v.serviceName) ? '' : 'serviceName='+v.serviceName)}">
                             <span class="icon icon-logo"></span>
-                            <span class="{!'subLogo' + v.serviceName}"></span>
+                            <span class="{!(v.serviceName == 'CSP') ? 'subLogoISSP' : 'subLogo' + v.serviceName}"></span>
                         </a>
                     </aura:set>
                 </aura:if>
@@ -48,7 +46,7 @@
 		    </div>
 
             <div class="slds-col slds-max-small-size_1-of-1 slds-align-bottom slds-p-horizontal_large">
-                <aura:if isTrue="{!equals(v.serviceName, 'ISSP')}">
+                <aura:if isTrue="{!equals(v.serviceName, 'ISSP') || equals(v.serviceName, 'CSP')}">
                     <lightning:select class="noLabel" value="{!v.selectedLanguage}" onchange="{!c.langPickerChange}">
                         <aura:iteration items="{!v.langPickerOptions}" var="item">
                             <option text="{!item.label}" value="{!item.value}" selected="{!item.selected}"/>

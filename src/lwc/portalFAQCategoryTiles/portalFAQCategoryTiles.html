@@ -1,0 +1,39 @@
+<template>
+    <div if:true={loading} class="spinnerContainer">
+        <lightning-spinner class="background-superLightGray" size="medium"></lightning-spinner>
+    </div>
+
+    <!-- RENDER AS TILES -->
+    <div if:false={loading} >
+        <div if:true={renderWithIcons}>
+            <div class="text-medium text-darkGray text-bold slds-m-bottom_x-small">
+                {label.CSP_FAQ_HeaderTitle}
+            </div>
+            <div class="text-xsmall text-gray subtitleHeight">
+                {label.CSP_FAQ_Subtitle}
+            </div>
+                
+            <div class="slds-grid slds-wrap slds-gutters_xx-small">
+                <template for:each={lstTiles} for:item="tile" for:index="index">
+                    <div key={tile.categoryName} class={tile.class} >
+                        <div class="customBorderlessCardWhite cursorPointer heightInfo" onclick={handleTileButtonClick} data-item={tile.categoryName}>
+                            <img src={tile.imageURL} data-item={tile.categoryName}/>
+                            <div class="text-small text-black text-bold" data-item={tile.categoryName}>{tile.categoryLabel}</div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- RENDER AS A LIST -->
+        <div if:false={renderWithIcons}>
+            <div class="customBorderlessCardGray">
+                <template for:each={lstTiles} for:item="tile" for:index="index">
+                    <div key={tile.categoryName} class="slds-p-around_medium customCardTitleBox cursorPointer borderStyle cardStyle" onclick={handleTileButtonClick} data-item={tile.categoryName}>
+                        <span class="slds-p-left_small text-bold" data-item={tile.categoryName}>{tile.categoryLabel}</span>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>
