@@ -1,4 +1,4 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
@@ -13,7 +13,11 @@ import CSP_Welcome_Panel_Bullet_4_Title from '@salesforce/label/c.CSP_Welcome_Pa
 import CSP_Welcome_Panel_Bullet_4_Desc  from '@salesforce/label/c.CSP_Welcome_Panel_Bullet_4_Desc';
 import CSP_PortalPath                   from '@salesforce/label/c.CSP_PortalPath';
 
+import getAuthConfig from '@salesforce/apex/CSP_Utils.getAuthConfig';
+
 export default class PortalPublicKBInfo extends NavigationMixin(LightningElement) {
+    @track config = {};
+
     _labels = {
         CSP_Welcome_Panel_Bullet_1_Title,
         CSP_Welcome_Panel_Bullet_1_Desc,
@@ -34,11 +38,20 @@ export default class PortalPublicKBInfo extends NavigationMixin(LightningElement
         this._labels = value; 
     }
 
-    serviceIcon = CSP_PortalPath + 'CSPortal/Images/Icons/service_recolor.png';
-    uptodateIcon = CSP_PortalPath + 'CSPortal/Images/Icons/uptodate_recolor.png';
-    offerIcon = CSP_PortalPath + 'CSPortal/Images/Icons/offer_recolor.png';
-    supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support_recolor.png';
-    arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow_right_recolor.png';
+    serviceIcon = CSP_PortalPath + 'CSPortal/Images/Icons/servicerecolor.png';
+    uptodateIcon = CSP_PortalPath + 'CSPortal/Images/Icons/uptodaterecolor.png';
+    offerIcon = CSP_PortalPath + 'CSPortal/Images/Icons/offerrecolor.png';
+    supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/supportrecolor.png';
+    arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrowrightrecolor.png';
+
+    connectedCallback() {
+        getAuthConfig()
+            .then(results => {
+                var config = JSON.parse(JSON.stringify(results));
+                config.selfRegistrationUrl = results.selfRegistrationUrl.substring(results.selfRegistrationUrl.indexOf(CSP_PortalPath));
+                this.config = config;
+        });
+    }
 
     handleNavigateToLogin() {
         this[NavigationMixin.GenerateUrl]({
@@ -50,11 +63,6 @@ export default class PortalPublicKBInfo extends NavigationMixin(LightningElement
     }
 
     handleNavigateToSignUp() {
-        this[NavigationMixin.GenerateUrl]({
-            type: "comm__loginPage",
-            attributes: {
-                actionName: 'login'
-            }})
-        .then(url => navigateToPage(url, {}));
+        navigateToPage(this.config.selfRegistrationUrl);
     }
 }
