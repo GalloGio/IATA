@@ -326,6 +326,24 @@ public class IATAIsoCountryDAO {
 
 	/**
 	 * Method that return a list of IATA_ISO_Country list without all
+	 * Case_BSP_Country__c != null AND Case_BSP_Country__c != '' AND is Multicountry_Enabled__c 
+	 * 
+	 * @return List of IATA_ISO_Country
+	 */
+	public static List<IATA_ISO_Country__c> getMultiCountryIsoCountriesByCaseBSPCountryNotNull(){  
+
+		List<IATA_ISO_Country__c> isoCountryList = new List<IATA_ISO_Country__c>();
+
+		for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountries()){
+			if(isoCountry.Case_BSP_Country__c != null && isoCountry.Case_BSP_Country__c != '' && isoCountry.Multicountry_Enabled__c){
+				isoCountryList.add(isoCountry);
+			}
+		}
+		return isoCountryList;
+	}
+
+	/**
+	 * Method that return a list of IATA_ISO_Country list without all
 	 * Case_BSP_Country__c != null AND Case_BSP_Country__c != ''
 	 * 
 	 * @return List of IATA_ISO_Country
