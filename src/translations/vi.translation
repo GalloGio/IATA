@@ -1915,6 +1915,10 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
+        <label>Kính chào quý khách,</label>
+        <name>CSP_Dear</name>
+    </customLabels>
+    <customLabels>
         <label>Từ chối quyền truy cập của người dùng</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1943,15 +1947,15 @@
         <name>CSP_Email</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <label>Chân thành cảm ơn quý khách vì đã đăng ký tài khoản trên Cổng thông tin Khách hàng IATA. Chỉ còn một bước nữa thôi là quý khách có thể truy cập vào hệ thống của chúng tôi!</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 2 --></label>
+        <label>Xin quý khách vui lòng xác nhận địa chỉ Email của mình bằng cách nhấn vào</label>
         <name>CSP_Email_Confirmation_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 3 --></label>
+        <label>Vì lý do bảo mật, liên kết này chỉ có hiệu lực trong vòng 8 giờ tới. Sau khoảng thời gian trên, quý khách sẽ phải gửi lại yêu cầu xác minh tài khoản đến địa chỉ Email của mình.</label>
         <name>CSP_Email_Confirmation_Body_Part_3</name>
     </customLabels>
     <customLabels>
@@ -1963,23 +1967,27 @@
         <name>CSP_Email_Header_Image</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 1 --></label>
+        <label>đây</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi đã nhận được truy vấn yêu cầu đặt lại mật khẩu cho tài khoản của quý khách trên Cổng thông tin Khách hàng IATA.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 2 --></label>
+        <label>Xin quý khách vui lòng nhấn vào</label>
         <name>CSP_Email_Password_Reset_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 3 --></label>
+        <label>để thực hiện cài đặt mật khẩu mới cho tài khoản của mình.</label>
         <name>CSP_Email_Password_Reset_Body_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 4 --></label>
+        <label>Vì lý do bảo mật, liên kết này sẽ chỉ có hiệu lực trong vòng 8 giờ tới. Sau khoảng thời gian trên, quý khách sẽ phải gửi lại yêu cầu đặt lại mật khẩu đến địa chỉ Email của mình.</label>
         <name>CSP_Email_Password_Reset_Body_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Signature Part 1 --></label>
+        <label>Chân thành cảm ơn quý khách vì đã trở thành một phần của IATA.</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
@@ -1987,23 +1995,23 @@
         <name>CSP_Email_Signature_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 1 --></label>
+        <label>Chúng tôi rất hân hạnh khi có quý khách tham gia vào Cổng thông tin Khách hàng IATA của chúng tôi!</label>
         <name>CSP_Email_Welcome_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 2 --></label>
+        <label>Cổng thông tin Khách hàng IATA cung cấp các gói dịch vụ hữu ích, các thông tin liên quan đến sản phẩm, một số mẹo và thủ thuật hữu ích được thiết kế dành riêng cho quý khách. Quý khách có thể sử dụng tài khoản này để dễ dàng liên hệ với Bộ phận Chăm sóc Khách hàng của chúng tôi. Tài khoản trên cũng cung cấp các tính năng trò chuyện trực tiếp hoặc mua hàng trực tiếp từ cửa hàng trực tuyến của chúng tôi. Đây chính là cánh cổng đưa quý khách đến IATA!</label>
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 3 --></label>
+        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;Đưa tôi đến Cổng thông tin!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 4 --></label>
+        <label>Để nâng cao các trải nghiệm của mình trên Cổng thông tin Khách hàng IATA, quý khách có thể hoàn thành các thông tin còn thiếu trên hồ sơ tài khoản của mình bất cứ khi nào quý khách muốn. Quý khách có thể dễ dàng thực hiện thao tác trên bằng cách nhấn vào</label>
         <name>CSP_Email_Welcome_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 5 --></label>
+        <label>Chúng tôi hy vọng quý khách có những trải nghiệm tuyệt vời khi sử dụng Cổng thông tin Khách hàng IATA của chúng tôi!</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
@@ -2223,10 +2231,7 @@
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
-        <label>Tôi đồng ý với 
-&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Chính sách bảo mật &lt;/a&gt;
-và &lt;br/&gt;
-&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Điều khoản sử dụng. &lt;/a&gt; của IATA</label>
+        <label>Tôi đồng ý với &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Chính sách bảo mật&lt;/a&gt; và &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Điều khoản sử dụng. &lt;/a&gt; của IATA</label>
         <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>

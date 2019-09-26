@@ -1913,6 +1913,10 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
+        <label>Уважаемый!</label>
+        <name>CSP_Dear</name>
+    </customLabels>
+    <customLabels>
         <label>Запретить доступ пользователя</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1941,15 +1945,15 @@
         <name>CSP_Email</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <label>Спасибо за регистрацию на клиентском портале в Международной ассоциации воздушного транспорта (ИАТА). Вы всего в одном шаге от получения доступа!</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 2 --></label>
+        <label>Пожалуйста, подтвердите свой адрес электронной почты, нажав</label>
         <name>CSP_Email_Confirmation_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 3 --></label>
+        <label>По соображениям безопасности эта ссылка действительна в течение 8 часов. По истечении времени, Вы должны будете повторно подать запрос.</label>
         <name>CSP_Email_Confirmation_Body_Part_3</name>
     </customLabels>
     <customLabels>
@@ -1961,23 +1965,27 @@
         <name>CSP_Email_Header_Image</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 1 --></label>
+        <label>здесь</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>Мы получили Ваш запрос на сброс Вашего пароля клиентского портала Международной ассоциации воздушного транспорта (ИАТА).</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 2 --></label>
+        <label>Пожалуйста, нажмите</label>
         <name>CSP_Email_Password_Reset_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 3 --></label>
+        <label>чтобы установить новый пароль.</label>
         <name>CSP_Email_Password_Reset_Body_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 4 --></label>
+        <label>По соображениям безопасности эта ссылка действительна в течение 8 часов. По истечении времени, Вы должны будете повторно подать запрос.</label>
         <name>CSP_Email_Password_Reset_Body_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Signature Part 1 --></label>
+        <label>Спасибо за участие в Международной ассоциации воздушного транспорта (ИАТА).</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
@@ -1985,23 +1993,23 @@
         <name>CSP_Email_Signature_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 1 --></label>
+        <label>Мы рады, что Вы с нами на нашем клиентском портале Международной ассоциации воздушного транспорта (ИАТА)!</label>
         <name>CSP_Email_Welcome_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 2 --></label>
+        <label>Клиентский портал Международной ассоциации воздушного транспорта (ИАТА) содержит полезные услуги, информацию о продукте, полезные советы и рекомендации, специально разработанные для Вас. Вы можете использовать его, чтобы легко связаться с нашей службой поддержки клиентов, в том числе в режиме реального времени в чате или непосредственно в нашем интернет-магазине. Это Ваши ворота в Международную ассоциацию воздушного транспорта (ИАТА)!</label>
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 3 --></label>
+        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;Отведите меня на портал!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 4 --></label>
+        <label>Для еще большего улучшения Вашего опыта в клиентском портале Международной ассоциации воздушного транспорта (ИАТА), Вы можете заполнить информацию в своей учетной записи, когда Вы захотите. Вы можете легко сделать это, нажав</label>
         <name>CSP_Email_Welcome_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 5 --></label>
+        <label>Мы надеемся, что Вам понравится наш клиентский портал Международной ассоциации воздушного транспорта (ИАТА)!</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
@@ -2221,7 +2229,9 @@
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Privacy Policy --></label>
+        <label>Я согласен с
+&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;ИАТА Политикой конфиденциальности&lt;/a&gt;
+ и &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Условиями использования.&lt;/a&gt;</label>
         <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>

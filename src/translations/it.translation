@@ -1917,6 +1917,10 @@ la seguente procedura per completarlo :
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
+        <label>Gentile cliente,</label>
+        <name>CSP_Dear</name>
+    </customLabels>
+    <customLabels>
         <label>Nega l&apos;accesso all&apos;utente</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1945,15 +1949,15 @@ la seguente procedura per completarlo :
         <name>CSP_Email</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <label>la ringraziamo per essersi registrato al Portale Clienti IATA. Manca soltanto un ultimo passaggio per ottenere l&apos;accesso!</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 2 --></label>
+        <label>Confermi il suo indirizzo email facendo clic</label>
         <name>CSP_Email_Confirmation_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 3 --></label>
+        <label>Per motivi di sicurezza, questo link sarà valido per 8 ore. Trascorso tale tempo limite, dovrà inviare una nuova richiesta.</label>
         <name>CSP_Email_Confirmation_Body_Part_3</name>
     </customLabels>
     <customLabels>
@@ -1965,23 +1969,27 @@ la seguente procedura per completarlo :
         <name>CSP_Email_Header_Image</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 1 --></label>
+        <label>qui.</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>abbiamo ricevuto la sua richiesta di reimpostazione della password del Portale Clienti IATA.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 2 --></label>
+        <label>Faccia clic</label>
         <name>CSP_Email_Password_Reset_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 3 --></label>
+        <label>per impostare una nuova password.</label>
         <name>CSP_Email_Password_Reset_Body_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 4 --></label>
+        <label>Per motivi di sicurezza, questo link sarà valido per 8 ore. Trascorso tale tempo limite, dovrà inviare una nuova richiesta.</label>
         <name>CSP_Email_Password_Reset_Body_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Signature Part 1 --></label>
+        <label>Grazie per la sua partecipazione a IATA.</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
@@ -1989,23 +1997,23 @@ la seguente procedura per completarlo :
         <name>CSP_Email_Signature_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 1 --></label>
+        <label>siamo lieti di accoglierla nel nostro Portale Clienti IATA!</label>
         <name>CSP_Email_Welcome_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 2 --></label>
+        <label>Il Portale Clienti IATA è ricco di servizi utili, informazioni sui prodotti, utili suggerimenti e consigli specifici in base alle sue esigenze. Può usarlo per contattare facilmente il nostro Servizio Clienti, compresa l&apos;assistenza via chat, o acquistare direttamente dal nostro store online. È il suo accesso diretto a IATA!</label>
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 3 --></label>
+        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;Portami al portale!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 4 --></label>
+        <label>Per migliorare ulteriormente la sua esperienza col Portale Clienti IATA, può inserire le informazioni sull&apos;account quando lo desidera. Può farlo facilmente facendo clic</label>
         <name>CSP_Email_Welcome_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 5 --></label>
+        <label>Ci auguriamo che il nostro Portale Clienti IATA sia di suo gradimento!</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
@@ -2226,9 +2234,7 @@ la seguente procedura per completarlo :
     </customLabels>
     <customLabels>
         <label>Sono d&apos;accordo con l&apos;
-&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Informativa sulla privacy &lt;/a&gt;
-ed i &lt;br/&gt;
-&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Termini di utilizzo &lt;/a&gt;  di IATA.</label>
+&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Informativa sulla privacy&lt;/a&gt; ed i &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Termini di utilizzo &lt;/a&gt;  di IATA.</label>
         <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>

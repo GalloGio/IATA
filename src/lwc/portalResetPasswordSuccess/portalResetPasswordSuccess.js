@@ -11,7 +11,7 @@ import message1Label        from '@salesforce/label/c.CSP_Reset_Password_Success
 import message2Label        from '@salesforce/label/c.CSP_Reset_Password_Success_Msg_2';
 
 export default class PortalResetPasswordSuccess extends LightningElement {
-    logoIcon = CSP_PortalPath + 'check2xGreen.png';
+    successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/success.png';
 
     labels = {
         successLabel,

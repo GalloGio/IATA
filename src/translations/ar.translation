@@ -1913,6 +1913,10 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
+        <label>عميلنا العزيز،</label>
+        <name>CSP_Dear</name>
+    </customLabels>
+    <customLabels>
         <label>رفض وصول المستخدم</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1941,15 +1945,15 @@
         <name>CSP_Email</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <label>شكرًا لك على التسجيل في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA). أنت على بعد خطوة واحدة فقط للدخول!</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 2 --></label>
+        <label>يرجى تأكيد عنوان بريدك الإلكتروني من خلال النقر</label>
         <name>CSP_Email_Confirmation_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 3 --></label>
+        <label>لأسباب أمنية ، هذا الرابط صالح لمدة 8 ساعات. بعد انتهاء الوقت المحدد ، يجب عليك إعادة تقديم طلبك.</label>
         <name>CSP_Email_Confirmation_Body_Part_3</name>
     </customLabels>
     <customLabels>
@@ -1961,23 +1965,27 @@
         <name>CSP_Email_Header_Image</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 1 --></label>
+        <label>هنا</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>لقد تلقينا طلبك لإعادة تعيين كلمة المرور الخاصة بك في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA).</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 2 --></label>
+        <label>من فضلك اضغط</label>
         <name>CSP_Email_Password_Reset_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 3 --></label>
+        <label>لتعيين كلمة مرور جديدة.</label>
         <name>CSP_Email_Password_Reset_Body_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 4 --></label>
+        <label>لأسباب أمنية ، هذا الرابط صالح لمدة 8 ساعات. بعد انتهاء الوقت المحدد ، يجب عليك إعادة تقديم طلبك.</label>
         <name>CSP_Email_Password_Reset_Body_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Signature Part 1 --></label>
+        <label>شكراً لكونكم جزء من الاتحاد الدولي للنقل الجوي (إياتا - IATA).</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
@@ -1985,23 +1993,23 @@
         <name>CSP_Email_Signature_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 1 --></label>
+        <label>يسعدنا أن تكون معنا في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA)!</label>
         <name>CSP_Email_Welcome_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 2 --></label>
+        <label>بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA) بها الكثير من الخدمات المفيدة ، ومعلومات المنتج ، ونصائح وأساليب مفيدة معدَّة خصيصا لك. يمكنك استخدامها للتواصل مع فريق خدمة العملاء لدينا بسهولة ، بما في ذلك الدردشة الحية أو الشراء مباشرة من متجرنا على الإنترنت. انها بوابتك إلى الاتحاد الدولي للنقل الجوي (إياتا - IATA)!</label>
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 3 --></label>
+        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;إنتقل إلى البوابة!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 4 --></label>
+        <label>لتحسين تجربتك في استخدام بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA) ، يمكنك إكمال معلومات حسابك متى أردت ذلك. يمكنك القيام بذلك بسهولة عن طريق النقر</label>
         <name>CSP_Email_Welcome_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 5 --></label>
+        <label>نأمل أن تستمتعوا معنا باستخدام بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA)!</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>

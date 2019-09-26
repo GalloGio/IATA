@@ -11,7 +11,7 @@ import tryAgainLabel          from '@salesforce/label/c.CSP_Try_Again';
 import newAccountMessageLabel from '@salesforce/label/c.CSP_Create_New_Account_Label';
 
 export default class PortalForgotPasswordSuccess extends LightningElement {
-    logoIcon = CSP_PortalPath + 'check2xGreen.png';
+    logoIcon = CSP_PortalPath + 'CSPortal/Images/Icons/success.png';
 
     @api selfRegistrationUrl;
     @api isSelfRegistrationEnabled;

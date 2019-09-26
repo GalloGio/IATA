@@ -10,8 +10,8 @@ import successMsg2Label     from '@salesforce/label/c.CSP_Chg_Pass_Success_Msg_2
 import loginNowLabel        from '@salesforce/label/c.CSP_Login_Now';
 
 export default class PortalChangePasswordSuccess extends LightningElement {
-    logoIcon  = CSP_PortalPath + 'check2xGreen.png';
-    logoIcon2 = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
+    successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/success.png';
+    logoIcon    = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
 
     labels = {
         loginNowLabel,

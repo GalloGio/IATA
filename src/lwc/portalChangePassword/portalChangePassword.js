@@ -18,14 +18,18 @@ import errorMessageLabel        from '@salesforce/label/c.CSP_Change_Password_Er
 
 
 export default class PortalChangePassword extends LightningElement {
-    @track isLoading       = false;
-    @track currentPassword = "";
-    @track newPassword     = "";
-    @track confirmPassword = "";
+    @track isLoading         = false;
+    @track currentPassword   = "";
+    @track newPassword       = "";
+    @track confirmPassword   = "";
+    @track showErrorMessage  = false;
     @track passwordFormat           = false;
     @track buttonDisabled           = true;
     @track currentPasswordInputType = "password";
     @track newPasswordInputType     = "password";
+
+    cancelIcon      = CSP_PortalPath + 'CSPortal/Images/Icons/cancel_white.svg';
+    exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_mark_white.svg';
 
     labels = {
         saveLabel,
@@ -43,7 +47,7 @@ export default class PortalChangePassword extends LightningElement {
     }
 
     get svgURL(){
-        return CSP_PortalPath + 'show_blue.png';
+        return CSP_PortalPath + 'CSPortal/Images/Icons/show_blue.png';
     }
 
     get isCurrentPasswordIconDisabled(){
@@ -172,13 +176,13 @@ export default class PortalChangePassword extends LightningElement {
                              }
                              else{
                                  this.message = errorMessageLabel;
-                                 this.showNotification();
+                                 this.showErrorMessage = true;
                                  this.changeIsLoading();
                              }
                            })
                            .catch(error => {
                                this.message = errorMessageLabel;
-                               this.showNotification();
+                               this.showErrorMessage = true;
                                this.changeIsLoading();
                            });
         }
@@ -192,16 +196,11 @@ export default class PortalChangePassword extends LightningElement {
          }
     }
 
-    showNotification() {
-        const evt = new ShowToastEvent({
-            title: 'Error',
-            message: this.message,
-            variant: 'error',
-        });
-        this.dispatchEvent(evt);
-    }
-
     changeIsLoading(){
         this.isLoading = !this.isLoading;
+    }
+
+    handleSnackbarCancel() {
+        this.showErrorMessage = false;
     }
 }

@@ -1913,6 +1913,10 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
+        <label>Sayın</label>
+        <name>CSP_Dear</name>
+    </customLabels>
+    <customLabels>
         <label>Kullanıcı Erişimini Reddedin</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1941,15 +1945,15 @@
         <name>CSP_Email</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <label>IATA Müşteri Portalı&apos;na kaydolduğunuz için teşekkür ederiz. Erişim almanıza sadece bir adım kaldı!</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 2 --></label>
+        <label>Lütfen e-posta adresinizi</label>
         <name>CSP_Email_Confirmation_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 3 --></label>
+        <label>Güvenlik sebepleri nedeniyle bu link 8 saat geçerli olacaktır. Linkin süresi dolduktan sonra, isteğinizi tekrar göndermeniz gerekecektir.</label>
         <name>CSP_Email_Confirmation_Body_Part_3</name>
     </customLabels>
     <customLabels>
@@ -1961,23 +1965,27 @@
         <name>CSP_Email_Header_Image</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 1 --></label>
+        <label>yapabilirsiniz</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı şifrenizi sıfırlama isteğiniz bize ulaştı.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 2 --></label>
+        <label>Yeni bir şifre</label>
         <name>CSP_Email_Password_Reset_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 3 --></label>
+        <label>lütfen buraya tıklayın.</label>
         <name>CSP_Email_Password_Reset_Body_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 4 --></label>
+        <label>Güvenlik sebepleri nedeniyle bu link 8 saat geçerli olacaktır. Linkin süresi dolduktan sonra, isteğinizi yeniden göndermeniz gerekecektir.</label>
         <name>CSP_Email_Password_Reset_Body_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Signature Part 1 --></label>
+        <label>IATA&apos;in bir parçası olduğunuz için teşekkür ederiz.</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
@@ -1985,23 +1993,23 @@
         <name>CSP_Email_Signature_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 1 --></label>
+        <label>IATA Müşteri Portalımızda bizimle olmanızdan mutluluk duyuyoruz.</label>
         <name>CSP_Email_Welcome_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 2 --></label>
+        <label>IATA Müşteri Portalı; size özel olarak hazırlanmış faydalı hizmetler, ürün bilgileri, yararlı ipuçları ve püf noktaları ile doludur. Portalı canlı sohbet veya çevrimiçi mağazamızdan doğrudan alışveriş de yapmak dahil olmak üzere, Müşteri Hizmetleri Ekibimizle kolayca iletişim kurmak için kullanabilirsiniz. Burası IATA&apos;e (Uluslararası Hava Taşımacılığı Birliği) açılan kapınızdır!</label>
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 3 --></label>
+        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;Beni Portala götürün!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 4 --></label>
+        <label>IATA Müşteri Portalı deneyiminizi daha da geliştirmek için, istediğiniz zaman hesap bilgilerinizi tamamlayabilirsiniz. Buraya tıklayarak bunu kolayca</label>
         <name>CSP_Email_Welcome_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 5 --></label>
+        <label>Umarız IATA Müşteri Portalımızdan hoşnut kalırsınız!</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
@@ -2221,9 +2229,7 @@
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
-        <label>IATA (Uluslararası Hava Taşımacılığı Birliği)&apos;nin &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Gizlilik Politikası &lt;/a&gt;
-ve &lt;br/&gt;
-&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Kullanım Koşulları&apos;nı kabul ediyorum. &lt;/a&gt;</label>
+        <label>IATA (Uluslararası Hava Taşımacılığı Birliği)&apos;nin &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Gizlilik Politikası&lt;/a&gt; ve &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Kullanım Koşulları&apos;nı&lt;/a&gt; kabul ediyorum.</label>
         <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>

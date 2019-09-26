@@ -1916,6 +1916,10 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
+        <label>Yth.</label>
+        <name>CSP_Dear</name>
+    </customLabels>
+    <customLabels>
         <label>Tolak Akses Pengguna</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1944,15 +1948,15 @@
         <name>CSP_Email</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <label>Terima kasih telah mendaftar ke Portal Pelanggan IATA (International Air Transport Association). Anda tinggal selangkah lagi untuk mendapatkan akses!</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 2 --></label>
+        <label>Harap konfirmasikan alamat email Anda dengan mengklik</label>
         <name>CSP_Email_Confirmation_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 3 --></label>
+        <label>Demi alasan keamanan, tautan ini hanya berlaku selama 8 jam. Setelah batas waktu habis, Anda harus mengirimkan kembali permintaan Anda.</label>
         <name>CSP_Email_Confirmation_Body_Part_3</name>
     </customLabels>
     <customLabels>
@@ -1964,23 +1968,27 @@
         <name>CSP_Email_Header_Image</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 1 --></label>
+        <label>di sini</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami telah menerima permintaan Anda untuk mengatur ulang kata sandi Portal Pelanggan IATA Anda.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 2 --></label>
+        <label>Silakan klik</label>
         <name>CSP_Email_Password_Reset_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 3 --></label>
+        <label>untuk mengatur kata sandi baru.</label>
         <name>CSP_Email_Password_Reset_Body_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 4 --></label>
+        <label>Demi alasan keamanan, tautan ini hanya berlaku selama 8 jam. Setelah batas waktu habis, Anda harus mengirimkan kembali permintaan Anda.</label>
         <name>CSP_Email_Password_Reset_Body_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Signature Part 1 --></label>
+        <label>Terima kasih telah menjadi bagian dari IATA.</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
@@ -1988,23 +1996,23 @@
         <name>CSP_Email_Signature_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 1 --></label>
+        <label>Kami senang Anda bersama kami di Portal Pelanggan IATA (International Air Transport Association)!</label>
         <name>CSP_Email_Welcome_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 2 --></label>
+        <label>Portal Pelanggan IATA penuh dengan layanan yang bermanfaat, informasi produk, tips dan trik berguna yang dirancang khusus untuk Anda. Anda dapat menggunakannya untuk menghubungi Tim Layanan Pelanggan kami dengan mudah, termasuk layanan live chat atau membeli langsung dari toko online kami. Inilah gerbang Anda ke IATA!</label>
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 3 --></label>
+        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;Bawa saya ke Portal!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 4 --></label>
+        <label>Untuk lebih meningkatkan pengalaman Portal Pelanggan IATA Anda, Anda dapat melengkapi informasi akun Anda kapan pun Anda mau. Anda dapat dengan mudah melakukannya dengan mengklik</label>
         <name>CSP_Email_Welcome_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 5 --></label>
+        <label>Kami harap Anda menikmati Portal Pelanggan IATA kami!</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
@@ -2224,9 +2232,8 @@
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
-        <label>Saya setuju dengan &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Kebijakan Privasi &lt;/a&gt;
-dan &lt;br/&gt;
-&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Syarat Penggunaan. &lt;/a&gt; IATA</label>
+        <label>Saya setuju dengan IATA &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Kebijakan Privasi&lt;/a&gt;
+dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Syarat Penggunaan. &lt;/a&gt;</label>
         <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>

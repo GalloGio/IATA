@@ -1916,6 +1916,10 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
+        <label>친애하는 고객님께</label>
+        <name>CSP_Dear</name>
+    </customLabels>
+    <customLabels>
         <label>사용자 액세스 거부</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1944,15 +1948,15 @@
         <name>CSP_Email</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <label>국제항공운송협회 (IATA)  고객 포털에 등록해 주셔서 감사합니다. 등록을 마치기까지 딱 한 발짝이 남아있습니다.</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 2 --></label>
+        <label>다음을 클릭하여 이메일 주소를 인증하세요</label>
         <name>CSP_Email_Confirmation_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Confirmation Body Part 3 --></label>
+        <label>보안상의 이유로 이 링크는 8시간 동안 유효합니다. 시간제한이 만료되면 재요청하셔야 합니다.</label>
         <name>CSP_Email_Confirmation_Body_Part_3</name>
     </customLabels>
     <customLabels>
@@ -1964,23 +1968,27 @@
         <name>CSP_Email_Header_Image</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 1 --></label>
+        <label>이 링크</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA)  고객 포털  비밀번호 재설정 요청이 접수되었습니다.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 2 --></label>
+        <label>다음을 클릭하세요</label>
         <name>CSP_Email_Password_Reset_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 3 --></label>
+        <label>새 비밀번호를 설정하기 위해.</label>
         <name>CSP_Email_Password_Reset_Body_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Password Reset Body Part 4 --></label>
+        <label>보안상의 이유로 이 링크는 8시간 동안 유효합니다. 시간 제한이 만료되면 재요청하셔야 합니다.</label>
         <name>CSP_Email_Password_Reset_Body_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Signature Part 1 --></label>
+        <label>국제항공운송협회 (IATA) 에 참여해 주셔서 감사합니다.</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
@@ -1988,23 +1996,23 @@
         <name>CSP_Email_Signature_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 1 --></label>
+        <label>고객님께서 국제항공운송협회 (IATA)  고객 포털에서 저희와 함께 하게 되어 기쁩니다!</label>
         <name>CSP_Email_Welcome_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 2 --></label>
+        <label>국제항공운송협회 (IATA)  고객 포털에는 유용한 서비스, 제품 정보, 유용한 팁 및 정보가 포함되어 있습니다. 이를 사용해 실시간 채팅이나 온라인 상점에서 직접 구매하는 등 고객 서비스 팀에 쉽게 연락하실 수 있습니다. 국제항공운송협회 (IATA)에 들어가는 문과 같습니다!</label>
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 3 --></label>
+        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;포털로 데려다 주세요!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 4 --></label>
+        <label>국제항공운송협회 (IATA)  고객 포털 사용  경험을 더욱 향상하기 위해 원하시는 때 언제든 계정 정보를 완성하실 수 있습니다. 다음을 클릭하여 쉽게 그렇게 하실 수 있습니다</label>
         <name>CSP_Email_Welcome_Part_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Welcome Part 5 --></label>
+        <label>저희는 귀하가 저희의 국제항공운송협회 (IATA)  고객 포털을 즐기시길 바랍니다!</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
@@ -2224,7 +2232,7 @@
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Privacy Policy --></label>
+        <label>IATA 의 &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;개인 정보 보호 정책&lt;/a&gt; 과 &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;이용 약관&lt;/a&gt;에 동의합니다.</label>
         <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
