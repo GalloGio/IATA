@@ -9,7 +9,7 @@
             operationType="{!strOperationType}"
             areaType="{!strAreaType}"
             changeType="{!strChangeType}"
-            isSIS="{!OR(isISPAActive,isISUAActive)}" />
+            isSIS="{!isSISMember}" />
 
     <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
         Any doubts? Please check out our&nbsp;
@@ -30,10 +30,10 @@
             <!-- BASP/CASS Submit section -->
             <apex:outputPanel rendered="{!OR(isBSP,isCASS)}">
                 <apex:outputPanel id="mainPanel" layout="block" styleclass="apcontainer">
-                    <apex:pageBlockSection title="Application Status" columns="1">
+                    <apex:pageBlockSection title="Application Status" columns="1" collapsible="false">
                         <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,'All mandatory fields have been filled; You are ready to submit your application','You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>                  
                     </apex:pageBlockSection>
-                    <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}">
+                    <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}" collapsible="false">
                         <apex:outputText >
                             <div style="padding-bottom:10px">
                                 <div class="aplabel">The Airline needs to provide a Bank Account Mandate to IATA, so that the BSP / CASS proceedings can be settled. The bank account must either be:</div>
@@ -86,7 +86,7 @@
                     </apex:pageBlockSection>
 
                     <!-- With ICCS and is not a Member -->
-                    <apex:pageBlockSection title="Information required to join ICCS" columns="1" rendered="{!showJoinICCS}">
+                    <apex:pageBlockSection title="Information required to join ICCS" columns="1" rendered="{!showJoinICCS}" collapsible="false">
                         <p>
                             Thank you for your interest in IATA’s ICCS services.<br/>
                             As per our records your company is not active member of ICCS; in order to activate your application with ICCS, please complete the package in the link below:
@@ -114,7 +114,7 @@
                     </apex:pageBlockSection>
 
                     <!-- With ICCS and is Member -->
-                <apex:pageBlockSection title="Information required to join ICCS in this market" columns="1" rendered="{!showICCSJoinMarket}">
+                <apex:pageBlockSection title="Information required to join ICCS in this market" columns="1" rendered="{!showICCSJoinMarket}" collapsible="false">
                     Please download and complete the form in the link below, and upload using the box:
                     <apex:outputPanel layout="block" rendered="{!ICCSJoiningThisMarketUrl!=null}">
                         <apex:outputLink value="{!ICCSJoiningThisMarketUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!ICCSJoiningThisMarketName}</apex:outputLink>
@@ -123,7 +123,7 @@
                         src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=Information required to join ICCS in this market&reqDescription=&reqIdentifier=ICCS_Join_market"/>
                     </apex:pageBlockSection>
 
-                    <apex:pageBlockSection title="{!CASE(apcountryisocode, 'PE', 'Disclaimer', 'Additional Requirements')} for {!strLoB} {!apcountry}" columns="1" rendered="{!OR(apcountryisocode='IL',apcountryisocode='EC', AND(apcountryisocode='UA', strLOB='BSP'),AND(apcountryisocode='KR', strLOB='BSP'),apcountryisocode='PE',AND(apcountryisocode='RU', strLOB='BSP'))}">
+                    <apex:pageBlockSection title="{!CASE(apcountryisocode, 'PE', 'Disclaimer', 'Additional Requirements')} for {!strLoB} {!apcountry}" columns="1" rendered="{!OR(apcountryisocode='IL',apcountryisocode='EC', AND(apcountryisocode='UA', strLOB='BSP'),AND(apcountryisocode='KR', strLOB='BSP'),apcountryisocode='PE',AND(apcountryisocode='RU', strLOB='BSP'))}" collapsible="false">
                         <apex:outputText rendered="{!apcountryisocode='IL'}">
                             It is a legal requirement in {!strLOB} Israel that the participating Airline signs and submits the Antitrust Document.<br/>
                             It is the Airline that signs the form, even it is being represented in the market by a GSA/GSSA.<br/>
@@ -218,7 +218,7 @@
                     </apex:pageBlockSection>
                     
                     <!-- IATA EasyPay -->   
-                    <apex:pageBlockSection title="IATA EasyPay" columns="1" rendered="{! AND(strOperationType = 'BSP', isoCountryEligible)}">
+                    <apex:pageBlockSection title="IATA EasyPay" columns="1" rendered="{! AND(strOperationType = 'BSP', isoCountryEligible)}" collapsible="false">
                         <div class="aplabel">
                             <p>Kindly note that IATA EasyPay is secure and voluntary payment method for agents to issue tickets through the BSP. IATA EasyPay is an industry standard, established in Resolution and available by default to all carriers in <b>{!apcountry}</b>. However, should your airline wish to opt out of accepting IATA EasyPay please notify IATA through written notice a minimum of 30 days prior to the opt-out taking effect. Prior to doing so, please also ensure that your airline has fully assessed the impact of opting out of this payment method. Your airline’s opt-out will be communicated to all Accredited Agents in the market.
                             </p>
@@ -235,7 +235,7 @@
                     </apex:pageBlockSection>
 
                     <!-- Agreements BSP -->
-                    <apex:pageBlockSection title="Agreements BSP" columns="1" rendered="{!isBSP && OR(ShowCounterIndemnity,ShowFormOfConcurrence,ShowFormOfApplication)}">
+                    <apex:pageBlockSection title="Agreements BSP" columns="1" rendered="{!isBSP && OR(ShowCounterIndemnity,ShowFormOfConcurrence,ShowFormOfApplication)}" collapsible="false">
                         <div class="aplabel">
                             <p>
                                 IATA currently does not hold any valid agreement(s) for your airline. All participants must sign these agreements as condition to join CASS as per resolution 850.<br/>
@@ -265,7 +265,7 @@
                     </apex:pageBlockSection>
 
                     <!-- Agreements CASS -->
-                    <apex:pageBlockSection title="Agreements CASS" columns="1" rendered="{!isCASS && OR(ShowCounterIndemnity,ShowFormOfApplicationAndConcurrence)}">
+                    <apex:pageBlockSection title="Agreements CASS" columns="1" rendered="{!isCASS && OR(ShowCounterIndemnity,ShowFormOfApplicationAndConcurrence)}" collapsible="false">
                         <div class="aplabel">
                             <p>
                                 IATA currently does not hold any valid agreement(s) for your airline. All participants must sign these agreements as condition to join CASS as per resolution 851.<br/>
@@ -291,7 +291,7 @@
                 </apex:outputPanel>
 
                 <!-- Accept terms and conditions -->   
-                <apex:pageBlockSection title="Terms and conditions" columns="1">
+                <apex:pageBlockSection title="Terms and conditions" columns="1" collapsible="false">
                     <div class="aplabel">
                         <p>By submitting the present application form to IATA,  I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in <b>{!apcountry}</b>
                             and that the ISS Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and agents free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.</p><br/>
@@ -342,7 +342,7 @@
                     </apex:outputPanel>
                 </apex:pageBlockSection>
 
-                <apex:pageBlockSection columns="1" collapsible="false">
+                <apex:pageBlockSection columns="1" collapsible="false" rendered="{!NOT(IsSISMember)}">
                     <apex:facet name="header">
                         <apex:outputpanel >
                             {!$Label.ISSP_SIS_Membership_Participation_Agreement}

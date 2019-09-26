@@ -51,7 +51,7 @@
             operationType="{!strOperationType}"
             areaType="{!strAreaType}"
             changeType="{!strChangeType}"
-            isSIS="{!OR(isISPAActive,isISUAActive)}" />
+            isSIS="{!isSISMember}" />
         
         <apex:form id="APChangesForm" styleClass="inline">
             <apex:pageBlock id="changeblock" mode="edit">

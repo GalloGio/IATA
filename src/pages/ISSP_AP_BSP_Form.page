@@ -189,7 +189,7 @@
             operationType="{!strOperationType}"
             areaType="{!strAreaType}"
             changeType="{!strChangeType}"
-            isSIS="{!OR(isISPAActive,isISUAActive)}" />
+            isSIS="{!isSISMember}" />
 
     <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
         Any doubts? Please check out our&nbsp;

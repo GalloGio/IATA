@@ -159,7 +159,7 @@
             <tr>
                 <td colspan="4" class="required">
                     <apex:iframe scrolling="false" height="180px" rendered="{!!readOnly}"
-                        src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=4&reqRequired=Mandatory&reqName={!URLENCODE('Shareholders information (Excel file)')}&reqDescription={!URLENCODE('For each shareholder and officer include a copy of their valid passport, complete legal name, nationality, date of birth
+                        src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=4&reqRequired=Mandatory&reqName={!URLENCODE('Shareholders information')}&reqDescription={!URLENCODE('For each shareholder and officer include a copy of their valid passport, complete legal name, nationality, date of birth
                                 and passport number.')}&reqIdentifier=Shareholders_information&onlyOne=false" />
                     <apex:outputText value="{!IF(FIND('Shareholders_information',ctrl.listUploadedFileIds)=0,'File not uploaded','File uploaded')}: Shareholders Information"/>
                 </td>

@@ -164,7 +164,7 @@
             <apex:outputText></apex:outputText>
             <tr>
                 <td colspan="4" class="required">
-                    <apex:iframe scrolling="false" height="180px" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=4&reqRequired=Mandatory&reqName={!URLENCODE('Shareholders information (Excel file)')}&reqDescription={!URLENCODE('For each shareholder and officer include a copy of their valid passport, complete legal name, nationality, date of birth
+                    <apex:iframe scrolling="false" height="180px" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=4&reqRequired=Mandatory&reqName={!URLENCODE('Shareholders information')}&reqDescription={!URLENCODE('For each shareholder and officer include a copy of their valid passport, complete legal name, nationality, date of birth
                                     and passport number.')}&reqIdentifier=Shareholders_information&onlyOne=false" />
                     <apex:outputText value="{!IF(FIND('Shareholders_information',ctrl.listUploadedFileIds)=0,'File not uploaded','File uploaded')}: Shareholders information"
                         rendered="{!readOnly}" styleclass="bold" />
@@ -228,8 +228,7 @@
         </tr>
         <tr>
             <td colspan="4">
-                <div class="strong-label">Will receive copies of all ICH communications including Circulars, system changes, requests for information
-                    or confirmation, and acknowledgements of changes to instructions and officers, and
+                <div class="strong-label">Will receive copies of all ICH system notifications listed below, and:
                     <ol type="a">
                         <li>If there is one Primary Contact, such Primary Contact is to be nominated by those two signatories
                             of this application form; and</li>
@@ -756,38 +755,15 @@
     <div class="no-page-break">
     <apex:pageBlockSection columns="1" id="section8" collapsible="true">
         <apex:facet name="header">
-            <apex:outputpanel>
-                Section 8 - Audited Financial Statement
-            </apex:outputpanel>
-        </apex:facet>
-
-        <tr>
-            <td colspan="4">
-                <div class="strong-label">Copy of most recent Audited Financial Statement. If not English, an English translation is required. English
-                    version must have a notation “True Copy”, have company stamp and be signed by the CFO or CEO of the company.</div>
-            </td>
-        </tr>
-        <apex:outputText></apex:outputText>
-
-        <apex:iframe scrolling="false" height="180px" rendered="{!!readOnly}" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=9&reqRequired=Mandatory&reqName=Audited Financial Statement&reqDescription=&reqIdentifier=AuditedFinancialStatement&onlyOne=true"
-        />
-        <apex:outputText styleclass="bold" value="{!IF(FIND('AuditedFinancialStatement',ctrl.listUploadedFileIds)=0,'File not uploaded','File uploaded')}: Audited Financial Statement"
-            rendered="{!readOnly}" />
-    </apex:pageBlockSection>
-    </div>
-
-    <div class="no-page-break">
-    <apex:pageBlockSection columns="1" id="section9" collapsible="true">
-        <apex:facet name="header">
             <apex:outputpanel >
-                Section 9 - Letter from ICH member
+                Section 8 - Letter from ICH member
             </apex:outputpanel>
         </apex:facet>
 
         <apex:outputText value="Letter from a Banking Signatory or Principal Contact of an ICH Member confirming that the Member will settle with the applicant Associate Member through the ICH if membership is approved; or certified copy of contract with an ICH Member airline." styleclass="strong-label"/>
         <tr><td colspan="4" class="required">
             <apex:iframe scrolling="false" height="160px" rendered="{!!readOnly}"
-                src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=10&reqRequired=Mandatory&reqName={!URLENCODE('Letter from ICH Member')}&reqDescription=&reqIdentifier=LetterICHMember&onlyOne=true"/>
+                src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=10&reqRequired=Optional&reqName={!URLENCODE('Letter from ICH Member')}&reqDescription={!URLENCODE('Only applicable to non IATA member airline.')}&reqIdentifier=LetterICHMember&onlyOne=true"/>
             <apex:outputText styleclass="bold" value="{!IF(FIND('LetterICHMember',ctrl.listUploadedFileIds)=0,'File not uploaded','File uploaded')}: Letter from ICH Member"
                 rendered="{!readOnly}" />
         </td></tr>
@@ -796,10 +772,10 @@
     </div>
 
     <div class="no-page-break">
-    <apex:pageBlockSection columns="1" id="section10" collapsible="true">
+    <apex:pageBlockSection columns="1" id="section9" collapsible="true">
         <apex:facet name="header">
             <apex:outputpanel >
-                Section 10 - Parent Company support documents
+                Section 9 - Parent Company support documents
             </apex:outputpanel>
         </apex:facet>
 

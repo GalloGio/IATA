@@ -13,7 +13,7 @@
             operationType="{!strOperationType}"
             areaType="{!strAreaType}"
             changeType="{!strChangeType}"
-            isSIS="{!OR(isISPAActive,isISUAActive)}" />
+            isSIS="{!isSISMember}" />
 
         <apex:form id="ICHForm" styleClass="inline form-container">
 
