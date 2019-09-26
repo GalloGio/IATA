@@ -4,7 +4,7 @@
 
 .containerBorderTop {
     border-top-style: solid;
-    color: #d3d3d352;
+    color: rgba(212, 212, 212, 0.52);
     /*margin-bottom: 15px;*/
 }
 
@@ -75,4 +75,3 @@ input:-webkit-autofill:active  {
 .formElementSpacer{
     padding-bottom:40px;
 }
-

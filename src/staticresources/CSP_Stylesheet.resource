@@ -1395,6 +1395,14 @@ lightning-datatable .slds-th__action {
     width: 100%;
 }
 
+/* Login portal header select language styles */
+.loginHeaderWrapper .slds-input__icon_right lightning-primitive-icon:after{
+    border-top-color: #f0f2f5;
+}
+.loginHeaderWrapper .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:after{
+    border-bottom-color: #f0f2f5;
+}
+
 .serviceContactList .slds-dropdown{
     border-radius: 0;
 }
@@ -1588,7 +1596,7 @@ visibility: hidden;
 .custTextInput input:focus{
     border: solid 2px rgba(30, 50, 250, 0.6);
 }
-
+	
 .custTextInput input:disabled {
   border:none;
 }
@@ -1636,6 +1644,14 @@ visibility: hidden;
     color: #3333ff;
     font-size: 14px;
     font-weight: 500;
+}
+
+.languageSelectWrapper .slds-combobox_container input[role="textbox"]{
+    text-align: right !important;
+}
+
+.languageSelectWrapper .slds-input__icon-group_right .slds-input__icon_right{
+    padding-top: 2px;
 }
 
 .blueCustomButtonLinkMedium, .blueCustomButtonLinkMedium button, .blueCustomButtonLinkMedium button:active, .blueCustomButtonLinkMedium button:visited, .blueCustomButtonLinkMedium button:focus {
@@ -1711,10 +1727,14 @@ visibility: hidden;
 	border-color: #e6e6e6;
 }
 .welcomePopup {
-	background-color: #F7F8FA;
+ 	 background-color: #F7F8FA;
+     width: 100%;
+     margin: auto;
+     box-shadow: 5px 5px 20px #808080;
+     border-radius: 1px;
+}
+
+.itemWelcome > .slds-slot{
+    display: inline-flex;
     width: 100%;
-    max-width: 544px;
-    margin: auto;
-    box-shadow: 5px 5px 20px #808080;
-    border-radius: 1px;
 }

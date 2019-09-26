@@ -8,11 +8,43 @@
 }
 
 .slds-combobox_container{
-    background:transparent !important;
+    /*background:transparent !important;*/
     border:none !important;
 }
 
 .slds-combobox_container input[role="textbox"]{
     background:transparent !important;
-        border:none !important;
+    border:none !important;
+}
+
+.languageSelectWrapper{
+    width: 160px;
+    padding-right: 20px;
+}
+
+.logoMobile{
+    display: none;
+}
+
+.slds-combobox_container .slds-input__icon_right .slds-icon:after{
+    border-top-color: #f0f2f5;
+}
+
+@media only screen and (max-width: 770px){
+    .logoMobile{
+        display: block;
+        padding-top: 1rem;
+        width: 70%;
+        max-width: 400px;
+    }
+
+    .loginHeaderWrapper{
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .selectorContainer{
+        padding-bottom: 1rem; 
+    }
 }
