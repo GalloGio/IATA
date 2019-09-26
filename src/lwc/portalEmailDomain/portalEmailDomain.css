@@ -1,0 +1,33 @@
+.errorBox {
+    color: white;
+    border-radius: 10px;
+    background: #e21f1f;
+    padding: 10px;
+    width: 100%;
+    white-space: normal;
+  }
+  
+  .modalTitle {
+    font-size: 20px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: normal;
+    color: #333;
+  }
+  
+  .form-label {
+    color: black;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+  
+  .wrapContent {
+    flex: auto;
+  }
+
+  .fixButton {
+    display: flex; 
+    justify-content: flex-end;
+  }

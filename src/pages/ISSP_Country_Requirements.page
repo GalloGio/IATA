@@ -1,6 +1,7 @@
 <apex:page controller="ISSP_Ctrl_Country_Requirements" standardstylesheets="false" showheader="false" sidebar="false" applybodytag="false" applyhtmltag="false" action="{!checkAccess}">
-  	<html>
-    	<c:ISSP_Header/>
+  <html>
+    <c:ISSP_Header ></c:ISSP_Header>
+		<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
 
     	<script>
       		window.hideTags = function() {
@@ -22,11 +23,11 @@
       		});
     	</script>
 
-    	<body>      
-      		<div class="container">
-        		<c:ISSP_CustomNavigation communityName="{!communityName}"/>
-			  		<apex:form id="mainFrm">	
-          				<apex:pagemessages id="errors" />
+    <body>      
+      <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+      <div class="container">
+			  <apex:form id="mainFrm">	
+          <apex:pagemessages id="errors" />
 
           				<apex:outputpanel layout="block" rendered="{! not newLayout}">        		          
             				<div class="row">
@@ -258,40 +259,42 @@
 
                   					<apex:actionFunction action="{!refreshRequirementsList}" name="operationTypeChanged" rerender="countryRequirementsListId"/>
 
-                  					<apex:actionFunction action="{!setNewAgencyTypeValue}" name="updateAgencyTypeValue" rerender="countryRequirementsListId">
-                  						<apex:param name="agencyTypeParam" value="" assignTo="{!agencyType}"/>
-                  					</apex:actionFunction>
 
-                  					<div class="row">
-                    					<div class="col-md-12">
-                      						<apex:outputPanel id="countryRequirementsListId">
-                        						<apex:pageBlock >
-                          							<apex:dataTable value="{!countryRequirementsList}" var="reqs" style="background-color:white" styleClass="table table-condensed"> 
-                            							<apex:column headerClass="info">
-                              								<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                            							</apex:column>
-                        								<apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA cargo Agent'),agentType)), $Label.ISSP_AMS_NoC_Request_for_Change)}">
-                              								<apex:outputText >
-                                								<strong>{!reqs.Name}</strong><br/>
-                                								<div style="font-weight: normal !important">
-                                  									<span>
-                                    									<apex:outputField value="{!reqs.Requirement_text__c}"/>
-                                  									</span>
-                                								</div>
-                              								</apex:outputText>
-                        								</apex:column>
-                          							</apex:dataTable>
-                        						</apex:pageBlock>
-                      						</apex:outputPanel>
-                    					</div>
-                  					</div>
-                				</div>
-              				</div>
-            			</div>            
-          			</apex:outputpanel>
-        		</apex:form>
-        	<c:ISSP_CustomFooter communityName="{!communityName}"/>
-      	</div><!-- end container-->    
+									<apex:actionFunction action="{!setNewAgencyTypeValue}" name="updateAgencyTypeValue" rerender="countryRequirementsListId">
+										<apex:param name="agencyTypeParam" value="" assignTo="{!agencyType}"/>
+									</apex:actionFunction>
+									
+                  <div class="row">
+                    <div class="col-md-12">
+                      <apex:outputPanel id="countryRequirementsListId">
+                        <apex:pageBlock >
+                          <apex:dataTable value="{!countryRequirementsList}" var="reqs" style="background-color:white" styleClass="table table-condensed"> 
+                            <apex:column headerClass="info">
+                              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </apex:column>
+                            <apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA cargo Agent'),agentType)),
+                                                                         $Label.ISSP_AMS_NoC_Request_for_Change)}">
+                              <apex:outputText >
+                                <strong>{!reqs.Name}</strong><br/>
+                                <div style="font-weight: normal !important">
+                                  <span>
+                                    <apex:outputField value="{!reqs.Requirement_text__c}"/>
+                                  </span>
+                                </div>
+                              </apex:outputText>
+                            </apex:column>
+                          </apex:dataTable>
+                        </apex:pageBlock>
+                      </apex:outputPanel>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>            
+          </apex:outputpanel>
+        </apex:form>
+      </div><!-- end container-->    
+      <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </body>
 </html>
 </apex:page>

@@ -3637,6 +3637,20 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Cases_Legal</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Legal</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>L3_CDS_AMS</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>ISPICKVAL(Origin, &quot;Email - Publications AMS Orders&quot;)  &amp;&amp;  RecordType.Name = &quot;Process&quot;</formula>

@@ -89,8 +89,7 @@
 						<apex:repeat value="{! line}" var="cell">
 							<apex:outputPanel rendered="{! cell.name == 'applyNow'}">
 								<td>
-									<apex:outputLink styleClass="btn btn_iata_primary" 
-										value="/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent&accredType={! cell.attribute}{!IF(helper.chinaAgent, '&typeOfAgency=' + helper.chinaLocClass, '')}">{! $Label.ANG_ISSP_ProductComparisonApplyNow}</apex:outputLink>
+									<apex:outputLink styleClass="iatabtn iatabtn-default" value="/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent&accredType={! cell.attribute}{!IF(helper.chinaAgent, '&typeOfAgency=' + helper.chinaLocClass, '')}">{! $Label.ANG_ISSP_ProductComparisonApplyNow}</apex:outputLink>
 								</td>
 							</apex:outputPanel>
 
@@ -127,7 +126,7 @@
 										</apex:outPutpanel>
 
 										<apex:outPutpanel rendered="{!!(cell.tooltip == '')}">
-											<apex:outputLabel value = "{! cell.slabel}" />
+											<apex:outputLabel value="{! cell.slabel}" />
 
 											<a href="#" data-html="true" data-toggle="popover" data-trigger="hover" 
 											   title="{!cell.slabel}" data-content="<div escape='false'>{!cell.tooltip}</div>">

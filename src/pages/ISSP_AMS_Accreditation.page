@@ -10,32 +10,20 @@
            >
 
     <html>
-        <c:ISSP_Header communityName="{!communityName}" />
-
+        <c:ISSP_Header communityName="{!communityName}" ></c:ISSP_Header>
         <body>
         <script src="{!URLFOR($Resource.bootbox)}" />
         <script src="{!URLFOR($Resource.datePickerFix)}" />
         <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
         <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
-        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"/>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
         <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" />
         <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
 
     <style>
         .pbTitle {
+            display: none;
             width: {!IF(isstep2,'90% !important','40% !important')};
-        }
-
-        .pbBody {
-            padding-left:10px !important;
-        }
-
-        .pbBody a {
-            color:#337ab7 !important
-        }
-
-        .bPageBlock {
-            border-top-width : thin !important;
         }
 
         .bEditBlock input {
@@ -52,6 +40,7 @@
             background-color: #337ab7 !important;
             border-color: #2e6da4 !important;
             border: 1px solid transparent !important;
+            /*background: */
         }
 
         .tb-header {
@@ -71,23 +60,13 @@
             padding-left: inherit;
         }
 
-        #contentWrapper {
-            background: #fff !important; 
-            margin: 0 auto;
-            max-width: 1170px;
-        }
+        #contentWrapper {  background: #fff !important; margin: 0 auto;max-width: 1170px;}
 
-        .requiredText {
-            display: none;
-        }
+        .requiredText {display:none;}
 
-        .dateFormat {
-            display: none;
-        }
+        .dateFormat {display:none;}
 
-        .errorMsg {
-            color:#d74c3b
-        }
+        .errorMsg {color:#d74c3b}
 
         .progress-bar-off {
             color:#6BBBEA;
@@ -97,16 +76,14 @@
             border-right:2px solid white;
         }
 
-        body .bPageBlock .pbBody .pbSubheader {
-            background-image: url('') !important;
-            background-color: #1797c0;
-            color: #fff;
+        body .bPageBlock .pbBody .summary-subsection .pbSubheader{
+                background-image: url('') !important;
+                background-color: initial;
+                color: initial;
         }
 
-        body .bPageBlock .pbBody .summary-subsection .pbSubheader {
-            background-image: url('') !important;
-            background-color: initial;
-            color: initial;
+        body .secondaryPalette.bPageBlock{
+            border-bottom: none !important;
         }
 
         .pbSubheader {
@@ -153,44 +130,17 @@
             font-weight:bold
         }
 
-        .col2 {
-            width:60%; 
-            padding-left:50px;
-            vertical-align: text-top;
-        }
+        .col2 {width:60%; padding-left:50px;vertical-align: text-top;}
+        .col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
+        .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
+        .col3 {width:50%;vertical-align: text-top;}
 
-        .col2_regular {
-            width:25%; 
-            padding-left:50px;
-            vertical-align: text-top;
-        }
+        .col1_inner {width:25%; vertical-align: text-top;}
+        .col2_inner {width:25%; vertical-align: text-top;}
 
-        .col2_4 {
-            width:10%;
-            padding-left:5px;
-            vertical-align: text-top;
-        }
-
-        .col3 {
-            width:50%;
-            vertical-align: text-top;
-        }
-
-        .col1_inner {
-            width:25%; 
-            vertical-align: text-top;
-        }
-
-        .col2_inner {
-            width:25%; 
-            vertical-align: text-top;
-        }
-
-        .row1 {
-            padding-bottom:16px; 
-            vertical-align: text-top;
-        }
+        .row1 {padding-bottom:16px; vertical-align: text-top;}
     </style>
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
 
     <script>
         var showProductComparisonLink = false;
@@ -198,10 +148,8 @@
 
         setVarsProductComparisonLink('{!namEnabled}', '{!sectorValue}', '{!isHOAccredited}', '{!con.Account.Sector__c}');
 
-        $(function() { 
-            $('.requiredIndicator').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>'); 
-        });
         
+            $(function(){ $('.requiredIndicator').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>'); } );
         var pilotList = {{!pilotList}};
         
         var defaultHQCountry;
@@ -212,7 +160,8 @@
         }
 
         var vOfficeType = '{!newCase.Reason1__c}';
-
+            console.log('vOfficeType '+vOfficeType);
+            console.log('Default country '+ defaultHQCountry);
         var operationType = '{!sectorvalue}';
         var hasPermission = true;
 
@@ -245,8 +194,29 @@
         }
 
         function toggleOfficeTypes(officeSelect, ctrylistid) {
+                //var mySelectOptions = $('select[name="' + ctrylistid + '"] option');
+                //var mySelect = $('select[name="' + ctrylistid + '"]');
             var officeTypeSel = $('select[name="' + officeSelect + '"]');
             vOfficeType = officeTypeSel.val();
+                /**
+                mySelectOptions.each(function() {
+                  if(vOfficeType=='New BR Abroad') {
+                    if(this.value != defaultHQCountry) {
+                        $(this).prop('disabled', false);
+                     } else {
+                        $(this).prop('disabled', true);
+                        mySelect.val('');
+                     }
+                  } else {
+                    if(this.value != defaultHQCountry) {
+                        $(this).prop('disabled', true);
+                     } else {
+                        $(this).prop('disabled', false);
+                        mySelect.val(defaultHQCountry);
+                     }
+                  }
+                });
+                **/
         }
 
         function isInArray(arr, val) {
@@ -263,6 +233,7 @@
             if(defaultHQCountry=='CN') {
                 var chinaAgentType = $('select[name="' + chinaAgentTypeId + '"]');
                 if(chinaAgentType.val() == 'Domestic') {
+                        console.log('in domestic');
                     return true;
                 }
             }
@@ -304,11 +275,13 @@
                 vOfficeType = $lists.val();
                 var countriesMap = JSON.parse('{!jsonCountriesMap}');
                 var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Import Agent"];
-
+                console.log('no empty voffice '+vOfficeType);
                 if('{!isNoticeOfChange}'=='true' || vOfficeType=='')
                     isAllowedCountry = 't';
                 else{
                     var idx = vOfficeType.indexOf(' - ');
+
+                    console.log('vOfficeType goto '+vOfficeType);
 
                     if( (vOfficeType.substring(idx + 3).trim() == 'Legacy') || (vOfficeType.includes('Standard')) || (vOfficeType.includes('AE'))){
                         operationType = 'Travel_Agent';
@@ -316,14 +289,18 @@
                         operationType = 'Cargo_Agent';
                     }
 
+                    // NHO -
+                    console.log('vOfficeType.substring(0, idx) ' + operationType+'-'+vOfficeType.substring(0, idx));
+
                     var countryList = countriesMap[operationType+'-'+vOfficeType.substring(0, idx)];
 
                     var isAllowedCountry = false;
-
+                    console.log('countryList ' + countryList);
                     if(defaultHQCountry != null && countryList != undefined) {
                         var isAllowedCountry = countryList[countryList.indexOf(defaultHQCountry)+3];
                     }
-
+                    console.log('isAllowedCountry ' + isAllowedCountry);
+                    ///alert( $('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
                     var langId = '{!$Component.step1Form.step1Block.applylanguage}';
                     var langSel = $('select[name="' + langId + '"]');
                     var vLang = langSel.val();
@@ -331,6 +308,7 @@
                         //For pilot only English & Spanish HO applications for pilot countries alllowed
 
                     if( $('input[name="' + myValue + '"][value=Travel_Agent]').prop("checked")) {
+                        console.log('Travel China Domestic: ' + isChinaDomestic());
                         if(isAllowedCountry=='f' || (isChinaDomestic() && !{!isocountry.ANG_Enable_NewGen__c})) {
                             bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Pax)}", function(result) {
                                 if(result) {
@@ -349,11 +327,12 @@
                         }
                     } else {
                         if(isAllowedCountry=='f' || isChinaDomestic()) {
+                        // temporary for CNS
+                        console.log('{!communityName}');
                             if('{!communityName}'==='CNS') {
                                 bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)}", function(result) {
                                     if(result) {
                                         window.open('/ISSP_AMSCases{!if(communityName=='CNS','?CommunityName='+communityName,'')}', '_self');
-                                        
                                         if(isChinaDomestic()) {
                                             window.open('https://www.iata-asd.com', '_blank');
                                         } else {
@@ -365,7 +344,6 @@
                                 bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo)}", function(result) {
                                     if(result) {
                                         window.open('/ISSP_AMSCases{!if(communityName=='CNS','?CommunityName='+communityName,'')}', '_self');
-                                
                                         if(isChinaDomestic()) {
                                             window.open('https://www.iata-asd.com', '_blank');
                                         } else {
@@ -404,7 +382,6 @@
 
         function togglePageItem(v, fldId) {
             var el = document.getElementById(fldId);
-            
             if(v=='HO - Selected Branches' || v=='Selected Branches Only') {
                 el.style.display='block';
             } else {
@@ -413,14 +390,13 @@
         }
 
         function getFileLink(fileName) {
+            // alert(''+fileName);
             $("#loading").show();
-            
             setTimeout(function() {
                 try{
                     ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fileName,function(result, event) {
                         var result2 = result.replace("&amp;","&");
                         var newWin = window.open(result2);
-                        
                         if(!newWin || newWin.closed || typeof newWin.closed=='undefined') {
                             alert('{!$Label.ISSP_AMS_ACCR_Alert1}');
                         }
@@ -436,6 +412,7 @@
         }
 
         function isIE(){
+            //alert(navigator.userAgent);
             //return /MSIE/.test(navigator.userAgent);
             if (/MSIE/.test(navigator.userAgent)){
                 return true;
@@ -451,6 +428,7 @@
         var vReqNo
 
         function resetUploadBar() {
+        //$('.uploadbar-' + vReqNo).css('width', '0%');
             $("#loading-" + vReqNo).hide();
         }
 
@@ -663,9 +641,9 @@
         </script>
     </apex:outputPanel>
 
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div class="container">
-        <div id="contentWrapper">
-            <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+       <div id="contentWrapper">
 
     <!----------------------------------------->
     <!-- STEP 1 -->
@@ -681,33 +659,37 @@
                     <div class="panel-body" id="body-enquiries">
 
                         <apex:form id="step1Form" styleClass="form-horizontal">
-                            <div class="progress">
+        <div class="progress iata-tabs">
 
-                                <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                                    {!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}
+            <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                <apex:outputText value="{!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}" escape="false"/>
                                 </div>
-                                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                                    <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!lblStepB}" id="Next2">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" id="Next2">
                                         <apex:param value="2" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
+                    <apex:outputText value="{!lblStepB}" escape="false"/>
                                     </apex:commandLink>
                                 </div>
-                                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                                    <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '3');if(hasPermission != true) return false;" value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" id="Next3">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '3');if(hasPermission != true) return false;" id="Next3">
                                         <apex:param value="3" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
+                    <apex:outputText value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" escape="false"/>
                                     </apex:commandLink>
                                 </div>
-                                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-                                    <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '4');if(hasPermission != true) return false;" value="{!lblStepD}" id="Next4">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
+                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '4');if(hasPermission != true) return false;" id="Next4">
                                         <apex:param value="4" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
+                    <apex:outputText value="{!lblStepD}" escape="false"/>
                                     </apex:commandLink>
                                 </div>
-                                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
-                                    <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '5');if(hasPermission != true) return false;" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" id="Next5">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
+                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '5');if(hasPermission != true) return false;" id="Next5">
                                         <apex:param value="5" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
+                    <apex:outputText value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" escape="false"/>
                                     </apex:commandLink>
                                 </div>
-                            </div>
-
+							
+							</div>
                             <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="optionsSetpA, langGSA, legalNameSelection, legalNames" oncomplete="if({!isMultiCountryNewAE}) {$('[id$=isSameLegal]').first().css('display', 'none'); populateLegalAndSeparateFields(); if ('{!sectorValue}' === 'Cargo_Agent') {
                                 $('[id$=legalNameSelection]').css('display', 'none');}}"> 
                                 <apex:param value="" assignTo="{!sectorValue}" name="sectorValue"/>
@@ -717,6 +699,7 @@
                             </apex:actionFunction>
                             <apex:actionFunction action="{!updateAmsCountry}" name="updateAmsCountry" oncomplete="getCountryFromController()" reRender="amscountrylabel">
                             </apex:actionFunction>
+
                             <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" oncomplete="populateLegalAndSeparateFields();" />
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
                             <apex:actionFunction action="{!resetHierarchy}" name="reRenderAccountsNoc" reRender="branchaccountsel"/>
@@ -726,14 +709,18 @@
                             <apex:pageBlock id="step1Block" mode="edit" >
                                 <apex:pageBlockButtons location="bottom" style="padding-left:100px">
                                     <apex:actionStatus id="buttonLoadingStep1">
-                                        <apex:facet name="stop"><apex:outputPanel >
-                                            <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"/>
-                                            <apex:commandButton styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" rendered="{!NOT(amsIsGSA=='YES')}" status="buttonLoadingStep1" reRender="step1Form" oncomplete="loadPageOptions();"/>
-                                        </apex:outputPanel></apex:facet>
-                                        <apex:facet name="start"><apex:outputPanel >
-                                            <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
-                                            <apex:commandButton styleclass="btn btn-default"  value="{!$Label.ISSP_Next}..." rendered="{!NOT(amsIsGSA=='YES')}" disabled="true" reRender="step1Form"/>
-                                        </apex:outputPanel></apex:facet>
+                    <apex:facet name="stop">
+                        <apex:outputPanel >
+                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" rendered="{!NOT(amsIsGSA=='YES')}" status="buttonLoadingStep1" reRender="step1Form"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"  oncomplete="loadPageOptions();"/>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    <apex:facet name="start">
+                        <apex:outputPanel >
+                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" value="{!$Label.ISSP_Next}..." rendered="{!NOT(amsIsGSA=='YES')}" disabled="true" reRender="step1Form"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
+                        </apex:outputPanel>
+                    </apex:facet>
                                     </apex:actionStatus>
                                 </apex:pageBlockButtons>
                                 <apex:pageMessages escape="false"></apex:pageMessages>
@@ -763,7 +750,6 @@
                                                     <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" />
                                                     <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}" id="cargoAgentCheck" />
                                                 </apex:selectRadio>
-                                        
                                                 <script>
                                                     if('{!communityName}' === 'CNS') {
                                                         $(":radio[value=Travel_Agent]").parents('td').hide();
@@ -771,7 +757,6 @@
                                                 </script>
                                             </div>
                                         </div>
-                            
                                         <apex:outputPanel id="optionsSetpA">
                                             <apex:actionRegion >
                                                 <div class="form-group">
@@ -808,8 +793,8 @@
                                                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" id="separateYes"/>
                                                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                                                             </apex:selectradio>
-                                                        </div>
 
+					                                    </div>
                                                         <div style="float: left;padding-top:10px;padding-right: 30px;">
                                                             <apex:image value="/img/msg_icons/info16.png" title="{!IF(isMultiCountryNewAE, $Label.ANG_AE_separate_Legal_Entity_MultiCountry, $Label.ISSP_ANG_Step1_Legal_Display_Help)}" style="float:left" html-data-placement="right" html-data-toggle="tooltip" />
                                                         </div>
@@ -845,29 +830,20 @@
                                             <apex:outputPanel rendered="{!AND(isBankAccountChange == true, con.Account.Location_Type__c == 'AE')}">
                                                 {!ContactAccount}
                                             </apex:outputPanel>
-                                            
                                             <apex:outputPanel rendered="{!OR(isBankAccountChange != true, con.Account.Location_Type__c != 'AE')}">
                                                 <apex:outputPanel rendered="{!OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy')}">
                                                     <apex:selectRadio required="true" id="LegacyLocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:45%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');">
-                                            	    	
                                                         <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Office}" rendered="{!isHOcontact}" />
-                                            	    	
                                                         <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_All_Branches}" rendered="{!AND(isHOcontact, OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1))}" />
-	                                            	
                                                         <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_Some_Branches}" rendered="{!AND(isHOcontact, OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1))}"/>
-        	                                    	  
                                                         <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Branch_Office}" rendered="{!OR(isHOcontact,BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
                                                     </apex:selectRadio>
                                                 </apex:outputPanel>
-
                                                 <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptions">    
                                                     <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}'); checkLocationQuestion(); reRenderNocMessage();">
                                                         <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}" />
-                                                        
-                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_All_Branches}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}"/>
-                                                        
-                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_Some_Branches}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" />
-                                                        
+                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_All_Branches}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}"/>                                                     
+                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_Some_Branches}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" />                                                       
                                                         <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Associate_Entity}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" />
                                                     </apex:selectRadio>
 
@@ -913,7 +889,27 @@
                                                 </apex:facet>
                                             </apex:actionStatus>
                                         </apex:pageBlockSection>
-                                        <!--##RN INC463820  -->
+                                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				<!--##RN INC463820  -->
                                     </apex:outputPanel>
                                 </apex:outputpanel>
                             </apex:outputpanel>
@@ -1014,7 +1010,7 @@
                                                     <div class="form-group" id="isGSA">
                                                         <label for="isGSA" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Is_GSA}</label>
                                                         <div class="col-lg-9" style="padding-top:7px">
-                                                            <apex:selectradio id="isGSASelect" style="width:15%" label="{!$Label.ISSP_AMS_Step1_Is_GSA}" value="{!amsIsGSA}" >
+                                                <apex:selectradio id="isGSASelect" style="width:15%" label="{!$Label.ISSP_AMS_Step1_Is_GSA}" value="{!amsIsGSA}" > <!-- required="{!isGSARequired}"> HANDLED IN CONTROLLER NOW -->
                                                                 <apex:selectOption itemValue="YES" itemLabel="{!$Label.ISSP_Yes}" />
                                                                 <apex:selectOption itemValue="NO" itemLabel="{!$Label.ISSP_No}" />
                                                             </apex:selectradio>
@@ -1038,6 +1034,7 @@
                                 if ({!isMultiCountryNewAE} == false) toggleCountries($('[id$=officetypelist]').val());
 
                                 //Disable country selection for the Pilot
+                    //document.getElementById('{!$Component.step1Form.step1Block.countryconcerned}').disabled=true;
 
                                 function operationTypeChanged(namEnabled, sectorValue, isHOAccredited, sector) {
                                     if (sectorValue === 'Cargo_Agent') {
@@ -1070,21 +1067,29 @@
                     </div>
                     <div class="panel-body" id="body-enquiries">
                         <apex:form >
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                                    <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}" id="Prev1"/>
+                <div class="progress iata-tabs">
+                    <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+                        <apex:commandLink styleclass="link-white" action="{!goToStep1}" id="Prev1">
+                            <apex:outputText value="{!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}" escape="false"/>
+                        </apex:commandLink>
                                 </div>
-                                <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
-                                {!lblStepB}
+                    <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
+                        <apex:outputText value="{!lblStepB}" escape="false"/>
                                 </div>
-                                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                                    <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange), lblStepC, lblNoCStepC)}" id="Next3"/>
+                    <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+                        <apex:commandLink styleclass="link-white" action="{!goToStep3}" id="Next3">
+                            <apex:outputText value="{!IF(NOT(isNoticeOfChange), lblStepC, lblNoCStepC)}" escape="false"/>
+                        </apex:commandLink>
                                 </div>
-                                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-                                    <apex:commandLink styleclass="btn btn-default" action="{!goToStep4}" value="{!lblStepD}" id="Next4"/>
+                    <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
+                        <apex:commandLink styleclass="link-white" action="{!goToStep4}" id="Next4">
+                            <apex:outputText value="{!lblStepD}" escape="false"/>
+                        </apex:commandLink>
                                 </div>
-                                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                                <apex:commandLink styleclass="btn btn-default" action="{!goToStep5}" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" id="Next5"/>
+                     <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
+                        <apex:commandLink styleclass="link-white" action="{!goToStep5}" id="Next5">
+                            <apex:outputText value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" escape="false"/>
+                        </apex:commandLink>
                                 </div>
                             </div>
                         </apex:form>
@@ -1112,14 +1117,22 @@
 
                             <center>
                                 <apex:pageBlock mode="edit">
-                                    <apex:commandButton styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_Back}" id="Previous"/>
-                                    <apex:commandButton styleclass="btn btn-default" action="{!goToStep3}" value="{!$Label.ISSP_Next}" id="Next"/>
+                        <apex:pageBlockButtons location="bottom" style="padding-left:100px">
+                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToStep3}" value="{!$Label.ISSP_Next}" id="Next"/>
+                        <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!goToStep1}" value="{!$Label.ISSP_Back}" id="Previous"/>
+                    </apex:pageBlockButtons>
                                 </apex:pageBlock>
                             </center>
                         </apex:form>
                     </div>
                 </div>
             </apex:outputText>
+
+    <!-- ------------------------------ --->
+    <!-- STEP 3 Display PAX or Cargo FORM -->
+    <!-- ------------------------------- -->
+
+
 
     <!-- ---------------------------- -->
     <!-- STEP 4 Upload required docs -->
@@ -1146,21 +1159,29 @@
             </div>
     <div class="panel-body" id="body-enquiries">
         <apex:form >
-        <div class="progress">
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!lblStepA}" id="Prev1"/>
+        <div class="progress iata-tabs">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+                <apex:commandLink styleclass="link-white" action="{!goToStep1}" id="Prev1">
+                    <apex:outputText value="{!lblStepA}" escape="false"/>
+                </apex:commandLink>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep2}" value="{!lblStepB}" id="Prev2"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
+                <apex:commandLink styleclass="link-white" action="{!goToStep2}" id="Prev2">
+                    <apex:outputText value="{!lblStepB}" escape="false"/>
+                </apex:commandLink>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" id="Prev3"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+                <apex:commandLink styleclass="link-white" action="{!goToStep3}" id="Prev3">
+                    <apex:outputText value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" escape="false"/>
+                </apex:commandLink>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep4}" value="{!lblStepD}" id="Prev4"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
+                <apex:commandLink styleclass="link-white" action="{!goToStep4}" id="Prev4">
+                    <apex:outputText value="{!lblStepD}" escape="false"/>
+                </apex:commandLink>
             </div>
-             <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                {!IF(AND(isNoticeOfChange, newForm.Is_change_ownership_or_shareholding__c), lblNoCStepD, lblStepE)}
+             <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
+                <apex:outputText value="{!IF(AND(isNoticeOfChange, newForm.Is_change_ownership_or_shareholding__c), lblNoCStepD, lblStepE)}" escape="false"/>
             </div>
         </div>
        </apex:form>
@@ -1245,15 +1266,18 @@
                 <br/>
                 <div style="text-align:center;">
                     <apex:actionStatus id="buttonLoadingStep5PAX">
-                    <apex:facet name="stop"><apex:outputPanel >
-                    <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5PAX"/>
-                    <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}" status="buttonLoadingStep5PAX" reRender="PAXForm"/>
-                    <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5PAX"/>
-                        </apex:outputPanel></apex:facet>
-                    <apex:facet name="start"><apex:outputPanel >
-                    <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true"/>
-                    <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}..." disabled="true"/>
-                    <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
+                    <apex:facet name="stop">
+                        <apex:outputPanel >
+                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}" status="buttonLoadingStep5PAX" reRender="PAXForm"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5PAX"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" status="buttonLoadingStep5PAX"/>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    <apex:facet name="start">
+                        <apex:outputPanel >
+                            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}..." disabled="true" style="float:right" />
+                            <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true" style="float:right" />
+                            <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}"  disabled="true"/>
                          </apex:outputPanel></apex:facet>
                     </apex:actionStatus>
                 </div>
@@ -1388,7 +1412,7 @@
             <br/><br/>
                 <a href="{!portalRedirectToCase}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
             <br/><br/>
-           {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="{!portalRedirectToCaseList}" target="_self">{!IF(isNewPortal, $Label.CSP_AMS_StepFinal_In_Addition2, $Label.ISSP_AMS_StepFinal_In_Addition2)}</a>.
+            {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="{!portalRedirectToCaseList}" target="_self">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
             <br/><br/><br/><br/>
 
             <apex:form rendered="{!AND(OR(BEGINS(sectorValue, 'Travel_Agent'), AND(BEGINS(sectorValue, 'Cargo_Agent'), newForm.Agent_Type__c!='IATA Cargo Agent', newForm.Agent_Type__c!='EACP Intermediary')),!isNoticeOfChange,newForm.SAAM_Case__r.Reason1__c != 'FoP Management',newCase.Reason1__c!='CLO - Closure')}">
@@ -1402,7 +1426,7 @@
 
             </apex:form>
         </div>
-    </apex:pageBlock>
+        </apex:pageBlock>
 
     <apex:form id="finalConfirmationNoCMC">
         <div class="modal fade" id="finalConfirmationNoCMCModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -1427,8 +1451,8 @@
     </apex:form>
 
          </div>
-         <c:ISSP_CustomFooter communityName="{!communityName}"/>
-         </div>
+        </div>
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
 
     </body>
 </html>

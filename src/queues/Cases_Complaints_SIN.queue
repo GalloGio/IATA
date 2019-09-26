@@ -5,6 +5,7 @@
     <name>Cases - Complaints SIN</name>
     <queueMembers>
         <users>
+            <user>trangl@iata.org</user>
             <user>mohananb@iata.org</user>
             <user>vitharanai@iata.org</user>
             <user>yangj@iata.org</user>

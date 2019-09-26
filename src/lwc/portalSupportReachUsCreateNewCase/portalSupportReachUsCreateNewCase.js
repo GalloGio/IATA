@@ -168,6 +168,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
                 //JSON parse and stringify turns the result more readable 
                 this.myResult = JSON.parse(JSON.stringify(result));
+                this.metadatatree = JSON.parse(JSON.stringify(result));
 
                 //getParamsFromPage grabs the data from the URL
                 let pageParams = getParamsFromPage();
@@ -486,11 +487,24 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             record.Country_concerned_by_the_query__c = this.caseInitiated.Country_concerned_by_the_query__c;
             record.Origin = this.caseInitiated.Origin;
             record.Status = this.caseInitiated.Status;
-            record.Topic__c = this.topicLabel;
-            record.Subtopic__c = this.subtopicLabel;
             record.IFAP_Country_ISO__c = this.caseInitiated.IFAP_Country_ISO__c.toUpperCase();
             record.Subject = this.caseInitiated.Subject;
             record.Description = this.caseInitiated.Description;
+
+            let topicEn = '';
+            let subtopicEn = '';
+            
+            let pageParams = getParamsFromPage();
+            let metadatatreeAux = JSON.parse(JSON.stringify(this.metadatatree));
+            for(let ii = 0; ii < metadatatreeAux.length; ii++){
+                if(metadatatreeAux[ii].categoryName === pageParams.category && metadatatreeAux[ii].topicName === pageParams.topic ){
+                    topicEn = metadatatreeAux[ii].topicLabelEn;
+                    subtopicEn = metadatatreeAux[ii].childsEn[pageParams.subtopic];
+                }
+            }
+
+            record.Topic__c = topicEn;
+            record.Subtopic__c = subtopicEn;
 
             this.loading = true;
             let process = event.target.attributes.getNamedItem('data-id').value;

@@ -2504,6 +2504,25 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         <errorMessage>Financial institution is not active. Please request agent to submit a financial security from alternative provider.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Expiry_date_greater_than_validity_start</fullName>
+        <active>true</active>
+        <description>Rule to ensure that the expiry date of FS is greater than validity start date</description>
+        <errorConditionFormula>OR(
+  AND(
+    ISNEW(),
+    Unlimited_Security__c = false,
+    Expiry_Date__c &lt;=  Validity_Start_Date__c 
+  ),
+  AND(
+    ISCHANGED(Expiry_Date__c) ,
+    Unlimited_Security__c = false,
+    Expiry_Date__c &lt;=  Validity_Start_Date__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>Expiry_Date__c</errorDisplayField>
+        <errorMessage>Expiry date of the Financial Security can&apos;t be less than the Validity start date.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Financial_Security_Validation_is_mandato</fullName>
         <active>true</active>
         <description>ACR 06749697 - A validation rule to force the user update the field &quot;Financial Security Validation&quot;</description>

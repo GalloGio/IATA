@@ -404,6 +404,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Created_By_Role__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Process_Age__c</field>
             </layoutItems>
             <layoutItems>
