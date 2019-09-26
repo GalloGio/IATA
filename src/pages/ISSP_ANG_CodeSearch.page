@@ -1,17 +1,10 @@
-<apex:page controller="ISSP_ANG_CodeSearch" language="en" cache="false"
-           sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false"
-           docType="html-5.0"
-           standardStylesheets="false">
+<apex:page controller="ISSP_ANG_CodeSearch" language="en" cache="false" sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" standardStylesheets="false">
 
-  <head>
+  	<html>
+    	<c:ISSP_Header/>
+    	<c:iss_ap_css />
 
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-    <c:ISSP_Header ></c:ISSP_Header>
-    <c:iss_ap_css />
-
-  </head>
+  
     <style>
       .section-header {
         background-color: #1e32fa;
@@ -88,20 +81,19 @@
     </style>
     <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
     <script type="text/javascript">
-      $(document).ready(function() {
-        $(window).keydown(function(event){
-          if(event.keyCode == 13) {
-            event.preventDefault();
-            doPreSearch();
-            return false;
-          }
-        });
-      });
+     	$(document).ready(function() {
+        	$(window).keydown(function(event){
+         		if(event.keyCode == 13) {
+            		event.preventDefault();
+            		doPreSearch();
+            		return false;
+          		}
+        	});
+      	});
 
-      function doPreSearch() {
-        var searchString = $('[id$="searchInputId"]').val();
-        doSearchServer(searchString);
-      }
+      	function doPreSearch() {
+        	doSearchServer($('[id$="searchInputId"]').val());
+      	}
     </script>
 
   <body>
@@ -110,9 +102,9 @@
         <div class="container"> 
       <apex:form id="mainFrm">
 
-      <apex:actionFunction action="{!doSearch}" name="doSearchServer" rerender="searchResults">
-        <apex:param id="searchStringId" name="searchString" value="" />
-      </apex:actionFunction>
+      			<apex:actionFunction action="{!doSearch}" name="doSearchServer" rerender="searchResults">
+        			<apex:param id="searchStringId" name="searchString" value="" />
+      			</apex:actionFunction>
 
         <div class="panel-primary" id="page-wrapper" >
           <!--<div class="row">
@@ -256,7 +248,7 @@
                         </td>
                       </tr>
 
-                      <tr style="display: {!IF(AND(isTravel, agency.ANG_IsNewGenAgency__c, rhcAgencyInfo != null), '', 'none')};">
+                      <tr style="display: {!IF(AND(isTravel, agency.ANG_IsNewGenAgency__c, rhcAgencyInfo != null, agency.IATA_ISO_Country__r.ISO_Code__c != 'CN'), '', 'none')};">
                         <td style="width: 20%;">
                           <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RHC}"/>
                         </td>
@@ -271,11 +263,9 @@
 
                     <br/>
 
-                  <!--<div name="right-side" class="col-md-4 col-sm-12">-->
                     <div style="min-height: 225px; display:{!IF(AND(isTravel, afpWrapper != null, agency.ANG_IsNewGenAgency__c),'','none')};">
                       <c:AFP_Component wrapperClass="{!afpWrapper}"/>
                     </div>
-                  <!--</div>-->
 
                     <apex:outputPanel rendered="{!AND(agency.ANG_IsNewGenAgency__c, isTravel)}">
 
@@ -283,7 +273,6 @@
 
                       <div class="section-header">
                         <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RiskEventsHistory.png')}"/>
-                        <!--i class="fa fa-line-chart" aria-hidden="true"></i-->
                         <strong>{!$Label.ISSP_RHC_HUB_RH}</strong>
                       </div>
 
@@ -359,10 +348,11 @@
     </main>
      <c:ISSP_CustomFooter />
 
-    <script src="{!URLFOR($Resource.DataTablesBootstrap)}"></script>
-    <script src="{!URLFOR($Resource.JqueryDataTables)}"></script>
-    <link type="text/css" rel="stylesheet" href="{!URLFOR($Resource.DataTablesBootstrapCSS,'dataTables.bootstrap.min.css')}" />
+    		<script src="{!URLFOR($Resource.DataTablesBootstrap)}"></script>
+    		<script src="{!URLFOR($Resource.JqueryDataTables)}"></script>
+    		<link type="text/css" rel="stylesheet" href="{!URLFOR($Resource.DataTablesBootstrapCSS,'dataTables.bootstrap.min.css')}" />
 
-  </body>
+  		</body>
+  	</html>
 
 </apex:page>
