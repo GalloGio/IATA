@@ -1726,3 +1726,8 @@ visibility: hidden;
 .registrationComboBox .slds-combobox_container input[role="textbox"]{
 	border-color: #e6e6e6;
 }
+
+.itemWelcome > .slds-slot{
+    display: inline-flex;
+    width: 100%;
+}
