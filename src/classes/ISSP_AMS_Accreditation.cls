@@ -639,7 +639,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (sectorValue != null) {
                     sector = sectorValue.replace('_', ' ');
 
-                    if (isocountry.ISO_Code__c == 'CN') {
+                    if (isocountry.ISO_Code__c == 'CN' && !sector.contains('-')) { //PRB41685 - Avoid duplication of the Local_Agent_Type__c value on the sector valor
                         sector += ' - ' + newForm.Local_Agent_Type__c;
                     }
 
@@ -869,7 +869,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             sector = sectorValue.replace('_', ' ');
 
-            if (isocountry.ISO_Code__c == 'CN') {
+            if (isocountry.ISO_Code__c == 'CN' && !sector.contains('-')) { //PRB41685 - Avoid duplication of the Local_Agent_Type__c value on the sector valor
                 sector += ' - ' + newForm.Local_Agent_Type__c;
             } 
 
