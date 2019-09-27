@@ -855,12 +855,14 @@ public class AMS_OSCARTriggerHandler {
             if(oscar.Process__c != AMS_Utils.CERTIFICATE) oscar.Certificate_Quantity__c = null;
 
 
-            oscars.add(oscar);
+           if(oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NEWGESTANDARD)
+                oscars.add(oscar);
 
         }
 
-        if (!oscars.isEmpty()){}//deprecated AMS-1665//AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
-
+        if (!oscars.isEmpty()){
+            AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
+        }//deprecated AMS-1665//AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
     }
 
     private static void copyDataFromTargetAgency(){
