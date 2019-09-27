@@ -146,11 +146,6 @@ public class AMS_OscarCaseTriggerHelper {
 
             Boolean changed = false;
             AMS_OSCAR__c oscar = oscars.get(c.OSCAR__c);
-            
-            if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
-                oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE;
-                changed = true;
-            }
 
             if(oscar.Name != c.CaseNumber){
                 System.debug(loggingLevel.FINE, '____ [cls AMS_OscarCaseTriggerHelper - populateOscarFields] Renaming OSCAR - ' + oscar.Id + '('+c.CaseNumber+')');

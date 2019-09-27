@@ -929,6 +929,9 @@ public class AMS_OSCARTriggerHandler {
         allOnlineAccr = (allOnlineAccr == null || allOnlineAccr.isEmpty()) ? getAllAccreditations(oscarLst) : allOnlineAccr;
 
         for(AMS_OSCAR__c oscar: oscarLst){
+            if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY && oscar.ANG_Type_Of_Change__c != AMS_Utils.ANG_ACCREDITATION_TYPE){
+                oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE;
+            }
             if(Trigger.isUpdate && oscar.process__c == AMS_Utils.NEWHESTANDARD && oldMap.get(oscar.Id).STEP6__c != AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
                 AMS_Pax_Accreditation_Form__c stgArea = allOnlineAccr.get(oscar.AMS_Online_Accreditation__c);
                 countryIdSet.add(stgArea.Branch_Office_Country__c);
