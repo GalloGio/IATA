@@ -384,13 +384,13 @@
 
                             <div class="row bankDetails" style="padding-top: 20px">
                                 <div class="col-md-12" style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};">
-                                    <input type="button" class="btn btn_iata_primary" onClick="checkEligibility('true');return false;" value="{!$Label.ISSP_AMS_Step0_Change_Bank_Details}"/>
+                                    <input type="button" class="iatabtn btn btn_iata_primary" onClick="checkEligibility('true');return false;" value="{!$Label.ISSP_AMS_Step0_Change_Bank_Details}"/>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-12" style="padding-bottom: 10px; display:{!IF(agencyCategory != 'TIDS Agent','','none')};">
-                                    <apex:commandButton styleClass="btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}" disabled="{! revCaseOpen}"/><br/>
+                                    <apex:commandButton styleClass="iatabtn btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}" disabled="{! revCaseOpen}"/><br/>
                                     <div style="{!IF(!revCaseOpen, 'display:block', 'display:none')}">
                                         <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>
                                         
