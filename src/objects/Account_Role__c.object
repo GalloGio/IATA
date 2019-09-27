@@ -147,6 +147,33 @@ The Account Role record should be named after the functional capability for whic
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>OJT_File_Id__c</fullName>
+        <description>id of the latestePublishedversion of the file</description>
+        <externalId>false</externalId>
+        <label>OJT File Id</label>
+        <length>150</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OJT_file__c</fullName>
+        <externalId>false</externalId>
+        <label>OJT file</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>OJT_file_validated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>OJT file validated</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Primary_Contact_Count__c</fullName>
         <description>Roll-up field that count how many primary contacts are related with the account role.</description>
         <externalId>false</externalId>

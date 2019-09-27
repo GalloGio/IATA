@@ -122,6 +122,26 @@
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>ITP Administrator</fullName>
+                    <default>false</default>
+                    <label>ITP Administrator</label>
+                </value>
+                <value>
+                    <fullName>ITP Master</fullName>
+                    <default>false</default>
+                    <label>ITP Master</label>
+                </value>
+                <value>
+                    <fullName>ITP Trainee</fullName>
+                    <default>false</default>
+                    <label>ITP Trainee</label>
+                </value>
+                <value>
+                    <fullName>ITP Training Coordinator</fullName>
+                    <default>false</default>
+                    <label>ITP Training Coordinator</label>
+                </value>
+                <value>
                     <fullName>Primary Contact</fullName>
                     <default>false</default>
                     <label>Primary Contact</label>
@@ -129,6 +149,19 @@
             </valueSetDefinition>
         </valueSet>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Contact_Roles__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Portal Contact Roles</label>
+        <referenceTo>Contact_Roles__c</referenceTo>
+        <relationshipLabel>Account Contacts Role</relationshipLabel>
+        <relationshipName>Account_Contacts_Role</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Contact__c</fullName>
@@ -144,6 +177,15 @@
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Details__c</fullName>
+        <externalId>false</externalId>
+        <label>Details</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>Email__c</fullName>
@@ -182,6 +224,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Personal_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Additional_Email__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Personal Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Position__c</fullName>
         <externalId>false</externalId>
         <formula>Contact__r.Title</formula>
@@ -207,9 +261,9 @@
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
-                    <fullName>Other</fullName>
+                    <fullName>IFTP</fullName>
                     <default>false</default>
-                    <label>Other</label>
+                    <label>IFTP</label>
                 </value>
                 <value>
                     <fullName>TIP</fullName>
@@ -220,9 +274,34 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Title__c</fullName>
         <externalId>false</externalId>
-        <formula>TEXT(Contact__r.Salutation)</formula>
+        <formula>Contact__r.Title</formula>
         <label>Title</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -299,14 +378,60 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Integration_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Success</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Last_Integration_Operation__c</picklist>
+            <values>
+                <fullName>delete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>insert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>update</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Service_Rendered__c</picklist>
             <values>
                 <fullName>TIP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchFilterFields>First_Name__c</searchFilterFields>
+        <searchFilterFields>Last_Name__c</searchFilterFields>
+        <searchFilterFields>Email__c</searchFilterFields>
+        <searchFilterFields>Company_Code__c</searchFilterFields>
+        <searchFilterFields>Contact__c</searchFilterFields>
+        <searchResultsAdditionalFields>First_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Last_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Email__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
         <fullName>Mandatory_fields_for_primary_contact</fullName>
