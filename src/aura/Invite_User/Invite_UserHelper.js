@@ -201,7 +201,6 @@
         $A.util.removeClass(actor, "slds-has-error"); // remove red border
         $A.util.addClass(actor, "hide-error-message"); // hide error message
         var elements = document.getElementsByClassName("slds-form-element__help");
-        console.log(elements[0].innerText);
     },
 
     getActors: function(component) {
@@ -215,7 +214,6 @@
 	},
 
 	getActorsForExternalUser : function(component, event) {
-	    console.log('v.invitation.AccountId__c');
 	    let action = component.get('c.getUserAccounts');
         action.setCallback(this, function(response) {
             const state = response.getState();
@@ -229,7 +227,6 @@
                    component.set('v.actors', actorsData);
                    component.set('v.invitation.AccountId__c', actors[0].Id);
                    this.handleGetActorsAllowedDomains(component, event, actors);
-                   console.log(component.get('v.invitation.AccountId__c'));
                }
             }
         });
@@ -238,7 +235,6 @@
 	},
 
 	getActorsForInternalUser : function(component, event) {
-	    console.log(component.find('actor'));
 	    let action = component.get('c.getGadmActors');
 	    action.setCallback(this, function(response){
             const state = response.getState();
@@ -252,8 +248,6 @@
                     component.set('v.actors', actorsData);
                     component.set('v.invitation.AccountId__c', actors[0].Id);
                     this.handleGetActorsAllowedDomains(component, event, actors);
-                    console.log(component.get('v.invitation.AccountId__c'));
-                     console.log(component.find('actor'));
                 }
             }
          });
