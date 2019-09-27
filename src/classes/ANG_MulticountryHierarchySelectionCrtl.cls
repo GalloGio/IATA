@@ -633,39 +633,39 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		AMS_Process_Detail__c cloneProcess;
 		Account oldMainAccount;
+		
+		List<AMS_Process_Detail__c> pdLst = mapHierarchyProcessDetail.values();
+
+		mapHierarchyProcessDetail.clear();
+
+		integer i=0;
 
 		for(HierarchyItem item: hierarchyValues){
-			AMS_Process_Detail__c currentPD = mapHierarchyProcessDetail.get(item.acc.ID);
+			
+			if(!item.isHE && !item.isAE){
+				item.acc.Location_type__c = AMS_Utils.GE;
+				continue;
+			}
 
-			//if found a Process Detail record - then it is a HE / AE or the GE changed
-			if(currentPD != null){
+			AMS_Process_Detail__c currentPD = pdLst.get(i);
+			
+			currentPD.account__c = item.acc.Id;
 
-				if(!item.isHE && !item.isAE) { 
-					cloneProcess = currentPD;
-					item.acc.Location_type__c = AMS_Utils.GE;
-				}
-				if(item.isHE){
+			if(item.isHE){
 					currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.HE;
 					item.acc.Location_type__c = AMS_Utils.HE;
-				} 
-				if(item.isAE){
-					currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.AE;
-					item.acc.Location_type__c = AMS_Utils.AE;
-				}				
-			}else if(currentPD == null && (item.isHE || item.isAE)){				
-				oldMainAccount = item.acc;
-				item.acc.Location_Type__c = item.isHE ? AMS_Utils.HE : AMS_Utils.AE;
+			} 
+			else {
+				currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.AE;
+				item.acc.Location_type__c = AMS_Utils.AE;
 			}
-		}
 
-		if(oldMainAccount != null && cloneProcess != null){
-
-			//Removed the previous entry with the key of the new GE(clone the previous ) and add a new Entry with the new HE/AE 
-			mapHierarchyProcessDetail.remove(cloneProcess.Account__c);
-			cloneProcess.Account__c = oldMainAccount.ID;
-			mapHierarchyProcessDetail.put(oldMainAccount.ID, cloneProcess);
+			mapHierarchyProcessDetail.put(currentPD.account__c, currentPD);
+			
+			i++;
 
 		}
+
 	}
 
 	@TestVisible private boolean performValidations(){
