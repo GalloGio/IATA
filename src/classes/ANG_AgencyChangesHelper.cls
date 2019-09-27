@@ -31,7 +31,6 @@ public with sharing class ANG_AgencyChangesHelper {
 		public Set<Id> accountsChanged;
 
 		public Map<Id,AMS_Agencies_Hierarchy__c> hierarchies;
-		public List<AMS_Agencies_Hierarchy__c> hierarchiesToDeleteLst;
 
 		public AChangeStructure(){
 			relationsMap = new Map<Id, AMS_Agencies_relationhip__c>();
@@ -51,7 +50,6 @@ public with sharing class ANG_AgencyChangesHelper {
 			deactivateRhcInformationLst = new List<ANG_RHC_Information__c>();
 			agencyAuthorizationToUpdateLst = new List<Agency_Authorization__c>();
 			calculateRiskAssessmentMap = new Map<Id, Map<Id, Integer>>();
-			hierarchiesToDeleteLst = new List<AMS_Agencies_Hierarchy__c>();
 			riskAlertsToUpdateLst = new List<ANG_Risk_Alert__c>();
 		}
 
@@ -106,16 +104,24 @@ public with sharing class ANG_AgencyChangesHelper {
 			calculateRiskAssessmentMap.put(accountId, null);
 		}
 
-		public void addHierarchyToDelete(AMS_Agencies_Hierarchy__c hierarchy){
-			hierarchiesToDeleteLst.add(hierarchy);
-		}
-
 		public void addRiskAlertsToUpdate(List<ANG_Risk_Alert__c> riskAlertsLst){
 			riskAlertsToUpdateLst.addAll(riskAlertsLst);
 		}
 		
 		public void addAccountsToRecalculateFsAmounts(Id accountId){
 			accountsToRecalculateFsAmounts.add(accountId);
+		}
+
+		public void runDeletes(){
+
+			if(relationsToDeleteLst != NULL && !relationsToDeleteLst.isEmpty()){
+				delete relationsToDeleteLst;
+			}
+
+			if(deactivateRhcInformationLst != NULL && !deactivateRhcInformationLst.isEmpty()){
+				ANG_RHCHelper.deactivateRHCInfo(deactivateRhcInformationLst);
+			}
+
 		}
 
 		public Boolean runUpsert(){
@@ -125,6 +131,8 @@ public with sharing class ANG_AgencyChangesHelper {
 			Boolean hasUpserted = false;
 
 			AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
+
+			runDeletes();
 
 			if(relationsMap != null && !relationsMap.isEmpty()){
 				System.debug('[ANG_AgencyChangesHelper] Upserting following relations:'+relationsMap);
@@ -138,14 +146,6 @@ public with sharing class ANG_AgencyChangesHelper {
 				hasUpserted = true;	
 			}
 
-			if(hierarchiesToDeleteLst != NULL && !hierarchiesToDeleteLst.isEmpty()){
-				delete hierarchiesToDeleteLst;
-			}
-
-			if(relationsToDeleteLst != NULL && !relationsToDeleteLst.isEmpty()){
-				delete relationsToDeleteLst;
-			}
-			
 			if(accountsMap != null && !accountsMap.isEmpty() && !accountsChanged.isEmpty()){
 
 				List<Account> toUpsert = new List<Account>();					
@@ -171,10 +171,6 @@ public with sharing class ANG_AgencyChangesHelper {
 			AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
 
 			System.debug('[ANG_AgencyChangesHelper] Upsert has run.');
-
-			if(deactivateRhcInformationLst != NULL && !deactivateRhcInformationLst.isEmpty()){
-				ANG_RHCHelper.deactivateRHCInfo(deactivateRhcInformationLst);
-			}
 
 			if(accountsToCreateRhcInformationLst != NULL && !accountsToCreateRhcInformationLst.isEmpty()){
 				ANG_RHCHelper.createRHCInfo(accountsToCreateRhcInformationLst, false);
@@ -227,7 +223,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		AMS_OSCAR__c oscar = oscars[0];
 
 		if(oscar.Process__c == AMS_UTils.NGCONVERSIONTOMULTICOUNTRY){
+			System.debug(LoggingLevel.FINE, '##SSHK## [ANG_AgencyChangesHelper.handleNewGenChangesProcess] [BEFORE CONVERSION] BEGIN SOQL:' + Limits.getQueries());
 			handleConversionToMulticountry(oscar);
+			System.debug(LoggingLevel.FINE, '##SSHK## [ANG_AgencyChangesHelper.handleNewGenChangesProcess] [AFTER CONVERSION] END SOQL:' + Limits.getQueries());
 			return;
 		}
 
@@ -604,11 +602,11 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			topEntityPerBspMap.put(accountGE.IATA_ISO_Country__r.AMS_Settlement_System__c, accountGE.Id);
 			
-			AMS_Agencies_Hierarchy__c newHierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'NewGen Hierarchy', Main_Account__c = accountGE.Id);
-			insert newHierarchy;
-
 			AMS_Pax_Accreditation_Form__c stagingArea = getAccreditation(oscar.AMS_Online_Accreditation__c);
 
+			List<AMS_Agencies_Hierarchy__c> hierarchiesToDeleteLst = new List<AMS_Agencies_Hierarchy__c>();
+			List<AMS_Agencies_relationhip__c> relationsToUpdateHierarchyRef = new List<AMS_Agencies_relationhip__c>();
+			
 			for(Account acct : changesContainer.accountsMap.values()){
 
 				acct.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
@@ -646,9 +644,10 @@ public with sharing class ANG_AgencyChangesHelper {
 					AMS_Agencies_relationhip__c rel = new AMS_Agencies_relationhip__c(
 						Is_Newgen_Relation__c = true, 
 						Child_Account__c = acct.Id, 
-						Parent_Account__c = acct.ParentId, 
-						Hierarchy__c = newHierarchy.Id
+						Parent_Account__c = acct.ParentId
 					);
+
+					relationsToUpdateHierarchyRef.add(rel);
 
 					changesContainer.addRelation(rel);
 
@@ -679,7 +678,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				List<AMS_Agencies_Hierarchy__c> hierarchyLst = (List<AMS_Agencies_Hierarchy__c>) acct.getSObjects('Main_Accounts__r');
 
 				if(hierarchyLst != NULL && !hierarchyLst.isEmpty()){
-					changesContainer.addHierarchyToDelete(hierarchyLst.get(0));
+					hierarchiesToDeleteLst.add(hierarchyLst.get(0));
 				}
 
 				changesContainer.addAccount(acct);	
@@ -703,6 +702,16 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			}
 
+			delete hierarchiesToDeleteLst;
+
+			AMS_Agencies_Hierarchy__c newHierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'NewGen Hierarchy', Main_Account__c = accountGE.Id);
+			insert newHierarchy;
+
+			//Update Hierarchy reference for every new relationship
+			for(AMS_Agencies_relationhip__c rel : relationsToUpdateHierarchyRef){
+				rel.Hierarchy__c = newHierarchy.Id;
+			}
+			
 			update new AMS_PAX_Accreditation_Form__c(
 				Id = oscar.AMS_Online_Accreditation__c, 
 				ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
