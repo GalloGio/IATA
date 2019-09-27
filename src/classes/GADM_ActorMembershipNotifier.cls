@@ -12,6 +12,12 @@ public without sharing class GADM_ActorMembershipNotifier {
 
             EmailTemplate upcomingEmailTemplate = [SELECT Id, Name, Subject, Body FROM EmailTemplate WHERE DeveloperName =: 'Actor_Membership_Termination'];
 
+            Id iataNoReplyId = null;
+            OrgWideEmailAddress[] iataNoReply = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
+            if(iataNoReply != null && iataNoReply.size() > 0){
+                iataNoReplyId = iataNoReply.get(0).Id;
+            }
+
             for(NotifierWrapper wrapper : wrappers) {
                 Integer noOfDays = wrapper.priorDaysToNotify;
                 Date effectiveFrom = wrapper.effectiveFrom;
@@ -21,10 +27,17 @@ public without sharing class GADM_ActorMembershipNotifier {
                 List<User> users = wrapper.users;
 
                 if(contacts != null && contacts.size() > 0) {
+
+                    string email = 'gadm@iata.org';
+                    List<GADM_Settings__mdt> settings = [SELECT IATA_Email_Contact__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM'];
+                    if(settings != null && settings.size() > 0){
+                        email = settings[0].IATA_Email_Contact__c;
+                    }
+
                     for(Contact con : contacts) {
                         Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(upcomingEmailTemplate.Id, con.Id, null);
                         String bodyHtml = mail.getHtmlBody();
-                        String replacedHtmlBody = bodyHtml.replace('*userName*', String.valueOf(con.FirstName + ' ' +con.LastName )).replace('*actorName*', accountName).replace('*noOfdays*', String.valueOf(noOfDays));
+                        String replacedHtmlBody = bodyHtml.replace('*userName*', String.valueOf(con.FirstName + ' ' +con.LastName )).replace('*email*', email).replace('*actorName*', accountName).replace('*noOfdays*', String.valueOf(noOfDays));
                         if(effectiveFrom != null) {
                             replacedHtmlBody = replacedHtmlBody.replace('*effectiveFrom*', String.valueOf(effectiveFrom));
                         }
@@ -34,7 +47,7 @@ public without sharing class GADM_ActorMembershipNotifier {
                         mail.setHtmlBody(replacedHtmlBody);
 
                         String bodyText = mail.getPlainTextBody();
-                        String replacedTextBody = bodyText.replace('*userName*', String.valueOf(con.FirstName + ' ' +con.LastName )).replace('*actorName*', accountName).replace('*noOfdays*', String.valueOf(noOfDays));
+                        String replacedTextBody = bodyText.replace('*userName*', String.valueOf(con.FirstName + ' ' +con.LastName )).replace('*email*', email).replace('*actorName*', accountName).replace('*noOfdays*', String.valueOf(noOfDays));
                         if(effectiveFrom != null) {
                             replacedTextBody = replacedTextBody.replace('*effectiveFrom*', String.valueOf(effectiveFrom));
                         }
@@ -43,7 +56,9 @@ public without sharing class GADM_ActorMembershipNotifier {
                         }
                         mail.setPlainTextBody(replacedTextBody);
                         mail.setUseSignature(false);
-
+                        if(iataNoReplyId != null) {
+                            mail.setOrgWideEmailAddressId(iataNoReplyId);
+                        }
                         emailMessages.add(mail);
 
                     }
@@ -73,7 +88,9 @@ public without sharing class GADM_ActorMembershipNotifier {
                         }
                         mail.setPlainTextBody(replacedTextBody);
                         mail.setUseSignature(false);
-
+                        if(iataNoReplyId != null) {
+                            mail.setOrgWideEmailAddressId(iataNoReplyId);
+                        }
                         emailMessages.add(mail);
                     }
                 }

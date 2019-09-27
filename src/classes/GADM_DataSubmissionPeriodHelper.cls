@@ -584,6 +584,18 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
         Map<String, List<NotificationWrapper>> notificationsWrapperMap = notifyContactsBySubmissionPeriods(dateToCompare);
         notificationsWrapperMap = prepareNotifications(notificationsWrapperMap);
 
+        Id iataNoReplyId = null;
+        OrgWideEmailAddress[] iataNoReply = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
+        if(iataNoReply != null && iataNoReply.size() > 0){
+            iataNoReplyId = iataNoReply.get(0).Id;
+        }
+
+        string email = 'gadm@iata.org';
+        List<GADM_Settings__mdt> settings = [SELECT IATA_Email_Contact__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM'];
+        if(settings != null && settings.size() > 0){
+            email = settings[0].IATA_Email_Contact__c;
+        }
+
         List<NotificationWrapper> upcomingNotificationWrappers = notificationsWrapperMap.get('Upcoming');
         List<NotificationWrapper> inDueNotificationWrappers = notificationsWrapperMap.get('InDue');
         List<NotificationWrapper> notSubmittingWrappers = notificationsWrapperMap.get('NotSubmitting');
@@ -597,13 +609,16 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
             for(Contact_Role_Service_Access__c access : accesses) {
                 Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(upcomingWrapper.emailTemplate.Id, access.Contact__c, null);
                 String bodyHtml = mail.getHtmlBody();
-                String replacedHtmlBody = bodyHtml.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd)).replace('*actor*', upcomingWrapper.accountName);
+                String replacedHtmlBody = bodyHtml.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd)).replace('*actor*', upcomingWrapper.accountName).replace('*email*', email);
                 mail.setHtmlBody(replacedHtmlBody);
 
                 String bodyText = mail.getPlainTextBody();
-                String replacedTextBody = bodyText.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd)).replace('*actor*', upcomingWrapper.accountName);
+                String replacedTextBody = bodyText.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd)).replace('*actor*', upcomingWrapper.accountName).replace('*email*', email);
                 mail.setPlainTextBody(replacedTextBody);
                 mail.setUseSignature(false);
+                if(iataNoReplyId != null) {
+                    mail.setOrgWideEmailAddressId(iataNoReplyId);
+                }
                 allmsg.add(mail);
             }
         }
@@ -616,13 +631,16 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
             for(Contact_Role_Service_Access__c access : accesses) {
                 Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(inDueWrapper.emailTemplate.Id, access.Contact__c, null);
                 String bodyHtml = mail.getHtmlBody();
-                String replacedHtmlBody = bodyHtml.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd)).replace('*actor*', inDueWrapper.accountName);
+                String replacedHtmlBody = bodyHtml.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd)).replace('*actor*', inDueWrapper.accountName).replace('*email*', email);
                 mail.setHtmlBody(replacedHtmlBody);
 
                 String bodyText = mail.getPlainTextBody();
-                String replacedTextBody = bodyText.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd)).replace('*actor*', inDueWrapper.accountName);
+                String replacedTextBody = bodyText.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd)).replace('*actor*', inDueWrapper.accountName).replace('*email*', email);
                 mail.setPlainTextBody(replacedTextBody);
                 mail.setUseSignature(false);
+                if(iataNoReplyId != null) {
+                    mail.setOrgWideEmailAddressId(iataNoReplyId);
+                }
                 allmsg.add(mail);
             }
         }
@@ -636,13 +654,16 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
             for(Id contactId : accesses) {
                 Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(notSubmittingWrapper.emailTemplate.Id, contactId, null);
                 String bodyHtml = mail.getHtmlBody();
-                String replacedHtmlbody = bodyHtml.replace('*actor*', accountName).replace('*monthsNotSubmitting*', String.valueOf(monthsNotSubmitting));
+                String replacedHtmlbody = bodyHtml.replace('*actor*', accountName).replace('*monthsNotSubmitting*', String.valueOf(monthsNotSubmitting)).replace('*email*', email);
                 mail.setHtmlBody(replacedHtmlBody);
 
                 String bodyText = mail.getPlainTextBody();
-                String replacedTextbody = bodyText.replace('*actor*', accountName).replace('*monthsNotSubmitting*', String.valueOf(monthsNotSubmitting));
+                String replacedTextbody = bodyText.replace('*actor*', accountName).replace('*monthsNotSubmitting*', String.valueOf(monthsNotSubmitting)).replace('*email*', email);
                 mail.setPlainTextBody(replacedTextBody);
                 mail.setUseSignature(false);
+                if(iataNoReplyId != null) {
+                    mail.setOrgWideEmailAddressId(iataNoReplyId);
+                }
                 allmsg.add(mail);
             }
         }

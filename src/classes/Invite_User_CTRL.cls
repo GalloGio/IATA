@@ -90,7 +90,7 @@ public without sharing class Invite_User_CTRL {
         try{
             if(contact == null && invitation != null){
                 insert invitation;
-                invitation = [SELECT Id, Salutation__c, Email__c, Last_Name__c, First_Name__c FROM Invitation__c WHERE Id =: invitation.Id];
+                invitation = [SELECT Id, Salutation__c, AccountId__c, Email__c, Last_Name__c, First_Name__c FROM Invitation__c WHERE Id =: invitation.Id];
                 return sendEmail(true, invitation);
             } else if (contact != null) {
                 return sendEmail(false, contact);
@@ -108,6 +108,7 @@ public without sharing class Invite_User_CTRL {
         string emailAddress = '';
         String userName = '';
         Id whatId = null;
+        Id accountId = null;
 
         if (newUser){
             emailTemplate = 'Invite_user_new';
@@ -115,6 +116,8 @@ public without sharing class Invite_User_CTRL {
             Invitation__c invitation = (Invitation__c)obj;
             emailAddress = invitation.Email__c;
             whatId = invitation.Id;
+            accountId = invitation.AccountId__c;
+
 
             if((invitation.Last_Name__c != null && invitation.Last_Name__c != '') && (invitation.First_Name__c != null && invitation.First_Name__c != '')) {
                 userName = invitation.First_Name__c + ' ' + invitation.Last_Name__c;
@@ -132,6 +135,22 @@ public without sharing class Invite_User_CTRL {
             Contact con = (Contact)obj;
             emailAddress = con.Email;
             whatId = con.Id;
+            accountId = con.Account.Id;
+        }
+
+        string accountName = '';
+
+        if (accountId != null){
+            List<Account> accs = [SELECT Id, Name FROM Account WHERE Id = :accountId];
+            if(accs != null && accs.size() > 0){
+                accountName = accs[0].Name;
+            }
+        }
+
+        Id iataNoReplyId = null;
+        OrgWideEmailAddress[] iataNoReply = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
+        if(iataNoReply != null && iataNoReply.size() > 0){
+            iataNoReplyId = iataNoReply.get(0).Id;
         }
 
         EmailTemplate et = [SELECT Id, Name, Subject, Body FROM EmailTemplate WHERE DeveloperName =: emailTemplate];
@@ -140,17 +159,20 @@ public without sharing class Invite_User_CTRL {
 
         mail.setToAddresses(new List<string>{emailAddress});
         mail.setSaveAsActivity(false);
+        if(iataNoReplyId != null) {
+            mail.setOrgWideEmailAddressId(iataNoReplyId);
+        }
         mail.setUseSignature(false);
         mail.setTreatTargetObjectAsRecipient(false);
         string body = mail.getHtmlBody();
-
+        system.debug(mail);
         if(newUser) {
-            mail.setHtmlBody(body.replace('*link*', link).replace('*userName*', userName));
-            mail.setPlainTextBody(body.replace('*link*', link).replace('*userName*', userName));
+            mail.setHtmlBody(body.replace('*link*', link).replace('*userName*', userName).replace('*account*', accountName));
+            mail.setPlainTextBody(body.replace('*link*', link).replace('*userName*', userName).replace('*account*', accountName));
 
         }else{
-            mail.setHtmlBody(body.replace('*link*', link));
-            mail.setPlainTextBody(body.replace('*link*', link));
+            mail.setHtmlBody(body.replace('*link*', link).replace('*account*', accountName));
+            mail.setPlainTextBody(body.replace('*link*', link).replace('*account*', accountName));
         }
 
         List<Messaging.SingleEmailMessage> allmsg = new List<Messaging.SingleEmailMessage>();

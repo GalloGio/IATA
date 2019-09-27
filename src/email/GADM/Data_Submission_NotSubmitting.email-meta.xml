@@ -4,8 +4,15 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Data_Submission_NotSubmitting</name>
     <style>none</style>
-    <subject>No data submissions</subject>
-    <textOnly>Dear {!Contact.FirstName} {!Contact.LastName}, we did not receive data for *actor* for *monthsNotSubmitting* months. Please submit the data.  IATA</textOnly>
+    <subject>GADM submission not received</subject>
+    <textOnly>Dear {!Contact.Salutation} {!Contact.FirstName} {!Contact.LastName},
+
+Submission file(s) from *actor* have not been received for *monthsNotSubmitting* months. Continued failure to submit data may result in restricted access to the GADM program.
+
+Please provide the data at your earliest convenience or contact GADM Admin (*email*) for assistance.
+
+GADM Team
+gadm@iata.org</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

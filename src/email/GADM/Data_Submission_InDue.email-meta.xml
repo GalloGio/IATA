@@ -4,9 +4,13 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Data_Submission_InDue</name>
     <style>none</style>
-    <subject>In due data submission</subject>
-    <textOnly>Dear {!Contact.FirstName} {!Contact.LastName},
-submission period for *actor* start: *periodStart* submission period end: *periodEnd*</textOnly>
+    <subject>GADM submission period</subject>
+    <textOnly>Dear {!Contact.Salutation} {!Contact.FirstName} {!Contact.LastName},
+
+Submission period for *actor* starts *periodStart* and ends *periodEnd*. Please upload your file during this period.
+
+GADM Team
+gadm@iata.org</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

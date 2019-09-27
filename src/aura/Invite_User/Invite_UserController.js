@@ -44,7 +44,7 @@
         $A.util.addClass(component.find("detail"), 'slds-hide');
         let invitation = component.get('v.invitation');
         invitation.Email__c = ''
-        component.set('v.invitation', invitation);
+        //component.set('v.invitation', invitation);
 
         let emailField = component.find('email');
         if(! $A.util.isEmpty(emailField)) {
@@ -52,11 +52,10 @@
         }
         component.set('v.showBack', false);
         $A.util.addClass(component.find("emailError"), 'slds-hide');
-
+        console.log(component.find('actor'));
         //reset the combo-box error message
-        component.set('v.showActors', false);
-        component.set('v.showActors', true);
-
+        helper.hideErrors(component, event, helper);
+        console.log(component.find('actor'));
     },
 
     inviteUser : function(cmp, event, helper) {
@@ -74,6 +73,7 @@
  
 	checkUsername :function (cmp, event, helper) {
 	    helper.toggleSpinner(cmp);
+	    console.log(cmp.find('actor'));
         if(helper.validateEmail(cmp)){
 
             var emailCmp = cmp.find("email");
@@ -96,7 +96,7 @@
 
                 cmp.set("v.contact", params.contact);
                 cmp.set("v.invitation", params.invitation);
-
+console.log(cmp.find('actor'));
                 if(params.showNotifyButton){
                     $A.util.removeClass(cmp.find("notifyUserButton"), 'slds-hide');
                     let emailField = cmp.find('email');

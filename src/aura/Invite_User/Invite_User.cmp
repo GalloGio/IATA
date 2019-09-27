@@ -13,7 +13,6 @@
     <aura:attribute name="showBack" type="Boolean" default="false"/>
     <aura:attribute name="userCountry" type="String" />
     <aura:attribute name="showPage" type="Boolean" default="False"/>
-    <aura:attribute name="showActors" type="Boolean" default="True"/>
 
     <!--ARE WE IN LIGHTNING OR CLASSIC?-->
     <aura:attribute name="theme" type="String" default="Theme4d"/>
@@ -96,9 +95,7 @@
             <div aura:id="detail" class="slds-grid slds-wrap slds-size--8-of-12 center slds-hide">
                 <!--ACTORS-->
                 <div class="slds-col--padded slds-size--1-of-1">
-                    <aura:if isTrue="{! v.showActors}">
-                        <lightning:combobox aura:id="actor" name="accounts" label="Actor" value="{!v.invitation.AccountId__c}" placeholder="Select Actor" options="{! v.actors }" messageWhenValueMissing="Please select Actor" required="true" onchange="{! c.checkActorDomains}"/>
-                    </aura:if>
+                    <lightning:combobox aura:id="actor" name="accounts" label="Actor" value="{!v.invitation.AccountId__c}" placeholder="Select Actor" options="{! v.actors }" messageWhenValueMissing="Please select Actor" required="true" onchange="{! c.checkActorDomains}"/>
                 </div>
                 <!--SALUTATION-->
                 <div class="slds-col--padded slds-size--1-of-1">

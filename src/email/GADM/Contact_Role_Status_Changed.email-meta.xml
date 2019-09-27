@@ -4,8 +4,15 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Contact Role Status Changed</name>
     <style>none</style>
-    <subject>Status changed</subject>
-    <textOnly>Dear {!Contact.Name} Role {!Contact_Role_Service_Access__c.Contact_Roles_Name__c} status has been changed to {!Contact_Role_Service_Access__c.Status__c}.</textOnly>
+    <subject>GADM User access change</subject>
+    <textOnly>Dear {!Contact.Name}{!Receiving_User.Name},
+
+Role “{!Contact_Role_Service_Access__c.Contact_Roles_Name__c}” status has been changed to {!Contact_Role_Service_Access__c.Status__c}.
+
+Please note that the role of “{!Contact_Role_Service_Access__c.Contact_Roles_Name__c}” *tense* {!Contact_Role_Service_Access__c.Status__c}. For a full explanation of user roles and permission, please refer to the Program Operations Manual.
+
+GADM Team
+gadm@iata.org</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

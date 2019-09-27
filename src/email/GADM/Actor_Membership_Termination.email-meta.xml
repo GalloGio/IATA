@@ -4,14 +4,16 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Actor Membership Termination</name>
     <style>none</style>
-    <subject>Actor Membership Termination</subject>
+    <subject>GADM Membership soon to expire</subject>
     <textOnly>Dear *userName*,
 
-*actorName* participation in GADM program will expire in *noOfdays* days.
+*actorName* participation in GADM program will expire in  *noOfdays* days. 
+Subscription period will end *effectiveTo*.
 
-Subscription period *effectiveFrom* - *effectiveTo*.
+To extend your subscription, please contact GADM Admin (*email*). 
 
-IATA</textOnly>
+GADM Team
+gadm@iata.org</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

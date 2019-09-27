@@ -164,12 +164,25 @@ public without sharing class ContactRoleServiceAccessTriggerHandler {
 }
 
     private static Messaging.SingleEmailMessage createNotification(Id access, string emailAddress, Id person, string status, string emailTemplateName) {
+        Id iataNoReplyId = null;
+        OrgWideEmailAddress[] iataNoReply = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
+        if(iataNoReply != null && iataNoReply.size() > 0){
+            iataNoReplyId = iataNoReply.get(0).Id;
+        }
+
+        string tense = status.toUpperCase() == 'PENDING' ? 'is' : 'has been';
         emailTemplateName = 'Contact_Role_Status_Changed';
         EmailTemplate et = [SELECT Id, Name, Subject, Body FROM EmailTemplate WHERE DeveloperName = :emailTemplateName];
         Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(et.Id, person, access);
+        String bodyText = mail.getPlainTextBody();
+        String replacedTextbody = bodyText.replace('*tense*', tense);
+        mail.setPlainTextBody(replacedTextBody);
         mail.setToAddresses(new List<string>{
                 emailAddress
         });
+        if(iataNoReplyId != null) {
+            mail.setOrgWideEmailAddressId(iataNoReplyId);
+        }
         mail.setSaveAsActivity(false);
         mail.setUseSignature(false);
         mail.setTreatTargetObjectAsRecipient(false);
