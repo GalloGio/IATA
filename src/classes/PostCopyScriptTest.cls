@@ -73,6 +73,9 @@ public class PostCopyScriptTest {
                 Name = 'Pardot Campaign');
             insert rec7;
 
+            Group g1 = new Group(Name='group name', type='Queue', email = 'postcopyscript@iata.org');
+            insert g1;
+
         }
         
     }
@@ -140,10 +143,17 @@ public class PostCopyScriptTest {
 
 			System.assertEquals(numRecords, 0);
             
-            Test.stopTest();
-                
-		}
-		
+            Test.stopTest();                
+		}		
 	}
+
+    @isTest 
+	static void testUpdateQueuesEmail() {
+        List<Group> emailsToUpdate = [SELECT Email FROM Group WHERE Type = 'Queue' and email != ''];
+        System.assertNotEquals([SELECT count() FROM Group WHERE Type = 'Queue' and email like '%@example.com'], emailsToUpdate.size(),'The queue emails were already updated');
+        PostCopyScript script = new PostCopyScript();
+        script.updateQueuesEmail();
+        System.assertEquals([SELECT count() FROM Group WHERE Type = 'Queue' and email like '%@example.com'], emailsToUpdate.size());
+    }
 
 }

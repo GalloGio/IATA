@@ -130,4 +130,61 @@ private class ANG_FinancialSecurityTriggerHandlerTest {
 		System.assertEquals(1,auLst.size());
 
 	}
+
+
+	@isTest static void createFinancialSecurityOnChinaAssociatedEntities(){
+
+		IATA_ISO_Country__c ctryChina = new IATA_ISO_Country__c (Name='China',ISO_Code__c='CN', ANG_Enable_NewGen__c = true, Region__c = 'China & North Asia', 
+			ANG_RHC_LocationType__c = 'Include all AEs');
+        insert ctryChina;
+
+        Id accountAgencyRT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        
+        Account chinaHE = new Account(IATA_ISO_Country__c = ctryChina.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='HE',Name='Test China HE Agency OK',
+        	Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P', ANG_Accreditation_Model__c = 'Cash');
+        
+        insert chinaHE;
+
+        ANG_RHC_Information__c rhc1 = new ANG_RHC_Information__c(ANG_AccountId__c = chinaHE.Id,CurrencyIsoCode = 'USD',
+        	RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO, ANG_UniqueKey__c=chinaHE.id+ANG_RHCHelper.RHC_INFO_STD_RT);
+        insert rhc1;
+
+        Account chinaAE = new Account(IATA_ISO_Country__c = ctryChina.id, ParentId = chinaHE.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='AE',
+        	Name='Test China AE Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P', ANG_Accreditation_Model__c = 'Cash');
+
+        insert chinaAE;
+
+        Case caseHE = new Case(AccountId = chinaHE.Id, Financial_Security_Amount__c = 5000, Financial_Security_Currency__c = 'USD');
+        Case caseAE = new Case(AccountId = chinaAE.Id, Financial_Security_Amount__c = 1000, Financial_Security_Currency__c = 'USD');
+        insert new List<Case>{caseHE,caseAE};
+
+        Financial_Institution__c fi = new Financial_Institution__c(Name = 'FI1', INSTITUTION_TYPE__C='Bank');
+        insert fi;
+
+        Test.startTest();
+
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
+
+        Financial_Security__c fsHE = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=chinaHE.Id, AMOUNT__C=5000, EXPIRY_DATE__C=system.Today().AddDays(100), 
+        	FINANCIAL_INSTITUTION__c=fi.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='China & North Asia', Reception_Date__c=system.today(), 
+        	Reasonforrequest__c='New Application', Reception_Case__c=caseHE.Id);
+        insert fsHE;
+
+        //Financial Security for 
+        Financial_Security__c fsAE = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=chinaAE.Id, AMOUNT__C=1000, EXPIRY_DATE__C=system.Today().AddDays(100), 
+        	FINANCIAL_INSTITUTION__c=fi.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='China & North Asia', Reception_Date__c=system.today(),
+        	 Reasonforrequest__c='New Application', Reception_Case__c=caseAE.Id);
+        insert fsAE;
+
+        Test.StopTest();
+
+        ANG_RHC_Information__c rhcUpdated = [SELECT ANG_AccountId__c, ANG_UniqueKey__c, ANG_Financial_Security__c, ANG_Minimum_Financial_Security__c 
+        									FROM ANG_RHC_Information__c
+        									WHERE ANG_AccountId__c = :chinaHE.Id AND ANG_UniqueKey__c = :chinaHE.id+ANG_RHCHelper.RHC_INFO_STD_RT];
+
+        System.assertEquals(6000, rhcUpdated.ANG_Financial_Security__c);
+		System.assertEquals(6000, rhcUpdated.ANG_Minimum_Financial_Security__c);
+
+	}
+
 }

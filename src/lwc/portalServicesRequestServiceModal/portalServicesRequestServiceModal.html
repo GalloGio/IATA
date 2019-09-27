@@ -294,23 +294,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="slds-modal__container customCreateCaseModal">
-                    <div class="slds-p-horizontal_large text-xsmall successBoxContainer">
+                <div class="slds-modal__container customCreateCaseModal fitToContent">
+                    <div class="slds-p-horizontal_large text-xsmall successBoxContainer modalScroll">
                         <p
                             class="slds-align_absolute-center slds-m-horizontal_large slds-p-top_xx-large slds-p-bottom_small">
-                            {submitMessage}
+                            <span>
+                                <lightning-formatted-rich-text value={submitMessage}></lightning-formatted-rich-text>
+                                &nbsp;
+                                <a class="blueCustomButtonLink text-xsmall" onclick={navigateToCompanyProfile}>{companyInformationLabel}</a>
+                                &nbsp;{companyInformationPageLabel}.
+                            </span>
                         </p>
-                        <ul class="slds-m-horizontal_xx-large slds-m-top_medium">
-                            <template for:each={portalAdminList.data} for:item="pa">
-                                <li class="slds-m-around_x-small" key={pa.Name}>
-                                    <span class=" slds-m-horizontal_x-small text-bold" key={pa.Name}>{pa.Name}</span>
-                                    <span key={pa.Name}>
-                                        <lightning-formatted-email value={pa.Email} hide-icon>
-                                        </lightning-formatted-email>
-                                    </span>
-                                </li>
-                            </template>
-                        </ul>
                     </div>
                     <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
                         <div class="slds-align_absolute-center">

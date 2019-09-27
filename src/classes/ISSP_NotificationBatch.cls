@@ -21,6 +21,8 @@ global class ISSP_NotificationBatch implements Database.Batchable<sObject>
 	global Map<String, String> MessagesByGroupMap;
 
 	global String ContactGroupField; //Field which grouped the messages for contact, as described above.
+	
+	global list<String> listVariables; // map to replaces tags {0},{1},{2}...
 
 	/**
 	 * [
@@ -35,6 +37,7 @@ global class ISSP_NotificationBatch implements Database.Batchable<sObject>
 		NotificationTemplate = null;
 		MessagesByGroupMap = null;
 		ContactGroupField = '';
+		listVariables = null;
 	}
 	
 	/**
@@ -64,7 +67,7 @@ global class ISSP_NotificationBatch implements Database.Batchable<sObject>
    	global void execute(Database.BatchableContext BC, List<sObject> scope) 
    	{
    		System.debug('KTC - ISSP_NotificationBatch - execute - scope: ' + scope);
-        ISSP_NotificationUtilities.insertNotifications((List<Contact>)scope, NotificationTemplate, MessagesByGroupMap, ContactGroupField);
+        ISSP_NotificationUtilities.insertNotifications((List<Contact>)scope, NotificationTemplate, MessagesByGroupMap, ContactGroupField, listVariables);
 	}
 	
 	/**

@@ -33,7 +33,8 @@ export default class PortalHomePageHeader extends LightningElement {
         getUserName({})
         .then(result => {
             //console.log('getUserName: ', result);
-            this.greetinglabel = this.label.CSP_Home_WelcomeTitle.replace('[username]',result);
+            if(!result)result='';
+             this.greetinglabel = this.label.CSP_Home_WelcomeTitle.replace('[username]',result);
             this.loadingGreeting = false;
         }).catch(error => {
             this.loadingGreeting = false;

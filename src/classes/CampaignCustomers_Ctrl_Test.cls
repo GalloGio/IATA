@@ -16,14 +16,16 @@ public class CampaignCustomers_Ctrl_Test
 
 		//Create location for the customer
 		Contact oContact = new Contact_Sel().getContactById(usr.contactId);
+		List<Account> oAccounts = TestDataGenerator.generateAccounts(4, true);
+		List<Contact> oContacts = TestDataGenerator.generateContacts('' + oAccounts[0].Id, 3, true);
 		List<IECAddress__c> lstAddress = TestDataGenerator.generateAddresses(1, true);
 		List<Location__c> lstLocation = new List<Location__c>();
-		lstLocation.add(new Location__c(Type__c='Sold To', Address__c=lstAddress[0].Id, Account__c=oContact.AccountId, SAP_Id__c='sold1'));
-		lstLocation.add(new Location__c(Type__c='Bill To', Address__c=lstAddress[0].Id, Account__c=oContact.AccountId, Contact__c=oContact.Id, SAP_Id__c='bill1'));
-		lstLocation.add(new Location__c(Type__c='Ship To', Address__c=lstAddress[0].Id, Account__c=oContact.AccountId, Contact__c=oContact.Id, SAP_Id__c='ship1'));
+		lstLocation.add(new Location__c(Type__c='Sold To', Address__c=lstAddress[0].Id, Account__c=oAccounts[0].Id, SAP_Id__c='sold1'));
+		lstLocation.add(new Location__c(Type__c='Bill To', Address__c=lstAddress[0].Id, Account__c=oAccounts[1].Id, Contact__c=oContacts[0].Id, SAP_Id__c='bill1'));
+		lstLocation.add(new Location__c(Type__c='Ship To', Address__c=lstAddress[0].Id, Account__c=oAccounts[2].Id, Contact__c=oContacts[1].Id, SAP_Id__c='ship1'));
 		insert lstLocation;
-		update new Account(Id=oContact.AccountId, SoldTo_Location__c=lstLocation[0].Id);
-		update new Contact(Id=oContact.Id, BillTo_Location__c=lstLocation[1].Id, ShipTo_Location__c=lstLocation[2].Id);
+		update new Account(Id=oAccounts[3].Id, SoldTo_Location__c=lstLocation[0].Id);
+		update new Contact(Id=oContacts[2].Id, BillTo_Location__c=lstLocation[1].Id, ShipTo_Location__c=lstLocation[2].Id);
 
 		//Products
 		List<Product2> products = TestDataGenerator.generateProducts(5, false);

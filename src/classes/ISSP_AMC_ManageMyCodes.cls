@@ -60,8 +60,8 @@ public class ISSP_AMC_ManageMyCodes {
 					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
 						designatorApplicationId = participation.Id;
 					}
-					else {
-						if(eachExistingCase.Status != 'Closed'){
+					else {                        
+						if(eachExistingCase.Status != 'Closed' && eachExistingCase.Status != 'Closed_Rejected'){
 							caseDesignatorApplicationId = eachExistingCase.Id;
 						}
 					}
@@ -79,7 +79,7 @@ public class ISSP_AMC_ManageMyCodes {
 						baggageApplicationId = participation.Id;
 					}
 					else {
-						if(eachExistingCase.Status != 'Closed'){
+						if(eachExistingCase.Status != 'Closed' && eachExistingCase.Status != 'Closed_Rejected'){
 							caseBaggageApplicationId = eachExistingCase.Id;
 						}
 					}
@@ -88,7 +88,7 @@ public class ISSP_AMC_ManageMyCodes {
 						accountingOrPrefixApplicationId = participation.Id;
 					}
 					else {
-						if(eachExistingCase.Status != 'Closed'){
+						if(eachExistingCase.Status != 'Closed' && eachExistingCase.Status != 'Closed_Rejected'){
 							caseAccountingOrPrefixApplicationId = eachExistingCase.Id;
 						}
 					}

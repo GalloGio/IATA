@@ -89,6 +89,8 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     @track showModal = false;
     @track callUsPhoneNumberConfigs;
     @track phoneNumber = [];
+
+    @track showHideRecentCasesList = false;
     //@track suggestion;
 
     //global variables
@@ -430,7 +432,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //first element on the picklist
         for (const item of this.myResult) {
-            if (!map.has(item.childs) && item.topicName === this.topic) {
+            if (!map.has(item.childs) && item.topicName === this.topic && item.categoryName === this.category) {
                 Object.keys(item.childs).forEach(function (el) {
                     mySubTopicOptionsAux.push({
                         label: el, value: item.childs[el]
@@ -457,7 +459,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                     this.optionsButton = true;
                     if (this.emergencyCategories.some(obj => obj.value === this.topic + ('__c'))
                         && this.emergencyCategories.some(obj => obj.value.includes(this.subTopic + '__c'))) {
-                        this.emergencyButton = true;
+                            if(this.isQuestion){
+                                this.emergencyButton = true;
+                            }
                     }
                 }
             } else {
@@ -487,7 +491,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
                 if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
                     && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
-                    this.emergencyButton = true;
+                        if(this.isQuestion){
+                            this.emergencyButton = true;
+                        }
                 }
             }
         } else {
@@ -507,7 +513,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
             if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
                 && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
-                this.emergencyButton = true;
+                    if(this.isQuestion){
+                        this.emergencyButton = true;
+                    }
             }
         } else {
             this.optionsButton = false;
@@ -864,5 +872,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                         && item.DeveloperName === 'LVA_CallUs_GEN'); // ---- Seventh Condition ------//
             });
         }
+    }
+
+    hideRecentCasesList() {
+        this.showHideRecentCasesList = true;
     }
 }
