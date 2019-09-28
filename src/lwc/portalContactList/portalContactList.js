@@ -2,21 +2,48 @@
  * Created by pvavruska on 6/4/2019.
  */
 
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track, api, wire } from 'lwc';
 
 import getAccountDomains from '@salesforce/apex/PortalProfileCtrl.getAccountDomains';
 import isAccountDomain from '@salesforce/apex/PortalProfileCtrl.isAccountDomain';
+import inactivate from '@salesforce/apex/PortalProfileCtrl.inactivate';
+import approve from '@salesforce/apex/PortalProfileCtrl.approve';
+import getRejectionReasons from '@salesforce/apex/ISSP_PortalUserStatusChange.getRejectionReasons';
+import { reduceErrors } from 'c/ldsUtils';
+
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import BasicsSection from '@salesforce/label/c.csp_Basics_Section_label';
 import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
 import CSP_Search_NoResults_text1 from '@salesforce/label/c.CSP_Search_NoResults_text1';
 import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults_text2';
-
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import ISSP_ReasonInactivation from '@salesforce/label/c.ISSP_ReasonInactivation';
+import CSP_selectReason from '@salesforce/label/c.CSP_selectReason';
+import ISSP_Confirm from '@salesforce/label/c.ISSP_Confirm';
+import ISSP_InactiveUser_IdCard from '@salesforce/label/c.ISSP_InactiveUser_IdCard';
+import ISSP_SureToContinue from '@salesforce/label/c.ISSP_SureToContinue';
+import ISSP_SelectOneContact from '@salesforce/label/c.ISSP_SelectOneContact';
 import ISSP_ContactList_HoverPopup_Text from '@salesforce/label/c.ISSP_ContactList_HoverPopup_Text';
 
 
 export default class PortalContactList extends LightningElement {
+
+    _labels = { 
+        BasicsSection, 
+        CSP_NoSearchResults, 
+        CSP_Search_NoResults_text1, 
+        CSP_Search_NoResults_text2, 
+        ISSP_ContactList_HoverPopup_Text, 
+        ISSP_ReasonInactivation, 
+        CSP_selectReason,
+        ISSP_Confirm,
+        ISSP_InactiveUser_IdCard,
+        ISSP_SureToContinue,
+        ISSP_SelectOneContact
+    };
+    get labels() { return this._labels; }
+    set labels(value) { this._labels = value; }
 
     @api isAccount;
 
@@ -29,19 +56,25 @@ export default class PortalContactList extends LightningElement {
     @api fetching;
     isAsc = true;
     sortBy;
-    @track isLoading = true;
+    @track loading = false;
     @track isLoadingRecords = true;
     @api fieldsListToCreate;
     @track recordsLocal;
+    @track contactsWrapper;
     @api recordsInitDone = false;
     @track openId;
     @track showEditLocal = false;
     @track _searchKey = false;
     @track isAccountDomain;
     @track accountDomain = [];
+    @track allContacts = [];
+    @track inactiveModal = false;
+    @track inactiveReason = '';
+    @track hasError = false;
+    @track errorMessage = '';
+    @track contactsSelected = [];
+    @track allContactsSelected = false;
 
-    
-    
     searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
     /* Dynamic fields*/
@@ -98,6 +131,14 @@ export default class PortalContactList extends LightningElement {
         }
     }
 
+    @api
+    get wrapper() {
+        return this.contactsWrapper;
+    }
+    set wrapper(value) {
+        this.contactsWrapper = value;
+    }
+
     get hasRecords() { return this.records !== undefined && this.records.length > 0; }
 
     get fieldCount() {
@@ -108,13 +149,9 @@ export default class PortalContactList extends LightningElement {
         }
     }
 
+    @wire(getRejectionReasons) inactiveOptions;
 
-
-    _labels = { BasicsSection, CSP_NoSearchResults, CSP_Search_NoResults_text1, CSP_Search_NoResults_text2 , ISSP_ContactList_HoverPopup_Text};
-    get labels() { return this._labels; }
-    set labels(value) { this._labels = value; }
-
-    connectedCallback() {
+    connectedCallback() {        
         this.fetching = false;
         this.isAccount = (this.isAccount === 'true' ? true : false);
 
@@ -153,6 +190,260 @@ export default class PortalContactList extends LightningElement {
         }
 
         this.records = records;
+    }
+
+    get noSelected() {
+        var result = false;
+        if (this.inactiveReason === '') result = true;
+
+        return result;
+    }
+
+    grantAccess(event) {
+        this.loading = true;
+
+        let contact = [];
+        contact.push(event.target.dataset.item);
+        let exp = event.target.dataset.name;
+
+        switch(exp) {
+            case 'approve':
+                this.processApprove(contact, 'Approved User');
+                break;
+            case 'approveAdmin':
+                this.processApprove(contact, 'Approved Admin');
+                break;
+            default:
+                break;
+        }
+    }
+
+    grantAccessAll(event) {
+        this.loading = true;
+
+        let exp = event.target.dataset.name;
+        switch(exp) {
+            case 'approve':
+                this.processApprove(this.contactsSelected, 'Approved User');
+                break;
+            case 'approveAdmin':
+                this.processApprove(this.contactsSelected, 'Approved Admin');
+                break;
+            default:
+                break;
+        }
+    }
+
+    processApprove(contactsList, appStatus) {
+        let records = JSON.parse(JSON.stringify(this.contactsWrapper));
+        let found = true;
+
+        for (let i = 0; i < records.length; i++) { 
+            if(contactsList.includes(records[i].contact.Id)) {
+                records[i].selected = true;
+                if(found) found = false;
+            } else {
+                records[i].selected = false;
+            }
+        }
+
+        this.contactsWrapper = records;
+
+        if(found) {
+            this.loading = false;
+            const toastEvent = new ShowToastEvent({
+                title: 'Error',
+                message: ISSP_SelectOneContact,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastEvent);
+        } else {
+            approve({ contactList : JSON.stringify(this.contactsWrapper), approvalStatus : appStatus })
+                .then(results => {
+                    this.loading = false;
+                    if(results.isSuccess) {
+                        const toastEvent = new ShowToastEvent({
+                            title: 'Success',
+                            message: results.successMsg,
+                            variant: 'success'
+                        });
+                        this.dispatchEvent(toastEvent);
+                        this.refreshview();
+                    } else {
+                        const toastEvent = new ShowToastEvent({
+                            title: 'Error',
+                            message: results.errorMsg,
+                            variant: 'error'
+                        });
+                        this.dispatchEvent(toastEvent);
+                    }
+                })
+                .catch(error => {
+                    this.loading = false;
+                    const toastEvent = new ShowToastEvent({
+                        title: 'Error',
+                        message: reduceErrors(error).join(', '),
+                        variant: 'error'
+                    });
+                    this.dispatchEvent(toastEvent);
+            });
+        }
+    }
+
+    denyAccess(event) {
+        let contactSelected = event.target.dataset.item !== undefined ? event.target.dataset.item : '';
+        this.inactiveModal = true;
+
+        let records = JSON.parse(JSON.stringify(this.contactsWrapper));
+        let conSelected = JSON.parse(JSON.stringify(this.contactsSelected));
+        
+        for (let i = 0; i < records.length; i++) { 
+            if((contactSelected !== '' && contactSelected === records[i].contact.Id) || records[i].selected || conSelected.includes(records[i].contact.Id)) {
+                records[i].selected = true;
+
+                if(records[i].hasIdCard) {
+                    let conf = confirm(this._labels.ISSP_InactiveUser_IdCard + ' ' + this._labels.ISSP_SureToContinue + ' ' + records[i].contact.Name);
+                    if(conf) {
+                        records[i].hasIdCard = false;
+                    } else {
+                        this.inactiveModal = false;
+                    }
+                }
+            } else {
+                records[i].selected = false;
+            }
+        }
+
+        this.contactsWrapper = records;
+
+    }
+
+    processInactive() {
+        this.loading = true;
+
+        let records = JSON.parse(JSON.stringify(this.contactsWrapper));
+        let found = true;
+
+        for (let i = 0; i < records.length; i++) {
+            if(records[i].selected) {
+                found = false;
+                break;
+            }
+        }
+
+        if(found) {
+            this.loading = false;
+            const toastEvent = new ShowToastEvent({
+                title: 'Error',
+                message: ISSP_SelectOneContact,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastEvent);
+        } else {
+            inactivate({ contactList : JSON.stringify(this.contactsWrapper), reasonToInactive : this.inactiveReason })
+                .then(results => {
+                    this.loading = false;
+                    if(results.isSuccess) {
+                        const toastEvent = new ShowToastEvent({
+                            title: 'Success',
+                            message: results.successMsg,
+                            variant: 'success'
+                        });
+                        this.dispatchEvent(toastEvent);
+                        this.refreshview();
+                    } else {
+                        this.hasError = true;
+                        this.errorMessage = results.errorMsg;
+                    }
+                    
+                })
+                .catch(error => {
+                    this.loading = false;
+                    const toastEvent = new ShowToastEvent({
+                        title: 'Error',
+                        message: reduceErrors(error).join(', '),
+                        variant: 'error'
+                    });
+                    this.dispatchEvent(toastEvent);
+            });
+        }
+    }
+
+    handleInactiveReason(event) {
+        this.inactiveReason = event.detail.value;
+    }
+
+    handleRadioOptions(event) {
+        let contactSelected = event.target.dataset.item;
+
+        let fieldValue = JSON.parse(JSON.stringify(this.contactsSelected));
+
+        if (!fieldValue.includes(contactSelected)) {
+            fieldValue.push(contactSelected)
+        } else {
+            for (let i = fieldValue.length - 1; i >= 0; i--) {
+                if (fieldValue[i] === contactSelected) {
+                    fieldValue.splice(i, 1);
+                }
+            }
+        }
+
+        this.contactsSelected = fieldValue;
+    }
+
+    handleRadioAllOptions() {        
+        let recordsWrapper = JSON.parse(JSON.stringify(this.contactsWrapper));
+
+        for (let i = 0; i < recordsWrapper.length; i++) {
+            if(this.allContactsSelected) {
+                recordsWrapper[i].selected = false;
+            } else {
+                recordsWrapper[i].selected = true;
+            }
+        }
+
+        this.contactsWrapper = recordsWrapper;
+        
+        let records = JSON.parse(JSON.stringify(this.records));
+
+        for (let i = 0; i < records.length; i++) {
+            if(this.allContactsSelected) {
+                records[i].selected = false;
+            } else {
+                records[i].selected = true;
+            }
+        }
+
+        this.records = records;
+
+        this.allContactsSelected = !this.allContactsSelected;
+    }
+
+    closeInactiveModal() {
+        if(!this.loading) {
+            this.inactiveModal = false;
+            this.hasError = false;
+            this.errorMessage = '';
+            this.inactiveReason = '';
+            this.contactsSelected = [];
+            this.allContactsSelected = false;
+
+            let recordsWrapper = JSON.parse(JSON.stringify(this.contactsWrapper));
+
+            for (let i = 0; i < recordsWrapper.length; i++) {
+                recordsWrapper[i].selected = false;
+            }
+    
+            this.contactsWrapper = recordsWrapper;
+
+            let records = JSON.parse(JSON.stringify(this.records));
+
+            for (let i = 0; i < records.length; i++) {
+                records[i].selected = false;
+            }
+    
+            this.records = records;
+        }
     }
 
     @api resetInit() {
@@ -227,6 +518,8 @@ export default class PortalContactList extends LightningElement {
                 if (this.openId != null && this.openId == record.Id) {
                     record.open = true;
                 }
+
+                record.selected = record.selected !== undefined ? record.selected : false;
             }
 
             this.records = records;

@@ -175,7 +175,7 @@
                                 <div class="slds-grid slds-wrap slds-m-top_x-small">
                                     <c-portal-contact-list is-account="false" object-name="Contact" class="fullWidth"
                                         default-sort="Name" fields-list={contactFields}
-                                        fields-list-to-create={fieldsListToCreate} records={contacts}
+                                        fields-list-to-create={fieldsListToCreate} records={contacts} wrapper={contactsWrapper}
                                         openmodel={openmodel} recordid={recordid} accountid={accountid}
                                         objectid={objectid} ongetcontacts={getContacts} fetching={isFetching}
                                         onrefreshview={refreshview} onsearchrecords={searchRecords} search-key={searchTextContacts}>
