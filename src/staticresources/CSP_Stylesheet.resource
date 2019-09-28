@@ -1552,6 +1552,10 @@ visibility: hidden;
     background-image: url(/csportal/s/CSPortal/Images/Icons/more.svg);
 }
 
+.removeArrowFromButtonMenu button > :nth-child(2) {
+  display: none;
+}
+
 .introMessage span a {
     color: #3333ff;
 }
