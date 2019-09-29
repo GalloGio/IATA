@@ -4,8 +4,9 @@ import { navigateToPage } from 'c/navigationUtils';
 
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import getFieldLabels from '@salesforce/apex/CSP_Utils.getSelectedColumns';
-import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
+
 import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
+import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
 
 
 import { getParamsFromPage } from 'c/navigationUtils';
