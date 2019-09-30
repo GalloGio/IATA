@@ -1877,7 +1877,7 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Complete Profile --></label>
+        <label>กรอกข้อมูลส่วนบุคคลของคุณ</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
@@ -2081,11 +2081,11 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Desc --></label>
+        <label>การสร้างบัญชีของคุณสำเร็จแล้ว! คุณสามารถสำรวจคุณสมบัติพอร์ทัลของเราได้แล้ว ณ ขณะนี้ สำหรับการตั้งค่าเนื้อหาส่วนบุคคลเพิ่มเติม กรุณากรอกข้อมูลส่วนบุคคลของคุณ</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Title --></label>
+        <label>ยินดีต้อนรับ</label>
         <name>CSP_First_Login_Title</name>
     </customLabels>
     <customLabels>
@@ -2215,6 +2215,10 @@
     <customLabels>
         <label>เราต้องการข้อมูลของคุณ เพื่อดำเนินการกับคำร้องของ คุณ</label>
         <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลส่วนบุคคล</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2493,7 +2497,7 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Skip --></label>
+        <label>ข้ามการดำเนินการในตอนนี้</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>

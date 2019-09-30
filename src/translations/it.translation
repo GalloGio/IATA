@@ -1881,7 +1881,7 @@ la seguente procedura per completarlo :
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Complete Profile --></label>
+        <label>Completi il suo profilo</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
@@ -2085,11 +2085,11 @@ la seguente procedura per completarlo :
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Desc --></label>
+        <label>Il suo account è stato creato con successo! Potrà già da ora scoprire le funzionalità del nostro portale. Per ottenere contenuti personalizzati, la invitiamo a completare il suo profilo.</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Title --></label>
+        <label>Le diamo il benvenuto!</label>
         <name>CSP_First_Login_Title</name>
     </customLabels>
     <customLabels>
@@ -2219,6 +2219,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label>Abbiamo bisogno del suo contributo per procedere con il suo caso.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Informazioni personali</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2498,7 +2502,7 @@ la seguente procedura per completarlo :
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Skip --></label>
+        <label>Salti per ora</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>

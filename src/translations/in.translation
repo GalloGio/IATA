@@ -1880,7 +1880,7 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Complete Profile --></label>
+        <label>Lengkapi Profil Anda.</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
@@ -2084,11 +2084,11 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Desc --></label>
+        <label>Akun Anda berhasil dibuat! Anda sudah dapat menemukan fitur Portal kami sekarang. Untuk konten yang lebih personal, silakan lengkapi profil Anda.</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Title --></label>
+        <label>Selamat datang.</label>
         <name>CSP_First_Login_Title</name>
     </customLabels>
     <customLabels>
@@ -2218,6 +2218,10 @@
     <customLabels>
         <label>Kami membutuhkan masukan Anda untuk melanjutkan kasus Anda.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Informasi pribadi.</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2497,7 +2501,7 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Skip --></label>
+        <label>Lewati Untuk Sekarang ini.</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>

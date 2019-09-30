@@ -1881,7 +1881,7 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Complete Profile --></label>
+        <label>Vervollständigen Sie Ihr Profil</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
@@ -2085,11 +2085,11 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Desc --></label>
+        <label>Ihr Konto wurde erfolgreich erstellt! Sie können unsere Portalfunktionen bereits jetzt entdecken. Für personalisiertere Inhalte vervollständigen Sie bitte Ihr Profil.</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Title --></label>
+        <label>Willkommen an Bord</label>
         <name>CSP_First_Login_Title</name>
     </customLabels>
     <customLabels>
@@ -2219,6 +2219,10 @@
     <customLabels>
         <label>Wir benötigen Ihre Eingaben, um mit Ihrem Fall fortzufahren.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Persönliche Angaben</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2499,7 +2503,7 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Skip --></label>
+        <label>Erstmal überspringen</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>

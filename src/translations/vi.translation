@@ -1879,7 +1879,7 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Complete Profile --></label>
+        <label>Hoàn thành Hồ sơ cá nhân</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
@@ -2083,11 +2083,11 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Desc --></label>
+        <label>Tài khoản đăng nhập của quý khách đã được tạo mới thành công! Quý khách hiện có thể khám phá các tính năng trên trang Cổng thông tin của chúng tôi ngay từ bây giờ. Đối với các nội dung mang tính chất cá nhân hóa, xin quý khách vui lòng hoàn thành hồ sơ của mình.</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Title --></label>
+        <label>Chào mừng quý khách,</label>
         <name>CSP_First_Login_Title</name>
     </customLabels>
     <customLabels>
@@ -2217,6 +2217,10 @@
     <customLabels>
         <label>Chúng tôi cần ý kiến đóng góp của bạn để tiến hành với trường hợp của bạn.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Thông tin cá nhân</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2495,7 +2499,7 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Skip --></label>
+        <label>Tạm thời bỏ qua</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>

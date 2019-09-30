@@ -1877,7 +1877,7 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Complete Profile --></label>
+        <label>Заполнить свой профиль</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
@@ -2081,11 +2081,11 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Desc --></label>
+        <label>Ваша учетная запись была успешно создана! И теперь вы уже можете приступить к исследованию возможностей нашего портала. Для получения и просмотра более персонализированного содержания, пожалуйста, заполните свой профиль.</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Title --></label>
+        <label>Добро пожаловать на борт!</label>
         <name>CSP_First_Login_Title</name>
     </customLabels>
     <customLabels>
@@ -2215,6 +2215,10 @@
     <customLabels>
         <label>Нам нужно ваше мнение, чтобы продолжить изучение вашего случая.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Персональные данные</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2495,7 +2499,7 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Skip --></label>
+        <label>Пропустить сейчас</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>

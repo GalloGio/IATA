@@ -1880,7 +1880,7 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Complete Profile --></label>
+        <label>Complete seu perfil</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
@@ -2084,11 +2084,11 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Desc --></label>
+        <label>Sua conta foi criada com sucesso! Você já pode descobrir nossos recursos do Portal agora. Para conteúdo mais personalizado, preencha seu perfil.</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Title --></label>
+        <label>Bem-vindo a bordo.</label>
         <name>CSP_First_Login_Title</name>
     </customLabels>
     <customLabels>
@@ -2218,6 +2218,10 @@
     <customLabels>
         <label>Precisamos da sua opinião para prosseguir com o seu caso.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Informação pessoal</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2496,7 +2500,7 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Skip --></label>
+        <label>Pular por enquanto</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>

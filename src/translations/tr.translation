@@ -1877,7 +1877,7 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Complete Profile --></label>
+        <label>Profilinizi Tamamlayın</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
@@ -2081,11 +2081,11 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Desc --></label>
+        <label>Hesabınız başarıyla oluşturuldu! Portal özelliklerimizi şimdiden keşfedebilirsiniz. Daha fazla kişiselleştirilmiş içerik için lütfen profilinizi tamamlayın.</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Title --></label>
+        <label>Aramıza hoşgeldiniz</label>
         <name>CSP_First_Login_Title</name>
     </customLabels>
     <customLabels>
@@ -2215,6 +2215,10 @@
     <customLabels>
         <label>Sorgunuza devam etmek için bilginize ihtiyacımız var.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Kişisel Bilgiler</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2493,7 +2497,7 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Skip --></label>
+        <label>Şimdilik Atla</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>

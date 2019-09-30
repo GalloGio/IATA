@@ -1877,7 +1877,7 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Complete Profile --></label>
+        <label>完成您的个人档案</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
@@ -2081,11 +2081,11 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Desc --></label>
+        <label>您的帐户已成功创建！ 您现在已经可以发现我们的门户网站的功能。有关更多个性化内容，请填写您的个人档案。</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Title --></label>
+        <label>欢迎登机</label>
         <name>CSP_First_Login_Title</name>
     </customLabels>
     <customLabels>
@@ -2215,6 +2215,10 @@
     <customLabels>
         <label>我们需要您的意见来继续处理您的案例。</label>
         <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>个人信息</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2493,7 +2497,7 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Skip --></label>
+        <label>现在跳过</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>

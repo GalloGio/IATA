@@ -1880,7 +1880,7 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Complete Profile --></label>
+        <label>プロフィールを完了させる</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
@@ -2084,11 +2084,11 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Desc --></label>
+        <label>アカウントが正常に作成されました！ ポータルの機能を探索していただけます。より個人化されたコンテンツについては、プロフィールを完了させてください。</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP First Login Title --></label>
+        <label>ようこそ</label>
         <name>CSP_First_Login_Title</name>
     </customLabels>
     <customLabels>
@@ -2218,6 +2218,10 @@
     <customLabels>
         <label>お客様の案件を進めさせていただく際に、お客様のご意見が必要です。</label>
         <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>個人情報</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2497,7 +2501,7 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Skip --></label>
+        <label>飛ばして進む</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
