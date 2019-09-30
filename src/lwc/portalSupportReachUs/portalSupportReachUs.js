@@ -580,7 +580,13 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //Shows Options Panel
         let showOptionsPanel = new Promise((resolve, reject) => {
-            const showoptions = new CustomEvent('showoptions');
+            const showoptions = new CustomEvent('showoptions', { 
+                detail: {
+                    topic: this.topic,
+                    subtopic: this.subTopic,
+                    category: this.category
+                }
+            });
             // Fire the custom event
             this.dispatchEvent(showoptions);
 

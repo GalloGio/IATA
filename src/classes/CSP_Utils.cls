@@ -1,5 +1,31 @@
 public with sharing class CSP_Utils {
 
+    public class LoginConfig {
+        @AuraEnabled
+        public String selfRegistrationUrl {get;set;}
+    }
+
+    @AuraEnabled
+    public static LoginConfig getAuthConfig(){
+        Id networkId = Network.getNetworkId();
+        Auth.AuthConfiguration authConfig = new Auth.AuthConfiguration(networkId,'');
+
+        LoginConfig config = new LoginConfig();
+        config.selfRegistrationUrl = authConfig.getSelfRegistrationUrl();
+
+        return config;
+    }    
+
+    /* 
+    * @description Indicates whether the current user isn’t logged in to the community.
+    * @params
+    * @return Boolean
+    */    
+    @AuraEnabled
+    public static Boolean isGuestUser(){
+        return Auth.CommunitiesUtil.isGuestUser();
+    } 
+
     public static String toDatetime(Date dte) {
         DateTime dtAndTime = DateTime.newInstanceGmt(dte.year(), dte.month(), dte.day(), 0, 0, 0);
 
