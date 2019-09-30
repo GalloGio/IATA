@@ -138,7 +138,8 @@ public class AMS_OscarCaseTriggerHelper {
         if(oscarCases.isEmpty()) return;
 
         List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
-        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c 
+        //WMO-564 copy case reason to oscar 
+        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c, Case_Reason__c  
                                                                    FROM AMS_OSCAR__c WHERE Id = :oscarIds]);
 
         for(Case c : oscarCases){
@@ -158,7 +159,12 @@ public class AMS_OscarCaseTriggerHelper {
 
                 changed = true;
             }
-
+            //WMO-564
+            if(oscar.Case_Reason__c != c.Reason1__c) {
+                oscar.Case_Reason__c = c.Reason1__c;
+                CaseProcessTypeHelper.populateOSCARAccProcess(oscar);
+                changed = true;
+            }
             if(oscar.BusinessHours__c != c.BusinessHoursId){
                 oscar.BusinessHours__c = c.BusinessHoursId;
                 changed = true;
