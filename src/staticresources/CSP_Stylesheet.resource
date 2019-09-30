@@ -1726,12 +1726,14 @@ visibility: hidden;
 .registrationComboBox .slds-combobox_container input[role="textbox"]{
 	border-color: #e6e6e6;
 }
+
 .welcomePopup {
- 	 background-color: #F7F8FA;
-     width: 100%;
-     margin: auto;
-     box-shadow: 5px 5px 20px #808080;
-     border-radius: 1px;
+	background-color: #F7F8FA;
+    width: 100%;
+    max-width: 544px;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
 }
 
 .itemWelcome > .slds-slot{
