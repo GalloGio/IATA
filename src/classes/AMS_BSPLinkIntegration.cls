@@ -50,10 +50,10 @@ global class AMS_BSPLinkIntegration {
 		}
 		
 		if(sProcess=='DeactivationUndo'){
-			if(lsCase.get(0).Shut_Down_TKT_System_GDS_and_BSPlink__c<system.today().addDays(-10)){
+			if(lsCase.get(0).Shut_Down_TKT_System_GDS_and_BSPlink__c<system.today().addDays(-60)){
 				r.IATACode='-';
 				r.result = 'Error';
-				r.description = 'Cannot undo deactivation if more than 10 days passed since deactivation';
+				r.description = 'Cannot undo deactivation if more than 60 days passed since deactivation';
 				lsToReturn.Add(r);
 				return lsToReturn;
 			}
