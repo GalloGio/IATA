@@ -212,6 +212,15 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Global_ID__c</fullName>
+        <displayFormat>aB4-{000000000}</displayFormat>
+        <externalId>false</externalId>
+        <label>Global ID</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
         <fullName>Last_Name__c</fullName>
         <description>Last name of the related contact</description>
         <externalId>false</externalId>
