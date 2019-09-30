@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Auto_grant_service__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Category__c</field>
@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Is_Visible__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Parent__c</field>
