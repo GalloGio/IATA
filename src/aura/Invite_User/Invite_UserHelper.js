@@ -75,6 +75,8 @@
                 component.set("v.userType", response.getReturnValue().UserType);
                 this.getActors(component);
                 this.contactLabels(component);
+                //scroll to top of page
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }else{
                 this.toggleSpinner(component);
                 this.showToast(component, 'error', 'Unexpected error.', 'Unable to load data.');
