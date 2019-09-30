@@ -12,7 +12,9 @@ public class ANG_MulticountryCopyParentInfo implements Queueable {
 
 		System.debug('[ANG_MulticountryCopyParentInfo] Execuing ANG_MulticountryCopyParentInfo');
 
-		List<AMS_OSCAR__c> oscars = [SELECT id, AMS_Online_Accreditation__c, Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c, 
+		List<AMS_OSCAR__c> oscars = [SELECT Id, AMS_Online_Accreditation__c,
+										Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c, 
+										Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c,
 										Account__r.Parent.Name, 
 										Account__r.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c,
 										Account__r.Parent.Company_Type__c, 
@@ -61,8 +63,10 @@ public class ANG_MulticountryCopyParentInfo implements Queueable {
 				
 				System.debug('[ANG_MulticountryCopyParentInfo] Copying data from: ' + osc.Account__r.Parent.Name);
 
-				if(osc.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c == osc.Account__r.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
-
+				if (osc.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c 
+						== osc.Account__r.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c
+					&& ! osc.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c)
+				{
 		    		onlineAcc = new AMS_Pax_Accreditation_Form__c(
 		    			id = osc.AMS_Online_Accreditation__c, 
 		    			Remittance_frequency__c = osc.Account__r.Parent.Remittance_frequency__c

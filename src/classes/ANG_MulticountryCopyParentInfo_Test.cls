@@ -25,12 +25,14 @@ public class ANG_MulticountryCopyParentInfo_Test {
 		countryPT.ISO_Code__c = 'PT';
 		countryPT.ANG_Enable_NewGen__c = true;
 		countryPT.AMS_Settlement_System__c = bspPT.Id;
+        countryPT.Multicountry_Enabled__c = true;
 
 		IATA_ISO_Country__c countryUK = new IATA_ISO_Country__c();
 		countryUK.Name = 'United Kingdom';
 		countryUK.ISO_Code__c = 'GB';
 		countryUK.ANG_Enable_NewGen__c = true;
 		countryUK.AMS_Settlement_System__c = bspGB.Id;
+        countryUK.Multicountry_Enabled__c = true;
 
 		insert new List<IATA_ISO_Country__c>{countryPT, countryUK};
 
