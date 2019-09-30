@@ -1,0 +1,191 @@
+<!-- Training Records Detail Search -->
+<template>
+    <c-portal-iftp-export-data></c-portal-iftp-export-data>
+    <!-- Error panel -->
+    <template if:true={error}>
+        <c-error-panel errors={error} main-error-message={mainErrorMessage}></c-error-panel>
+    </template>
+
+    <div if:false={showSearchModal}>
+        <div class="slds-card_boundary">
+            <lightning-card> 
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    Search Criteria
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-m-left_x-small">
+                        <lightning-combobox
+                            name="station"
+                            label="Station"
+                            value={stationValue}
+                            placeholder="Select Station"
+                            options={stationOptions}
+                            onchange={handleChangeStation}
+                            required>
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
+                        <lightning-combobox
+                            name="level"
+                            label="Level"
+                            value={levelValue}
+                            placeholder="Select Level"
+                            options={levelOptions}
+                            onchange={handleChangeLevel} >
+                        </lightning-combobox>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-m-left_x-small">
+                        <lightning-combobox
+                            name="itp"
+                            label="ITP"
+                            value={itpValue}
+                            placeholder="Select ITP"
+                            options={itpOptions}
+                            onchange={handleChangeITP} >
+                        </lightning-combobox>  
+                    </div>
+                    <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
+                    <!-- <div class="slds-col slds-m-left_x-small"> -->
+                        <lightning-combobox
+                            name="aircraftType"
+                            label="Operation Type"
+                            value={aircraftTypeValue}
+                            placeholder="Select Aircraft Type"
+                            options={aircraftTypeOptions}
+                            onchange={handleChangeAircraftType} >
+                        </lightning-combobox>
+                    </div>
+                    <!--
+                    <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
+                        <lightning-combobox
+                            name="proficiency"
+                            label="Proficiency"
+                            value={proficiencyValue}
+                            placeholder="Select Proficiency"
+                            options={proficiencyOptions}
+                            onchange={handleChangeProficiency} >
+                        </lightning-combobox>
+                    </div>
+                    -->
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-m-left_x-small">
+                        <lightning-combobox
+                            name="experiationstatus"
+                            label="Expiration Status"
+                            value={experiationstatusValue}
+                            placeholder="Select Expiration Status"
+                            options={experiationstatusOptions}
+                            onchange={handleChangeExperiationstatus} >
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-m-left_x-small">
+                        <lightning-combobox
+                            name="datePeriod"
+                            label="Period"
+                            value={datePeriodValue}
+                            placeholder="Select a Period"
+                            options={datePeriodOptions}
+                            onchange={handleChangedatePeriod} >
+                        </lightning-combobox>
+                    </div>   
+                    <div class="slds-col slds-m-left_x-small">
+                        <lightning-input 
+                            type="date" 
+                            name="fromDate" 
+                            label="Expiration Date From" 
+                            value={fromDateValue} 
+                            min="2018-01-01"
+                            onchange={handleChangeFromDate}>
+                        </lightning-input>
+                    </div>    
+                    <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
+                        <lightning-input 
+                            type="date" 
+                            name="toDate" 
+                            label="Expiration Date To" 
+                            value={toDateValue}
+                            min={toDateMinValue} 
+                            onchange={handleChangeToDate}>
+                        </lightning-input>
+                    </div>  
+                </div>
+                <br/>
+                <lightning-button   variant="neutral" 
+                                    label="Search" 
+                                    title="Search" 
+                                    icon-name="utility:filterList" 
+                                    icon-position="right" 
+                                    class="slds-m-left_x-small" 
+                                    onclick={handleSearchButtonClick}>
+                </lightning-button>
+                <lightning-button   variant="neutral" 
+                                    label="Reset" 
+                                    title="Reset Form" 
+                                    icon-name="utility:filterList" 
+                                    icon-position="right" 
+                                    class="slds-m-left_x-small" 
+                                    onclick={handleResetButtonClick}>
+                </lightning-button>
+                <lightning-button   variant="neutral" 
+                                    class="slds-m-right--x-small align_button_right_class" 
+                                    label="Download All Data as Excel file"
+                                    onclick={handleExportAllDataToExcel}>
+                </lightning-button>
+
+            </lightning-card>
+        </div>  
+    </div>
+    
+    <template if:true={showSearch}>
+        <div class="slds-card_boundary slds-card_boundary slds-m-top_medium">
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    Training Records
+                </div>
+                <div if:true={dataRecords} class="slds-col align-right-class">
+                    <lightning-button variant="neutral" class="slds-m-left_x-small" label="Download Data as CSV file"
+                        onclick={handleExportToCsv}>
+                    </lightning-button>
+                </div>
+                <div if:true={dataRecords} class="slds-col align-right-class">
+                    <lightning-button variant="neutral" class="slds-m-left_x-small" label="Download Data as Excel file"
+                        onclick={handleExportToExcel}>
+                    </lightning-button>
+                </div>
+                <div></div>
+                <p class="slds-p-horizontal_small">
+                    <template if:true={loading}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+                    <template if:false={loading}>
+                        <div if:true={dataRecords}>
+                            <lightning-datatable
+                                key-field="Id"
+                                data={data}
+                                columns={columns}
+                                sorted-by={sortedBy}
+                                sorted-direction={sortedDirection}
+                                onsort={updateColumnSorting}
+                                hide-checkbox-column>
+                            </lightning-datatable>
+                        </div>
+                        <div if:false={dataRecords}>
+                            <div class="slds-text-align_center">
+                                <div class="slds-text-heading_medium">
+                                    <h3>No Results</h3>
+                                </div>
+                            </div>                            
+                        </div>                    
+                    </template>
+                </p>
+            </lightning-card>
+        </div>
+    </template>
+
+
+</template>
