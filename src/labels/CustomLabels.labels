@@ -3713,9 +3713,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP First Login Desc</shortDescription>
-        <value>Your personal account is created successfully. You can now discover the IATA portal.
-&lt;br/&gt; &lt;br/&gt;
-Take a few minutes to complete your profile and enjoy personalized services from IATA!</value>
+        <value>Your account is created successfully. You can discover the portal features now. Please complete your profile to get more personalized content</value>
     </labels>
     <labels>
         <fullName>CSP_First_Login_Title</fullName>
@@ -3987,6 +3985,14 @@ Take a few minutes to complete your profile and enjoy personalized services from
         <value>We need your input to proceed with your case.</value>
     </labels>
     <labels>
+        <fullName>CSP_Personal_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Personal Information</shortDescription>
+        <value>Personal Information</value>
+    </labels>
+    <labels>
         <fullName>CSP_PortalPath</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4017,7 +4023,7 @@ Take a few minutes to complete your profile and enjoy personalized services from
         <shortDescription>CSP Privacy Policy</shortDescription>
         <value>I agree with IATA&apos;s
 &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy&lt;/a&gt;
- and &lt;br/&gt;
+ and
 &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Terms of Use.&lt;/a&gt;</value>
     </labels>
     <labels>

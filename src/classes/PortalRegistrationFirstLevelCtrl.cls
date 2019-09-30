@@ -192,7 +192,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         List<Contact> contactList = [SELECT Id, Email, FirstName, LastName, Phone, Preferred_Language__c, ISO_Country__c, Account.Sector__c, Account.Category__c, Account.is_General_Public_Account__c FROM Contact WHERE Id =:loggedUser.contactId LIMIT 1];
         if(!contactList.isEmpty()){
             config.contact = contactList.get(0);
-            system.debug('config.contact: ' + config.contact);
             config.selectedCustomerType = GCS_CustomerType.getCustomerTypeFromSectorAndCategory(config.contact.Account.Sector__c, config.contact.Account.Category__c);
             GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType = getMetadataCustomerType(config.selectedCustomerType);
             if(selectedMetadataCustomerType.Type__c == 'Category'){
@@ -307,6 +306,31 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     }
 
+    public static boolean sendConfirmationEmailVF(RegistrationParameters params, string lang){
+        Boolean result = false;
+        string oneTimeUrl = generateOneTimeUrl(params);
+        string userId = UserInfo.getUserId();
+
+        Map<String, String> emailMap = generateEmailBodyParamsForConfirmation(params, oneTimeUrl);
+
+        string langKey = 'en_US';
+        if (lang != null && lang != ''){
+            for(Preferred_Language_on_ISS_Portal__c portalLang : Preferred_Language_on_ISS_Portal__c.getAll().values()){
+                if(portalLang.language__c == lang){
+                    langKey = portalLang.languageLocalKey__c;
+                }
+            }
+        }
+
+        List<User> userList =  [SELECT Id FROM User WHERE languagelocalekey =:langKey LIMIT 1];
+        if(!userList.isEmpty()){
+            userId = userList.get(0).Id;
+        }
+
+        result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_Email_VF', emailMap, userId);
+        return result;
+    }
+
     public static boolean sendRegistrationEmail(RegistrationParameters params){
 
         Boolean result = false;
@@ -318,6 +342,16 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         result = sendEmail(params.email, 'CSP_New_Member_Welcome_Email', emailMap);
         return result;
 
+    }
+
+    public static boolean sendRegistrationEmailVF(RegistrationParameters params, string userId){
+        Boolean result = false;
+        string oneTimeUrl = generateOneTimeUrl(params);
+
+        Map<String, String> emailMap = generateEmailBodyParamsForRegistration(params, oneTimeUrl);
+
+        result = sendEmailVF(params.email, 'CSP_New_Member_Welcome_Email_VF', emailMap, userId);
+        return result;
     }
 
     @AuraEnabled
@@ -363,7 +397,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             //Find Bucket Account
             if(params.accountId.length() < 1){
                 BucketAccountDetail bucketAccount = getBucketAccount(selectedMetadataCustomerType, params.country);
-                system.debug('bucketAccount: ' + bucketAccount);
                 if(bucketAccount.acc == null){
                     result.isSuccess = false;
                     result.message = 'Failed to find bucket account';
@@ -402,12 +435,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 result.userName = usr.userName;
 
                 //Send Confirmation Email
-                system.debug('params: ' + params);
-                result.isSuccess = sendConfirmationEmail(params);
+                result.isSuccess = sendConfirmationEmailVF(params, con.Preferred_Language__c);
                 if(result.isSuccess == false){
                     result.message = 'Error sending Confirmation Email';
                 }
-
                 return result;
             }else{
                 Database.rollback(sp);
@@ -436,7 +467,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             if(params.isNewAccount == true){
                 GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType = getMetadataCustomerType(params.selectedCustomerType);
                 BucketAccountDetail bucketAccount = getBucketAccount(selectedMetadataCustomerType, params.country);
-                system.debug('bucketAccount: ' + bucketAccount);
                 if(bucketAccount.acc == null){
                     result.isSuccess = false;
                     result.message = 'Failed to find bucket account';
@@ -473,14 +503,14 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
             NewUserDetail usr = createNewUser(con, string.valueOf(mode), con.Preferred_Language__c, password, registrationRequired);
 
-            system.debug('userId: ' + usr.userId);
             if(usr.userId != null) {
                 result.isSuccess = true;
                 result.portalUserId = usr.userId;
                 result.userName = usr.userName;
 
                 //Send Confirmation Email
-                result.isSuccess = sendRegistrationEmail(params);
+                //result.isSuccess = sendRegistrationEmail(params);
+                result.isSuccess = sendRegistrationEmailVF(params, usr.userId);
                 if(result.isSuccess == false){
                     result.message = 'Error sending Registration Email';
                 }
@@ -527,7 +557,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 //Find Bucket Account
                 string country = (inputMap.get('country') != null) ? string.valueOf(inputMap.get('country')) : '';
                 BucketAccountDetail bucketAccount = getBucketAccount(selectedMetadataCustomerType, country);
-                system.debug('bucketAccount: ' + bucketAccount);
                 if(bucketAccount.acc == null){
                     result.isSuccess = false;
                     result.message = 'Failed to find bucket account';
@@ -561,7 +590,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 con.Preferred_Language__c = string.valueOf(inputMap.get('language'));
             }
 
-            system.debug('con: ' + con);
             DataBase.SaveResult sr = DataBase.update(con);
             if(sr.isSuccess() == false){
                 for(Database.Error objErr : sr.getErrors()) {
@@ -654,7 +682,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             }
 
-            system.debug('acc: ' + acc);
             DataBase.SaveResult sr = DataBase.insert(acc);
             if(sr.isSuccess() == false){
                 for(Database.Error objErr : sr.getErrors()) {
@@ -681,7 +708,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
     }
 
     public static Contact createContact(RegistrationParameters params){
-        system.debug('params: ' + params);
+
         Contact con = new Contact();
 
         try{
@@ -715,7 +742,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             con.Community__c = 'ISS Customer Portal';
             con.User_Portal_Status__c = 'Pending';
             //todo: perform field check before insert
-            system.debug('con: ' + con);
+
             DataBase.SaveResult sr = DataBase.Insert(con);
             if(sr.isSuccess() == false){
                 for(Database.Error objErr : sr.getErrors()) {
@@ -788,10 +815,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             u.languagelocalekey = langKey;
 
-            system.debug('user to be created: ' + u);
             usr.userId = Site.createPortalUser(u, accountId, password, false);
             usr.userName = u.username;
-            system.debug('USERID: ' + usr.userId);
 
             List<PermissionSet> permissionList = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_SSO'];
             if(permissionList.size() > 0){
@@ -900,6 +925,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         boolean success = true;
 
         try{
+
             List<Messaging.SendEmailResult>    listEmailResult = null;
             List<Messaging.SingleEmailmessage> listSingleEmailMessages = new List<Messaging.SingleEmailmessage>();
 
@@ -949,6 +975,66 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         }
 
         return success;
+    }
+
+    public static boolean sendEmailVF(String receiver, String template ,Map<String,String> mapBodyParams, string userId){
+
+        boolean success = true;
+
+        try{
+            List<Messaging.SendEmailResult>    listEmailResult = null;
+            List<Messaging.SingleEmailmessage> listSingleEmailMessages = new List<Messaging.SingleEmailmessage>();
+
+            EmailTemplate emailTemplate = [SELECT Id,Subject,HtmlValue,Body FROM EmailTemplate WHERE DeveloperName=:template];
+            Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, userId, null);
+
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            OrgWideEmailAddress orgWideEmail  = [SELECT Id,Address FROM OrgWideEmailAddress WHERE Address='noreply@iata.org' Limit 1];
+            if(orgWideEmail != null){
+                mail.setOrgWideEmailAddressId(orgWideEmail.Id);
+            }
+            else{
+                mail.setSenderDisplayName('IATA Noreply');
+            }
+
+
+            List<String> receiverList = new List<String>();
+            receiverList.add(receiver);
+            mail.setToAddresses(receiverList);
+            mail.setReplyTo('noreply@iata.org');
+            //mail.setTargetObjectId(userId);
+            mail.setSubject(emailTemplate.Subject);
+
+            String plainBody = message.getPlainTextBody();
+
+
+            for(String key : mapBodyParams.keySet()) {
+                if(plainBody <> null){
+                    plainBody = plainBody.replace(key, (mapBodyParams.get(key) == null) ? '' : mapBodyParams.get(key));
+                }
+            }
+
+
+            if(plainBody <> null){
+
+                mail.setHtmlBody(plainBody);
+            }
+
+            mail.setSaveAsActivity(false);
+            //mail.setPlainTextBody(plainBody);
+            listSingleEmailMessages.add(mail);
+
+            if(!Test.isRunningTest()) {
+                listEmailResult = Messaging.sendEmail(listSingleEmailMessages);
+            }
+        }
+        catch(Exception ex){
+            success = false;
+            system.debug(ex.getMessage());
+        }
+
+        return success;
+
     }
 
     @future

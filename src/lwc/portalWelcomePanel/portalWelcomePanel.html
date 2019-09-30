@@ -87,13 +87,8 @@
 
                             </lightning-layout-item>
                             <lightning-layout-item size=10>
-                                <div class="textAlignCenter text-xsmall">
-                                    <lightning-button variant="base"
-                                                      label={labels.CSP_FAQ_Label}
-                                                      title={labels.CSP_FAQ_Label}
-                                                      onclick={handleNavigateToFAQ}
-                                                      class="blueCustomButtonLinkSmall">
-                                    </lightning-button>
+                                <div class="textAlignCenter text-xxsmall">
+                                    <a onclick={handleNavigateToFAQ} style="color:#3333ff; font-weight: 500;">{labels.CSP_FAQ_Label}</a>
                                     <img src={arrowIcon} class="service faqPointer" onclick={handleNavigateToFAQ}>
                                 </div>
                             </lightning-layout-item>

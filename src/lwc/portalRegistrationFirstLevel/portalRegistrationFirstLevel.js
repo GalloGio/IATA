@@ -746,10 +746,12 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         this.userCountryCode = registrationState.userCountryCode;
         this.isRegistrationComplete = registrationState.isRegistrationComplete;
         this.userInfo = registrationState.userInfo;
+        if(this.isRegistrationComplete == false){
+            this._checkForMissingFields();
+        }
         this.isLoading = false;
 
         if(this.displayContactForm){
-            this._checkForMissingFields();
             this._initializePhoneInput();
         }
 
