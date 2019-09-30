@@ -1133,14 +1133,26 @@ public without sharing class portalIftpTrainingRecords {
         String auxStationsOptions = searchValues[0];
         Set<String> lStations = (auxStationsOptions != 'null') ? new Set<String>(auxStationsOptions.split(',')) :  new Set<String>();
 
-        for(String code: lStations){
+        Map<String, List<Role_Address__c>> itpByStationCodeMap = PortalIftpUtils.getAirlineITPsByStation();
+        System.debug('itpByStationCodeMap' +  itpByStationCodeMap);
+        for(String code: itpByStationCodeMap.keySet()){
+            List<Role_Address__c> innerList = itpByStationCodeMap.get(code);
+
             searchValues[0] = code;
-            System.debug('searchValues' +  searchValues);
+            searchValues[1] = '';
+
+            for(Role_Address__c rec: innerList){
+                if(String.isBlank(searchValues[3])){
+                    searchValues[1] += rec.Account_Role_Relationship__r.To__r.Account__c;
+                } else{
+                    searchValues[1] += ',';
+                    searchValues[1] += rec.Account_Role_Relationship__r.To__r.Account__c;
+                }
+            }
             resultsList.addAll(getTrainingRecordsDetail(searchValues, searchType));
-            System.debug('resultsList.size()' +  resultsList.size());
         }
         System.debug('resultsList' +  resultsList);
-
+        
         return resultsList;
     }
 

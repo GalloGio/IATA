@@ -4,10 +4,11 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 //import getSelectedColumns from '@salesforce/apex/CSP_Utils.getSelectedColumns';
 //import searchTrainingRecords from '@salesforce/apex/portalIFTPTrainingRecords.searchTrainingRecords';
 import getTrainingRecords from '@salesforce/apex/portalIftpTrainingRecords.getTrainingRecordsDetail';
-import getITPStations from '@salesforce/apex/PortalIftpUtils.getITPStations';
-import getITPConnectedToAirlineByStation from '@salesforce/apex/PortalIftpUtils.getITPConnectedToAirlineByStation';
+//import getITPStations from '@salesforce/apex/PortalIftpUtils.getITPStations';
+//import getITPConnectedToAirlineByStation from '@salesforce/apex/PortalIftpUtils.getITPConnectedToAirlineByStation';
 import getCertificationTypesWithLevel from '@salesforce/apex/PortalIftpUtils.getCertificationTypesWithLevel';
 import getAllTrainingRecordsForDetailView from '@salesforce/apex/portalIftpTrainingRecords.getAllTrainingRecordsForDetailView';
+import getAirlineITPsByStation from '@salesforce/apex/PortalIftpUtils.getAirlineITPsByStation';
 
 
 //import {getUserStationsJS}  from 'c/portalIftpUtilsJS';
@@ -46,6 +47,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
 
     @track stationOptions;
+           itpBYStationMap; 
     @track itpOptions;
     @track aircraftTypeOptions;
            certificationTypesWithLevel;
@@ -95,32 +97,19 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.stationValue = event.detail.value;
         this.itpValue = null;
 
-        getITPConnectedToAirlineByStation({ stationCode: this.stationValue })
-            .then(result => {
                 console.log(result);
-                let myResult = JSON.parse(JSON.stringify(result));
-                
+
                 console.log(myResult);
-                console.log('myResult : ' + myResult);
-                let myTopicOptions = [{ label: 'All', value: 'All' }];
+        let myResult = this.itpBYStationMap[this.stationValue];
 
-                Object.keys(myResult).forEach(function (el) {
-                    myTopicOptions.push({ label: myResult[el].Account_Role_Relationship__r.To__r.Account__r.Name, value: myResult[el].Account_Role_Relationship__r.To__r.Account__c });
-                    //myTopicOptions.push({ label: myResult[el], value: el });
-                });
+        let myTopicOptions = [{ label: 'All', value: 'All' }];
 
-                console.log('getITPConnectedToAirlineByStation - myTopicOptions : ', myTopicOptions);
-                console.log(myTopicOptions);
-                this.itpOptions = this.sortData('label', 'asc', myTopicOptions);
-                console.log('getITPConnectedToAirlineByStation - this.itpOptions : ', this.itpOptions);
-            })
-            .catch(error => {
-                console.log('getITPConnectedToAirlineByStation - Error : ' + error);
-                this.mainErrorMessage = error;
-                this.error = error;
-            });  
-
+        myResult.forEach( rec => {
+            myTopicOptions.push({ label: rec.Account_Role_Relationship__r.To__r.Account__r.Name, value: rec.Account_Role_Relationship__r.To__r.Account__c });
+        });        
+        this.itpOptions = this.sortData('label', 'asc', myTopicOptions);
     }
+
     handleChangeITP(event) {
         this.itpValue = event.detail.value;
     }
@@ -272,6 +261,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.toDateMinValue = undefined;
         this.datePeriodValue = undefined;
         this.showSearch = false;
+        this.itpBYStationMap = undefined;
         this.cleanErrors();
         
     }
@@ -283,54 +273,82 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.stationOptions = getUserStationsJS();
         console.log(this.stationOptions);
         */
+    /*
         getITPStations()
-            .then(result => {
-                console.log(result);
-                let myResult = JSON.parse(JSON.stringify(result));
-                
-                console.log(myResult);
-                console.log('myResult : ' + myResult);
-                //let myTopicOptions = [{ label: 'All', value: 'All' }];
-                let myTopicOptions = [];
+        .then(result => {
+            console.log(result);
+            let myResult = JSON.parse(JSON.stringify(result));
+            
+            console.log(myResult);
+            console.log('myResult : ' + myResult);
+            //let myTopicOptions = [{ label: 'All', value: 'All' }];
+            let myTopicOptions = [];
 
-                Object.keys(myResult).forEach(function (el) {
-                    //myTopicOptions.push({ label: myResult[el].City__c, value: myResult[el].Code__c });
-                    myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
-                });
-                
-                this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
-     
-            })
-            .catch(error => {
-                console.log('getITPStations - Error : ' + error);
-                this.mainErrorMessage = error;
-                this.error = error;
-            });  
+            Object.keys(myResult).forEach(function (el) {
+                //myTopicOptions.push({ label: myResult[el].City__c, value: myResult[el].Code__c });
+                myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
+            });
+            
+            this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
+    
+        })
+        .catch(error => {
+            console.log('getITPStations - Error : ' + error);
+            this.mainErrorMessage = error;
+            this.error = error;
+        });  
+        */
+
+       getAirlineITPsByStation()
+       .then(result => {
+           console.log(result);
+           let myResult = JSON.parse(JSON.stringify(result));
+           
+           console.log(myResult);
+           console.log('__rs__ myResult : ', myResult);
+           //let myTopicOptions = [{ label: 'All', value: 'All' }];
+           let myTopicOptions = [];
+
+           Object.keys(myResult).forEach(function (el) {
+               //myTopicOptions.push({ label: myResult[el].City__c, value: myResult[el].Code__c });
+               myTopicOptions.push({ label: myResult[el][0].Address__r.Code__c + ' - ' + myResult[el][0].Address__r.Description__c, value: myResult[el][0].Address__r.Code__c });
+           });
+           
+           this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
+           this.itpBYStationMap = myResult;
+           console.log('this.stationOptions ', this.stationOptions );
+   
+       })
+       .catch(error => {
+           console.log('getAirlineITPsByStation - Error : ', error);
+           this.mainErrorMessage = error;
+           this.error = error;
+       }); 
         
-            getCertificationTypesWithLevel({certificationType: 'Aircraft'})
-            .then(result => {
-                console.log(result);
-                let myResult = JSON.parse(JSON.stringify(result));
+        getCertificationTypesWithLevel({certificationType: 'Aircraft'})
+        .then(result => {
+            console.log(result);
+            let myResult = JSON.parse(JSON.stringify(result));
 
-                this.certificationTypesWithLevel = myResult;
+            this.certificationTypesWithLevel = myResult;
 
-                console.log('this.certificationTypesWithLevel : ', this.certificationTypesWithLevel);
+            console.log('this.certificationTypesWithLevel : ', this.certificationTypesWithLevel);
 
-                let myTopicOptions = [{ label: '- All Level 2 -', value: 'All Level 2'}];
-                myResult.forEach(cert =>{
-                    if(cert.Prerequisite_Level__c === 'Level 2'){
-                        myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
-                    }  
-                });
-                this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions);
-                this.aircraftTypeValue = 'All Level 2';
-                
-            })
-            .catch(error => {
-                console.log('getITPStations - Error : ' + error);
-                this.mainErrorMessage = error;
-                this.error = error;
-            });  
+            let myTopicOptions = [{ label: '- All Level 2 -', value: 'All Level 2'}];
+            myResult.forEach(cert =>{
+                if(cert.Prerequisite_Level__c === 'Level 2'){
+                    myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
+                }  
+            });
+            this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions);
+            this.aircraftTypeValue = 'All Level 2';
+            
+        })
+        .catch(error => {
+            console.log('getCertificationTypesWithLevel - Error : ' + error);
+            this.mainErrorMessage = error;
+            this.error = error;
+        });  
 
 
         this.columns = [
@@ -556,12 +574,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         });  
         console.log('handleSearch - END');
         
-    }
-
-    fillStations(userId){
-
-        this.stationOptions = getITPStations('');
-
     }
 
     cleanErrors(){

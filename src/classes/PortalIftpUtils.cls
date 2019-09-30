@@ -111,6 +111,7 @@ public without sharing class PortalIftpUtils {
         return stations;
     }
 
+
     /* 
     * @description Main method that returns a map where the key is the employees' id and the value 
     is a list of stations added to that employee(Role Addresses)
@@ -276,13 +277,49 @@ public without sharing class PortalIftpUtils {
     }
 
     /* 
+    * @description 
+        Account_Role_Relationship__c - relation between Airline and ITP Company
+        Account_Role_Service__c - ITP Company or Airline
+        Account_Contact_Role__c - Employee
+    * @params
+    * @return List<Role_Address__c>
+    */   
+
+    @AuraEnabled(cacheable=false)
+    public static Map<String, List<Role_Address__c>> getAirlineITPsByStation(){
+        Id userId = System.UserInfo.getUserId();
+
+        User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
+
+        List<Role_Address__c> companies = [SELECT   Account_Role_Relationship__r.To__r.Account__c, 
+                                                    Account_Role_Relationship__r.To__r.Account__r.name,
+                                                    Address__r.Code__c,
+                                                    Address__r.Description__c
+                                            FROM Role_Address__c 
+                                            WHERE Account_Role_Relationship__r.From__r.Account__c = :userAcc.contact.accountid
+                                            AND Address__c != null];
+
+        Map<String, List<Role_Address__c>> ItpByStationsMap = new Map<String, List<Role_Address__c>>();
+        for(Role_Address__c rec: companies){
+            if(ItpByStationsMap.containsKey(rec.Address__r.Code__c)){
+                List<Role_Address__c> innerList = ItpByStationsMap.get(rec.Address__r.Code__c);
+                innerList.add(rec);
+                ItpByStationsMap.put(rec.Address__r.Code__c, innerList);
+            } else {
+                List<Role_Address__c> innerList = new List<Role_Address__c>();
+                innerList.add(rec);
+                ItpByStationsMap.put(rec.Address__r.Code__c, innerList);
+            }
+        }
+        return ItpByStationsMap;
+    }
+
+    /* 
     * @description Main method that returns a Stations for a given user
 
         Account_Role_Relationship__c - relation between Airline and ITP Company
         Account_Role_Service__c - ITP Company or Airline
         Account_Contact_Role__c - Employee
-
-
     * @params
     * @return List<Role_Address__c>
     */                                                                                                       
@@ -308,7 +345,7 @@ public without sharing class PortalIftpUtils {
 
         User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
 
-        List<Role_Address__c> companies = [SELECT Account_Role_Relationship__r.To__r.Account__c, Account_Role_Relationship__r.To__r.Account__r.name  
+        List<Role_Address__c> companies = [SELECT Account_Role_Relationship__r.To__r.Account__c, Account_Role_Relationship__r.To__r.Account__r.name, Address__r.Code__c  
                                             FROM Role_Address__c 
                                             WHERE Account_Role_Relationship__r.From__r.Account__c = :userAcc.contact.accountid 
                                             AND Address__r.Code__c in :stationsCodes ];
