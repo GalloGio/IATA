@@ -126,6 +126,8 @@ public without sharing class ISSP_Login {
 		string startURL = ApexPages.currentPage().getParameters().get('startURL');
 		if (startURL!=null)
             pageLink = startURL;
+			
+		if(communityName =='CNS' && oneUser != null && !oneUser.CNS_Account_or_Agency__c) pageLink=''; // In case a non CNS users tries to login throught CNS Portal, will be redirected to the correct community
 
 		system.debug('pageLink: ' + pageLink);
         PageReference ans = Site.login(null != oneUser ? oneUser.Username : username, password, pageLink);
@@ -148,7 +150,7 @@ public without sharing class ISSP_Login {
 		thisUser.Portal_User_Frozen_Checkbox__c = false;
 		update thisUser;
         Boolean success = false;
-        if(thisUser.Contact.Community__c != null && thisUser.Contact.Community__c.contains('CNS')){
+        if(thisUser.Contact.Community__c != null && thisUser.Contact.Community__c.contains('CNS') && thisUser.CNS_Account_or_Agency__c){
             success = Comm_User_Helper.resetPassword(thisUser.email, Comm_User_Helper.CNS, false);
         }else{
             success = Comm_User_Helper.resetPassword(thisUser.email, Comm_User_Helper.ISSP, false);
