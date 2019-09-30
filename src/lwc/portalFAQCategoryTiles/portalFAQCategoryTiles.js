@@ -1,5 +1,5 @@
 import { LightningElement, track, api } from 'lwc';
-import getCategoryTiles from '@salesforce/apex/PortalFAQsCtrl.getCategoryTiles';
+import getFaqsStructure from '@salesforce/apex/DescribeDataCategoryGroupStructures.getFaqsStructure';
 
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
@@ -23,7 +23,7 @@ export default class PortalFAQCategoryTiles extends NavigationMixin(LightningEle
     iconsExtension = '.svg';
     
     connectedCallback() {                
-        getCategoryTiles()
+        getFaqsStructure()
         .then(results => {
             if(results.length) {
                 let resultsAux = JSON.parse(JSON.stringify(results));

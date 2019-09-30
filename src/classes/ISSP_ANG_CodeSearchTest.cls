@@ -7,12 +7,14 @@ private class ISSP_ANG_CodeSearchTest {
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
                 Name = 'Portugal_test',
                 ISO_Code__c = 'PT',
-                ANG_Enable_NewGen__c = true
+                ANG_Enable_NewGen__c = true,
+                BSP_Country_free_text__c='PT'
             );
 
         IATA_ISO_Country__c switzerland = new IATA_ISO_Country__c (
                 Name = 'Switzerland_test',
-                ISO_Code__c = 'HE'
+                ISO_Code__c = 'HE',
+                BSP_Country_free_text__c='HE'
             );
 
         insert portugal;

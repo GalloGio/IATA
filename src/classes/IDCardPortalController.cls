@@ -178,6 +178,9 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
             nextPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(selected.Account.IATACode__c));
             nextPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(action));
             nextPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(selected.VER_Number__c.toPlainString().trim()));
+            if(accountStatusTerminated){
+                nextPage.getParameters().put(IDCardUtil.ACCOUNT_STATUS_TERMINATED, IDCardUtil.EncryptEncodeParameter('Terminated'));
+            }
 
             nextPage.setRedirect(true);
 

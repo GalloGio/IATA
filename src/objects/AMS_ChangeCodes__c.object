@@ -336,6 +336,28 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Field7Values__c</fullName>
+        <description>Values to check on the seventh field</description>
+        <externalId>false</externalId>
+        <label>Field7Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field7__c</fullName>
+        <description>API Name of the seventh field to check</description>
+        <externalId>false</externalId>
+        <label>Field7</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Generate_Irregularity_Sequence__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -438,7 +460,6 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>NAME</columns>
         <columns>Change_Code__c</columns>
         <columns>Reason_Code__c</columns>
-        <columns>Reason_Code_Description__c</columns>
         <columns>Published_in_bulletin__c</columns>
         <columns>Record_Type__c</columns>
         <columns>Field1__c</columns>
@@ -447,6 +468,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Field4__c</columns>
         <columns>Field5__c</columns>
         <columns>Field6__c</columns>
+        <columns>Field7__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>Clear_Irregularities__c</columns>
         <columns>Risk_ChangeCode__c</columns>
@@ -591,7 +613,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>NG_RB</fullName>
+        <fullName>NewGen</fullName>
         <columns>NAME</columns>
         <columns>Change_Code__c</columns>
         <columns>Record_Type__c</columns>
@@ -607,7 +629,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
             <operation>contains</operation>
             <value>ANG</value>
         </filters>
-        <label>NG_RB</label>
+        <label>NewGen</label>
         <language>en_US</language>
     </listViews>
     <listViews>
