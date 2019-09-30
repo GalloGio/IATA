@@ -378,7 +378,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 					if(!isMulticountry){
 						System.debug('[ANG_AgencyChangesHelper] Starting Risk Actions');
-						performRiskEventActions(oscar,currHEAccount,isAllHierarchySelected, oscar.New_parent__c);
+						performRiskEventActions(oscar,currHEAccount, oscar.New_parent__c, changesContainer.accountsMap.values());
 						System.debug('[ANG_AgencyChangesHelper] Risk Actions Ended');
 					}
 	
@@ -816,15 +816,29 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	}
 
-	public static void performRiskEventActions(AMS_OSCAR__c oscar, String oldParentHierarchyId, Boolean isAllHierarchySelected, Id newParentId){
+	public static void performRiskEventActions(AMS_OSCAR__c oscar, String oldParentHierarchyId, Id newParentId, List<Account> accountLst){
 		    
-		if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY,AMS_Utils.ANG_LOCATION_TYPE},oscar.ANG_Type_Of_Change__c))
-            System.enqueueJob(new ANG_Risk_Helper.FutureHandler(new Map<Id,Id>{oldParentHierarchyId => oscar.Account__c}));
+		if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY,AMS_Utils.ANG_LOCATION_TYPE},oscar.ANG_Type_Of_Change__c)){
+			System.enqueueJob(new ANG_Risk_Helper.FutureHandler(new Map<Id,Id>{oldParentHierarchyId => oscar.Account__c}));
+		}
 		
-		if(containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c) && isAllHierarchySelected)
-            System.enqueueJob(new ANG_Risk_Helper.FutureHandler([SELECT Id FROM ANG_Agency_Risk_Event__c WHERE ANG_HE_AccountId__c = :oldParentHierarchyId], newParentId));
+		if(containsChange(new List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
+
+			List<ANG_Agency_Risk_Event__c> riskEventsToDeactivateLst = new List<ANG_Agency_Risk_Event__c>();
+			
+			for(Account acct : accountLst){
+				List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
+
+				if(riskEventsLst != NULL && !riskEventsLst.isEmpty()){
+					riskEventsToDeactivateLst.addAll(riskEventsLst);
+				}
+			}
+
+			System.enqueueJob(new ANG_Risk_Helper.FutureHandler(riskEventsToDeactivateLst, newParentId));
+
+		}
         
-    }
+  }
 
 	public static boolean isAllHierarchySelected(AMS_OSCAR__c oscar, Set<Id> accountHierarchyRelationships){
 
