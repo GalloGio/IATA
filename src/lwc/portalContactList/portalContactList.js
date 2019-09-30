@@ -65,6 +65,7 @@ export default class PortalContactList extends LightningElement {
     @track openId;
     @track showEditLocal = false;
     @track _searchKey = false;
+    @track manualOrder = false;
     @track isAccountDomain;
     @track accountDomain = [];
     @track allContacts = [];
@@ -564,6 +565,7 @@ export default class PortalContactList extends LightningElement {
     }
 
     columnSort(event) {
+        this.manualOrder = true;
         let fieldName = event.target.dataset.name;
         this.isAsc = !this.isAsc;
         this.orderRows(fieldName);
@@ -578,7 +580,7 @@ export default class PortalContactList extends LightningElement {
 
 
         //Choose different field for login date
-        if (fieldName === 'LastLogin') { fieldName == 'LastLoginDate'; }
+        if (fieldName === 'LastLogin') { fieldName = 'LastLoginDate'; }
 
         this.sortBy = fieldName;
         //Handle sort direction
@@ -590,29 +592,44 @@ export default class PortalContactList extends LightningElement {
                 this.isAsc = true;
             }
         }
-        
 
-        //Do sorting
-        records.sort((a, b) => {
-            let aEmpty = (a[fieldName] == null) || (a[fieldName].length == 0);
-            let bEmpty = (b[fieldName] == null) || (b[fieldName].length == 0);
+        if(this.manualOrder) {
+            //Do sorting
+            records.sort((a, b) => {
+                let aEmpty = (a[fieldName] == null) || (a[fieldName].length == 0);
+                let bEmpty = (b[fieldName] == null) || (b[fieldName].length == 0);
 
-            if ((aEmpty && bEmpty) || (a[fieldName] == b[fieldName])) {
-                return 0;
+                if ((aEmpty && bEmpty) || (a[fieldName] == b[fieldName])) {
+                    return 0;
+                }
+
+                if (aEmpty) {
+                    return 1 * (isAsc ? 1 : -1);
+                }
+
+                if (bEmpty) {
+                    return -1 * (isAsc ? 1 : -1);
+                }
+
+                return (a[fieldName].toLowerCase() < b[fieldName].toLowerCase() ? -1 : 1) * (isAsc ? 1 : -1)
+            });
+
+            this.records = records;
+        } else {
+            let orderedRecords = [];
+            for (let i = 0; i < records.length; i++) {
+                if(records[i].PortalStatus === 'Pending Approval') {
+                    let con = records[i];
+                    delete records[i];
+                    orderedRecords.unshift(con);
+    
+                } else {
+                    orderedRecords.push(records[i]);
+                }
             }
 
-            if (aEmpty) {
-                return 1 * (isAsc ? 1 : -1);
-            }
-
-            if (bEmpty) {
-                return -1 * (isAsc ? 1 : -1);
-            }
-
-            return (a[fieldName].toLowerCase() < b[fieldName].toLowerCase() ? -1 : 1) * (isAsc ? 1 : -1)
-        });
-
-        this.records = records;
+            this.records = orderedRecords;
+        }
 
         //Set field classes
         let fieldsList = JSON.parse(JSON.stringify(this.fieldsList));
