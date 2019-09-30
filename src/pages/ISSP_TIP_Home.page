@@ -477,7 +477,7 @@
             </div>
 
             <!-- ACAMBAS - TIP-241 Start -->
-            <apex:form id="myModal" aria-hidden="true">
+            <apex:form>
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <apex:pageblock>
                     
