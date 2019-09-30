@@ -2555,15 +2555,15 @@
         <name>CSP_TypeOfCase</name>
     </customLabels>
     <customLabels>
-        <label>Прямой доступ к более чем 60 услугам Международной ассоциации воздушного транспорта (ИАТА), отобранным специально для вас.</label>
+        <label>Прямой доступ к более чем 60 услугам ИАТА, отобранным специально для вас.</label>
         <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
     </customLabels>
     <customLabels>
-        <label>Доступ к сервисам Международной ассоциации воздушного транспорта (ИАТА)</label>
+        <label>Доступ к сервисам ИАТА</label>
         <name>CSP_Welcome_Panel_Bullet_1_Title</name>
     </customLabels>
     <customLabels>
-        <label>Легко управляйте и обновляйте свой профиль Международной ассоциации воздушного транспорта (ИАТА).</label>
+        <label>Легко управляйте и обновляйте свой профиль ИАТА.</label>
         <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
     </customLabels>
     <customLabels>
@@ -2571,7 +2571,7 @@
         <name>CSP_Welcome_Panel_Bullet_2_Title</name>
     </customLabels>
     <customLabels>
-        <label>Откройте для себя выбор публикаций, тренингов и других продуктов и услуг Международной ассоциации воздушного транспорта (ИАТА).</label>
+        <label>Откройте для себя выбор публикаций, тренингов и других продуктов и услуг ИАТА.</label>
         <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
     </customLabels>
     <customLabels>
@@ -2579,7 +2579,7 @@
         <name>CSP_Welcome_Panel_Bullet_3_Title</name>
     </customLabels>
     <customLabels>
-        <label>Получите доступ к нашей обширной коллекции вопросов и ответов; а также получите прямую поддержку от Международной ассоциации воздушного транспорта (ИАТА).</label>
+        <label>Получите доступ к нашей обширной коллекции вопросов и ответов; а также получите прямую поддержку от ИАТА.</label>
         <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
     </customLabels>
     <customLabels>
@@ -2587,11 +2587,11 @@
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
     </customLabels>
     <customLabels>
-        <label>Доступ и управление всеми вашими сервисами Международной ассоциации воздушного транспорта (ИАТА). Обратитесь к информации о различных продуктах и получите поддержку по любому вопросу. Здесь для вас.</label>
+        <label>Доступ и управление всеми вашими сервисами ИАТА. Обратитесь к информации о различных продуктах и получите поддержку по любому вопросу. Здесь для вас.</label>
         <name>CSP_Welcome_Panel_Info</name>
     </customLabels>
     <customLabels>
-        <label>Добро пожаловать в клиентский портал Международной ассоциации воздушного транспорта (ИАТА)</label>
+        <label>Добро пожаловать в клиентский портал ИАТА</label>
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
