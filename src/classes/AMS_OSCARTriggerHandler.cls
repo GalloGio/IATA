@@ -3324,10 +3324,8 @@ public class AMS_OSCARTriggerHandler {
 
         }
 
-		//WMO-564/NEWGEN-5934 - ACAMBAS: Begin
-        //if (oldOSCAR.Send_inspection_request__c == false && updatedOscar.Send_inspection_request__c == true)
-        //    updatedOSCAR.STEP13__c = 'In Progress';
-		//WMO-564/NEWGEN-5934 - ACAMBAS: End
+        if (oldOSCAR.Send_inspection_request__c == false && updatedOscar.Send_inspection_request__c == true)
+            updatedOSCAR.STEP13__c = 'In Progress';
 
         if (oldOSCAR.Send_agreement__c == false && updatedOscar.Send_agreement__c == true)
             updatedOSCAR.STEP14__c = 'In Progress';
@@ -3488,10 +3486,6 @@ public class AMS_OSCARTriggerHandler {
             }
             updatedOSCAR.STEP2__c = 'Failed';
         }
-
-        if (oldOSCAR.Bank_Guarantee_amount__c == null && updatedOscar.Bank_Guarantee_amount__c != null)
-            updatedOSCAR.STEP12__c = 'In Progress';
-
 
         if (oldOSCAR.Validation_Status__c != updatedOscar.Validation_Status__c) {
             List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
