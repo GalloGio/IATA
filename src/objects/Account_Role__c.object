@@ -124,6 +124,14 @@ The Account Role record should be named after the functional capability for whic
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Global_ID__c</fullName>
+        <displayFormat>aB5-{0000000000}</displayFormat>
+        <externalId>false</externalId>
+        <label>Global ID</label>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
         <fullName>HQ_Location__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Select the country where provider&apos;s headquarter is located</description>
