@@ -4339,6 +4339,70 @@ Payment required on receipt of this Payment Advice
         <value>You don’t have any Tasks yet. When you do, they will appear here.</value>
     </labels>
     <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_1_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_1_Desc</shortDescription>
+        <value>Directly access more than 60 IATA services, specially selected for you.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_1_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_1_Title</shortDescription>
+        <value>Access IATA services</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_2_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_2_Desc</shortDescription>
+        <value>Easily manage and update your IATA profile.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_2_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_2_Title</shortDescription>
+        <value>Stay up to date</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_3_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_3_Desc</shortDescription>
+        <value>Discover the selection of publications, trainings and other IATA products and services.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_3_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_3_Title</shortDescription>
+        <value>Find special offers</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_4_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_4_Desc</shortDescription>
+        <value>Access our extensive collection of questions &amp; answers; and get direct support from IATA.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_4_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_4_Title</shortDescription>
+        <value>Get answers</value>
+    </labels>    
+	 <labels>
         <fullName>CSP_cpcc_Agent_Credit_Risk</fullName>
         <language>en_US</language>
         <protected>false</protected>

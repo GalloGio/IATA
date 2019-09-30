@@ -1,5 +1,21 @@
 public with sharing class CSP_Utils {
-    
+
+    public class LoginConfig {
+        @AuraEnabled
+        public String selfRegistrationUrl {get;set;}
+    }
+
+    @AuraEnabled
+    public static LoginConfig getAuthConfig(){
+        Id networkId = Network.getNetworkId();
+        Auth.AuthConfiguration authConfig = new Auth.AuthConfiguration(networkId,'');
+
+        LoginConfig config = new LoginConfig();
+        config.selfRegistrationUrl = authConfig.getSelfRegistrationUrl();
+
+        return config;
+    }    
+
     /* 
     * @description Indicates whether the current user isn’t logged in to the community.
     * @params
