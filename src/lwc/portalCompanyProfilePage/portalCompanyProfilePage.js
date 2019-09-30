@@ -115,6 +115,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
         { label: CountryLabel, fieldName: 'Country' },
     ];
 
+    @track tabName = '';
+
     @wire(getPortalAdmins) 
     getPortalAdminList({ error, data }) {
         if(data) {
@@ -182,10 +184,17 @@ export default class PortalCompanyProfilePage extends LightningElement {
                         tabAux.active = viewContacts;
                     }
                 }
-
                 tabsAux.push(tabAux);
-
             }
+
+            let tabNameLocal;
+            tabsAux.forEach( function(tab){
+                if(tab.active) {
+                    tabNameLocal = tab.label;
+            }
+            });
+
+            this.tabName = tabNameLocal;
 
             let noSearch = false;
 
