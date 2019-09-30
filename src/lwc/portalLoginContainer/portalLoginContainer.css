@@ -73,12 +73,12 @@
     background-color: #f0f2f5;
 }
 
-/*.fixedPosition{
+.fixedPosition{
     position: fixed;
     left: 0;
     width: inherit;
     max-width: inherit;
-}*/
+}
 
 
 
