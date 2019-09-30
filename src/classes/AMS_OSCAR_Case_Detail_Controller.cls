@@ -19,23 +19,29 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean isAEAccount{get{return (oscarObj.Location_Type__c == AMS_Utils.AE);}set;}
     public Boolean displayErrorMsg{get{return false;} set;}
     public Boolean showStagingArea {get; set;}
-
+    
     private Id rfPerStateBspId;
-    public Boolean rfPerState{get{
 
-        if(AMS_Utils.oscarNewGenNewAppProcesses.contains(oscarObj.Process__c)){
-            List<IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{accreditationObj.Branch_Office_Country__c});
-            
-            if(!countries.isEmpty()){
-                IATA_ISO_Country__c cntry = countries.get(0);
-                rfPerStateBspId = cntry.AMS_Settlement_System__c;
-                return cntry.AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
+    public Boolean rfPerState
+    {
+        get
+        {
+            if (AMS_Utils.oscarNewGenNewAppProcesses.contains(oscarObj.Process__c)
+                || shouldTestRemittanceFrequencyStateForMulticountry())
+            {
+                List<IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{accreditationObj.Branch_Office_Country__c});
+                
+                if(!countries.isEmpty()){
+                    IATA_ISO_Country__c cntry = countries.get(0);
+                    rfPerStateBspId = cntry.AMS_Settlement_System__c;
+                    return cntry.AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
+                }
             }
+            
+            return false;
         }
-        
-        return false;
-        
-    }set;}
+        set;
+    }
 
     private Set<Id> hierarchyAccountIds = new Set<Id>();
     private Map<Id, Account> hierarchyAccountsMap = new Map<Id, Account>();
@@ -203,6 +209,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             if(isAllHierarchySelected && !isSingleAccountHierarchy && isVATnumberSpecialCase && isAgencyCorrection) {
                 editableFields.remove('ISSP_AMS_VAT_number__c');
             }
+            if (shouldTestRemittanceFrequencyStateForMulticountry() && rfPerState) {
+                editableFields.add('Remittance_frequency__c');
+            }
 
             //System.debug(loggingLevel.FINEST, '____ [cls AMS_OSCAR_Case_Detail_Controller - getEditableFields] editableFields - ' + editableFields);
             System.debug('____ [cls AMS_OSCAR_Case_Detail_Controller - getEditableFields] sCorrectionType_of_change - ' + sCorrectionType_of_change);
@@ -233,7 +242,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         //if(fieldName == 'Location_Class__c' && isNewGenProcess) return false;
         //if(fieldName == 'Location_Type__c' && isNewGenProcess) return false;
         if(fieldName == 'ANG_Accreditation_Type__c' && isNewGenProcess && !isAgencyChanges) return false;  
-        if(fieldName == 'Remittance_frequency__c' && isNewGenProcess  && this.oscarObj.process__c != 'ANG.CONVERT.ST.TO.MC' && (oscarObj.Process__c == AMS_Utils.NEWAE || (oscarObj.Process__c == AMS_Utils.MCAE && isAEAccount))) return false;     
+        if(fieldName == 'Remittance_frequency__c' && isNewGenProcess  && this.oscarObj.process__c != 'ANG.CONVERT.ST.TO.MC' && (oscarObj.Process__c == AMS_Utils.NEWAE || (oscarObj.Process__c == AMS_Utils.MCAE && isAEAccount)) && rfPerState == false) return false;
 		if(fieldName == 'Location_Type__c' && !isAgencyChanges && accreditationObj.Location_Type__c == AMS_Utils.HO && !String.isBlank(accreditationObj.IATACode__c)) return false; //AC-ENHC0012276
         if(!isAgencyChanges && !isAgencyCorrection  && this.oscarObj.process__c != 'ANG.CONVERT.ST.TO.MC') return true;
 
@@ -846,6 +855,13 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         this.saveAction = true;
     } 
 
+    private Boolean shouldTestRemittanceFrequencyStateForMulticountry()
+    {
+        return accreditationObj != null && oscarObj != null
+                    && accreditationObj.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
+                    && oscarObj.Process__c == AMS_Utils.NGCHANGES
+                    && oscarObj.ANG_Type_Of_Change__c == AMS_Utils.ANG_LOCATION;
+    }
 
     public class FormField {
         public String name { get; set; }
