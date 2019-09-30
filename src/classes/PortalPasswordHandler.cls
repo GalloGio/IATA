@@ -136,6 +136,8 @@ public without sharing class PortalPasswordHandler {
             List<Messaging.SingleEmailmessage> listSingleEmailMessages = new List<Messaging.SingleEmailmessage>();
 
             EmailTemplate emailTemplate = [SELECT Id,Subject,HtmlValue,Body FROM EmailTemplate WHERE DeveloperName=:template Limit 1];
+            Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, userId, null);
+
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             OrgWideEmailAddress orgWideEmail  = [SELECT Id,Address FROM OrgWideEmailAddress WHERE Address='noreply@iata.org' Limit 1];
             if(orgWideEmail != null){
@@ -149,16 +151,14 @@ public without sharing class PortalPasswordHandler {
             mail.setTargetObjectId(userId);
             mail.setSubject(emailTemplate.Subject);
 
-            String htmlBody  = emailTemplate.HtmlValue;
-            String plainBody = emailTemplate.Body;
+            String plainBody = message.getPlainTextBody();
             for(String key : mapBodyParams.keySet()) {
-                if(htmlBody <> null && mapBodyParams <> null) {
-                    htmlBody  = htmlBody.replace(key, (mapBodyParams.get(key) == null)  ? '' : mapBodyParams.get(key));
+                if(plainBody <> null && mapBodyParams <> null) {
                     plainBody = plainBody.replace(key, (mapBodyParams.get(key) == null) ? '' : mapBodyParams.get(key));
                 }
             }
 
-            if(htmlBody <> null) mail.setHtmlBody(htmlBody);
+            if(plainBody <> null) mail.setHtmlBody(plainBody);
 
             mail.setSaveAsActivity(false);
             mail.setPlainTextBody(plainBody);
@@ -199,7 +199,7 @@ public without sharing class PortalPasswordHandler {
         }
         catch(Exception ex){
             result.success = false;
-            result.message = 'Your new password could not be set.';
+            result.message = Label.CSP_Change_Password_Error;
         }
         return result;
     }

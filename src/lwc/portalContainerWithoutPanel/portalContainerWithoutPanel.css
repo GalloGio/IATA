@@ -47,3 +47,34 @@
         max-width: 400px;
     }
 }
+
+.loginFooter{
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+    align-items: flex-end;
+    padding-top: 10px;
+}
+
+.footerlinks{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    font-size: 14px;
+}
+
+@media only screen and (max-width: 500px) {
+    .loginFooter{
+        justify-content: center;
+    }
+}
+
+.leftLink{
+    padding-right: 10px;
+}
+
+.rightLink{
+    padding-left: 10px;
+}
