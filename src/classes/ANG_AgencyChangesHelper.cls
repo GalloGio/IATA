@@ -896,7 +896,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static AChangeStructure  detachTerminatedAccountsFromHierarchy(Map<Id, List<AMS_Agencies_relationhip__c>> allRelations, AChangeStructure toReturn){
 
-		Set<Id> hierarchiesToDelete = new Set<Id>();
+		Set<AMS_Agencies_Hierarchy__c> hierarchiesToDelete = new Set<AMS_Agencies_Hierarchy__c>();
 
 		Set<String> terminatedStatus = new Set <String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S1_NOTACCREDITED, AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING, AMS_Utils.ACC_S3_NOTINOPERATION, ''};
 		
@@ -905,7 +905,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		for(List<AMS_Agencies_relationhip__c> rels: allRelations.values()){
 			for(AMS_Agencies_relationhip__c rel:rels){
 				
-				if(terminatedStatus.contains(rel.Child_Account__r.Status__c)){
+				if(String.isBlank(rel.Child_Account__r.Status__c) || terminatedStatus.contains(rel.Child_Account__r.Status__c)){
 					
 					Account childAccount = toReturn.accountsMap.get(rel.Child_Account__c) != null ?  toReturn.accountsMap.get(rel.Child_Account__c) : new Account(Id = rel.Child_Account__c);
 
@@ -915,18 +915,20 @@ public with sharing class ANG_AgencyChangesHelper {
 					toReturn.addAccount(childAccount);
 
 					relToDelete.add(rel);
-					hierarchiesToDelete.add(rel.hierarchy__c);
+					hierarchiesToDelete.add(new AMS_Agencies_Hierarchy__c(Id = rel.hierarchy__c));
 				}
 			
 			}
 		}
 
-		if(!relToDelete.isEmpty())
+		if(!relToDelete.isEmpty()){
 			delete relToDelete;
+		}
 
-		if(!hierarchiesToDelete.isEmpty())
-			delete [Select ID from AMS_Agencies_Hierarchy__c where id in :hierarchiesToDelete];
-
+		if(!hierarchiesToDelete.isEmpty()){
+			delete new List<AMS_Agencies_Hierarchy__c>(hierarchiesToDelete);
+		}
+		
 		return toReturn;
 
 	}
