@@ -305,28 +305,19 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
     }
 
     private void processRollbackRiskAlert(List<String> riskAlertList){
+        List<ANG_Risk_Alert__c> riskAlertToRollback = new List<ANG_Risk_Alert__c>();
 
-        Map<Id, ANG_Risk_Alert__c> riskAlertToRollback = new Map<Id, ANG_Risk_Alert__c>();
-
-        for(String raString: riskAlertList){
-            ANG_Risk_Alert__c riskAlert = (ANG_Risk_Alert__c) JSON.deserialize(raString, ANG_Risk_Alert__c.class);
-            riskAlertToRollback.put(riskAlert.Id, riskAlert);
+        for(String riskAlert: riskAlertList){
+            ANG_Risk_Alert__c ra = (ANG_Risk_Alert__c) JSON.deserialize(riskAlert, ANG_Risk_Alert__c.class);
+            riskAlertToRollback.add(ra);
         }
 
-        Map<Id, ANG_Risk_Alert__c> existingRiskAlert = new Map<Id, ANG_Risk_Alert__c>([SELECT Id FROM ANG_Risk_Alert__c WHERE Id IN :riskAlertToRollback.keySet()]);
-
-        for (Id riskAlertID: riskAlertToRollback.keySet()) {
-            if (!existingRiskAlert.keySet().contains(riskAlertID)) {
-                System.debug('[ANG_RollbackEngineHelper] Risk Alert - Set ID = NULL');
-                riskAlertToRollback.get(riskAlertID).Id = null;
-            }
-        }
-
-        delete [Select Id from ANG_Risk_Alert__c where ANG_Account__c in:accountsRelated and Id not in: riskAlertToRollback.keySet()];
-
+        //Risk alerts are never created as part of the oscar process
+        //Therefore, we just need to update the records with the backup info
         if(!riskAlertToRollback.isEmpty()){
-            upsert riskAlertToRollback.values();
+            upsert riskAlertToRollback;
         }
+
 
     } 
 
