@@ -1,5 +1,4 @@
 import { LightningElement, track, wire } from 'lwc';
-//import { refreshApex } from '@salesforce/apex';
 import { CurrentPageReference } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { registerListener, unregisterAllListeners} from 'c/pubsub';
@@ -18,7 +17,6 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
     @track employeeCodeValue;
     @track aircraftTypeValue = 'All';
     @track aircraftTypeOptions;
-    //@track proficiencyValue;
     @track datePeriodValue;
     @track fromDateValue;
     @track fromDateMinValue = new Date(2019, 0, 1);
@@ -47,16 +45,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
             { label: 'Expired', value: 'Expired' },
         ];
     }
-/*
-    get proficiencyOptions() {
-        return [
-            { label: 'None', value: 'None' },
-            { label: 'Level 2', value: 'Level 2' },
-            { label: 'Level 3', value: 'Level 3' },
-            { label: 'All', value: 'All' }
-        ];
-    }
-*/
+
     get datePeriodOptions() {
         return [
             { label: 'None', value: '0' },
@@ -96,42 +85,12 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
             cellAttributes: { class: {fieldName: 'showPicklist' }},
             typeAttributes: { rowActions: this.getAllActions}
         }
-        //{label: 'Proficiency', fieldName: 'proficiency', type: 'text', sortable: true},
-        //{label: 'Station', fieldName: 'station', type: 'text', sortable: true},
-        /*{label: 'PREREQ EXPIRATION', fieldName: 'indicator', type: 'text', sortable: true,
-            cellAttributes: { class: { fieldName: 'indicatorStatus' }, iconName: { fieldName: 'indicatorIcon' }, iconPosition: 'right' },
-            tooltip: 'test' } ,
-        */
     ];
-/*
-    @wire(getITPStations)
-    handleGetItpStations({error, data}){
-        //succeeded
-        if(data){
-            let myResult = JSON.parse(JSON.stringify(data));
-            
-            console.log('myResult : ' + myResult);
-            let myTopicOptions = [];
 
-            Object.keys(myResult).forEach(function (el) {
-                myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
-            });
-            this.stationOptions = this.sortData('label', 'asc', JSON.parse(JSON.stringify(myTopicOptions)));
-        }
-
-        //exception
-        if(error){
-            //show toast "Something went wrong"
-            console.log('error : ' + error);
-        }
-    }
-*/
-    //@wire(getCertificationTypes, {certificationType: 'Aircraft'})
     @wire(getCertificationTypes, {certificationType: ''})
     handleGetCertificationTypes({error, data}){
         if(data){
             let myResult = JSON.parse(JSON.stringify(data));
-            console.log('myResult : ' + myResult);
             myResult = this.sortData('Name', 'asc', myResult);
             let myTopicOptions = [{ label: 'All', value: 'All' }];
 
@@ -150,24 +109,17 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
     @wire(CurrentPageReference) pageRef;
 
     connectedCallback() {
-        console.log('INIT connectedCallback');
         registerListener('stationsChanged', this.handleStationsChanged, this);
 
         this.initData();
-        
-        console.log('END connectedCallback');
     }
 
     initData(){
         getUserInfo()
         .then(result =>{
             let myResult = JSON.parse(JSON.stringify(result));
-            console.log('myResult.primaryStationCode', myResult.primaryStationCode);
             if(myResult){
                 this.userInfo = myResult;
-                console.log('this.userInfo', this.userInfo);
-                console.log('this.userInfo.primaryStationCode', this.userInfo.primaryStationCode);
-                console.log('this.userInfo.hasAssociatedStations', this.userInfo.hasAssociatedStations);
                 if(myResult.primaryStationCode){
                     if(!this.stationValue && !this.showSearch){
                         this.stationValue = myResult.primaryStationCode;
@@ -185,10 +137,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
             getITPStations()
             .then(result => {
                 let myResult = JSON.parse(JSON.stringify(result));
-
-                console.log('myResult : ' + myResult);
                 let myTopicOptions = [];
-                    //myTopicOptions.push({ label: 'All my associated stations', value: 'All my associated stations'});
                 Object.keys(myResult).forEach(function (el) {
                     myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
                 });
@@ -203,26 +152,9 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                 
                 this.showSearchCriteria = true;
                 this.loading = false;
-                console.log('this.stationOptions', this.stationOptions);
-/*
-                if(this.stationValue){
-                    //Reset this.stationValue if this.stationValue = code of deleted station
-                    let stationOptions = JSON.parse(JSON.stringify(this.stationOptions));
-                    let exists = false;
-                    stationOptions.forEach(opt =>{
-                        if(opt.value === this.stationValue){
-                            exists = true;
-                        }
-                    })
-                    if(!exists){
-                        this.stationValue = null;
-                    }
-                }
-            */
             })
             .catch(error => {
                 console.log('getITPStations - Error : ' + error);
-
                 this.loading = false;
             }); 
         })
@@ -246,11 +178,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
     handleChangeEmployeeCodeValue(event){
         this.employeeCodeValue = event.detail.value;
     }
-    /*
-    handleChangeProficiency(event) {
-        this.proficiencyValue = event.detail.value;
-    }
-    */
+
     handleChangeDatePeriod(event) {
 
         this.datePeriodValue = event.detail.value;
@@ -283,9 +211,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         this.fromDateValue = event.detail.value;
         this.toDateMinValue = this.fromDateValue;
 
-        console.log('handleChangeFromDate - Comparing : ' + this.toDateValue + '::' + this.toDateMinValue);
         if(this.toDateValue < this.toDateMinValue){
-            console.log('handleChangeFromDate - Error : ' + this.toDateValue + '::' + this.toDateMinValue);
             this.toDateValue = '';
         }
     }
@@ -316,28 +242,10 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         let auxItp = (this.itpValue == null) ? 'null' : this.itpValue;
         let auxExpirationStatus = (this.expirationStatusValue == null) ? 'null' : this.expirationStatusValue;
         let auxAircraftType = (this.aircraftTypeValue == null) ? 'null' : this.aircraftTypeValue;
-        //let auxProficiency = (this.proficiencyValue == null) ? 'null' : this.proficiencyValue;
         let auxFromDate = (this.fromDateValue == null) ? 'null' : this.fromDateValue;
         let auxToDate = (this.toDateValue == null) ? 'null' : this.toDateValue;
         let auxEmployeeCode = (this.employeeCodeValue == null) ? 'null' : this.employeeCodeValue.trim();
 
-        console.log('handleSearch - INIT');
-        console.log('auxItp', auxItp);
-        console.log('this.stationValue: ' + this.stationValue);
-        console.log('this.stationOptions: ' + this.stationOptions);
-        console.log('this.stationOptions.length: ' + this.stationOptions.length);
-        console.log('this.employeeCodeValue: ' + this.employeeCodeValue);
-/*
-        if(this.stationValue === 'All'){
-            for(i=0; i < this.stationOptions.length; i++){
-                if(this.stationOptions[i].value === 'All'){
-                    auxStations = '';
-                }else{
-                    auxStations = (auxStations === '' ) ? this.stationOptions[i].value : auxStations + ',' + this.stationOptions[i].value;
-                }
-            }
-        }
-*/
         if(this.expirationStatusValue === 'All'){
             for(i=0; i < this.expirationStatusOptions.length; i++){
                 if(this.expirationStatusOptions[i].value == 'All'){
@@ -357,35 +265,23 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                 }
             }
         }
-/*
-        if(this.proficiencyValue === 'All' ||  !this.proficiencyValue){
-            auxProficiency = 'null';
-        }
-        console.log('auxProficiency', auxProficiency);
-        */
+
         //List
         auxSearchValues = [
             auxStation,
             auxItp,
             auxExpirationStatus,
             auxAircraftType,
-            'null',    //auxProficiency,
+            'null',                 //auxProficiency,
             auxFromDate,
             auxToDate,
-            'null',               //place holder for firstName
-            'null',                //place holder for lastName
+            'null',                 //place holder for firstName
+            'null',                 //place holder for lastName
             auxEmployeeCode
         ];
        
-        console.log('searchValues: ', auxSearchValues);
-        
-        
         getTrainingRecords({searchValues: auxSearchValues, searchType: 'MonitorTrainings' })
         .then(results => {
-            console.log('handleSearch - results : ', results);
-            console.log('handleSearch - results.length : ', results.length);
-            console.log('handleSearch - results:1 : ', results[1]);
-
 
             if(results && results.length > 0) {
                 results.forEach(rec =>{
@@ -396,11 +292,11 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                         //rec.showPicklist = 'slds-hide-action';
                     }
                 })
-                //this.data = JSON.parse(JSON.stringify(results));
                 this.data = this.sortData('days', 'asc', JSON.parse(JSON.stringify(results)));
                 this.originalData = this.data;
                 this.fullData = this.data;
                 this.dataRecords = true;
+                console.log('this.data ', this.data);
             } else {
                 this.dataRecords = false; 
             }
@@ -408,15 +304,12 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         })
         .catch(error => {
             console.log('handleSearch - Error : ', error);
-            console.log(error);
 
             this.mainErrorMessage = error;
             this.error = error;
             this.loading = false;
             this.dataRecords = false;
-        });  
-        console.log('handleSearch - END');
-        
+        });          
     }
 
 
@@ -428,7 +321,6 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         this.expirationStatusValue = undefined;
         this.aircraftTypeValue = 'All';
         this.employeeCodeValue = undefined;
-        //this.proficiencyValue = undefined;
         this.datePeriodValue = undefined;
         this.fromDateValue = undefined;
         this.fromDateMaxValue = undefined;
@@ -458,8 +350,6 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         for(let i=0; i < this.selectedRows.length; i++){
             this.selectedRowsKeys.push(this.selectedRows[i].uniqueRowId);
         }
-        
-        console.log('this.selectedRows ', JSON.parse(JSON.stringify(this.selectedRows)));
     }
 
     handleSelectAllEnroll(){
@@ -487,8 +377,6 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                 })
             })
             this.fullData = auxFullData;
-            console.log('this.data', this.data);
-            console.log('this.fullData', this.fullData);
         }
         this.selectedRows = null;
         this.selectedRowsKeys = [];
@@ -520,8 +408,6 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                 })
             })
             this.fullData = auxFullData;
-            console.log('this.data', this.data);
-            console.log('this.fullData', this.fullData);
         }
         this.selectedRows = null;
         this.selectedRowsKeys = [];
@@ -549,26 +435,28 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                 if(rec.setEnroll && rec.setEnroll === 'Enroll' && rec.enrolled !== 'Yes'){
                     let recordTosave ={};
                     recordTosave.contact_role_certification_id = rec.certificationId;
-                    recordTosave.isEnrollment = true;
-                    console.log('recordTosave', recordTosave);
+                    recordTosave.action = 'Enroll';
                     dataToSave.push(recordTosave);
                 }
                 if(rec.setEnroll && rec.setEnroll === 'Unenroll' && rec.enrolled === 'Yes'){
                     let recordTosave ={};
                     recordTosave.contact_role_certification_id = rec.certificationId;
-                    recordTosave.isEnrollment = false;
-                    console.log('recordTosave', recordTosave);
+                    recordTosave.action = 'Unenroll';
                     dataToSave.push(recordTosave);
+                }
+                if(rec.setEnroll && rec.setEnroll === 'Stop'){
+                    let recordTosave ={};
+                    recordTosave.contact_role_certification_id = rec.certificationId;
+                    recordTosave.action = 'Stop';
+                    dataToSave.push(recordTosave);
+
                 }
             })
 
-            console.log('dataToSave: ',dataToSave);
-            
             if(dataToSave.length > 0){
                 this.loading = true;
                 updateCertificationEnroll({dataToSave: dataToSave })
                 .then(results => {
-                    console.log('updateCertificationEnroll - results', results);
                     if(results) {
                         auxData.forEach(rec => {
                             if(rec.setEnroll === 'Enroll'){
@@ -579,9 +467,20 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                                 rec.enrolled = '';
                                 rec.enrollmentStatus = 'Success';
                                 rec.enrollmentIcon = 'utility:check';
+                            } else if(rec.setEnroll === 'Stop'){
+                                rec.enrolled = '';
+                                rec.enrollmentStatus = 'Success';
+                                rec.enrollmentIcon = 'utility:check';
                             }
                         }) 
-                        this.data = auxData;                 
+                        this.data = auxData;  
+                        const event = new ShowToastEvent({
+                            title: 'Save Enrollments',
+                            message: 'Data updated successfully ',
+                            variant: 'success',
+                            mode: 'pester'
+                        });
+                        this.dispatchEvent(event);               
                     } else {
                         const event = new ShowToastEvent({
                             title: 'Save Enrollments',
@@ -590,14 +489,12 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                             mode: 'sticky'
                         });
                         this.dispatchEvent(event);
-                        //send Toast: error message to the user
                     }
                     this.loading = false;
                     
                 })
                 .catch(error => {
                     console.log('handleSearch - Error : ', error);
-                    console.log(error);
     
                     const event = new ShowToastEvent({
                         title: 'Save Enrollments',
@@ -610,6 +507,10 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                     this.loading = false;
     
                 }); 
+
+
+
+
             } else {
                 const event = new ShowToastEvent({
                     title: 'Save Enrollments',
@@ -640,14 +541,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
     }
 
     getAllActions(row, doneCallback){
-        console.log('row', row);
         let result;
-/*
-        result = [
-            { label: 'Yes', name: 'Yes'}
-        ];
-
-*/
         if(row.enrolled === 'Yes'){
             result = [
                 { label: 'Unenroll', name: 'Unenroll'}
@@ -658,7 +552,10 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
             ];
         }
 
-        console.log('result', result);
+        if(row.expirationStatus === 'Expired' && (row.isGeneralTraining === 'No' || (row.isGeneralTraining === 'Yes' && row.level === 'Level 3') )){
+            result.push({ label: 'Stop', name: 'Stop'})
+        }
+
         doneCallback(result);
     }
 
@@ -677,18 +574,8 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         let employee_code = row.companyNumber;
         let auxData = JSON.parse(JSON.stringify(this.data));
 
-        console.log('row.companyNumber', row.companyNumber);
-        console.log('uniqueRowId', uniqueRowId);
-        console.log('actionName', actionName);
-        console.log('index', index);
-
-        // eslint-disable-next-line default-case
         switch (actionName) {
             case 'filter':
-                console.log('this.fullData', this.fullData);
-                console.log('this.fullData.length', this.fullData.length);
-                console.log('this.data', this.data);
-                console.log('this.data.length', this.data.length);
 
                 if(this.fullData.length !== this.data.length){
                     this.data = JSON.parse(JSON.stringify(this.fullData));
@@ -698,7 +585,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                 }
                 this.loading = false;
                 break;
-            //case 'Yes':
+
             case 'Enroll':
                 auxData[index].setEnroll = 'Enroll';
                 this.data = auxData;
@@ -715,8 +602,6 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                         })
                     })
                     this.fullData = auxFullData;
-                    console.log('this.data', this.data);
-                    console.log('this.fullData', this.fullData);
                 }
                 this.showDatatableButtons = true;
                 this.loading = false;
@@ -738,8 +623,27 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                         })
                     })
                     this.fullData = auxFullData;
-                    console.log('this.data', this.data);
-                    console.log('this.fullData', this.fullData);
+                }
+                this.showDatatableButtons = true;
+                this.loading = false;
+                break;
+
+            case 'Stop':
+                auxData[index].setEnroll = 'Stop';
+                this.data = auxData;
+
+                if(this.data.length === this.fullData.length){
+                    this.fullData = this.data;
+                } else{
+                    let auxFullData = JSON.parse(JSON.stringify(this.fullData));
+                    auxData.forEach(dataRecord =>{
+                        auxFullData.forEach(fullDataRecord =>{
+                            if(dataRecord.certificationId === fullDataRecord.certificationId){
+                                fullDataRecord.setEnroll = dataRecord.setEnroll;
+                            }
+                        })
+                    })
+                    this.fullData = auxFullData;
                 }
                 this.showDatatableButtons = true;
                 this.loading = false;
@@ -762,12 +666,9 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
     }
 
     handleStationsChanged(){
-        console.log('Listener - handleStationsChanged');
         this.showSearchCriteria = false;
         this.loading = true;
         this.initData();
-        console.log('Listener - handleStationsChanged, after this.initData() in ProficiencyManagement');
-        console.log('Listener - handleStationsChanged, after this.initData() in ProficiencyManagement');
     }
 
     /*******************************************************************************
@@ -797,10 +698,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         let key = primer ?
             function(x) {return primer(x.hasOwnProperty(field) ? (typeof x[field] === 'string' ? x[field].toLowerCase() : x[field]) : 'aaa')} :
             function(x) {return x.hasOwnProperty(field) ? (typeof x[field] === 'string' ? x[field].toLowerCase() : x[field]) : 'aaa'};
-            /*
-            function(x) {return primer(x[field])} :
-            function(x) {return x[field]};
-            */
+
         return function (a, b) {
             let A = key(a);
             let B = key(b);
