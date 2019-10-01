@@ -753,6 +753,11 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             transferCase.ContactId = ui.contactId;
             transferCase.Status = 'Open';
             transferCase.Visible_on_ISS_Portal__c = true;
+            transferCase.CaseArea__c = 'IATA Fuelling Training Portal (IFTP)';
+            transferCase.Reason1__c  = 'IFTP Request Record Transfer';
+            transferCase.Region__c = ui.accountRegion;
+            transferCase.BSPCountry__c = ui.accountCountry;
+            
             System.debug('transferCase' + transferCase);
 
             Savepoint sp = Database.setSavepoint();
