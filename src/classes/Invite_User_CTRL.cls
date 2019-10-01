@@ -165,7 +165,6 @@ public without sharing class Invite_User_CTRL {
         mail.setUseSignature(false);
         mail.setTreatTargetObjectAsRecipient(false);
         string body = mail.getHtmlBody();
-        system.debug(mail);
         if(newUser) {
             mail.setHtmlBody(body.replace('*link*', link).replace('*userName*', userName).replace('*account*', accountName));
             mail.setPlainTextBody(body.replace('*link*', link).replace('*userName*', userName).replace('*account*', accountName));
