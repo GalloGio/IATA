@@ -375,7 +375,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 }
 
                // for new HE Accreditations get the values from the BSP configuration of all BSP operation codes related to this country
-                if(oscarObj.Process__c == AMS_Utils.MCAE || oscarObj.Process__c == AMS_Utils.NEWHELITE || oscarObj.Process__c == AMS_Utils.NEWHESTANDARD || oscarObj.Process__c == AMS_Utils.NEWGESTANDARD) {
+                if(oscarObj.Process__c == AMS_Utils.MCAE || oscarObj.Process__c == AMS_Utils.NEWHELITE || oscarObj.Process__c == AMS_Utils.NEWHESTANDARD || oscarObj.Process__c == AMS_Utils.NEWGESTANDARD || oscarObj.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY) {
 
                     for(AMS_Settlement_System__c operation :operations) {
                         for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {

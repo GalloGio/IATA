@@ -10421,6 +10421,30 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Multicountry_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Multicountry Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Global</fullName>
+                    <default>false</default>
+                    <label>Global</label>
+                </value>
+                <value>
+                    <fullName>Local</fullName>
+                    <default>false</default>
+                    <label>Local</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Name</fullName>
         <trackHistory>true</trackHistory>
     </fields>
@@ -16334,6 +16358,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Multicountry_Role__c</picklist>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Name</picklist>
             <values>
                 <fullName>Dr%2E</fullName>
@@ -19520,6 +19555,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>iiNet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Multicountry_Role__c</picklist>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

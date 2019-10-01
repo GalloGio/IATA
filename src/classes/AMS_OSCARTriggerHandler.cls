@@ -775,7 +775,7 @@ public class AMS_OSCARTriggerHandler {
                 stepsOSCAR.add(fieldMap.get(fieldName).getDescribe().getLabel());
         }
 
-        List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
+        List<AMS_OSCAR__c> oscarsToAssignRegionQueue = new List<AMS_OSCAR__c>();
 
         /*** AMSU-37 ***/
         Set<Id> accountIds = new Set<Id>();
@@ -796,6 +796,7 @@ public class AMS_OSCARTriggerHandler {
             }
         }
         
+        allOnlineAccr = (allOnlineAccr == null || allOnlineAccr.isEmpty()) ? getAllAccreditations(oscarsToInsert) : allOnlineAccr;
 
         for (AMS_OSCAR__c oscar : oscarsToInsert) {
             //set default name if no case is attached to the oscar
@@ -853,16 +854,19 @@ public class AMS_OSCARTriggerHandler {
             if(oscar.Process__c == AMS_Utils.CERTIFICATION) oscar.Sanity_check_deadline__c = Date.today()+90;
 
             if(oscar.Process__c != AMS_Utils.CERTIFICATE) oscar.Certificate_Quantity__c = null;
+            
+            AMS_Pax_Accreditation_Form__c stgArea = allOnlineAccr.get(oscar.AMS_Online_Accreditation__c);
 
-
-           if(oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NEWGESTANDARD)
-                oscars.add(oscar);
+            if(oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY ||
+               (oscar.Process__c == AMS_Utils.NGCHANGES && stgArea.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)){
+                oscarsToAssignRegionQueue.add(oscar);
+            }
 
         }
 
-        if (!oscars.isEmpty()){
-            AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
-        }//deprecated AMS-1665//AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
+        if (!oscarsToAssignRegionQueue.isEmpty()){
+            AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscarsToAssignRegionQueue);
+        }
     }
 
     private static void copyDataFromTargetAgency(){
