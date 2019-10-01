@@ -22812,6 +22812,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>IATA Codes to relinquish</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_View_Owners_Info</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Import</shortDescription>
+        <value>In case of same legal entity please click on &quot;View &amp; Modify Owners&quot; to access the list of contacts previously provided.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_View_Owners_Modify</fullName>
         <categories>ISSP, ANG</categories>
         <language>en_US</language>
