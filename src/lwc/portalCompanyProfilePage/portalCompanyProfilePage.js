@@ -65,6 +65,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
     @track lstTabs = [];
 
     @track contacts = [];
+    @track contactsWrapper = [];
     @track branches = [];
     @track branchesLoaded = false;
     @track contactsLoaded = false;
@@ -434,6 +435,13 @@ export default class PortalCompanyProfilePage extends LightningElement {
     retrieveContacts() {
         let offset = this.contactsOffset;
         getContacts({ offset: offset }).then(result => {
+            let _oldContactsWrapper = offset != 0 ? JSON.parse(JSON.stringify(this.contactsWrapper)) : [];
+            let _contactsWrapper = JSON.parse(JSON.stringify(result));
+            for (let i = 0; i < _contactsWrapper.length; i++) {
+                _oldContactsWrapper.push(_contactsWrapper[i]);
+            } 
+
+            this.contactsWrapper = _oldContactsWrapper;
             this.isFetching = false;
             if (result.length == 0) { this.contactsEnded = true; this.contactsLoaded = true; return; }
 
