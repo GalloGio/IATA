@@ -58,8 +58,6 @@ public without sharing class PortalIftpUtils {
         }
         userInfo.contactId = userAcc.contactId;  
 
-            System.debug('PortalIftpUtils.getUserInfo - userInfo: '+ userInfo);
-
         return userInfo;
     }
 
@@ -133,7 +131,6 @@ public without sharing class PortalIftpUtils {
                 auxaddr.add( new Address__c(Id = ra.Address__c, Code__c = ra.Address__r.Code__c) );
                 ret.put(ra.Account_Contact_Role__c, auxaddr);
             }
-            System.debug('getEmployeesStations - ret: '+ ret);
         }                                               
 
         return ret;
@@ -372,9 +369,7 @@ public without sharing class PortalIftpUtils {
     public static InsertStationWrapper updateStation(List<Object> dataToSave, String origin){
         List<Role_Address__c> stationsToUpdate = new List<Role_Address__c>();
         InsertStationWrapper irw;
-        System.debug('____ [cls PortalIftpUtils - updateStation] dataToSave - ' + dataToSave );
         List<Address__c> ITPStationsInDatabase = PortalIftpUtils.getITPStations();
-        System.debug('____ [cls PortalIftpUtils - updateStation] ITPStationsInDatabase - ' + ITPStationsInDatabase );
         
         for(Object rec : dataToSave){
             Role_Address__c auxStation = (Role_Address__c)JSON.deserialize(JSON.serialize(rec ), Role_Address__c.class);
@@ -392,7 +387,6 @@ public without sharing class PortalIftpUtils {
                 irw = new InsertStationWrapper('The station you tried to update, is no longer a station of this ITP.', false);
             }
         }
-        System.debug('____ [cls PortalIftpUtils - updateStation] stationsToUpdate - ' + stationsToUpdate );
 
         if(stationsToUpdate.size() > 0){
             update stationsToUpdate;
@@ -466,14 +460,11 @@ public without sharing class PortalIftpUtils {
                 mUserAddr.put(addr.Code__c, addr);
             }
 
-            System.debug('____ [cls PortalIftpUtils - importStationsCSVFile] mAllAddr - ' + mAllAddr );
-
             ContentVersion cv=[select id,ContentDocumentId,versiondata from Contentversion where ContentDocumentId=:fileId AND IsLatest = true ];
             //ContentVersion cv=[select id,ContentDocumentId,versiondata from Contentversion where ContentDocumentId='0690Q000000MH4TQAW' AND IsLatest = true ];
             Blob csvFileBody =cv.VersionData;
             String csvAsString= csvFileBody.toString();
             List<String> csvFileLines= csvAsString.split('\n');
-            system.debug(csvFileLines);
 
             //Remove Empty Lines
             Integer index = 0;
@@ -590,8 +581,6 @@ public without sharing class PortalIftpUtils {
                 }
             }
 
-            System.debug(csvFileLines);
-
             List<String> allMessages;
 
 
@@ -625,9 +614,6 @@ public without sharing class PortalIftpUtils {
                 }
             }
 
-            System.debug('__RS__  mapEmployeeInfoByEmployeeCode' + mapEmployeeInfoByEmployeeCode);
-            System.debug('__RS__  results' + results);
-
             List<Contact> contactsToInsert = new List<Contact>();
             List<Contact> contactsToUpdate = new List<Contact>();
             List<Account_Contact_Role__c> accContRoleToInsert = new List<Account_Contact_Role__c>();
@@ -640,11 +626,6 @@ public without sharing class PortalIftpUtils {
             Set<String> employeesCodesInCSVFileList = mapEmployeeInfoByEmployeeCode.keySet();
             for(String empCode : employeesCodesInCSVFileList){
                 string[] csvRecordData = mapEmployeeInfoByEmployeeCode.get(empCode);
-
-            //for(Integer i=1;i<csvFileLines.size();i++){
-                //string[] csvRecordData = csvFileLines[i].split(',');
-
-                //List<String> allMessages;
 
                 if(csvRecordData != null && csvRecordData.size() > 0){
                     // Save errors
@@ -859,7 +840,6 @@ public without sharing class PortalIftpUtils {
                                                     WHERE Account_Contact_Role__c IN :accContRoleToUpdate];
                     }
                     // Insert in Role_Address__C (all records, from inserted and updateed contacts)
-                     //System.debug('____ [cls PortalIftpUtils - importEmployeesCSVFile] mapEmployeeStationCodes.keySet - ' + mapEmployeeStationCodes.keySet() );
                     for(String key: mapEmployeeStationCodes.keySet()){
                         Id accountContactRoleID;
                         List<String> stationsCodes = new List<String>();
@@ -881,12 +861,9 @@ public without sharing class PortalIftpUtils {
                         }
 
                         stationsCodes = mapEmployeeStationCodes.get(key);
-                        System.debug('key ' + key);
-                        System.debug('stationsCodes ' + stationsCodes);
 
                         Boolean isFirstStation = true;
                         for(String code: stationsCodes ){
-                            System.debug('code ' + code);
                             Boolean exists = false;
                             if(isUpdateEmployee){
                                 // Check if station to be added is already a station of that employee
@@ -916,12 +893,10 @@ public without sharing class PortalIftpUtils {
                             if(!exists){
                                 for(Address__c station: allAddr){
                                     if( code == station.Code__c){
-                                        System.debug('code - ' + code + ' - exists - ' + exists);
                                         Role_Address__c roleAddressAux = new Role_Address__c();
                                         roleAddressAux.Account_Contact_Role__c = accountContactRoleID;
                                         roleAddressAux.Address__c = station.Id;
                                         roleAddressAux.Primary__c = false;
-                                        //if(i == 0 && !isUpdateEmployee){
                                         if(isFirstStation){
                                             roleAddressAux.Primary__c = true;
                                             isFirstStation = false;
@@ -933,26 +908,6 @@ public without sharing class PortalIftpUtils {
                             } 
                         }
                     }
-                    /*
-                    List<Role_Address__c> existingRoleAddressPrimaryStationList = new List<Role_Address__c>();
-                    for(Role_Address__c rec: existingRoleAddresses){
-                        if(rec.Primary__c){
-                            existingRoleAddressPrimaryStationList.add(rec);
-                        }
-                    }
-                    
-                    
-                    if(existingRoleAddressPrimaryStationList.size() > 0){
-                        for(Role_Address__c rec: existingRoleAddressPrimaryStationList){
-                            for(Integer i = 0; i < roleAdressToInsert.size(); i++){
-                                if(rec.Account_Contact_Role__r.Company_Code__c.equalsIgnoreCase(roleAdressToInsert[i].Account_Contact_Role__r.Company_Code__c)){
-                                    roleAdressToInsert[i].Primary__c = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    */
                     insert roleAdressToInsert;
                     if(roleAddressesToUpdatePrimaryStation.size() > 0){
                         update roleAddressesToUpdatePrimaryStation;
@@ -1059,8 +1014,8 @@ public without sharing class PortalIftpUtils {
                     }
                     
                 } catch (DMLException e) {
-                    System.debug('____ [cls PortalIftpUtils - importEmployeesCSVFile] DMLException - ' + e );
-                    System.debug('____ [cls PortalIftpUtils - importEmployeesCSVFile] DMLException - ' + e.getStackTraceString() );
+                    System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - importEmployeesCSVFile] DMLException - ' + e );
+                    System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - importEmployeesCSVFile] DMLException - ' + e.getStackTraceString() );
                     Database.rollback(sp);
 
                     ImportResultsWrapper irw = new ImportResultsWrapper('', '', 'An error has occurred while importing data. Please make sure input CSV file is correct.', 'Failed');
@@ -1072,8 +1027,8 @@ public without sharing class PortalIftpUtils {
         catch (Exception e){
             //ApexPages.Message errorMessage = new ApexPages.Message(ApexPages.severity.ERROR,'An error has occured while importin data Please make sure input csv file is correct');
             //ApexPages.addMessage(errorMessage);
-            System.debug('____ [cls PortalIftpUtils - importEmployeesCSVFile] Exception - ' + e );
-            System.debug('____ [cls PortalIftpUtils - importEmployeesCSVFile] Exception - ' + e.getStackTraceString() );
+            System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - importEmployeesCSVFile] Exception - ' + e );
+            System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - importEmployeesCSVFile] Exception - ' + e.getStackTraceString() );
                     
             ImportResultsWrapper irw = new ImportResultsWrapper('', '', 'An error has occurred while importing data. Please make sure input CSV file is correct.', 'Failed');
             results.add(irw);
@@ -1126,9 +1081,7 @@ public without sharing class PortalIftpUtils {
                         mapEmployeesByCompanyCode.put(rec.Company_Code__c, rec);
                     }
                 }
-                System.debug('##R System.debug(mapEmployeesByCompanyCode.keyset())' + mapEmployeesByCompanyCode.keyset());
                 for(Integer x = 1; x < csvFileLines.size(); x++){
-                    System.debug('##R csvFileLines[x]' + csvFileLines[x]);
                     if(mapEmployeesByCompanyCode.containsKey(csvFileLines[x])){
                         if(mapEmployeesByCompanyCode.get(csvFileLines[x]).Status__c.compareTo('Inactive') == 0){
                             ImportResultsWrapper irwDeleted = new ImportResultsWrapper(csvFileLines[x], '', 'Employee already deleted.', 'Failed');
@@ -1231,8 +1184,8 @@ public without sharing class PortalIftpUtils {
                         }
 
                     } catch (DMLException e) {
-                        System.debug('____ [cls PortalIftpUtils - importEmployeesCSVFile] DMLException - ' + e );
-                        System.debug('____ [cls PortalIftpUtils - importEmployeesCSVFile] DMLException - ' + e.getStackTraceString() );
+                        System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - importEmployeesCSVFile] DMLException - ' + e );
+                        System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - importEmployeesCSVFile] DMLException - ' + e.getStackTraceString() );
                         Database.rollback(sp);
 
                         ImportResultsWrapper irw = new ImportResultsWrapper('','','An error has occurred while deleting employees data. Please make sure input CSV file is correct.', 'Failed');
@@ -1242,8 +1195,8 @@ public without sharing class PortalIftpUtils {
             }         
         }
         catch (Exception e){
-            System.debug('____ [cls PortalIftpUtils - importEmployeesCSVFile] Exception - ' + e );
-            System.debug('____ [cls PortalIftpUtils - importEmployeesCSVFile] Exception - ' + e.getStackTraceString() );
+            System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - importEmployeesCSVFile] Exception - ' + e );
+            System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - importEmployeesCSVFile] Exception - ' + e.getStackTraceString() );
                     
             ImportResultsWrapper irw = new ImportResultsWrapper('', '', 'An error has occurred while deleting employees data. Please make sure input CSV file is correct.', 'Failed');
             results.add(irw);
@@ -1274,7 +1227,6 @@ public without sharing class PortalIftpUtils {
             Id ownerId = [Select Id FROM group WHERE Type = 'Queue' and Name = 'IFTP'].Id;
 
             ID ProcessRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
-            System.debug('ownerId' + ownerId);
 
             Savepoint sp = Database.setSavepoint();
             try {
@@ -1291,15 +1243,12 @@ public without sharing class PortalIftpUtils {
                 //cdl.LinkedEntityId = '0581j00000050jV';
                 cdl.LinkedEntityId = ISSP_CS__c.getValues('IFTP-DocumentLibrary').Value__c;
 
-                System.debug('____ [cls PortalIftpUtils - manageUploadGlobalOJT] cdl.LinkedEntityId - ' + cdl.LinkedEntityId);
                 insert cdl;
 
                 //Create case for upload file validation
                 //ContentDocument cdocument = [select id,LatestPublishedVersionId, title from ContentDocument where Id = :fileId LIMIT 1];
                 ContentVersion cversion = [select id, title from ContentVersion where ContentDocumentId = :fileId LIMIT 1];
-                //System.debug('____ [cls portalIFTPTrainingRecords - getTrainingRecords] cdocument  - ' + cdocument);
-                System.debug('____ [cls portalIFTPTrainingRecords - getTrainingRecords] cversion  - ' + cversion);
-                // String ojt_global_file_url =  cdocument.LatestPublishedVersionId;
+
                 String ojt_global_file_c_version_id = cversion.id;
                 String baseUrl = URL.getSalesforceBaseUrl().toExternalForm();
 
@@ -1319,17 +1268,13 @@ public without sharing class PortalIftpUtils {
                 transferCase.ContactId = ui.contactId;
                 transferCase.Status = 'Open';
                 transferCase.Visible_on_ISS_Portal__c = true;
-                System.debug('transferCase' + transferCase);
 
                 insert transferCase;
-                System.debug('transferCase' + transferCase);
-
-
             } 
             catch (DMLException e) {
                 result = false;
-                System.debug('____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException - ' + e );
-                System.debug('____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException - ' + e.getStackTraceString() );
+                System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException - ' + e );
+                System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException - ' + e.getStackTraceString() );
                 Database.rollback(sp);
                 try{
                     List<ContentDocument> fileList = new List<ContentDocument>();
@@ -1338,8 +1283,8 @@ public without sharing class PortalIftpUtils {
                 } 
                 catch (DMLException eDML) {
                     result = false;
-                    System.debug('____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException delete fileList - ' + eDML );
-                    System.debug('____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException delete fileList - ' + eDML.getStackTraceString() );
+                    System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException delete fileList - ' + eDML );
+                    System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException delete fileList - ' + eDML.getStackTraceString() );
 
                 }
 
@@ -1347,8 +1292,8 @@ public without sharing class PortalIftpUtils {
         }
         catch (Exception ex){
             result = false;
-            System.debug('____ [cls PortalIftpUtils - manageUploadGlobalOJT] Exception - ' + ex );
-            System.debug('____ [cls PortalIftpUtils - manageUploadGlobalOJT] Exception - ' + ex.getStackTraceString() );           
+            System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] Exception - ' + ex );
+            System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] Exception - ' + ex.getStackTraceString() );           
         }  
         return result;
     }
@@ -1378,7 +1323,6 @@ public without sharing class PortalIftpUtils {
                 rolAddr.id = recordID;
                 rolAddr.OJT_File_Id__c = fileId;
                 rolAddr.OJT_file_validated__c = false;
-                System.debug('____ [cls PortalIftpUtils - manageUploadStationOJT] rolAddr - ' + rolAddr );
                 update rolAddr;
 
                 ContentDocumentLink cdl = new ContentDocumentLink();
@@ -1392,8 +1336,6 @@ public without sharing class PortalIftpUtils {
                 //Create case for upload file validation
                 //ContentDocument cdocument = [select id,LatestPublishedVersionId, title from ContentDocument where Id = :fileId LIMIT 1];
                 ContentVersion cversion = [select id, title from ContentVersion where ContentDocumentId = :fileId LIMIT 1];
-                //System.debug('____ [cls portalIFTPTrainingRecords - getTrainingRecords] cdocument  - ' + cdocument);
-                System.debug('____ [cls portalIFTPTrainingRecords - getTrainingRecords] cversion  - ' + cversion);
                 //String ojt_global_file_url =  cdocument.LatestPublishedVersionId;
                 String ojt_station_file_c_version_id = cversion.id;
                 String baseUrl = URL.getSalesforceBaseUrl().toExternalForm();
@@ -1414,15 +1356,13 @@ public without sharing class PortalIftpUtils {
                 transferCase.ContactId = ui.contactId;
                 transferCase.Status = 'Open';
                 transferCase.Visible_on_ISS_Portal__c = true;
-                System.debug('transferCase' + transferCase);
 
                 insert transferCase;
-                System.debug('transferCase' + transferCase);
 
             } 
             catch (DMLException e) {
-                System.debug('____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException - ' + e );
-                System.debug('____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException - ' + e.getStackTraceString() );
+                System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException - ' + e );
+                System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException - ' + e.getStackTraceString() );
                 Database.rollback(sp);
                 result = false; 
                 try{
@@ -1431,15 +1371,15 @@ public without sharing class PortalIftpUtils {
                     delete fileList; 
                 } 
                 catch (DMLException eDML) {
-                    System.debug('____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException delete fileList - ' + eDML );
-                    System.debug('____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException delete fileList - ' + eDML.getStackTraceString());
+                    System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException delete fileList - ' + eDML );
+                    System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException delete fileList - ' + eDML.getStackTraceString());
                     result = false; 
                 }
             }
         }
         catch (Exception ex){
-            System.debug('____ [cls PortalIftpUtils - manageUploadStationOJT] Exception - ' + ex );
-            System.debug('____ [cls PortalIftpUtils - manageUploadStationOJT] Exception - ' + ex.getStackTraceString() ); 
+            System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] Exception - ' + ex );
+            System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] Exception - ' + ex.getStackTraceString() ); 
             result = false;          
         } 
 

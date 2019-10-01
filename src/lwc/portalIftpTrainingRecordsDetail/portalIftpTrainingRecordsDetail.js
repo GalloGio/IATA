@@ -1,18 +1,10 @@
 import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-//import getSelectedColumns from '@salesforce/apex/CSP_Utils.getSelectedColumns';
-//import searchTrainingRecords from '@salesforce/apex/portalIFTPTrainingRecords.searchTrainingRecords';
 import getTrainingRecords from '@salesforce/apex/portalIftpTrainingRecords.getTrainingRecordsDetail';
-//import getITPStations from '@salesforce/apex/PortalIftpUtils.getITPStations';
-//import getITPConnectedToAirlineByStation from '@salesforce/apex/PortalIftpUtils.getITPConnectedToAirlineByStation';
 import getCertificationTypesWithLevel from '@salesforce/apex/PortalIftpUtils.getCertificationTypesWithLevel';
 import getAllTrainingRecordsForDetailView from '@salesforce/apex/portalIftpTrainingRecords.getAllTrainingRecordsForDetailView';
 import getAirlineITPsByStation from '@salesforce/apex/PortalIftpUtils.getAirlineITPsByStation';
-
-
-//import {getUserStationsJS}  from 'c/portalIftpUtilsJS';
-//import {stations}  from 'c/portalIftpUtilsJS';
 
 export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
@@ -34,7 +26,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     @track itpValue;
     @track experiationstatusValue;
     @track aircraftTypeValue = 'All Level 2';
-    //@track proficiencyValue;
     @track levelValue = 'Level 2';
 
     @track datePeriodValue;
@@ -59,16 +50,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             { label: 'Expired', value: 'Expired' },
         ];
     }
-    /*
-    get proficiencyOptions() {
-        return [
-            { label: 'All', value: 'All' },
-            { label: 'None', value: 'None' },
-            { label: 'Level 2', value: 'Level 2' },
-            { label: 'Level 3', value: 'Level 3' },
-        ];
-    }
-    */
 
     get levelOptions() {
         return [
@@ -88,7 +69,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     }
 
     
-
     get dataRecords() {
         return this.dataRecords;
     } 
@@ -97,9 +77,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.stationValue = event.detail.value;
         this.itpValue = null;
 
-                console.log(result);
-
-                console.log(myResult);
         let myResult = this.itpBYStationMap[this.stationValue];
 
         let myTopicOptions = [{ label: 'All', value: 'All' }];
@@ -119,11 +96,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     handleChangeAircraftType(event) {
         this.aircraftTypeValue = event.detail.value;
     }
-    /*
-    handleChangeProficiency(event) {
-        this.proficiencyValue = event.detail.value;
-    }
-    */
 
     handleChangeLevel(event) {
         this.levelValue = event.detail.value;
@@ -194,9 +166,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.fromDateValue = event.detail.value;
         this.toDateMinValue = this.fromDateValue;
 
-        console.log('handleChangeFromDate - Comparing : ' + this.toDateValue + '::' + this.toDateMinValue);
         if(this.toDateValue < this.toDateMinValue){
-            console.log('handleChangeFromDate - Error : ' + this.toDateValue + '::' + this.toDateMinValue);
             this.toDateValue = '';
         }
     }
@@ -216,11 +186,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
                             inputCmp.setCustomValidity('');
                         }
                     } 
-                    /*
-                    if(inputCmp.name === 'itp' && this.itpOptions !== undefined && this.itpOptions.length < 2 ){
-                        inputCmp.setCustomValidity('Need to have an ITP Provider');
-                    }
-                    */
                     inputCmp.reportValidity();
                     return validSoFar && inputCmp.checkValidity();
        }, true);
@@ -230,7 +195,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         if(allValid){
             this.showSearch = true;
             if(this.itpOptions !== undefined && this.itpOptions.length < 2 ){
-                console.log('this.itpOptions', this.itpOptions);
                 this.dataRecords = false;
                 this.loading = false;
             } else {
@@ -253,7 +217,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             }  
         });
         this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions); 
-        //this.proficiencyValue = undefined;
         this.levelValue = 'Level 2';
         this.fromDateValue = undefined;
         this.fromDateMaxValue = undefined;
@@ -267,56 +230,19 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     }
 
     connectedCallback() {
-        console.log('INIT connectedCallback');
-        /*
-        console.log(this.stationOptions);
-        this.stationOptions = getUserStationsJS();
-        console.log(this.stationOptions);
-        */
-    /*
-        getITPStations()
-        .then(result => {
-            console.log(result);
-            let myResult = JSON.parse(JSON.stringify(result));
-            
-            console.log(myResult);
-            console.log('myResult : ' + myResult);
-            //let myTopicOptions = [{ label: 'All', value: 'All' }];
-            let myTopicOptions = [];
-
-            Object.keys(myResult).forEach(function (el) {
-                //myTopicOptions.push({ label: myResult[el].City__c, value: myResult[el].Code__c });
-                myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
-            });
-            
-            this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
-    
-        })
-        .catch(error => {
-            console.log('getITPStations - Error : ' + error);
-            this.mainErrorMessage = error;
-            this.error = error;
-        });  
-        */
 
        getAirlineITPsByStation()
        .then(result => {
-           console.log(result);
            let myResult = JSON.parse(JSON.stringify(result));
            
-           console.log(myResult);
-           console.log('__rs__ myResult : ', myResult);
-           //let myTopicOptions = [{ label: 'All', value: 'All' }];
            let myTopicOptions = [];
 
            Object.keys(myResult).forEach(function (el) {
-               //myTopicOptions.push({ label: myResult[el].City__c, value: myResult[el].Code__c });
                myTopicOptions.push({ label: myResult[el][0].Address__r.Code__c + ' - ' + myResult[el][0].Address__r.Description__c, value: myResult[el][0].Address__r.Code__c });
            });
            
            this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
            this.itpBYStationMap = myResult;
-           console.log('this.stationOptions ', this.stationOptions );
    
        })
        .catch(error => {
@@ -327,12 +253,9 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         
         getCertificationTypesWithLevel({certificationType: 'Aircraft'})
         .then(result => {
-            console.log(result);
             let myResult = JSON.parse(JSON.stringify(result));
 
             this.certificationTypesWithLevel = myResult;
-
-            console.log('this.certificationTypesWithLevel : ', this.certificationTypesWithLevel);
 
             let myTopicOptions = [{ label: '- All Level 2 -', value: 'All Level 2'}];
             myResult.forEach(cert =>{
@@ -345,7 +268,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             
         })
         .catch(error => {
-            console.log('getCertificationTypesWithLevel - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
         });  
@@ -362,11 +284,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
                 cellAttributes: { class: { fieldName: 'expirationStatus' }, iconName: { fieldName: 'expirationIcon' }, iconPosition: 'right' } },
             {label: 'Proficiency', fieldName: 'proficiency', type: 'text', sortable: true},
             {label: 'Station', fieldName: 'station', type: 'text', sortable: true},
-            /*
-            {label: 'PREREQ EXPIRATION', fieldName: 'indicator', type: 'text', sortable: true,
-                cellAttributes: { class: { fieldName: 'indicatorStatus' }, iconName: { fieldName: 'indicatorIcon' }, iconPosition: 'right' },
-                tooltip: 'test' },
-                */
             {label: 'PREREQ', fieldName: 'indicatorPrereq', type: 'text', sortable: true,
                 cellAttributes: { class: { fieldName: 'indicatorStatus' }, iconName: { fieldName: 'indicatorIcon' }, iconPosition: 'right' },
                 tooltip: 'test' 
@@ -377,8 +294,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
                 tooltip: 'test' 
             }
         ];
-
-        console.log('END connectedCallback');
     }
 
     // The method onsort event handler
@@ -403,10 +318,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         var key = primer ?
             function(x) {return primer(x.hasOwnProperty(field) ? (typeof x[field] === 'string' ? x[field].toLowerCase() : x[field]) : 'aaa')} :
             function(x) {return x.hasOwnProperty(field) ? (typeof x[field] === 'string' ? x[field].toLowerCase() : x[field]) : 'aaa'};
-            /*
-            function(x) {return primer(x[field])} :
-            function(x) {return x[field]};
-            */
+
         return function (a, b) {
             var A = key(a);
             var B = key(b);
@@ -430,26 +342,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         var auxProficiency = 'Yes';
         var auxFromDate = (this.fromDateValue == null) ? 'null' : this.fromDateValue;
         var auxToDate = (this.toDateValue == null) ? 'null' : this.toDateValue;
-
-        console.log('handleSearch - INIT');
-        console.log('auxItp', auxItp);
-
-        console.log('this.stationValue: ' + this.stationValue);
-        console.log('this.stationOptions: ' + this.stationOptions);
-        console.log('this.stationOptions.length: ' + this.stationOptions.length);
-        console.log(this.stationOptions);
-        /*
-        if(this.stationValue === 'All'){
-            
-            for(i=0; i < this.stationOptions.length; i++){
-                if(this.stationOptions[i].value === 'All'){
-                    auxStations = '';
-                }else{
-                    auxStations = (auxStations === '' ) ? this.stationOptions[i].value : auxStations + ',' + this.stationOptions[i].value;
-                }
-            }
-        }
-        */
        
         if(!this.itpValue || this.itpValue === 'All'){
             for(i=0; i < this.itpOptions.length; i++){
@@ -459,7 +351,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
                    auxItp = (auxItp === '' ) ? this.itpOptions[i].value : auxItp + ',' + this.itpOptions[i].value;
                 }
             }
-            console.log('auxItp', auxItp);
         }
 
         if(this.experiationstatusValue === 'All'){
@@ -475,13 +366,10 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         if(this.aircraftTypeValue === 'All' || this.aircraftTypeValue === 'All Level 2' || this.aircraftTypeValue === 'All Level 3'){
             auxAircraftType = '';
             for(i=0; i < this.aircraftTypeOptions.length; i++){
-                console.log('OUT this.aircraftTypeOptions[i]', this.aircraftTypeOptions[i]);
                 if(this.aircraftTypeOptions[i].value !== 'All' && this.aircraftTypeOptions[i].value !== 'All Level 2' && this.aircraftTypeOptions[i].value !== 'All Level 3'){
-                    console.log('IN this.aircraftTypeOptions[i]', this.aircraftTypeOptions[i]);
                     auxAircraftType = (auxAircraftType === '' ) ? this.aircraftTypeOptions[i].value : auxAircraftType + ',' + this.aircraftTypeOptions[i].value;
                 }
             }
-            console.log('auxAircraftType', auxAircraftType);
         }
 
         if(auxLevel === 'All'){
@@ -492,42 +380,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
                 }
             }
         }
-
-        //On search "Level 2" must include "Level 3" results also, when L3 select only show L3
-        /*
-        if(this.proficiencyValue === 'All' || this.proficiencyValue === 'Level 2' || !this.proficiencyValue){
-            for(i=0; i < this.proficiencyOptions.length; i++){
-                if(this.proficiencyOptions[i].value === 'All' || !this.proficiencyValue){
-                    auxProficiency = '';
-                }else{
-                    if(this.proficiencyValue === 'Level 2'){
-                        if(this.proficiencyOptions[i].value !== 'None'){
-                            auxProficiency = (auxProficiency === '' ) ? this.proficiencyOptions[i].value : auxProficiency + ',' + this.proficiencyOptions[i].value;
-                        }
-                    } else {
-                        auxProficiency = (auxProficiency === '' ) ? this.proficiencyOptions[i].value : auxProficiency + ',' + this.proficiencyOptions[i].value;
-                    }
-                }
-            }
-        }
-        */
-        /*
-        //Map
-        auxSearchValues = [
-            {"station" : auxStations},
-            {"itp" : auxItp},
-            {"experiationstatus" : auxExperiationstatus},
-            {"aircraftType" : auxAircraftType},
-            {"proficiency" : auxProficiency},
-            {"fromDate" : auxFromDate},
-            {"toDate" : auxToDate}
-        ];
-        */
-        /*
-        //Map
-        auxSearchValues.set('station', auxStations);
-        auxSearchValues.set('itp', auxItp);
-        */
    
         //List
         auxSearchValues = [
@@ -542,19 +394,12 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             'null',                //place holder for lastName
             auxLevel
         ];
-       
-        console.log('searchValues: ', auxSearchValues);
-        console.log(auxSearchValues);
+
         
         this.loading = true;
         //getTrainingRecords({searchValues: JSON.parse(JSON.stringify(auxSearchValues)) })
         getTrainingRecords({searchValues: auxSearchValues, searchType: 'RecordsDetail' })
         .then(results => {
-            console.log('handleSearch - results : ', results);
-            console.log('handleSearch - results.length : ', results.length);
-            console.log('handleSearch - results:1 : ', results[1]);
-
-
             if(results && results.length > 0) {
                 this.data = results;
                 this.dataRecords = true;
@@ -564,16 +409,11 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             this.loading = false;
         })
         .catch(error => {
-            console.log('handleSearch - Error : ', error);
-            console.log(error);
-
             this.mainErrorMessage = error;
             this.error = error;
             this.loading = false;
             this.dataRecords = false;
-        });  
-        console.log('handleSearch - END');
-        
+        });     
     }
 
     cleanErrors(){
@@ -596,17 +436,13 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     handleExportToExcel(){
         let columns = JSON.parse(JSON.stringify(this.columns));
         let data = JSON.parse(JSON.stringify(this.data));
-        console.log('columns ', columns);
-        console.log('data ', data);
         this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, data, "EmployeesSearchResults.xls");
     }
 
     handleExportAllDataToExcel(){
-        console.log('handleExportAllDataToExcel START');
         let auxSearchValues = {};
         // ALL Stations
         let auxStations = '';
-        console.log('this.stationOptions', this.stationOptions);
         for(let i=0; i < this.stationOptions.length; i++){
             if(this.stationOptions[i].value === 'All'){
                 auxStations = '';
@@ -614,13 +450,11 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
                 auxStations = (auxStations === '' ) ? this.stationOptions[i].value : auxStations + ',' + this.stationOptions[i].value;
             }
         }
-        console.log('auxStations', auxStations);
 
         // All Aircraft Types
         let auxAircraftType = '';
         for(let i=0; i < this.certificationTypesWithLevel.length; i++){
             if(this.certificationTypesWithLevel[i].value !== 'All' && this.certificationTypesWithLevel[i].value !== 'All Level 2' && this.certificationTypesWithLevel[i].value !== 'All Level 3'){
-                console.log('IN this.certificationTypesWithLevel[i]', this.certificationTypesWithLevel[i]);
                 auxAircraftType = (auxAircraftType === '' ) ? this.certificationTypesWithLevel[i].Certification__c : auxAircraftType + ',' + this.certificationTypesWithLevel[i].Certification__c;
             }
         }
@@ -640,8 +474,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             'null',                 // place holder for lastName
             'Level 2,Level 3'       // place holder for auxLevel
         ];
-        
-        console.log('searchValues: ', auxSearchValues);
 
         // 1st - get all data from database
         let columns = JSON.parse(JSON.stringify(this.columns));
@@ -652,7 +484,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
                 // 2nd - create excel file
                 this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, results, "AllDataRequestResults.xls");
             } else {
-                console.log(' no results: ', results);
                 const event = new ShowToastEvent({
                     title: 'Download All Data Request Result',
                     message: 'The request returned no results.',
@@ -665,8 +496,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
         })
         .catch(error => {
-            console.log('handleSearch - Error : ', error);
-            console.log(error);
 
             const event = new ShowToastEvent({
                 title: 'Download All Data Request Result',
@@ -680,37 +509,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             this.error = error;
             this.loading = false;
         });  
-        
-        console.log('handleExportAllDataToExcel END');
-
-    }
-    /*
-    handleSearckButtonClick(evt){
-        this.handleSearch(evt.target.value);
     }
 
-    handleSearchClick(){
-        this.showSearchModal = true;
-        //this.modalClasses = 'slds-fade-in-open';
-        //this.backdropClasses = 'slds-backdrop_open';
-    }
-
-    handleCloseSearchModalButtonClick(){
-        this.showSearchModal = false;
-
-        let objAux = JSON.parse(JSON.stringify(this.filteringObject));
-        objAux.showAllComponents = false;
-        this.filteringObject = objAux;        
-        //this.modalClasses = '';
-        //this.backdropClasses = '';
-    }
-
-    handleFiltersButtonClick(){
-        this.showFiltersArea = !this.showFiltersArea;
-    }
-
-    fireChangeEvent(filters) {
-       
-    }
-    */
 }
