@@ -285,7 +285,7 @@
                 <!-- Modal content -->
                 <div id="modal-content-ErrorHandling" class="modal-content">
                   <span id="closeModal-ErrorHandling" class="closeModal">&times;</span>
-                  <p>There was an error in updating your balance. Please try again and if the issue persists contact <b><a href="/ISSP_FAQ2Case">customer support.</a></b></p>
+                  <p>There was an error in updating your balance. Please try again and if the issue persists contact <b><a href="{!IF(isNewPortal, portalRedirectToSupport,'/ISSP_FAQ2Case')}">customer support.</a></b></p>
                 </div>
   
               </div>
