@@ -29,6 +29,7 @@ public without sharing class portalIftpTrainingRecords {
         return itpTrainingCoordinatorsList;
     }
 
+   
     /* 
     * @description  Method name: getTrainingRecordsForMonitorTrainings
                     This method is used in tab 'Monitor Trainings' for ITP user.
@@ -101,7 +102,7 @@ public without sharing class portalIftpTrainingRecords {
                 sQueryRolAddr += 'AND Address__r.Code__c IN :lStations ';
             }
             List<Role_Address__c> employeesStationsConnectionsList =  Database.query(sQueryRolAddr);
-            
+                        
             Set<Id> empIds = new Set<Id>();
 
             for(Role_Address__c rec : employeesStationsConnectionsList){
@@ -109,13 +110,16 @@ public without sharing class portalIftpTrainingRecords {
             }
 
             String sQuery = 'SELECT Id, Name, Enrolled__c, Account_Contact_Role__c, Account_Contact_Role__r.First_Name__c, Account_Contact_Role__r.Last_Name__c, ';
-            sQuery += 'Account_Contact_Role__r.Company_Code__c , Certification__r.Name, Certification__r.Code__c, ';
+            sQuery += 'Account_Contact_Role__r.Company_Code__c , Certification__c, Certification__r.Name, Certification__r.Code__c, ';
             sQuery += 'Account_Contact_Role__r.Contact__r.account.name, Expiration_Status__c, Expiration_Date__c, CreatedDate ';
             sQuery += 'FROM Contact_Role_Certification__c ';
             
             String conditionsRoles = '';
             String conditionsCertification = '';
             List<String> lConditionsCertification = new List<String>();
+
+            lConditionsCertification.add('Stopped__c != \'Yes\'');    
+
             if(lEmployeeCode != null){
                 lConditionsCertification.add('Account_Contact_Role__c in (SELECT Id FROM Account_Contact_Role__c WHERE Company_Code__c like :lEmployeeCode)'); 
             } else {
@@ -148,7 +152,7 @@ public without sharing class portalIftpTrainingRecords {
                 
             }
             sQuery += conditionsCertification;
-            
+          
             List<Contact_Role_Certification__c> certifications =  Database.query(sQuery);
 
             // Get Employees Primary Station
@@ -226,6 +230,24 @@ public without sharing class portalIftpTrainingRecords {
                 }
             }
         }
+        List<IFTP_Certification_Detail__c> certDetailList = [SELECT Certification__r.Name, General_Training__c, Prerequisite_Level__c
+                                                            FROM IFTP_Certification_Detail__c];
+
+        Map<String, IFTP_Certification_Detail__c> mapCertDetailByName = new Map<String, IFTP_Certification_Detail__c>();
+        for(IFTP_Certification_Detail__c cert: certDetailList){
+            if(!mapCertDetailByName.containsKey(cert.Certification__r.Name)){
+                mapCertDetailByName.put(cert.Certification__r.Name, cert);
+            }
+        }
+
+        for(TrainingRecordsWrapper rec: ltrWrapper){
+            if(mapCertDetailByName.containsKey(rec.trainingName)){
+                IFTP_Certification_Detail__c detail = mapCertDetailByName.get(rec.trainingName);
+                rec.level = detail.Prerequisite_Level__c;
+                rec.isGeneralTraining = detail.General_Training__c;
+            }
+        }
+
         return ltrWrapper;
     }
     
@@ -241,7 +263,6 @@ public without sharing class portalIftpTrainingRecords {
     @AuraEnabled (cacheable=false)
     public static List<TrainingRecordsWrapper> getTrainingRecordsForProficiencyManagement(List<String> searchValues, String searchType){
         //Collect searchValues and manage them to make search possible
-
         String auxStationsOptions = searchValues[0];
         String auxAircraftTypeOptions = searchValues[3];
         String auxProficiencyOptions = searchValues[4];
@@ -366,7 +387,7 @@ public without sharing class portalIftpTrainingRecords {
                 }
             }
         }
-
+        
         // Get from Database records of all general mandatory trainings assessment active, for active employees working for logged user ITP
         List<Contact_Role_Certification__c> generalTrainingList = [SELECT   Id,
                                                                             Account_Contact_Role__c, Name,
@@ -434,14 +455,13 @@ public without sharing class portalIftpTrainingRecords {
         certificationsWithLevel = [SELECT Certification__c, Certification__r.Name, Prerequisite_Level__c
                                         FROM IFTP_Certification_Detail__c
                                         WHERE General_Training__c like 'No'];
-    
+  
         for(Id employeeId : certificationsByEmployeeIdCertificateIdMap.keySet()){
             Map<Id, List<Contact_Role_Certification__c>> innerMap = certificationsByEmployeeIdCertificateIdMap.get(employeeId);
 
             for(Id assessmentId : innerMap.keySet()){
 
                 List<Contact_Role_Certification__c> assessmentList = innerMap.get(assessmentId);
-                //Contact_Role_Certification__c assessment = innerMap.get(assessmentId);
                 //Get assessment level
                 String assessmentLevel = '';
                 for(IFTP_Certification_Detail__c rec: certificationsWithLevel){
@@ -637,7 +657,7 @@ public without sharing class portalIftpTrainingRecords {
     */
     @AuraEnabled (cacheable=false)
     public static List<TrainingRecordsWrapper> getTrainingRecordsDetail(List<String> searchValues, String searchType){
-    
+
         //String auxStationsOptions = searchValues[0];
         String lStation = searchValues[0];
         String auxItpOptions = searchValues[1];
@@ -662,7 +682,7 @@ public without sharing class portalIftpTrainingRecords {
         Set<Id> empIds = new Set<Id>();
         String sQuery = 'SELECT Id, Name, Account_Contact_Role__c, Account_Contact_Role__r.First_Name__c, Account_Contact_Role__r.Last_Name__c, ';
         sQuery += 'Account_Contact_Role__r.Company_Code__c , Certification__c, Certification__r.Name, ';
-        sQuery += 'Account_Contact_Role__r.Contact__r.account.name, Expiration_Status__c, Expiration_Date__c, CreatedDate ';
+        sQuery += 'Account_Contact_Role__r.Contact__r.account.name, Expiration_Status__c, Expiration_Date__c, CreatedDate, Stopped__c ';
         sQuery += ', (SELECT Id, Name, Proficiency_level__c, Proficiency_Granted_By__c, Proficiency_Status__c, Start_Date__c, Address__c, Address__r.Code__c FROM Role_Addresses__r) '; 
         sQuery += 'FROM Contact_Role_Certification__c ';
         
@@ -670,6 +690,7 @@ public without sharing class portalIftpTrainingRecords {
         String conditionsCertification = '';
         List<String> lConditionsCertification = new List<String>();
 
+        lConditionsCertification.add('Stopped__c != \'Yes\''); 
 
         List<Contact_Role_Certification__c> contRolCertificationsList = [SELECT Id 
                                                                             FROM Contact_Role_Certification__c 
@@ -707,6 +728,7 @@ public without sharing class portalIftpTrainingRecords {
             }
             
         }
+ 
         if(searchType != null && searchType.equalsIgnoreCase('RecordsDetail')){
             String lAircraftTypeStr;
             for(String element:lAircraftType){
@@ -1237,11 +1259,14 @@ public without sharing class portalIftpTrainingRecords {
 
             CertificationEnrollmentWrapper recordToUpdate = certificateToUpdateEnrollmentByIdMap.get(existRec.Id);
 
-            if((existRec.Enrolled__c == null || existRec.Enrolled__c.equalsIgnoreCase('No')) && recordToUpdate.isEnrollment){
+            if((existRec.Stopped__c == null || existRec.Stopped__c.equalsIgnoreCase('No')) && (existRec.Enrolled__c == null || existRec.Enrolled__c.equalsIgnoreCase('No')) && recordToUpdate.action.equalsIgnoreCase('Enroll')){
                 existRec.Enrolled__c = 'Yes';
                 contact_role_certification_to_update_list.add(existRec);
-            } else if(existRec.Enrolled__c.equalsIgnoreCase('Yes') && !recordToUpdate.isEnrollment){
+            } else if((existRec.Stopped__c == null || existRec.Stopped__c.equalsIgnoreCase('No')) && recordToUpdate.action.equalsIgnoreCase('Unenroll')){
                 existRec.Enrolled__c = 'No';
+                contact_role_certification_to_update_list.add(existRec);
+            } else if((existRec.Stopped__c == null || existRec.Stopped__c.equalsIgnoreCase('No')) && recordToUpdate.action.equalsIgnoreCase('Stop')){
+                existRec.Stopped__c = 'Yes';
                 contact_role_certification_to_update_list.add(existRec);
             }
         }
@@ -1259,7 +1284,7 @@ public without sharing class portalIftpTrainingRecords {
 
         return updateOK;
     }
-
+    
     @AuraEnabled (cacheable=false)
     public static String  getFileContent(Id fileId){
         ContentVersion cv = [Select versionData from contentversion where  ContentDocumentId=: fileId and isLatest = true];
@@ -1340,8 +1365,12 @@ public without sharing class portalIftpTrainingRecords {
         public String primaryStation {get;set;}
         @AuraEnabled
         public String enrolled {get;set;}
-        
-        
+        @AuraEnabled
+        public String level {get;set;}
+        @AuraEnabled
+        public String isGeneralTraining {get;set;}
+
+
         public TrainingRecordsWrapper(Id certificationId, Id account_contact_role_Id, String firstName, String lastName, 
                                         String companyNumber, String trainingName,
                                         String itpName, String expirationStatus,
@@ -1419,7 +1448,7 @@ public without sharing class portalIftpTrainingRecords {
         @AuraEnabled
         public Id contact_role_certification_id {get;set;}
         @AuraEnabled
-        public Boolean isEnrollment {get;set;}
+        public String action {get;set;}
 
         public CertificationEnrollmentWrapper(){}  
     }
