@@ -4091,6 +4091,66 @@
         <template>Approval_notifications_DPC_Systems/Rejection_of_CR</template>
     </alerts>
     <alerts>
+        <fullName>Warning</fullName>
+        <description>Warning First Contact with Client</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>Warning2_First_Contact_with_Client</fullName>
+        <description>Warning First Contact with Client</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>WarningEmail_Maximum_Case_Age_with_IATA</fullName>
+        <description>WarningEmail Maximum Case Age with IATA</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>Warning_Email_Maximum_Case_Age_with_IATA</fullName>
+        <description>WarningEmail Maximum Case Age with IATA</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>Warning_First_Contact_with_Client</fullName>
+        <description>Warning First Contact with Client</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>Warning_Maximum_Age_with_IATA</fullName>
+        <description>WarningEmail Maximum Case Age with IATA</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
         <fullName>X1st_email_on_CS_escalated_case</fullName>
         <description>1st email on CS escalated case</description>
         <protected>false</protected>
