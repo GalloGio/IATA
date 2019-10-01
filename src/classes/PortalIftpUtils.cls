@@ -36,10 +36,6 @@ public without sharing class PortalIftpUtils {
             PortalContactRoles = lContactRole[0].Contact_Roles__r.Name;
         }                                                    
 
-        System.debug('PortalIftpUtils.getUserInfo - userAcc: '+ userAcc);
-        System.debug('PortalIftpUtils.getUserInfo - accRoleSrv: '+ accRoleSrv);
-        System.debug('PortalIftpUtils.getUserInfo - contactRole: '+ contactRole);
-
         UserInfoRecordsWrapper userInfo = new UserInfoRecordsWrapper(
             userId, 
             userAcc.contact.accountid, 
@@ -66,15 +62,7 @@ public without sharing class PortalIftpUtils {
 
         return userInfo;
     }
-/*
-    @AuraEnabled(cacheable=true)
-    public static List<Address__c> getUserStations(){
 
-        List<Address__c> stations = [SELECT Id, City__c, Code__c, Description__c FROM Address__c ORDER BY Code__c];
-
-        return stations;
-    }
-*/
     @AuraEnabled(cacheable=true)
     public static List<Address__c> getAllStations(){
 
@@ -198,32 +186,6 @@ public without sharing class PortalIftpUtils {
 
         return emps;
     }
-    /*
-    @AuraEnabled(cacheable=true)
-    public static List<Role_Address__c> getITPRoleAddresses(Id accountId){
-
-        List<Role_Address__c> itpRoleAddresses = [SELECT Id,
-                                                        Account_Contact_Role__c, 
-                                                        Account_Contact_Role__r.Contact__c,
-                                                        Account_Contact_Role__r.Contact__r.Status__c,
-                                                        Account_Contact_Role__r.Email__c, 
-                                                        Account_Contact_Role__r.Personal_Email__c,
-                                                        Account_Contact_Role__r.First_Name__c, 
-                                                        Account_Contact_Role__r.Last_Name__c,
-                                                        Account_Contact_Role__r.Company_Code__c,
-                                                        Account_Contact_Role__r.Contact_Role__c,
-                                                        Account_Contact_Role__r.Status__c,  
-                                                        Address__c,                                                                                                                                                                                                                     
-                                                        Address__r.City__c, 
-                                                        Address__r.Code__c, 
-                                                        Address__r.Description__c
-                                                FROM Role_Address__c 
-                                                WHERE Account_Contact_Role__r.Status__c <> 'Inactive'
-                                                AND Account_Contact_Role__r.Contact__r.accountid = :accountId];
-
-        return itpRoleAddresses;
-    }
-    */
 
     @AuraEnabled(cacheable=true)
     public static Address__c getITPStationEmployees(Id addressId){
@@ -381,7 +343,7 @@ public without sharing class PortalIftpUtils {
         return certifications;
     }
 
-        /*
+    /*
     * @params
     * @return List<IFTP_Certification_Detail__c>
     */
@@ -529,8 +491,6 @@ public without sharing class PortalIftpUtils {
                 
                 String code = csvFileLines[i].trim();
 
-                System.debug('____ [cls PortalIftpUtils - importStationsCSVFile] code - ' + code );
-                System.debug('____ [cls PortalIftpUtils - importStationsCSVFile] mAllAddr.containsKey(code) - ' + mAllAddr.containsKey(code) );
                 if(mUserAddr.containsKey(code)){
                     Address__c addr = mUserAddr.get(code);
                     ImportResultsWrapper irw = new ImportResultsWrapper(
@@ -1250,12 +1210,6 @@ public without sharing class PortalIftpUtils {
                     }
                 }
 
-
-                System.debug('accContRoleToInactive ' + accContRoleToInactive);
-                System.debug('contactsToInactive ' + contactsToInactive);
-                System.debug('#####R roleAdressToBeDeleted' + roleAdressToBeDeleted);
-                System.debug('#####R IftpHistoryRecordsToBeInserted' + IftpHistoryRecordsToBeInserted);
-
                 //query database account_contact_role where company_code in list and accountid: useraccountid, get account_contact_role.id and contact.id
                 //update status = inactive
                 if(contactsToInactive.size() > 0 || accContRoleToInactive.size() > 0){
@@ -1413,9 +1367,6 @@ public without sharing class PortalIftpUtils {
     public static Boolean manageUploadStationOJT(Id fileId, Id recordID){
         Boolean result = true;
         try{
-            System.debug('____ [cls PortalIftpUtils - manageUploadStationOJT] fileId - ' + fileId );
-            System.debug('____ [cls PortalIftpUtils - manageUploadStationOJT] recordID - ' + recordID );
-
             UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
             Id ownerId = [Select Id FROM group WHERE Type = 'Queue' and Name = 'IFTP'].Id;
 
