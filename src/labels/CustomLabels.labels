@@ -3869,6 +3869,14 @@ Payment required on receipt of this Payment Advice
         <value>Recent Cases</value>
     </labels>
     <labels>
+        <fullName>CSP_Recipients</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Details Details page</shortDescription>
+        <value>Recipients</value>
+    </labels>
+    <labels>
         <fullName>CSP_Record_Deleted</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -39143,6 +39151,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Query</shortDescription>
         <value>Support</value>
+    </labels>
+    <labels>
+        <fullName>csp_RecipientsQuestion</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Details Details page</shortDescription>
+        <value>Anyone else to be informed?</value>
     </labels>
     <labels>
         <fullName>csp_RequestService_ContactPortalAdmin_Alt</fullName>

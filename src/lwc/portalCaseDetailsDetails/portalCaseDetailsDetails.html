@@ -23,9 +23,31 @@
           </div>
         </div>
       </div>
+      <!-- Documents accordion -->
+      <div class="topLightGrayBorder">
+        <div class="slds-p-around_medium customCardTitleBox cursorPointer" onclick={toggleDocumentsDetailsSection}>
+          <lightning-icon data-docicon class="darkBlueIcon" if:false={showDocumentsSection}
+            icon-name="utility:chevronright" size="xx-small"></lightning-icon>
+          <span class="slds-p-left_large">{labels.DocumentsLabel}</span><span if:true={showNrDocs}>({nrDocs})</span>
+        </div>
+        <div data-docdiv class="slds-p-around_medium slds-medium-size_1-of-1 slds-m-around-large collapsed"
+          style="transition: height 0.8s ease;">
+          <c-attachment-list-cmp shownorecords="false" parentid={caseId} isportal="true" show-modal={showAddDocsModal}
+            no-attachment-msg={labels.AddDocumentsMsg} onupdateddocs={updateNdocs} accepted-formats={acceptedFormats}>
+          </c-attachment-list-cmp>
+        </div>
+      </div>
+      <!--Comment Accordion other component moved here on MTSL-811-->
       <div class="topLightGrayBorder">
         <c-portal-case-details-messaging></c-portal-case-details-messaging>
       </div>
+    </template>
+  </div>
+  <div class="customCard slds-m-top--x-large">
+    <template if:true={loading}>
+      <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <template if:false={loading}>
       <!-- Additinal details accordion  MTSL-811 -->
       <div class="topLightGrayBorder">
         <div class="slds-p-around_medium customCardTitleBox cursorPointer" onclick={toggleCaseDetailsSection}
@@ -67,7 +89,7 @@
                             <span>{caseDetails.Country_concerned_by_the_query__c}</span>
             </div>
 
-                        <!-- ROW 2 -->
+            <!-- ROW 3 -->
             <div if:true={hasAccountConcerned}
               class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
               <span class="grey">{labels.RelatedAccount}</span><br />
@@ -79,11 +101,14 @@
               <span>{caseDetails.Type_of_case_Portal__c}</span>
             </div>
 
-                        <!-- ROW 3 -->
+            <!-- ROW 4 -->
+            <div if:false={showNewDescriptionSection}>
               <div if:true={hasDescription}
                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
                 <span class="grey">{labels.Description}</span><br />
-                            <span>{caseDetails.Description}</span>
+                <span>
+                  <lightning-formatted-text value={caseDetails.Description}></lightning-formatted-text>
+                </span>
               </div>
             </div>
 
@@ -140,14 +165,7 @@
               </div>
             </div>
 
-            <!-- ROW Survey Link -->
-            <div if:true={hasSurveyLink}
-                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
-              <span class="grey">{labels.ISSP_Survey}</span><br />
-              <a class="text-blue" href={surveyLink} target="_blank">{labels.Open}</a>
-            </div>
-
-                        <!-- ROW 7 Display PDF -->
+            <!-- ROW 7 Display PDF -->
             <div if:true={getDisplayPDF}
               class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
                             <img src={pdfImage}>
@@ -178,25 +196,6 @@
         </div>
       </div>
 
-
-      <!-- Documents accordion -->
-      <div class="topLightGrayBorder">
-                <div  class="slds-p-around_medium customCardTitleBox cursorPointer"
-                    onclick={toggleDocumentsDetailsSection}>                  
-          <lightning-icon data-docicon class="darkBlueIcon" if:false={showDocumentsSection}
-            icon-name="utility:chevronright" size="xx-small"></lightning-icon>
-          <span class="slds-p-left_large">{labels.DocumentsLabel}</span><span if:true={showNrDocs}>({nrDocs})</span>
-        </div>
-                <div data-docdiv class="slds-p-around_medium slds-medium-size_1-of-1 slds-m-around-large collapsed" style="transition: height 0.8s ease;">
-                    <c-attachment-list-cmp shownorecords=false parentid={caseId} isportal=true
-                        show-modal={showAddDocsModal} 
-                        no-attachment-msg={labels.AddDocumentsMsg} 
-                        onupdateddocs={updateNdocs}
-                        accepted-formats={acceptedFormats}>
-          </c-attachment-list-cmp>
-
-        </div>
-      </div>
 
     </template>
   </div>
