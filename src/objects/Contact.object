@@ -8376,6 +8376,15 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>IsPendingApproval__c</fullName>
+        <description>Indicate if a user has the User Portal Status of &#39;Pending Approval&#39;. Used to order the contact list on Company Profile (CSPortal).</description>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(User_Portal_Status__c, &#39;Pending Approval&#39;)</formula>
+        <label>Is Pending Approval</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>    
+    <fields>
         <fullName>ISSP_Account_Name__c</fullName>
         <externalId>false</externalId>
         <formula>HYPERLINK(&quot;/&quot; &amp; AccountId,  Account.Name )</formula>
