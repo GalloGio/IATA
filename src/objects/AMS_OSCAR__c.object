@@ -3548,6 +3548,20 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
+	<fields>
+		<fullName>Process_Eff_Age__c</fullName>
+		<defaultValue>0</defaultValue>
+		<externalId>false</externalId>
+		<label>Process Eff. Age</label>
+		<precision>18</precision>
+		<required>false</required>
+		<scale>2</scale>
+		<trackFeedHistory>false</trackFeedHistory>
+		<trackHistory>false</trackHistory>
+		<trackTrending>false</trackTrending>
+		<type>Number</type>
+		<unique>false</unique>
+	</fields>
     <fields>
         <fullName>Process__c</fullName>
         <description>Define the process to follow for this LifeCycle Request</description>
@@ -65384,6 +65398,16 @@ window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;);
         <url>javascript:srcUp(&quot;/apex/OSCARWizzardFlowPage&quot;);</url>
     </webLinks>
     <validationRules>
+		<fullName>Agreement_received</fullName>
+		<active>true</active>
+		<description>Agreement received can&#39;t be populated if agreement requested is empty</description>
+		<errorConditionFormula>AND(
+	NOT(ISNULL(PSAA_EACP_Agreement_received__c)),
+	ISNULL(Agreement_requested__c)
+	)</errorConditionFormula>
+		<errorMessage>Please fill the &quot;Agreement requested&quot; date before filling the Agreement received date</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>AMS_PCI_Expiry_Date_Required</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
@@ -65445,6 +65469,16 @@ TEXT(Process__c) = &#39;ANG.NEW.AE.1.0&#39;
 TEXT(RPM_Approval__c) = &quot;Authorize Approval&quot; &amp;&amp; ISBLANK(AMS_Online_Accreditation__r.Remittance_frequency__c)</errorConditionFormula>
         <errorMessage>The OSCAR cannot be approved until the remittance frequency is populated.</errorMessage>
     </validationRules>
+	<validationRules>
+		<fullName>Bank_Guarantee_received</fullName>
+		<active>true</active>
+		<description>Bank guarantee received can&#39;t be populated if bank guarantee requested is empty</description>
+		<errorConditionFormula>AND(
+		NOT(ISNULL(Bank_Guarantee_received__c)),
+		ISNULL( Bank_Guarantee_requested__c)
+		)</errorConditionFormula>
+		<errorMessage>Please fill the &quot;Bank guarantee requested&quot; date before populating the &quot;Bank guarantee received&quot;.</errorMessage>
+	</validationRules>
     <validationRules>
         <fullName>Cannot_Approve_Oscar_If_FS_not_confirmed</fullName>
         <active>true</active>
@@ -65558,19 +65592,8 @@ NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account
     )
 )</errorConditionFormula>
         <errorDisplayField>Status__c</errorDisplayField>
-        <errorMessage>This type of change doesn&quot;t require validation or approval</errorMessage>
+        <errorMessage>This type of change doesn&apos;t require validation or approval</errorMessage>
     </validationRules>
-	<validationRules>
-		<fullName>Payment_received_validation</fullName>
-		<active>false</active>
-		<description>Payment received can&quot;t be empty if there&quot;s no data in Payment requested</description>
-		<errorConditionFormula>AND(
-		ISNULL(Payment_requested__c),
-		NOT(ISNULL(Proof_of_payment_received__c )),
-		NOT(RecordType.Name = &quot;CERTIFICATE&quot;)
-		)</errorConditionFormula>
-		<errorMessage>Please fill the &quot;Payment requested&quot; date before populating the &quot;Payment received&quot;</errorMessage>
-	</validationRules>
     <validationRules>
         <fullName>RPM_Approval_only_after_Validation</fullName>
         <active>false</active>

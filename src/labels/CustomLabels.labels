@@ -31152,6 +31152,51 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <value>- Select the Type of your Company -</value>
     </labels>
     <labels>
+        <fullName>KPI1RT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>KPI1RT</shortDescription>
+        <value>CasesMENA 
+CasesAmericas 
+ExternalCasesIDFSglobal 
+Cases_China_North_Asia 
+CasesEurope 
+ComplaintIDFS 
+InternalCasesEuropeSCE</value>
+    </labels>
+    <labels>
+        <fullName>KPI1Reason</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>KPI1Reason</shortDescription>
+        <value>CHC – Change of Shareholding 
+CHO / CHS – Change of Ownership / Legal Status 
+CHN - Change of Name 
+New HO 
+Financial RVW intermediaries 
+New HE lite 
+New HE standard 
+Accreditation Type 
+New EAA - Application process for European Accredited Agent</value>
+    </labels>
+    <labels>
+        <fullName>KPI2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>KPI2</shortDescription>
+        <value>New BR / IP 
+CHL - Change of Location 
+New SA / CHV – New Code 
+Direct Debit Setup/Update 
+VMFR Setup/Update 
+CLO - Closure 
+New AE 
+FoP Management 
+New HE lite 
+Accreditation Type 
+CHG – Data Maintenance</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Sender_Email</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -38465,6 +38510,33 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Warning No Shippable Product</shortDescription>
         <value>There is no shippable product in this order to create a Sales Order in SAP</value>
+    </labels>
+    <labels>
+        <fullName>ProcessEffAge</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ProcessEffAge</shortDescription>
+        <value>New HO 
+CHG – Data Maintenance 
+CLO - Closure 
+CHL - Change of Location 
+New BR Abroad 
+Termination 
+CHO / CHS – Change of Ownership / Legal Status 
+CHN - Change of Name 
+New BR / IP 
+CHC – Change of Shareholding 
+New SA / CHV – New Code 
+GSA / MSO / Handling Agent 
+Direct Debit Setup/Update 
+VMFR Setup/Update 
+Reinstatement 
+AIMS Data Entry 
+CAD – Data Maintenance 
+Review 
+Review withdrawal 
+Minor Database Changes 
+Financial RVW intermediaries</value>
     </labels>
     <labels>
         <fullName>Warning_OrderItem_Exist</fullName>

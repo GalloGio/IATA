@@ -2709,4 +2709,10 @@ public without sharing class AMS_Utils {
 
     }
 
+    /*** WMO-564 ***/
+    public static final Set<String> REASONS_FOR_KPI_CALCULATION = new Set<String> {
+        'New HO', 'New HE standard', 'CHO / CHS – Change of Ownership / Legal Status', 'CHN - Change of Name', 
+        'CHC – Change of Shareholding', 'CHL - Change of Location', 'New AE', 'New BR / IP', 'New HE lite', 'New SA'
+    };
+
 }
