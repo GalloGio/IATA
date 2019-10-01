@@ -5,8 +5,7 @@ import { navigateToPage } from 'c/navigationUtils';
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import getFieldLabels from '@salesforce/apex/CSP_Utils.getSelectedColumns';
 import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
-import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
-import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
+
 
 import { getParamsFromPage } from 'c/navigationUtils';
 
@@ -15,7 +14,6 @@ import AddDocumentsMsg from '@salesforce/label/c.CSP_No_Documents_Message';
 import DocumentsLabel from '@salesforce/label/c.ISSP_Documents';
 import CaseDetails from '@salesforce/label/c.IDCard_CaseDetails';
 import RelatedAccount from '@salesforce/label/c.csp_CreateNewCaseMainPicklistLabel';
-import ISSP_Survey from '@salesforce/label/c.ISSP_Survey';
 import Open from '@salesforce/label/c.Open';
 
 import Email from '@salesforce/label/c.Email';
@@ -40,7 +38,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track caseDetails;
     @track caseId;
     @track optionBuilder;
-    @track surveyLink;
 
     @track pdfImage = PDFICON;
 
@@ -54,7 +51,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         CaseDetails,
         DocumentsLabel,
         RelatedAccount,
-        ISSP_Survey,
         Open,
         ISSP_AMS_Download_PDF_Copy,
         ISSP_AMS_Download_PDF_NOC,
@@ -98,7 +94,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
                         });
 
                     this.loading = false;
-                    this.getSurveyLink();
+                    
                 })
                 .catch(error => {
                     console.log('error: ', error);
@@ -297,14 +293,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         this.showAddDocsModal = true;
     }
 
-    getSurveyLink(){
-        getSurveyLink({ caseId: this.caseId })
-            .then(result => {
-                this.surveyLink = result;
-            })
-            .catch(error => {
-                this.surveyLink = undefined;
-            });
-    }
+
 
 }
