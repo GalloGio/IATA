@@ -1319,7 +1319,7 @@
 
                     					<apex:outputText value="{!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'),$Label.ISSP_AMS_Step3_4_People,$Label.ISSP_AMS_Step3_4_Branch_People)}" styleClass="col-md-12" escape="false" />
 
-                              			<apex:outputText rendered="{!AND(OR(isMultiCountryNewAE, isMCAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}" value="Text message (missing)" style="color: red;" styleClass="col-md-12" escape="false"/>
+                              			<apex:outputText rendered="{!AND(OR(isMultiCountryNewAE, isMCAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}" value="{!$Label.ISSP_ANG_View_Owners_Info}" styleClass="col-md-12" escape="false"/>
 
 					                    <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
 					                      {!$Label.ISSP_AMS_Not_Listed_Msg}
