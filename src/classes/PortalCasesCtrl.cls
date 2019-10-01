@@ -692,7 +692,7 @@ public with sharing class PortalCasesCtrl {
         Boolean isToShowSurveyBtn = csValues != null && csValues.RolesAvailable__c.contains(userRole) || csValues.RolesAvailable__c.contains('All');
         Boolean matchingCaseType = caseType == null;
         Boolean surveyCompleted = false;
-        Boolean validCloseDate = newCase.ClosedDate < Date.today().addDays(-14);
+        Boolean validCloseDate = newCase.ClosedDate >= Date.today().addDays(-14);
 
         List<Instant_Surveys__c> Survey_List = new List<Instant_Surveys__c>([SELECT Case_ID__c
         FROM Instant_Surveys__c
