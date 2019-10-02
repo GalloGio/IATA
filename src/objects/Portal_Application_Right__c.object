@@ -768,7 +768,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
     <label>Portal Service Access</label>
     <listViews>
         <fullName>All</fullName>
-        <columns>OBJECT_ID</columns>
+        <columns>NAME</columns>
         <columns>Contact__c</columns>
         <columns>Portal_Application__c</columns>
         <columns>Right__c</columns>
@@ -783,32 +783,6 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <language>en_US</language>
         <sharedTo>
             <allPartnerUsers></allPartnerUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>All1</fullName>
-        <columns>Contact__c</columns>
-        <columns>Portal_Application__c</columns>
-        <columns>Right__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>All_Internal</fullName>
-        <columns>Contact__c</columns>
-        <columns>Portal_Application__c</columns>
-        <columns>Right__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
         </sharedTo>
     </listViews>
     <listViews>

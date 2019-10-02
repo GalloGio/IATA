@@ -2311,11 +2311,11 @@
         <name>CSP_Services_AvailableServicesTabTitle</name>
     </customLabels>
     <customLabels>
-        <label>Ir a servicio</label>
+        <label>Acceder al servicio</label>
         <name>CSP_Services_GoToService</name>
     </customLabels>
     <customLabels>
-        <label>Ir a Servicios</label>
+        <label>Acceder al Servicios</label>
         <name>CSP_Services_GoToServices</name>
     </customLabels>
     <customLabels>
