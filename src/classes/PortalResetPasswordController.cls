@@ -62,7 +62,6 @@ public without sharing class PortalResetPasswordController {
         }
         catch(Exception ex){
             result.success = false;
-            result.message = ex.getMessage();
         }
 
         return result;

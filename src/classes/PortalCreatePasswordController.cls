@@ -54,16 +54,13 @@ public without sharing class PortalCreatePasswordController {
         String startUrl = Label.CSP_PortalPath;
         if(result.isSuccess == true){
             try{
-                if(result.isGeneralPublicAccount == true){
-                    startUrl += '?firstLogin=true';
-                }
+                if(result.isGeneralPublicAccount == true) startUrl += '?firstLogin=true';
 
                 System.PageReference pageRef = Site.login(result.username, password, startUrl);
                 result.message = pageRef.getUrl();
             }
             catch(Exception ex){
                 result.isSuccess = false;
-                result.message   = ex.getMessage();
             }
         }
         return result;
