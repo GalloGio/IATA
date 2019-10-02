@@ -19,44 +19,8 @@
 <apex:stylesheet value="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/fullcalendar.min.css')}"/>
 <apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/main.min.css')}"/>
 <apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/qtip/jquery.qtip.min.css')}"/>
-
 <link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/>
-<style>
-    .fc-content .fc-title {
-        color: #fff !important;
-    }
 
-    .iatabtn-main{
-        width: 165px;
-    }
-
-    .syncBtn.iatabtn-main{
-        background-color: #5cb85c;
-    }
-
-    .pageTitle{
-        font-family: inherit !important;
-        font-size: 20px !important;
-    }
-
-    .pageSubtitle{
-        font-size: 19px;
-    }
-
-    .fc-header-toolbar .fc-left h2{
-        font-family: Arial, Helvetica, sans-serif !important;
-        font-size: 20px !important;
-    }
-
-    .form-group label{
-        font-size: 13px !important;
-    }
-
-    /*.fc-row.fc-week.fc-widget-content{
-        height: 80px !important;
-    }*/
-</style>
-<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
 <script>
     moment.locale("{!UserLanguage}");
     var LIST_FILTERS = {!listFiltersJson};
@@ -79,7 +43,6 @@
         initFilters();
         initCalendar();
         refreshEvents();
-        enableFilters(true);
         
         $(".countryFilter").change(function() {
             updatePicklistsFromCountry();
@@ -96,15 +59,10 @@
         $("#currencyFilter").change(function() {
             refreshEvents();
         });
-        $('[id$=enableFiltersCheck]').on('click', function(e) {
-            //console.log('oii', $('[id$=enableFiltersCheck]')[0].checked);
-            enableFilters($('[id$=enableFiltersCheck]')[0].checked);
-        });
-        /*$("#enableFiltersCheck").click(function() {
-            console.log('oii', $(this).prop('checked'));
+        $("#enableFiltersCheck").click(function() {
             var enabled = $(this).prop('checked');
             enableFilters(enabled);
-        });*/
+        });
         $("#resetButton").click(function() {
             $(".countryFilter").val(defaultCountry);
             updatePicklistsFromCountry();
@@ -112,9 +70,7 @@
             updatePicklistsFromType();
             $("#frequencyFilter").val(defaultFrequency);
             updatePicklistsFromFrequency();
-            //$("#enableFiltersCheck").prop('checked',false);
-            console.log("oi1");
-            $('[id$=enableFiltersCheck]')[0].checked = false;
+            $("#enableFiltersCheck").prop('checked',false);
             enableFilters(false);
             refreshEvents();
         });
@@ -148,11 +104,9 @@
     
     function initFilters(){
         if ("{!$CurrentPage.parameters.fcountry}">"") {
-            console.log("{!$CurrentPage.parameters.fcountry}");
             $(".countryFilter").val("{!$CurrentPage.parameters.fcountry}");
         } else {
             $(".countryFilter").val(defaultCountry);
-            console.log(defaultCountry);
         }
         updatePicklistsFromCountry(true);
         if ("{!$CurrentPage.parameters.ftype}">"") {
@@ -173,15 +127,14 @@
         var fenablefilters = "{!$CurrentPage.parameters.fenablefilters}";
         if (fenablefilters>"") {
             var isEnabled = fenablefilters=='true';
-            //$("#enableFiltersCheck").prop("checked",isEnabled);
-            $('[id$=enableFiltersCheck]')[0].checked = isEnabled;
+            $("#enableFiltersCheck").prop("checked",isEnabled);
             enableFilters(isEnabled);
-        } /*else {
+        } else {
             if (!isAirline) {
                 $("#enableFiltersCheck").prop("checked",false);
                 enableFilters(false);
             }
-        }*/
+        }
     }
     
     function enableFilters(enabled) {
@@ -238,7 +191,7 @@
             isRTL: false,
             firstDay: 1,
             monthNames: ['{!$Label.ISSP_AMS_Month_January}','{!$Label.ISSP_AMS_Month_February}','{!$Label.ISSP_AMS_Month_March}','{!$Label.ISSP_AMS_Month_April}','{!$Label.ISSP_AMS_Month_May}','{!$Label.ISSP_AMS_Month_June}','{!$Label.ISSP_AMS_Month_July}','{!$Label.ISSP_AMS_Month_August}','{!$Label.ISSP_AMS_Month_September}','{!$Label.ISSP_AMS_Month_October}','{!$Label.ISSP_AMS_Month_November}','{!$Label.ISSP_AMS_Month_December}'],
-            monthNamesShort: ['{!$Label.PKB2_month_january}','{!$Label.PKB2_month_february}','{!$Label.PKB2_month_march}','{!$Label.PKB2_month_april}','{!$Label.PKB2_month_may}','{!$Label.PKB2_month_june}','{!$Label.PKB2_month_july}','{!$Label.PKB2_month_august}','{!$Label.PKB2_month_september}','{!$Label.PKB2_month_october}','{!$Label.PKB2_month_november}','{!$Label.PKB2_month_december}'],
+            monthNamesShort: ['{!$Label.PKB2_month_January}','{!$Label.PKB2_month_February}','{!$Label.PKB2_month_March}','{!$Label.PKB2_month_April}','{!$Label.PKB2_month_May}','{!$Label.PKB2_month_June}','{!$Label.PKB2_month_July}','{!$Label.PKB2_month_August}','{!$Label.PKB2_month_September}','{!$Label.PKB2_month_October}','{!$Label.PKB2_month_November}','{!$Label.PKB2_month_December}'],
             dayNames: ['{!$Label.ISSP_Weekday_Sunday}','{!$Label.ISSP_Weekday_Monday}','{!$Label.ISSP_Weekday_Tuesday}','{!$Label.ISSP_Weekday_Wednesday}','{!$Label.ISSP_Weekday_Thursday}','{!$Label.ISSP_Weekday_Friday}','{!$Label.ISSP_Weekday_Saturday}'],
             dayNamesShort: ['{!$Label.ISSP_Weekday_Short_Sunday}','{!$Label.ISSP_Weekday_Short_Monday}','{!$Label.ISSP_Weekday_Short_Tuesday}','{!$Label.ISSP_Weekday_Short_Wednesday}','{!$Label.ISSP_Weekday_Short_Thursday}','{!$Label.ISSP_Weekday_Short_Friday}','{!$Label.ISSP_Weekday_Short_Saturday}'],
             buttonText: {
@@ -295,12 +248,9 @@
         if ($("#currencyFilter").val()>"") {
             href+="&fcurrency=" + $("#currencyFilter").val();
         }
-        if ($('[id$=enableFiltersCheck]')[0].checked){
+        if ($("#enableFiltersCheck").prop("checked")) {
             href+="&fenablefilters=true";
         }
-        /*if ($("#enableFiltersCheck").prop("checked")) {
-            href+="&fenablefilters=true";
-        }*/
         return href;
     }
     
@@ -463,12 +413,12 @@
     }
 </script>
 
-<c:ISSP_CustomNavigation />
 <div class="container">
+    <c:ISSP_CustomNavigation />
     
     <div class="row">
         <div class="col-sm-12">
-            <div id="title" class="pageTitle"></div>
+            <div id="title"></div>
         </div>
     </div>
     
@@ -492,18 +442,19 @@
             </div>
             <div class="col-sm-1"></div>
         </apex:outputPanel>
-    </apex:form>
+    </apex:form >
 
     <div id="rowCalendar" class="row">
         <div class="col-sm-2">
             <apex:form >
                 <apex:outputPanel layout="block" styleclass="form-group">
-                    <button id="syncCalendar" class="btn iatabtn-main syncBtn" type="button">
+                    <button id="syncCalendar" class="btn btn-success" type="button">
                         <span class="glyphicon glyphicon-calendar"></span>
                         {!$Label.ISSP_OperationalCalendar_Sync_Calendar}
                     </button>
                 </apex:outputPanel>
-                <h3 class="pageSubtitle">{!$Label.ISSP_OperationalCalendar_FilterTitle}</h3>
+                <br/>
+                <h3>{!$Label.ISSP_OperationalCalendar_FilterTitle}</h3>
                 <div class="form-group">
                     <label for="countryFilterInput">{!$Label.ISSP_OperationalCalendar_CountryFilter}</label>
                     <apex:selectList styleclass="countryFilter form-control required" multiselect="false" size="1">
@@ -524,12 +475,12 @@
                 </apex:outputPanel>
                 <apex:outputPanel layout="block" styleclass="form-group" rendered="{!NOT(isAirline)}">
                     <div class="form-check">
-                        <apex:inputCheckbox selected="true" styleclass="form-check-input" id="enableFiltersCheck"/>
+                        <input type="checkbox" class="form-check-input" id="enableFiltersCheck"/>
                         <label class="form-check-label" for="enableFiltersCheck">{!$Label.ISSP_OperationalCalendar_EnableFilters}</label>
                     </div>
                 </apex:outputPanel>
                 <apex:outputPanel layout="block" styleclass="form-group">
-                    <button id="resetButton" class="btn iatabtn-main" type="button">{!$Label.ISSP_OperationalCalendar_Reset}</button>
+                    <button id="resetButton" class="btn btn-primary" type="button">{!$Label.ISSP_OperationalCalendar_Reset}</button>
                 </apex:outputPanel>
             </apex:form>
         </div>
@@ -537,6 +488,6 @@
             <div id='calendar'></div>
         </div>
     </div> 
+    <c:ISSP_CustomFooter />
 </div>
-<c:ISSP_CustomFooter />
 </apex:page>
