@@ -344,5 +344,15 @@ public with sharing class CSP_Utils {
         return 'https://' + host + pageName;
     }
 
+     /* 
+    * @description Return if the user is an Airline User
+    * @return boolean is airline user
+    */
+    @AuraEnabled
+    public static Boolean isAirlineUser() {
+        User loggedUser = getLoggedUser();
+        return loggedUser.Profile.Name.contains('Airline');
+    }
+
 
 }

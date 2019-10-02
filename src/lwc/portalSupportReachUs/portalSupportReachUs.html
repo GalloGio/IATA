@@ -67,7 +67,7 @@
         <template if:false={isCompliment}>
             <div class="customWhiteBackground">
 
-                <template if:false={showHideRecentCasesList}>
+                <template if:true={showRecentCasesList}>
                     <div class="recentCasesMargin">
                         <c-recent-cases home-page = false special-case oncheckemptylist={hideRecentCasesList}></c-recent-cases>
                     </div>
