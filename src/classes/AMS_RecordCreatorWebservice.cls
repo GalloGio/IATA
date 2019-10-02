@@ -137,17 +137,19 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     }
 
-    public static void createProcessDetailsForConversion(String oscarId, List<Account> accounts) { //rui
+    public static void createProcessDetailsForConversion(String oscarId, List<Account> accounts) {
         Id rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
 		List<AMS_Process_Detail__c> processDetailLst = new List<AMS_Process_Detail__c>();
 
 		for (Account acc: accounts) {
-            AMS_Process_Detail__c pd = new AMS_Process_Detail__c();
-            pd.Oscar__c = oscarId;
-            pd.Account__c = acc.Id;
-            pd.RecordTypeId = rtAgencyInvolved;
-            processDetailLst.add(pd);
+            if (acc.Id != accountId) {
+                AMS_Process_Detail__c pd = new AMS_Process_Detail__c();
+                pd.Oscar__c = oscarId;
+                pd.Account__c = acc.Id;
+                pd.RecordTypeId = rtAgencyInvolved;
+                processDetailLst.add(pd);
+            }
 		}
         
 		insert processDetailLst;
