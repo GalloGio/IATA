@@ -303,7 +303,6 @@
         //WMO-564
         oscar.Payment_Requested__c = Date.today();
         oscar.Bank_Guarantee_requested__c = Date.today();
-        oscar.Reason_for_unsuccessful_application__c = 'Financial Security Requirements not met';
 
         update oscar;
 
