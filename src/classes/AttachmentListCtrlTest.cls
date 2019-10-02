@@ -270,5 +270,4 @@ private  class AttachmentListCtrlTest {
            system.AssertEquals(res.severity=='SUCCESS',true);
         Test.stopTest();
      }
-
 }
