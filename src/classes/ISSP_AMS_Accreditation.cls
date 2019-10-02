@@ -3957,13 +3957,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         system.debug('aqui newForms ' + newForms);
         if (newForms.size() > 0) {
             newForm = newForms[0];
-        }
 
-        if (newForm.Branch_Office_Country__r.ISO_Code__c == 'CN' && newCase.Reason1__c == AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
-            if (newForm.SAAM_Case__r.Account.Category__c == 'Domestic Agent') {
-                newForm.Local_Agent_Type__c = 'Domestic';
-            } else {
-                newForm.Local_Agent_Type__c = 'International';
+            if (newForm.Branch_Office_Country__r.ISO_Code__c == 'CN' && newCase.Reason1__c == AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
+                
+                if (newForm.SAAM_Case__r.Account.Category__c == 'Domestic Agent') {
+                    newForm.Local_Agent_Type__c = 'Domestic';
+                } else {
+                    newForm.Local_Agent_Type__c = 'International';
+                }
             }
         }
     }
