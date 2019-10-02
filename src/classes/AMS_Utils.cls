@@ -259,7 +259,7 @@ public without sharing class AMS_Utils {
 
     public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL = 'Multicountry Annual';
     public static final String FA_RESULT_UNSATISFACTORY_UPDATE_FS = 'Unsatisfactory - Update Financial Security';
-    public static final String FA_RESULT_SATISFACTORY_NO_ACTION = 'Satisfactory - No action';
+    public static final String FA_RESULT_SATISFACTORY_NO_ACTION = 'Satisfactory - No Action';
 
     // Case - Origin
     public static final String CASE_ORIGIN_PORTAL = 'Portal';
