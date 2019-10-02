@@ -279,7 +279,7 @@ public class AMS_ChangeCodesHelper {
         Id oscarId = null;
 
         if (oscar != null)
-            oscarId = oscar.Id;
+            oscarId = oscar.Id;        
         
         String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
@@ -359,8 +359,8 @@ public class AMS_ChangeCodesHelper {
             
             if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
 
-            if( (oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWAE ) && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
-            if( oscar.RecordTypeId == AMS_Utils.RECTYPE_CHANGE && !oscar.First_Step_Completed__c && String.isNotEmpty(aacNEW.Bulletin_Information__c)){
+            if( (oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWAE ) && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created ');  
+                    if( oscar.RecordTypeId == AMS_Utils.RECTYPE_CHANGE && !oscar.First_Step_Completed__c && String.isNotEmpty(aacNEW.Bulletin_Information__c)){
                 for(String status : AMS_Utils.AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
             }
                 
@@ -560,7 +560,7 @@ public class AMS_ChangeCodesHelper {
             codesConfs = [SELECT Name, Change_Code__c, Published_in_bulletin__c, Bulletin_Memo_Text__c,
                                     Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Integration_RecId__c, Field1__c, Field1Values__c, Field2__c,
                                     Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c,
-                                    Field6__c, Field6Values__c FROM AMS_ChangeCodes__c WHERE Skip_Agency_Update__c = true];
+                                    Field6__c, Field6Values__c, Field7__c, Field7Values__c FROM AMS_ChangeCodes__c WHERE Skip_Agency_Update__c = true];
 
         for (Account acc:accsNew){
             for (AMS_ChangeCodes__c conf:codesConfs){
@@ -579,6 +579,10 @@ public class AMS_ChangeCodesHelper {
                     CCToBeGenerated = bCheckCondition(acc, conf.Field5__c, conf.Field5Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
                 if(conf.Field6__c!=null && CCToBeGenerated)
                     CCToBeGenerated = bCheckCondition(acc, conf.Field6__c, conf.Field6Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
+                
+                if(conf.Field7__c != NULL && CCToBeGenerated){
+                    CCToBeGenerated = bCheckCondition(acc, conf.Field7__c, conf.Field7Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
+                }
 
                 if(CCToBeGenerated)
                     mapAccCodeConf.put(acc, conf);
@@ -635,11 +639,13 @@ public class AMS_ChangeCodesHelper {
         Set<String> setFOPs = new Set<String>();
 
         if(fOPs != null && !fOPs.isEmpty() && isNewGen){
+
             for(Agency_Authorization__c fop : fOPs) {
-                authRelabel = (fop.Authority__c == 'Card Payment Method' ? 'Credit Card' : (fop.Authority__c == 'IEP Payment Method' ? 'IATA EasyPay' : (fop.Authority__c == 'Cash Payment Method' ? 'Cash' : '')));
+                authRelabel = (fop.Authority__c == 'Card Payment Method' ? 'Credit Card' : (fop.Authority__c == 'IEP Payment Method' ? 'IATA EasyPay' : (fop.Authority__c == 'Cash Payment Method' ? 'Cash' : (fop.Authority__c == 'BOP Payment Method' ? 'BOP' : ''))));
+
                 // if a payment method is being restricted do not display it on ebulletin
                 if( !(authRelabel == 'Credit Card' && (changeCodeName == 'CCA' || changeCodeName == 'FOP')) && !(authRelabel == 'Cash' && (changeCodeName == 'PCA' || changeCodeName == 'FOP'))) {
-                    setFOPs.add(authRelabel);                    
+                    setFOPs.add(authRelabel);
                 }
             }
             // include payment method if it's being restored
@@ -655,6 +661,7 @@ public class AMS_ChangeCodesHelper {
             }
 
             fopString = fopString.removeEnd(' - ');
+            if(AMS_Utils.setChinaCountries.contains(fOPs[0].ISO_Country__c)) fopString += ': Authorized';
         }
 
         return fopString;
@@ -662,16 +669,19 @@ public class AMS_ChangeCodesHelper {
 
     public static Map<Id,List<Agency_Authorization__c>> fetchFormsOfPayment(Set<Id> accsIds){
 
+        Set<String> activeStatus = new Set<String>{'Active','Authorized'};
+
         Id aaRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         Map<Id,List<Agency_Authorization__c>> fOPs = new Map<Id,List<Agency_Authorization__c>>();
 
         if(accsIds.isEmpty()) return fOPs;
-        for(Agency_Authorization__c fop: [SELECT Authority__c, Status__c, Account__c FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId AND Status__c = 'Active']){
+        for(Agency_Authorization__c fop: [SELECT Authority__c, Status__c, Account__c, ISO_Country__c 
+                                          FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId AND Status__c IN :activeStatus]){
             if(fOPs.keySet().contains(fop.Account__c))
                 fOPs.get(fop.Account__c).add(fop);
             else
-                    fOPs.put(fop.Account__c,new List<Agency_Authorization__c>{fop});
+                fOPs.put(fop.Account__c,new List<Agency_Authorization__c>{fop});
         }
 
         return fOPs;

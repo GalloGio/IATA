@@ -289,7 +289,7 @@
                                 <!-- Cart Empty -->
                                 <apex:variable var="cartEmpty" value="0" rendered="{!OR(vfOrder.orderItems == null, vfOrder.orderItems.size == 0) && stopProcess != true}">
                                     <div class="footer-actions text-right">
-                                        <a href="{!$Site.BaseUrl}/IEC_ProductList" class="button wide">{!$Label.Button_Continue_Shopping}</a>
+                                        <a href="{!$Site.BaseRequestURL}/IEC_ProductList" class="button wide">{!$Label.Button_Continue_Shopping}</a>
                                     </div>
                                 </apex:variable>
                             </div>

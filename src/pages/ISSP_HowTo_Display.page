@@ -116,7 +116,7 @@
             
           <div id="right_content" style="margin:40px 20px">
                 <apex:outputPanel layout="block" id="backbutton" style="margin-bottom: 50px;">
-              <a class="relatedLink" href="{!$Site.BaseUrl}{!faqHome}?{!allSearchParams}&MainNav=resources&subNav=faq&mid=M2S1">&lt; {!$Label.PKB2_Back_To_Results}</a>
+              <a class="relatedLink" href="{!$Site.BaseRequestURL}{!faqHome}?{!allSearchParams}&MainNav=resources&subNav=faq&mid=M2S1">&lt; {!$Label.PKB2_Back_To_Results}</a>
           <!--  <a class="relatedLink" style="float:right" href="{!$Site.CurrentSiteUrl}?{!pkbCon.languageParam}={!pkbCon.selectedLanguage}">{!$Label.PKB2_Back_To_Search_Page}</a> -->
           
           </apex:outputPanel>

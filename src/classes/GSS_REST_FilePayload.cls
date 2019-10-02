@@ -220,7 +220,7 @@ global with sharing class GSS_REST_FilePayload {
             if(isAfter16 && isSemiMonthly) theEndOfMonth    = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),16);
             //From the first to the 15 of the month, generate semi-monthly files for the PERIOD 1
                     
-            if(isAfter16==false && isSemiMonthly) theFirstOfMonth  = Date.TODAY().toStartOfMonth().addMonths(-1).addDays(16);
+            if(isAfter16==false && isSemiMonthly) theFirstOfMonth  = Date.TODAY().toStartOfMonth().addMonths(-1).addDays(15);
             if(isAfter16==false && isSemiMonthly) theEndOfMonth    = Date.newInstance(Date.TODAY().Year(), Date.TODAY().month(),1);
   
             if(isSemiMonthly) STARTDAY='>='+String.valueOf(theFirstOfMonth);
