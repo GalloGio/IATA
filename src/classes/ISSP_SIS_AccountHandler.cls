@@ -35,22 +35,6 @@ public with sharing class ISSP_SIS_AccountHandler {
     }
 
     /**
-        Finds in Custom Metadata SIS_Management_Visibility__mdt all valid combinations
-        of Sector + Category
-    **/
-    private static set<String> VALID_SIS_SECTOR_CATEGORY = null;
-    public static set<String> getValidSISSectorCategory() {
-        if (VALID_SIS_SECTOR_CATEGORY==null) {
-            VALID_SIS_SECTOR_CATEGORY = new set<String>();
-            for (SIS_Management_Visibility__mdt sisVisibility:
-            [SELECT Id, Sector__c, Category__c FROM SIS_Management_Visibility__mdt WHERE Is_Visible__c = true] ) {
-                VALID_SIS_SECTOR_CATEGORY.add(sisVisibility.Sector__c + ',' + sisVisibility.Category__c);
-            }
-        }
-        return VALID_SIS_SECTOR_CATEGORY;
-    }
-
-    /**
         Get the set of all valid combinations of location class an location Type
         defined in the CS 'ISSP_SIS_Account_Allowed_Location__c'
     **/
