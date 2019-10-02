@@ -858,6 +858,8 @@ private class ANG_MulticountryHelperTest {
 
 		insert acontact;
 
+		Test.startTest();
+
 		oscar.AMS_Online_Accreditation__c = staging.Id;
 		oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 
@@ -880,6 +882,8 @@ private class ANG_MulticountryHelperTest {
 
 		system.assertEquals(pdLst.size(), 1, 'There must be a single process detail record with the record type \'Multicountry Yearly Financial Review\'');
 
+		Test.stopTest();
+		
 	}
 
 }
