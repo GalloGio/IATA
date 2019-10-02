@@ -95,22 +95,25 @@ global class AMS_OSCAR_Webservice {
 
             ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
-            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name from AMS_OSCAR__c where Id = : oscarId];
-            if (oscar != null && oscar.size() > 0) {
-                String accountId = oscar[0].Account__c;
+            List<AMS_OSCAR__c> oscarLst = [select Name, Account__c, Account__r.ANG_Accreditation_Model__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name from AMS_OSCAR__c where Id = : oscarId];
+            if (oscarLst != null && oscarLst.size() > 0) {
+
+                AMS_OSCAR__c oscar = oscarLst[0];
+
+                String accountId = oscar.Account__c;
 
                 if (accountId == null) {
                     result = 'Could not find an account related to this OSCAR.';
                     return 'ERROR: ' + result;
                 }
                 //account must have billing country
-                String billingCountry = oscar[0].Account__r.BillingCountry;
+                String billingCountry = oscar.Account__r.BillingCountry;
                 if (billingCountry == null) {
                     result = 'Could not find a billing country on the account related to this OSCAR.';
                     return 'ERROR: ' + result;
                 }
 
-                String accountType = oscar[0].Account__r.Type;
+                String accountType = oscar.Account__r.Type;
                 if (accountType == null || !Pattern.matches('IATA Cargo Agent|IATA Passenger Sales Agent|CASS Associate', accountType)) {
                     result = 'The type of account related to this oscar must be one of the following: IATA Cargo Agent|IATA Passenger Sales Agent|CASS Associate';
                     return 'ERROR: ' + result;
@@ -123,7 +126,7 @@ global class AMS_OSCAR_Webservice {
                     return 'ERROR: ' + result;
                 }
 
-                List<Case> cases = [select Id, Reason1__c from Case where OSCAR__c = : oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+                List<Case> cases = [select Id, Reason1__c from Case where OSCAR__c = : oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
                 if (cases == null || cases.isEmpty()) {
                     result = 'Could not find a the Oscar Communication case related to this OSCAR.';
@@ -133,18 +136,23 @@ global class AMS_OSCAR_Webservice {
                 Case oscarCommCase = cases[0];
 
                 Date currentDate = Date.today();
-                Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c,
-                                         Subject = oscarCommCase.Reason1__c + ' - ' + oscar[0].Account__r.Name, Status = 'Agent to be Notified',
-                                         Deadline_Date__c = currentDate + 5, ContactId = ifapContact[0].Id, OSCAR__c = oscar[0].Id, Financial_Assessment_requested__c = currentDate);
+                Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar.Account__c,
+                                         Subject = oscarCommCase.Reason1__c + ' - ' + oscar.Account__r.Name, Status = 'Agent to be Notified',
+                                         Deadline_Date__c = currentDate + 5, ContactId = ifapContact[0].Id, OSCAR__c = oscar.Id, Financial_Assessment_requested__c = currentDate);
+                
+                if(oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+                    ifapCase.Deadline_Date__c = currentDate.addDays(60);
+                    ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL;
+                }
 
                 insert ifapCase;
 
-                oscar[0].STEP11__c = 'In Progress';
+                oscar.STEP11__c = 'In Progress';
                 update oscar;
 
                 //OSCAR Name will be equal to the CaseNumber, so instead of querying the ifap Case for its CaseNumber
                 //we simply return the OSCAR Name
-                return ifapCase.Id + ':' + oscar[0].Name;
+                return ifapCase.Id + ':' + oscar.Name;
 
             }
 

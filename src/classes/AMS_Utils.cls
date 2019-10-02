@@ -257,6 +257,8 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_OPT_OUT = 'Financial review opt-in / opt-out';
     public static final String CASE_REASON_PCI_DSS_COMPLIANT = 'PCI DSS Compliant';
 
+    public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL = 'Multicountry Annual';
+
     // Case - Origin
     public static final String CASE_ORIGIN_PORTAL = 'Portal';
     public static final String ANG_MASSIVE_FOP = 'Massive FOP Creation';

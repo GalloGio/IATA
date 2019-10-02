@@ -13,6 +13,7 @@ public class ANG_CaseTriggerHandler {
 	//public void onBeforeInsert() {}
 	public void onAfterInsert() {
 		updateFinancialReviewResultOnAccount();
+		handleMulticountryIfapCreation(Trigger.New);
 		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
 	}
 
@@ -122,6 +123,25 @@ public class ANG_CaseTriggerHandler {
 		if(!financialSecurities.isEmpty()){
 			ANG_FinancialSecurityTriggerHandler fsth = new ANG_FinancialSecurityTriggerHandler();
 			fsth.updateRHCInfoFSMinimumAmount(accsIds, financialSecurities);
+		}
+
+	}
+
+	private static void handleMulticountryIfapCreation(List<Case> caseLst){
+		
+		Id ifapRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+		Id financialReviewPdRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Multicountry_Yearly_Financial_Review');
+
+		List<AMS_Process_Detail__c> pdLst = new List<AMS_Process_Detail__c>();
+
+		for(Case cse : caseLst){
+			if(cse.RecordTypeId == ifapRecordTypeId && cse.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL){
+				pdLst.add(new AMS_Process_Detail__c(Case__c = cse.Id, RecordTypeId = financialReviewPdRecordTypeId));
+			}
+		}
+
+		if(!pdLst.isEmpty()){
+			insert pdLst;
 		}
 
 	}

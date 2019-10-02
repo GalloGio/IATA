@@ -270,8 +270,12 @@
                 <field>Third_FA_non_Compliance_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Submitted_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Financial_Assessment_deadline__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
