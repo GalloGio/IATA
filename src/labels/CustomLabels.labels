@@ -1176,6 +1176,14 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <value>&lt;a href=&quot;/ISSP_ANG_PCI?&amp;retUrl=/ISSP_HomePage&quot;&gt;Request Credit Card FoP&lt;/a&gt;</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ASD_HelpText</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ASD_HelpText</shortDescription>
+        <value>Please access ASD to view more details on the Remittance Holding Capacity</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_AccreditationType</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -1206,14 +1214,6 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_AnnualFees</shortDescription>
         <value>Annual Fees :</value>
-    </labels>
-    <labels>
-        <fullName>ANG_ISSP_ASD_HelpText</fullName>
-        <categories>ISSP,ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_ASD_HelpText</shortDescription>
-        <value>Please access ASD to view more details on the Remittance Holding Capacity</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_AssociateEntity</fullName>
@@ -2215,18 +2215,18 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Risk Description</value>
     </labels>
     <labels>
-        <fullName>ANG_ISSP_RHC_Information_China</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG ISSP RHC Information China</shortDescription>
-        <value>Risk Profile</value>
-    </labels>
-    <labels>
         <fullName>ANG_ISSP_RHC_Information</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP RHC Information</shortDescription>
         <value>Risk Profile and RHC</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_RHC_Information_China</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RHC Information China</shortDescription>
+        <value>Risk Profile</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_RHC_Request_Balance_Update</fullName>
@@ -2499,6 +2499,14 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>Account information updated</shortDescription>
         <value>Your Account information is now updated</value>
+    </labels>
+    <labels>
+        <fullName>Accreditation_date</fullName>
+        <categories>Accreditation date</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Accreditation date</shortDescription>
+        <value>Accreditation date</value>
     </labels>
     <labels>
         <fullName>Action</fullName>
@@ -4506,7 +4514,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area2</shortDescription>
-        <value>Instructor-led Training (individual),	Instructor-led Training (groups),	IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,	Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,	Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management</value>
+        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP)</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -18654,6 +18662,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>NOTICE OF CHANGE</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Partner</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Partner</shortDescription>
+        <value>Authorised signature of Partner</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Percent_Ownership</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -18953,7 +18969,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Transferee</shortDescription>
-        <value>Transferee:</value>
+        <value>Authorised Signature of Transferee (In case of corporation or sole owner)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Transferor</fullName>
@@ -18961,7 +18977,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Transferor</shortDescription>
-        <value>Transferor:</value>
+        <value>Authorised Signature of Agent (Transferor)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Type_Of_Person</fullName>
@@ -19054,7 +19070,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_title_or_capacity</shortDescription>
-        <value>Title or capacity</value>
+        <value>Title/Position</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_type_or_print</fullName>
@@ -22379,6 +22395,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>View Country Requirements</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Country_Reqs_Type_Of_Agency</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Type of Agency</shortDescription>
+        <value>Type of Agency:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ENTIRE_HIERARCHY</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -22880,14 +22904,6 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
         <value>The cost of converting from one Accreditation Type to another is as follows.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_Country_Reqs_Type_Of_Agency</fullName>
-        <categories>ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Type of Agency</shortDescription>
-        <value>Type of Agency:</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_RHC_InformationDescription</fullName>
@@ -24231,6 +24247,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP Change Request Description</shortDescription>
         <value>This service allows you to change your BSP / CASS Participation details - Local address, Tax number or Financial / Admin Contact (MasterTable) and IATA Easy Pay opt-in or opt-out</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_China_Domestic</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP China Domestic</shortDescription>
+        <value>Travel Agent - Domestic</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_China_International</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP China International</shortDescription>
+        <value>Travel Agent - International</value>
     </labels>
     <labels>
         <fullName>ISSP_ClickHereLogIn</fullName>
@@ -32500,22 +32532,6 @@ CNS Customer Services</value>
         <value>8 characters</value>
     </labels>
     <labels>
-        <fullName>ISSP_China_Domestic</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP China Domestic</shortDescription>
-        <value>Travel Agent - Domestic</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_China_International</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP China International</shortDescription>
-        <value>Travel Agent - International</value>
-    </labels>
-    <labels>
         <fullName>ISSP_consult_FAQ</fullName>
         <categories>ISSP, Homepage</categories>
         <language>en_US</language>
@@ -37603,6 +37619,14 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <protected>false</protected>
         <shortDescription>Remaining_Owners</shortDescription>
         <value>Remaining Owners</value>
+    </labels>
+    <labels>
+        <fullName>Remittance_frequency</fullName>
+        <categories>Remittance frequency</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Remittance frequency</shortDescription>
+        <value>Remittance frequency</value>
     </labels>
     <labels>
         <fullName>Renewal_Number</fullName>
