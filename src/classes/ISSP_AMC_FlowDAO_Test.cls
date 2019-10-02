@@ -335,7 +335,7 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 
                 
                 
-                System.runAs(myUserAndreina){
+                System.runAs(myUser){
 
                     IATA_Process_Orchestrator__c orchestrator = new IATA_Process_Orchestrator__c();
                     orchestrator.associated_case__c = controller.participation.case__c;

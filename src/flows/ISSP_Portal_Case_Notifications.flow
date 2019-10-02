@@ -73,6 +73,29 @@
         <processMetadataValues>
             <name>emailAlertSelection</name>
             <value>
+                <stringValue>ISSP_Send_expiration_Reminder_CNS</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myWaitEvent_myWait_myRule_11_event_0_SA1</name>
+        <label>ISSP Send expiration Reminder CNS</label>
+        <locationX>1100</locationX>
+        <locationY>200</locationY>
+        <actionName>Case.ISSP_Send_expiration_Reminder_CNS</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myWaitEvent_myWait_myRule_11_event_0_postWaitExecutionAssignment</targetReference>
+        </connector>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
                 <stringValue>ISSP_Send_expiration_Reminder</stringValue>
             </value>
         </processMetadataValues>
@@ -96,14 +119,14 @@
         <processMetadataValues>
             <name>emailAlertSelection</name>
             <value>
-                <stringValue>ISSP_Send_expiration_Reminder_CNS</stringValue>
+                <stringValue>ISSP_Send_expiration_Reminder</stringValue>
             </value>
         </processMetadataValues>
         <name>myWaitEvent_myWait_myRule_9_event_0_SA1</name>
-        <label>ISSP Send expiration Reminder CNS</label>
+        <label>ISSP Send expiration Reminder</label>
         <locationX>900</locationX>
         <locationY>200</locationY>
-        <actionName>Case.ISSP_Send_expiration_Reminder_CNS</actionName>
+        <actionName>Case.ISSP_Send_expiration_Reminder</actionName>
         <actionType>emailAlert</actionType>
         <connector>
             <targetReference>myWaitEvent_myWait_myRule_9_event_0_postWaitExecutionAssignment</targetReference>
@@ -125,6 +148,22 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>myPreWaitDecision_myWait_myRule_11</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>myWaitAssignment_myWait_myRule_11</name>
+        <label>myWaitAssignment_myWait_myRule_11</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>cancelWaits</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>myWait_myRule_11</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -161,6 +200,38 @@
         </assignmentItems>
         <connector>
             <targetReference>myPreWaitDecision_myWait_myRule_7</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>myWaitEvent_myWait_myRule_11_event_0_postWaitExecutionAssignment</name>
+        <label>myWaitEvent_myWait_myRule_11_event_0_postWaitExecutionAssignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>myWaitEvent_myWait_myRule_11_event_0_postActionExecutionVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>myWait_myRule_11</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>myWaitEvent_myWait_myRule_11_event_1_postWaitExecutionAssignment</name>
+        <label>myWaitEvent_myWait_myRule_11_event_1_postWaitExecutionAssignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>myWaitEvent_myWait_myRule_11_event_1_postActionExecutionVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>myWait_myRule_11</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -262,6 +333,34 @@
         <processMetadataValues>
             <name>index</name>
             <value>
+                <numberValue>5.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision10</name>
+        <label>myDecision10</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_11</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_11</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_11_pmetdec</targetReference>
+            </connector>
+            <label>Draft Case form Portal CNS</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
                 <numberValue>1.0</numberValue>
             </value>
         </processMetadataValues>
@@ -348,7 +447,7 @@
             <connector>
                 <targetReference>myRule_7_pmetdec</targetReference>
             </connector>
-            <label>Draft case from portal ISSP</label>
+            <label>Draft case from portal ISSP (SAAM, OSCAR, Process)</label>
         </rules>
     </decisions>
     <decisions>
@@ -362,6 +461,9 @@
         <label>myDecision8</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision10</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_9</name>
@@ -376,7 +478,7 @@
             <connector>
                 <targetReference>myRule_9_pmetdec</targetReference>
             </connector>
-            <label>Draft Case form Portal CNS</label>
+            <label>Draft case from portal ISSP (AP)</label>
         </rules>
     </decisions>
     <decisions>
@@ -430,6 +532,81 @@
         </rules>
     </decisions>
     <decisions>
+        <name>myPostWaitDecision_myWaitEvent_myWait_myRule_9_event_0</name>
+        <label>myPostWaitDecision_myWaitEvent_myWait_myRule_9_event_0</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myWaitEvent_myWait_myRule_9_event_0_postWaitExecutionAssignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myPostWaitRule_myWaitEvent_myWait_myRule_9_event_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_current.CreatedDate</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myWaitEvent_myWait_myRule_9_event_0_SA1</targetReference>
+            </connector>
+            <label>myPostWaitRule_myWaitEvent_myWait_myRule_9_event_0</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myPostWaitDecision_myWaitEvent_myWait_myRule_9_event_1</name>
+        <label>myPostWaitDecision_myWaitEvent_myWait_myRule_9_event_1</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myWaitEvent_myWait_myRule_9_event_1_postWaitExecutionAssignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myPostWaitRule_myWaitEvent_myWait_myRule_9_event_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_current.CreatedDate</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myWaitEvent_myWait_myRule_9_event_1_SA1</targetReference>
+            </connector>
+            <label>myPostWaitRule_myWaitEvent_myWait_myRule_9_event_1</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myPreWaitDecision_myWait_myRule_11</name>
+        <label>myPreWaitDecision_myWait_myRule_11</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myWaitAssignment_myWait_myRule_11</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myPreWaitRule_myWait_myRule_11</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_11</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myPreWaitDecision_myWait_myRule_9</targetReference>
+            </connector>
+            <label>myPreWaitRule_myWait_myRule_11</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>myPreWaitDecision_myWait_myRule_7</name>
         <label>myPreWaitDecision_myWait_myRule_7</label>
         <locationX>0</locationX>
@@ -477,6 +654,43 @@
                 <targetReference>myPreWaitDecision_myWait_myRule_7</targetReference>
             </connector>
             <label>myPreWaitRule_myWait_myRule_9</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_11_pmetdec</name>
+        <label>Previously Met Decision</label>
+        <locationX>1100</locationX>
+        <locationY>100</locationY>
+        <defaultConnector>
+            <targetReference>myWait_myRule_11</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Previously Met</defaultConnectorLabel>
+        <rules>
+            <name>myRule_11_pmetnullrule</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myWait_myRule_11</targetReference>
+            </connector>
+            <label>Previously Met - Null</label>
+        </rules>
+        <rules>
+            <name>myRule_11_pmetrule</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_11_pmetrule</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Previously Met - Prev</label>
         </rules>
     </decisions>
     <decisions>
@@ -569,6 +783,36 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
+                <stringValue>AND(ISPICKVAL([Case].Status , &apos;Draft&apos;) , ISPICKVAL([Case].Origin, &apos;Portal&apos;), [Case].CNSCase__c ,
+OR([Case].RecordType.Name == &apos;IDFS Airline Participation Process&apos; , [Case].RecordType.Name ==&apos;SAAM&apos;, [Case].RecordType.Name ==&apos;OSCAR Communication&apos;
+ ) )</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_11</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(ISPICKVAL({!myVariable_current.Status} , &apos;Draft&apos;) , ISPICKVAL({!myVariable_current.Origin}, &apos;Portal&apos;), {!myVariable_current.CNSCase__c} ,
+OR({!myVariable_current.RecordType.Name} == &apos;IDFS Airline Participation Process&apos; , {!myVariable_current.RecordType.Name} ==&apos;SAAM&apos;, {!myVariable_current.RecordType.Name} ==&apos;OSCAR Communication&apos;
+ ) )</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(ISPICKVAL([Case].Status , &apos;Draft&apos;) , ISPICKVAL([Case].Origin, &apos;Portal&apos;), [Case].CNSCase__c ,
+OR([Case].RecordType.Name == &apos;IDFS Airline Participation Process&apos; , [Case].RecordType.Name ==&apos;SAAM&apos;, [Case].RecordType.Name ==&apos;OSCAR Communication&apos;
+ ) )</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_11_pmetrule</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(ISPICKVAL({!myVariable_old.Status} , &apos;Draft&apos;) , ISPICKVAL({!myVariable_old.Origin}, &apos;Portal&apos;), {!myVariable_old.CNSCase__c} ,
+OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process&apos; , {!myVariable_old.RecordType.Name} ==&apos;SAAM&apos;, {!myVariable_old.RecordType.Name} ==&apos;OSCAR Communication&apos;
+ ) )</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
                 <stringValue>AND([Case].New_Attachment_From_Portal_User__c,  ISPICKVAL($User.UserType, &apos;Partner&apos;) ,[Case].CNSCase__c)</stringValue>
             </value>
         </processMetadataValues>
@@ -593,63 +837,103 @@ CONTAINS(TEXT({!$User.UserType}), &apos;Partner&apos;) )</expression>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>AND(ISPICKVAL([Case].Status , &apos;Draft&apos;) , ISPICKVAL([Case].Origin, &apos;Portal&apos;), NOT([Case].CNSCase__c ),
-OR([Case].RecordType.Name == &apos;IDFS Airline Participation Process&apos; , [Case].RecordType.Name ==&apos;SAAM&apos;, [Case].RecordType.Name ==&apos;OSCAR Communication&apos;, [Case].RecordType.Name ==&apos;Process&apos;
- ) )</stringValue>
+                <stringValue>AND(
+	ISPICKVAL([Case].Status , &apos;Draft&apos;),
+	ISPICKVAL([Case].Origin, &apos;Portal&apos;),
+	NOT([Case].CNSCase__c ),
+	OR(
+		[Case].RecordType.Name ==&apos;SAAM&apos;,
+		[Case].RecordType.Name ==&apos;OSCAR Communication&apos;,
+		[Case].RecordType.Name ==&apos;Process&apos;
+	)
+)</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_7</name>
         <dataType>Boolean</dataType>
-        <expression>AND(ISPICKVAL({!myVariable_current.Status} , &apos;Draft&apos;) , ISPICKVAL({!myVariable_current.Origin}, &apos;Portal&apos;), NOT({!myVariable_current.CNSCase__c} ),
-OR({!myVariable_current.RecordType.Name} == &apos;IDFS Airline Participation Process&apos; , {!myVariable_current.RecordType.Name} ==&apos;SAAM&apos;, {!myVariable_current.RecordType.Name} ==&apos;OSCAR Communication&apos;, {!myVariable_current.RecordType.Name} ==&apos;Process&apos;
- ) )</expression>
+        <expression>AND(
+	ISPICKVAL({!myVariable_current.Status} , &apos;Draft&apos;),
+	ISPICKVAL({!myVariable_current.Origin}, &apos;Portal&apos;),
+	NOT({!myVariable_current.CNSCase__c} ),
+	OR(
+		{!myVariable_current.RecordType.Name} ==&apos;SAAM&apos;,
+		{!myVariable_current.RecordType.Name} ==&apos;OSCAR Communication&apos;,
+		{!myVariable_current.RecordType.Name} ==&apos;Process&apos;
+	)
+)</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>AND(ISPICKVAL([Case].Status , &apos;Draft&apos;) , ISPICKVAL([Case].Origin, &apos;Portal&apos;), NOT([Case].CNSCase__c ),
-OR([Case].RecordType.Name == &apos;IDFS Airline Participation Process&apos; , [Case].RecordType.Name ==&apos;SAAM&apos;, [Case].RecordType.Name ==&apos;OSCAR Communication&apos;, [Case].RecordType.Name ==&apos;Process&apos;
- ) )</stringValue>
+                <stringValue>AND(
+	ISPICKVAL([Case].Status , &apos;Draft&apos;),
+	ISPICKVAL([Case].Origin, &apos;Portal&apos;),
+	NOT([Case].CNSCase__c ),
+	OR(
+		[Case].RecordType.Name ==&apos;SAAM&apos;,
+		[Case].RecordType.Name ==&apos;OSCAR Communication&apos;,
+		[Case].RecordType.Name ==&apos;Process&apos;
+	)
+)</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_7_pmetrule</name>
         <dataType>Boolean</dataType>
-        <expression>AND(ISPICKVAL({!myVariable_old.Status} , &apos;Draft&apos;) , ISPICKVAL({!myVariable_old.Origin}, &apos;Portal&apos;), NOT({!myVariable_old.CNSCase__c} ),
-OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process&apos; , {!myVariable_old.RecordType.Name} ==&apos;SAAM&apos;, {!myVariable_old.RecordType.Name} ==&apos;OSCAR Communication&apos;, {!myVariable_old.RecordType.Name} ==&apos;Process&apos;
- ) )</expression>
+        <expression>AND(
+	ISPICKVAL({!myVariable_old.Status} , &apos;Draft&apos;),
+	ISPICKVAL({!myVariable_old.Origin}, &apos;Portal&apos;),
+	NOT({!myVariable_old.CNSCase__c} ),
+	OR(
+		{!myVariable_old.RecordType.Name} ==&apos;SAAM&apos;,
+		{!myVariable_old.RecordType.Name} ==&apos;OSCAR Communication&apos;,
+		{!myVariable_old.RecordType.Name} ==&apos;Process&apos;
+	)
+)</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>AND(ISPICKVAL([Case].Status , &apos;Draft&apos;) , ISPICKVAL([Case].Origin, &apos;Portal&apos;), [Case].CNSCase__c ,
-OR([Case].RecordType.Name == &apos;IDFS Airline Participation Process&apos; , [Case].RecordType.Name ==&apos;SAAM&apos;, [Case].RecordType.Name ==&apos;OSCAR Communication&apos;
- ) )</stringValue>
+                <stringValue>AND(
+	ISPICKVAL([Case].Status , &apos;Draft&apos;),
+	ISPICKVAL([Case].Origin, &apos;Portal&apos;),
+	NOT([Case].CNSCase__c ),
+	[Case].RecordType.Name == &apos;IDFS Airline Participation Process&apos;
+)</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_9</name>
         <dataType>Boolean</dataType>
-        <expression>AND(ISPICKVAL({!myVariable_current.Status} , &apos;Draft&apos;) , ISPICKVAL({!myVariable_current.Origin}, &apos;Portal&apos;), {!myVariable_current.CNSCase__c} ,
-OR({!myVariable_current.RecordType.Name} == &apos;IDFS Airline Participation Process&apos; , {!myVariable_current.RecordType.Name} ==&apos;SAAM&apos;, {!myVariable_current.RecordType.Name} ==&apos;OSCAR Communication&apos;
- ) )</expression>
+        <expression>AND(
+	ISPICKVAL({!myVariable_current.Status} , &apos;Draft&apos;),
+	ISPICKVAL({!myVariable_current.Origin}, &apos;Portal&apos;),
+	NOT({!myVariable_current.CNSCase__c} ),
+	{!myVariable_current.RecordType.Name} == &apos;IDFS Airline Participation Process&apos;
+)</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>AND(ISPICKVAL([Case].Status , &apos;Draft&apos;) , ISPICKVAL([Case].Origin, &apos;Portal&apos;), [Case].CNSCase__c ,
-OR([Case].RecordType.Name == &apos;IDFS Airline Participation Process&apos; , [Case].RecordType.Name ==&apos;SAAM&apos;, [Case].RecordType.Name ==&apos;OSCAR Communication&apos;
- ) )</stringValue>
+                <stringValue>AND(
+	ISPICKVAL([Case].Status , &apos;Draft&apos;),
+	ISPICKVAL([Case].Origin, &apos;Portal&apos;),
+	NOT([Case].CNSCase__c ),
+	[Case].RecordType.Name == &apos;IDFS Airline Participation Process&apos;
+)</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_9_pmetrule</name>
         <dataType>Boolean</dataType>
-        <expression>AND(ISPICKVAL({!myVariable_old.Status} , &apos;Draft&apos;) , ISPICKVAL({!myVariable_old.Origin}, &apos;Portal&apos;), {!myVariable_old.CNSCase__c} ,
-OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process&apos; , {!myVariable_old.RecordType.Name} ==&apos;SAAM&apos;, {!myVariable_old.RecordType.Name} ==&apos;OSCAR Communication&apos;
- ) )</expression>
+        <expression>AND(
+	ISPICKVAL({!myVariable_old.Status} , &apos;Draft&apos;),
+	ISPICKVAL({!myVariable_old.Origin}, &apos;Portal&apos;),
+	NOT({!myVariable_old.CNSCase__c} ),
+	{!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process&apos;
+)</expression>
     </formulas>
-    <interviewLabel>ISSP_Portal_Case_Notifications-4_InterviewLabel</interviewLabel>
+    <interviewLabel>ISSP_Portal_Case_Notifications-3_InterviewLabel</interviewLabel>
     <label>ISSP Portal Case Notifications</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -908,6 +1192,137 @@ OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process
                 <stringValue>[Case]</stringValue>
             </value>
         </processMetadataValues>
+        <name>myWaitEvent_myWait_myRule_11_event_1_SA1</name>
+        <label>Update Case Fields</label>
+        <locationX>1100</locationX>
+        <locationY>200</locationY>
+        <connector>
+            <targetReference>myWaitEvent_myWait_myRule_11_event_1_postWaitExecutionAssignment</targetReference>
+        </connector>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Owner ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>OwnerId</field>
+            <value>
+                <stringValue>00G20000000mDEUEA2</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Status</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Status</field>
+            <value>
+                <stringValue>Abandoned</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Boolean</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Visible on ISS Portal</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Boolean</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Visible_on_ISS_Portal__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Case]</stringValue>
+            </value>
+        </processMetadataValues>
         <name>myWaitEvent_myWait_myRule_7_event_1_SA1</name>
         <label>Update Case Fields</label>
         <locationX>700</locationX>
@@ -1079,6 +1494,12 @@ OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process
                 </value>
             </processMetadataValues>
             <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue>Group;User</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
                 <name>rightHandSideType</name>
                 <value>
                     <stringValue>ID</stringValue>
@@ -1109,6 +1530,12 @@ OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process
                 </value>
             </processMetadataValues>
             <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
                 <name>rightHandSideType</name>
                 <value>
                     <stringValue>Picklist</stringValue>
@@ -1136,6 +1563,12 @@ OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process
                 <name>leftHandSideLabel</name>
                 <value>
                     <stringValue>Visible on ISS Portal</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -1187,6 +1620,26 @@ OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process
         </value>
     </variables>
     <variables>
+        <name>myWaitEvent_myWait_myRule_11_event_0_postActionExecutionVariable</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>myWaitEvent_myWait_myRule_11_event_1_postActionExecutionVariable</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>myWaitEvent_myWait_myRule_7_event_0_postActionExecutionVariable</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -1226,6 +1679,93 @@ OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process
             <booleanValue>false</booleanValue>
         </value>
     </variables>
+    <waits>
+        <name>myWait_myRule_11</name>
+        <label>myWait_myRule_11</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>defaultLabel</defaultConnectorLabel>
+        <waitEvents>
+            <processMetadataValues>
+                <name>inputParameterType</name>
+                <value>
+                    <stringValue>now</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>myWaitEvent_myWait_myRule_11_event_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myWaitEvent_myWait_myRule_11_event_0_postActionExecutionVariable</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myWaitEvent_myWait_myRule_11_event_0_SA1</targetReference>
+            </connector>
+            <eventType>AlarmEvent</eventType>
+            <inputParameters>
+                <name>AlarmTime</name>
+                <value>
+                    <elementReference>myVariable_waitStartTimeVariable</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Days</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>13.0</numberValue>
+                </value>
+            </inputParameters>
+            <label>myWaitEvent_myWait_myRule_11_event_0</label>
+        </waitEvents>
+        <waitEvents>
+            <processMetadataValues>
+                <name>inputParameterType</name>
+                <value>
+                    <stringValue>now</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>myWaitEvent_myWait_myRule_11_event_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myWaitEvent_myWait_myRule_11_event_1_postActionExecutionVariable</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myWaitEvent_myWait_myRule_11_event_1_SA1</targetReference>
+            </connector>
+            <eventType>AlarmEvent</eventType>
+            <inputParameters>
+                <name>AlarmTime</name>
+                <value>
+                    <elementReference>myVariable_waitStartTimeVariable</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Days</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>15.0</numberValue>
+                </value>
+            </inputParameters>
+            <label>myWaitEvent_myWait_myRule_11_event_1</label>
+        </waitEvents>
+    </waits>
     <waits>
         <name>myWait_myRule_7</name>
         <label>myWait_myRule_7</label>
@@ -1347,7 +1887,7 @@ OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process
             <processMetadataValues>
                 <name>inputParameterType</name>
                 <value>
-                    <stringValue>now</stringValue>
+                    <stringValue>referenced</stringValue>
                 </value>
             </processMetadataValues>
             <name>myWaitEvent_myWait_myRule_9_event_0</name>
@@ -1360,13 +1900,19 @@ OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myWaitEvent_myWait_myRule_9_event_0_SA1</targetReference>
+                <targetReference>myPostWaitDecision_myWaitEvent_myWait_myRule_9_event_0</targetReference>
             </connector>
-            <eventType>AlarmEvent</eventType>
+            <eventType>DateRefAlarmEvent</eventType>
             <inputParameters>
-                <name>AlarmTime</name>
+                <name>TimeTableColumnEnumOrId</name>
                 <value>
-                    <elementReference>myVariable_waitStartTimeVariable</elementReference>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>EntityObjectId</name>
+                <value>
+                    <elementReference>myVariable_current.Id</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1378,7 +1924,13 @@ OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process
             <inputParameters>
                 <name>TimeOffset</name>
                 <value>
-                    <numberValue>13.0</numberValue>
+                    <numberValue>54.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeFieldColumnEnumOrId</name>
+                <value>
+                    <stringValue>CreatedDate</stringValue>
                 </value>
             </inputParameters>
             <label>myWaitEvent_myWait_myRule_9_event_0</label>
@@ -1387,7 +1939,7 @@ OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process
             <processMetadataValues>
                 <name>inputParameterType</name>
                 <value>
-                    <stringValue>now</stringValue>
+                    <stringValue>referenced</stringValue>
                 </value>
             </processMetadataValues>
             <name>myWaitEvent_myWait_myRule_9_event_1</name>
@@ -1400,13 +1952,19 @@ OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myWaitEvent_myWait_myRule_9_event_1_SA1</targetReference>
+                <targetReference>myPostWaitDecision_myWaitEvent_myWait_myRule_9_event_1</targetReference>
             </connector>
-            <eventType>AlarmEvent</eventType>
+            <eventType>DateRefAlarmEvent</eventType>
             <inputParameters>
-                <name>AlarmTime</name>
+                <name>TimeTableColumnEnumOrId</name>
                 <value>
-                    <elementReference>myVariable_waitStartTimeVariable</elementReference>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>EntityObjectId</name>
+                <value>
+                    <elementReference>myVariable_current.Id</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1418,7 +1976,13 @@ OR({!myVariable_old.RecordType.Name} == &apos;IDFS Airline Participation Process
             <inputParameters>
                 <name>TimeOffset</name>
                 <value>
-                    <numberValue>15.0</numberValue>
+                    <numberValue>56.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeFieldColumnEnumOrId</name>
+                <value>
+                    <stringValue>CreatedDate</stringValue>
                 </value>
             </inputParameters>
             <label>myWaitEvent_myWait_myRule_9_event_1</label>

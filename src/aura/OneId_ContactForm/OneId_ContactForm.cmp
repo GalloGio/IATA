@@ -1,7 +1,7 @@
 <aura:component controller="OneId_RegistrationProcessController">
 
     <aura:attribute name="contactLabels" type="Map"/>
-    <aura:attribute name="jobFunctionOptions" type="String[]"/>
+    <aura:attribute name="jobFunctionOptions" type="List"/>
     <aura:attribute name="userCountry" type="String"/>
     <aura:attribute name="hasJquery" type="Boolean"/>
     <aura:attribute name="contact" type="Contact" default="{'sObjectType':'Contact'}"/>
@@ -48,7 +48,7 @@
             <label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Membership_Function__c}</label>
             <ui:inputSelect multiple="true" class="multiple required" aura:id="membershipFunction" value="{!v.contact.Membership_Function__c}" required="true">
                 <aura:iteration items="{!v.jobFunctionOptions}" var="function" indexVar="index" aura:id="function">
-                    <ui:inputSelectOption text="{!function}" label="{!function}" /><!-- value="true" -->
+                    <ui:inputSelectOption text="{!function.value}" label="{!function.label}" /><!-- value="true" -->
                 </aura:iteration>
             </ui:inputSelect>
             <ul aura:id="jobHelp" >

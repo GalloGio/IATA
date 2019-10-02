@@ -33,7 +33,7 @@ public  class ISSP_TC_Accept {
     
     //Language picklist
     public String selectedLanguage {get;set;}
-    
+
     public List<SelectOption> languages {
     get {
         List<SelectOption> options = new List<selectOption>();
@@ -53,7 +53,20 @@ public  class ISSP_TC_Accept {
     }
     set;
     }
-    
+
+    public Boolean isPortalNavigationBar {
+    get {
+        if(isPortalNavigationBar == null) {
+            User usr = [SELECT Id, Profile.Name, CNS_Account_or_Agency__c FROM User WHERE Id =: UserInfo.getUserId()];
+
+            isPortalNavigationBar = CSP_Utils.isNewPortalActive();
+         }
+
+        system.debug('SS## isPortalNavigationBar: ' + isPortalNavigationBar);
+        return isPortalNavigationBar;
+    }
+    set;
+    }
 
     public ISSP_TC_Accept(){
         isBSP = false;
@@ -92,17 +105,19 @@ public  class ISSP_TC_Accept {
             //AMSU-142 (AMSU-26)
             isCargoDGR = false;
             if (userList[0].AccountId != null){
-                Account acc = [Select Location_Class__c, Category__c, Sector__c, Is_Branch_Abroad__c, Status__c, Location_Type__c, RecordTypeId from Account where Id = :userList[0].AccountId];
+                Account acc = [Select Location_Class__c, Category__c, Sector__c, Is_Branch_Abroad__c, Status__c, Location_Type__c, RecordTypeId, IATA_ISO_Country__r.ANG_GDI_Enabled__c from Account where Id = :userList[0].AccountId];
                 if( AMS_Utils.LocationClassDGR.contains(acc.Location_Class__c) ) {
                     isCargoDGR = true;
                 }
 
-                Set<String> allowedLocTypes = new Set<String>{'HO', 'HE', 'AO'};
+                Set<String> allowedLocTypes = new Set<String>{'HO', 'HE', 'AO', 'GE'};
+                Set<String> allowedLocClass = new Set<String>{'P', 'D'};
 
                 if (((acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent') && acc.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) && 
                     (allowedLocTypes.contains(acc.Location_Type__c) || acc.Is_Branch_Abroad__c == 'Yes') &&
-                    (AMS_Utils.ACTIVEAGENCYSTATUS.contains(acc.Status__c) || acc.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) &&
-                    (userList[0].Contact.Financial_Assessment_Contact__c || userList[0].Contact.User_Portal_Status__c == 'Approved Admin')) {
+                    allowedLocClass.contains(acc.Location_Class__c) &&
+                    (AMS_Utils.ACTIVEAGENCYSTATUS.contains(acc.Status__c) || acc.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING || acc.Status__c == AMS_Utils.ACC_S10_ENDORSED) &&
+                    (userList[0].Contact.Financial_Assessment_Contact__c || userList[0].Contact.User_Portal_Status__c == 'Approved Admin') && acc.IATA_ISO_Country__r.ANG_GDI_Enabled__c) {
                     showFinancialInstitution = true;
                 }
             }

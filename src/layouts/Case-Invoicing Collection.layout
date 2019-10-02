@@ -191,6 +191,10 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Collected_Amount_all_periods__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Invoice_Type__c</field>
             </layoutItems>
@@ -357,6 +361,22 @@
             <layoutItems>
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Case tracking history (Custom)</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>300</height>
+                <page>CaseTrackingHistory</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>

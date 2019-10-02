@@ -12,17 +12,14 @@ public without sharing class LVA_ChatTriggerHandler {
     // ****************** distribution methods ********************
     // ************************************************************
     
-    public void onBeforeInsert(){
-        //workaround no longer needed
-       // CreateCaseForLiveChat();
-    }
+     public void onBeforeInsert(){}
     
-    public void onAfterInsert(){
-        ProcessLiveChatTranscript(triggerNew);
-    }
+    public void onAfterInsert(){}
     
     public void onBeforeUpdate(){}
-    public void onAfterUpdate(){}
+    public void onAfterUpdate(){  
+        processLiveChat();      
+    }
     
   //  public void onBeforeDelete(){}
   //  public void onAfterDelete(){}
@@ -31,7 +28,7 @@ public without sharing class LVA_ChatTriggerHandler {
     // ********************* action methods ***********************
     // ************************************************************
     
-    public void CreateCaseForLiveChat(){
+    /*public void CreateCaseForLiveChat(){
         //Workaround for salesforce issue on creating cases from the deploymetn API
        /* Date mydate = Date.today();
         Map<Id, Case> mapCases = new Map<Id,Case>();
@@ -62,25 +59,20 @@ public without sharing class LVA_ChatTriggerHandler {
                 lct.CaseId = c.id;
             }
         }*/
-    }
+    //}
 
 
    
-    /*public void processLiveChat(){
-        List<LiveChatTranscript> lctlist= new List<LiveChatTranscript>(); 
-        List<case> caseToUpdateList= new List<case>(); 
-
+    public void processLiveChat(){
+        List<LiveChatTranscript> lctlist= new List<LiveChatTranscript>();
         for(LiveChatTranscript lct:triggerNew){
         
             if(lct.Status != oldMap.get(lct.id).Status ){
                 if(oldMap.get(lct.id).Status ==INPROGRESS_STATUS && closedStatusSet.contains(lct.Status))   lctlist.add(lct);
             }
         }
-        if(!lctlist.isEmpty()) ProcessLiveChatTranscript(lctlist);   
-        
-        if(!caseToUpdateList.isEmpty()) update caseToUpdateList;  
-
-    }*/
+        if(!lctlist.isEmpty()) ProcessLiveChatTranscript(lctlist);      
+    }
 
      public static void ProcessLiveChatTranscript(List<LiveChatTranscript> liveChatTranscripts){
         List<CaseComment> ccs = new List<CaseComment>();

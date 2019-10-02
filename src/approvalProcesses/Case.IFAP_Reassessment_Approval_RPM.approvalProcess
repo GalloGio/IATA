@@ -34,6 +34,10 @@
         <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
+                <name>cedrolav@iata.org</name>
+                <type>user</type>
+            </approver>
+            <approver>
                 <name>martinyuks@iata.org</name>
                 <type>user</type>
             </approver>
@@ -112,6 +116,10 @@
         <assignedApprover>
             <approver>
                 <name>martinyuks@iata.org</name>
+                <type>user</type>
+            </approver>
+            <approver>
+                <name>sarrie@iata.org</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>

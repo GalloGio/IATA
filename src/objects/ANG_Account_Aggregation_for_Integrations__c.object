@@ -52,6 +52,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>AMS_PWC_INT_DEFNONPAY__c</fullName>
         <description>PWC: Sum all all DEF non payment in the last N Months</description>

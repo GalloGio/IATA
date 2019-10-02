@@ -36,10 +36,14 @@ public class ANG_RHCInformationTriggerHandler{
 				updatedFlagsForRHCEqsFS.add(rhc);
 
 		if (!updatedFlagsForRHCEqsFS.isEmpty()) ANG_RHCHelper.calculateRHCAmount(updatedFlagsForRHCEqsFS);
+        
+		assessOscarAccreditationForecastRHC(filterByIATACode(triggerNew));
+
 	}
 	public void onAfterUpdate(){
 		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),oldMap,'RHC_Information','ANG_AccountId__c').run();
 		refreshRMEData();
+		handleRhcUpdate();
 	}
 
 	public void onBeforeDelete(){}
@@ -147,6 +151,36 @@ public class ANG_RHCInformationTriggerHandler{
                 }               
             }
         }        	
+	}
+
+    public static void assessOscarAccreditationForecastRHC(List<ANG_RHC_Information__c> rhcLst){
+        
+		if(!AMS_OscarTriggerHandler.applyRHCForecast || rhcLst.size() > 1)
+			return;
+
+		System.debug('[ANG_RHCInformationTriggerHandler] Applying ANG_RHC_Amount__c = ANG_RHC_Amount_Forecasted__c to new Oscar Accredited RHC Info.');
+		
+		ANG_RHC_Information__c rhc = rhcLst.get(0);
+		rhc.ANG_RHC_Amount__c = rhc.ANG_RHC_Amount_Forecasted__c;
+		rhc.ANG_Forecasted_RHC_Effective_date__c = System.today();
+		rhc.ANG_RHC_Effective_Date__c = System.today();
+		
+	}
+
+	private void handleRhcUpdate(){
+
+		Set<Id> toNotify = new Set<Id>();
+		
+		for(ANG_RHC_Information__c rhc : triggerNew){
+			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(rhc.ANG_AccountId__c) && rhc.ANG_RHC_Amount_Forecasted__c != oldMap.get(rhc.Id).ANG_RHC_Amount_Forecasted__c){
+				toNotify.add(rhc.ANG_AccountId__c);
+			}
+		}
+
+		if(!toNotify.isEmpty()){
+			ANG_RHCHelper.handleRiskOrForecastedRhcAmountUpdates(toNotify);
+		}
+
 	}
 
 }

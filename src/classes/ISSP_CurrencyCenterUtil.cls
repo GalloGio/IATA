@@ -109,8 +109,9 @@ public without sharing class ISSP_CurrencyCenterUtil {
 
         List<Portal_Application_Right__c> parList = [SELECT Id, Name, Contact__c FROM Portal_Application_Right__c
                 WHERE Contact__c in : accountsContacts AND
-                Right__c = 'Access Granted' AND
-                Application_Start_URL__c = '/ISSP_CurrencyCenterHome'];
+                        Right__c = 'Access Granted' AND
+                        Application_Start_URL__c = '/ISSP_CurrencyCenterHome' AND 
+                        Enable_Notifications__c = true];
         System.debug('jmc - ISSP_CurrencyCenterUtil.sendEmailsBatch parList ' + parList);
 
         if(!parList.isEmpty()){

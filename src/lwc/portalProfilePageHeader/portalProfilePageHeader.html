@@ -1,0 +1,75 @@
+<!--
+ - Created by pvavruska on 5/23/2019.
+ -->
+
+<!-- Portal Profile Page Header -->
+<template>
+
+
+
+    <c-portal-page-container style-class="dark">
+        <span slot="componentContent">
+            <div class="fixMinSize">
+
+                <!-- Breadcrumbs -->
+                <div class="slds-is-relative">
+                    <c-portal-breadcrumbs></c-portal-breadcrumbs>
+                </div>
+
+                <!-- Header -->
+                <div class="slds-is-relative headerShadow">
+                    <template if:true={loading}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+
+                    <template if:false={loading}>
+                        <div class="coverBand" style={backgroundStyle}></div>
+
+                        <!-- NOT BELONGS TO THIS SCOPE! TO IMPLEMENT IN FUTURE-->
+                        <!--div style={profileDivStyle}></div-->
+
+                            <div class="companyHeader slds-m-bottom_medium fullWidth">
+                                <!-- Image spacers -->
+                                <!-- NOT BELONGS TO THIS SCOPE! TO IMPLEMENT IN FUTURE-->
+                                <!--div class="slds-hide_medium fullWidth smallSpacer">< Image></div>
+                                <div class="slds-show_medium mediumSpacer">< Image ></div-->
+
+
+                                <template if:false={noAccount}>
+                                    <!-- Header company info grid -->
+                                    <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around--small">
+                                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-4 slds-large-size_2-of-3 ">
+                                            <div class="text-medium text-bold text-darkGray">{userAccount.Name}</class></div>
+                                        </div>
+                                        <!-- Labels -->
+                                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-large-size_1-of-3"> </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-large-size_1-of-3" >
+                                            <div class="fieldLabel">{labels.csp_Profile_Website}</div>
+                                            <div class="fieldValue"><a target="_blank" href={accountHref}>{accountWeb}</a></div>
+                                        </div>
+                                        <template if:false={emptyCode}>
+                                            <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4 slds-large-size_1-of-3 ">
+                                                <div class="fieldLabel">{labels.csp_Profile_IATACode}</div>
+                                                <div class="fieldValue">{userAccount.IATACode__c}</div>
+                                            </div>
+                                        </template>
+                                        <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4 slds-large-size_1-of-3 ">
+                                            <div class="fieldLabel">{labels.csp_Profile_CompanyEmail}</div>
+                                            <div class="fieldValue">{userAccount.Email__c}</div>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <!-- No account -->
+                                <template if:true={noAccount}>
+                                    <div class="text-medium text-bold slds-p-top_xx-large text-darkGray centered">
+                                        No related account
+                                    </div>
+                                </template>
+                            </div>
+                    </template>
+                </div>
+            </div>
+        </span>
+    </c-portal-page-container>
+</template>

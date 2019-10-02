@@ -22,20 +22,14 @@ private class AMS_AgencyAChangeCodeTest {
         IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', AIMS_Area_Name__c = 'ITALY', Region__c='Europe', ISS_Office_Location__c='Italy');
         insert italy;
         
-
         Account HO1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = italy.id, 
                          Sector__c = (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), 
                          Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = 'Approved',
                          Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com'
                          );
-       
-        
         insert HO1;
         
-        
-
         Contact C1 = new Contact(FirstName = 'First', LastName = 'Contact',  AccountId = HO1.Id, Email = 'thecontact1@gmail.com', Phone = '123123123');
-
         insert C1;
 
         createCaseAndOSCAR(HO1,C1);
@@ -133,8 +127,6 @@ private class AMS_AgencyAChangeCodeTest {
         changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
         changeCode.status  = '2';
 
-        
-
         accreditation.Account_Name__c = 'Changed Name';
         accreditation.Short_Name__c= 'Changed short name';
         accreditation.Trade_Name__c='Changed trade name';
@@ -185,7 +177,48 @@ private class AMS_AgencyAChangeCodeTest {
         triggerhandler.onAfterUpdate();
         triggerhandler.onBeforeDelete();
         triggerhandler.onAfterDelete();
+    }
 
+    @isTest static void testRVWAndUpdateChangeCode() {
+
+        IATA_ISO_Country__c cnsCountry = new IATA_ISO_Country__c(Name = 'CNS Country', CNS_Country__c = true, ISO_Code__c = 'XX');
+        insert cnsCountry;
+
+        Account acc = [select id from Account limit 1];
+        acc.Location_Class__c = 'C';
+        acc.IATA_ISO_Country__c = cnsCountry.Id;
+        update acc;
+
+        Contact con = [select id from Contact limit 1];
+
+        ID rtSidraLite = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+        ID rtCNS = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CNS_Collection_Process');
+
+        Case cnsCase = new Case(RecordTypeId = rtSidraLite, Subject = 'CNS Case', AccountId = acc.Id, ContactId = con.Id);
+        insert cnsCase;
+
+        Case sidraLiteCase = new Case(RecordTypeId = rtSidraLite, Subject = 'SIDRA Lite Case', ParentId = cnsCase.Id, AccountId = acc.Id, ContactId = con.Id);
+        insert sidraLiteCase;
+        
+        Test.StartTest();
+
+        //insert RVW change code
+        Agency_Applied_Change_code__c cc = new Agency_Applied_Change_code__c();   
+        cc.Account__c = acc.Id;
+        cc.SIDRA_Case__c = sidraLiteCase.Id;
+        cc.Change_Code__c = 'RVW';
+        insert cc;
+
+        //update change code
+        cc.AccountNewStatus__c = 'Approved';
+        cc.Reason_Description__c  = 'ACCREDITED - MEETS CRITERIA'; 
+        update cc;
+
+        //invoke batches
+        AMS_AgencyAChangeCodeHandler.notifyAirlines(new List<Agency_Applied_Change_code__c>{cc});
+
+
+        Test.StopTest();
     }
 
 }

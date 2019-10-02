@@ -59,6 +59,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fieldSets>
         <fullName>ISSPAccServiceListView</fullName>
         <description>ISSP_AccesstoService</description>
@@ -134,6 +135,19 @@
         <length>255</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Airline_Prefix__c</fullName>
+        <description>Used by TD to display data for CASS Airlines.</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.Account.Airline_Prefix__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Airline Prefix</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -457,6 +471,16 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Last_Visit_Date__c</fullName>
+        <description>Last time when user visited this service</description>
+        <externalId>false</externalId>
+        <label>Last Visit Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>Last_modified_by_internal_user__c</fullName>
@@ -1100,6 +1124,18 @@ NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
         <errorMessage>Access cannot be granted since the Agency&apos;s accreditation type for this contact does not match the portal service (Restrict by Accreditation Type).</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>MIR_service_for_airlines_only</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+    Application_Name__c = &quot;Management Information Report&quot;,
+    ISPICKVAL(Right__c,&apos;Access Granted&apos;),
+      NOT(
+      ISPICKVAL(Contact__r.Account.Sector__c,&apos;Airline&apos;)
+      )
+    )</errorConditionFormula>
+        <errorMessage>Management Information Report portal service can only be granted for users under airline accounts.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>MR_cannot_be_approved_by_admin</fullName>
         <active>false</active>
         <errorConditionFormula>AND( 
@@ -1150,7 +1186,9 @@ NOT(BEGINS($Profile.Name, &apos;identity&apos;))
         <active>true</active>
         <description>Internal users must not be able to assign an IATA EasyPay portal service with Access Status = Access Requested to a contact.</description>
         <errorConditionFormula>and(
+OR(
 Text(Right__c) = &apos;Access Requested&apos;,
+Text(Right__c) = &apos;Access Granted&apos;),
 CONTAINS(Application_Name__c, &apos;IATA EasyPay&apos;),
 NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)),
 $Profile.Name != &apos;ISS Portal Agency Delegated Admin User&apos;,

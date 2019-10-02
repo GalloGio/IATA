@@ -289,11 +289,11 @@ public class ISSP_AMC_EntityContactData {
 			controllerParticipation.Has_the_airline_been_issued_an_AOC__c = accountRecord.;
 			controllerParticipation.Has_the_airline_the_AOC_in_progress__c = accountRecord.;
 			controllerParticipation.Head_Office_Contact_Details__c = accountRecord.;*/
-			controllerParticipation.HQ_City__c = accountRecord.ShippingCity;
-			controllerParticipation.HQ_Country__c = accountRecord.ShippingCountry;
-			controllerParticipation.HQ_Postal_Zip_code__c = accountRecord.ShippingPostalCode;
-			controllerParticipation.HQ_State_Province__c = accountRecord.ShippingState;
-			controllerParticipation.HQ_Street_address_1__c = accountRecord.ShippingStreet;
+			controllerParticipation.HQ_City__c = accountRecord.BillingCity;
+			controllerParticipation.HQ_Country__c = accountRecord.BillingCountry;
+			controllerParticipation.HQ_Postal_Zip_code__c = accountRecord.BillingPostalCode;
+			controllerParticipation.HQ_State_Province__c = accountRecord.BillingState;
+			controllerParticipation.HQ_Street_address_1__c = accountRecord.BillingStreet;
 			controllerParticipation.HQ_VAT__c = accountRecord.VAT_Number__c;
 			if(ISSP_AMC_Location_Identifier.isLoc == false){
 				controllerParticipation.IATA_ISO_Country__c = accountRecord.IATA_ISO_Country__c;

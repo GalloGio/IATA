@@ -1,0 +1,29 @@
+<template>
+    <div class="customLightShadow background-white">
+
+        <!-- Header Part -->
+        <div class="slds-p-top_x-large slds-p-bottom_x-small">
+            <div style="display: flex;justify-content: center;align-items: center;">
+                <div class="triangleRight" style="width:20px;">
+                    &nbsp;
+                </div>
+                <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
+                    <div style="width:100%;">
+                        <span class="text-medium text-darkGray text-bold slds-p-left_small"><slot name="cardTitle"></slot></span>
+                    </div>
+                </div>
+                <div class="text-xxsmall slds-m-right_large">
+                    <slot name="cardButton"></slot>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Body Part -->
+        <div class={bodyStyle}>
+            <slot name="cardBody"></slot>
+        </div>
+        
+    </div>
+    
+</template>

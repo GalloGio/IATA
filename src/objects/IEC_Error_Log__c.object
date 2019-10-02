@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Contact__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -165,20 +166,6 @@
     </fields>
     <label>IEC Error Log</label>
     <listViews>
-        <fullName>DataLoader_GDS_Errors</fullName>
-        <columns>NAME</columns>
-        <columns>Type__c</columns>
-        <columns>Source__c</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>IATACODE__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Stack_Trace__c</columns>
-        <columns>Extra_Information__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>DataLoader - Webstar GDS Errors</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>DataLoader_GSS_Errors</fullName>
         <columns>NAME</columns>
         <columns>Source__c</columns>
@@ -188,108 +175,6 @@
         <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>00 - ALL</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Errors_GSS_CACWEB</fullName>
-        <columns>NAME</columns>
-        <columns>Type__c</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>Source__c</columns>
-        <columns>Displayed_Message__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Type__c</field>
-            <operation>equals</operation>
-            <value>Error</value>
-        </filters>
-        <filters>
-            <field>Source__c</field>
-            <operation>contains</operation>
-            <value>GSS,CAC</value>
-        </filters>
-        <label>Errors for GSS &amp; CACWEB</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Errors_for_GSS_CACWEB_File_Production</fullName>
-        <columns>NAME</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Type__c</columns>
-        <columns>Source__c</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>Displayed_Message__c</columns>
-        <columns>Stack_Trace__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Type__c</field>
-            <operation>equals</operation>
-            <value>Error</value>
-        </filters>
-        <filters>
-            <field>Source__c</field>
-            <operation>contains</operation>
-            <value>GSS,CAC,MDP</value>
-        </filters>
-        <filters>
-            <field>Displayed_Message__c</field>
-            <operation>startsWith</operation>
-            <value>File Generation</value>
-        </filters>
-        <label>Errors for GSS &amp; CACWEB File Production</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>GDP_Replicate_Errors</fullName>
-        <columns>NAME</columns>
-        <columns>Type__c</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>Source__c</columns>
-        <columns>Displayed_Message__c</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source__c</field>
-            <operation>contains</operation>
-            <value>GDP Replicate</value>
-        </filters>
-        <label>GDP Replicate Errors</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>IECSAPManager_errors</fullName>
-        <columns>NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source__c</field>
-            <operation>equals</operation>
-            <value>IECSAPManager</value>
-        </filters>
-        <filters>
-            <field>Type__c</field>
-            <operation>equals</operation>
-            <value>Error</value>
-        </filters>
-        <label>IECSAPManager errors</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Infos</fullName>
-        <columns>NAME</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>Displayed_Message__c</columns>
-        <columns>Extra_Information__c</columns>
-        <columns>Source__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Type__c</field>
-            <operation>equals</operation>
-            <value>Info</value>
-        </filters>
-        <label>Infos</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -310,97 +195,20 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Today_No_SAP</fullName>
+        <fullName>Zuora_Synch_Errors</fullName>
         <columns>NAME</columns>
+        <columns>Source__c</columns>
+        <columns>Stack_Trace__c</columns>
         <columns>Type__c</columns>
         <columns>Errror_Message__c</columns>
-        <columns>Source__c</columns>
-        <columns>Displayed_Message__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Source__c</field>
-            <operation>notContain</operation>
-            <value>SAP</value>
-        </filters>
-        <filters>
-            <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>Product_Svc/processZProductSaveResult</value>
         </filters>
-        <label>Today No SAP</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Webstar_Accreditation_Errors</fullName>
-        <columns>NAME</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>IATACODE__c</columns>
-        <columns>Source__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source__c</field>
-            <operation>startsWith</operation>
-            <value>DataLoader_AIMS_Accreditations</value>
-        </filters>
-        <label>Webstar Accreditation Errors</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>ZZ_AdHoc_Search</fullName>
-        <columns>NAME</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>IATACODE__c</columns>
-        <columns>Source__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Errror_Message__c</field>
-            <operation>contains</operation>
-            <value>term</value>
-        </filters>
-        <label>ZZ-AdHoc Search</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Zuora</fullName>
-        <columns>NAME</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>Type__c</columns>
-        <columns>Source__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source__c</field>
-            <operation>contains</operation>
-            <value>Zuora</value>
-        </filters>
-        <label>Zuora</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>e_commerce</fullName>
-        <columns>NAME</columns>
-        <columns>Contact__c</columns>
-        <columns>Displayed_Message__c</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>Extra_Information__c</columns>
-        <columns>Source__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Data__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>greaterThan</operation>
-            <value>11/30/2018 12:01 AM</value>
-        </filters>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>lessOrEqual</operation>
-            <value>11/30/2018 11:59 PM</value>
-        </filters>
-        <label>e-commerce</label>
+        <label>Zuora Synch Errors</label>
         <language>en_US</language>
     </listViews>
     <nameField>

@@ -38,7 +38,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>Subject</field>
-        <formula>&quot;Phone call received on the&quot;+&quot; &quot;+ TEXT(Case.CreatedDate)</formula>
+        <formula>&quot;Phone call received on the&quot;+&quot; &quot;+ TEXT(DATETIMEVALUE(NOW()))</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Type</field>
@@ -76,7 +76,7 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>ParentId</field>
-                <uiBehavior>Required</uiBehavior>
+                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
@@ -96,7 +96,7 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Case_record_type__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
@@ -144,6 +144,6 @@
     </quickActionLayout>
     <targetObject>Case</targetObject>
     <targetParentField>Parent</targetParentField>
-    <targetRecordType>Case.Cases_Global</targetRecordType>
+    <targetRecordType>Case.CasesEurope</targetRecordType>
     <type>Create</type>
 </QuickAction>

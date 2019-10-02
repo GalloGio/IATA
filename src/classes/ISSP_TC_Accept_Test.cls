@@ -143,7 +143,8 @@ private class ISSP_TC_Accept_Test {
         ISSP_TC_Accept cttr = new ISSP_TC_Accept();
     	
     	system.runAs(newUser){	
-        	cttr.CheckLogoutorSurvey();
+        	cttr.CheckLogoutorSurvey();			
+			system.assertEquals(cttr.isPortalNavigationBar,false);
     	}
     }
 

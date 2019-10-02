@@ -4,6 +4,7 @@ global without sharing class GDPR_RequestList_CTRL {
     global static List<Case> getUserCases(){
         String contactId = null;
         String userId = UserInfo.getUserId();
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'GDPR_Request');
 
         User userAux = [SELECT Id, ContactId FROM User WHERE Id = :userId];
         if(userAux != null && userAux.ContactId != null){contactId = userAux.ContactId;}
@@ -13,7 +14,7 @@ global without sharing class GDPR_RequestList_CTRL {
         
         List<Case> lstCases = [SELECT Id,CaseNumber,Status,Data_Privacy_Rights__c,ContactId,Subject,Description 
                                FROM Case 
-                               WHERE ContactId = :contactId AND DPO_Owner__c = NULL ORDER BY createddate desc];
+                               WHERE ContactId = :contactId AND DPO_Owner__c = NULL AND RecordTypeId = :rtId ORDER BY createddate desc];
         return lstCases;
     }
     

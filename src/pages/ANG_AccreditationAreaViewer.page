@@ -263,6 +263,11 @@
 						<apex:column styleClass="{!IF(ac.changedFieldsMap['Mobile__c'],'editable','')}" value="{!ac.ac.Mobile__c}"/>
 						<apex:column styleClass="{!IF(ac.changedFieldsMap['FAX__c'],'editable','')}" value="{!ac.ac.FAX__c}"/>
 						<apex:column styleClass="{!IF(ac.changedFieldsMap['Financial_interest__c'],'editable','')}" value="{!ac.ac.Financial_interest__c}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['AddressStreet__c'],'editable','')}" value="{!ac.ac.AddressStreet__c}"/>
+                    	<apex:column styleClass="{!IF(ac.changedFieldsMap['AddressPostCode__c'],'editable','')}" value="{!ac.ac.AddressPostCode__c}"/>
+                    	<apex:column styleClass="{!IF(ac.changedFieldsMap['AddressState__c'],'editable','')}" value="{!ac.ac.AddressState__c}"/>
+                    	<apex:column styleClass="{!IF(ac.changedFieldsMap['AddressCountry__c'],'editable','')}" value="{!ac.ac.AddressCountry__c}"/>
+
 				</apex:pageblocktable>
 	
 			</apex:pageBlockSection>

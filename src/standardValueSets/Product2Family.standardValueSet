@@ -292,6 +292,11 @@
         <label>TACT</label>
     </standardValue>
     <standardValue>
+        <fullName>TACT-Public</fullName>
+        <default>false</default>
+        <label>TACT-Public</label>
+    </standardValue>
+    <standardValue>
         <fullName>Taxes</fullName>
         <default>false</default>
         <label>Taxes</label>
@@ -305,6 +310,11 @@
         <fullName>Timatic</fullName>
         <default>false</default>
         <label>Timatic</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Timatic-Public</fullName>
+        <default>false</default>
+        <label>Timatic-Public</label>
     </standardValue>
     <standardValue>
         <fullName>Training</fullName>
@@ -330,5 +340,15 @@
         <fullName>Training: Self Study</fullName>
         <default>false</default>
         <label>Training: Self Study</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Training - Distance</fullName>
+        <default>false</default>
+        <label>Training - Distance</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Training - OnSite</fullName>
+        <default>false</default>
+        <label>Training - OnSite</label>
     </standardValue>
 </StandardValueSet>

@@ -28,6 +28,9 @@ public with sharing class AMS_AccountRoleCreator
 
     public static final Set<String> allowedLocationTypesForNewProcesses = new Set<String>{'HO','AO', 'HE', 'AE'};
 
+    public static boolean isAccountRoleCreationRunning = false;
+    public static Map<Id,Double> totalCoveredOwnershipByAccount = new Map<Id,Double>();
+
     private static String createContactRecordTypes(List<String> types){
         String toReturn = '';
 
@@ -211,6 +214,12 @@ public with sharing class AMS_AccountRoleCreator
                 accConBucketPerAccount.put(bucket.accountId, new List<AccreditationContactBucket>());
 
             accConBucketPerAccount.get(bucket.accountId).add(bucket);
+
+            //calculate total Covered Ownership By Account
+            if(bucket.isOwner && !bucket.accreditationContact.RecordType.DeveloperName.toUpperCase().contains('PREVIOUS')) {
+                Double totalCovered = totalCoveredOwnershipByAccount.containsKey(bucket.accountId) ? (totalCoveredOwnershipByAccount.get(bucket.accountId) + bucket.accreditationContact.Financial_interest__c) : bucket.accreditationContact.Financial_interest__c;
+                totalCoveredOwnershipByAccount.put(bucket.accountId, totalCovered);
+            }
         }
 
         //upsert contacts
@@ -329,7 +338,10 @@ public with sharing class AMS_AccountRoleCreator
 
         //upsert roles
         listClonesRoles.addAll(rolesToUpsert.values());
-        upsert listClonesRoles;
+        if(!listClonesRoles.isEmpty()){
+            isAccountRoleCreationRunning = true;
+            upsert listClonesRoles;
+        }
 
         // fill the accreditation contacts with the new roles ids
         for(AMS_Account_Role__c roleAfterUpsert : listClonesRoles) {

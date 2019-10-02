@@ -17,6 +17,16 @@ public class ISSP_AddAttachment {
   public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
   public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
 
+  public Boolean isNewPortal {
+    get {
+        if(isNewPortal == null) {
+            isNewPortal = CSP_Utils.isNewPortalActive();
+         }
+        return isNewPortal;
+    }
+    set;
+  }
+
   public ISSP_AddAttachment() {
     isCase = false;
     isClaim = false;
@@ -191,7 +201,14 @@ public class ISSP_AddAttachment {
                     }
                 }
                 
-                 return new Pagereference('/ISSP_Case?caseId=' + tmpCase.Id + commParam);   
+                if (!isNewPortal) {
+                  return new Pagereference('/ISSP_Case?caseId=' + tmpCase.Id + commParam);
+                } else {
+                  String url = CSP_Utils.redirectfromPortalHeader('case-details');
+                  return new Pagereference(url + '?caseId=' + tmpCase.Id);
+                }
+
+                   
                 }
 
     

@@ -224,6 +224,7 @@ public with sharing class AMS_AccreditationContactHelper
         if (ac.AddressStreet__c != null) con.OtherStreet =  ac.AddressStreet__c;
         if (ac.AddressCity__c != null) con.OtherCity =  ac.AddressCity__c;
         if (ac.AddressPostcode__c != null) con.OtherPostalCode =  ac.AddressPostcode__c;
+        if (ac.AddressState__c != null) con.OtherState = ac.AddressState__c;
         if (ac.AddressCountry__c != null) con.OtherCountry =  ac.AddressCountry__c;
 
         return con;
@@ -258,6 +259,7 @@ public with sharing class AMS_AccreditationContactHelper
         if (ac.AddressStreet__c != null) con.OtherStreet =  ac.AddressStreet__c;
         if (ac.AddressCity__c != null) con.OtherCity =  ac.AddressCity__c;
         if (ac.AddressPostcode__c != null) con.OtherPostalCode =  ac.AddressPostcode__c;
+        if (ac.AddressState__c != null) con.OtherState = ac.AddressState__c;
         if (ac.AddressCountry__c != null) con.OtherCountry =  ac.AddressCountry__c;
 
         if(!verifyChangesOnContactOrAccount(con,clonedCon))

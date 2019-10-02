@@ -37,6 +37,14 @@
         <type>Default</type>
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>Publication</fullName>
+        <fields>Name</fields>
+        <fields>Product_Manager_lookup__c</fields>
+        <fields>SAP_Material_Number__c</fields>
+        <fields>Name_of_SME__c</fields>
+        <label>Publication</label>
+    </compactLayouts>
     <enableFeeds>false</enableFeeds>
     <fieldSets>
         <fullName>CAMPAIGN_CUSTOMER_SEARCH_FIELDS</fullName>
@@ -601,6 +609,40 @@
         <label>Deferred Revenues</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Delivery_Fulfillment_Support__c</fullName>
+        <externalId>false</externalId>
+        <label>Delivery Fulfillment Support</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>YMQ ePublication Support</fullName>
+                    <default>false</default>
+                    <label>YMQ ePublication Support</label>
+                </value>
+                <value>
+                    <fullName>Product Manager</fullName>
+                    <default>false</default>
+                    <label>Product Manager</label>
+                </value>
+                <value>
+                    <fullName>Amazon S3 ITS</fullName>
+                    <default>false</default>
+                    <label>Amazon S3 ITS</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>true</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Description</fullName>
@@ -2233,6 +2275,11 @@ SIS Charge Code Type.</description>
                     <label>20 Year Passenger Forecast</label>
                 </value>
                 <value>
+                    <fullName>A4A-IATA Reservations Interline Procedures (AIRIMP)</fullName>
+                    <default>false</default>
+                    <label>A4A-IATA Reservations Interline Procedures (AIRIMP)</label>
+                </value>
+                <value>
                     <fullName>Aircraft Reliability Guidelines</fullName>
                     <default>false</default>
                     <label>Aircraft Reliability Guidelines</label>
@@ -2266,11 +2313,6 @@ SIS Charge Code Type.</description>
                     <fullName>Airport Handling Manual</fullName>
                     <default>false</default>
                     <label>Airport Handling Manual</label>
-                </value>
-                <value>
-                    <fullName>ATA-IATA Reservations Interline Procedures (AIRIMP)</fullName>
-                    <default>false</default>
-                    <label>ATA-IATA Reservations Interline Procedures (AIRIMP)</label>
                 </value>
                 <value>
                     <fullName>Aviation Charges Intelligence Center (ACIC)</fullName>
@@ -4074,13 +4116,14 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
     </fields>
     <fields>
         <fullName>Name_of_SME__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Name of the SME</label>
-        <length>50</length>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Products2</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Non_IATA_product__c</fullName>
@@ -6699,6 +6742,25 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Delivery_Fulfillment_Support__c</picklist>
+            <values>
+                <fullName>Amazon S3 ITS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Product Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YMQ ePublication Support</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Display_Ecom_Customer_Type__c</picklist>
             <values>
                 <fullName>Airlines</fullName>
@@ -7917,7 +7979,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>ATA-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9812,6 +9874,25 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Delivery_Fulfillment_Support__c</picklist>
+            <values>
+                <fullName>Amazon S3 ITS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Product Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YMQ ePublication Support</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Display_Ecom_Customer_Type__c</picklist>
             <values>
                 <fullName>Airlines</fullName>
@@ -11010,7 +11091,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>ATA-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12844,6 +12925,7 @@ The product will only appear on the Online Store when the date entered in this f
     <recordTypes>
         <fullName>Publication</fullName>
         <active>true</active>
+        <compactLayoutAssignment>Publication</compactLayoutAssignment>
         <label>Publication</label>
         <picklistValues>
             <picklist>Accepted_Payment_Methods__c</picklist>
@@ -12936,6 +13018,25 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Travel Agents</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Delivery_Fulfillment_Support__c</picklist>
+            <values>
+                <fullName>Amazon S3 ITS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Product Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YMQ ePublication Support</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14123,6 +14224,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>TACT-Public</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIESS</fullName>
                 <default>false</default>
             </values>
@@ -14132,6 +14237,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Timatic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timatic-Public</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14162,7 +14271,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>ATA-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16043,6 +16152,3033 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
     </recordTypes>
     <recordTypes>
+        <fullName>Training_Courses</fullName>
+        <active>true</active>
+        <label>Training Courses</label>
+        <picklistValues>
+            <picklist>Accepted_Payment_Methods__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing House</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Category_Group__c</picklist>
+            <values>
+                <fullName>Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Directories</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Economics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance and Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forecasts %26 Statistics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarders</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handlers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Suppliers %26 Manufacturers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>More</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resolutions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety %26 Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standards%2C Recommended Practices %26 Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agents</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Delivery_Fulfillment_Support__c</picklist>
+            <values>
+                <fullName>Amazon S3 ITS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Product Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YMQ ePublication Support</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Display_Ecom_Customer_Type__c</picklist>
+            <values>
+                <fullName>Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarders</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handlers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Suppliers %26 Manufacturers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agents</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Display_Ecom_Topic__c</picklist>
+            <values>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Directories</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Economics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exchange-Rates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance-and-Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forecasts-and-Statistic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law-and-Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety-and-Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scheduling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standards-and-Recommended-Practices</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax-Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel-Agency-Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User-Charges</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Division_Department__c</picklist>
+            <values>
+                <fullName>Airports%2C Passenger%2C Cargo and Security %28APCS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporate Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial and Distribution Services %28FDS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing and Commercial Services %28MACS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member and External Relations %28MER%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety and Flight Operations %28SFO%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Charge_Category__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Charge_Code_Type__c</picklist>
+            <values>
+                <fullName>Air</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Departure Fees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Development Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Infrastructure Development Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Service Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boarding Bridge Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Check-in Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Concourse Fees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coordination</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Curfew</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CurfewPAX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Custom Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Desk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equipment Rent Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handling Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inspection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meal Security Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Navigation Aid Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Noise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Permit Procedure Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ramp Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rescue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Storage Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Taxes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Telecommunication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waste</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Water</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weather</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Charge_Code__c</picklist>
+            <values>
+                <fullName>Approach</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Communication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>En-Route</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lighting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meteorology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Misc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Oceanic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Over-flight</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Runway Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Utilities</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Legacy_Charge_Code__c</picklist>
+            <values>
+                <fullName>AAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AAF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ADD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ADF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ADI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AFD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AFF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AID</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AIF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AIM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AIW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ASF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BBF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BE9</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CF3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CIF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CO1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CSC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CTN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CUP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CUT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CVP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DFD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DLD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DLL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DVD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DVF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EBC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EQU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EVL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FPX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FTS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GG5</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GRH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HAN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HCD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HCI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HD1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HD2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HF4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HYI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID5</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IDF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IEF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IUS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LA1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LEX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LOC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LTG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NAV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ND5</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NTL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OAN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OF1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OFJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OFL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OI2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OP1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OP2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OP3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OPI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OVT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PAE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PD1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PFC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PFD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PI1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PK1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PKG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PKI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PKL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>POL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PS1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PS2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PS3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PSC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PSD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PSG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PSI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PSR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PSW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PTP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PWI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PXD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PXI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PZR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RA1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RD1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RDA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RDI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RDN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RMP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RNA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SCD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SCI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SD1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SE1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SE2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SI1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SNG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SSF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SYI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TE1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TEF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TG8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TPL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UD1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UDD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UDE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UDF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UDI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UI1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>URA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UVD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UVI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Family</picklist>
+            <values>
+                <fullName>Training - Distance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training - OnSite</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IATA_ORG_Group__c</picklist>
+            <values>
+                <fullName>20 Year Passenger Forecast</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Reliability Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Coding Directory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Industry Freight Forecast</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airlines Magazine Subscription</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Development Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Handling Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aviation Charges Intelligence Center %28ACIC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aviation Cyber Security Toolkit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage ID</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cabin Safety Guide</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Agency Conference Resolution Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Claims and Loss Prevention Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Country Statistics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Interchange Message Procedures %28Cargo-IMP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Services Conference Resolution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Tariff Coordinating Conference Resolutions Manuals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo-XML Tookit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>City Code Directory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Compliance Kits - Combos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Data eList Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Handling Labels</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Hazard Labels</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Limited- Excepted Labels</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Posters</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Print Manuals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Software</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Training Books</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Response Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Essential Documents on International Air Carrier Liability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Simulation Training  Device Design</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel Services Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Passenger Survey</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Guide to Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Guidelines for Maintenance Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Cargo Handling Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Consolidated Exchange Rates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Exchange Rates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Ground Operations Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Operational Safety Audit %28IOSA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Rates of Exchange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Technical Peripheral Specifications</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA and Aviation History</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infectious Substances Shipping Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Integrated Risk Management Guidance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International Aircraft Financing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>List of Ticket and Airport Taxes and Fees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lithium Battery Guidelines Chinese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lithium Battery Shipping Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live Animals Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Load Control XML Messaging Toolkit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lost Found Property Chart</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maintenance Program Optimization Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly Traffic Statistics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multilateral Interline Traffic Agreements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Online Library</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other DGR Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Agency Conference Resolutions Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Data Exchange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Fare Construction Toolkit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Services Conference Resolutions Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Standards</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Tariff Coordinating Conference Composite Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Tariffs e-resolution Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishable Cargo Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publications Online</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reservations Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security Management System Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Computerized Airplane Performance %28SCAP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Schedules Information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>The Combined Cargo Conference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticketed Point Mileage Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticketing Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Time temperature labels</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>World Air Transport Statistics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>eAWBLink</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IEC_Cart_Option__c</picklist>
+            <values>
+                <fullName>Buy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Buy%2FQuote</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quote</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IEC_Page_Areas_of_Activity__c</picklist>
+            <values>
+                <fullName>Air Navigation Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Air Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Air Waybill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airmail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Development</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Management %26 Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alternative Fuels</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cabin Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Agency Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs %26 Trade Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cyber Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efficiency %26 Cost Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering %26 Maintenance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Facilitation %26 Passenger Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fares and Ticketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fast Travel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health %26 Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Operational Safety Audit %28IOSA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Safety Audit for Ground Operations %28ISAGO%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Data Model</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law %26 Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lithium Batteries</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Distribution Capability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Noise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Stop Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations %26 Infrastructure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Rights</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Tariffs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmacy %26 Healthcare</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Radio Spectrum</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Runway Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety Management Systems</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales and Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scheduling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security %26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security Management Systems</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Smart Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sustainability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel and Tourism</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unit Load Devices</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waste</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>e-Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IEC_Page_Content_Types__c</picklist>
+            <values>
+                <fullName>Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Directory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Economic Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Guideline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mobile App</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regulation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Software</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standards</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Statistics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Survey</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Toolkit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Image__c</picklist>
+            <values>
+                <fullName>Book</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book CD-ROM Web download</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book and CD-ROM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book and Web Download</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CD-ROM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DVD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Data File</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excel Spreadsheet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Floating License</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Folder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Labels</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Memory Stick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF %26 Excel files</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Poster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WEB Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WEB Download</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>eBook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>magazine</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>newsletter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>sf_sdl</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>special charges</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Inventory_Status__c</picklist>
+            <values>
+                <fullName>Available Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coming Soon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In stock</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Out of stock</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Language__c</picklist>
+            <values>
+                <fullName>Afrikaans</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Arabic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bulgarian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Catalan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chinese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chinese trad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Croatian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Czech</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Danish</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dutch</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>English</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estonian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finnish</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>French</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>German</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Greek</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hebrew</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hungarian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Icelandic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Indonesian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Italian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Japanese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Korean</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Latvian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lithuanian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Malaysian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multilingual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Norwegian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Polish</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portuguese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Romanian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Russian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Serbian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Serbian %28Latin%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slovakian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slovenian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Spanish</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swedish</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Thai</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Turkish</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ukrainian</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Line_of_Business__c</picklist>
+            <values>
+                <fullName>Advertising</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Events</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publications</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partnerships</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T %26 T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Media__c</picklist>
+            <values>
+                <fullName>Binder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book %26 Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book %26 Windows</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book and CD-ROM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book and WEB Download</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Brochure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C-Data File</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C-Web Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CD-ROM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CD-ROM LAN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chart</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DVD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Data File</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Disk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Download</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excel Spreadsheet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Floating License</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Folder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GR Airline pseudo code</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Labels</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Magazine</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Memory Stick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Newsletter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF %26 Excel files</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Poster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Software Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Video</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WEB Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WEB Download</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WEB Seminar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Windows</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>eBook</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Mega_Menu__c</picklist>
+            <values>
+                <fullName>IATA Branded Merchandise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>data-and-statistics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>publications</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Number_Of_Editions_per_Year__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductAudience__c</picklist>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Franchise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member GDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Processor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Member Single</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductCategory__c</picklist>
+            <values>
+                <fullName>CAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MDP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Product_Manager__c</picklist>
+            <values>
+                <fullName>Adelia Candido</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alan Murray Hayden</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Amine Boulaghmen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Andres Uribe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Angela Pacifico</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Benoît Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Brian Couture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Charles de Gheldere</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Denis Lebel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dimitrios Sanos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Eli Mandelawi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Filipa Toscano</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Frank Erb</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Frederic Montavont</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Henk Mulder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hicham Seifeddine</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ignacio Tamarit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Isabella Anderson</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ismail Albaidhani</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jean Ruiz</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jean-Christophe Rossand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jesper Venema</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jesus Rubio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Karen Stephenson</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Karim Ayari</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kato Christophe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Laurent Delarue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lise Gagnon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Luc Debono</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Manfred Blondeel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Markus Muller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Patricia Morgan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Piervittorio Farabbi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rachid Rahim</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rene Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Richard Lanthier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ronald Schaefer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shane McCorley</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sonja Raickovic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terry Light</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unknown %2F N%2EA%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacant</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Victoria Romero</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Product_Marketing_Manager__c</picklist>
+            <values>
+                <fullName>BERTOLUS Julie</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Eve-Marie Morgo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marc Heinicke</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %2F Does not Apply</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ramy Ainmelk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Raphaëlle Caron</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Product_Segment__c</picklist>
+            <values>
+                <fullName>Academic Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport %26 Civil Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alternate Channels</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Any Segment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PAX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel %26 Tourism</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Product_Type__c</picklist>
+            <values>
+                <fullName>Access Fees %28N VAT%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Advertising</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSPLink Materials</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Books w ISBN %28N QST%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Books w%2Fo ISBN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CBS Special</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CD %284%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CD-ROM %26 Book w ISBN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Classroom Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commissions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conf Admission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conf Room Rent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conf Sponsor %28N VAT%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting %26 Audit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cost Recvry %28N VAT%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC Additl Serv%2ECASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC Additnl Serv%2EBSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC Core Materls BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC Core Matls CASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dist Learn-Book%2C CD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dist Learn-Online</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E-Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Srv %28N VAT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Group C Materials</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Local BSP Matls</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Local CASS Matl</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Late Pmt Fees%28N VAT%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Poster %26 Book w ISBN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Sharing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Royalties</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service Fees %28RCM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service Fees %28VAT%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Third Party Rev%2FTax</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Usage Fees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Video %26 Book w ISBN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WEBLink Materials</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>QuantityUnitOfMeasure</picklist>
+            <values>
+                <fullName>Each</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Refinement_Format__c</picklist>
+            <values>
+                <fullName>Digital</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Print %26 CDs</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Refinement_Language__c</picklist>
+            <values>
+                <fullName>Chinese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>English</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>French</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>German</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multilingual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Russian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Spanish</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Refinement_Segment__c</picklist>
+            <values>
+                <fullName>Airport %26 Civil Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel %26 Tourism</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Restricted_Customer_Type__c</picklist>
+            <values>
+                <fullName>Accredited Training Center %28ATC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accredited Training Schools %28ATS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employee %28commercial purposes%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employees %28work related reason%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Training %26 Development Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Genric%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Gold%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sales_Channel__c</picklist>
+            <values>
+                <fullName>Auto E%26F Process</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call Center</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inter company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MACS %E2%80%93 Channel Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MACS %E2%80%93Telesales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MACS - Customer Care</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MACS - Direct Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MACS - Field Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MACS - SPP Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MACS - Team Sell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAD - Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Manual E%26F Process</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Online Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Third Party</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Webstar Annual Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Worldtek</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Discontd w Replacemt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Discontd w%2Fo Replace</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Defect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Test Part</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under Development</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>zqu__Category__c</picklist>
+            <values>
+                <fullName>Add On Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Base Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Miscellaneous Products</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>zqu__SyncStatus__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Synced</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Syncing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Updated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>zqu__Type__c</picklist>
+            <values>
+                <fullName>Bundle</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standalone</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
         <fullName>Unclassified</fullName>
         <active>true</active>
         <label>Unclassified</label>
@@ -16097,6 +19233,29 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Standards%2C Recommended Practices %26 Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agents</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Delivery_Fulfillment_Support__c</picklist>
+            <values>
+                <fullName>Amazon S3 ITS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Product Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YMQ ePublication Support</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17335,7 +20494,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>ATA-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -19164,12 +22323,13 @@ The product will only appear on the Online Store when the date entered in this f
         <customTabListAdditionalFields>PRODUCT2.FAMILY</customTabListAdditionalFields>
         <customTabListAdditionalFields>Product_Manager__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>PRODUCT2.NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Short_Title__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>SAP_Material_Number__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Product_Manager__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Product_Section__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Line_of_Business__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Activity_Code__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Product_Segment__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Edition__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Language__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Media__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Effective_From__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Delivery_Fulfillment_Support__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>EF_IATA_Ticket_Tax_Code__c</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.NAME</lookupPhoneDialogsAdditionalFields>
@@ -19177,12 +22337,13 @@ The product will only appear on the Online Store when the date entered in this f
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.FAMILY</lookupPhoneDialogsAdditionalFields>
         <searchResultsAdditionalFields>PRODUCT2.NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Product_Segment__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Product_Manager__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>PRODUCT2.FAMILY</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>PRODUCT2.ACTIVE</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Line_of_Business__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Short_Title__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>SAP_Material_Number__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Edition__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Language__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Media__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Effective_From__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Delivery_Fulfillment_Support__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>

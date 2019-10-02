@@ -907,6 +907,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             System.debug('____ [cls CaseBeforeTrigger - trgCase Trigger.isInsert]');
             SidraLiteManager.insertSidraLiteCases(Trigger.new);
             DPCCasesUtil.addAdditionalContactsBefore(Trigger.new);
+            CNSCaseManager.insertCNSCases(Trigger.new); //ACAMBAS - WMO-482
         }
         /*trgCase Trigger.isInsert*/
 
@@ -1451,8 +1452,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
         if (trgCase){
             System.debug('____ [cls CaseBeforeTrigger - trgCase Trigger.isUpdate]');
-            SidraLiteManager.updateSidraLiteCases(Trigger.new, Trigger.old);
+            SidraLiteManager.updateSidraLiteCases(Trigger.newMap, Trigger.oldMap); //ACAMBAS - WMO-483: Changed parameters from lists to maps
             CaseDueDiligence.beforeUpdate(Trigger.newMap, Trigger.oldMap);
+            CNSCaseManager.updateCNSCases(Trigger.new, Trigger.oldMap); //ACAMBAS - WMO-482
         }
 
         /*trgProcessISSCase Trigger.isUpdate*/
@@ -2137,7 +2139,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 
                 for (AMS_OSCAR__C oscar : [select Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c,
                                            Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c,
-                                           Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c
+                                           Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c, Requested_Bank_Guarantee_currency__c
                                            from AMS_OSCAR__c where Id in :oscarIdcases.keySet()]) {
 
                     oscar = AMS_Utils.syncOSCARwithIFAP(trigger.oldMap.get(oscarIdcases.get(oscar.Id).Id), oscarIdcases.get(oscar.Id), oscar, false);

@@ -21,6 +21,8 @@ public class ISSP_ANG_CodeSearch {
 	public ANG_ISSP_AfpWrapper afpWrapper {get; set;}
 	public String airlineId {get; set;}
 	public ANG_RHC_Information__c rhcAgencyInfo {get; set;}
+	public boolean isSpecialIATACodeSearchCountry {get; set;}
+	public String RHCValueForSpecialCountry {get; set;}
 
 	public static Set<String> statusSet = new Set<String> {
 		Ams_Utils.ACC_S9_APPROVED,
@@ -35,6 +37,8 @@ public class ISSP_ANG_CodeSearch {
 		this.activeSearch = false;
 		this.activeError = false;
 		this.showParent = false;
+		this.isSpecialIATACodeSearchCountry = false;
+		this.RHCValueForSpecialCountry = null;
 
 		this.airlineId = [SELECT Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1].Contact.AccountId;
 	}
@@ -49,6 +53,8 @@ public class ISSP_ANG_CodeSearch {
 		this.showIrregularities = false;
 		this.financialSecurityExists = false;
 		this.ho_he = '';
+		this.isSpecialIATACodeSearchCountry = false;
+		this.RHCValueForSpecialCountry = null;
 
 		try{
 			//
@@ -114,6 +120,15 @@ public class ISSP_ANG_CodeSearch {
 
 			if(agencies.size() > 0) { 
 				Account reqAgency = agencies[0];
+
+				IATA_Code_Search_Special_Countries__mdt[] specialCountries = [SELECT Remittance_Holding_Capacity_Value__c 
+																				FROM IATA_Code_Search_Special_Countries__mdt
+                               													WHERE DeveloperName =:reqAgency.IATA_ISO_Country__r.Name LIMIT 1];
+
+				if(specialCountries.size() == 1){
+					isSpecialIATACodeSearchCountry = true;
+					RHCValueForSpecialCountry = specialCountries[0].Remittance_Holding_Capacity_Value__c;
+				}
 
 				List<ANG_RHC_Information__c> rhcInfos = [SELECT Id, ANG_CashCondition__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :reqAgency.Id];
 

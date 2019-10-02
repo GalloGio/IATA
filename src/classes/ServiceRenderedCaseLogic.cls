@@ -146,12 +146,15 @@ public class ServiceRenderedCaseLogic {
     map<String,Case> KeyPerCase = new map<String,Case>();
         
     for(Case c: casesOkConsumer ){
-      accountIds.add(c.AccountId);
-      keyPerCase.put( c.accountID  + separator +
-                      c.Provider__c + separator 
-                       +
-                       ServicesPerReason.get( c.reason1__c).service__C
-                      , C );
+        Case_Reason_Service__c caseService = ServicesPerReason.get( c.reason1__c);
+        if (caseService.Create_custom_service_rendered__c) {
+            accountIds.add(c.AccountId);
+            keyPerCase.put( c.accountID  + separator +
+                            c.Provider__c + separator 
+                            +
+                            ServicesPerReason.get( c.reason1__c).service__C
+                            , C );
+        }
     }
 
     set<String> servicesFromDb = new set<String>();   
@@ -261,18 +264,22 @@ public class ServiceRenderedCaseLogic {
       
       list<Services_Rendered__c> services = new list<Services_Rendered__c>();
       for (Case c :cases) {
+                if(c.AccountId <> null) {
+                    Case_Reason_Service__c caseReasonService = ServicesPerReason.get(c.reason1__c);
+                    if( caseReasonService!=null
+                        && caseReasonService.Create_custom_service_rendered__c==true
+                        && activeServices.get(caseReasonService.service__c) <> null
+                        && activeServices.get(caseReasonService.service__c).get(c.AccountId ) <> null  ){
 
-        if(c.AccountId <> null && activeServices.get(ServicesPerReason.get(c.reason1__c).service__c) <> null &&
-          activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId ) <> null){
-
-          services.add(new Services_Rendered__c(Name = 'name shall be copied', 
-                                                Services_Rendered_to_Airline__c = c.AccountId,
-                                                Services_Rendered_By__c = c.Provider__c,
-                                                Services_Rendered_Type__c = ServicesPerReason.get(c.reason1__c).service__c,
-                                                Services_Rendered_Status__c ='Inactive',
-                                                Inactivation_Airline_Participation_Case__c = c.Id,
-                                                Id = activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId).Id, 
-                                                Leaving_Date__c = Date.ValueOf(c.ClosedDate)));
+                        services.add(new Services_Rendered__c(Name = 'name shall be copied', 
+                                                              Services_Rendered_to_Airline__c = c.AccountId,
+                                                              Services_Rendered_By__c = c.Provider__c,
+                                                              Services_Rendered_Type__c = ServicesPerReason.get(c.reason1__c).service__c,
+                                                              Services_Rendered_Status__c ='Inactive',
+                                                              Inactivation_Airline_Participation_Case__c = c.Id,
+                                                              Id = activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId).Id, 
+                                                              Leaving_Date__c = Date.ValueOf(c.ClosedDate)));
+                    }
       }
     }
     return services;

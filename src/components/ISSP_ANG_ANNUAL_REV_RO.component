@@ -32,9 +32,14 @@
                 <apex:outputField value="{!ca.account.TradeName__c}" />
             </apex:pageBlockSectionItem>
 
-            <apex:pageBlockSectionItem>
-                <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}" />
-                <apex:outputField value="{!ca.account.VAT_Number__c}" />
+            <apex:pageBlockSectionItem rendered="{! !ca.isocountry.Hide_Tax_Number_VAT__c}">
+                    <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}" />
+                    <apex:outputField value="{!ca.account.VAT_Number__c}" />
+            </apex:pageBlockSectionItem>
+            
+            <apex:pageBlockSectionItem rendered="{! !ca.isocountry.Hide_Tax_Number_2_VAT_field_2__c}">
+                    <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_2_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_2_Input__c.Label, ca.isocountry.Tax_Number_2_label__c)}" />
+                    <apex:outputField value="{!ca.account.VAT_Number_2__c}" />
             </apex:pageBlockSectionItem>
 
             <DSE:DS_DataQuality id="jqueryfix" FieldGroupName="" RecordRef="{!ca.fw.newform}"/>

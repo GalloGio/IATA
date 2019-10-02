@@ -54,8 +54,10 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Agents__c</fullName>
+        <description>Related Agent</description>
         <externalId>false</externalId>
         <label>Agents</label>
         <referenceTo>Agents__c</referenceTo>
@@ -68,6 +70,7 @@
     </fields>
     <fields>
         <fullName>Priority__c</fullName>
+        <description>Represents the priority of the skill. Can be &apos;0&apos;, &apos;1&apos;, &apos;2&apos;, &apos;3&apos;</description>
         <externalId>false</externalId>
         <label>Priority</label>
         <required>false</required>
@@ -101,6 +104,7 @@
     </fields>
     <fields>
         <fullName>Queue_Name__c</fullName>
+        <description>Name of the Auto Queue that the Skill is in</description>
         <externalId>false</externalId>
         <formula>Skills__r.Auto_queue__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -123,6 +127,7 @@
     <fields>
         <fullName>Skills__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Skill</description>
         <externalId>false</externalId>
         <label>Skills</label>
         <referenceTo>Skill__c</referenceTo>

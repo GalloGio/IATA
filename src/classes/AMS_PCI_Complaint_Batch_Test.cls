@@ -54,7 +54,7 @@ private class AMS_PCI_Complaint_Batch_Test {
 	
 	@isTest
 	static void runStartTest() {		
-		Test.startTest();
+		
 		AMS_PCI_Complaint_Batch.start('0 1 * * * ?', 1);
 		AMS_PCI_Complaint_Batch.ErrorWrapper err = new AMS_PCI_Complaint_Batch.ErrorWrapper(null, 'test');
 		Id accountId = err.accountId;
@@ -62,15 +62,25 @@ private class AMS_PCI_Complaint_Batch_Test {
 
 		//AMS_PCI_Complaint_Batch batch = new AMS_PCI_Complaint_Batch();
 		List<AMS_PCI_Complaint_Batch.ResultWrapper> resChunk = new List<AMS_PCI_Complaint_Batch.ResultWrapper>();
+        
+        Test.startTest();
 		try {
 			DateTime dt = system.now();
 			Date d2 = date.newinstance((dt.year() + 1), dt.month(), dt.day());
 			Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-			List<Account> agencylist = [SELECT Id, Name, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c, Abbreviated_address__c, Abbreviated_name__c, BillingState, BillingCity, IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode, BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, License_Number__c, VAT_Number__c, Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c,Location_Type__c, Mobile__c, Operation__c, Remittance_frequency__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, BillingCountry, Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c, Company_Type__c, Status__c FROM Account WHERE RecordtypeId=:agencyRT];
+			List<Account> agencylist = [SELECT Id, Name, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c
+                                        FROM Account 
+                                        WHERE RecordtypeId=:agencyRT
+                                       ];
 			System.debug('agencylist: ' + agencylist);
 		    AMS_PCI_Complaint_Batch.validateCandidatesForRenewal(agencylist, resChunk, false);
 
-		    List<AMS_OSCAR__c> oscars = [SELECT Id, Is_PCI_compliant__c, Process__c, Account__c, Location_Class__c, ANG_PCI_compliance_expiry_date__c, Status__c, STEP6__c, Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c WHERE  Process__c = :AMS_Utils.PCI_COMPLIANT AND RecordTypeId = :AMS_Utils.RECTYPE_CERT AND Status__c = 'Accepted_Future Date'];
+		    List<AMS_OSCAR__c> oscars = [SELECT Id, Is_PCI_compliant__c, Process__c, Account__c, Location_Class__c, ANG_PCI_compliance_expiry_date__c, Status__c, STEP6__c, Oscar_Communication_Case_Id__c 
+                                         FROM AMS_OSCAR__c 
+                                         WHERE  Process__c = :AMS_Utils.PCI_COMPLIANT 
+                                         	AND RecordTypeId = :AMS_Utils.RECTYPE_CERT 
+                                         	AND Status__c = 'Accepted_Future Date'
+                                        ];
 
 		    loadCredentials();
 		    List<AmazonFile__c> listFile = new List<AmazonFile__c>();

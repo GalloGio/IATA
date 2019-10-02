@@ -94,6 +94,7 @@
         <relatedList>AMS_Agency_Operations__c.Operation__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
         <fields>Class_Type__c</fields>
         <fields>Remittance_Frequency__c</fields>
         <fields>Remittances_Per_Year__c</fields>
@@ -107,7 +108,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hZ0000000a2sN</masterLabel>
+        <masterLabel>00hw000000dO5nj</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

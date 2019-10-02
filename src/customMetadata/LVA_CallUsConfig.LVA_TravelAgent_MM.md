@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>PhoneNumber__c</field>
-        <value xsi:type="xsd:string">+65 6499-2402</value>
+        <value xsi:type="xsd:string">+65 6499-2547</value>
     </values>
     <values>
         <field>Sector__c</field>

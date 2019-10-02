@@ -158,7 +158,7 @@
                         </div>
                         <div class="col-md-2 input-daterange input-group" id="openDatePicker" data-provide="datepicker" data-date-format="mm/dd/yyyy">
                             <div class="{!IF(AND(hasError, participation.Date_when_airport_has_been_operational__c == null), 'has-error has-feedback', '')}">
-                                <apex:inputText id="openDate" onblur="dateValidationOptYes(this);" onchange="if(this.value != '{!participation.Date_when_airport_has_been_operational__c}'){ saveOnDate();startLoading();}" styleClass="form-control alldate" value="{!participation.Date_when_airport_has_been_operational__c }">
+                                <apex:inputText id="openDate" styleClass="form-control alldate" value="{!participation.Date_when_airport_has_been_operational__c }">
                                 </apex:inputText>
                                 <span class="{!IF(AND(hasError, participation.Date_when_airport_has_been_operational__c == null), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span> 
                                 <span class="sr-only">(error)</span>

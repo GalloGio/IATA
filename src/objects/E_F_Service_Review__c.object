@@ -53,9 +53,10 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Date__c</fullName>
-        <description>Date theService Review took or will take place</description>
+        <description>Date of the Service Review took or will take place</description>
         <externalId>false</externalId>
         <inlineHelpText>Select the Service Review date</inlineHelpText>
         <label>Date</label>
@@ -67,6 +68,7 @@
     <fields>
         <fullName>E_F_Asset__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related E&amp;F Asset</description>
         <externalId>false</externalId>
         <label>E&amp;F Asset</label>
         <referenceTo>E_F_Asset__c</referenceTo>
@@ -115,6 +117,7 @@
     </fields>
     <fields>
         <fullName>Review_Owner__c</fullName>
+        <description>Contains the names of 3 review owners: &quot;Arnaud Francq&quot;, &quot;Koen Karsbergen&quot; and &quot;Claudia falconi&quot;</description>
         <externalId>false</externalId>
         <label>Review Owner</label>
         <required>false</required>

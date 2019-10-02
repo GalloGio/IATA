@@ -92,6 +92,10 @@
     <multilineLayoutFields>UnitPrice</multilineLayoutFields>
     <multilineLayoutFields>Description</multilineLayoutFields>
     <relatedLists>
+        <fields>ScheduleDate</fields>
+        <fields>Revenue</fields>
+        <fields>Quantity</fields>
+        <fields>Description</fields>
         <relatedList>RelatedScheduleList</relatedList>
     </relatedLists>
     <relatedObjects>OpportunityId</relatedObjects>

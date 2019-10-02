@@ -25,11 +25,15 @@ ul li, ol li {
         }
        
         .ap-required {
-    		color:#a31717 !important;
-    	}
+            color: #a31717;
+            font-weight: bold;
+        }
+        .ap-required:before {
+            content: "*&nbsp;";
+        }
         
         .apcontainer div {
-        border-top: 0px !important;
+        border-top: 0px;
         }
         
         .col1 {
@@ -137,7 +141,12 @@ div.footer {display: block;padding: 5px;position: running(footer);}
 td.hactive {font-size: 14pt; color: green; border-bottom: 5px solid green !important; padding-left: 20px;margin-left: 20px;background-color: #fff !important;}
 td.hactivered {font-size: 14pt; color: #C90435; border-bottom: 5px solid #C90435 !important; padding-left: 20px;margin-left: 20px;background-color: #fff !important;}
 td.hinactive {font-size: 14pt; color: #000; border-bottom: 0px !important; padding-left: 20px;margin-left: 20px;background-color: #fff !important;}
-
+.red-box {
+    color: #a31717;
+    border: 1px solid #a31717 !important;
+    margin: 10px;
+    padding: 10px;
+}
 .pageNav {
     font-size: 9pt;
     top: 100px;

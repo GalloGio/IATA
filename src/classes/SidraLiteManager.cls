@@ -12,6 +12,7 @@ public with sharing class SidraLiteManager {
     public static final Id RECORDTYPE_SAAM = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     public static final Id RECORDTYPE_OSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     public static final Id RECORDTYPE_INVOICING = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Invoicing_Collection_Cases');
+    public static final Id RECORDTYPE_CNS = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CNS_Collection_Process'); //ACAMBAS - WMO-483
 
     public class SidraLiteException extends Exception {}
 
@@ -59,13 +60,78 @@ public with sharing class SidraLiteManager {
     /**
         Before update actions
     **/
-    public static void updateSidraLiteCases(list<Case> listNewCases, list<Case> listOldCases) {
-        list<Case> listSidraLite = filterSidraLiteCases(listNewCases);
+    public static void updateSidraLiteCases(map<Id,Case> mapNewCases, map<Id,Case> mapOldCases) {   //ACAMBAS - WMO-483: Changed parameters from lists to maps
+        list<Case> listSidraLite = filterSidraLiteCases(mapNewCases.values());
         if (listSidraLite.isEmpty()) return;
 
-        map<Id,Case> mapOlds = new map<Id,Case>(listOldCases);
-        updateUserFieldsOnUpdate(listSidraLite, mapOlds);
+        //ACAMBAS - WMO-483: Begin
+        //map<Id, Case> sidraLiteCasesMap = new map<Id,Case>(listSidraLite);
+        validateUpdateSidraLiteCases(listSidraLite);
+        //ACAMBAS - WMO-483: End
+        
+        updateUserFieldsOnUpdate(listSidraLite, mapOldCases);
     }
+
+    //ACAMBAS - WMO-483: Begin
+    /*public static void validateUpdateSidraLiteCases(map<Id,Case> mapNewCases, map<Id,Case> mapOldCases) {
+        for(Case c : mapNewCases.values()) {
+            if(mapNewCases.get(c.Id).CNSCase__c == true) { //SIDRA Case for CNS
+
+                //Validate fields that cannot be changed
+                
+                Schema.FieldSet readOnlyFields = Schema.SObjectType.Case.fieldSets.ROFieldsSidraLiteForCNS;
+
+                for(Schema.FieldSetMember field : readOnlyFields.getFields()) {   
+                    Object newValue = mapNewCases.get(c.Id).get(field.getFieldPath());
+                    Object oldValue = mapOldCases.get(c.Id).get(field.getFieldPath());
+
+                    if(newValue != oldValue) {   
+                        c.addError(Label.SidraLiteROFieldError.replace('{0}', field.getLabel()));
+                    }
+                }
+            }
+        }        
+    }*/
+    public static void validateUpdateSidraLiteCases(list<Case> caseList) {
+
+        Schema.FieldSet readOnlyFields;
+
+        for(Case c : caseList) {
+            if(c.CNSCase__c == true && c.SIDRA_Lite_Reason__c == 'CNS Collection') {  //SIDRA Lite for CNS
+
+                //Validate fields that cannot be changed
+                
+                readOnlyFields = Schema.SObjectType.Case.fieldSets.ROFieldsSidraLiteForCNS;
+
+                for(Schema.FieldSetMember field : readOnlyFields.getFields()) {   
+                    String newValue = String.valueOf(c.get(field.getFieldPath()));
+                    String fieldType = String.valueOf(field.getType());
+
+                    if((fieldType != 'BOOLEAN' && !String.isEmpty(newValue)) ||
+                       (fieldType == 'BOOLEAN' && newValue == 'true')) {  
+                        c.addError(Label.SidraLiteROFieldError.replace('{0}', field.getLabel()));
+                    }
+                }
+    }
+            else if(c.CNSCase__c == true && c.SIDRA_Lite_Reason__c == 'CNS Financial Review') { //SIDRA Lite for IFAP Case CNS
+
+                //Validate fields that cannot be changed
+                
+                readOnlyFields = Schema.SObjectType.Case.fieldSets.ROFieldsSidraLiteForIFAPCNS;
+
+                for(Schema.FieldSetMember field : readOnlyFields.getFields()) {   
+                    String newValue = String.valueOf(c.get(field.getFieldPath()));
+                    String fieldType = String.valueOf(field.getType());
+
+                    if((fieldType != 'BOOLEAN' && !String.isEmpty(newValue)) ||
+                       (fieldType == 'BOOLEAN' && newValue == 'true')) {  
+                        c.addError(Label.SidraLiteROFieldError.replace('{0}', field.getLabel()));
+                    }
+                }
+            }
+        }        
+    }
+    //ACAMBAS - WMO-483: End
 
     /**
         return only Sidra lite Cases in input list
@@ -142,7 +208,7 @@ public with sharing class SidraLiteManager {
             [Select Id, RecordtypeId, Deadline_Date__c, FA_Letter_Sent__c, FA_Second_Deadline_Date__c, FirstFAnonComplianceDate__c,
             FirstFSnonComplianceDate__c, FS_Deadline_Date__c, FS_Second_Deadline_Date__c, Status, FS_Letter_Sent__c, secondFAnonComplianceDate__c,
             secondFSnonComplianceDate__c, FA_Third_Deadline_Date__c, FS_Third_Deadline_Date__c, Third_FA_non_Compliance_Date__c, Region__c,
-            BSPCountry__c, BusinessHoursId, Reason1__c, SAAM_Deadline_Date__c, New_IFAP_Deadline_date__c, Termination_date__c,
+            BSPCountry__c, BusinessHoursId, Reason1__c, SAAM_Deadline_Date__c, New_IFAP_Deadline_date__c, Termination_date__c, AccountID, Financial_Review_Result__c, Assessment_Performed_Date__c,
             Documentation_Complete__c, Bank_Guarantee_received__c, Has_the_agent_paid_invoice__c, isClosed, Bank_Guarantee_deadline__c, Comments__c,
             (Select Id, CaseNumber, SIDRA_lite_Reason__c, SIDRA_Lite_Default_Date__c,SAAM_Deadline_Date__c, New_IFAP_Deadline_date__c, Termination_date__c, Comments__c  from Cases where RecordtypeId = :RECORDTYPE_SIDRA_LITE )
             from Case
@@ -154,7 +220,7 @@ public with sharing class SidraLiteManager {
         map<Id,Account> mapAccounts = new map<Id,Account>();
         if (!listAccountId.isEmpty()) {
             mapAccounts = new map<Id,Account>(
-            [Select Id, Type, Status__c, Accumulated_Irregularities__c, Category__c, ANG_IsNewGenAgency__c 
+            [Select Id, Type, Status__c, Accumulated_Irregularities__c, Category__c, ANG_IsNewGenAgency__c, CNS_Agency__c 
             from Account
             where id in :listAccountId]);
         }
@@ -233,6 +299,8 @@ public with sharing class SidraLiteManager {
             SidraLiteHelperForOSCAR.checkBussinessRules(parentCase);
         } else if (parentCase.RecordtypeId == RECORDTYPE_SIDRA) {
             SidraLiteHelperForSIDRA.checkBussinessRules(parentCase);
+        } else if (parentCase.RecordtypeId == RECORDTYPE_CNS) { //ACAMBAS - WMO-483
+            SidraLiteHelperForCNS.checkBussinessRules(parentCase); //ACAMBAS - WMO-483
         } else {
             throw new SidraLiteException('This case recordtype is not allowed');
         }
@@ -430,7 +498,12 @@ public with sharing class SidraLiteManager {
                 cse.IRR_Withdrawal_Reason__c = 'Default Prev';
             }
             parentCase.firstFSnonComplianceDate__c = Date.Today();
-            parentCase.FS_Second_Deadline_Date__c = Date.Today().addDays(30);
+
+            //We should set the FS 2nd Compliance due date as 60 days (as per Reso 812, Section 4.3.9) for NewGen countries.
+            if(parentCase.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c)
+                parentCase.FS_Second_Deadline_Date__c = Date.Today().addDays(60);
+            else
+                parentCase.FS_Second_Deadline_Date__c = Date.Today().addDays(30);
         }
         return parentCase;
     }
@@ -506,6 +579,21 @@ public with sharing class SidraLiteManager {
         }
         // ACTIONS for FA
         else {
+            //ACAMBAS - WMO-485: Begin 
+            if (account.CNS_Agency__c == true) {
+                if (cse.SIDRA_Lite_Reason__c != 'CNS Financial Review') {
+                    cse.SIDRA_Lite_Reason__c.addError('Set right value here');
+                    throw new SidraLiteException('The SIDRA lite reason must be "CNS Financial Review" for this scenario');
+                }
+
+                List<Case> childSIDRALiteCases = [SELECT Id FROM Case WHERE ParentId = :parentCase.Id];
+
+                if(childSIDRALiteCases.size() > 0) {
+                    throw new SidraLiteException('Second non compliance it is not allowed for a CNS agency');        
+                }
+            }
+            else {
+            //ACAMBAS - WMO-485: End       
             if (parentCase.Status == 'Sanity Check Failure') {
                 if ( cse.SIDRA_Lite_Reason__c != 'Sanity Check failure of financial statement' ) {
                     cse.SIDRA_Lite_Reason__c.addError('Set right value here');
@@ -525,8 +613,56 @@ public with sharing class SidraLiteManager {
             if (SidraLiteUtil.isCargoCASS(account)) {
                 parentCase.FA_Second_Deadline_Date__c = parentCase.firstFAnonComplianceDate__c.addDays(30);
             }
+
+            /*NEWGEN-5301*/
+            evaluateAnotherIfapCases(parentCase, cse, account);
+
+        }
         }
         return parentCase;
+    }
+
+       /*
+    Check:
+        - the agent is newgen
+        - the agent is still opted in for financial review
+        - the agent fails to provide Financial Statements (on the IFAP Case) by the First deadline date (<FA Deadline Date> is in the past)
+        - the agent is in his second year non compliance (has another IFAP case for the previous financial year in status "Closed_non compliance")
+    
+    if true:
+
+          -<First FA non-Compliance Date> = TODAY
+          -<Second FA non-Compliance Date> = TODAY
+          -<FA Second Deadline Date> = TODAY
+          -<FA Third Deadline Date> = End of the following month
+    */
+    public static void evaluateAnotherIfapCases(Case parentCaseIfap, Case childCaseSidra, Account account){
+		
+        System.debug('[SidraLiteHelperForIFAP] Starting evaluateAnotherIfapCases.');
+        
+        if(!account.ANG_IsNewGenAgency__c)
+            return;
+
+        String previousYear = String.valueOf(Date.today().year() - 1);
+
+        List<Case> previousIFAPs = [Select Id from Case where accountId =:parentCaseIfap.AccountId and RecordtypeId = :SidraLiteManager.RECORDTYPE_IFAP and IFAP_Financial_Year__c =:previousYear and Status = 'Closed_Non compliance'];
+
+        if(previousIFAPs.isEmpty()){
+            System.debug('[SidraLiteHelperForIFAP] [evaluateAnotherIfapCases] - There are no previous iFAPs');
+            return;
+        }
+        
+
+        parentCaseIfap.firstFAnonComplianceDate__c = System.today();
+        parentCaseIfap.secondFAnonComplianceDate__c = System.today();
+        parentCaseIfap.FA_Second_Deadline_Date__c  = System.today();
+  
+        Date newDate = Date.newInstance(System.today().year(),System.today().month(),1);
+
+        parentCaseIfap.FA_Third_Deadline_Date__c  = newDate.addMonths(2).addDays(-1);
+
+        System.debug('[SidraLiteHelperForIFAP] [evaluateAnotherIfapCases] - parentCaseIfap update:'+parentCaseIfap);
+
     }
 
     public static Case getRelatedCase(Case parentCase) {
@@ -548,6 +684,12 @@ public with sharing class SidraLiteManager {
         if (parentCase.RecordtypeId == RECORDTYPE_SIDRA) {
             return getRelatedCaseDefault(parentCase);
         }
+        //ACAMBAS - WMO-483: Begin
+        if (parentCase.RecordtypeId == RECORDTYPE_CNS) {
+            return getRelatedCaseDefault(parentCase);
+        }
+        //ACAMBAS - WMO-483: End
+        
         return null;
     }
 
@@ -557,6 +699,8 @@ public with sharing class SidraLiteManager {
     **/
     public static Case getRelatedCaseForIFAP(Case parentCase) {
         set<String> validReason = new set<String>();
+        validReason.add('CNS Financial Review'); //WMO-485 - ACAMBAS
+
         if (SidraLiteHelperForIFAP.isFS(parentCase)) {
             validReason.add('Financial Security Non-compliance');
         } else {

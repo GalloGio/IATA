@@ -104,7 +104,7 @@ global with sharing class ANG_AccreditationAreaViewer {
             set;
         }
 
-    public static List<String> fieldsAccContacts = new List<String>{'First_Name__c','Last_Name__c','Email__c','Phone__c','Agency_owner__c','Agency_role__c','Authorised_signatory__c','Financial_Assessment_Contact__c','Portal_administrator__c','Salutation__c','Mobile__c','FAX__c','Financial_interest__c','Time_devoted_to_Agency_business__c','Date_joined_agency__c','Job_title__c','AddressStreet__c','AddressCity__c','AddressPostCode__c','AddressCountry__c'};
+    public static List<String> fieldsAccContacts = new List<String>{'First_Name__c','Last_Name__c','Email__c','Phone__c','Agency_owner__c','Agency_role__c','Authorised_signatory__c','Financial_Assessment_Contact__c','Portal_administrator__c','Salutation__c','Mobile__c','FAX__c','Financial_interest__c','Time_devoted_to_Agency_business__c','Date_joined_agency__c','Job_title__c','AddressStreet__c','AddressCity__c','AddressPostCode__c','AddressState__c','AddressCountry__c'};
 
 
 /*

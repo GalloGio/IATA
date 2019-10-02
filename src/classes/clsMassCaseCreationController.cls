@@ -208,7 +208,7 @@ public with sharing class clsMassCaseCreationController {
       //String openCasesFlag = Apexpages.currentPage().getParameters().get('opencasesflag');  // phase 4
       String targetFinancialYear = Apexpages.currentPage().getParameters().get('targetFinancialYear');  // phase 4
       String exclClosedCases = Apexpages.currentPage().getParameters().get('exclClosedCases');  // phase 4
-
+      String exclFAOptOut = Apexpages.currentPage().getParameters().get('exclFAOptOut');  // phase 4
       // test
       searchAgentsWithClosedCase();
 
@@ -261,6 +261,7 @@ public with sharing class clsMassCaseCreationController {
       secondPage.getParameters().put('targetFinancialYear', targetFinancialYear);
       secondPage.getParameters().put('exclOpenCases', exclOpenCases);
       secondPage.getParameters().put('exclClosedCases', exclClosedCases);
+      secondPage.getParameters().put('exclFAOptOut', exclFAOptOut);
 
       XlsUrl = secondPage.getUrl();
       for (Contact cont : Database.query(q)) {
@@ -298,6 +299,7 @@ public with sharing class clsMassCaseCreationController {
     String targetFinancialYear = Apexpages.currentPage().getParameters().get('targetFinancialYear');  // phase 4
     String exclOpenCases = Apexpages.currentPage().getParameters().get('exclOpenCases');  // phase 4
     String exclClosedCases = Apexpages.currentPage().getParameters().get('exclClosedCases');  // phase 4
+    String exclFAOptOut = Apexpages.currentPage().getParameters().get('exclFAOptOut');  // phase 4
 
     isCreateCasesIsDisabled = true;
     isSendEmailIsDisabled = true;
@@ -317,7 +319,7 @@ public with sharing class clsMassCaseCreationController {
       ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please select a country'));
       IsSelectedCountryIsSpain = false;
     } else {
-      soql = 'select Account.name, Account.IATACode__c, Account.Status__c, Account.Type, Account.BillingCountry, Account.Location_Type__c, account.CCG_Participant__c , account.CCG_IRR_Distribution_list__c, Account.Number_of_open_Financial_Review_Cases__c, FirstName, LastName, Email, Account.Region__c, ID, Financial_Assessment_Contact__c, Name from contact where account.name != null and Account.IATACode__c != null and Financial_Assessment_Contact__c = true';
+      soql = 'select Account.name, Account.IATACode__c, Account.Status__c, Account.Type, Account.BillingCountry, Account.Location_Type__c, account.CCG_Participant__c , account.CCG_IRR_Distribution_list__c, account.ANG_FA_Opt_out__c , Account.Number_of_open_Financial_Review_Cases__c, FirstName, LastName, Email, Account.Region__c, ID, Financial_Assessment_Contact__c, Name from contact where account.name != null and Account.IATACode__c != null and Financial_Assessment_Contact__c = true';
       //if (!country.equals('')) {
         //soql += ' and Account.BillingCountry LIKE \''+String.escapeSingleQuotes(country)+'%\'';
 
@@ -392,7 +394,9 @@ public with sharing class clsMassCaseCreationController {
       // construct link to report (no need to pass the hardcoded parameter, only the dynamic ones)
       //openCasesReportURL = '/00OR0000000k0QE?';   //'/00OR0000000k06s?';  // ID of the report
 
-      soql += ' and (((Account.Reinstated_Date__c = null or Account.Reinstated_Date__c < :sixMonthsAgo) and Account.Category__c = \'IATA Passenger Sales Agent\') or Account.Category__c != \'IATA Passenger Sales Agent\') ';
+      if(exclFAOptOut.equals('true'))
+        soql += ' and Account.ANG_FA_Opt_out__c = false';
+      soql += ' and (((Account.Reinstated_Date__c = null or Account.Reinstated_Date__c < :sixMonthsAgo) and Account.Category__c = \'IATA Passenger Sales Agent\') or Account.Category__c != \'IATA Passenger Sales Agent\'  or ((Account.Default_date__c >= :sixMonthsAgo or Account.Reinstated_Date__c >= :sixMonthsAgo) and Account.ANG_IsNewGenAgency__c = true ))';
       soql += ' and Account.ANG_Accreditation_Model__c <> \'Cashless\''; // NEWGEN-1079';
 
       system.debug(LoggingLevel.ERROR, 'QUERY: ' + soql);

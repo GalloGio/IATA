@@ -1,0 +1,9 @@
+Dear Customer, 
+Thank you for placing your order.
+We are happy to confirm that it will be processed and your invoice will be sent to you shortly. 
+Please find below the case number assigned to your order: {!Order.AccountNumber}
+Case number:  {!Case.CaseNumber}
+Don’t forget to quote this case number if you have any queries or comments.
+Best regards,
+International Air Transport Association
+Case Thread ID {!Case.Thread_Id}

@@ -10,6 +10,7 @@ global without sharing class Comm_User_Helper {
   public static final string SEPARATOR = '@#@#@#';
   public static final string KEYTODECODE = 'Kg0m2vAj4VmBBviGAUehrw==';
   public static final string plusReplacer = '@@##';
+  public static final string WILDCARD = 'ALL';
 
   public static String EncryptString( String str) {
         Blob dataToEncrypt = Blob.valueOf(str);
@@ -234,7 +235,7 @@ global without sharing class Comm_User_Helper {
             }
 
         }
-        
+        addDefaultAppRights(con,con.Account);
 
         return userId;
         
@@ -249,11 +250,62 @@ global without sharing class Comm_User_Helper {
     
     
     }
-    
 
+    /**
+        Add application rights to the input contact based on the custom metadata
+        Portal_Application_Setting__mdt
+        Only to the first contact added to an account
+    **/
+    public static void addDefaultAppRights(Contact contact, Account account) {
+        try {
+            if (account==null) {
+                account = [SELECT Id,Sector__c,Category__c 
+                    FROM Account
+                    WHERE Id = :contact.AccountId];
+                contact.Account = account;
+            }
 
+            list<Contact> listOtherContacts = [
+                SELECT Id FROM Contact
+                WHERE AccountId = :account.Id
+                AND Id != :contact.Id];
+            //if the account has no other contacts it means that current contact is the first one
+            // so we try to add permission to the applications (if needed)
+            if (listOtherContacts.isEmpty()) {
+                // Find app names with Auto Grant Service
+                list<String> listAppNames = new list<String>();
+                for (Portal_Application_Setting__mdt setting: [
+                        SELECT id, MasterLabel,
+                            (SELECT Sector__c, Category__c
+                            FROM Portal_Application_Visibilities__r
+                            WHERE Auto_grant_service__c = true
+                            AND Sector__c = :account.Sector__c
+                            AND Category__c IN (:account.Category__c,:WILDCARD))
+                        FROM Portal_Application_Setting__mdt]) {
+                    if (setting.Portal_Application_Visibilities__r.size()>0) {
+                        listAppNames.add(setting.MasterLabel);
+                    }
+                }
 
+                // give right to all found apps
+                list<Portal_Application_Right__c> listAppRight = new list<Portal_Application_Right__c>();
+                for ( Portal_Applications__c app: [SELECT Id FROM Portal_Applications__c WHERE Name IN :listAppNames]) {
+                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+                    newRight.Contact__c = contact.Id;
+                    newRight.Portal_Application__c = app.Id;
+                    newRight.Right__c = 'Access Granted';
+                    listAppRight.add(newRight);
+                }
 
+                //insert rights
+                if (!listAppRight.isEmpty()) {
+                    insert listAppRight;
+                }
+            }
+        } catch (Exception e) {
+            System.debug('ERROR in Comm_User_Helper.addDefaultAppRights, couldn\'t create app rights for ' + contact + ':\n ' + e.getMessage());
+        }
+    }
 
     public static  Map<String, String> IEC_builMessageWrapper(contact con , string password , string link){
         Map<String, String> mapBodyParamsIssp = new map<String,String>{

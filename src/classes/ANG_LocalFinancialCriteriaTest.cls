@@ -494,8 +494,7 @@ private class ANG_LocalFinancialCriteriaTest {
 
 		Decimal expectedAmount = (FS_AMOUNT * rhcInfo.RHC_Amount_Equals_FS_Percent__c/100);
 		
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 	}
 	
@@ -527,8 +526,7 @@ private class ANG_LocalFinancialCriteriaTest {
 
 		Decimal expectedAmount = (FS_AMOUNT * CASH_CONDITION_PERCENTAGE/100);
 		
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 	}
 	
@@ -561,8 +559,7 @@ private class ANG_LocalFinancialCriteriaTest {
 
 		Decimal expectedAmount = (FS_AMOUNT * FIXED_PERCENTAGE_RISK_A/100);
 		
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 	}
 
@@ -650,8 +647,7 @@ private class ANG_LocalFinancialCriteriaTest {
 
 		Decimal expectedAmount = (FS_AMOUNT * firstPercentage/100);
 		
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 		if(updatedPoints == NULL) return;
 
@@ -673,8 +669,7 @@ private class ANG_LocalFinancialCriteriaTest {
 
 		expectedAmount = (FS_AMOUNT * 2 * secondPercentage/100);
 		
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 	}
 
@@ -705,8 +700,7 @@ private class ANG_LocalFinancialCriteriaTest {
 
 		Decimal expectedMinRHCAmount = ANG_Risk_Helper.currencyConverter(COUNTRY_CURRENCY, COUNTRY_MIN_RHC_AMOUNT, rhcInfo.CurrencyIsoCode);
 
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedMinRHCAmount);
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+		System.assert(expectedMinRHCAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 		rhcInfo.ANG_RME_Amount__c = 2000;
 		rhcInfo.ANG_RHC_Amount_Provisional__c = 2000;
@@ -725,8 +719,7 @@ private class ANG_LocalFinancialCriteriaTest {
 
 		Decimal expectedAmount = rhcUpdated.ANG_Exceeding_Financial_Security__c + rhcInfo.ANG_RME_Amount__c;
 
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
-		System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 	}
 
@@ -768,8 +761,7 @@ private class ANG_LocalFinancialCriteriaTest {
 
         Decimal expectedAmount = (FS_AMOUNT * FIXED_PERCENTAGE_RISK_A1/100);
         
-        System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
-        System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+        System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
         agentHK.Financial_Assessment_Points__c = 176;
 
@@ -787,8 +779,7 @@ private class ANG_LocalFinancialCriteriaTest {
 
         expectedAmount = (FS_AMOUNT * FIXED_PERCENTAGE_RISK_A2/100);
         
-        System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
-        System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+        System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
     }
 
@@ -829,8 +820,7 @@ private class ANG_LocalFinancialCriteriaTest {
 
         Decimal expectedMinRHCAmount = ANG_Risk_Helper.currencyConverter(COUNTRY_CURRENCY, COUNTRY_MIN_RHC_AMOUNT, rhcInfo.CurrencyIsoCode);
 
-        System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedMinRHCAmount);
-        System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+        System.assert(expectedMinRHCAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
         rhcInfo.ANG_RME_Amount__c = 2000;
         rhcInfo.ANG_RHC_Amount_Provisional__c = 2000;
@@ -849,8 +839,7 @@ private class ANG_LocalFinancialCriteriaTest {
 
         Decimal expectedAmount = rhcUpdated.ANG_Exceeding_Financial_Security__c + rhcInfo.ANG_RME_Amount__c;
 
-        System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
-        System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+        System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
     }
 

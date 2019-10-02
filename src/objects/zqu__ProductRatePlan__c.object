@@ -47,13 +47,14 @@
     <description>The Rate Plan associated with a ZProduct.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fieldSets>
         <fullName>zqu__EditProductRatePlan</fullName>
         <description>Edit Product Rate Plan</description>
@@ -882,8 +883,16 @@
     <label>Product Rate Plan</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>zqu__ZProduct__c</columns>
+        <columns>ZProduct_ZuoraId__c</columns>
+        <columns>zqu__Product__c</columns>
+        <columns>ZProduct_EffectiveStartDate__c</columns>
+        <columns>ZProduct_EffectiveEndDate__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>CAC</fullName>

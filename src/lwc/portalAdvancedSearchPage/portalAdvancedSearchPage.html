@@ -1,0 +1,125 @@
+<template>
+
+    <div style={backgroundStyle}>
+        <c-portal-page-container>
+            <span slot="componentContent">
+                <c-portal-breadcrumbs show-in-white=true></c-portal-breadcrumbs>
+
+                <div class="slds-p-vertical_x-large text-white text-xlarge text-bold">
+                    {label.CSP_Breadcrumb_AdvancedSearch_Title} 
+                </div>
+            </span>
+        </c-portal-page-container>
+    </div>
+
+    <c-portal-page-container>
+        <span slot="componentContent">
+            <!-- SEARCH BAR -->
+            <div class="background-white searchBarPosition">
+                <div class="slds-p-vertical_small customCardWhite searchBarRow">
+                    <div class="searchBarIcon">
+                        <img src={searchIconUrl} class="slds-p-left_small" height="42" width="42"/>
+                    </div>
+                    <div class="searchBarBarContainer">
+                        <div class="fullWidth">
+                            <lightning-input
+                                name="enter-search"
+                                type="text"
+                                placeholder={label.CSP_Search_Home_Placeholder}
+                                onchange={onchangeSearchInput}
+                                onkeyup={onkeyupSearchInput}
+                                value={filteringObject.searchText}
+                                class="hideInputLabel borderlessInput searchInputPlaceHolder">
+                            </lightning-input>
+                        </div>
+                    </div>
+                    <div>
+                        <span if:true={loadingTypehead} class="smallSearchSpinner">
+                            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </span>
+    </c-portal-page-container>
+
+    <c-portal-page-container>
+
+        <span slot="componentContent">
+
+            <div class="slds-grid slds-wrap slds-gutters_direct-small">
+                
+                <!-- Filters Section -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-large-size_1-of-4" >
+                    <c-portal-search-filters filtering-object={filteringObject} onhighlightfilterchanged={handlehighlightfilterchanged} 
+                        onpicklistfilterchanged={handlehighlightfilterchanged}></c-portal-search-filters>
+                </div>
+
+                <!-- Results Section -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-4 slds-large-size_3-of-4" >
+
+                    <div style={resultsClass}>
+                        <div class="slds-m-vertical_medium">
+                            <c-portal-search-cases-list filtering-object-parent={filteringObject} 
+                                advanced-search onfilterchanged={handlefilterchanged} onhighlightfilterchanged={handlehighlightfilterchanged} >
+                            </c-portal-search-cases-list>
+                        </div>
+                        <div class="slds-m-vertical_medium">
+                            <c-portal-search-f-a-q-list filtering-object-parent={filteringObject} 
+                            advanced-search onfilterchanged={handlefilterchanged} onhighlightfilterchanged={handlehighlightfilterchanged} >
+                        </c-portal-search-f-a-q-list>
+                        </div>
+                        <div class="slds-m-vertical_medium">
+                            <c-portal-search-documents-list filtering-object-parent={filteringObject} 
+                                advanced-search onfilterchanged={handlefilterchanged} onhighlightfilterchanged={handlehighlightfilterchanged} >
+                            </c-portal-search-documents-list>
+                        </div>
+                        <div class="slds-m-vertical_medium">
+                            <c-portal-search-services-list filtering-object-parent={filteringObject} 
+                            advanced-search onfilterchanged={handlefilterchanged} onhighlightfilterchanged={handlehighlightfilterchanged}>
+                        </c-portal-search-services-list>
+                        </div>
+                    </div>
+
+                    <div style={noResultsClass}>
+                        <div class="slds-p-vertical_medium">
+                            <div class="slds-text-align_center">
+                                <img class="slds-p-vertical_medium" src={searchIconNoResultsUrl}/>
+                                <div class="text-large text-bold text-linkBlue">{label.CSP_Search_NoResults_text1}</div>
+                                <div class="text-xsmall text-gray">{label.CSP_Search_NoResults_text2} <span class="text-bold text-darkGray"> "{filteringObject.searchText}"</span></div>
+                                <div class="text-xsmall text-gray">{label.CSP_Search_NoResults_text3}</div>
+                            </div>
+                        </div>
+
+                        <div class="slds-p-vertical_medium slds-grid slds-wrap slds-grid_align-center">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-4 slds-large-size_3-of-4">
+                                <c-portal-f-a-q-reach-us-banner></c-portal-f-a-q-reach-us-banner>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style={emptySearchStringClass}>
+                        <div class="slds-p-vertical_medium">
+                            <div class="slds-text-align_center">
+                                <img class="slds-p-vertical_medium" src={searchIconUrl} height="96px" width="96px"/>
+                                <div class="text-large text-bold text-linkBlue">{label.CSP_Search_TypeIn_text1}</div>
+                                <div class="text-xsmall text-gray">{label.CSP_Search_TypeIn_text2}</span></div>
+                                <div class="text-xsmall text-gray">{label.CSP_Search_TypeIn_text3}</div>
+                            </div>
+                        </div>
+
+                        <div class="slds-p-vertical_medium slds-grid slds-wrap slds-grid_align-center">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-4 slds-large-size_3-of-4">
+                                <c-portal-f-a-q-reach-us-banner></c-portal-f-a-q-reach-us-banner>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </span>
+
+    </c-portal-page-container>
+    
+</template>

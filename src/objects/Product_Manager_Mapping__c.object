@@ -53,9 +53,11 @@
     <enableSearch>true</enableSearch>
     <enableSharing>false</enableSharing>
     <enableStreamingApi>false</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
     <fields>
         <fullName>Product_Manager__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>The product manager for Product2</description>
         <externalId>false</externalId>
         <label>Product Manager</label>
         <lookupFilter>

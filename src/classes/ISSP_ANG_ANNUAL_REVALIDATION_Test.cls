@@ -136,8 +136,10 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', ANG_Enable_NewGen__c = true,
-                                    Postal_Code_Format_regEx__c = '\\d{4}([\\-]\\d{3})?');
+                                    Postal_Code_Format_regEx__c = '\\d{4}([\\-]\\d{3})?', Region__c = 'some', State_Province_Picklist__c = true);
 		insert country;
+
+		insert new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c = country.Id, Name='Ontario', ISO_Code__c='CA-ON');
 
 		AMS_Accreditation_Country_CheckList__c aacc = new AMS_Accreditation_Country_CheckList__c(
      		IATA_ISO_Country__c = country.Id,
@@ -264,13 +266,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.confirmUpdate();
 
-		/*ctrl.currentAccount.fw.newform.Local_Physical_Address_Street__c = 'test';
-		ctrl.currentAccount.fw.newform.Local_Postal_Address_Street__c = 'test';
-		ctrl.currentAccount.fw.newform.Local_Physical_Address_City__c = 'test';
-		ctrl.currentAccount.fw.newform.Local_Postal_Address_City__c = 'test';
-		ctrl.currentAccount.fw.newform.Local_Physical_Address_Province__c = 'test';
-		ctrl.currentAccount.fw.newform.Local_Postal_Address_Province__c = 'test';
-		ctrl.currentAccount.fw.newform.Local_Legally_Registered_Name__c = 'test';*/
+		String countryInfoByCountryNameMapString = ctrl.countryInfoByCountryNameMapString;
+		String stateListByCountryName = ctrl.stateListByCountryName;
 
 		ctrl.currentAccount.fw.newForm.Notify_Change_Legal_Details__c = true;
 		ctrl.currentAccount.fw.newForm.Notify_Change_Location__c = true;
@@ -370,6 +367,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.newContact.Last_name__c = 'a';
 		ctrl.currentAccount.newContact.AddressStreet__c = 'a';
 		ctrl.currentAccount.newContact.AddressCity__c = 'a';
+        ctrl.currentAccount.newContact.AddressState__c = 'a';
 		ctrl.currentAccount.newContact.AddressPostcode__c = 'a';
 		ctrl.currentAccount.newContact.Job_title__c = 'a';
 		ctrl.currentAccount.newContact.Agencies_prev_worked_for__c = 'some';
@@ -417,7 +415,12 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.currentAccount.newContact = new AMS_Accreditation_Contact__c();
 		ctrl.contactType = 'Person';
+        ctrl.amsContactCountry = 'Country';
 
+        System.currentPageReference().getParameters().put('countryName', 'test');
+
+        ctrl.getContactStates();
+        
 		ctrl.createAgencyContact();
 
 		ctrl.saveDraft();
@@ -463,13 +466,27 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.currentAccount.fw.newform.Account_Name__c = '中文';
 		ctrl.currentAccount.fw.newform.Trade_Name__c = '中文';
+
+		ctrl.currentAccount.fw.newform.Branch_Office_Postal_code__c = '中文';
+		ctrl.currentAccount.fw.newform.Website__c = '中文';
+		ctrl.currentAccount.fw.newform.Branch_Office_Email__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_State__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_Postal_Code__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_Country__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_City__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_Street__c = '中文';
+		ctrl.currentAccount.fw.newform.Branch_Office_Street_name_number__c = '中文';
+
 		ctrl.currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c = null;
 		ctrl.currentAccount.isocountry.Tax_Number_VAT_field_mandatory__c = true;
+        ctrl.currentAccount.isocountry.Tax_Number_2_VAT_field_2_mandatory__c = true;
 
 		ctrl.confirmUpdate();
 
 		ctrl.currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c = '123';
+        ctrl.currentAccount.fw.newform.ISSP_AMS_VAT_Number_2_Input__c = '123';
 		ctrl.currentAccount.fw.newForm.INVALID_Tax_Number__c = true;
+        ctrl.currentAccount.fw.newForm.INVALID_Tax_Number_2__c = true;
 
 		ctrl.confirmUpdate();
 
@@ -504,7 +521,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.confirmUpdate();
 
-		upd.validateVATNumber();
+		//upd.validateVATNumber();
+        //upd.validateVATNumber2();
 
 		aacc.License_required__c = true;
 		aacc.Registration_required__c = true;
@@ -834,7 +852,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ISSP_ANG_ANNUAL_REV_UPDATE upd = new ISSP_ANG_ANNUAL_REV_UPDATE();
 
-		System.assert(upd.countryInfoByCountryNameMapString == '\'\'');
 		System.assert(upd.countryList.size() > 0);
 		System.assert(upd.countryInfoByCountryNameMapString.startsWith('{'));
 
@@ -842,5 +859,228 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		Test.stopTest();
 
 	}
+    
+    @isTest
+    static void test7() {
+        insert new ISSP_CS__c(Name = 'ISSP AMS ALLOWED AGENCY URL', Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)(([.])(([a-zA-Z]{2,3}))([.]){0,1}([a-zA-Z]{2,3}){0,1})');
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
+                                    IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
+                                    IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', ANG_Enable_NewGen__c = true,
+                                    Postal_Code_Format_regEx__c = '\\d{4}([\\-]\\d{3})?');
+		insert country;
+
+		AMS_Accreditation_Country_CheckList__c aacc = new AMS_Accreditation_Country_CheckList__c(
+     		IATA_ISO_Country__c = country.Id,
+     		Operation__c = 'Travel Agent'
+     	);
+
+     	insert aacc;
+
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.BillingCity = 'test';
+        account.ShippingCity = 'test';
+        account.Name = 'test';
+        account.sector__c = Ams_Utils.SECTOR_PASSENGER;
+        account.Location_Type__c = AMS_Utils.HE;
+        account.RecordTypeId = rtAgency ;
+        account.IATACode__c = '12345678';
+		account.status__c = Ams_Utils.ACC_S9_APPROVED;
+		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
+
+		insert account;
+
+        Account child = ISSP_ObjectFactory.createNewAccount();
+        child.BillingCity = 'test';
+        child.ShippingCity = 'test';
+        child.Name = 'test child';
+        child.sector__c = Ams_Utils.SECTOR_PASSENGER;
+        child.Location_Type__c = AMS_Utils.AE;
+        child.RecordTypeId = rtAgency ;
+        child.IATACode__c = '87654321';
+		child.status__c = Ams_Utils.ACC_S9_APPROVED;
+		child.parentId = account.id;
+		child.Top_Parent__c = account.id;
+		child.IATA_ISO_Country__c = country.Id;
+		child.Location_Class__c = 'P';
+
+		insert child;
+
+		AMS_Agencies_Hierarchy__c hier = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+
+		insert hier;
+
+		AMS_Agencies_relationhip__c rel = new AMS_Agencies_relationhip__c(Hierarchy__c = hier.Id, Parent_Account__c = account.Id, Child_Account__c = child.Id, HO_Flag__c = 'true', Is_Newgen_Relation__c = true);
+
+		insert rel;
+
+		AMS_OSCAR__c oscar = New AMS_OSCAR__c (
+			Account__c = account.id,
+			Process__c = 'ANG.ANNUAL.REVALIDATION',
+			RecordTypeId = rtOscar
+		);
+
+		insert oscar;
+
+		Case testcase = new Case (
+			Account_Concerned__c = account.id,
+			AccountId = account.id,
+			OSCAR__c  = oscar.id,
+			Reason1__c = 'Annual revalidation',
+			RecordTypeId = rtCase,
+			Subject = 'Annual revalidation - GoStandard - test',
+			Type = 'Case',
+			Type_of_customer__c = 'IATA Travel Agent'
+		);
+
+		insert testcase;
+
+		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
+		System.currentPageReference().getParameters().put('caseId', testcase.id);
+
+		ISSP_ANG_ANNUAL_REVALIDATION ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
+
+
+		String mode = ctrl.mode;
+
+		List<SelectOption> countryNameList = ctrl.countryNameList;
+		AMS_Accreditation_Country_CheckList__c CountryCheckList = ctrl.CountryCheckList;
+        
+        ISSP_ANG_ANNUAL_REV_UPDATE upd = new ISSP_ANG_ANNUAL_REV_UPDATE();
+		upd.ca = ctrl.currentAccount;
+		upd.newAgencyContact();
+		upd.editAgencyContact();
+		AMS_Accreditation_Country_CheckList__c CountryCheckListUpd = upd.CountryCheckList;
+        
+        Test.startTest();
+        
+        Boolean c = upd.displayShipping;
+        system.assertEquals(true, c);
+        
+        Test.stopTest();
+    }
+    
+    @isTest
+    static void test8() {        
+        insert new ISSP_CS__c(Name = 'ISSP AMS ALLOWED AGENCY URL', Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)(([.])(([a-zA-Z]{2,3}))([.]){0,1}([a-zA-Z]{2,3}){0,1})');
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
+                                    IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
+                                    IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', ANG_Enable_NewGen__c = true,
+                                    Postal_Code_Format_regEx__c = '\\d{4}([\\-]\\d{3})?');
+		insert country;
+
+		AMS_Accreditation_Country_CheckList__c aacc = new AMS_Accreditation_Country_CheckList__c(
+     		IATA_ISO_Country__c = country.Id,
+     		Operation__c = 'Travel Agent'
+     	);
+
+     	insert aacc;
+
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.BillingCity = 'test';
+        account.Name = 'test';
+        account.sector__c = Ams_Utils.SECTOR_PASSENGER;
+        account.Location_Type__c = AMS_Utils.HE;
+        account.RecordTypeId = rtAgency ;
+        account.IATACode__c = '12345678';
+		account.status__c = Ams_Utils.ACC_S9_APPROVED;
+		account.IATA_ISO_Country__c = country.Id;
+		account.Location_Class__c = 'P';
+
+		insert account;
+
+        Account child = ISSP_ObjectFactory.createNewAccount();
+        child.BillingCity = 'test';
+        child.Name = 'test child';
+        child.sector__c = Ams_Utils.SECTOR_PASSENGER;
+        child.Location_Type__c = AMS_Utils.AE;
+        child.RecordTypeId = rtAgency ;
+        child.IATACode__c = '87654321';
+		child.status__c = Ams_Utils.ACC_S9_APPROVED;
+		child.parentId = account.id;
+		child.Top_Parent__c = account.id;
+		child.IATA_ISO_Country__c = country.Id;
+		child.Location_Class__c = 'P';
+
+		insert child;
+
+		AMS_Agencies_Hierarchy__c hier = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+
+		insert hier;
+
+		AMS_Agencies_relationhip__c rel = new AMS_Agencies_relationhip__c(Hierarchy__c = hier.Id, Parent_Account__c = account.Id, Child_Account__c = child.Id, HO_Flag__c = 'true', Is_Newgen_Relation__c = true);
+
+		insert rel;
+
+		AMS_OSCAR__c oscar = New AMS_OSCAR__c (
+			Account__c = account.id,
+			Process__c = 'ANG.ANNUAL.REVALIDATION',
+			RecordTypeId = rtOscar
+		);
+
+		insert oscar;
+
+		Case testcase = new Case (
+			Account_Concerned__c = account.id,
+			AccountId = account.id,
+			OSCAR__c  = oscar.id,
+			Reason1__c = 'Annual revalidation',
+			RecordTypeId = rtCase,
+			Subject = 'Annual revalidation - GoStandard - test',
+			Type = 'Case',
+			Type_of_customer__c = 'IATA Travel Agent'
+		);
+
+		insert testcase;
+
+		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
+		System.currentPageReference().getParameters().put('caseId', testcase.id);
+
+		ISSP_ANG_ANNUAL_REVALIDATION ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
+
+		ctrl.updateDetails();
+		String mode = ctrl.mode;
+        List<SelectOption> relAc = ctrl.relatedAccounts;
+        ctrl.currentAccount.fw.newform.Copy_Ownership__c = true;
+        ctrl.currentAccount.fw.newform.Notify_Change_Ownership__c = true;
+
+		List<SelectOption> countryNameList = ctrl.countryNameList;
+		AMS_Accreditation_Country_CheckList__c CountryCheckList = ctrl.CountryCheckList;
+        
+        ISSP_ANG_ANNUAL_REV_UPDATE upd = new ISSP_ANG_ANNUAL_REV_UPDATE();
+		upd.ca = ctrl.currentAccount;
+		upd.newAgencyContact();
+		upd.editAgencyContact();
+        ctrl.cleanOwnership();
+        List<String> forms = new List<String>();
+        forms.add(child.Id);
+        ctrl.formsToCopyOwnersTo = forms;
+        ctrl.copyOwnership();
+        
+		AMS_Accreditation_Country_CheckList__c CountryCheckListUpd = upd.CountryCheckList;
+        
+        Test.startTest();
+        
+        upd.validateVATNumber();
+        upd.validateVATNumber2();
+        ctrl.confirmUpdate();
+        ctrl.getBatchStatus();
+                
+        Boolean c = upd.displayShipping;
+        system.assertEquals(false, c);
+        upd.displayShipping = false;
+        upd.resetCheckbox();
+        
+        List<SelectOption> bsl = upd.billingStateList;
+        List<SelectOption> ssl = upd.shippingStateList;
+        string slbcn = upd.stateListByCountryName;
+        string si = upd.stateInfo;
+        
+        Test.stopTest();
+    }
 
 }

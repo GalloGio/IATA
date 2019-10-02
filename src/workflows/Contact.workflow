@@ -412,7 +412,7 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <name>IFAP_Enable_portal_self_registration</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.Financial_Assessment_Contact__c</field>
             <operation>equals</operation>
