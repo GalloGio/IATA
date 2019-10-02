@@ -58,11 +58,11 @@
                 }
 
                 function openLearnMore() {
-                    $('[id$="learnMoreModal"]').css('display', 'block'); rui
+                    $('[id$="learnMoreModal"]').css('display', 'block'); 
                 }
 
                 function closeLearnMore() {
-                    $('[id$="learnMoreModal"]').css('display', 'none'); rui
+                    $('[id$="learnMoreModal"]').css('display', 'none'); 
                 }
             </script>
 
@@ -109,7 +109,7 @@
 
                                         <apex:commandButton styleClass="btn_iata_primary btn" value="{!$Label.ANG_ISSP_GDI_Navigate_Portal}" onclick="navigateToGDIPortal();" reRender="" rendered="{!AND(gdiAppRightGranted, CONTAINS(financialInstitution.Name, 'Euler Hermes'), NOT(countryIsMulticountryEnabled))}" style="float: right;"/>
 
-                                        <apex:commandButton styleClass="btn_iata_primary btn" value="{!$Label.ANG_ISSP_GDI_Learn_More}" onclick="openLearnMore();" reRender="" rendered="{!countryIsMulticountryEnabled}" style="float: right;"/> rui
+                                        <apex:commandButton styleClass="btn_iata_primary btn" value="{!$Label.ANG_ISSP_GDI_Learn_More}" onclick="openLearnMore(); return false;" reRender="" rendered="{!countryIsMulticountryEnabled}" style="float: right;"/>
                                         
                                         <apex:facet name="header">
                                             <apex:outputText escape="false" value="{!$ObjectType.Financial_Institution__c.fields.Name.Label}"/>
@@ -183,7 +183,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <button id="learnMoreModalCloseButtonSecondary" type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="closeLearnMoreModal();">&times;</button>
+                                            <button id="learnMoreModalCloseButtonSecondary" type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="closeLearnMore(); return false;">&times;</button>
                                             <h4 class="modal-title">{!$Label.OneId_TermsAndConditions}</h4>
                                         </div>
                                         <div class="modal-body">

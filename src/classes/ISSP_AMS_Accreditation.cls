@@ -5170,8 +5170,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
         String iataCodeToSearch = accountToBeFetchedOrRemoved + '%';
         
-        List<Account> agency = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
-                            Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c
+        List<Account> agency = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c, ANG_Accreditation_Model__c,
+                            Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c, Top_Parent__r.ANG_Accreditation_Model__c
                         FROM Account
                         WHERE RecordType.DeveloperName = 'IATA_Agency'
                             AND Sector__c = :AMS_Utils.SECTOR_PASSENGER 
@@ -5180,7 +5180,8 @@ public without sharing class ISSP_AMS_Accreditation {
                             AND Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
                             AND (Location_Type__c = :AMS_Utils.AE OR Location_Type__c = :AMS_Utils.HE OR Location_Type__c = :AMS_Utils.GE)
                             AND IATA_ISO_Country__r.Multicountry_Enabled__c = true
-                            LIMIT 1];
+                            AND ANG_Accreditation_Model__c = 'Cash' //remove when allow conversion mix-in
+                        LIMIT 1];
 
         if (!agency.isEmpty()) {
             Account temp;
@@ -8199,28 +8200,44 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void addToAccountsToConvert () {
-        if (!accountsToBeConverted.contains(accountToBeConverted)) {
-            if (accountsToBeConverted.isEmpty()) {
-                newForm.Agency_Codes_Concerned__c = accountToBeConverted.IATACode__c;
-            } else {
-                newForm.Agency_Codes_Concerned__c += ',' + accountToBeConverted.IATACode__c;
-            }
-            
-            accountsToBeConverted.add(accountToBeConverted);
+        List<String> convertingIds = new List<String>();
+
+        for (Account acc: accountsToBeConverted) {
+            convertingIds.add(acc.Id);
         }
+
+        for (Account a: [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
+                            Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c 
+                            FROM Account WHERE Top_Parent__c = :accountToBeConverted.Id OR Id = :accountToBeConverted.Id]) {
+            if (!convertingIds.contains(a.IATACode__c)) {
+                if (accountsToBeConverted.isEmpty()) {
+                    newForm.Agency_Codes_Concerned__c = a.IATACode__c;
+                } else {
+                    newForm.Agency_Codes_Concerned__c += ',' + a.IATACode__c;
+                }
+                
+                accountsToBeConverted.add(a);
+            }
+        }        
     }
 
     public void removeFromAccountsToConvert() {
-        for (Integer i = 0; i < accountsToBeConverted.size(); i++) {
-            if (accountsToBeConverted[i].IATACode__c == accountToBeFetchedOrRemoved) {
-                accountsToBeConverted.remove(i);
+        for (Account a: [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
+                            Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c 
+                            FROM Account WHERE Top_Parent__c = :accountToBeFetchedOrRemoved OR Id = :accountToBeFetchedOrRemoved]) {
+            
+            for (Integer i = 0; i < accountsToBeConverted.size(); i++) {
+                if (accountsToBeConverted[i].Id == a.Id) {
+                    accountsToBeConverted.remove(i);
+                    break;
+                }
+            }
+
+            if (newForm.Agency_Codes_Concerned__c.contains(a.Id + ',')) {
+                newForm.Agency_Codes_Concerned__c.remove(a.Id + ',');
+            } else if (newForm.Agency_Codes_Concerned__c.contains(a.Id)) {
+                newForm.Agency_Codes_Concerned__c.remove(a.Id);
             }
         }
-
-        if (newForm.Agency_Codes_Concerned__c.contains(accountToBeFetchedOrRemoved + ',')) {
-            newForm.Agency_Codes_Concerned__c.remove(accountToBeFetchedOrRemoved + ',');
-        } else if (newForm.Agency_Codes_Concerned__c.contains(accountToBeFetchedOrRemoved)) {
-            newForm.Agency_Codes_Concerned__c.remove(accountToBeFetchedOrRemoved);
-        } 
     }
 }
