@@ -2501,6 +2501,14 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Your Account information is now updated</value>
     </labels>
     <labels>
+        <fullName>Accreditation_date</fullName>
+        <categories>Accreditation date</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Accreditation date</shortDescription>
+        <value>Accreditation date</value>
+    </labels>
+    <labels>
         <fullName>Action</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -4506,7 +4514,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area2</shortDescription>
-        <value>Instructor-led Training (individual),	Instructor-led Training (groups),	IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,	Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,	Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management</value>
+        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP)</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -37611,6 +37619,14 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <protected>false</protected>
         <shortDescription>Remaining_Owners</shortDescription>
         <value>Remaining Owners</value>
+    </labels>
+    <labels>
+        <fullName>Remittance_frequency</fullName>
+        <categories>Remittance frequency</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Remittance frequency</shortDescription>
+        <value>Remittance frequency</value>
     </labels>
     <labels>
         <fullName>Renewal_Number</fullName>
