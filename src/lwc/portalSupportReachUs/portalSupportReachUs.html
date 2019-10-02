@@ -67,7 +67,11 @@
         <template if:false={isCompliment}>
             <div class="customWhiteBackground">
 
-                
+                <template if:true={showRecentCasesList}>
+                    <div class="recentCasesMargin">
+                        <c-recent-cases home-page = false special-case oncheckemptylist={hideRecentCasesList}></c-recent-cases>
+                    </div>
+                </template>
 
                 <div class="slds-text-align_center slds-p-top_xx-large">
                     <h1 class="text-medium text-bold">{label.csp_SupportReachUs_SupportCategoriesInfo}</h1>
