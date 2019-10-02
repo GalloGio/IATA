@@ -2058,7 +2058,7 @@ public class AMS_OSCARTriggerHandler {
                 c.OwnerId = updatedOSCAR.OwnerId;
                 caseChanged = true;
             }
-            if(c.Process_Start_Date__c == null && updatedOSCAR.Process__c != AMS_Utils.VOLRELINQUISH){
+            if(c.Process_Start_Date__c == null && updatedOSCAR.Process__c != AMS_Utils.VOLRELINQUISH && c.Process_Start_Date__c <> updatedOSCAR.Sanity_check_received__c){
                 c.Process_Start_Date__c = updatedOSCAR.Sanity_check_received__c;
                 caseChanged = true;
             }
