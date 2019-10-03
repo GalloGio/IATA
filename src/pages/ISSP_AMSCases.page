@@ -104,6 +104,7 @@
                 cursor: pointer;
                 color: #337ab7;
                 text-decoration: underline;
+            }
             .mainRows{
                 display: flex;
                 flex-direction: row;
@@ -298,7 +299,7 @@
             <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
             <apex:actionFunction action="{!runOptInOut}" name="runOptInOut" oncomplete="onCompleteOptInOut();" rerender="DraftCases" />
             
-            <div class="" style="width: 100%">
+            <div class="container" style="width: 100%">
                 <div class="row mainRows">
                     <section name="left-side-agency-accred" class="col-md-7" style="min-height: 350px;">
 				<div class="content-box">
@@ -310,7 +311,7 @@
                         </header>
                             
                         <div class="row" style="padding-top: 20px">
-                            <div class="col-md-7">
+                            <div class="col-md-12 padded-on-top">
                                         
                                 <!--<input type="button" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/>-->
                                 <input type="button" style="display:{!IF(NOT(isHOAccredited),'','none')};" class="iatabtn" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Head_Entity, $Label.ISSP_AMS_Apply_New_Office))}"/>
