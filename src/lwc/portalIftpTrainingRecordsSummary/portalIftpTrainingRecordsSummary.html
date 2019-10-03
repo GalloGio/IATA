@@ -1,0 +1,179 @@
+<!-- Training Records Summary Search -->
+<template>
+
+    <!-- Error panel -->
+    <template if:true={error}>
+        <c-error-panel errors={error} main-error-message={mainErrorMessage}></c-error-panel>
+    </template>
+    <!-- Search stations -->
+    <div class="slds-card_boundary">
+        <lightning-card> 
+            <div slot="title">
+                <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                Search Criteria
+            </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-m-left_x-small">
+            <!-- <div class='addStationContainer'> -->
+                    <lightning-input name="Search when user hits the 'enter' key" 
+                                        placeholder="Search Stations"
+                                        label="Search Stations" 
+                                        value={queryTerm} 
+                                        type="search" 
+                                        onchange={handleChangeSearch}
+                                        onkeyup={handleKeyUp} 
+                                        required>
+                    </lightning-input>
+                </div>
+                <div class="slds-col  slds-p-top_large">
+                <!-- <div class="alignSearchStationsButton"> -->
+                    <lightning-button label="Search Stations" 
+                                        variant="neutral"
+                                        onclick={handleSearchStationOnClick}>
+                    </lightning-button>
+                </div>
+            </div>
+            <lightning-combobox name="proficiency" 
+                                label="Level" 
+                                value={proficiencyValue} 
+                                placeholder="Select Proficiency"
+                                options={proficiencyOptions} 
+                                onchange={handleChangeProficiency}
+                                class="slds-m-left_x-small slds-m-right_x-small" 
+                                required>
+            </lightning-combobox>
+            <lightning-combobox name="aircraftType" 
+                                label="Operation Type" 
+                                value={aircraftTypeValue}
+                                placeholder="Select Aircraft Type" 
+                                options={aircraftTypeOptions} 
+                                onchange={handleChangeAircraftType} 
+                                class="slds-m-left_x-small slds-m-right_x-small" 
+                                required>
+            </lightning-combobox>
+
+            <br />
+            <lightning-button variant="neutral" 
+                                label="Search" 
+                                title="Search" 
+                                icon-name="utility:filterList"
+                                icon-position="right"
+                                class="slds-m-left_x-small" 
+                                onclick={handleSearchButtonClick}>
+            </lightning-button>
+            <lightning-button variant="neutral" 
+                                label="Reset" 
+                                title="Reset Form" 
+                                icon-name="utility:filterList"
+                                icon-position="right" 
+                                class="slds-m-left_x-small" 
+                                onclick={handleResetButtonClick}>
+            </lightning-button>
+        </lightning-card>
+    </div>
+
+    <template if:true={showSearch}>
+
+        <div class="slds-card_boundary slds-m-top_medium">
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    ITP Operational Capability
+                </div>
+                <!--
+                <div>
+                    <lightning-button variant="neutral" class="slds-m-left_x-small" label="Download Data as PDF file"
+                        onclick={downloadPDFFile}>
+                    </lightning-button>
+                </div>
+                -->
+                <p class="slds-p-horizontal_small">
+                    <template if:true={loading}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+                    <template if:false={loading}>
+                        <div if:true={dataRecords}>
+                            <lightning-datatable key-field="id" 
+                                                data={data} 
+                                                columns={columns} 
+                                                hide-checkbox-column
+                                                sorted-by={sortedBy} 
+                                                sorted-direction={sortedDirection}
+                                                onsort={updateColumnSorting} 
+                                                onrowaction={handleRowAction}>
+                            </lightning-datatable>
+                        </div>
+                        <div if:false={dataRecords}>
+                            <div class="slds-text-align_center">
+                                <div class="slds-text-heading_medium">
+                                    <h3>No Results</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </p>
+            </lightning-card>
+        </div>
+    </template>
+
+    <!--Select station modal-->
+    <template if:true={openStationsModal}>
+        <div style="height: 50%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-is-relative">
+                        <lightning-spinner if:true={loadingSpinner} alternative-text="Loading" size="medium">
+                        </lightning-spinner>
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={handleCancel}>
+                                <lightning-icon icon-name="utility:close" size="medium">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Search Stations
+                                Results</h2>
+                        </header>
+                        <template if:false={loadingModal}>
+                            <div class="min-height-class slds-modal__content slds-p-around_medium"
+                                id="modal-content-id-3">
+                                <div if:true={showSearchResults} class="slds-form-element__label slds-no-flex">Select the Station from the table below</div>
+                                <div if:true={showSearchResults} class="slds-m-top_medium slds-m-bottom_x-large">
+                                    
+                                    <div class="max_height_class">
+                                        <!-- Row actions -->
+                                        <lightning-datatable key-field="id" 
+                                                            data={listSearchStationsResult}
+                                                            columns={columnsSelectStation} 
+                                                            sorted-by={sortedByStationOptions} 
+                                                            sorted-direction={sortedDirectionStationOptions}
+                                                            onsort={updatecolumnsSearchStationSorting}
+                                                            max-row-selection=1
+                                                            onrowselection={getSelectedRows}>
+                                        </lightning-datatable>
+                                    </div>
+                                </div>
+                                <div if:false={showSearchResults} class="slds-m-top_medium slds-m-bottom_x-large">
+                                    <div>
+                                        No Results Found
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <footer class="slds-modal__footer">
+                            <lightning-button if:true={selectedRows} class='selectStationSave' label="Select" variant="neutral" onclick={handleSelectStationsSave}>
+                            </lightning-button>
+                            <lightning-button class="cancelButton" label="Cancel" variant="neutral"
+                                onclick={handleCancel}>
+                            </lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </footer>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+
+
+</template>
