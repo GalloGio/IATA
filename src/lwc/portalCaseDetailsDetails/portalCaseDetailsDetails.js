@@ -46,6 +46,9 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
     @track nrDocs = 0;
 
+    @track showNewDescriptionSection = false;
+    @track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
+
     @track labels = {
         AddDocumentsMsg,
         CaseDetails,
@@ -292,7 +295,4 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         //display modal on attachment component
         this.showAddDocsModal = true;
     }
-
-
-
 }
