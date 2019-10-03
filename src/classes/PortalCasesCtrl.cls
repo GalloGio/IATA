@@ -748,7 +748,7 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
 
 	String labelDescription = fieldMap.get('Description').getDescribe().getLabel();         //It provides to get the object fields label.
 
-	String caseDescription = caseToFirstComment.Description;
+	String caseDescription = caseToFirstComment.Description != null ? caseToFirstComment.Description : '';
 
 	if(caseDescription.contains(labelDescription + ' - ')) {
 		caseDescription = caseDescription.substringAfter(labelDescription + ' - ');
