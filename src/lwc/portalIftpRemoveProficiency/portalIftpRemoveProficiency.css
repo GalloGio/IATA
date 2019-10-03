@@ -1,0 +1,8 @@
+.spinner{
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
