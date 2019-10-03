@@ -257,6 +257,10 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_OPT_OUT = 'Financial review opt-in / opt-out';
     public static final String CASE_REASON_PCI_DSS_COMPLIANT = 'PCI DSS Compliant';
 
+    public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL = 'Multicountry Annual';
+    public static final String FA_RESULT_UNSATISFACTORY_UPDATE_FS = 'Unsatisfactory - Update Financial Security';
+    public static final String FA_RESULT_SATISFACTORY_NO_ACTION = 'Satisfactory - No Action';
+
     // Case - Origin
     public static final String CASE_ORIGIN_PORTAL = 'Portal';
     public static final String ANG_MASSIVE_FOP = 'Massive FOP Creation';
@@ -265,12 +269,13 @@ public without sharing class AMS_Utils {
     // Case - Status
     public static final String CASE_STATUS_CLOSED = 'Closed';
     public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUESTED = 'Financial Security Requested';
+    public static final String CASE_STATUS_ASSESSMENT_FINALIZED = 'Assessment Finalized';
 
     // Case - Reason1__c //AMSU-165
     public static final String CASE_REASON_CHG_DATA_MAINTENANCE = 'CHG – Data Maintenance';
 
     //set with the ifap status to update the account's last financial review
-    public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED, CASE_STATUS_FINANCIAL_SECURITY_REQUESTED};
+    public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED, CASE_STATUS_FINANCIAL_SECURITY_REQUESTED, CASE_STATUS_ASSESSMENT_FINALIZED};
 
     public static final String CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT = 'IATA Travel Agent';
 

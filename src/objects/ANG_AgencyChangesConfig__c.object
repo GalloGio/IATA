@@ -58,6 +58,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>TC_Conversion_Multicountry__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Identifies a conversion from standard to multicountry</description>
+        <externalId>false</externalId>
+        <label>Conversion Multicountry</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>TC_Hierarchy__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

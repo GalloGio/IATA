@@ -13,6 +13,7 @@ public class ANG_CaseTriggerHandler {
 	//public void onBeforeInsert() {}
 	public void onAfterInsert() {
 		updateFinancialReviewResultOnAccount();
+		handleMulticountryIfapCreation(Trigger.New);
 		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
 	}
 
@@ -48,6 +49,8 @@ public class ANG_CaseTriggerHandler {
 			System.debug(loggingLevel.FINEST, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] has SAAM Area - ' + (c.CaseArea__c == saamArea));
 			System.debug(loggingLevel.FINEST, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] is IFAP - ' + (c.RecordTypeId == AMS_Utils.RECTYPE_IFAP));
 			System.debug(loggingLevel.FINEST, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] has IFAP status - ' + ifapStatus.contains(c.status));
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] Financial Review Type - ' + c.Financial_Review_Type__c);
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] Exception Approved On: ' + c.Exception_Approved_on__c);
 
 			if( (Trigger.isInsert || (Trigger.isUpdate && c.Status != oldMap.get(c.Id).Status)) && 
 				(
@@ -60,6 +63,17 @@ public class ANG_CaseTriggerHandler {
 					&& ifapStatus.contains(c.status))
 				)
 			){
+				//Skip updating the financial result on the account  considering the following scenario:
+				if(c.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL && c.Exception_Approved_on__c != NULL){
+					//A Financial Review is done on a multicountry key hierarchy and an exception is raised to evaluate 
+					//if the consequences should be applied or not. If the exception is approved, 
+					//it means that the consequences of the new Financial Assessment result 
+					//do not need to be applied on the hierarchy and so 
+					//the new Financial Assessment result will not be copied at all on the account
+					System.debug(loggingLevel.FINE, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] Skip case with exception approved: ' + c.CaseNumber);
+					continue;
+				}
+
 				if(!casesPerAccount.containsKey(c.AccountId)) casesPerAccount.put(c.AccountId, new List<Case>());
 				casesPerAccount.get(c.AccountId).add(c);
 
@@ -122,6 +136,25 @@ public class ANG_CaseTriggerHandler {
 		if(!financialSecurities.isEmpty()){
 			ANG_FinancialSecurityTriggerHandler fsth = new ANG_FinancialSecurityTriggerHandler();
 			fsth.updateRHCInfoFSMinimumAmount(accsIds, financialSecurities);
+		}
+
+	}
+
+	private static void handleMulticountryIfapCreation(List<Case> caseLst){
+		
+		Id ifapRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+		Id financialReviewPdRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Multicountry_Yearly_Financial_Review');
+
+		List<AMS_Process_Detail__c> pdLst = new List<AMS_Process_Detail__c>();
+
+		for(Case cse : caseLst){
+			if(cse.RecordTypeId == ifapRecordTypeId && cse.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL){
+				pdLst.add(new AMS_Process_Detail__c(Case__c = cse.Id, RecordTypeId = financialReviewPdRecordTypeId));
+			}
+		}
+
+		if(!pdLst.isEmpty()){
+			insert pdLst;
 		}
 
 	}

@@ -30,7 +30,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <height>50</height>
+                <height>100</height>
                 <page>AMS_Change_Code_Notification</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
