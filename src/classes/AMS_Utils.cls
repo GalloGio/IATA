@@ -2676,19 +2676,21 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 
     public static final List<Schema.FieldSetMember> STAGING_AREA_FIELDS_TO_VALIDATE = SObjectType.AMS_Pax_Accreditation_Form__c.FieldSets.STAGING_AREA_FIELDS_TO_VALIDATE.getFields();
 
-    // validate that RHC / Financial Security currency is allowed
-    public static void runCurrencyValidations(List<SObject> objects) {
+    //Validates if the financial security currency is allowed
+    public static void runCurrencyValidations(List<SObject> objects, String currencyFieldName){
         Map<String,ANG_RHC_Currencies__c> currencyConfs = ANG_RHC_Currencies__c.getall();
-        List<ANG_RHC_Currencies__c> sortedList = currencyConfs.values();
-        sortedList.sort();
+        List<ANG_RHC_Currencies__c> currencyLst = currencyConfs.values();
+        currencyLst.sort();
 
         String allowedCurrencies = '';
-        for(ANG_RHC_Currencies__c conf : sortedList){
+        for(ANG_RHC_Currencies__c conf : currencyLst){
             allowedCurrencies +='<br/>'+conf.name +' - '+conf.Currency_Name__c; 
         }
-
+        
         for(SObject obj :objects){
-            if(!currencyConfs.containsKey(String.valueOf(obj.get('CurrencyIsoCode')))) obj.addError('The Currency selected is not allowed. Currently allowed currencies are: <br/>'+allowedCurrencies, false);
+            if(!currencyConfs.containsKey(String.valueOf(obj.get(currencyFieldName)))){
+                obj.addError('The Financial Security Currency selected is not allowed. Currently allowed currencies are: <br/>'+allowedCurrencies, false);
+            }
         }
     }
     
