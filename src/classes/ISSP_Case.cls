@@ -1638,7 +1638,7 @@ public without sharing class ISSP_Case {
             sendMassEmail(newCase.Id,template.Id);
 
         } catch (DMLException e) {
-            ApexPages.addMessages(ex);
+            ApexPages.addMessages(e);
             Database.rollback(sp);
         }
     }
