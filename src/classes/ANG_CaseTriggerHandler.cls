@@ -10,14 +10,20 @@ public class ANG_CaseTriggerHandler {
 	// ****************** distribution methods ********************
 	// ************************************************************
 	
-	//public void onBeforeInsert() {}
+	public void onBeforeInsert(){
+		handleMulticountryIfaps(triggerNew, oldMap);
+	}
+
 	public void onAfterInsert() {
 		updateFinancialReviewResultOnAccount();
-		handleMulticountryIfapCreation(Trigger.New);
+		handleMulticountryIfaps(triggerNew, oldMap);
 		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
 	}
 
-	//public void onBeforeUpdate() {}
+	public void onBeforeUpdate(){
+		handleMulticountryIfaps(triggerNew, oldMap);
+	}
+	
 	public void onAfterUpdate() {
 		updateFinancialReviewResultOnAccount();
 		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
@@ -140,21 +146,35 @@ public class ANG_CaseTriggerHandler {
 
 	}
 
-	private static void handleMulticountryIfapCreation(List<Case> caseLst){
+	private static void handleMulticountryIfaps(List<Case> caseLst, Map<Id,Case> caseOldMap){
 		
 		Id ifapRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 		Id financialReviewPdRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Multicountry_Yearly_Financial_Review');
 
 		List<AMS_Process_Detail__c> pdLst = new List<AMS_Process_Detail__c>();
+		List<Case> casesToRunFsCurrencyValidationsLst = new List<Case>();
 
 		for(Case cse : caseLst){
 			if(cse.RecordTypeId == ifapRecordTypeId && cse.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL){
-				pdLst.add(new AMS_Process_Detail__c(Case__c = cse.Id, RecordTypeId = financialReviewPdRecordTypeId));
+				if(Trigger.isInsert && Trigger.isAfter){
+					pdLst.add(new AMS_Process_Detail__c(Case__c = cse.Id, RecordTypeId = financialReviewPdRecordTypeId));
+				}
+				else if(Trigger.isInsert && Trigger.isBefore && String.isNotBlank(cse.Financial_Security_Currency__c)){
+					casesToRunFsCurrencyValidationsLst.add(cse);
+				}
+				else if(Trigger.isUpdate && Trigger.isBefore && String.isNotBlank(cse.Financial_Security_Currency__c) &&
+							  cse.Financial_Security_Currency__c != caseOldMap.get(cse.Id).Financial_Security_Currency__c){
+					casesToRunFsCurrencyValidationsLst.add(cse);
+				}
 			}
 		}
 
 		if(!pdLst.isEmpty()){
 			insert pdLst;
+		}
+		
+		if(!casesToRunFsCurrencyValidationsLst.isEmpty()){
+			AMS_Utils.runCurrencyValidations(casesToRunFsCurrencyValidationsLst, 'Financial_Security_Currency__c');
 		}
 
 	}
