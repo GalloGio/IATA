@@ -51,7 +51,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         Open
     };
 
-    acceptedFormats = '.pdf, .jpeg, .jpg, .png, .ppt, .pptx, .xls, .xlsx, .tif, .tiff, .zip';
+    acceptedFormats = '.pdf, .jpeg, .jpg, .png, .ppt, .pptx, .xls, .xlsx, .tif, .tiff, .zip, .doc, .docx';
 
 
 
