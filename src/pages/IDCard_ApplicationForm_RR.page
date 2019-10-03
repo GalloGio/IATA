@@ -984,6 +984,8 @@ accept="application/pdf" />
                                             </td>
                                         </tr>
                                     </table>
+                                    <apex:outputText id="textExpedite" value="{!$Label.IDCard_Expedite_Text}" label="" rendered="{!AND(IsExpediteAvailable, IDCardApplicationRR.Card_Type__c == 'plastic')}"/>  
+                                    &nbsp; 
                                     <table id="expediteTable">
                                         <tr>
                                             <td style="width: 170px"><span class="labelCol">{!$Label.IDCard_Expedite_Delivery}</span></td>
@@ -996,7 +998,7 @@ accept="application/pdf" />
                                         </tr>
                                     </table>
                                     
-                                        <apex:outputText id="textExpedite" value="{!$Label.IDCard_Expedite_Text}" label="" rendered="{!AND(IsExpediteAvailable, IDCardApplicationRR.Card_Type__c == 'plastic')}"/>  
+                                        <apex:outputText id="noteExpedite" value="{!$Label.IDCard_Expedite_Note}" label="" rendered="{!AND(IsExpediteAvailable, IDCardApplicationRR.Card_Type__c == 'plastic')}"/>  
                                 </apex:actionRegion>
                                 <script> 
                                 var tableStyle = document.getElementById('expediteTable').style;

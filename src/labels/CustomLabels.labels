@@ -9059,7 +9059,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Expedite_Note</shortDescription>
-        <value>Note: Recommended option to track shipment where mail service may be unreliable. Delivery within 8-10 business days. Tracking number available upon request.</value>
+        <value>Note: Recommended option to track shipment where mail service may be unreliable. Delivery within 4-8 business days. Tracking number available upon request.</value>
     </labels>
     <labels>
         <fullName>IDCard_Expedite_Text</fullName>

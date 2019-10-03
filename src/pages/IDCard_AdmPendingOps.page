@@ -75,10 +75,10 @@
 		                                      <th>{!$Label.IDCard_ka_Nature}</th>
 		                                      <th>{!$Label.IDCard_ka_Amount}</th>
 		                                      <th>{!$Label.IDCard_ka_date_Request}</th>
-											  <th>{!$ObjectType.ID_Card_Application__c.fields.Card_Type__c.Label}</th>
 											  <th > <input type="checkbox" id="allDigital"  onchange="allDigitalApp();" />All digital</th>
-		                                      <th > <input type="checkbox" class="selectAll" name="checkAll"  onclick="checkAllApp();" />Select all </th>
+		                                      <th > <input type="checkbox" class="selectAll" name="checkAll"  onclick="checkAllApp();" />Approve all </th>
 		                                      <th >{!$Label.IDCard_ka_actions}</th >
+											  <th></th>
 		                                  </tr>
 		                              </thead> 
 		                              <tbody>
