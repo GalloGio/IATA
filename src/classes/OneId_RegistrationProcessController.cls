@@ -35,7 +35,7 @@ public without sharing class OneId_RegistrationProcessController {
 		}
 		else if(sector == 'Airline Supplier'){
 			recordTypesSet = '(\'Others\',\'Standard_Account\')';
-			categoryFilter = ' AND Category__c in (\'Global Distribution System\',\'Content Aggregator\', \'Systems Solutions Provider\')';
+			categoryFilter = ' AND Category__c in (\'Global Distribution System\',\'Content Aggregator\', \'System Solutions Provider\')';
 		}
 		
 		if(recordTypesSet == ''){
