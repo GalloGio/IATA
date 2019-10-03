@@ -738,9 +738,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         this.displayContactForm = registrationState.displayContactForm;
         this.displayTermsAndUsage = registrationState.displayTermsAndUsage;
         this.selectedCustomerType = registrationState.selectedCustomerType;
-        this.sector = registrationState.sector;
-        this.category = registrationState.category;
-        this.extraQuestion = registrationState.extraQuestion;
+        //this.sector = registrationState.sector;
+        //this.category = registrationState.category;
+        //this.extraQuestion = registrationState.extraQuestion;
         this.selectedMetadataCustomerType = registrationState.selectedMetadataCustomerType;
         this.userCountry = registrationState.userCountry;
         this.userCountryCode = registrationState.userCountryCode;

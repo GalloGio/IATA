@@ -117,7 +117,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         return config;
     }
 
-
     public static Map<String,String> getContactLabels() {
 
         List<SObjectField> contactFields = new List<Schema.SObjectField> {
@@ -294,18 +293,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         }
     }
 
-    public static boolean sendConfirmationEmail(RegistrationParameters params){
-
-        Boolean result = false;
-        string oneTimeUrl = generateOneTimeUrl(params);
-
-        Map<String, String> emailMap = generateEmailBodyParamsForConfirmation(params, oneTimeUrl);
-
-        result = sendEmail(params.email, 'CSP_New_Member_Email_Confirmation', emailMap);
-        return result;
-
-    }
-
     public static boolean sendConfirmationEmailVF(RegistrationParameters params, string lang){
         Boolean result = false;
         string oneTimeUrl = generateOneTimeUrl(params);
@@ -329,19 +316,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
         result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_Email_VF', emailMap, userId);
         return result;
-    }
-
-    public static boolean sendRegistrationEmail(RegistrationParameters params){
-
-        Boolean result = false;
-        string url = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('login'));
-        url = url + 'my-profile';
-
-        Map<String, String> emailMap = generateEmailBodyParamsForRegistration(params, url);
-
-        result = sendEmail(params.email, 'CSP_New_Member_Welcome_Email', emailMap);
-        return result;
-
     }
 
     public static boolean sendRegistrationEmailVF(RegistrationParameters params, string userId){
@@ -426,8 +400,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             //Create User
             OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
-            NewUserDetail usr = createNewUser(con, string.valueOf(mode), con.Preferred_Language__c, null, false);
-
+            NewUserDetail usr = createNewUser(con, string.valueOf(mode), con.Preferred_Language__c, null, false, true);
+            system.debug('usr: ' + usr);
             if(usr.userId!= null) {
                 Database.rollback(sp);
                 result.isSuccess = true;
@@ -501,7 +475,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             //Create User
             OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
-            NewUserDetail usr = createNewUser(con, string.valueOf(mode), con.Preferred_Language__c, password, registrationRequired);
+            NewUserDetail usr = createNewUser(con, string.valueOf(mode), con.Preferred_Language__c, password, registrationRequired, false);
 
             if(usr.userId != null) {
                 result.isSuccess = true;
@@ -760,7 +734,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     }
 
-    public static NewUserDetail createNewUser(Contact con, string community, string lang, string password, boolean registrationRequired){
+    public static NewUserDetail createNewUser(Contact con, string community, string lang, string password, boolean registrationRequired, boolean simulation){
 
         NewUserDetail usr = new NewUserDetail();
         usr.userId = null;
@@ -814,17 +788,28 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             }
 
             u.languagelocalekey = langKey;
-
             usr.userId = Site.createPortalUser(u, accountId, password, false);
+            if(Test.isRunningTest()){
+                u.ContactId = con.Id;
+                u.alias = u.CommunityNickname.left(8);
+                u.TimeZoneSidKey = 'America/Los_Angeles';
+                u.localesidkey = 'en_US';
+                u.emailencodingkey = 'UTF-8';
+                DataBase.SaveResult sr = DataBase.insert(u);
+                system.debug('sr: ' + sr);
+                usr.userId = u.Id;
+            }
             usr.userName = u.username;
 
-            List<PermissionSet> permissionList = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_SSO'];
-            if(permissionList.size() > 0){
-                addPermissionToUser(permissionList.get(0).Id, usr.userId);
-            }
+            if(simulation == false){
+                List<PermissionSet> permissionList = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_SSO'];
+                if(permissionList.size() > 0){
+                    addPermissionToUser(permissionList.get(0).Id, usr.userId);
+                }
 
-            //Check user permissions for FAQs, reassign if needed
-            PortalFAQsSharingCtrl.validateUserFAQsPermissions(usr.userId);
+                //Check user permissions for FAQs, reassign if needed
+                PortalFAQsSharingCtrl.validateUserFAQsPermissions(usr.userId);
+            }
 
             return usr;
 
@@ -921,62 +906,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     }
 
-    public static boolean sendEmail(String receiver, String template, Map<String,String> mapBodyParams) {
-        boolean success = true;
-
-        try{
-
-            List<Messaging.SendEmailResult>    listEmailResult = null;
-            List<Messaging.SingleEmailmessage> listSingleEmailMessages = new List<Messaging.SingleEmailmessage>();
-
-            EmailTemplate emailTemplate = [SELECT Id,Subject,HtmlValue,Body FROM EmailTemplate WHERE DeveloperName=:template];
-
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            OrgWideEmailAddress orgWideEmail  = [SELECT Id,Address FROM OrgWideEmailAddress WHERE Address='noreply@iata.org' Limit 1];
-            if(orgWideEmail != null){
-                mail.setOrgWideEmailAddressId(orgWideEmail.Id);
-            }
-            else{
-                mail.setSenderDisplayName('IATA Noreply');
-            }
-
-
-            List<String> receiverList = new List<String>();
-            receiverList.add(receiver);
-            mail.setToAddresses(receiverList);
-            mail.setReplyTo('noreply@iata.org');
-            //mail.setTargetObjectId(userId);
-            mail.setSubject(emailTemplate.Subject);
-
-            String htmlBody  = emailTemplate.HtmlValue;
-            String plainBody = emailTemplate.Body;
-            for(String key : mapBodyParams.keySet()) {
-                if(htmlBody <> null && mapBodyParams <> null) {
-                    htmlBody  = htmlBody.replace(key, (mapBodyParams.get(key) == null)  ? '' : mapBodyParams.get(key));
-                    plainBody = plainBody.replace(key, (mapBodyParams.get(key) == null) ? '' : mapBodyParams.get(key));
-                }
-            }
-
-            if(htmlBody <> null){
-                mail.setHtmlBody(htmlBody);
-            }
-
-            mail.setSaveAsActivity(false);
-            mail.setPlainTextBody(plainBody);
-            listSingleEmailMessages.add(mail);
-
-            if(!Test.isRunningTest()) {
-                listEmailResult = Messaging.sendEmail(listSingleEmailMessages);
-            }
-        }
-        catch(Exception ex){
-            success = false;
-            system.debug(ex.getMessage());
-        }
-
-        return success;
-    }
-
     public static boolean sendEmailVF(String receiver, String template ,Map<String,String> mapBodyParams, string userId){
 
         boolean success = true;
@@ -1043,6 +972,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         PermissionSetAssignment oPermissionSetAssignment = new PermissionSetAssignment();
         oPermissionSetAssignment.AssigneeId = userId;
         oPermissionSetAssignment.PermissionSetId = permissionSetId;
+        system.debug('oPermissionSetAssignment: ' + oPermissionSetAssignment);
         insert oPermissionSetAssignment;
     }
 
