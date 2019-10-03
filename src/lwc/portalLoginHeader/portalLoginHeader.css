@@ -30,13 +30,14 @@
     border-top-color: #f0f2f5;
 }
 
-@media only screen and (max-width: 770px){
+@media only screen and (max-width: 1023px){
     .logoMobile{
         display: block;
         padding-top: 1rem;
         width: 70%;
         max-width: 400px;
-    }
+        margin: auto;
+        }
 
     .loginHeaderWrapper{
         flex-direction: column;

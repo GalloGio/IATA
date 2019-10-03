@@ -6,7 +6,9 @@
 <template>
 
     <lightning-layout vertical-align="end" horizontal-align="end" class="loginHeaderWrapper">
-        <img src={logoIcon} class="logoMobile">
+        <div>
+            <img src={logoIcon} class="logoMobile">
+        </div>
         <div class="slds-p-bottom_xx-large selectorContainer">
             <lightning-layout-item>
                 <div if:true={chagingLang} class="changingLangSpinner">

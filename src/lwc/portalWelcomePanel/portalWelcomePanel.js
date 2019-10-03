@@ -54,11 +54,11 @@ export default class PortalWelcomePanel extends LightningElement {
     offerIcon = CSP_PortalPath + 'CSPortal/Images/Icons/offer_recolor.png';
     supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support_recolor.png';
     arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow_right_recolor.png';
-    bgImage = CSP_PortalPath + 'CSPortal/Images/Backgrounds/WelcomePanelBackground.png';
+    bgImage = CSP_PortalPath + 'CSPortal/Images/Backgrounds/WelcomePanelBackground.jpg';
     @track backgroundStyle;
 
     connectedCallback() {
-        this.backgroundStyle = 'background-image: url("' + this.bgImage + '");background-position: center;background-repeat: no-repeat;background-size: cover;';
+        this.backgroundStyle = 'background-image: url("' + this.bgImage + '"); background-position: center; background-repeat: no-repeat; background-size: cover;';
     }
 
     handleNavigateToFAQ(){
