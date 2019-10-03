@@ -591,13 +591,16 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 
 		system.assert(oscar.ANG_FA_Opt_Out__c == AMS_Utils.NOT_APPLICABLE, 'The OSCAR should have the default value \'' + AMS_Utils.NOT_APPLICABLE + '\' for \'Financial Assessment opt-in/opt-out\' before passing the sanity check');
 
+		Test.startTest();
+
 		oscar.Is_PCI_compliant__c = 'Yes';
 		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.STEP6__c = AMS_Utils.PASSED;
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE;
 		oscar.Change_effective_as_of__c = Date.Today();
-
 		update oscar;
+
+		Test.stopTest();
 
 		oscar = 
 			[SELECT 
@@ -612,9 +615,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			];
 
 		system.assert(oscar.ANG_FA_Opt_Out__c == AMS_Utils.FA_OPT_OUT, 'The OSCAR should have the value \'' + AMS_Utils.FA_OPT_OUT + '\' for \'Financial Assessment opt-in/opt-out\'');
-		
-		Test.startTest();
-
+			
 		oscar.STEP11__c = AMS_Utils.PASSED;
 		oscar.STEP2__c = AMS_Utils.PASSED;
 		oscar.STEP34__c = AMS_Utils.PASSED;
@@ -622,8 +623,6 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		update oscar;
-
-		Test.stopTest();
 		
 		assessfinancialReviewOptOut(oscar.Id);
 
