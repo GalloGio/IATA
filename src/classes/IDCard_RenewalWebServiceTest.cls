@@ -1298,7 +1298,7 @@ public class IDCard_RenewalWebServiceTest
                     ASF_Current_Function__c, ASF_Percentage_of_Annual_Booking__c, ASF_Market_Specialization__c,
                     ASF_Market_Specialization_Comment__c, ASF_Market_Focus__c, ASF_Specializing_on_Destination__c,
                     ASF_Completed_Travel_Courses__c, ASF_Last_Completed_Travel_Course__c, ASF_FAM_Trips__c,
-                    UIR__c, VER_Number__c, IATA_Code__c
+                    UIR__c, VER_Number__c, IATA_Code__c, Card_Type__c
                 FROM ID_Card_Application__c WHERE Id = :idCardApplicationId];
     }
 

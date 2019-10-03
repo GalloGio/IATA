@@ -964,31 +964,45 @@ accept="application/pdf" />
                             
                             <br/>
                             
-                            <apex:pageBlockSection collapsible="false"   rendered="{!IsExpediteAvailable}" >
+                            <apex:pageBlockSection collapsible="false"   rendered="{!isCardTypeChoiceAvailable}" >
                                 
-                                <apex:outputText styleclass="LabelsBlue" value="{!$Label.IDCard_DeliveryOption}"  rendered="{!IsExpediteAvailable}" />
+                                <apex:outputText styleclass="LabelsBlue" value="{!$Label.IDCard_DeliveryOption}"  rendered="{!isCardTypeChoiceAvailable}" />
                                 <br/>
                                 
                                 
                                 <apex:actionRegion >
-                                    
+                                
+                                    <table id="printTable">
+                                        <tr>
+                                            <td style="width: 170px"><span class="labelCol">{!$Label.IDCard_CardType_WishToRecieve}</span></td>
+                                            <td> 
+                                                <apex:selectList id="cardTypeSelect" size="1" value="{!IDCardApplicationRR.Card_Type__c}" style="width:100%">
+                                                    <apex:selectOptions value="{!cardTypeList}"/>
+                                                        <apex:actionSupport event="onchange"  action="{!CalculateApplicationFee}"  reRender="panelApplicableFee, ErrorMsgs, panelIDCardFees"  status="saveStatus"/>
+                                                </apex:selectList>
+                                                &nbsp;&nbsp; 
+                                            </td>
+                                        </tr>
+                                    </table>
                                     <table id="expediteTable">
                                         <tr>
                                             <td style="width: 170px"><span class="labelCol">{!$Label.IDCard_Expedite_Delivery}</span></td>
                                             <td> 
-                                                <apex:inputField id="chckExpedite"   value="{!IDCardApplicationRR.IDCard_Expedite_Delivery__c}">
+                                                <apex:inputCheckbox id="chckExpedite"   value="{!IDCardApplicationRR.IDCard_Expedite_Delivery__c}" >
                                                     <apex:actionSupport event="onclick"  action="{!CalculateApplicationFee}"  reRender="panelApplicableFee, ErrorMsgs"  status="saveStatus"/>
-                                                </apex:inputField>
+                                                </apex:inputCheckbox>
                                                 &nbsp;&nbsp; 
                                                 <apex:outputText id="lblExpedite" value="{!expediteFees} {!IDCardApplicationRR.CurrencyIsoCode}"   label="" rendered="{!IsExpediteAvailable}" /></td>
                                         </tr>
                                     </table>
-                                        <span>{!$Label.IDCard_Expedite_Note}</span>  
+                                    
+                                        <apex:outputText id="textExpedite" value="{!$Label.IDCard_Expedite_Text}" label="" rendered="{!AND(IsExpediteAvailable, IDCardApplicationRR.Card_Type__c == 'plastic')}"/>  
                                 </apex:actionRegion>
                                 <script> 
-                                var tableStyle = document.getElementById('expediteTable').style;                                
-                                {!IsExpediteAvailable} ? tableStyle.visibility = 'visible' :tableStyle.display = 'none';    
-                                
+                                var tableStyle = document.getElementById('expediteTable').style;
+                                {!IsExpediteAvailable && IDCardApplicationRR.Card_Type__c == 'plastic'} ? tableStyle.visibility = 'visible' :tableStyle.display = 'none';
+                                var tableStylePrint = document.getElementById('printTable').style;                                
+                                {!isCardTypeChoiceAvailable} ? tableStylePrint.visibility = 'visible' :tableStyle.display = 'none'; 
                                 </script>
                             </apex:pageBlockSection>
                             

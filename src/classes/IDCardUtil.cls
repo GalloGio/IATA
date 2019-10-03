@@ -891,6 +891,15 @@ global with sharing class IDCardUtil {
             if (theContact != null) {
                 idCard.Related_Contact__c = theContact.Id;
             }
+            if (IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL.equals(idCard.Card_Type__c))
+            {
+                idCard.Is_Expedite__c = false;
+                idCard.MustSyncWithAIMS__c = false;
+                idCard.Card_Status__c = IDCardUtil.CARDSTATUS_VALID;
+                idCard.Sent_to_AIMS_on__c = System.now();
+                idCard.Received_From_AIMS__c = System.now();
+            }
+ 
             system.debug(LoggingLevel.ERROR, '[CreateIDCardObjectFromApplication] return ' + idcard);
             return idCard;
         } catch (Exception ex) {
@@ -1029,7 +1038,7 @@ global with sharing class IDCardUtil {
     * Returns the account object from an IATA code
     */
     public static List<Account> GetAccountListFromIATACodes(Set<String> iataCodes) {
-        return  [Select IATACode__c, BillingCountry, type, Id From Account
+        return  [Select IATACode__c, BillingCountry, IATA_ISO_Country__c, type, Id From Account
                  where RecordType.Name = : 'Agency'
                                          AND IATACode__c in :iataCodes
                                          AND  (Status__c in : IDCARDUtil.ALLOWED_ACCOUNT_STATUS)

@@ -8456,6 +8456,41 @@ The sum of percentage cannot exceed 100%</value>
         <value>12</value>
     </labels>
     <labels>
+        <fullName>IDCard_CardType_DigCard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_CardType_DigCard</shortDescription>
+        <value>Digital card</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_CardType_DigCardNo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_CardType_DigCardNo</shortDescription>
+        <value>No, digital card only</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_CardType_PhysCard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_CardType_PhysCard</shortDescription>
+        <value>Physical card</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_CardType_PhysCardYes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_CardType_PhysCardYes</shortDescription>
+        <value>Yes, send me a physical card</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_CardType_WishToRecieve</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_CardType_WishToRecieve</shortDescription>
+        <value>Do you wish to receive the physical ID Card? Additional fees may apply</value>
+    </labels>
+    <labels>
         <fullName>IDCard_CaseDetails</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9025,6 +9060,14 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <protected>false</protected>
         <shortDescription>IDCard_Expedite_Note</shortDescription>
         <value>Note: Recommended option to track shipment where mail service may be unreliable. Delivery within 8-10 business days. Tracking number available upon request.</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Expedite_Text</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Expedite_Text</shortDescription>
+        <value>Your printed ID Card should be delivered to the agency address within 2 - 6 weeks; however, you can choose to pay for expedited delivery (4 – 8 business days)</value>
     </labels>
     <labels>
         <fullName>IDCard_ExportCSV</fullName>

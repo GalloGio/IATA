@@ -75,11 +75,10 @@
 		                                      <th>{!$Label.IDCard_ka_Nature}</th>
 		                                      <th>{!$Label.IDCard_ka_Amount}</th>
 		                                      <th>{!$Label.IDCard_ka_date_Request}</th>
+											  <th>{!$ObjectType.ID_Card_Application__c.fields.Card_Type__c.Label}</th>
+											  <th > <input type="checkbox" id="allDigital"  onchange="allDigitalApp();" />All digital</th>
 		                                      <th > <input type="checkbox" class="selectAll" name="checkAll"  onclick="checkAllApp();" />Select all </th>
 		                                      <th >{!$Label.IDCard_ka_actions}</th >
-		                                      <th >
-		                                       
-		                                      </th >
 		                                  </tr>
 		                              </thead> 
 		                              <tbody>
@@ -96,9 +95,21 @@
 		                                            </td>
 		                                          <td><apex:outputField value="{!application.IATA_Code__c}" /></td>
 		                                          <td><apex:outputField value="{!application.Type_of_application__c}" /></td>
-		                                          <td><apex:outputField value="{!application.Applicable_Fee__c}" /></td> 
-		                                          
+		                                          <td>
+												  <apex:outputPanel id="appFee">
+												  <apex:outputField value="{!application.Applicable_Fee__c}" />
+		                                          </apex:outputPanel></td> 
 		                                          <td><apex:outputField value="{!application.CreatedDate}" /></td>
+												  <td>
+												  	<p style="display:{!IF(isNotDigitalOnly[application.Id],'block','none')}">
+													<apex:actionRegion >
+												  	<apex:selectList id="cardTypeSelect" size="1" value="{!application.Card_Type__c}">
+                                            			<apex:selectOptions value="{!cardTypeList}"/>
+                                                			<apex:actionSupport event="onchange"  status="Loading"  action="{!calculateAllPrices}"  reRender="appFee, pageHeader"/>
+                                        				</apex:selectList>
+													</apex:actionRegion >
+                                                    </p>
+                                                  </td>
 		                                          <td>
 		                                              <p style="display:{!IF(isApplicationreadyMap[application.Id],'block','none')}">
 		                                              <input type="radio" class= "radioClass" name="groupb['{!application.Id}']" value="" id ="b_{!application.Id}_0"  onclick="validationApplication('{!application.Id}')" /><label for="b_{!application.Id}_0">{!$Label.IDCard_ka_accept}</label>
@@ -154,6 +165,8 @@
 		                    </apex:actionFunction>
 		                    <apex:actionFunction status="Loading"  action="{!validateAllApplication}" name="validateAllApplication" rerender="pageHeader"  >
 		                    </apex:actionFunction>
+							<apex:actionFunction status="Loading"  action="{!calculateAllPrices}" name="calculateAllPrices" rerender="appFee, pageHeader"  >
+		                    </apex:actionFunction>
 		               </apex:form>
 		            </div>
            </div> 
@@ -177,20 +190,31 @@
 					});*/
 					var b =  $(".selectAll")[0].checked;
 					
-						var allRows = $("#pendingApplicationTable").DataTable().column(5).nodes();
+						var allRows = $("#pendingApplicationTable").DataTable().column(6).nodes();
 						 $.each($(allRows).find(".radioClass"),function(){
 	                    		this.checked = b;
 	                    		});
-	                    allRows = $("#pendingApplicationTable").DataTable().column(6).nodes();
+	                    allRows = $("#pendingApplicationTable").DataTable().column(7).nodes();
 						 $.each($(allRows).find("input"),function(){
 	                    		this.checked = false;
                    		});
-                   		allRows = $("#pendingApplicationTable").DataTable().column(7).nodes();
+                   		allRows = $("#pendingApplicationTable").DataTable().column(8).nodes();
 						 $.each($(allRows).find(".radiodoNothingClass"),function(){
 	                    		this.checked = !b;
                    		});
                     
 		            validateAllApplication();
+		       }
+
+			   function allDigitalApp(){
+		         
+					var checkBox = document.getElementById('allDigital');
+        			var allRows = $("#pendingApplicationTable").DataTable().column(5).nodes();
+					if (checkBox.checked){
+						$('[id$="cardTypeSelect"]').val('digital');
+					}
+                    
+		            calculateAllPrices();
 		       }
 		      
 		      
