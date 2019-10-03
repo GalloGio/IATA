@@ -104,7 +104,7 @@ public with sharing class CaseProcessTypeHelper {
          	recordValue = Integer.valueOf(oscar.get(refFieldList[1]));
             cse.KPI_Calculation__c = recordValue == process.KPI_Reference_Value__c ? 1 : 0;
         }
-        else if(refFieldList.size() == 0) { //Case
+        else if(refFieldList.size() == 1) { //Case
             recordValue = Integer.valueOf(cse.get(process.KPI_Reference_Field__c));          
             cse.KPI_Calculation__c = recordValue <= process.KPI_Reference_Value__c ? 1 : 0;
         }
