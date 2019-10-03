@@ -885,6 +885,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     }
 
     hideRecentCasesList() {
-        this.showRecentCasesList = true;
+        this.showRecentCasesList = false;
     }
 }
