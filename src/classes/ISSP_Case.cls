@@ -1585,6 +1585,9 @@ public without sharing class ISSP_Case {
             for(DPCCasePriorityHigh__c dcph : DPCCasePriorityEmails){
                 setEmailPriority.add(dcph.Email__c);
             }   
+            if(JSONcontactSelected != null && JSONcontactSelected != ''){
+                setEmailPriority.add(JSONcontactSelected);
+            }
             if(!setEmailPriority.isEmpty()){
                 List<User> lsUsersPriority =
                             [SELECT Id, Name, Email, AccountId, Contact.AccountId
@@ -1602,9 +1605,6 @@ public without sharing class ISSP_Case {
             }                                         
         }
 
-        if(JSONcontactSelected != null && JSONcontactSelected != ''){
-            lsNewEmails.add(JSONcontactSelected);
-        }
         // Find the contacts for the emails not found
         if (!setEmail.isEmpty()) {
             list<Contact> listContact = [
@@ -1638,6 +1638,7 @@ public without sharing class ISSP_Case {
             sendMassEmail(newCase.Id,template.Id);
 
         } catch (DMLException e) {
+            ApexPages.addMessages(ex);
             Database.rollback(sp);
         }
     }
