@@ -73,6 +73,12 @@
                     icon-position="right" 
                     onclick={handleResetButtonClick}>
                 </lightning-button>
+                <lightning-button 
+                    variant="success" 
+                    class="slds-m-right--x-small align_button_right_class" 
+                    label="Add Employee"
+                    onclick={handleAddEmployee}>
+                </lightning-button>
             </template>
         </lightning-card>
     </div>
@@ -86,14 +92,7 @@
                 <template if:true={loading}>
                     <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
                 </template>
-                <template if:false={loading}>
-                    <lightning-button 
-                        variant="success" 
-                        class="slds-m-left_x-small" 
-                        label="Add Employee"
-                        onclick={handleAddEmployee}>
-                    </lightning-button>
-                    
+                <template if:false={loading}>            
                     <div if:true={hasSearchResults}>
                         <div class="slds-p-around_medium slds-grid slds-wrap slds-gutters_x-small slds-grid_align-end">
                             <div class="slds-grid slds-gutters">

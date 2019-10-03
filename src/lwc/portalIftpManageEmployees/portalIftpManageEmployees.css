@@ -46,3 +46,7 @@
 .noStationToAddMinHeightClass{
     min-height: 80px;
 }
+
+.align_button_right_class{
+    float: right;
+}

@@ -2,7 +2,6 @@ import { LightningElement, track, wire } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { registerListener, unregisterAllListeners, fireEvent } from 'c/pubsub';
-//import { refreshApex } from '@salesforce/apex';
 
 import addNewEmployee from '@salesforce/apex/PortalIftEmployeeRecordsManagement.addNewEmployee';
 import getAllITPEmployees from '@salesforce/apex/PortalIftEmployeeRecordsManagement.getAllITPEmployees';
@@ -66,7 +65,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
     @track stationsProneToAdd = [];
     @track showStationsList = false;
     @track auxSearchValues = {};
-           //wiredITPEmployeesWithStationsInfoResult;
     @track openReactivateConfirmationModal = false;
         recordToReactivate = {};
     @track openResetPasswordModal = false;
@@ -74,79 +72,14 @@ export default class PortalIftpManageEmployees extends LightningElement {
     @track passwordConfirmation = '';
     
     @wire(CurrentPageReference) pageRef;
-/*
-    @wire(getITPEmployeesWithStationsInfo, {searchValues: '$auxSearchValues', origin: 'Manage Employees'} )
-    handleITPEmployeesWithStationsInfoResults(result){
-        console.log('$auxSearchValues', this.auxSearchValues);
-        this.wiredITPEmployeesWithStationsInfoResult = result;
-        if(result.data){
-            let myResults = JSON.parse(JSON.stringify(result.data));
-            myResults.forEach(rec =>{
-                rec.Primary_Station_Code = '';
-                rec.upperCase = 'to-upper-case';
-                rec.Username = '1' + rec.Name.substring(rec.Name.length-6);
-                if(rec.Role_Addresses__r){
-                    rec.Role_Addresses__r.forEach(recRolAdd =>{
-                        if(recRolAdd.Primary__c){
-                            rec.Primary_Station_Code = recRolAdd.Address__r.Code__c;
-                        } 
-                    })
-                }
-            })
-            this.ITPEmployeesWithStationsInfo = JSON.parse(JSON.stringify(myResults));
-            if(this.ITPEmployeesWithStationsInfo.length > 0){
-                this.ITPEmployeesWithStationsInfo = this.sortData('Last_Name__c', 'asc', JSON.parse(JSON.stringify(this.ITPEmployeesWithStationsInfo)));
-                this.hasSearchResults = true;
-            } else {
-                this.hasSearchResults = false;
-            }
-        }
-        if(result.error){
-            this.hasSearchResults = false;
-            const event = new ShowToastEvent({
-                title: 'Employees Data',
-                message: 'Unable to get employees data from database.',
-                variant: 'error',
-                mode: 'sticky'
-            });
-            this.dispatchEvent(event);
-            console.log('error', result.error);
-        }
-    }
-*/
+
     connectedCallback() {
-        console.log('INIT connectedCallback');
         registerListener('employeesChanged', this.handleEmployeesChanged, this);
         registerListener('stationsChanged', this.handleStationsChanged, this);
         this.showSearchCriteria = false;
         this.loadingSearchCriteria = true;
 
-/*
-        getITPStations()
-        .then(result => {
-            let myResult = JSON.parse(JSON.stringify(result));
-            
-            let myTopicOptions = [];
-
-            Object.keys(myResult).forEach(function (el) {
-                myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
-            });
-            this.ITPStations = myResult;
-            this.stationOptions = this.sortData('value', 'asc', JSON.parse(JSON.stringify(myTopicOptions)));
-        })
-        .catch(error => {
-            const event = new ShowToastEvent({
-                title: 'ITP Stations',
-                message: 'Unable to get ITP\'s Stations data from database.',
-                variant: 'error',
-                mode: 'pester'
-            });
-            this.dispatchEvent(event);
-            console.log('getITPStations - Error : ', error);
-        }); 
-*/
         this.initData();       
-        console.log("starting");
 
         //For Datatable in Manage Employees Search
         this.columnsSearchEmployees = [
@@ -248,9 +181,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
                 }
             },
         ];
-
-        console.log('END connectedCallback');
-
     }
 
     initData(){
@@ -258,7 +188,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
         getUserInfo()
         .then(result =>{
             let myResult = JSON.parse(JSON.stringify(result));
-            console.log('myResult.primaryStationCode', myResult.primaryStationCode);
             if(myResult){
                 this.userInfo = myResult;
                 if(myResult.primaryStationCode){
@@ -298,7 +227,10 @@ export default class PortalIftpManageEmployees extends LightningElement {
                 myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
             });
             this.ITPStations = myResult;
-            this.stationOptions = this.sortData('value', 'asc', JSON.parse(JSON.stringify(myTopicOptions)));
+            myTopicOptions = this.sortData('value', 'asc', myTopicOptions);
+            myTopicOptions.push({label: 'Not allocated', value: 'Not Allocated'});
+            this.stationOptions = myTopicOptions;
+
             this.showSearchCriteria = true;
             this.loadingSearchCriteria = false;
 
@@ -353,34 +285,31 @@ export default class PortalIftpManageEmployees extends LightningElement {
     handleChangeFirstName(event) {
         this.firstNameValue = event.detail.value;
         this.auxSearchValues.firstName = this.firstNameValue.trim(); 
-        console.log('this.auxSearchValues.firstName', this.auxSearchValues.firstName); 
     }
 
     handleChangeLastName(event) {
         this.lastNameValue = event.detail.value;
         this.auxSearchValues.lastName = this.lastNameValue.trim();
-        console.log('this.auxSearchValues.lastName', this.auxSearchValues.lastName); 
     }
 
     handleChangeEmployeeCodeValue(event) {
         this.employeeCodeValue = event.detail.value;
         this.auxSearchValues.employeeCode = this.employeeCodeValue.trim();
-        console.log('this.auxSearchValues.employeeCode', this.auxSearchValues.employeeCode); 
     }
 
     handleChangeStation(event) {
         this.stationValue = event.detail.value;
-        this.auxSearchValues.stationCode = this.stationValue.trim();
-        console.log('this.auxSearchValues.stationCode', this.auxSearchValues.stationCode); 
+        this.auxSearchValues.stationCode = this.stationValue.trim(); 
     }
 
     handleSearchButtonClick() {
-        console.log('handleSearchButtonClick() START');
-        console.log('this.auxSearchValues', this.auxSearchValues);
-        let auxSearchValues = JSON.parse(JSON.stringify(this.auxSearchValues));
-        console.log('let auxSearchValues', auxSearchValues);
+        let isNotAllocated = false;
         this.loading = true;
         this.showSearch = true;
+        if(this.auxSearchValues.stationCode === 'Not Allocated'){
+            isNotAllocated = true;
+            this.auxSearchValues.stationCode = null;
+        }
         //refreshApex(this.wiredITPEmployeesWithStationsInfoResult);
         getITPEmployeesWithStationsInfo({searchValues: this.auxSearchValues, origin: 'Manage Employees'})
         .then(result =>{
@@ -388,12 +317,18 @@ export default class PortalIftpManageEmployees extends LightningElement {
                 let myResults = JSON.parse(JSON.stringify(result));
                 console.log('myResults ', myResults);
 
+                let finalresults = [];
+
                 myResults.forEach(rec =>{
                     rec.Primary_Station_Code = '';
                     rec.upperCase = 'to-upper-case';
-                    rec.Username = rec.Name.substring(4, rec.Name.length -1);
-                    rec.Username = parseInt(rec.Username);
-                    rec.Username = rec.Username.toString();
+                    if(rec.Contact_Role__c === 'ITP Training Coordinator'){
+                        rec.Username = 'email';
+                    } else {
+                        rec.Username = rec.Name.substring(4, rec.Name.length -1);
+                        rec.Username = parseInt(rec.Username);
+                        rec.Username = rec.Username.toString();
+                    }
 
                     if(rec.Role_Addresses__r){
                         rec.Role_Addresses__r.forEach(recRolAdd =>{
@@ -402,8 +337,12 @@ export default class PortalIftpManageEmployees extends LightningElement {
                             } 
                         })
                     }
+
+                    if((isNotAllocated && !rec.Primary_Station_Code) || !isNotAllocated){
+                        finalresults.push(rec);
+                    }
                 })
-                this.ITPEmployeesWithStationsInfo = JSON.parse(JSON.stringify(myResults));
+                this.ITPEmployeesWithStationsInfo = JSON.parse(JSON.stringify(finalresults));
                 if(this.ITPEmployeesWithStationsInfo.length > 0){
                     this.ITPEmployeesWithStationsInfo = this.sortData('Last_Name__c', 'asc', JSON.parse(JSON.stringify(this.ITPEmployeesWithStationsInfo)));
                     this.hasSearchResults = true;
