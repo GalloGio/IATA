@@ -895,7 +895,6 @@ global with sharing class IDCardUtil {
             {
                 idCard.Is_Expedite__c = false;
                 idCard.MustSyncWithAIMS__c = false;
-                idCard.Card_Status__c = IDCardUtil.CARDSTATUS_VALID;
                 idCard.Sent_to_AIMS_on__c = System.now();
                 idCard.Received_From_AIMS__c = System.now();
             }
