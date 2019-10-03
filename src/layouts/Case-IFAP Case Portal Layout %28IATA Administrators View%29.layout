@@ -293,6 +293,10 @@
                 <behavior>Edit</behavior>
                 <field>SIDRA_Exclude_from_report_exceptions__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Exception_approved_on__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
