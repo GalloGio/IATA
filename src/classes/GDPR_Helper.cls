@@ -241,6 +241,7 @@ public without sharing class GDPR_Helper {
         emailMsg.setToAddresses(new String[]{email});
         emailMsg.saveAsActivity = false;
         emailMsg.setHtmlBody(htmlBody);
+        emailMsg.setSubject('Signup & Privacy Portal');
         Messaging.SendEmailResult[] results = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{emailMsg});
     }
 
