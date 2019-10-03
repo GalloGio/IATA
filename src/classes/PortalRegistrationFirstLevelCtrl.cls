@@ -322,8 +322,15 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         Boolean result = false;
         string oneTimeUrl = generateOneTimeUrl(params);
 
-        Map<String, String> emailMap = generateEmailBodyParamsForRegistration(params, oneTimeUrl);
+        if (userId == null || userId == ''){
+            userId = UserInfo.getUserId();
+            List<User> userList =  [SELECT Id FROM User WHERE languagelocalekey =:params.language LIMIT 1];
+            if(!userList.isEmpty()){
+                userId = userList.get(0).Id;
+            }
+        }
 
+        Map<String, String> emailMap = generateEmailBodyParamsForRegistration(params, oneTimeUrl);
         result = sendEmailVF(params.email, 'CSP_New_Member_Welcome_Email_VF', emailMap, userId);
         return result;
     }
