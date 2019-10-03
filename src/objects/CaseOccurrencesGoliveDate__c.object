@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>The rule &quot;Change the accumulation of 4 to 3 occurrences within 12 months period of both (Small Amount) and/or (Minor Error Policy)&quot; will reset the counter of 3 occurrences starting the day we go live</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Go_Live_Date__c</fullName>
+        <description>Date were the new rule will reset the counter of 3 occurrences starting</description>
+        <externalId>false</externalId>
+        <label>Go Live Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Case 3 Occurrences Go live Date</label>
+    <visibility>Public</visibility>
+</CustomObject>
