@@ -59,14 +59,14 @@ export default class PortalMyProfilePage extends LightningElement {
         const leftNav = this.template.querySelector('c-portal-company-profile-info-nav');
         if (leftNav) {
             let navItems = [];
-            for (let key in this.sectionMapContact) {
-                navItems.push({ label: key, value: key, open: true });
+
+            for(let i = 0; i < this.sectionMapContact.length; i++){
+                navItems.push({ label: this.sectionMapContact[i].cardTitle, value: this.sectionMapContact[i].cardTitle, open: true });
             }
 
-            for (let key in this.sectionMapAccount) {
-                navItems.push({ label: key, value: key, open: true });
+            for(let i = 0; i < this.sectionMapAccount.length; i++){
+                navItems.push({ label: this.sectionMapAccount[i].cardTitle, value: this.sectionMapAccount[i].cardTitle, open: true });
             }
-
 
             leftNav.navItems = navItems;
             leftNav.activesection = 'Basics';
@@ -77,19 +77,21 @@ export default class PortalMyProfilePage extends LightningElement {
         getFieldsMap({ type: 'MyProfile' }).then(result => {
 
             this.sectionMapContact = JSON.parse(JSON.stringify(result));
+            let sectionMapContactLocal = JSON.parse(JSON.stringify(result));
 
-            let sectionMap = this.sectionMapContact;
+            this.mapOfValuesContact = [];
+            let mapOfValuesContactLocal = [];
 
-            let localMap = [];
-            for (let key in this.sectionMapContact) {
-
-                if (sectionMap.hasOwnProperty(key)) {
-                    let value = sectionMap[key];
-                    localMap.push({ 'value': value, 'key': key,'showfunction' : (key === 'Professional') });//
-
-                }
+            for (let i = 0; i < sectionMapContactLocal.length; i++) {
+                mapOfValuesContactLocal.push({
+                    'value': sectionMapContactLocal[i].lstFieldWrapper,
+                    'key': sectionMapContactLocal[i].cardTitle,
+                    'showfunction': (sectionMapContactLocal[i].cardTitle === 'Professional'),
+                    'isEditable': sectionMapContactLocal[i].isEditable
+                });
             }
-            this.mapOfValuesContact = localMap;
+
+            this.mapOfValuesContact = mapOfValuesContactLocal;
 
         });
     }
@@ -133,19 +135,18 @@ export default class PortalMyProfilePage extends LightningElement {
 
     getBusinessContact(){
         getFieldsMap({ type: 'MyProfileAccFields' }).then(result => {
+
             this.sectionMapAccount = JSON.parse(JSON.stringify(result));
 
-            let sectionMap = this.sectionMapAccount;
+            this.mapOfValuesAccount = [];
 
-            let localMap = [];
-            for (let key in this.sectionMapAccount) {
-                if (sectionMap.hasOwnProperty(key)) {
-                    let value = sectionMap[key];
-                    localMap.push({ 'value': value, 'key': key });
-                }
+            for(let i = 0; i < this.sectionMapAccount.length; i++){
+                this.mapOfValuesAccount.push({ 
+                                    'value': this.sectionMapAccount[i].lstFieldWrapper, 
+                                    'key': this.sectionMapAccount[i].cardTitle, 
+                                    'isEditable' : this.sectionMapAccount[i].isEditable
+                                });
             }
-
-            this.mapOfValuesAccount = localMap;
         });
     }
 

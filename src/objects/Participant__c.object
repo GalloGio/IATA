@@ -365,11 +365,6 @@ Contact__r.Account.Name
                     <label>Designated Alternate</label>
                 </value>
                 <value>
-                    <fullName>Member+</fullName>
-                    <default>false</default>
-                    <label>Member+</label>
-                </value>
-                <value>
                     <fullName>Member</fullName>
                     <default>false</default>
                     <label>Member</label>
@@ -633,10 +628,6 @@ Contact__r.Account.Name
             </values>
             <values>
                 <fullName>Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member%2B</fullName>
                 <default>false</default>
             </values>
             <values>

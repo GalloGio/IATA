@@ -932,7 +932,7 @@ public without sharing class OneId_RegistrationProcessController {
     }
    @AuraEnabled
     public static StatesAndAlternateNames getStates(String country){
-        List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, (SELECT IATA_ISO_State__r.Name, GeonameHierarchy_label__c, Name FROM IATA_ISO_Cities__r ) FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
+        List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, (SELECT IATA_ISO_State__r.Name, GeonameName__c, GeonameHierarchy_label__c, Name FROM IATA_ISO_Cities__r ) FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
         Map<ID, IATA_ISO_City__c> ma = new Map<ID,IATA_ISO_City__c>([SELECT GeonameAlternateNames__c FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name = :country]);
         StatesAndAlternateNames states = new StatesAndAlternateNames(liis, ma);
 
@@ -954,18 +954,6 @@ public without sharing class OneId_RegistrationProcessController {
         
     }
 
-    @AuraEnabled
-    public static String getAllCities(String country){
-        String allCities = '';
-        
-        for(IATA_ISO_City__c iic : [SELECT Name FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name != :country] ){
-            allCities += iic.Name+', ';
-        }
-        
-        Integer allCitiesSize = allCities.length(); 
-        
-        return allCitiesSize > 0 ? allCities.substring(0,allCitiesSize-2):null;
-    } 
     /* Manuel Conde commented this... 
 
     public static void increaseCodeCoverage(){
