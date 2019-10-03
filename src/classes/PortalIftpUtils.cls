@@ -10,10 +10,8 @@ public without sharing class PortalIftpUtils {
         String contactRole = null;
         String PortalContactRoles = null;
 
-        User userAcc = [SELECT Id, ContactId, Contact.User_Portal_Status__c, Contact.Accountid, 
-                                Contact.Account.IATA_ISO_Country__r.Region__c, Contact.Account.IATA_ISO_Country__r.Name,
-                                Contact.Account.Recordtype.Name,
-                                Contact.Account.Recordtype.Developername, Contact.Account.Name, Profile_Name__c
+        User userAcc = [SELECT id, contactId, contact.User_Portal_Status__c, contact.accountid, contact.account.recordtype.name,
+                                contact.account.recordtype.developername, contact.account.name, Profile_Name__c
                             FROM user 
                             WHERE Id= :userId];
 
@@ -58,9 +56,7 @@ public without sharing class PortalIftpUtils {
                 }
             }
         }
-        userInfo.contactId = userAcc.contactId;
-        userInfo.accountRegion = userAcc.Contact.Account.IATA_ISO_Country__r.Region__c;
-        userInfo.accountCountry = userAcc.Contact.Account.IATA_ISO_Country__r.Name;
+        userInfo.contactId = userAcc.contactId;  
 
         return userInfo;
     }
@@ -1272,10 +1268,6 @@ public without sharing class PortalIftpUtils {
                 transferCase.ContactId = ui.contactId;
                 transferCase.Status = 'Open';
                 transferCase.Visible_on_ISS_Portal__c = true;
-                transferCase.CaseArea__c = 'IATA Fuelling Training Portal (IFTP)';
-                transferCase.Reason1__c  = 'IFTP OJT File Validation';
-                transferCase.Region__c = ui.accountRegion;
-                transferCase.BSPCountry__c = ui.accountCountry;
 
                 insert transferCase;
             } 
@@ -1364,10 +1356,6 @@ public without sharing class PortalIftpUtils {
                 transferCase.ContactId = ui.contactId;
                 transferCase.Status = 'Open';
                 transferCase.Visible_on_ISS_Portal__c = true;
-                transferCase.CaseArea__c = 'IATA Fuelling Training Portal (IFTP)';
-                transferCase.Reason1__c  = 'IFTP OJT File Validation';
-                transferCase.Region__c = ui.accountRegion;
-                transferCase.BSPCountry__c = ui.accountCountry;
 
                 insert transferCase;
 
@@ -1484,11 +1472,6 @@ public without sharing class PortalIftpUtils {
         public String contactId {get;set;}
         @AuraEnabled
         public Boolean hasAssociatedStations {get;set;}
-        @AuraEnabled
-        public String accountRegion {get;set;}
-        @AuraEnabled
-        public String accountCountry {get;set;}
-
 
         public UserInfoRecordsWrapper(  Id id, 
                                         Id accountId, 
