@@ -41,6 +41,8 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
     public Double deliveryPrice  {get; set;}
     public Integer rejectedSize  {get; set;}
     public Double expediteFees  {get; set;}
+    public Double idCardFee {get; set;}
+    public Double coursesFee {get; set;}
 
     private double massAppDeliveryFee = 0;
 
@@ -81,12 +83,12 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
     /** vars used for mexpedite fees.**/
     public boolean fastExpedition {get; set{
-            fastExpedition = value;
-            if (validatedApplication != null) {
+            fastExpedition = false;//value;
+            /*if (validatedApplication != null) {
                 for (ID_Card_Application__c app : validatedApplication.values())
                     if (isApplicationExpediteAvailable(app))
-                        app.IDCard_Expedite_Delivery__c = fastExpedition;
-                calculateAllPrices();
+                        app.IDCard_Expedite_Delivery__c = ;
+                calculateAllPrices();*/
             }
         }
     }
@@ -551,7 +553,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
         expediteFees = 0 ;
         massAppDeliveryFee = 0;
         
-        for (ID_Card_Application__c app : validatedApplication.values()) {
+        for (ID_Card_Application__c app : pendingApplications) {
 
             Price_Table__c priceTable = tablePerCountry.get(countriesPerIATACode2.get(app.IATA_Code__c));
             Boolean isITDIPackage = false;
@@ -561,13 +563,14 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
                     isITDIPackage = true;
                 }
             Boolean isReissue = (app.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE);
+            Boolean isToPrint = (app.Card_Type__c == 'plastic');
             if(IDCard_MobileAppRenewalService.US_COUNTRY_ISO_CODES.contains(priceTable.ISO_Country__r.ISO_Code__c)){
                 app.Card_Type__c = 'digital';
-                app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, false);
-            } else {
-                Boolean isToPrint = (app.Card_Type__c == 'plastic');
-                app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
-            }
+                isToPrint = false;
+            } 
+            app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
+            //detailledFees = IDCardUtil.GetDetailledFees(priceTable, isReissue, false, isITDIPackage, null, null, isToPrint);
+            if(validatedApplication.keyset().contains(app.Id)){
             /*system.debug('Find element  with ' + app.Tax_2_Value__c + ' -  ' + app.ID_Card_Fee__c + ' -  ' + app.IDCard_Expedite_Delivery_Fee__c + ' -  ' + app.Tax_1_Value__c);
             if (app.Tax_2_Value__c != null) {
                 try {
@@ -585,7 +588,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
             }*/
             if (app.ID_Card_Fee__c != null)
                 tPrice += app.Applicable_Fee__c;
-            if (fastExpedition && isApplicationExpediteAvailable(app) ) {
+            /*if (fastExpedition && isApplicationExpediteAvailable(app) ) {
                 string key = countriesPerIATACode.get(app.IATA_Code__c).ID + '-'+ accountTypesPerIATACode.get(app.IATA_Code__c);
                 system.debug('[CALCULATED FEES] should add fee to app: ' + app.Id);
                 ApexPAges.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'KEY: '+key));
@@ -596,9 +599,15 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
                     massAppDeliveryFee =  pricePerCountry.get(key).Mass_Purchase_exp__c;
 
                 }
-            }
+            }*/
+            deliveryPrice += priceTable.Cost_of_Printer__c;
+            idCardFee += priceTable.ID_Card_Fee__c;
+            coursesFee += app.ITDI_Courses_Fee__c;
+            
             if (app.CurrencyIsoCode != null)
                 appsCurrency = app.CurrencyIsoCode;
+
+            }
         }
         tPrice += massAppDeliveryFee;
         

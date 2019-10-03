@@ -9091,6 +9091,13 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <value>Fees</value>
     </labels>
     <labels>
+        <fullName>IDCard_FeesPhysical</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_FeesPhysical</shortDescription>
+        <value>Physical Card fee</value>
+    </labels>
+    <labels>
         <fullName>IDCard_FileUploadSuccess</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10852,6 +10859,13 @@ Your ID Card application manager has been informed of your request.</value>
         <value>IDCard Specifics</value>
     </labels>
     <labels>
+        <fullName>ID_Card_Taxes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID_Card_Taxes</shortDescription>
+        <value>Applicable taxes</value>
+    </labels>
+    <labels>
         <fullName>ID_Card_Terms_Condition</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10884,6 +10898,13 @@ and
         <protected>false</protected>
         <shortDescription>ID Card To Agency</shortDescription>
         <value>To agency:</value>
+    </labels>
+    <labels>
+        <fullName>ID_Card_Training_Fee</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID_Card_Training_Fee</shortDescription>
+        <value>IATA Training fee: 2 Courses</value>
     </labels>
     <labels>
         <fullName>ID_Card_Upload_Proof</fullName>
@@ -37888,6 +37909,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Title_Home_Page</shortDescription>
         <value>IATA: International Air Transport Association</value>
+    </labels>
+    <labels>
+        <fullName>Total_Cost</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Total_Cost</shortDescription>
+        <value>Total Cost</value>
     </labels>
     <labels>
         <fullName>Total_Price</fullName>
