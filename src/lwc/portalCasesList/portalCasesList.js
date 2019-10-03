@@ -138,7 +138,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
                 {label: ISSP_Contact, fieldName: 'ContactName', type: 'text'},
                 {label: results.LastModifiedDate, fieldName: 'LastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}, cellAttributes: {class: 'cellHidden'}},
                 {label: results.Country_concerned__c, fieldName: 'Country', type: 'text', cellAttributes: {class: 'cellHidden'}},
-                {label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, typeAttributes: {label: {fieldName: 'statusClass'}, target:'_self'}, cellAttributes: {class: 'cellHidden'}}
+                {label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, typeAttributes: {target:'_self'}, cellAttributes: {class: {fieldName: 'statusClass' }}}
             ];
             /*Column 'Created By' is only visible by Portal Admin on list 'My Company Cases'*/
             this.columnsAux = this.columns[3];
@@ -229,7 +229,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
                     row.CaseURL = urlMap[row.Id];
                     row.Country = row.Country_concerned_by_the_query__c;
                     row.ContactName = row.Contact.Name;
-                    row.statusClass= row.Status.replace(/\s/g, '').replace(/_|-|\./g, '');
+                    row.statusClass= row.Status.replace(/\s/g, '').replace(/_|-|\./g, '') + ' cellHidden';
                 }
 
                 let casesListAux = this.casesList.concat(allDataAux.records);
