@@ -496,6 +496,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		oscar.STEP35__c = AMS_Utils.PASSED;
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		oscar.Bank_Guarantee_Requested__c = Date.today();
 		update oscar;
 
 
@@ -596,8 +597,6 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE;
 		oscar.Change_effective_as_of__c = Date.Today();
 
-		Test.startTest();
-
 		update oscar;
 
 		oscar = 
@@ -614,6 +613,8 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 
 		system.assert(oscar.ANG_FA_Opt_Out__c == AMS_Utils.FA_OPT_OUT, 'The OSCAR should have the value \'' + AMS_Utils.FA_OPT_OUT + '\' for \'Financial Assessment opt-in/opt-out\'');
 		
+		Test.startTest();
+
 		oscar.STEP11__c = AMS_Utils.PASSED;
 		oscar.STEP2__c = AMS_Utils.PASSED;
 		oscar.STEP34__c = AMS_Utils.PASSED;
