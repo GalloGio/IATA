@@ -734,6 +734,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             String lmsUsername = 'Employee LMS Username:    ' + employeeToTransferData.lmsUsername + '.\n';
             String formerItpName = 'Employee Former ITP Name:   ' + employeeToTransferData.formerItpName + '.\n';
             String formerStations = 'Employee Former Stations:  ' + employeeToTransferData.formerStations + '.\n';
+            
 
             String description = 'Request Employee Records Transfer Data: \n';
             description += firstName;
@@ -741,6 +742,11 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             description += lmsUsername;
             description += formerItpName;
             description += formerStations;
+
+            if(String.isNotBlank(employeeToTransferData.comments)){
+                String comments = 'Comments: ' + employeeToTransferData.comments + '\n';
+                description += comments;
+            }
 
             System.debug('description' + description);
 
@@ -937,6 +943,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
         public String lastName {get;set;}
         @AuraEnabled
         public String lmsUsername {get;set;}
+        @AuraEnabled
+        public String comments {get;set;}
 
         public EmployeeTransferRequestWrapper(){}
 
