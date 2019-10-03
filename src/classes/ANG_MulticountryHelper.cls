@@ -480,14 +480,16 @@ public class ANG_MulticountryHelper {
 		assignFieldsAcct.ANG_HE_CashCondition__c = srcAcct.ANG_HE_CashCondition__c;
 		assignFieldsAcct.Financial_Review_Result__c = srcAcct.Financial_Review_Result__c;
 		assignFieldsAcct.ANG_HE_RiskHistoryAssessment__c = srcAcct.ANG_HE_RiskHistoryAssessment__c;
-        assignFieldsAcct.Identify_as_Multicountry_Key_Hierarchy__c = srcAcct.Identify_as_Multicountry_Key_Hierarchy__c; 
+		assignFieldsAcct.Financial_Assessment_Points__c = srcAcct.Financial_Assessment_Points__c;
+		assignFieldsAcct.Identify_as_Multicountry_Key_Hierarchy__c = srcAcct.Identify_as_Multicountry_Key_Hierarchy__c; 
 
 		srcAcct.ANG_IEP_Status__c = null;
 		srcAcct.ANG_HE_RiskStatus__c = null;
 		srcAcct.ANG_IEP_HE_AccntNum__c = null;
 		srcAcct.ANG_HE_CashCondition__c = false;
 		srcAcct.ANG_HE_RiskHistoryAssessment__c = null;
-        srcAcct.Identify_as_Multicountry_Key_Hierarchy__c = false;
+		srcAcct.Financial_Assessment_Points__c = null;
+		srcAcct.Identify_as_Multicountry_Key_Hierarchy__c = false;
 
 		ANG_RHCHelper.moveRHCInfos(srcAcct.RHC_Informations__r, new Map<Id,Id>{srcAcct.Id => assignFieldsAcct.Id});
 	
