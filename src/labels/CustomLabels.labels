@@ -28073,6 +28073,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>No events to show</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_PDFFooterText</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP OperationalCalendar PDFFooterText</shortDescription>
+        <value>This is the footer, please change the value of this custom label: ISSP_OperationalCalendar_PDFFooterText</value>
+    </labels>
+    <labels>
         <fullName>ISSP_OperationalCalendar_Reset</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>

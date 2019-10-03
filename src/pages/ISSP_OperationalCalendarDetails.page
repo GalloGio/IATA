@@ -274,6 +274,7 @@
         extend: 'pdfHtml5',
         exportOptions: {
             columns: ':visible',
+            header: true,
             footer: true,
             format: {
                 body: function ( data, row, column, node ) {
@@ -289,6 +290,13 @@
             }
         },
         title: function () { return getExportFileNamePDF();},
+        messageBottom: function ( doc ) {
+			return {
+                alignment: 'left',
+                text: "\n{!$Label.ISSP_OperationalCalendar_PDFFooterText}",
+                margin: [40, 100]
+            }
+        },
         orientation: "portrait",
         customize: function ( doc ) {
             doc.content.splice( 0, 0, {
@@ -296,12 +304,34 @@
                 alignment: 'center',
                 image: getLogo()
             });
+            doc['header']=(function(page, pages) {
+                if (page>1) return {
+                    columns: [
+                        {
+							margin: [ 40, 0],
+                            alignment: 'left',
+                            image: getLogo(),
+                            width: 40
+                        },
+                        {
+							margin: [ 0, 10],
+                            alignment: 'center',
+                            fontSize: 16,
+                            text: getExportFileNamePDF()
+                        }
+                    ]
+                }
+            });
             doc['footer']=(function(page, pages) {
                 return {
                     columns: [
                         '\n{!$Label.ISSP_OperationalCalendar_DownloadDate}: ' + moment().format('D MMM YYYY'),
                         '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: ' + formatDate(getLastModifiedDate()),
                         '\n'+ getDiscalimer(),
+                        {
+                            alignment: 'right',
+                            text: ['\n','www.iata.org/CS']
+                        },
                         {
                             alignment: 'right',
                             text: ['\n',{ text: page.toString() },  ' / ', { text: pages.toString() }]
@@ -347,7 +377,7 @@
             if(table.column(i).visible()) colCount++;
         }
         //PDF Button
-        pdfButton.orientation = colCount>6? "landscape": "portrait";
+        pdfButton.orientation = colCount>7? "landscape": "portrait";
         var isDisabled = $(".buttons-pdf").prop("disabled");
         $(".buttons-pdf").remove();
         $("#advanced-filters").empty();

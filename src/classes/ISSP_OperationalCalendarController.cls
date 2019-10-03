@@ -832,7 +832,8 @@ global without sharing class ISSP_OperationalCalendarController {
         for(Schema.FieldSetMember f : fieldset.getFields()) {
             String stype = String.ValueOf(f.getType()).toLowerCase();
             stype = f.getFieldPath()=='Country__c'? 'string': stype;
-            table.headers.add(new HeaderDef(f.getLabel(),stype,true));
+            String headerLabel = f.getFieldPath()=='frequency_code__c'? 'Code': f.getLabel();
+            table.headers.add(new HeaderDef(headerLabel,stype,true));
         }
         //data
         table.data = new list<list<String>>();
@@ -865,6 +866,10 @@ global without sharing class ISSP_OperationalCalendarController {
                 if (f.getFieldPath()=='Country__c') {
                     // convert country Id to country Name
                     fieldValue = MAP_COUNTRIES.get(fieldValue);
+                }
+                if (f.getFieldPath()=='frequency_code__c') {
+                    // convert frequency code to full name
+                    fieldValue = MAP_FREQUENCIES.get(fieldValue);
                 }
                 listLine.add(fieldValue);
             }
