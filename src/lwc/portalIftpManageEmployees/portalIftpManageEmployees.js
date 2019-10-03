@@ -323,7 +323,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
                     rec.Primary_Station_Code = '';
                     rec.upperCase = 'to-upper-case';
                     if(rec.Contact_Role__c === 'ITP Training Coordinator'){
-                        rec.Username = 'email';
+                        rec.Username = rec.Email__c;
                     } else {
                         rec.Username = rec.Name.substring(4, rec.Name.length -1);
                         rec.Username = parseInt(rec.Username);
