@@ -1886,6 +1886,11 @@ public without sharing class ISSP_AMS_Accreditation {
                 return null;
             }
 
+            if (getIsGSARequired() && amsIsGSA == null) {
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Step1_Is_GSA + ': ' + Label.ISSP_YouMustEnter));
+                return null;
+            }
+
             if ((newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY) && newForm.AE_separate_Legal_Entity__c == null) {
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Separate_Entity_Null));
                 return null;
@@ -4550,6 +4555,14 @@ public without sharing class ISSP_AMS_Accreditation {
                 populateFieldsFromParentForm(newForm);
             }
         }
+
+        if (newForm.Branch_Office_Country__r.ISO_Code__c == 'CN' && newCase.Reason1__c == AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
+            if (newForm.SAAM_Case__r.Account.Category__c == 'Domestic Agent') {
+                newForm.Local_Agent_Type__c = 'Domestic';
+            } else {
+                newForm.Local_Agent_Type__c = 'International';
+            }
+        }
     }
 
     public void resetOwnership() { //NEWGEN-1249
@@ -5475,6 +5488,53 @@ public without sharing class ISSP_AMS_Accreditation {
 
         jsonCountriesMap = JSON.serialize(mapCountriesList);
         jsonCountriesNotAllowedList = JSON.serialize(notAllowedCountries);
+    }
+
+    private boolean isCurrentUserinPeopleTable(String email) {
+        AMS_Accreditation_Contact__c amsContact = [
+                    SELECT Id FROM AMS_Accreditation_Contact__c
+                    WHERE Email__c = :email AND AMS_Pax_Accreditation_Form__r.SAAM_Case__c = :vSaamCaseId
+                ];
+        if (amsContact == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private List<String> getAmscontactsEmails(List <AMS_Accreditation_Contact__c> amscontacts) {
+        List<String> amscontactsEmails = new List<String>();
+        if (amscontacts != null) {
+            for (AMS_Accreditation_Contact__c amscon : amscontacts) {
+                if (amscon.email__c != null && amscon.email__c.trim() != '') {
+                    amscontactsEmails.add(amscon.Email__c);
+                }
+            }
+        }
+        return amscontactsEmails;
+    }
+
+    private void fillContactByEmailMaps(List <Contact> contactListAll, Map<String, List<Contact>> contactListByEmailMap, Map<String, List<Contact>> contactOtherListByEmailMap) {
+        if (contactListAll != null) {
+            for (Contact conItr : contactListAll) {
+                if (conItr.AccountId == con.AccountId) {
+                    if (contactListByEmailMap.containsKey(conItr.Email)) {
+                        contactListByEmailMap.get(conItr.Email).add(conItr);
+                    } else {
+                        contactListByEmailMap.put(conItr.Email, new List<Contact> {conItr});
+                    }
+                }
+            }
+            for (Contact conItr : contactListAll) {
+                if (conItr.AccountId != con.AccountId) {
+                    if (contactOtherListByEmailMap.containsKey(conItr.Email)) {
+                        contactOtherListByEmailMap.get(conItr.Email).add(conItr);
+                    } else {
+                        contactOtherListByEmailMap.put(conItr.Email, new List<Contact> {conItr});
+                    }
+                }
+            }
+        }
     }
 
     private void setPortalAdminContact() {
