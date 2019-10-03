@@ -46,6 +46,10 @@
                 <behavior>Edit</behavior>
                 <field>Files_Folder__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AWS_Landing_Folder__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

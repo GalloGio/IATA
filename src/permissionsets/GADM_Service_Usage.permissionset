@@ -56,7 +56,6 @@
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>GADM Service Usage</label>
-    <license>Salesforce Platform</license>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>

@@ -350,7 +350,6 @@
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>GADM User Management</label>
-    <license>Salesforce Platform</license>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -517,7 +516,7 @@
     </tabSettings>
     <tabSettings>
         <tab>Invite_User</tab>
-        <visibility>Available</visibility>
+        <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
         <tab>Portal_Applications__c</tab>

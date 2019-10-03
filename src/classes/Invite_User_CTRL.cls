@@ -57,7 +57,10 @@ public without sharing class Invite_User_CTRL {
                     if(detail.Allowed_email_domain__c != null) {
                         List<String> domainsList = new List<String>();
                         if(detail.Allowed_email_domain__c.indexOf(';') > -1) {
-                            domainsList = detail.Allowed_email_domain__c.split(';');
+                            List<String> tempList = detail.Allowed_email_domain__c.split(';');
+                            for(String domain : tempList) {
+                                domainsList.add(domain.trim());
+                            }
                         }else{
                             domainsList.add(detail.Allowed_email_domain__c);
                         }
@@ -290,7 +293,7 @@ public without sharing class Invite_User_CTRL {
             return response.get('country');
 
         }catch(Exception e){
-            System.debug('Exception findLocation LightningRegistrationProcess...' + e);
+            System.debug('Exception findLocation Invite_User_CTRL...' + e);
             return e.getMessage();
         }
     }

@@ -21,7 +21,6 @@
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>GADM Service Notifications</label>
-    <license>Salesforce Platform</license>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>

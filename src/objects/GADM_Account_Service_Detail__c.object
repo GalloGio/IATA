@@ -133,6 +133,7 @@
         <fullName>Allowed_email_domain__c</fullName>
         <description>Allowed domain for user registration. Enforced in self service user management.</description>
         <externalId>false</externalId>
+        <inlineHelpText>Separate domains by &quot;;&quot;.</inlineHelpText>
         <label>Allowed email domain</label>
         <length>255</length>
         <required>false</required>
