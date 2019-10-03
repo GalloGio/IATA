@@ -70,7 +70,7 @@ public without sharing class PortalCreatePasswordController {
     public static boolean resendEmail(String paramStr) {
         PortalRegistrationFirstLevelCtrl.RegistrationParameters params = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(paramStr, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
         params.registrationTime = string.valueOf(system.now());
-        boolean success = PortalRegistrationFirstLevelCtrl.sendRegistrationEmail(params);
+        boolean success = PortalRegistrationFirstLevelCtrl.sendRegistrationEmailVF(params,'');
         return success;
     }
 
