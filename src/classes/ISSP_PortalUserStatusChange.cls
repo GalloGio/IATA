@@ -24,6 +24,25 @@ public with sharing class ISSP_PortalUserStatusChange {
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
 
     public static boolean fromLc =false; //flag to check if method running from lightning component
+
+    public List<SelectOption> galaOptions {
+        get {
+            if (galaOptions == null) {
+                galaOptions = new List<SelectOption>{
+                    new SelectOption('', '- Select Multicountry Role - '),
+                    new SelectOption('Global', 'Global'),
+                    new SelectOption('Local', 'Local')
+                };
+            }
+
+            return galaOptions;
+        }
+        
+        private set;
+    }
+
+    public List<SelectOption> availableLocalCountries {get; set;}
+    public List<SelectOption> selectedLocalCountries {get; set;}
     
     public ISSP_PortalUserStatusChange(Apexpages.Standardcontroller ctrl){
         Map<String, String> communityMap = new Map<String, String>{'CNS' => 'CNS Customer Portal', 'IEC' => 'E-Commerce','ISSP' => 'ISS Customer Portal'};
@@ -32,9 +51,10 @@ public with sharing class ISSP_PortalUserStatusChange {
         hasIdCard = false;
         hasProducts = false;
 
-        con = [select id,Status__c,User_Portal_Status__c,Account.Top_Parent__c,AccountId,Regional_Administrator_Countries__c, Community__c,
+        con = [select id,Status__c,User_Portal_Status__c,Account.Top_Parent__c,AccountId,Regional_Administrator_Countries__c, Community__c, Multicountry_Role__c, 
             (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE NOT card_status__c like 'Cancelled%'),
-            (SELECT Id FROM IEC_Subscriptions_History__r)
+            (SELECT Id FROM IEC_Subscriptions_History__r),
+            Account.ANG_Accreditation_Model__c, Account.IATA_ISO_Country__r.Name
             from Contact where Id=:ctrl.getId()];
         if (!con.ID_Cards__r.isEmpty()){
             hasIdCard = true;
@@ -90,6 +110,43 @@ public with sharing class ISSP_PortalUserStatusChange {
                     selectedVal = key;
             }            
         }
+
+        if (con.Account.ANG_Accreditation_Model__c == 'Multicountry') {
+            populateLocalCountryLists();
+        }
+    }
+
+    public void populateLocalCountryLists() {
+        availableLocalCountries = new List<SelectOption>();
+        selectedLocalCountries = new List<SelectOption>();
+
+        List<Account_Contact_Role__c> existingAccConRoles =  [SELECT Id, MC_Admin_BSP__c
+                                                            FROM Account_Contact_Role__c
+                                                            WHERE Contact__c = :con.Id];
+
+        if (existingAccConRoles.isEmpty()) {
+            for (IATA_ISO_Country__c country: IATAISOCountryDAO.getMultiCountryIsoCountriesByCaseBSPCountryNotNull()) {
+                if (country.Name != con.Account.IATA_ISO_Country__r.Name) {
+                    availableLocalCountries.add(new SelectOption(country.Name, country.Name));
+                } else {
+                    selectedLocalCountries.add(new SelectOption(country.Name, country.Name));
+                }
+            }
+        } else {
+            Set<String> bspIds = new Set<String>();
+
+            for (Account_Contact_Role__c accConRole: existingAccConRoles) {
+                bspIds.add(accConRole.MC_Admin_BSP__c);
+            }
+
+            for (IATA_ISO_Country__c country: IATAISOCountryDAO.getMultiCountryIsoCountriesByCaseBSPCountryNotNull()) {
+                if (bspIds.contains(country.AMS_Settlement_System__c)) {
+                    selectedLocalCountries.add(new SelectOption(country.Name, country.Name));
+                } else {
+                    availableLocalCountries.add(new SelectOption(country.Name, country.Name));
+                }
+            }
+        }
     }
 
     public Pagereference save(){
@@ -116,7 +173,90 @@ public with sharing class ISSP_PortalUserStatusChange {
             return new Pagereference('/'+con.Id);
         }
     }
-    
+
+    private void createAccountContactRoles() {
+        String defaultAccRoleMCId = checkExistingMCAccRole();
+        
+        List<Account_Contact_Role__c> accConRolesToInsert = new List<Account_Contact_Role__c>();
+
+        if (con.Multicountry_Role__c == 'Local') {
+            List<String> countryNames = new List<String>();
+            
+            for (SelectOption country: selectedLocalCountries) {
+                countryNames.add(country.getValue());
+            }
+
+            Set<String> bspIds = new Set<String>();
+            
+            for (IATA_ISO_Country__c country: [SELECT Id, AMS_Settlement_System__c 
+                                            FROM IATA_ISO_Country__c 
+                                            WHERE Name IN :countryNames]) {
+                bspIds.add(country.AMS_Settlement_System__c);
+            }
+
+            List<Account_Contact_Role__c> accConRolesToRemove = new List<Account_Contact_Role__c>();
+
+            for (Account_Contact_Role__c accConRole: [SELECT Id, MC_Admin_BSP__c
+                                                    FROM Account_Contact_Role__c
+                                                    WHERE Contact__c = :con.Id]) {
+                if (bspIds.contains(accConRole.MC_Admin_BSP__c)) {
+                    bspIds.remove(accConRole.MC_Admin_BSP__c);
+                } else {
+                    accConRolesToRemove.add(accConRole);
+                }
+            }
+
+            delete accConRolesToRemove;
+
+            for (String bsp: bspIds) {
+                Account_Contact_Role__c accConRole = new Account_Contact_Role__c(Account__c = con.AccountId,
+                                                                                Account_Role__c = defaultAccRoleMCId,
+                                                                                Service_Rendered__c = 'Newgen Multicountry',
+                                                                                MC_Admin_BSP__c = bsp,
+                                                                                Contact__c = con.Id,
+                                                                                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master'));
+
+                accConRolesToInsert.add(accConRole);
+            }
+        } else {
+            List<Account_Contact_Role__c> allCountryAccConRole = [SELECT Id 
+                                                                FROM Account_Contact_Role__c
+                                                                WHERE Contact__c = :con.Id
+                                                                    AND MC_Admin_BSP__c = ''
+                                                                LIMIT 1];
+
+            if (allCountryAccConRole.isEmpty()) {
+                Account_Contact_Role__c accConRole = new Account_Contact_Role__c(Account__c = con.AccountId,
+                                                                                Account_Role__c = defaultAccRoleMCId,
+                                                                                Service_Rendered__c = 'Newgen Multicountry',
+                                                                                Contact__c = con.Id,
+                                                                                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master'));
+                
+                accConRolesToInsert.add(accConRole);
+            }
+        }
+
+        insert accConRolesToInsert;
+    }
+
+    private String checkExistingMCAccRole() {
+        List<Account_Role__c> accRoles = [SELECT Id
+                                        FROM Account_Role__c
+                                        WHERE Account__c = :con.AccountId
+                                        LIMIT 1];
+
+        if (accRoles.isEmpty()) {
+            Account_Role__c accRole = new Account_Role__c(Account__c = con.AccountId,
+                                                        Account_Role_Name__c = 'AMS Agency',
+                                                        RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master'));
+
+            insert accRole;
+            return accRole.Id;
+        } else {
+            return accRoles[0].Id;
+        }
+    }
+        
     public PageReference customCancel(){
         return new Pagereference('/ISSP_Contact?Id='+con.Id + commParam);
     }
@@ -1181,7 +1321,7 @@ public with sharing class ISSP_PortalUserStatusChange {
     }
 
      
-     public PageReference saveNewStatus(){
+    public PageReference saveNewStatus(){
         firstCommunity = new List<String>();
         errorMessages = new List<String>();
         for (SelectOption so : communityOptions){
@@ -1236,7 +1376,13 @@ public with sharing class ISSP_PortalUserStatusChange {
             contactStatus = rejectionReason;
         }
         system.debug('contactStatus: ' + contactStatus);
-        Savepoint sPointContact = Database.setSavepoint();       
+        Savepoint sPointContact = Database.setSavepoint();
+
+        if (con.User_Portal_Status__c == 'Approved Admin' && con.Account.ANG_Accreditation_Model__c == 'Multicountry') {
+            createAccountContactRoles();
+            update con;
+        }
+
         String runActionResult = runAction(con.Id, contactList[0].Email, theAction, newValue, contactStatus, firstCommunity);
         
         if (runActionResult != ''){
