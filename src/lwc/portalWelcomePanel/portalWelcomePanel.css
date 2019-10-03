@@ -129,3 +129,7 @@
 .welcomePanelItem{
   display: inline-block;
 }
+
+.IEFixWidth{
+  width: 100%;
+}

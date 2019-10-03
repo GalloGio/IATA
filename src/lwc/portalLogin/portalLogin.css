@@ -75,3 +75,13 @@ input:-webkit-autofill:active  {
 .formElementSpacer{
     padding-bottom:40px;
 }
+
+.IEFixDisplay{
+    display: inherit;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .IEFixDisplay{
+        display: inline-block;
+    }
+}

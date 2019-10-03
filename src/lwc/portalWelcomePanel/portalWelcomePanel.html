@@ -5,21 +5,22 @@
 <!-- Portal Welcome Panel -->
 <template>
 
-    <div class="contentContainer" style={backgroundStyle}>
+    <div class="contentContainer IEFixWidth" style={backgroundStyle}>
 
         <img src={logoIcon} class="imgBg">
 
-        <div class="headerTitle">
+        <div class="headerTitle IEFixWidth">
             <lightning-formatted-rich-text value={labels.CSP_Welcome_Title} class=""></lightning-formatted-rich-text>
         </div>
 
-        <div class="infoText">
+        <div class="infoText IEFixWidth">
             {labels.CSP_Welcome_Panel_Info}
         </div>
 
-        <div class="rectangle">
+        <div class="rectangle IEFixWidth">
 
             <lightning-layout multiple-rows=true>
+                <div class="IEFixWidth">
                     <lightning-layout-item size=12 class="bounds welcomePanelItem">
                         <lightning-layout multiple-rows=false class="itemWelcome">
                             <lightning-layout-item size=2>
@@ -87,19 +88,14 @@
 
                             </lightning-layout-item>
                             <lightning-layout-item size=10>
-                                <div class="textAlignCenter text-xsmall">
-                                    <lightning-button variant="base"
-                                                      label={labels.CSP_FAQ_Label}
-                                                      title={labels.CSP_FAQ_Label}
-                                                      onclick={handleNavigateToFAQ}
-                                                      class="blueCustomButtonLinkSmall">
-                                    </lightning-button>
+                                <div class="textAlignCenter text-xxsmall">
+                                    <a onclick={handleNavigateToFAQ} style="color:#3333ff; font-weight: 500;">{labels.CSP_FAQ_Label}</a>
                                     <img src={arrowIcon} class="service faqPointer" onclick={handleNavigateToFAQ}>
                                 </div>
                             </lightning-layout-item>
                         </lightning-layout>
                     </lightning-layout-item>
-
+                </div>
                 </lightning-layout>
 
         </div>

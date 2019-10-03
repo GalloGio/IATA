@@ -48,7 +48,7 @@
     }
 }
 
-@media only screen and (max-width: 770px) {
+@media only screen and (max-width: 1023px) {
    .welcomePanelContainer{
        display: none;
    }
@@ -71,6 +71,7 @@
 
 .bodyContent{
     background-color: #f0f2f5;
+    min-height: 100vh;
 }
 
 .fixedPosition{
@@ -99,7 +100,7 @@
     font-size: 14px;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 1023px) {
     .loginFooter{
         justify-content: center;
     }
