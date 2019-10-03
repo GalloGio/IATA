@@ -86,7 +86,7 @@
             <div if:true={hasCountryConcerned}
               class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
               <span class="grey">{labels.Country_concerned__c}</span><br />
-                            <span>{caseDetails.Country_concerned_by_the_query__c}</span>
+              <span>{caseDetails.Country_concerned_by_the_query__c}</span>
             </div>
 
             <!-- ROW 3 -->
@@ -104,7 +104,7 @@
             <!-- ROW 4 -->
             <div if:false={showNewDescriptionSection}>
               <div if:true={hasDescription}
-                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
+                class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
                 <span class="grey">{labels.Description}</span><br />
                 <span>
                   <lightning-formatted-text value={caseDetails.Description}></lightning-formatted-text>
@@ -113,32 +113,31 @@
             </div>
 
             <!-- ROW 5 -->
-                        <div if:true={hasAccount}
+            <div if:true={hasAccount}
               class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
-                            <span class="grey">Account Name</span><br />
+              <span class="grey">Account Name</span><br />
               <span if:true={optionBuilder}>
-                                <span if:true={optionBuilder.isAdmin} onclick={openCompanyProfile} class="linkColor">
-                                    {caseDetails.Account.Name}
+                <span if:true={optionBuilder.isAdmin} onclick={openCompanyProfile} class="linkColor">
+                  {caseDetails.Account.Name}
                 </span>
                 <span if:false={optionBuilder.isAdmin}>
-                                    {caseDetails.Account.Name}
+                  {caseDetails.Account.Name}
                 </span>
               </span>
             </div>
 
             <!-- ROW 6 -->
-                        <div if:true={hasContact}
-                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
-                            <span class="grey">Contact Name</span><br />
-                            <span if:true={optionBuilder}>
-                                <span if:true={optionBuilder.isAdmin} onclick={openCompanyProfileContactTab}
-                                    class="linkColor">
-                                    <span>{caseDetails.Contact.FirstName} {caseDetails.Contact.LastName}</span>
-                                </span>
-                                <span if:false={optionBuilder.isAdmin}>
-                                    <span>{caseDetails.Contact.FirstName} {caseDetails.Contact.LastName}</span>
+            <div if:true={hasContact}
+              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
+              <span class="grey">Contact Name</span><br />
+              <span if:true={optionBuilder}>
+                <span if:true={optionBuilder.isAdmin} onclick={openCompanyProfileContactTab} class="linkColor">
+                  <span>{caseDetails.Contact.FirstName} {caseDetails.Contact.LastName}</span>
                 </span>
-              </div>
+                <span if:false={optionBuilder.isAdmin}>
+                  <span>{caseDetails.Contact.FirstName} {caseDetails.Contact.LastName}</span>
+                </span>
+              </span>
             </div>
 
             <!-- ROW 7 -->
@@ -168,26 +167,26 @@
             <!-- ROW 7 Display PDF -->
             <div if:true={getDisplayPDF}
               class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
-                            <img src={pdfImage}>
+              <img src={pdfImage}>
 
               <span if:true={getPDF1}>
                 <a class="linkColor" href={getPDFLink1} target="_new">
-                                    {labels.ISSP_AMS_Download_PDF_Copy} </a>
+                  {labels.ISSP_AMS_Download_PDF_Copy} </a>
               </span>
 
               <span if:true={getPDF2_3}>
                 <a class="linkColor" href={getPDFLink2_3} target="_new">
-                                    {labels.ISSP_AMS_Download_PDF_NOC} </a>
+                  {labels.ISSP_AMS_Download_PDF_NOC} </a>
               </span>
 
               <span if:true={getPDF4}>
                 <a class="linkColor" href={getPDFLink4} target="_new">
-                                    {labels.ISSP_AMS_Download_PDF_Copy} </a>
+                  {labels.ISSP_AMS_Download_PDF_Copy} </a>
               </span>
 
               <span if:true={getPDF5}>
                 <a class="linkColor" href={getPDFLink5} target="_new">
-                                    {labels.ISSP_AMS_Download_PDF_Copy} </a>
+                  {labels.ISSP_AMS_Download_PDF_Copy} </a>
               </span>
 
             </div>
