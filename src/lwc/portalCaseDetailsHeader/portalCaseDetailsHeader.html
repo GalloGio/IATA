@@ -17,8 +17,9 @@
                     <span style="color: #9a9eb0;">Case Number</span><br />
                     <span style="font-size: 1.3rem;font-weight: 400;">{caseDetails.CaseNumber}</span>
                 </div>
-                <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12 slds-p-around_medium" style="border-right: 1px solid #9a9eb0;border-left: 1px solid #9a9eb0;" >
-                    <span style="color: #9a9eb0;">Subject</span><br/>
+                <div
+                    class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12 slds-p-around_medium border_gradient">
+                    <span style="color: #9a9eb0;">Subject</span><br />
                     <span style="font-size: 1.3rem;font-weight: 400;">{caseDetails.Subject}</span>
                 </div>
                 <div
@@ -53,7 +54,7 @@
                             </lightning-formatted-date-time>
                         </span>
                     </div>
-                    
+
                 </div>
                 <div
                     class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_7-of-12 slds-p-around_medium">
@@ -109,14 +110,14 @@
                     line-height: 1.63;
                     letter-spacing: normal;
                     color: #525252;">
-                        You can manage the people that you want to be informed about this case. 
+                        You can manage the people that you want to be informed about this case.
                         Add new recipients or remove existing ones.
                     </div>
 
                     <div class="slds-p-around_small" style="font-size: 14px; font-weight: normal; font-style: normal; font-stretch: normal; line-height: 1.43; letter-spacing: normal; color: #525252;">
                         E-mail Adress
                     </div>
-                    <div class="aroundLightGrayBorder slds-p-around_small" >
+                    <div class="aroundLightGrayBorder slds-p-around_small">
                         <lightning-input
                             name="newRecipientTextInput"
                             class="hideInputLabel borderlessInput newRecipientTextInput" 
@@ -124,10 +125,10 @@
                             value={newRecipient}
                             style="display: inline-block;width: 80%;" 
                             type="email" >
-                        </lightning-input >
+                        </lightning-input>
                         <lightning-button label="Add" variant="neutral" onclick={addNewRecipientButtonClick} style="display: inline-block;float: right;"></lightning-button>
                     </div>
-                    <div class="slds-m-top_large" style="min-height:150px;" >
+                    <div class="slds-m-top_large" style="min-height:150px;">
 
                         <template for:each={lstRecipients} for:item="recipient">
                             <span key={recipient.id} class="slds-p-around_x-small slds-m-around_xx-small" style="display:inline-block;border-radius: 1px;background-color: #f7f8fc;font-size: 14px; font-weight: normal; font-style: normal; font-stretch: normal; line-height: 1.71; letter-spacing: normal;color: #4a4d61;">
@@ -147,9 +148,9 @@
                 </div>
 
             </div>
-              
+
         </div>
 
     </template>
-    
+
 </template>

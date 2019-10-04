@@ -37,6 +37,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track loading = true;
     @track caseDetails;
     @track caseId;
+    @track surveyLink;
     @track optionBuilder;
 
     @track pdfImage = PDFICON;

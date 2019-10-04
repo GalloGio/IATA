@@ -1,16 +1,16 @@
 <template>
-    <div class="customCard">
+    <div>
         <template if:true={loading}>
             <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
         </template>
         <template if:false={loading}>
             <div if:true={hasMessages}>
 
-                <div class="customBlueTitle cursorPointer" onclick={toggleCaseMessagingSection}>
+                <div class="customCardTitleBox cursorPointer" onclick={toggleCaseMessagingSection}>
                     <div class="slds-p-around_medium">
-                        <lightning-icon class="whiteIcon" if:true={showCaseMessagingSection}
+                        <lightning-icon class="darkBlueIcon" if:true={showCaseMessagingSection}
                             icon-name="utility:chevrondown" size="xx-small"></lightning-icon>
-                        <lightning-icon class="whiteIcon" if:false={showCaseMessagingSection}
+                        <lightning-icon class="darkBlueIcon" if:false={showCaseMessagingSection}
                             icon-name="utility:chevronright" size="xx-small"></lightning-icon>
                         <span class="slds-p-left_large">{label.CSP_CaseMessage_MessageTitle}</span>
                     </div>
