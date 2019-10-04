@@ -40100,4 +40100,11 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+	<labels>
+        <fullName>TSI_USA_Only</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TSI USA Only</shortDescription>
+        <value>Travel Service Intermediaries-TSI (USA Only)</value>
+    </labels>
 </CustomLabels>

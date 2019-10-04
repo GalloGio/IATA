@@ -210,20 +210,20 @@
                                                             <div class="nav-content">
                                                                 <ul class="nav">
                                                                     <apex:repeat value="{!subCategories[cat.value]}" var="topic">
-                                                                        <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!cat.value}&topic={!topic.value}">{!topic.label}</a></li>
+                                                                        <li><a href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!cat.value}&topic={!topic.value}">{!topic.label}</a></li>
                                                                     </apex:repeat>
                                                                 </ul>
                                                                 <!-- Customer Types -->
                                                                 <apex:variable var="isPublicationCategory" value="1" rendered="{!cat.value == 'publications'}">
                                                                     <ul class="nav">
                                                                         <apex:repeat var="ct" value="{!customerTypes}">
-                                                                            <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category=publications&customer_type={!ct}">{!ct}</a></li>
+                                                                            <li><a href="{!$Site.BaseRequestURL}/IEC_ProductList?category=publications&customer_type={!ct}">{!ct}</a></li>
                                                                         </apex:repeat>
                                                                     </ul>
                                                                 </apex:variable>
 
                                                                 <div class="button-container">
-                                                                    <a class="button" href="{!$Site.BaseUrl}/IEC_ProductList?category={!cat.value}" onclick="pushGoToViewAll();">{!$Label.Button_View_all}</a>
+                                                                    <a class="button" href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!cat.value}" onclick="pushGoToViewAll();">{!$Label.Button_View_all}</a>
                                                                 </div>                                                          
                                                             </div>
                                                         </div>
@@ -234,7 +234,7 @@
                                                                 <ul class="list new-releases">
                                                                     <apex:repeat value="{!newReleases[cat.value]}" var="prod">
                                                                     <li class="release-item">
-                                                                        <h5 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h5>
+                                                                        <h5 class="item-name"><a href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h5>
                                                                         <h6 class="item-description-title">{!prod.Media}</h6>
                                                                         <p class="item-description">{!prod.ProductShortDesc}</p>
                                                                     </li>
@@ -257,7 +257,7 @@
                                                             <div class="item">
                                                                 <h5>{!prod.ProductName}</h5>
                                                                 <p>{!prod.ProductShortDesc}</p>
-                                                                <a class="icon arrow-right" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="pushGoToViewDetails();">View details</a>
+                                                                <a class="icon arrow-right" href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="pushGoToViewDetails();">View details</a>
                                                             </div>
                                                         </apex:repeat>
                                                     </div>
@@ -284,7 +284,7 @@
                                                 <li class="list-item">
                                                     <div class="item-wrapper">
                                                         <figure class="item-image">
-                                                            <a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">
+                                                            <a href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}">
                                                             <!--<img src="{!URLFOR($Resource.Product_Images, prod.ImageName)}" alt="{!prod.ProductName}" />-->
 
                                                             <apex:outputPanel layout="block" style="height: 180px;" rendered="{!prod.imageFile != '' }">
@@ -299,7 +299,7 @@
 
                                                             </a>
                                                         </figure>
-                                                        <h3 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h3>
+                                                        <h3 class="item-name"><a href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h3>
                                                         <h4 class="item-description-title" style="{! IF(isBlank(prod.Media), 'display:none', 'display:inline')}">
                                                             {!prod.Media}
                                                         </h4>
@@ -341,7 +341,7 @@
                                                             <span class="price-label">{!$Label.Direct_Sales}</span>
                                                         </apex:outputPanel>
                                                     
-                                                        <a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="pushClickOnTopSellerProduct('{!prod.ProductNumber}', {!prod.productNameAnalytic}, '{!prod.Portfolio}', '{!prod.unitPrice}', '{!prod.ProductCategory}');">{!IF(OR(prod.InventoryStatus == 'Out of stock',prod.InventoryStatus == 'Coming Soon'), $Label.PreOrderAddToCart, $Label.Button_Select)}</a>
+                                                        <a class="button" href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="pushClickOnTopSellerProduct('{!prod.ProductNumber}', {!prod.productNameAnalytic}, '{!prod.Portfolio}', '{!prod.unitPrice}', '{!prod.ProductCategory}');">{!IF(OR(prod.InventoryStatus == 'Out of stock',prod.InventoryStatus == 'Coming Soon'), $Label.PreOrderAddToCart, $Label.Button_Select)}</a>
                                                     </div>
                                                 </li>
                                             </apex:repeat>
