@@ -42,19 +42,17 @@ public class ANG_MulticountryCopyParentInfo implements Queueable {
 
 			for(AMS_OSCAR__c osc : oscars){
 
-				if(osc.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c == osc.Account__r.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
 
-					System.debug('[ANG_MulticountryCopyParentInfo] Copiyng data from: ' + osc.Account__r.Parent.Name);
+				System.debug('[ANG_MulticountryCopyParentInfo] Copiyng data from: ' + osc.Account__r.Parent.Name);
 
-					//Create new AMS_Pax_Accreditation_Form__c object for each Oscar
-					onlineAcc = new AMS_Pax_Accreditation_Form__c(
+				//Create new AMS_Pax_Accreditation_Form__c object for each Oscar
+				onlineAcc = new AMS_Pax_Accreditation_Form__c(
 
-						id = osc.AMS_Online_Accreditation__c,
-						
-						ANG_Accreditation_type__c = osc.Account__r.Parent.ANG_Accreditation_Model__c		//accreditation type
-					);
-					onlineAccList.add(onlineAcc);
-				}
+					id = osc.AMS_Online_Accreditation__c,
+					
+					ANG_Accreditation_type__c = osc.Account__r.Parent.ANG_Accreditation_Model__c		//accreditation type
+				);
+				onlineAccList.add(onlineAcc);
 			}
 		}
 		else if(changeCode == 'FIN'){
