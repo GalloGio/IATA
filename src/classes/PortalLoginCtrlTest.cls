@@ -29,6 +29,9 @@ public with sharing class PortalLoginCtrlTest {
 
         PortalLoginCtrl.LoginConfig loginConfig = PortalLoginCtrl.getInitialConfig();
         PortalLoginCtrl.LoginResult loginResult = PortalLoginCtrl.login('contact@bucketairline.com', 'password', '');
+        loginResult = PortalLoginCtrl.login('contact@bucketairline.com', 'password', Label.CSP_PortalPath + 'test');
+        loginResult = PortalLoginCtrl.login('contact@bucketairline.com', 'password', 'test');
+        loginResult = PortalLoginCtrl.login('contact@bucketairline.com', '', '');
         system.runAs(portalUser) {
         	PortalLoginCtrl.reactivateUser(portalUser);
         }
