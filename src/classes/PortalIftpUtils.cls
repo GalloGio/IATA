@@ -591,7 +591,7 @@ public without sharing class PortalIftpUtils {
             Map<String, List<String>> mapEmployeeInfoByEmployeeCode = new Map<String, List<String>>();
             for(Integer i=1;i<csvFileLines.size();i++){
                 string[] csvRecordData = csvFileLines[i].split(',');
-                if(mapEmployeeInfoByEmployeeCode.containsKey(csvRecordData[0].remove('"').trim())){
+                if(String.isNotBlank(csvRecordData[0].remove('"').trim()) && mapEmployeeInfoByEmployeeCode.containsKey(csvRecordData[0].remove('"').trim())){
                         ImportResultsWrapper irw = new ImportResultsWrapper(
                             csvRecordData[0].remove('"').trim(),
                             csvRecordData[1].remove('"').trim() + ' ' + csvRecordData[2].remove('"').trim(), 
@@ -612,9 +612,11 @@ public without sharing class PortalIftpUtils {
                         irw2.lastName = duplicatedRecord[2].remove('"').trim();
                         results.add(irw2);
                         mapEmployeeInfoByEmployeeCode.remove(csvRecordData[0].remove('"').trim());
-
+                        
                 } else {
-                    mapEmployeeInfoByEmployeeCode.put(csvRecordData[0].remove('"').trim(), csvRecordData);
+                    if(String.isNotBlank(csvRecordData[0].remove('"').trim())){
+                        mapEmployeeInfoByEmployeeCode.put(csvRecordData[0].remove('"').trim(), csvRecordData);
+                    }   
                 }
             }
 
@@ -627,10 +629,8 @@ public without sharing class PortalIftpUtils {
             List<Role_Address__c> roleAddressesToUpdatePrimaryStation = new List<Role_Address__c>();
             List<Role_Address__c> existingRoleAddresses = new List<Role_Address__c>();
 
-            Set<String> employeesCodesInCSVFileList = mapEmployeeInfoByEmployeeCode.keySet();
-            for(String empCode : employeesCodesInCSVFileList){
-                string[] csvRecordData = mapEmployeeInfoByEmployeeCode.get(empCode);
-
+            for(Integer i=1;i<csvFileLines.size();i++){
+                string[] csvRecordData = csvFileLines[i].split(',');
                 if(csvRecordData != null && csvRecordData.size() > 0){
                     // Save errors
                     allMessages = new List<String>();
@@ -741,7 +741,7 @@ public without sharing class PortalIftpUtils {
                         results.add(irw);
                     }
 
-                    if(allMessages.isEmpty()){
+                    if(allMessages.isEmpty() && mapEmployeeInfoByEmployeeCode.containsKey(companyCode)){
                         Contact cont = new Contact();
                         Account_Contact_Role__c accContRole = new Account_Contact_Role__c();
 
