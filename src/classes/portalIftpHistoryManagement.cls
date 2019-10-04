@@ -1,7 +1,5 @@
-public with sharing class portalIftpHistoryManagement {
-    public portalIftpHistoryManagement() {
+public without sharing class portalIftpHistoryManagement {
 
-    }
     static final Integer numberOfEventTypes = 8;
     public static final Integer Employee_Start_Working_for_ITP = 1;
     public static final Integer Employee_Stop_Working_for_ITP = 2;
@@ -21,7 +19,7 @@ public with sharing class portalIftpHistoryManagement {
     public static void insertIntoIftpHistory(IFTP_History__c iftpHistoryRecord){
         List<IFTP_History__c> iftpHistoryRecordList = new List<IFTP_History__c>();
         iftpHistoryRecordList.add(iftpHistoryRecord);
-        portalIftpHistoryManagement.insertIntoIftpHistory(iftpHistoryRecordList);
+        insertIntoIftpHistory(iftpHistoryRecordList);
     }
 
     @AuraEnabled (cacheable=false)    
@@ -30,7 +28,7 @@ public with sharing class portalIftpHistoryManagement {
                                                             String employeeFirstName, 
                                                             String employeeLastName){
 
-        LoggedUserInfoWrapper loggedUserInfo = portalIftpHistoryManagement.getLoggedUserNameStr();
+        LoggedUserInfoWrapper loggedUserInfo = getLoggedUserNameStr();
         IFTP_History__c ih;
         if(eventType  == Employee_Start_Working_for_ITP || eventType == Employee_Stop_Working_for_ITP) {
             ih = new IFTP_History__c( Event_Type__c = String.valueOf(eventType),
@@ -50,7 +48,7 @@ public with sharing class portalIftpHistoryManagement {
                                                             String employeeLastName,
                                                             String addressCode,
                                                             String addressCity){
-        LoggedUserInfoWrapper loggedUserInfo = portalIftpHistoryManagement.getLoggedUserNameStr();
+        LoggedUserInfoWrapper loggedUserInfo = getLoggedUserNameStr();
         IFTP_History__c ih;
         if(eventType  == Employee_Start_Working_at_Station || eventType == Employee_Stop_Working_at_Station) {
             ih = new IFTP_History__c( Event_Type__c = String.valueOf(eventType),
@@ -75,7 +73,7 @@ public with sharing class portalIftpHistoryManagement {
                                                             String certificationName,
                                                             String proficiencyLevel,
                                                             String proficiencyGrantedBy){
-        LoggedUserInfoWrapper loggedUserInfo = portalIftpHistoryManagement.getLoggedUserNameStr();
+        LoggedUserInfoWrapper loggedUserInfo = getLoggedUserNameStr();
         IFTP_History__c ih;
         if(eventType  == Employee_Receives_Proficiency || eventType == Employee_Loose_Proficiency || eventType == Start_Suppression || eventType == Stop_Suppression) {
             ih = new IFTP_History__c( Event_Type__c = String.valueOf(eventType),
@@ -96,8 +94,7 @@ public with sharing class portalIftpHistoryManagement {
     @AuraEnabled (cacheable=false) 
     public static LoggedUserInfoWrapper getLoggedUserNameStr(){
         Id userId = System.UserInfo.getUserId();
-        User userAcc = [SELECT id, contactId FROM user WHERE Id= :userId];
-        Contact loggedUserInfo = [SELECT FirstName, LastName, Account.Name FROM Contact WHERE id = :userAcc.contactId LIMIT 1];
+        Contact loggedUserInfo = [SELECT FirstName, LastName, Account.Name FROM Contact WHERE id IN (SELECT ContactId FROM user WHERE Id = :userId) LIMIT 1];
 
         LoggedUserInfoWrapper userWrap = new LoggedUserInfoWrapper(loggedUserInfo.Account.Name ,loggedUserInfo.FirstName, loggedUserInfo.LastName);
 

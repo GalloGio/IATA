@@ -109,7 +109,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             for(Account_Contact_Role__c emp : accEmps){
                 mAccEmps.put(emp.Company_Code__c, emp);
             } 
-            List<Account_Contact_Role__c> allITPEmployees = PortalIftpUtils.getAllITPEmployees(ui.accountId);
+            List<Account_Contact_Role__c> allITPEmployees = getAllITPEmployees();
             Map<String, Account_Contact_Role__c> inactiveEmployeesMap = new Map<String, Account_Contact_Role__c>();
             for(Account_Contact_Role__c emp : allITPEmployees){
                 if(emp.Status__c.equalsIgnoreCase('Inactive')){
@@ -790,75 +790,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
         return resultWrapper;
     }
 
-    @AuraEnabled (cacheable=false)
-    public static RemoveProficiencyRequestResultWrapper requestRemoveProficiency(Object removeProficiencyRecord){
-        RemoveProficiencyRequestResultWrapper resultWrapper;
-
-        RemoveProficiencyRequestWrapper proficiencyToBeRemovedData = (RemoveProficiencyRequestWrapper)JSON.deserialize(JSON.serialize(removeProficiencyRecord), RemoveProficiencyRequestWrapper.class);
-        
-        System.debug('proficiencyToBeRemovedData' + proficiencyToBeRemovedData);
- 
-        // Create case
-        PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
-        Id ownerId = [Select Id FROM group WHERE Type = 'Queue' and Name = 'IFTP'].Id;
-
-        ID ProcessRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
-        System.debug('ownerId' + ownerId);
-
-        String firstName = 'Employee First Name:    ' + proficiencyToBeRemovedData.firstName + '.\n';
-        String lastName = 'Employee Last Name:  ' + proficiencyToBeRemovedData.lastName + '.\n';
-        String employeeCode = 'Employee Code:  ' + proficiencyToBeRemovedData.employeeCode + '.\n';
-        String itpName = 'Employee ITP Name:    ' + proficiencyToBeRemovedData.itpName + '.\n';
-        String station = 'Station Code:   ' + proficiencyToBeRemovedData.stationCode + '.\n';
-        String trainingCode = 'Certification Code:   ' + proficiencyToBeRemovedData.trainingCode + '.\n';
-        String trainingName = 'Certification Name:   ' + proficiencyToBeRemovedData.trainingName + '.\n';
-        String contactRoleCertificationId = 'Contact Role Certification ID:   ' + proficiencyToBeRemovedData.contactRoleCertificationId + '.\n';
-        String expirationDate = 'Assessment Expiration Date:   ' + proficiencyToBeRemovedData.expirationDate + '.\n';
-
-        String description = 'Request Remove Proficiency Data: \n';
-        description += firstName;
-        description += lastName;
-        description += employeeCode;
-        description += itpName;
-        description += station;
-        description += trainingCode;
-        description += trainingName;
-        description += contactRoleCertificationId;
-        description += expirationDate;
-
-        System.debug('description' + description);
-
-        Case transferCase = new Case();
-        transferCase.recordtypeID = ProcessRTId;
-        transferCase.AccountId = ui.accountId;
-        transferCase.OwnerId = ownerId;
-        transferCase.Subject = 'Request Remove Proficiency';
-        transferCase.Description = description;
-        transferCase.ContactId = ui.contactId;
-        transferCase.Status = 'Open';
-        transferCase.Visible_on_ISS_Portal__c = true;
-        System.debug('transferCase' + transferCase);
-
-        Savepoint sp = Database.setSavepoint();
-        try {
-            insert transferCase;
-            System.debug('transferCase' + transferCase);
-            resultWrapper = new RemoveProficiencyRequestResultWrapper(proficiencyToBeRemovedData.firstName + proficiencyToBeRemovedData.lastName,
-                                                                    'Remove Proficiency requested successfully. ',
-                                                                    true);
-            resultWrapper.transferCase = transferCase;
-        } catch (DMLException e) {
-                System.debug('____ [cls PortalEmployeeRecordsManagement - requestRemoveProficiency] DMLException - ' + e );
-                System.debug('____ [cls PortalEmployeeRecordsManagement - requestRemoveProficiency] DMLException - ' + e.getStackTraceString() );
-                Database.rollback(sp);
-
-                resultWrapper = new RemoveProficiencyRequestResultWrapper(proficiencyToBeRemovedData.firstName + proficiencyToBeRemovedData.lastName, 
-                                                                                        'An error has occured - Remove Proficiency Request Failed. ', false);
-        }
-
-        return resultWrapper;
-    }
-
     public class ResultWrapper {
         
         @AuraEnabled
@@ -965,44 +896,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
         public RemoveProficiencyRequestWrapper(){}
 
-    }
-
-    public class EmployeeTransferRequestResultWrapper{
-        @AuraEnabled
-        public String employee_name {get;set;}
-        @AuraEnabled
-        public String result_message {get;set;}
-        @AuraEnabled
-        public Boolean succeeded {get;set;}
-        @AuraEnabled
-        public Case transferCase {get;set;}
-
-        public EmployeeTransferRequestResultWrapper(){}
-
-        public EmployeeTransferRequestResultWrapper(String employee_name, String result_message, Boolean succeeded){
-            this.employee_name = employee_name;
-            this.result_message = result_message;
-            this.succeeded = succeeded;
-        }
-    }
-
-    public class RemoveProficiencyRequestResultWrapper{
-        @AuraEnabled
-        public String employee_name {get;set;}
-        @AuraEnabled
-        public String result_message {get;set;}
-        @AuraEnabled
-        public Boolean succeeded {get;set;}
-        @AuraEnabled
-        public Case transferCase {get;set;}
-
-        public RemoveProficiencyRequestResultWrapper(){}
-
-        public RemoveProficiencyRequestResultWrapper(String employee_name, String result_message, Boolean succeeded){
-            this.employee_name = employee_name;
-            this.result_message = result_message;
-            this.succeeded = succeeded;
-        }
     }
 
 }

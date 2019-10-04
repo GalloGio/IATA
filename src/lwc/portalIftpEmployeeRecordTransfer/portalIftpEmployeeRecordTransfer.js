@@ -18,7 +18,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
     @track columns;
     @track sortedBy;
     @track sortedDirection;
-    //@track selectedRows;
     @track employeesToTransfer;
     @track stationOptions;
     @track loadingSearchCriteria = false;
@@ -40,14 +39,7 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
     @track employeeCodeValue = null;
     @track openmodal = false;
     @track recordRequestTransfer = [];
-/*
-    openmodal() {
-        this.openmodel = true
-    }
-    closeModal() {
-        this.openmodel = false
-    } 
-*/    
+   
     get dataRecords() {
         return this.dataRecords;
     } 
@@ -59,32 +51,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
 
         registerListener('stationsChanged', this.handleStationsChanged, this);
 
-
-/*
-        getITPStations()
-        .then(result => {
-            let myResult = JSON.parse(JSON.stringify(result));
-            
-            let myTopicOptions = [];
-
-            Object.keys(myResult).forEach(function (el) {
-                //myTopicOptions.push({ label: myResult[el].City__c, value: myResult[el].Code__c });
-                myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
-            });
-
-            this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
-        })
-        .catch(error => {
-            const event = new ShowToastEvent({
-                title: 'ITP Stations',
-                message: 'Unable to get ITP\'s Stations data from database.',
-                variant: 'error',
-                mode: 'pester'
-            });
-            this.dispatchEvent(event);
-            console.log('getITPStations - Error : ', error);
-        });  
-*/
         this.initData();
 
         this.columns = [
@@ -103,7 +69,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
             {label: 'First Name', fieldName: 'firstName', type: 'text', sortable: true},
             {label: 'Station', fieldName: 'stationsCodesListAsString', type: 'text', sortable: true},
             {label: 'Employee Code', fieldName: 'companyNumber', type: 'text', sortable: true},
-            //{type: 'action', typeAttributes: { rowActions: this.actionsRow }}
         ];
 
         console.log('END connectedCallback');
@@ -123,7 +88,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
             let myTopicOptions = [];
 
             Object.keys(myResult).forEach(function (el) {
-                //myTopicOptions.push({ label: myResult[el].City__c, value: myResult[el].Code__c });
                 myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
             });
 
@@ -159,7 +123,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
     }
 
     disconnectedCallback() {
-		// unsubscribe from bearListUpdate event
 		unregisterAllListeners(this);
 	}
 
@@ -256,14 +219,7 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
                 break;
         }  
     }
-/*
-    handleSelectAll(){
-        if(this.selectedRows.length > 0){
-            this.employeesToTransfer = this.selectedRows;
-        }
-        this.openmodal();
-    }
-*/   
+  
     findRowIndexById(id) {
         let ret = -1;
         this.data.some((row, index) => {
@@ -388,7 +344,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
             this.employeeCodeValue,
             this.stationValue
         ];
-        console.log('auxSearchValues ', auxSearchValues);
         this.loading = true;
         getEmployeeRecords({searchValues: auxSearchValues, accountId: this.userInfo.accountId})
         .then(results => {
@@ -418,11 +373,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
             this.dispatchEvent(event);
         }); 
     }
-/*
-    getSelectedRows(event) {
-        this.selectedRows = event.detail.selectedRows;
-    }
-*/
 
     /*******************************************************************************
     *                                                                              *
