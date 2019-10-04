@@ -156,18 +156,6 @@ public without sharing class PortalIftpUtils {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<Account_Contact_Role__c> getAllITPEmployees(Id accountId){
-        List<Account_Contact_Role__c> emps = [SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c,
-                                                    Contact__c, Email__c,First_Name__c,Id,Integration_Status__c,
-                                                    Last_Name__c,Name,Personal_Email__c,Contact_Roles__c,
-                                                    Position__c,RecordTypeId,Service_Rendered__c,Status__c,Title__c,
-                                                    TransferFlag__c,UniqueKey__c, Details__c
-                                                FROM Account_Contact_Role__c 
-                                                WHERE  Contact__r.accountid = :accountId];
-        return emps;
-    }
-
-    @AuraEnabled(cacheable=true)
     public static List<Account_Contact_Role__c> getITPEmployeesWithStationsInfo(Id accountId){
 
         List<Account_Contact_Role__c> emps = [SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c,
@@ -557,7 +545,7 @@ public without sharing class PortalIftpUtils {
 
             UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 
-            List<Account_Contact_Role__c> accEmps = PortalIftpUtils.getAllITPEmployees(ui.accountId);
+            List<Account_Contact_Role__c> accEmps = PortalIftEmployeeRecordsManagement.getAllITPEmployees();
 
             List<Address__c> allAddr = PortalIftpUtils.getAllStations();
             List<Address__c> userAddr = PortalIftpUtils.getITPStations();
@@ -1072,7 +1060,7 @@ public without sharing class PortalIftpUtils {
             if (!csvFileLines.isEmpty()){
 
                 UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
-                List<Account_Contact_Role__c> accEmps = PortalIftpUtils.getAllITPEmployees(ui.accountId);
+                List<Account_Contact_Role__c> accEmps = PortalIftEmployeeRecordsManagement.getAllITPEmployees();
 
                 List<Account_Contact_Role__c> accContRoleToInactive = new List<Account_Contact_Role__c>();
                 List<Contact> contactsToInactive = new List<Contact>();
@@ -1274,6 +1262,8 @@ public without sharing class PortalIftpUtils {
                 transferCase.Visible_on_ISS_Portal__c = true;
                 transferCase.CaseArea__c = 'IATA Fuelling Training Portal (IFTP)';
                 transferCase.Reason1__c  = 'IFTP OJT File Validation';
+                transferCase.Region__c = ui.accountRegion;
+                transferCase.BSPCountry__c = ui.accountCountry;
 
                 insert transferCase;
             } 
@@ -1364,8 +1354,8 @@ public without sharing class PortalIftpUtils {
                 transferCase.Visible_on_ISS_Portal__c = true;
                 transferCase.CaseArea__c = 'IATA Fuelling Training Portal (IFTP)';
                 transferCase.Reason1__c  = 'IFTP OJT File Validation';
-                //transferCase.Region__c = ;
-                //transferCase.BSPCountry__c = ;
+                transferCase.Region__c = ui.accountRegion;
+                transferCase.BSPCountry__c = ui.accountCountry;
 
                 insert transferCase;
 
