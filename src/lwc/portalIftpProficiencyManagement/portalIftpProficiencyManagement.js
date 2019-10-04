@@ -3,20 +3,12 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CurrentPageReference } from 'lightning/navigation';
 import { registerListener, unregisterAllListeners} from 'c/pubsub';
 
-//import getSelectedColumns from '@salesforce/apex/CSP_Utils.getSelectedColumns';
-//import searchTrainingRecords from '@salesforce/apex/portalIFTPTrainingRecords.searchTrainingRecords';
 import getTrainingRecords from '@salesforce/apex/portalIftpTrainingRecords.getTrainingRecordsForProficiencyManagement';
 import updateCertificationProficiency from '@salesforce/apex/portalIftpTrainingRecords.updateCertificationProficiency';
 import getITPStations from '@salesforce/apex/PortalIftpUtils.getITPStations';
 import getCertificationTypes from '@salesforce/apex/PortalIftpUtils.getCertificationTypes';
 import getITPTrainingCoordinators from '@salesforce/apex/portalIftpTrainingRecords.getITPTrainingCoordinators';
 import getUserInfo from '@salesforce/apex/PortalIftpUtils.getUserInfo';
-import requestRemoveProficiency from '@salesforce/apex/PortalIftEmployeeRecordsManagement.requestRemoveProficiency';
-
-
-//import {getUserStationsJS}  from 'c/portalIftpUtilsJS';
-//import {stations}  from 'c/portalIftpUtilsJS';
-
 
 export default class PortalIftpProficiencyManagement extends LightningElement {
 
@@ -117,26 +109,12 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
             {label: 'First Name', fieldName: 'firstName', type: 'text', sortable: true},
             {label: 'Employee Code', fieldName: 'companyNumber', type: 'text', sortable: true},
             {label: 'Aircraft type', fieldName: 'trainingName', type: 'text', sortable: true},
-            //{label: 'ITP', fieldName: 'itpName', type: 'text', sortable: true},
             {label: 'Expiration Date', fieldName: 'expirationDate', type: 'date', sortable: true, typeAttributes: {year: "numeric", month: "long", day: "2-digit"}},
             {label: 'Proficiency', fieldName: 'proficiency', type: 'text', sortable: true, 
                 cellAttributes: { class: { fieldName: 'proficiencyStatus' }, iconName: { fieldName: 'proficiencyIcon' }, iconPosition: 'right' } },
-            //{label: 'Station', fieldName: 'station', type: 'text', sortable: true},
             {label: 'Proficiency Granted By', fieldName: 'proficiencyGrantedBy', type: 'text', sortable: true},
             {label: 'Set Proficiency', fieldName: 'setProficiency', type: 'text'},
             {type: 'action', class: {fieldName: 'showPicklist'}, typeAttributes: { rowActions: this.getAllActions }},
-            {label: '',
-                type: 'button',
-                initialWidth: 230,
-                typeAttributes: {
-                    title: 'Request Remove Proficiency',
-                    name: 'request_remove_proficiency',
-                    variant: 'border-filled',
-                    alternativeText: 'Request Remove Proficiency', 
-                    label: 'Request Remove Proficiency',
-                    class: {fieldName: 'showRemoveProficiencyButton'}
-                }
-            },
         ];
         this.initData();
         
@@ -148,7 +126,6 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
         getUserInfo()
         .then(result =>{
             let myResult = JSON.parse(JSON.stringify(result));
-            console.log('myResult.primaryStationCode', myResult.primaryStationCode);
             if(myResult){
                 this.userInfo = myResult;               
                 if(myResult.primaryStationCode){
@@ -188,7 +165,6 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
             this.cleanErrors();
             this.showSearchCriteria = true;
             this.loadingSearchCriteria = false;
-            console.log('this.stationOptions', this.stationOptions);
             if(this.stationValue){
                 //Reset this.stationValue if this.stationValue = code of deleted station
                 let stationOptions = JSON.parse(JSON.stringify(this.stationOptions));
@@ -239,48 +215,16 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
                                 inputCmp.setCustomValidity('');
                             }
                         }
-                        /*
-                        if(inputCmp.name === 'aircraftType'){
-                            if(!this.aircraftTypeValue){
-                            inputCmp.setCustomValidity('Complete this field.');
-                            } else{
-                                inputCmp.setCustomValidity('');
-                            }
-                        }
-                        if(inputCmp.name === 'proficiency'){
-                            if(!this.proficiencyValue){
-                            inputCmp.setCustomValidity('Complete this field.');
-                            } else{
-                                inputCmp.setCustomValidity('');
-                            }
-                        }
-                        */
                         inputCmp.reportValidity();
                         return validSoFar && inputCmp.checkValidity();
         }, true);
 
         if(allValid){
-
-            //show/hide action buttons && set Proficiency Action Column
             
             if(this.proficiencyValue === 'No' || this.proficiencyValue === 'All'){
                 this.showButtonAllProficient = true;
             } 
-            
 
-            //remove column "Set Proficiency" and row action if it exists
-            /*
-            let i;
-            for(i = 0; i < this.columns.length; i++){
-                if(this.columns[i].fieldName === 'setProficiency'){
-                        this.columns.splice(i,2); 
-                    }
-            }
-            this.columns.push({label: 'Set Proficiency', fieldName: 'setProficiency', type: 'text'});
-            this.columns.push({type: 'action', typeAttributes: { rowActions: this.getAllActions }});
-
-            */
-            console.log('__RS__ before calling this.handleSearch()');
             this.showSearch = true;
             this.handleSearch();
         }
@@ -288,13 +232,11 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
 
     getAllActions(row, doneCallback){
         let result;
-        console.log('row.proficiency', row.proficiency);
 
         result = [
             { label: 'Yes', name: 'Yes'}
         ];
         
-        console.log('result', result);
         doneCallback(result);
     }
 
@@ -330,51 +272,7 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
         
         this.showDatatableButtons = true;
 
-        console.log('uniqueRowId: ' + uniqueRowId);
-        console.log('index: ' + index);
-
-        console.log('auxData', auxData);
-        let recordRequestRemoveProficiency = {};
-
-        switch(actionName){
-            case 'request_remove_proficiency':
-                console.log('remove proficiency request.');
-                
-                recordRequestRemoveProficiency.firstName = auxData[index].firstName;
-                recordRequestRemoveProficiency.lastName = auxData[index].lastName;
-                recordRequestRemoveProficiency.employeeCode = auxData[index].companyNumber;
-                recordRequestRemoveProficiency.itpName = auxData[index].itpName;
-                recordRequestRemoveProficiency.stationCode = auxData[index].station;
-                recordRequestRemoveProficiency.trainingCode = auxData[index].trainingCode;
-                recordRequestRemoveProficiency.trainingName = auxData[index].trainingName;
-                recordRequestRemoveProficiency.contactRoleCertificationId = auxData[index].contactRoleCertificationId;
-                recordRequestRemoveProficiency.expirationDate = auxData[index].expirationDate;
-                console.log('recordRequestRemoveProficiency', recordRequestRemoveProficiency);
-
-                requestRemoveProficiency({removeProficiencyRecord: recordRequestRemoveProficiency})
-                .then(result => {
-
-                    console.log('result', result);
-                    const event = new ShowToastEvent({
-                        title: 'Request Remove Proficiency Result',
-                        message: result.result_message,
-                        variant: 'success',
-                        mode: 'pester'
-                    });
-                    this.dispatchEvent(event);
-
-                })
-                .catch(error => {
-                    const event = new ShowToastEvent({
-                        title: 'Request Remove Proficiency Result',
-                        message: 'Unable to Complete your request.',
-                        variant: 'error',
-                        mode: 'pester'
-                    });
-                    this.dispatchEvent(event);
-                });
-                break;
-                
+        switch(actionName){ 
             case 'Yes':
                 auxData[index].setProficiency = 'Yes';
                 break;
