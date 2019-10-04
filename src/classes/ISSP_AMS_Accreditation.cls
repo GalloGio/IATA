@@ -8268,7 +8268,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
         for (Account a: [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
                             Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c 
-                            FROM Account WHERE Top_Parent__c = :accountToBeConverted.Id OR Id = :accountToBeConverted.Id]) {
+                            FROM Account WHERE (Top_Parent__c = :accountToBeConverted.Id OR Id = :accountToBeConverted.Id) AND Top_Parent__c <>:con.Account.id AND Id <> :con.Account.id]) {
             if (!convertingIds.contains(a.id)) {
                 convertingIds.add(a.Id);
                 if (accountsToBeConverted.isEmpty()) {
