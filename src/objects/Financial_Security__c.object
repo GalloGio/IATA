@@ -2530,7 +2530,7 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
     </validationRules>
     <validationRules>
         <fullName>Financial_Security_Validation_Case</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Financial Security Validation Case should be filled when switching a bank guarantee to &quot;Active&quot;</description>
         <errorConditionFormula>AND(
 ISPICKVAL(Security_Type__c, &quot;Bank Guarantee&quot;),
