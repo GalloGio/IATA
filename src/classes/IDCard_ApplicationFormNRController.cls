@@ -78,7 +78,24 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
   public String attachmentID {get; set;}
 
+  public List<SelectOption> cardTypeList {
+    get {
+        if (cardTypeList == null) {
+            cardTypeList = new List<SelectOption>{};
+            cardTypeList.add(new SelectOption('digital', Label.IDCard_CardType_DigCardNo));
+            cardTypeList.add(new SelectOption('plastic', Label.IDCard_CardType_PhysCardYes));
+        }
+        return cardTypeList;
+    }
+    private set;
+  }
 
+  public Boolean isCardTypeChoiceAvailable {
+    get {
+      IATA_ISO_Country__c contactCountry = GetIATAISOCountryOfContact(IDCardApplicationNR.IATA_Code__c);
+      return !IDCard_MobileAppRenewalService.US_COUNTRY_ISO_CODES.contains(contactCountry.ISO_Code__c);   
+    }
+  }
   /** 
    * Constructor
    */
@@ -147,7 +164,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
                              i.IATA_numeric_code_previous_employer_3__c, i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c,
                              i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c, i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c,
                              i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c,
-                             i.Applicable_Fee__c, i.Regional_Office__c, i.AgencyShare_Confirmation__c  From ID_Card_Application__c i
+                             i.Applicable_Fee__c, i.Regional_Office__c, i.AgencyShare_Confirmation__c, i.Card_Type__c  From ID_Card_Application__c i
                              where i.Id = :applicationId limit 1];
       //Block Page if payment is done and case is created
       Case[] tempCase = [ Select id from Case where Related_ID_Card_Application__c = : IDCardApplicationNR.Id ] ;
@@ -489,6 +506,10 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
       Boolean isReissue = (IDCardApplicationNR.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE);
       Boolean isExpedite = IDCardApplicationNR.IDCard_Expedite_Delivery__c;
 
+      if(IDCardApplicationNR.Card_Type__c == 'digital') IDCardApplicationNR.IDCard_Expedite_Delivery__c = false;
+      Boolean isToPrint = (IDCardApplicationNR.Card_Type__c == 'plastic');
+      if(isCardTypeChoiceAvailable == false) isToPrint = false;
+
       //Get the ITDI Courses Selection
       IDCardApplicationNR.Package_of_Travel_Professionals_Course_1__c = null;
       IDCardApplicationNR.Package_of_Travel_Professionals_Course_2__c = null;
@@ -504,11 +525,11 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
 
       Boolean isITDIPackage = selectedITDICourses.size() > 0 ; //IDCardApplicationNR.Package_of_Travel_Professionals_Course_1__c != null || IDCardApplicationNR.Package_of_Travel_Professionals_Course_2__c != null;
-      detailledFees = IDCardUtil.GetDetailledFees(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion);
+      detailledFees = IDCardUtil.GetDetailledFees(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion, null, isToPrint);
       IDCardApplicationNR.ID_Card_Fee__c = detailledFees.get('IDCardFee');
       IDCardApplicationNR.IDCard_Expedite_Delivery_Fee__c = detailledFees.get('ExpediteFee');
       IDCardApplicationNR.ITDI_Courses_Fee__c = detailledFees.get('ITDIFee');
-      IDCardApplicationNR.Applicable_Fee__c = IDCardUtil.GetApplicableFee(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion);
+      IDCardApplicationNR.Applicable_Fee__c = IDCardUtil.GetApplicableFee(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion, isToPrint);
       IDCardApplicationNR.CurrencyIsoCode = listPriceTables[0].CurrencyIsoCode;
 
       ///////////////

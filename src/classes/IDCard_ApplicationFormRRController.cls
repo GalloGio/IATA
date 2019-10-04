@@ -78,6 +78,18 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
     }
   }
 
+  public List<SelectOption> cardTypeList {
+    get {
+        if (cardTypeList == null) {
+            cardTypeList = new List<SelectOption>{};
+            cardTypeList.add(new SelectOption('digital', Label.IDCard_CardType_DigCardNo));
+            cardTypeList.add(new SelectOption('plastic', Label.IDCard_CardType_PhysCardYes));
+        }
+        return cardTypeList;
+    }
+    private set;
+  }
+
   public Boolean IsContactFromCanada {
     get {
       if (GetIATAISOCountryOfContact(IDCardApplicationRR.IATA_Code__c).ISO_Code__c == 'CA')
@@ -118,6 +130,13 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
           return true;
         return false;      
       }
+    }
+  }
+
+  public Boolean isCardTypeChoiceAvailable {
+    get {
+      IATA_ISO_Country__c contactCountry = GetIATAISOCountryOfContact(IDCardApplicationRR.IATA_Code__c);
+      return !IDCard_MobileAppRenewalService.US_COUNTRY_ISO_CODES.contains(contactCountry.ISO_Code__c);   
     }
   }
 
@@ -309,7 +328,7 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
       String applicationId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
       system.debug('[IDCard_ApplicationFormRRController] found id card app Id  ' + applicationId)  ;
       //get application info from DB
-      IDCardApplicationRR = [Select i.Payment_Amount__c, i.VER_Number__c, i.RecordTypeId, i.Revenue_Confirmation__c, i.UIR__c, i.Type_of_application__c, i.Title__c, i.Telephone__c, i.SystemModstamp, i.Start_Date_Industry__c, i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c, i.Solicitation_Flag__c, i.Promotion_Code__c, i.Position_in_Current_Agency__c, i.Position_Code__c, i.Photo__c, i.Package_of_Travel_Professionals_Course_2__c, i.Package_of_Travel_Professionals_Course_1__c, i.OwnerId, i.Name, i.Middle_Initial__c, i.Last_Name__c, i.LastModifiedDate, i.LastModifiedById, i.IsDeleted, i.Id, i.IDCard_Prefered_Language__c, i.IDCard_Expedite_Delivery__c, i.IDCard_Expedite_Delivery_Fee__c, i.IATA_numeric_code_previous_employer_4__c, i.IATA_numeric_code_previous_employer_3__c, i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c, i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c, i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c, i.Regional_Office__c, i.AgencyShare_Confirmation__c  From ID_Card_Application__c i where i.Id = :applicationId limit 1];
+      IDCardApplicationRR = [Select i.Payment_Amount__c, i.VER_Number__c, i.RecordTypeId, i.Revenue_Confirmation__c, i.UIR__c, i.Type_of_application__c, i.Title__c, i.Telephone__c, i.SystemModstamp, i.Start_Date_Industry__c, i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c, i.Solicitation_Flag__c, i.Promotion_Code__c, i.Position_in_Current_Agency__c, i.Position_Code__c, i.Photo__c, i.Package_of_Travel_Professionals_Course_2__c, i.Package_of_Travel_Professionals_Course_1__c, i.OwnerId, i.Name, i.Middle_Initial__c, i.Last_Name__c, i.LastModifiedDate, i.LastModifiedById, i.IsDeleted, i.Id, i.IDCard_Prefered_Language__c, i.IDCard_Expedite_Delivery__c, i.IDCard_Expedite_Delivery_Fee__c, i.IATA_numeric_code_previous_employer_4__c, i.IATA_numeric_code_previous_employer_3__c, i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c, i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c, i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c, i.Regional_Office__c, i.AgencyShare_Confirmation__c, i.Card_Type__c  From ID_Card_Application__c i where i.Id = :applicationId limit 1];
       system.debug('[IDCard_ApplicationFormRRController] found id card app from Id ?  ' + (IDCardApplicationRR != null))  ;
       //Block Page if payment is done and case is created
       Case[] tempCase = [ Select id from Case where Related_ID_Card_Application__c = : IDCardApplicationRR.Id ] ;
@@ -479,12 +498,14 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
 
       ////////////////////////////////
       // calculate the applicable fee
-
+      if(IDCardApplicationRR.Card_Type__c == 'digital') IDCardApplicationRR.IDCard_Expedite_Delivery__c = false;
+      Boolean isToPrint = (IDCardApplicationRR.Card_Type__c == 'plastic');
+      if(isCardTypeChoiceAvailable == false) isToPrint = false;
       Boolean isReissue = (IDCardApplicationRR.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE);
       Boolean isExpedite = IDCardApplicationRR.IDCard_Expedite_Delivery__c;
       Boolean isITDIPackage = selectedITDICourses.size() > 0; //IDCardApplicationRR.Package_of_Travel_Professionals_Course_1__c != null || IDCardApplicationRR.Package_of_Travel_Professionals_Course_2__c != null;
-      detailledFees = IDCardUtil.GetDetailledFees(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion);
-      IDCardApplicationRR.Applicable_Fee__c = IDCardUtil.GetApplicableFee(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion);
+      detailledFees = IDCardUtil.GetDetailledFees(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion, null, isToPrint);
+      IDCardApplicationRR.Applicable_Fee__c = IDCardUtil.GetApplicableFee(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion, isToPrint);
       IDCardApplicationRR.ID_Card_Fee__c = detailledFees.get('IDCardFee');
       IDCardApplicationRR.IDCard_Expedite_Delivery_Fee__c = detailledFees.get('ExpediteFee');
       IDCardApplicationRR.ITDI_Courses_Fee__c = detailledFees.get('ITDIFee');
