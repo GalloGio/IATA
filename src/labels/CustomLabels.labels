@@ -3319,6 +3319,13 @@ Payment required on receipt of this Payment Advice
         <value>Case Number</value>
     </labels>
     <labels>
+        <fullName>CSP_Case_Currency</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Case_Currency</shortDescription>
+        <value>Case Currency</value>
+    </labels>
+    <labels>
         <fullName>CSP_Cases</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3604,6 +3611,20 @@ Payment required on receipt of this Payment Advice
         <value>Welcome [username]</value>
     </labels>
     <labels>
+        <fullName>CSP_IATA_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_IATA_Country</shortDescription>
+        <value>IATA Country</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IMPORTANT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_IMPORTANT</shortDescription>
+        <value>IMPORTANT</value>
+    </labels>
+    <labels>
         <fullName>CSP_LogOut</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3737,12 +3758,26 @@ Payment required on receipt of this Payment Advice
         <value>See Monthly</value>
     </labels>
     <labels>
+        <fullName>CSP_Payment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Payment</shortDescription>
+        <value>Payment</value>
+    </labels>
+    <labels>
         <fullName>CSP_PendingCustomerCase_Warning</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_PendingCustomerCase_Warning</shortDescription>
         <value>We need your input to proceed with your case.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Period</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Period</shortDescription>
+        <value>Period</value>
     </labels>
     <labels>
         <fullName>CSP_PortalPath</fullName>
@@ -3843,14 +3878,21 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP RecentCases HelpText</shortDescription>
-        <value>On Going</value>
+        <value>Is your question related to an ongoing case?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_RecentCases_HelpText2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP RecentCases HelpText 2</shortDescription>
+        <value>If not, scroll down to contact us.</value>
     </labels>
     <labels>
         <fullName>CSP_RecentCases_Support</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Recent Cases Support</shortDescription>
-        <value>Recent Cases</value>
+        <value>Ongoing Cases</value>
     </labels>
     <labels>
         <fullName>CSP_Record_Deleted</fullName>
@@ -3866,6 +3908,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_RelatedArticles</shortDescription>
         <value>Related Articles</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Remittantce_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Remittantce_Date</shortDescription>
+        <value>Remittantce Date</value>
     </labels>
     <labels>
         <fullName>CSP_RemoveAllFilters</fullName>
@@ -4322,6 +4371,70 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_User</shortDescription>
         <value>User</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_1_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_1_Desc</shortDescription>
+        <value>Directly access more than 60 IATA services, specially selected for you.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_1_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_1_Title</shortDescription>
+        <value>Access IATA services</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_2_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_2_Desc</shortDescription>
+        <value>Easily manage and update your IATA profile.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_2_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_2_Title</shortDescription>
+        <value>Stay up to date</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_3_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_3_Desc</shortDescription>
+        <value>Discover the selection of publications, trainings and other IATA products and services.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_3_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_3_Title</shortDescription>
+        <value>Find special offers</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_4_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_4_Desc</shortDescription>
+        <value>Access our extensive collection of questions &amp; answers; and get direct support from IATA.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Bullet_4_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Welcome_Panel_Bullet_4_Title</shortDescription>
+        <value>Get answers</value>
     </labels>
     <labels>
         <fullName>CSP_You_Dont_Have_Announcements</fullName>
@@ -20008,7 +20121,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step1_PCI</shortDescription>
-        <value>A. IATA Code Selection</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;IATA Code Selection</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_ProgressBar</fullName>
@@ -20088,7 +20201,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step2_PCI</shortDescription>
-        <value>B. Upload File</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;B&lt;/span&gt;Upload File</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step2_ProgressBar</fullName>
@@ -20934,7 +21047,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_PCI</shortDescription>
-        <value>C. Submit to IATA</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;C&lt;/span&gt;Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_PersonModal_CheckBoxes</fullName>
@@ -26950,6 +27063,86 @@ this is the tiess topic help</value>
         <value>ID Card Valid to</value>
     </labels>
     <labels>
+        <fullName>ISSP_IDFS_Title_01</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_01</shortDescription>
+        <value>Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_02</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_02</shortDescription>
+        <value>Eligibility validation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_03</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_03</shortDescription>
+        <value>Validation of&lt;br/&gt;Resolutions&lt;br/&gt; Agreements</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_04</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_04</shortDescription>
+        <value>Country Requirement&lt;br/&gt;Review &amp; Fulfillment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_05</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_05</shortDescription>
+        <value>Bank Instructions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_06</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_06</shortDescription>
+        <value>Cass Test File</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_07</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_07</shortDescription>
+        <value>Compliance Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_08</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_08</shortDescription>
+        <value>Penny test</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_09</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_09</shortDescription>
+        <value>Joining fee</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IDFS_Title_10</fullName>
+        <categories>ISSP IDFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IDFS_Title_10</shortDescription>
+        <value>System Activation</value>
+    </labels>
+    <labels>
         <fullName>ISSP_IFACP_Endorsement_Changes</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -31684,7 +31877,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_PRIMARY_CONTACTS_MSG</shortDescription>
-        <value>Please &lt;a style=&quot;color:blue&quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;submit a case to IATA&lt;/a&gt; if you wish to change your primary contact.</value>
+        <value>Please &lt;a style=&quot;color:blue&quot; href=&quot;/csportal/s/support-reach-us&quot;&gt;submit a case to IATA&lt;/a&gt; if you wish to change your primary contact.</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_PRODUCT_DETAILS_SECTION</fullName>
@@ -31803,14 +31996,14 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG1</shortDescription>
-        <value>You can view your account details on the &lt;a style=&quot;color:blue &quot; href=&quot;/apex/ISSP_CompanyInformation?mid=M5S2&quot;&gt;Company Information&lt;/a&gt; page.</value>
+        <value>You can view your account details on the &lt;a style=&quot;color:blue &quot; href=&quot;/csportal/s/company-profile&quot;&gt;Company Information&lt;/a&gt; page.</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2</shortDescription>
-        <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;submit a case to IATA&lt;/a&gt; if you wish to make any changes.</value>
+        <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;/csportal/s/support-reach-us&quot;&gt;submit a case to IATA&lt;/a&gt; if you wish to make any changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</fullName>
