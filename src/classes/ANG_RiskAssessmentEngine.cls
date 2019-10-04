@@ -408,7 +408,11 @@ public class ANG_RiskAssessmentEngine{
         Map<Id, decimal> remittancesPerHierarchy = new Map<Id, decimal>();
         
         for(Account acct : acctLst){
-            decimal nbrOfRemittances = nbrOfRemittancesPerFrequencyMap.get(acct.Remittance_Frequency__c);
+            decimal nbrOfRemittances = 0;
+
+            if(String.isNotBlank(acct.Remittance_Frequency__c)){
+                nbrOfRemittances = nbrOfRemittancesPerFrequencyMap.get(acct.Remittance_Frequency__c);
+            }
             
             Id acctId = acct.Top_Parent__c != NULL ? acct.Top_Parent__c : acct.Id;
 
