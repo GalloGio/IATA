@@ -493,13 +493,11 @@ export default class PortalIftpManageStations extends LightningElement {
     }
 
     handleUploadFinish(event){
-        console.log('handleUploadFinish -- here');
         this.loadingEditSpinner = true;
         const uploadedFiles = JSON.parse(JSON.stringify(event.detail));
         let docdId = uploadedFiles[0].documentId;
         manageUploadStationOJT({fileId: docdId, recordID: this.editData.id})        
         .then(result =>{
-            console.log('result', result);
             if(result){
                 const event = new ShowToastEvent({
                     title: 'Upload Station OJT Document',

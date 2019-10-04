@@ -114,7 +114,7 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
                 cellAttributes: { class: { fieldName: 'proficiencyStatus' }, iconName: { fieldName: 'proficiencyIcon' }, iconPosition: 'right' } },
             {label: 'Proficiency Granted By', fieldName: 'proficiencyGrantedBy', type: 'text', sortable: true},
             {label: 'Set Proficiency', fieldName: 'setProficiency', type: 'text'},
-            {type: 'action', class: {fieldName: 'showPicklist'}, typeAttributes: { rowActions: this.getAllActions }},
+            {type: 'action', typeAttributes: { rowActions: this.getAllActions }, cellAttributes: { class: { fieldName: 'showPicklist' }}},
         ];
         this.initData();
         
@@ -362,11 +362,9 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
                 results.forEach(rec =>{
                     rec.upperCase = 'to-upper-case';
                     if(rec.proficiency === 'No'){
-                        rec.showRemoveProficiencyButton = 'slds-hide';
                         rec.showPicklist = 'slds-show';
                     } else if(rec.proficiency === 'Yes'){
-                        rec.showRemoveProficiencyButton = 'slds-show';
-                        rec.showPicklist = 'slds-hide';
+                        rec.showPicklist = 'slds-hide-proficiency-action';
                     }
                 })
                 this.data = results;

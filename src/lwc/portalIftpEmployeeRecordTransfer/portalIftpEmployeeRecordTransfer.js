@@ -39,7 +39,7 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
     @track employeeCodeValue = null;
     @track openmodal = false;
     @track recordRequestTransfer = [];
- 
+   
     get dataRecords() {
         return this.dataRecords;
     } 

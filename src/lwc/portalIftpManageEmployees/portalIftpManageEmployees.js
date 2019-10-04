@@ -310,7 +310,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
             isNotAllocated = true;
             this.auxSearchValues.stationCode = null;
         }
-        //refreshApex(this.wiredITPEmployeesWithStationsInfoResult);
         getITPEmployeesWithStationsInfo({searchValues: this.auxSearchValues, origin: 'Manage Employees'})
         .then(result =>{
             if(result){
@@ -325,7 +324,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
                     if(rec.Contact_Role__c === 'ITP Training Coordinator'){
                         rec.Username = rec.Email__c;
                     } else {
-                        rec.Username = rec.Name.substring(4, rec.Name.length -1);
+                        rec.Username = rec.Name.substring(4, rec.Name.length);
                         rec.Username = parseInt(rec.Username);
                         rec.Username = rec.Username.toString();
                     }
@@ -613,14 +612,12 @@ export default class PortalIftpManageEmployees extends LightningElement {
                 this.openModal = true;
                 break;
             case 'delete':
-                console.log('this.recordToManage', this.recordToManage);
                 this.isActionView = true;
                 this.isActionDelete = true;
                 this.modalTitle = 'Employee to Delete';
                 this.openModal = true;
                 break;
             case 'manage_employee_stations':
-                console.log('this.recordToManage', this.recordToManage);
                 this.modalTitle = "Manage Employee's Stations";
                 this.initManageStationsModal();
                 break;
@@ -1004,7 +1001,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
                     newStationsList.push(r);
                 })
             }
-            console.log('newStationsList', newStationsList);
 
             updateEmployeeStations({originalStationsList: originalStationsList, newStationsList: newStationsList})
             .then(r => {

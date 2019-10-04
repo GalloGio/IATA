@@ -1,14 +1,9 @@
 import { LightningElement, track } from 'lwc';
 
-
-//import getSelectedColumns from '@salesforce/apex/CSP_Utils.getSelectedColumns';
-//import searchTrainingRecords from '@salesforce/apex/portalIFTPTrainingRecords.searchTrainingRecords';
 import getTrainingRecords from '@salesforce/apex/portalIftpTrainingRecords.getTrainingRecordsDetail';
-//import getITPStations from '@salesforce/apex/PortalIftpUtils.getITPStations';
-//import getCertificationTypes from '@salesforce/apex/PortalIftpUtils.getCertificationTypes';
 import getCertificationTypesWithLevel from '@salesforce/apex/PortalIftpUtils.getCertificationTypesWithLevel';
 import getAllStations from '@salesforce/apex/PortalIftpUtils.getAllStations';
-//import getFileContent from '@salesforce/apex/portalIftpTrainingRecords.getFileContent';
+
 
 export default class PortalIftpTrainingRecordsSummary extends LightningElement {
 
@@ -58,11 +53,7 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
     get dataRecords() {
         return this.dataRecords;
     } 
-    /*
-    handleChangeStation(event) {
-        this.stationValue = event.detail.value;
-    }
-    */
+
     handleChangeAircraftType(event) {
         this.aircraftTypeValue = event.detail.value;
     }
@@ -146,36 +137,7 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
 
     connectedCallback() {
         console.log('INIT connectedCallback');
-        /*
-        console.log(this.stationOptions);
-        this.stationOptions = getUserStationsJS();
-        console.log(this.stationOptions);
-        */
-       /*
-        getITPStations()
-            .then(result => {
-                console.log(result);
-                let myResult = JSON.parse(JSON.stringify(result));
-                
-                console.log(myResult);
-                console.log('myResult : ' + myResult);
-                //let myTopicOptions = [{ label: 'All', value: 'All' }];
-                let myTopicOptions = [];
 
-                Object.keys(myResult).forEach(function (el) {
-                    //myTopicOptions.push({ label: myResult[el].City__c, value: myResult[el].Code__c });
-                    myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
-                });
-
-                this.stationOptions = myTopicOptions;
-                this.cleanErrors();
-            })
-            .catch(error => {
-                console.log('getITPStations - Error : ' + error);
-                this.mainErrorMessage = error;
-                this.error = error;
-            });  
-        */
         getAllStations()
         .then(result => {
             console.log(result);
@@ -187,8 +149,6 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
             this.allStations = myResult;
 
             //console.log('this.allStations : ' + this.allStations);
-            console.log('this.allStations.length : ' + this.allStations.length);
-            console.log('this.allStations[0] : ', this.allStations[0]);
 
 
             //let myTopicOptions = [{ label: 'All', value: 'All' }];
@@ -207,29 +167,6 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
             this.error = error;
         }); 
 
-/*
-        getCertificationTypes({certificationType: 'Aircraft'})
-            .then(result => {
-                console.log(result);
-                let myResult = JSON.parse(JSON.stringify(result));
-                
-                console.log(myResult);
-                console.log('myResult : ' + myResult);
-                let myTopicOptions = [];
-
-                Object.keys(myResult).forEach(function (el) {
-                    myTopicOptions.push({ label: myResult[el].Name, value: myResult[el].Id });
-                });
-
-                this.aircraftTypeOptions = myTopicOptions;
-                this.cleanErrors();
-            })
-            .catch(error => {
-                console.log('getITPStations - Error : ' + error);
-                this.mainErrorMessage = error;
-                this.error = error;
-            }); 
-*/
         getCertificationTypesWithLevel({certificationType: 'Aircraft'})
         .then(result => {
             console.log(result);
@@ -288,41 +225,6 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
         //var auxStations = (this.stationValue == null) ? 'null' : this.stationValue;
         var auxAircraftType = (this.aircraftTypeValue == null) ? 'null' : this.aircraftTypeValue;
         var auxProficiency = (this.proficiencyValue == null) ? 'null' : this.proficiencyValue;
-        /*
-        if(this.stationValue === 'All'){
-            
-            for(i=0; i < this.stationOptions.length; i++){
-                if(this.stationOptions[i].value === 'All'){
-                    auxStations = '';
-                }else{
-                    auxStations = (auxStations === '' ) ? this.stationOptions[i].value : auxStations + ',' + this.stationOptions[i].value;
-                }
-            }
-        }
-        */
-       /*
-        if(this.aircraftTypeValue === 'All'){
-            for(i=0; i < this.aircraftTypeOptions.length; i++){
-                if(this.aircraftTypeOptions[i].value === 'All'){
-                    auxAircraftType = '';
-                }else{
-                    auxAircraftType = (auxAircraftType === '' ) ? this.aircraftTypeOptions[i].value : auxAircraftType + ',' + this.aircraftTypeOptions[i].value;
-                }
-            }
-        }
-*/
-        //On search "Level 2" must include "Level 3" results also, when L3 select only show L3
-        /*
-        if(this.proficiencyValue == 'All' || this.proficiencyValue == 'Level 2'){
-            for(i=0; i < this.proficiencyOptions.length; i++){
-                if(this.proficiencyOptions[i].value == 'All'){
-                    auxProficiency = '';
-                }else{
-                    auxProficiency = (auxProficiency == '' ) ? this.proficiencyOptions[i].value : auxProficiency + ',' + this.proficiencyOptions[i].value;
-                }
-            }
-        }
-        */
    
         //List
         auxSearchValues = [
@@ -339,43 +241,19 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
 
         ];
         
-        console.log('**********   auxSearchValues: ' + auxSearchValues);
-        
         this.loading = true;
-        //getTrainingRecords({searchValues: JSON.parse(JSON.stringify(auxSearchValues)) })
         getTrainingRecords({searchValues: auxSearchValues, searchType: 'RecordsSummary'})
         .then(results => {
-            console.log('handleSearch - results : ', results);
-            console.log('handleSearch - results.length : ' + results.length);
-            console.log('handleSearch - results:0 : ', results[0]);
 
             if(results && results.length > 0) {
                 this.data = JSON.parse(JSON.stringify(results));
-/*
-                this.data.forEach(record =>{
-                    if(record.OJT_file_ITP){
-                        console.log('record.OJT_file_ITP' + record.OJT_file_ITP);
-                    }
-                    if(record.OJT_file_Station){
-                        console.log('record.OJT_file_Station' + record.OJT_file_ITP);
-                    }
-                    record.OJT_file_ITP = 'https://iata--iftpfmdev.lightning.force.com/lightning/r/ContentDocument/0690Q000000Mi7oQAC/view';
-                    record.OJT_file_global_name = record.itpName + ' - Global OJT file';
-                    record.OJT_file_Station = 'https://iata--IFTPFMDEV.cs109.my.salesforce.com/sfc/p/0Q0000000SIh/a/0Q0000004KqS/UkPnpCQZuH9FzMtxfcp7t2y8LzsnTFQ7xejfUIj1G4A';
-                    record.OJT_file_Station_name = record.itpName + ' - Station OJT file';
-                })
-*/
                 this.dataRecords = true;
 
-                console.log('this.data', this.data);
-                console.log('this.dataRecords', this.dataRecords);
             } else {
                 this.dataRecords = false; 
             }
             this.loading = false;
-            console.log('this.loading', this.loading);
-            console.log('this.data', this.data);
-            console.log('this.dataRecords', this.dataRecords);
+
             this.cleanErrors();
         })
         .catch(error => {

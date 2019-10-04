@@ -5,35 +5,13 @@ public class PortalIftpUtilsTest {
 
         portalIftpTestClass.test_config();
 
-        Test.startTest();
-
         User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
 
         System.debug('u2 - ' + u2);
 
-        // List<Document> docs = [SELECT Id,name FROM Document]; 
-        List<ContentVersion> docs = [SELECT Id, Title, ContentDocumentId FROM ContentVersion]; 
-        System.debug('docs: ' + docs);
+        Test.startTest();
 
-        Id empItpId = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Emp Ins Document'].ContentDocumentId;
-        Id empItpId2 = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Emp Ins Document2'].ContentDocumentId;
-        
-        Id stationItpId = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Station Ins Document'].ContentDocumentId;
-        Id ItpOJTId = [SELECT Id FROM Document WHERE name = 'OJT Document'].Id;
-        Id add2Id = [Select Id From Address__c where Code__c = 'GVX' limit 1].Id;
-
-        List<Role_Address__c> roleAddrList3 = [Select Id, Description__c, Address__c, Name, Account_Role_Service__c from Role_Address__c];
- 
-        
         System.runAs(u2) {
-
-            PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
-
-            //List<Address__c> addList1 = PortalIftpUtils.getUserStations();
-
-            List<Address__c> addList2 = PortalIftpUtils.getAllStations();
-
-            List<Address__c> addList3 = PortalIftpUtils.getITPStations();
 
             String sRoleAddr = 'ITP Trainee';
             List<Account_Contact_Role__c> empList = [Select Id, Contact__C, Contact__r.accountid from Account_Contact_Role__c];
@@ -52,9 +30,29 @@ public class PortalIftpUtilsTest {
 
             List<Account_Contact_Role__c> accRoleList1 = PortalIftpUtils.getITPEmployees(accId);
 
-            List<Account_Contact_Role__c> accRoleList2 = PortalIftpUtils.getAllITPEmployees(accId);
+            List<Account_Contact_Role__c> accRoleList2 = PortalIftEmployeeRecordsManagement.getAllITPEmployees();
 
             List<Account_Contact_Role__c> accRoleList3 = PortalIftpUtils.getITPEmployeesWithStationsInfo(accId);
+
+        }
+        Test.stopTest();
+    }
+
+    
+    static testMethod void portalIftpUtils_test1_1() {
+
+        portalIftpTestClass.test_config();
+
+        Test.startTest();
+        User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
+        System.runAs(u2) {
+
+            PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
+
+            List<Address__c> addList2 = PortalIftpUtils.getAllStations();
+
+            List<Address__c> addList3 = PortalIftpUtils.getITPStations();
+
 
             List<PortalIftpUtils.StationRecordsWrapper> swrap = PortalIftpUtils.getITPStationsForDatatable();
 
@@ -67,33 +65,40 @@ public class PortalIftpUtilsTest {
             List<IFTP_Certification_DEtail__c> cert3 = PortalIftpUtils.getCertificationTypesWithLevel('Aircraft');
             List<IFTP_Certification_DEtail__c> cert4 = PortalIftpUtils.getCertificationTypesWithLevel('');
 
-            // dataToSave.push({ Id: auxEditData.id, Description__c: auxEditData.description });
-            // Role_Address__c
+        }
+        Test.stopTest();
+    }
+
+        static testMethod void portalIftpUtils_test1_2() {
+
+        portalIftpTestClass.test_config();
+
+        User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
+
+        System.debug('u2 - ' + u2);
+
+        Id empItpId = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Emp Ins Document'].ContentDocumentId;
+        Id empItpId2 = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Emp Ins Document2'].ContentDocumentId;
+        Id stationItpId = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Station Ins Document'].ContentDocumentId;
+        Id ItpOJTId = [SELECT Id FROM Document WHERE name = 'OJT Document'].Id;
+        Id add2Id = [Select Id From Address__c where Code__c = 'GVX' limit 1].Id;
+        List<Role_Address__c> roleAddrList3 = [Select Id, Description__c, Address__c, Name, Account_Role_Service__c from Role_Address__c];
+
+        Test.startTest();
+
+        System.runAs(u2) {
+
             Integer i = 0;
             for(Role_Address__c roleAddr : roleAddrList3){
                 i++;
                 roleAddr.Description__c = 'test upd ' + i;
             }
-            PortalIftpUtils.InsertStationWrapper UpdStation = PortalIftpUtils.updateStation(roleAddrList3, null);
+            System.debug('roleAddrList3 - ' + roleAddrList3);
+            PortalIftpUtils.InsertStationWrapper updStationWrapper = PortalIftpUtils.updateStation(roleAddrList3, null);
 
 
-            // dataToSave.push({ Address__c: addressId, Name: addressCity, Account_Role_Service__c: auxUserInfo.accountRoleSrv});
-            
-            List<Role_Address__c> roleAddrList4 = new List<Role_Address__c>();
-            i = 0;
-            for(Role_Address__c roleAddr : roleAddrList3){
-                i++;
-                Role_Address__c aux = new Role_Address__c();
-                aux.Description__c = 'test ins' + i;
-                aux.Address__c = add2Id;
-                aux.Name = 'Role Address ITP Coord ' + i;
-                aux.Account_Role_Service__c = roleAddr.Account_Role_Service__c;
-                roleAddrList4.add(aux);
-            }
-
-
-//            Address__c addr = PortalIftpUtils.getITPStationEmployees(roleAddrList3[0].Address__c);
             Address__c addr = PortalIftpUtils.getITPStationEmployees(add2Id);
+            
             List<PortalIftpUtils.ImportResultsWrapper> irw1 = PortalIftpUtils.importStationsCSVFile(stationItpId);
 
             List<PortalIftpUtils.ImportResultsWrapper> irw2 = PortalIftpUtils.importEmployeesCSVFile(empItpId);
@@ -107,6 +112,7 @@ public class PortalIftpUtilsTest {
         }
         Test.stopTest();
     }
+
 
     static testMethod void portalIftpUtils_test2() {
 
