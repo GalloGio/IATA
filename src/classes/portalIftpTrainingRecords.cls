@@ -1253,7 +1253,7 @@ public without sharing class portalIftpTrainingRecords {
             certificateToUpdateEnrollmentByIdMap.put(rec.contact_role_certification_id, rec);
         }
 
-        existing_contact_role_certification_list = [SELECT Id, Name, Enrolled__c FROM Contact_Role_Certification__c WHERE Id IN : contact_role_certifications_id_list];
+        existing_contact_role_certification_list = [SELECT Id, Name, Enrolled__c, Stopped__c FROM Contact_Role_Certification__c WHERE Id IN : contact_role_certifications_id_list];
 
         for(Contact_Role_Certification__c existRec: existing_contact_role_certification_list){
 

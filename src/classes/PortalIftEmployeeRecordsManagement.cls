@@ -85,7 +85,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
         } else {
             emps = queryResults;
         }
-        System.debug('____ [cls PortalIftEmployeeRecordsManagement - getITPEmployeesWithStationsInfo] emps - ' + emps);
+
         return emps;
     }
 
@@ -116,14 +116,11 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                      inactiveEmployeesMap.put(emp.Company_Code__c, emp);
                 }
             } 
-            System.debug('____ [cls PortalEmployeeRecordsManagement - addNewEmployee] inactiveEmployeesMap - ' + inactiveEmployeesMap);
             List<String> allMessages = new List<String>();
 
             EmployeeRecordWrapper employeeToAdd = (EmployeeRecordWrapper)JSON.deserialize(JSON.serialize(employeeToInsert), EmployeeRecordWrapper.class);
-            System.debug('____ [cls PortalEmployeeRecordsManagement - addNewEmployee] employeeToAdd - ' + employeeToAdd);
 
             employeeToAdd.busEmail =  (employeeToAdd.busEmail == null)? '': employeeToAdd.busEmail.trim();
-            System.debug('____ [cls PortalEmployeeRecordsManagement - addNewEmployee] email:' + employeeToAdd.busEmail);
 
             // Check mandatory fields
             if(String.isBlank(employeeToAdd.code)){
@@ -138,8 +135,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             if(mAccEmps.containsKey(employeeToAdd.code)){
                 allMessages.add('Failled: This Employee Code already exists in the database; ');
             } 
-
-            System.debug('____ [cls PortalEmployeeRecordsManagement - addNewEmployee] allMessages.size()  - ' + allMessages.size() );
 
             if(allMessages.size() > 0){
                 String aux = '';
@@ -172,9 +167,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                 accContRoleToInsert.Account_Role__c = ui.accountRole;
                 accContRoleToInsert.Contact_Role__c = employeeToAdd.role.trim();
                 accContRoleToInsert.Details__c = employeeToAdd.details;
-
-                System.debug('____ [cls PortalEmployeeRecordsManagement - addNewEmployee] contactToInsert - ' + contactToInsert);
-                System.debug('____ [cls PortalEmployeeRecordsManagement - addNewEmployee] accContRoleToInsert - ' + accContRoleToInsert);
 
                 rw = new ResultWrapper(employeeToAdd.code, 'Employee Ready to be inserted', false); 
 
@@ -549,10 +541,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                 }
 
 
-                System.debug('roleAddressToBeInsertedList' + roleAddressToBeInsertedList);
-                System.debug('originalRoleAddressesList' + originalRoleAddressesList);
-
-                
             
                 Savepoint sp = Database.setSavepoint();
                 try {
@@ -734,7 +722,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             String lmsUsername = 'Employee LMS Username:    ' + employeeToTransferData.lmsUsername + '.\n';
             String formerItpName = 'Employee Former ITP Name:   ' + employeeToTransferData.formerItpName + '.\n';
             String formerStations = 'Employee Former Stations:  ' + employeeToTransferData.formerStations + '.\n';
-            
 
             String description = 'Request Employee Records Transfer Data: \n';
             description += firstName;
@@ -763,7 +750,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             transferCase.Reason1__c  = 'IFTP Request Record Transfer';
             transferCase.Region__c = ui.accountRegion;
             transferCase.BSPCountry__c = ui.accountCountry;
-
             System.debug('transferCase' + transferCase);
 
             Savepoint sp = Database.setSavepoint();
@@ -881,29 +867,22 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
     }
 
-    public class RemoveProficiencyRequestWrapper{
+    public class EmployeeTransferRequestResultWrapper{
+        @AuraEnabled
+        public String employee_name {get;set;}
+        @AuraEnabled
+        public String result_message {get;set;}
+        @AuraEnabled
+        public Boolean succeeded {get;set;}
+        @AuraEnabled
+        public Case transferCase {get;set;}
 
-        @AuraEnabled
-        public String firstName {get;set;}
-        @AuraEnabled
-        public String lastName {get;set;}
-        @AuraEnabled
-        public String employeeCode {get;set;}
-        @AuraEnabled
-        public String itpName {get;set;}
-        @AuraEnabled
-        public String stationCode {get;set;}
-        @AuraEnabled
-        public String trainingCode {get;set;}
-        @AuraEnabled
-        public String trainingName {get;set;}
-        @AuraEnabled
-        public Id contactRoleCertificationId {get;set;}
-        @AuraEnabled
-        public Date expirationDate {get;set;}
+        public EmployeeTransferRequestResultWrapper(){}
 
-        public RemoveProficiencyRequestWrapper(){}
-
+        public EmployeeTransferRequestResultWrapper(String employee_name, String result_message, Boolean succeeded){
+            this.employee_name = employee_name;
+            this.result_message = result_message;
+            this.succeeded = succeeded;
+        }
     }
-
 }
