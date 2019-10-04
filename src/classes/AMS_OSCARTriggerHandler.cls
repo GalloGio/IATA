@@ -3596,8 +3596,18 @@ public class AMS_OSCARTriggerHandler {
         }
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
+            
+            Set<String> targetProcessesSet = new Set<String>{
+                AMS_Utils.NEWHELITE, 
+                AMS_Utils.NEWHESTANDARD, 
+                AMS_Utils.NEWGESTANDARD, 
+                AMS_Utils.NEWAE, 
+                AMS_Utils.MCAE, 
+                AMS_Utils.NGCHINACONVERSION, 
+                AMS_Utils.NGCONVERSIONTOMULTICOUNTRY
+            };
 
-            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE || updatedOscar.Process__c == AMS_Utils.MCAE || updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION){
+            if(targetProcessesSet.contains(updatedOscar.Process__c)){
 
                 if(updatedOscar.Process__c == AMS_Utils.MCAE && !ANG_MulticountryHelper.allowApprovalStep(updatedOscar)){
                     updatedOscar.addError(Label.ANG_Multicountry_Process_Parent_Account_Error);
@@ -3648,7 +3658,15 @@ public class AMS_OSCARTriggerHandler {
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Disapproval') {
 
-            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD){
+            Set<String> targetProcessesSet = new Set<String>{
+                AMS_Utils.NEWHELITE, 
+                AMS_Utils.NEWHESTANDARD, 
+                AMS_Utils.NEWGESTANDARD, 
+                AMS_Utils.MCAE, 
+                AMS_Utils.NGCONVERSIONTOMULTICOUNTRY
+            };
+
+            if(targetProcessesSet.contains(updatedOscar.Process__c)){
 
                 System.debug('Sending the email for the user to anounce disapproval of the oscar');
 
