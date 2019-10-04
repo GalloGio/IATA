@@ -53,6 +53,9 @@ export default class portalIftpTabs extends NavigationMixin(LightningElement) {
     @track showMonitorTrainings         = false;
     @track showProficiencyReports       = false;
     
+    get showLMSButton() { 
+        return this.isITPUser || this.isUserAdmin;
+    }
     
     connectedCallback() {
         console.log('INIT connectedCallback');

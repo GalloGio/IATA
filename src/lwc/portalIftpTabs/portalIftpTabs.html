@@ -5,9 +5,11 @@
             <c-error-panel errors={error} main-error-message={mainErrorMessage}></c-error-panel>
         </template>
 
-        <div class="slds-clearfix">
-            <lightning-button variant="brand" label="IFTP LMS" title="IFTP LMS" onclick={handleRedirect} class="slds-float_right slds-m-around_x-small"></lightning-button>
-        </div>
+        <template if:true={showLMSButton}>
+            <div class="slds-clearfix">
+                <lightning-button variant="brand" label="IFTP LMS" title="IFTP LMS" onclick={handleRedirect} class="slds-float_right slds-m-around_x-small"></lightning-button>
+            </div>
+        </template>
 
         <lightning-tabset variant="scoped">
             <lightning-tab label="Proficiency Management" title="Proficiency Management" if:true={showProficiencyManagement}>
