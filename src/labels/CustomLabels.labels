@@ -3318,7 +3318,7 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_CaseNumber</shortDescription>
         <value>Case Number</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_Case_Currency</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3610,14 +3610,14 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Home_WelcomeTitle</shortDescription>
         <value>Welcome [username]</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_IATA_Country</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_IATA_Country</shortDescription>
         <value>IATA Country</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_IMPORTANT</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3757,7 +3757,7 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_OperationalCalendar_SeeMonthlyLink</shortDescription>
         <value>See Monthly</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_Payment</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3772,7 +3772,7 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_PendingCustomerCase_Warning</shortDescription>
         <value>We need your input to proceed with your case.</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_Period</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3880,7 +3880,7 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP RecentCases HelpText</shortDescription>
         <value>Is your question related to an ongoing case?</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_RecentCases_HelpText2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3909,7 +3909,7 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_RelatedArticles</shortDescription>
         <value>Related Articles</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_Remittantce_Date</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4373,27 +4373,6 @@ Payment required on receipt of this Payment Advice
         <value>User</value>
     </labels>
     <labels>
-        <fullName>CSP_You_Dont_Have_Announcements</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_You_Dont_Have_Announcements</shortDescription>
-        <value>You don’t have any Announcements yet. When you do, they will appear here.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_You_Dont_Have_Notifications</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_You_Dont_Have_Notifications</shortDescription>
-        <value>You don’t have any Notifications yet. When you do, they will appear here.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_You_Dont_Have_Tasks</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_You_Dont_Have_Tasks</shortDescription>
-        <value>You don’t have any Tasks yet. When you do, they will appear here.</value>
-    </labels>
-    <labels>
         <fullName>CSP_Welcome_Panel_Bullet_1_Desc</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4456,8 +4435,29 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Welcome_Panel_Bullet_4_Title</shortDescription>
         <value>Get answers</value>
-    </labels>    
-	 <labels>
+    </labels>
+    <labels>
+        <fullName>CSP_You_Dont_Have_Announcements</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_You_Dont_Have_Announcements</shortDescription>
+        <value>You don’t have any Announcements yet. When you do, they will appear here.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_You_Dont_Have_Notifications</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_You_Dont_Have_Notifications</shortDescription>
+        <value>You don’t have any Notifications yet. When you do, they will appear here.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_You_Dont_Have_Tasks</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_You_Dont_Have_Tasks</shortDescription>
+        <value>You don’t have any Tasks yet. When you do, they will appear here.</value>
+    </labels>
+    <labels>
         <fullName>CSP_cpcc_Agent_Credit_Risk</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -27062,7 +27062,7 @@ this is the tiess topic help</value>
         <shortDescription>ISSP_MyProfile</shortDescription>
         <value>ID Card Valid to</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>ISSP_IDFS_Title_01</fullName>
         <categories>ISSP IDFS</categories>
         <language>en_US</language>
@@ -29302,7 +29302,7 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <shortDescription>ISSP_ProductSubcategory</shortDescription>
         <value>Product Subcategory</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>ISSP_ProgressBar_Agreement</fullName>
         <categories>ISSP ProgressBar</categories>
         <language>en_US</language>
@@ -34310,7 +34310,14 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <shortDescription>My_Renewals</shortDescription>
         <value>Renewals &gt; Publications</value>
     </labels>
-	<labels>
+    <labels>
+        <fullName>NDC_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NDC Troubleshooting</shortDescription>
+        <value>https://identity.iata.org/s/troubleshooting?serviceName=NDCMM</value>
+    </labels>
+    <labels>
         <fullName>NEW_HO_SanityCheck</fullName>
         <categories>NEW_HO_SanityCheck</categories>
         <language>en_US</language>
@@ -34325,13 +34332,6 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>NEW_HO_Submitted</shortDescription>
         <value>Submitted</value>
-    </labels>
-    <labels>
-        <fullName>NDC_Troubleshooting</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NDC Troubleshooting</shortDescription>
-        <value>https://identity.iata.org/s/troubleshooting?serviceName=NDCMM</value>
     </labels>
     <labels>
         <fullName>New</fullName>
