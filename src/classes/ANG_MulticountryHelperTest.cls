@@ -767,7 +767,7 @@ private class ANG_MulticountryHelperTest {
 	}
 
 	@isTest
-	public static void createIfapForMulticountryAgentTest(){
+	static void createIfapForMulticountryAgentTest(){
 
 		List<Account> accountLst = new List<Account>(
 			[SELECT 
@@ -884,6 +884,159 @@ private class ANG_MulticountryHelperTest {
 
 		Test.stopTest();
 		
+	}
+
+	@isTest static void updateFinancialReviewResultMulticountryTest(){
+		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+
+		List<Account> accountLst = new List<Account>(
+			[SELECT 
+				Id,
+				Name,
+				ISO_State__c,
+				Location_Type__c,
+				Location_Class__c,
+				IATA_ISO_Country__c
+			 FROM Account
+			 WHERE
+			 	Location_Type__c = :AMS_Utils.GE
+			 LIMIT 1
+			]
+		);
+
+		Account accountGE = accountLst.get(0);
+
+		accountGE.ANG_Accreditation_Model__c = 'Multicountry';
+		accountGE.IATACode__c = '99999999';
+		update accountGE;
+
+		Contact cont = new Contact(
+			AccountId = accountGE.Id, 
+			Firstname = 'Richard', 
+			Lastname = 'Vaughan', 
+			Phone = '666123456', 
+			MobilePhone = '911111111', 
+			Email = 'richard.vaughan@test.com', 
+			Financial_Assessment_Contact__c = true
+		);
+		insert cont;
+
+		ID ifapCaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+
+		Case ifap = new Case();
+		ifap.AccountId = accountGE.Id;
+		ifap.ContactId = cont.Id;
+		ifap.Subject = 'IFAP Multicountry';
+		ifap.Status = 'Agent to be Notified';
+		ifap.RecordTypeId = ifapCaseRecordTypeId;
+		ifap.IFAP_Financial_Year__c = String.valueOf(Date.today().year());
+		ifap.ArchivedDate__c = Date.today();
+		ifap.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL;
+		insert ifap;
+		
+		Test.startTest();
+
+		ifap.Financial_Assessment_Points__c = 70;
+		ifap.Assessment_Performed_Date__c = System.today();
+		ifap.Financial_Review_Result__c = AMS_Utils.FA_RESULT_SATISFACTORY_NO_ACTION;
+		ifap.Status = AMS_Utils.CASE_STATUS_ASSESSMENT_FINALIZED;
+
+		update ifap;
+
+		accountGE = 
+			[SELECT 
+				Id, 
+				Financial_Review_Result__c, 
+				Assessment_Performed_Date__c, 
+				Financial_Assessment_Points__c
+			FROM Account
+			WHERE
+				Id = :accountGE.Id
+			];
+
+		system.assertEquals(accountGE.Financial_Assessment_Points__c, ifap.Financial_Assessment_Points__c);
+		system.assertEquals(accountGE.Financial_Review_Result__c, ifap.Financial_Review_Result__c);
+		system.assertEquals(accountGE.Assessment_Performed_Date__c, ifap.Assessment_Performed_Date__c);
+
+		Test.stopTest();
+
+	}
+
+	@isTest static void doNotUpdateFinancialReviewResultMulticountryTest(){
+		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+
+		List<Account> accountLst = new List<Account>(
+			[SELECT 
+				Id,
+				Name,
+				ISO_State__c,
+				Location_Type__c,
+				Location_Class__c,
+				IATA_ISO_Country__c
+			 FROM Account
+			 WHERE
+			 	Location_Type__c = :AMS_Utils.GE
+			 LIMIT 1
+			]
+		);
+
+		Account accountGE = accountLst.get(0);
+
+		accountGE.ANG_Accreditation_Model__c = 'Multicountry';
+		accountGE.IATACode__c = '99999999';
+		update accountGE;
+
+		Contact cont = new Contact(
+			AccountId = accountGE.Id, 
+			Firstname = 'Richard', 
+			Lastname = 'Vaughan', 
+			Phone = '666123456', 
+			MobilePhone = '911111111', 
+			Email = 'richard.vaughan@test.com', 
+			Financial_Assessment_Contact__c = true
+		);
+		insert cont;
+
+		ID ifapCaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+
+		Case ifap = new Case();
+		ifap.AccountId = accountGE.Id;
+		ifap.ContactId = cont.Id;
+		ifap.Subject = 'IFAP Multicountry';
+		ifap.Status = 'Agent to be Notified';
+		ifap.RecordTypeId = ifapCaseRecordTypeId;
+		ifap.IFAP_Financial_Year__c = String.valueOf(Date.today().year());
+		ifap.ArchivedDate__c = Date.today();
+		ifap.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL;
+		insert ifap;
+		
+		Test.startTest();
+
+		ifap.Financial_Assessment_Points__c = 70;
+		ifap.Assessment_Performed_Date__c = System.today();
+		ifap.Financial_Review_Result__c = AMS_Utils.FA_RESULT_SATISFACTORY_NO_ACTION;
+		ifap.Status = AMS_Utils.CASE_STATUS_ASSESSMENT_FINALIZED;
+		ifap.Exception_Approved_On__c = System.today();
+
+		update ifap;
+
+		accountGE = 
+			[SELECT 
+				Id, 
+				Financial_Review_Result__c, 
+				Assessment_Performed_Date__c, 
+				Financial_Assessment_Points__c
+			FROM Account
+			WHERE
+				Id = :accountGE.Id
+			];
+
+		system.assertNotEquals(accountGE.Financial_Assessment_Points__c, ifap.Financial_Assessment_Points__c);
+		system.assertNotEquals(accountGE.Financial_Review_Result__c, ifap.Financial_Review_Result__c);
+		system.assertNotEquals(accountGE.Assessment_Performed_Date__c, ifap.Assessment_Performed_Date__c);
+
+		Test.stopTest();
+
 	}
 
 }

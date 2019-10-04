@@ -1886,6 +1886,11 @@ public without sharing class ISSP_AMS_Accreditation {
                 return null;
             }
 
+            if (getIsGSARequired() && amsIsGSA == null) {
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Step1_Is_GSA + ': ' + Label.ISSP_YouMustEnter));
+                return null;
+            }
+
             if ((newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY) && newForm.AE_separate_Legal_Entity__c == null) {
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Separate_Entity_Null));
                 return null;
@@ -4550,6 +4555,14 @@ public without sharing class ISSP_AMS_Accreditation {
                 populateFieldsFromParentForm(newForm);
             }
         }
+
+        if (newForm.Branch_Office_Country__r.ISO_Code__c == 'CN' && newCase.Reason1__c == AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
+            if (newForm.SAAM_Case__r.Account.Category__c == 'Domestic Agent') {
+                newForm.Local_Agent_Type__c = 'Domestic';
+            } else {
+                newForm.Local_Agent_Type__c = 'International';
+            }
+        }
     }
 
     public void resetOwnership() { //NEWGEN-1249
@@ -5170,8 +5183,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
         String iataCodeToSearch = accountToBeFetchedOrRemoved + '%';
         
-        List<Account> agency = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
-                            Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c
+        List<Account> agency = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c, ANG_Accreditation_Model__c,
+                            Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c, Top_Parent__r.ANG_Accreditation_Model__c
                         FROM Account
                         WHERE RecordType.DeveloperName = 'IATA_Agency'
                             AND Sector__c = :AMS_Utils.SECTOR_PASSENGER 
@@ -5180,7 +5193,8 @@ public without sharing class ISSP_AMS_Accreditation {
                             AND Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
                             AND (Location_Type__c = :AMS_Utils.AE OR Location_Type__c = :AMS_Utils.HE OR Location_Type__c = :AMS_Utils.GE)
                             AND IATA_ISO_Country__r.Multicountry_Enabled__c = true
-                            LIMIT 1];
+                            AND ANG_Accreditation_Model__c = 'Cash' //remove when allow conversion mix-in
+                        LIMIT 1];
 
         if (!agency.isEmpty()) {
             Account temp;
@@ -5474,6 +5488,53 @@ public without sharing class ISSP_AMS_Accreditation {
 
         jsonCountriesMap = JSON.serialize(mapCountriesList);
         jsonCountriesNotAllowedList = JSON.serialize(notAllowedCountries);
+    }
+
+    private boolean isCurrentUserinPeopleTable(String email) {
+        AMS_Accreditation_Contact__c amsContact = [
+                    SELECT Id FROM AMS_Accreditation_Contact__c
+                    WHERE Email__c = :email AND AMS_Pax_Accreditation_Form__r.SAAM_Case__c = :vSaamCaseId
+                ];
+        if (amsContact == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private List<String> getAmscontactsEmails(List <AMS_Accreditation_Contact__c> amscontacts) {
+        List<String> amscontactsEmails = new List<String>();
+        if (amscontacts != null) {
+            for (AMS_Accreditation_Contact__c amscon : amscontacts) {
+                if (amscon.email__c != null && amscon.email__c.trim() != '') {
+                    amscontactsEmails.add(amscon.Email__c);
+                }
+            }
+        }
+        return amscontactsEmails;
+    }
+
+    private void fillContactByEmailMaps(List <Contact> contactListAll, Map<String, List<Contact>> contactListByEmailMap, Map<String, List<Contact>> contactOtherListByEmailMap) {
+        if (contactListAll != null) {
+            for (Contact conItr : contactListAll) {
+                if (conItr.AccountId == con.AccountId) {
+                    if (contactListByEmailMap.containsKey(conItr.Email)) {
+                        contactListByEmailMap.get(conItr.Email).add(conItr);
+                    } else {
+                        contactListByEmailMap.put(conItr.Email, new List<Contact> {conItr});
+                    }
+                }
+            }
+            for (Contact conItr : contactListAll) {
+                if (conItr.AccountId != con.AccountId) {
+                    if (contactOtherListByEmailMap.containsKey(conItr.Email)) {
+                        contactOtherListByEmailMap.get(conItr.Email).add(conItr);
+                    } else {
+                        contactOtherListByEmailMap.put(conItr.Email, new List<Contact> {conItr});
+                    }
+                }
+            }
+        }
     }
 
     private void setPortalAdminContact() {
@@ -8199,28 +8260,44 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void addToAccountsToConvert () {
-        if (!accountsToBeConverted.contains(accountToBeConverted)) {
-            if (accountsToBeConverted.isEmpty()) {
-                newForm.Agency_Codes_Concerned__c = accountToBeConverted.IATACode__c;
-            } else {
-                newForm.Agency_Codes_Concerned__c += ',' + accountToBeConverted.IATACode__c;
-            }
-            
-            accountsToBeConverted.add(accountToBeConverted);
+        List<String> convertingIds = new List<String>();
+
+        for (Account acc: accountsToBeConverted) {
+            convertingIds.add(acc.Id);
         }
+
+        for (Account a: [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
+                            Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c 
+                            FROM Account WHERE Top_Parent__c = :accountToBeConverted.Id OR Id = :accountToBeConverted.Id]) {
+            if (!convertingIds.contains(a.IATACode__c)) {
+                if (accountsToBeConverted.isEmpty()) {
+                    newForm.Agency_Codes_Concerned__c = a.IATACode__c;
+                } else {
+                    newForm.Agency_Codes_Concerned__c += ',' + a.IATACode__c;
+                }
+                
+                accountsToBeConverted.add(a);
+            }
+        }        
     }
 
     public void removeFromAccountsToConvert() {
-        for (Integer i = 0; i < accountsToBeConverted.size(); i++) {
-            if (accountsToBeConverted[i].IATACode__c == accountToBeFetchedOrRemoved) {
-                accountsToBeConverted.remove(i);
+        for (Account a: [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
+                            Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c 
+                            FROM Account WHERE Top_Parent__c = :accountToBeFetchedOrRemoved OR Id = :accountToBeFetchedOrRemoved]) {
+            
+            for (Integer i = 0; i < accountsToBeConverted.size(); i++) {
+                if (accountsToBeConverted[i].Id == a.Id) {
+                    accountsToBeConverted.remove(i);
+                    break;
+                }
+            }
+
+            if (newForm.Agency_Codes_Concerned__c.contains(a.Id + ',')) {
+                newForm.Agency_Codes_Concerned__c.remove(a.Id + ',');
+            } else if (newForm.Agency_Codes_Concerned__c.contains(a.Id)) {
+                newForm.Agency_Codes_Concerned__c.remove(a.Id);
             }
         }
-
-        if (newForm.Agency_Codes_Concerned__c.contains(accountToBeFetchedOrRemoved + ',')) {
-            newForm.Agency_Codes_Concerned__c.remove(accountToBeFetchedOrRemoved + ',');
-        } else if (newForm.Agency_Codes_Concerned__c.contains(accountToBeFetchedOrRemoved)) {
-            newForm.Agency_Codes_Concerned__c.remove(accountToBeFetchedOrRemoved);
-        } 
     }
 }

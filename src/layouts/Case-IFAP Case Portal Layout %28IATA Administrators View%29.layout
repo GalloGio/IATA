@@ -149,6 +149,13 @@
         <label>Agent Information</label>
         <layoutColumns>
             <layoutItems>
+                <height>50</height>
+                <page>ANG_IFAP_Notifications</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer_Case__c</field>
             </layoutItems>
@@ -178,6 +185,9 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>ContactId</field>
@@ -292,6 +302,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SIDRA_Exclude_from_report_exceptions__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Exception_approved_on__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

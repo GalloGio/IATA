@@ -50,28 +50,6 @@
             document.getElementById('productDiv').style.display='none';
         }
     }
-
-    function showHideGALAOpions() {
-        if (document.querySelector('[id$="theStatus"]').value == 'Approved Admin') {
-            document.querySelector('[id$="GALAOptions"]').style.display = 'block';
-            showHideLocalCountries();
-        } else {
-            document.querySelector('[id$="GALAOptions"]').style.display = 'none';
-        }
-    }
-
-    function showHideLocalCountries() {
-        if (document.querySelector('[id$="galaPicklist"]').value == 'Local') {
-            document.querySelector('[id$="localCountrySelection"]').style.display = 'block';
-        } else {
-            document.querySelector('[id$="localCountrySelection"]').style.display = 'none';
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function(event) {
-        showHideGALAOpions();
-        showHideLocalCountries();
-    });
 	</script>
 
 <apex:form id="newForm">
@@ -94,59 +72,27 @@
             <apex:inputField value="{!con.Status__c}" />           
         </apex:pageBlockSection>
         </div>
-
+        
         <div id="statusDiv" >
-            <apex:pageBlockSection title="" columns="2">
-                <apex:pageBlockSectionItem>
-                    <apex:outputText value="User Portal Status" />
-                    <apex:outputPanel>
-                        <apex:outputLabel value="{!$ObjectType.Contact.fields.User_Portal_Status__c.label}" rendered="{!hasIdCard}" />
-                        <apex:selectList id="theStatus" value="{!con.User_Portal_Status__c}" size="1" styleClass="UserStatus form-control" onchange="showHideReason('{!$Component.theStatus}'); showHideGALAOpions();">
-                            <apex:selectOptions value="{!portalStatusOptions}" />
-                        </apex:selectList>
-                    </apex:outputPanel>
-                </apex:pageBlockSectionItem>
-                
-                <apex:pageBlockSectionItem>
-                    <apex:outputText value="User Community" />
-                    <apex:outputPanel layout="block" styleClass="requiredInput">
-                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
-                        <apex:selectList id="UserCommunity" value="{!selectedVal}" multiselect="false" size="1" >
-                            <apex:selectOptions value="{!communityOptions}"/>
-                        </apex:selectList>
-                    </apex:outputPanel>
-                </apex:pageBlockSectionItem>
-            </apex:pageBlockSection>
-
-            <apex:outputPanel id="GALAOptions" style="display: none">
-                <apex:pageBlockSection title="" columns="2">
-                    <apex:pageBlockSectionItem>
-                        <apex:outputText value="User Multicountry Role" />
-                        <apex:outputPanel layout="block" styleClass="requiredInput">
-                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
-                            <apex:selectList id="galaPicklist" value="{!con.Multicountry_Role__c}" size="1" styleClass="UserStatus form-control" onchange="showHideLocalCountries();">
-                                <apex:selectOptions value="{!galaOptions}" />
-                            </apex:selectList>
-                        </apex:outputPanel>
-                    </apex:pageBlockSectionItem>
-
-                    <apex:outputPanel id="localCountrySelection" style="display: none">
-                        <apex:pageBlockSectionItem>
-                            <apex:outputPanel layout="block">
-                                <c:MultiselectPicklist id="countryMultiSelection"
-                                    leftLabel="Available Multicountry Admin countries" 
-                                    leftOptions="{!availableLocalCountries}"
-                                    rightLabel="Selected Multicountry Admin countries"
-                                    rightOptions="{!selectedLocalCountries}"
-                                    size="8"
-                                    width="300px"
-                                    btn_up_down="false"/>
-                            </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                    </apex:outputPanel>
-                </apex:pageBlockSection>
-            </apex:outputPanel>
+        <apex:pageBlockSection title="" columns="2">
+            <apex:pageBlockSectionItem>
+                <apex:outputLabel value="{!$ObjectType.Contact.fields.User_Portal_Status__c.label}" rendered="{!hasIdCard}" />
+                <apex:selectList id="theStatus" value="{!con.User_Portal_Status__c}" size="1" styleClass="UserStatus form-control"
+                        onchange="showHideReason('{!$Component.theStatus}');">
+                    <apex:selectOptions value="{!portalStatusOptions}" />
+                </apex:selectList>
+            </apex:pageBlockSectionItem>
             
+            <apex:pageBlockSectionItem >
+          <apex:outputText value="User Community" />
+          <apex:outputPanel layout="block" styleClass="requiredInput">
+            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+             <apex:selectList id="UserCommunity" value="{!selectedVal}" multiselect="false" size="1" >
+                <apex:selectOptions value="{!communityOptions}"/>
+            </apex:selectList>
+            </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
         </div>
         
         <div id="reasonDiv" style="{!IF (con.User_Portal_Status__c == 'Deactivated', '', 'display:none')}" >

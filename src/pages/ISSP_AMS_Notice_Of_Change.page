@@ -837,7 +837,7 @@
 										<apex:column value="{!acc.BillingCountry}"/>
 										<apex:column>
 											<apex:commandLink action="{!removeFromAccountsToConvert}" styleClass="glyphicon glyphicon-trash" rerender="accountsToBeConvertedPanel">
-												<apex:param value="{!acc.IATACode__c}" name="recordId" assignTo="{!accountToBeFetchedOrRemoved}" />
+												<apex:param value="{!acc.Id}" name="recordId" assignTo="{!accountToBeFetchedOrRemoved}" />
 											</apex:commandLink>
 										</apex:column>
 									</apex:pageBlockTable>
