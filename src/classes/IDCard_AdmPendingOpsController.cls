@@ -88,16 +88,14 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
                 for (ID_Card_Application__c app : validatedApplication.values())
                     if (isApplicationExpediteAvailable(app))
                         app.IDCard_Expedite_Delivery__c = ;
-                calculateAllPrices();*/
-            }
+                calculateAllPrices();
+            }*/
         }
     }
 
     public Map<String, IATA_ISO_Country__c> countriesPerIATACode = new Map<String, IATA_ISO_Country__c>();
 
     public Map<String, String> countriesPerIATACode2 = new Map<String, String>();
-
-    public Map<String, Price_Table__c> tablePerCountry = new Map<String, Price_Table__c>();
 
     public boolean IsExpediteAvailable {get; set;}
 
@@ -117,6 +115,8 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
         rejectedSize = 0;
         deliveryPrice = 0;
         expediteFees = 0;
+        idCardFee = 0;
+        coursesFee = 0;
         cyberSrcData = null;
         fastExpedition =  false;
         cyberSrcData = new Map<String, String>()     ;
@@ -220,14 +220,13 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
         pricePerCountry = new Map<String , Price_Table__c>();
         List<Price_Table__c> pts = [Select p.ID_Card_Fee__c, p.Expedite__c, p.Mass_Purchase_exp__c,  p.IATA_Package__c,  p.Type_Class_of_Agent__c , p.ISO_Country__c, p.ISO_Country__r.ISO_Code__c,p.Name, p.Cost_of_Printer__c From Price_Table__c p];
         for (Price_Table__c pt : pts) {
-            tablePerCountry.put(pt.ISO_Country__c, pt);
             system.debug('[MASS APP FEE] find record ofr mass feees: class: ' + pt.Type_Class_of_Agent__c + ' country id :' + pt.ISO_Country__c + ' fee: ' + pt.Mass_Purchase_exp__c);
             pricePerCountry.put(pt.ISO_Country__c+'-'+pt.Type_Class_of_Agent__c, pt);
-            ApexPAges.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,pt.ISO_Country__c+'-'+pt.Type_Class_of_Agent__c+' ---> '+pt.Mass_Purchase_exp__c));
-            system.debug(LoggingLevel.ERROR,'#############  INSERISCO NELLA MAPPA: '+pt.ISO_Country__c+'-'+pt.Type_Class_of_Agent__c+' ---> '+pt.Mass_Purchase_exp__c);
+            //ApexPAges.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,pt.ISO_Country__c+'-'+pt.Type_Class_of_Agent__c+' ---> '+pt.Mass_Purchase_exp__c));
+            //system.debug(LoggingLevel.ERROR,'#############  INSERISCO NELLA MAPPA: '+pt.ISO_Country__c+'-'+pt.Type_Class_of_Agent__c+' ---> '+pt.Mass_Purchase_exp__c);
         }
         for (ID_Card_Application__c app : pendingApplications) {
-            Price_Table__c priceTable = tablePerCountry.get(countriesPerIATACode2.get(app.IATA_Code__c));
+            Price_Table__c priceTable = pricePerCountry.get(countriesPerIATACode2.get(app.IATA_Code__c)+'-'+accountTypesPerIATACode.get(app.IATA_Code__c));
             if(IDCard_MobileAppRenewalService.US_COUNTRY_ISO_CODES.contains(priceTable.ISO_Country__r.ISO_Code__c)){
                 isNotDigitalOnly.put(app.Id, false);
             } else {
@@ -552,10 +551,12 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
         deliveryPrice = 0;
         expediteFees = 0 ;
         massAppDeliveryFee = 0;
+        idCardFee = 0;
+        coursesFee = 0;
         
         for (ID_Card_Application__c app : pendingApplications) {
 
-            Price_Table__c priceTable = tablePerCountry.get(countriesPerIATACode2.get(app.IATA_Code__c));
+            Price_Table__c priceTable = pricePerCountry.get(countriesPerIATACode2.get(app.IATA_Code__c)+'-'+accountTypesPerIATACode.get(app.IATA_Code__c));
             Boolean isITDIPackage = false;
                 if(app.Package_of_Travel_Professionals_Course_1__c != null){
                     isITDIPackage = true;
