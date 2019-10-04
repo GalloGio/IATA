@@ -140,6 +140,22 @@ export default class PortalContactList extends LightningElement {
         this.contactsWrapper = value;
     }
 
+    @api
+    get actionName() {
+        return this._actionName;
+    }
+    set actionName(value) {
+        this._actionName = value;
+        
+        if(this._actionName !== '') {
+            if(this._actionName === 'approve') { 
+                this.grantAccessAll(); 
+            } else if(this._actionName === 'inactive') {
+                this.denyAccess();
+            }
+        }
+    }
+
     get hasRecords() { return this.records !== undefined && this.records.length > 0; }
 
     get fieldCount() {
@@ -222,7 +238,7 @@ export default class PortalContactList extends LightningElement {
     grantAccessAll(event) {
         this.loading = true;
 
-        let exp = event.target.dataset.name;
+        let exp = event !== undefined ? event.target.dataset.name : this._actionName;
         switch(exp) {
             case 'approve':
                 this.processApprove(this.contactsSelected, 'Approved User');
@@ -291,8 +307,9 @@ export default class PortalContactList extends LightningElement {
         }
     }
 
-    denyAccess(event) {
-        let contactSelected = event.target.dataset.item !== undefined ? event.target.dataset.item : '';
+    denyAccess(event) {        
+        let contactSelected = event !== undefined ? event.target.dataset.item : '';
+
         this.inactiveModal = true;
 
         let records = JSON.parse(JSON.stringify(this.contactsWrapper));
@@ -374,7 +391,7 @@ export default class PortalContactList extends LightningElement {
         this.inactiveReason = event.detail.value;
     }
 
-    handleRadioOptions(event) {
+    handleRadioOptions(event) {        
         let contactSelected = event.target.dataset.item;
 
         let fieldValue = JSON.parse(JSON.stringify(this.contactsSelected));
@@ -390,10 +407,15 @@ export default class PortalContactList extends LightningElement {
         }
 
         this.contactsSelected = fieldValue;
+        
+        if(this.allContactsSelected && this.contactsSelected.length === 0) this.allContactsSelected = false;
+
+        this.dispatchEvent(new CustomEvent('manageusers', { detail: this.contactsSelected.length }));
     }
 
-    handleRadioAllOptions() {        
+    handleRadioAllOptions() {
         let recordsWrapper = JSON.parse(JSON.stringify(this.contactsWrapper));
+        let fieldValue = [];
 
         for (let i = 0; i < recordsWrapper.length; i++) {
             if(this.allContactsSelected) {
@@ -412,12 +434,21 @@ export default class PortalContactList extends LightningElement {
                 records[i].selected = false;
             } else {
                 records[i].selected = true;
+                fieldValue.push(records[i].Id);
             }
         }
 
         this.records = records;
 
-        this.allContactsSelected = !this.allContactsSelected;
+        if(this.allContactsSelected) {
+            this.allContactsSelected = false;
+            this.contactsSelected = [];
+        } else {
+            this.contactsSelected = fieldValue;
+            this.allContactsSelected = true;
+        }
+
+        this.dispatchEvent(new CustomEvent('manageusers', { detail: this.allContactsSelected }));
     }
 
     closeInactiveModal() {
@@ -428,6 +459,8 @@ export default class PortalContactList extends LightningElement {
             this.inactiveReason = '';
             this.contactsSelected = [];
             this.allContactsSelected = false;
+
+            this.dispatchEvent(new CustomEvent('manageusers', { detail: false }));
 
             let recordsWrapper = JSON.parse(JSON.stringify(this.contactsWrapper));
 
