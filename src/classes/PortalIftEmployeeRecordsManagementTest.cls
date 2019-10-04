@@ -106,17 +106,15 @@ private class PortalIftEmployeeRecordsManagementTest {
         User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
 
         Id contactToDelete = [SELECT id FROM contact WHERE LastName like 'Student' LIMIT 1].id;
-        System.debug('__RS__ contactToDelete '+ contactToDelete);
         Account_Contact_Role__c employeeToInactivate = [SELECT id, Contact__c, name, Company_Code__c, First_Name__c, Last_Name__c, Status__c FROM Account_Contact_Role__c WHERE contact__c = :contactToDelete];
-        System.debug('__RS__ employeeToInactivate '+ employeeToInactivate);
 
         System.debug('u1 - ' + u1);
 
         System.runAs(u1) {
             
             PortalIftEmployeeRecordsManagement.ResultWrapper res2 = PortalIftEmployeeRecordsManagement.inactivateEmployee(employeeToInactivate);
-            System.debug('__RS__ res2 '+ res2);
             PortalIftEmployeeRecordsManagement.ResultWrapper res42 = PortalIftEmployeeRecordsManagement.updateEmployee(employeeToInactivate, 'reactivate_and_update');
+
         }
         Test.stopTest();
     }
@@ -221,17 +219,14 @@ private class PortalIftEmployeeRecordsManagementTest {
         Address__c Addr1 = [SELECT Id, Code__c FROM Address__c WHERE Code__c = 'GVX' LIMIT 1];
         Address__c Addr2 = [SELECT Id, Code__c FROM Address__c WHERE Code__c = 'PTX' LIMIT 1];
         Address__c Addr3 = [SELECT Id, Code__c FROM Address__c WHERE Code__c = 'FRX' LIMIT 1];
-        System.debug('__RS__ Addr1 - ' + Addr1);
-        System.debug('__RS__ Addr2 - ' + Addr2);
-        System.debug('__RS__ Addr3 - ' + Addr3);
+
             
         Account_Contact_Role__c employee = [SELECT Id, Company_Code__c, First_Name__c, Last_Name__c FROM Account_Contact_Role__c WHERE Company_Code__c = 'Abc' LIMIT 1];
-        System.debug('__RS__ employee - ' + employee);
+
 
         List<Role_Address__c> newRoleAddressToInsertList = new List<Role_Address__c>();
         List<Role_Address__c> originalEmpStations = [SELECT Id, Name, Address__c, Address__r.Code__c, Account_Contact_Role__c, Account_Contact_Role__r.Company_Code__c, Primary__c
                                                 FROM Role_Address__c WHERE Account_Contact_Role__r.Company_Code__c = 'Abc'];
-        System.debug('__RS__ originalEmpStations - ' + originalEmpStations);
 
         System.runAs(u1) {
             for(Role_Address__c rec : originalEmpStations){
@@ -241,19 +236,19 @@ private class PortalIftEmployeeRecordsManagementTest {
                 }
             }
 
-            System.debug('__RS__ newRoleAddressToInsertList - ' + newRoleAddressToInsertList);
+
             Role_Address__c roleAddressAA112FRX = new Role_Address__c(Account_Contact_Role__c = employee.Id, Address__c = Addr3.Id, Name = 'Role Address AA112 FRX');
             newRoleAddressToInsertList.add(roleAddressAA112FRX);
-            System.debug('__RS__ newRoleAddressToInsertList 2 - ' + newRoleAddressToInsertList);
+
 
             PortalIftEmployeeRecordsManagement.ResultWrapper res2 = PortalIftEmployeeRecordsManagement.updateEmployeeStations(originalEmpStations, newRoleAddressToInsertList);
-            System.debug('__RS__ res2 - ' + res2);
+
 
         }
         Test.stopTest();
     }
-    @IsTest
 
+    @IsTest
     static void getITPEmployeesWithStationsInfoTest(){
         portalIftpTestClass.test_config();
         Test.startTest();

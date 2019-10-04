@@ -11,7 +11,7 @@ public without sharing class PortalIftpUtils {
         String PortalContactRoles = null;
 
         User userAcc = [SELECT Id, ContactId, Contact.User_Portal_Status__c, Contact.Accountid, 
-                                Contact.Account.Region__c, Contact.Account.IATA_ISO_Country__c,
+                                Contact.Account.Region__c, Contact.Account.IATA_ISO_Country__r.Name,
                                 Contact.Account.Recordtype.Name,
                                 Contact.Account.Recordtype.Developername, Contact.Account.Name, Profile_Name__c
                             FROM user 
@@ -60,7 +60,7 @@ public without sharing class PortalIftpUtils {
         }
         userInfo.contactId = userAcc.contactId;
         userInfo.accountRegion = userAcc.Contact.Account.Region__c;
-        userInfo.accountCountry = userAcc.Contact.Account.IATA_ISO_Country__c;
+        userInfo.accountCountry = userAcc.Contact.Account.IATA_ISO_Country__r.Name;
 
         return userInfo;
     }
@@ -101,7 +101,6 @@ public without sharing class PortalIftpUtils {
         return stations;
     }
 
-
     /* 
     * @description Main method that returns a map where the key is the employees' id and the value 
     is a list of stations added to that employee(Role Addresses)
@@ -112,13 +111,6 @@ public without sharing class PortalIftpUtils {
     @AuraEnabled(cacheable=true)
     public static Map<Id, List<Address__c>> getEmployeesStations(List<Id> employeesIDs){
 
-        /*
-        List<Address__c> stations = [SELECT City__c, Code__c, Description__c FROM Address__c 
-                                                WHERE Id in (
-                                                    SELECT Address__c FROM Role_Address__c
-                                                    WHERE Account_Role_Service__r.Account_Role__r.Account__c = :userAcc.contact.accountid
-                                                    )  ];
-                                                    */
         Map<Id, List<Address__c>> ret = new Map<Id, List<Address__c>>(); 
 
         List<Role_Address__c> stations = [SELECT Account_Contact_Role__c, Address__c, Address__r.City__c, Address__r.Code__c, Address__r.Description__c
@@ -175,6 +167,7 @@ public without sharing class PortalIftpUtils {
 
         return emps;
     }
+
 
     @AuraEnabled(cacheable=true)
     public static Address__c getITPStationEmployees(Id addressId){
@@ -271,6 +264,8 @@ public without sharing class PortalIftpUtils {
         Account_Role_Relationship__c - relation between Airline and ITP Company
         Account_Role_Service__c - ITP Company or Airline
         Account_Contact_Role__c - Employee
+
+
     * @params
     * @return List<Role_Address__c>
     */                                                                                                       
@@ -296,7 +291,7 @@ public without sharing class PortalIftpUtils {
 
         User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
 
-        List<Role_Address__c> companies = [SELECT Account_Role_Relationship__r.To__r.Account__c, Account_Role_Relationship__r.To__r.Account__r.name, Address__r.Code__c  
+        List<Role_Address__c> companies = [SELECT Account_Role_Relationship__r.To__r.Account__c, Account_Role_Relationship__r.To__r.Account__r.name, Address__r.Code__c   
                                             FROM Role_Address__c 
                                             WHERE Account_Role_Relationship__r.From__r.Account__c = :userAcc.contact.accountid 
                                             AND Address__r.Code__c in :stationsCodes ];

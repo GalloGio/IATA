@@ -232,35 +232,4 @@ public class portalIftpTrainingRecordsTest {
         }
         Test.stopTest();
     }
-/*
-    static testMethod void portalIftpStationsManagements_test1() {
-
-        portalIftpTestClass.test_config();
-
-        Test.startTest();
-
-        User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
-
-        System.debug('u2 - ' + u2);
-        
-        System.runAs(u2) {
-
-        }
-
-        //public static String  getFileContent(Id fileId){
-        ContentVersion contentVersion_1 = new ContentVersion(
-            Title = 'test',
-            PathOnClient = 'test.jpg',
-            VersionData = Blob.valueOf('Test Content'),
-            IsMajorVersion = true
-            );
-        insert contentVersion_1;
-        Id fileId = [Select ContentDocumentId from contentversion where Id = :contentVersion_1.Id ].Id;
-        String fileContent = portalIftpTrainingRecords.getFileContent(fileId);
-        
-
-        Test.stopTest();
-
-    }
-*/  
 }
