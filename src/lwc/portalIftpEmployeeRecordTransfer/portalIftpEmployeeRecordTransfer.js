@@ -18,7 +18,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
     @track columns;
     @track sortedBy;
     @track sortedDirection;
-    //@track selectedRows;
     @track employeesToTransfer;
     @track stationOptions;
     @track loadingSearchCriteria = false;
@@ -40,14 +39,7 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
     @track employeeCodeValue = null;
     @track openmodal = false;
     @track recordRequestTransfer = [];
-/*
-    openmodal() {
-        this.openmodel = true
-    }
-    closeModal() {
-        this.openmodel = false
-    } 
-*/    
+ 
     get dataRecords() {
         return this.dataRecords;
     } 
@@ -55,36 +47,9 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
     @wire(CurrentPageReference) pageRef;
 
     connectedCallback() {
-        console.log('INIT connectedCallback');
 
         registerListener('stationsChanged', this.handleStationsChanged, this);
 
-
-/*
-        getITPStations()
-        .then(result => {
-            let myResult = JSON.parse(JSON.stringify(result));
-            
-            let myTopicOptions = [];
-
-            Object.keys(myResult).forEach(function (el) {
-                //myTopicOptions.push({ label: myResult[el].City__c, value: myResult[el].Code__c });
-                myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
-            });
-
-            this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
-        })
-        .catch(error => {
-            const event = new ShowToastEvent({
-                title: 'ITP Stations',
-                message: 'Unable to get ITP\'s Stations data from database.',
-                variant: 'error',
-                mode: 'pester'
-            });
-            this.dispatchEvent(event);
-            console.log('getITPStations - Error : ', error);
-        });  
-*/
         this.initData();
 
         this.columns = [
@@ -103,10 +68,8 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
             {label: 'First Name', fieldName: 'firstName', type: 'text', sortable: true},
             {label: 'Station', fieldName: 'stationsCodesListAsString', type: 'text', sortable: true},
             {label: 'Employee Code', fieldName: 'companyNumber', type: 'text', sortable: true},
-            //{type: 'action', typeAttributes: { rowActions: this.actionsRow }}
         ];
 
-        console.log('END connectedCallback');
     }
 
     initData(){
@@ -123,7 +86,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
             let myTopicOptions = [];
 
             Object.keys(myResult).forEach(function (el) {
-                //myTopicOptions.push({ label: myResult[el].City__c, value: myResult[el].Code__c });
                 myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
             });
 
@@ -133,7 +95,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
             this.loadingSearchCriteria = false;
 
             if(this.stationValue){
-                //Reset this.stationValue if this.stationValue = code of deleted station
                 let stationOptions = JSON.parse(JSON.stringify(this.stationOptions));
                 let exists = false;
                 stationOptions.forEach(opt =>{
@@ -154,12 +115,10 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
                 mode: 'pester'
             });
             this.dispatchEvent(event);
-            console.log('getITPStations - Error : ', error);
         });
     }
 
     disconnectedCallback() {
-		// unsubscribe from bearListUpdate event
 		unregisterAllListeners(this);
 	}
 
@@ -187,7 +146,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
     }
     
     handleSearchButtonClick(){
-        //this.selectedRows = null;
         //Form Validations
         if(!this.firstNameValue && !this.lastNameValue && !this.employeeCodeValue){
             const event = new ShowToastEvent({
@@ -210,7 +168,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
         this.lastNameValue = null;
         this.emailValue = null;
         this.employeeCodeValue = null;
-        //this.selectedRows = null;
         this.employeesToTransfer = null;
         this.stationValue = null;
     }
@@ -241,29 +198,19 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
 
         switch(actionName){
             case 'askForTransfer':
-                console.log('In transferForm');
                 this.openmodal = true;
-                console.log('this.openmodal ', this.openmodal);
                 this.recordRequestTransfer = recordRequestTransfer;
                 
                 this.recordRequestTransfer.lmsUsername = '';
                 this.recordRequestTransfer.formerItpName = '';
                 this.recordRequestTransfer.formerStations = '';
-
-                console.log('this.recordRequestTransfer', this.recordRequestTransfer); 
+                this.recordRequestTransfer.comments = '';
                 break;
             default:
                 break;
         }  
     }
-/*
-    handleSelectAll(){
-        if(this.selectedRows.length > 0){
-            this.employeesToTransfer = this.selectedRows;
-        }
-        this.openmodal();
-    }
-*/   
+  
     findRowIndexById(id) {
         let ret = -1;
         this.data.some((row, index) => {
@@ -303,8 +250,11 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
         this.recordRequestTransfer.formerStations = event.detail.value;
     }
 
+    handleRequestTransferEmployeeCommentsChange(event){
+        this.recordRequestTransfer.comments = event.detail.value;
+    }
+
     handleRequestTransferSave(){
-        console.log('this.recordRequestTransfer', this.recordRequestTransfer);
         this.loadingModal = true;
 
         const allValid = [...this.template.querySelectorAll('lightning-input')]
@@ -331,13 +281,11 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
             }, true);
 
         if(allValid){
-            console.log('allValid', allValid);
             let recordRequestTransfer = JSON.parse(JSON.stringify(this.recordRequestTransfer));
 
             requestEmployeeTransfer({recordToRequestTransfer: recordRequestTransfer})
             .then(result => {
                 
-                console.log('result', result);
                 const event = new ShowToastEvent({
                     title: 'Request Employee Transfer Result',
                     message: result.result_message,
@@ -357,7 +305,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
                     mode: 'pester'
                 });
                 this.dispatchEvent(event);
-                console.log('getITPStations - Error : ', error);
                 this.loadingModal = false;
             });
         } else{
@@ -388,13 +335,11 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
             this.employeeCodeValue,
             this.stationValue
         ];
-        console.log('auxSearchValues ', auxSearchValues);
         this.loading = true;
         getEmployeeRecords({searchValues: auxSearchValues, accountId: this.userInfo.accountId})
         .then(results => {
             if(results && results.length > 0) {
                 this.data = this.sortData('lastName', 'asc', JSON.parse(JSON.stringify(results)));
-                console.log('handleSearch - this.data: ', this.data);
                 this.dataRecords = true;
                 this.data.forEach(rec =>{
                     rec.upperCase = 'to-upper-case';
@@ -406,7 +351,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
         })
         .catch(error => {
             console.log('handleSearch - Error : ' + error);
-            console.log(error);
             this.loading = false;
             this.dataRecords = false;
             const event = new ShowToastEvent({
@@ -418,11 +362,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
             this.dispatchEvent(event);
         }); 
     }
-/*
-    getSelectedRows(event) {
-        this.selectedRows = event.detail.selectedRows;
-    }
-*/
 
     /*******************************************************************************
     *                                                                              *
