@@ -622,6 +622,8 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		oscar.STEP35__c = AMS_Utils.PASSED;
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		//WMO-564
+		oscar.Bank_Guarantee_requested__c = Date.today();
 		update oscar;
 		
 		assessfinancialReviewOptOut(oscar.Id);
