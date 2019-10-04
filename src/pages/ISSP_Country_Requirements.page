@@ -1,6 +1,18 @@
 <apex:page controller="ISSP_Ctrl_Country_Requirements" standardstylesheets="false" showheader="false" sidebar="false" applybodytag="false" applyhtmltag="false" action="{!checkAccess}">
   <html>
     <c:ISSP_Header ></c:ISSP_Header>
+	<style>
+		.btn_iata_cancel{
+			margin: 10px 0 !important; 
+		}
+
+		.breadcrumb{
+			margin: 15px 0;
+		}
+      .btn{
+        border-radius: unset !important;
+      }
+    </style>
 		<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
 
     	<script>
@@ -32,7 +44,7 @@
           				<apex:outputpanel layout="block" rendered="{! not newLayout}">        		          
             				<div class="row">
               					<div class="col-md-12">
-					                <h4>{!$Label.ISSP_Resources} 
+					                <h4 class="breadcrumb">{!$Label.ISSP_Resources} 
 					                	<span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
 					                  	{!$Label.ISSP_Country_Requirements}
 					                  	<span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
@@ -43,7 +55,7 @@
 
 			        <!-- results-->
 			      			<div class="col-md-12" id="results1">
-              					<div class="panel panel-primary">
+              					<div class="panel-primary">
                 					<div class="panel-heading">
                   						<h3 class="panel-title">{!$Label.LAQ_Search}</h3>
                 					</div>

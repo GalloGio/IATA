@@ -8,6 +8,10 @@ public class PortalSearchFilterWrapper {
     public Boolean highlightTopResults {get; set;}
     @AuraEnabled
     public Boolean advancedSearch {get; set;}
+    @AuraEnabled
+    public String language {get; set;}
+    @AuraEnabled
+    public Boolean guestUser {get; set;}
 
     @AuraEnabled
     public casesComponent casesComponent {get; set;}
@@ -44,7 +48,7 @@ public class PortalSearchFilterWrapper {
         public String dateFromFilter {get; set;}
         @AuraEnabled
         public String dateToFilter {get; set;}
-        
+
         public casesComponent(){}
     }
 
