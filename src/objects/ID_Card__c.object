@@ -83,6 +83,20 @@ two record types:
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Agency_ISO_Country_Code__c</fullName>
+        <description>ISO Country Code taken from the related GDP Account View</description>
+        <externalId>false</externalId>
+        <formula>GDP_Products_Account_View__r.Country_ISO_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>ISO Country Code taken from the related GDP Account View</inlineHelpText>
+        <label>Agency ISO Country Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Agency_Name__c</fullName>
         <externalId>false</externalId>
         <label>Agency Name</label>
@@ -1001,6 +1015,19 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>WebStar_P00_Key__c</fullName>
+        <description>Primary Key assigned to Persons in WebStar. Used as junction key between US ID Card and related Contact</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Primary Key assigned to Persons in WebStar. Used as junction key between US ID Card and related Contact</inlineHelpText>
+        <label>WebStar P00 Key</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <label>ID Card</label>
     <listViews>

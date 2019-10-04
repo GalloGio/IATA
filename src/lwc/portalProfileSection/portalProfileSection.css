@@ -1,0 +1,13 @@
+.flexCenter{
+    display : flex;
+    justify-content : center;
+    align-items : center;
+}
+
+.flexOneZero{
+    flex: 1 0 auto;
+}
+
+fullWidth.{
+    width:100%;
+}

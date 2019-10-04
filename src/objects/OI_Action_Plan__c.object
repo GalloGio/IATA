@@ -67,6 +67,47 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Action_Plan_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Action Plan Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Short Term Fix</fullName>
+                    <default>false</default>
+                    <label>Short Term Fix</label>
+                </value>
+                <value>
+                    <fullName>Permanent Fix</fullName>
+                    <default>false</default>
+                    <label>Permanent Fix</label>
+                </value>
+                <value>
+                    <fullName>Corrective Action</fullName>
+                    <default>false</default>
+                    <label>Corrective Action</label>
+                </value>
+                <value>
+                    <fullName>Preventive Action</fullName>
+                    <default>false</default>
+                    <label>Preventive Action</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Closure_Date__c</fullName>
         <externalId>false</externalId>
         <label>Closure Date</label>
@@ -121,6 +162,28 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Link_to_External_tracking_system__c</fullName>
+        <description>Data Governance</description>
+        <externalId>false</externalId>
+        <label>Link to External tracking system</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Link_to_report_or_dashboard_url__c</fullName>
+        <description>Data Governance</description>
+        <externalId>false</externalId>
+        <label>Link to report or dashboard (url)</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>Met_Due_Date__c</fullName>
         <externalId>false</externalId>
         <formula>IF ((Due_Date__c &gt;= Closure_Date__c), 1, 0)</formula>
@@ -148,6 +211,19 @@
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
+    <fields>
+        <fullName>Technical_Responsible_Perform__c</fullName>
+        <description>Data governance</description>
+        <externalId>false</externalId>
+        <label>Technical Responsible (Perform)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>OI Action Plan</label>
     <nameField>
         <displayFormat>OI Action Plan-{0000}</displayFormat>
@@ -157,6 +233,44 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>OI Action Plans</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Data_Governance</fullName>
+        <active>true</active>
+        <label>Data Governance</label>
+        <picklistValues>
+            <picklist>Action_Plan_Type__c</picklist>
+            <values>
+                <fullName>Permanent Fix</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Short Term Fix</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>action_plan_std</fullName>
+        <active>true</active>
+        <label>Action plan standard</label>
+        <picklistValues>
+            <picklist>Action_Plan_Type__c</picklist>
+            <values>
+                <fullName>Corrective Action</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Preventive Action</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>

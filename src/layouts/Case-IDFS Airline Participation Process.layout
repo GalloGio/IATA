@@ -404,6 +404,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Created_By_Role__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Process_Age__c</field>
             </layoutItems>
             <layoutItems>
@@ -501,6 +505,22 @@
             <layoutItems>
                 <height>200</height>
                 <page>AirlineSuspensionChildCases</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Case tracking history (custom)</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>CaseTrackingHistory</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>

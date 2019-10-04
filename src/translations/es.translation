@@ -169,6 +169,78 @@
         <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
     <customLabels>
+        <label>No podemos verificar la dirección en la ubicación especificada.</label>
+        <name>AMS_DQ_Cannot_Check</name>
+    </customLabels>
+    <customLabels>
+        <label>No podemos encontrar esa dirección. Si está seguro de que es correcta, puede hacer click en Enviar.</label>
+        <name>AMS_DQ_Cannot_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>No podemos validar la dirección sin una {0} ciudad. Rellene el campo.</label>
+        <name>AMS_DQ_Cannot_Validate_City</name>
+    </customLabels>
+    <customLabels>
+        <label>No podemos validar la dirección sin una {0} ciudad y calle. Rellene el campo.</label>
+        <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>No podemos validar la dirección sin una {0} calle. Rellene el campo.</label>
+        <name>AMS_DQ_Cannot_Validate_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>Verificar dirección</label>
+        <name>AMS_DQ_Check_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label>La ciudad {0} es obligatoria. Rellene el campo {1} ciudad.</label>
+        <name>AMS_DQ_City_Cumpulsory</name>
+    </customLabels>
+    <customLabels>
+        <label>La ciudad {0} no está en nuestra base de datos (o fue escrita de forma diferente).</label>
+        <name>AMS_DQ_City_Not_in_Database</name>
+    </customLabels>
+    <customLabels>
+        <label>La ciudad {0} está en nuestra base de datos, pero parece que pertenece a otro país.</label>
+        <name>AMS_DQ_City_in_Another_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>La ciudad {0} está en nuestra base de datos, pero está asociada con otro estado o provincia.</label>
+        <name>AMS_DQ_City_in_Another_State</name>
+    </customLabels>
+    <customLabels>
+        <label>Introduzca una ciudad válida.</label>
+        <name>AMS_DQ_Enter_Valid_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
+        <label>Hemos encontrado coincidencia con la dirección o direcciones.</label>
+        <name>AMS_DQ_Found_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label>Revise el nombre de la ciudad. Si está seguro de que su entrada es correcta, haga clic en enviar.</label>
+        <name>AMS_DQ_Review_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Revise el(los) nombre(s) del país y/o ciudad. Si está seguro de que su entrada es correcta, haga clic en enviar.</label>
+        <name>AMS_DQ_Review_Country_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Revise el estado o provincia y/o nombre de la ciudad.</label>
+        <name>AMS_DQ_Review_State</name>
+    </customLabels>
+    <customLabels>
+        <label>Revise el estado/provincia y/o el nombre de la ciudad. Si está seguro de que su entrada es correcta, haga clic en enviar.</label>
+        <name>AMS_DQ_Review_State_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label>El campo calle {0} es obligatoria. Rellene el {1} campo de la calle.</label>
+        <name>AMS_DQ_Street_Compulsory</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Due Diligence Lock --></label>
         <name>AMS_Due_Diligence_Lock</name>
     </customLabels>
@@ -717,6 +789,10 @@
         <name>ANG_ISSP_AFP_NoCreditCardMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ASD_HelpText --></label>
+        <name>ANG_ISSP_ASD_HelpText</name>
+    </customLabels>
+    <customLabels>
         <label>Tipo de acreditación</label>
         <name>ANG_ISSP_AccreditationType</name>
     </customLabels>
@@ -735,6 +811,18 @@
     <customLabels>
         <label>Entidad(es) asociada(s):</label>
         <name>ANG_ISSP_AssociateEntity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BOP --></label>
+        <name>ANG_ISSP_BOP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BOP Access Link --></label>
+        <name>ANG_ISSP_BOP_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_BOP_China_URL --></label>
+        <name>ANG_ISSP_BOP_China_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- Case reason used in the case subject --></label>
@@ -869,6 +957,10 @@
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
+    </customLabels>
+    <customLabels>
         <label>La lista de instituciones financieras que ofrecen seguro de Garantía Financiera en su país</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>
@@ -913,7 +1005,7 @@
         <name>ANG_ISSP_HeadEntity</name>
     </customLabels>
     <customLabels>
-        <label>EasyPay de IATA</label>
+        <label><!-- ANG_ISSP_IATA_EasyPay --></label>
         <name>ANG_ISSP_IATA_EasyPay</name>
     </customLabels>
     <customLabels>
@@ -1065,6 +1157,10 @@
         <name>ANG_ISSP_ProductComparisonFeature10Tooltip</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ProductComparisonFeature11 --></label>
+        <name>ANG_ISSP_ProductComparisonFeature11</name>
+    </customLabels>
+    <customLabels>
         <label>Tooltip de característica 1</label>
         <name>ANG_ISSP_ProductComparisonFeature1Tooltip</name>
     </customLabels>
@@ -1211,6 +1307,10 @@
     <customLabels>
         <label>Información de la RHC</label>
         <name>ANG_ISSP_RHC_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG ISSP RHC Information China --></label>
+        <name>ANG_ISSP_RHC_Information_China</name>
     </customLabels>
     <customLabels>
         <label>Solicite actualización de balances</label>
@@ -1361,6 +1461,10 @@
         <name>Account_information_updated</name>
     </customLabels>
     <customLabels>
+        <label><!-- Accreditation date --></label>
+        <name>Accreditation_date</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Action --></label>
         <name>Action</name>
     </customLabels>
@@ -1391,7 +1495,7 @@
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label>Le rogamos que valide su dirección de facturación y de entrega haciendo clic en el botón &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <label>Compruebe sus direcciones de facturación y envío haciendo clic en el botón Verificar dirección</label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>
@@ -1449,6 +1553,14 @@
     <customLabels>
         <label><!-- AirlineSuspensionEmailRecipientsEurope --></label>
         <name>AirlineSuspensionEmailRecipientsEurope</name>
+    </customLabels>
+    <customLabels>
+        <label>Todas las notificaciones</label>
+        <name>All_Notifications_Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>Anuncios</label>
+        <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- Ask Delete Attachment --></label>
@@ -1639,23 +1751,707 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Community --></label>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin --></label>
+        <name>CSP_ANG_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin_Authorized_Signature --></label>
+        <name>CSP_ANG_Portal_Admin_Authorized_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_About --></label>
+        <name>CSP_About</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Accept Terms Error --></label>
+        <name>CSP_Accept_Terms_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Account Domain Created --></label>
+        <name>CSP_Account_Domain_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_All --></label>
+        <name>CSP_Add_All</name>
+    </customLabels>
+    <customLabels>
+        <label>Añadir nuevos documentos</label>
+        <name>CSP_Add_New_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_New_User --></label>
+        <name>CSP_Add_New_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_User --></label>
+        <name>CSP_Add_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Anuncio</label>
+        <name>CSP_Announcement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Apply --></label>
+        <name>CSP_Apply</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Le resultó útil este artículo?</label>
+        <name>CSP_ArticleHelpful</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Branch Offices --></label>
+        <name>CSP_Branch_Offices</name>
+    </customLabels>
+    <customLabels>
+        <label>Búsqueda avanzada</label>
+        <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Perfil de la compañía</label>
+        <name>CSP_Breadcrumb_CompanyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_FAQ_Title --></label>
+        <name>CSP_Breadcrumb_FAQ_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Página de inicio</label>
+        <name>CSP_Breadcrumb_Home_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Servicios</label>
+        <name>CSP_Breadcrumb_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_Support_CreateNewCase --></label>
+        <name>CSP_Breadcrumb_Support_CreateNewCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Contáctenos</label>
+        <name>CSP_Breadcrumb_Support_ReachUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Asistencia</label>
+        <name>CSP_Breadcrumb_Support_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
+        <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Cancelar</label>
+        <name>CSP_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>Cancelar {0} servicio</label>
+        <name>CSP_CancelServiceActionLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Puede cancelar su acceso a {0}</label>
+        <name>CSP_CancelServiceMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Está seguro de que desea cancelar el acceso a {0}?</label>
+        <name>CSP_Cancel_Access_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Cancelar acceso</label>
+        <name>CSP_Cancel_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Cancelar petición</label>
+        <name>CSP_Cancel_Request</name>
+    </customLabels>
+    <customLabels>
+        <label>Puede enviar y recibir mensajes al Servicio de Atención al Cliente de IATA sobre este caso.</label>
+        <name>CSP_CaseMessage_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Escriba sus comentarios aquí</label>
+        <name>CSP_CaseMessage_InputPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Mensajes</label>
+        <name>CSP_CaseMessage_MessageTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Comentario añadido correctamente</label>
+        <name>CSP_CaseMessage_SubmitSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>Número de caso</label>
+        <name>CSP_CaseNumber</name>
+    </customLabels>
+    <customLabels>
+        <label>Casos</label>
+        <name>CSP_Cases</name>
+    </customLabels>
+    <customLabels>
+        <label>Comunidad</label>
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Portal_Status --></label>
+        <label>Ver los casos de mi empresa</label>
+        <name>CSP_CompanyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>Perfil de la compañía</label>
+        <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Está seguro de que desea denegar el acceso a &lt;b&gt;{0}&lt;/b&gt; a &lt;b&gt;{1}&lt;/b&gt;?</label>
+        <name>CSP_Confirm_Deny_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Está seguro de que desea otorgar acceso a &lt;b&gt;{0}&lt;/b&gt; a &lt;b&gt;{1}&lt;/b&gt;?</label>
+        <name>CSP_Confirm_Grant_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>Su {0} solicitud de acceso se ha entregado a los administradores del portal. Si tiene alguna pregunta o petición sobre el proceso, puede ponerse en contacto con un administrador a continuación:</label>
+        <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Continue --></label>
+        <name>CSP_Continue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Create_Contact_Complete_Field --></label>
+        <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
+    </customLabels>
+    <customLabels>
+        <label>Denegar acceso de usuario</label>
+        <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Documentos</label>
+        <name>CSP_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label>Todos los documentos</label>
+        <name>CSP_DocumentsAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Documentos</label>
+        <name>CSP_DocumentsLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Seleccione la categoría a la que pertenece el documento que está buscando.</label>
+        <name>CSP_DocumentsSelCat</name>
+    </customLabels>
+    <customLabels>
+        <label>Países de publicación</label>
+        <name>CSP_Documents_PubliCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Domain Error Message --></label>
+        <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
+    </customLabels>
+    <customLabels>
+        <label>Contáctenos</label>
+        <name>CSP_FAQReachUsBanner_ButtonText</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Cree un caso, chatee directamente con un representante de IATA o llámenos.&quot;</label>
+        <name>CSP_FAQReachUsBanner_Text</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Necesita más ayuda?</label>
+        <name>CSP_FAQReachUsBanner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Preguntas Frecuentes</label>
+        <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Seleccione una de las categorías principales</label>
+        <name>CSP_FAQ_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_FAQs_Title --></label>
+        <name>CSP_FAQs_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Servicios favoritos</label>
+        <name>CSP_FavoriteServices_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Características</label>
+        <name>CSP_Features_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Díganos cómo podemos hacer que este artículo sea más útil.</label>
+        <name>CSP_FeedbackBody</name>
+    </customLabels>
+    <customLabels>
+        <label>Valoramos sus comentarios para ayudarnos a mejorar la calidad de nuestros artículos.</label>
+        <name>CSP_FeedbackBody2</name>
+    </customLabels>
+    <customLabels>
+        <label>Comentarios</label>
+        <name>CSP_FeedbackTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filter --></label>
+        <name>CSP_Filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filtered --></label>
+        <name>CSP_Filtered</name>
+    </customLabels>
+    <customLabels>
+        <label>Para usted</label>
+        <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>Otorgar acceso de usuario</label>
+        <name>CSP_Grant_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Hola [username]</label>
+        <name>CSP_Home_WelcomeTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Desconectar</label>
+        <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Puede gestionar los usuarios de la siguiente lista.</label>
+        <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>Gestionar servicio</label>
+        <name>CSP_Manage_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Gestionar servicios</label>
+        <name>CSP_Manage_Services</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Manage_Services --></label>
+        <name>CSP_Manage_Services_NoIEPAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Ver Mis casos</label>
+        <name>CSP_MyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre</label>
+        <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewServiceUserMessage --></label>
+        <name>CSP_NewServiceUserMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP New Email Domain --></label>
+        <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label>No hay cuenta relacionada que mostrar.</label>
+        <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>No tiene ningún caso por ahora.</label>
+        <name>CSP_NoCases1</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Pero una vez que lo haya hecho, verá los más recientes aquí.&quot;</label>
+        <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>No hay resultados</label>
+        <name>CSP_NoSearchResults</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Si es necesario, puede añadir documentos al caso.&quot;</label>
+        <name>CSP_No_Documents_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Calendario semanal</label>
+        <name>CSP_OperationalCalendar_HomeTileTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Ver mensualmente</label>
+        <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Necesitamos su opinión para proceder con su caso.</label>
+        <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PortalPath --></label>
+        <name>CSP_PortalPath</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Portal_Administrators --></label>
+        <name>CSP_Portal_Administrators</name>
+    </customLabels>
+    <customLabels>
+        <label>Estado del portal</label>
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_SelectCommunity --></label>
+        <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
+        <name>CSP_Profile_PrivacyManagement_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Text --></label>
+        <name>CSP_Profile_PrivacyManagement_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Title --></label>
+        <name>CSP_Profile_PrivacyManagement_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_URL --></label>
+        <name>CSP_Profile_PrivacyManagement_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Qué es un caso y cuándo lo necesito?</label>
+        <name>CSP_Question1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question1URL --></label>
+        <name>CSP_Question1URL</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Cómo puedo ver y actualizar los detalles de un caso?</label>
+        <name>CSP_Question2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question2URL --></label>
+        <name>CSP_Question2URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Casos recientes</label>
+        <name>CSP_RecentCases</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP RecentCases HelpText --></label>
+        <name>CSP_RecentCases_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Recent Cases Support --></label>
+        <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Record Deleted --></label>
+        <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>Artículos relacionados</label>
+        <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveAllFilters --></label>
+        <name>CSP_RemoveAllFilters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveContact_Reason --></label>
+        <name>CSP_RemoveContact_Reason</name>
+    </customLabels>
+    <customLabels>
+        <label>Solicitud de servicio</label>
+        <name>CSP_Request_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Guardar</label>
+        <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>Buscar por detalles del documento</label>
+        <name>CSP_SearchDocuments</name>
+    </customLabels>
+    <customLabels>
+        <label>Buscar por detalles de preguntas frecuentes</label>
+        <name>CSP_SearchFAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>Búsqueda avanzada</label>
+        <name>CSP_Search_AdvancedSearch</name>
+    </customLabels>
+    <customLabels>
+        <label>País</label>
+        <name>CSP_Search_Case_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Tipo</label>
+        <name>CSP_Search_Case_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Categoría</label>
+        <name>CSP_Search_Documents_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Tipo de producto</label>
+        <name>CSP_Search_Documents_ProdType</name>
+    </customLabels>
+    <customLabels>
+        <label>País de publicación</label>
+        <name>CSP_Search_Documents_PubCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>Categoría</label>
+        <name>CSP_Search_FAQ_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Subtema</label>
+        <name>CSP_Search_FAQ_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>Tema</label>
+        <name>CSP_Search_FAQ_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Encuentre servicios, casos, asistencia y más&quot;</label>
+        <name>CSP_Search_Home_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Encontrar un usuario del servicio</label>
+        <name>CSP_Search_In_Contacts_In_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>No hay resultados de búsqueda</label>
+        <name>CSP_Search_NoResults_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Lo sentimos, no hay ningún resultado para&quot;</label>
+        <name>CSP_Search_NoResults_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>Verifique la ortografía de su búsqueda o inténtelo de nuevo con otras nuevas.</label>
+        <name>CSP_Search_NoResults_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>Servicios de búsqueda</label>
+        <name>CSP_Search_Services_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Asistencia en la búsqueda</label>
+        <name>CSP_Search_Support_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Resultados principales</label>
+        <name>CSP_Search_TopResults</name>
+    </customLabels>
+    <customLabels>
+        <label>Escriba sus términos de búsqueda</label>
+        <name>CSP_Search_TypeIn_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>Escriba más de dos letras para iniciar la búsqueda.</label>
+        <name>CSP_Search_TypeIn_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>Seleccione una sección de filtro para mejorar aún más sus resultados de búsqueda.</label>
+        <name>CSP_Search_TypeIn_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Búsqueda de número de caso, asunto o descripción&quot;</label>
+        <name>CSP_SearchingOn</name>
+    </customLabels>
+    <customLabels>
+        <label>Ver todo</label>
+        <name>CSP_SeeAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Seleccione comunidad</label>
         <name>CSP_SelectCommunity</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_SelectPortalStatus --></label>
+        <label>Seleccione el estado del portal</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_selectReason --></label>
+        <label>Acceso al servicio</label>
+        <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>Acceso solicitado</label>
+        <name>CSP_Services_AccessRequested</name>
+    </customLabels>
+    <customLabels>
+        <label>Acceso solicitado</label>
+        <name>CSP_Services_AccessRequestedTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Todos los servicios disponibles para su empresa se enumeran a continuación.</label>
+        <name>CSP_Services_AvailableServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Servicios disponibles</label>
+        <name>CSP_Services_AvailableServicesTabTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Acceder al servicio</label>
+        <name>CSP_Services_GoToService</name>
+    </customLabels>
+    <customLabels>
+        <label>Acceder al Servicios</label>
+        <name>CSP_Services_GoToServices</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Busca un servicio?</label>
+        <name>CSP_Services_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Administrar servicio</label>
+        <name>CSP_Services_ManageService</name>
+    </customLabels>
+    <customLabels>
+        <label>Los servicios de su empresa se enumeran a continuación.</label>
+        <name>CSP_Services_MyServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Mis servicios</label>
+        <name>CSP_Services_MyServicesTabTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Ver servicios disponibles</label>
+        <name>CSP_Services_RequestServiceBannerButton</name>
+    </customLabels>
+    <customLabels>
+        <label>Ver información detallada del servicio y solicitar acceso a los servicios disponibles.</label>
+        <name>CSP_Services_RequestServiceBannerSubtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Petición de servicio</label>
+        <name>CSP_Services_RequestServiceBannerTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Servicio de Información</label>
+        <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>Servicios</label>
+        <name>CSP_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Ajustes</label>
+        <name>CSP_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label>Estado</label>
+        <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Enviar</label>
+        <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Success --></label>
+        <name>CSP_Success</name>
+    </customLabels>
+    <customLabels>
+        <label>Asistencia</label>
+        <name>CSP_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Cómo podemos ayudarle?</label>
+        <name>CSP_Support_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Puede subir archivos pdf, jpeg, jpg, png, ppt, pptx, xls, xlsx, tif, tiff, zip. El tamaño debe ser inferior a 50 MB.</label>
+        <name>CSP_Supported_File_Extensions</name>
+    </customLabels>
+    <customLabels>
+        <label>Tarea</label>
+        <name>CSP_Task</name>
+    </customLabels>
+    <customLabels>
+        <label>¡Gracias por sus comentarios!</label>
+        <name>CSP_ThanksFeedback</name>
+    </customLabels>
+    <customLabels>
+        <label>Título</label>
+        <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Tipo de caso</label>
+        <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Announcements --></label>
+        <name>CSP_You_Dont_Have_Announcements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Notifications --></label>
+        <name>CSP_You_Dont_Have_Notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Tasks --></label>
+        <name>CSP_You_Dont_Have_Tasks</name>
+    </customLabels>
+    <customLabels>
+        <label>Riesgo de crédito del agente</label>
+        <name>CSP_cpcc_Agent_Credit_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label>Signatario autorizado</label>
+        <name>CSP_cpcc_Authorised_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>Contacto de pago de BSP (plan de facturación y liquidación)/CASS (sistema de liquidación de cuentas de transporte)</label>
+        <name>CSP_cpcc_BSP_CASS_Payment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>Estado del tipo de contacto</label>
+        <name>CSP_cpcc_Contact_Type_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Contacto de evaluación financiera</label>
+        <name>CSP_cpcc_Financial_Assessment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>Contacto de facturación</label>
+        <name>CSP_cpcc_Invoice_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>Nuevo perfil de contacto</label>
+        <name>CSP_cpcc_New_Contact_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>Administrador del portal</label>
+        <name>CSP_cpcc_Portal_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label>Áreas de trabajo</label>
+        <name>CSP_cpcc_Working_Areas</name>
+    </customLabels>
+    <customLabels>
+        <label>Seleccione el motivo</label>
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
@@ -1709,6 +2505,10 @@
     <customLabels>
         <label><!-- CaseValidation - Area --></label>
         <name>CaseValidation_Area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CaseValidation - Area2 --></label>
+        <name>CaseValidation_Area2</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
@@ -1903,6 +2703,10 @@
         <name>CurrencyCenter_BSP_CASS_Proffile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_ICCS_Availability --></label>
+        <name>CurrencyCenter_BSP_ICCS_Availability</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -1933,6 +2737,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_CASS --></label>
         <name>CurrencyCenter_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_CASS_ICCS_Availability --></label>
+        <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
@@ -3323,7 +4131,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>Perfil</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -7936,6 +8744,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label>Recuerde: Al copiar la información de propiedad en una agencia, se borrará toda la información de propiedad previa de la agencia destino.</label>
+        <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
         <label>-- Seleccionar país -</label>
         <name>ISSP_AMS_Country_Select</name>
     </customLabels>
@@ -8620,6 +9432,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Local_Details_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator --></label>
+        <name>ISSP_AMS_MSO_Aggregator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator_Info --></label>
+        <name>ISSP_AMS_MSO_Aggregator_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_MSO_Alternatively --></label>
         <name>ISSP_AMS_MSO_Alternatively</name>
     </customLabels>
@@ -9228,6 +10048,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_NoC_PDF_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Partner --></label>
+        <name>ISSP_AMS_NoC_Partner</name>
+    </customLabels>
+    <customLabels>
         <label>Asegúrese de que el porcentaje de propiedad total actualizado sea igual a 100 %.</label>
         <name>ISSP_AMS_NoC_Percent_Ownership</name>
     </customLabels>
@@ -9716,6 +10540,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
+        <label>Seleccionar las cuentas destino</label>
+        <name>ISSP_AMS_Select_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>* Entidades asociadas seleccionadas</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
@@ -9734,6 +10562,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP_AMS_Signatory --></label>
         <name>ISSP_AMS_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>Comunidad autónoma/Provincia</label>
+        <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_State_Names_Addresses_Field_Label --></label>
@@ -11126,6 +11958,22 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
+        <label>Verificando...</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
+    </customLabels>
+    <customLabels>
+        <label>Esta acción le permite copiar los datos de propiedad desde esta cuenta a las ubicaciones elegidas y pertenecientes a su jerarquía. Podrá visualizar los cambios aplicados por esta acción en las agencias destino, únicamente tras la Confirmación de actualización de todos los datos de esta página.</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
+    </customLabels>
+    <customLabels>
+        <label>Agencias procesadas</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
+    </customLabels>
+    <customLabels>
+        <label>Copiar Trámite de la propiedad</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
+    </customLabels>
+    <customLabels>
         <label>Haga clic aquí para continuar con el cumplimiento con la PCI</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
@@ -11136,6 +11984,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Ver los requisitos por país</label>
         <name>ISSP_ANG_Country_Req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Type of Agency --></label>
+        <name>ISSP_ANG_Country_Reqs_Type_Of_Agency</name>
     </customLabels>
     <customLabels>
         <label>Jerarquía completa</label>
@@ -11379,7 +12231,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;Gestiona fondos del/de los subbilletero(s)&lt;/li&gt; &lt;li&gt;Gestiona el acceso de usuarios del EasyPay de IATA del «Emisor de billetes» y el/los subbilletero(s)&lt;/li&gt; &lt;li&gt;Genera números de EasyPay de IATA a partir del/de los billetero(s) asignado(s) que vaya(n) a usarse para emitir billetes a través del GDS&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;Genera números de EasyPay de IATA a partir de cualquier billetero(s) asignado(s) que vaya(n) a usarse para emitir billetes a través del GDS&lt;/li&gt;&lt;/ul&gt;</label>
@@ -12089,6 +12941,14 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Change_Request_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP China Domestic --></label>
+        <name>ISSP_China_Domestic</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP China International --></label>
+        <name>ISSP_China_International</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email --></label>
         <name>ISSP_ClickHereLogIn</name>
     </customLabels>
@@ -12099,6 +12959,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>Cerrado</label>
         <name>ISSP_ClosedIFAPCasesStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Closed_Non_Compliance --></label>
+        <name>ISSP_Closed_Non_Compliance</name>
     </customLabels>
     <customLabels>
         <label>Dirección</label>
@@ -12195,6 +13059,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>Su nombre</label>
         <name>ISSP_ContactName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
         <label>Datos de contacto</label>
@@ -12897,6 +13765,14 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_EnterValidString</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
+    </customLabels>
+    <customLabels>
         <label>Introducir texto.</label>
         <name>ISSP_Enter_Value</name>
     </customLabels>
@@ -13186,6 +14062,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
+        <label>Con la inclusión, los proveedores del sector (p. ej., compañías aéreas, hoteles y operadores turísticos) podrán distribuir mensajes importantes a su agencia respecto a sus políticas de agencias y ventas, promociones y productos.</label>
+        <name>ISSP_Gdp_Opt_In_Hint</name>
+    </customLabels>
+    <customLabels>
         <label>No General Public Account was found matching your search criteria. Please click on â€œNextâ€ to return to login page.</label>
         <name>ISSP_GeneralPublicNotFound</name>
     </customLabels>
@@ -13412,6 +14292,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label><!-- ISSP IATA Designator --></label>
         <name>ISSP_IATA_Designator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IATA_Location_Code --></label>
+        <name>ISSP_IATA_Location_Code</name>
     </customLabels>
     <customLabels>
         <label>&quot;El código IATA no existe. Introduzca el código IATA correcto. Si no posee un código IATA, seleccione &quot;&quot;Otro&quot;&quot; en &quot;&quot;Tipo de cliente&quot;&quot;.&quot;</label>
@@ -14330,8 +15214,8 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
         <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
-        <label> Puede emplear Payment Link para pagar facturas de IATA mediante tarjeta de crédito.&lt;br/&gt;
-&lt;b&gt;Atención&lt;/b&gt;&lt;br/&gt;
+        <label> Puede emplear Payment Link para pagar facturas de IATA mediante tarjeta de crédito.&amp;nbsp;
+&lt;b&gt;Atención&lt;/b&gt;&amp;nbsp;
 Tenga en cuenta que muchas facturas de IATA agentes acreditados se cobran a través de BSP/CASS. Le rogamos que observe detenidamente los datos de la factura para asegurarse de que no la ha abonado ya, antes de proceder a su pago mediante tarjeta de crédito.</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
@@ -14600,6 +15484,10 @@ Tenga en cuenta que muchas facturas de IATA agentes acreditados se cobran a trav
         <name>ISSP_RHC_HUB_AFP_Cash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP RHC HUB AFP China --></label>
+        <name>ISSP_RHC_HUB_AFP_China</name>
+    </customLabels>
+    <customLabels>
         <label>Tarjeta de crédito</label>
         <name>ISSP_RHC_HUB_AFP_Credit_Card</name>
     </customLabels>
@@ -14702,6 +15590,10 @@ Tenga en cuenta que muchas facturas de IATA agentes acreditados se cobran a trav
     <customLabels>
         <label>Indique su apellido</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>Seleccione su país</label>
@@ -14979,8 +15871,16 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
+        <label>Los cambios, a excepción de la GDP Opt-in, deben hacerse a través del proceso de Revalidación Anual</label>
+        <name>ISSP_Rev_Case_Open_Acc_Info</name>
+    </customLabels>
+    <customLabels>
         <label>- Seleccionar país -</label>
         <name>ISSP_SELECT_COUNTRY</name>
+    </customLabels>
+    <customLabels>
+        <label>-Seleccione comunidad autónoma-</label>
+        <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
         <label>2 o más</label>
@@ -15625,6 +16525,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label><!-- ISSP Status change to Inactive --></label>
         <name>ISSP_Status_change_to_Inactive</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
     </customLabels>
     <customLabels>
         <label>Subcategoría</label>
@@ -17024,6 +17928,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
+        <label>Marcar como leído</label>
+        <name>MarkAsRead_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -17156,6 +18064,22 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>Not_Applicable</name>
     </customLabels>
     <customLabels>
+        <label><!-- Not In CNS Group Error --></label>
+        <name>Not_In_CNS_Group_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Notificación</label>
+        <name>Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>Notificaciones</label>
+        <name>NotificationCenter_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Detalles de la notificación</label>
+        <name>NotificationDetail_Detail</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Notions_Essentl_Tarif_Billet_Description --></label>
         <name>Notions_Essentl_Tarif_Billet_Description</name>
     </customLabels>
@@ -17206,6 +18130,18 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>Elija la categoría</label>
@@ -18691,6 +19627,18 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>Please_select_the_target_Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- PortalAccess --></label>
+        <name>PortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal Name to Redirect --></label>
+        <name>PortalNameRedirect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PortalService --></label>
+        <name>PortalService</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>
@@ -18879,6 +19827,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>Remaining_Owners</name>
     </customLabels>
     <customLabels>
+        <label><!-- Remittance frequency --></label>
+        <name>Remittance_frequency</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Renewal_Number --></label>
         <name>Renewal_Number</name>
     </customLabels>
@@ -19043,6 +19995,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ShoppingCartQtyMsg</name>
     </customLabels>
     <customLabels>
+        <label><!-- Error displayed when a RO field is changed in a SIDRA Lite case --></label>
+        <name>SidraLiteROFieldError</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SignIn --></label>
         <name>SignIn</name>
     </customLabels>
@@ -19131,6 +20087,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label>Tareas</label>
+        <name>Tasks_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Taxes --></label>
         <name>Taxes</name>
     </customLabels>
@@ -19187,6 +20147,14 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
+        <label>{0} solicitó acceso al portal.</label>
+        <name>UserRequestPortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} solicitó acceso al servicio {1}</label>
+        <name>UserRequestServiceAccess</name>
+    </customLabels>
+    <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
     </customLabels>
@@ -19213,6 +20181,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label><!-- ViewCart --></label>
         <name>ViewCart</name>
+    </customLabels>
+    <customLabels>
+        <label>Ver detalles</label>
+        <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- View_6_more --></label>
@@ -19309,6 +20281,498 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label><!-- Contacting us --></label>
         <name>contacting_us</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Relocation --></label>
+        <name>csp_AccountRelocateSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>Proceso de acreditación</label>
+        <name>csp_Accreditation_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>Seleccione la categoría principal</label>
+        <name>csp_ActionForCategoryPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>Servicio de acceso</label>
+        <name>csp_ActionForTopicPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>Complete el formulario para ver las opciones de asistencia recomendadas</label>
+        <name>csp_ActionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_AgencyReadOnly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Profile section label --></label>
+        <name>csp_Basics_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Llámenos</label>
+        <name>csp_Call_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Periodo disponible:</label>
+        <name>csp_Call_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Un representante de IATA comenzará a trabajar en ello.</label>
+        <name>csp_CaseBeingWorked</name>
+    </customLabels>
+    <customLabels>
+        <label>Caso creado con éxito.</label>
+        <name>csp_CaseCreatedSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>Obtendrá una respuesta pronto.</label>
+        <name>csp_CaseResponseGuarantee</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Puede añadir comentarios, documentos y destinatarios en caso de actualización. Puede realizar seguimiento del estado y actualizaciones en</label>
+        <name>csp_CaseTracking</name>
+    </customLabels>
+    <customLabels>
+        <label>Crear caso</label>
+        <name>csp_Case_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Díganos cómo podemos ayudarle</label>
+        <name>csp_Case_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Chatee con nosotros</label>
+        <name>csp_Chat_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat con un representante de IATA</label>
+        <name>csp_Chat_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Obtenga asistencia directamente a través del portal IATA, por teléfono o chat.</label>
+        <name>csp_ChooseOption</name>
+    </customLabels>
+    <customLabels>
+        <label>Contacto de la empresa</label>
+        <name>csp_CompanyContact_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Complete required field label --></label>
+        <name>csp_CompleteField</name>
+    </customLabels>
+    <customLabels>
+        <label>Gracias por compartir.</label>
+        <name>csp_Compliment</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;En IATA, nos esforzamos por brindar un excelente servicio al cliente y es gratificante saber que a usted también le parece importante. Consideramos todos los comentario que hace.&quot;</label>
+        <name>csp_ComplimentInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>Hacer un cumplido</label>
+        <name>csp_Compliment_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Queja</label>
+        <name>csp_Concern</name>
+    </customLabels>
+    <customLabels>
+        <label>Queja</label>
+        <name>csp_Concern_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Seleccione el país o región de su consulta</label>
+        <name>csp_CountryOrRegionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label>Crear caso y añadir archivo adjunto</label>
+        <name>csp_CreateNewCaseAddAttachment</name>
+    </customLabels>
+    <customLabels>
+        <label>Proporciónenos todos los detalles que nos ayudarán a investigar su consulta.</label>
+        <name>csp_CreateNewCaseMainInputBoxSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Descripción</label>
+        <name>csp_CreateNewCaseMainInputBoxTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Añadir a otro usuario del portal</label>
+        <name>csp_CreateNewCaseMainInputEmailsSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Destinatarios adicionales</label>
+        <name>csp_CreateNewCaseMainInputEmailsTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Cuál es el tema de su pregunta?</label>
+        <name>csp_CreateNewCaseMainInputSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Asunto</label>
+        <name>csp_CreateNewCaseMainInputTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Código de cuenta relacionado</label>
+        <name>csp_CreateNewCaseMainPicklistLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Crear caso</label>
+        <name>csp_CreateNewCaseTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Seleccionó</label>
+        <name>csp_CreateNewCaseTopSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Proporciónenos más información.</label>
+        <name>csp_CreateNewCaseTopSubSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Crear nuevo contacto</label>
+        <name>csp_CreateNewContact</name>
+    </customLabels>
+    <customLabels>
+        <label>Consulta de emergencia</label>
+        <name>csp_Emergency_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>Revisión financiera</label>
+        <name>csp_Financial_Review</name>
+    </customLabels>
+    <customLabels>
+        <label>Encontrar sucursal</label>
+        <name>csp_Find_Branch</name>
+    </customLabels>
+    <customLabels>
+        <label>Encontrar contacto</label>
+        <name>csp_Find_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Facebook_URL --></label>
+        <name>csp_Footer_Facebook_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Tienda IATA</label>
+        <name>csp_Footer_IATA_Store</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_IataStore_URL --></label>
+        <name>csp_Footer_IataStore_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Legal_URL --></label>
+        <name>csp_Footer_Legal_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Linkedin_URL --></label>
+        <name>csp_Footer_Linkedin_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Privacy_URL --></label>
+        <name>csp_Footer_Privacy_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Twitter_URL --></label>
+        <name>csp_Footer_Twitter_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Youtube_URL --></label>
+        <name>csp_Footer_Youtube_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Ir a la página de inicio</label>
+        <name>csp_GoToHomepage</name>
+    </customLabels>
+    <customLabels>
+        <label>Ir a Asistencia</label>
+        <name>csp_GoToSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>Pago IATA</label>
+        <name>csp_IATA_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label>Administrador de IEP</label>
+        <name>csp_IEPAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label>Contactar con Asistencia</label>
+        <name>csp_IntentionOnThisPage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_InvalidPhoneValue --></label>
+        <name>csp_InvalidPhoneValue</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Es su consulta una emergencia?</label>
+        <name>csp_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Último acceso</label>
+        <name>csp_LastLoginDate</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;El chat no está disponible. Por favor, llame o cree un caso.&quot;</label>
+        <name>csp_LiveAgentBadConfig</name>
+    </customLabels>
+    <customLabels>
+        <label>La conexión de chat ha caducado. Puede actualizar la página o crear un caso</label>
+        <name>csp_LiveAgentTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>Tiempo de espera del agente superado. Actualice la página o contacte con soporte</label>
+        <name>csp_LiveTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>Gestor de cartera principal</label>
+        <name>csp_MasterWalletManager</name>
+    </customLabels>
+    <customLabels>
+        <label>Función de trabajo</label>
+        <name>csp_MembershipFunction</name>
+    </customLabels>
+    <customLabels>
+        <label>Empresa</label>
+        <name>csp_My_Profile_Company</name>
+    </customLabels>
+    <customLabels>
+        <label>Correo electrónico</label>
+        <name>csp_My_Profile_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Título del puesto</label>
+        <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_NoPortalServiceNameFound</name>
+    </customLabels>
+    <customLabels>
+        <label>Seleccione su opción de asistencia preferida</label>
+        <name>csp_Options_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Proceso</label>
+        <name>csp_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>Contacto profesional</label>
+        <name>csp_Profile_BusinessContact</name>
+    </customLabels>
+    <customLabels>
+        <label>Correo electrónico de la empresa</label>
+        <name>csp_Profile_CompanyEmail</name>
+    </customLabels>
+    <customLabels>
+        <label>Código IATA</label>
+        <name>csp_Profile_IATACode</name>
+    </customLabels>
+    <customLabels>
+        <label>Contacto personal</label>
+        <name>csp_Profile_PersonalContact</name>
+    </customLabels>
+    <customLabels>
+        <label>Accesibilidad del portal</label>
+        <name>csp_Profile_PortalAccessibility</name>
+    </customLabels>
+    <customLabels>
+        <label>Profesional</label>
+        <name>csp_Profile_Professional</name>
+    </customLabels>
+    <customLabels>
+        <label>Página web</label>
+        <name>csp_Profile_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Asistencia</label>
+        <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>Su Agencia no tiene actualmente una cuenta IATA EasyPay abierta.&lt;br/&gt;&lt;br/&gt;Póngase en contacto con el signatario autorizado de su oficina central para solicitarle la apertura de una cuenta IATA EasyPay. Como administrador del portal, puede actualizar su &lt;a href=&quot;/my-profile&quot;&gt;Información personal&lt;/a&gt; para designarse como Signatario Legal Autorizado o asignar el administrador de portal correcto desde la página &lt;a href=&quot;/company-profile&quot;&gt; Gestión de la empresa -&gt; Contactos&lt;/a&gt; y pídales que abran su cuenta EasyPay.&lt;br/&gt;&lt;br/&gt;&lt;a href=&quot;/Support-Reach-Us&quot;&gt;Contacte con soporte&lt;/a &gt; si necesita ayuda.</label>
+        <name>csp_RequestService_ContactPortalAdmin_Alt</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Su agencia no tiene actualmente una cuenta IATA EasyPay abierta. &lt;br/&gt;&lt;br/&gt;Póngase en contacto con el signatario autorizado de su oficina central para solicitarle que abra una cuenta IATA EasyPay. Para abrir una cuenta IATA EasyPay, necesita ser tanto administrador del portal como signatario autorizado de su agencia.&lt;br/&gt;&lt;br/&gt;&lt;a href=&quot;/Support-Reach-Us&quot;&gt;Contacte con Soporte&lt;/a&gt; si necesita ayuda.</label>
+        <name>csp_RequestService_ContactPortalAdmin_LegalAuth</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_RequestService_ContactSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>Un signatario autorizado de su entidad titular ya ha iniciado la apertura de la cuenta IEP de su agencia. Una vez que la cuenta IEP se haya abierto correctamente podrá acceder a este servicio.</label>
+        <name>csp_RequestService_IEPAccountOpenInProgress</name>
+    </customLabels>
+    <customLabels>
+        <label>Ahora, se le redirigirá al Portal de EasyPay, donde podrá completar su solicitud para abrir la cuenta IATA EasyPay de su Agencia. &lt;br/&gt;&lt;br/&gt; Al continuar, está de acuerdo con que IATA facilite su nombre, apellidos, dirección de correo electrónico y código IATA y cualquier otra información personal relevante a los Proveedores EasyPay de IATA. Esta información solo será utilizada por los proveedores de IATA EasyPay con el fin de abrir y administrar su cuenta de EasyPay y operar los servicios de EasyPay en general, o de lo contrario, según lo exija la ley.&lt;br/&gt;&lt;br/&gt;¿Desea continuar?</label>
+        <name>csp_RequestService_ProceedIEPAccountOpen</name>
+    </customLabels>
+    <customLabels>
+        <label>Solicitud de acceso</label>
+        <name>csp_Request_New_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Pago de ventas</label>
+        <name>csp_Sales_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_SearchNotPerformed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceAccessConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceRequestConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label>Subtema</label>
+        <name>csp_Sub_Topic_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Subtema</label>
+        <name>csp_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>Sugerencia</label>
+        <name>csp_Suggest_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Esto podría ayudar</label>
+        <name>csp_Suggestion_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Estamos a su disposición.</label>
+        <name>csp_SupportCategoriesInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>Pregunta</label>
+        <name>csp_SupportReachUs_AskTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Estamos a su disposición.</label>
+        <name>csp_SupportReachUs_BasicInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>Categoría</label>
+        <name>csp_SupportReachUs_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Hacer un cumplido</label>
+        <name>csp_SupportReachUs_ComplimentTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Queja</label>
+        <name>csp_SupportReachUs_ConcernTile</name>
+    </customLabels>
+    <customLabels>
+        <label>País</label>
+        <name>csp_SupportReachUs_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Es su consulta una emergencia?</label>
+        <name>csp_SupportReachUs_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Obtenga asistencia directamente a través del portal IATA, por teléfono o chat.</label>
+        <name>csp_SupportReachUs_PlzChoosePath</name>
+    </customLabels>
+    <customLabels>
+        <label>Seleccione la categoría principal</label>
+        <name>csp_SupportReachUs_SelectCategory</name>
+    </customLabels>
+    <customLabels>
+        <label>Seleccione el país o región de su consulta</label>
+        <name>csp_SupportReachUs_SelectCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>Seleccione el tema</label>
+        <name>csp_SupportReachUs_SelectTopic</name>
+    </customLabels>
+    <customLabels>
+        <label>Mostrar opciones de asistencia</label>
+        <name>csp_SupportReachUs_ShowSupportOptions</name>
+    </customLabels>
+    <customLabels>
+        <label>Complete el formulario para ver las opciones de soporte recomendadas</label>
+        <name>csp_SupportReachUs_SpecifyCaseDetails</name>
+    </customLabels>
+    <customLabels>
+        <label>Sugerencia</label>
+        <name>csp_SupportReachUs_SuggestTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Tema</label>
+        <name>csp_SupportReachUs_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>Contáctenos</label>
+        <name>csp_SupportReachUs_WhatDoYouWant</name>
+    </customLabels>
+    <customLabels>
+        <label>Asistencia</label>
+        <name>csp_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Este panel permite que cada línea aérea Treasure Team obtenga una visibilidad total de sus ventas con tarjeta de crédito, y el informe descargable de ventas relacionado, además de la visualización de los flujos de caja que estén siendo procesados por cada uno de los principales sistemas de liquidación IATA: BSP (plan de facturación y liquidación), CASS (sistema de liquidación de cuentas de transporte), ICCS (Servicio de liquidación de divisas) e ICH (IATA Clearing House).&quot;</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel1</name>
+    </customLabels>
+    <customLabels>
+        <label>Para leer más, visite www.iata.org/treasurydashboard</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel2</name>
+    </customLabels>
+    <customLabels>
+        <label>Está a punto de solicitar más información sobre un servicio comercial de IATA. Al hacer clic en &quot;Confirmar&quot;, se le enviará toda la información sobre cómo suscribirse a IATA Treasury Dashboard Premium de forma mensual.</label>
+        <name>csp_TDP_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Está a punto de solicitar más información sobre un servicio comercial de IATA. Al hacer clic en &quot;Confirmar&quot;, se le enviará toda la información sobre cómo suscribirse a Treasury Dashboard de IATA de forma mensual.</label>
+        <name>csp_TD_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Emisor de billetes</label>
+        <name>csp_TicketIssuer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_TimeoutIEP</name>
+    </customLabels>
+    <customLabels>
+        <label>El destinatario no ha sido añadido. Presione el botón «Añadir».</label>
+        <name>csp_ToastWarningRecipientNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label>Ver resumen del caso</label>
+        <name>csp_ViewCaseSummary</name>
+    </customLabels>
+    <customLabels>
+        <label>Áreas de trabajo</label>
+        <name>csp_WorkingAreas</name>
+    </customLabels>
+    <customLabels>
+        <label>Mostrar opciones de asistencia</label>
+        <name>csp_btn_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Error creando caso</label>
+        <name>csp_errorCreatingCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Búsqueda por nombre o correo electrónico</label>
+        <name>csp_searchEmailRecipientPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Búsqueda por código IATA, ubicación o nombre&quot;</label>
+        <name>csp_searchIataCodeLocationNamePlaceHolder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_toSelectSubTopic</name>
     </customLabels>
     <customLabels>
         <label><!-- days left --></label>

@@ -8,6 +8,7 @@
     <customButtons>Move_to_Recycle_Bin</customButtons>
     <customButtons>unbabelsc__Unbabel_Translate_Case</customButtons>
     <customButtons>Translate_Last_Customer_Comment</customButtons>
+    <customButtons>Reset_New_interactions</customButtons>
     <customConsoleComponents>
         <subtabComponents>
             <containers>
@@ -127,6 +128,10 @@
                 <behavior>Readonly</behavior>
                 <field>IATA_Code__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Product__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -226,6 +231,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Assigned_To__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Account_Concerned__c</field>
             </layoutItems>
             <layoutItems>
@@ -281,7 +290,11 @@
         <editHeading>false</editHeading>
         <label>Web Links</label>
         <layoutColumns/>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <customLink>Send_an_email_to_Kale_Application_Support</customLink>
+            </layoutItems>
+        </layoutColumns>
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
@@ -530,6 +543,9 @@
             </layoutItem>
         </relatedContentItems>
     </relatedContent>
+    <relatedLists>
+        <relatedList>RelatedFileList</relatedList>
+    </relatedLists>
     <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
     </relatedLists>

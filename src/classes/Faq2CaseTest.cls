@@ -217,6 +217,7 @@ private class Faq2CaseTest {
         child.Site = 'headSite';
         child.sector__c = 'Airline';
         child.Top_Parent__c = parent.Id;
+        child.Reason_for_creation__c = 'Created by customer';
         insert child;
         System.debug('child Id: ' + child.Id);
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -301,6 +302,7 @@ private class Faq2CaseTest {
         child.Site = 'headSite';
         child.sector__c = 'Airline';
         child.Top_Parent__c = parent.Id;
+        child.Reason_for_creation__c = 'Created by customer';
         insert child;
         System.debug('child Id: ' + child.Id);
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -474,6 +476,7 @@ private class Faq2CaseTest {
         child.Site = 'headSite';
         child.sector__c = 'Airline';
         child.Top_Parent__c = parent.Id;
+        child.Reason_for_creation__c = 'Created by customer';
         insert child;
         System.debug('child Id: ' + child.Id);
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -520,6 +523,7 @@ private class Faq2CaseTest {
         child.Site = 'headSite';
         child.sector__c = 'Airline';
         child.Top_Parent__c = parent.Id;
+        child.Reason_for_creation__c = 'Created by customer';
         insert child;
         System.debug('child Id: ' + child.Id);
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -532,6 +536,7 @@ private class Faq2CaseTest {
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
+       
         Test.startTest();
         System.runAs(newUser)
         {
@@ -562,6 +567,7 @@ private class Faq2CaseTest {
         child.Site = 'headSite';
         child.sector__c = 'Airline';
         child.Top_Parent__c = parent.Id;
+        child.Reason_for_creation__c = 'Created by customer';
         insert child;
         System.debug('child Id: ' + child.Id);
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -607,6 +613,7 @@ private class Faq2CaseTest {
         child.Site = 'headSite';
         child.sector__c = 'Airline';
         child.Top_Parent__c = parent.Id;
+        child.Reason_for_creation__c = 'Created by customer';
         insert child;
         System.debug('child Id: ' + child.Id);
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -652,6 +659,7 @@ private class Faq2CaseTest {
         child.Site = 'headSite';
         child.sector__c = 'Airline';
         child.Top_Parent__c = parent.Id;
+        child.Reason_for_creation__c = 'Created by customer';
         insert child;
         System.debug('child Id: ' + child.Id);
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -891,7 +899,8 @@ private class Faq2CaseTest {
             Salutation = 'Mr.',
             FirstName= 'first',
             LastName= 'last',
-            AccountId = account1.id);
+            AccountId = account1.id,
+            Phone = '999999999');
         insert contact;
         
         vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();

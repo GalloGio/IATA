@@ -95,7 +95,7 @@
         <fullName>ANG_isToUpdateRHC__c</fullName>
         <description>Technical field to help control the rhc record update on financial security triggerhandler</description>
         <externalId>false</externalId>
-        <formula>ISPICKVAL(Account__r.Location_Type__c,&apos;HE&apos;) &amp;&amp; ISPICKVAL(Account__r.ANG_Accreditation_Model__c,&apos;Cash&apos;)</formula>
+        <formula>(ISPICKVAL(Account__r.Location_Type__c,&apos;HE&apos;) || (ISPICKVAL(Account__r.Location_Type__c,&apos;AE&apos;) &amp;&amp; ISPICKVAL(Account__r.IATA_ISO_Country__r.ANG_RHC_LocationType__c, &apos;Include all AEs&apos;))) &amp;&amp; ISPICKVAL(Account__r.ANG_Accreditation_Model__c,&apos;Cash&apos;)</formula>
         <label>Update RHC</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -229,6 +229,15 @@
         <externalId>false</externalId>
         <inlineHelpText>It is mandatory to link the security with an institution. If the institution does not exist, create it first and then create the security related to it</inlineHelpText>
         <label>Financial Institution</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Financial_Institution__c.RecordType.Name</field>
+                <operation>equals</operation>
+                <value>Generic FI</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>Financial_Institution__c</referenceTo>
         <relationshipLabel>Financial Securities</relationshipLabel>
         <relationshipName>Financial_Securities</relationshipName>
@@ -2536,6 +2545,25 @@ OR(
         <errorMessage>Please fill &quot;Financial Security Validation Case&quot; before making it active.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Expiry_date_greater_than_validity_start</fullName>
+        <active>true</active>
+        <description>Rule to ensure that the expiry date of FS is greater than validity start date</description>
+        <errorConditionFormula>OR(
+  AND(
+    ISNEW(),
+    Unlimited_Security__c = false,
+    Expiry_Date__c &lt;=  Validity_Start_Date__c 
+  ),
+  AND(
+    ISCHANGED(Expiry_Date__c) ,
+    Unlimited_Security__c = false,
+    Expiry_Date__c &lt;=  Validity_Start_Date__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>Expiry_Date__c</errorDisplayField>
+        <errorMessage>Expiry date of the Financial Security can&apos;t be less than the Validity start date.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Financial_Security_Validation_is_mandato</fullName>
         <active>true</active>
         <description>ACR 06749697 - A validation rule to force the user update the field &quot;Financial Security Validation&quot;</description>
@@ -2602,9 +2630,12 @@ NOT( ISPICKVAL( Region__c , &quot;China &amp; North Asia&quot;) )
         <fullName>SARA_Security_must_be_linked_to_HO</fullName>
         <active>true</active>
         <description>check that the financial security is linked to the top parent account of the agent (except for cross border guarantees and GDI).</description>
-        <errorConditionFormula>AND(NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HO&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HE&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;GE&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;AO&quot;)) , ISNEW(),  not(ispickval(Security_Type__c , &quot;Cross Border Guarantee&quot;)),not(ispickval(Security_Type__c , &quot;GDI&quot;)))</errorConditionFormula>
+        <errorConditionFormula>AND(NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HO&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HE&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;GE&quot;)),
+				NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;AO&quot;)),
+				NOT(ISPICKVAL(Account__r.IATA_ISO_Country__r.ANG_RHC_LocationType__c, &quot;Include all AEs&quot;))
+				, ISNEW(), not(ispickval(Security_Type__c , &quot;Cross Border Guarantee&quot;)),not(ispickval(Security_Type__c , &quot;GDI&quot;)))</errorConditionFormula>
         <errorDisplayField>Account__c</errorDisplayField>
-        <errorMessage>The financial security must be linked to the HO/AO/HE/GE account of the agent, never to a branch. Please classify the security accordingly or contact your administrator if any doubts.</errorMessage>
+        <errorMessage>The financial security must be linked to the HO/AO/HE/GE account of the agent, never to a branch (exception for China). Please classify the security accordingly or contact your administrator if any doubts.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>SARA_reception_information_mandatory</fullName>

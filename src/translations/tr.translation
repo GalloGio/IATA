@@ -169,6 +169,78 @@
         <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
     <customLabels>
+        <label>Belirtilen konumdaki adresi kontrol edemiyoruz.</label>
+        <name>AMS_DQ_Cannot_Check</name>
+    </customLabels>
+    <customLabels>
+        <label>Bu adresi bulamadık. Girişinizin doğru olduğundan eminseniz, yine de gönderebilirsiniz.</label>
+        <name>AMS_DQ_Cannot_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} şehri olmadan adresi doğrulayamıyoruz. Lütfen alanı doldurunuz.</label>
+        <name>AMS_DQ_Cannot_Validate_City</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} şehir ve caddesi olmadan adresi doğrulayamıyoruz. Lütfen alanı doldurunuz.</label>
+        <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>Bir {0} caddesi olmadan adresi doğrulayamıyoruz. Lütfen alanı doldurunuz.</label>
+        <name>AMS_DQ_Cannot_Validate_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>Adresi Kontrol Edin</label>
+        <name>AMS_DQ_Check_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} şehri zorunludur. Lütfen {1} şehir alanını doldurun.</label>
+        <name>AMS_DQ_City_Cumpulsory</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} şehri veritabanımızda bulunmuyor (veya farklı bir şekilde yazılmıştı).</label>
+        <name>AMS_DQ_City_Not_in_Database</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} şehri veri tabanımızda ama görünüşe göre veritabanımıza göre başka bir ülkeye ait.</label>
+        <name>AMS_DQ_City_in_Another_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} şehri veritabanımızda bulunuyor ancak başka bir Eyalet / İl ile ilişkili.</label>
+        <name>AMS_DQ_City_in_Another_State</name>
+    </customLabels>
+    <customLabels>
+        <label>Geçerli bir şehir giriniz.</label>
+        <name>AMS_DQ_Enter_Valid_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
+        <label>Eşleşen adres (ler) bulundu.</label>
+        <name>AMS_DQ_Found_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label>Şehir adını gözden geçirin. Girişinizin doğru olduğundan eminseniz gönder düğmesine tıklayın.</label>
+        <name>AMS_DQ_Review_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Ülke ve / veya şehir adlarını inceleyin. Girişinizin doğru olduğundan eminseniz gönder düğmesine tıklayın.</label>
+        <name>AMS_DQ_Review_Country_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Eyalet / il ve / veya şehir adını gözden geçirin.</label>
+        <name>AMS_DQ_Review_State</name>
+    </customLabels>
+    <customLabels>
+        <label>Eyalet / il ve / veya şehir adını gözden geçirin. Girişinizin doğru olduğundan eminseniz gönder düğmesine tıklayın.</label>
+        <name>AMS_DQ_Review_State_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} caddesi zorunludur. Lütfen {1} sokak alanını doldurun.</label>
+        <name>AMS_DQ_Street_Compulsory</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Due Diligence Lock --></label>
         <name>AMS_Due_Diligence_Lock</name>
     </customLabels>
@@ -717,6 +789,10 @@
         <name>ANG_ISSP_AFP_NoCreditCardMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ASD_HelpText --></label>
+        <name>ANG_ISSP_ASD_HelpText</name>
+    </customLabels>
+    <customLabels>
         <label>Akreditasyon Türü</label>
         <name>ANG_ISSP_AccreditationType</name>
     </customLabels>
@@ -735,6 +811,18 @@
     <customLabels>
         <label>Ortak Kurulu?(lar) :</label>
         <name>ANG_ISSP_AssociateEntity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BOP --></label>
+        <name>ANG_ISSP_BOP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BOP Access Link --></label>
+        <name>ANG_ISSP_BOP_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_BOP_China_URL --></label>
+        <name>ANG_ISSP_BOP_China_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- Case reason used in the case subject --></label>
@@ -867,6 +955,10 @@
     <customLabels>
         <label>Kabul ediyorum</label>
         <name>ANG_ISSP_GDI_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
     </customLabels>
     <customLabels>
         <label>Ülkenizde Finansal Güvence Sigortası sağlayan Finans Kurumlarının listesi</label>
@@ -1065,6 +1157,10 @@
         <name>ANG_ISSP_ProductComparisonFeature10Tooltip</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ProductComparisonFeature11 --></label>
+        <name>ANG_ISSP_ProductComparisonFeature11</name>
+    </customLabels>
+    <customLabels>
         <label>Özellik 1 Araç ?pucu</label>
         <name>ANG_ISSP_ProductComparisonFeature1Tooltip</name>
     </customLabels>
@@ -1211,6 +1307,10 @@
     <customLabels>
         <label>RHC Bilgileri</label>
         <name>ANG_ISSP_RHC_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG ISSP RHC Information China --></label>
+        <name>ANG_ISSP_RHC_Information_China</name>
     </customLabels>
     <customLabels>
         <label>Bakiye Güncellemesi Talep Et</label>
@@ -1361,6 +1461,10 @@
         <name>Account_information_updated</name>
     </customLabels>
     <customLabels>
+        <label><!-- Accreditation date --></label>
+        <name>Accreditation_date</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Action --></label>
         <name>Action</name>
     </customLabels>
@@ -1389,7 +1493,7 @@
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label><!-- AddressDoctorValidate --></label>
+        <label>Lütfen adresi kontrol edin düğmesine tıklayarak fatura ve teslimat adreslerinizi kontrol edin.</label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>
@@ -1447,6 +1551,14 @@
     <customLabels>
         <label><!-- AirlineSuspensionEmailRecipientsEurope --></label>
         <name>AirlineSuspensionEmailRecipientsEurope</name>
+    </customLabels>
+    <customLabels>
+        <label>Tüm Bildirimler</label>
+        <name>All_Notifications_Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>Duyurular</label>
+        <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- Ask Delete Attachment --></label>
@@ -1637,23 +1749,707 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Community --></label>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin --></label>
+        <name>CSP_ANG_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin_Authorized_Signature --></label>
+        <name>CSP_ANG_Portal_Admin_Authorized_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_About --></label>
+        <name>CSP_About</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Accept Terms Error --></label>
+        <name>CSP_Accept_Terms_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Account Domain Created --></label>
+        <name>CSP_Account_Domain_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_All --></label>
+        <name>CSP_Add_All</name>
+    </customLabels>
+    <customLabels>
+        <label>Yeni Belge Ekle</label>
+        <name>CSP_Add_New_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_New_User --></label>
+        <name>CSP_Add_New_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_User --></label>
+        <name>CSP_Add_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Duyuru</label>
+        <name>CSP_Announcement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Apply --></label>
+        <name>CSP_Apply</name>
+    </customLabels>
+    <customLabels>
+        <label>Bu makale yardımcı oldu mu?</label>
+        <name>CSP_ArticleHelpful</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Branch Offices --></label>
+        <name>CSP_Branch_Offices</name>
+    </customLabels>
+    <customLabels>
+        <label>Gelişmiş Arama</label>
+        <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket Profili</label>
+        <name>CSP_Breadcrumb_CompanyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_FAQ_Title --></label>
+        <name>CSP_Breadcrumb_FAQ_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Ana Sayfa</label>
+        <name>CSP_Breadcrumb_Home_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Hizmetler</label>
+        <name>CSP_Breadcrumb_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_Support_CreateNewCase --></label>
+        <name>CSP_Breadcrumb_Support_CreateNewCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Bize Ulaşın</label>
+        <name>CSP_Breadcrumb_Support_ReachUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Destek</label>
+        <name>CSP_Breadcrumb_Support_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
+        <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>İptal et</label>
+        <name>CSP_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} Hizmetini İptal Edin</label>
+        <name>CSP_CancelServiceActionLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} erişiminizi iptal edebilirsiniz</label>
+        <name>CSP_CancelServiceMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} hizmetine erişimi iptal etmek istediğinizden emin misiniz?</label>
+        <name>CSP_Cancel_Access_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Erişimi İptal Edin</label>
+        <name>CSP_Cancel_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>İsteği İptal Edin</label>
+        <name>CSP_Cancel_Request</name>
+    </customLabels>
+    <customLabels>
+        <label>Bu durum hakkında IATA (Uluslararası Hava Taşımacılığı Birliği) Müşteri Hizmetlerine mesaj gönderebilir ve alabilirsiniz.</label>
+        <name>CSP_CaseMessage_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Yorumlarınızı buraya yazın</label>
+        <name>CSP_CaseMessage_InputPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Mesajlar</label>
+        <name>CSP_CaseMessage_MessageTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Yorum Başarıyla Eklendi</label>
+        <name>CSP_CaseMessage_SubmitSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgu numarası</label>
+        <name>CSP_CaseNumber</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgular</label>
+        <name>CSP_Cases</name>
+    </customLabels>
+    <customLabels>
+        <label>Topluluk</label>
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Portal_Status --></label>
+        <label>Şirket Sorgularımı Görüntüle</label>
+        <name>CSP_CompanyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket Profili</label>
+        <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;b&gt;{1}&lt;/b&gt; için &lt;b&gt;{0}&lt;/b&gt; işlemine erişimi reddetmek istediğinizden emin misiniz?</label>
+        <name>CSP_Confirm_Deny_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;b&gt;{1}&lt;/b&gt; için &lt;b&gt;{0}&lt;/b&gt; hizmetine erişime izin vermek istediğinize emin misiniz?</label>
+        <name>CSP_Confirm_Grant_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} erişim isteğiniz portal yöneticilerine iletildi. İşlemle ilgili herhangi bir sorunuz veya talebiniz varsa, aşağıdaki bir yöneticiyle iletişime geçebilirsiniz:</label>
+        <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Continue --></label>
+        <name>CSP_Continue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Create_Contact_Complete_Field --></label>
+        <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
+    </customLabels>
+    <customLabels>
+        <label>Kullanıcı Erişimini Reddedin</label>
+        <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Evraklar</label>
+        <name>CSP_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label>Tüm Belgeler</label>
+        <name>CSP_DocumentsAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Evraklar</label>
+        <name>CSP_DocumentsLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen aradığınız belgenin ait olduğu kategoriyi seçin.</label>
+        <name>CSP_DocumentsSelCat</name>
+    </customLabels>
+    <customLabels>
+        <label>Yayın Ülkeleri</label>
+        <name>CSP_Documents_PubliCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Domain Error Message --></label>
+        <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
+    </customLabels>
+    <customLabels>
+        <label>Bize Ulaşın</label>
+        <name>CSP_FAQReachUsBanner_ButtonText</name>
+    </customLabels>
+    <customLabels>
+        <label>Bir sorgu oluşturun, doğrudan IATA (Uluslararası Hava Taşımacılığı Birliği) Temsilcisi ile sohbet edin veya bizi arayın.</label>
+        <name>CSP_FAQReachUsBanner_Text</name>
+    </customLabels>
+    <customLabels>
+        <label>Daha fazla yardıma mı ihtiyacınız var?</label>
+        <name>CSP_FAQReachUsBanner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Sık Sorulan Sorular</label>
+        <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Ana kategorilerden birini seçin</label>
+        <name>CSP_FAQ_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_FAQs_Title --></label>
+        <name>CSP_FAQs_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Favori Hizmetler</label>
+        <name>CSP_FavoriteServices_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Özellikler</label>
+        <name>CSP_Features_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Bu makaleyi nasıl daha kullanışlı hale getirebileceğimizi bize söyleyin.</label>
+        <name>CSP_FeedbackBody</name>
+    </customLabels>
+    <customLabels>
+        <label>Makalelerimizin kalitesini yükseltmemize yardımcı olmak için görüşlerinize değer veriyoruz.</label>
+        <name>CSP_FeedbackBody2</name>
+    </customLabels>
+    <customLabels>
+        <label>Geri Bildirim</label>
+        <name>CSP_FeedbackTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filter --></label>
+        <name>CSP_Filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filtered --></label>
+        <name>CSP_Filtered</name>
+    </customLabels>
+    <customLabels>
+        <label>Sizin İçin</label>
+        <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>Kullanıcıya Erişim İzni Verin</label>
+        <name>CSP_Grant_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Merhaba [username]</label>
+        <name>CSP_Home_WelcomeTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Çıkış Yap</label>
+        <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>kullanıcılarrı aşağıdaki listeden yönetebilirsiniz.</label>
+        <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>Hizmeti Yönetin</label>
+        <name>CSP_Manage_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Hizmetleri Yönetin</label>
+        <name>CSP_Manage_Services</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Manage_Services --></label>
+        <name>CSP_Manage_Services_NoIEPAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgularımı Görüntüle</label>
+        <name>CSP_MyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>İsim</label>
+        <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewServiceUserMessage --></label>
+        <name>CSP_NewServiceUserMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP New Email Domain --></label>
+        <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label>Gösterilecek ilgili hesap yok.</label>
+        <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Şimdilik hiçbir sorgunuz yok.</label>
+        <name>CSP_NoCases1</name>
+    </customLabels>
+    <customLabels>
+        <label>Sahip olunca, burada en yenilerini göreceksiniz.</label>
+        <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>Sonuç Yok</label>
+        <name>CSP_NoSearchResults</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Gerekirse, kasaya belgeler ekleyebilirsiniz.&quot;</label>
+        <name>CSP_No_Documents_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Haftalık Takvim</label>
+        <name>CSP_OperationalCalendar_HomeTileTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Aylık görün</label>
+        <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgunuza devam etmek için bilginize ihtiyacımız var.</label>
+        <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PortalPath --></label>
+        <name>CSP_PortalPath</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Portal_Administrators --></label>
+        <name>CSP_Portal_Administrators</name>
+    </customLabels>
+    <customLabels>
+        <label>Portal Durumu</label>
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_SelectCommunity --></label>
+        <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
+        <name>CSP_Profile_PrivacyManagement_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Text --></label>
+        <name>CSP_Profile_PrivacyManagement_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Title --></label>
+        <name>CSP_Profile_PrivacyManagement_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_URL --></label>
+        <name>CSP_Profile_PrivacyManagement_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgu nedir ve ne zaman ihtiyacım olacak?</label>
+        <name>CSP_Question1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question1URL --></label>
+        <name>CSP_Question1URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Bir sorgunun ayrıntılarını nasıl görebilir ve güncelleyebilirim?</label>
+        <name>CSP_Question2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question2URL --></label>
+        <name>CSP_Question2URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Son Sorgular</label>
+        <name>CSP_RecentCases</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP RecentCases HelpText --></label>
+        <name>CSP_RecentCases_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Recent Cases Support --></label>
+        <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Record Deleted --></label>
+        <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>İlgili Makaleler</label>
+        <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveAllFilters --></label>
+        <name>CSP_RemoveAllFilters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveContact_Reason --></label>
+        <name>CSP_RemoveContact_Reason</name>
+    </customLabels>
+    <customLabels>
+        <label>Servis İsteği</label>
+        <name>CSP_Request_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Kaydedin</label>
+        <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>Belge ayrıntılarına göre arayın</label>
+        <name>CSP_SearchDocuments</name>
+    </customLabels>
+    <customLabels>
+        <label>SSS detaylarına göre arayın</label>
+        <name>CSP_SearchFAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>Gelişmiş Arama</label>
+        <name>CSP_Search_AdvancedSearch</name>
+    </customLabels>
+    <customLabels>
+        <label>Ülke</label>
+        <name>CSP_Search_Case_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Tip</label>
+        <name>CSP_Search_Case_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Kategori</label>
+        <name>CSP_Search_Documents_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Ürün Tipi</label>
+        <name>CSP_Search_Documents_ProdType</name>
+    </customLabels>
+    <customLabels>
+        <label>Yayınlanan Ülke</label>
+        <name>CSP_Search_Documents_PubCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>Kategori</label>
+        <name>CSP_Search_FAQ_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Altbaşlık</label>
+        <name>CSP_Search_FAQ_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>Konu</label>
+        <name>CSP_Search_FAQ_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>Servisleri, sorguları, desteği ve daha fazlasını bulun</label>
+        <name>CSP_Search_Home_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Bir servis kullanıcısı bulun</label>
+        <name>CSP_Search_In_Contacts_In_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Arama Sonucu Bulunamadı</label>
+        <name>CSP_Search_NoResults_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>Üzgünüz, için herhangi bir sonuç yok.</label>
+        <name>CSP_Search_NoResults_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>Anahtar kelimelerinizin yazılışını kontrol edin veya yenileri ile tekrar deneyin.</label>
+        <name>CSP_Search_NoResults_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>Arama Servisleri</label>
+        <name>CSP_Search_Services_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Arama Desteği</label>
+        <name>CSP_Search_Support_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>En İyi Sonuçlar</label>
+        <name>CSP_Search_TopResults</name>
+    </customLabels>
+    <customLabels>
+        <label>Arama terimlerinizi yazın</label>
+        <name>CSP_Search_TypeIn_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>Aramaya başlamak için lütfen 2 harften fazla bir şey yazın.</label>
+        <name>CSP_Search_TypeIn_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>Arama sonuçlarınızı daha da iyileştirmek için bir filtre bölümü seçin.</label>
+        <name>CSP_Search_TypeIn_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Sorun Numarası, Konusu veya Açıklamasına Göre Arama&quot;</label>
+        <name>CSP_SearchingOn</name>
+    </customLabels>
+    <customLabels>
+        <label>Tümünü Gör</label>
+        <name>CSP_SeeAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Topluluk Seçin</label>
         <name>CSP_SelectCommunity</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_SelectPortalStatus --></label>
+        <label>Portal Durumu Seçin</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_selectReason --></label>
+        <label>Servis Erişimi</label>
+        <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>Erişim İstendi</label>
+        <name>CSP_Services_AccessRequested</name>
+    </customLabels>
+    <customLabels>
+        <label>Erişim Talep Edildi</label>
+        <name>CSP_Services_AccessRequestedTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirketiniz için mevcut tüm hizmetler aşağıda listelenmiştir.</label>
+        <name>CSP_Services_AvailableServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Mevcut Hizmetler</label>
+        <name>CSP_Services_AvailableServicesTabTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Servise Git</label>
+        <name>CSP_Services_GoToService</name>
+    </customLabels>
+    <customLabels>
+        <label>Hizmetlere Gidin</label>
+        <name>CSP_Services_GoToServices</name>
+    </customLabels>
+    <customLabels>
+        <label>Bir hizmeti mi arıyorsunuz?</label>
+        <name>CSP_Services_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Hizmeti Yönet</label>
+        <name>CSP_Services_ManageService</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirketinizin hizmetleri aşağıda listelenmiştir.</label>
+        <name>CSP_Services_MyServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Hizmetlerim</label>
+        <name>CSP_Services_MyServicesTabTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Mevcut Hizmetlere Bakın</label>
+        <name>CSP_Services_RequestServiceBannerButton</name>
+    </customLabels>
+    <customLabels>
+        <label>Ayrıntılı servis bilgilerini görüntüleyin ve mevcut servislere erişim isteyin.</label>
+        <name>CSP_Services_RequestServiceBannerSubtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Hizmet talebi</label>
+        <name>CSP_Services_RequestServiceBannerTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Servis Bilgisi</label>
+        <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>Hizmetler</label>
+        <name>CSP_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Ayarlar</label>
+        <name>CSP_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label>Durum</label>
+        <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Gönder</label>
+        <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Success --></label>
+        <name>CSP_Success</name>
+    </customLabels>
+    <customLabels>
+        <label>Destek</label>
+        <name>CSP_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>Nasıl yardımcı olabiliriz?</label>
+        <name>CSP_Support_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Pdf, jpeg, jpg, png, ppt, pptx, xls, xlsx, tif, tiff, zip dosyalarını yükleyebilirsiniz. Boyut 50 MB&apos;den küçük olmalıdır.</label>
+        <name>CSP_Supported_File_Extensions</name>
+    </customLabels>
+    <customLabels>
+        <label>Görev</label>
+        <name>CSP_Task</name>
+    </customLabels>
+    <customLabels>
+        <label>Geri bildiriminiz için teşekkür ederiz.</label>
+        <name>CSP_ThanksFeedback</name>
+    </customLabels>
+    <customLabels>
+        <label>Başlık</label>
+        <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgunun Türü</label>
+        <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Announcements --></label>
+        <name>CSP_You_Dont_Have_Announcements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Notifications --></label>
+        <name>CSP_You_Dont_Have_Notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Tasks --></label>
+        <name>CSP_You_Dont_Have_Tasks</name>
+    </customLabels>
+    <customLabels>
+        <label>Acente Kredi Riski</label>
+        <name>CSP_cpcc_Agent_Credit_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label>Yetkili İmzası</label>
+        <name>CSP_cpcc_Authorised_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>BSP/CASS Ödeme Sorumlusu</label>
+        <name>CSP_cpcc_BSP_CASS_Payment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>İletişim Türü Durumu</label>
+        <name>CSP_cpcc_Contact_Type_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Finansal Değerlendirme Sorumlusu</label>
+        <name>CSP_cpcc_Financial_Assessment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>Fatura Sorumlusu</label>
+        <name>CSP_cpcc_Invoice_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>Yeni Sorumlu Profili</label>
+        <name>CSP_cpcc_New_Contact_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>Portal Yöneticisi</label>
+        <name>CSP_cpcc_Portal_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label>Çalışma Alanları</label>
+        <name>CSP_cpcc_Working_Areas</name>
+    </customLabels>
+    <customLabels>
+        <label>Sebep Seçin</label>
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
@@ -1707,6 +2503,10 @@
     <customLabels>
         <label><!-- CaseValidation - Area --></label>
         <name>CaseValidation_Area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CaseValidation - Area2 --></label>
+        <name>CaseValidation_Area2</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
@@ -1901,6 +2701,10 @@
         <name>CurrencyCenter_BSP_CASS_Proffile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_ICCS_Availability --></label>
+        <name>CurrencyCenter_BSP_ICCS_Availability</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -1931,6 +2735,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_CASS --></label>
         <name>CurrencyCenter_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_CASS_ICCS_Availability --></label>
+        <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
@@ -3321,7 +4129,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>Profil</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -7906,6 +8714,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label>Dikkat! Sahiplik bilgileri bir Acenteye kopyalandığında hedef Acentedeki mevcut sahiplik bilgileri silinir.</label>
+        <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Country Select --></label>
         <name>ISSP_AMS_Country_Select</name>
     </customLabels>
@@ -8590,6 +9402,14 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Local_Details_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator --></label>
+        <name>ISSP_AMS_MSO_Aggregator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator_Info --></label>
+        <name>ISSP_AMS_MSO_Aggregator_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_MSO_Alternatively --></label>
         <name>ISSP_AMS_MSO_Alternatively</name>
     </customLabels>
@@ -9198,6 +10018,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_NoC_PDF_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Partner --></label>
+        <name>ISSP_AMS_NoC_Partner</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NoC Percent Ownership --></label>
         <name>ISSP_AMS_NoC_Percent_Ownership</name>
     </customLabels>
@@ -9686,6 +10510,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
+        <label>Hedef Hesapları Seçin</label>
+        <name>ISSP_AMS_Select_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>* Seçili Ortak Kurulu?lar</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
@@ -9704,6 +10532,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
     <customLabels>
         <label><!-- ISSP_AMS_Signatory --></label>
         <name>ISSP_AMS_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>İl/İlçe</label>
+        <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_State_Names_Addresses_Field_Label --></label>
@@ -11094,6 +11926,22 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
+        <label>Kontrol ediliyor...</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
+    </customLabels>
+    <customLabels>
+        <label>Bu eylem, bu hesaptaki sahiplik bilgilerini hiyerarşinizdeki seçtiğiniz konumlara kopyalamanıza izin verir. Bu sayfadaki tüm bilgileri Güncellemeyi Onayladıktan sonra, bu eylem ile hedef acentelere uygulanan değişiklikleri görüntüleyebilirsiniz.</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
+    </customLabels>
+    <customLabels>
+        <label>Acenteler işleme alındı</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
+    </customLabels>
+    <customLabels>
+        <label>Sahiplik Durumunu Kopyalayın</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
+    </customLabels>
+    <customLabels>
         <label>PCI Uygunlu?u ile devam etmek için buraya t?klay?n</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
@@ -11104,6 +11952,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
     <customLabels>
         <label>Ülke Gereksinimlerini Görüntüle</label>
         <name>ISSP_ANG_Country_Req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Type of Agency --></label>
+        <name>ISSP_ANG_Country_Reqs_Type_Of_Agency</name>
     </customLabels>
     <customLabels>
         <label>Tüm Hiyerar?i</label>
@@ -11347,7 +12199,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;Atanan Alt Cüzdanlar?n finansmanlar?n? yönetir&lt;/li&gt; &lt;li&gt;“Bilet Olu?turucu” IATA EasyPay kullan?c?lar?n?n eri?imini ve Alt Cüzdanlar?n? yönetir&lt;/li&gt; &lt;li&gt;GDS arac?l???yla bilet olu?turmak için kullan?lacak olan atanm?? cüzdanlardan IATA EasyPay Numaralar? olu?turur&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;GDS arac?l???yla bilet olu?turmak için kullan?lacak olan herhangi bir atanm?? cüzdandan IATA EasyPay Numaralar? olu?turur&lt;/li&gt;&lt;/ul&gt;</label>
@@ -12056,6 +12908,14 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
         <name>ISSP_Change_Request_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP China Domestic --></label>
+        <name>ISSP_China_Domestic</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP China International --></label>
+        <name>ISSP_China_International</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email --></label>
         <name>ISSP_ClickHereLogIn</name>
     </customLabels>
@@ -12066,6 +12926,10 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
     <customLabels>
         <label>Kapalı</label>
         <name>ISSP_ClosedIFAPCasesStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Closed_Non_Compliance --></label>
+        <name>ISSP_Closed_Non_Compliance</name>
     </customLabels>
     <customLabels>
         <label>Adres Bilgileri</label>
@@ -12162,6 +13026,10 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
     <customLabels>
         <label>Kişi Adı</label>
         <name>ISSP_ContactName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
         <label>İrtibat Bilgileri</label>
@@ -12864,6 +13732,14 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
         <name>ISSP_EnterValidString</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
+    </customLabels>
+    <customLabels>
         <label>Metin Girin</label>
         <name>ISSP_Enter_Value</name>
     </customLabels>
@@ -13153,6 +14029,10 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
+        <label>Dâhil olmayı talep ederseniz, havayolları, oteller ve tur operatörleri gibi sektör tedarikçileri acentenize kendi ürünleri, kampanyaları, satış ve acente politikaları hakkında önemli bilgiler gönderebilecek.</label>
+        <name>ISSP_Gdp_Opt_In_Hint</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_GeneralPublicNotFound --></label>
         <name>ISSP_GeneralPublicNotFound</name>
     </customLabels>
@@ -13379,6 +14259,10 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
     <customLabels>
         <label><!-- ISSP IATA Designator --></label>
         <name>ISSP_IATA_Designator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IATA_Location_Code --></label>
+        <name>ISSP_IATA_Location_Code</name>
     </customLabels>
     <customLabels>
         <label>Hatalı IATA kodu. Lütfen doğru IATA Kodunu girin. IATA kodunuz yoksa, lütfen ‘Müşteri Türü’ olarak ‘Diğer’ seçeneğini seçin.</label>
@@ -14574,6 +15458,10 @@ Akredite edilmiş acenteler için bir çok IATA faturası BSP/CASS yoluyla tahsi
         <name>ISSP_RHC_HUB_AFP_Cash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP RHC HUB AFP China --></label>
+        <name>ISSP_RHC_HUB_AFP_China</name>
+    </customLabels>
+    <customLabels>
         <label>Kredi Kart?</label>
         <name>ISSP_RHC_HUB_AFP_Credit_Card</name>
     </customLabels>
@@ -14676,6 +15564,10 @@ Akredite edilmiş acenteler için bir çok IATA faturası BSP/CASS yoluyla tahsi
     <customLabels>
         <label>Lütfen soyadınızı girin</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>Lütfen ülkenizi seçin</label>
@@ -14954,8 +15846,16 @@ Parolanızı sıfırlamak isterseniz lütfen giriş ekranına geri dönün ve �
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
+        <label>GDP Opt-in harici yapılan değişiklikler Yıllık Yeniden Onaylama süreci boyunca yapılmalıdır</label>
+        <name>ISSP_Rev_Case_Open_Acc_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP SELECT COUNTRY --></label>
         <name>ISSP_SELECT_COUNTRY</name>
+    </customLabels>
+    <customLabels>
+        <label>- İl Seçin -</label>
+        <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP SELECT THREE or MORE --></label>
@@ -15600,6 +16500,10 @@ Parolanızı sıfırlamak isterseniz lütfen giriş ekranına geri dönün ve �
     <customLabels>
         <label><!-- ISSP Status change to Inactive --></label>
         <name>ISSP_Status_change_to_Inactive</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
     </customLabels>
     <customLabels>
         <label>Alt Tür</label>
@@ -17003,6 +17907,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
+        <label>Okundu olarak işaretle</label>
+        <name>MarkAsRead_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -17135,6 +18043,22 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>Not_Applicable</name>
     </customLabels>
     <customLabels>
+        <label><!-- Not In CNS Group Error --></label>
+        <name>Not_In_CNS_Group_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Bildirim</label>
+        <name>Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>Bildirimler</label>
+        <name>NotificationCenter_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Bildirim Ayrıntısı</label>
+        <name>NotificationDetail_Detail</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Notions_Essentl_Tarif_Billet_Description --></label>
         <name>Notions_Essentl_Tarif_Billet_Description</name>
     </customLabels>
@@ -17185,6 +18109,18 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>Lütfen kategori seçin</label>
@@ -18670,6 +19606,18 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Please_select_the_target_Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- PortalAccess --></label>
+        <name>PortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal Name to Redirect --></label>
+        <name>PortalNameRedirect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PortalService --></label>
+        <name>PortalService</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>
@@ -18858,6 +19806,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Remaining_Owners</name>
     </customLabels>
     <customLabels>
+        <label><!-- Remittance frequency --></label>
+        <name>Remittance_frequency</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Renewal_Number --></label>
         <name>Renewal_Number</name>
     </customLabels>
@@ -19024,6 +19976,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>ShoppingCartQtyMsg</name>
     </customLabels>
     <customLabels>
+        <label><!-- Error displayed when a RO field is changed in a SIDRA Lite case --></label>
+        <name>SidraLiteROFieldError</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SignIn --></label>
         <name>SignIn</name>
     </customLabels>
@@ -19112,6 +20068,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label>Görevler</label>
+        <name>Tasks_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Taxes --></label>
         <name>Taxes</name>
     </customLabels>
@@ -19168,6 +20128,14 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
+        <label>&quot;{0}, Portala Erişim istedi.&quot;</label>
+        <name>UserRequestPortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;{0}, {1} hizmetine erişim istedi&quot;</label>
+        <name>UserRequestServiceAccess</name>
+    </customLabels>
+    <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
     </customLabels>
@@ -19194,6 +20162,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customLabels>
         <label><!-- ViewCart --></label>
         <name>ViewCart</name>
+    </customLabels>
+    <customLabels>
+        <label>Detayları Göster</label>
+        <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- View_6_more --></label>
@@ -19290,6 +20262,498 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customLabels>
         <label><!-- Contacting us --></label>
         <name>contacting_us</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Relocation --></label>
+        <name>csp_AccountRelocateSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>Akreditasyon Süreci</label>
+        <name>csp_Accreditation_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>Ana kategoriyi seçin</label>
+        <name>csp_ActionForCategoryPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>Hizmete Erişin</label>
+        <name>csp_ActionForTopicPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>Önerilen destek seçeneklerini görmek için formu doldurun</label>
+        <name>csp_ActionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_AgencyReadOnly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Profile section label --></label>
+        <name>csp_Basics_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Bizi Arayın</label>
+        <name>csp_Call_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Uygun dönem:</label>
+        <name>csp_Call_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Bir IATA (Uluslararası Hava Taşımacılığı Birliği) Temsilcisi bunun üzerinde çalışmaya başlayacaktır.</label>
+        <name>csp_CaseBeingWorked</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgu başarıyla oluşturuldu.</label>
+        <name>csp_CaseCreatedSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>Yakında bir cevap alacaksınız.</label>
+        <name>csp_CaseResponseGuarantee</name>
+    </customLabels>
+    <customLabels>
+        <label>Güncelleme durumunda yorum, belge ve alıcı ekleyebilirsiniz. Durumu takip edebilir ve güncellemeler yapabilirsiniz.</label>
+        <name>csp_CaseTracking</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgu Oluştur</label>
+        <name>csp_Case_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Nasıl yardımcı olabileceğimizi bize söyleyin</label>
+        <name>csp_Case_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Bizimle Sohbet edin</label>
+        <name>csp_Chat_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA (Uluslararası Hava Taşımacılığı Birliği) Temsilcisi ile sohbet edin</label>
+        <name>csp_Chat_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Telefon veya sohbet yoluyla, IATA (Uluslararası Hava Taşımacılığı Birliği) portalı üzerinden doğrudan destek alın.</label>
+        <name>csp_ChooseOption</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket İletişim Bilgisi</label>
+        <name>csp_CompanyContact_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Complete required field label --></label>
+        <name>csp_CompleteField</name>
+    </customLabels>
+    <customLabels>
+        <label>Paylaştığınız için teşekkürler.</label>
+        <name>csp_Compliment</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA (Uluslararası Hava Taşımacılığı Birliği)&apos;da mükemmel bir müşteri hizmeti sunmaya çalışıyoruz ve sizin de ilgilendiğinizi bilmek harika. Bize verdiğiniz tüm geri bildirimleri dikkate alırız.</label>
+        <name>csp_ComplimentInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>Övgü</label>
+        <name>csp_Compliment_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Şikâyet</label>
+        <name>csp_Concern</name>
+    </customLabels>
+    <customLabels>
+        <label>Şikâyet</label>
+        <name>csp_Concern_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgunuzun ülkesini veya bölgesini seçin</label>
+        <name>csp_CountryOrRegionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgu Oluştur &amp; Ek Ekleyin</label>
+        <name>csp_CreateNewCaseAddAttachment</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgunuzu araştırmamıza yardımcı olacak tüm ayrıntıları sağlayın</label>
+        <name>csp_CreateNewCaseMainInputBoxSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Açıklama</label>
+        <name>csp_CreateNewCaseMainInputBoxTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Başka bir Portal kullanıcısı ekle</label>
+        <name>csp_CreateNewCaseMainInputEmailsSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Ek alıcılar</label>
+        <name>csp_CreateNewCaseMainInputEmailsTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorunuz ne hakkında?</label>
+        <name>csp_CreateNewCaseMainInputSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Konu</label>
+        <name>csp_CreateNewCaseMainInputTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>İlgili Hesap Kodu</label>
+        <name>csp_CreateNewCaseMainPicklistLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgu Oluştur</label>
+        <name>csp_CreateNewCaseTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Seçtiniz</label>
+        <name>csp_CreateNewCaseTopSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen bize daha fazla bilgi verin.</label>
+        <name>csp_CreateNewCaseTopSubSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Yeni Kişi Oluşturun</label>
+        <name>csp_CreateNewContact</name>
+    </customLabels>
+    <customLabels>
+        <label>Acil Durum Sorgusu</label>
+        <name>csp_Emergency_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>Finansal İnceleme</label>
+        <name>csp_Financial_Review</name>
+    </customLabels>
+    <customLabels>
+        <label>Şube Bulun</label>
+        <name>csp_Find_Branch</name>
+    </customLabels>
+    <customLabels>
+        <label>Kişi Bulun</label>
+        <name>csp_Find_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Facebook_URL --></label>
+        <name>csp_Footer_Facebook_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA (Uluslararası Hava Taşımacılığı Birliği) Mağazası</label>
+        <name>csp_Footer_IATA_Store</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_IataStore_URL --></label>
+        <name>csp_Footer_IataStore_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Legal_URL --></label>
+        <name>csp_Footer_Legal_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Linkedin_URL --></label>
+        <name>csp_Footer_Linkedin_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Privacy_URL --></label>
+        <name>csp_Footer_Privacy_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Twitter_URL --></label>
+        <name>csp_Footer_Twitter_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Youtube_URL --></label>
+        <name>csp_Footer_Youtube_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Ana Sayfaya Gidin</label>
+        <name>csp_GoToHomepage</name>
+    </customLabels>
+    <customLabels>
+        <label>Desteğe Git</label>
+        <name>csp_GoToSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA (Uluslararası Hava Taşımacılığı Birliği) Ödeme</label>
+        <name>csp_IATA_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label>IEP Yöneticisi</label>
+        <name>csp_IEPAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label>İletişim Desteği</label>
+        <name>csp_IntentionOnThisPage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_InvalidPhoneValue --></label>
+        <name>csp_InvalidPhoneValue</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgunuz bir acil durum mu?</label>
+        <name>csp_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Son Giriş</label>
+        <name>csp_LastLoginDate</name>
+    </customLabels>
+    <customLabels>
+        <label>Sohbet mevcut değil. Lütfen arayın veya bir sorgu oluşturun.</label>
+        <name>csp_LiveAgentBadConfig</name>
+    </customLabels>
+    <customLabels>
+        <label>Sohbet bağlantısı zaman aşımına uğradı. Sayfayı yenileyebilir veya bir sorgu oluşturabilirsiniz</label>
+        <name>csp_LiveAgentTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>Live Agent bağlantısı zaman aşımı. Lütfen sayfayı yenileyin ya da Destek ile iletişime geçin.</label>
+        <name>csp_LiveTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>Master Cüzdan Müdürü</label>
+        <name>csp_MasterWalletManager</name>
+    </customLabels>
+    <customLabels>
+        <label>Görev tanımı</label>
+        <name>csp_MembershipFunction</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket</label>
+        <name>csp_My_Profile_Company</name>
+    </customLabels>
+    <customLabels>
+        <label>E-posta</label>
+        <name>csp_My_Profile_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>İş Ünvanı</label>
+        <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_NoPortalServiceNameFound</name>
+    </customLabels>
+    <customLabels>
+        <label>Tercih ettiğiniz destek seçeneğini seçin</label>
+        <name>csp_Options_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Süreç</label>
+        <name>csp_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>İş bağlantısı</label>
+        <name>csp_Profile_BusinessContact</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket E-Posta Adresl</label>
+        <name>csp_Profile_CompanyEmail</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA kodu</label>
+        <name>csp_Profile_IATACode</name>
+    </customLabels>
+    <customLabels>
+        <label>Kişisel iletişim Bilgileri</label>
+        <name>csp_Profile_PersonalContact</name>
+    </customLabels>
+    <customLabels>
+        <label>Portal Erişilebilirliği</label>
+        <name>csp_Profile_PortalAccessibility</name>
+    </customLabels>
+    <customLabels>
+        <label>Profesyonel</label>
+        <name>csp_Profile_Professional</name>
+    </customLabels>
+    <customLabels>
+        <label>Web sitesi</label>
+        <name>csp_Profile_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Destek</label>
+        <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Acentenizin şu anda açık IATA (Uluslararası Hava Taşımacılığı Birliği) ATA (Uluslararası Hava Taşımacılığı Birliği) EasyPay Hesabı yok. &lt;br /&gt; &lt;br /&gt;IATA (Uluslararası Hava Taşımacılığı Birliği) EasyPay Hesabı açmalarını istemek için lütfen Genel Merkezinizin Yetkili İmzası ile iletişim kurun. Portal Yöneticisi olarak, güncelleyebilirsiniz &lt;a href=&quot;/my-profile&quot;&gt;Kişisel Bilgi&lt;/a&gt; kendinizi Yasal Yetkili İmza Sahibi olarak yetkilendirmek veya doğru portal yöneticisini &lt;a href =&quot;/company-profile&quot;&gt;Şirket Yönetim -&gt; İletişim Bilgileri&lt;/a&gt; sayfasından atayın ve EasyPay hesabınızı açmalarını isteyin.&lt;br/&gt;&lt;br/&gt;Yardıma ihtiyacınız olursa lütfen &lt;a href=&quot;/Support-Reach-Us&quot;&gt;İletişim Desteği&lt;/a&gt; ile temasa geçin.</label>
+        <name>csp_RequestService_ContactPortalAdmin_Alt</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Acentenizin şu anda açık bir IATA (Uluslararası Hava Taşımacılığı Birliği) EasyPay Hesabı bulunmamaktadır.&lt;br/&gt;&lt;br/&gt;Bir IATA (Uluslararası Hava Taşımacılığı Birliği) EasyPay Hesabı açması için Genel Merkez&apos;inizdeki İmzadan Yetkili Kişi ile temasa geçin. IATA (Uluslararası Hava Taşımacılığı Birliği) EasyPay Hesabı açmak için, Acentenizin hem Portal Yöneticisi hem de Yetkili İmza sahibi olmanız gerekir.&lt;br/&gt;&lt;br/&gt;Lütfen yardıma ihtiyacınız olursa&lt; a href=&quot;/Support-Reach-Us&quot;&gt;İletişim Desteğiişime&lt;/a&gt; geçin.</label>
+        <name>csp_RequestService_ContactPortalAdmin_LegalAuth</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_RequestService_ContactSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>Kurumunuzdan bir Yetkili İmza, Ajansınızın IEP Hesabının açılması işlemini çoktan başlattı. IEP Hesabı başarıyla açıldığında, bu servise erişebileceksiniz.</label>
+        <name>csp_RequestService_IEPAccountOpenInProgress</name>
+    </customLabels>
+    <customLabels>
+        <label>Acentenizin IATA EasyPay hesabını açmak için başvurunuzu tamamlayabileceğiniz EasyPay Portal&apos;a yönlendirileceksiniz. &lt;br /&gt; &lt;br /&gt; Devam ederek, IATA (Uluslararası Hava Taşımacılığı Birliği)‘nın adınızı, soyadınızı, e-posta adresinizi ve IATA kodu ve ilgili diğer kişisel bilgileri IATA (Uluslararası Hava Taşımacılığı Birliği) EasyPay Tedarikçilerine göndermesini kabul edersiniz. Bu bilgi EasyPay Tedarikçileri tarafından yalnızca IATA (Uluslararası Hava Taşımacılığı Birliği) EasyPay hesabınızı açmak ve yönetmek ve genel olarak EasyPay hizmetlerini işletmek için veya yasaların gerektirdiği başka şekillerde kullanılır. &lt;br /&gt; &lt;br /&gt; Devam etmek istiyor musunuz?</label>
+        <name>csp_RequestService_ProceedIEPAccountOpen</name>
+    </customLabels>
+    <customLabels>
+        <label>Erişim Talep Edin</label>
+        <name>csp_Request_New_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Satış Ödeme</label>
+        <name>csp_Sales_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_SearchNotPerformed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceAccessConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceRequestConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label>Altbaşlık</label>
+        <name>csp_Sub_Topic_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Altbaşlık</label>
+        <name>csp_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>Öneri</label>
+        <name>csp_Suggest_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Bunlar yardımcı olabilir</label>
+        <name>csp_Suggestion_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Bizler yardım etmek için buradayız.</label>
+        <name>csp_SupportCategoriesInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>Soru</label>
+        <name>csp_SupportReachUs_AskTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Bizler yardım etmek için buradayız.</label>
+        <name>csp_SupportReachUs_BasicInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>Kategori</label>
+        <name>csp_SupportReachUs_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Övgü</label>
+        <name>csp_SupportReachUs_ComplimentTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Şikâyet</label>
+        <name>csp_SupportReachUs_ConcernTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Ülke</label>
+        <name>csp_SupportReachUs_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgunuz bir acil durum mu?</label>
+        <name>csp_SupportReachUs_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Telefon veya sohbet yoluyla, IATA (Uluslararası Hava Taşımacılığı Birliği) portalı üzerinden doğrudan destek alın.</label>
+        <name>csp_SupportReachUs_PlzChoosePath</name>
+    </customLabels>
+    <customLabels>
+        <label>Ana kategoriyi seçin</label>
+        <name>csp_SupportReachUs_SelectCategory</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgunuzun ülkesini veya bölgesini seçin</label>
+        <name>csp_SupportReachUs_SelectCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>Konuyu seçin</label>
+        <name>csp_SupportReachUs_SelectTopic</name>
+    </customLabels>
+    <customLabels>
+        <label>Destek Seçeneklerini Göster</label>
+        <name>csp_SupportReachUs_ShowSupportOptions</name>
+    </customLabels>
+    <customLabels>
+        <label>Önerilen destek seçeneklerini görmek için formu doldurun</label>
+        <name>csp_SupportReachUs_SpecifyCaseDetails</name>
+    </customLabels>
+    <customLabels>
+        <label>Öneri</label>
+        <name>csp_SupportReachUs_SuggestTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Konu</label>
+        <name>csp_SupportReachUs_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>Bizimle Ulaşın</label>
+        <name>csp_SupportReachUs_WhatDoYouWant</name>
+    </customLabels>
+    <customLabels>
+        <label>Destek</label>
+        <name>csp_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Bu gösterge panosu, her havayolu şirketinin Hazine Ekibinin gelen kredi kartı satışlarının ve ilgili kredi kartı satışlarının tümünün görünürlüğünü sağlamasına ek olarak IATA&apos;nın ana yerleşim sistemlerinin her biri tarafından işlenen nakit akışlarını: BSP, CASS, ICCS (Para Birimi Gümrükleme Servisi) ve ICH (IATA(Uluslararası Hava Taşımacılığı Birliği) Takas Evi) izlemeye olanak tanır.</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel1</name>
+    </customLabels>
+    <customLabels>
+        <label>Daha fazla bilgi içinwww.iata.org/treasurydashboardadresini ziyaret edin.</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel2</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA (Uluslararası Hava Taşımacılığı Birliği) ticari hizmeti hakkında daha fazla bilgi istemek üzeresiniz &quot;Onayla&quot; düğmesine tıkladığınızda, IATA (Uluslararası Hava Taşımacılığı Birliği) Hazine Premium Gösterge Panosuna aylık olarak abone olabilmeniz için gerekli tüm bilgiler gönderilir.</label>
+        <name>csp_TDP_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA (Uluslararası Hava Taşımacılığı Birliği) ticari hizmeti hakkında daha fazla bilgi istemek üzeresiniz. &quot;Onayla&quot; düğmesine tıkladığınızda, IATA (Uluslararası Hava Taşımacılığı Birliği) Hazine Gösterge Panosuna aylık olarak abone olabilmeniz için tüm bilgiler gönderilir.</label>
+        <name>csp_TD_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Bileti Yayınlayan</label>
+        <name>csp_TicketIssuer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_TimeoutIEP</name>
+    </customLabels>
+    <customLabels>
+        <label>Alıcı eklenmedi. Lütfen Ekle düğmesine basın.</label>
+        <name>csp_ToastWarningRecipientNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgu Özetini Görüntüleyin</label>
+        <name>csp_ViewCaseSummary</name>
+    </customLabels>
+    <customLabels>
+        <label>Çalışma alanları</label>
+        <name>csp_WorkingAreas</name>
+    </customLabels>
+    <customLabels>
+        <label>Destek Seçeneklerini Göster</label>
+        <name>csp_btn_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgu oluşturulurken hata oluştu</label>
+        <name>csp_errorCreatingCase</name>
+    </customLabels>
+    <customLabels>
+        <label>İsme veya e-postaya göre ara</label>
+        <name>csp_searchEmailRecipientPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA koduna, yere veya isme göre ara</label>
+        <name>csp_searchIataCodeLocationNamePlaceHolder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_toSelectSubTopic</name>
     </customLabels>
     <customLabels>
         <label><!-- days left --></label>

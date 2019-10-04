@@ -9,6 +9,8 @@ public class ANG_RHCInformationTriggerHandler{
 	public Map<Id, ANG_RHC_Information__c> newMap = (Map<Id,ANG_RHC_Information__c>) Trigger.newMap;
 	public Map<Id, ANG_RHC_Information__c> oldMap = (Map<Id,ANG_RHC_Information__c>) Trigger.oldMap;
 
+	public static Boolean skipConvertAndSumFSAmounts = false;
+
 	// ************************************************************
 	// ****************** distribution methods ********************
 	// ************************************************************
@@ -36,10 +38,14 @@ public class ANG_RHCInformationTriggerHandler{
 				updatedFlagsForRHCEqsFS.add(rhc);
 
 		if (!updatedFlagsForRHCEqsFS.isEmpty()) ANG_RHCHelper.calculateRHCAmount(updatedFlagsForRHCEqsFS);
+        
+		assessOscarAccreditationForecastRHC(filterByIATACode(triggerNew));
+
 	}
 	public void onAfterUpdate(){
 		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),oldMap,'RHC_Information','ANG_AccountId__c').run();
 		refreshRMEData();
+		handleRhcUpdate();
 	}
 
 	public void onBeforeDelete(){}
@@ -62,6 +68,13 @@ public class ANG_RHCInformationTriggerHandler{
 	}
 
 	private void convertAndSumFS(){
+		
+		//In case of rollback RHC record for countries that 
+		//have the flag RHC Location Type == 'Include All AEs'
+		if(skipConvertAndSumFSAmounts){
+			return;
+		}
+
 		set<id> accIdSet = new set<id>();		
 		map<id,ANG_RHC_Information__c> accRhcMap = new map<id,ANG_RHC_Information__c>();
 		for(ANG_RHC_Information__c rhc:triggerNew){
@@ -147,6 +160,51 @@ public class ANG_RHCInformationTriggerHandler{
                 }               
             }
         }        	
+	}
+
+    public static void assessOscarAccreditationForecastRHC(List<ANG_RHC_Information__c> rhcLst){
+        
+		if(!AMS_OscarTriggerHandler.applyRHCForecast || rhcLst.size() > 1)
+			return;
+
+		System.debug('[ANG_RHCInformationTriggerHandler] Applying ANG_RHC_Amount__c = ANG_RHC_Amount_Forecasted__c to new Oscar Accredited RHC Info.');
+		
+		ANG_RHC_Information__c rhc = rhcLst.get(0);
+		rhc.ANG_RHC_Amount__c = rhc.ANG_RHC_Amount_Forecasted__c;
+		rhc.ANG_Forecasted_RHC_Effective_date__c = System.today();
+		rhc.ANG_RHC_Effective_Date__c = System.today();
+		
+	}
+
+	private void handleRhcUpdate(){
+
+		//Need to fetch the countries to check the country specifics 
+		Set<ID> setAccountIDs = new Set<ID>();
+		Map<ID,ID> mapAccountIDsPerIsoCountriesIDs = new Map<ID,ID>();
+
+		for(ANG_RHC_Information__c rhc : triggerNew) setAccountIDs.add(rhc.ANG_AccountId__c);
+
+		for(Account acc: [SELECT ID, IATA_ISO_Country__c FROM Account WHERE ID IN :setAccountIDs]) mapAccountIDsPerIsoCountriesIDs.put(acc.id, acc.IATA_ISO_Country__c);
+
+
+		Set<Id> toNotify = new Set<Id>();
+		
+		for(ANG_RHC_Information__c rhc : triggerNew){
+			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(rhc.ANG_AccountId__c) && rhc.ANG_RHC_Amount_Forecasted__c != oldMap.get(rhc.Id).ANG_RHC_Amount_Forecasted__c){
+				
+				Boolean sendNotification = true;
+				
+				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{mapAccountIDsPerIsoCountriesIDs.get(rhc.ANG_AccountId__c)}).get(0).AMS_Country_Specific_Attributes__r)
+					if (att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && att.Block_notification_on_RHC_amount_update__c) sendNotification = false;
+				
+				if(sendNotification) toNotify.add(rhc.ANG_AccountId__c);
+			}
+		}
+
+		if(!toNotify.isEmpty()){
+			ANG_RHCHelper.handleRiskOrForecastedRhcAmountUpdates(toNotify);
+		}
+
 	}
 
 }

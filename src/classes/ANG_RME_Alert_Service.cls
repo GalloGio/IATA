@@ -34,6 +34,17 @@ global class ANG_RME_Alert_Service {
 		public String transactionId;
 		public String api;
 		public String code;
+
+		//INT_032: reception of EDS Alerts
+		public List<String> triggeredRules;
+		public List<AgentStates> agentStates;
+
+	}
+
+	//INT_032: reception of EDS Alerts
+	public class AgentStates {
+		public String state;
+		public String value;
 	}
 
 	global class RequestResult {
@@ -81,6 +92,16 @@ global class ANG_RME_Alert_Service {
 		set;
 	}
 
+	private static Map<String, String> agentStatesMapping = new Map<String, String>{
+		'edsState_fastGrowth_ratio_L12M_P12M' => 'Fast Growth Last 12m',
+		'edsState_fastGrowth_ratio_L3M_P3M'	=> 'Fast Growth Last 3m',
+		'edsState_fastGrowth_ratio_L3M_L3MPY' => 'Fast Growth Last 3m vs previous year',
+		'edsState_ticketsAbroad_ratio_L3M' => 'Cross Border Sales',
+		'edsState_cashSales_ratio_L3M' => 'Cash Sales Shift',
+		'edsState_cashSales_shift_L3M_P3M' => 'Shift of FoP',
+		'edsState_market_intelligence' => 'Market Intelligence'
+	};
+	
 	private static void setResponse(String message, Integer statusCode){
 		setResponse(message, null, statusCode);
 	}
@@ -114,6 +135,11 @@ global class ANG_RME_Alert_Service {
 
 			String eventType = RestContext.request.params.get('eventType');
 
+			if(String.isBlank(req.iataCode)){
+				setResponse('Required value missing: iataCode', 404);
+				return new Map<String, RequestResult>{'apiStatus' => result};
+			}
+
 			//fetch current information
 			List<Account> accs = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where IATACode__c = :req.iataCode AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
 			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] accs - ' + accs);
@@ -122,6 +148,10 @@ global class ANG_RME_Alert_Service {
 
 			//handle Real Time Sales alert request 
 			else if(req.eventType == 'RTSAlert') 			saveRTSAlert(req, accs[0].Id);
+
+			else if(req.eventType == 'EDSAlert'){
+				saveEDSAlert(req, accs[0].Id);
+			}
 
 			else if(accs[0].RHC_Informations__r.isEmpty())	setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
 			else if(accs[0].RHC_informations__r.size()>1)	setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
@@ -246,6 +276,64 @@ global class ANG_RME_Alert_Service {
 
 	}
 
+	private static Boolean validateEDSAlert(RHCMessage req){
+	
+		Boolean missingEventId = String.isBlank(req.eventId); 
+		Boolean missingRules = (req.triggeredRules == NULL || req.triggeredRules.isEmpty());
+
+		if(missingEventId || missingRules){
+			setResponse('Required values missing: ' +
+				(missingEventId ? 'eventId ' : '') +
+				(missingRules ? 'triggeredRules ' : ''),
+				400);
+
+			return false;
+		
+		}
+
+		return true;
+
+	}
+
+	private static void saveEDSAlert(RHCMessage req, Id accountId){
+
+		if(!validateEDSAlert(req)){
+			return;
+		}
+
+		Decimal openCashPosition = 0;
+		String agentCurrentStanding = '';
+
+		for(AgentStates agentState : req.agentStates){
+			
+			if(agentState.state == 'consumedRHC_USD'){
+				openCashPosition = Decimal.valueOf(agentState.value);
+				continue;
+			}
+
+			String readableState = agentStatesMapping.get(agentState.state);
+
+			agentCurrentStanding += readableState + ': ' + agentState.value + '\n';
+
+		}
+
+		ANG_Risk_Alert__c edsAlert = new ANG_Risk_Alert__c(
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_EDS'),
+			ANG_Account__c = accountId,
+			ANG_EventId__c = req.eventId,
+			ANG_RME_Last_Update__c = req.eventTime,
+			CurrencyIsoCode = 'USD',
+			ANG_Open_Cash_Position__c = openCashPosition,
+			ANG_Triggered_Rules__c = String.join(req.triggeredRules, ';'),
+			ANG_Agent_current_standing__c = agentCurrentStanding
+		);
+    	
+		insert edsAlert;
+
+    	setResponse(null, 202);
+	
+	}
+
 	global class WebserviceResult {
 		webservice Boolean isSuccess;
 		webservice String description;
@@ -257,6 +345,14 @@ global class ANG_RME_Alert_Service {
 		private WebserviceResult(){
 			isSuccess = true;
 		}
+        
+        public RHCMessage getResultMessage(){
+            return this.res;
+        }
+		
+        public void setResultMessage(RHCMessage inRes){
+            this.res = inRes;
+        }
 	}
 
 	public static WebserviceResult testWebserviceResult(){
@@ -272,7 +368,7 @@ global class ANG_RME_Alert_Service {
 	//webservice called by salesforce (javascript button and portal) to request an update of RHC Consumption Status
 	webservice static WebserviceResult requestBalanceUpdate(String accountId){
 
-		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c, ANG_RHC_Amount_Forecasted__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal', false); //results are saved on the private varible "result"
 
@@ -320,8 +416,13 @@ global class ANG_RME_Alert_Service {
 		return result;
 	}
 
-	//webservice called by salesforce (javascript button) to request an update on Provisional RHC status
 	webservice static WebserviceResult requestProvisionalRHC(String accountId, Boolean flagUpdateProvisioning){
+		return ANG_RME_Alert_Service.requestProvisionalRHCAux(accountId,flagUpdateProvisioning,true);
+	}
+
+	//webservice called by salesforce (javascript button) to request an update on Provisional RHC status
+	webservice static WebserviceResult requestProvisionalRHCAux(String accountId, Boolean flagUpdateProvisioning, Boolean updateResults){
+
 
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 		
@@ -344,7 +445,7 @@ global class ANG_RME_Alert_Service {
 				log.Error_Code__c = 'RHC Value Mismatch';
 				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
 			}*/
-			else{
+			else if(updateResults){
 				ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
 				rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
 				rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();

@@ -27,7 +27,33 @@ private class ANG_financialReviewOnCaseTest {
             Change_Code__c = 'UGR', 
             Integration_RecId__c = 'C'
         );
+        
+        insert new AMS_ChangeCodes__c(
+            Name = 'UpgDownRisk', 
+            Change_Code__c = 'RSK', 
+            Integration_RecId__c = 'C'
+        );
 
+        Notification_Template__c nt = new Notification_Template__c();
+		nt.Identifier__c = 'Risk_Information_Update';
+		nt.Language__c = 'English';
+		nt.Subject__c = 'Risk Information Update';
+		nt.Type__c = 'Information';
+		nt.Notification_color__c = '#007FFF';
+		nt.Expire_in_days__c = 180;
+		nt.Admins_Users__c = 'Administrators';
+		nt.Message__c = 
+			'We would like to inform you that your Risk Status has been updated. ' +
+			'Your risk information now stands as follow:' +
+			'<br><br>Risk Status: #RISK_STATUS#' +
+			'<br>Cash conditions limited to Financial Security: #CASH_CONDITION#'+
+			'<br>RHC Amount: #RHC_AMOUNT#'+
+			'<br>RHC Effective Date: #RHC_EFFECTIVE_DATE#'+
+			'<p>Please check more details on the RHC Information page.' +
+			'<br>Thank you</p>'+
+			'<p>IATA – Global Delivery Center</p>';
+
+		insert nt;
 
         // Create a new ISO Country
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(
@@ -53,6 +79,7 @@ private class ANG_financialReviewOnCaseTest {
             Location_Class__c = 'P',
             Type = 'IATA Passenger Sales Agent',
             Sector__c = 'Travel Agent',
+            Reason__c = 'testreason',
             IATA_ISO_Country__c = country.Id,
             ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
             ANG_HE_RiskHistoryAssessment__c = AMS_Utils.PASSED,
@@ -86,14 +113,20 @@ private class ANG_financialReviewOnCaseTest {
                 IFAP_Area__c = 'asda'
                  );
         insert c;
-                
+            
+        ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
+			ANG_AccountId__c = a.Id,
+			CurrencyIsoCode = 'EUR',
+			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO
+		);
+
+		insert rhcInfo;
         // Create a new Financial Security
         Financial_Security__c fs = new Financial_Security__c(Region__c = 'Americas', Security_status__c = 'Active', Account__c = a.Id, CurrencyIsoCode = 'USD', Amount__c = 100,
                         Expiry_date__c = Date.today().addYears(2), Financial_Institution__c = fi.Id, Security_Type__c = 'Cross Border Guarantee', 
                         ValIdity_Start_Date__c = Date.today().addDays(-2), Reception_Case__c = c.Id, Reception_Date__c = Date.today(), Reasonforrequest__c = 'New Application');
         insert fs;
        
-
     }
 
     static testMethod void updateCaseStatusToNOTUpdateFinancialReview(){

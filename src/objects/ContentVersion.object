@@ -2256,6 +2256,11 @@
                     <label>AirportIS</label>
                 </value>
                 <value>
+                    <fullName>Airsat</fullName>
+                    <default>false</default>
+                    <label>Airsat</label>
+                </value>
+                <value>
                     <fullName>CargoIS</fullName>
                     <default>false</default>
                     <label>CargoIS</label>
@@ -2274,6 +2279,11 @@
                     <fullName>GAP</fullName>
                     <default>false</default>
                     <label>GAP</label>
+                </value>
+                <value>
+                    <fullName>IATAN</fullName>
+                    <default>false</default>
+                    <label>IATAN</label>
                 </value>
                 <value>
                     <fullName>ICH - IATA Clearing House</fullName>
@@ -2296,10 +2306,56 @@
                     <label>PaxIS</label>
                 </value>
                 <value>
+                    <fullName>PUBLICATIONS</fullName>
+                    <default>false</default>
+                    <label>PUBLICATIONS</label>
+                </value>
+                <value>
+                    <fullName>SIS Membership</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>SIS Membership</label>
+                </value>
+                <value>
                     <fullName>SIS - Simplified Invoicing &amp; Settlement</fullName>
                     <default>false</default>
                     <label>SIS - Simplified Invoicing &amp; Settlement</label>
                 </value>
+                <value>
+                    <fullName>TACT</fullName>
+                    <default>false</default>
+                    <label>TACT</label>
+                </value>
+                <value>
+                    <fullName>TandT</fullName>
+                    <default>false</default>
+                    <label>TandT</label>
+                </value>
+                <value>
+                    <fullName>TIMATIC</fullName>
+                    <default>false</default>
+                    <label>TIMATIC</label>
+                </value>
+                <value>
+                    <fullName>TRAINING</fullName>
+                    <default>false</default>
+                    <label>TRAINING</label>
+                </value>
+                <value>
+                    <fullName>Weblink</fullName>
+                    <default>false</default>
+                    <label>Weblink</label>
+                </value>
+                <value>
+                    <fullName>BIS</fullName>
+                    <default>false</default>
+                    <label>BIS</label>
+                </value>
+                <value>
+                    <fullName>Treasury Dashboard</fullName>
+                    <default>false</default>
+                    <label>Treasury Dashboard</label>
+                </value>				
             </valueSetDefinition>
         </valueSet>
     </fields>

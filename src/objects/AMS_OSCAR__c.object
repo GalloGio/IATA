@@ -1547,8 +1547,8 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <description>Technical field. Used to match custom settings on Change Code generation.</description>
         <externalId>false</externalId>
         <formula>IF(Account__r.CNS_Agency__c,
-				&apos;CNS-&apos; + TEXT(Account__r.Location_Type__c) + &apos;-&apos;+TEXT(Account__r.Location_Class__c),
-				&apos;AMS&apos;
+                &apos;CNS-&apos; + TEXT(Account__r.Location_Type__c) + &apos;-&apos;+TEXT(Account__r.Location_Class__c),
+                &apos;AMS&apos;
 )</formula>
         <label>Business Process</label>
         <required>false</required>
@@ -1685,6 +1685,17 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Change_of_Entity_Location_within_EU__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Field related to the scenario of an accredited agency relocating in a different BSP, but within European Union</description>
+        <externalId>false</externalId>
+        <label>Change of Entity Location within EU</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Change_of_location_type_behavior__c</fullName>
@@ -3191,8 +3202,8 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     <fields>
         <fullName>Notification_days__c</fullName>
         <externalId>false</externalId>
-        <formula>if(DGR_Expiry_Date__c - today() &gt; 60,&quot;90&quot;,
-if(DGR_Expiry_Date__c - today() &gt; 30,&quot;60&quot;,
+        <formula>if(DGR_Expiry_Date__c - today() &gt; 62,&quot;90&quot;,
+if(DGR_Expiry_Date__c - today() &gt; 32,&quot;60&quot;,
 if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Notification days</label>
@@ -3362,6 +3373,21 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Previous_HE__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Stores the reference for the previous HE account when performing a change of location type. This field is set when the sanity check step is passed.</description>
+        <externalId>false</externalId>
+        <label>Previous HE</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>OSCARs (Previous HE)</relationshipLabel>
+        <relationshipName>Previous_HE_Accounts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Process_Start_Date__c</fullName>
@@ -8049,7 +8075,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
     </listViews>
     <listViews>
         <fullName>AgencyManagementAfricaME_AMS_OSCAR</fullName>
-        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
         <columns>NAME</columns>
         <columns>Account__c</columns>
         <columns>Country__c</columns>
@@ -8075,6 +8101,11 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             <operation>equals</operation>
             <value>VR.1.0,VR.1.0.CA,ANG.FS.OPTINOUT,CER.1.0</value>
         </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>AMS_OSCAR__c.ANG_ANNUAL_REVALIDATION</value>
+        </filters>
         <label>Agency Management - Africa &amp; ME</label>
         <language>en_US</language>
         <queue>AgencyManagementAfricaME</queue>
@@ -8099,6 +8130,11 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             <field>Status__c</field>
             <operation>notEqual</operation>
             <value>Closed,Closed_Not Accepted,Closed_Rejected,Closed_Withdrawn</value>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>AMS_OSCAR__c.ANG_ANNUAL_REVALIDATION</value>
         </filters>
         <label>Agency Management - Americas</label>
         <language>en_US</language>
@@ -8219,7 +8255,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
     </listViews>
     <listViews>
         <fullName>CasesACCEuropeOffOnshore_AMS_OSCAR</fullName>
-        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
         <columns>NAME</columns>
         <columns>Account__c</columns>
         <columns>Country__c</columns>
@@ -8244,6 +8280,11 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             <field>Process__c</field>
             <operation>equals</operation>
             <value>VR.1.0,VR.1.0.CA,ANG.FS.OPTINOUT,CER.1.0</value>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>AMS_OSCAR__c.ANG_ANNUAL_REVALIDATION</value>
         </filters>
         <label>Agency Management - Europe</label>
         <language>en_US</language>
@@ -64924,28 +64965,28 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <fullName>AMS_PCI_Expiry_Date_Required</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-	OR(
-		TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
-		TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
-	),
-	OR(
-		AND(
-			OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
-			TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
-			RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
-			ISBLANK(ANG_PCI_compliance_expiry_date__c)
-		),
-		AND(
-			OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
-			RecordType.DeveloperName = &apos;NEW&apos;,
+    OR(
+        TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
+        TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
+    ),
+    OR(
+        AND(
+            OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
+            TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
+            RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
+            ISBLANK(ANG_PCI_compliance_expiry_date__c)
+        ),
+        AND(
+            OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
+            RecordType.DeveloperName = &apos;NEW&apos;,
             ISPICKVAL(STEP6__c, &apos;Passed&apos;),
-			ISBLANK(ANG_PCI_compliance_expiry_date__c),
-			OR(
-				TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
-				TEXT(Process__c) == &apos;NEW.BR&apos;
-			)
-		)	
-	)
+            ISBLANK(ANG_PCI_compliance_expiry_date__c),
+            OR(
+                TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
+                TEXT(Process__c) == &apos;NEW.BR&apos;
+            )
+        )   
+    )
 )</errorConditionFormula>
         <errorMessage>You must determine a PCI compliance expiry date</errorMessage>
     </validationRules>

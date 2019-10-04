@@ -32,25 +32,44 @@ private class ISSP_FinancialSecInformationCtrlTest {
                 cse.Origin = 'IATA Internal User';
                 insert cse;
 
-                Financial_Institution__c fi = new Financial_Institution__c();
-                fi.Name = 'Bank Test';
-                fi.Region__c = 'Europe';
-                fi.Country__c = 'Portugal';
-                fi.Institution_Type__c = 'Bank';
-                insert fi;
+                Id rtGenericFIId = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Generic_FI').getRecordTypeId();
+                Id rtCCBankId = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Currency_Center_Bank').getRecordTypeId();
 
-                Financial_Security__c fs = new Financial_Security__c();
-                fs.Region__c = 'Europe';
-                fs.Security_Status__c = 'Active';
-                fs.Security_Type__c = 'CCG';
-                fs.Account__c = agency.Id;
-                fs.Amount__c = 10000;
-                fs.Financial_Institution__c = fi.Id;
-                fs.Reception_Case__c = cse.Id;
-                fs.Reception_Date__c = Date.today();
-                fs.Reasonforrequest__c = 'New Application';
-                fs.Expiry_Date__c = Date.today().addDays(90);
-                insert fs;
+                list<Financial_Institution__c> listFi = new list<Financial_Institution__c>();
+                // Generic FI
+                Financial_Institution__c fi1 = new Financial_Institution__c();
+                fi1.RecordTypeId = rtGenericFIId;
+                fi1.Name = 'Bank Test';
+                fi1.Region__c = 'Europe';
+                fi1.Country__c = 'Portugal';
+                fi1.Institution_Type__c = 'Bank';
+                // Vurrency Center Bank
+                Financial_Institution__c fi2 = new Financial_Institution__c();
+                fi2.RecordTypeId = rtCCBankId;
+                fi2.Name = 'Bank Test';
+                fi2.Region__c = 'Europe';
+                fi2.Country__c = 'Portugal';
+                fi2.Institution_Type__c = 'Bank';
+
+                listFi.add(fi1);
+                listFi.add(fi2);
+                insert listFi;
+
+                list<Financial_Security__c> listFs = new list<Financial_Security__c>();
+
+                Financial_Security__c fs1 = new Financial_Security__c();
+                fs1.Region__c = 'Europe';
+                fs1.Security_Status__c = 'Active';
+                fs1.Security_Type__c = 'CCG';
+                fs1.Account__c = agency.Id;
+                fs1.Amount__c = 10000;
+                fs1.Financial_Institution__c = fi1.Id;
+                fs1.Reception_Case__c = cse.Id;
+                fs1.Reception_Date__c = Date.today();
+                fs1.Reasonforrequest__c = 'New Application';
+                fs1.Expiry_Date__c = Date.today().addDays(90);
+                fs1.CurrencyIsoCode = 'USD';
+                insert fs1;
         }
 
         @isTest 
@@ -68,10 +87,16 @@ private class ISSP_FinancialSecInformationCtrlTest {
 
                 Test.startTest();
                 User agencyAdmin = [SELECT Id, ProfileId FROM User WHERE Contact.Email = 'mail@test.com'];
+                ISSP_FinancialSecInformationController ctrl;
                 System.runAs(agencyAdmin) {
-        	       ISSP_FinancialSecInformationController ctrl = new ISSP_FinancialSecInformationController();
+                   ctrl = new ISSP_FinancialSecInformationController();
                 }
-        	Test.stopTest();
+            Test.stopTest();
+
+            System.assertEquals(ctrl.totalSecuredAmount,10000);
+            System.assertEquals(ctrl.totalConvertedAmount,10000);
+            System.assertEquals(ctrl.localCurrency,'USD');
+            System.assertEquals(ctrl.showConvertedAmount,false);
         }
-	
+    
 }

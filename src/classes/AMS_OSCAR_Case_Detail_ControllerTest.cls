@@ -113,6 +113,9 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 			insert settlement;
 
+			country.AMS_Settlement_System__c = settlement.Id;
+			update country;
+
 			AMS_Operation__c opCode = new AMS_Operation__c(
 				Name = 'test operation',
 				Settlement__c = settlement.id,
@@ -127,14 +130,16 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			ANG_BSP_Attributes__c bSPAttributes1 = new ANG_BSP_Attributes__c(
 				Class_Type__c  = 'P',
 				Remittance_Frequency__c = 'D',
-				Operation__c = opCode.Id
+				Operation__c = opCode.Id,
+				BSP__c = settlement.Id
 			);
 			bSPAttributes.add(bSPAttributes1);
 
 				ANG_BSP_Attributes__c bSPAttributes2 = new ANG_BSP_Attributes__c(
 				Class_Type__c  = 'P',
 				Remittance_Frequency__c = 'V',
-				Operation__c = opCode.Id
+				Operation__c = opCode.Id,
+				BSP__c = settlement.Id
 			);
 			bSPAttributes.add(bSPAttributes2);
 			
@@ -231,6 +236,9 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
         insert settlement;
 
+		country.AMS_Settlement_System__c = settlement.Id;
+		update country;
+
         AMS_Operation__c opCode = new AMS_Operation__c(
             Name = 'test operation',
             Settlement__c = settlement.id,
@@ -243,7 +251,8 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
         ANG_BSP_Attributes__c bSPAttributes = new ANG_BSP_Attributes__c(
             Class_Type__c  = 'P',
             Remittance_Frequency__c = 'V',
-            Operation__c = opCode.Id
+            Operation__c = opCode.Id,
+			BSP__c = settlement.Id
         );
 
         insert bSPAttributes;

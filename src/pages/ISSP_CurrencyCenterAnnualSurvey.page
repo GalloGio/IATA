@@ -442,63 +442,36 @@
                     <div class="tabcontent" id="survey">
                         <apex:pageBlock id="pageBlockCountrySurvey">
 
-                            <h2 class="section">Blocked Funds </h2>
+                            <!--h2 class="section">Blocked Funds </h2-->
+
                             <apex:outputPanel id="sectionsPanel">
 
                                 <apex:repeat value="{!wccsObject.typeReportMap}" var="section">
 
-                                    <!-- Reporting Type Table -->
-                                    <apex:outputPanel id="reportingTypePanel">
-                                        <div class="scrollBarTable">
-                                           <table id="reportingTypeTable" class="totalTable" border="1">
-                                                <thead>
-                                                    <tr class="dataRow">
-                                                        <th class="headerRow">Total Amount</th>
-                                                        <th class="headerRow">Sales Period (Start)</th>
-                                                        <th class="headerRow">Sales Period (End)</th>
-                                                        <th class="headerRow">ICCS</th>
-                                                        <th class="headerRow">Average Exchange Rate (to USD)</th>
-                                                        <th class="headerRow">USD (Equivalent)</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr class="dataRow">
-                                                        <td class="dataCell">
-                                                            <!--<apex:outputText value="{!wccsObject.typeReportMap[section].Total_Currency__c}" id="totalCurrency"/>-->
-                                                            <apex:outputField value="{!wccsObject.typeReportMap[section].Total_Currency__c}" id="totalCurrency"/>
-                                                        </td>
-                                                        <td class="dataCell">
-                                                            <apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_Start_Date__c}" type="date" styleClass="disableClass"/>
-                                                        </td>
-                                                        <td class="dataCell">
-                                                            <apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_End_Date__c}" styleClass="disableClass" type="date"  html-min="{!YEAR(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)}-{!IF(LEN(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}-{!IF(LEN(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}"/>
-                                                        </td>
-                                                        <td class="dataCell">
-                                                            <apex:outputText value="{!wccsObject.typeReportMap[section].ICCS__c}"/>
-                                                        </td>
-                                                        <td class="dataCell">
-                                                            <apex:outputText value="{!wccsObject.typeReportMap[section].Average_Exchange_Rate__c}" />
-                                                        </td>
-                                                        <td class="dataCell">
-                                                            <!--<apex:outputText value="{0, number, Currency}">
-                                                                <apex:param value="{!wccsObject.typeReportMap[section].Total_Amount_USD__c}" id="totalUSD"/>
-                                                            </apex:outputText>-->
-                                                            <apex:outputField value="{!wccsObject.typeReportMap[section].Total_Amount_USD__c}" id="totalUSD" />
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table> 
-                                        </div>
-                                    </apex:outputPanel>
+                                    <table width="100%">
+                                      <tr width="90%">
+                                        <td>
+                                          <h2 class="section">Blocked Funds {!wccsObject.typeReportMap[section].Currency__c}
+                                            <!--button onclick="hide(this, event)" style="background: transparent; margin: 20px 0 20px 0;">
+                                              <span class="glyphicon glyphicon-chevron-up" style="font-size: 10px; color: #0075BC"></span>
+                                            </button-->
+                                          </h2>
+                                        </td>
+                                        <td align="center">
+                                        </td>
+                                      </tr>    
+                                    </table>
+
+                                    <!-- Banks Table -->    
                                     <apex:outputPanel styleClass="insideTable">
 
                                         <apex:outputPanel id="bankPanelBlockedFunds">
                                             
-                                            <h3 style="color: #0075BC;">Bank Details
+                                            <!--h3 style="color: #0075BC;">Bank Details
                                                 <button onclick="hide(this, event)" style="background: transparent; margin: 10px 0 10px 0;">
                                                     <span class="glyphicon glyphicon-chevron-up" style="font-size: 10px; color: #0075BC"></span>
                                                 </button>
-                                            </h3>
+                                            </h3-->
 
                                             <div class="row scrollBarTable">
 
@@ -551,9 +524,9 @@
                                                         <apex:outputField value="{!item.Amount_USD__c}" />
                                                     </apex:column>
 
-                                                    <apex:column rendered="{!surveyStatus=='Draft'}" >
+                                                    <apex:column rendered="{!surveyStatus=='Draft'}" headerClass="white" styleclass="empty">
                                                     </apex:column>
-                                                    <apex:column rendered="{!surveyStatus=='Draft'}" >
+                                                    <apex:column rendered="{!surveyStatus=='Draft'}" headerClass="green">
                                                         <apex:facet name="header">
                                                             <apex:commandLink id="addRowBankMap" value="Add Row" action="{!addRowBankMap}" rerender="bankTable, warningMessages" styleClass="btnDisable bankAddBtnLink"
                                                                               oncomplete="requireFields();">
@@ -572,6 +545,62 @@
                                             </div>
 
                                         </apex:outputPanel>
+
+                                    <div height="10px">&nbsp;</div>
+
+                                    <!-- Reporting Type Table -->
+                                    <apex:outputPanel id="reportingTypePanel">
+                                        <div class="scrollBarTable">
+                                           <table id="reportingTypeTable" class="totalTable" border="1">
+                                                <thead>
+                                                    <tr class="dataRow">
+                                                        <th class="headerRow">Total Amount</th>
+                                                        <th class="headerRow">Sales Period (Start) *</th>
+                                                        <th class="headerRow">Sales Period (End) *</th>
+                                                        <th class="headerRow">ICCS</th>
+                                                        <th class="headerRow">Average Exchange Rate (to USD)</th>
+                                                        <th class="headerRow">USD (Equivalent)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="dataRow">
+                                                        <td class="dataCell">
+                                                            <!--<apex:outputText value="{!wccsObject.typeReportMap[section].Total_Currency__c}" id="totalCurrency"/>-->
+                                                            <apex:outputField value="{!wccsObject.typeReportMap[section].Total_Currency__c}" id="totalCurrency"/>
+                                                        </td>
+                                                        <td class="dataCell">
+                                                            <apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_Start_Date__c}" type="date" styleClass="disableClass required">
+                                                                <apex:actionSupport event="onchange" action="{!calculate}" reRender="reportingTypePanel, bankTable" oncomplete="requireFields();">
+                                                                </apex:actionSupport>
+                                                            </apex:inputField>
+                                                        </td>
+                                                        <td class="dataCell">
+                                                            <apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_End_Date__c}" styleClass="disableClass required" type="date"  html-min="{!YEAR(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)}-{!IF(LEN(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}-{!IF(LEN(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}">
+                                                                <apex:actionSupport event="onchange" action="{!calculate}" reRender="reportingTypePanel, bankTable" oncomplete="requireFields();">
+                                                                </apex:actionSupport>
+                                                            </apex:inputField>
+                                                        </td>
+                                                        <td class="dataCell">
+                                                            <apex:outputText value="{!wccsObject.typeReportMap[section].ICCS__c}"/>
+                                                        </td>
+                                                        <td class="dataCell">
+                                                            <apex:outputText value="{!wccsObject.typeReportMap[section].Average_Exchange_Rate__c}" />
+                                                        </td>
+                                                        <td class="dataCell">
+                                                            <!--<apex:outputText value="{0, number, Currency}">
+                                                                <apex:param value="{!wccsObject.typeReportMap[section].Total_Amount_USD__c}" id="totalUSD"/>
+                                                            </apex:outputText>-->
+                                                            <apex:outputField value="{!wccsObject.typeReportMap[section].Total_Amount_USD__c}" id="totalUSD" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table> 
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    
+
+                                    
 
                                         <apex:outputPanel id="typeOperationsPanel">
                                            

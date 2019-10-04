@@ -91,7 +91,8 @@
    CASE(ANG_FormOfPayment_ID__c, 
    &quot;CC&quot;, &quot;Card Payment Method&quot;,
    &quot;CA&quot;, &quot;Cash Payment Method&quot;,
-   &quot;EP&quot;, &quot;IEP Payment Method&quot;,&quot;&quot;),
+   &quot;EP&quot;, &quot;IEP Payment Method&quot;,
+   &quot;BOP&quot;, &quot;BOP Payment Method&quot;, &quot;&quot;),
 &quot;&quot;
 )</formula>
         <label>Authorization</label>
@@ -176,7 +177,7 @@ IF(ISBLANK(Email_Used_for_BSP_Creation__c),0,100),2)</formula>
         <label>Last Request Result</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -217,6 +218,11 @@ IF(ISBLANK(Email_Used_for_BSP_Creation__c),0,100),2)</formula>
                     <fullName>Not Authorized</fullName>
                     <default>false</default>
                     <label>Not Authorized</label>
+                </value>
+                <value>
+                    <fullName>Authorized</fullName>
+                    <default>false</default>
+                    <label>Authorized</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -288,6 +294,10 @@ IF(ISBLANK(Email_Used_for_BSP_Creation__c),0,100),2)</formula>
         <picklistValues>
             <picklist>ANG_FormOfPayment_ID__c</picklist>
             <values>
+                <fullName>BOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CA</fullName>
                 <default>false</default>
             </values>
@@ -304,6 +314,10 @@ IF(ISBLANK(Email_Used_for_BSP_Creation__c),0,100),2)</formula>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Authorized</fullName>
                 <default>false</default>
             </values>
             <values>

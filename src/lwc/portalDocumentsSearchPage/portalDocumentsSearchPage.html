@@ -1,0 +1,65 @@
+<template>
+    <c-portal-page-container>
+        <span slot="componentContent">            
+            <div class="slds-grid slds-wrap slds-gutters_direct-small slds-m-top_medium">
+                <!-- DOCUMENTS CATEGORIES / FILTERS -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-large-size_1-of-4" >
+                    <c-portal-documents-filters document-object={documentObject} onhighlightfilter={handleHighlightFilter} onfilter={handleFilter}></c-portal-documents-filters>
+                </div>
+
+                <!-- RESULTS BY DOCUMENT CATEGORY -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-4 slds-large-size_3-of-4">
+
+                    <div class="slds-grid slds-wrap slds-gutters_medium">
+                        <!-- SEARCH BAR -->
+                        <div class="slds-col slds-size_1-of-1 heigthInfo">
+                            <div class="bottomLightGrayBorder slds-m-around_small">
+                                <img src={searchIconUrl}>
+                                <lightning-input name="newRecipientTextInput"
+                                    placeholder={label.CSP_SearchDocuments}
+                                    class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchStyle"
+                                    value={searchText}
+                                    onchange={filterInputChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div if:true={loading} class="spinnerContainer">
+                        <lightning-spinner class="background-superLightGray" size="medium"></lightning-spinner>
+                    </div>
+                    
+                    <div if:false={loading}>
+                        <div class="slds-col slds-size_1-of-1">
+                            <!-- DOCUMENTS -->
+                            <div class="slds-grid slds-wrap slds-gutters_medium">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <div class="slds-grid slds-wrap slds-gutters_xx-small slds-p-vertical_xxx-small">
+                                        <template for:each={categories} for:item="keyValue" for:index="keyValueIndex">
+                                            <div key={keyValue.name}>
+                                                <c-portal-documents-category document-object={keyValue} onfilter={handleFilter} oncategoryfilter={categoryFilter}></c-portal-documents-category>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- NO RESULTS -->
+                            <div if:true={renderNoResults}>
+                                <div class="slds-p-vertical_medium slds-text-align_center">
+                                    <img class="slds-p-vertical_medium" src={searchIconUrl} height="96px" width="96px"/>
+                                    <div class="text-large text-bold text-linkBlue">{label.CSP_Search_TypeIn_text1}</div>
+                                    <div class="text-xsmall text-gray">{label.CSP_Search_TypeIn_text2}</span></div>
+                                    <div class="text-xsmall text-gray">{label.CSP_Search_TypeIn_text3}</div>
+                                </div>
+                                <!-- REACH US BANNER -->
+                                <div class="slds-p-vertical_medium">
+                                    <c-portal-f-a-q-reach-us-banner></c-portal-f-a-q-reach-us-banner>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </span>
+    </c-portal-page-container>
+</template>

@@ -424,6 +424,7 @@
                                 if (isToClean) {
                                     $('[id$="ShippingCountryList"]').val('');
                                     $('#shipping_country__c > input').val('');
+                                    resetPCHint();
                                 }
                             }
 
@@ -646,7 +647,7 @@
                 <apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;{!IF(AND(ca.errorFoundCheckBoxes, ca.fw.newForm.Confirm_Ownership_details_are_correct__c==false, ca.fw.newForm.Notify_Change_Ownership__c==false), 'border:2px red solid !important;margin-right:5px;', 'margin-right:5px')}">
                         <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Confirm_Ownership_details}" style="color:black;font-size:110%"/>
-                        <apex:inputCheckbox disabled="{!ca.isReadonly || ca.fw.newForm.ISSP_AMS_Total_Previous_Ownership__c != 100}" html-data-group="agencyOwnership" value="{!ca.fw.newForm.Confirm_Ownership_details_are_correct__c}" onclick="$('[id$=currcorporatedetails]').hide();"/>
+                        <apex:inputCheckbox disabled="{!ca.isReadonly || ca.fw.newForm.ISSP_AMS_Total_Previous_Ownership__c != 100}" html-data-group="agencyOwnership" value="{!ca.fw.newForm.Confirm_Ownership_details_are_correct__c}" onclick="hideCurrCorporateDetails();"/>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
@@ -723,6 +724,30 @@
         </apex:pageBlockSection>
 
         <apex:pageBlockSection columns="1" collapsible="false" id="Section31">
+            
+            <apex:outputPanel styleClass="agencyOwnershipComponent">
+                <apex:pageBlockSection columns="1">
+                    <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;margin-right:5px;">
+                        <apex:outputpanel>
+                            <div>
+                                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Copy_Ownership__c.Label}" style="color:black;font-size:110%"/>
+                                <a href="" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<div escape='false'>{!$Label.ISSP_ANG_COPY_OWNERSHIP_HINT}</div>">
+                                    <apex:image value="/img/msg_icons/info16.png"/></a>                            
+                                <apex:inputCheckbox id="copyOwnershipCheckbox" disabled="{!ca.isReadonly}" html-data-controls="copyOwnershipComponent" html-data-group="copyOwnership" value="{!ca.fw.newForm.Copy_Ownership__c}" onclick="copyOwnership();"/>
+                            </div>
+                        </apex:outputpanel>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+            <apex:outputPanel styleClass="copyOwnershipComponent" >
+                <apex:pageBlockSection columns="2">
+                    <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:15%;margin-right:5px;">
+                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="copyOwnershipEdit" status="" oncomplete="showCopyOwnershipDialog();" rerender="copyOwnership">
+                            <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_Select_Accounts}
+                        </apex:commandLink>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
 
             <!-- previousOwners (PERSON) -->
             <apex:outputPanel id="currentPersonOwners">
@@ -1087,7 +1112,10 @@
 
             if ($('[id$="disableCheckBoxBranch"]')[0].checked) {
                 $('[id$="ShippingStateList"]').attr('style', 'display: none;');
-                $('[id$="shippingStateInput"]').attr('style', 'display: none;');
+            	$('[id$="shippingStateInput"]').attr('style', 'display: none;');
+            	$(".branch_office_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');            
+            } else {
+                $(".branch_office_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
             }
 
             // checks initial state
@@ -1112,6 +1140,11 @@
 
         function showCurrCorporateDetails() {
             if($('[id$="ownershipCheckbox"]').prop("checked")) {
+                if($('[id$="ownershipCheckbox"]').prop("checked")) {
+                    $('[id$=copyOwnershipEdit]').show();
+                } else {
+                    $('[id$=copyOwnershipEdit]').hide();
+                }
                 if($('[id$=UpdatedLegalStatus]').val() == 'Corporation') {
                     $('[id$=currcorporatedetails]').show();
                 }
@@ -1120,7 +1153,19 @@
                 }
             } else {
                 $('[id$=currcorporatedetails]').hide();
+                $('[id$=copyOwnershipEdit]').hide();
             }
+        }
+
+        function hideCurrCorporateDetails() {
+        	$('[id$=currcorporatedetails]').hide();
+            $('[id$=copyOwnershipEdit]').hide();
+        }
+
+		function copyOwnership() {
+            if(!$('[id$="copyOwnershipCheckbox"]').prop("checked")) {
+                copyOwnershipClear();
+            } 
         }
 
         function populateShippingCountry() {

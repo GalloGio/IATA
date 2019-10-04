@@ -9,7 +9,6 @@ private class ANG_AccountTriggerHandlerTest {
 		customsettings.add(new ANG_CalloutMapping__c(Name = 'MAPDF', Change_Code__c = 'MAPDF', CalloutClass__c = 'ANG_CalloutIEPMasterdata', Action__c = 'PUT', Event_Type__C = 'MS_Update', Credential__c = '/agencies/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'ChangeCode'));
 		customsettings.add(new ANG_CalloutMapping__c(Name = 'MBDIL', Change_Code__c = 'MBDIL', CalloutClass__c = 'ANG_CalloutIEPMasterdata', Action__c = 'PUT', Event_Type__C = 'MS_Update', Credential__c = '/agencies/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'ChangeCode'));
 		customsettings.add(new ANG_CalloutMapping__c(Name = 'MBPDD', Change_Code__c = 'MBPDD', CalloutClass__c = 'ANG_CalloutIEPMasterdata', Action__c = 'PUT', Event_Type__C = 'MS_Update', Credential__c = '/agencies/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'ChangeCode'));
-		
 		customsettings.add(
 			new ANG_CalloutMapping__c(
 				Name = 'IEP_PCI_Compliance', 
@@ -298,7 +297,17 @@ private class ANG_AccountTriggerHandlerTest {
 		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
 		ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-		Account a = new Account(ANG_FA_Opt_out__c = true, Name = 'NameTest1', IATACode__c = '12344567', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');
+		IATA_ISO_Country__c isoTest = [SELECT Id
+									FROM IATA_ISO_Country__c
+									WHERE Name = 'Iso Country Name Test'];
+
+		Account a = new Account(ANG_FA_Opt_out__c = true, 
+								Name = 'NameTest1', 
+								IATACode__c = '12344567', 
+								TradeName__c = 'tradeName1', 
+								RecordTypeId = standardRT, 
+								Short_Name__c = 'ShortNameTest1Example1',
+								IATA_ISO_Country__c = isoTest.Id);
 
 		insert a;
 
@@ -306,12 +315,18 @@ private class ANG_AccountTriggerHandlerTest {
 
 		List<ANG_RHC_Information__c> rhcList1 = [Select ANG_RHC_Amount_Provisional__c,
 													   ANG_Provisional_RHC_Last_Update__c,
-													   ANG_RME_Amount__c
+													   ANG_RME_Amount__c, ANG_AccountId__c, ANG_Financial_Security__c,
+													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
+													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
+													   ANG_RHC_Amount_Forecasted__c, ANG_Forecasted_RHC_Effective_date__c
 												  from ANG_RHC_Information__c 
 												 Where ANG_AccountId__c =: a.id];
+
+		ANG_RHCHelper.calculateRHCAmount(rhcList1);
         
         rhcList1[0].CurrencyIsoCode = 'USD';
         rhcList1[0].ANG_RME_Amount__c = 200;
+		rhcList1[0].ANG_RHC_Amount__c = rhcList1[0].ANG_RHC_Amount_Forecasted__c;
         upsert rhcList1[0];
 
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
@@ -356,7 +371,17 @@ private class ANG_AccountTriggerHandlerTest {
 		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
 		ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-		Account a = new Account(ANG_FA_Opt_out__c = true, Name = 'NameTest1', IATACode__c = '12344567', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');
+		IATA_ISO_Country__c isoTest = [SELECT Id
+									FROM IATA_ISO_Country__c
+									WHERE Name = 'Iso Country Name Test'];
+
+		Account a = new Account(ANG_FA_Opt_out__c = true, 
+								Name = 'NameTest1', 
+								IATACode__c = '12344567', 
+								TradeName__c = 'tradeName1', 
+								RecordTypeId = standardRT, 
+								Short_Name__c = 'ShortNameTest1Example1',
+								IATA_ISO_Country__c = isoTest.Id);
 
 		insert a;
 
@@ -364,12 +389,18 @@ private class ANG_AccountTriggerHandlerTest {
 
 		List<ANG_RHC_Information__c> rhcList1 = [Select ANG_RHC_Amount_Provisional__c,
 													   ANG_Provisional_RHC_Last_Update__c,
-													   ANG_RME_Amount__c
+													   ANG_RME_Amount__c, ANG_AccountId__c, ANG_Financial_Security__c,
+													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
+													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
+													   ANG_RHC_Amount_Forecasted__c, ANG_Forecasted_RHC_Effective_date__c
 												  from ANG_RHC_Information__c 
 												 Where ANG_AccountId__c =: a.id];
+
+		ANG_RHCHelper.calculateRHCAmount(rhcList1);
         
         rhcList1[0].CurrencyIsoCode = 'USD';
         rhcList1[0].ANG_RME_Amount__c = 200;
+		rhcList1[0].ANG_RHC_Amount__c = rhcList1[0].ANG_RHC_Amount_Forecasted__c;
         upsert rhcList1[0];
 
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
@@ -446,12 +477,18 @@ private class ANG_AccountTriggerHandlerTest {
 
 		List<ANG_RHC_Information__c> rhcList1 = [Select ANG_RHC_Amount_Provisional__c,
 													   ANG_Provisional_RHC_Last_Update__c,
-													   ANG_RME_Amount__c
+													   ANG_RME_Amount__c, ANG_AccountId__c, ANG_Financial_Security__c,
+													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
+													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
+													   ANG_RHC_Amount_Forecasted__c, ANG_Forecasted_RHC_Effective_date__c
 												  from ANG_RHC_Information__c 
 												 Where ANG_AccountId__c =: a.id];
+
+		ANG_RHCHelper.calculateRHCAmount(rhcList1);
         
         rhcList1[0].CurrencyIsoCode = 'USD';
         rhcList1[0].ANG_RME_Amount__c = 200;
+		rhcList1[0].ANG_RHC_Amount__c = rhcList1[0].ANG_RHC_Amount_Forecasted__c;
         upsert rhcList1[0];
 
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
@@ -541,6 +578,41 @@ private class ANG_AccountTriggerHandlerTest {
         Test.stopTest();
 
         System.assertEquals(2, [SELECT Id FROM AMS_Agency_Updates__c WHERE Change_Code__c = 'MAPDF' OR Change_Code__c ='MBDIL'].size());
+    }
+
+	@isTest static void testChangeFOPsStatusAccordingly(){
+
+        List<Agency_Authorization__c> fops = new List<Agency_Authorization__c>();
+        Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+        Account a = [SELECT Id,Is_PCI_compliant__c FROM Account WHERE Name = 'Test'];
+        
+        Agency_Authorization__c cashfop = new Agency_Authorization__c(Account__c = a.id, ANG_FormOfPayment_ID__c = 'CA', RecordTypeId = formOfPaymentRT);
+           fops.add(cashfop);
+
+           Agency_Authorization__c creditCardfop = new Agency_Authorization__c(Account__c = a.id, ANG_FormOfPayment_ID__c = 'CC', RecordTypeId = formOfPaymentRT);
+           fops.add(creditCardfop);
+           
+           Agency_Authorization__c bopMethod = new Agency_Authorization__c(Account__c = a.id, ANG_FormOfPayment_ID__c = 'EP', RecordTypeId = formOfPaymentRT);
+           fops.add(bopMethod);
+           insert fops;
+
+        a.Status__c = AMS_Utils.ACC_S0_TERMINATED;
+        update a;
+
+        for(Agency_Authorization__c aa : [SELECT Status__c FROM Agency_Authorization__c ]){
+            system.assertEquals(aa.Status__c, 'Non-Active');
+        }
+
+        a.Status__c = AMS_Utils.ACC_S9_APPROVED;
+        update a;
+
+        for(Agency_Authorization__c aa : [SELECT ANG_FormOfPayment_ID__c, Status__c FROM Agency_Authorization__c ]){
+            
+            if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CC)
+            	system.assertEquals(aa.Status__c, 'Non-Active');
+            else
+            	system.assertEquals(aa.Status__c, 'Active');
+        }
     }
 
 	@isTest static void dueDiligenceModelBPlusTest(){
@@ -702,7 +774,7 @@ private class ANG_AccountTriggerHandlerTest {
         integer i=0;
         for (Account a :accs){
 			a.Is_PCI_compliant__c = (Math.mod(i, 2) == 0) ? 'Corporate Card' : 'Nil CC';
-        	a.ANG_IEP_Status__c = 'No IEP Account';
+        	a.ANG_IEP_Status__c = (Math.mod(i, 2) == 0) ? 'No IEP Account' : NULL;
 			i++;
         }
 

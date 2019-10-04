@@ -49,11 +49,15 @@ public with sharing class FinancialSecurityUtil {
     			lstRelatedAccountIds.add(fs.Account__c);
     		}
     	}
-    	
-    	// Get extra information on these FS records (information not available in the Trigger.new map, like the account name)
-    	List<Financial_Security__c> lstFSRecordsWithExtraInfo = [SELECT Id, Name, Region__c, Account_Country__c, IATA_code__c, Expiry_Date__c, Account__c, Account__r.Name, Account__r.Industry, Account__r.Type,
-    						Financial_Institution__r.Name, Amount__c, Security_Type__c, Remarks__c FROM Financial_Security__c WHERE Id IN :lstFSRecordIds];
-    	
+
+        // Get extra information on these FS records (information not available in the Trigger.new map, like the account name)
+        List<Financial_Security__c> lstFSRecordsWithExtraInfo = [
+            SELECT Id, Name, Region__c, Account_Country__c, IATA_code__c, Expiry_Date__c, Account__c, Account__r.Name, Account__r.Industry, Account__r.Type,
+                Financial_Institution__r.Name, Amount__c, Security_Type__c, Remarks__c
+            FROM Financial_Security__c
+            WHERE Financial_Institution__r.RecordType.DeveloperName = 'Generic_FI'
+            AND Id IN :lstFSRecordIds];
+
     	// Get all financial assessment contacts from the accounts related to the FS records (keep 1 contact per account), to add them on the cases
     	List<Contact> lstFAContacts = [SELECT Id, AccountId FROM Contact WHERE Financial_Assessment_Contact__c = true AND AccountId IN :lstRelatedAccountIds];
     	map<Id, Id> mapFAContactIdsPerAccountIds = new map<Id, Id>();

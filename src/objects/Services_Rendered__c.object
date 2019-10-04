@@ -342,7 +342,7 @@
         <filters>
             <field>Services_Rendered_to_Airline__c</field>
             <operation>equals</operation>
-            <value>Air France</value>
+            <value>Oman Air</value>
         </filters>
         <label>ZZ-BSP Participation - Search by Airline</label>
         <language>en_US</language>

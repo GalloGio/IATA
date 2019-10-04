@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -101,10 +100,6 @@
                 <behavior>Edit</behavior>
                 <field>Baggage_Tag_Range_Code__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Accounting_Code__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -139,6 +134,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Geoname_Billing_City__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>IATA_ISO_Billing_State__c</field>
             </layoutItems>
             <layoutItems>
@@ -157,6 +156,10 @@
                 <behavior>Edit</behavior>
                 <field>Website</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Global_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -174,6 +177,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Sub_Region__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Geoname_Shipping_City__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -659,6 +666,7 @@
         <customButtons>Mass_Update_Contracts</customButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>Product_Family__c</fields>
+        <fields>CONTRACT.NAME</fields>
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
         <fields>CONTRACT_TERM</fields>
@@ -696,6 +704,14 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>What__c</fields>
+        <fields>Old_Value__c</fields>
+        <fields>New_Value__c</fields>
+        <relatedList>ANG_Account_Tracking_History__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

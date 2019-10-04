@@ -1,0 +1,8 @@
+.emptyGrayAreaSize{
+    height: 50px;
+}
+
+.selectedTab{
+    color:#f04632;
+    border-bottom: 5px solid #f04632;
+}

@@ -67,7 +67,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
     public List<SelectOption> billingStateList {
         get {
             if (billingStateList == null) {
-                billingStateList = new List<SelectOption>{new SelectOption('','')};
+                billingStateList = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_STATE)};
 
                 for (IATA_ISO_State__c state: [SELECT Id, Name
                                             FROM IATA_ISO_State__c
@@ -137,13 +137,13 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
     }
 
     public void currentShippingCountryStates() {
-        shippingStateList = new List<SelectOption>{new SelectOption('', '')};
+        shippingStateList = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_STATE)};
 
-            if(stateListByCountryNameMap.containsKey(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
-        for (IATA_ISO_State__c state: stateListByCountryNameMap.get(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
-            shippingStateList.add(new SelectOption(state.Name, state.Name));
-        }
-    }
+        if(stateListByCountryNameMap.containsKey(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
+        	for (IATA_ISO_State__c state: stateListByCountryNameMap.get(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
+            	shippingStateList.add(new SelectOption(state.Name, state.Name));
+        	}
+    	}
     }
     
     public void validateVATNumber2() {
@@ -169,13 +169,16 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 
     public AMS_Accreditation_Country_CheckList__c countryCheckList {
         get{
-            List<AMS_Accreditation_Country_CheckList__c> aux = [SELECT License_required__c, Registration_required__c, 
+            if (countryCheckList == null) {
+                List<AMS_Accreditation_Country_CheckList__c> aux = [SELECT License_required__c, Registration_required__c, 
                                                                     Statement_of_International_Sales__c, Statement_of_International_Sales_Branch__c
                                                                 FROM AMS_Accreditation_Country_CheckList__c
                                                                 WHERE IATA_ISO_Country__r.ISO_Code__c = :ca.isocountry.Iso_code__c 
                                                                     AND Operation__c = :ca.Account.Sector__c];
 
-            return (!aux.isEmpty()) ? aux[0] : null;
+                return (!aux.isEmpty()) ? aux[0] : null;
+            }
+            return countryCheckList;
         }
         set;
     }

@@ -1,0 +1,24 @@
+<template>
+
+    <div if:true={componentLoading} class="spinnerContainer">
+        <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+    </div>
+
+    <div if:false={componentLoading}>
+        <div if:true={viewRequestedServicesArea}>
+            <div class="text-medium text-bold text-darkGray slds-p-top_xx-large slds-p-bottom_small" >{label.CSP_Services_AccessRequestedTitle}</div>
+
+            <div class="slds-grid slds-wrap slds-gutters_direct-small">
+
+                <template for:each={lstServicesRequested} for:item="serviceRequested">
+                    <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-vertical_small" key={serviceRequested.Id}>
+
+                        <c-portal-services-access-requested-card service={serviceRequested}></c-portal-services-access-requested-card>
+
+                    </div>
+                </template>
+
+            </div>
+        </div>
+    </div>
+</template>

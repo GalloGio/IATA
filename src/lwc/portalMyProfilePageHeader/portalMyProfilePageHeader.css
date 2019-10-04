@@ -1,0 +1,53 @@
+.fieldLabel {
+  height: 20px;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  color: #999999;
+}
+
+.fieldValue {
+  height: 26px;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.63;
+  letter-spacing: normal;
+  color: #525252;
+}
+
+.breadcrumbsPosition {
+  position: relative;
+}
+
+.headerPosition {
+  position: relative;
+  box-shadow: 0px 1px 12px 0px #827f7f;
+}
+
+.myProfileHeader {
+  width: 100%;
+  min-height: 150px;
+  margin-bottom: 2rem;
+  background-color: #ffff;
+}
+
+.imagespacer {
+  height: 100px;
+  width: 100%;
+}
+
+.imagespacerSmall {
+  min-width: 250px;
+  height: 1px;
+  float: left;
+}
+
+.headerMyProfile {
+  padding: 1rem;
+  max-width: 800px;
+}

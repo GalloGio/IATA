@@ -25,6 +25,17 @@ public class ANG_RME_Alert_Service_Test {
 
 		ANG_RHCHelper.createRHCInfo(new Set<Id>{a.Id}, false);
 
+		List<ANG_RHC_Information__c> rhcLst = [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :a.Id];
+        
+        if(!rhcLst.isEmpty()){ 
+            rhcLst.get(0).ANG_Forecasted_RHC_Effective_date__c = System.today(); 
+            update rhcLst;
+       	}
+        
+        Test.startTest();
+        Database.executeBatch(new ANG_RHCCopyRHCForecastBatch(null));
+        Test.stopTest();
+
 		createRMEMappings();
 	}
 	

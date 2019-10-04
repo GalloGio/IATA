@@ -1,0 +1,62 @@
+<template>
+    <div if:true={renderDataTable} class="slds-p-top_medium slds-p-horizontal_medium dimensionContainer">
+
+        <lightning-datatable columns={documentsColumns} hide-checkbox-column class="attlist slds-scrollable_none"
+            is-loading={loading} key-field="Id" data={lstDocuments} onrowaction={handleRowAction}
+            resize-column-disabled=true>
+        </lightning-datatable>
+
+        <div class="slds-m-top_x-large slds-border_top slds-p-top_small">
+            <span class="AddAttButtonContainer">
+                <lightning-button class="whiteButtonBlueBorder slds-p-around_small text-xsmall text-bold" label={label.AddNewDocuments}
+                    onclick={handleAddAttachs}></lightning-button>
+            </span>
+        </div>
+    </div>
+    <div if:false={renderDataTable}
+        class="slds-grid slds-wrap slds-p-horizontal_large slds-align_absolute-center noDocContainer">
+        <div class="slds-col slds-size_1-of-1 slds-p-around_medium slds-text-align_center">
+            <span class="textMediumMessage">{noAttachmentMsg}</span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-align_absolute-center">
+            <lightning-button class="whiteButtonBlueBorder slds-p-around_small text-xsmall text-bold" label={label.AddNewDocuments}
+                onclick={handleAddAttachs}></lightning-button>
+        </div>
+    </div>
+
+
+    <template if:true={showModal}>
+        <div class="modal">
+            <div class="customPopupInteriorHalfScreenCentered">
+                <!-- Popup Header -->
+                <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle">
+                    <span>{label.AddNewDocuments}</span>
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark"
+                        onclick={handleCloseModal}>+</span>
+                </div>
+                <!-- Popup Body -->
+                <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                    <div class="slds-p-vertical_large textMediumMessage">
+                        {label.SupportedFileExt}
+                    </div>
+                    <lightning-file-upload name="fileUploader" record-id={parentid} accept={acceptedFormats}
+                        onuploadfinished={handleFinishAddNewAttachs}
+                        class="slds-size_1-of-1 slds-p-horizontal_small uploadFileArea" multiple>
+                    </lightning-file-upload>
+                    <div if:true={renderModalDataTable} class="slds-m-top_large dimensionContainer">
+                        <lightning-datatable class="newattlist" key-field="Id" data={newDocsList}
+                            columns={newDocumentsColumns} is-loading={loading} hide-checkbox-column
+                            onrowaction={handleRowAction} resize-column-disabled=true>
+                        </lightning-datatable>
+                    </div>
+                </div>
+                <!-- Popup Footer -->
+                <div if:true={renderModalDataTable} class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                    <lightning-button class="slds-float_right containedButton" label={label.Done} variant="neutral"
+                        onclick={handleCloseModal}>
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

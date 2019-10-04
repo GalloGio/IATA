@@ -38,7 +38,7 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 
 					}
 					else {
-						if(eachExistingCase.Status != 'Closed'){
+						if(eachExistingCase.Status != 'Closed' && eachExistingCase.Status != 'Closed_Rejected'){
 							
 							caseDesignatorApplicationId = eachExistingCase.Id;
 						}
@@ -49,7 +49,7 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 						locationCodeApplicationId = participation.Id;
 					}
 					else {
-						if(eachExistingCase.Status != 'Closed'){
+						if(eachExistingCase.Status != 'Closed' && eachExistingCase.Status != 'Closed_Rejected'){
 							caseLocationCodeApplicationId = eachExistingCase.Id;
 						}
 					}
@@ -58,7 +58,7 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 						baggageApplicationId = participation.Id;
 					}
 					else {
-						if(eachExistingCase.Status != 'Closed'){
+						if(eachExistingCase.Status != 'Closed' && eachExistingCase.Status != 'Closed_Rejected'){
 							
 							caseBaggageApplicationId = eachExistingCase.Id;
 						}
@@ -68,7 +68,7 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 						accountingOrPrefixApplicationId = participation.Id;
 					}
 					else {
-						if(eachExistingCase.Status != 'Closed'){
+						if(eachExistingCase.Status != 'Closed' && eachExistingCase.Status != 'Closed_Rejected'){
 							caseAccountingOrPrefixApplicationId = eachExistingCase.Id;
 						}
 					}
@@ -158,7 +158,7 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 
 
 		if(isDesignator == true){
-          	caseUrl = '/ISSP_AMC_Airline_Designators?participationId= '+ designatorApplicationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';	
+          	caseUrl = '/ISSP_AMC_Airline_Designators?participationId='+ designatorApplicationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';	
 		}
 		if(isAccountingPrefix == true){
 			caseUrl = '/ISSP_AMC_Accounting_Or_Prefix_Code?participationId=' + accountingOrPrefixApplicationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';

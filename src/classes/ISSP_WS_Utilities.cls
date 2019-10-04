@@ -56,6 +56,7 @@ public without sharing class ISSP_WS_Utilities {
         u.contactId = contactId;
         u.timezonesidkey = 'Asia/Dubai';
         u.UID__c = Comm_User_Helper.NewGuid();
+        u.FederationIdentifier = contactId.substring(0, 15);
         return u;
     }
 

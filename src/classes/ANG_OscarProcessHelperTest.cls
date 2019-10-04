@@ -98,6 +98,8 @@ private class ANG_OscarProcessHelperTest {
 
 		insert acontact;
 
+		AMS_OSCARTriggerHandler.allOnlineAccr = null;
+
 		oscar.STEP6__c = AMS_Utils.PASSED;
 		oscar.AMS_Online_Accreditation__c = theAccreditation.Id;
 		oscar.Is_PCI_compliant__c = 'Yes';
@@ -670,7 +672,7 @@ private class ANG_OscarProcessHelperTest {
 		
 		// test Change Code and SIDRA Lite creation
 		oscars[0].step43__c = AMS_Utils.PASSED;
-		oscars[0].step44__c = 'Failed';
+		oscars[0].step44__c = 'Passed';
 
 		update oscars;
 

@@ -1,0 +1,8 @@
+Dear Customer, 
+Thank you for your enquiry. One of our Customer Service Representatives will respond to you shortly.  You have been allocated the following:
+Case number: {!Case.CaseNumber}
+ Don’t forget to quote this case number if you wish to contact us regarding your enquiry.
+
+Best regards,
+IATA Customer Service Center
+Case Thread ID: {!Case.Thread_Id}
