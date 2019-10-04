@@ -1608,7 +1608,7 @@ private class Faq2CaseTest {
                                 PortalRole = 'Manager',
                                 CommunityNickname = ComNickNameStr,
                                License_Cost_Center__c = 'ITO005CH01',
-                                ProfileId = [select Id from profile where Name='ISS Portal Delegated Admin User Full FAQ Access' limit 1].id,
+                                ProfileId = [select Id from profile where Name='ISS Portal Delegated Admin User Test Full FAQ Access' limit 1].id,
                                 IsActive = true);
         insert newUser;
         return newUser;
