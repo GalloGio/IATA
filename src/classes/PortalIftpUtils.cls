@@ -1610,21 +1610,33 @@ public without sharing class PortalIftpUtils {
     public static Boolean removeProficiency(String roleAddressId){
 
         try{
-            Role_Address__c roleAddress = [SELECT Id, Account_Contact_Role__r.Company_Code__c, 
-                                            Account_Contact_Role__r.First_Name__c, 
-                                            Account_Contact_Role__r.Last_Name__c, Address__r.City__c, 
+            Role_Address__c roleAddress = [SELECT Id, 
+                                            Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c, 
+                                            Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c, 
+                                            Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c, Address__r.City__c, 
                                             Address__r.Code__c, Contact_Role_Certification__r.Certification__r.Name, 
                                             Proficiency_level__c, Proficiency_Granted_By__c 
                                           FROM Role_Address__c WHERE Id=:roleAddressId];
             roleAddress.Proficiency_level__c = 'No';
             update roleAddress;
             
+            /*IFTP_History__c iftpH = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Loose_Proficiency, 
+                                                            roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c, 
+                                                            roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c, 
+                                                            roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c,
+                                                            roleAddress.Address__r.Code__c,
+                                                            roleAddress.Address__r.City__c,
+                                                            roleAddress.Contact_Role_Certification__r.Certification__r.Name,
+                                                            roleAddress.Proficiency_level__c,
+                                                            roleAddress.Proficiency_Granted_By__c
+                                                            );*/
+            
             IFTP_History__c iftpH = new IFTP_History__c();
             iftpH.Event_Type__c = String.valueOf(portalIftpHistoryManagement.Employee_Loose_Proficiency);
             iftpH.ITP_Name__c = 'IATA INTERNAL USER';
-            iftpH.Employee_Code__c = roleAddress.Account_Contact_Role__r.Company_Code__c;
-            iftpH.Employee_First_Name__c = roleAddress.Account_Contact_Role__r.First_Name__c;
-            iftpH.Employee_Last_Name__c = roleAddress.Account_Contact_Role__r.Last_Name__c;
+            iftpH.Employee_Code__c = roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c;
+            iftpH.Employee_First_Name__c = roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c;
+            iftpH.Employee_Last_Name__c = roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c;
             iftpH.Address_Code__c = roleAddress.Address__r.Code__c;
             iftpH.Address_City__c = roleAddress.Address__r.City__c;
             iftpH.Certification_Name__c = roleAddress.Contact_Role_Certification__r.Certification__r.Name;
