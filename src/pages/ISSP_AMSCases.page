@@ -1,11 +1,10 @@
-<apex:page controller="ISSP_AMS_Accreditation" cache="false" 
-           sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" 
-           standardStylesheets="false" language="{!displayLanguage}">
+<apex:page controller="ISSP_AMS_Accreditation" cache="false" sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false"
+    standardStylesheets="false" language="{!displayLanguage}">
     <html>
     <c:ISSP_Header />
 
-        <body>
-        <script src="{!URLFOR($Resource.bootbox)}"/>
+    <body>
+        <script src="{!URLFOR($Resource.bootbox)}" />
         <style>
             .section-header {
                 background-color: #1e32fa;
@@ -16,7 +15,8 @@
                 border-top: 1px solid #ddd;
             }
 
-            body, div.container {
+            body,
+            div.container {
                 background-color: rgb(240, 242, 245) !important;
             }
 
@@ -34,10 +34,10 @@
             }
 
             .tableFormat {
-                padding-left : 5px !important;
-                padding-right : 15px !important;
+                padding-left: 5px !important;
+                padding-right: 15px !important;
                 padding-bottom: 2px !important;
-                padding-top :  2px !important;
+                padding-top: 2px !important;
                 vertical-align: middle !important;
             }
 
@@ -49,18 +49,18 @@
                 font-size: 12px;
             }
 
-            .borderless > thead > tr > th,
-            .borderless > tbody > tr > th,
-            .borderless > tfoot > tr > th,
-            .borderless > thead > tr > td,
-            .borderless > tbody > tr > td,
-            .borderless > tfoot > tr > td {
+            .borderless>thead>tr>th,
+            .borderless>tbody>tr>th,
+            .borderless>tfoot>tr>th,
+            .borderless>thead>tr>td,
+            .borderless>tbody>tr>td,
+            .borderless>tfoot>tr>td {
                 border-top: none;
-            }      
+            }
 
-            input + label {
+            input+label {
                 font-weight: normal;
-            } 
+            }
 
             .overlay {
                 display: none;
@@ -77,7 +77,7 @@
                 -khtml-opacity: 0.3;
                 z-index: 1000;
             }
-        
+
             .loader {
                 background: url('/img/loading32.gif') scroll no-repeat 0 0;
                 width: 32px;
@@ -86,14 +86,28 @@
                 left: 50%;
             }
 
+            .customlink {
+                cursor: pointer;
+                color: #337ab7;
+            }
             .content-box {
                 box-shadow: 5px 5px 20px #e2e2e2;
                 background-color: white;
+                height: 100%;
             }
-            
-            .content-box > .row {
+		.content-box > .row {
                 padding-left: 15px;
                 padding-right: 15px;
+            }
+
+            .customlink:hover {
+                cursor: pointer;
+                color: #337ab7;
+                text-decoration: underline;
+            }
+            .mainRows{
+                display: flex;
+                flex-direction: row;
             }
 
             .padded-on-top {
@@ -135,7 +149,7 @@
             }
 
         </style>
-        <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
+        <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
 
         <script type="text/javascript">
             var typeAccredSelected = '';
@@ -285,8 +299,8 @@
             <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
             <apex:actionFunction action="{!runOptInOut}" name="runOptInOut" oncomplete="onCompleteOptInOut();" rerender="DraftCases" />
             
-            <div class="" style="width: 100%">
-                <div class="row">
+            <div class="container" style="width: 100%">
+                <div class="row mainRows">
                     <section name="left-side-agency-accred" class="col-md-7" style="min-height: 350px;">
 				<div class="content-box">
                         <header>
@@ -297,12 +311,12 @@
                         </header>
                             
                         <div class="row" style="padding-top: 20px">
-                            <div class="col-md-7">
+                            <div class="col-md-12 padded-on-top">
                                         
                                 <!--<input type="button" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/>-->
-                                <input type="button" style="display:{!IF(NOT(isHOAccredited),'','none')};" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Head_Entity, $Label.ISSP_AMS_Apply_New_Office))}"/>
+                                <input type="button" style="display:{!IF(NOT(isHOAccredited),'','none')};" class="iatabtn" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Head_Entity, $Label.ISSP_AMS_Apply_New_Office))}"/>
 
-                                <input type="button" style="display:{!IF(isHOAccredited,'','none')};" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Associate_Entity, $Label.ISSP_AMS_Apply_New_Branch_Office)}"/>
+                                <input type="button" style="display:{!IF(isHOAccredited,'','none')};" class="iatabtn" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Associate_Entity, $Label.ISSP_AMS_Apply_New_Branch_Office)}"/>
 
                                 <br/>
                                         
@@ -369,13 +383,13 @@
 
                             <div class="row bankDetails" style="padding-top: 20px">
                                 <div class="col-md-12" style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};">
-                                    <input type="button" class="btn btn_iata_primary" onClick="checkEligibility('true');return false;" value="{!$Label.ISSP_AMS_Step0_Change_Bank_Details}"/>
+                                    <input type="button" class="iatabtn btn btn_iata_primary" onClick="checkEligibility('true');return false;" value="{!$Label.ISSP_AMS_Step0_Change_Bank_Details}"/>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-12" style="padding-bottom: 10px; display:{!IF(agencyCategory != 'TIDS Agent','','none')};">
-                                    <apex:commandButton styleClass="btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}" disabled="{! revCaseOpen}"/><br/>
+                                    <apex:commandButton styleClass="iatabtn btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}" disabled="{! revCaseOpen}"/><br/>
                                     <div style="{!IF(!revCaseOpen, 'display:block', 'display:none')}">
                                         <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>
                                         
@@ -389,7 +403,7 @@
                         </section>
                 </div>
                 
-                <div class="row">
+                <div class="row mainRows">
                     <section name="left-side-ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px">
                         <header>
                             <div class="section-header">

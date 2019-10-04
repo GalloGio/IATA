@@ -188,12 +188,32 @@
           		text-decoration: none;
           		cursor: pointer;
       		}
-    	</style>
+			.row-main{
+				margin-bottom: 20px;
+			  }
 
+			  .requestbtn-wrapper{
+				display: flex;
+				justify-content: center;
+				margin: 15px 0;
+			  }
+
+			  .col-md-4.col-sm-12.text-center img{
+				height: 80px;
+				width: 80px;
+			  }
+
+			  .table>tbody>tr>td{
+				border-top: none !important;
+			  }
+
+    </style>
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
+		<c:ISSP_CustomNavigation />
     	<main class="container">
-      		<c:ISSP_CustomNavigation />
+      		
       		<apex:form id="mainFrm">
-      			<div class="row">
+      			<div class="row row-main">
         		<!--LEFT SECTION-->
         			<section name="left-side" class="col-md-8 col-sm-12">
 
@@ -277,8 +297,8 @@
 	            			</apex:outputPanel>
 
 	            			<div class="row" style="display: {!IF(OR(isCashless, isChinaAgent),'none','block')}">
-	              				<div class="col-col-xs-12 col-md-8 col-md-offset-2">
-	                				<button id="requestRME" onclick="requestBalanceUpdate();return false;" class="btn btn-block btn_iata_primary">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
+	              				<div class="requestbtn-wrapper">
+	                				<button id="requestRME" onclick="requestBalanceUpdate();return false;" class="iatabtn-main">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
 	              				</div>
 	            				<!-- The Modal -->
 	            				<div id="myModal" class="modal">
@@ -286,7 +306,7 @@
 	              					<!-- Modal content -->
 	              					<div id="modal-content-ErrorHandling" class="modal-content">
 	                					<span id="closeModal-ErrorHandling" class="closeModal">&times;</span>
-	                					<p>There was an error in updating your balance. Please try again and if the issue persists contact <b><a href="/ISSP_FAQ2Case">customer support.</a></b></p>
+	                					<p>There was an error in updating your balance. Please try again and if the issue persists contact <b><a href="{!IF(isNewPortal, portalRedirectToSupport,'/ISSP_FAQ2Case')}">customer support.</a></b></p>
 	              					</div>
 	            				</div>
 	            			</div>
@@ -478,7 +498,7 @@
 	            				<c:ANG_ProductComparison helperParam="{! helper}"/>
 	          				</div>
 	          				<div class="modal-footer">
-	            				<button type="button" class="btn btn-default" data-dismiss="modal">{! $Label.LAQ_Close}</button>
+	            				<button type="button" class="iatabtn iatabtn-default" data-dismiss="modal">{! $Label.LAQ_Close}</button>
 	          				</div>
 	        			</div>
 	    			</div>
