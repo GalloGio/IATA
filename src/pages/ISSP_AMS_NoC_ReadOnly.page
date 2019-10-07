@@ -131,7 +131,7 @@
 
                         <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
                             <apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType}"/>
-                            <apex:outputText value="{!IF(con.Account.ANG_Accreditation_Model__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash)}" />
+                            <apex:outputText value="{!IF(con.Account.ANG_Accreditation_Model__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, IF(con.Account.ANG_Accreditation_Model__c == 'Cashless', $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash, $Label.ANG_ISSP_ProductStandardAccreditationWithMultiCountry))}" />
                         </apex:panelGrid>
                         <apex:outputPanel rendered="{!NOT(newForm.Notify_Change_Accreditation_Type__c)}"></apex:outputPanel>
                         <apex:outputPanel rendered="{!newForm.Notify_Change_Accreditation_Type__c}">
