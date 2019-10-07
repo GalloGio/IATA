@@ -430,7 +430,7 @@ public with sharing class PortalProfileCtrl {
                 editable = false;
             }
 
-            if(hasAnnualRevalidation() && ('email__c'.equals(f.getFieldPath().toLowerCase())  || 'website'.equals(f.getFieldPath().toLowerCase()) )) {
+            if(hasAnnualRevalidation() && ('phone'.equals(f.getFieldPath().toLowerCase())  || 'fax'.equals(f.getFieldPath().toLowerCase())  || 'email__c'.equals(f.getFieldPath().toLowerCase())  || 'website'.equals(f.getFieldPath().toLowerCase()) )) {
                 editable = false;
             }
 
