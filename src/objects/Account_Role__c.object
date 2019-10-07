@@ -311,9 +311,10 @@ The Account Role record should be named after the functional capability for whic
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>Default</fullName>
+        <fullName>ITP</fullName>
         <active>true</active>
-        <label>Default</label>
+        <compactLayoutAssignment>IFTP_Compact_Layout</compactLayoutAssignment>
+        <label>IFTP</label>
         <picklistValues>
             <picklist>Provider_Type__c</picklist>
             <values>
