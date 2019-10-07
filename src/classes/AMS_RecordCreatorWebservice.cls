@@ -32,7 +32,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     private static String NEWNGLOBAL = 'ANG.NEW.GE.STANDARD.1.0';
     public static String CONVERT_TO_MC = 'ANG.CONVERT.ST.TO.MC';
 
-    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV, AMS_Utils.new_PASS_BR};
+    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV};
 
     public static Set<String> newgenChildProcess = new Set<String>{NEWNAE,MCAE}; 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
