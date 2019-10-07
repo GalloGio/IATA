@@ -1,0 +1,201 @@
+<!-- Proficiency Management Search -->
+<template>
+
+    <!-- Error panel -->
+    <template if:true={error}>
+        <c-error-panel errors={error} main-error-message={mainErrorMessage}></c-error-panel>
+    </template>
+
+
+    <div class="slds-card_boundary">
+        <lightning-card> 
+            <div slot="title">
+                <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                Search Criteria
+            </div> 
+            <lightning-combobox
+                name="station"
+                label="Station"
+                value={stationValue}
+                placeholder="Select Station"
+                options={stationOptions}
+                onchange={handleChangeStation}
+                class="slds-m-left_x-small slds-m-right_x-small">
+            </lightning-combobox>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-m-left_x-small">
+                    <lightning-input 
+                        name="lastName"
+                        label="Last Name"
+                        value={lastNameValue}
+                        placeholder="Last Name"
+                        onchange={handleChangeLastName}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-m-left_x-small">
+                    <lightning-input 
+                        name="firstName"
+                        label="First Name"
+                        value={firstNameValue}
+                        placeholder="First Name"
+                        onchange={handleChangeFirstName}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
+                    <lightning-input 
+                        name="employeeCode"
+                        label="Employee Code"
+                        value={employeeCodeValue}
+                        placeholder="Employee Code"
+                        onchange={handleChangeEmployeeCode}>
+                    </lightning-input>
+                </div>
+            </div>
+            <br/>
+            <lightning-button variant="neutral" label="Search" title="Search" class="slds-m-left_x-small"
+            icon-name="utility:filterList" icon-position="right" 
+            onclick={handleSearchButtonClick}>
+            </lightning-button>
+            <lightning-button variant="neutral" label="Reset" title="Reset Form" class="slds-m-left_x-small"
+            icon-name="utility:filterList" icon-position="right" 
+            onclick={handleResetButtonClick}>
+            </lightning-button>
+        </lightning-card>
+    </div>
+    
+    <template if:true={showSearch}>
+        <div class="slds-card_boundary slds-m-top_medium">
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    Training Records
+                </div>
+                <p class="slds-p-horizontal_small">
+                    <template if:true={loading}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+                    <template if:false={loading}>
+                        <div if:true={dataRecords}>
+                            <lightning-datatable
+                                key-field="uniqueRowId"
+                                data={data}
+                                columns={columns}
+                                sorted-by={sortedBy}
+                                sorted-direction={sortedDirection}
+                                onsort={updateColumnSorting}
+                                onrowaction={handleRowAction}
+                                onheaderaction={handleHeaderAction}
+                                hide-checkbox-column>
+                            </lightning-datatable>
+
+                        </div>
+                        <div if:false={dataRecords}>
+                            <div class="slds-text-align_center">
+                                <div class="slds-text-heading_medium">
+                                    <h3>No Results</h3>
+                                </div>
+                            </div>                            
+                        </div>                    
+                    </template>
+                </p>
+            </lightning-card>
+        </div>
+
+        <!-- MODAL Ask for Tranfer -->
+        <template if:true={openmodal}>
+            <div style="height: 50%;">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <div class="slds-is-relative">
+                            <lightning-spinner if:true={loadingModal} alternative-text="Loading" size="medium"></lightning-spinner>
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={cancelAskForTransfer}>
+                                    <lightning-icon icon-name="utility:close" size="medium">
+                                    </lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Request Transfer Form</h2>
+                            </header>
+
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                <lightning-input 
+                                    name="first_name" 
+                                    label="First Name"
+                                    value={recordRequestTransfer.firstName} 
+                                    placeholder="First Name"
+                                    pattern=(.*[^\s].*)
+                                    message-when-pattern-mismatch="First name is required."
+                                    onchange={handleRequestTransferEmployeeFirstNameChange} 
+                                    required>
+                                </lightning-input>
+                            
+                                <lightning-input 
+                                    name="last_name" 
+                                    label="Last Name" 
+                                    value={recordRequestTransfer.lastName}
+                                    placeholder="Last Name" 
+                                    pattern=(.*[^\s].*)
+                                    message-when-pattern-mismatch="Last name is required."
+                                    onchange={handleRequestTransferEmployeeLastNameChange} 
+                                    required>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="lms_username" 
+                                    label="LMS Username" 
+                                    value={recordRequestTransfer.lmsUsername}
+                                    placeholder="LMS Username" 
+                                    pattern=(.*[^\s].*)
+                                    message-when-pattern-mismatch="LMS Username is required."
+                                    onchange={handleRequestTransferEmployeeLmsUsernameChange} 
+                                    required>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="former_itp_name" 
+                                    label="Former ITP Name" 
+                                    value={recordRequestTransfer.formerItpName}
+                                    placeholder="Former ITP Name" 
+                                    pattern=(.*[^\s].*)
+                                    message-when-pattern-mismatch="Former ITP Name is required."
+                                    onchange={handleRequestTransferEmployeeFormerITPNameChange} 
+                                    required>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="former_stations" 
+                                    label="Former Stations (Please use the three caracters code of the station)" 
+                                    value={recordRequestTransfer.formerStations}
+                                    placeholder="Former Stations" 
+                                    pattern=(.*[^\s].*)
+                                    message-when-pattern-mismatch="Former Stations are required."
+                                    onchange={handleRequestTransferEmployeeFormerStationsChange} 
+                                    required>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="comments" 
+                                    label="Comments" 
+                                    value={recordRequestTransfer.comments}
+                                    placeholder="Comments" 
+                                    onchange={handleRequestTransferEmployeeCommentsChange}>
+                                </lightning-input>
+                            </div>
+                            <footer class="slds-modal__footer">
+                                <lightning-button
+                                    label="Save" 
+                                    variant="neutral"
+                                    onclick={handleRequestTransferSave}>
+                                </lightning-button>
+                                <lightning-button 
+                                    label="Cancel"
+                                    class="cancelButton" 
+                                    variant="neutral" 
+                                    onclick={cancelAskForTransfer}>
+                                </lightning-button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            </footer>
+                        </div>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </template>
+    </template>
+</template>

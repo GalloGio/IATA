@@ -1,0 +1,522 @@
+<!-- Employees Management Search -->
+<template>
+    <c-portal-iftp-export-data></c-portal-iftp-export-data>
+    <!-- Error panel -->
+    <template if:true={error}>
+        <c-error-panel errors={error} main-error-message={mainErrorMessage}></c-error-panel>
+    </template>
+    <div class="slds-card_boundary">
+        <lightning-card> 
+            <div slot="title">
+                <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                Search Criteria
+            </div>
+            <template if:true={loadingSearchCriteria}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+            <template if:false={loadingSearchCriteria} if:true={showSearchCriteria}>   
+                <lightning-combobox 
+                    name="station" 
+                    label="Station" 
+                    value={stationValue}
+                    placeholder="Select Station"
+                    options={stationOptions} 
+                    onchange={handleChangeStation}
+                    class="slds-m-left_x-small slds-m-right_x-small">
+                </lightning-combobox>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-m-left_x-small">
+                        <lightning-input 
+                            name="lastName" 
+                            label="Last Name" 
+                            value={lastNameValue} 
+                            placeholder="Last Name"
+                            onchange={handleChangeLastName}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-m-left_x-small">
+                        <lightning-input 
+                            name="firstName" 
+                            label="First Name" 
+                            value={firstNameValue} 
+                            placeholder="First Name"
+                            onchange={handleChangeFirstName}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
+                        <lightning-input 
+                            name="employeeCode" 
+                            label="Employee Code" 
+                            value={employeeCodeValue} 
+                            placeholder="Employee Code"
+                            onchange={handleChangeEmployeeCodeValue}>
+                        </lightning-input>
+                    </div>
+                </div>
+
+                <br />
+                <lightning-button 
+                    variant="neutral" 
+                    label="Search" 
+                    title="Search" 
+                    class="slds-m-left_x-small"
+                    icon-name="utility:filterList" 
+                    icon-position="right" 
+                    onclick={handleSearchButtonClick}>
+                </lightning-button>
+                <lightning-button 
+                    variant="neutral" 
+                    label="Reset" 
+                    title="Reset Form" 
+                    class="slds-m-left_x-small"
+                    icon-name="utility:filterList" 
+                    icon-position="right" 
+                    onclick={handleResetButtonClick}>
+                </lightning-button>
+                <lightning-button 
+                    variant="success" 
+                    class="slds-m-right--x-small align_button_right_class" 
+                    label="Add Employee"
+                    onclick={handleAddEmployee}>
+                </lightning-button>
+            </template>
+        </lightning-card>
+    </div>
+    <div if:true={showSearch} class="slds-card_boundary slds-m-top_medium">
+        <lightning-card>
+            <div slot="title">
+                <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                Employee Records
+            </div>
+            <p class="slds-p-horizontal_small">
+                <template if:true={loading}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </template>
+                <template if:false={loading}>            
+                    <div if:true={hasSearchResults}>
+                        <div class="slds-p-around_medium slds-grid slds-wrap slds-gutters_x-small slds-grid_align-end">
+                            <div class="slds-grid slds-gutters">
+                                <lightning-button 
+                                    variant="neutral" 
+                                    class="slds-m-left_x-small" 
+                                    label="Download Data as CSV file"
+                                    onclick={handleExportToCsv}>
+                                </lightning-button>
+                                <lightning-button 
+                                    variant="neutral" 
+                                    class="slds-m-left_x-small" 
+                                    label="Download Data as Excel file"
+                                    onclick={handleExportToExcel}>
+                                </lightning-button>
+                            </div>
+                        </div>
+                        <lightning-datatable 
+                            key-field="Id" 
+                            hide-checkbox-column 
+                            data={ITPEmployeesWithStationsInfo}
+                            columns={columnsSearchEmployees} 
+                            sorted-by={sortedBy} 
+                            sorted-direction={sortedDirection}
+                            onsort={updateColumnSorting} 
+                            onrowaction={handleRowAction}>
+                        </lightning-datatable>
+                    </div>
+                    <div if:false={hasSearchResults}>
+                            <div class="slds-text-align_center">
+                                <div class="slds-text-heading_medium">
+                                    <h3>No Results</h3>
+                                </div>
+                            </div>
+                        </div>
+                </template>
+            </p>
+        </lightning-card>
+    </div>
+    <!-- Reactivate Employee Confirmation MODAL -->
+    <template if:true={openReactivateConfirmationModal}>
+        <div style="height: 50%;" class="reactivateConfirmation">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container" style="width: 20%;">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeReactivateConfirmationModal}>
+                            <lightning-icon icon-name="utility:close" size="medium">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">There are an inactive employee record for this employee code. 
+                            Are you sure you what to reactivate and update it?</h2>
+                    </header>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Reactivate and Update" variant="neutral" onclick={reactivateConfirmation}>
+                        </lightning-button>
+                        <lightning-button class="cancelButton" label="Cancel" variant="neutral"
+                            onclick={closeReactivateConfirmationModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+    <!-- View/ Delete/ Edit / Add MODAL -->
+    <template if:true={openModal}>
+        <div style="height: 50%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    
+                    <div class="slds-is-relative">
+                        <lightning-spinner if:true={loadingSpinner} alternative-text="Loading" size="medium"></lightning-spinner>
+
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" 
+                                onclick={handleCancel}>
+                                <lightning-icon icon-name="utility:close" size="medium"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{modalTitle}</h2>
+                        </header>
+                        <template if:false={loadingModal}>
+                            <div if:false={isActionNew} 
+                                    class="slds-modal__content slds-p-around_medium"
+                                    id="modal-content-id-1">
+                                <lightning-input 
+                                    name="employee_code" 
+                                    label="Employee Code"
+                                    value={recordToManage.Company_Code__c} 
+                                    placeholder="Employee Code"
+                                    onchange={handleChangeEditEmployeeCompanyCode} 
+                                    disabled={isEmployeeCodeDisabled}>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="first_name" 
+                                    label="First Name"
+                                    value={recordToManage.First_Name__c} 
+                                    placeholder="First Name"
+                                    pattern=(.*[^\s].*)
+                                    message-when-pattern-mismatch="First name is required."
+                                    disabled={isActionView} 
+                                    onchange={handleChangeEditEmployeeFirstName} 
+                                    required>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="last_name" 
+                                    label="Last Name" 
+                                    value={recordToManage.Last_Name__c}
+                                    placeholder="Last Name" 
+                                    pattern=(.*[^\s].*)
+                                    message-when-pattern-mismatch="Last name is required."
+                                    disabled={isActionView} 
+                                    onchange={handleChangeEditEmployeeLasttName} 
+                                    required>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="Title" 
+                                    label="Title"
+                                    value={recordToManage.Title__c} 
+                                    placeholder="Title" 
+                                    disabled={isActionView}
+                                    onchange={handleChangeEditEmployeeTitle}>
+                                </lightning-input>                       
+                                <lightning-input 
+                                    name="employee_role" 
+                                    label="Employee Role"
+                                    value={recordToManage.Contact_Role__c} 
+                                    placeholder="Employee Role" 
+                                    disabled>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="phone" 
+                                    label="Phone"
+                                    value={recordToManage.Business_Phone__c} 
+                                    placeholder="Phone" 
+                                    disabled={isActionView}
+                                    onchange={handleChangeEditEmployeePhone}>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="details" 
+                                    label="Details"
+                                    value={recordToManage.Details__c} 
+                                    placeholder="Details" 
+                                    disabled={isActionView}
+                                    onchange={handleChangeEditEmployeeDetails}>
+                                </lightning-input>
+                                <label class="slds-form-element__label slds-no-flex">Employee Stations</label>
+                                <lightning-datatable 
+                                    key-field="Code__c" 
+                                    hide-checkbox-column
+                                    data={recordToManageStationsList} 
+                                    columns={columnsShowEmployeeStations}
+                                    sorted-by={sortedrecordToManageStationsListBy} 
+                                    sorted-direction={sortedrecordToManageStationsListDirection}
+                                    onsort={updaterecordToManageStationsListSorting}
+                                    hidden={hasNoStations}>
+                                </lightning-datatable>
+                                <div if:true={hasNoStations}>
+                                    <div class="slds-text-align_center">
+                                        <div class="slds-text-heading_medium">
+                                            <h4>No Stations Associated with this employee.</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div if:true={isActionNew} class="slds-modal__content slds-p-around_medium"
+                                id="modal-content-id-2">
+                                <lightning-input 
+                                    name="employee_code" 
+                                    label="Employee Code" 
+                                    placeholder="Employee Code"
+                                    pattern=(.*[^\s].*)
+                                    message-when-pattern-mismatch="Employee code is required."
+                                    onchange={handleChangeEmployeeCode} 
+                                    required>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="first_name" 
+                                    label="First Name" 
+                                    placeholder="First Name"
+                                    pattern=(.*[^\s].*)
+                                    message-when-pattern-mismatch="First name is required."
+                                    onchange={handleChangeEmployeeFirstName} 
+                                    required>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="last_name" 
+                                    label="Last Name" 
+                                    placeholder="Last Name"
+                                    pattern=(.*[^\s].*)
+                                    message-when-pattern-mismatch="Last name is required."
+                                    onchange={handleChangeEmployeeLastName} 
+                                    required>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="Title" 
+                                    label="Title" 
+                                    placeholder="Title" 
+                                    onchange={handleChangeEmployeeTitle}>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="employee_role" 
+                                    label="Employee role"
+                                    value={employeeToInsert.role} 
+                                    disabled>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="phone" 
+                                    label="Phone" 
+                                    placeholder="Phone"
+                                    onchange={handleChangeEmployeePhone}>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="details" 
+                                    label="Details" 
+                                    placeholder="Details" 
+                                    onchange={handleChangeEmployeeDetails}>
+                                </lightning-input>
+                            </div>
+                        </template>
+                        <footer class="slds-modal__footer">
+                            <lightning-button if:true={isActionNew} 
+                                            label="Save" 
+                                            variant="neutral"
+                                            onclick={handleNewEmployeeSave}>
+                            </lightning-button>
+                            <lightning-button if:true={isActionEdit} 
+                                            label="Save" variant="neutral"
+                                            onclick={handleUpdateEmployeeSave}>
+                            </lightning-button>
+                            <lightning-button if:true={isActionDelete} 
+                                            label="Delete" 
+                                            variant="neutral"
+                                            onclick={handleDelete}>
+                            </lightning-button>
+                            <lightning-button class="cancelButton" 
+                                            label="Cancel" 
+                                            variant="neutral"
+                                            onclick={handleCancel}>
+                            </lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </footer>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+    <!-- Confirmation MODAL -->
+    <template if:true={openConfirmationModal}>
+        <div style="height: 50%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeConfirmationModal}>
+                            <lightning-icon icon-name="utility:close" size="medium">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Are you sure you what
+                            to delete this employee record?</h2>
+                    </header>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Delete" variant="neutral" onclick={deleteConfirmation}>
+                        </lightning-button>
+                        <lightning-button class="cancelButton" label="Cancel" variant="neutral"
+                            onclick={closeConfirmationModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+    <!-- Manage Stations MODAL -->
+    <template if:true={openStationsModal}>
+        <div style="height: 50%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-is-relative">
+                        <lightning-spinner if:true={loadingModal} alternative-text="Loading" size="medium"></lightning-spinner>
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={handleCancel}>
+                                <lightning-icon icon-name="utility:close" size="medium">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">{modalTitle}</h2>
+                        </header>
+                        <div  class="min-height-class slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                            <label class="slds-form-element__label slds-no-flex">Stations</label>
+                            <div if:true={showStationsList}>
+                                <div  class="div_container slds-p-around_medium">
+                                    <div  class="slds-size_9-of-12">
+                                        <lightning-combobox 
+                                            name="stations"
+                                            value={manageStationValue}
+                                            placeholder="Select Station"
+                                            options={stationsProneToAdd}
+                                            onchange={handleChangeStationsProneToAdd}
+                                            class='combobox_max_height'>
+                                        </lightning-combobox>
+                                    </div>
+                                    <div  class="slds-size_3-of-12 addStationButtonContainer">
+                                        <lightning-button label="Add Station" variant="success" onclick={handleAddStationToEmployee}></lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div if:false={showStationsList} class="slds-text-align_center noStationToAddMinHeightClass">
+                                <div class="slds-text-heading_small">
+                                    <h4>No more stations to be added.</h4>
+                                </div>
+                            </div>
+                            <label class="slds-form-element__label slds-no-flex">Employee Stations</label>
+                            <div  class="div_container slds-p-around_medium">
+                                <div  if:false={hasNoStations} class="slds-size_12-of-12" style="height: 200px;">
+                                    <lightning-datatable 
+                                        key-field="Code__c" 
+                                        hide-checkbox-column
+                                        data={recordToManageNewStationsList} 
+                                        columns={columnsManageEmployeeStations}
+                                        onrowaction={handleManageEmployeeStationsRowAction}
+                                        hidden={hasNoStations}>
+                                    </lightning-datatable>
+                                </div>
+                                <div if:true={hasNoStations} class="slds-size_12-of-12" style="height: 200px;">
+                                    <div class="slds-text-align_center">
+                                        <div class="slds-text-heading_small">
+                                            <h4>No Stations Associated with this employee.</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button label="Save" variant="neutral" onclick={handleManageEmployeeStationsSave}>
+                            </lightning-button>
+                            <lightning-button class="cancelButton" label="Cancel" variant="neutral" onclick={handleCancel}>
+                            </lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </footer>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+
+      <!-- Reset Password MODAL -->
+      <template if:true={openResetPasswordModal}>
+        <div style="height: 50%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-is-relative">
+                        <lightning-spinner if:true={loadingSpinner} alternative-text="Loading" size="medium"></lightning-spinner>
+
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" 
+                                onclick={handleResetPasswordCancel}>
+                                <lightning-icon icon-name="utility:close" size="medium"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-07" class="slds-text-heading_medium slds-hyphenate">{modalTitle}</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium"
+                                id="modal-content-id-5">
+                            <lightning-input 
+                                name="first_name" 
+                                label="First Name"
+                                value={recordToManage.First_Name__c} 
+                                disabled>
+                            </lightning-input>
+                            <lightning-input 
+                                name="last_name" 
+                                label="Last Name" 
+                                value={recordToManage.Last_Name__c}
+                                disabled>
+                            </lightning-input>
+                            <lightning-input 
+                                name="Username" 
+                                label="LMS Username"
+                                value={recordToManage.Username} 
+                                disabled>
+                            </lightning-input>
+                            <lightning-input type="password"
+                                            label="New Password"
+                                            name="password" 
+                                            value={password}
+                                            placeholder="Password"
+                                            onchange={handleChangeInPassword} 
+                                            required>
+                            </lightning-input>
+                            <lightning-input type="password"
+                                            label="Confirm New Password"
+                                            name="passwordConfirmation" 
+                                            value={passwordConfirmation}
+                                            placeholder="Confirm Password"
+                                            onchange={handleChangeInConfirmePassword} 
+                                            required>
+                            </lightning-input>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button
+                                            label="Reset" 
+                                            variant="neutral"
+                                            onclick={handleResetPassword}>
+                            </lightning-button>
+                            <lightning-button class="cancelButton" 
+                                            label="Cancel" 
+                                            variant="neutral"
+                                            onclick={handleResetPasswordCancel}>
+                            </lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </footer>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+</template>
