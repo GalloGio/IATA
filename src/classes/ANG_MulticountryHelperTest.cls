@@ -1039,4 +1039,17 @@ private class ANG_MulticountryHelperTest {
 
 	}
 
+	@isTest
+	public static void testIsAccountInMulticountryCountry()
+	{
+		List<Account> accounts = [SELECT Id FROM Account 
+								  WHERE Name IN ('MC Account GE PT')
+								  ORDER BY Name ASC];
+		Test.startTest();
+		Boolean isMulticountry = ANG_MulticountryHelper.isAccountInMulticountryCountry(accounts.get(0).Id);
+		Test.stopTest();
+
+		system.assert(isMulticountry);
+	}
+
 }

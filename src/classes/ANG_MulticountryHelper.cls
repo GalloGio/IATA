@@ -820,6 +820,24 @@ public class ANG_MulticountryHelper {
 	{
 		return acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 	}
+	
+	public static Boolean isAccountInMulticountryCountry(Id acctId)
+	{
+		IATA_ISO_Country__c cntry = getAccountCountry(acctId);
+		return isMulticountryCountry(cntry);
+	}
+	
+	public static IATA_ISO_Country__c getAccountCountry(Id acctId)
+	{
+		Account acct = [SELECT IATA_ISO_Country__c FROM Account WHERE Id = :acctId];
+		List<IATA_ISO_Country__c> cntry = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{ acct.IATA_ISO_Country__c });
+		return ! cntry.isEmpty() ? cntry[0] : null;
+	}
+	
+	public static Boolean isMulticountryCountry(IATA_ISO_Country__c cntry)
+	{
+		return cntry == null ? false : cntry.Multicountry_Enabled__c;
+	}
 
 	/**
 	 * Returns a list of HE account child to the given list of accounts.
