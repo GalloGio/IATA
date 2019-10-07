@@ -150,14 +150,14 @@
                                         
                                         <!-- APPROVE -->
                                         <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">
-                                            <lightning-button if:true={showManageButtons} variant="brand" label={label.ISSP_Activate}
+                                            <lightning-button if:true={showManageButtons} variant="brand" label={labels.ISSP_Activate}
                                                 class="containedButtonSmaller" onclick={grantAccess} data-item="approve">
                                             </lightning-button>
                                         </lightning-layout-item>
 
                                         <!-- DECLINE -->
                                         <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">
-                                            <lightning-button if:true={showManageButtons} variant="brand" label={label.ISSP_Inactivate}
+                                            <lightning-button if:true={showManageButtons} variant="brand" label={labels.ISSP_Inactivate}
                                                 class="containedButtonSmaller" onclick={denyAccess} data-item="inactive">
                                             </lightning-button>
                                         </lightning-layout-item>

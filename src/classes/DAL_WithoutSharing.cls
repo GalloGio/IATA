@@ -64,7 +64,7 @@ public static List<Contact> getContactsByAccountId(Id accountId, Integer offset,
 	                          Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name,
                               Account_site__c, Account.RecordTypeId, Account.RecordType.Name, Account.BillingCity 
 	                          from Contact where AccountId IN:allBranches.keySet() and Status__c = 'Active' AND User_Portal_Status__c IN ('Pending Approval', 'Approved Admin', 'Approved User', '') 
-							  ORDER BY IsPendingApproval__c DESC LIMIT:batchSize OFFSET :offset ];
+							  ORDER BY SortingOrder__c LIMIT:batchSize OFFSET :offset ];
 
 	if(!contacts.isEmpty()) {
 		return contacts;
