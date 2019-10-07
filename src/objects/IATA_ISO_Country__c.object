@@ -2116,6 +2116,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <label>Venezuela</label>
                 </value>
                 <value>
+                    <fullName>Virgin British Islands</fullName>
+                    <default>false</default>
+                    <label>Virgin British Islands</label>
+                </value>
+                <value>
                     <fullName>Yemen</fullName>
                     <default>false</default>
                     <label>Yemen</label>
