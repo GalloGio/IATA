@@ -21,11 +21,11 @@ public class PortalFAQsCtrlTest {
             insert con;
 
             User usr = ISSP_ObjectFactory.createPortalUser(con);
-			
             PortalFAQsSharingCtrl.validateUserFAQsPermissions(usr.id);
+
             FAQ__kav kavObj = new FAQ__kav();
-            kavObj.Title = 'Article Portal Documents Test';
-            kavObj.UrlName = 'Article-Portal-Documents-Test';
+            kavObj.Title = 'Sample Article Portal Test';
+            kavObj.UrlName = 'Sample-Article-Portal-Test';
             kavObj.Summary = 'Summary';
             insert kavObj;
             
@@ -38,9 +38,10 @@ public class PortalFAQsCtrlTest {
             DescribeDataCategoryGroupResult[] results = Schema.describeDataCategoryGroups(
                 new String[] { 'KnowledgeArticleVersion'}
             );
+
             FAQ__DataCategorySelection tempCat = new FAQ__DataCategorySelection ();
             tempCat.DataCategoryGroupName = results[0].getName();
-            tempCat.DataCategoryName = 'ID_Card';
+            tempCat.DataCategoryName = 'IEP_Support';
             tempCat.ParentId = kavObj.Id;
 
             insert tempCat;
@@ -49,30 +50,42 @@ public class PortalFAQsCtrlTest {
 
     @isTest static void testGetFAQs() {
         User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-        FAQ__kav kavObj = [SELECT Id, Title, ArticleNumber, PublishStatus FROM FAQ__kav WHERE Title = 'Article Portal Documents Test' LIMIT 1];
-        
-
+        FAQ__kav kavObj = [SELECT Id, Title, ArticleNumber, PublishStatus FROM FAQ__kav WHERE Title = 'Sample Article Portal Test' LIMIT 1];
 
         Test.startTest();
         System.runAs(testUser) {
             PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
             filtersWrapper.searchText = 'Test Publish Online';
             filtersWrapper.faqsComponent = null;
+            filtersWrapper.language = 'en_US';
             PortalFAQsCtrl.PagedResult resultsWithoutSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
 
-            PortalSearchFilterWrapper.faqsComponent faqsComponent = new PortalSearchFilterWrapper.faqsComponent();
-            faqsComponent.faqSubtopicsList = new List<String>{'ID_Card'};
-            filtersWrapper.faqsComponent = faqsComponent;
-            PortalFAQsCtrl.PagedResult resultsWithSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '1');
+            filtersWrapper.language = '';
+            resultsWithoutSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
 
-            List<FAQ__kav> article = PortalFAQsCtrl.getArticles('ID_Card__c');
+            PortalSearchFilterWrapper.faqsComponent faqsComponent = new PortalSearchFilterWrapper.faqsComponent();
+            faqsComponent.faqSubtopicsList = new List<String>{'IEP_Support'};
+            filtersWrapper.faqsComponent = faqsComponent;
+            filtersWrapper.language = 'en_US';
+            PortalFAQsCtrl.PagedResult resultsWithSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '1');
         }
         Test.stopTest();
     }
 
+    @isTest static void testGetArticles() {
+        User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+        FAQ__kav kavObj = [SELECT Id, KnowledgeArticleId, Title, ArticleNumber, PublishStatus FROM FAQ__kav WHERE Title = 'Sample Article Portal Test' LIMIT 1];
+
+        Test.startTest();
+        System.runAs(testUser) {
+            List<FAQ__kav> article = PortalFAQsCtrl.getArticles('IEP_Support__c');
+            List<FAQ__kav> articleByLanguage = PortalFAQsCtrl.getArticlesByLanguage('IEP_Support__c', 'en_US');
+        }
+    }
+
     @isTest static void testArticleFeedback() {
         User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-        FAQ__kav kavObj = [SELECT Id, Title, ArticleNumber, PublishStatus FROM FAQ__kav WHERE Title = 'Article Portal Documents Test' LIMIT 1];
+        FAQ__kav kavObj = [SELECT Id, Title, ArticleNumber, PublishStatus FROM FAQ__kav WHERE Title = 'Sample Article Portal Test' LIMIT 1];
 
         Test.startTest();
         System.runAs(testUser) {
