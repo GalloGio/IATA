@@ -82,8 +82,6 @@ public class AMS_AccountTriggerHandler {
        System.debug('End CASS verification');
 
        if(processMinorChangesValidationFlag){
-            System.debug('Handling minor changes');
-            processMinorChangesValidationFlag = false;
             handleManualMinorChanges(accs,oldMap);
        }else{
             System.debug('Not Handling minor changes');
@@ -286,9 +284,11 @@ public class AMS_AccountTriggerHandler {
 
         List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
 
-
-        AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
-
+        if(!changeCodesToProcess.isEmpty()) {
+            System.debug('Handling minor changes');
+            processMinorChangesValidationFlag = false;
+            AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
+        }
     }
 
     public class AccountChangesStruct {
