@@ -8066,12 +8066,7 @@ system.debug('aqui sectorValue ' + sectorValue);
     }
 
     public PageReference saveAndNavigateToOwnersForm() {
-        if (newform.Same_Legal_Entity_Agency_Form__r.Status__c != 'InProgress') {
-            delete [SELECT Id FROM Account WHERE Id = :newForm.Same_Legal_Entity_Agency_Form__r.ISSP_Branch_AccountId__c];
-
-            update new AMS_Pax_Accreditation_Form__c(Id = newform.Same_Legal_Entity_Agency_Form__c,
-                                                    Status__c = 'InProgress', ISSP_Branch_AccountId__c = null);
-        }
+        newForm.ISSP_Branch_AccountId__c = null;
         
         String pageURL = '/';
 
