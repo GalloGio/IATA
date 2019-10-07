@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
-import getFAQsInfo from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
+import getFAQsInfoByLanguage from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfoByLanguage';
 
 export default class PortalFAQSubtopicTiles extends LightningElement {
     @track error;
@@ -7,15 +7,17 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
     @track topicTiles;
     @track subTopicTiles;
     @track accordionMap;
-    @api category;
     @track topic;
     @track counter = 0;
 
-    connectedCallback() {
-        getFAQsInfo()
+    @api category;
+    @api language;
+
+    connectedCallback() {        
+        getFAQsInfoByLanguage({ lang : this.language })
             .then(results => {
                 let result = JSON.parse(JSON.stringify(results));
-            
+                
                 this.topicTiles = [];
                 this.accordionMap = []; //Save all Data Category visibility information. Contains category(Tile), childs(Subtopic), topicLabel, topicName
                 let tempTopicOptions = [];
@@ -23,9 +25,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
                 
                 let tempCategoryName = this.category; //Contains selected category from portalFAQPage
         
-                Object.keys(result).forEach(function (el) {                
-                    
-
+                Object.keys(result).forEach(function (el) {
                     if(tempCategoryName === result[el].categoryName) {
                         tempAccordionMap[result[el].topicName] = result[el];
                         tempTopicOptions.push({ label: result[el].topicLabel, value: result[el].topicName, open: false, class: 'slds-p-around_medium customCardTitleBox cursorPointer borderStyle cardStyle' });

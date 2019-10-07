@@ -112,7 +112,7 @@
 
     <div class="header">
         <div class="header__wrapper">
-            <a href="{!$Site.BaseUrl}" class="header__logo" style="background:url({!$Resource.IEC_iata_logo_60px}) center center no-repeat;"></a>
+            <a href="{!$Site.BaseRequestURL}" class="header__logo" style="background:url({!$Resource.IEC_iata_logo_60px}) center center no-repeat;"></a>
 
             <ul>
 
@@ -129,7 +129,7 @@
 
 
                 <li class="header__navigation-li -right">
-                    <a href="{!$Site.BaseUrl}" class="header__navigation-link -cart"><i class="fa fa-shopping-cart"></i> Shopping Area</a>
+                    <a href="{!$Site.BaseRequestURL}" class="header__navigation-link -cart"><i class="fa fa-shopping-cart"></i> Shopping Area</a>
                 </li>
 
 
@@ -143,13 +143,13 @@
                             </apex:form>
 
                             <h3>Menu Items</h3>
-                            <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseUrl}/IEC_ContactInformation">My Account</a>
+                            <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseRequestURL}/IEC_ContactInformation">My Account</a>
                             </p>
-                            <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseUrl}/IEC_DataStatisticsSubscriptions">My Subscriptions</a>
+                            <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseRequestURL}/IEC_DataStatisticsSubscriptions">My Subscriptions</a>
                             </p>
-                            <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseUrl}/IEC_MyInvoices">My Invoices</a>
+                            <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseRequestURL}/IEC_MyInvoices">My Invoices</a>
                             </p>
-                            <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseUrl}/IEC_ZQuotes">My Quotes</a>
+                            <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseRequestURL}/IEC_ZQuotes">My Quotes</a>
                             </p>
                             <a style="margin-top:34px;" class="customButton signup" href="#" onClick="logout();">Already done? &nbsp;Logout</a>
 

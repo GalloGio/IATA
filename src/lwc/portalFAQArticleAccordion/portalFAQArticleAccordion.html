@@ -7,70 +7,78 @@
         </lightning-input>
     </div>
     <!-- ARTICLES -->
-    <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite">
-        <template if:true={hasArticles} for:each={articles} for:item="article">
-            <div class="slds-p-vertical_medium slds-m-around_small borderStyle" key={article.id}>
-                <div class="customCardTitleBox cursorPointer" onclick={articleSelected} data-item={article.label}
-                    data-id={article.id}>
-                    <lightning-icon class="darkBlueIcon" if:true={article.open} icon-name="utility:chevrondown"
-                        size="xx-small" data-item={article.label} data-id={article.id}></lightning-icon>
-                    <lightning-icon class="darkBlueIcon" if:false={article.open} icon-name="utility:chevronright"
-                        size="xx-small" data-item={article.label} data-id={article.id}></lightning-icon>
-                    <span class="slds-p-left_small text-bold" data-item={article.label}
-                        data-id={article.id}>{article.label}</span>
+    <div if:true={loading} class="spinnerContainer">
+        <lightning-spinner size="medium"></lightning-spinner>
+    </div>
+
+    <div if:false={loading}>
+        <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite">
+            <template if:true={hasArticles} for:each={articles} for:item="article">
+                <div class="slds-p-vertical_medium slds-m-around_small borderStyle" key={article.id}>
+                    <div class="customCardTitleBox cursorPointer" onclick={articleSelected} data-item={article.label}
+                        data-id={article.id}>
+                        <lightning-icon class="darkBlueIcon" if:true={article.open} icon-name="utility:chevrondown"
+                            size="xx-small" data-item={article.label} data-id={article.id}></lightning-icon>
+                        <lightning-icon class="darkBlueIcon" if:false={article.open} icon-name="utility:chevronright"
+                            size="xx-small" data-item={article.label} data-id={article.id}></lightning-icon>
+                        <span class="slds-p-left_small text-bold" data-item={article.label}
+                            data-id={article.id}>{article.label}</span>
+                    </div>
+                    <div if:true={article.open} class="slds-p-vertical_x-large text-xsmall"
+                        style="transition: height 0.3s ease;" data-item={article.label}>
+                        <!-- ARTICLE -->
+                        <div class="slds-m-bottom_medium">
+                            <lightning-formatted-rich-text value={article.value}></lightning-formatted-rich-text>
+                        </div>
+
+                        <!-- FEEDBACK -->
+                        <div if:false={article.feedback}
+                            class="slds-m-vertical_x-large slds-p-horizontal_x-large slds-p-vertical_medium WarningRectangle">
+                            <lightning-layout horizontal-align="spread">
+                                <lightning-layout-item class="text-bold text-xsmall text-darkGray slds-p-vertical_x-small">
+                                    {label.CSP_ArticleHelpful}
+                                </lightning-layout-item>
+                                <lightning-layout-item class="cursorPointer slds-p-vertical_xx-small">
+                                    <lightning-icon class="slds-p-around_xx-small cursorPointerColor slds-current-color" icon-name="utility:up" size="small"
+                                        onclick={feedbackStatus} data-item={article.id} data-title={article.label}
+                                        data-number={article.number} data-option="true"></lightning-icon>
+                                    <lightning-icon class="slds-p-around_xx-small cursorPointerColor slds-current-color" icon-name="utility:down" size="small"
+                                        onclick={renderModal} data-item={article.id} data-title={article.label}
+                                        data-number={article.number} data-option="false"></lightning-icon>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+
+                        <div if:true={article.feedback}
+                            class="slds-m-vertical_x-large slds-p-around_medium WarningRectangle">
+                            <lightning-layout horizontal-align="spread" class="slds-p-horizontal_medium">
+                                <lightning-layout-item class="text-bold text-xsmall text-darkGray slds-p-vertical_x-small">
+                                    {label.CSP_ThanksFeedback}
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+
+                        <!-- RELATED ARTICLES -->
+                        <div class="slds-p-vertical_x-large">
+                            <c-portal-f-a-q-related-article article={articleInfo} user-info={userInfo}></c-portal-f-a-q-related-article>
+                        </div>
+                        <!-- REACHS US BANNER -->
+                        <div class="slds-p-vertical_x-large">
+                            <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic}>
+                            </c-portal-f-a-q-reach-us-banner>
+                        </div>
+                    </div>
                 </div>
-                <div if:true={article.open} class="slds-p-vertical_x-large text-xsmall"
-                    style="transition: height 0.3s ease;" data-item={article.label}>
-                    <!-- ARTICLE -->
-                    <div class="slds-m-bottom_medium">
-                        <lightning-formatted-rich-text value={article.value}></lightning-formatted-rich-text>
-                    </div>
+            </template>
 
-                    <!-- FEEDBACK -->
-                    <div if:false={article.feedback} class="slds-m-vertical_x-large slds-p-horizontal_x-large slds-p-vertical_medium WarningRectangle">
-                        <lightning-layout horizontal-align="spread">
-                            <lightning-layout-item class="text-bold text-xsmall text-darkGray slds-p-vertical_x-small">
-                                {label.CSP_ArticleHelpful}
-                            </lightning-layout-item>
-                            <lightning-layout-item class="cursorPointer slds-p-vertical_xx-small">
-                                <lightning-icon class="slds-p-around_xx-small cursorPointerColor slds-current-color" icon-name="utility:up" size="small"
-                                    onclick={feedbackStatus} data-item={article.id} data-title={article.label}
-                                    data-number={article.number} data-option="true"></lightning-icon>
-                                <lightning-icon class="slds-p-around_xx-small cursorPointerColor slds-current-color" icon-name="utility:down" size="small"
-                                    onclick={renderModal} data-item={article.id} data-title={article.label}
-                                    data-number={article.number} data-option="false"></lightning-icon>
-                            </lightning-layout-item>
-                        </lightning-layout>
-                    </div>
-
-                    <div if:true={article.feedback}
-                        class="slds-m-vertical_x-large slds-p-around_medium WarningRectangle">
-                        <lightning-layout horizontal-align="spread" class="slds-p-horizontal_medium">
-                            <lightning-layout-item class="text-bold text-xsmall text-darkGray slds-p-vertical_x-small">
-                                {label.CSP_ThanksFeedback}
-                            </lightning-layout-item>
-                        </lightning-layout>
-                    </div>
-
-                    <!-- RELATED ARTICLES -->
-                    <div class="slds-p-vertical_x-large">
-                        <c-portal-f-a-q-related-article article={articleInfo}></c-portal-f-a-q-related-article>
-                    </div>
-                    <!-- REACHS US BANNER -->
-                    <div class="slds-p-vertical_x-large">
-                        <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic}>
-                        </c-portal-f-a-q-reach-us-banner>
-                    </div>
+            <template if:false={hasArticles}>
+                <!-- REACHS US BANNER -->
+                <div class="slds-p-vertical_x-large">
+                    <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic}>
+                    </c-portal-f-a-q-reach-us-banner>
                 </div>
-            </div>
-        </template>
-        <template if:false={hasArticles}>
-            <!-- REACHS US BANNER -->
-            <div class="slds-p-vertical_x-large">
-                <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic}>
-                </c-portal-f-a-q-reach-us-banner>
-            </div>
-        </template>
+            </template>
+        </div>
     </div>
 
     <!-- FEEDBACK DOWN OPTION -->
@@ -129,11 +137,6 @@
                     </div>
                 </div>
                 <div class="slds-modal__container customModal">
-                    <div class="slds-float_right close-modal">
-                        <lightning-icon icon-name="utility:close" variant="" alternative-text="Close" size="medium"
-                            class="slds-current-color slds-p-around_medium slds-text-link_reset" onclick={closeModal}>
-                        </lightning-icon>
-                    </div>
                     <div>
                         <h2 id="modal-heading-01"
                             class="slds-text-heading_medium slds-hyphenate slds-align_absolute-center slds-p-top_xx-large">
