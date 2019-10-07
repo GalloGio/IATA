@@ -696,16 +696,13 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
              
         }
+        
+        Boolean pilotTypeOfChange = (tocList.contains(AMS_Utils.CONVERTTONEWGENPILOT) || tocList.contains(AMS_Utils.CONVERTTOLEGACY) || tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL));
 
-        if((tocList.contains(AMS_Utils.CONVERTTONEWGENPILOT) || tocList.contains(AMS_Utils.CONVERTTOLEGACY) || tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL)) && existsLocClassDomesticError){
+        if(pilotTypeOfChange && existsLocClassDomesticError){
             errorChecks.put('Require Location Class Domestic', true);
         }
 
-        ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar,oscar.Account__r.ANG_Accreditation_Model__c);
-
-        if(config == null){
-            errorChecks.put('Invalid Changes Combination', true);
-        }
         //retrieve error messages
         List<String> errors = new List<String>();
 
@@ -713,8 +710,18 @@ public with sharing class ANG_AccountHierarchySelectionController {
             if(errorChecks.get(error)) errors.add(errorMessages.get(error));
         }
 
+        ANG_AgencyChangesConfigHelper.ChangesConfig changesConfig = NULL;
+        
+        if(!pilotTypeOfChange){
+            changesConfig = ANG_AgencyChangesConfigHelper.getConfig(oscar,oscar.Account__r.ANG_Accreditation_Model__c);
+        }
+
+        Boolean validChangeCombination = (changesConfig != NULL || pilotTypeOfChange);
+
         //display error messages and stop execution by short-circuiting the if on the save method
-        if(errors.isEmpty()) return true;
+        if(errors.isEmpty() && validChangeCombination){
+            return true;
+        }
 
         for(String error : errors) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, error));
         return false;

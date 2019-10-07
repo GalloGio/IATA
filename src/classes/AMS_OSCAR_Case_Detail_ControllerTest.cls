@@ -24,7 +24,8 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			Name ='Combination07',
 			TC_VMFR__c = true,
 			TCA_Sanity_check__c = 'CAD',
-			TCA_Application_withdrawal__c = 'CWD'
+			TCA_Application_withdrawal__c = 'CWD',
+			Valid_Accreditation_Models__c = 'ALL'
 			);
 
 		insert confs;
