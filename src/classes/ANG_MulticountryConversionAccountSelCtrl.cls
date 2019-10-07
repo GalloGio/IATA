@@ -2,6 +2,9 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 	@TestVisible
 	private static final String CANNOT_REMOVE_HE_ERROR = 'You cannot remove the HE associated with the OSCAR'; 
+
+	@TestVisible
+	private static final String COUNTRY_NOT_MULTICOUNTRY = '{0} is not enabled for Multicountry. Please remove the accounts in this country';
     
 	public class SelectedAccountWrapper implements Comparable {
 		
@@ -26,7 +29,8 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 		get{
 			noteList = new List<String>{
 				'Terminated hierarchies cannot be added',
-				'Please select agencies from at least 2 BSPs'
+				'Please select agencies from at least 2 BSPs',
+				'Please select Cash HE accounts in multicountry-enabled countries'
 			};
 			return noteList;
 		}
@@ -290,7 +294,19 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 		//We won't save any value on the field
 		Id selectedHE = this.oscar.New_Parent__c;
 		
-		if(selectedHE != NULL){
+		if (selectedHE != null)
+		{
+			// validate if it is a multicountry enabled country
+			IATA_ISO_Country__c country = ANG_MulticountryHelper.getAccountCountry(selectedHE);
+			if (! ANG_MulticountryHelper.isMulticountryCountry(country))
+			{
+				String message = String.format(COUNTRY_NOT_MULTICOUNTRY,
+					new List<Object> { (country == null ? 'unknown' : country.Name) });
+
+				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, message));
+				return null;
+			}
+
 			addHierarchyFromHE(selectedHE);
 		
 			this.oscar.New_Parent__c = null;

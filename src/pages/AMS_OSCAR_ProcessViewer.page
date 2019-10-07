@@ -194,6 +194,13 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                     }
                 }
 
+                if ({!oscar.Process__c == 'ANG.CONVERT.ST.TO.MC'} && arrayContains(fieldValueToServer, "Passed")
+                    && arrayContains(fieldsApiName, "STEP45__c"))
+                {
+                    if (! confirm("Please make sure that you review the step to Confirm the hierarchy structure to ensure validations are enforced. Do you want to proceed?"))
+                        return 'false';
+                }
+
                 sforce.connection.header = null;
                 var result = "" + sforce.apex.execute("AMS_OSCAR_Webservice","updateFormFields", 
                                            {fieldsToUpdateKey:fieldsApiName, 
@@ -204,6 +211,16 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                     alert(result);
                 }
             }
+        }
+
+        function arrayContains(array, element)
+        {
+            for (var i = 0; i != array.length; i++)
+            {
+                if (array[i] === element)
+                    return true;
+            }
+            return false;
         }
 
         function openSubtab(subtabUrl, subTabTitle)
