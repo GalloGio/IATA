@@ -7442,6 +7442,17 @@ public without sharing class ISSP_AMS_Accreditation {
         upsert this.trainedStaffContact;
     }
 
+    public boolean getIsGSARequired() {
+        Boolean isreq;
+system.debug('aqui sectorValue ' + sectorValue);
+        if (sectorValue == 'Travel_Agent') {
+            isreq = true;
+        } else {
+            isreq = false;
+        }
+        return isreq;
+    }
+
     public void getCGORegionData() {
         List<String> cargoAllRegionsList = new List<String>{'Africa', 'Australia & S. Pacific', 'Central America & Caribbean', 'Europe',
             'Far East', 'Middle East', 'South America', 'USA / Canada'};
