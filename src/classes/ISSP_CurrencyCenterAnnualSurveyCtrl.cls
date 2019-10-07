@@ -1091,7 +1091,7 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 	public List<Currency_Center_Survey__c> 	bankResult 											{ get; set; }
 	public List<Currency_Center_Survey__c> 	typeOfOperationsResult 								{ get; set; }
 	public Map<String, Country_Profile__c>	countriesProfileIdMap								{ get; set; }
-	public Map<String, IATA_ISO_Country__c>	iataIsoCountryMap									{ get; set; }
+	public static Map<String, IATA_ISO_Country__c>	iataIsoCountryMap							{ get; set; }
 	public String 							countriesSurveyString 								{ get; set; }
 
 	public void loadAll() {
