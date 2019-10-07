@@ -4,8 +4,13 @@
         <template if:true={error}>
             <c-error-panel errors={error} main-error-message={mainErrorMessage}></c-error-panel>
         </template>
-    
-        
+
+        <template if:true={showLMSButton}>
+            <div class="slds-clearfix">
+                <lightning-button variant="brand" label="IFTP LMS" title="IFTP LMS" onclick={handleRedirect} class="slds-float_right slds-m-around_x-small"></lightning-button>
+            </div>
+        </template>
+
         <lightning-tabset variant="scoped">
             <lightning-tab label="Proficiency Management" title="Proficiency Management" if:true={showProficiencyManagement}>
                 <c-portal-iftp-proficiency-management></c-portal-iftp-proficiency-management>
@@ -37,7 +42,9 @@
             <lightning-tab label="Training Records Summary" if:true={showTrainingRecordsSummary}>
                 <c-portal-iftp-training-records-summary></c-portal-iftp-training-records-summary>              
             </lightning-tab>
-            
+            <lightning-tab label="Proficiency Reports" title="Proficiency Reports" if:true={showProficiencyReports}>
+                <c-portal-iftp-proficiency-reports></c-portal-iftp-proficiency-reports>
+            </lightning-tab>
             <!--lightning-tab label="Portal Case List">
                 < ! --c-portal-cases-list ></c-portal-cases-list - - >
             </lightning-tab>

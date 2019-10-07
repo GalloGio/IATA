@@ -1563,4 +1563,14 @@ public without sharing class PortalIftpUtils {
         return true;
         
     }
+
+    @AuraEnabled(cacheable=false)
+    public static String getRedirectURL(){
+
+        ISSP_CS__c url = ISSP_CS__c.getValues('Absorb SSO');
+        system.debug('URL: ' + url);
+
+        return url.Value__c;
+        
+    }
 }

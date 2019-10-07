@@ -1,9 +1,11 @@
 import { LightningElement, api, track } from 'lwc';
+import { NavigationMixin } from 'lightning/navigation';
 
 import getUserInfo from '@salesforce/apex/PortalIftpUtils.getUserInfo';
+import getRedirectURL from '@salesforce/apex/PortalIftpUtils.getRedirectURL';
 
 
-export default class portalIftpTabs extends LightningElement {
+export default class portalIftpTabs extends NavigationMixin(LightningElement) {
     @api userInfo;
 
     @track error;
@@ -49,6 +51,11 @@ export default class portalIftpTabs extends LightningElement {
 	@track showImportStation           	= false;
     @track showImportEmployees         	= false;
     @track showMonitorTrainings         = false;
+    @track showProficiencyReports       = false;
+    
+    get showLMSButton() { 
+        return this.isITPUser || this.isUserAdmin;
+    }
     
     connectedCallback() {
         console.log('INIT connectedCallback');
@@ -108,6 +115,8 @@ export default class portalIftpTabs extends LightningElement {
             this.showImportStation           	= true;
             this.showImportEmployees         	= true;
             this.showMonitorTrainings           = true;
+            this.showProficiencyReports         = true;
+            
         }
 
         if(this.isAirlineUser){
@@ -115,6 +124,29 @@ export default class portalIftpTabs extends LightningElement {
             this.showTrainingRecordsSummary  	= true;
         }
         
+    }
+
+    handleRedirect(){
+        getRedirectURL()
+        .then(result => {
+            // Navigate to a URL
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__webPage',
+                    attributes: {
+                        url: result
+                    }
+                },
+                true // Replaces the current page in your browser history with the URL
+            );
+            //console.log('Redirect URL: ' + result);
+            //window.open('www.youraddress.com','_top')
+
+        })
+        .catch(error => {
+            console.log('getUserInfo - Error : ' + error);
+            this.mainErrorMessage = error;
+            this.error = error;
+        });
     }
 
 }
