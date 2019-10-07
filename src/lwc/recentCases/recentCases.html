@@ -7,6 +7,7 @@
 
             <span if:true={specialCase} class="slds-text-align_center">
                 <h2 class="slds-p-top_medium text-xsmall removeFontWeight">{helpText}</h2>
+                <h2 class="slds-p-top_medium text-xsmall removeFontWeight">{helpText2}</h2>
             </span>
         </span>
 
@@ -27,7 +28,7 @@
                     <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
                 </div>
                 <div if:false={loading}>
-                    <div if:true={dataRecords}>
+                    <div if:true={dataRecords} class={tableClass}>
                         <lightning-datatable
                             key-field="Id"
                             class={rowHeight}
