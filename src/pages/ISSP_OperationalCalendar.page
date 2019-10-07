@@ -34,6 +34,11 @@
     var defaultCountry = "{!defaultCountry}";
     var defaultFrequency = "{!defaultFrequency}";
     var defaultCycle = "";
+    if (isAirline) {
+        defaultCountry = "";
+        defaultOperationType = "";
+        defaultFrequency = "";
+    }
     var title = "{!$Label.ISSP_OperationalCalendar_Header}";
     console.log(MAP_FREQUENCIES);
     console.log(MAP_COUNTRIES);
