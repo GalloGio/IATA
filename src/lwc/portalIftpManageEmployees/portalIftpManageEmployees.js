@@ -4,6 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { registerListener, unregisterAllListeners, fireEvent } from 'c/pubsub';
 
 import addNewEmployee from '@salesforce/apex/PortalIftEmployeeRecordsManagement.addNewEmployee';
+import resetEmployeePassword from '@salesforce/apex/PortalIftEmployeeRecordsManagement.resetEmployeePassword';
 import getAllITPEmployees from '@salesforce/apex/PortalIftEmployeeRecordsManagement.getAllITPEmployees';
 import getITPEmployeesWithStationsInfo from '@salesforce/apex/PortalIftEmployeeRecordsManagement.getITPEmployeesWithStationsInfo';
 import getITPStations from '@salesforce/apex/PortalIftpUtils.getITPStations';
@@ -1095,17 +1096,50 @@ export default class PortalIftpManageEmployees extends LightningElement {
         this.loadingModal = false;
 
         if(allValid){
-            const event = new ShowToastEvent({
+            //callout to absorb api
+            resetEmployeePassword({globalId: this.recordToManage.Global_ID__c, newPassword: password})
+            .then(results => {
+                if(results !== undefined){
+                    if(results === true){
+                        this.showSuccessToast();
+                    }
+                    else{
+                       this.showErrorToast();
+                    }
+                }
+                
+            });
+            /*const event = new ShowToastEvent({
                 title: 'Reset Password Result',
                 message: 'Password was successfully changed.',
                 variant: 'success',
                 mode: 'pester'
             });
-            this.dispatchEvent(event);
+            this.dispatchEvent(event);*/
 
             this.loadingModal = false;
             this.handleResetPasswordCancel();
         }
+    }
+
+    showSuccessToast() {
+        const event = new ShowToastEvent({
+            title: 'Success',
+            variant: 'success',
+            message: 'Password changed successfully.',
+            mode: 'pester'
+        });
+        this.dispatchEvent(event);
+    }
+
+    showErrorToast() {
+        const event = new ShowToastEvent({
+            title: 'Error',
+            variant: 'error',
+            message: 'An Error has occurred while trying to reset password. Please contact your administtrator.',
+            mode: 'pester'
+        });
+        this.dispatchEvent(event);
     }
 
     handleResetPasswordCancel(){

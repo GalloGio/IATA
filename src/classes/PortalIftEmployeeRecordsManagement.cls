@@ -8,7 +8,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                                                     Contact__c, Email__c,First_Name__c,Id,Integration_Status__c,
                                                     Last_Name__c,Name,Personal_Email__c,Contact_Roles__c,
                                                     Position__c,RecordTypeId,Service_Rendered__c,Status__c,Title__c,
-                                                    TransferFlag__c,UniqueKey__c, Details__c
+                                                    TransferFlag__c,UniqueKey__c, Details__c, Global_ID__c
                                                 FROM Account_Contact_Role__c 
                                                 WHERE  Contact__r.accountid = :accountId];
         return emps;
@@ -28,7 +28,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
         sQuery += 'Contact__c, Email__c,First_Name__c,Id,Integration_Status__c, ';
         sQuery += 'Last_Name__c,Name,Personal_Email__c,Contact_Roles__c, ';
         sQuery += 'Position__c,RecordTypeId,Service_Rendered__c,Status__c,Title__c, ';
-        sQuery += 'TransferFlag__c,UniqueKey__c, Details__c, ';
+        sQuery += 'TransferFlag__c,UniqueKey__c, Details__c, Global_ID__c, ';
         sQuery += '(SELECT Address__c, ';
         sQuery += 'Address__r.City__c, ';
         sQuery += 'Address__r.Code__c, ';
@@ -780,6 +780,32 @@ public without sharing class PortalIftEmployeeRecordsManagement {
         }
 
         return resultWrapper;
+    }
+
+    @AuraEnabled (cacheable=false)
+    public static Boolean resetEmployeePassword(String globalId, String newPassword){     
+
+        try{
+            String jsonBody = '{"newPassword":'+ newPassword + '}';
+            HttpRequest req = new HttpRequest();
+            req.setHeader('Content-Type', 'application/json; charset=UTF-8');
+            req.setEndpoint('callout:IFTP_Absorb_Reset_Pass/users/'+ globalId +'/password');
+            req.setMethod('DELETE');
+            req.setBody(jsonBody);
+            Http http = new Http();
+            HTTPResponse res = http.send(req);
+            if (res.getStatusCode() == 200) {
+                return true;
+            }
+            System.debug(res.getBody());
+            return false;
+        }
+        catch (Exception e){
+            System.debug('____ [cls PortalEmployeeRecordsManagement - resetEmployeePassword] Exception - ' + e );
+            System.debug('____ [cls PortalEmployeeRecordsManagement - resetEmployeePassword] Exception - ' + e.getStackTraceString() );
+            return false;
+        }  
+        
     }
 
     public class ResultWrapper {
