@@ -23,7 +23,7 @@
                 <template if:false={isLoading}>
                     <!--WMO-699 - ACAMBAS: Begin -->
                     <template if:true={isCustomerInvoice}>
-                        <p align="center">{labels.See_Bank_Account_Details}</p><br>      
+                        <p align="center" style="color:blue;">{labels.See_Bank_Account_Details}</p><br>      
                     </template>
                     <!--WMO-699 - ACAMBAS: End -->
                     <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_small">
@@ -96,11 +96,15 @@
                                             <span key={field.fieldName} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
                                                 <div if:true={field.visible}>
                                                     <template if:false={field.changeUserStatus}>
-                                                        <lightning-output-field class="labelValue textValue"
-                                                                                field-name={field.fieldName}>
-                                                        </lightning-output-field>
+                                                        <!--WMO-699 - ACAMBAS: Begin -->
+                                                        <template if:true={isCustomerInvoice}>
+                                                            <b><lightning-output-field field-name={field.fieldName}></lightning-output-field></b>
+                                                        </template>
+                                                        <template if:false={isCustomerInvoice}>
+                                                            <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
+                                                        </template>
+                                                        <!--WMO-699 - ACAMBAS: End -->
                                                     </template>
-
                                                     <template if:true={field.changeUserStatus}>
                                                         <div class="changeUserStatus">
                                                             <lightning-output-field class="labelValue textValue"
@@ -186,7 +190,8 @@
 
                 <!--WMO-699 - ACAMBAS: Begin -->
                 <template if:true={displayPaymentLinkLabel}>     
-                    <lightning-formatted-rich-text value={labels.Credit_Card_Payment_Link}></lightning-formatted-rich-text>
+                    <p class="underLinded">&nbsp;</p>
+                    <p class="underLinded"><lightning-formatted-rich-text value={labels.Credit_Card_Payment_Link}></lightning-formatted-rich-text></p>
                 </template>
                 <!--WMO-699 - ACAMBAS: End -->
 
