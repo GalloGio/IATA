@@ -65,6 +65,8 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 			
 			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_MCAE, acct.Id, fieldsOfObject);
 
+			AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(new List<AMS_OSCAR__c>{oscar}, new Map<Id, Account>{acct.Id => acct});
+
 			insert oscar;
 
 	        fieldsOfObject = new Map<String,Object>();
