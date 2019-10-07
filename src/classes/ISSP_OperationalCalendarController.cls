@@ -219,7 +219,12 @@ global without sharing class ISSP_OperationalCalendarController {
         this.maxDate = Date.newInstance(Date.Today().year()+2, 1, 1);
         this.minDate = Date.newInstance(Date.Today().year()-1, 1, 1);
         initPicklistValues();
-
+        if (IS_AIRLINE) {
+            this.defaultCountry = '';
+            this.defaultOperationSubtype = '';
+            this.defaultOperationType = '';
+            this.defaultFrequency = '';
+        }
         initAdvFilters();
     }
     
