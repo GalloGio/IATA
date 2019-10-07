@@ -46,6 +46,8 @@
     </script>
 
     <!-- Modal -->
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
+
 <div class="modal fade" id="ModalCountryReqs" tabIndex="-1" data-backdrop='false' role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

@@ -55,8 +55,6 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
     @track noResultsClass = 'display: none;';
     @track resultsClass = 'display: none;';
 
-    @track showCross = false;
-
     setColumnsClass(){
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
 
@@ -86,7 +84,7 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
         //console.log(keyEntered);
 
         //if enter
-        if(keyEntered === 13){
+        if(this.filteringObject.advancedSearch && keyEntered === 13){
             this.navigateToAdvancedSearchPage();
         } 
 

@@ -1,6 +1,7 @@
 import { LightningElement, track, api } from 'lwc';
 
 import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs';
+import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
@@ -58,8 +59,13 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
     pagename = '';
 
     @track loadingBreadcrumbs = true;
+    @track guestUser = false;
 
     connectedCallback() {
+        isGuestUser().then(results => {            
+            if(results) this.guestUser = true;
+        });
+
         this.pagename = getPageName();
 
         this.classNameAllBreadCrumbs = 'text-linkBlue';
@@ -75,7 +81,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
                 this.results = results;
                 this.processLstBreadcrumbs();
             })
-            .catch(error => {
+            .catch(error => {                
                 this.loadingBreadcrumbs = false;
             });
         }
@@ -116,15 +122,36 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
     }
 
     navigateToBreadcrumb(event){
-        let clickedBreadcrumbName = event.target.dataset.item;
-        clickedBreadcrumbName = clickedBreadcrumbName.split('_').join('-');
+        let clickedBreadcrumbName = event.target.dataset.item;        
+        
+        // if guest user, redirect to public page
+        if(this.guestUser) {
+            if(clickedBreadcrumbName === 'home') {
+                window.location = 'https://www.iata.org';
+            }
 
-        this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
-            attributes: {
-                pageName: clickedBreadcrumbName
-            }})
-        .then(url => navigateToPage(url, {}));
+            if(clickedBreadcrumbName === 'support') {
+                clickedBreadcrumbName = 'faq';
+
+                clickedBreadcrumbName = clickedBreadcrumbName.split('_').join('-');
+
+                this[NavigationMixin.GenerateUrl]({
+                    type: "standard__namedPage",
+                    attributes: {
+                        pageName: clickedBreadcrumbName
+                    }})
+                .then(url => navigateToPage(url, {}));
+            }
+        } else {
+            clickedBreadcrumbName = clickedBreadcrumbName.split('_').join('-');
+
+            this[NavigationMixin.GenerateUrl]({
+                type: "standard__namedPage",
+                attributes: {
+                    pageName: clickedBreadcrumbName
+                }})
+            .then(url => navigateToPage(url, {}));
+        }
     }
 
 }

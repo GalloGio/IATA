@@ -565,7 +565,7 @@
 
                                     <!-- Popup Footer -->
                                     <div
-                                        class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                                        class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix footer-btn-wrapper">
 
                                         <a onclick={removeUser} if:true={allowContactDelete}><div class="removeLink">{removeContactLabel}</div></a>
 
@@ -574,7 +574,7 @@
                                         </lightning-button>
 
                                         <lightning-button
-                                            class="slds-float_right  containedButtonWhite slds-m-right_medium"
+                                            class="slds-float_right  containedButtonWhite slds-m-right_medium cancel-btn"
                                             disabled={isSaving} label={labels.CancelLabel} variant=""
                                             onclick={closeModal}></lightning-button>
                                     </div>

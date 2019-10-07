@@ -2,8 +2,8 @@ import { LightningElement, track } from 'lwc';
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import removeRecipient from '@salesforce/apex/PortalCasesCtrl.removeRecipient';
 import addNewRecipient from '@salesforce/apex/PortalCasesCtrl.addNewRecipient';
+import getOscarProgress from '@salesforce/apex/portal_OscarProgressBar.getOscarProgress';
 import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
-
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -31,6 +31,9 @@ export default class PortalHomeCalendar extends LightningElement {
     @track pendingCustomerCase = false;
     pendingCustomerCaseWarningLabel = CSP_PendingCustomerCase_Warning;
 
+    @track displayOscarProgressBar = false;
+    @track progressStatusList = [];
+    
     @track labels = {
         ISSP_Survey,
         Open,
@@ -44,9 +47,13 @@ export default class PortalHomeCalendar extends LightningElement {
 
         if(this.pageParams.caseId !== undefined){
             this.getCaseByIdJS();
-        }   
+        }
+        
+        if(this.pageParams.caseId !== undefined){
+            this.getProgressBarStatus();
+        }
 
-        this.getSurveyLink();
+	this.getSurveyLink();
     }
 
     getCaseByIdJS(){
@@ -91,6 +98,17 @@ export default class PortalHomeCalendar extends LightningElement {
             this.loading = false;
         });
         
+    }
+
+    getProgressBarStatus() {
+        getOscarProgress({ caseId : this.pageParams.caseId })
+        .then(results => {
+            if (results.length > 0){
+                this.displayOscarProgressBar = true;
+                this.progressStatusList = results;
+            }
+        });
+
     }
 
     openManageRecipientsPopup(){

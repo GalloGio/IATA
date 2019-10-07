@@ -50,13 +50,13 @@
       	<div class="tab-container__text-area full_width">   
 						
 						
-			<apex:iframe height="0" src="{!$Site.BaseUrl}/secur/logout.jsp" scrolling="false" id="logoutFrame"/>
+			<apex:iframe height="0" src="{!$Site.BaseRequestURL}/secur/logout.jsp" scrolling="false" id="logoutFrame"/>
 		
 			<script>
 		    	jQuery(document).ready( function() {
 		        	setTimeout(
 		        		function(){ 
-		            		document.location = '{!$Site.BaseUrl}';
+		            		document.location = '{!$Site.BaseRequestURL}';
 			        	}, 
 			        	4500);
 		        

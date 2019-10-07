@@ -155,6 +155,14 @@ body {
   fill: #ed7756;
 }
 
+.greenIcon svg {
+  fill: #289632;
+}
+
+.redIcon svg {
+  fill: red;
+}
+
 .whiteIcon svg {
     fill: #FFFFFF;
 }
@@ -431,8 +439,20 @@ lightning-datatable .slds-th__action {
     vertical-align: middle;
 }
 /* ############################################## */
+@media only screen and (max-device-width: 480px){
+  td.cellHidden{
+    display: none;
+  }
+  .casesListWrapper .slds-scrollable_y{
+    width: unset !important;
+  }
 
+  .casesListWrapper table{
+    width: 100% !important;
+  }
+}
 
+/* ############################################## */
 
 /* ############################################## */
 /* Casses for the popups */
@@ -519,6 +539,11 @@ lightning-datatable .slds-th__action {
     background-color: #f7f8fa;
     color: #999999;
     box-shadow: none;
+}
+@media screen and (max-width: 400px){
+  .reachusButton.containedButton button{
+    width: unset;
+  }
 }
 
 .containedButtonSlim, .containedButtonSlim button, .containedButtonSlim button:active, .containedButtonSlim button:visited, .containedButtonSlim button:focus {
@@ -877,7 +902,7 @@ lightning-datatable .slds-th__action {
     left: 0px;
 }
 .slds-combobox_container .slds-input__icon_right lightning-primitive-icon:after{
-    content: '';
+    content: "";
     position: absolute;
     border-top: 6px solid #fff;
     border-bottom: 0;
@@ -887,7 +912,7 @@ lightning-datatable .slds-th__action {
     left: 0px;
 }
 .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:after{
-    content: '';
+    content: "";
     position: absolute;
     border-top: 0;
     border-bottom: 6px solid #fff;
@@ -895,6 +920,50 @@ lightning-datatable .slds-th__action {
     border-right: 5px solid transparent;
     top: 8px;
     left: 0px;
+}
+
+.languageSelection .slds-combobox_container
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+    content: "";
+    position: absolute;
+    border-top: 0;
+    border-bottom: 6px solid transparent;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: 8px;
+    left: 0px;
+  }
+
+.languageSelection .slds-combobox_container
+  .slds-is-open
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+    content: "";
+    position: absolute;
+    border-top: 0;
+    border-bottom: 6px solid transparent;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: 8px;
+    left: 0px;
+  }
+
+.languageSelection .slds-combobox_container input[role="textbox"]{
+    border:none;
+    background-color: transparent;
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: transparent;
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"] {
+    height: 32px;
+    color: #3333ff;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
 }
 
 .slds-combobox_container lightning-base-combobox-item:hover,
