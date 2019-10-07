@@ -426,7 +426,7 @@
     <apex:pageBlockSection columns="1" id="section5" collapsible="true">
         <apex:facet name="header">
             <apex:outputpanel >
-                {!$Label.ISSP_SIS_Membership_ISPA_Section5_Title}
+                Section 5 - iiNET
             </apex:outputpanel>
         </apex:facet>
 

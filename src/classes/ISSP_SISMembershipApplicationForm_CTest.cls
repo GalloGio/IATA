@@ -154,8 +154,11 @@ private class ISSP_SISMembershipApplicationForm_CTest {
             
             formcontroller.currentStep=3;
             System.assert(formcontroller.submitForm()!=null);
+
+            Contact_Endorsement__c contact = controller.getAttentionUser();
             
             Test.stopTest();
         }
     }
+
 }

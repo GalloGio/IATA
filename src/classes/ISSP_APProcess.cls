@@ -2505,7 +2505,27 @@ global without sharing class ISSP_APProcess {
             }
         }
         return '';
-    } 
+    }
+
+    /**
+        get a list of valid SIS types (ISPA and ISUA only) 
+    **/
+    public list<String> getListSISTypes() {
+        list<String> listTypes = new list<String>();
+        for (Sis_Management_Type__mdt sisType:[
+                SELECT Id, DeveloperName, MasterLabel,
+                    (SELECT Id, Sector__c, Category__c, Is_Visible__c from SIS_Management_Visibilities__r
+                    WHERE Sector__c = :this.accountToShowSections.Sector__c
+                    AND Category__c = :this.accountToShowSections.Category__c
+                    AND Is_Visible__c = true)
+                FROM Sis_Management_Type__mdt
+                WHERE DeveloperName IN ('ISPA','ISUA')] ){
+            if (!sisType.SIS_Management_Visibilities__r.isEmpty()) {
+                listTypes.add(sisType.DeveloperName);
+            }
+        }
+        return listTypes;
+    }
 
     //dummy method to be remoded
     public List<System.SelectOption> getItems() {return null;}

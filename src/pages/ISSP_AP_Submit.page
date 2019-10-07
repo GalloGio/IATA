@@ -348,14 +348,14 @@
                             {!$Label.ISSP_SIS_Membership_Participation_Agreement}
                         </apex:outputpanel>
                     </apex:facet>
-                    <apex:outputPanel >
-                        <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
-                        <apex:outputPanel rendered="{!ICHTermsAndConditionsUrl!=null}">
-                            <apex:outputLink value="{!ICHTermsAndConditionsUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">
-                                {!ICHTermsAndConditionsName}
+                    <apex:repeat value="{!listSISTypes}" var="sisType" >
+                        <apex:outputPanel>
+                            <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
+                            <apex:outputLink value="/ISSP_SISMembershipApplicationFormPDF?id={!newForm.Id}&sistype={!sisType}" style="color:#31708f; text-decoration: underline;" target="_new">
+                                Download SIS application Form ({!sisType})
                             </apex:outputLink>
                         </apex:outputPanel>
-                    </apex:outputPanel>
+                    </apex:repeat>
                 </apex:pageBlockSection>
 
                 <!-- Accept Discalimer -->
