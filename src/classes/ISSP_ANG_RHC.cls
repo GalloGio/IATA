@@ -31,6 +31,25 @@ public with sharing class ISSP_ANG_RHC {
 	public Boolean isChinaAgent {get; set;}
 	public String remFrequency {get; set;}
 
+	public Boolean isNewPortal {
+        get {
+            if(isNewPortal == null) {
+                isNewPortal = CSP_Utils.isNewPortalActive();
+            }
+            
+            return isNewPortal;
+        }
+        set;
+    }
+    
+    public String portalRedirectToSupport {
+        get {
+            return CSP_Utils.redirectfromPortalHeader('support-reach-us');
+        }
+        set;
+    }
+
+
 	public ISSP_ANG_RHC() {
 		this.riskStatusFilter = 'Active';
 		init();
