@@ -62,7 +62,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	public List<Currency_Center_Survey__c> 				reportingTypesResult 			{ get; set; }
 	public List<Currency_Center_Survey__c> 				bankResult 						{ get; set; }
 	public Map<String, Country_Profile__c>				countriesProfileIdMap			{ get; set; }
-	public Map<String, IATA_ISO_Country__c>				iataIsoCountryMap				{ get; set; }
+	public static Map<String, IATA_ISO_Country__c>		iataIsoCountryMap				{ get; set; }
 
 	public String defaultSectionKey {
 		get {
