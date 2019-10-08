@@ -196,6 +196,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
             case '30':
             case '60':
             case '90':
+                this.fromDateValue = undefined;
                 //this.fromDateValue = todaysDateFormatted;
                 //this.toDateMinValue = this.fromDateValue;
                 this.toDateValue = todaysDatePlusFormatted;
