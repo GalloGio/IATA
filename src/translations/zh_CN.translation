@@ -2273,7 +2273,7 @@
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>请先检查您的垃圾邮件文件夹。如果在垃圾邮件文件夹中找不到任何内容，请点击&quot;重试&quot;按钮尝试重新注册。</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2309,7 +2309,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>您的电脑 IP 地址已被确定来自美国当局列出的禁运国家之一。支持我们客户门户的平台遵守美国法规，因此，我们目前无法为您当前的 IP 地址提供访问客户门户的权限。点击这里与我们联系。</label>
+        <label>您的电脑 IP 地址已被确定来自美国当局列出的禁运国家之一。&lt;br/&gt;支持我们客户门户的平台遵守美国法规，因此，我们目前无法为您当前的 IP 地址提供访问客户门户的权限。&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;点击这里与我们联系。&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2551,6 +2551,10 @@
     <customLabels>
         <label>案例类型</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>发生意外错误！</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>直接访问 60 多种特地为您准备的 IATA 服务。</label>

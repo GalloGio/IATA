@@ -2275,7 +2275,7 @@
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>Пожалуйста, сначала проверьте вашу папку со спамом. Если вы не можете найти нужное сообщение в папке со спамом, еще раз попробуйте зарегистрироваться, нажав кнопку «Повторить попытку».</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2311,7 +2311,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>IP вашего компьютера был определен как источник из одной из стран, указанных властями США в качестве эмбарго. Платформа, поддерживающая наш клиентский портал, соответствует правилам США, поэтому в настоящее время мы не можем предоставить доступ к клиентскому порталу с Вашего текущего IP-адреса. Нажмите здесь, чтобы связаться с нами.</label>
+        <label>IP вашего компьютера был определен как источник из одной из стран, указанных властями США в качестве эмбарго.&lt;br/&gt; Платформа, поддерживающая наш клиентский портал, соответствует правилам США, поэтому в настоящее время мы не можем предоставить доступ к клиентскому порталу с Вашего текущего IP-адреса.&lt;br/&gt; &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Нажмите здесь, чтобы связаться с нами.&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2553,6 +2553,10 @@
     <customLabels>
         <label>Тип случая</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Произошла непредвиденная ошибка!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>Прямой доступ к более чем 60 услугам ИАТА, отобранным специально для вас.</label>

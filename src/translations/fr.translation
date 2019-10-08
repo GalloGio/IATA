@@ -2277,7 +2277,7 @@
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>Veuillez d&apos;abord vérifier votre dossier de spams. Si vous ne trouvez rien dans le dossier spam, essayez de vous enregistrer à nouveau en cliquant sur le bouton Réessayer.</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2313,7 +2313,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>L&apos;IP de votre ordinateur a été identifié comme provenant de l&apos;un des pays listés comme étant sous embargo par les autorités américaines. La plateforme prenant en charge notre portail client est conforme à la réglementation américaine. Par conséquent, nous ne sommes actuellement pas en mesure de fournir un accès au portail client à partir de votre adresse IP actuelle. Cliquez ici pour nous contacter.</label>
+        <label>L&apos;IP de votre ordinateur a été identifié comme provenant de l&apos;un des pays listés comme étant sous embargo par les autorités américaines.&lt;br/&gt; La plateforme prenant en charge notre portail client est conforme à la réglementation américaine. Par conséquent, nous ne sommes actuellement pas en mesure de fournir un accès au portail client à partir de votre adresse IP actuelle.&lt;br/&gt; &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Cliquez ici&lt;/a&gt; pour nous contacter.</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2555,6 +2555,10 @@
     <customLabels>
         <label>Type de cas</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Une erreur inattendue s&apos;est produite!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>Accédez directement à plus de 60 services IATA, spécialement sélectionnés pour vous.</label>

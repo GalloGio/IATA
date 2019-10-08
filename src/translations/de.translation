@@ -2279,7 +2279,7 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>Bitte überprüfen Sie zuerst Ihren Spam-Ordner. Wenn Sie im Spam-Ordner nichts finden, versuchen Sie bitte erneut, sich zu registrieren, indem Sie auf die Schaltfläche „Erneut Versuchen“ klicken.</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2315,7 +2315,7 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>Ihre Computer-IP stammt aus einem der Länder, die von den US-Behörden mit einem Embargo belegt sind. Die Plattform, die unser Kundenportal unterstützt, entspricht diesen US-Vorschriften. Daher können wir derzeit keinen Zugang zum Kundenportal von Ihrer aktuellen IP-Adresse aus anbieten können. Klicken Sie hier, um mit uns Kontakt aufzunehmen.</label>
+        <label>Ihre Computer-IP stammt aus einem der Länder, die von den US-Behörden mit einem Embargo belegt sind. &lt;br/&gt; Die Plattform, die unser Kundenportal unterstützt, entspricht diesen US-Vorschriften. Daher können wir derzeit keinen Zugang zum Kundenportal von Ihrer aktuellen IP-Adresse aus anbieten können. &lt;br/&gt; &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Klicken Sie hier&lt;/a&gt;, um mit uns Kontakt aufzunehmen.</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2557,6 +2557,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Art des Falles</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Ein unerwarteter Fehler ist aufgetreten!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>Sie erhalten direkten Zugriff auf mehr als 60 IATA- Dienstleistungen, die speziell für Sie ausgewählt wurden.</label>

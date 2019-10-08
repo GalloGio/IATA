@@ -2276,7 +2276,7 @@
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>Por favor, verifique sua pasta de spam primeiro. Se você não encontrar nada na pasta de spam, tente registrar-se novamente clicando no botão Tentar novamente.</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2312,7 +2312,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>O IP do seu computador foi identificado como vindo de um dos países listados como embargados pelas autoridades dos EUA. A plataforma que suporta nosso Portal do cliente está em conformidade com os regulamentos dos EUA e, portanto, atualmente não podemos fornecer acesso ao portal do cliente a partir do seu endereço IP atual. Clique aqui para entrar em contato conosco.</label>
+        <label>O IP do seu computador foi identificado como vindo de um dos países listados como embargados pelas autoridades dos EUA.&lt;br/&gt; A plataforma que suporta nosso Portal do cliente está em conformidade com os regulamentos dos EUA e, portanto, atualmente não podemos fornecer acesso ao portal do cliente a partir do seu endereço IP atual.&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Clique aqui&lt;/a&gt; para entrar em contato conosco.</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2554,6 +2554,10 @@
     <customLabels>
         <label>Tipo de caso</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Ocorreu um erro inesperado!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>Acesse mais de 60 serviços IATA diretamente, especialmente selecionados para você.</label>

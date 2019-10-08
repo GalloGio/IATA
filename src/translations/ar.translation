@@ -2273,7 +2273,7 @@
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>الرجاء التحقق من مجلد البريد العشوائي الخاص بك أولاً. إذا لم تتمكن من العثور على أي شيء في مجلد البريد العشوائي، فالرجاء محاولة التسجيل مرة أخرى بالنقر فوق زر &quot;حاول مرة أخرى&quot;.</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2309,7 +2309,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>تم تحديد مصدر عنوان IP لجهاز الكمبيوتر الخاص بكم على أنه في إحدى الدول المدرجة على قائمة الحظر من قبل السلطات الأمريكية. يتوافق النظام الأساسي الذي يدعم بوابة عملائنا مع لوائح الولايات المتحدة ، وبالتالي ، لا يمكننا حاليًا توفير الوصول إلى بوابة العملاء من عنوان IP الحالي الخاص بكم. الرجاء النقر هنا للاتصال بنا.</label>
+        <label>تم تحديد مصدر عنوان IP لجهاز الكمبيوتر الخاص بكم على أنه في إحدى الدول المدرجة على قائمة الحظر من قبل السلطات الأمريكية. يتوافق النظام الأساسي الذي يدعم بوابة عملائنا مع لوائح الولايات المتحدة ، وبالتالي ، لا يمكننا حاليًا توفير الوصول إلى بوابة العملاء من عنوان IP الحالي الخاص بكم.&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt; الرجاء النقر هنا للاتصال بنا.&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2551,6 +2551,10 @@
     <customLabels>
         <label>نوع القضية</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>حدث خطأ غير متوقع!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>يمكنكم الوصول مباشرة إلى أكثر من 60 خدمة يقدمها الاتحاد الدولي للنقل الجوي (إياتا - IATA)، تم اختيارها خصيصاً من أجلكم.</label>

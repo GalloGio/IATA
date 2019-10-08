@@ -2275,7 +2275,7 @@
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>Trước tiên, quý khách cần kiểm tra thư mục thư rác của mình. Trong trường hợp quý khách vẫn không thể tìm thấy bất kỳ thư nào trong thư mục thư rác, xin quý khách vui lòng thử đăng ký lại với chúng tôi bằng cách nhấn vào nút Thử lại.</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2311,7 +2311,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>IP máy tính của bạn đã được xác định là bắt nguồn từ một trong những quốc gia nằm trong sanh sách bị cấm vận bởi chính quyền Hoa Kỳ. Nền tảng hỗ trợ Cổng thông tin Khách hàng của chúng tôi tuân thủ các quy định này của Hoa Kỳ và do đó, chúng tôi hiện không thể cung cấp quyền truy cập vào Cổng thông tin Khách hàng từ địa chỉ IP hiện tại của bạn. Nhấn vào đây để liên hệ với chúng tôi.</label>
+        <label>IP máy tính của bạn đã được xác định là bắt nguồn từ một trong những quốc gia nằm trong sanh sách bị cấm vận bởi chính quyền Hoa Kỳ.&lt;br/&gt; Nền tảng hỗ trợ Cổng thông tin Khách hàng của chúng tôi tuân thủ các quy định này của Hoa Kỳ và do đó, chúng tôi hiện không thể cung cấp quyền truy cập vào Cổng thông tin Khách hàng từ địa chỉ IP hiện tại của bạn.&lt;br/&gt; &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Nhấn vào đây để liên hệ với chúng tôi.&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2553,6 +2553,10 @@
     <customLabels>
         <label>Loại trường hợp</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Một lỗi kỹ thuật không ngờ đã xảy ra!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>Truy cập trực tiếp hơn 60 dịch vụ IATA, được lựa chọn đặc biệt cho bạn.</label>

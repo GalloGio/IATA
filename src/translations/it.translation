@@ -2278,7 +2278,7 @@ la seguente procedura per completarlo :
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>Controlli prima la cartella spam. Se non trova nulla nella cartella spam, provi a registrarsi di nuovo cliccando sul pulsante Riprova.</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2314,7 +2314,7 @@ la seguente procedura per completarlo :
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>L&apos;IP del suo computer è stato identificato come proveniente da uno dei Paesi elencati come sotto embargo dalle autorità statunitensi. La piattaforma che supporta il nostro Portale Clienti è conforme alle normative statunitensi e pertanto non siamo attualmente in grado di fornire l&apos;accesso al Portale Clienti dal suo attuale indirizzo IP. Clicchi qui per contattarci.</label>
+        <label>L&apos;IP del suo computer è stato identificato come proveniente da uno dei Paesi elencati come sotto embargo dalle autorità statunitensi. &lt;br/&gt;La piattaforma che supporta il nostro Portale Clienti è conforme alle normative statunitensi e pertanto non siamo attualmente in grado di fornire l&apos;accesso al Portale Clienti dal suo attuale indirizzo IP.&lt;br/&gt; &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Clicchi qui&lt;/a&gt; per contattarci.</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2556,6 +2556,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label>Tipo di caso</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Si è verificato un errore imprevisto.</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>Acceda direttamente a più di 60 servizi IATA, appositamente selezionati per lei.</label>

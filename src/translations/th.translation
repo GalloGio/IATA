@@ -2273,7 +2273,7 @@
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>อันดับแรก โปรดตรวจสอบโฟลเดอร์จดหมายขยะของคุณ หากคุณไม่พบสิ่งใดในโฟลเดอร์จดหมายขยะ โปรดลงทะเบียนใหม่อีกครั้ง โดยคลิกที่ปุ่ม &quot;ลองอีกครั้ง&quot;</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2309,7 +2309,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>มีการระบุว่า IP ของคอมพิวเตอร์ของคุณมีแหล่งที่มาจากหนึ่งในประเทศที่อยู่ในรายการที่ถูกระงับโดยหน่วยงานในสหรัฐอเมริกา แพลตฟอร์มที่สนับสนุนพอร์ทัลสำหรับลูกค้าของเรานั้น ปฏิบัติตามกฎระเบียบของสหรัฐอเมริกา และด้วยเหตุนี้ เราจึงไม่สามารถให้การเข้าถึงพอร์ทัลสำหรับลูกค้าจากที่อยู่ IP ปัจจุบันของคุณได้ คลิกที่นี่เพื่อติดต่อเรา</label>
+        <label>มีการระบุว่า IP ของคอมพิวเตอร์ของคุณมีแหล่งที่มาจากหนึ่งในประเทศที่อยู่ในรายการที่ถูกระงับโดยหน่วยงานในสหรัฐอเมริกา แพลตฟอร์มที่สนับสนุนพอร์ทัลสำหรับลูกค้าของเรานั้น ปฏิบัติตามกฎระเบียบของสหรัฐอเมริกา และด้วยเหตุนี้ เราจึงไม่สามารถให้การเข้าถึงพอร์ทัลสำหรับลูกค้าจากที่อยู่ IP ปัจจุบันของคุณได้ &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;คลิกที่นี่เพื่อติดต่อเรา&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2551,6 +2551,10 @@
     <customLabels>
         <label>ประเภทของคำร้อง</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>เกิดข้อผิดพลาดที่ไม่คาดคิดขึ้น!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>เข้าถึงบริการของ IATA มากกว่า 60 รายการโดยตรง คัดสรรมาเพื่อคุณโดยเฉพาะ</label>

@@ -2277,7 +2277,7 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>Silakan periksa folder spam Anda terlebih dahulu. Jika Anda tidak dapat menemukan apa pun di folder spam, silakan coba mendaftar lagi dengan mengklik tombol Coba Lagi.</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2313,7 +2313,7 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>IP komputer Anda teridentifikasi sebagai sumber dari salah satu negara yang ada di daftar embargo oleh otoritas AS. Platform yang mendukung Portal Pelanggan kami sesuai dengan peraturan AS, oleh karena itu saat ini kami belum dapat memberikan akses ke Portal Pelanggan melalui alamat IP Anda. Klik di sini untuk menghubungi kami.</label>
+        <label>IP komputer Anda teridentifikasi sebagai sumber dari salah satu negara yang ada di daftar embargo oleh otoritas AS.&lt;br/&gt;Platform yang mendukung Portal Pelanggan kami sesuai dengan peraturan AS, oleh karena itu saat ini kami belum dapat memberikan akses ke Portal Pelanggan melalui alamat IP Anda.&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Klik di &lt;/a&gt;sini untuk menghubungi kami.</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2555,6 +2555,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Jenis Kasus</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Terjadi kesalahan yang tak terduga!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>Akses langsung ke lebih dari 60 layanan IATA, dipilih khusus untuk Anda.</label>

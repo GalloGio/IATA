@@ -2277,7 +2277,7 @@
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>最初にスパムフォルダをご確認ください。スパムフォルダーに何も見つからない場合は、「再試行」 ボタンをクリックして、再度ご登録ください。</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2313,7 +2313,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>お使いのコンピューターのIPは、米国当局による通商禁止としてリストされている国のいずれかを起源としていることが確認されました。カスタマーポータルをサポートするプラットフォームはこの米国の規制に準拠しているため、現在のIPアドレスからカスタマーポータルへのアクセスを提供することはできません。こちらをクリックしてお問い合わせください。</label>
+        <label>お使いのコンピューターのIPは、米国当局による通商禁止としてリストされている国のいずれかを起源としていることが確認されました。&lt;br/&gt;カスタマーポータルをサポートするプラットフォームはこの米国の規制に準拠しているため、現在のIPアドレスからカスタマーポータルへのアクセスを提供することはできません。&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;こちらをクリックしてお問い合わせください。&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2555,6 +2555,10 @@
     <customLabels>
         <label>案件の種類</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>予期せぬエラーが発生しました。</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>お客様の為に特別に選択された、60を超えるIATAサービスに直接アクセスすることが出来ます。</label>

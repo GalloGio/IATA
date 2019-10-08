@@ -2273,7 +2273,7 @@
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>Lütfen önce spam klasörünüzü kontrol ediniz. Spam klasörünüzde hiçbir şey bulamazsanız, lütfen Tekrar Dene düğmesine tıklayarak tekrar kaydolmayı deneyin.</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2309,7 +2309,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>Bilgisayarınızın IP’sinin kaynağı, ABD yetkilileri tarafından ambargolu olarak listelenen ülkelerden birinde olarak tanımlandı. Müşteri Portalımızı destekleyen platform bu ABD düzenlemelerine uygundur ve dolayısıyla şu anki IP adresinizden Müşteri Portalına erişim sağlayamıyoruz. Bize ulaşmak için buraya tıklayın.</label>
+        <label>Bilgisayarınızın IP’sinin kaynağı, ABD yetkilileri tarafından ambargolu olarak listelenen ülkelerden birinde olarak tanımlandı.&lt;br/&gt;Müşteri Portalımızı destekleyen platform bu ABD düzenlemelerine uygundur ve dolayısıyla şu anki IP adresinizden Müşteri Portalına erişim sağlayamıyoruz. &lt;br/&gt;Bize ulaşmak için &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;buraya tıklayın&lt;/a&gt;.</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2551,6 +2551,10 @@
     <customLabels>
         <label>Sorgunun Türü</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Beklenmeyen bir hata oluştu!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>Sizin için özel olarak seçilmiş 60&apos;tan fazla IATA servisine doğrudan erişin.</label>

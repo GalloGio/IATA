@@ -2276,7 +2276,7 @@
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>Primero revise su carpeta de correos no deseados. Si no encuentra nada en la carpeta de correos no deseados, intente registrarse nuevamente al hacer clic en el botón &quot;Intentar otra vez&quot;.</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2312,7 +2312,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>La IP de su ordenador se ha identificado como procedente de uno de los países embargados por las autoridades estadounidenses. La plataforma que sustenta nuestro portal del cliente cumple con esta normativa estadounidense y, por lo tanto, actualmente no podemos proporcionar acceso al portal del cliente desde su dirección de IP actual. Haga clic aquí para ponerse en contacto con nosotros.</label>
+        <label>La IP de su ordenador se ha identificado como procedente de uno de los países embargados por las autoridades estadounidenses.&lt;br/&gt; La plataforma que sustenta nuestro portal del cliente cumple con esta normativa estadounidense y, por lo tanto, actualmente no podemos proporcionar acceso al portal del cliente desde su dirección de IP actual.&lt;br/&gt; Haga &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;clic aquí&lt;/a&gt; para ponerse en contacto con nosotros.</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2554,6 +2554,10 @@
     <customLabels>
         <label>Tipo de caso</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>¡Ocurrió un error inesperado!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>Acceda de forma directa a más de 60 servicios de IATA seleccionados específicamente para usted.</label>

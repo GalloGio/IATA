@@ -2276,7 +2276,7 @@
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Registration Retry Message --></label>
+        <label>먼저 스팸 폴더를 확인하세요. 스팸 폴더에서 찾으실 수 없는 경우 다시 시도 버튼을 클릭하여 다시 등록하세요.</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2312,7 +2312,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>고객님의 컴퓨터 IP가 미국 당국에 의해 금지된 국가 중 하나에서 접근된 것으로 확인되었습니다. 고객 포털을 지원하는 플랫폼은 이 미국 규정을 준수하므로 현재 IP 주소에서 고객 포털을 이용할 수 없습니다. 연락하려면 여기를 클릭하세요.</label>
+        <label>고객님의 컴퓨터 IP가 미국 당국에 의해 금지된 국가 중 하나에서 접근된 것으로 확인되었습니다.&lt;br/&gt; 고객 포털을 지원하는 플랫폼은 이 미국 규정을 준수하므로 현재 IP 주소에서 고객 포털을 이용할 수 없습니다.&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;연락하려면 여기를 클릭하세요.&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2554,6 +2554,10 @@
     <customLabels>
         <label>케이스 유형</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>예기치 않은 오류가 발생했습니다!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label>고객님을 위해 특별히 선택한 60개 이상의 국제항공운송협회 (IATA) 서비스를 직접 사용하세요.</label>
