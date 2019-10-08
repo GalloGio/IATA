@@ -78,13 +78,17 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.itpValue = null;
 
         let myResult = this.itpBYStationMap[this.stationValue];
-
-        let myTopicOptions = [{ label: 'All', value: 'All' }];
+        let myTopicOptions = [];
 
         myResult.forEach( rec => {
             myTopicOptions.push({ label: rec.Account_Role_Relationship__r.To__r.Account__r.Name, value: rec.Account_Role_Relationship__r.To__r.Account__c });
-        });        
+        });
+  
         this.itpOptions = this.sortData('label', 'asc', myTopicOptions);
+        
+        if(myTopicOptions.length > 1){
+            this.itpOptions.unshift({label: 'All', value: 'All'}); 
+        }
     }
 
     handleChangeITP(event) {
@@ -149,8 +153,9 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             case '30':
             case '60':
             case '90':
-                this.fromDateValue = todaysDateFormatted;
-                this.toDateMinValue = this.fromDateValue;
+                this.fromDateValue = undefined;
+                //this.fromDateValue = todaysDateFormatted;
+                //this.toDateMinValue = this.fromDateValue;
                 this.toDateValue = todaysDatePlusFormatted;
                 break;
             default:
@@ -224,7 +229,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.toDateMinValue = undefined;
         this.datePeriodValue = undefined;
         this.showSearch = false;
-        this.itpBYStationMap = undefined;
         this.cleanErrors();
         
     }

@@ -1,7 +1,4 @@
 public without sharing class PortalIftpStationsManagement {
-    public PortalIftpStationsManagement() {
-
-    }
 
 
     /********************************************************************************
@@ -110,23 +107,20 @@ public without sharing class PortalIftpStationsManagement {
     public static UpdateItpAddressAirlinesResultsWrapper updateItpAddressAirlines(Id itpAccountRoleId, List<Object> airlinesItpAddressToInsert, List<Object> airlinesItpAddressToDelete){
         UpdateItpAddressAirlinesResultsWrapper rw;
         try{
-            System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] airlinesItpAddressToInsert - ' + airlinesItpAddressToInsert );
-            List<AirlinesItpAddressWrapper> modifiedData = (List<AirlinesItpAddressWrapper>)JSON.deserialize(JSON.serialize(airlinesItpAddressToInsert), List<AirlinesItpAddressWrapper>.class);
-            System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] modifiedData - ' + modifiedData);
-            List<AirlinesItpAddressWrapper> originalData = (List<AirlinesItpAddressWrapper>)JSON.deserialize(JSON.serialize(airlinesItpAddressToDelete), List<AirlinesItpAddressWrapper>.class);
-            System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] originalData - ' + originalData);
+            List<AirlinesItpAddressWrapper> modifiedData = new List<AirlinesItpAddressWrapper>();
+            modifiedData = (List<AirlinesItpAddressWrapper>)JSON.deserialize(JSON.serialize(airlinesItpAddressToInsert), List<AirlinesItpAddressWrapper>.class);
+            List<AirlinesItpAddressWrapper> originalData = new List<AirlinesItpAddressWrapper>();
+            originalData = (List<AirlinesItpAddressWrapper>)JSON.deserialize(JSON.serialize(airlinesItpAddressToDelete), List<AirlinesItpAddressWrapper>.class);
             Id itpAccRolId = (Id)JSON.deserialize(JSON.serialize(itpAccountRoleId), Id.class);
-            System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] itpAccRolId - ' + itpAccRolId);
             Set<Id> airlineAccRolIdList = new Set<Id>();
             List<AirlinesItpAddressWrapper> dataToInsert = new List<AirlinesItpAddressWrapper>();
             List<AirlinesItpAddressWrapper> unchangedData = new List<AirlinesItpAddressWrapper>();
             List<Role_Address__c> roleAddressToDeleteList = new List<Role_Address__c>();
             List<Role_Address__c> roleAddressesToInsert = new List<Role_Address__c>();
-            //List<Role_Address__c> roleAddressesToDelete = new List<Role_Address__c>();
             List<Account_Role_Relationship__c> accRolRelToInsert = new List<Account_Role_Relationship__c>();
 
             Boolean existsInList = false;
-            if(!modifiedData.isEmpty() && !originalData.isEmpty()){
+            if(modifiedData != null && !modifiedData.isEmpty() && originalData != null && !originalData.isEmpty()){
 
                 if(!modifiedData.isEmpty()){
                     // remove duplicates from modifiedData (just to verify, probably having duplicated values will never happen)
@@ -173,25 +167,30 @@ public without sharing class PortalIftpStationsManagement {
                     }
                 }
             } else {
-                dataToInsert = modifiedData;
-                for(AirlinesItpAddressWrapper recToInsert: dataToInsert){
-                    airlineAccRolIdList.add(recToInsert.airlineAccRolId);
+                if(modifiedData != null){
+                    dataToInsert = modifiedData;
+                    for(AirlinesItpAddressWrapper recToInsert: dataToInsert){
+                        airlineAccRolIdList.add(recToInsert.airlineAccRolId);
+                    }
                 }
 
-                for(AirlinesItpAddressWrapper recToDelete: originalData){
-                    roleAddressToDeleteList.add(new Role_Address__c(id=recToDelete.rolAddrId, name = recToDelete.rolAddrName));
+                if(originalData != null){
+                    for(AirlinesItpAddressWrapper recToDelete: originalData){
+                        roleAddressToDeleteList.add(new Role_Address__c(id=recToDelete.rolAddrId, name = recToDelete.rolAddrName));
+                    }
                 }
             }
+            List<Account_Role_Relationship__c> accRolRelList = new List<Account_Role_Relationship__c>();
+            if(!airlineAccRolIdList.isEmpty()){
+                accRolRelList = [SELECT id, From__c, To__c, Portal_Service__c
+                                    FROM Account_Role_Relationship__c 
+                                    WHERE From__c = :airlineAccRolIdList
+                                    AND To__c = :itpAccRolId
+                                    AND Relationship_Status__c = 'Active'
+                                    AND Portal_Service__r.Name = 'IFTP'];
 
-            List<Account_Role_Relationship__c> accRolRelList = [SELECT id, From__c, To__c, Portal_Service__c
-                                                                FROM Account_Role_Relationship__c 
-                                                                WHERE From__c = :airlineAccRolIdList
-                                                                AND To__c = :itpAccRolId
-                                                                AND Relationship_Status__c = 'Active'
-                                                                AND Portal_Service__r.Name = 'IFTP'];
-
-            System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] accRolRelList - ' + accRolRelList);
-
+                System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] accRolRelList - ' + accRolRelList);
+            }
             Id portalServiceId;
             if(accRolRelList.isEmpty()){
                 portalServiceId = [ SELECT Id 
@@ -214,7 +213,7 @@ public without sharing class PortalIftpStationsManagement {
                         List<AirlinesItpAddressWrapper> airlinesList = stationsAirlinesMap.get(dataToInsert[count].addressId);
                         Boolean existsAirline = false;
                         for(AirlinesItpAddressWrapper airline: airlinesList){
-                            if(dataToInsert[count].airlineAccRolId == airline.airlineAccRolId){
+                            if(airline.airlineAccRolId != null && dataToInsert[count].airlineAccRolId == airline.airlineAccRolId){
                                 existsAirline = true;
                             }
                         }
@@ -223,7 +222,9 @@ public without sharing class PortalIftpStationsManagement {
                         } else {
                             count++;
                         }
-                    } 
+                    } else{
+                        count++;
+                    }
                 }
             }
             // Create the Role_Address__c records to be inserted; if more than one Account_Role_Relationship__c.Id possible the first one that is a match will be selected
@@ -273,12 +274,10 @@ public without sharing class PortalIftpStationsManagement {
             Savepoint sp = Database.setSavepoint();
             try {
                 if(!roleAddressToDeleteList.isEmpty()){
-                    System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] roleAddressToDeleteList - ' + roleAddressToDeleteList);
                     delete roleAddressToDeleteList;
                 }
 
                 if(!accRolRelToInsert.isEmpty()){
-                    System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] accRolRelToInsert - ' + accRolRelToInsert);
                     insert accRolRelToInsert;
                 }
 
@@ -375,7 +374,7 @@ public without sharing class PortalIftpStationsManagement {
             List<Address__c> ITPStations = PortalIftpUtils.getITPStations();
             Boolean existsStations = false;
             for(Address__c addr : ITPStations){
-                if(stationToDelete.code.equals(addr.code__c)){
+                if(stationToDelete.addressId.equals(addr.Id)){
                     existsStations = true;
                     break;
                 }
@@ -406,14 +405,7 @@ public without sharing class PortalIftpStationsManagement {
                                 roleAddrToDeleteList.add(new Role_Address__c(id = rec.rolAddrId, name = rec.rolAddrName));
                             }
                         }
-                        /*
-                        if(stationToDeleteAirlinesList != null){ 
 
-                            for(AirlinesItpAddressWrapper rec: stationToDeleteAirlinesList){
-                                roleAddrToDeleteList.add(new Role_Address__c(id = rec.rolAddrId, name = rec.rolAddrName));
-                            }
-                        }
-*/
                         roleAddrToDeleteList.add(new Role_Address__c(id = stationToDelete.id, name = stationToDelete.name));
 
 

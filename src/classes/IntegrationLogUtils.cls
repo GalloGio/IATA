@@ -1,7 +1,5 @@
 public with sharing class IntegrationLogUtils {
-    public IntegrationLogUtils() {
 
-    }
 
     @AuraEnabled (cacheable=false)    
     public static void insertIntoIntegrationLog(List<Integration_Log__c> intLogList){

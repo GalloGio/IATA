@@ -11,7 +11,7 @@ public without sharing class PortalIftpUtils {
         String PortalContactRoles = null;
 
         User userAcc = [SELECT Id, ContactId, Contact.User_Portal_Status__c, Contact.Accountid, 
-                                Contact.Account.Region__c, Contact.Account.IATA_ISO_Country__r.Name,
+                                Contact.Account.Region_formula__c, Contact.Account.IATA_ISO_Country__r.Name,
                                 Contact.Account.Recordtype.Name,
                                 Contact.Account.Recordtype.Developername, Contact.Account.Name, Profile_Name__c
                             FROM user 
@@ -59,7 +59,7 @@ public without sharing class PortalIftpUtils {
             }
         }
         userInfo.contactId = userAcc.contactId;
-        userInfo.accountRegion = userAcc.Contact.Account.Region__c;
+        userInfo.accountRegion = userAcc.Contact.Account.Region_formula__c;
         userInfo.accountCountry = userAcc.Contact.Account.IATA_ISO_Country__r.Name;
 
         return userInfo;

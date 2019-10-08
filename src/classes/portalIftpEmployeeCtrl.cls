@@ -136,6 +136,7 @@ public without sharing class portalIftpEmployeeCtrl {
                 }
                 trw.stationsCodesListAsString.removeEnd('; ');
             }
+            trw.name = emp.Name;
 
             if(String.isBlank(stationCode) || trw.stationsCodesListAsString.containsIgnoreCase(stationCode)){
                 lEmpWrapper.add(trw);
@@ -239,6 +240,9 @@ public without sharing class portalIftpEmployeeCtrl {
         public String companyNumber {get;set;}
         @AuraEnabled
         public String stationsCodesListAsString {get;set;}
+        @AuraEnabled
+        public String name {get;set;}
+
         
         public EmployeeRecordsWrapper(Id employeeId, String firstName, String lastName, 
                                         String email, String companyNumber ){
