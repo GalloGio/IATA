@@ -4472,7 +4472,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Credit_Card_Payment_Link</shortDescription>
-        <value>For credit card payment please click &lt;a href=&quot;{1}&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;.</value>
+        <value>For credit card payment please click &lt;a href=&quot;{1}&quot; target=&quot;_blank&quot; style=&quot;color: blue; text-decoration-line: underline;&quot;&gt;here&lt;/a&gt;.</value>
     </labels>
     <labels>
         <fullName>Credit_card_payment_msg</fullName>
