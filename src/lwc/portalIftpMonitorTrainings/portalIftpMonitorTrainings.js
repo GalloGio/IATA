@@ -196,8 +196,9 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
             case '30':
             case '60':
             case '90':
-                this.fromDateValue = todaysDateFormatted;
-                this.toDateMinValue = this.fromDateValue;
+                this.fromDateValue = undefined;
+                //this.fromDateValue = todaysDateFormatted;
+                //this.toDateMinValue = this.fromDateValue;
                 this.toDateValue = todaysDatePlusFormatted;
                 break;
             default:
@@ -207,6 +208,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         }
 
     }
+    
     handleChangeFromDate(event) {
         this.fromDateValue = event.detail.value;
         this.toDateMinValue = this.fromDateValue;
@@ -215,6 +217,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
             this.toDateValue = '';
         }
     }
+    
     handleChangeToDate(event) {
         this.toDateValue = event.detail.value;
     }

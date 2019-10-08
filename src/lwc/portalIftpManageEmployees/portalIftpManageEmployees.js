@@ -244,7 +244,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
                         exists = true;
                     }
                 })
-                if(!exists){
+                if(!exists && this.auxSearchValues.stationCode !== 'Not Allocated'){
                     this.stationValue = null;
                     this.auxSearchValues.stationCode = null;
                 }
@@ -309,6 +309,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
         this.showSearch = true;
         if(this.auxSearchValues.stationCode === 'Not Allocated'){
             isNotAllocated = true;
+            this.stationValue = null;
             this.auxSearchValues.stationCode = null;
         }
         getITPEmployeesWithStationsInfo({searchValues: this.auxSearchValues, origin: 'Manage Employees'})
@@ -805,13 +806,17 @@ export default class PortalIftpManageEmployees extends LightningElement {
                         exists = true;
                     }
                 })
-                if(!exists){
+                if(!exists && stationOpt.value !== 'Not Allocated'){
                     stationsProneToAdd.push(stationOpt);
                 }
                 exists = false;
             })
         } else {
-            stationsProneToAdd = stationOptions;
+            stationOptions.forEach(stationOpt =>{
+                if(stationOpt.value !== 'Not Allocated'){
+                    stationsProneToAdd.push(stationOpt);
+                }
+            })
         }
 
         this.loadingModal = false;

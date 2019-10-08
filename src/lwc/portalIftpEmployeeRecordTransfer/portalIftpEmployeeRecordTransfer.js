@@ -193,6 +193,7 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
         let recordRequestTransfer = {};
         recordRequestTransfer.firstName = auxData[index].firstName;
         recordRequestTransfer.lastName = auxData[index].lastName;
+        recordRequestTransfer.acrId = auxData[index].name;
 
         console.log('recordRequestTransfer', recordRequestTransfer);
 

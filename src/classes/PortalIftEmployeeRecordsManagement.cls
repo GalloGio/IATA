@@ -717,21 +717,24 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             ID ProcessRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
             System.debug('ownerId' + ownerId);
 
-            String firstName = 'Employee First Name:    ' + employeeToTransferData.firstName + '.\n';
-            String lastName = 'Employee Last Name:  ' + employeeToTransferData.lastName + '.\n';
-            String lmsUsername = 'Employee LMS Username:    ' + employeeToTransferData.lmsUsername + '.\n';
-            String formerItpName = 'Employee Former ITP Name:   ' + employeeToTransferData.formerItpName + '.\n';
-            String formerStations = 'Employee Former Stations:  ' + employeeToTransferData.formerStations + '.\n';
+            String firstName =      'Employee First Name: ' + employeeToTransferData.firstName + '  | \n';
+            String lastName =       'Employee Last Name: ' + employeeToTransferData.lastName + '  | \n';
+            String lmsUsername =    'Employee LMS Username: ' + employeeToTransferData.lmsUsername + ' | \n';
+            String formerItpName =  'Employee Former ITP Name: ' + employeeToTransferData.formerItpName + '  | \n';
+            String formerStations = 'Employee Former Stations: ' + employeeToTransferData.formerStations + ' | \n';
+            String acrId =          'Employee Account Contact Role Name: ' + employeeToTransferData.acrId + ' \n';
 
-            String description = 'Request Employee Records Transfer Data: \n';
+
+            String description = 'Request Employee Records Transfer Data: \n\n';
             description += firstName;
             description += lastName;
             description += lmsUsername;
             description += formerItpName;
             description += formerStations;
+            description += acrId;
 
             if(String.isNotBlank(employeeToTransferData.comments)){
-                String comments = 'Comments: ' + employeeToTransferData.comments + '\n';
+                String comments = ' | Comments: ' + employeeToTransferData.comments + '\n';
                 description += comments;
             }
 
@@ -888,6 +891,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
         public String lmsUsername {get;set;}
         @AuraEnabled
         public String comments {get;set;}
+        @AuraEnabled
+        public String acrId {get;set;}
 
         public EmployeeTransferRequestWrapper(){}
 
