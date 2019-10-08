@@ -821,17 +821,13 @@ public class ANG_MulticountryHelper {
 		return acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 	}
 	
-	public static Boolean isAccountInMulticountryCountry(Id acctId)
+	public static List<IATA_ISO_Country__c> getAccountCountry(List<Account> accts)
 	{
-		IATA_ISO_Country__c cntry = getAccountCountry(acctId);
-		return isMulticountryCountry(cntry);
-	}
-	
-	public static IATA_ISO_Country__c getAccountCountry(Id acctId)
-	{
-		Account acct = [SELECT IATA_ISO_Country__c FROM Account WHERE Id = :acctId];
-		List<IATA_ISO_Country__c> cntry = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{ acct.IATA_ISO_Country__c });
-		return ! cntry.isEmpty() ? cntry[0] : null;
+		Set<Id> countries = new Set<Id>();
+		for (Account a : accts)
+			countries.add(a.IATA_ISO_Country__c);
+
+		return IATAIsoCountryDAO.getIsoCountriesByIds(countries);
 	}
 	
 	public static Boolean isMulticountryCountry(IATA_ISO_Country__c cntry)

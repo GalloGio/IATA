@@ -194,7 +194,8 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 			this.alreadyAddedAccounts.add(acct.Id);
 		}
 
-		addHierarchyFromHE(this.oscar.Account__c);
+		List<Account> accountLst = getAccounts(this.oscar.Account__c);
+		addHierarchyFromHE(accountLst);
 
 		sortLists();
 
@@ -237,35 +238,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 	 * Adds the selected HE and the related hierarchy
 	 * @param  selectedHE: receives Id of the selected HE 
 	 */
-	private void addHierarchyFromHE(Id selectedHE){
-
-		List<Account> accountLst = new List<Account>(
-			[SELECT
-				Id,
-				Name,
-				Status__c,
-				IATACode__c,
-				Top_Parent__c,
-				Location_Type__c,
-				IATA_ISO_Country__r.Name,
-				IATA_ISO_Country__r.AMS_Settlement_System__r.Name
-			 FROM 
-				Account
-			 WHERE
-				(Id = :selectedHE OR Top_Parent__c = :selectedHE)
-			 AND
-				Location_Type__c IN (:AMS_Utils.HE, :AMS_Utils.AE)
-			 AND
-				Status__c NOT IN (
-					'',
-					NULL,
-					:AMS_Utils.ACC_S4_LISTED,
-					:AMS_Utils.ACC_S0_TERMINATED, 
-					:AMS_Utils.ACC_S1_NOTACCREDITED, 
-					:AMS_Utils.ACC_S3_NOTINOPERATION
-				)
-			]
-		);
+	private void addHierarchyFromHE(List<Account> accountLst){
 
 		for(Account acct : accountLst){
 
@@ -284,6 +257,39 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 	}
 
+	private List<Account> getAccounts(Id selectedAccount)
+	{
+		List<Account> accountLst = new List<Account>(
+			[SELECT
+				Id,
+				Name,
+				Status__c,
+				IATACode__c,
+				Top_Parent__c,
+				Location_Type__c,
+				IATA_ISO_Country__r.Name,
+				IATA_ISO_Country__r.AMS_Settlement_System__r.Name
+			 FROM 
+				Account
+			 WHERE
+				(Id = :selectedAccount OR Top_Parent__c = :selectedAccount)
+			 AND
+				Location_Type__c IN (:AMS_Utils.HE, :AMS_Utils.AE)
+			 AND
+				Status__c NOT IN (
+					'',
+					NULL,
+					:AMS_Utils.ACC_S4_LISTED,
+					:AMS_Utils.ACC_S0_TERMINATED, 
+					:AMS_Utils.ACC_S1_NOTACCREDITED, 
+					:AMS_Utils.ACC_S3_NOTINOPERATION
+				)
+			]
+		);
+
+		return accountLst;
+	}
+
 	/**
 	 * Adds the selected HE and 
 	 * the related hierarchy to the accounts table 
@@ -296,18 +302,13 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 		
 		if (selectedHE != null)
 		{
+			List<Account> accountLst = getAccounts(selectedHE);
+
 			// validate if it is a multicountry enabled country
-			IATA_ISO_Country__c country = ANG_MulticountryHelper.getAccountCountry(selectedHE);
-			if (! ANG_MulticountryHelper.isMulticountryCountry(country))
-			{
-				String message = String.format(COUNTRY_NOT_MULTICOUNTRY,
-					new List<Object> { (country == null ? 'unknown' : country.Name) });
-
-				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, message));
+			if (! isValidCountry(accountLst))
 				return null;
-			}
-
-			addHierarchyFromHE(selectedHE);
+			
+			addHierarchyFromHE(accountLst);
 		
 			this.oscar.New_Parent__c = null;
 
@@ -319,6 +320,24 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 		}
 
 		return null;
+	}
+
+	private Boolean isValidCountry(List<Account> accounts)
+	{
+		List<IATA_ISO_Country__c> countries = ANG_MulticountryHelper.getAccountCountry(accounts);
+		for (IATA_ISO_Country__c country : countries)
+		{
+			if (! ANG_MulticountryHelper.isMulticountryCountry(country))
+			{
+				String message = String.format(COUNTRY_NOT_MULTICOUNTRY,
+					new List<Object> { (country == null ? 'unknown' : country.Name) });
+
+				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, message));
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -367,6 +386,13 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 	 * @return null 
 	 */
 	public PageReference save(){
+
+		// validate if it is a multicountry enabled country
+		List<Account> accountLst = new List<Account>();
+		for (SelectedAccountWrapper saw : this.allAccountsSelectionLst)
+			accountLst.add(saw.acct);
+		if (! isValidCountry(accountLst))
+			return null;
 
 		Id rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
