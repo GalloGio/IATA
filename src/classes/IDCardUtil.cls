@@ -1022,7 +1022,7 @@ global with sharing class IDCardUtil {
 
         Account[] theAccounts = [SELECT IATACode__c, BillingCountry, type, Id 
                                  FROM Account
-                                 WHERE RecordType.Name = : 'Agency' AND IATACode__c = : iataCode
+                                 WHERE RecordTypeId =: AMS_Utils.RECTYPE_IATAAGENCY AND IATACode__c = : iataCode
                                     AND (Status__c in : IDCARDUtil.ALLOWED_ACCOUNT_STATUS or Status__c = 'Terminated') limit 1];
 
         System.debug(' *** Getting Account ' + theAccounts);
@@ -1037,8 +1037,9 @@ global with sharing class IDCardUtil {
     * Returns the account object from an IATA code
     */
     public static List<Account> GetAccountListFromIATACodes(Set<String> iataCodes) {
-        return  [Select IATACode__c, BillingCountry, IATA_ISO_Country__c, type, Id From Account
-                 where RecordType.Name = : 'Agency'
+        return  [SELECT IATACode__c, BillingCountry, IATA_ISO_Country__c, type, Id 
+                 FROM Account
+                 WHERE RecordTypeId =: AMS_Utils.RECTYPE_IATAAGENCY
                                          AND IATACode__c in :iataCodes
                                          AND  (Status__c in : IDCARDUtil.ALLOWED_ACCOUNT_STATUS)
                 ];

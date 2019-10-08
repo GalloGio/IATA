@@ -83,13 +83,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
     /** vars used for mexpedite fees.**/
     public boolean fastExpedition {get; set{
-            fastExpedition = false;//value;
-            /*if (validatedApplication != null) {
-                for (ID_Card_Application__c app : validatedApplication.values())
-                    if (isApplicationExpediteAvailable(app))
-                        app.IDCard_Expedite_Delivery__c = ;
-                calculateAllPrices();
-            }*/
+            fastExpedition = false;
         }
     }
 
@@ -222,8 +216,6 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
         for (Price_Table__c pt : pts) {
             system.debug('[MASS APP FEE] find record ofr mass feees: class: ' + pt.Type_Class_of_Agent__c + ' country id :' + pt.ISO_Country__c + ' fee: ' + pt.Mass_Purchase_exp__c);
             pricePerCountry.put(pt.ISO_Country__c+'-'+pt.Type_Class_of_Agent__c, pt);
-            //ApexPAges.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,pt.ISO_Country__c+'-'+pt.Type_Class_of_Agent__c+' ---> '+pt.Mass_Purchase_exp__c));
-            //system.debug(LoggingLevel.ERROR,'#############  INSERISCO NELLA MAPPA: '+pt.ISO_Country__c+'-'+pt.Type_Class_of_Agent__c+' ---> '+pt.Mass_Purchase_exp__c);
         }
         for (ID_Card_Application__c app : pendingApplications) {
             Price_Table__c priceTable = pricePerCountry.get(countriesPerIATACode2.get(app.IATA_Code__c)+'-'+accountTypesPerIATACode.get(app.IATA_Code__c));
@@ -570,37 +562,11 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
                 isToPrint = false;
             } 
             app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
-            //detailledFees = IDCardUtil.GetDetailledFees(priceTable, isReissue, false, isITDIPackage, null, null, isToPrint);
             if(validatedApplication.keyset().contains(app.Id)){
-            /*system.debug('Find element  with ' + app.Tax_2_Value__c + ' -  ' + app.ID_Card_Fee__c + ' -  ' + app.IDCard_Expedite_Delivery_Fee__c + ' -  ' + app.Tax_1_Value__c);
-            if (app.Tax_2_Value__c != null) {
-                try {
-                    vatPrice += Decimal.valueOf(Double.valueOf(app.Tax_2_Value__c.split(' ', 0)[0])).setScale(2);
-                } catch (TypeException te) {
-                    ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Failed to calculate VAT amout. Please contact IATA.' ));
-                }
-            }
-            if (app.Tax_1_Value__c != null) {
-                try {
-                    vatPrice += Decimal.valueOf(Double.valueOf(app.Tax_1_Value__c.split(' ', 0)[0])).setScale(2);
-                } catch (TypeException te) {
-                    ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Failed to calculate VAT amout. Please contact IATA.' ));
-                }
-            }*/
+           
             if (app.ID_Card_Fee__c != null)
                 tPrice += app.Applicable_Fee__c;
-            /*if (fastExpedition && isApplicationExpediteAvailable(app) ) {
-                string key = countriesPerIATACode.get(app.IATA_Code__c).ID + '-'+ accountTypesPerIATACode.get(app.IATA_Code__c);
-                system.debug('[CALCULATED FEES] should add fee to app: ' + app.Id);
-                ApexPAges.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'KEY: '+key));
-                system.debug(LoggingLevel.ERROR,'#############  KEY: '+key);
-                if (pricePerCountry.get(key).Mass_Purchase_exp__c != null) {
-                    system.debug('[CALCULATED FEES] managed to find fees_: ' + pricePerCountry.get(key));
-                    deliveryPrice =  pricePerCountry.get(key).Mass_Purchase_exp__c;
-                    massAppDeliveryFee =  pricePerCountry.get(key).Mass_Purchase_exp__c;
-
-                }
-            }*/
+            
             deliveryPrice += priceTable.Cost_of_Printer__c;
             idCardFee += priceTable.ID_Card_Fee__c;
             coursesFee += app.ITDI_Courses_Fee__c;
