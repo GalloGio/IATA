@@ -196,5 +196,21 @@ public class PortalIftpUtilsTest {
         }
         Test.stopTest();
     }
+
+    @IsTest
+    static void getAirlineITPsByStationTest(){
+        portalIftpTestClass.test_config();
+        //airlineUser
+        User u1 = [select id from user where Email = 'test.cont4@test.com' limit 1];
+        
+        Test.startTest();
+        
+        System.runAs(u1) {
+            Map<String, List<Role_Address__c>> res = PortalIftpUtils.getAirlineITPsByStation();
+        }
+        Test.stopTest();
+
+    }
     
 }
+

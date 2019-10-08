@@ -431,7 +431,6 @@ public class portalIftpTestClass {
 		String sBody2 = 'Employee Code,First Name,Last Name,Coordinator,Business Email,Stations Codes\n' +
 			'"MZ414","Abel14","Chain14","Title","123456","AbChain14@demo.com","GVX; GVX"\n' +
             '"MZ414","Aaron","Chain","Title","123456","AaronChain@demo.com","GVX; GVX"\n' +
-            '""\n' +
 			'"MA415","Abel15","Chain15","Title","","AbChain15@demo.com","GVX; PTX; FRX"\n' +
 			'"MA416","Abel16","Chain16","Title","123456","AbChain16@demo.com","GVX"\n'; 
         empInsDocument.VersionData = Blob.valueOf(sBody2);
@@ -471,7 +470,7 @@ public class portalIftpTestClass {
         insert empInsDocument3;
 
         List<ISSP_CS__c> isspCs = new List<ISSP_CS__c>();
-		isspCs.add( new ISSP_CS__c(Name = 'DocumentLibrary',Value__c = '0581j00000050jV'));
+		isspCs.add( new ISSP_CS__c(Name = 'IFTP-DocumentLibrary',Value__c = '0581j00000050jV'));
         insert isspCs;
         
     }

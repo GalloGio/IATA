@@ -48,7 +48,7 @@ public class portalIftpTrainingRecordsTest {
 
 
         List<String> searchValues2 = new List<String>();
-        searchValues2.add('PTX');   //auxStations,
+        searchValues2.add('All my associated stations');   //auxStations,
         searchValues2.add('null');   //auxItp,
         searchValues2.add('Active,Expired');   //auxExpirationStatus,
         searchValues2.add(strAircraftTypes);   //auxAircraftType,
