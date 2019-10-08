@@ -1014,10 +1014,14 @@ public without sharing class PortalIftpUtils {
         catch (Exception e){
             //ApexPages.Message errorMessage = new ApexPages.Message(ApexPages.severity.ERROR,'An error has occured while importin data Please make sure input csv file is correct');
             //ApexPages.addMessage(errorMessage);
+            String errorMessage = 'An error has occurred while importing data. Please make sure input CSV file is correct.';
+            if(e.getMessage().contains('BLOB is not a valid UTF-8 string')){
+                errorMessage = 'The input CSV file is not in a correct format. Please import CSV with UTF-8 format';
+            }
             System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - importEmployeesCSVFile] Exception - ' + e );
             System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - importEmployeesCSVFile] Exception - ' + e.getStackTraceString() );
                     
-            ImportResultsWrapper irw = new ImportResultsWrapper('', '', 'An error has occurred while importing data. Please make sure input CSV file is correct.', 'Failed');
+            ImportResultsWrapper irw = new ImportResultsWrapper('', '',errorMessage , 'Failed');
             results.add(irw);
             
         } 
@@ -1184,8 +1188,11 @@ public without sharing class PortalIftpUtils {
         catch (Exception e){
             System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - importEmployeesCSVFile] Exception - ' + e );
             System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - importEmployeesCSVFile] Exception - ' + e.getStackTraceString() );
-                    
-            ImportResultsWrapper irw = new ImportResultsWrapper('', '', 'An error has occurred while deleting employees data. Please make sure input CSV file is correct.', 'Failed');
+            String errorMessage = 'An error has occurred while deleting employees data. Please make sure input CSV file is correct.';
+            if(e.getMessage().contains('BLOB is not a valid UTF-8 string')){
+                errorMessage = 'The input CSV file is not in a correct format. Please import CSV with UTF-8 format';
+            }     
+            ImportResultsWrapper irw = new ImportResultsWrapper('', '', errorMessage, 'Failed');
             results.add(irw);
         } 
 
