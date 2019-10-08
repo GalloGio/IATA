@@ -271,14 +271,20 @@
     <formulas>
         <name>StartDate</name>
         <dataType>Date</dataType>
-        <expression>IF(ISNULL({!oscar.Change_effective_as_of__c}),
-	{!oscar.Dossier_Reception_Date__c},
-	IF({!oscar.Dossier_Reception_Date__c} &lt; {!oscar.Change_effective_as_of__c},
-		{!oscar.Change_effective_as_of__c},
-		{!oscar.Dossier_Reception_Date__c}
-		
-	)
-)</expression>
+        <expression>IF(OR(ISPICKVAL({!oscar.Process__c}, 'ANG.MAJOR.CHANGES.CHINA.1.0'),
+            ISPICKVAL({!oscar.Process__c}, 'ANG.MAJOR.CHANGES.1.0'),
+            ISPICKVAL({!oscar.Process__c}, 'MAJOR.CHANGES'),
+            ISPICKVAL({!oscar.Process__c}, 'CHANGE.CHINESE.1.1'),
+            ISPICKVAL({!oscar.Process__c}, 'CHANGE.1.0')),
+            IF(ISNULL({!oscar.Change_effective_as_of__c}),
+                {!oscar.Dossier_Reception_Date__c},
+                IF({!oscar.Dossier_Reception_Date__c} &gt; {!oscar.Change_effective_as_of__c},
+                    {!oscar.Dossier_Reception_Date__c},
+                    {!oscar.Change_effective_as_of__c}
+                )
+            ),
+            {!oscar.Dossier_Reception_Date__c}
+        )</expression>
     </formulas>
     <formulas>
         <name>TotalTime</name>
