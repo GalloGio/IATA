@@ -498,6 +498,28 @@ lightning-datatable .slds-th__action {
 /* ############################################## */
 /* Classes for the buttons */
 
+.containedButtonSmaller, 
+.containedButtonSmaller button {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 1px;
+  box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24),
+    0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  background-color: #3333ff;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  min-height: 47px;
+  width: 200px;
+  word-break: break-word;
+  border: none;
+}
+
 .containedButton, .containedButton button, .containedButton button:active, .containedButton button:visited, .containedButton button:focus {
     -webkit-transition-duration: 0.4s; /* Safari */
   	transition-duration: 0.4s;

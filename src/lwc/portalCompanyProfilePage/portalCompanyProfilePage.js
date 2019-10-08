@@ -37,6 +37,8 @@ import ContactNameLabel from '@salesforce/label/c.CSP_Name';
 import EmailLabel from '@salesforce/label/c.Email';
 import CountryLabel from '@salesforce/label/c.ISSP_Country';
 import NoResults from '@salesforce/label/c.CSP_NoSearchResults';
+import ISSP_Inactivate from '@salesforce/label/c.ISSP_Inactivate';
+import ISSP_Activate from '@salesforce/label/c.ISSP_Activate';
 
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -116,8 +118,11 @@ export default class PortalCompanyProfilePage extends LightningElement {
         { label: CountryLabel, fieldName: 'Country' },
     ];
 
-    @track tabName = '';
-
+	@track tabName = '';
+    
+    @track showManageButtons = false;
+    @track action = '';
+    
     @wire(getPortalAdmins) 
     getPortalAdminList({ error, data }) {
         if(data) {
@@ -148,7 +153,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
         return (this.loggedUser == null || this.loggedUser.Contact == null || this.loggedUser.Contact.AccountId == null);
     }
 
-    @track _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP, CSP_Portal_Administrators, NoResults };
+    @track _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP, CSP_Portal_Administrators, NoResults, ISSP_Inactivate, ISSP_Activate };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -435,7 +440,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
     retrieveContacts() {
         let offset = this.contactsOffset;
         getContacts({ offset: offset }).then(result => {
-            let _oldContactsWrapper = offset != 0 ? JSON.parse(JSON.stringify(this.contactsWrapper)) : [];
+            let _oldContactsWrapper = offset !== 0 ? JSON.parse(JSON.stringify(this.contactsWrapper)) : [];
             let _contactsWrapper = JSON.parse(JSON.stringify(result));
             for (let i = 0; i < _contactsWrapper.length; i++) {
                 _oldContactsWrapper.push(_contactsWrapper[i]);
@@ -786,4 +791,27 @@ export default class PortalCompanyProfilePage extends LightningElement {
     get tab2Active() { return this.lstTabs[2] != null && this.lstTabs[2].active; }
     get tab3Active() { return this.lstTabs[3] != null && this.lstTabs[3].active; }
     get tab4Active() { return this.lstTabs[4] != null && this.lstTabs[4].active; }
+
+    manageUsers(event) {
+        let contactsSelected = event.detail;
+
+        if((typeof contactsSelected === 'number' && contactsSelected !== 0) || (typeof contactsSelected === 'boolean' && contactsSelected === true)) {
+            this.showManageButtons = true;
+        } else {
+            this.showManageButtons = false;
+            this.action = '';
+        }
+    }
+
+    grantAccess(event) {
+        let action = event.target.dataset.item;
+
+        this.action = action;
+    }
+
+    denyAccess(event) {
+        let action = event.target.dataset.item;
+
+        this.action = action;
+    }
 }
