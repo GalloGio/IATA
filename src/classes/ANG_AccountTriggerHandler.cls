@@ -20,6 +20,8 @@ public class ANG_AccountTriggerHandler {
 		}
 		set;
 	}
+	
+	public Map<Id, Account> accountDataMap = new Map<Id, Account>();
 
 	// ************************************************************
 	// ****************** distribution methods ********************
@@ -191,11 +193,8 @@ public class ANG_AccountTriggerHandler {
 		}
 
         //Get all account data that we need to make the validations requested.
-
-		Map<Id,Account> accountDataMap = new Map<Id,Account>();
-
 		if(!downGradeBtoC.isEmpty() || isLastFinancialReviewUpgrade){
-			accountDataMap = fetchAccountData(changeCodesForRiskChangesLst);
+			this.accountDataMap = fetchAccountData(changeCodesForRiskChangesLst);
 		}
         
 		//downgrade from B to C
@@ -214,7 +213,7 @@ public class ANG_AccountTriggerHandler {
 
 			for(Id accId : changeCodesForRiskChangesLst){
 				
-				Account fetchedAcct = accountDataMap.get(accId);
+				Account fetchedAcct = this.accountDataMap.get(accId);
 
 				if(fetchedAcct.ANG_RiskStatus__c == AMS_UTils.NOT_APPLICABLE){
 					System.debug('Skipping account ' + accId + ' from Change code Creation because the risk status is not available.');
@@ -298,13 +297,11 @@ public class ANG_AccountTriggerHandler {
 		List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>();
 		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
-		Map<Id,Account> accountDataMap = new Map<Id,Account>();
-
-		accountDataMap = fetchAccountData(toChangeCode);
+		this.accountDataMap = fetchAccountData(toChangeCode);
 
 		for(Id accId : toChangeCode){
 			
-			Account fetchedAcct = accountDataMap.get(accId);
+			Account fetchedAcct = this.accountDataMap.get(accId);
 
 			if(fetchedAcct.ANG_RiskStatus__c == AMS_UTils.NOT_APPLICABLE){
 				System.debug('Skipping account ' + accId + ' from Change code Creation because the risk status is not available.');
@@ -741,12 +738,30 @@ public class ANG_AccountTriggerHandler {
 
 	public void updateFormsOfPayment(){
 
+		Set<Id> acctToFetchFoPSet = new Set<Id>();
 		List<Agency_Authorization__c> agencyAuthorizationsToProcessLst = new List<Agency_Authorization__c>();
 
 		for(Account a :triggerNew){
 			if((a.Status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c != AMS_Utils.ACC_S0_TERMINATED) || 
-				 (a.Status__c != AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c == AMS_Utils.ACC_S0_TERMINATED)){
-					 agencyAuthorizationsToProcessLst.addAll(getFormOfPaymentsByAccountId(a.Id));
+				(a.Status__c != AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c == AMS_Utils.ACC_S0_TERMINATED)){
+				
+				Account acct = this.accountDataMap.get(a.Id);
+				if(acct == NULL){
+					//If the account was not retrieved yet 
+					//we need to fetch it
+					acctToFetchFoPSet.add(a.Id);
+				}
+				else {
+					agencyAuthorizationsToProcessLst.addAll(getformOfPayments(acct));
+				}
+			}
+		}
+
+		//Fetch the remaining accounts
+		if(!acctToFetchFoPSet.isEmpty()){
+			Map<Id, Account> remainingAccountDataMap = fetchAccountData(acctToFetchFoPSet);
+			for(Id acctId : acctToFetchFoPSet){
+				agencyAuthorizationsToProcessLst.addAll(getformOfPayments(remainingAccountDataMap.get(acctId)));
 			}
 		}
 
@@ -816,6 +831,18 @@ public class ANG_AccountTriggerHandler {
 		if(!toNotify.isEmpty()){
 			ANG_RHCHelper.handleRiskOrForecastedRhcAmountUpdates(toNotify);
 		}
+	}
+
+	private List<Agency_Authorization__c> getFormOfPayments(Account acct){
+
+		List<Agency_Authorization__c> fopLst = acct.getSObjects('Agency_Authorizations__r');
+		
+		if(fopLst != NULL){
+			return fopLst;
+		}
+
+		return new List<Agency_Authorization__c>();
+
 	}
 
 	private List<Agency_Authorization__c> getActiveOrAuthorizedFoPs(Account acct){
