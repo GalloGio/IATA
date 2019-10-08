@@ -95,6 +95,8 @@ global with sharing class ANG_AccreditationAreaViewer {
                                                                 ,'ISSP_AMS_Legal_Status__c' => 'Company_Type__c'
                                                                 ,'Shipping_Country__c' => 'ShippingCountry'
                                                                 ,'Shipping_State__c' => 'ShippingState'
+                                                                ,'Geoname_Billing_City__c' => 'Geoname_Billing_City__c'
+                                                                ,'Geoname_Shipping_City__c' => 'Geoname_Shipping_City__c'
 
         };
             }
@@ -265,6 +267,8 @@ global with sharing class ANG_AccreditationAreaViewer {
                 , AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
                 , AMS_Pax_Accreditation_Form__c.ANG_Accreditation_type__c
                 , AMS_Pax_Accreditation_Form__c.HO_Account__c
+                , AMS_Pax_Accreditation_Form__c.Geoname_Billing_City__c
+                , AMS_Pax_Accreditation_Form__c.Geoname_Shipping_City__c
             };
         }
     }

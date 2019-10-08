@@ -1033,6 +1033,11 @@
         <fullName>ANG_location</fullName>
         <description>fields to be migrated when we have a change of location process</description>
         <displayedFields>
+            <field>Geoname_Billing_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>Branch_Office_City__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -1079,6 +1084,11 @@
         </displayedFields>
         <displayedFields>
             <field>Branch_Office_Postal_code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Geoname_Shipping_City__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -2857,6 +2867,32 @@ SAAM_Case__r.Account_Concerned__r.VAT_Number__c)</formula>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Geoname_Billing_City__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Geoname Billing City</label>
+        <referenceTo>IATA_ISO_City__c</referenceTo>
+        <relationshipLabel>AMS Online Accreditations</relationshipLabel>
+        <relationshipName>AMS_Online_Accreditations</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Geoname_Shipping_City__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Geoname Shipping City</label>
+        <referenceTo>IATA_ISO_City__c</referenceTo>
+        <relationshipLabel>AMS Online Accreditations Shipping</relationshipLabel>
+        <relationshipName>AMS_Online_Accreditations_Shipping</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Give_details_for_authorization_to_act__c</fullName>

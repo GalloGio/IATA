@@ -107,6 +107,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 , AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
                 , AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
                 , AMS_Pax_Accreditation_Form__c.ANG_Accreditation_type__c
+                , AMS_Pax_Accreditation_Form__c.Geoname_Billing_City__c
+                , AMS_Pax_Accreditation_Form__c.Geoname_Shipping_City__c
             };
         }
     }
@@ -194,7 +196,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         if(fieldName == 'Remittance_frequency__c' && isNewGenProcess && oscarObj.Process__c == AMS_Utils.NEWAE) return false;     
         if(fieldName == 'Location_Type__c' && !isAgencyChanges && accreditationObj.Location_Type__c == AMS_Utils.HO && !String.isBlank(accreditationObj.IATACode__c)) return false; //AC-ENHC0012276
         if(!isAgencyChanges && !isAgencyCorrection) return true;
-
+        if(fieldName == 'Branch_Office_City__c' && accreditationObj.Geoname_Billing_City__c != null) return false;
+        if(fieldName == 'Shipping_City__c' && accreditationObj.Geoname_Shipping_City__c != null) return false;
         //check per field
         return editableFields.contains(fieldName);
     }
