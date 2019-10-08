@@ -5187,6 +5187,7 @@ public without sharing class ISSP_AMS_Accreditation {
                             AND Sector__c = :AMS_Utils.SECTOR_PASSENGER 
                             AND IATACode__c LIKE :iataCodeToSearch
                             AND ID <> :con.account.id
+                            AND Top_Parent__c <> :con.account.id
                             AND Type = :AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT
                             AND Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
                             AND (Location_Type__c = :AMS_Utils.AE OR Location_Type__c = :AMS_Utils.HE OR Location_Type__c = :AMS_Utils.GE)
