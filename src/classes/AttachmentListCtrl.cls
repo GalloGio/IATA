@@ -124,7 +124,7 @@ public with sharing class AttachmentListCtrl {
         
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled(cacheable=false)
     public static List<WrapperAttach> getAllAttachmentsByParentIdAndPortal(string parentId, boolean isPortal, boolean isSAAMorSIDRA,boolean withBody) {
     //public static List<WrapperAttach> getAllAttachments(String parentId, Boolean isPortal) {
         System.debug('parentId: ' + parentId);
