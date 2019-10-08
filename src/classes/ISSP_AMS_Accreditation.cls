@@ -6018,7 +6018,7 @@ public without sharing class ISSP_AMS_Accreditation {
         return ngErrorFound;
     }
 
-    private Boolean validateFromShipping() {
+    private Boolean validateFormShipping() {
         Boolean errorFound = false;
 
         if (newForm.Shipping_City__c == null) {
@@ -6028,6 +6028,11 @@ public without sharing class ISSP_AMS_Accreditation {
 
         if (newForm.Shipping_Street__c == null) {
             newForm.Shipping_Street__c.addError(Label.ISSP_YouMustEnter);
+            errorFound = true;
+        }
+
+        if (newForm.Shipping_Country__c == null) {
+            newForm.Shipping_Country__c.addError(Label.ISSP_YouMustEnter);
             errorFound = true;
         }
 
@@ -6046,7 +6051,7 @@ public without sharing class ISSP_AMS_Accreditation {
             ngErrorFoundBR = true;
         }
 
-        if (validateFromShipping()) {
+        if (validateFormShipping()) {
             ngErrorFoundBR = true;
         }
 
@@ -7158,7 +7163,7 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
 
-        if (validateFromShipping()) {
+        if (validateFormShipping()) {
             errorFound = true;
         }
 
