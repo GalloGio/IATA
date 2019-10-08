@@ -61,7 +61,7 @@ private class ANG_FinancialSecurityTriggerHandlerTest {
 
 		Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
 
-        Financial_Security__c fs = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a1.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id);
+        Financial_Security__c fs = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a1.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id, Financial_Security_Validation_Case__c = cc.Id);
         insert FS;
 
 		fs.SECURITY_STATUS__C =  'Expired';
@@ -89,7 +89,7 @@ private class ANG_FinancialSecurityTriggerHandlerTest {
 
 		Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
 
-        Financial_Security__c fs = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a1.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id);
+        Financial_Security__c fs = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a1.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id, Financial_Security_Validation_Case__c = cc.Id);
         insert FS;
 
 		fs.AMOUNT__C = 4000;
@@ -117,7 +117,7 @@ private class ANG_FinancialSecurityTriggerHandlerTest {
 
 		Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
 
-        Financial_Security__c fs = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a1.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id);
+        Financial_Security__c fs = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a1.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id, Financial_Security_Validation_Case__c = cc.Id);
         insert FS;
 
 		fs.EXPIRY_DATE__C=system.Today().AddDays(200);
@@ -167,13 +167,13 @@ private class ANG_FinancialSecurityTriggerHandlerTest {
 
         Financial_Security__c fsHE = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=chinaHE.Id, AMOUNT__C=5000, EXPIRY_DATE__C=system.Today().AddDays(100), 
         	FINANCIAL_INSTITUTION__c=fi.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='China & North Asia', Reception_Date__c=system.today(), 
-        	Reasonforrequest__c='New Application', Reception_Case__c=caseHE.Id);
+        	Reasonforrequest__c='New Application', Reception_Case__c=caseHE.Id, Financial_Security_Validation_Case__c = caseHE.Id);
         insert fsHE;
 
         //Financial Security for 
         Financial_Security__c fsAE = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=chinaAE.Id, AMOUNT__C=1000, EXPIRY_DATE__C=system.Today().AddDays(100), 
         	FINANCIAL_INSTITUTION__c=fi.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='China & North Asia', Reception_Date__c=system.today(),
-        	 Reasonforrequest__c='New Application', Reception_Case__c=caseAE.Id);
+        	 Reasonforrequest__c='New Application', Reception_Case__c=caseAE.Id, Financial_Security_Validation_Case__c = caseAE.Id);
         insert fsAE;
 
         Test.StopTest();
