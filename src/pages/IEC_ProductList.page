@@ -197,8 +197,8 @@
 
 						<div class="inner-wrapper">
 							<ol class="list breadcrumb">
-								<li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
-								<li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a></li>
+								<li><a href="{!$Site.BaseRequestURL}">{!$Label.Home}</a></li>
+								<li><a href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a></li>
 								<li>
 									<apex:outputText value="{! IF(selectedTopicLabel == null || selectedTopicLabel == '', 'All', selectedTopicLabel)}" />
 									<!-- change page title -->
@@ -218,11 +218,11 @@
 									<div class="show-more-less-container">
 					                    <ul class="list show-more-less js-toggle-more-less" data-is-display-all="false">
 					                        
-					                        <li class="{!IF(selectedTopic==null,'is-selected', '')}"><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_category}">All</a></li>
+					                        <li class="{!IF(selectedTopic==null,'is-selected', '')}"><a href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!selected_category}">All</a></li>
 					                        
 					                        <apex:variable value="{!0}" var="counter" />
 					                        <apex:repeat var="cat" value="{!subCategories[selected_category]}">
-					                        	<li class="{!IF(selectedTopic==cat.value,'is-selected', '')}"><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_category}&topic={!cat.value}">{!cat.label}</a></li>
+					                        	<li class="{!IF(selectedTopic==cat.value,'is-selected', '')}"><a href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!selected_category}&topic={!cat.value}">{!cat.label}</a></li>
 												<apex:variable value="{!counter+1}" var="counter" />
 					                        </apex:repeat>
 											
@@ -345,7 +345,7 @@
 								        	<li class="list-item">
 												<div class="item-wrapper">
 													<figure class="item-image">
-														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">
+														<a href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">
                                                             <apex:outputPanel layout="block" style="height: 180px;" rendered="{!prod.imageFile != '' }">
 
                                                             <div class="fileImage" layout="block" style="height: 180px;">
@@ -358,7 +358,7 @@
 														</a>
 													</figure>
 													<h2 class="item-name">
-														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">{!prod.ProductName}</a>
+														<a href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">{!prod.ProductName}</a>
 													</h2>
 													<h3 class="item-description-title" style="{! IF(isBlank(prod.Media), 'display:none', 'display:inline')}">
 														{!prod.Media}
@@ -403,7 +403,7 @@
 														<span class="price-label">{!$Label.Direct_Sales}</span>
 													</apex:outputPanel>
 
-                                                    <a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" 
+                                                    <a class="button" href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}" 
                                                     	onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">
                                                     	{! IF(OR(prod.InventoryStatus == 'Out of stock',prod.InventoryStatus == 'Coming Soon'), $Label.PreOrderAddToCart, $Label.Button_Select)}
                                                 	</a>
