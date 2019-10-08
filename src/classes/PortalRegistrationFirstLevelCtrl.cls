@@ -191,7 +191,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         List<Contact> contactList = [SELECT Id, Email, FirstName, LastName, Phone, Preferred_Language__c, ISO_Country__c, Account.Sector__c, Account.Category__c, Account.is_General_Public_Account__c FROM Contact WHERE Id =:loggedUser.contactId LIMIT 1];
         if(!contactList.isEmpty()){
             config.contact = contactList.get(0);
-            config.selectedCustomerType = GCS_CustomerType.getCustomerTypeFromSectorAndCategory(config.contact.Account.Sector__c, config.contact.Account.Category__c);
+            config.selectedCustomerType = getCustomerTypeFromSectorAndCategory(config.contact.Account.Sector__c, config.contact.Account.Category__c);
             GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType = getMetadataCustomerType(config.selectedCustomerType);
             if(selectedMetadataCustomerType.Type__c == 'Category'){
                 config.category = selectedMetadataCustomerType.DeveloperName;
@@ -222,6 +222,22 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
         return config;
 
+    }
+
+    @AuraEnabled
+    public static String getCustomerTypeFromSectorAndCategory(String sector, String category){
+        if(sector == null || category == null){
+            return null;
+        }
+
+        List<GCS_CustomerType> customerTypesList = GCS_CustomerType.getCustomerTypesMap().values();
+        for(GCS_CustomerType customerType : customerTypesList){
+            if((customerType.metadataCustomerType.Created_Account_Sector__c == sector && customerType.metadataCustomerType.Created_Account_Category__c == category)
+                    || (customerType.metadataCustomerType.Filter_on_Sector__c == sector && customerType.metadataCustomerType.Filter_on_Category__c == category)){
+                return customerType.metadataCustomerType.DeveloperName;
+            }
+        }
+        return null;
     }
 
     @AuraEnabled
