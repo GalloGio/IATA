@@ -981,12 +981,16 @@ public without sharing class ISSP_AMS_Accreditation {
                         accountsToBeConverted = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
 
                         selectedCoutriesForNoCMC = '';
-                        
+                        Set<String> addedCountries = new Set<String>();
                         for (Account a: accountsToBeConverted) {
-                            selectedCoutriesForNoCMC += a.IATA_ISO_Country__r.Name + ', ';
+                            if(!addedCountries.contains(a.IATA_ISO_Country__r.Name)){
+                                selectedCoutriesForNoCMC += a.IATA_ISO_Country__r.Name + ', ';
+                                addedCountries.add(a.IATA_ISO_Country__r.Name);
+                            }
                         }
 
-                        selectedCoutriesForNoCMC += hqAccount.IATA_ISO_Country__r.Name;
+                        if(!addedCountries.contains(hqAccount.IATA_ISO_Country__r.Name)) selectedCoutriesForNoCMC += hqAccount.IATA_ISO_Country__r.Name;
+                        else selectedCoutriesForNoCMC = selectedCoutriesForNoCMC.removeEnd(', ');
                     }
 
                 } else {
