@@ -132,7 +132,7 @@
                         <template if:true={tab2Active}>
 
                             <template if:true={contactsLoaded}>
-                                <lightning-layout multiple-rows class="slds-text-align_right slds-m-top_x-large slds-gutters_xx-small" pull-to-boundary="medium" horizontal-align="spread">
+                                <lightning-layout multiple-rows class="slds-text-align_right slds-m-top_x-large slds-gutters_xx-small slds-p-around_xx-small" pull-to-boundary="small" horizontal-align="spread">
 
                                     <!-- SEARCH -->
                                     <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow" medium-device-size="6" large-device-size="3">
@@ -166,7 +166,7 @@
                                         <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">
                                             <lightning-button variant="brand" label={labels.ISSP_Assign_IFAP}
                                                 title={labels.ISSP_Assign_IFAP} onclick={navigateToIFAP}
-                                                class="containedButton">
+                                                class="containedButtonSmaller">
                                             </lightning-button>
                                         </lightning-layout-item>
 

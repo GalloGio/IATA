@@ -514,7 +514,7 @@ lightning-datatable .slds-th__action {
   letter-spacing: normal;
   text-align: center;
   color: #ffffff;
-  min-height: 47px;
+  min-height: 50px;
   width: 200px;
   word-break: break-word;
   border: none;
