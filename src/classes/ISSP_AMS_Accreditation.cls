@@ -3350,7 +3350,13 @@ public without sharing class ISSP_AMS_Accreditation {
             } else {
                 pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
             }
-        } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
+            pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        }
+        
+        if (newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
+            pageURL += '&formId=' + newForm.Id;
+        }
 
         return new Pagereference(pageURL);
     }
@@ -8092,15 +8098,17 @@ public without sharing class ISSP_AMS_Accreditation {
                         isSelected = newForm.Agency_Codes_Concerned__c.contains(a.IATACode__c);
                     }
 
+                    if (isNoticeOfChange) {
                     if (isMCAccredited) {
-                        if (isNoticeOfChange && !mcCountryIsos.contains(a.Country_ISO_Code__c)) {
+                            if (!mcCountryIsos.contains(a.Country_ISO_Code__c)) {
                             continue;
                         }
                     } else {
-                        if (isNoticeOfChange && a.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
+                            if (a.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
                             continue;
                         }
                     }
+                    }                    
 
                     hierarchy.put(a.Id, new HierarchyItem(a, isSelected));
                 }                           
@@ -8112,7 +8120,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public Boolean selectAll{
         get{
-            if(selectAll == null) selectAll = false;
+            if (selectAll == null) {
+                selectAll = false;
+            } 
             return selectAll;
         }
         set;
@@ -8168,17 +8178,6 @@ public without sharing class ISSP_AMS_Accreditation {
         }
         set;
     }
-
-    // ***********************************
-    // ********** constructor ************
-    // ***********************************
-    /*public ANG_AccountHierarchySelectionController(ApexPages.StandardController stdController){
-        if(!Test.isRunningTest()) stdController.addFields(new List<String>(oscarFields));
-
-        oscarId = stdController.getId();
-        oscar = (AMS_OSCAR__c)stdController.getRecord();
-    }*/
-
 
     // ***********************************
     // *********** wrappers **************
