@@ -289,4 +289,25 @@ private class PortalIftEmployeeRecordsManagementTest {
         }
         Test.stopTest();
     }
+
+    @IsTest
+    static void requestEmployeeTransferTest(){
+        portalIftpTestClass.test_config();
+        Test.startTest();
+        User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
+        PortalIftEmployeeRecordsManagement.EmployeeTransferRequestWrapper reqTransferEmp = new PortalIftEmployeeRecordsManagement.EmployeeTransferRequestWrapper();
+        reqTransferEmp.firstName = 'Abc';
+        reqTransferEmp.formerItpName = 'Old ITP';
+        reqTransferEmp.formerStations = 'GVA LHR';
+        reqTransferEmp.lastName = 'Emp';
+        reqTransferEmp.lmsUsername = '123';
+        reqTransferEmp.comments = 'From abroad';
+
+        System.runAs(u1) {
+
+            PortalIftEmployeeRecordsManagement.EmployeeTransferRequestResultWrapper res =  PortalIftEmployeeRecordsManagement.requestEmployeeTransfer(reqTransferEmp);
+
+        }
+        Test.stopTest();
+    }
 }
