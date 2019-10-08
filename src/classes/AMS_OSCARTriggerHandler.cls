@@ -775,8 +775,6 @@ public class AMS_OSCARTriggerHandler {
                 stepsOSCAR.add(fieldMap.get(fieldName).getDescribe().getLabel());
         }
 
-        List<AMS_OSCAR__c> oscarsToAssignRegionQueue = new List<AMS_OSCAR__c>();
-
         /*** AMSU-37 ***/
         Set<Id> accountIds = new Set<Id>();
         Set<String> reasonsToCheck = new Set<String> {AMS_Utils.APP_DISAPPROVED, AMS_Utils.APP_WITHDRAWN};
@@ -854,19 +852,9 @@ public class AMS_OSCARTriggerHandler {
             if(oscar.Process__c == AMS_Utils.CERTIFICATION) oscar.Sanity_check_deadline__c = Date.today()+90;
 
             if(oscar.Process__c != AMS_Utils.CERTIFICATE) oscar.Certificate_Quantity__c = null;
-            
-            AMS_Pax_Accreditation_Form__c stgArea = allOnlineAccr.get(oscar.AMS_Online_Accreditation__c);
-
-            if(oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY ||
-               (oscar.Process__c == AMS_Utils.NGCHANGES && stgArea.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)){
-                oscarsToAssignRegionQueue.add(oscar);
-            }
 
         }
 
-        if (!oscarsToAssignRegionQueue.isEmpty()){
-            AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscarsToAssignRegionQueue);
-        }
     }
 
     private static void copyDataFromTargetAgency(){

@@ -398,6 +398,14 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
             hierarchiesToDeleteIds.add(rel.Hierarchy__c);
         }
 
+        // when there are no relations left, the hierarchies have to be deleted anyway
+        for (AMS_Agencies_Hierarchy__c hie : [SELECT Id
+                                              FROM AMS_Agencies_Hierarchy__c
+                                              WHERE Main_Account__c IN :accountsRelatedList])
+        {
+            hierarchiesToDeleteIds.add(hie.Id);
+        }
+
         System.debug('relationsToDelete are:'+relationsToDelete);
 
         if(!relationsToDelete.isEmpty())
@@ -406,37 +414,34 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         if(!hierarchiesToDeleteIds.isEmpty())
             delete [Select Id from AMS_Agencies_Hierarchy__c where Id in :hierarchiesToDeleteIds];
 
-        if(hierarchyList == null && relationshipList == null)
-            return;
-
-        List<AMS_Agencies_relationhip__c> relationsToRollback = new List<AMS_Agencies_relationhip__c>();
-        List<AMS_Agencies_Hierarchy__c> hierarchiesToRollback = new List<AMS_Agencies_Hierarchy__c>();
-
+        // rollback hierarchies
         Map<Id,AMS_Agencies_Hierarchy__c> relationsBetweenHierarchy = new Map<Id,AMS_Agencies_Hierarchy__c>();
+        if (hierarchyList != null)
+        {
+            for(String hiearchy: hierarchyList){
+                AMS_Agencies_Hierarchy__c hierarchy = (AMS_Agencies_Hierarchy__c) JSON.deserialize(hiearchy, AMS_Agencies_Hierarchy__c.class);
 
-        for(String hiearchy: hierarchyList){
-            AMS_Agencies_Hierarchy__c hierarchy = (AMS_Agencies_Hierarchy__c) JSON.deserialize(hiearchy, AMS_Agencies_Hierarchy__c.class);
+                relationsBetweenHierarchy.put(hierarchy.Id, hierarchy);
+                hierarchy.Id = null;
+            }
 
-            Id oldHierarchyId = hierarchy.Id;
-
-            hierarchy.Id = null;
-
-            relationsBetweenHierarchy.put(oldHierarchyId,hierarchy);
-
+            if(!relationsBetweenHierarchy.values().isEmpty())
+                insert relationsBetweenHierarchy.values();
         }
 
-        if(!relationsBetweenHierarchy.values().isEmpty())
-            insert relationsBetweenHierarchy.values();
+        // rollback relationships
+        if (relationshipList != null)
+        {
+            List<AMS_Agencies_relationhip__c> relationsToRollback = new List<AMS_Agencies_relationhip__c>();
+            for(String relationStr: relationshipList){
+                AMS_Agencies_relationhip__c relation = (AMS_Agencies_relationhip__c) JSON.deserialize(relationStr, AMS_Agencies_relationhip__c.class);
+                relation.Id = null;
+                relation.Hierarchy__c = relationsBetweenHierarchy.get(relation.Hierarchy__c).Id;
+                relationsToRollback.add(relation);
+            }
 
-        for(String relationStr: relationshipList){
-            AMS_Agencies_relationhip__c relation = (AMS_Agencies_relationhip__c) JSON.deserialize(relationStr, AMS_Agencies_relationhip__c.class);
-            relation.Id = null;
-            relation.Hierarchy__c = relationsBetweenHierarchy.get(relation.Hierarchy__c).Id;
-            relationsToRollback.add(relation);
-        }
-
-        if(!relationsToRollback.isEmpty()){
-            upsert relationsToRollback;
+            if(!relationsToRollback.isEmpty())
+                upsert relationsToRollback;
         }
     }
 

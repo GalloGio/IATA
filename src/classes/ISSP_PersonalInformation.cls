@@ -269,38 +269,6 @@ public with sharing class ISSP_PersonalInformation {
         }
         set;
     }
-
-    public List<ISSP_AMS_Accreditation.AccountChanges> getAccountChangesList(){
-        List<ISSP_AMS_Accreditation.AccountChanges> accChanges_List = new List<ISSP_AMS_Accreditation.AccountChanges>();
-
-        Account acc = [Select Phone, PhoneNational__c, Fax, FaxNational__c, Email__c, TradeName__c, WebSite, GDP_Opt_In__c From Account Where id=:con.Account.Id limit 1];
-
-        if(acc.Phone != con.Account.Phone)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('Phone',acc.Phone,con.Account.Phone));
-
-        if(acc.PhoneNational__c != con.Account.PhoneNational__c)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('PhoneNational__c',acc.PhoneNational__c,con.Account.PhoneNational__c));
-
-        if(acc.Fax != con.Account.Fax)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('Fax',acc.Fax,con.Account.Fax));
-
-        if(acc.FaxNational__c != con.Account.FaxNational__c)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('FaxNational__c',acc.FaxNational__c,con.Account.FaxNational__c));
-
-        if(acc.Email__c != con.Account.Email__c)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('Email__c',acc.Email__c,con.Account.Email__c));
-
-        if(acc.TradeName__c != con.Account.TradeName__c)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('TradeName__c',acc.TradeName__c,con.Account.TradeName__c));
-        
-        if(acc.WebSite != con.Account.WebSite)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('WebSite',acc.WebSite,con.Account.WebSite));
-        
-        if(acc.GDP_Opt_In__c != con.Account.GDP_Opt_In__c && isGDPOptInDisplayed)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('GDP_Opt_In__c',String.valueOf(acc.GDP_Opt_In__c),String.valueOf(con.Account.GDP_Opt_In__c)));
-        
-        return accChanges_List;
-    }
 	
 	public Pagereference saveContact(){
         try {
