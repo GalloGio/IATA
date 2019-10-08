@@ -1,0 +1,52 @@
+.rectangle {
+    border-radius: 1px;
+    background-color: rgba(255, 255, 255, 0.96);
+    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 100% 91%, 91% 100%, 0% 100%, 0% 0%, 0% 0%);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 100% 91%, 91% 100%, 0% 100%, 0% 0%, 0% 0%);
+}
+
+.service {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+.cardItemTitle {
+    width: 272px;
+    height: 24px;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #333333;
+}
+
+.description {
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: #525252;
+}
+
+.faqContainer{
+    width: 336px;
+    object-fit: contain;
+    border-radius: 1px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+}
+
+.faqPointer {
+    cursor: pointer;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}

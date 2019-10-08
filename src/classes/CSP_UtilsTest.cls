@@ -215,6 +215,7 @@ private class CSP_UtilsTest {
         System.runAs(usr) {
             User testuser = CSP_Utils.getLoggedUser();
             Boolean testAdmin = CSP_Utils.isAdmin();
+            Boolean tesAirlineUser = CSP_Utils.isAirlineUser();
             Boolean testPortal = CSP_Utils.isNewPortalActive();
             ContentDistribution csContDist2 =  CSP_Utils.getContentDistribution('TestDoc', cv.id);
             PageReference pr = CSP_Utils.redirectToNewPortalPage('');

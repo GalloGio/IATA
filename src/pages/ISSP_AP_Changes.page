@@ -41,7 +41,7 @@
      <style>
          label {margin-left:3px;font-size:12px;}
     </style>
-    
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
     <div class="panel-primary">
             <div class="panel-heading head_panel_green">
                 <h3 class="panel-title">{!IF(strChangeType=='Minor database changes', 'Airline Participation Change Request', 'Change of Bank Account details')}</h3>

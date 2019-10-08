@@ -128,7 +128,7 @@
 													<!--
 													<a href="IEC_OrderHistory">In Order</a>
 													-->
-													<a href="{!$Site.BaseUrl}/{!IF(ISNULL(payment.orderID),'IEC_OrderHistory','IEC_ConfirmOrder?orderId=')}{!payment.orderID}">In Order</a>
+													<a href="{!$Site.BaseRequestURL}/{!IF(ISNULL(payment.orderID),'IEC_OrderHistory','IEC_ConfirmOrder?orderId=')}{!payment.orderID}">In Order</a>
 												</apex:outputPanel>
 		                                    </td>
 		                                </tr>
