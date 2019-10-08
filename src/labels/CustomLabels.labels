@@ -3352,9 +3352,9 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_CompanyAdministration_Link</shortDescription>
-        <value>So insisted received is occasion advanced honoured. Among ready to which up. Attacks smiling and may out assured moments man nothing outward. Thrown any behind afford either the set depend one temper.
+        <value>You can submit your account details changes through the IATA Accreditation and Changes service.
 &lt;br/&gt;
-&lt;a style=&quot;color: blue;&quot;href=&quot;https://lightmgprt-customer-portal-iata.cs101.force.com/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;IATA Accreditation and Changes&lt;/a&gt;</value>
+&lt;a style=&quot;color: blue;&quot;href=&quot;https://lightmgprt-customer-portal-iata.cs101.force.com/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Click here to directly access the IATA Accreditation and Changes&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_CompanyCases</fullName>
