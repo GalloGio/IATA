@@ -40,6 +40,7 @@ private class AMS_XML_GeneratorTest {
         AMS_XML_Fields__c xml16 = new AMS_XML_Fields__c(Name = 'Account.Original_Approval_DAte__c', Operation_Type__c = 'include', Object__c = 'Account', Field__c = 'Original_Approval_DAte__c');
         AMS_XML_Fields__c xml17 = new AMS_XML_Fields__c(Name = 'Account.GDS__c', Operation_Type__c = 'include', Object__c = 'Account', Field__c = 'GDS__c');
         AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name = 'Account.GDP_Opt_In__c', Operation_Type__c = 'include', Object__c = 'Account', Field__c = 'GDP_Opt_In__c');
+        AMS_XML_Fields__c xml19 = new AMS_XML_Fields__c(Name = 'agency_ownership.percentage', Operation_Type__c = 'include', Object__c = 'AMS_Account_Role__c', Field__c = 'percentage__c');
 
         List<AMS_XML_Fields__c> listofxml = new List<AMS_XML_Fields__c>();
         listofxml.add(xml1);
@@ -60,6 +61,7 @@ private class AMS_XML_GeneratorTest {
         listofxml.add(xml16);
         listofxml.add(xml17);
         listofxml.add(xml18);
+        listofxml.add(xml19);
 
         insert listofxml;
 
@@ -245,10 +247,10 @@ private class AMS_XML_GeneratorTest {
         insert personList;
 
         List<AMS_Account_Role__c> employeeList = new List<AMS_Account_Role__c>();
-        AMS_Account_Role__c e1 = new AMS_Account_Role__c(Employee_Name__c = 'Test1 employee', RecordTypeId = rtAccRoleEmployee, Person__c = p1.Id, Employee_type__c = 'RG,CL', Account__c = ag1.Id, isManager__c = True, isTicketingAgent__c = True);
-        AMS_Account_Role__c e2 = new AMS_Account_Role__c(Employee_Name__c = 'Test2 employee', RecordTypeId = rtAccRoleEmployee, Person__c = p2.Id, Employee_type__c = 'RG,CL', Account__c = ag2.Id, isManager__c = True);
-        AMS_Account_Role__c e3 = new AMS_Account_Role__c(Employee_Name__c = 'Test3 employee', RecordTypeId = rtAccRoleEmployee, Person__c = p3.Id, Employee_type__c = 'RG,CL', Account__c = ag3.Id, isManager__c = True);
-        AMS_Account_Role__c e4 = new AMS_Account_Role__c(Employee_Name__c = 'Test4 employee', RecordTypeId = rtAccRoleEmployee, Contact__c = c4.Id, Employee_type__c = 'RG,CL', Account__c = ag4.Id, isManager__c = True);
+        AMS_Account_Role__c e1 = new AMS_Account_Role__c(Percentage__c = 12, Employee_Name__c = 'Test1 employee', RecordTypeId = rtAccRoleEmployee, Person__c = p1.Id, Employee_type__c = 'RG,CL', Account__c = ag1.Id, isManager__c = True, isTicketingAgent__c = True);
+        AMS_Account_Role__c e2 = new AMS_Account_Role__c(Percentage__c = 12, Employee_Name__c = 'Test2 employee', RecordTypeId = rtAccRoleEmployee, Person__c = p2.Id, Employee_type__c = 'RG,CL', Account__c = ag2.Id, isManager__c = True);
+        AMS_Account_Role__c e3 = new AMS_Account_Role__c(Percentage__c = 12, Employee_Name__c = 'Test3 employee', RecordTypeId = rtAccRoleEmployee, Person__c = p3.Id, Employee_type__c = 'RG,CL', Account__c = ag3.Id, isManager__c = True);
+        AMS_Account_Role__c e4 = new AMS_Account_Role__c(Percentage__c = 12, Employee_Name__c = 'Test4 employee', RecordTypeId = rtAccRoleEmployee, Contact__c = c4.Id, Employee_type__c = 'RG,CL', Account__c = ag4.Id, isManager__c = True);
         employeeList.add(e1);
         employeeList.add(e2);
         employeeList.add(e3);

@@ -509,12 +509,24 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Financial_Interest_Formated__c</fullName>
+        <externalId>false</externalId>
+        <formula>Text(Financial_interest__c * 100 ) + &apos;%&apos;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Financial Interest (%)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Financial_interest__c</fullName>
         <externalId>false</externalId>
         <label>Financial Interest (%)</label>
-        <precision>5</precision>
+        <precision>9</precision>
         <required>false</required>
-        <scale>2</scale>
+        <scale>6</scale>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>

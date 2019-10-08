@@ -595,6 +595,18 @@ TEXT(Owner_Account__r.Membership_status__c)
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Percentage_Formated__c</fullName>
+        <externalId>false</externalId>
+        <formula>Text(Percentage__c * 100 ) + &apos;%&apos;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Percentage</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Percentage__c</fullName>
         <description>Percentage of the Account that this Entity owns</description>
         <externalId>false</externalId>
@@ -602,7 +614,7 @@ TEXT(Owner_Account__r.Membership_status__c)
         <label>Percentage</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>2</scale>
+        <scale>6</scale>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>

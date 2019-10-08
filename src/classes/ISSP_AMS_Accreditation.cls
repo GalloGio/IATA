@@ -2591,7 +2591,7 @@ public without sharing class ISSP_AMS_Accreditation {
         System.debug('editContactId: ' + editContactId);
         newContact = new AMS_Accreditation_Contact__c();
 
-        newContact = [SELECT Id, AMS_Pax_Accreditation_Form__c, Name, Authorised_signatory__c, Email__c, First_name__c, Last_name__c, Local_First_name__c, Local_Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c,
+        newContact = [SELECT Id, Financial_Interest_Formated__c, AMS_Pax_Accreditation_Form__c, Name, Authorised_signatory__c, Email__c, First_name__c, Last_name__c, Local_First_name__c, Local_Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c,
                       AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Financial_interest__c, Date_joined_agency__c, Registration_number__c, IATAcode__c, Company_Name_Local__c,Contact__c,
                       Phone__c, PhoneNational__c, FAX__c, FAXNational__c, Financial_Assessment_Contact__c, Job_title__c, Mobile__c, MobileNational__c, Time_devoted_to_Agency_business__c, Agencies_prev_worked_for__c,
                       Prev_Job1_Position__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, Prev_Job1_Employer__c, Prev_Job1_Address__c, CASS_contact__c, Number_Of_Shares__c,
@@ -3970,7 +3970,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     public void resetOwnership() { //NEWGEN-1249
         List<AMS_Accreditation_Contact__c> allOwners = [
-            SELECT Name, RecordType.DeveloperName, Financial_interest__c,ANG_contactFromAccount__c
+            SELECT Name, Financial_Interest_Formated__c, RecordType.DeveloperName, Financial_interest__c,ANG_contactFromAccount__c
             FROM AMS_Accreditation_Contact__c
             WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id
             AND Agency_owner__c = true
@@ -3985,7 +3985,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     public void resetCreatedOwnership() { //NEWGEN-1249
         List<AMS_Accreditation_Contact__c> allOwners = [
-            SELECT Name, RecordType.DeveloperName, Financial_interest__c,ANG_contactFromAccount__c
+            SELECT Name, Financial_Interest_Formated__c, RecordType.DeveloperName, Financial_interest__c,ANG_contactFromAccount__c
             FROM AMS_Accreditation_Contact__c
             WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id
             AND Agency_owner__c = true
@@ -4028,7 +4028,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
         get{
             List<AMS_Accreditation_Contact__c> tsl = [
-                SELECT Id, Name, First_name__c, Last_name__c, Position_trained_staff__c, List_Dangerous_Goods_Awareness__c,
+                SELECT Id, Financial_Interest_Formated__c, Name, First_name__c, Last_name__c, Position_trained_staff__c, List_Dangerous_Goods_Awareness__c,
                 IATA_FIATA_training_history__c, Training_dangerous_goods_completed__c, Valid_until__c, Air_cargo_transport_business_exp__c
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__c = :this.newForm.Id
@@ -4042,7 +4042,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
         get{
             List<AMS_Accreditation_Contact__c> cons = [
-                SELECT AMS_Pax_Accreditation_Form__c, Name, Authorised_signatory__c, Email__c, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c,
+                SELECT Financial_Interest_Formated__c, AMS_Pax_Accreditation_Form__c, Name, Authorised_signatory__c, Email__c, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c,
                 AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Financial_interest__c, Date_joined_agency__c, CASS_contact__c, Invoicing_Contact__c,
                 Phone__c, FAX__c, Financial_Assessment_Contact__c, Job_title__c, Mobile__c, Time_devoted_to_Agency_business__c, Agencies_prev_worked_for__c,
                 Prev_Job1_Position__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, Prev_Job1_Employer__c, Prev_Job1_Address__c,
@@ -4062,7 +4062,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
         get{
             List<AMS_Accreditation_Contact__c> ifapContatc = [
-                SELECT Salutation__c, Name, Email__c, First_name__c, Last_name__c,
+                SELECT Financial_Interest_Formated__c, Salutation__c, Name, Email__c, First_name__c, Last_name__c,
                        Phone__c, FAX__c, Financial_Assessment_Contact__c, Mobile__c,
                        Contact_Id__c, Contact__c, AMS_Pax_Accreditation_Form__c
                 FROM AMS_Accreditation_Contact__c
@@ -4095,7 +4095,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
             get{
                 List<AMS_Accreditation_Contact__c> currOwner = [
-                    SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
+                    SELECT Financial_Interest_Formated__c, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                     Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
                     AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c
                     FROM AMS_Accreditation_Contact__c
@@ -4112,7 +4112,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
             get{
                 List<AMS_Accreditation_Contact__c> cons = [
-                    SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c
+                    SELECT Name, Financial_Interest_Formated__c, Financial_interest__c, Registration_number__c, IATAcode__c
                     FROM AMS_Accreditation_Contact__c
                     WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND  RecordType.DeveloperName = 'Current_Company_Owner'
                     ORDER BY Name ASC
@@ -4127,7 +4127,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
             get{
                 List<AMS_Accreditation_Contact__c> cons = [
-                    SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c
+                    SELECT Name, Financial_Interest_Formated__c, Financial_interest__c, Registration_number__c, IATAcode__c
                     FROM AMS_Accreditation_Contact__c
                     WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND  RecordType.DeveloperName = 'Previous_Company_Owner'
                     ORDER BY Name ASC
@@ -4181,7 +4181,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
         get{
             List<AMS_Accreditation_Contact__c> cons = [
-                SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c, Company_Name_Local__c, Agency_owner__c
+                SELECT Name, Financial_Interest_Formated__c, Financial_interest__c, Registration_number__c, IATAcode__c, Company_Name_Local__c, Agency_owner__c
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND  RecordType.DeveloperName = 'Company'
                 ORDER BY Name ASC
@@ -4211,7 +4211,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
         get{
             List<AMS_Accreditation_Contact__c> cons = [
-                SELECT Name, RecordType.DeveloperName, Financial_interest__c
+                SELECT Name, RecordType.DeveloperName, Financial_interest__c, Financial_Interest_Formated__c
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND (Financial_interest__c > 0)
                 ORDER BY Name ASC
@@ -4225,7 +4225,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
         get{
             List<AMS_Accreditation_Contact__c> cons = [
-                SELECT Name, RecordType.DeveloperName, Financial_interest__c
+                SELECT Name, RecordType.DeveloperName, Financial_interest__c, Financial_Interest_Formated__c
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND (Financial_interest__c > 0) AND
                 (RecordType.DeveloperName = 'Current_Company_Owner' OR RecordType.DeveloperName = 'Current_Owner')
@@ -4240,7 +4240,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
         get{
             List<AMS_Accreditation_Contact__c> cons = [
-                SELECT Name, RecordType.DeveloperName, Financial_interest__c
+                SELECT Name, RecordType.DeveloperName, Financial_interest__c, Financial_Interest_Formated__c
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND (Financial_interest__c > 0) AND
                 (RecordType.DeveloperName = 'Previous_Company_Owner' OR RecordType.DeveloperName = 'Previous_Owner')
@@ -7223,7 +7223,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     private void setTrainedStaffList() {
         //FM 19-07-2017 - AMSU-20 - added: Type_Of_Certificate__c, Registration_number__c, Certificate_Issuer__c
-        this.trainedStaffList = [SELECT Id, Name, First_name__c, Last_name__c, List_Dangerous_Goods_Awareness__c, 
+        this.trainedStaffList = [SELECT Id, Financial_Interest_Formated__c, Name, First_name__c, Last_name__c, List_Dangerous_Goods_Awareness__c, 
         Position_trained_staff__c, IATA_FIATA_training_history__c, Air_cargo_transport_business_exp__c, Training_dangerous_goods_completed__c, 
         Valid_until__c, Type_Of_Certificate__c, Registration_number__c, Certificate_Issuer__c FROM AMS_Accreditation_Contact__c 
         WHERE AMS_Pax_Accreditation_Form__c = :this.newForm.Id AND 
@@ -7233,7 +7233,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     public void editTrainedStaff() {
         trainedStaffContact = new AMS_Accreditation_Contact__c();
         //FM 19-07-2017 - AMSU-20 - added: Type_Of_Certificate__c, Registration_number__c, Certificate_Issuer__c
-        trainedStaffContact = [SELECT Id, Name, First_name__c, Last_name__c, List_Dangerous_Goods_Awareness__c, Position_trained_staff__c, IATA_FIATA_training_history__c, Air_cargo_transport_business_exp__c, Training_dangerous_goods_completed__c, Valid_until__c, AMS_Pax_Accreditation_Form__c, Type_Of_Certificate__c, Registration_number__c, Certificate_Issuer__c FROM AMS_Accreditation_Contact__c WHERE Id = : trainedStaffId limit 1];
+        trainedStaffContact = [SELECT Id, Financial_Interest_Formated__c, Name, First_name__c, Last_name__c, List_Dangerous_Goods_Awareness__c, Position_trained_staff__c, IATA_FIATA_training_history__c, Air_cargo_transport_business_exp__c, Training_dangerous_goods_completed__c, Valid_until__c, AMS_Pax_Accreditation_Form__c, Type_Of_Certificate__c, Registration_number__c, Certificate_Issuer__c FROM AMS_Accreditation_Contact__c WHERE Id = : trainedStaffId limit 1];
 
     }
 
@@ -7552,7 +7552,7 @@ system.debug('aqui sectorValue ' + sectorValue);
             List<AMS_Account_Role__c> amsOwners = [SELECT Account__c,Active__c,
                 Employee_Name__c,Employee_type__c,Id,
                 Owner_Account__c,Owner_Account__r.Name,Owner_Account__r.IATACode__c,Owner_Account__r.Email__c,
-                Owner_Name__c,Percentage__c,
+                Owner_Name__c,Percentage__c, Percentage_Formated__c,
                 Position__c,RecordTypeId,Title__c,Valid__c,
                 Person__c,Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Email__c,
                 Contact__c,Contact__r.FirstName,Contact__r.LastName,Contact__r.Email,Contact__r.Phone,

@@ -44,7 +44,7 @@
 			<apex:column headerValue="Contact">
 				<apex:outputLink value="javascript:openRecord('{!owner.Contact__c}')">{!owner.Contact__r.Name}</apex:outputLink>
 			</apex:column>
-			<apex:column headerValue="Percentage" value="{!owner.Percentage__c}"/>
+			<apex:column headerValue="Percentage" value="{!owner.Percentage_Formated__c}"/>
 			<apex:column headerValue="Termination Date" value="{!owner.Termination_Date__c}"/>
 			<apex:column headerValue="Sort Order" value="{!owner.Sort_Order__c}"/>
 		</apex:pageBlockTable>

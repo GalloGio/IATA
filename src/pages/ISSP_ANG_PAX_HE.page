@@ -1356,7 +1356,7 @@
                                     <div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.Contact.fields.MobilePhone.Label}&nbsp;</span>{!agencycon.Mobile__c}</div>
                                     <div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.Contact.fields.FAX.Label}&nbsp;</span>{!agencycon.FAX__c}</div>
                                      <div class="contact-detail"><div style="font-weight:bold;float:left">{!$Label.ISSP_Address}&nbsp;</div><div style="margin-left:60px;">{!agencycon.AddressStreet__c}<br/>{!agencycon.AddressPostcode__c}&nbsp;{!agencycon.AddressCity__c}<br/>{!agencycon.AddressCountry__c}</div></div>
-                                     <div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label} </span>{!TEXT(agencycon.Financial_interest__c)}</div>
+                                     <div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label} </span>{!agencycon.Financial_Interest_Formated__c}</div>
                                      <div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Time_devoted_to_Agency_business__c.Label} </span>{!TEXT(agencycon.Time_devoted_to_Agency_business__c)}</div>
                                      <div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Date_joined_agency__c.Label}</span>{!TEXT(agencycon.Date_joined_agency__c)}</div>
                                      <div class="contact-detail"><span style="font-weight:bold">{!$Label.ISSP_MyProfile_TITLE} </span>{!agencycon.Job_title__c}</div>
@@ -1459,7 +1459,7 @@
                             <apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Company_Name_Local__c + ')','')}"/>
                             <apex:column value="{!agencycon.Registration_number__c}"/>
                             <apex:column value="{!agencycon.IATACode__c}"/>
-                            <apex:column value="{!agencycon.Financial_interest__c}"/>
+                            <apex:column value="{!agencycon.Financial_Interest_Formated__c}"/>
                              <apex:column rendered="{!NOT(AND(OR(amsOfficeType='Branch',newCase.Reason1__c=='New BR Abroad'), agencycon.Agency_owner__c))}">
                                 <apex:commandLink action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewCompanyDialog();" rerender="companyList, newCompany">
                                     <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
@@ -1484,7 +1484,7 @@
                             <apex:column headerValue="{!$Label.ISSP_Owner}" value="{!owner.Name}"/>
                             <apex:column footerClass="tbFooter" footerValue="TOTAL" headerValue="{!$Label.LAQ_Type}" value="{!$Label.ISSP_AMS_PAX_Person}" rendered="{!owner.RecordType.DeveloperName!='Company'}"/>
                             <apex:column footerClass="tbFooter" footerValue="TOTAL" headerValue="{!$Label.LAQ_Type}" value="{!$Label.ISSP_AMS_PAX_Company}" rendered="{!owner.RecordType.DeveloperName=='Company'}"/>
-                            <apex:column footerValue="{!ROUND(Ownership_Total, 2)}%" value="{!owner.Financial_interest__c}"/>
+                            <apex:column value="{!owner.Financial_Interest_Formated__c}"/>
                      </apex:pageBlockTable>
                 </apex:pageBlockSection>
                 </div>
