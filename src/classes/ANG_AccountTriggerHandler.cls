@@ -33,12 +33,15 @@ public class ANG_AccountTriggerHandler {
 		populateIEPStatus();
 	}
 
+	public void onAfterInsert(){}
+
 	public void onBeforeUpdate(){
 		adjustShortName();
 		updateRiskStatus();
 		runRiskAssessment();
 		populateIEPStatus();
 	}
+
 	public void onAfterUpdate() {
 		updateRiskEventStatus();
 		updateRHCInformation();
@@ -50,6 +53,9 @@ public class ANG_AccountTriggerHandler {
 		handleAccountUpdate();
 	}
 
+	public void onBeforeDelete(){}
+	public void onAfterDelete(){}
+	
 	// ************************************************************
 	// ********************* action methods ***********************
 	// ************************************************************
@@ -849,20 +855,16 @@ public class ANG_AccountTriggerHandler {
 		
 		List<Agency_Authorization__c> fopToReturnLst = new List<Agency_Authorization__c>();
 
-		if(acct != NULL){
+		if(acct == NULL){
 			return fopToReturnLst;
 		}
 
-		List<Agency_Authorization__c> fopLst = acct.getSObjects('Agency_Authorizations__r');
-
-		if(fopLst != NULL && !fopLst.isEmpty()){
-			for(Agency_Authorization__c aa : fopLst){
-				if(aa.Status__c == 'Active' || aa.Status__c == 'Authorized'){
-					fopToReturnLst.add(aa);
-				}
+		for(Agency_Authorization__c aa : getFormOfPayments(acct)){
+			if(aa.Status__c == 'Active' || aa.Status__c == 'Authorized'){
+				fopToReturnLst.add(aa);
 			}
 		}
-
+		
 		return fopToReturnLst;
 		
 	}
