@@ -20303,7 +20303,10 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
    ISCHANGED( LastName ),
    ISCHANGED( Email )  
  ),
+	OR(
   $User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Staff - HO&quot;,
+	 		$User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Supervisor - HO&quot;
+	),
     NOT( ISPICKVAL($User.UserType, &quot;Standard&quot; )),
    $User.ToU_accepted__c = TRUE
 )</errorConditionFormula>
@@ -20320,7 +20323,10 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
    ISCHANGED( LastName ),
    ISCHANGED( Email )  
  ),
+  OR(
   $User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Staff - HO&quot;,
+				$User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Supervisor - HO&quot;
+		),
     ISPICKVAL($User.UserType, &quot;Standard&quot; )
 )</errorConditionFormula>
         <errorMessage>This is an Authorized Signatory contact so you can’t modify first name, last name or email address. Please contact Airline Participation team.</errorMessage>
