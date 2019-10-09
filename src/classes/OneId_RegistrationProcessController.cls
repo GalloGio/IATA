@@ -636,8 +636,123 @@ public without sharing class OneId_RegistrationProcessController {
 
                     if(acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')                    
                         portalServiceNewAgency(con.Id);
+    	            }
                 }
+	
+	            /**
+                 IFTP Accounts - IFTP Service
+                 only for NEW Accounts
+                 */
+                if(acc.Sector__c == 'Airline Supplier' && acc.Category__c == 'Fuel Supplier' ){
+
+                    String RECTYPE_ITP_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
+                    String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'ITP');
+                    String RECTYPE_Others = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
                 
+                    Account_Roles__c accRoles = [SELECT id FROM Account_Roles__c 
+                                            WHERE Name = 'Airline Supplier - ITP' limit 1];
+
+                    Account_Role_Services__c accRoleSrvs = [SELECT id FROM Account_Role_Services__c  
+                                            WHERE Name = 'IFTP - ITP' limit 1];
+
+                    PermissionSet psAbsorb = [SELECT Id FROM PermissionSet WHERE Name = 'Absorb'];
+
+                    List<Contact_Roles__c> contRoles = [SELECT id, Name FROM Contact_Roles__c WHERE Name in ('ITP Administrator','ITP Training Coordinator') ];
+                    Id idContRoleAdmin = null;
+                    Id idContRoleTranCoord = null;
+
+                    for(Contact_Roles__c cr : contRoles){
+                        if(cr.name == 'ITP Administrator'){
+                            idContRoleAdmin = cr.id;
+                        }else if(cr.name == 'ITP Training Coordinator'){
+                            idContRoleTranCoord = cr.id;
+                        }
+                    } 
+
+                    Portal_Applications__c pa = [SELECT id FROM Portal_Applications__c WHERE name = 'IFTP' limit 1];
+
+                    Account_Contact_Role__c accContRoleToInserted = new Account_Contact_Role__c();
+
+                    if(isNewAcc == true){
+
+                        Account_Role__c accRole = new Account_Role__c();
+                        accRole.Account__c = acc.Id;
+                        accRole.Account_Roles__c = accRoles.id;
+                        accRole.RecordTypeId = RECTYPE_ITP_AccRole;
+                        insert accRole;
+
+                        Account_Role_Service__c accRoleSrv = new Account_Role_Service__c();
+                        accRoleSrv.Account_Role__c = accRole.id;
+                        accRoleSrv.Account_Role_Services__c = accRoleSrvs.id;
+                        insert accRoleSrv;
+
+                        Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
+                        // accContRoleToInsert.Company_Code__c = employeeToAdd.code.trim();
+                        accContRoleToInsert.Service_Rendered__c = 'IFTP';
+                        accContRoleToInsert.Status__c = 'Active';
+                        accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
+                        accContRoleToInsert.Account_Role__c = accRole.Id;
+                        accContRoleToInsert.Contact_Role__c = 'ITP Administrator';
+                        accContRoleToInsert.Contact_Roles__c = idContRoleAdmin;
+                        accContRoleToInsert.Details__c = '';
+                        accContRoleToInsert.Contact__c = con.Id;
+                        insert accContRoleToInsert;
+
+                        accContRoleToInserted.Id = accContRoleToInsert.Id;
+                    
+                    }else{
+                        System.debug('Not NEW Account!');
+                        Account_Role__c accRole = [SELECT id FROM Account_Role__c WHERE account__c = :acc.id AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
+
+                        Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
+                        // accContRoleToInsert.Company_Code__c = employeeToAdd.code.trim();
+                        accContRoleToInsert.Service_Rendered__c = 'IFTP';
+                        accContRoleToInsert.Status__c = 'Active';
+                        accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
+                        accContRoleToInsert.Account_Role__c = accRole.Id;
+                        accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
+                        accContRoleToInsert.Contact_Roles__c = idContRoleTranCoord;
+                        accContRoleToInsert.Details__c = '';
+                        accContRoleToInsert.Contact__c = con.Id;
+                        insert accContRoleToInsert;
+
+                        accContRoleToInserted.Id = accContRoleToInsert.Id;
+
+                        System.debug('accContRoleToInsert- ' + accContRoleToInsert);
+                    }
+
+                    Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
+                            Portal_Application__c = pa.id,
+                            Right__c = 'Access Requested',
+                            Contact__c = con.Id,
+                            Favourite_Service__c = true
+                        );
+                        insert portalApplicationRight;
+
+                    accContRoleToInserted = [SELECT Id,Name, Company_Code__c FROM Account_Contact_Role__c WHERE id = :accContRoleToInserted.Id LIMIT 1];
+
+                    String newEmployeeCode = 'TC-' + accContRoleToInserted.Name.split('-').get(1).replaceFirst('^0+','');
+                    accContRoleToInserted.Company_Code__c = newEmployeeCode;
+                    
+                    update accContRoleToInserted;
+
+                    User cont = [SELECT id, contact.FirstName, contact.LastName, contact.account.name FROM User WHERE ContactId = :con.Id LIMIT 1];
+            
+                    List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
+                    IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP, 
+                                                                        accContRoleToInserted.Company_Code__c, 
+                                                                        cont.contact.account.name, 
+                                                                        cont.contact.FirstName, 
+                                                                        cont.contact.LastName);
+                    IftpHistoryRecordsToBeInserted.add(ihrec);
+
+                    if(IftpHistoryRecordsToBeInserted.size() > 0){
+                        portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
+                    }
+                
+                    updatePortalUseProfile(cont.id,'ISS Portal (Partner)');
+                    assignPermissionSet(psAbsorb.Id, cont.id);
+                }
             }
             
             // We need to create a Case
@@ -675,7 +790,7 @@ public without sharing class OneId_RegistrationProcessController {
                 );
                 insert portalApplicationRight;
             }            
-        } catch(exception ex){            
+        }catch(exception ex){            
             Database.rollback(sp);
             System.debug(ex);
             return false;
@@ -698,7 +813,14 @@ public without sharing class OneId_RegistrationProcessController {
                 acc.Reason_for_creation__c = 'Created by customer';
                 //Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
                 acc.ownerid = ISSP_Constant.newAccountOwnerId;
-                acc.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+                //IFTP - included if for Others recordtype
+                if (acc.Sector__c != null && !String.isBlank(acc.Sector__c) && acc.Sector__c == 'Airline Supplier' &&
+                        acc.Category__c != null && !String.isBlank(acc.Category__c) && acc.Category__c == 'Fuel Supplier'){
+                    acc.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others'); //FOR ITP Account
+                }else{
+                	acc.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+                }
                 
                 if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
                     acc.Category_Other_Value__c = null;
@@ -829,10 +951,18 @@ public without sharing class OneId_RegistrationProcessController {
 
     }
 
-    @future
     public static void updatePortalUseProfile(String userId){
+
+        // system.debug('updateUserProfile starting... ' + userId);
+        // Profile isspAgentUser = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'];                
+        // update new User(Id = userId, ProfileId = isspAgentUser.Id);   
+        updatePortalUseProfile(userId, 'ISS Portal Agency User (Partner)');   
+    }
+
+    @future
+    public static void updatePortalUseProfile(String userId, String sProfile){
         system.debug('updateUserProfile starting... ' + userId);
-        Profile isspAgentUser = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'];                
+        Profile isspAgentUser = [SELECT Id FROM Profile WHERE Name = :sProfile];                
         update new User(Id = userId, ProfileId = isspAgentUser.Id);       
     }
 
@@ -952,6 +1082,14 @@ public without sharing class OneId_RegistrationProcessController {
            this.idAndAlternateNames = idAndAlternateNames;  
         }
         
+    }
+
+    @future
+    private static void assignPermissionSet(Id absorbId, Id userId){
+        PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = absorbId, AssigneeId = userId);
+        System.debug('psa: ' + psa);
+                    
+        insert psa;
     }
 
     /* Manuel Conde commented this... 
