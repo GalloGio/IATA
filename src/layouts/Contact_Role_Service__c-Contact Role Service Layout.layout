@@ -60,6 +60,9 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <relatedList>RelatedFileList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <relatedList>Contact_Role_Service_Permission__c.Contact_Role_Service__c</relatedList>
     </relatedLists>
