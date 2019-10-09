@@ -137,14 +137,6 @@ public static String paymentLinkRedirect(){
 	}
 }
 
-/*
- * Method used to retrieve the old link when redirecting the users to the old Portals
- */
-@AuraEnabled
-public static String goToOldPortalService(String myurl){
-	return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, myurl);
-}
-
 private static Map<String,ISSPServiceListView__c> getMapSrevicesListViews() {
 	//get all values from custom settings object
 	List<ISSPServiceListView__c> csServiceListViews = ISSPServiceListView__c.getAll().values();
