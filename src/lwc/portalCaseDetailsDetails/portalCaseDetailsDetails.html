@@ -15,7 +15,7 @@
           <div class="slds-grid slds-wrap slds-p-horizontal_large">
             <!-- ROW Description -->
             <div if:true={hasDescription}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
+            class="slds-col slds-size_1-of-1 slds-p-around_medium">
               <span>
                 <lightning-formatted-text value={caseDetails.Description}></lightning-formatted-text>
               </span>
@@ -30,7 +30,7 @@
             icon-name="utility:chevronright" size="xx-small"></lightning-icon>
           <span class="slds-p-left_large">{labels.DocumentsLabel}</span><span if:true={showNrDocs}>({nrDocs})</span>
         </div>
-        <div data-docdiv class="slds-p-around_medium slds-medium-size_1-of-1 slds-m-around-large collapsed"
+        <div data-docdiv class="slds-p-around_medium slds-medium-size_1-of-1 slds-m-around-large collapsed documentsAccordionTransition">
           style="transition: height 0.8s ease;">
           <c-attachment-list-cmp shownorecords="false" parentid={caseId} isportal="true" show-modal={showAddDocsModal}
             no-attachment-msg={labels.AddDocumentsMsg} onupdateddocs={updateNdocs} accepted-formats={acceptedFormats}>
@@ -67,36 +67,36 @@
           <div class="slds-grid slds-wrap slds-p-horizontal_large">
             <!-- ROW 1 -->
             <div if:true={hasTopic}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
               <span class="grey">{labels.Topic__c}</span><br />
               <span>{caseDetails.Topic__c}</span>
             </div>
             <div if:true={hasSubtopic}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
               <span class="grey">{labels.Subtopic__c}</span><br />
               <span>{caseDetails.Subtopic__c}</span>
             </div>
 
             <!-- ROW 2 -->
             <div if:true={hasRegion}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
               <span class="grey">{labels.Region__c}</span><br />
               <span>{caseDetails.Region__c}</span>
             </div>
             <div if:true={hasCountryConcerned}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
               <span class="grey">{labels.Country_concerned__c}</span><br />
               <span>{caseDetails.Country_concerned_by_the_query__c}</span>
             </div>
 
             <!-- ROW 3 -->
             <div if:true={hasAccountConcerned}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
               <span class="grey">{labels.RelatedAccount}</span><br />
               <span>{caseDetails.Account_Concerned__r.IATACode__c}</span>
             </div>
             <div if:true={hasTypeOfCasePortal}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
               <span class="grey">{labels.Type_of_case_Portal__c}</span><br />
               <span>{caseDetails.Type_of_case_Portal__c}</span>
             </div>
@@ -104,7 +104,7 @@
             <!-- ROW 4 -->
             <div if:false={showNewDescriptionSection}>
               <div if:true={hasDescription}
-                class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
+                class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
                 <span class="grey">{labels.Description}</span><br />
                 <span>
                   <lightning-formatted-text value={caseDetails.Description}></lightning-formatted-text>
@@ -114,7 +114,7 @@
 
             <!-- ROW 5 -->
             <div if:true={hasAccount}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
+            class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
               <span class="grey">Account Name</span><br />
               <span if:true={optionBuilder}>
                 <span if:true={optionBuilder.isAdmin} onclick={openCompanyProfile} class="linkColor">
@@ -128,7 +128,7 @@
 
             <!-- ROW 6 -->
             <div if:true={hasContact}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
+            class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-p-around_medium">
               <span class="grey">Contact Name</span><br />
               <span if:true={optionBuilder}>
                 <span if:true={optionBuilder.isAdmin} onclick={openCompanyProfileContactTab} class="linkColor">
@@ -142,7 +142,7 @@
 
             <!-- ROW 7 -->
             <div if:true={optionBuilder}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
               <div if:true={optionBuilder.isSidraCase}>
                 <span class="grey"> {labels.CSP_IATA_Country} </span><br />
                 <span> {caseDetails.BSPCountry__c} </span>
@@ -151,7 +151,7 @@
 
             <!-- ROW 8 -->
             <div if:true={optionBuilder}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
               <div if:true={optionBuilder.isSidraCase}>
                 <div if:true={caseDetails.Update_AIMS_IRR__c}>
                   <span class="grey">
@@ -166,7 +166,7 @@
 
             <!-- ROW 7 Display PDF -->
             <div if:true={getDisplayPDF}
-              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
+            class="slds-col slds-size_1-of-1 slds-p-around_medium">
               <img src={pdfImage}>
 
               <span if:true={getPDF1}>
