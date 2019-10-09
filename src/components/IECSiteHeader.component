@@ -101,35 +101,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
    
   <div class="header">
     <div class="header__wrapper">
-      <a href="{!$Site.BaseUrl}" class="header__logo" style="background:url({!$Resource.IEC_iata_logo_60px}) center center no-repeat;" ></a>
+      <a href="{!$Site.BaseRequestURL}" class="header__logo" style="background:url({!$Resource.IEC_iata_logo_60px}) center center no-repeat;" ></a>
 
       <ul>
         <li class="header__navigation-li -first">
           
           
             <!--  
-         <apex:outputLink   rendered="{! If(ApexPages.currentPage().getURL().indexOf('Product')>-1  ,true,false) }" value="{!$Site.BaseUrl}/IECBrowseProducts" styleclass="header__navigation-link -products active">
+         <apex:outputLink   rendered="{! If(ApexPages.currentPage().getURL().indexOf('Product')>-1  ,true,false) }" value="{!$Site.BaseRequestURL}/IECBrowseProducts" styleclass="header__navigation-link -products active">
             Products  <i class="fa fa-caret-down"></i> 
          </apex:outputLink>
              -->
             
-        <!--   <a href="{!$Site.BaseUrl}/IECBrowseProducts" class="header__navigation-link -products">Products  <i class="fa fa-caret-down"></i></a>-->
+        <!--   <a href="{!$Site.BaseRequestURL}/IECBrowseProducts" class="header__navigation-link -products">Products  <i class="fa fa-caret-down"></i></a>-->
           <script>           
                var url = document.URL;
                if (url.indexOf("BrowseProducts") > -1 ) 
-                  { document.write('<a href="{!$Site.BaseUrl}" class="header__navigation-link active">Products  <i class="fa fa-caret-down"></i></a>'); }
+                  { document.write('<a href="{!$Site.BaseRequestURL}" class="header__navigation-link active">Products  <i class="fa fa-caret-down"></i></a>'); }
                else
-                 { document.write('<a href="{!$Site.BaseUrl}" class="header__navigation-link">Products  <i class="fa fa-caret-down"></i></a>');}           
+                 { document.write('<a href="{!$Site.BaseRequestURL}" class="header__navigation-link">Products  <i class="fa fa-caret-down"></i></a>');}           
             </script>   
               
           <apex:form >
               <div class="navigation-dropdown">             <!--  style="background-image:url({!$Resource.IEC_dropdownnavy})"  -->
-                <!--<apex:outputpanel layout="none" rendered="{!bAvailGSS}"><a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdGSS}" class="navigation-dropdown__link">Global Systems Solutions</a></apex:outputpanel>-->
-                <!--<apex:outputpanel layout="none" rendered="{!bAvailMDP}"><a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdMDP}" class="navigation-dropdown__link">Marketing Data Package</a></apex:outputpanel>-->              
-                <!--<apex:outputpanel layout="none" rendered="{!bAvailGAD}"><a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdGAD}" class="navigation-dropdown__link">Global Agency Directory</a></apex:outputpanel>-->
-                <!--<apex:outputpanel layout="none" rendered="{!bAvailCACPro}"><a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdCACPro}" class="navigation-dropdown__link">CHECKACODE PROFESSIONAL</a></apex:outputpanel>-->
-                <!-- apex:outputpanel layout="none" rendered="{!bAvailCACWeb}"><a href="{!$Site.BaseUrl}/IEC_SearchResults}?site-search={!sProdCACWeb}" class="navigation-dropdown__link">Check-a-code Webservice</a></apex:outputpanel-->
-                <!-- apex:outputpanel layout="none" rendered="{!bAvailEBro}"><a href="{!$Site.BaseUrl}/IECProductViewer}?ProductCode={!sProdEBro}" class="navigation-dropdown__link">E-Broadcast</a></apex:outputpanel-->
+                <!--<apex:outputpanel layout="none" rendered="{!bAvailGSS}"><a href="{!$Site.BaseRequestURL}/IEC_SearchResults?site-search={!sProdGSS}" class="navigation-dropdown__link">Global Systems Solutions</a></apex:outputpanel>-->
+                <!--<apex:outputpanel layout="none" rendered="{!bAvailMDP}"><a href="{!$Site.BaseRequestURL}/IEC_SearchResults?site-search={!sProdMDP}" class="navigation-dropdown__link">Marketing Data Package</a></apex:outputpanel>-->              
+                <!--<apex:outputpanel layout="none" rendered="{!bAvailGAD}"><a href="{!$Site.BaseRequestURL}/IEC_SearchResults?site-search={!sProdGAD}" class="navigation-dropdown__link">Global Agency Directory</a></apex:outputpanel>-->
+                <!--<apex:outputpanel layout="none" rendered="{!bAvailCACPro}"><a href="{!$Site.BaseRequestURL}/IEC_SearchResults?site-search={!sProdCACPro}" class="navigation-dropdown__link">CHECKACODE PROFESSIONAL</a></apex:outputpanel>-->
+                <!-- apex:outputpanel layout="none" rendered="{!bAvailCACWeb}"><a href="{!$Site.BaseRequestURL}/IEC_SearchResults}?site-search={!sProdCACWeb}" class="navigation-dropdown__link">Check-a-code Webservice</a></apex:outputpanel-->
+                <!-- apex:outputpanel layout="none" rendered="{!bAvailEBro}"><a href="{!$Site.BaseRequestURL}/IECProductViewer}?ProductCode={!sProdEBro}" class="navigation-dropdown__link">E-Broadcast</a></apex:outputpanel-->
               </div>
           </apex:form>
           
@@ -139,27 +139,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <script>           
                var url = document.URL;
                if (url.indexOf("Support") > -1 ) 
-                  { document.write('<a href="{!$Site.BaseUrl}/IECSupport" class="header__navigation-link active">Support</a>'); }
+                  { document.write('<a href="{!$Site.BaseRequestURL}/IECSupport" class="header__navigation-link active">Support</a>'); }
                else
-                 { document.write('<a href="{!$Site.BaseUrl}/IECSupport" class="header__navigation-link">Support</a>');}             
+                 { document.write('<a href="{!$Site.BaseRequestURL}/IECSupport" class="header__navigation-link">Support</a>');}             
             </script>        
         </li>
         <li class="header__navigation-li">
             <script>           
                var url = document.URL;
                if (url.indexOf("Customers") > -1 ) 
-                  { document.write('<a href="{!$Site.BaseUrl}/IECCustomers" class="header__navigation-link active">Customers</a>'); }
+                  { document.write('<a href="{!$Site.BaseRequestURL}/IECCustomers" class="header__navigation-link active">Customers</a>'); }
                else
-                 { document.write('<a href="{!$Site.BaseUrl}/IECCustomers" class="header__navigation-link">Customers</a>');}             
+                 { document.write('<a href="{!$Site.BaseRequestURL}/IECCustomers" class="header__navigation-link">Customers</a>');}             
             </script>                                          
         </li>
         <li class="header__navigation-li">
             <script>           
                var url = document.URL;
                if (url.indexOf("About") > -1 ) 
-                  { document.write('<a href="{!$Site.BaseUrl}/IECAboutGDP" class="header__navigation-link active">About Global Data</a>'); }
+                  { document.write('<a href="{!$Site.BaseRequestURL}/IECAboutGDP" class="header__navigation-link active">About Global Data</a>'); }
                else
-                 { document.write('<a href="{!$Site.BaseUrl}/IECAboutGDP" class="header__navigation-link">About Global Data</a>');}           
+                 { document.write('<a href="{!$Site.BaseRequestURL}/IECAboutGDP" class="header__navigation-link">About Global Data</a>');}           
             </script>               
         </li>
         <li class="header__navigation-li">
@@ -232,16 +232,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                  </apex:form>   
                 
                  <h3>Menu Items</h3>                                 
-                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseUrl}/IEC_ContactInformation">My Account</a></p>
-                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseUrl}/IEC_DataStatisticsSubscriptions">My Subscriptions</a></p>
-                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseUrl}/IEC_OrderHistory">My Invoices</a></p>
-                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseUrl}/IEC_ZQuotes">My Quotes</a></p>
+                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseRequestURL}/IEC_ContactInformation">My Account</a></p>
+                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseRequestURL}/IEC_DataStatisticsSubscriptions">My Subscriptions</a></p>
+                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseRequestURL}/IEC_OrderHistory">My Invoices</a></p>
+                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="{!$Site.BaseRequestURL}/IEC_ZQuotes">My Quotes</a></p>
                  <a style="margin-top:34px;" class="customButton signup" href="#" onClick="logout();">Already done? &nbsp;Logout</a>
                 
                 <!-- 
                  <div class="login-container">
-                      <a href="{!$Site.BaseUrl}/IECUpdateContact">My Account</a>
-                      <a href="{!$Site.BaseUrl}/IECHistActiveSubscriptions">My Subscriptions</a>
+                      <a href="{!$Site.BaseRequestURL}/IECUpdateContact">My Account</a>
+                      <a href="{!$Site.BaseRequestURL}/IECHistActiveSubscriptions">My Subscriptions</a>
                       <hr/>
                       <a href="#" onClick="logout();">Logout</a>
                   </div>
@@ -263,7 +263,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     </apex:outputText>
                             </span>
                   </p>                    
-                <a href="{!$Site.BaseUrl}/IECShoppingCart" class="customButton signin">Checkout</a>              
+                <a href="{!$Site.BaseRequestURL}/IECShoppingCart" class="customButton signin">Checkout</a>              
       </div>
          
 </apex:component>
