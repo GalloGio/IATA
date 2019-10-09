@@ -3359,7 +3359,13 @@ public without sharing class ISSP_AMS_Accreditation {
             } else {
                 pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
             }
-        } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
+            pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        }
+        
+        if (newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
+            pageURL += '&formId=' + newForm.Id;
+        }
 
         return new Pagereference(pageURL);
     }
@@ -6023,7 +6029,7 @@ public without sharing class ISSP_AMS_Accreditation {
         return ngErrorFound;
     }
 
-    private Boolean validateFromShipping() {
+    private Boolean validateFormShipping() {
         Boolean errorFound = false;
 
         if (newForm.Shipping_City__c == null) {
@@ -6033,6 +6039,11 @@ public without sharing class ISSP_AMS_Accreditation {
 
         if (newForm.Shipping_Street__c == null) {
             newForm.Shipping_Street__c.addError(Label.ISSP_YouMustEnter);
+            errorFound = true;
+        }
+
+        if (newForm.Shipping_Country__c == null) {
+            newForm.Shipping_Country__c.addError(Label.ISSP_YouMustEnter);
             errorFound = true;
         }
 
@@ -6051,7 +6062,7 @@ public without sharing class ISSP_AMS_Accreditation {
             ngErrorFoundBR = true;
         }
 
-        if (validateFromShipping()) {
+        if (validateFormShipping()) {
             ngErrorFoundBR = true;
         }
 
@@ -7163,7 +7174,7 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
 
-        if (validateFromShipping()) {
+        if (validateFormShipping()) {
             errorFound = true;
         }
 
@@ -8114,15 +8125,17 @@ system.debug('aqui sectorValue ' + sectorValue);
                         isSelected = newForm.Agency_Codes_Concerned__c.contains(a.IATACode__c);
                     }
 
+                    if (isNoticeOfChange) {
                     if (isMCAccredited) {
-                        if (isNoticeOfChange && !mcCountryIsos.contains(a.Country_ISO_Code__c)) {
+                            if (!mcCountryIsos.contains(a.Country_ISO_Code__c)) {
                             continue;
                         }
                     } else {
-                        if (isNoticeOfChange && a.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
+                            if (a.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
                             continue;
                         }
                     }
+                    }                    
 
                     hierarchy.put(a.Id, new HierarchyItem(a, isSelected));
                 }                           
@@ -8134,7 +8147,9 @@ system.debug('aqui sectorValue ' + sectorValue);
 
     public Boolean selectAll{
         get{
-            if(selectAll == null) selectAll = false;
+            if (selectAll == null) {
+                selectAll = false;
+            } 
             return selectAll;
         }
         set;
@@ -8190,17 +8205,6 @@ system.debug('aqui sectorValue ' + sectorValue);
         }
         set;
     }
-
-    // ***********************************
-    // ********** constructor ************
-    // ***********************************
-    /*public ANG_AccountHierarchySelectionController(ApexPages.StandardController stdController){
-        if(!Test.isRunningTest()) stdController.addFields(new List<String>(oscarFields));
-
-        oscarId = stdController.getId();
-        oscar = (AMS_OSCAR__c)stdController.getRecord();
-    }*/
-
 
     // ***********************************
     // *********** wrappers **************
