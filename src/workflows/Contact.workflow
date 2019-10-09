@@ -205,16 +205,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>EmailStatusUpdate</fullName>
-        <description>Captues current date whenever changes in &quot;Email Status&quot; field</description>
-        <field>Email_Status_Update__c</field>
-        <formula>Today()</formula>
-        <name>Email Status Update</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>IFAP_Enable_portal_self_registration</fullName>
         <field>CanAllowPortalSelfReg</field>
         <literalValue>1</literalValue>
@@ -360,21 +350,6 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <value>E&amp;F Operator</value>
         </criteriaItems>
         <description>Notification of deactivated operator E&amp;F contact</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Email Status Update</fullName>
-        <actions>
-            <name>EmailStatusUpdate</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contact.Email_Status__c</field>
-            <operation>equals</operation>
-            <value>Missing,Do not Email,Invalid,Email,Unknown,Bad Email</value>
-        </criteriaItems>
-        <description>Updates &quot;Email Status Update &quot; field whenever changes in Email changes field.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
