@@ -27,25 +27,29 @@ controller="BSPParticipationManager">
                     <aura:if isTrue="{!v.showUserError}">
                         {!$Label.c.BSPParticipationUserAccess}
                     </aura:if> 
-                    <aura:if isTrue="{!v.showLocationClassError}">
-                        {!$Label.c.BSPParticipationPopupAlert}
-                    </aura:if> 
-                    <aura:if isTrue="{!v.showDisableEnable}">
-                        {!$Label.c.BSPParticipationDisable}
-                    </aura:if> 
-                    <aura:if isTrue="{!!v.showDisableEnable}">
-                        {!$Label.c.BSPParticipationEnable}
+                    <aura:if isTrue="{!!v.showUserError}">
+                        <aura:if isTrue="{!v.showLocationClassError}">
+                            {!$Label.c.BSPParticipationPopupAlert}
+                        </aura:if> 
+                        <aura:if isTrue="{!v.showDisableEnable}">
+                            {!$Label.c.BSPParticipationDisable}
+                        </aura:if> 
+                        <aura:if isTrue="{!!v.showDisableEnable}">
+                            {!$Label.c.BSPParticipationEnable}
+                        </aura:if> 
                     </aura:if> 
                 </div>
             </lightning:layoutItem>
         </lightning:layout>
         <hr style="margin-bottom: 3%;"></hr>
         <div class="slds-float_right">
-            <aura:if isTrue="{!v.showDisableEnable}">
-                <lightning:button label='{!$Label.c.BSP_Participation_Button_Disable}' onclick="{! c.doDisable }"></lightning:button>
-            </aura:if> 
-            <aura:if isTrue="{!!v.showDisableEnable}">
-                <lightning:button label='{!$Label.c.BSP_Participation_Button_Enable}' onclick="{! c.doEnable }"></lightning:button>
+            <aura:if isTrue="{!!v.showUserError}">
+                <aura:if isTrue="{!v.showDisableEnable}">
+                    <lightning:button label='{!$Label.c.BSP_Participation_Button_Disable}' onclick="{! c.doDisable }"></lightning:button>
+                </aura:if> 
+                <aura:if isTrue="{!!v.showDisableEnable}">
+                    <lightning:button label='{!$Label.c.BSP_Participation_Button_Enable}' onclick="{! c.doEnable }"></lightning:button>
+                </aura:if> 
             </aura:if> 
         </div>
     </aura:if> 
