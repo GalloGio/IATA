@@ -582,6 +582,8 @@
                 }
 
                 $('[id$="nocThirdQuestion"]').css('display', 'none');
+
+                $('[for$="countryconcerned"]')[0].innerText = "{!$Label.ANG_ISSP_CountryConcerned_AEs}";
             }
 
             if ($('[id$="LocationType"]').find("input")[3].checked) {
@@ -593,6 +595,8 @@
                 }
 
                 $('[id$="nocThirdQuestion"]').css('display', 'none');
+
+                $('[for$="countryconcerned"]')[0].innerText = "{!$Label.ANG_ISSP_CountryConcerned_AEs}";
             }
         }
 
@@ -705,6 +709,7 @@
                             <apex:actionFunction action="{!resetHierarchy}" name="reRenderAccountsNoc" reRender="branchaccountsel"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions, nocFormQuestions" oncomplete=""/>
                             <apex:actionFunction name="reRenderNocMessage" reRender="nocMessage"/>
+                            <apex:actionFunction name="selectAllAEs" action="{!doSelectAll}" status="blockEditing" reRender="table"/>
                             
                             <apex:pageBlock id="step1Block" mode="edit" >
                                 <apex:pageBlockButtons location="bottom" style="padding-left:100px">
@@ -866,9 +871,7 @@
                                             <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
                                                 <apex:column >
                                                     <apex:facet name="header">
-                                                        <apex:inputCheckbox value="{!selectAll}">
-                                                            <apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table"/>
-                                                        </apex:inputCheckbox>
+                                                        <apex:inputCheckbox value="{!selectAll}" onchange="selectAllAEs();"/>
                                                     </apex:facet>
                                                     <apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}"/>
                                                 </apex:column>
@@ -889,25 +892,6 @@
                                                 </apex:facet>
                                             </apex:actionStatus>
                                         </apex:pageBlockSection>
-                                        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 				<!--##RN INC463820  -->
                                     </apex:outputPanel>
@@ -915,7 +899,7 @@
                             </apex:outputpanel>
 
                             <div class="form-group" id="countrySelection">
-                                <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ANG_ISSP_CountryConcerned_AEs}</label>
+                                <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ANG_ISSP_CountryConcerned}</label>
 
                                 <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
                                     <apex:outputPanel rendered="{!AND(isMCAccredited, isNoticeOfChange)}">
@@ -964,7 +948,7 @@
 
                                             <apex:outputPanel rendered="{!OR(isBankAccountChange != true, con.Account.Location_Type__c != 'AE')}">
                                                 <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptionsFirstQ">
-                                                    <apex:selectRadio required="true" id="typeOfChange" layout="pageDirection" label="{!$Label.ISSP_ANG_NOC_Type_Of_Change}" style="width:70%;" value="{!newForm.Type_of_Change__c}" >
+                                                    <apex:selectRadio id="typeOfChange" layout="pageDirection" label="{!$Label.ISSP_ANG_NOC_Type_Of_Change}" style="width:70%;" value="{!newForm.Type_of_Change__c}" >
                                                         <apex:selectOption itemValue="{!$Label.ISSP_Yes}" itemLabel="{!$Label.ISSP_Yes}"/>
 
                                                         <apex:selectOption itemValue="{!$Label.ISSP_No}" itemLabel="{!$Label.ISSP_No}"/>
