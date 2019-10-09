@@ -764,13 +764,7 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
 	                                                                                 ORDER BY CreatedDate ASC];
 
 
-	String type='Case';
-
-	Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-	Schema.SObjectType leadSchema = schemaMap.get(type);
-	Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
-
-	String labelDescription = fieldMap.get('Description').getDescribe().getLabel();         //It provides to get the object fields label.
+	String labelDescription = Case.Description.getDescribe().getLabel(); //gets Case Description field label.
 
 	String caseDescription = caseToFirstComment.Description != null ? caseToFirstComment.Description : '';
 
