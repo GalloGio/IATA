@@ -463,14 +463,19 @@ public without sharing class ISSP_AMS_Accreditation {
     public String accountToBeFetchedOrRemoved {get; set;}
     public Account accountToBeConverted {get; set;}
 
-    public List<Account> accountsToBeConverted {
+    private Map<Id,Account> accountsToBeConverted {
         get {
             if (accountsToBeConverted == null) {
-                accountsToBeConverted = new List<Account>();
+                accountsToBeConverted = new Map<Id,Account>();
             }
             return accountsToBeConverted;
         }
         set;
+    }
+
+    public List<Account> getAccountsToBeConverted(){
+        if(accountsToBeConverted == null) return new List<Account>();
+        return accountsToBeConverted.values();
     }
 
     public String selectedCoutriesForNoCMC {get; set;}
@@ -978,11 +983,11 @@ public without sharing class ISSP_AMS_Accreditation {
                     isStep5 = true;
 
                     if (newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry' && isNoticeOfChange) {
-                        accountsToBeConverted = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
+                        if(newForm.Agency_Codes_Concerned__c != null) accountsToBeConverted = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
 
                         selectedCoutriesForNoCMC = '';
                         Set<String> addedCountries = new Set<String>();
-                        for (Account a: accountsToBeConverted) {
+                        for (Account a: accountsToBeConverted.values()) {
                             if(!addedCountries.contains(a.IATA_ISO_Country__r.Name)){
                                 selectedCoutriesForNoCMC += a.IATA_ISO_Country__r.Name + ', ';
                                 addedCountries.add(a.IATA_ISO_Country__r.Name);
@@ -1226,7 +1231,7 @@ public without sharing class ISSP_AMS_Accreditation {
         return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, 
                     BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c, IATA_ISO_Shipping_Country__c, 
                     IATA_ISO_Shipping_State__c, Country_ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__c,
-                    TradeName__c, Company_Type__c, Status__c
+                    TradeName__c, Company_Type__c, Status__c, Top_Parent__r.IATACode__c, Top_Parent__r.Id
                 FROM Account
                 WHERE (Top_Parent__c = :hqAccount.Id OR Id = :hqAccount.Id)
                 ORDER BY Legal_name__c];
@@ -1473,11 +1478,11 @@ public without sharing class ISSP_AMS_Accreditation {
         }
     }
 
-    private List<Account> getSelectedBranchList(List<String> branchCodes) {
-        return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
+    private Map<Id,Account> getSelectedBranchList(List<String> branchCodes) {
+        return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id
                 FROM Account
                 WHERE IATACode__c IN :branchCodes
-                ORDER BY Name, IATACode__c];
+                ORDER BY Name, IATACode__c]);
     }
 
     public List<SelectOption> getBranchAccounts() {
@@ -1539,7 +1544,7 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         if(newForm.Agency_Codes_Concerned__c != null) {
-            accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
+            accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(',')).values();
         }
 
         return getAccountOptions(accountList);
@@ -8271,22 +8276,18 @@ system.debug('aqui sectorValue ' + sectorValue);
     public void addToAccountsToConvert () {
         Set<String> convertingIds = new Set<String>();
 
-        for (Account acc: accountsToBeConverted) {
-            convertingIds.add(acc.Id);
-        }
-
         for (Account a: [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
                             Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c 
                             FROM Account WHERE (Top_Parent__c = :accountToBeConverted.Id OR Id = :accountToBeConverted.Id) AND Top_Parent__c <>:con.Account.id AND Id <> :con.Account.id]) {
-            if (!convertingIds.contains(a.id)) {
-                convertingIds.add(a.Id);
+            if (!accountsToBeConverted.keyset().contains(a.id)) {
+                //convertingIds.add(a.Id);
                 if (accountsToBeConverted.isEmpty()) {
                     newForm.Agency_Codes_Concerned__c = a.IATACode__c;
                 } else {
                     newForm.Agency_Codes_Concerned__c += ',' + a.IATACode__c;
                 }
                 
-                accountsToBeConverted.add(a);
+                accountsToBeConverted.put(a.id,a);
             }
         }        
     }
@@ -8294,20 +8295,20 @@ system.debug('aqui sectorValue ' + sectorValue);
     public void removeFromAccountsToConvert() {
         for (Account a: [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
                             Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c 
-                            FROM Account WHERE Top_Parent__c = :accountToBeFetchedOrRemoved OR Id = :accountToBeFetchedOrRemoved]) {
+                            FROM Account WHERE Id = :accountToBeFetchedOrRemoved]) {
             
-            for (Integer i = 0; i < accountsToBeConverted.size(); i++) {
-                if (accountsToBeConverted[i].Id == a.Id) {
-                    accountsToBeConverted.remove(i);
-                    break;
+            for (Account acc: accountsToBeConverted.values()) {
+                if (acc.Id == a.Id || acc.Top_Parent__r.id == a.Top_Parent__r.id || acc.id == a.Top_Parent__r.id ) {
+                    
+                    if (newForm.Agency_Codes_Concerned__c.contains(acc.IATACode__c + ',')) {
+                        newForm.Agency_Codes_Concerned__c = newForm.Agency_Codes_Concerned__c.remove(acc.IATACode__c + ',');
+                    }else if (newForm.Agency_Codes_Concerned__c.contains(acc.IATACode__c)) {
+                        newForm.Agency_Codes_Concerned__c = newForm.Agency_Codes_Concerned__c.remove(acc.IATACode__c);
                 }
+                    accountsToBeConverted.remove(acc.id);
+            }
             }
 
-            if (newForm.Agency_Codes_Concerned__c.contains(a.Id + ',')) {
-                newForm.Agency_Codes_Concerned__c.remove(a.Id + ',');
-            } else if (newForm.Agency_Codes_Concerned__c.contains(a.Id)) {
-                newForm.Agency_Codes_Concerned__c.remove(a.Id);
-            }
         }
     }
 }
