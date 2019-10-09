@@ -347,6 +347,16 @@ public class PortalServicesCtrlTest {
     }
     
     @isTest
+    public static void PortalServicesCtrlTest_goToOldPortalService() {
+        Test.StartTest();
+        
+        PortalServicesCtrl.goToOldPortalService('');
+        
+        Test.StopTest();
+        
+    }
+    
+    @isTest
     public static void PortalServicesCtrlTest_getServiceInformation() {
         Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest2'];
 

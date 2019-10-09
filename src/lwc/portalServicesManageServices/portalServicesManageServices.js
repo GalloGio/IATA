@@ -578,31 +578,37 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         let recordId = serviceAux.Id;
 
         // update Last Visit Date on record
-        if (requestable === "true") {
-            updateLastModifiedService({ serviceId: recordId })
-        }
+        updateLastModifiedService({ serviceId: recordId })
 
         let myUrl = appFullUrlData;
 
         //verifies if the event target contains all data for correct redirection
         if (openWindowData !== undefined) {
             //determines if the link is to be opened on a new window or on the current
-            if (openWindowData) {
+            if (openWindowData === "true") {
                 if (appFullUrlData !== 'undefined') {
                     myUrl = appFullUrlData;
                 }
                 //is this link a requestable Service?
                 if (requestable === "true") {
-                    //stop the spinner
-                    this.toggleSpinner();
-                    //open new tab with the redirection
-                    window.open(myUrl);
+                    //method that redirects the user to the old portal maintaing the same loginId
+                    goToOldPortalService({ myurl: myUrl })
+                        .then(result => {
+                            //stop the spinner
+                            this.toggleSpinner();
+                            //open new tab with the redirection
+                            window.open(result);
+                        })
+                        .catch(error => {
+                            //throws error
+                            this.error = error;
+                        });
                 } else {
                     myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
                     window.open(myUrl);
                 }
             } else {
-                window.open(myUrl,"_self");
+                window.location.href = myUrl;
             }
         }
     }
