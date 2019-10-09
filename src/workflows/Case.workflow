@@ -15336,6 +15336,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>equals</operation>
             <value>Submitted</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.Financial_Review_Type__c</field>
+            <operation>notEqual</operation>
+            <value>Multicountry Annual</value>
+        </criteriaItems>
         <description>When the case status changes to Submitted, the new case field  FA Submitted date field is automatically updated</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
