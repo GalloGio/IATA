@@ -1,5 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
+import { reduceErrors } from 'c/ldsUtils';
 
 import getUserInfo from '@salesforce/apex/PortalIftpUtils.getUserInfo';
 import getRedirectURL from '@salesforce/apex/PortalIftpUtils.getRedirectURL';
@@ -73,9 +74,16 @@ export default class portalIftpTabs extends NavigationMixin(LightningElement) {
             
         })
         .catch(error => {
-            console.log('getUserInfo - Error : ' + error);
-            this.mainErrorMessage = error;
-            this.error = error;
+            
+            let err = reduceErrors(error);
+            
+            if(err[0] === 'List has no rows for assignment to SObject' ){
+                this.mainErrorMessage = 'Currently you dont have access to IFTP Portal, please contact the Administrator';
+                this.error = error;
+            }else{
+                this.mainErrorMessage = error;
+                this.error = error;
+            }
         });
     }
 
@@ -93,7 +101,7 @@ export default class portalIftpTabs extends NavigationMixin(LightningElement) {
         
             this.isAirlineUser = true;
             
-        }else if(this.userInfo.profile === 'ISS Portal (Partner)' || userInfo.profile === 'ISS Portal'){
+        }else if(this.userInfo.profile === 'ISS Portal (Partner)' || userInfo.profile === 'ISS Portal' || userInfo.profile === 'ISS Portal Delegated Admin User'){
         
             this.isITPUser = true;
 
