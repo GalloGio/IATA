@@ -121,6 +121,91 @@ private class ISSP_ChangePassword_Test {
     	}
     	Test.stopTest();
     }
+
+    static testMethod void myUnitTest_4() {
+    	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
+    	insert issc;
+    	Test.startTest();
+    	PageReference pgRef = Page.ISSP_ChangePassword;
+    	Test.setCurrentPage(pgRef);
+    	
+    	List<Network> networks = [SELECT Id
+									FROM Network
+									WHERE (Name = 'IATA Portal' OR Name = 'CS Portal')];
+
+		if(!networks.isEmpty()){
+			ApexPages.currentPage().getParameters().put('retUrl','networkId='+networks[0].Id);
+		}
+    	
+    	// insert account
+        Account newAccount = new Account();
+        newAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
+        newAccount.Name = 'Company';
+        newAccount.Sector__c = 'Airline Supplier';
+        newAccount.Category__c = 'Fuel Supplier';
+		insert newAccount;
+ 
+        // create Bill To contact info
+        Contact newContact = new Contact();
+        newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
+        newContact.AccountId = newAccount.Id;
+        newContact.FirstName = 'Test';
+        newContact.LastName = 'User';
+        newContact.Title = 'TestTitle';
+        newContact.Email = 'testIECGuest@test.iata.org';
+        newContact.Phone = '514123345';
+        newContact.User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS;
+        insert newContact;
+
+        User u = new User(
+            Username = ISSP_Utilities.buildPortalUserName('testIECGuest@test.iata.org')
+            , Email = 'testIECGuest@test.iata.org'
+            , emailencodingkey = 'UTF-8'
+            , Alias = IECUserManager.createAliasFromName(newContact.LastName)
+            , FirstName = newContact.FirstName
+            , LastName = newContact.LastName
+            , LocaleSidKey = 'en_US'
+            , CommunityNickname = 'testIECGuest@iata.org'
+            , ProfileId = IECUserManager.getProfileIdForIECUser()
+            , LanguageLocaleKey = 'en_US'
+            , timezonesidkey = 'America/New_York'
+            , ContactId = newContact.Id
+            , IsActive = true
+            , ReceivesAdminInfoEmails = false
+            , ReceivesInfoEmails = false
+            , UID__c = '1234'
+        );
+        insert u;
+
+        String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
+        IECUserManager.login(u.Username, 'testpassword', null);
+    	
+    	System.runAs(u) {
+	        ISSP_ChangePassword pgCont = new ISSP_ChangePassword();	        
+	        // Test 001: Leave all fields blank
+	        pgCont.currentPassword = '';
+	        pgCont.newPassword = '';
+	        pgCont.confirmNewPassword = '';
+	        pgCont.changePassword();
+	        
+	        // Test 002: Different passwords
+	        pgCont.currentPassword = 'a';
+	        pgCont.newPassword = 'b';
+	        pgCont.confirmNewPassword = 'c';
+	        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Test'));
+	        pgCont.changePassword();
+	        
+	        // Test 003: Correct
+	        pgCont.currentPassword = 'a';
+	        pgCont.newPassword = 'b1234567';
+	        pgCont.confirmNewPassword = 'b1234567';
+			pgCont.serviceName = 'serviceName';
+			pgCont.serviceNameParam = 'serviceNameParam';
+	        pgCont.changePassword();
+
+    	}
+    	Test.stopTest();
+    }
     
     static testMethod void loginPage_ISSP() {
 
