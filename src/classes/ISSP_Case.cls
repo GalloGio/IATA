@@ -717,9 +717,7 @@ public without sharing class ISSP_Case {
                 //This custom setting contains emails to be automatically added to the "Additional Recipients" field. 
                 //Before this option was made by a query to the User object.
                 //For this you have to configure the custom setting where the Name field is the account id and the email is the intended email to be added.
-                List<DPC2DPCCasesEmails__c> DPC2DPCCasesEmails = [SELECT Name, Email__c 
-                                                                    FROM DPC2DPCCasesEmails__c];
-
+                
                 DPC2DPCCasesEmails = [SELECT Name, Email__c 
                                         FROM DPC2DPCCasesEmails__c];
 
