@@ -52,6 +52,7 @@ public without sharing class ISSP_Case {
     public String JSONcontacts { get; set; }
     public String JSONcontactSelected { get; set; }
     public String JSONcontactsHighPriority { get; set; }
+    public List<DPC2DPCCasesEmails__c> DPC2DPCCasesEmails { get; set; } 
 
     public Id runningUserId {get; set;}
     public Contact con {get; set;}
@@ -719,6 +720,8 @@ public without sharing class ISSP_Case {
                 List<DPC2DPCCasesEmails__c> DPC2DPCCasesEmails = [SELECT Name, Email__c 
                                                                     FROM DPC2DPCCasesEmails__c];
 
+                DPC2DPCCasesEmails = [SELECT Name, Email__c 
+                                        FROM DPC2DPCCasesEmails__c];
 
                 JSONcontacts = JSON.serialize(DPC2DPCCasesEmails);
                 newCase.ACCA_Owner__c = Userinfo.getUserId();
@@ -1576,34 +1579,46 @@ public without sharing class ISSP_Case {
         }
 
         //On DPC case creation with Priority, automatically add additional recipients
+        Set<String> setEmailPriority = new Set<String>();
         
+        String emailCurrentAcc = [select contactid, contact.accountid from user where id = :UserInfo.getUserId()].contact.accountid;
+
+        if(DPC2DPCCasesEmails != null){
+            if(emailCurrentAcc != ''){
+                for(DPC2DPCCasesEmails__c d2dca : DPC2DPCCasesEmails){
+                    if(d2dca.Name == emailCurrentAcc){
+                        setEmailPriority.add(d2dca.Email__c);
+                    }
+                }
+            }
+        }
         List<DPCCasePriorityHigh__c> DPCCasePriorityEmails = [SELECT Priority__c, Email__c 
                                                                 FROM DPCCasePriorityHigh__c 
                                                                 WHERE Priority__c =: newCase.Priority];
         if(!DPCCasePriorityEmails.isEmpty()){
-            Set<String> setEmailPriority = new Set<String>();
             for(DPCCasePriorityHigh__c dcph : DPCCasePriorityEmails){
                 setEmailPriority.add(dcph.Email__c);
-            }   
-            if(JSONcontactSelected != null && JSONcontactSelected != ''){
-                setEmailPriority.add(JSONcontactSelected);
-            }
-            if(!setEmailPriority.isEmpty()){
-                List<User> lsUsersPriority =
-                            [SELECT Id, Name, Email, AccountId, Contact.AccountId
-                            FROM User
-                            WHERE Email IN :setEmailPriority];
-                for(User user : lsUsersPriority) {
-                    CaseTeamMember teammember = new CaseTeamMember(
-                        ParentId = newCase.Id,
-                        MemberId = user.Id,
-                        TeamRoleId = PARTNER_USER_ROLE);
-                    lsCaseTeamMembers.add(teammember);
-                    lsNewEmails.add(user.Email);
-                    setEmail.remove(user.Email);
-                }
-            }                                         
+            }                                   
         }
+        if(JSONcontactSelected != null && JSONcontactSelected != ''){
+                setEmailPriority.add(JSONcontactSelected);
+        }
+
+        if(!setEmailPriority.isEmpty()){
+            List<User> lsUsersPriority =
+                        [SELECT Id, Name, Email, AccountId, Contact.AccountId
+                        FROM User
+                        WHERE Email IN :setEmailPriority];
+            for(User user : lsUsersPriority) {
+                CaseTeamMember teammember = new CaseTeamMember(
+                    ParentId = newCase.Id,
+                    MemberId = user.Id,
+                    TeamRoleId = PARTNER_USER_ROLE);
+                lsCaseTeamMembers.add(teammember);
+                lsNewEmails.add(user.Email);
+                setEmail.remove(user.Email);
+            }
+        }   
 
         // Find the contacts for the emails not found
         if (!setEmail.isEmpty()) {
