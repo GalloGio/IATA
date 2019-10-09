@@ -1,0 +1,52 @@
+<aura:component implements="force:hasSObjectName,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,force:hasRecordId" 
+controller="BSPParticipationManager">
+
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="showLoading" type="Boolean" default="true" />
+    <aura:attribute name="showUserError" type="Boolean" default="false" />
+    <aura:attribute name="showLocationClassError" type="Boolean" default="false" />
+    <aura:attribute name="showDisableEnable" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+
+    <aura:if isTrue="{!v.showLoading}">
+        <div class="exampleHolder">
+            <lightning:spinner alternativeText="Loading" size="large" />
+        </div>
+    </aura:if> 
+
+    <aura:if isTrue="{!!v.showLoading}">
+        <lightning:layout verticalAlign="center" multipleRows="true">
+            <lightning:layoutItem padding="around-small" class="page-header" size="12">
+                <div class="page-section page-header">
+                    <h2>{!$Label.c.BSPParticipationPopupTitle}</h2>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem>
+                <div style="height: 90px;line-height: 90px;">
+                    <aura:if isTrue="{!v.showUserError}">
+                        {!$Label.c.BSPParticipationUserAccess}
+                    </aura:if> 
+                    <aura:if isTrue="{!v.showLocationClassError}">
+                        {!$Label.c.BSPParticipationPopupAlert}
+                    </aura:if> 
+                    <aura:if isTrue="{!v.showDisableEnable}">
+                        {!$Label.c.BSPParticipationDisable}
+                    </aura:if> 
+                    <aura:if isTrue="{!!v.showDisableEnable}">
+                        {!$Label.c.BSPParticipationEnable}
+                    </aura:if> 
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+        <hr style="margin-bottom: 3%;"></hr>
+        <div class="slds-float_right">
+            <aura:if isTrue="{!v.showDisableEnable}">
+                <lightning:button label='{!$Label.c.BSP_Participation_Button_Disable}' onclick="{! c.doDisable }"></lightning:button>
+            </aura:if> 
+            <aura:if isTrue="{!!v.showDisableEnable}">
+                <lightning:button label='{!$Label.c.BSP_Participation_Button_Enable}' onclick="{! c.doEnable }"></lightning:button>
+            </aura:if> 
+        </div>
+    </aura:if> 
+</aura:component>

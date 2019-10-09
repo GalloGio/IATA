@@ -489,6 +489,16 @@
                     <label>FPY</label>
                 </value>
                 <value>
+                    <fullName>GSA</fullName>
+                    <default>false</default>
+                    <label>GSA</label>
+                </value>
+                <value>
+                    <fullName>GSD</fullName>
+                    <default>false</default>
+                    <label>GSD</label>
+                </value>
+                <value>
                     <fullName>IAF</fullName>
                     <default>false</default>
                     <label>IAF</label>
@@ -1913,6 +1923,14 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <picklistValues>
             <picklist>Change_Code__c</picklist>
             <values>
+                <fullName>GSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSD</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IRR</fullName>
                 <default>false</default>
             </values>
@@ -2453,6 +2471,14 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
                 <default>false</default>
             </values>
             <values>
+                <fullName>GSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSD</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IAF</fullName>
                 <default>false</default>
             </values>
@@ -2922,4 +2948,35 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <errorMessage>Irregularity change codes cannot be created on newgen agencies.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
+    <webLinks>
+        <fullName>GSA_BSP_Participation</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>GSA BSP Participation</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/resource/1570549933000/EnableOrDisableBSPParticipation&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)}
+{!REQUIRESCRIPT(&quot;/support/console/30.0/integration.js&quot;)}
+{!REQUIRESCRIPT(&quot;/resource/1464159618000/SLDS103/assets/styles/salesforce-lightning-design-system.css&quot;)}
+
+try {
+	   var recId = window.location.href.substring(window.location.href.lastIndexOf(&apos;/&apos;) + 1);
+				if(recId.includes(&quot;#&quot;)){
+				    var splited = recId.split(&quot;#&quot;);
+								recId = splited[0];
+				}
+    var Accounts = sforce.connection.query(&quot;SELECT Location_Class__c, Category__c, RecordType.DeveloperName from Account where id =&apos;&quot;+recId+&quot;&apos; limit 1&quot;);
+				if(Accounts.records.RecordType.DeveloperName != &apos;IATA_Agency&apos; || Accounts.records.Location_Class__c != &apos;G&apos; || Accounts.records.Category__c != &apos;GSA General Sales Agent&apos;) {
+        alert(&apos;{!$Label.BSPParticipationPopupAlert}&apos;);
+    }else{
+        displayKeyCustomerAlert(&apos;{!$Label.BSPParticipationPopupTitle}&apos;, &apos;{!$Label.BSPParticipationDisable}&apos;, &apos;{!$Label.BSPParticipationEnable}&apos;, &apos;{!$Label.BSPParticipationUserAccess}&apos;, &apos;{!$Label.BSP_Participation_Button_Enable}&apos;, &apos;{!$Label.BSP_Participation_Button_Disable}&apos;, recId);
+    }
+}catch(e) {
+    alert(&apos;An error has occurred. Error: &apos; + e);
+}</url>
+    </webLinks>
 </CustomObject>

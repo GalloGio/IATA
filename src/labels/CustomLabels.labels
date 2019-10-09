@@ -2771,6 +2771,56 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>This service facilitates interaction and exchange of information between travel agents and airlines participating in IATA Billing and Settlement Plan (BSP).</value>
     </labels>
     <labels>
+        <fullName>BSPParticipationDisable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Disable</shortDescription>
+        <value>Are you sure you want to disable BSP Participation?</value>
+    </labels>
+    <labels>
+        <fullName>BSPParticipationEnable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Enable</shortDescription>
+        <value>Are you sure you want to enable BSP Participation?</value>
+    </labels>
+    <labels>
+        <fullName>BSPParticipationPopupAlert</fullName>
+        <categories>Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Popup Alert</shortDescription>
+        <value>You can choose this change code with Agency of location class G and category GSA only!</value>
+    </labels>
+    <labels>
+        <fullName>BSPParticipationPopupTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Popup Title</shortDescription>
+        <value>BSP participation</value>
+    </labels>
+    <labels>
+        <fullName>BSPParticipationUserAccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation User Access Error</shortDescription>
+        <value>Your user has no access to this action. Please review your permissions with support.</value>
+    </labels>
+    <labels>
+        <fullName>BSP_Participation_Button_Disable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Button Disable</shortDescription>
+        <value>Disable BSP Participation</value>
+    </labels>
+    <labels>
+        <fullName>BSP_Participation_Button_Enable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Button Enable</shortDescription>
+        <value>Enable BSP Participation</value>
+    </labels>
+    <labels>
         <fullName>Bank_Transfer_Payment_terms</fullName>
         <language>en_US</language>
         <protected>false</protected>

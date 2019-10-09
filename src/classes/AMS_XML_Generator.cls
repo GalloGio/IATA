@@ -737,10 +737,12 @@ public with sharing class AMS_XML_Generator {
         }
 
         Id formOfPaymentRTId   = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
+        //WMO-715
+        Id BSPLinkId   = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'BSPLink');
 
 /*  NEWGEN-801 */
-
-        lAgencyAuthorizations = [SELECT Id, ANG_FormOfPayment_ID__c,Account__c from Agency_Authorization__c where Account__c in :setAgencyKeys and RecordTypeId =:formOfPaymentRTId and Status__c = 'Active' ];
+        //WMO-715
+        lAgencyAuthorizations = [SELECT Id, ANG_FormOfPayment_ID__c,Account__c, RecordTypeId from Agency_Authorization__c where Account__c in :setAgencyKeys and (RecordTypeId =:formOfPaymentRTId OR RecordTypeId =:BSPLinkId) and Status__c = 'Active' ];
 
         if(mAgencyAuthorizations == null)
             mAgencyAuthorizations =  new Map<Id, List<Agency_Authorization__c>>();
@@ -1777,8 +1779,10 @@ public with sharing class AMS_XML_Generator {
             getElementNode(agencyNode, 'is_branch_abroad',agency.Is_Branch_Abroad__c);
 
 
+            //WMO-715
             //Authorizations Codes
-            
+            Id formOfPaymentRTId   = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
+            Id BSPLinkId   = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'BSPLink');
             Dom.Xmlnode nodeAauthorizationsNode = agencyNode.addChildElement('authorizations', null, null);
 
             List<Agency_Authorization__c> agencyAuthl = mAgencyAuthorizations.get(agency.Id);
@@ -1786,12 +1790,19 @@ public with sharing class AMS_XML_Generator {
             if(agencyAuthl == null){
 
                 getElementNode(nodeAauthorizationsNode, 'form_of_payment_id',null);
+                //WMO-715
+                getElementNode(nodeAauthorizationsNode, 'BSPlink',null);
             
             }else{
                 
                 for(Agency_Authorization__c aaElem: agencyAuthl){
 
-                    getElementNode(nodeAauthorizationsNode, 'form_of_payment_id',aaElem.ANG_FormOfPayment_ID__c);
+                    //WMO-715
+                    if(aaElem.RecordTypeId == formOfPaymentRTId){
+                        getElementNode(nodeAauthorizationsNode, 'form_of_payment_id',aaElem.ANG_FormOfPayment_ID__c);
+                    }else if(aaElem.RecordTypeId == BSPLinkId){
+                        getElementNode(nodeAauthorizationsNode, 'BSPlink', 'Yes');
+                    }
                 
                 }
             }

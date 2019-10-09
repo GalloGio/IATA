@@ -805,6 +805,7 @@
         <relatedList>Case.Account_Concerned__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>GSA_BSP_Participation</customButtons>
         <fields>Active__c</fields>
         <fields>Change_Code__c</fields>
         <fields>NAME</fields>
