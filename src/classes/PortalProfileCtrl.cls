@@ -287,11 +287,8 @@ public static Contact contactInfo = new Contact();
 				wrapper.contactUser = u;
 				wrapper.services = contactToServices.get(u.ContactId);
 				wrapper.selected = false;
-				wrapper.hasIdCard = false;
-				wrapper.hasProducts = false;
-
-				if(contactsWithIdCard.contains(u.ContactId)) wrapper.hasIdCard = true;
-				if(contactsWithSubscription.contains(u.ContactId)) wrapper.hasProducts = true;
+				wrapper.hasIdCard = contactsWithIdCard.contains(u.ContactId);
+                wrapper.hasProducts = contactsWithIdCard.contains(u.ContactId);
 
 				wrappers.add(wrapper);
 			}
@@ -302,11 +299,9 @@ public static Contact contactInfo = new Contact();
 					wrapper.contact = c;
 					wrapper.services = new List<PortalServicesCtrl.ServiceWrapper>();
 					wrapper.selected = false;
-					wrapper.hasIdCard = false;
-					wrapper.hasProducts = false;
-
-					if(contactsWithIdCard.contains(c.Id)) wrapper.hasIdCard = true;
-					if(contactsWithSubscription.contains(c.Id)) wrapper.hasProducts = true;
+					wrapper.hasIdCard = contactsWithIdCard.contains(c.Id);
+                    wrapper.hasProducts = contactsWithIdCard.contains(c.Id);
+                    
 					wrappers.add(wrapper);
 				}
 			}

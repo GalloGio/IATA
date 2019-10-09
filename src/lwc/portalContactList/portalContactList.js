@@ -25,7 +25,11 @@ import ISSP_InactiveUser_IdCard from '@salesforce/label/c.ISSP_InactiveUser_IdCa
 import ISSP_SureToContinue from '@salesforce/label/c.ISSP_SureToContinue';
 import ISSP_SelectOneContact from '@salesforce/label/c.ISSP_SelectOneContact';
 import ISSP_ContactList_HoverPopup_Text from '@salesforce/label/c.ISSP_ContactList_HoverPopup_Text';
-
+import ISSP_Activate from '@salesforce/label/c.ISSP_Activate';
+import ISSP_MakeAdmin from '@salesforce/label/c.ISSP_MakeAdmin';
+import ISSP_AMS_eBulletin_Disabled from '@salesforce/label/c.ISSP_AMS_eBulletin_Disabled';
+import PKB2_js_error from '@salesforce/label/c.PKB2_js_error';
+import CSP_Success from '@salesforce/label/c.CSP_Success';
 
 export default class PortalContactList extends LightningElement {
 
@@ -40,7 +44,13 @@ export default class PortalContactList extends LightningElement {
         ISSP_Confirm,
         ISSP_InactiveUser_IdCard,
         ISSP_SureToContinue,
-        ISSP_SelectOneContact
+        ISSP_SelectOneContact,
+        ISSP_SelectOneContact,
+        ISSP_Activate,
+        ISSP_MakeAdmin,
+        ISSP_AMS_eBulletin_Disabled,
+        PKB2_js_error,
+        CSP_Success
     };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
@@ -210,10 +220,7 @@ export default class PortalContactList extends LightningElement {
     }
 
     get noSelected() {
-        var result = false;
-        if (this.inactiveReason === '') result = true;
-
-        return result;
+        return (this.inactiveReason === '');
     }
 
     grantAccess(event) {
@@ -269,7 +276,7 @@ export default class PortalContactList extends LightningElement {
         if(found) {
             this.loading = false;
             const toastEvent = new ShowToastEvent({
-                title: 'Error',
+                title: _lables.PKB2_js_error,
                 message: ISSP_SelectOneContact,
                 variant: 'error'
             });
@@ -280,7 +287,7 @@ export default class PortalContactList extends LightningElement {
                     this.loading = false;
                     if(results.isSuccess) {
                         const toastEvent = new ShowToastEvent({
-                            title: 'Success',
+                            title: _labels.CSP_Success,
                             message: results.successMsg,
                             variant: 'success'
                         });
@@ -288,7 +295,7 @@ export default class PortalContactList extends LightningElement {
                         this.refreshview();
                     } else {
                         const toastEvent = new ShowToastEvent({
-                            title: 'Error',
+                            title: _lables.PKB2_js_error,
                             message: results.errorMsg,
                             variant: 'error'
                         });
@@ -299,7 +306,7 @@ export default class PortalContactList extends LightningElement {
                 .catch(error => {
                     this.loading = false;
                     const toastEvent = new ShowToastEvent({
-                        title: 'Error',
+                        title: _lables.PKB2_js_error,
                         message: reduceErrors(error).join(', '),
                         variant: 'error'
                     });
@@ -365,7 +372,7 @@ export default class PortalContactList extends LightningElement {
                     this.loading = false;
                     if(results.isSuccess) {
                         const toastEvent = new ShowToastEvent({
-                            title: 'Success',
+                            title: _labels.CSP_Success,
                             message: results.successMsg,
                             variant: 'success'
                         });
@@ -381,7 +388,7 @@ export default class PortalContactList extends LightningElement {
                 .catch(error => {
                     this.loading = false;
                     const toastEvent = new ShowToastEvent({
-                        title: 'Error',
+                        title: _lables.PKB2_js_error,
                         message: reduceErrors(error).join(', '),
                         variant: 'error'
                     });
