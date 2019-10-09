@@ -22,7 +22,8 @@ public without sharing class OneIdForgotPasswordController {
                 return Label.Site.invalid_email;
             }           
             
-            List<User> users = [Select u.Username,u.firstName, u.Id, u.Email, u.IsActive , u.ContactID, U.UID__c
+            List<User> users = [Select u.Username,u.firstName, u.Id, u.Email, u.IsActive , u.ContactID, U.UID__c,
+								u.CNS_Account_or_Agency__c
                                     From User u 
                                     where (u.Email = :username )
                                     and (IsActive = true OR Portal_User_Frozen_Checkbox__c = true)
@@ -39,8 +40,12 @@ public without sharing class OneIdForgotPasswordController {
             users[0].Portal_User_Frozen_Checkbox__c = false;     
             update users;
             
+			
+			string comm=Comm_User_Helper.ONEIDENTITY;                  
+           	if(users[0].CNS_Account_or_Agency__c) comm='CNS';
+			
             success = Comm_User_Helper.resetPassword(username, //email in this case
-                                                             Comm_User_Helper.ONEIDENTITY, 
+                                                             comm, 
                                                              false,
                                                      		 serviceName);  // OneIdEnh CSP-ID002: added service name
 			
