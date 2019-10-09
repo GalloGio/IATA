@@ -20,9 +20,7 @@ global without sharing class ISSP_OperationalCalendarController {
         'BSP International',
         'BSP Domestic',
         'CASS Export',
-        'CASS Import',
-        'ICCS',
-        'SIS'
+        'CASS Import'
     };
 
     public static final list<String> AIRLINE_PROFILES = new list<String>();
@@ -145,6 +143,9 @@ global without sharing class ISSP_OperationalCalendarController {
         }
         return JSON.serialize(listSisTypes,true);
     }
+    public Boolean getIsMultiButtonVisible() {
+        return IS_AIRLINE || this.account.Location_Type__c=='GE';
+    }
 
     /**
         True if this account is able to see SIS information
@@ -198,6 +199,7 @@ global without sharing class ISSP_OperationalCalendarController {
                 Contact.Account.IATA_ISO_Country__c,
                 Contact.Account.Remittance_frequency__c,
                 Contact.Account.Location_Class__c,
+                Contact.Account.Location_Type__c,
                 Contact.Account.SIS_Status__c,
                 Contact.Account.SIS_Sub_Status__c,
                 Contact.Account.ICH_Member__c,
@@ -213,8 +215,6 @@ global without sharing class ISSP_OperationalCalendarController {
         this.contact = this.user.contact;
         this.account = this.user.contact.account;
         this.defaultCountry = this.account.IATA_ISO_Country__c;
-        this.defaultOperationSubtype = nvl(MAP_OPERATION_TYPES.get(this.account.Location_Class__c));
-        this.defaultOperationType = String.isBlank(this.defaultOperationSubtype)? 'BSP/CASS': '';
         this.defaultFrequency = this.account.Remittance_frequency__c;
         this.maxDate = Date.newInstance(Date.Today().year()+2, 1, 1);
         this.minDate = Date.newInstance(Date.Today().year()-1, 1, 1);
@@ -241,16 +241,10 @@ global without sharing class ISSP_OperationalCalendarController {
     **/
     public void initPicklistValues() {
         this.setFilter = new set<String>();
-        // first BSP/CASS + CNS
-        initPicklistValuesBSPCASS();
-        // next ICCS
-        if (getIsICCSAccount()) {
-            this.defaultOperationType='ICCS';
-            initPicklistValuesICCS();
-        }
+        list<String> listResult;
         // finally SIS
         if (getIsSISAccount())  {
-            list<String> listResult = initPicklistValuesSIS();
+            listResult = initPicklistValuesSIS();
             if (!listResult.isEmpty()) {
                 this.setFilter.addAll(listResult);
                 // set default values for filters
@@ -263,6 +257,23 @@ global without sharing class ISSP_OperationalCalendarController {
                     this.defaultOperationSubtype = 'SIS';
                 }
             } 
+        }
+        // next ICCS
+        if (getIsICCSAccount()) {
+            listResult = initPicklistValuesICCS();
+            if (!listResult.isEmpty()) {
+                this.setFilter.addAll(listResult);
+                this.defaultOperationType='ICCS';
+            }
+        }
+        // first BSP/CASS + CNS
+        listResult = initPicklistValuesBSPCASS();
+        if (!listResult.isEmpty()) {
+            this.setFilter.addAll(listResult);
+            if (this.defaultOperationType!='CNS') {
+                this.defaultOperationType='BSP/CASS';
+                this.defaultOperationSubtype = nvl(MAP_OPERATION_TYPES.get(this.account.Location_Class__c));
+            }
         }
     }
 
@@ -283,7 +294,8 @@ global without sharing class ISSP_OperationalCalendarController {
         return listResult;
     }
 
-    public void initPicklistValuesICCS() {
+    public list<String> initPicklistValuesICCS() {
+        list<String> listResult = new list<String>();
         // adding remmitance frequencies only for SIS
         for (AggregateResult result: [
                 SELECT cycle__c, Country__c, frequency_code__c, Operation_Currency__c
@@ -294,11 +306,12 @@ global without sharing class ISSP_OperationalCalendarController {
                 GROUP BY cycle__c, Country__c, frequency_code__c, Operation_Currency__c
                 ORDER BY cycle__c, Country__c, frequency_code__c, Operation_Currency__c ASC]){
             String str = 'ICCS' + ',' + result.get('cycle__c') + ',' + result.get('Country__c') + ',' + result.get('frequency_code__c') + ',' + result.get('Operation_Currency__c');
-            this.setFilter.add(str);
+            listResult.add(str);
         }
+        return listResult;
     }
 
-    public void initPicklistValuesBSPCASS() {
+    public list<String> initPicklistValuesBSPCASS() {
         // mapFrequencies, its a relation between countries and their frequencies
         list<AMS_Settlement_System__c> listOp = [
             SELECT Id, Name,  
@@ -312,6 +325,7 @@ global without sharing class ISSP_OperationalCalendarController {
             FROM AMS_Settlement_System__c 
         ];
         
+        list<String> listResult = new list<String>();
         set<Id> setCountryId = new set<Id>();
         for (AMS_Settlement_System__c op: listOp ) {
             Set<Id> listBSPCountries = getSetIds(op.IATA_ISO_Countries__r);
@@ -341,12 +355,12 @@ global without sharing class ISSP_OperationalCalendarController {
                         String isocode=SPECIAL_CASE_COUNTRIES.get(countryId).ISO_Code__c;
                         if (operation.Operation_Code__c!=null && operation.Operation_Code__c.startsWith(isocode)) {
                             String str = groupType + ',' + operation.Operation_Type__c + ',' + countryId + ',' + operation.frequency_code__c + ',' + operation.Operation_Currency__c;
-                            this.setFilter.add(str);
+                            listResult.add(str);
                             setCountryId.add(countryId);
                         }
                     } else {
                         String str = groupType + ',' + operation.Operation_Type__c + ',' + countryId + ',' + operation.frequency_code__c + ',' + operation.Operation_Currency__c;
-                        this.setFilter.add(str);
+                        listResult.add(str);
                         setCountryId.add(countryId);
                     }
                 }
@@ -368,6 +382,7 @@ global without sharing class ISSP_OperationalCalendarController {
             IATA_ISO_Country__c country = mapNameCountry.get(countryName);
             this.countryOptions.add(new SelectOption(country.Id, countryName));
         }
+        return listResult;
     }
 
     /**

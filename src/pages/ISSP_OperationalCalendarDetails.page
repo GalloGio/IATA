@@ -154,6 +154,16 @@
             refreshDetails(true);
         });
         $(".btn-default").toggleClass('btn-default btn-primary');
+        //populate picklists in multi-download button section
+        if (isAirline) {
+            $('#typeOfDownload').empty()
+                .append('<option value="all">{!$Label.ISSP_FDS_AllCountries}</option>')
+                .append('<option value="allservices">{!$Label.ISSP_FDS_AllCountriesWithServices}</option>')
+                .append('<option value="custom" selected="selected">{!$Label.ISSP_FDS_ChooseCountries}</option>');
+        } else {
+            $('#typeOfDownload').empty()
+                .append('<option value="custom" selected="selected">{!$Label.ISSP_FDS_ChooseCountries}</option>');
+        }
     });
     
     function initFilters(){
@@ -408,7 +418,7 @@
         /*** WMO-388 ***/
         //Multi-Download Button
         var operationType = nvl($("#typeFilter").val());
-        if("{!isAirline}" == "true" && operationType != "SIS" && operationType != "ICCS") {
+        if("{!isMultiButtonVisible}" == "true" && operationType != "SIS" && operationType != "ICCS") {
             $("#advanced-filters")
                 .append("<div class='dt-buttons btn-group'><button class='btn buttons-html5 btn-primary'><span class='glyphicon glyphicon-th' style='padding-right:2px;'></span><span>{!$Label.ISSP_FDS_CustomFilterBtn}</span></button></div>");
             $("#advanced-filters").attr('onclick','openCustomFilters()');
@@ -1017,18 +1027,18 @@
         <!-- FILTERS -->
         <div class="row">
             <div class="col-sm-2 form-group">
-                <apex:outputPanel layout="block" styleclass="form-check" rendered="{!NOT(isAirline)}">
+                <apex:outputPanel layout="block" styleclass="form-check" rendered="{!NOT(isMultiButtonVisible)}">
                     <input type="checkbox" class="form-check-input" id="enableFiltersCheck"/>
                     <label class="form-check-label" for="enableFiltersCheck">{!$Label.ISSP_OperationalCalendar_EnableFilters}</label>
                 </apex:outputPanel>
             </div>
-            <div class="{!IF(isAirline, 'col-sm-6', 'col-sm-8')}">
+            <div class="{!IF(isMultiButtonVisible, 'col-sm-6', 'col-sm-8')}">
                 <button type="button" class="btn btn-default btn-calendar center-block" onclick="showCalendar()">{!$Label.ISSP_OperationalCalendar_Show_Calendar}</button>
             </div>
-            <div id="exportCSV" class="{!IF(isAirline, 'col-sm-4', 'col-sm-2')}" style="float: right; text-align: right;">
+            <div id="exportCSV" class="{!IF(isMultiButtonVisible, 'col-sm-4', 'col-sm-2')}" style="float: right; text-align: right;">
                 <span id="exportCSV"></span>
                 <span id="exportPDF"></span>
-                <apex:outputPanel layout="none" rendered="{!isAirline}">
+                <apex:outputPanel layout="none" rendered="{!isMultiButtonVisible}">
                     <span id="advanced-filters" class="pull-right" style="margin-left: 1%"></span>
                 </apex:outputPanel>
             </div>
@@ -1118,7 +1128,7 @@
         <div id="table-container"></div>
 
         <!-- WMO-388 -->
-        <apex:outputPanel layout="none" rendered="{!isAirline}">
+        <apex:outputPanel layout="none" rendered="{!isMultiButtonVisible}">
             <div id="custom-filters" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
@@ -1136,9 +1146,6 @@
                                     <div class="col-sm-10">
                                         <label for="typeOfDownload">{!$Label.ISSP_FDS_DownloadOpts}</label>
                                         <select id="typeOfDownload" class="form-control required" onchange="changeTypeOfDownload(this);">
-                                            <option value="all">{!$Label.ISSP_FDS_AllCountries}</option>
-                                            <option value="allservices">{!$Label.ISSP_FDS_AllCountriesWithServices}</option>
-                                            <option value="custom" selected="selected">{!$Label.ISSP_FDS_ChooseCountries}</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1"></div>
