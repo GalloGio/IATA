@@ -20,6 +20,14 @@
 				pageLoad();
 			}
 			testSetTabTitle();
+			
+			// disable "enter"
+			document.getElementById("{!$Component.accountForm}").onkeypress = function(e)
+			{
+				var key = e.charCode || e.keyCode || 0;     
+				if (key == 13)
+					e.preventDefault();
+			}
 		}
 
 		function closeTab(){
@@ -51,6 +59,19 @@
 			
 		}
 
+		function checkAccountSelection()
+		{
+			document.getElementById('{!$Component.accountForm.accountSel.lookupField.selectHeField}').value = '';
+			rerenderAccountSel();
+
+			var messages = document.getElementById('j_id0:accountForm:accountSel:pageMesssagesPanel').querySelectorAll('li');
+			for (var i = 0; i != messages.length; i++)
+			{
+				if (messages[i].innerText.startsWith('New parent'))
+					messages[i].parentNode.removeChild(messages[i]);
+			}
+		}
+
 	</script>
 
 	<style>
@@ -77,9 +98,11 @@
 
 	<apex:outputPanel id="editPanel" rendered="{!!readOnly}">
 
-		<apex:form styleClass="pos-relative">
+		<apex:form styleClass="pos-relative" id="accountForm">
 
-			<apex:pageBlock >
+			<apex:actionFunction name="rerenderAccountSel" rerender="lookupField" />
+
+			<apex:pageBlock id="accountSel">
 			
 				<apex:panelGrid id="fieldPanel" columns="4">
 
@@ -89,7 +112,8 @@
 
 					<apex:pageBlockSection id="lookupField" columns="2" rendered="{!!readOnly}">
 						<apex:inputField label="Select HE Accounts" value="{!oscar.New_parent__c}" id="selectHeField"/>
-						<apex:commandButton title="Add" value="Add" action="{!addHierarchyFromHE}" status="blockEditing" rerender="selectedAccountsPanel, selectedHeSection, allSelectedAccountsTable, selectHeField, pageMesssagesPanel"/>
+						<apex:commandButton title="Add" value="Add" action="{!addHierarchyFromHE}" status="blockEditing" rerender="selectedAccountsPanel, selectedHeSection, allSelectedAccountsTable, selectHeField, pageMesssagesPanel, lookupField"
+							oncomplete="checkAccountSelection();"/>
 					</apex:pageBlockSection>
 
 				</apex:panelGrid>
