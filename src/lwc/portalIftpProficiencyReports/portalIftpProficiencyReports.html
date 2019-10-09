@@ -1,0 +1,127 @@
+<!-- Proficiency Management Search -->
+<template>
+    <c-portal-iftp-export-data></c-portal-iftp-export-data>
+    <!-- Error panel -->
+    <template if:true={error}>
+        <c-error-panel errors={error} main-error-message={mainErrorMessage}></c-error-panel>
+    </template>
+
+    <div class="slds-card_boundary">
+        <lightning-card> 
+            <div slot="title">
+                <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                Search Criteria
+            </div>             
+           
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-m-left_x-small">
+                    <lightning-combobox
+                        name="ITP"
+                        label="ITP"
+                        value={itpValue}
+                        placeholder="Select ITP"
+                        options={itpOptions}
+                        onchange={handleChangeITP}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
+                    
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
+                    <lightning-combobox
+                        name="Month"
+                        label="Month"
+                        value={monthValue}
+                        placeholder="Select Month"
+                        options={monthOptions}
+                        onchange={handleChangeMonth}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
+                    <lightning-combobox
+                        name="YearCB"
+                        label="Year"
+                        value={yearValue}
+                        placeholder="Select Year"
+                        options={yearOptions}
+                        onchange={handleChangeYear}>
+                    </lightning-combobox>
+                </div>
+            </div>
+            <br/>
+            <lightning-button variant="neutral" label="Search" title="Search" class="slds-m-left_x-small"
+            icon-name="utility:filterList" icon-position="right" 
+            onclick={handleSearchButtonClick}>
+            </lightning-button>
+            <lightning-button variant="neutral" label="Reset" title="Reset Form" class="slds-m-left_x-small"
+            icon-name="utility:filterList" icon-position="right" 
+            onclick={handleResetButtonClick}>
+            </lightning-button>
+        </lightning-card>
+    </div>
+    
+    <template if:true={showSearch}>
+            <div class="slds-card_boundary slds-card_boundary slds-m-top_medium">
+                    <lightning-card>
+                        <div slot="title">
+                            <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                            Proficiency Report
+                        </div>
+                
+                        
+                        
+                <p class="slds-p-horizontal_small"></p>
+                    <template if:true={loading}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+                    <template if:false={loading}>
+                        <div if:true={dataRecords}>
+                            <div class="slds-p-around_medium slds-grid slds-wrap slds-gutters_x-small slds-grid_align-end">
+                                <div class="slds-grid slds-gutters">
+                                    <lightning-button 
+                                        variant="neutral" 
+                                        label="Download Data as CSV file"
+                                        class="slds-m-left_x-small"
+                                        onclick={handleExportToCsv}>
+                                    </lightning-button>
+                                    <lightning-button 
+                                        variant="neutral" 
+                                        label="Download Data as Excel file"
+                                        class="slds-m-left_x-small slds-m-right_small"
+                                        onclick={handleExportToExcel}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                            <p class="slds-p-horizontal_small">
+                            <br/>
+                            <lightning-datatable
+                                key-field="uniqueRowId"
+                                data={data}
+                                columns={columns}
+                                sorted-by={sortedBy}
+                                sorted-direction={sortedDirection}
+                                onsort={updateColumnSorting}
+                                onrowselection={getSelectedRows}
+                                onrowaction={handleRowAction}
+                                onheaderaction={handleHeaderAction}>
+                            </lightning-datatable>
+                            <br/><br/>
+                            </p>
+                        </div>
+                        <div if:false={dataRecords}>
+                            <div class="slds-text-align_center">
+                                <div class="slds-text-heading_medium">
+                                    <h3>No Results</h3>
+                                </div>
+                            </div>                            
+                        </div>                    
+                    </template>
+                </p>
+            </lightning-card>
+        </div>
+    </template>
+
+
+</template>

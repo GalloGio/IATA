@@ -1,5 +1,13 @@
 public without sharing class PortalIftpUtils {
 
+    @AuraEnabled
+    public static boolean isCommunity(){
+        Id siteId = Site.getSiteId(); // take a look at the apex class Site, you may find more useful method concerning site/community
+        if (siteId != null) {
+            return true;
+        }
+        return false;
+    }
 
     @AuraEnabled(cacheable=false)
     public static UserInfoRecordsWrapper getUserInfo(){
@@ -295,6 +303,31 @@ public without sharing class PortalIftpUtils {
                                             FROM Role_Address__c 
                                             WHERE Account_Role_Relationship__r.From__r.Account__c = :userAcc.contact.accountid 
                                             AND Address__r.Code__c in :stationsCodes ];
+
+        return companies;
+    }
+
+
+    @AuraEnabled(cacheable=true)
+    public static List<Account_Role_Relationship__c> getITPConnectedToAirline(){
+
+        Id userId = System.UserInfo.getUserId();
+
+        User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
+
+        List<Account_Role_Relationship__c> companies = [SELECT To__r.Account__r.name  
+                                            FROM Account_Role_Relationship__c 
+                                            WHERE From__r.Account__c = :userAcc.contact.accountid];
+
+        return companies;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<Account> getAllITP(){
+
+        List<Account> companies = [SELECT name  
+                                            FROM Account 
+                                            WHERE Sector__c = 'Airline Supplier' AND Category__c = 'Fuel Supplier'];
 
         return companies;
     }
