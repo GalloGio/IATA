@@ -46,7 +46,7 @@ export default class PortalContactList extends LightningElement {
     set labels(value) { this._labels = value; }
 
     @api isAccount;
-
+    @track _actionName = '';
     @api openmodel;
     @api recordid;
     @track originalRecords;
@@ -293,6 +293,7 @@ export default class PortalContactList extends LightningElement {
                             variant: 'error'
                         });
                         this.dispatchEvent(toastEvent);
+                        this.refreshview();
                     }
                 })
                 .catch(error => {
@@ -303,6 +304,7 @@ export default class PortalContactList extends LightningElement {
                         variant: 'error'
                     });
                     this.dispatchEvent(toastEvent);
+                    this.refreshview();
             });
         }
     }
@@ -369,6 +371,7 @@ export default class PortalContactList extends LightningElement {
                         });
                         this.dispatchEvent(toastEvent);
                         this.refreshview();
+                        this.closeInactiveModal();
                     } else {
                         this.hasError = true;
                         this.errorMessage = results.errorMsg;
@@ -383,6 +386,8 @@ export default class PortalContactList extends LightningElement {
                         variant: 'error'
                     });
                     this.dispatchEvent(toastEvent);
+                    this.refreshview();
+                    this.closeInactiveModal();
             });
         }
     }
