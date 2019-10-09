@@ -53,6 +53,19 @@
         <unique>false</unique>
     </fields>
     <label>Case Process Type</label>
+    <listViews>
+        <fullName>All_w_details</fullName>
+        <columns>MasterLabel</columns>
+        <columns>Type__c</columns>
+        <columns>DeveloperName</columns>
+        <columns>KPI_Reference_Value__c</columns>
+        <columns>KPI_Reference_Field__c</columns>
+        <columns>Reason__c</columns>
+        <columns>Record_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All w details</label>
+        <language>en_US</language>
+    </listViews>
     <pluralLabel>Case Process Types</pluralLabel>
     <visibility>Public</visibility>
 </CustomObject>
