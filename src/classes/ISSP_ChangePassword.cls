@@ -300,11 +300,15 @@ public without sharing class ISSP_ChangePassword {
 
                 System.debug('setIFTPUser : after ! accContRoleCheck');
 
-                Account_Role__c accRole = [SELECT id, account__r.recordtypeid, account__r.Sector__c, account__r.Category__c 
+                List<Account_Role__c> lAccRole = [SELECT id, account__r.recordtypeid, account__r.Sector__c, account__r.Category__c 
                                             FROM Account_Role__c 
                                             WHERE account__c = :userInfo.accountId AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
 
-                System.debug('accRole: ' + accRole);
+                Account_Role__c accRole = new Account_Role__c();
+
+                if(lAccRole.size() > 0){
+                    accRole = lAccRole[0];
+                } 
 
                 if(accRole != null){
                     bAccRole = true;
