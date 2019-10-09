@@ -20,11 +20,12 @@ public without sharing class GCS_RegistrationController{
     public static boolean registration(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
     	System.debug('GCS Registration process - account information : ' + acc);
     	if(acc.Id != null){
-    		Account existingAccount = [SELECT Sector__c,IATA_ISO_Country__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,IATA_ISO_Billing_State__c
+    		Account existingAccount = [SELECT Sector__c,Category__c,IATA_ISO_Country__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,IATA_ISO_Billing_State__c
     				FROM Account 
     				WHERE Id =: acc.Id];
     				
     		acc.Sector__c = existingAccount.Sector__c;
+            acc.Category__c = existingAccount.Category__c;
     		acc.IATA_ISO_Country__c = existingAccount.IATA_ISO_Country__c;
     		acc.IATA_ISO_Shipping_Country__c = existingAccount.IATA_ISO_Shipping_Country__c;
     		acc.IATA_ISO_Shipping_State__c = existingAccount.IATA_ISO_Shipping_State__c;

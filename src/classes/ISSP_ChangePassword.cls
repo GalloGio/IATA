@@ -162,6 +162,11 @@ public without sharing class ISSP_ChangePassword {
                 System.debug(loggingLevel.FINE, '____ [cls ISSP_ChangePassword - changePassword]  - Validating FAQ permissions' );
                 PortalFAQsSharingCtrl.validateUserFAQsPermissions(UserInfo.getUserId());
 
+                //IFTP
+                System.debug('setIFTPUser START! ');
+                setIFTPUser();
+                System.debug('setIFTPUser END! ');
+                
                 return pageRef;
             }
         }
@@ -264,6 +269,148 @@ public without sharing class ISSP_ChangePassword {
         }
     }    
     
+    /**
+        IFTP                
+    */
+    public void setIFTPUser(){   
+    
+        try{
+            System.debug('setIFTPUser INIT! ');
+
+            Boolean bAccRole = false;
+            Boolean bContRole = false;
+            Account userAcc = new Account();
+
+            // String sLog = '';
+            String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'ITP');
+            // String RECTYPE_Others = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
+            
+            User userInfo = [SELECT id, accountId, ContactId FROM USER WHERE id=: UserInfo.getUserId()];
+            // sLog = 'userInfo.accountId: ' + userInfo.accountId+ '\n';
+            // sLog += 'RECTYPE_ITP_AccRole: ' + RECTYPE_ITP_AccRole+ '\n';
+            System.debug('userInfo: ' + userInfo);
+
+            List<Account_Contact_Role__c> accContRoleCheck = [SELECT id FROM Account_Contact_Role__c WHERE Service_Rendered__c = 'IFTP' AND Contact__c = :userInfo.ContactId];
+            
+            System.debug('accContRoleCheck: ' + accContRoleCheck);
+            System.debug('accContRoleCheck.size(): ' + accContRoleCheck.size());
+
+            //if no Acc Cont Roles then create one and also create the Portal Service access
+            if(accContRoleCheck.size() == 0){
+
+                System.debug('setIFTPUser : after ! accContRoleCheck');
+
+                Account_Role__c accRole = [SELECT id, account__r.recordtypeid, account__r.Sector__c, account__r.Category__c 
+                                            FROM Account_Role__c 
+                                            WHERE account__c = :userInfo.accountId AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
+
+                System.debug('accRole: ' + accRole);
+
+                if(accRole != null){
+                    bAccRole = true;
+                    userAcc.recordtypeid = accRole.account__r.recordtypeid;
+                    userAcc.Sector__c = accRole.account__r.Sector__c;
+                    userAcc.Category__c = accRole.account__r.Category__c;
+                }else{
+                    userAcc = [SELECT recordtypeid, Sector__c, Category__c FROM Account WHERE id = :userInfo.accountId];
+                }
+
+                System.debug('userAcc.Sector__c: ' + userAcc.Sector__c);
+                System.debug('userAcc.Category__c: ' + userAcc.Category__c);
+
+                // if(userAcc.recordtypeid == RECTYPE_Others && userAcc.Sector__c == 'Airline Supplier' && userAcc.Category__c == 'Fuel Supplier'){
+                if(userAcc.Sector__c == 'Airline Supplier' && userAcc.Category__c == 'Fuel Supplier'){
+                
+                    String RECTYPE_ITP_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
+                
+                    Contact_Roles__c contRoles = [SELECT id, Name FROM Contact_Roles__c WHERE Name = 'ITP Training Coordinator' limit 1];                       
+                    System.debug('contRoles: ' + contRoles);
+                    Portal_Applications__c pa = [SELECT id FROM Portal_Applications__c WHERE name = 'IFTP' limit 1];
+                    System.debug('pa: ' + pa);
+
+                    PermissionSet psAbsorb = [SELECT Id FROM PermissionSet WHERE Name = 'Absorb'];
+                    
+
+                    if(contRoles != null){
+                        bContRole = true;
+                    }
+                
+                    Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
+                    // accContRoleToInsert.Company_Code__c = employeeToAdd.code.trim();
+                    accContRoleToInsert.Service_Rendered__c = 'IFTP';
+                    accContRoleToInsert.Status__c = 'Active';
+                    accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
+                    if(bAccRole){
+                        accContRoleToInsert.Account_Role__c = accRole.Id;
+                    }
+
+                    accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
+
+                    if(bContRole){
+                        accContRoleToInsert.Contact_Roles__c = contRoles.id;
+                    }
+
+                    accContRoleToInsert.Details__c = '';
+                    accContRoleToInsert.Contact__c = userInfo.ContactId;
+
+                    insert accContRoleToInsert;
+
+                    Account_Contact_Role__c accContRoleToInserted = [SELECT Name FROM Account_Contact_Role__c WHERE id = :accContRoleToInsert.Id LIMIT 1];
+
+                    System.debug('accContRoleToInserted: ' + accContRoleToInserted);
+                    System.debug('accContRoleToInserted.Name: ' + accContRoleToInserted.Name);
+                    String newEmployeeCode = 'TC-' + accContRoleToInserted.Name.split('-').get(1).replaceFirst('^0+','');
+                    accContRoleToInserted.Company_Code__c = newEmployeeCode;
+                    System.debug('newEmployeeCode: ' + newEmployeeCode);
+                    
+                    update accContRoleToInserted;
+
+                    Contact cont = [SELECT id, FirstName, LastName FROM Contact WHERE Id = :userInfo.ContactId LIMIT 1];
+            
+                    List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
+                    IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP, 
+                                                                        accContRoleToInserted.Company_Code__c, 
+                                                                        cont.FirstName, 
+                                                                        cont.LastName);
+                    IftpHistoryRecordsToBeInserted.add(ihrec);
+
+                    if(IftpHistoryRecordsToBeInserted.size() > 0){
+                        portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
+                    }
+
+                    Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
+                        Portal_Application__c = pa.id,
+                        Right__c = 'Access Requested',
+                        Contact__c = userInfo.ContactId,
+                        Favourite_Service__c = true
+                    );
+                    insert portalApplicationRight;
+
+                    assignPermissionSet(psAbsorb.Id, userInfo.id);
+                       
+                    
+                    System.debug('accContRoleToInsert: ' + accContRoleToInsert);
+            
+                }
+            }
+        }catch (Exception ex) {
+            // errorMessage.add(ex.getMessage());
+            System.debug('ex.getMessage(): ' + ex.getMessage());
+            System.debug('ex.getStackTraceString(): ' + ex.getStackTraceString());
+        } 
+
+    }
+    
+    @future
+    private static void assignPermissionSet(Id absorbId, Id userId){
+        PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = absorbId, AssigneeId = userId);
+        System.debug('psa: ' + psa);
+                    
+        insert psa;
+    }
+
+
+
     public static void increaseCodeCoverage(){
     	Integer i = 0;
     	i = 0;
