@@ -120,11 +120,7 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
     onchangeSearchInput(event){
         this.searchText = event.target.value;
         
-        if (this.searchText.length > 0) {
-            this.showCross = true;
-        } else {
-            this.showCross = false;
-        }
+        this.showCross = this.searchText.length > 0;
 
         // Clear the timeout if it has already been set.
         // This will prevent the previous task from executing
