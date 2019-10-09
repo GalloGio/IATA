@@ -151,19 +151,6 @@ public class portalIftpTrainingRecordsTest {
         User u2 = [select id, profile.name from user where Email = 'test.cont4@test.com' limit 1];
         System.debug('u2 - ' + u2);
 
-        List<portalIftpTrainingRecords.CertificationProficiencyWrapper> recordsToUpdateList = new List<portalIftpTrainingRecords.CertificationProficiencyWrapper>();
-        portalIftpTrainingRecords.CertificationProficiencyWrapper recordToUpdate = new portalIftpTrainingRecords.CertificationProficiencyWrapper();
-        recordToUpdate.address_Id = [SELECT Id FROM Address__c WHERE code__c like 'PTX' LIMIT 1].Id;
-        recordToUpdate.employee_code = 'Abc';
-        recordToUpdate.address_code = 'GVX';
-        recordToUpdate.certification_code = 'P1';
-        recordToUpdate.contact_role_certification_Id = [SELECT Id FROM Contact_Role_certification__c WHERE certification__r.code__c like 'P1' AND Account_Contact_Role__R.Company_Code__c like 'Abc' LIMIT 1].ID;
-        recordToUpdate.proficiency = 'Yes';
-        recordToUpdate.proficiency_granted_by = 'Coordinator, ITP Coordinator';
-
-        recordsToUpdateList.add(recordToUpdate);
-
-
         Id ITP_id = [SELECT Id FROM Account WHERE Name = 'ITP Account' LIMIT 1].Id;
         String itpIdStr = '' + ITP_id;
         Id certificationId = [SELECT Certification__c FROM IFTP_Certification_Detail__c WHERE General_Training__c = 'No' AND  Prerequisite_Level__c = 'Level 2' LIMIT 1].Id;
@@ -195,14 +182,28 @@ public class portalIftpTrainingRecordsTest {
         searchValues2.add('null');   //'null',                //place holder for lastName
         searchValues2.add('Level 2');   //auxLevel
 
+        Id certificationId2 = [SELECT Certification__c FROM IFTP_Certification_Detail__c WHERE General_Training__c = 'No' AND  Prerequisite_Level__c = 'Level 3' LIMIT 1].Id;
+        String certificationIdStr2 = '' + certificationId2;
+        System.debug('certificationIdStr2 - ' + certificationIdStr2);
+
+        List<String> searchValues3 = new List<String>();
+        searchValues3.add('GVX');   //auxStations,
+        searchValues3.add(itpIdStr);   //auxItp,
+        searchValues3.add('null');   //auxExpirationStatus,
+        searchValues3.add(certificationIdStr2);   //auxAircraftType,
+        searchValues3.add('Yes');   //'null',    //auxProficiency,
+        searchValues3.add('null');   //auxFromDate,
+        searchValues3.add('null');   //auxToDate,
+        searchValues3.add('null');   //'null',               //place holder for firstName
+        searchValues3.add('null');   //'null',                //place holder for lastName
+        searchValues3.add('Level 3');   //auxLevel
+
         System.runAs(u2) {
             List<portalIftpTrainingRecords.TrainingRecordsWrapper> resultsList = new List<portalIftpTrainingRecords.TrainingRecordsWrapper>();
             resultsList = portalIftpTrainingRecords.getTrainingRecordsDetail(searchValues, searchType);
-
-            Boolean result = portalIftpTrainingRecords.updateCertificationProficiency(recordsToUpdateList);
-
             resultsList = portalIftpTrainingRecords.getTrainingRecordsDetail(searchValues, searchType);
             resultsList = portalIftpTrainingRecords.getTrainingRecordsDetail(searchValues2, searchType2);
+            resultsList = portalIftpTrainingRecords.getTrainingRecordsDetail(searchValues3, searchType);
         }
         Test.stopTest();
     }
@@ -212,7 +213,7 @@ public class portalIftpTrainingRecordsTest {
 
         Test.startTest();
         
-        User u2 = [select id, profile.name from user where Email = 'test.cont4@test.com' limit 1];
+        User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
         System.debug('u2 - ' + u2);
         List<portalIftpTrainingRecords.CertificationProficiencyWrapper> recordsToUpdateList = new List<portalIftpTrainingRecords.CertificationProficiencyWrapper>();
         portalIftpTrainingRecords.CertificationProficiencyWrapper recordToUpdate = new portalIftpTrainingRecords.CertificationProficiencyWrapper();
@@ -232,4 +233,73 @@ public class portalIftpTrainingRecordsTest {
         }
         Test.stopTest();
     }
+
+    static testMethod void updateCertificationEnrollTest(){
+        portalIftpTestClass.test_config();
+
+        Test.startTest();
+        
+        User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
+        System.debug('u2 - ' + u2);
+
+        System.runAs(u2) {
+
+
+        }
+        Test.stopTest();
+    }
+
+    static testMethod void getAllTrainingRecordsForDetailViewTest(){
+        portalIftpTestClass.test_config();
+
+        Test.startTest();
+        
+        User u2 = [select id, profile.name from user where Email = 'test.cont4@test.com' limit 1];
+        System.debug('u2 - ' + u2);
+        String searchType = 'RecordsDetail';
+
+        List<IFTP_Certification_Detail__c> lcertification = [SELECT Certification__c FROM IFTP_Certification_Detail__c WHERE General_Training__c = 'No'];
+        String certificationIdStr = '';
+        if(!lcertification.isEmpty()){
+            Boolean first = true;
+            for(IFTP_Certification_Detail__c cert: lcertification){
+                if(!first){
+                    certificationIdStr += ',';
+                    first = false;
+                } 
+                certificationIdStr = certificationIdStr += cert.Certification__c;
+            }
+        }
+        
+        System.runAs(u2) {
+            Map<String, List<Role_Address__c>> stationsMap = PortalIftpUtils.getAirlineITPsByStation();
+            Set<String> lCodes = stationsMap.keySet();
+            String stationCodeStr = '';
+            if(!lCodes.isEmpty()){
+                Boolean first = true;
+                for(String str: lCodes){
+                    if(!first){
+                        stationCodeStr += ',';
+                        first = false;
+                    } 
+                    stationCodeStr = stationCodeStr += str;
+                }
+            }
+            List<String> searchValues = new List<String>();
+            searchValues.add(stationCodeStr);   //auxStations,
+            searchValues.add('null');   //auxItp,
+            searchValues.add('null');   //auxExpirationStatus,
+            searchValues.add(certificationIdStr);   //auxAircraftType,
+            searchValues.add('Yes');   //'null',    //auxProficiency,
+            searchValues.add('null');   //auxFromDate,
+            searchValues.add('null');   //auxToDate,
+            searchValues.add('null');   //'null',               //place holder for firstName
+            searchValues.add('null');   //'null',                //place holder for lastName
+            searchValues.add('Level 2, Level 3'); 
+
+            List<portalIftpTrainingRecords.TrainingRecordsWrapper> res =  portalIftpTrainingRecords.getAllTrainingRecordsForDetailView(searchValues, searchType);
+        }
+        Test.stopTest();
+    }
+
 }
