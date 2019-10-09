@@ -137,8 +137,6 @@ public without sharing class ISSP_ChangePassword {
                         pageref = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/?'+serviceNameParam));
                     }
                     
-					if (communityName=='CNS') pageRef = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/?CommunityName='+communityName));
-                    
                     if (tempPass) updateUsers();
                 }
                 else{
