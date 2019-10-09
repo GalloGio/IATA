@@ -53,8 +53,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
         }
         if(searchCriteriaValues.employeeCode != null && String.isnotblank(searchCriteriaValues.employeeCode)){
             String employeeCode = searchCriteriaValues.employeeCode;
-            System.debug('____ [cls PortalIftEmployeeRecordsManagement - getITPEmployeesWithStationsInfo] employeeCode - ' + employeeCode);
-            System.debug('____ [cls PortalIftEmployeeRecordsManagement - getITPEmployeesWithStationsInfo] employeeCode.length() - ' + employeeCode.length());
             sQueryConditions.add('Company_Code__c = :employeeCode');
         }
 
@@ -66,9 +64,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             }
             
         }
-        System.debug('____ [cls PortalIftEmployeeRecordsManagement - getITPEmployeesWithStationsInfo] conditionsStr - ' + conditionsStr);
+        
         sQuery += conditionsStr;
-        System.debug('____ [cls PortalIftEmployeeRecordsManagement - getITPEmployeesWithStationsInfo] sQuery - ' + sQuery);
 
         List<Account_Contact_Role__c> queryResults =  Database.query(sQuery);
         List<Account_Contact_Role__c> emps = new List<Account_Contact_Role__c>();
@@ -144,8 +141,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                 rw = new ResultWrapper(employeeToAdd.code, aux, false);
             }
 
-            System.debug('____ [cls PortalEmployeeRecordsManagement - addNewEmployee] rw - ' + rw);
-
             if(allMessages.isEmpty()){
 
                 contactToInsert.FirstName = employeeToAdd.first_name.trim();
@@ -195,11 +190,9 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                                                     FROM Role_Address__c 
                                                     WHERE Account_Contact_Role__c = :accContRoleToInsert.id];
                         delete existingRoleAddresses;
-                        System.debug('____ [cls PortalEmployeeRecordsManagement - addNewEmployee UPDATE] contactToInsert - ' + contactToInsert );
 
                     } else {
                         insert contactToInsert;
-                        System.debug('____ [cls PortalEmployeeRecordsManagement - addNewEmployee INSERT] contactToInsert 22- ' + contactToInsert );
 
                         accContRoleToInsert.Contact__c = contactToInsert.Id;
 
@@ -219,8 +212,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                     rw.accContRoleManaged = accContRoleToInsert;
                     
                 } catch (DMLException e) {
-                    System.debug('____ [cls PortalEmployeeRecordsManagement - addNewEmployee] DMLException - ' + e );
-                    System.debug('____ [cls PortalEmployeeRecordsManagement - addNewEmployee] DMLException - ' + e.getStackTraceString() );
+                    System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - addNewEmployee] DMLException - ' + e );
+                    System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - addNewEmployee] DMLException - ' + e.getStackTraceString() );
                     Database.rollback(sp);
 
                     rw = new ResultWrapper('', 'An error has occured while saving data', false);
@@ -229,8 +222,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             }
         }
         catch (Exception e){
-            System.debug('____ [cls PortalEmployeeRecordsManagement - addNewEmployee] Exception - ' + e );
-            System.debug('____ [cls PortalEmployeeRecordsManagement - addNewEmployee] Exception - ' + e.getStackTraceString() );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - addNewEmployee] Exception - ' + e );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - addNewEmployee] Exception - ' + e.getStackTraceString() );
                     
             rw = new ResultWrapper('', 'An error has occured while saving data', false);
         }  
@@ -243,7 +236,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
         ResultWrapper result;       
         try {
-            System.debug('____ [cls PortalEmployeeRecordsManagement - inactivateEmployee] dataToInactivate - ' + dataToInactivate );
             List<Role_Address__c> roleAdressToBeDeleted = new List<Role_Address__c>();
             List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
 
@@ -257,7 +249,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                 Contact contactToUpdate = new Contact();
                 contactToUpdate.Id = auxAccContRol.Contact__c;
                 contactToUpdate.Status__c = auxAccContRol.Status__c;
-                System.debug('____ [cls PortalEmployeeRecordsManagement - inactivateEmployee] auxAccContRol - ' + auxAccContRol );
 
                 IFTP_History__c ih = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Stop_Working_for_ITP, 
                                                                                     auxAccContRol.Company_Code__c, 
@@ -322,8 +313,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                     result.accContRoleManaged = auxAccContRol;
 
                 } catch (DMLException e) {
-                    System.debug('____ [cls PortalEmployeeRecordsManagement - inactivateEmployee] DMLException - ' + e );
-                    System.debug('____ [cls PortalEmployeeRecordsManagement - inactivateEmployee] DMLException - ' + e.getStackTraceString() );
+                    System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - inactivateEmployee] DMLException - ' + e );
+                    System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - inactivateEmployee] DMLException - ' + e.getStackTraceString() );
                     Database.rollback(sp);
 
                     result = new ResultWrapper( '', 'An error has occured while saving data', false);
@@ -333,8 +324,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             }             
         }
         catch (Exception e){
-            System.debug('____ [cls PortalEmployeeRecordsManagement - inactivateEmployee] Exception - ' + e );
-            System.debug('____ [cls PortalEmployeeRecordsManagement - inactivateEmployee] Exception - ' + e.getStackTraceString() );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - inactivateEmployee] Exception - ' + e );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - inactivateEmployee] Exception - ' + e.getStackTraceString() );
                     
             result = new ResultWrapper('', 'An error has occured while saving data', false);
         }  
@@ -357,7 +348,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                 mAccEmps.put(emp.Company_Code__c, emp);
             }  
 
-            System.debug('____ [cls PortalEmployeeRecordsManagement - updateEmployee] recordToUpdate - ' + recordToUpdate);
             List<String> allMessages = new List<String>();
             Contact contactToUpdate = new Contact();
             Account_Contact_Role__c employeeToUpdate = (Account_Contact_Role__c)JSON.deserialize(JSON.serialize(recordToUpdate), Account_Contact_Role__c.class);
@@ -365,8 +355,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             Account_Contact_Role__c accCountRolInDatabase = [SELECT Id, Status__c FROM Account_Contact_Role__c WHERE Id = :employeeToUpdate.Id LIMIT 1];
 
             if(accCountRolInDatabase.Status__c.equalsIgnoreCase('Active')){
-
-                System.debug('____ [cls PortalEmployeeRecordsManagement - updateEmployee] employeeToUpdate - ' + employeeToUpdate);
 
                 // Check mandatory fields
                 if(String.isBlank(employeeToUpdate.Company_Code__c)){
@@ -383,8 +371,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                 if(String.isBlank(employeeToUpdate.Last_Name__c)){
                     allMessages.add('Last Name is missing; ');
                 }
-
-                System.debug('____ [cls PortalEmployeeRecordsManagement - updateEmployee] allMessages.size()  - ' + allMessages.size() );
 
                 if(allMessages.size() > 0){
                     String aux = 'Failled: ';
@@ -423,8 +409,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                         }
 
                     } catch (DMLException e) {
-                        System.debug('____ [cls PortalEmployeeRecordsManagement - updateEmployee] DMLException - ' + e );
-                        System.debug('____ [cls PortalEmployeeRecordsManagement - updateEmployee] DMLException - ' + e.getStackTraceString() );
+                        System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - updateEmployee] DMLException - ' + e );
+                        System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - updateEmployee] DMLException - ' + e.getStackTraceString() );
                         Database.rollback(sp);
 
                         rw = new ResultWrapper('', 'An error has occured while saving data', false);
@@ -436,8 +422,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             }
         }
         catch (Exception e){
-            System.debug('____ [cls PortalEmployeeRecordsManagement - updateEmployee] Exception - ' + e );
-            System.debug('____ [cls PortalEmployeeRecordsManagement - updateEmployee] Exception - ' + e.getStackTraceString() );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - updateEmployee] Exception - ' + e );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - updateEmployee] Exception - ' + e.getStackTraceString() );
                     
             rw = new ResultWrapper( '', 'An error has occured while saving data', false);
         }  
@@ -450,8 +436,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
         ResultWrapper rw = new ResultWrapper();
         List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
         List<Address__c> ItpAddressesList = PortalIftpUtils.getITPStations();
-        System.debug('originalStationsList' + originalStationsList);
-        System.debug('newStationsList' + newStationsList);
         
         try{
             List<String> allMessages = new List<String>();
@@ -475,8 +459,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
             if(accCountRole.Status__c.equalsIgnoreCase('Active')){
 
-                System.debug('newRoleAddressesList' + newRoleAddressesList);
-                System.debug('originalRoleAddressesList' + originalRoleAddressesList);
                 for(Role_Address__c newRec: newRoleAddressesList ){
                     Boolean exists = false;
                     // Check if station to be added is already a station of that employee
@@ -489,7 +471,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                             }
                             exists = true;
                             originalRoleAddressesList.remove(j);
-                            System.debug('1111 roleAddressToUpdatePrimary' + roleAddressToUpdatePrimary);                                                                                                                                                                                                                                                                                                
                             break;
                         } else {
                             j++;
@@ -676,8 +657,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                
         }
         catch (Exception e){
-            System.debug('____ [cls PortalEmployeeRecordsManagement - updateEmployeeStations] Exception - ' + e );
-            System.debug('____ [cls PortalEmployeeRecordsManagement - updateEmployeeStations] Exception - ' + e.getStackTraceString() );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - updateEmployeeStations] Exception - ' + e );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - updateEmployeeStations] Exception - ' + e.getStackTraceString() );
                     
             rw = new ResultWrapper( '', 'An error has occured while saving data', false);
         }  
@@ -691,7 +672,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
         EmployeeTransferRequestWrapper employeeToTransferData = (EmployeeTransferRequestWrapper)JSON.deserialize(JSON.serialize(recordToRequestTransfer), EmployeeTransferRequestWrapper.class);
         
-        System.debug('employeeToTransferData' + employeeToTransferData);
         List<String> errorMessages = new List<String>();
 
         if(String.isBlank(employeeToTransferData.firstName)){
@@ -720,7 +700,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             Id ownerId = [Select Id FROM group WHERE Type = 'Queue' and Name = 'IFTP'].Id;
 
             ID ProcessRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
-            System.debug('ownerId' + ownerId);
 
             String firstName =      'Employee First Name: ' + employeeToTransferData.firstName + '  | \n';
             String lastName =       'Employee Last Name: ' + employeeToTransferData.lastName + '  | \n';
@@ -742,8 +721,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                 description += comments;
             }
 
-            System.debug('description' + description);
-
             Case transferCase = new Case();
             transferCase.recordtypeID = ProcessRTId;
             transferCase.AccountId = ui.accountId;
@@ -757,19 +734,17 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             transferCase.Reason1__c  = 'IFTP Request Record Transfer';
             transferCase.Region__c = ui.accountRegion;
             transferCase.BSPCountry__c = ui.accountCountry;
-            System.debug('transferCase' + transferCase);
 
             Savepoint sp = Database.setSavepoint();
             try {
                 insert transferCase;
-                System.debug('transferCase' + transferCase);
                 resultWrapper = new EmployeeTransferRequestResultWrapper(employeeToTransferData.firstName + employeeToTransferData.lastName,
                                                                         'Transfer requested successfully. ',
                                                                         true);
                 resultWrapper.transferCase = transferCase;
             } catch (DMLException e) {
-                    System.debug('____ [cls PortalEmployeeRecordsManagement - requestEmployeeTransfer] DMLException - ' + e );
-                    System.debug('____ [cls PortalEmployeeRecordsManagement - requestEmployeeTransfer] DMLException - ' + e.getStackTraceString() );
+                    System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - requestEmployeeTransfer] DMLException - ' + e );
+                    System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - requestEmployeeTransfer] DMLException - ' + e.getStackTraceString() );
                     Database.rollback(sp);
 
                     resultWrapper = new EmployeeTransferRequestResultWrapper(employeeToTransferData.firstName + employeeToTransferData.lastName, 
@@ -808,8 +783,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             return false;
         }
         catch (Exception e){
-            System.debug('____ [cls PortalEmployeeRecordsManagement - resetEmployeePassword] Exception - ' + e );
-            System.debug('____ [cls PortalEmployeeRecordsManagement - resetEmployeePassword] Exception - ' + e.getStackTraceString() );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - resetEmployeePassword] Exception - ' + e );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - resetEmployeePassword] Exception - ' + e.getStackTraceString() );
             return false;
         }  
         
