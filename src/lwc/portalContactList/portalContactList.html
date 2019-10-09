@@ -27,7 +27,7 @@
                     <thead>
                         <tr>
                             <th class="tableLefty"></th>
-                            <th class="underLinded">
+                            <th class="underLined">
                                 <lightning-input 
                                     type="checkbox"  
                                     name="options"
@@ -35,7 +35,7 @@
                                     onchange={handleRadioAllOptions}>
                                 </lightning-input>
                             </th>
-                            <th class="underLinded">
+                            <th class="underLined">
                                 <!-- arrow spacer -->
                             </th>
                             <template for:each={fieldsList.ROWS} for:item="field" for:index="index">
@@ -48,7 +48,7 @@
                                         icon-name="utility:arrowdown" size="xx-small" data-name={field.fieldName}>></lightning-icon>
                                 </th>
                             </template>
-                            <th class="underLinded">
+                            <th class="underLined">
                                 <!-- three dots icon (contact access) -->
                             </th>
                             <th class="tableLefty"></th>
@@ -59,7 +59,7 @@
                         <tbody key={record.Id}>
                             <tr>
                                 <td class="tableLefty"></td>
-                                <td class="underLinded">
+                                <td class="underLined">
                                     <lightning-input 
                                         type="checkbox" 
                                         name="options"
@@ -68,7 +68,7 @@
                                         onchange={handleRadioOptions}>
                                     </lightning-input>
                                 </td>
-                                <td class="underLinded chevronColumn" onclick={openRecordDetail} data-item={index}>
+                                <td class="underLined chevronColumn" onclick={openRecordDetail} data-item={index}>
                                     <div class="cursorPointer inline-block">
                                         <lightning-icon class="darkBlueIcon" if:true={record.open}
                                             icon-name="utility:chevrondown" size="xx-small" data-item={index}>
@@ -94,7 +94,7 @@
                                         </span>
                                     </td>
                                 </template>
-                                <td class="underLinded">
+                                <td class="underLined">
                                     <lightning-button-menu
                                         class="removeArrowFromButtonMenu"        
                                         variant="container" 
@@ -104,21 +104,21 @@
                                                 data-item={record.Id}
                                                 data-name="approve"
                                                 class="text-bold"
-                                                label="Approve"
+                                                label={_labels.ISSP_Activate}
                                                 onclick={grantAccess}>
                                             </lightning-menu-item>
                                             <lightning-menu-item
                                                 data-item={record.Id}
                                                 data-name="approveAdmin"
                                                 class="text-bold"
-                                                label="Approve as Admin"
+                                                label={_labels.ISSP_MakeAdmin}
                                                 onclick={grantAccess}>
                                             </lightning-menu-item>                                            
                                             <lightning-menu-item
                                                 data-item={record.Id}
                                                 data-name="inactive"
                                                 class="text-bold"
-                                                label="Inactive"
+                                                label={_labels.ISSP_AMS_eBulletin_Disabled}
                                                 onclick={denyAccess}>
                                             </lightning-menu-item>
                                     </lightning-button-menu>

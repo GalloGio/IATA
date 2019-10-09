@@ -804,14 +804,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
     }
 
     grantAccess(event) {
-        let action = event.target.dataset.item;
-
-        this.action = action;
+        this.action = event.target.dataset.item;
     }
 
     denyAccess(event) {
-        let action = event.target.dataset.item;
-
-        this.action = action;
+        this.action = event.target.dataset.item;
     }
 }
