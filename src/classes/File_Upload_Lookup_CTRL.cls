@@ -28,10 +28,10 @@ public without sharing class File_Upload_Lookup_CTRL {
         }
 
 
-        //filter out duplicates
+        //get only GADM Data Submitters
         Map<Id, String> resultsMap = new Map<Id, String>();
 
-        List<Contact_Role_Service_Access__c> accesses = [SELECT Id, Contact__c, Contact__r.Name FROM Contact_Role_Service_Access__c WHERE Contact__c = :contactIds AND Status__c = 'Granted' AND Contact_Role__r.Contact_Roles__r.Name = 'GADM User'];
+        List<Contact_Role_Service_Access__c> accesses = [SELECT Id, Contact__c, Contact__r.Name FROM Contact_Role_Service_Access__c WHERE Contact__c = :contactIds AND Service__r.Name = 'GADM' AND Status__c = 'Granted' AND Contact_Role__r.Contact_Roles__r.Name = 'GADM Data Submitter'];
         for(Contact_Role_Service_Access__c access : accesses) {
             resultsMap.put(access.Contact__c, access.Contact__r.Name);
         }

@@ -19,7 +19,22 @@ public class File_Upload_Lookup_CTRL_TEST {
         contactRoles.Name = 'GADM User';
         insert contactRoles;
 
+        Contact_Roles__c contactRoles2 = new Contact_Roles__c();
+        contactRoles2.Name = 'GADM Data Submitter';
+        insert contactRoles2;
+
+        Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
         Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
+
+        Account_Contact_Role__c contactRole1 = new Account_Contact_Role__c();
+        contactRole1.RecordTypeId = functionalRecordTypeId;
+        contactRole1.Account_Role__c = accountRole.Id;
+        contactRole1.Contact__c = testContact.Id;
+        contactRole1.Contact_Roles__c = contactRoles.Id;
+        contactRole1.Service_Rendered__c = 'GADM';
+        insert contactRole1;
+
+
         Account_Contact_Role__c contactRole = new Account_Contact_Role__c();
         contactRole.RecordTypeId = groupRecordTypeId;
         contactRole.Account_Role__c = accountRole.Id;
@@ -27,6 +42,14 @@ public class File_Upload_Lookup_CTRL_TEST {
         contactRole.Contact_Roles__c = contactRoles.Id;
         contactRole.Service_Rendered__c = 'GADM';
         insert contactRole;
+
+        Account_Contact_Role__c contactRole2 = new Account_Contact_Role__c();
+        contactRole2.RecordTypeId = functionalRecordTypeId;
+        contactRole2.Account_Role__c = accountRole.Id;
+        contactRole2.Contact__c = testContact.Id;
+        contactRole2.Contact_Roles__c = contactRoles2.Id;
+        contactRole2.Service_Rendered__c = 'GADM';
+        insert contactRole2;
 
         Portal_Applications__c service = new Portal_Applications__c();
         service.Name = 'GADM';
@@ -38,6 +61,20 @@ public class File_Upload_Lookup_CTRL_TEST {
         access.Contact_Role__c = contactRole.Id;
         access.Service__c = service.Id;
         insert access;
+
+        Contact_Role_Service_Access__c access1 = new Contact_Role_Service_Access__c();
+        access1.Contact__c = testContact.Id;
+        access1.Status__c = 'Granted';
+        access1.Contact_Role__c = contactRole1.Id;
+        access1.Service__c = service.Id;
+        insert access1;
+
+        Contact_Role_Service_Access__c access2 = new Contact_Role_Service_Access__c();
+        access2.Contact__c = testContact.Id;
+        access2.Status__c = 'Granted';
+        access2.Contact_Role__c = contactRole2.Id;
+        access2.Service__c = service.Id;
+        insert access2;
 
     }
 

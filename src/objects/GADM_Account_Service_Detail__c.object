@@ -121,6 +121,7 @@
     <fields>
         <fullName>Active_User_Count__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>Max number of active GADM Users for an actor.</inlineHelpText>
         <label>Active User Count</label>
         <precision>3</precision>
         <required>false</required>
@@ -167,6 +168,7 @@
     <fields>
         <fullName>Expected_amount_of_data_submissions__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>Number of expected data submissions for actor during submission period.</inlineHelpText>
         <label>Expected amount of data submissions</label>
         <precision>6</precision>
         <required>false</required>
@@ -276,6 +278,7 @@
         <fullName>Submission_Period_Extension__c</fullName>
         <defaultValue>0</defaultValue>
         <externalId>false</externalId>
+        <inlineHelpText>Number of extra days added to submission period length.</inlineHelpText>
         <label>Submission Period Extension</label>
         <precision>2</precision>
         <required>false</required>
