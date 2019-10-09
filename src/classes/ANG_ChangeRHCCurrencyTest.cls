@@ -1,10 +1,10 @@
 @isTest
 private class ANG_ChangeRHCCurrencyTest {
 
-    @TestSetup
-    static void setup(){
-        
-        Test.startTest();
+	@TestSetup
+	static void setup(){
+		
+		Test.startTest();
 
 		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
 			Name = 'BSP-PT',
@@ -48,11 +48,11 @@ private class ANG_ChangeRHCCurrencyTest {
 		accountGE.IATA_ISO_Country__c = countryPT.Id;
 		accountGE.RecordTypeId = iataAgencyRecTypeId;
 		accountGE.Type = 'IATA Passenger Sales Agent';
-        accountGE.IATACode__c = '999999999';
-        accountGE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
-        accountGE.Status__c = 'Approved';
-        accountGE.ANG_Accreditation_Model__c = 'Multicountry';
-        accountGE.Remittance_frequency__c = 'M';
+		accountGE.IATACode__c = '999999999';
+		accountGE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
+		accountGE.Status__c = 'Approved';
+		accountGE.ANG_Accreditation_Model__c = 'Multicountry';
+		accountGE.Remittance_frequency__c = 'M';
 		insert accountGE;
 
 		Account accountHE = new Account();
@@ -62,11 +62,11 @@ private class ANG_ChangeRHCCurrencyTest {
 		accountHE.Location_Class__c = 'P';
 		accountHE.IATA_ISO_Country__c = countryUK.Id;
 		accountHE.RecordTypeId = iataAgencyRecTypeId;
-        accountHE.IATACode__c = '999999998';
-        accountHE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
-        accountHE.Status__c = 'Approved';
-        accountHE.ANG_Accreditation_Model__c = 'Multicountry';
-        accountHE.Remittance_frequency__c = 'M';
+		accountHE.IATACode__c = '999999998';
+		accountHE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
+		accountHE.Status__c = 'Approved';
+		accountHE.ANG_Accreditation_Model__c = 'Multicountry';
+		accountHE.Remittance_frequency__c = 'M';
 
 		Account accountAE = new Account();
 		accountAE.Name = 'Multicountry AE PT';
@@ -75,15 +75,15 @@ private class ANG_ChangeRHCCurrencyTest {
 		accountAE.Location_Class__c = 'P';
 		accountAE.IATA_ISO_Country__c = countryPT.Id;
 		accountAE.RecordTypeId = iataAgencyRecTypeId;
-        accountAE.IATACode__c = '999999997';
-        accountAE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
-        accountAE.Status__c = 'Approved';
-        accountAE.ANG_Accreditation_Model__c = 'Multicountry';
-        accountAE.Remittance_frequency__c = 'M';
+		accountAE.IATACode__c = '999999997';
+		accountAE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
+		accountAE.Status__c = 'Approved';
+		accountAE.ANG_Accreditation_Model__c = 'Multicountry';
+		accountAE.Remittance_frequency__c = 'M';
 
 		insert new List<Account>{accountHE, accountAE};
 
-        ANG_RHCHelper.createRHCInfo(new Set<Id>{accountGE.Id}, false);
+		ANG_RHCHelper.createRHCInfo(new Set<Id>{accountGE.Id}, false);
 
 		Contact cont = new Contact(
 			AccountId = accountGE.id, 
@@ -96,18 +96,18 @@ private class ANG_ChangeRHCCurrencyTest {
 		);
 
 		insert cont;
-        
-        Case cse = new Case();
-        cse.AccountId = accountGE.Id;
-        cse.ContactId = cont.Id;
-        cse.RecordTypeId = AMS_Utils.RECTYPE_SAAM;
-        insert cse;
-                
-        Test.stopTest();
+		
+		Case cse = new Case();
+		cse.AccountId = accountGE.Id;
+		cse.ContactId = cont.Id;
+		cse.RecordTypeId = AMS_Utils.RECTYPE_SAAM;
+		insert cse;
+				
+		Test.stopTest();
 
-    }
+	}
 
-    @isTest static void changeRhcCurrencyTest(){
+	@isTest static void changeRhcCurrencyTest(){
 		
 		ANG_RHC_Information__c rhc = 
 			[SELECT 
@@ -134,14 +134,14 @@ private class ANG_ChangeRHCCurrencyTest {
 
 		Test.setCurrentPage(pageRef);
 
-    	ANG_ChangeRHCCurrency controller = new ANG_ChangeRHCCurrency(); 
+		ANG_ChangeRHCCurrency controller = new ANG_ChangeRHCCurrency(); 
 
 		controller.save();
 
 		controller.rhc.CurrencyIsoCode = 'USD';
-        controller.caseToUpdate.ParentId = cse.Id;
-        		
-        controller.save();
+		controller.caseToUpdate.ParentId = cse.Id;
+				
+		controller.save();
 
 		cse = 
 			[SELECT 
@@ -171,5 +171,5 @@ private class ANG_ChangeRHCCurrencyTest {
 		
 		System.assertEquals('USD', rhc.CurrencyIsoCode, 'RHC Currency must be USD');
 
-    }
+	}
 }
