@@ -6125,6 +6125,44 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         </valueSet>
     </fields>
     <fields>
+        <fullName>Business_City__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>City of the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business City</label>
+        <referenceTo>IATA_ISO_City__c</referenceTo>
+        <relationshipLabel>Accounts with Business City</relationshipLabel>
+        <relationshipName>Accounts_with_Billing_City</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Business_Postal_Code__c</fullName>
+        <description>Postal Code for the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business Postal Code</label>
+        <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_Street__c</fullName>
+        <description>Street of the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business Street</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>CAMP_Agreement__c</fullName>
         <description>FDS. Agency Accounts. Used to track Agent compliance / submission of executed CAMP Agreements and to follow up with Agents pending submission of agreements to IATA.</description>
         <externalId>false</externalId>
@@ -15799,6 +15837,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     </fields>
     <fields>
         <fullName>SIS_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
         <description>Used by SIS team to store the SIS ID for integration purposes</description>
         <externalId>false</externalId>
         <label>SIS ID</label>
@@ -15807,7 +15846,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
-        <unique>false</unique>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>SIS_Member_Code__c</fullName>
