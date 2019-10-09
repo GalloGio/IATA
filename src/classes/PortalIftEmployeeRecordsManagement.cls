@@ -659,6 +659,11 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                     }
                     rw = new ResultWrapper('', message, true);
                     rw.roleAddressesInserted = roleAddressToBeInsertedList;
+
+
+                    //Touch Account Contact Role for creation of platform event for Mulesoft
+                    Account_Contact_Role__c toTouch = new Account_Contact_Role__c(id=accCountRole.Id);
+                    update toTouch;
                     
                 } catch (DMLException e) {
                     Database.rollback(sp);
@@ -724,7 +729,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             String formerStations = 'Employee Former Stations: ' + employeeToTransferData.formerStations + ' | \n';
             String acrId =          'Employee Account Contact Role Name: ' + employeeToTransferData.acrId + ' \n';
 
-
             String description = 'Request Employee Records Transfer Data: \n\n';
             description += firstName;
             description += lastName;
@@ -734,7 +738,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             description += acrId;
 
             if(String.isNotBlank(employeeToTransferData.comments)){
-                String comments = ' | Comments: ' + employeeToTransferData.comments + '\n';
+                String comments = '| Comments: ' + employeeToTransferData.comments + '\n';
                 description += comments;
             }
 
@@ -789,10 +793,10 @@ public without sharing class PortalIftEmployeeRecordsManagement {
     public static Boolean resetEmployeePassword(String globalId, String newPassword){     
 
         try{
-            String jsonBody = '{"newPassword":'+ newPassword + '}';
+            String jsonBody = '{"newPassword": "'+ newPassword + '"}';
             HttpRequest req = new HttpRequest();
             req.setHeader('Content-Type', 'application/json; charset=UTF-8');
-            req.setEndpoint('callout:IFTP_Absorb_Reset_Pass/users/'+ globalId +'/password');
+            req.setEndpoint('callout:IFTP_Absorb_Reset_Pass/users/' + globalId + '/password');
             req.setMethod('DELETE');
             req.setBody(jsonBody);
             Http http = new Http();
