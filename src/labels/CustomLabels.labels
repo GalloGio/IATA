@@ -4655,6 +4655,13 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <value>Type of case</value>
     </labels>
     <labels>
+        <fullName>CSP_Unexcepted_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Unexcepted_Error</shortDescription>
+        <value>An unexpected error occured!</value>
+    </labels>
+    <labels>
         <fullName>CSP_Welcome_Panel_Bullet_1_Desc</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
