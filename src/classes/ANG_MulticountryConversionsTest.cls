@@ -239,7 +239,7 @@ private class ANG_MulticountryConversionsTest {
 
     ANG_MulticountryConversionAccountSelCtrl controller = new ANG_MulticountryConversionAccountSelCtrl(stdOscarCtrl); 
 
-    System.assertEquals(2, controller.noteList.size(), 'Two notes must be present');
+    System.assertEquals(3, controller.noteList.size(), 'Three notes must be present');
     System.assertEquals(1, controller.heAccountSelectionLst.size(), 'Only one HE must be on the selected HE\'s');
     System.assertEquals(2, controller.accountSelectionLst.size(), 'Only two accounts must be on the selected list');
 
@@ -373,7 +373,7 @@ private class ANG_MulticountryConversionsTest {
 
     List<AMS_Process_Detail__c> processDetails = new List<AMS_Process_Detail__c>();
 
-    List<Account> accountList = [SELECT ID, Name, Location_type__c FROM Account Where (Location_Type__c = 'HE' OR Name = 'Standard AE PT') AND ID <> :oscar.Account__c];
+    List<Account> accountList = [SELECT ID, Name, Location_type__c FROM Account Where Name IN ( 'Standard HE PT','Standard HE FR', 'Standard AE PT', 'Standard AE UK' ) AND ID <> :oscar.Account__c];
 
     //Create AMS_Process_Detail for the existing Accounts - excluding the Oscar's Account
     for(Account acc : accountList){
@@ -398,8 +398,9 @@ private class ANG_MulticountryConversionsTest {
 		List<ANG_MulticountryHierarchySelectionCrtl.HierarchyItem> hierarchyValues = selectionCrtl.hierarchyValues;
 
 		for (ANG_MulticountryHierarchySelectionCrtl.HierarchyItem it : hierarchyValues) {
-      if(it.acc.Name == 'Standard HE UK') it.isHE = true;
-      if(it.acc.Name == 'Standard HE FR') it.isAE = true;
+      if(it.acc.Name == 'Standard AE UK') it.isAE = true;
+      if(it.acc.Name == 'Standard HE FR') it.isHE = true;
+      if(it.acc.Name == 'Standard AE PT') it.isAE = false;
 		}
 
     //AE account should not be alone in a BSP 
@@ -408,10 +409,8 @@ private class ANG_MulticountryConversionsTest {
 
     //Test Different RF in same BSP
     for (ANG_MulticountryHierarchySelectionCrtl.HierarchyItem it : hierarchyValues) {
-      if(it.acc.Name == 'Standard HE FR') { 
-        it.isHE = true;
-        it.isAE = false;
-      }
+      if(it.acc.Name == 'Standard AE UK') it.isAE = false;
+      if(it.acc.Name == 'Standard HE FR') it.isHE = true;
       if(it.acc.Name == 'Standard AE PT') it.isAE = true;
 		}
     selectionCrtl.saveConversion();

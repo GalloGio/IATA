@@ -1,10 +1,24 @@
 @isTest
 private class ANG_ChangeRHCCurrencyTest {
 
+	private static Set<String> currencySet = new Set<String>{'USD', 'EUR'};
+
 	@TestSetup
 	static void setup(){
-		
+
 		Test.startTest();
+
+		ANG_RHC_Currencies__c dollarCurrency = new ANG_RHC_Currencies__c();
+		dollarCurrency.Name = 'USD';
+		dollarCurrency.CurrencyIsoCode = 'USD';
+		dollarCurrency.Currency_Name__c  = 'US Dollar';
+
+		ANG_RHC_Currencies__c euroCurrency = new ANG_RHC_Currencies__c();
+		euroCurrency.Name = 'EUR';
+		euroCurrency.CurrencyIsoCode = 'EUR';
+		euroCurrency.Currency_Name__c  = 'Euro';
+
+		insert new List<ANG_RHC_Currencies__c>{dollarCurrency, euroCurrency};
 
 		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
 			Name = 'BSP-PT',
@@ -21,7 +35,7 @@ private class ANG_ChangeRHCCurrencyTest {
 		insert new List<AMS_Settlement_System__c>{bspPT, bspGB};
 
 		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c();
-		
+
 		countryPT.Name = 'Portugal';
 		countryPT.ISO_Code__c = 'PT';
 		countryPT.ANG_Enable_NewGen__c = true;
@@ -29,7 +43,7 @@ private class ANG_ChangeRHCCurrencyTest {
 		countryPT.Multicountry_Enabled__c = true;
 
 		IATA_ISO_Country__c countryUK = new IATA_ISO_Country__c();
-		
+
 		countryUK.Name = 'United Kingdom';
 		countryUK.ISO_Code__c = 'GB';
 		countryUK.ANG_Enable_NewGen__c = true;
@@ -86,45 +100,45 @@ private class ANG_ChangeRHCCurrencyTest {
 		ANG_RHCHelper.createRHCInfo(new Set<Id>{accountGE.Id}, false);
 
 		Contact cont = new Contact(
-			AccountId = accountGE.id, 
-			Firstname = 'Richard', 
-			Lastname = 'Vaughan', 
-			Phone = '666123456', 
-			MobilePhone = '911111111', 
-			Email = 'richard.vaughan@test.com', 
+			AccountId = accountGE.id,
+			Firstname = 'Richard',
+			Lastname = 'Vaughan',
+			Phone = '666123456',
+			MobilePhone = '911111111',
+			Email = 'richard.vaughan@test.com',
 			Financial_Assessment_Contact__c = true
 		);
 
 		insert cont;
-		
+
 		Case cse = new Case();
 		cse.AccountId = accountGE.Id;
 		cse.ContactId = cont.Id;
 		cse.RecordTypeId = AMS_Utils.RECTYPE_SAAM;
 		insert cse;
-				
+
 		Test.stopTest();
 
 	}
 
 	@isTest static void changeRhcCurrencyTest(){
-		
-		ANG_RHC_Information__c rhc = 
-			[SELECT 
+
+		ANG_RHC_Information__c rhc =
+			[SELECT
 				Id,
 				ANG_AccountId__c
-			 FROM ANG_RHC_Information__c 
-			 WHERE 
+			 FROM ANG_RHC_Information__c
+			 WHERE
 			 	ANG_AccountId__r.IATACode__c ='999999999'
 			 LIMIT 1
 			];
 
-		Case cse = 
-			[SELECT 
-				Id 
-			 FROM Case 
-			 WHERE 
-			 	AccountId = :rhc.ANG_AccountId__c 
+		Case cse =
+			[SELECT
+				Id
+			 FROM Case
+			 WHERE
+			 	AccountId = :rhc.ANG_AccountId__c
 			 LIMIT 1
 			];
 
@@ -134,41 +148,51 @@ private class ANG_ChangeRHCCurrencyTest {
 
 		Test.setCurrentPage(pageRef);
 
-		ANG_ChangeRHCCurrency controller = new ANG_ChangeRHCCurrency(); 
+		ANG_ChangeRHCCurrency controller = new ANG_ChangeRHCCurrency();
+
+		controller.toggleEditMode();
+
+		system.assert(!controller.isEdit);
 
 		controller.save();
+
+		List<SelectOption> currencyLst = controller.plOptions;
+
+		for(SelectOption so : currencyLst){
+			System.assert(currencySet.contains(so.getValue()));
+		}
 
 		controller.rhc.CurrencyIsoCode = 'USD';
 		controller.caseToUpdate.ParentId = cse.Id;
-				
+
 		controller.save();
 
-		cse = 
-			[SELECT 
+		cse =
+			[SELECT
 				Id,
 				Reason1__c,
 				CaseArea__c,
 				Subject
-			 FROM Case 
-			 WHERE 
-			 	AccountId = :rhc.ANG_AccountId__c 
+			 FROM Case
+			 WHERE
+			 	AccountId = :rhc.ANG_AccountId__c
 			 LIMIT 1
 			];
 
 		System.assertEquals('RHC Changes', cse.Reason1__c, 'Reason1__c must be \'RHC Changes\'');
 		System.assertEquals('Risk Management Process', cse.CaseArea__c, 'CaseArea__c must be \'RHC Changes\'');
 		System.assertEquals('RHC currency updated', cse.Subject, 'Subject must be \'RHC Changes\'');
-		
-		rhc = 
-			[SELECT 
-				Id, 
-				CurrencyIsoCode 
+
+		rhc =
+			[SELECT
+				Id,
+				CurrencyIsoCode
 			 FROM ANG_RHC_Information__c
-			 WHERE 
+			 WHERE
 			 	Id = :rhc.Id
 			 LIMIT 1
 			];
-		
+
 		System.assertEquals('USD', rhc.CurrencyIsoCode, 'RHC Currency must be USD');
 
 	}
