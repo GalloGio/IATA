@@ -1595,8 +1595,9 @@ public without sharing class PortalIftpUtils {
 
             insert iftpH;
 
-        }catch(Exception e){
-            System.debug('The following exception has occurred: ' + e.getMessage());
+        }catch(Exception ex){
+            System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - removeProficiency] Exception - ' + ex );
+            System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - removeProficiency] Exception - ' + ex.getStackTraceString() ); 
             return false;
         }
 
