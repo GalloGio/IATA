@@ -503,9 +503,13 @@ global class ISSP_AmazonS3_Ctrl {
                 RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'AMS_File'),
                 Size_MB__c = fielsize* 0.000001, //convert to MB
                 isPublic__c = true,
-                Case__c = cse.Id,
-                Form__c = formId
+                Case__c = cse.Id
             );
+
+            if (!String.isBlank(formId)) {
+                amazonFile.Form__c = formId;
+            }
+
             insert amazonFile;
 
             if(cse.Status!='Draft') {
@@ -538,9 +542,13 @@ global class ISSP_AmazonS3_Ctrl {
                 RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'AMS_File'),
                 Size_MB__c = uploadedFileSize* 0.000001, //convert to MB
                 isPublic__c = true,
-                Case__c = Id,
-                Form__c = formId
+                Case__c = Id
             );
+
+            if (!String.isBlank(formId)) {
+                amazonFile.Form__c = formId;
+            }
+
             insert amazonFile;
 
             if(cse.Status!='Draft') {
