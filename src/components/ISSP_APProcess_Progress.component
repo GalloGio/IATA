@@ -17,49 +17,49 @@
 
     <!-- BSP -->
     <apex:outputPanel layout="block" styleclass="progress iata-tabs" rendered="{!operationType=='BSP'}">
-        <div class="progress-bar iata-tab {!IF(step==1,'','progress-bar-off')}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            A. Participation Country &amp; Type
+        <div class="progress-bar iata-tab {!IF(step==1,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+             <span class="progress-tab-step">A</span> Participation Country &amp; Type
         </div>
-        <div class="progress-bar iata-tab {!IF(step==2,'','progress-bar-off')}" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            B. Review Country Requirements
+        <div class="progress-bar iata-tab {!IF(step==2,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+             <span class="progress-tab-step">B</span> Review Country Requirements
         </div>
-        <div class="progress-bar iata-tab {!IF(step==3,'','progress-bar-off')}" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            C. BSP {!IF(areaType=='Airline Joining', 'Joining Form', IF(changeType=='Minor database changes','Change Request','Bank details change'))}
+        <div class="progress-bar iata-tab {!IF(step==3,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+             <span class="progress-tab-step">C</span> BSP {!IF(areaType=='Airline Joining', 'Joining Form', IF(changeType=='Minor database changes','Change Request','Bank details change'))}
         </div>
-        <div class="progress-bar iata-tab {!IF(step==4,'','progress-bar-off')}" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            D. Submit to IATA
+        <div class="progress-bar iata-tab {!IF(step==4,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+             <span class="progress-tab-step">D</span> Submit to IATA
         </div>
     </apex:outputPanel>
 
     <!-- CASS -->
     <apex:outputPanel layout="block" styleclass="progress iata-tabs" rendered="{!operationType=='CASS'}">
-        <div class="progress-bar iata-tab {!IF(step==1,'','progress-bar-off')}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            A. Participation Country &amp; Type
+        <div class="progress-bar iata-tab {!IF(step==1,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+             <span class="progress-tab-step">A</span> Participation Country &amp; Type
         </div>
-        <div class="progress-bar iata-tab {!IF(step==2,'','progress-bar-off')}" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            B. Review Country Requirements
+        <div class="progress-bar iata-tab {!IF(step==2,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+             <span class="progress-tab-step">B</span> Review Country Requirements
         </div>
-        <div class="progress-bar iata-tab {!IF(step==3,'','progress-bar-off')}" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            C. CASS {!IF(areaType=='Airline Joining', 'Joining Form', IF(changeType=='Minor database changes','Change Request','Bank details change'))}
+        <div class="progress-bar iata-tab {!IF(step==3,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+             <span class="progress-tab-step">C</span> CASS {!IF(areaType=='Airline Joining', 'Joining Form', IF(changeType=='Minor database changes','Change Request','Bank details change'))}
         </div>
-        <div class="progress-bar iata-tab {!IF(step==4,'','progress-bar-off')}" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            D. Submit to IATA
+        <div class="progress-bar iata-tab {!IF(step==4,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+             <span class="progress-tab-step">D</span> Submit to IATA
         </div>
     </apex:outputPanel>
 
         <!-- ICH -->
     <apex:outputPanel layout="block" styleclass="progress iata-tabs" rendered="{!operationType=='ICH'}">
-        <div class="progress-bar iata-tab {!IF(step==1,'','progress-bar-off')}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            A. Participation type
+        <div class="progress-bar iata-tab {!IF(step==1,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+             <span class="progress-tab-step">A</span> Participation type
         </div>
-        <div class="progress-bar iata-tab {!IF(step==2,'','progress-bar-off')}" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            B. Review Requirements
+        <div class="progress-bar iata-tab {!IF(step==2,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+             <span class="progress-tab-step">B</span> Review Requirements
         </div>
-        <div class="progress-bar iata-tab {!IF(step==3,'','progress-bar-off')}" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            C. {!IF(isSIS, 'SIS & ICH Online Application', 'ICH Application')}
+        <div class="progress-bar iata-tab {!IF(step==3,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+             <span class="progress-tab-step">C</span> {!IF(isSIS, 'SIS & ICH Online Application', 'ICH Application')}
         </div>
-        <div class="progress-bar iata-tab {!IF(step==4,'','progress-bar-off')}" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            D. Support documents and Submit to IATA
+        <div class="progress-bar iata-tab {!IF(step==4,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+             <span class="progress-tab-step">D</span> Support documents and Submit to IATA
         </div>
     </apex:outputPanel>
 
