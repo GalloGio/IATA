@@ -274,6 +274,32 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>ANG_RHC_LocationType__c</fullName>
+        <description>Defines if RHC should take into account only the HE or include the AE from the hierarchy</description>
+        <externalId>false</externalId>
+        <label>RHC Location Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>HE only</fullName>
+                    <default>true</default>
+                    <label>HE only</label>
+                </value>
+                <value>
+                    <fullName>Include all AEs</fullName>
+                    <default>false</default>
+                    <label>Include all AEs</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Acli_Country__c</fullName>
         <description>The country name for acli</description>
         <externalId>false</externalId>
@@ -2088,6 +2114,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <fullName>Venezuela</fullName>
                     <default>false</default>
                     <label>Venezuela</label>
+                </value>
+                <value>
+                    <fullName>Virgin British Islands</fullName>
+                    <default>false</default>
+                    <label>Virgin British Islands</label>
                 </value>
                 <value>
                     <fullName>Yemen</fullName>

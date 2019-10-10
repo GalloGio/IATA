@@ -1,6 +1,9 @@
 trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after insert, after update) {
 
     if(!AMS_TriggerExecutionManager.checkExecution(AMS_OSCAR__c.getSObjectType(), 'AMS_OSCARTrigger')) { return; }
+
+    //WMO-564
+    if(AMS_OSCARTriggerHandler.isRunningAgeCalculator) { return; }
 	
 
     if (Trigger.isBefore && Trigger.isInsert) {

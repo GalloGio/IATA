@@ -71,9 +71,9 @@ public class ANG_ActivateDeactivateREBatch_Test{
 		insert new List<IATA_ISO_Country__c>{isoCntr1, isoCntr2, isoCntr3};
 
 		//Account
-		Account acc1= new Account(Name='Acc1', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr1.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C);
-		Account acc2= new Account(Name='Acc2', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr2.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C);
-		Account acc3= new Account(Name='Acc3', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr3.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C);		
+		Account acc1= new Account(Name='Acc1', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr1.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C, Reason__c = '21-NEW APPLICATION');
+		Account acc2= new Account(Name='Acc2', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr2.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C, Reason__c = '21-NEW APPLICATION');
+		Account acc3= new Account(Name='Acc3', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr3.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C, Reason__c = '21-NEW APPLICATION');		
 		insert new List<Account>{acc1, acc2, acc3};
 
 		

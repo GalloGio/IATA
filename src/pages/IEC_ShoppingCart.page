@@ -200,7 +200,7 @@
 
                                 <div class="footer-actions">
                                     <ul class="list actions">
-                                        <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category=publications&topic=New" class="button secondary">{!$Label.Button_Continue_Shopping}</a></li>
+                                        <li><a href="{!$Site.BaseRequestURL}/IEC_ProductList?category=publications&topic=New" class="button secondary">{!$Label.Button_Continue_Shopping}</a></li>
                                     </ul>
                                 </div>
                                 
@@ -355,7 +355,7 @@
 
                                 <div class="footer-actions">
                                     <ul class="list actions">
-                                        <li><a onclick="clickOnContinuePush();" href="{!$Site.BaseUrl}/IEC_ProductList?category=publications&topic=New" class="button secondary">{!$Label.Button_Continue_Shopping}</a></li>
+                                        <li><a onclick="clickOnContinuePush();" href="{!$Site.BaseRequestURL}/IEC_ProductList?category=publications&topic=New" class="button secondary">{!$Label.Button_Continue_Shopping}</a></li>
                                         <li>
                                             <!--
                                             <button class="button" onclick="startCheckout();">

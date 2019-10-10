@@ -1,0 +1,78 @@
+.icon-logo img{
+    width: 96px;
+    float: left;
+}
+
+.widthLimiter h2{
+    max-width: 1180px;
+    margin: 13px auto 0;
+    font-size: 35px;
+    color: #fff;
+    font-weight: normal;
+    font-family: "HelveticaNeueW01-Thin", "Helvetica Neue LT W10_35 Thin", Arial;
+    padding-bottom: 30px;
+} 
+
+.ft {
+    height:2px;
+    color:#828282;
+    background-color:#828282
+}
+
+.ft .footerSeparator {
+    height:2px;
+    color:#828282;
+    background-color:#828282
+}
+.noindex {
+    clear:both;
+    padding:0;
+    background-color:#535151;
+    color:#fff
+}
+
+.widthLimiter {
+    width:100%;
+    max-width:1180px;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    overflow:hidden
+}
+
+.header .icon-logo{font-size:48px;float:left;margin-left:5px;margin-right:40px}
+.externalLinks{margin:0 auto;float:left;padding-top:20px}
+.externalLinks li{display:inline-block;padding:20px 0;color:white;font-size:16px;font-weight:bold}
+.externalLinks li:first-child{padding-right:140px}
+.externalLinks a{font-size:14px;font-weight:normal;line-height:20px}
+.socialLinks{float:right;padding-top:40px;color:white}
+.socialLinks li{float:left;padding:0 35px}
+.copyright{max-width:1180px;font-size:14px;height:20px;padding:100px 0 40px;color:white;float: left;width: 100%;}
+.copyright p{float:left}
+.copyright ul{float:right}
+.copyright ul li{display:inline-block;border-left:1px solid #fff;padding:0 10px}
+.copyright ul li:first-child{border-left:0}
+.header {
+    background-color: #535151;
+    width: 100%;
+    height: 60px;
+    padding-top: 30px;
+    display: inline-table;
+}
+
+a:link, a:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
+.imgInfo {
+    background-color: #ffff;
+    height: 50px;
+    width: 50px;
+}
+
+.imgInfoRSS {
+    height: 20px;
+    width: 20px;
+    margin-top: 15px;
+}

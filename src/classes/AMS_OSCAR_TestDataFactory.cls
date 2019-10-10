@@ -208,7 +208,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		AMS_Person__c per = new AMS_Person__c(Name = 'teste', User__c = UserInfo.getUserId());
 		insert per;
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', AIMS_Area_Name__c = 'UNITED STATES')  ;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', AIMS_Area_Name__c = 'UNITED STATES',AMS_Default_State__c = 'US')  ;
         insert ctry ;
 
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
@@ -269,7 +269,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
 
-        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = oscarCase.Id, Account_Name__c=a1.Name, Short_Name__c=a1.Short_Name__c );
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = oscarCase.Id, Account_Name__c=a1.Name, Short_Name__c=a1.Short_Name__c,Branch_Office_Country__c = ctry.id,IATA_ISO_State__c=stt.Id);
         insert stagingArea;
 
         OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
@@ -307,8 +307,8 @@ public with sharing class AMS_OSCAR_TestDataFactory
 	public static void createCargoAgencyOSCARtestData()
 	{
 
-		IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='FR',ISO_Code__c='FR');
-		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='AR',ISO_Code__c='AR');
+		IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='FR',ISO_Code__c='FR',AMS_Default_State__c = 'FR');
+		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='AR',ISO_Code__c='AR',AMS_Default_State__c = 'AR');
 		insert new List<IATA_ISO_Country__c>{ctry1, ctry2};
 
 		AMS_Country_Specific_Attribute__c csa1 = new AMS_Country_Specific_Attribute__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'DGR_Minimum_Requirements'), Location_Class__c='R', Minimum_DGR_BR__c=1, Minimum_DGR_HO__c=1, IATA_ISO_Country__c=ctry1.Id);
@@ -334,7 +334,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
 
 		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(Account__c = cargoHO.id, RecordTypeId = AMS_Utils.RECTYPE_NEW, Process__c =AMS_Utils.new_HO);
 		insert OSCAR;
-
+		
 		Contact co1 = new Contact(AccountId = cargoHO.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin');
 		Contact co2 = new Contact(AccountId = cargoHO.id, Firstname = 'teste2', Lastname='test2', Phone = '911111112', MobilePhone = '911111112', Email = 'test2@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved Admin');
 		Contact co3 = new Contact(AccountId = cargoHO.id, Firstname = 'teste3', Lastname='test3', Phone = '911111113', MobilePhone = '911111113', Email = 'test3@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved');
@@ -351,6 +351,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(Account_Name__c = cargoHO.Name,
                 IATAcode__c = cargoHO.IATAcode__c,
                 Branch_Office_Country__c = cargoHO.IATA_ISO_Country__c,
+				IATA_ISO_State__c = stt.Id,
                 Location_Class__c = cargoHO.Location_Class__c,
                 Location_Type__c = cargoHO.Location_Type__c,
                 SAAM_Case__c = oscarCase.Id,
@@ -369,7 +370,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		AMS_Accreditation_Contact__c acontact2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Greg', Last_name__c='Plitt', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_DGA, RecordTypeId=trainedStaff);
 
 		AMS_Accreditation_Contact__c acontact3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Daff', Last_name__c='Duck', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_CATA, RecordTypeId=trainedStaff);
-
+		
 		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3};
 
 	}

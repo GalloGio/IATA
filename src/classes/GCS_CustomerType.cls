@@ -10,7 +10,8 @@ public class GCS_CustomerType implements Comparable{
                         'Other' => Label.ISSP_Other,
                         'Student' => Label.ISSP_Contact_About_IATA_Courses,
                         'Yes' => Label.ISSP_Yes,
-                        'No' => Label.ISSP_No
+                        'No' => Label.ISSP_No,
+                        'TSI_USA_Only' => Label.TSI_USA_Only
                 };
             }
             return customLabels;
