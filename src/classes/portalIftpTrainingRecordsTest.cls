@@ -228,7 +228,7 @@ public class portalIftpTrainingRecordsTest {
         System.debug('recordToUpdate - ' + recordToUpdate);
         
         System.runAs(u2) {
-            Boolean result = portalIftpTrainingRecords.updateCertificationProficiency(recordsToUpdateList);
+            portalIftpTrainingRecords.updateCertificationProficiency(recordsToUpdateList);
         }
         Test.stopTest();
     }
