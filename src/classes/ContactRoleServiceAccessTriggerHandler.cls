@@ -177,6 +177,10 @@ public without sharing class ContactRoleServiceAccessTriggerHandler {
         String bodyText = mail.getPlainTextBody();
         String replacedTextbody = bodyText.replace('*tense*', tense);
         mail.setPlainTextBody(replacedTextBody);
+        String bodyHtml = mail.getHtmlBody();
+        String replacedHtmlBody = bodyHtml.replace('*tense*', tense);
+        mail.setHtmlBody(replacedHtmlBody);
+
         mail.setToAddresses(new List<string>{
                 emailAddress
         });
@@ -186,7 +190,6 @@ public without sharing class ContactRoleServiceAccessTriggerHandler {
         mail.setSaveAsActivity(false);
         mail.setUseSignature(false);
         mail.setTreatTargetObjectAsRecipient(false);
-        string body = mail.getHtmlBody();
         return mail;
     }
 
