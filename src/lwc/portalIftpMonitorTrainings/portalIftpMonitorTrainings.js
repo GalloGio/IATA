@@ -459,40 +459,30 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
             if(dataToSave.length > 0){
                 this.loading = true;
                 updateCertificationEnroll({dataToSave: dataToSave })
-                .then(results => {
-                    if(results) {
-                        auxData.forEach(rec => {
-                            if(rec.setEnroll === 'Enroll'){
-                                rec.enrolled = 'Yes';
-                                rec.enrollmentStatus = 'Success';
-                                rec.enrollmentIcon = 'utility:check';
-                            } else if(rec.setEnroll === 'Unenroll'){
-                                rec.enrolled = '';
-                                rec.enrollmentStatus = 'Success';
-                                rec.enrollmentIcon = 'utility:check';
-                            } else if(rec.setEnroll === 'Stop'){
-                                rec.enrolled = '';
-                                rec.enrollmentStatus = 'Success';
-                                rec.enrollmentIcon = 'utility:check';
-                            }
-                        }) 
-                        this.data = auxData;  
-                        const event = new ShowToastEvent({
-                            title: 'Save Enrollments',
-                            message: 'Data updated successfully ',
-                            variant: 'success',
-                            mode: 'pester'
-                        });
-                        this.dispatchEvent(event);               
-                    } else {
-                        const event = new ShowToastEvent({
-                            title: 'Save Enrollments',
-                            message: 'Unable to save data. ',
-                            variant: 'error',
-                            mode: 'sticky'
-                        });
-                        this.dispatchEvent(event);
-                    }
+                .then(data => {
+                    auxData.forEach(rec => {
+                        if(rec.setEnroll === 'Enroll'){
+                            rec.enrolled = 'Yes';
+                            rec.enrollmentStatus = 'Success';
+                            rec.enrollmentIcon = 'utility:check';
+                        } else if(rec.setEnroll === 'Unenroll'){
+                            rec.enrolled = '';
+                            rec.enrollmentStatus = 'Success';
+                            rec.enrollmentIcon = 'utility:check';
+                        } else if(rec.setEnroll === 'Stop'){
+                            rec.enrolled = '';
+                            rec.enrollmentStatus = 'Success';
+                            rec.enrollmentIcon = 'utility:check';
+                        }
+                    }) 
+                    this.data = auxData;  
+                    const event = new ShowToastEvent({
+                        title: 'Save Enrollments',
+                        message: 'Data updated successfully ',
+                        variant: 'success',
+                        mode: 'pester'
+                    });
+                    this.dispatchEvent(event);               
                     this.loading = false;
                     
                 })
