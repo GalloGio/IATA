@@ -607,31 +607,31 @@ public without sharing class PortalIftpUtils {
             Map<String, List<String>> mapEmployeeInfoByEmployeeCode = new Map<String, List<String>>();
             for(Integer i=1;i<csvFileLines.size();i++){
                 string[] csvRecordData = csvFileLines[i].split(',');
-                if(String.isNotBlank(csvRecordData[0].remove('"').trim()) && mapEmployeeInfoByEmployeeCode.containsKey(csvRecordData[0].remove('"').trim())){
+                if(String.isNotBlank(clearString(csvRecordData[0])) && mapEmployeeInfoByEmployeeCode.containsKey(clearString(csvRecordData[0]))){
                         ImportResultsWrapper irw = new ImportResultsWrapper(
-                            csvRecordData[0].remove('"').trim(),
-                            csvRecordData[1].remove('"').trim() + ' ' + csvRecordData[2].remove('"').trim(), 
+                            clearString(csvRecordData[0]),
+                            clearString(csvRecordData[1])+ ' ' + clearString(csvRecordData[2]), 
                             'Employee Code duplicated in import CSV file. ',
                             'Failed');
-                        irw.firstName = csvRecordData[1].remove('"').trim();
-                        irw.lastName = csvRecordData[2].remove('"').trim();
+                        irw.firstName = clearString(csvRecordData[1]);
+                        irw.lastName = clearString(csvRecordData[2]);
                         results.add(irw);
 
-                        List<String> duplicatedRecord = mapEmployeeInfoByEmployeeCode.get(csvRecordData[0].remove('"').trim());
+                        List<String> duplicatedRecord = mapEmployeeInfoByEmployeeCode.get(clearString(csvRecordData[0]));
 
                         ImportResultsWrapper irw2 = new ImportResultsWrapper(
-                            duplicatedRecord[0].remove('"').trim(),
-                            duplicatedRecord[1].remove('"').trim() + ' ' + duplicatedRecord[2].remove('"').trim(), 
+                            clearString(duplicatedRecord[0]),
+                            clearString(duplicatedRecord[1]) + ' ' + clearString(duplicatedRecord[2]), 
                             'Employee Code duplicated in import CSV file. ',
                             'Failed');
-                        irw2.firstName = duplicatedRecord[1].remove('"').trim();
-                        irw2.lastName = duplicatedRecord[2].remove('"').trim();
+                        irw2.firstName = clearString(duplicatedRecord[1]);
+                        irw2.lastName = clearString(duplicatedRecord[2]);
                         results.add(irw2);
-                        mapEmployeeInfoByEmployeeCode.remove(csvRecordData[0].remove('"').trim());
+                        mapEmployeeInfoByEmployeeCode.remove(clearString(csvRecordData[0]));
                         
                 } else {
-                    if(String.isNotBlank(csvRecordData[0].remove('"').trim())){
-                        mapEmployeeInfoByEmployeeCode.put(csvRecordData[0].remove('"').trim(), csvRecordData);
+                    if(String.isNotBlank(clearString(csvRecordData[0]))){
+                        mapEmployeeInfoByEmployeeCode.put(clearString(csvRecordData[0]), csvRecordData);
                     }   
                 }
             }
@@ -652,17 +652,16 @@ public without sharing class PortalIftpUtils {
                     allMessages = new List<String>();
 
                     //Employee Code,First Name,Last Name,Coordinator,Business Email
-                    String companyCode = csvRecordData[0].remove('"').trim();
-                    String firstName = csvRecordData[1].remove('"').trim();
-                    String lastName = csvRecordData[2].remove('"').trim();
-                    //String coordinator = csvRecordData[3].trim().remove('"');
-                    String title =csvRecordData[3].remove('"').trim();
-                    String phone =csvRecordData[4].remove('"').trim();
+                    String companyCode = clearString(csvRecordData[0]);
+                    String firstName = clearString(csvRecordData[1]);
+                    String lastName = clearString(csvRecordData[2]);
+                    String title = clearString(csvRecordData[3]);
+                    String phone = clearString(csvRecordData[4]);
                     if(String.isBlank(phone)){
                         phone = '00';
                     }
 
-                    String details =csvRecordData[5].remove('"').trim();
+                    String details = clearString(csvRecordData[5]);
 
                     // Check mandatory fields
                     if(String.isBlank(companyCode)){
@@ -676,7 +675,7 @@ public without sharing class PortalIftpUtils {
                     }
 
                     // stations: Removes double quotes from string
-                    String stationsCodesString = csvRecordData[6].remove('"').trim();
+                    String stationsCodesString = clearString(csvRecordData[6]);
 
                     if(String.isBlank(stationsCodesString)){
                         allMessages.add('No station associated; ');
@@ -1079,8 +1078,8 @@ public without sharing class PortalIftpUtils {
 
             Integer index = 0;
             while(index < csvFileLines.size()){
-                if(String.isNotBlank(csvFileLines[index])){
-                    csvFileLines[index] = csvFileLines[index].remove('"').trim();
+                if(String.isNotBlank(clearString(csvFileLines[index]))){
+                    csvFileLines[index] = clearString(csvFileLines[index]);
                 }
                 if(String.isBlank(csvFileLines[index])){
                     csvFileLines.remove(index);
@@ -1569,17 +1568,6 @@ public without sharing class PortalIftpUtils {
             roleAddress.Proficiency_level__c = 'No';
             update roleAddress;
             
-            /*IFTP_History__c iftpH = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Loose_Proficiency, 
-                                                            roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c, 
-                                                            roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c, 
-                                                            roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c,
-                                                            roleAddress.Address__r.Code__c,
-                                                            roleAddress.Address__r.City__c,
-                                                            roleAddress.Contact_Role_Certification__r.Certification__r.Name,
-                                                            roleAddress.Proficiency_level__c,
-                                                            roleAddress.Proficiency_Granted_By__c
-                                                            );*/
-            
             IFTP_History__c iftpH = new IFTP_History__c();
             iftpH.Event_Type__c = String.valueOf(portalIftpHistoryManagement.Employee_Loose_Proficiency);
             iftpH.ITP_Name__c = 'IATA INTERNAL USER';
@@ -1609,9 +1597,10 @@ public without sharing class PortalIftpUtils {
     public static String getRedirectURL(){
 
         ISSP_CS__c url = ISSP_CS__c.getValues('Absorb SSO');
-        system.debug('URL: ' + url);
-
         return url.Value__c;
         
+    }
+    private static String clearString(String s){
+        return s.remove('"').trim();
     }
 }
