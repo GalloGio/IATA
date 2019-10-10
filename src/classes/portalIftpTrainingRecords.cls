@@ -230,8 +230,14 @@ public without sharing class portalIftpTrainingRecords {
                 }
             }
         }
+
+        List<String> lCertName = new List<String>();
+        for(TrainingRecordsWrapper rec: ltrWrapper){
+            lCertName.add(rec.trainingName);
+        }
+
         List<IFTP_Certification_Detail__c> certDetailList = [SELECT Certification__r.Name, General_Training__c, Prerequisite_Level__c
-                                                            FROM IFTP_Certification_Detail__c];
+                                                            FROM IFTP_Certification_Detail__c WHERE Certification__r.Name IN :lCertName];
 
         Map<String, IFTP_Certification_Detail__c> mapCertDetailByName = new Map<String, IFTP_Certification_Detail__c>();
         for(IFTP_Certification_Detail__c cert: certDetailList){
@@ -1240,7 +1246,7 @@ public without sharing class portalIftpTrainingRecords {
     }
 
     @AuraEnabled (cacheable=false)
-    public static Boolean updateCertificationEnroll(List<Object> dataToSave){
+    public static void updateCertificationEnroll(List<Object> dataToSave){
         Boolean updateOK = true;
         List<CertificationEnrollmentWrapper> dataToUpdate = (List<CertificationEnrollmentWrapper>)JSON.deserialize(JSON.serialize(dataToSave),List<CertificationEnrollmentWrapper>.class);
         List<Contact_Role_Certification__c> existing_contact_role_certification_list = new List<Contact_Role_Certification__c>();
@@ -1270,19 +1276,10 @@ public without sharing class portalIftpTrainingRecords {
                 contact_role_certification_to_update_list.add(existRec);
             }
         }
-        Savepoint sp = Database.setSavepoint();
-        try {
 
-            if(contact_role_certification_to_update_list.size() > 0){
-                update contact_role_certification_to_update_list;
-            }
-        
-        } catch (DMLException e) {
-            Database.rollback(sp);
-            updateOK = false;
+        if(contact_role_certification_to_update_list.size() > 0){
+            update contact_role_certification_to_update_list;
         }
-
-        return updateOK;
     }
     
     @AuraEnabled (cacheable=false)

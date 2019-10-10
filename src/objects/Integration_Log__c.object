@@ -177,6 +177,7 @@
     </fields>
     <fields>
         <fullName>RecordId__c</fullName>
+        <description>The Record ID of the record that this log entry refers to.</description>
         <externalId>false</externalId>
         <label>RecordId</label>
         <length>80</length>

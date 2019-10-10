@@ -20,17 +20,14 @@ export default class PortalIftpUploadOJT extends LightningElement {
         
         getUserInfo()
         .then(result => {
-            console.log(result);
             let myResult = JSON.parse(JSON.stringify(result));
             
             this.userInfo = myResult;
-            console.log(' this.userInfo: ',  this.userInfo);
-            console.log(' this.userInfo.accountRole: ',  this.userInfo.accountRole);
             this.myRecordId = this.userInfo.accountRole;
 
         })
         .catch(error => {
-            console.log('getITPStations - Error : ' + error);
+            console.error('PortalIftpUploadOJT - getUserInfo - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
         });  
@@ -40,9 +37,6 @@ export default class PortalIftpUploadOJT extends LightningElement {
         this.loadingSpinner = true;
         const uploadedFiles = JSON.parse(JSON.stringify(event.detail));
         let docdId = uploadedFiles[0].documentId;
-        
-        console.log('PortalIftpImportStations - handleUploadFinish - uploadedFiles: ',uploadedFiles );
-        console.log('PortalIftpImportStations - handleUploadFinish - docdId: ',docdId );
 
         manageUploadGlobalOJT({fileId: docdId})
         .then(result =>{

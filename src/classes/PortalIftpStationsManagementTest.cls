@@ -16,13 +16,9 @@ public class PortalIftpStationsManagementTest {
 
         User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
 
-        System.debug('u1 - ' + u1);
-
         System.runAs(u1) {
 
             Map<Id,List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>> itpStationsAirlines = PortalIftpStationsManagement.getItpStationsAirlines();
-        
-            System.debug('itpStationsAirlines - ' + itpStationsAirlines);
 
             List<PortalIftpStationsManagement.AirlinesItpAddressWrapper> toInsertDelete = new List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>();
             List<PortalIftpStationsManagement.AirlinesItpAddressWrapper> toInsert = new List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>();
@@ -49,9 +45,6 @@ public class PortalIftpStationsManagementTest {
             );
 
             toInsert.add(newRecord);
-
-            System.debug('toInsertDelete - ' + toInsertDelete);
-            System.debug('toInsert - ' + toInsert);
                     
             PortalIftpStationsManagement.UpdateItpAddressAirlinesResultsWrapper ins1del1 = PortalIftpStationsManagement.updateItpAddressAirlines(toInsert[0].itpAccRolId, toInsert, null);
             PortalIftpStationsManagement.UpdateItpAddressAirlinesResultsWrapper ins1del2 = PortalIftpStationsManagement.updateItpAddressAirlines(toInsert[0].itpAccRolId, toInsert, toInsertDelete);
@@ -71,13 +64,9 @@ public class PortalIftpStationsManagementTest {
 
         User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
 
-        System.debug('u1 - ' + u1);
-
         System.runAs(u1) {
 
-            Map<Id,List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>> itpStationsAirlines = PortalIftpStationsManagement.getItpStationsAirlines();
-        
-            System.debug('itpStationsAirlines - ' + itpStationsAirlines);
+            Map<Id,List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>> itpStationsAirlines = PortalIftpStationsManagement.getItpStationsAirlines();    
 
             List<PortalIftpStationsManagement.AirlinesItpAddressWrapper> toInsertDelete = new List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>();
             List<PortalIftpStationsManagement.AirlinesItpAddressWrapper> toInsert = new List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>();
@@ -86,10 +75,7 @@ public class PortalIftpStationsManagementTest {
                 toInsertDelete = itpStationsAirlines.get(idAdd);
                 break;
             }
-
-
-            System.debug('toInsertDelete - ' + toInsertDelete);
-            
+          
             PortalIftpStationsManagement.UpdateItpAddressAirlinesResultsWrapper ins = PortalIftpStationsManagement.updateItpAddressAirlines(toInsertDelete[0].itpAccRolId, null, toInsertDelete);
         
         }
@@ -108,13 +94,9 @@ public class PortalIftpStationsManagementTest {
 
         User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
 
-        System.debug('u1 - ' + u1);
-
         System.runAs(u1) {
 
             Map<Id,List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>> itpStationsAirlines = PortalIftpStationsManagement.getItpStationsAirlines();
-        
-            System.debug('itpStationsAirlines - ' + itpStationsAirlines);
 
             List<PortalIftpStationsManagement.AirlinesItpAddressWrapper> toInsertDelete = new List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>();
             List<PortalIftpStationsManagement.AirlinesItpAddressWrapper> toInsert = new List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>();
@@ -123,9 +105,6 @@ public class PortalIftpStationsManagementTest {
                 toInsertDelete = itpStationsAirlines.get(idAdd);
                 break;
             }
-
-
-            System.debug('toInsertDelete - ' + toInsertDelete);
             
             PortalIftpStationsManagement.UpdateItpAddressAirlinesResultsWrapper del = PortalIftpStationsManagement.updateItpAddressAirlines(toInsertDelete[0].itpAccRolId, toInsertDelete, null);
 
@@ -145,13 +124,9 @@ public class PortalIftpStationsManagementTest {
 
         User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
 
-        System.debug('u1 - ' + u1);
-
         System.runAs(u1) {
 
             Map<Id,List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>> itpStationsAirlines = PortalIftpStationsManagement.getItpStationsAirlines();
-        
-            System.debug('itpStationsAirlines - ' + itpStationsAirlines);
 
             List<PortalIftpStationsManagement.AirlinesItpAddressWrapper> toInsertDelete = new List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>();
             List<PortalIftpStationsManagement.AirlinesItpAddressWrapper> toInsert = new List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>();
@@ -160,9 +135,6 @@ public class PortalIftpStationsManagementTest {
                 toInsertDelete = itpStationsAirlines.get(idAdd);
                 break;
             }
-
-
-            System.debug('toInsertDelete - ' + toInsertDelete);
 
             PortalIftpStationsManagement.UpdateItpAddressAirlinesResultsWrapper insdel = PortalIftpStationsManagement.updateItpAddressAirlines(toInsertDelete[0].itpAccRolId, toInsertDelete, toInsertDelete);
         }

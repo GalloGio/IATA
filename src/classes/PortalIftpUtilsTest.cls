@@ -7,15 +7,12 @@ public class PortalIftpUtilsTest {
 
         User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
 
-        System.debug('u2 - ' + u2);
-
         Test.startTest();
 
         System.runAs(u2) {
 
             String sRoleAddr = 'ITP Trainee';
             List<Account_Contact_Role__c> empList = [Select Id, Contact__C, Contact__r.accountid from Account_Contact_Role__c];
-            System.debug('empList: ' + empList);
             
             Id empId = empList[0].Id;
             Id accId = empList[0].Contact__r.accountid;
@@ -75,8 +72,6 @@ public class PortalIftpUtilsTest {
 
         User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
 
-        System.debug('u2 - ' + u2);
-
         Id empItpId = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Emp Ins Document'].ContentDocumentId;
         Id empItpId2 = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Emp Ins Document2'].ContentDocumentId;
         Id stationItpId = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Station Ins Document'].ContentDocumentId;
@@ -93,7 +88,6 @@ public class PortalIftpUtilsTest {
                 i++;
                 roleAddr.Description__c = 'test upd ' + i;
             }
-            System.debug('roleAddrList3 - ' + roleAddrList3);
             PortalIftpUtils.InsertStationWrapper updStationWrapper = PortalIftpUtils.updateStation(roleAddrList3, null);
 
 
