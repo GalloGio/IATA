@@ -213,7 +213,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
 
         })
         .catch(error => {
-            console.log('getITPStations - Error : ' + error);
+            console.error('getITPStations - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
         }); 
@@ -258,7 +258,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
                 mode: 'pester'
             });
             this.dispatchEvent(event);
-            console.log('getITPStations - Error : ', error);
+            console.error('getITPStations - Error : ', error);
         }); 
     }
 
@@ -316,8 +316,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
         .then(result =>{
             if(result){
                 let myResults = JSON.parse(JSON.stringify(result));
-                console.log('myResults ', myResults);
-
                 let finalresults = [];
 
                 myResults.forEach(rec =>{
@@ -435,13 +433,10 @@ export default class PortalIftpManageEmployees extends LightningElement {
         .then(result => {
             let myResult = JSON.parse(JSON.stringify(result));
             allITPEmployees = myResult;
-            console.log('aITPEmployees', allITPEmployees);
-
 
             let existsInactive = false;
             allITPEmployees.forEach(emp => {
                 if(emp.Company_Code__c === this.employeeToInsert.code.trim() && emp.Status__c ==='Inactive'){
-                    console.log('there is an inactive employee with this code', existsInactive);
                     existsInactive = true;
                     this.employeeToInsert.id = emp.Id;
                     this.employeeToInsert.contactId = emp.Contact__c;
@@ -449,9 +444,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
                 }
             })
             if(allValid && existsInactive){
-                console.log('there is an inactive employee with this code', existsInactive);
                 this.openReactivateConfirmationModal = true;
-                console.log('this.recordToReactivate', this.recordToReactivate);
                 
             } else if (allValid && !existsInactive) {
                 this.loadingSpinner = true;
@@ -501,7 +494,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
                 mode: 'pester'
             });
             this.dispatchEvent(event);
-            console.log('getITPStations - Error : ', error);
+            console.error('getITPStations - Error : ', error);
         });
     }
 
@@ -624,8 +617,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
                 this.initManageStationsModal();
                 break;
             case 'resetPassword':
-                console.log('resetPassword');
-                console.log('this.recordToManage', this.recordToManage);
                 this.openResetPasswordModal = true;
                 this.modalTitle = 'Reset Password';
             default:
@@ -929,7 +920,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
             case 'set_as_primary':
                 
                 if(recordToManageNewStationsList.length > 0){
-                    console.log('recordToManageNewStationsList', recordToManageNewStationsList);
 
                     recordToManageNewStationsList.forEach(station =>{
                         if(station.Code__c === code){
@@ -941,7 +931,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
                             station.showButton = 'slds-show';
                         }
                     })
-                    console.log('recordToManageNewStationsList', recordToManageNewStationsList);
                     this.recordToManageNewStationsList = recordToManageNewStationsList;
                 }
                 this.loadingSpinner = false;
@@ -994,7 +983,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
             
             if(recordToManageNewStationsList.length > 0){
                 recordToManageNewStationsList.forEach(station =>{
-                    console.log('station', station);
                     let r = {};
                     r.Account_Contact_Role__c = recordToManage.Id;
                     r.Address__c = station.Id;
@@ -1062,7 +1050,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
     }
     
     handleResetPassword(){
-        console.log('in handleResetPassword');
         this.loadingModal = true;
         //check if password == confirmPassword
         //check if password has at least 6 caracters
