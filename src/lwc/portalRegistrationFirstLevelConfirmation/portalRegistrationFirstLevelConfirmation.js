@@ -30,6 +30,7 @@ import ISSP_Registration_MyInformation          from '@salesforce/label/c.ISSP_R
 import CSP_Troubleshooting_Info                 from '@salesforce/label/c.CSP_Troubleshooting_Info';
 import CSP_Troubleshooting                      from '@salesforce/label/c.CSP_Troubleshooting';
 import OneId_CSP_Troubleshooting_Link           from '@salesforce/label/c.OneId_CSP_Troubleshooting_Link';
+import CSP_Unexcepted_Error                     from '@salesforce/label/c.CSP_Unexcepted_Error';
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalRegistrationFirstLevelConfirmation extends LightningElement {
@@ -85,6 +86,7 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
         CSP_Troubleshooting_Info,
         CSP_Troubleshooting,
         OneId_CSP_Troubleshooting_Link,
+        CSP_Unexcepted_Error,
         CSP_PortalPath
     }
 
@@ -250,17 +252,19 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
         console.log('customer type: ', JSON.parse(JSON.stringify(this.selectedMetadataCustomerType)));
 
 
-        if(this.config.selectedCustomerType != this.registrationForm.selectedCustomerType){
-            customerTypeChanged = true;
-        }
-
-        if(this.config.contact.ISO_Country__c){
-            if(this.config.contact.ISO_Country__c != this.registrationForm.country){
+        if(this.config.isGeneralPublic == true){
+            if(this.config.selectedCustomerType != this.registrationForm.selectedCustomerType){
                 customerTypeChanged = true;
             }
-        }else{
-            if(this.registrationForm.country.length > 0){
-                customerTypeChanged = true;
+
+            if(this.config.contact.ISO_Country__c){
+                if(this.config.contact.ISO_Country__c != this.registrationForm.country){
+                    customerTypeChanged = true;
+                }
+            }else{
+                if(this.registrationForm.country.length > 0){
+                    customerTypeChanged = true;
+                }
             }
         }
 

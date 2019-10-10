@@ -560,14 +560,15 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                     return result;
                 }else{
                     con.AccountId = bucketAccount.acc.Id;
-                    if(inputMap.get('country') != null && inputMap.get('country') != ''){
-                        con.ISO_Country__c = string.valueOf(inputMap.get('country'));
-                    }else{
-                        List<IATA_ISO_Country__c> countryList = [SELECT ID FROM IATA_ISO_Country__c WHERE Name = 'NO COUNTRY' LIMIT 1];
-                        if(!countryList.isEmpty()){
-                            con.ISO_Country__c = countryList.get(0).Id;
-                        }
-                    }
+                }
+            }
+
+            if(inputMap.get('country') != null && inputMap.get('country') != ''){
+                con.ISO_Country__c = string.valueOf(inputMap.get('country'));
+            }else{
+                List<IATA_ISO_Country__c> countryList = [SELECT ID FROM IATA_ISO_Country__c WHERE Name = 'NO COUNTRY' LIMIT 1];
+                if(!countryList.isEmpty()){
+                    con.ISO_Country__c = countryList.get(0).Id;
                 }
             }
 
@@ -585,6 +586,25 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             if((inputMap.get('language') != null)){
                 con.Preferred_Language__c = string.valueOf(inputMap.get('language'));
+                string langKey = 'en_US';
+                for(Preferred_Language_on_ISS_Portal__c portalLang : Preferred_Language_on_ISS_Portal__c.getAll().values()){
+                    if(portalLang.language__c == con.Preferred_Language__c){
+                        langKey = portalLang.languageLocalKey__c;
+                    }
+                }
+
+                User usr = [select Id from User where Id=:Userinfo.getUserId()];
+                usr.LanguageLocaleKey = langKey;
+                usr.LocaleSidKey = langKey;
+                DataBase.SaveResult sr = DataBase.update(usr);
+                if(sr.isSuccess() == false){
+                    for(Database.Error objErr : sr.getErrors()) {
+                        System.debug('Portal Level 1 registration Confirmation - update user: ' + objErr.getStatusCode() + ': ' + objErr.getMessage());
+                    }
+                    result.isSuccess = false;
+                    result.message = 'Failed to update user';
+                    return result;
+                }
             }
 
             DataBase.SaveResult sr = DataBase.update(con);
@@ -592,6 +612,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 for(Database.Error objErr : sr.getErrors()) {
                     System.debug('Portal Level 1 registration Confirmation - update contact: ' + objErr.getStatusCode() + ': ' + objErr.getMessage());
                 }
+                Database.rollback(sp);
                 result.isSuccess = false;
                 result.message = 'Failed to update Contact';
                 return result;

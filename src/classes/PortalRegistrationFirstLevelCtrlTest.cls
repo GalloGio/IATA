@@ -13,6 +13,19 @@ public class PortalRegistrationFirstLevelCtrlTest {
         setting.Value__c = UserInfo.getUserId();
         insert setting;
 
+        //Create Community Languages
+        Preferred_Language_on_ISS_Portal__c lang1 = new Preferred_Language_on_ISS_Portal__c();
+        lang1.Name = 'English';
+        lang1.languageLocalKey__c = 'en_US';
+        lang1.Language__c = 'English';
+
+        Preferred_Language_on_ISS_Portal__c lang2 = new Preferred_Language_on_ISS_Portal__c();
+        lang2.Name = 'French';
+        lang2.languageLocalKey__c = 'fr';
+        lang2.Language__c = 'French';
+
+        insert new List<Preferred_Language_on_ISS_Portal__c>{lang1, lang2};
+
         //Create ISO Countries
         List<IATA_ISO_Country__c> countryList = new List<IATA_ISO_Country__c>();
         IATA_ISO_Country__c c1 = new IATA_ISO_Country__c (

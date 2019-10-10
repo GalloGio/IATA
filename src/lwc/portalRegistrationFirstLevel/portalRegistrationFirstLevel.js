@@ -30,7 +30,7 @@ import jQuery                                   from '@salesforce/resourceUrl/jQ
 /* ==============================================================================================================*/
 /* Custom Labels
 /* ==============================================================================================================*/
-import Login                                    from '@salesforce/label/c.login';
+import Login                                    from '@salesforce/label/c.Login';
 import CSP_Email                                from '@salesforce/label/c.CSP_Email';
 import CSP_Registration_Description             from '@salesforce/label/c.CSP_Registration_Description'
 import CSP_Change_Email                         from '@salesforce/label/c.CSP_Change_Email';
@@ -49,6 +49,7 @@ import CSP_Try_Again                            from '@salesforce/label/c.CSP_Tr
 import CSP_Troubleshooting_Info                 from '@salesforce/label/c.CSP_Troubleshooting_Info';
 import CSP_Troubleshooting                      from '@salesforce/label/c.CSP_Troubleshooting';
 import OneId_CSP_Troubleshooting_Link           from '@salesforce/label/c.OneId_CSP_Troubleshooting_Link';
+import CSP_Unexcepted_Error                     from '@salesforce/label/c.CSP_Unexcepted_Error';
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
 
 
@@ -119,6 +120,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         CSP_Troubleshooting_Info,
         CSP_Troubleshooting,
         OneId_CSP_Troubleshooting_Link,
+        CSP_Unexcepted_Error,
         CSP_PortalPath
     }
 
