@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>KPI_Reference_Value__c</field>
-        <value xsi:type="xsd:double">72.0</value>
+        <value xsi:type="xsd:double">27.0</value>
     </values>
     <values>
         <field>Reason__c</field>
