@@ -19,13 +19,10 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
     
 
     @track showSearch = false;
-    //@track stationValue;
     @track aircraftTypeValue = null;
             certificationTypesWithLevel;
     @track proficiencyValue = 'Level 2';
 
-    
-    //@track stationOptions;
     @track aircraftTypeOptions;
     @track allStations;
     @track selectedRows = null;
@@ -115,7 +112,6 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
 
     handleResetButtonClick(){
         this.handleResetSelectStationSearch();
-        //this.stationValue = null;
         this.aircraftTypeValue = null;
         this.proficiencyValue = 'Level 2';
         let myTopicOptions;
@@ -136,22 +132,12 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
     }
 
     connectedCallback() {
-        console.log('INIT connectedCallback');
 
         getAllStations()
         .then(result => {
-            console.log(result);
-            let myResult = JSON.parse(JSON.stringify(result));
-            
-            //console.log(myResult);
-            //console.log('myResult : ' + myResult);
-
+            let myResult = JSON.parse(JSON.stringify(result));        
             this.allStations = myResult;
 
-            //console.log('this.allStations : ' + this.allStations);
-
-
-            //let myTopicOptions = [{ label: 'All', value: 'All' }];
             let myTopicOptions = [];
 
             Object.keys(myResult).forEach(function (el) {
@@ -162,18 +148,15 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
     
         })
         .catch(error => {
-            console.log('getAllStations - Error : ' + error);
+            console.error('getAllStations - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
         }); 
 
         getCertificationTypesWithLevel({certificationType: 'Aircraft'})
         .then(result => {
-            console.log(result);
             let myResult = JSON.parse(JSON.stringify(result));
             this.certificationTypesWithLevel = myResult;
-
-            console.log('this.certificationTypesWithLevel : ', this.certificationTypesWithLevel);
 
             let myTopicOptions;
             myResult.forEach(cert =>{
@@ -190,7 +173,7 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
             
         })
         .catch(error => {
-            console.log('getITPStations - Error : ' + error);
+            console.error('getITPStations - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
         }); 
@@ -199,7 +182,6 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
         this.columns = [
             {label: 'ITP Name', fieldName: 'itpName', type: 'text', sortable: true},
             {label: 'Operation Type', fieldName: 'trainingName', type: 'text', sortable: true},
-            //{label: 'Proficiency', fieldName: 'proficiency', type: 'text', sortable: true},
             
             {label: 'Global OJT', fieldName: 'OJT_file_ITP', type: 'url', 
             typeAttributes: {
@@ -210,19 +192,14 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
                 label: { fieldName: "OJT_file_station_name" }
               }, sortable: true}
             
-            //{label: 'Station', fieldName: 'station', type: 'text', sortable: true}
         ];
-
-        console.log('END connectedCallback');
     }
 
     handleSearch(){
         
         var auxSearchValues = new Map();
-        //var i;
         let selectedRows = JSON.parse(JSON.stringify(this.selectedRows));
         let auxStations = selectedRows[0].Code__c;
-        //var auxStations = (this.stationValue == null) ? 'null' : this.stationValue;
         var auxAircraftType = (this.aircraftTypeValue == null) ? 'null' : this.aircraftTypeValue;
         var auxProficiency = (this.proficiencyValue == null) ? 'null' : this.proficiencyValue;
    
@@ -257,14 +234,12 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
             this.cleanErrors();
         })
         .catch(error => {
-            console.log('handleSearch - Error : ' + error);
-            console.log(error);
+            console.error('handleSearch - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
             this.loading = false;
             this.dataRecords = false;
         });  
-        console.log('handleSearch - END');
     }
 
     cleanErrors(){
@@ -311,7 +286,6 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
                     (station.Description__c !== undefined && station.Description__c.toUpperCase().includes(this.queryTerm.toUpperCase()))|| 
                     (station.City__c !== undefined  && station.City__c.toUpperCase().includes(this.queryTerm.toUpperCase()));
         });
-        console.log('myResult: ', myResult);
         this.listSearchStationsResult = myResult;
 
         this.loadingSpinner = false;
@@ -383,76 +357,4 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
             return reverse * ((A > B) - (B > A));
         }
     }
-
-    /********************************************************************************
-     *                                                                              *
-     *    Methods to handle Download of OJT files  *
-     *                                                                              *  
-     ********************************************************************************/
-
-     /*
-
-    handleRowAction(event){
-        let data = JSON.parse(JSON.stringify(this.data));
-        const actionName = event.detail.action.name;
-        const row = event.detail.row;
-        let id = row.id;
-        let index = -1;
-        let recordToManage = {};
-        console.log('row', JSON.parse(JSON.stringify(row)));
-        
-        for(let i = 0; i < data.length; i++){
-            if(id === data[i].uniqueRowId){
-                recordToManage = data[i];
-                index = i;
-                i = data.length;
-            }
-        }
-        console.log('recordToManage', recordToManage);
-
-        switch (actionName) {
-            case 'downloadGlobal':
-                recordToManage.OJT_file_ITP_name = recordToManage.itpName + ' - Global OJT file';
-                this.downloadPDFFile(recordToManage.OJT_file_global_id, recordToManage.OJT_file_ITP_name);
-                break;
-            case 'downloadStation':
-
-                break;
-            default:
-        }
-
-    }
-
-    downloadPDFFile(fileId, fileName){
-        console.log('downloadPDFFile - start : ');
-        
-        getFileContent({fileId: '0690Q000000MecOQAS'})
-        .then(results =>{
-            let pdfFileName = fileName +'.pdf';
-            console.log('downloadPDFFile - results : ', results);
-            if(window.navigator.msSaveBlob) { // IE 10+
-                let blob = new Blob([results], {
-                              type: 'application/pdf'          
-                    });
-                window.navigator.msSaveBlob(blob, pdfFileName);
-            }
-            else
-            {
-            
-                    // Creating anchor element to download
-                    let downloadElement = document.createElement('a');
-                    // below statement is required if you are using firefox browser
-                    document.body.appendChild(downloadElement);
-    
-                    // This  encodeURI encodes special characters, except: , / ? : @ & = + $ # (Use encodeURIComponent() to encode these characters).
-                    downloadElement.href = 'data: application/octet-stream;base64,' + results;
-                    // CSV File Name
-                    downloadElement.download = pdfFileName;
-                    
-                    // click() Javascript function to download CSV file
-                    downloadElement.click();
-            }
-        })
-    }
-    */
 }
