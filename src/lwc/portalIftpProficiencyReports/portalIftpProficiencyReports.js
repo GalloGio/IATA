@@ -3,7 +3,6 @@ import { LightningElement, track } from 'lwc';
 import getProficiencyReport from '@salesforce/apex/portalIftpHistoryManagement.getProficiencyReport';
 import getUserInfo from '@salesforce/apex/PortalIftpUtils.getUserInfo';
 import getAllITP from '@salesforce/apex/PortalIftpUtils.getAllITP';
-// import getITPConnectedToAirline from '@salesforce/apex/PortalIftpUtils.getITPConnectedToAirline';
 import isCommunity from '@salesforce/apex/PortalIftpUtils.isCommunity';
 
 export default class portalIftpProficiencyReports extends LightningElement {
@@ -20,10 +19,6 @@ export default class portalIftpProficiencyReports extends LightningElement {
     fieldLabels = [
         'uniqueRowId','certificationId','account_contact_role_Id','firstName', 'lastName', 'companyNumber', 'trainingName', 'itpName', 'expirationDate', 'proficiency', 'station', 'setProficiency'
     ];
-    
-    // onchange={handleChangeITP}>
-    // onchange={handleChangeMonth}>
-    // onchange={handleChangeYear}
 
     @track showSearch = false;
     @track itpValue;
@@ -31,18 +26,9 @@ export default class portalIftpProficiencyReports extends LightningElement {
     @track yearValue;
     
     @track itpOptions;
-    //@track monthOptions;
-    //@track yearOptions;
     
     @track showDatatableButtons = false;
            userInfo; 
-
-           
-    // get itpOptions() {
-    //         return [
-    //             { label: 'Menzies', value: 'Menzies' }
-    //         ];
-    //     }
 
     get monthOptions() {
         return [
@@ -79,7 +65,6 @@ export default class portalIftpProficiencyReports extends LightningElement {
     } 
 
     connectedCallback() {
-        console.log('INIT connectedCallback');
 
         let today = new Date();
         let yearToday = today.getFullYear();
@@ -87,22 +72,17 @@ export default class portalIftpProficiencyReports extends LightningElement {
         
         this.yearValue = ''+yearToday; //Set picklist to current year
         this.monthValue = ''+monthToday; //Set picklist to current year
-        console.log('this.yearValue: ',this.yearValue);
-        console.log('this.monthValue: ',this.monthValue);
-
 
         isCommunity()
             .then(result =>{
                 let myResult = JSON.parse(JSON.stringify(result));
-                console.log('myResult', myResult);
                 if(myResult){
                     
                     getUserInfo()
-                        .then(result =>{
-                            let myResult = JSON.parse(JSON.stringify(result));
-                            console.log('myResult.primaryStationCode', myResult.primaryStationCode);
-                            if(myResult){
-                                this.userInfo = myResult;
+                        .then(result2 =>{
+                            let myResult2 = JSON.parse(JSON.stringify(result2));
+                            if(myResult2){
+                                this.userInfo = myResult2;
                      
                                 if(this.userInfo.profile === 'ISS Portal (Partner)' || this.userInfo.profile === 'ISS Portal Delegated Admin User'){
                                     this.itpOptions =  [
@@ -113,67 +93,67 @@ export default class portalIftpProficiencyReports extends LightningElement {
                             }
                         })
                         .catch(error => {
-                            console.log('getITPStations - Error : ' + error);
+                            console.error('portalIftpProficiencyReports - getUserInfo - Error : ' + error);
                             this.mainErrorMessage = error;
                             this.error = error;
                         });  
         
+                        this.columns = [
+                            {label: 'ITP', fieldName: 'ITP_name', type: 'text', sortable: true},
+                            // {label: 'Account Id', fieldName: 'accountId', type: 'text', sortable: true},
+                            {label: 'Modules', fieldName: 'numberModules', type: 'text', sortable: true},
+                            {label: 'Employees', fieldName: 'numberEmployees', type: 'text', sortable: true},
+                            {label: 'Month', fieldName: 'reqMonth', type: 'text', sortable: true},
+                            {label: 'Year', fieldName: 'reqYear', type: 'text', sortable: true}
+                        ];
 
                 }else{
-                    // getITPConnectedToAirline()
                     getAllITP()
                         .then(result2 => {
                             let myResult2 = JSON.parse(JSON.stringify(result2));
         
-                            // this.itpStations = myResult2;
                             let myTopicOptions = [];
         
                             myTopicOptions.push({ label:'-- All ITP --', value:'All'});
 
                             Object.keys(myResult2).forEach(function (el) {
-                                //myTopicOptions.push({ label: myResult[el].City__c, value: myResult[el].Code__c });
                                 myTopicOptions.push({ label:myResult2[el].Name, value:myResult2[el].Name});
                             });
                             this.itpOptions = this.sortData('label', 'asc', myTopicOptions);
                             this.cleanErrors();
                         })
                         .catch(error => {
-                            console.log('getITPStations - Error : ' + error);
+                            console.error('portalIftpProficiencyReports - getAllITP - Error : ' + error);
                             this.mainErrorMessage = error;
                             this.error = error;
                         });  
+
+                        this.columns = [
+                            {label: 'ITP', fieldName: 'ITP_name', type: 'text', sortable: true},
+                            {label: 'Account Id', fieldName: 'accountId', type: 'text', sortable: true},
+                            {label: 'Modules', fieldName: 'numberModules', type: 'text', sortable: true},
+                            {label: 'Employees', fieldName: 'numberEmployees', type: 'text', sortable: true},
+                            {label: 'Month', fieldName: 'reqMonth', type: 'text', sortable: true},
+                            {label: 'Year', fieldName: 'reqYear', type: 'text', sortable: true}
+                        ];
                 }
             })
             .catch(error => {
-                console.log('getITPStations - Error : ' + error);
+                console.error('portalIftpProficiencyReports - getAllITP - Error : ' + error);
                 this.mainErrorMessage = error;
                 this.error = error;
             });  
         
-        
-        this.columns = [
-            {label: 'ITP', fieldName: 'ITP_name', type: 'text', sortable: true},
-            // {label: 'Account Id', fieldName: 'accountId', type: 'text', sortable: true},
-            {label: 'Modules', fieldName: 'numberModules', type: 'text', sortable: true},
-            {label: 'Employees', fieldName: 'numberEmployees', type: 'text', sortable: true},
-            {label: 'Month', fieldName: 'reqMonth', type: 'text', sortable: true},
-            {label: 'Year', fieldName: 'reqYear', type: 'text', sortable: true}
-        ];
-
-        console.log('END connectedCallback');
     }
 
     handleChangeMonth(event) {
-        console.log('handleChangeMonth - event.detail.value : ' + event.detail.value);
         this.monthValue = event.detail.value;
     }
     handleChangeYear(event) {
-        console.log('handleChangeYear - event.detail.value : ' + event.detail.value);
         this.yearValue = event.detail.value;
     }
 
     handleChangeITP(event) {
-        console.log('handleChangeITP - event.detail.value : ' + event.detail.value);
         this.itpValue = event.detail.value;
     }
     
@@ -203,9 +183,6 @@ export default class portalIftpProficiencyReports extends LightningElement {
 
 
     handleSearch(){
-        console.log('handleSearch - this.itpValuee : ' + this.itpValue);
-        console.log('handleSearch - this.monthValue : ' + this.monthValue);
-        console.log('handleSearch - this.yearValue : ' + this.yearValue);
         
         this.loading = true;
 
@@ -217,10 +194,7 @@ export default class portalIftpProficiencyReports extends LightningElement {
                     
                     this.data = results;
                     this.dataRecords = true;
-                    // this.data = this.sortData('lastName', 'asc', JSON.parse(JSON.stringify(this.data)));
                     this.loading = false;
-
-                    console.log('##### this.data', this.data);
                 
                 }  else {
                     this.dataRecords = false;
@@ -229,8 +203,7 @@ export default class portalIftpProficiencyReports extends LightningElement {
                 this.cleanErrors();
             })
             .catch(error => {
-                console.log('handleSearch - Error : ', error);
-                console.log(error);
+                console.error('getProficiencyReport - Error : ', error);
                 this.mainErrorMessage = error;
                 this.error = error;
                 this.loading = false;
@@ -238,34 +211,25 @@ export default class portalIftpProficiencyReports extends LightningElement {
             });  
 
         }else{
-            console.log('handleSearch - ALL : start');
             let itps = JSON.parse(JSON.stringify(this.itpOptions));
 
             let itpsResults = [];
           
             for(let i = 0 ; i < itps.length; i++){
                 
-                if(itps[i].value != 'All'){
+                if(itps[i].value !== 'All'){
                     getProficiencyReport({itpName: itps[i].value, monthValue: this.monthValue, yearValue: this.yearValue})
                         .then(results => {
                             if(results && results.length > 0){
 
-                                console.log('#####  this.data',  this.data);
-                                console.log('##### itpsResults', itpsResults);
-
                                 if(this.data){
                                     itpsResults = JSON.parse(JSON.stringify(this.data));
-                                    
                                 }
                                 if(itpsResults.length > 0){
-                                    // console.log('##### this.data - next');
                                     for(let i = 0; i < results.length; i++){
-                                        // this.data.push( results[i] );
                                         itpsResults.push( results[i] );
                                     };
                                 }else{
-                                    console.log('##### this.data - 1st');
-                                    // this.data = results;
                                     itpsResults = results;
                                 }
                              
@@ -282,8 +246,7 @@ export default class portalIftpProficiencyReports extends LightningElement {
                             this.cleanErrors();
                         })
                         .catch(error => {
-                            console.log('handleSearch - Error : ', error);
-                            console.log(error);
+                            console.error('getProficiencyReport - Error : ', error);
                             this.mainErrorMessage = error;
                             this.error = error;
                             this.loading = false;
@@ -292,10 +255,7 @@ export default class portalIftpProficiencyReports extends LightningElement {
                 }
             }
             
-            
-            
         }
-        console.log('handleSearch - END');
         
     }
     cleanErrors(){
@@ -354,8 +314,6 @@ export default class portalIftpProficiencyReports extends LightningElement {
     handleExportToExcel(){
         let columns = JSON.parse(JSON.stringify(this.columns));
         let data = JSON.parse(JSON.stringify(this.data));
-        console.log('columns ', columns);
-        console.log('data ', data);
         this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, data, "EmployeesSearchResults.xls");
     }
 }

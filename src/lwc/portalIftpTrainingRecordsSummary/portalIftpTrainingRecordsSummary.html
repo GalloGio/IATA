@@ -14,7 +14,6 @@
             </div>
             <div class="slds-grid slds-gutters">
                 <div class="slds-col slds-m-left_x-small">
-            <!-- <div class='addStationContainer'> -->
                     <lightning-input name="Search when user hits the 'enter' key" 
                                         placeholder="Search Stations"
                                         label="Search Stations" 
@@ -26,7 +25,6 @@
                     </lightning-input>
                 </div>
                 <div class="slds-col  slds-p-top_large">
-                <!-- <div class="alignSearchStationsButton"> -->
                     <lightning-button label="Search Stations" 
                                         variant="neutral"
                                         onclick={handleSearchStationOnClick}>
@@ -51,7 +49,6 @@
                                 class="slds-m-left_x-small slds-m-right_x-small" 
                                 required>
             </lightning-combobox>
-
             <br />
             <lightning-button variant="neutral" 
                                 label="Search" 
@@ -71,22 +68,13 @@
             </lightning-button>
         </lightning-card>
     </div>
-
     <template if:true={showSearch}>
-
         <div class="slds-card_boundary slds-m-top_medium">
             <lightning-card>
                 <div slot="title">
                     <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
                     ITP Operational Capability
                 </div>
-                <!--
-                <div>
-                    <lightning-button variant="neutral" class="slds-m-left_x-small" label="Download Data as PDF file"
-                        onclick={downloadPDFFile}>
-                    </lightning-button>
-                </div>
-                -->
                 <p class="slds-p-horizontal_small">
                     <template if:true={loading}>
                         <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
@@ -115,7 +103,6 @@
             </lightning-card>
         </div>
     </template>
-
     <!--Select station modal-->
     <template if:true={openStationsModal}>
         <div style="height: 50%;">
@@ -174,6 +161,4 @@
             <div class="slds-backdrop slds-backdrop_open"></div>
         </div>
     </template>
-
-
 </template>

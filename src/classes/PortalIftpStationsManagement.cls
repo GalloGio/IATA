@@ -202,15 +202,26 @@ public without sharing class PortalIftpStationsManagement {
             if(!dataToInsert.isEmpty()){
                 //Check if station - airline - itp already exists, if so remove from insert list
                 Map<Id,List<AirlinesItpAddressWrapper>> stationsAirlinesMap = PortalIftpStationsManagement.getItpStationsAirlines();
+
+                Map<Id, Set<Id>> stationsAirlineAccRolIdMap = new Map<Id, Set<Id>>();
+                for(Id i: stationsAirlinesMap.keySet()){
+                    List<AirlinesItpAddressWrapper> airlines_List = stationsAirlinesMap.get(i);
+                    Set<Id> idsSet = new Set<Id>();
+                    for(AirlinesItpAddressWrapper rec: airlines_List){
+                        if(rec.airlineAccRolId != null){
+                            idsSet.add(rec.airlineAccRolId);
+                        }
+                    }
+                    stationsAirlineAccRolIdMap.put(i, idsSet);
+                }
+
                 Integer count = 0;
                 while(count < dataToInsert.size()){
-                    if(stationsAirlinesMap.containsKey(dataToInsert[count].addressId)){
-                        List<AirlinesItpAddressWrapper> airlinesList = stationsAirlinesMap.get(dataToInsert[count].addressId);
+                    if(stationsAirlineAccRolIdMap.containsKey(dataToInsert[count].addressId)){
+                        Set<Id> idsSet  = stationsAirlineAccRolIdMap.get(dataToInsert[count].addressId);
                         Boolean existsAirline = false;
-                        for(AirlinesItpAddressWrapper airline: airlinesList){
-                            if(airline.airlineAccRolId != null && dataToInsert[count].airlineAccRolId == airline.airlineAccRolId){
-                                existsAirline = true;
-                            }
+                        if(idsSet.contains(dataToInsert[count].airlineAccRolId)){
+                            existsAirline = true;
                         }
                         if(existsAirline){
                             dataToInsert.remove(count);
@@ -219,7 +230,7 @@ public without sharing class PortalIftpStationsManagement {
                         }
                     } else{
                         count++;
-                    }
+                    }                  
                 }
             }
             // Create the Role_Address__c records to be inserted; if more than one Account_Role_Relationship__c.Id possible the first one that is a match will be selected
@@ -249,13 +260,15 @@ public without sharing class PortalIftpStationsManagement {
                 //Check if station - airline - itp exists, if it doesn't exist remove from delete list
                 List<Role_Address__c> existingRoleAddressesList = [SELECT Id FROM Role_Address__c WHERE Id IN: roleAddressToDeleteList];
                 if(roleAddressToDeleteList.size() != existingRoleAddressesList.size()){
+                    Set<Id> existRolAddrIdSet = new Set<Id>();
+                    for(Role_Address__c rolAddr: existingRoleAddressesList){
+                        existRolAddrIdSet.add(rolAddr.Id);
+                    }
                     Integer count = 0;
                     while(count < roleAddressToDeleteList.size()){
                         Boolean existsInDatabase = false;
-                        for(Role_Address__c recInDatabase: existingRoleAddressesList){
-                            if(recInDatabase.Id == roleAddressToDeleteList[count].Id){
-                                existsInDatabase = true;
-                            }
+                        if(existRolAddrIdSet.contains(roleAddressToDeleteList[count].Id)){
+                            existsInDatabase = true;
                         }
                         if(!existsInDatabase){
                             roleAddressToDeleteList.remove(count);

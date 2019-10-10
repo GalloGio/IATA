@@ -47,6 +47,7 @@ public class PortalIftpUtilsTest {
             PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 
             List<Address__c> addList2 = PortalIftpUtils.getAllStations();
+            List<Address__c> addList22 = PortalIftpUtils.getUserStations();
 
             List<Address__c> addList3 = PortalIftpUtils.getITPStations();
 

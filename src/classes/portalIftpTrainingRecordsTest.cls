@@ -1,10 +1,13 @@
 @isTest
 public class portalIftpTrainingRecordsTest {
     
+    @testSetup static void setup(){
+        portalIftpTestClass.test_config();
+    }
+
     
     static testMethod void getITPTrainingCoordinatorsTest(){
-        portalIftpTestClass.test_config();
-
+        
         Test.startTest();
         User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
 
@@ -19,7 +22,6 @@ public class portalIftpTrainingRecordsTest {
     }
 
     static testMethod void getTrainingRecordsForMonitorTrainingsTest(){
-        portalIftpTestClass.test_config();
 
         Test.startTest();
         // ITP User: 'test.cont3@test.com'
@@ -69,7 +71,6 @@ public class portalIftpTrainingRecordsTest {
     }
 
     static testMethod void getTrainingRecordsForProficiencyManagementTest(){
-        portalIftpTestClass.test_config();
 
         Test.startTest();
         // ITP User: 'test.cont3@test.com'
@@ -145,7 +146,6 @@ public class portalIftpTrainingRecordsTest {
     
         
     static testMethod void getTrainingRecordsDetailTest(){
-        portalIftpTestClass.test_config();
         Test.startTest();
         // Airline User: 'test.cont4@test.com'
         User u2 = [select id, profile.name from user where Email = 'test.cont4@test.com' limit 1];
@@ -209,7 +209,6 @@ public class portalIftpTrainingRecordsTest {
     }
 
     static testMethod void updateCertificationProficiencyTest(){
-        portalIftpTestClass.test_config();
 
         Test.startTest();
         
@@ -229,13 +228,12 @@ public class portalIftpTrainingRecordsTest {
         System.debug('recordToUpdate - ' + recordToUpdate);
         
         System.runAs(u2) {
-            Boolean result = portalIftpTrainingRecords.updateCertificationProficiency(recordsToUpdateList);
+            portalIftpTrainingRecords.updateCertificationProficiency(recordsToUpdateList);
         }
         Test.stopTest();
     }
 
     static testMethod void updateCertificationEnrollTest(){
-        portalIftpTestClass.test_config();
 
         Test.startTest();
         
@@ -272,7 +270,6 @@ public class portalIftpTrainingRecordsTest {
     }
 
     static testMethod void getAllTrainingRecordsForDetailViewTest(){
-        portalIftpTestClass.test_config();
 
         Test.startTest();
         
