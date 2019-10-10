@@ -74,6 +74,14 @@ public without sharing class PortalIftpUtils {
     }
 
     @AuraEnabled(cacheable=true)
+    public static List<Address__c> getUserStations(){
+
+        List<Address__c> stations = [SELECT Id, City__c, Code__c, Description__c FROM Address__c ORDER BY Code__c];
+
+        return stations;
+    }
+
+    @AuraEnabled(cacheable=true)
     public static List<Address__c> getAllStations(){
 
         List<Address__c> stations = [SELECT Id, City__c, Code__c, Description__c FROM Address__c ORDER BY Code__c];
