@@ -56,6 +56,10 @@
                 <field>Country__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IOSA_ISAGO__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>External_Actor_Id__c</field>
             </layoutItems>
