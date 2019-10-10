@@ -310,4 +310,19 @@ private class PortalIftEmployeeRecordsManagementTest {
         }
         Test.stopTest();
     }
+
+    @IsTest
+    static void resetPasswordTest(){
+        // Set the mock response
+		Integer code = 200;
+		String status = 'ok';
+		String body = '{}';
+		Map<String, String> responseHeaders = new Map<String,String>();
+		responseHeaders.put('Content-Type', 'application/json');
+		Test.setMock(HttpCalloutMock.class, new ISSP_MockHttpResponseGenerator(code, status, body, responseHeaders));
+
+        Boolean result = PortalIftEmployeeRecordsManagement.resetEmployeePassword('aB40000000000', 'test123');
+
+        system.assert(result, true);
+    }
 }
