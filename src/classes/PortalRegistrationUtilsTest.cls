@@ -10,6 +10,7 @@ public with sharing class PortalRegistrationUtilsTest {
 
 
         insert new ISSP_CS__c(Name = 'ipinfo_token',Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)([.])(([a-zA-Z]{3})|([a-zA-Z]{2}))');
+        insert new ISSP_CS__c(Name = 'ipinfo_domain',Value__c = 'https://ipinfo.io/');
         insert new OneId_Global_Settings__c(ipinfo_call_enabled__c = true);
 
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(ISO_Code__c='PT',Name='Portugal',Region__c='Europe', Sanctioned_Country__c = true);
@@ -43,9 +44,7 @@ public with sharing class PortalRegistrationUtilsTest {
         child.BillingCountry = 'Italy';
         insert child;
         System.debug('child Id: ' + child.Id);
-        //Contact con = ISSP_ObjectFactory.createNewContact();
 
-        //PortalRegistrationUtils.getUserLocation('');
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
         PortalRegistrationUtils.getUserLocation('83.240.229.11');

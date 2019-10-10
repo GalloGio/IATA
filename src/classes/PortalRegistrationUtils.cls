@@ -29,8 +29,10 @@ public with sharing class PortalRegistrationUtils {
 
         ISSP_CS__c cs = ISSP_CS__c.getInstance('ipinfo_token');
         String ipinfo_token = cs.value__c;
+        cs = ISSP_CS__c.getInstance('ipinfo_domain');
+        String ipinfo_domain = cs.value__c;
 
-        String IP_LOOKUP_URL = 'https://ipinfo.io/' + ipAddress + '/json?token=' + ipinfo_token;
+        String IP_LOOKUP_URL = ipinfo_domain + ipAddress + '/json?token=' + ipinfo_token;
         Http h = new Http();
         HttpRequest req = new HttpRequest();
         req.setEndpoint(IP_LOOKUP_URL);
