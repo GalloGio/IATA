@@ -170,7 +170,6 @@ public without sharing class ShareObjectsToExternalUsers {
         }
 
         Map<Id, List<Id>> usersByRoles = getUsersByRoles(roleIds);
-        system.debug(usersByRoles);
         Map<Id, List<Id>> usersByPermission = new Map<Id, List<Id>>();
 
         for(Contact_Role_Service_Permission__c permission: permissions){
@@ -201,7 +200,6 @@ public without sharing class ShareObjectsToExternalUsers {
         }
 
         Map<Id, List<Id>> usersByRoles = getUsersByRoles(roleIds);
-        system.debug(usersByRoles);
         Map<Id, List<Id>> usersByService = new Map<Id, List<Id>>();
 
         for(Contact_Role_Service__c service: services){
@@ -242,7 +240,6 @@ public without sharing class ShareObjectsToExternalUsers {
         }
 
         Map<Id, List<Id>> usersByRoles = getUsersByRoles(roleIds);
-        system.debug(usersByRoles);
         Map<Id, List<Id>> usersByServiceNotifications = new Map<Id, List<Id>>();
 
         for (Id notification : notificationToRoleIds.keySet()) {
@@ -264,7 +261,7 @@ public without sharing class ShareObjectsToExternalUsers {
                 }
             }
         }
-        system.debug(usersByServiceNotifications);
+
         return usersByServiceNotifications;
     }
 
@@ -288,7 +285,7 @@ public without sharing class ShareObjectsToExternalUsers {
         for (User u : [SELECT Id, ContactId FROM User Where ContactId IN :contactIds]) {
             contactToUser.put(u.ContactId, u.Id);
         }
-        system.debug(contactToUser);
+
         for (Id role : contactsByRoles.keySet()) {
             List<Id> contacts = contactsByRoles.get(role);
             if (contacts != null) {
@@ -311,8 +308,8 @@ public without sharing class ShareObjectsToExternalUsers {
     }
 
     public static void shareObjectsByRoleAccessChange(List<Contact_Role_Service_Access__c> roleAccessNew, Map<Id, Contact_Role_Service_Access__c> roleAccessOld){
-        List<Id> unshareContactRole = new List<Id>();
-        List<Id> shareContactRole = new List<Id>();
+        Set<Id> unshareContactRole = new Set<Id>();
+        Set<Id> shareContactRole = new Set<Id>();
         if(roleAccessNew != null && roleAccessOld != null){
             for(Contact_Role_Service_Access__c newRole: roleAccessNew){
                 Contact_Role_Service_Access__c oldRole = roleAccessOld.get(newRole.Id);
@@ -339,8 +336,21 @@ public without sharing class ShareObjectsToExternalUsers {
             }
         } else {return;}
 
-        List<Account_Contact_Role__c> share = [SELECT Id, Contact_Roles__c, Contact__c FROM Account_Contact_Role__c WHERE Id IN : shareContactRole];
-        List<Account_Contact_Role__c> unshare = [SELECT Id, Contact_Roles__c, Contact__c FROM Account_Contact_Role__c WHERE Id IN : unshareContactRole];
+        List<Account_Contact_Role__c> allContactRoles = [SELECT Id, Contact_Roles__c, Contact__c FROM Account_Contact_Role__c WHERE Id IN :shareContactRole OR Id IN :unshareContactRole];
+
+        List<Account_Contact_Role__c> share = new List<Account_Contact_Role__c>();
+        List<Account_Contact_Role__c> unshare = new List<Account_Contact_Role__c>();
+
+        for(Account_Contact_Role__c acr: allContactRoles){
+            if(shareContactRole.contains(acr.Id)){
+                share.add(acr);
+            }
+            if(unshareContactRole.contains(acr.Id)){
+                unshare.add(acr);
+            }
+        }
+
+
         Set<Id> roles = new Set<Id>();
         Set<Id> contacts = new Set<Id>();
 
@@ -453,9 +463,6 @@ public without sharing class ShareObjectsToExternalUsers {
         for(Id roleId: shareContactRole.keySet()){
             roles.add(roleId);
         }
-        system.debug('sharing');
-        system.debug(unshareContactRole);
-        system.debug(shareContactRole);
 
         Map<Id, List<string>> accountContactRolesAccessStatus = new Map<Id, List<string>>();
         List<Contact_Role_Service_Access__c> accesses = [SELECT Id, Contact_Role__r.Contact_Roles__c, Status__c FROM Contact_Role_Service_Access__c WHERE Contact_Role__r.Contact_Roles__c =: roles];
@@ -472,9 +479,7 @@ public without sharing class ShareObjectsToExternalUsers {
 
         Map<Id, Set<Id>> roleToObjects = getRolesRelatedObjects(roles);
         Map<Id, Id> getUsersForContacts = getUsersForContacts(contacts);
-        system.debug('roleToObjects');
-        system.debug(roleToObjects);
-        system.debug(getUsersForContacts);
+
         Map<Id, Set<Id>> objectsForUserShare = new Map<Id, Set<Id>>();
         for (Id role : shareContactRole.keySet()) {
             List<string> statuses = accountContactRolesAccessStatus.get(role);
@@ -486,9 +491,6 @@ public without sharing class ShareObjectsToExternalUsers {
                 for(Id contactId: contactIds){
                     Set<Id> objects = roleToObjects.get(role);
                     Id user = getUsersForContacts.get(contactId);
-                    system.debug('obj+uset');
-                    system.debug(user);
-                    system.debug(objects);
 
                     if (objects != null && user != null) {
                         Set<Id> objectsForUser = objectsForUserShare.get(user);
@@ -521,8 +523,6 @@ public without sharing class ShareObjectsToExternalUsers {
             }
         }
 
-        system.debug(objectsForUserUnshare);
-        system.debug(objectsForUserShare);
         unshareObjectsForUsers(objectsForUserUnshare, 'Service_Notification__share');
         unshareObjectsForUsers(objectsForUserUnshare, 'Contact_Role_Service__share');
         unshareObjectsForUsers(objectsForUserUnshare, 'Contact_Role_Service_Permission__share');
@@ -544,7 +544,6 @@ public without sharing class ShareObjectsToExternalUsers {
 
         if(conditions != null && conditions.size() > 0) {
             string query = 'SELECT Id FROM ' + objectName + ' WHERE '+ string.join(conditions, ' OR ');
-            system.debug(query);
             List<sObject> objects = Database.query(query);
             Database.delete(objects);
         }

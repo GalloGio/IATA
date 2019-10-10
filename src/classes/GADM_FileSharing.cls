@@ -12,10 +12,10 @@ public with sharing class GADM_FileSharing {
             }
         }
 
-        Id fileGadmRecordtype = Schema.SObjectType.ContentVersion.getRecordTypeInfosByName().get('GADM').getRecordTypeId();
+        Id fileGadmRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('ContentVersion', 'GADM');
         if (fileGadmRecordtype != null){
             for (ContentVersion cv: newValues) {
-                if(internalGadmGroupMemberIds.contains(cv.CreatedById) && cv.RecordTypeId == null){
+                if(internalGadmGroupMemberIds.contains(cv.CreatedById)){
                     cv.RecordTypeId = fileGadmRecordtype;
                 }
             }

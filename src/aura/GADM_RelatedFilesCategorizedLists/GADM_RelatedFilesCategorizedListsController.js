@@ -3,8 +3,8 @@
  */
 ({
     initializeComponent: function(component, event, helper) {
-
         if (component.get("v.isPopup")) {
+            /*HTML hack, read the comment on cssstyle attribute*/
             component.set("v.cssStyle", ".uiMenu {z-index:0} .oiHeader a.homeIcon {z-index:0} .forceIcon .slds-icon_xx-small {width: 1.5rem; height: 1.5rem} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton {padding: 0px !important} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton, input.uiButton {margin-top: 0px; background-color: transparent;}");
         }
         let action = component.get('c.getFiles');

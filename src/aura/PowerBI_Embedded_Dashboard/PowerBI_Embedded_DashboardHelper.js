@@ -265,7 +265,7 @@
         component.set('v.showSpinner', ! component.get('v.showSpinner'));
     },
     applyCSS: function(component){
+        /*HTML hack, read the comment on cssstyle attribute*/
         component.set("v.cssStyle", ".modal-header {padding-bottom:0rem; border-bottom: 0px solid #e9ecef} .slds-text-heading_medium, .slds-text-heading--medium {display:none;} .uiMenu {z-index:0} .oiHeader a.homeIcon {z-index:0} .forceIcon .slds-icon_xx-small {width: 1.5rem; height: 1.5rem} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton {padding: 0px !important} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton, input.uiButton {margin-top: 0px; background-color: transparent;}");
     },
-
 })

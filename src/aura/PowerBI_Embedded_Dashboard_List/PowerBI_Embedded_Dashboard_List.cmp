@@ -1,52 +1,49 @@
 <aura:component controller="PowerBI_Embedded_Dashboard_CTRL" description="PowerBI_Embedded_Dashboard_List">
 
-    <aura:attribute name="category" type="Object"/>
-    <aura:attribute name="selectedDashboard" type="Object"/>
+    <aura:attribute name="category" type="Object" />
+    <aura:attribute name="selectedDashboard" type="Object" />
 
     <!--SHOW ATTRIBUTES-->
-    <aura:attribute name="showDashboards" type="Boolean" default="true"/>
-    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
-
+    <aura:attribute name="showDashboards" type="Boolean" default="true" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
 
     <!--EVENTS-->
-    <aura:registerEvent name="backListEvent" type="c:PowerBI_Embedded_Dashboard_List_Back_EVT"/>
-    <aura:registerEvent name="serviceUsageEvent" type="c:Service_Usage_Event"/>
-    <aura:handler name="backEvent" event="c:PowerBI_Embedded_Dashboard_Back_EVT" action="{!c.backEvent}"/>
+    <aura:registerEvent name="backListEvent" type="c:PowerBI_Embedded_Dashboard_List_Back_EVT" />
+    <aura:registerEvent name="serviceUsageEvent" type="c:Service_Usage_Event" />
+    <aura:handler name="backEvent" event="c:PowerBI_Embedded_Dashboard_Back_EVT" action="{!c.backEvent}" />
 
-    <aura:attribute name="cssStyle" type="String"/>
+    <aura:attribute name="cssStyle" type="String" />
+    <!-- IF MODAL WINDOW IS OPENED, ONE ID LOGO AND SERVICE PROFILE MENU IS DISPLAYED OVER THE POPUP DIALOG -->
+    <!-- THIS HTML HACK IS THE ONLY WAY HOW TO PUSH THE HEADER COMPONENTS INTO BACKGROUND AND THAN BACK TO THEIR ORIGINAL POSITION ONCE MODAL IS CLOSED-->
+    <!-- COMPONENT NEEDS TO BE IN VERSION 40 AS IN LATER VERSIONS style IS NOT SUPPORTED-->
     <style>{!v.cssStyle}</style>
 
-    <aura:handler name="init" value="{! this}" action="{! c.init}"/>
-    <lightning:overlayLibrary aura:id="overlayLib"/>
-    <lightning:overlayLibrary aura:id="overlayLibDocs"/>
+    <aura:handler name="init" value="{! this}" action="{! c.init}" />
+    <lightning:overlayLibrary aura:id="overlayLib" />
+    <lightning:overlayLibrary aura:id="overlayLibDocs" />
     <div class="slds-container--fluid">
-
         <aura:if isTrue="{! v.showDashboards}">
-
             <aura:iteration items="{! v.category.permissions}" var="dashboard" indexVar="key">
                 <div class="{!key%2==0 ? 'line' : 'line lineTwoPlus'}">
-                    <div style="margin-left: 1rem;" class ="slds-align_absolute-center">
+                    <div  class="slds-align_absolute-center marginLeft1">
                         <h2>{! dashboard.permission.Name}</h2>
                     </div>
-                    <span style="float:right;">
-                            <button id="{!key}" class="btn btn-primary btn-grey"  style="margin-top: 0px !important;" onclick="{!c.show}">Show</button>
-
-                                 <button id="{!key}" class="btn btn-primary btn-grey" disabled ="{!not(dashboard.hasFilesAttached)}" style="margin-left: 0.5rem; margin-top: 0px !important;" onclick="{!c.showDocuments}">Documents</button>
-
-                         </span>
+                    <span class="floatRight">
+                        <button id="{!key}" class="btn btn-primary btn-grey marginTop0" onclick="{!c.show}">Show</button>
+                        <button id="{!key}" class="btn btn-primary btn-grey marginLeft05 marginTop0" disabled ="{!not(dashboard.hasFilesAttached)}" onclick="{!c.showDocuments}">Documents</button>
+                    </span>
                 </div>
             </aura:iteration>
             <div class="body_container">
-                <c:GADM_RelatedFilesCategorizedLists objectIds="{!v.category.categoryIds}"/>
+                <c:GADM_RelatedFilesCategorizedLists objectIds="{!v.category.categoryIds}" />
             </div>
             <div class="back_button">
                 <button class="btn btn-primary btn-grey" onclick="{! c.listBack}">Back</button>
             </div>
-
         </aura:if>
 
         <aura:if isTrue="{! v.showSpinner}">
-            <lightning:spinner alternativeText="Loading"/>
+            <lightning:spinner alternativeText="Loading" />
         </aura:if>
     </div>
 

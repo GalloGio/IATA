@@ -1,32 +1,39 @@
 .THIS .back_button {
     text-align:center;
 }
-
 .THIS .lineTwoPlus{
     border-top: 1px solid #dedede;
 }
-
 .THIS .centered {
   display: table-cell;
   vertical-align: middle;
   border: 1px solid black;
 }
-
 .THIS .line {
     display: flex;
     justify-content: space-between;
     padding-top: 1rem;
     margin-bottom: 1rem;
 }
-
 .THIS .slds-accordion__summary-action.slds-button:hover {
      background-color: white !important;
 }
-
 .THIS .slds-accordion__summary-action.btn {
      margin-top: 0px !important;
 }
 .THIS .body_container {
     min-height:300px;
     padding: 20px 20px;
+}
+.THIS .marginLeft1 {
+    margin-left: 1rem;
+}
+.THIS .marginLeft05 {
+    margin-left: 0.5rem;
+}
+.THIS .marginTop0 {
+    margin-top: 0px !important;
+}
+.THIS .floatRight {
+    float:right;
 }

@@ -11,6 +11,10 @@
     <aura:attribute name="cssStyle" type="String" />
     <!--HANDLER-->
     <aura:handler name="init" value="{!this}" action="{! c.init}"/>
+
+    <!-- IF MODAL WINDOW IS OPENED, ONE ID LOGO AND SERVICE PROFILE MENU IS DISPLAYED OVER THE POPUP DIALOG -->
+    <!-- THIS HTML HACK IS THE ONLY WAY HOW TO PUSH THE HEADER COMPONENTS INTO BACKGROUND AND THAN BACK TO THEIR ORIGINAL POSITION ONCE MODAL IS CLOSED-->
+    <!-- COMPONENT NEEDS TO BE IN VERSION 40 AS IN LATER VERSIONS style IS NOT SUPPORTED-->
     <style>{!v.cssStyle}</style>
     <lightning:overlayLibrary aura:id="overlayLib"/>
     <div>

@@ -17,3 +17,13 @@
     padding-top: 0.2rem;
     padding-bottom: 0.2rem;
 }
+.THIS .marginLeft{
+    margin-left: 1rem;
+}
+.THIS .floatRight{
+    float:right;
+}
+.THIS .tabContainer{
+    height:10rem;
+    overflow:auto;
+}
