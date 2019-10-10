@@ -169,13 +169,13 @@
                         <apex:outputPanel layout="block" styleClass="inner-wrapper" rendered="{!product !=null}">                           
                             <!-- breadcrumb -->
                             <ol class="list breadcrumb">
-                                <li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
+                                <li><a href="{!$Site.BaseRequestURL}">{!$Label.Home}</a></li>
                                 <li>
-                                    <a style="{! IF(selectedCategory.value == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a>
+                                    <a style="{! IF(selectedCategory.value == '', 'display:none', '')}" href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a>
                                     <apex:outputText value="" rendered="{! selectedCategory.value == ''}" />
                                 </li>
                                 <li>
-                                    <a style="{! IF(selectedCategory.value == '' || selectedTopic == null || selectedTopic == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}&topic={!selectedTopic}">{!selectedTopicLabel}</a>
+                                    <a style="{! IF(selectedCategory.value == '' || selectedTopic == null || selectedTopic == '', 'display:none', '')}" href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!selectedCategory.value}&topic={!selectedTopic}">{!selectedTopicLabel}</a>
                                     <apex:outputText value="" rendered="{! selectedCategory.value == '' || selectedTopic == null || selectedTopic == ''}" />
                                 </li>
                                 <li>{!product.ProductName}</li>
@@ -321,7 +321,7 @@
                                                         <!-- <apex:variable var="icon" value="img/components/icons/{!LOWER(SUBSTITUTE(product.Media,' ','_'))}.png" /> -->
                                                         <li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}">
                                                             <!-- background: url({!URLFOR($Resource.EcommerceAssets, icon)}) no-repeat 0 0 -->
-                                                            <!-- <h4 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4> -->
+                                                            <!-- <h4 class="item-name"><a href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4> -->
                                                             <h4 class="item-name">{!prod.ProductName}</h4>
                                                             <div class="item-description">{!prod.ProductShortDesc}</div>
                                                         </li>
@@ -389,7 +389,7 @@
                                         <ul class="list product">
                                             <apex:repeat value="{!product.ProductComponent}" var="prod">
                                                 <li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}">
-                                                    <h4 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
+                                                    <h4 class="item-name"><a href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
                                                     <div class="item-description">{!prod.ProductShortDesc}</div>
                                                 </li>
                                             </apex:repeat>
@@ -403,7 +403,7 @@
                                         <ul class="list product">
                                             <apex:repeat value="{!lstRelatedProducts}" var="prod">
                                                 <li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}">
-                                                    <h4 class="item-name"><a onclick="relatedProductPush('{!prod.ProductNumber}');" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
+                                                    <h4 class="item-name"><a onclick="relatedProductPush('{!prod.ProductNumber}');" href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
                                                     <div class="item-description">{!prod.ProductShortDesc}</div>
                                                 </li>
                                             </apex:repeat>
@@ -417,7 +417,7 @@
                                         <apex:repeat value="{!recommendedProducts}" var="prod">
                                             <li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}" 
                                             style="min-height:40px;">
-                                                <h4 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
+                                                <h4 class="item-name"><a href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
                                                 <apex:variable var="shortDesc" value="1" rendered="{!prod.ProductShortDesc != null && prod.ProductShortDesc != ''}">
                                                     <div class="item-description">{!prod.ProductShortDesc}</div>
                                                 </apex:variable>

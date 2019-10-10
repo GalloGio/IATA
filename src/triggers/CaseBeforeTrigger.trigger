@@ -144,6 +144,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 /***********************************************************************************************************************************************************/
     /*Share trigger code*/
     if (Trigger.isInsert || Trigger.isUpdate) {
+
+        /** WMO-564 **/
+        if(Trigger.isUpdate) {
+            CaseProcessTypeHelper.processKPI(Trigger.new, Trigger.oldMap);
+        }
+
 	// assigns default email address to be used on send email quick action
         //follows same logic as current classic functionality      
         for(Case c: trigger.new){
