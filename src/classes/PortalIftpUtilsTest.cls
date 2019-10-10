@@ -128,8 +128,12 @@ public class PortalIftpUtilsTest {
 
         String RECTYPE_Track_Response = RecordTypeSingleton.getInstance().getRecordTypeId('Integration_Log__c', 'Track_Response');
         Integration_Log__c il1 = new Integration_Log__c();
-        Integration_Log__c il2 = IntegrationLogUtils.createAccountContactRoleIntegrationLog(null, RECTYPE_Track_Response, null);    
-        IntegrationLogUtils.insertIntoIntegrationLog(il2);
+        il1 = IntegrationLogUtils.createAccountContactRoleIntegrationLog(null, RECTYPE_Track_Response, null);    
+        IntegrationLogUtils.insertIntoIntegrationLog(il1);
+
+        Integration_Log__c il3 = new Integration_Log__c();
+        il3 = IntegrationLogUtils.createAccountRoleIntegrationLog(null, RECTYPE_Track_Response, null);    
+        IntegrationLogUtils.insertIntoIntegrationLog(il3);
 
         Test.stopTest();
     }

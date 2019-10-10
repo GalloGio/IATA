@@ -242,8 +242,30 @@ public class portalIftpTrainingRecordsTest {
         User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
         System.debug('u2 - ' + u2);
 
-        System.runAs(u2) {
+        Contact_Role_Certification__c  crc = [SELECT Id FROM Contact_Role_Certification__c WHERE Name = 'Certification Plane 3 renew' LIMIT 1];
 
+        portalIftpTrainingRecords.CertificationEnrollmentWrapper dataToSave = new portalIftpTrainingRecords.CertificationEnrollmentWrapper();
+        dataToSave.action = 'Enroll';
+        dataToSave.contact_role_certification_id = crc.Id;
+        List<portalIftpTrainingRecords.CertificationEnrollmentWrapper> lToSave = new List<portalIftpTrainingRecords.CertificationEnrollmentWrapper>();
+        lToSave.add(dataToSave);
+
+        portalIftpTrainingRecords.CertificationEnrollmentWrapper dataToSave2 = new portalIftpTrainingRecords.CertificationEnrollmentWrapper();
+        dataToSave2.action = 'Unenroll';
+        dataToSave2.contact_role_certification_id = crc.Id;
+        List<portalIftpTrainingRecords.CertificationEnrollmentWrapper> lToSave2 = new List<portalIftpTrainingRecords.CertificationEnrollmentWrapper>();
+        lToSave2.add(dataToSave2);
+
+        portalIftpTrainingRecords.CertificationEnrollmentWrapper dataToSave3 = new portalIftpTrainingRecords.CertificationEnrollmentWrapper();
+        dataToSave3.action = 'Stop';
+        dataToSave3.contact_role_certification_id = crc.Id;
+        List<portalIftpTrainingRecords.CertificationEnrollmentWrapper> lToSave3 = new List<portalIftpTrainingRecords.CertificationEnrollmentWrapper>();
+        lToSave3.add(dataToSave3);
+
+        System.runAs(u2) {
+            Boolean res = portalIftpTrainingRecords.updateCertificationEnroll(lToSave);
+            Boolean res2 = portalIftpTrainingRecords.updateCertificationEnroll(lToSave2);
+            Boolean res3 = portalIftpTrainingRecords.updateCertificationEnroll(lToSave3);
 
         }
         Test.stopTest();
@@ -298,6 +320,22 @@ public class portalIftpTrainingRecordsTest {
             searchValues.add('Level 2, Level 3'); 
 
             List<portalIftpTrainingRecords.TrainingRecordsWrapper> res =  portalIftpTrainingRecords.getAllTrainingRecordsForDetailView(searchValues, searchType);
+        }
+        Test.stopTest();
+    }
+
+        static testMethod void getFileContentTest(){
+        portalIftpTestClass.test_config();
+
+        Test.startTest();
+        
+        User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
+        System.debug('u2 - ' + u2);
+
+        Id fileId = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Emp Ins Document'].ContentDocumentId;
+
+        System.runAs(u2) {
+            String res = portalIftpTrainingRecords.getFileContent(fileId);
         }
         Test.stopTest();
     }
