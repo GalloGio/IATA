@@ -314,22 +314,16 @@ public virtual class IEC_PageController
 		}
 	}
 
-	public PageReference csPortalCommunityRedirect(){
-		List<Network> csPortalIdList = new List<Network>([SELECT id FROM Network WHERE NAME = 'CS PORTAL' LIMIT 1]);
-		String urlPath;
+    public PageReference csPortalCommunityRedirect(){
+       String urlPath;
+       String urlRedirect = '/s/support-reach-us?category=Publications&topic=IATA_Store';
 
-		if(!csPortalIdList.isEmpty()){
-			System.debug(':::: COMM URL :::: ' + Site.getBaseUrl() + '/servlet/networks/switch?networkId=' + String.valueOf(csPortalIdList.get(0).id) + '&startURL=s/support-reach-us?category=Publications&topic=IATA_Store');
- 			urlPath = '/servlet/networks/switch?networkId=' + String.valueOf(csPortalIdList.get(0)) + '&startURL=s/support-reach-us?category=Publications&topic=IATA_Store';
-		}
-		else{
-			urlPath = Site.getBaseRequestUrl();
-		}
-		
-		PageReference cspPage = new PageReference(urlPath);
-  		cspPage.setRedirect(true);
-  		return cspPage;
-	}
+       urlPath = OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.CSP, urlRedirect);
+       
+       PageReference cspPage = new PageReference(urlPath);
+       cspPage.setRedirect(true);
+       return cspPage;
+   }
 
 	public Pagereference logout() 
     {
