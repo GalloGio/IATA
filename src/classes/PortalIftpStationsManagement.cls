@@ -188,8 +188,6 @@ public without sharing class PortalIftpStationsManagement {
                                     AND To__c = :itpAccRolId
                                     AND Relationship_Status__c = 'Active'
                                     AND Portal_Service__r.Name = 'IFTP'];
-
-                System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] accRolRelList - ' + accRolRelList);
             }
             Id portalServiceId;
             if(accRolRelList.isEmpty()){
@@ -201,9 +199,6 @@ public without sharing class PortalIftpStationsManagement {
                 portalServiceId = accRolRelList[0].Portal_Service__c;
             }
 
-            System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] portalServiceId - ' + portalServiceId);
-
-            
             if(!dataToInsert.isEmpty()){
                 //Check if station - airline - itp already exists, if so remove from insert list
                 Map<Id,List<AirlinesItpAddressWrapper>> stationsAirlinesMap = PortalIftpStationsManagement.getItpStationsAirlines();
@@ -298,7 +293,6 @@ public without sharing class PortalIftpStationsManagement {
                         }
 
                         if(!exists && !accRolRelToInsert.isEmpty()){
-                            System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] accRolRelToInsert after insert- ' + accRolRelToInsert);
                             for(Account_Role_Relationship__c arrInserted: accRolRelToInsert){
                                 if(rec.airlineAccRolId == arrInserted.From__c && rec.itpAccRolId == arrInserted.To__c){
                                     newRecord.Account_Role_Relationship__c = arrInserted.id;
@@ -311,7 +305,6 @@ public without sharing class PortalIftpStationsManagement {
                 }
 
                 if(!roleAddressesToInsert.isEmpty()){
-                    System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] roleAddressesToInsert - ' + roleAddressesToInsert);
                     insert roleAddressesToInsert;
                 } 
 
@@ -339,8 +332,8 @@ public without sharing class PortalIftpStationsManagement {
                 }
             } 
             catch (DMLException e) {
-                System.debug('____ [cls PortalEmployeeRecordsManagement - updateEmployeeStations] DMLException - ' + e );
-                System.debug('____ [cls PortalEmployeeRecordsManagement - updateEmployeeStations] DMLException - ' + e.getStackTraceString() );
+                System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - updateEmployeeStations] DMLException - ' + e );
+                System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - updateEmployeeStations] DMLException - ' + e.getStackTraceString() );
                 Database.rollback(sp);
                 
                 rw = new UpdateItpAddressAirlinesResultsWrapper(
@@ -351,8 +344,8 @@ public without sharing class PortalIftpStationsManagement {
             }                                       
         }
         catch (Exception e){
-            System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] Exception - ' + e );
-            System.debug('____ [cls PortalStationsManagement - updateItpAddressAirlines] Exception - ' + e.getStackTraceString() );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalStationsManagement - updateItpAddressAirlines] Exception - ' + e );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalStationsManagement - updateItpAddressAirlines] Exception - ' + e.getStackTraceString() );
               
             rw = new UpdateItpAddressAirlinesResultsWrapper(
                         'An error has occured while saving data',
@@ -371,9 +364,8 @@ public without sharing class PortalIftpStationsManagement {
 
         try{
             //check if station has not been deleted yet
-            List<Address__c> ITPStations = PortalIftpUtils.getITPStations();
             Boolean existsStations = false;
-            for(Address__c addr : ITPStations){
+            for(Address__c addr : PortalIftpUtils.getITPStations()){
                 if(stationToDelete.addressId.equals(addr.Id)){
                     existsStations = true;
                     break;
@@ -384,9 +376,7 @@ public without sharing class PortalIftpStationsManagement {
 
                 boolean existsEmployees = false;
                 //Check if there are employees working in that station for that ITP
-                System.debug('____ [cls PortalStationsManagement - deleteStationFromItp] stationToDelete - ' + stationToDelete);
                 Address__c stationsWithEmployees = PortalIftpUtils.getITPStationEmployees(stationToDelete.addressId);
-                System.debug('____ [cls PortalStationsManagement - deleteStationFromItp] stationToDelete.addressId - ' + stationToDelete.addressId);
                 if(stationsWithEmployees != null && stationsWithEmployees.Role_Addresses__r != null && stationsWithEmployees.Role_Addresses__r.size() > 0){
                     existsEmployees = true;
                 }
@@ -412,14 +402,13 @@ public without sharing class PortalIftpStationsManagement {
                         Savepoint sp = Database.setSavepoint();
                         try {
                             if(!roleAddrToDeleteList.isEmpty()){
-                                System.debug('____ [cls PortalStationsManagement - deleteStationFromItp] roleAddrToDeleteList - ' + roleAddrToDeleteList);
                                 delete roleAddrToDeleteList;
                                 delResWrp = new DeleteStationResultsWrapper('Station deleted successfully.', true, stationToDelete);
                             }
                         } 
                         catch (DMLException e) {
-                            System.debug('____ [cls PortalEmployeeRecordsManagement - deleteStationFromItp] DMLException - ' + e );
-                            System.debug('____ [cls PortalEmployeeRecordsManagement - deleteStationFromItp] DMLException - ' + e.getStackTraceString() );
+                            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - deleteStationFromItp] DMLException - ' + e );
+                            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - deleteStationFromItp] DMLException - ' + e.getStackTraceString() );
                             Database.rollback(sp);
                             
                             delResWrp = new DeleteStationResultsWrapper('Failed: An error has occured while saving data', false, stationToDelete); 
@@ -430,8 +419,8 @@ public without sharing class PortalIftpStationsManagement {
             }                                     
         }
         catch (Exception e){
-            System.debug('____ [cls PortalStationsManagement - deleteStationFromItp] Exception - ' + e );
-            System.debug('____ [cls PortalStationsManagement - deleteStationFromItp] Exception - ' + e.getStackTraceString() );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalStationsManagement - deleteStationFromItp] Exception - ' + e );
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalStationsManagement - deleteStationFromItp] Exception - ' + e.getStackTraceString() );
             
             delResWrp = new DeleteStationResultsWrapper('Failed: An error has occured while saving data', false, stationToDelete);
             
