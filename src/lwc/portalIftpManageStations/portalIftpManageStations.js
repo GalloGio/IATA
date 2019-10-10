@@ -94,30 +94,7 @@ export default class PortalIftpManageStations extends LightningElement {
     } 
 
     @wire(CurrentPageReference) pageRef;
-/*
-    @wire(getITPStations)
-    handleGetItpStations({error, data}){
-        //succeeded
-        if(data){
-            let myResult = JSON.parse(JSON.stringify(data));
 
-            //let myTopicOptions = [{ label: 'All', value: 'All' }];
-            let myTopicOptions = [];
-    
-            Object.keys(myResult).forEach(function (el) {
-                myTopicOptions.push(myResult[el].Code__c);
-            });
-            this.stationOptions = this.sortData('label', 'asc', JSON.parse(JSON.stringify(myTopicOptions)));
-            this.ITPStations = myResult;
-        }
-
-        //exception
-        if(error){
-            //show toast "Something went wrong"
-            console.log('error : ' + error);
-        }
-    }
-*/
 
     /*******************************************************************************
     *                                                                              *
@@ -126,7 +103,6 @@ export default class PortalIftpManageStations extends LightningElement {
     * ******************************************************************************/
 
     connectedCallback() {
-        console.log('INIT connectedCallback');
 
         registerListener('stationsChanged', this.handleStationsChanged, this);
 
@@ -147,7 +123,6 @@ export default class PortalIftpManageStations extends LightningElement {
             let myResult = JSON.parse(JSON.stringify(result));
             this.allStations = myResult;
 
-            //let myTopicOptions = [{ label: 'All', value: 'All' }];
             let myTopicOptions = [];
 
             Object.keys(myResult).forEach(function (el) {
@@ -244,12 +219,10 @@ export default class PortalIftpManageStations extends LightningElement {
             {label: 'Airline Name', fieldName: 'airlineName', type: 'text', sortable: true},
         ]
 
-        console.log('END connectedCallback');
     }
 
 
     initData(){
-        console.log('### IN ');
         this.loading = true;
         this.showSearch = true;
         this.dataRecords = false;
@@ -258,7 +231,6 @@ export default class PortalIftpManageStations extends LightningElement {
         .then(result => {
             let myResult = JSON.parse(JSON.stringify(result));
 
-            //let myTopicOptions = [{ label: 'All', value: 'All' }];
             let myTopicOptions = [];
 
             Object.keys(myResult).forEach(function (el) {
@@ -279,7 +251,6 @@ export default class PortalIftpManageStations extends LightningElement {
         .then(results => {
             if(results && results.length > 0) {
                 this.data = this.sortData('code', 'asc', JSON.parse(JSON.stringify(results)));
-                console.log('this.data ', this.data);
                 this.dataRecords = true;
             } else {
                 this.dataRecords = false; 
@@ -319,11 +290,9 @@ export default class PortalIftpManageStations extends LightningElement {
 	}
 
     handleStationsChanged(){
-        console.log('Listener - handleStationsChanged');
         this.showSearch = true;
         this.loading = true;
         this.initData();
-        console.log('Listener - handleStationsChanged, after this.initData()');
     }
 
     /*******************************************************************************
@@ -377,7 +346,6 @@ export default class PortalIftpManageStations extends LightningElement {
         let searchableStations = allStations.filter(station =>{
             return stationOptions.indexOf(station.Code__c) === -1;
         });
-        //let myResult =  allStations.filter(station => { 
         let myResult =  searchableStations.filter(station => { 
             return (station.Code__c !== undefined && station.Code__c.toUpperCase().includes(this.queryTerm.toUpperCase())) || 
                     (station.Description__c !== undefined && station.Description__c.toUpperCase().includes(this.queryTerm.toUpperCase()))|| 
@@ -457,7 +425,6 @@ export default class PortalIftpManageStations extends LightningElement {
                 this.openModal();
                 break;
             case 'delete':
-                //this.isActionView = true;
                 this.isActionDelete = true;
                 this.editData =  auxData[index];
                 this.recordToManageOriginalAirlinesList = selectedStationAirlinesList;
@@ -559,20 +526,16 @@ export default class PortalIftpManageStations extends LightningElement {
         let dataToSave = [];
         let auxData = JSON.parse(JSON.stringify(this.data));
         let auxEditData = JSON.parse(JSON.stringify(this.editData));
-        console.log('auxEditData', auxEditData);
 
         if(auxEditData.description !== undefined && auxEditData.description !== ''){ 
             dataToSave.push({ Id: auxEditData.id, Description__c: auxEditData.description, Address__c: auxEditData.addressId});
         }
-
-        console.log('dataToSave', dataToSave);
 
         updateStation({dataToSave: dataToSave, origin: 'updateStation' })
         .then(results => {
             let variant = 'error';
             let mode = 'sticky';
             let message = 'Unable to edit stations\' Notes';
-            console.log('results', results);
             if(results.succeeded) {
                 this.cleanErrors();
                 
@@ -607,7 +570,6 @@ export default class PortalIftpManageStations extends LightningElement {
             this.mainErrorMessage = error;
             this.error = error;
             this.loading = false;
-            //this.dataRecords = false;
             this.loadingEditSpinner = false;
             this.closeModal();
             this.isActionEdit = false;
@@ -640,10 +602,8 @@ export default class PortalIftpManageStations extends LightningElement {
         }
 
         this.loadingNew = true;
-        console.log('dataToSave ', dataToSave);
         insertStation({dataToSave: dataToSave })
         .then(results => {
-            console.log('results', results);
             let variant;
             let mode;
             if(results.succeeded){
@@ -653,20 +613,6 @@ export default class PortalIftpManageStations extends LightningElement {
                 this.showSearch = true;
                 this.loading = true;
                 this.initData();
-                /*
-                let auxMainData = JSON.parse(JSON.stringify(this.data));
-                console.log('auxMainData', auxMainData);
-                auxMainData.push({  addressId: results.stationsToInsertList[0].Address__c,
-                                    code: auxData[0].Code__c, 
-                                    city: auxData[0].City__c,
-                                    airportDescription: auxData[0].Description__c, 
-                                    id: results.stationsToInsertList[0].Id, 
-                                    name: results.stationsToInsertList[0].Name});
-                console.log('auxMainData', auxMainData);
-                this.data = auxMainData;
-                this.data = this.sortData('code', 'asc', JSON.parse(JSON.stringify(auxMainData)));
-                this.stationOptions.push(auxData[0].Code__c);
-*/
                 fireEvent(this.pageRef, 'stationsChanged', null);
 
             } else {
@@ -699,7 +645,6 @@ export default class PortalIftpManageStations extends LightningElement {
 
     handleRequestDelete(){
         let stationToDelete = JSON.parse(JSON.stringify(this.editData));
-        console.log('stationToDelete', stationToDelete);
         this.loadingDeleteSpinner = true;
         getITPStationEmployees({addressId: stationToDelete.addressId})
         .then(results =>{
@@ -738,11 +683,9 @@ export default class PortalIftpManageStations extends LightningElement {
 
     deleteConfirmation(){
         this.loadingDeleteSpinner = true;
-        console.log('delete station-itp connection');
         this.loadingSpinner = true;
         let itpStationsAirlinesMap = JSON.parse(JSON.stringify(this.itpStationsAirlinesMap));
         let stationToDelete = JSON.parse(JSON.stringify(this.editData));
-        console.log('stationToDelete', stationToDelete);
         let auxItpStations = JSON.parse(JSON.stringify(this.ITPStations));
         let auxData = JSON.parse(JSON.stringify(this.data));
         let auxStationOptions = JSON.parse(JSON.stringify(this.stationOptions));
@@ -750,7 +693,6 @@ export default class PortalIftpManageStations extends LightningElement {
         let recordToManageOriginalAirlinesList = [];
         if(this.recordToManageOriginalAirlinesList){
             recordToManageOriginalAirlinesList = JSON.parse(JSON.stringify(this.recordToManageOriginalAirlinesList));
-            console.log('recordToManageOriginalAirlinesList', recordToManageOriginalAirlinesList);
         }
         this.openConfirmationModal = false;
         this.askForconfirmationMessage = '';
