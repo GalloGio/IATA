@@ -27,7 +27,7 @@ export default class PortalIftpUploadOJT extends LightningElement {
 
         })
         .catch(error => {
-            console.log('PortalIftpUploadOJT - getITPStations - Error : ' + error);
+            console.error('PortalIftpUploadOJT - getUserInfo - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
         });  
