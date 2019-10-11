@@ -1682,3 +1682,8 @@ visibility: hidden;
 .button_no_margin button{
     margin: -10px !important;
 }
+
+.blueLink a {
+	color: #1e32fa;
+}
+  
