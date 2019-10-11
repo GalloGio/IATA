@@ -61,6 +61,7 @@ private class IDCard_AdmUserListAndFormTest {
                         IDCard_Key_Account__c = true,
                         RecordTypeId = rtacc,
                         BillingCountry = 'Australia',
+                        IATA_ISO_Country__c = isoc.Id,
                         Status__c = 'Approved'
         );
         insert a;
@@ -71,6 +72,7 @@ private class IDCard_AdmUserListAndFormTest {
                         IDCard_Key_Account__c = true,
                         RecordTypeId = rtacc,
                         BillingCountry = 'Australia',
+                        IATA_ISO_Country__c = isoc.Id,
                         Status__c = 'Approved'
         );
         insert a2;

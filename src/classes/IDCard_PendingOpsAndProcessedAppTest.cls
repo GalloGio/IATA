@@ -59,6 +59,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
                         IDCard_Key_Account__c = true,
                         RecordTypeId = rtacc,
                         BillingCountry = 'Australia',
+                        IATA_ISO_Country__c = isoc.Id,
                         Status__c = 'Approved'
 
                        );
