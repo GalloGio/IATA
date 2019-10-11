@@ -60,7 +60,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 
 			sp = Database.setSavePoint();
 
-	        fieldsOfObject.put('Process__c', AMS_Utils.MCAE);
+			fieldsOfObject.put('Process__c', AMS_Utils.MCAE);
 			fieldsOfObject.put('Status__c','Open');
 			
 			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_MCAE, acct.Id, fieldsOfObject);
@@ -69,24 +69,24 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 
 			insert oscar;
 
-	        fieldsOfObject = new Map<String,Object>();
-	        fieldsOfObject.put('Oscar__c',oscar.Id);
-	        fieldsOfObject.put('ContactId',c.ContactId);
-	        fieldsOfObject.put('ParentId',c.Id);
-	        fieldsOfObject.put('BSPCountry__c',acct.BillingCountry);
-	        fieldsOfObject.put('CaseArea__c',c.CaseArea__c);
-	        fieldsOfObject.put('ContactId',c.ContactId);
+			fieldsOfObject = new Map<String,Object>();
+			fieldsOfObject.put('Oscar__c',oscar.Id);
+			fieldsOfObject.put('ContactId',c.ContactId);
+			fieldsOfObject.put('ParentId',c.Id);
+			fieldsOfObject.put('BSPCountry__c',acct.BillingCountry);
+			fieldsOfObject.put('CaseArea__c',c.CaseArea__c);
+			fieldsOfObject.put('ContactId',c.ContactId);
 			fieldsOfObject.put('Reason1__c', 'New AE Multicountry');
-	        fieldsOfObject.put('Region__c',acct.Region_formula__c);
-	        fieldsOfObject.put('Subject', 'New Associate Entity - GoGlobal - ' + acct.IATA_ISO_Country__r.Name);
-	        fieldsOfObject.put('Visible_on_ISS_Portal__c', c.Visible_on_ISS_Portal__c);
-	        fieldsOfObject.put('Origin', c.Origin);
-	        
-	        newCaseMC = ANG_EntityCreator.createCase(c.RecordTypeId, acct.id, fieldsOfObject);
+			fieldsOfObject.put('Region__c',acct.Region_formula__c);
+			fieldsOfObject.put('Subject', 'New Associate Entity - GoGlobal - ' + acct.IATA_ISO_Country__r.Name);
+			fieldsOfObject.put('Visible_on_ISS_Portal__c', c.Visible_on_ISS_Portal__c);
+			fieldsOfObject.put('Origin', c.Origin);
+			
+			newCaseMC = ANG_EntityCreator.createCase(c.RecordTypeId, acct.id, fieldsOfObject);
 			System.debug('[ANG_MulticountryOscarCreatorBatch]new Case = ' + newCaseMC);
 			
-	        insert newCaseMC;
-	        
+			insert newCaseMC;
+			
 			System.debug('accountAccreditationFormsMap is:'+accountAccreditationFormsMap);
 
 			if(c.origin == 'Portal' && accountAccreditationFormsMap.get(acct.Id) != null){ 
@@ -106,19 +106,19 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 				stagingArea = ANG_EntityCreator.createStagingArea(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Associate_Entity'), acct.Name, newCaseMC.Id, fieldsOfObject);
 				
 				insert stagingArea;
-	        }
+			}
 
-	        fieldsOfObject = new Map<String,Object>();
-	        fieldsOfObject.put('AMS_Online_Accreditation__c',stagingArea.Id);
-	        fieldsOfObject.put('Oscar_Communication_Case_Id__c', newCaseMC.Id);
-	        ANG_EntityCreator.updateOscar(oscar, fieldsOfObject);
-	        	        
-	        upsert oscar;
-	        
+			fieldsOfObject = new Map<String,Object>();
+			fieldsOfObject.put('AMS_Online_Accreditation__c',stagingArea.Id);
+			fieldsOfObject.put('Oscar_Communication_Case_Id__c', newCaseMC.Id);
+			ANG_EntityCreator.updateOscar(oscar, fieldsOfObject);
+						
+			upsert oscar;
+			
 		}catch(Exception e){
 			
-            System.debug('[ANG_MulticountryOscarCreatorBatch] Exception processing account ' + acct.Id + ':' + e.getStackTraceString());
-            
+			System.debug('[ANG_MulticountryOscarCreatorBatch] Exception processing account ' + acct.Id + ':' + e.getStackTraceString());
+			
 			ANG_ConversionHelper.ConversionBatchItem item = new ANG_ConversionHelper.ConversionBatchItem(new ANG_ConversionHelper.HierarchyStructure(acct), 1, BC.getJobId(), true, e.getMessage());
 
 			System.debug(item);

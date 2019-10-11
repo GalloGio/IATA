@@ -1,7 +1,7 @@
 public class ANG_EligibilityForNewMulticountryAgent {
 
 	public class EligibilityInputWrapper {
-	    @InvocableVariable(required=true)
+		@InvocableVariable(required=true)
 		public Account currentAgent;
 		@InvocableVariable(required=true)
 		public Id currentAgentBSP;
@@ -24,8 +24,7 @@ public class ANG_EligibilityForNewMulticountryAgent {
 		Account parentAgent = 
 			[SELECT 
 				IATA_ISO_Country__r.AMS_Settlement_System__c 
-			 FROM
-				Account
+			 FROM Account
 			 WHERE 
 			 	Id = :ew.currentAgent.ParentId
 			 LIMIT 1
@@ -42,8 +41,7 @@ public class ANG_EligibilityForNewMulticountryAgent {
 			List<Account> childHEList = new List<Account>(
 				[SELECT
 					Id
-				 FROM
-				 	Account
+				 FROM Account
 				 WHERE
 				 	Id != :ew.currentAgent.Id
 				 AND

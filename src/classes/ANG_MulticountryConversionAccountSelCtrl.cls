@@ -5,7 +5,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 	@TestVisible
 	private static final String COUNTRY_NOT_MULTICOUNTRY = '{0} is not enabled for Multicountry. Please remove the accounts in this country';
-    
+	
 	public class SelectedAccountWrapper implements Comparable {
 		
 		public Account acct {get; set;}
@@ -133,8 +133,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 						Account__r.Location_Type__c,
 						Account__r.IATA_ISO_Country__r.Name,
 						Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Name
-					FROM
-						AMS_Process_Detail__c
+					FROM AMS_Process_Detail__c
 					WHERE
 						OSCAR__c = :this.oscar.Id
 					AND
@@ -176,7 +175,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 		if(this.oscar.STEP45__c == AMS_Utils.PASSED){
 			readOnly = true;
-            return;
+			return;
 		}
 		
 		for(Id acctId : processDetailsMap.keySet()){
@@ -269,8 +268,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 				Location_Type__c,
 				IATA_ISO_Country__r.Name,
 				IATA_ISO_Country__r.AMS_Settlement_System__r.Name
-			 FROM 
-				Account
+			 FROM Account
 			 WHERE
 				(Id = :selectedAccount OR Top_Parent__c = :selectedAccount)
 			 AND
