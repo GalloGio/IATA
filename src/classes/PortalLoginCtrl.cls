@@ -139,7 +139,7 @@ public with sharing class PortalLoginCtrl {
         if(result.success == true){
             String link                  = PortalPasswordHandler.generateUrl(result.user, result.password, 'resetPassword');
             Map<String, String> emailMap = PortalPasswordHandler.forgotPasswordEmailMap(result.user, link);
-            result.success               = PortalPasswordHandler.sendEmail(result.user.id, 'CSP_Forgot_Password_Email', emailMap);
+            result.success               = PortalPasswordHandler.sendEmail(result.user.id, 'CSP_Forgot_Password_Email_VF', emailMap);
         }
     }
 
