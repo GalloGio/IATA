@@ -264,7 +264,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         query += 'Country__r.Name FROM AP_Country_Requierment__c ';
         query += 'WHERE Line_of_business__c = \'' + typeFilter + '\' AND Country__c = \'' + countryFilter + '\' ';
         query += 'LIMIT 1';
-        System.debug('query: '+query);
+
         List<AP_Country_Requierment__c> listCountryReqments = Database.query(query);
 
         if (listCountryReqments.isEmpty()) {
