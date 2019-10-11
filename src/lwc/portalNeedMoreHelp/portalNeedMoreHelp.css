@@ -1,0 +1,29 @@
+.customCard {
+    border-width: 2px;
+    position: relative;
+    box-shadow: none;
+    background-color: #ffffff;
+  }
+  
+  .customCard::after,
+  .customCard::before {
+    content:"";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 120px 120px;
+    position: absolute;
+  }
+  
+  .customCard::after {
+    bottom: -2px;
+    right: -2px;
+    z-index: 1;
+  }
+  
+  .customCard::before {
+    border-color: transparent transparent #e2e2e2 transparent;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+  }

@@ -4,6 +4,7 @@
     <customButtons>E2CP__New_Comment</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Accept_Case</customButtons>
+    <customButtons>Escalate_within_IATA</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>

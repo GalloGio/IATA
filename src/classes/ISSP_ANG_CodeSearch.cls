@@ -23,6 +23,7 @@ public class ISSP_ANG_CodeSearch {
 	public ANG_RHC_Information__c rhcAgencyInfo {get; set;}
 	public boolean isSpecialIATACodeSearchCountry {get; set;}
 	public String RHCValueForSpecialCountry {get; set;}
+	public String AccreditationDateFormated {get; set;}
 
 	public static Set<String> statusSet = new Set<String> {
 		Ams_Utils.ACC_S9_APPROVED,
@@ -98,7 +99,7 @@ public class ISSP_ANG_CodeSearch {
 			List<Account> agencies = new List<Account>();
 			Account airline;
 
-			for (Account a: [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, ANG_Accreditation_Model__c,
+			for (Account a: [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, ANG_Accreditation_Model__c, Accreditation_date__c, toLabel(Remittance_frequency__c), Location_Class__c,
 								ANG_HE_RiskStatus__c, ANG_RiskStatus__c, Active_Guarantees__c, Accumulated_Irregularities__c, Location_Type__c,
 								Top_Parent__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, ANG_IsNewGenAgency__c, IATA_ISO_Country__r.BSP_Country_free_text__c,
 								Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.ISO_Code__c,
@@ -133,7 +134,8 @@ public class ISSP_ANG_CodeSearch {
 					rhcAgencyInfo = rhcInfos[0];
 				}
 
-				if (reqAgency.Location_Type__c == Ams_Utils.AE || reqAgency.Location_Type__c == Ams_Utils.BR || reqAgency.Location_Type__c == Ams_Utils.SA) {
+				if(reqAgency.Location_Type__c == Ams_Utils.AE || reqAgency.Location_Type__c == Ams_Utils.BR || reqAgency.Location_Type__c == Ams_Utils.SA) {
+
 					if(reqAgency.Location_Type__c == Ams_Utils.AE) {
 						auxReplacement = 'an ' + Label.ISSP_ANG_ASSOCIATE_ENTITY;
 					} else {
@@ -148,7 +150,7 @@ public class ISSP_ANG_CodeSearch {
 
 					String aux = Label.ISSP_ANG_IATA_CODE_SEARCH_HE.replace('%IATA_CODE%', reqAgency.IATACode__c).replace('%CHILD_LOCATION%', auxReplacement);
 
-					Account parentAgency = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name,
+					Account parentAgency = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, Accreditation_date__c, toLabel(Remittance_frequency__c), Location_Class__c,
 												   ANG_Accreditation_Model__c, ANG_HE_RiskStatus__c, ANG_RiskStatus__c, Active_Guarantees__c,
 												   Accumulated_Irregularities__c, Location_Type__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.BSP_Country_free_text__c, 
 												   ANG_IsNewGenAgency__c, Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.ISO_Code__c
@@ -174,7 +176,7 @@ public class ISSP_ANG_CodeSearch {
 				}
 
 				if (airline.Field_Head_Office__c == 'Branch') {
-					Account parentAirline = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name,
+					Account parentAirline = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, Accreditation_date__c, toLabel(Remittance_frequency__c), Location_Class__c,
 												   ANG_Accreditation_Model__c, ANG_HE_RiskStatus__c, ANG_RiskStatus__c, Active_Guarantees__c,
 												   Accumulated_Irregularities__c, Location_Type__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, 
 												   ANG_IsNewGenAgency__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c
@@ -206,6 +208,7 @@ public class ISSP_ANG_CodeSearch {
 				}
 
 				if (countryFound) {
+
 					if (this.agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
 						afpWrapper = AMS_Utils.getANG_ISSP_AfpWrapper(null, this.agency, true);
 					} 
@@ -232,6 +235,12 @@ public class ISSP_ANG_CodeSearch {
 						this.errorMessage = 'Information not available: Your Airline has no BSP Participation in the country of this IATA Code ' + this.agency.IATA_ISO_Country__r.Name;
 					}
 				}
+
+				if(agency.Accreditation_date__c != null){
+					Datetime output = agency.Accreditation_date__c;
+					AccreditationDateFormated = output.format('dd-MMM-YYYY');
+				}
+				
 			} else {
 				this.activeError = true;
 				this.errorMessage = Label.ISSP_ANG_IATA_CODE_SEARCH_NOTHING_FOUND.replace('%TYPE%', auxReplacement);
@@ -241,12 +250,14 @@ public class ISSP_ANG_CodeSearch {
     }
 
     public PageReference refreshRiskEventsTable() {
+
         riskEventsList = null;
 
         return null;
     }
 
     public List<RiskEvent> getRiskEventsList() {
+
 		riskEventsList = new List<RiskEvent>();
 
 		String soqlStr = 'Select ANG_Risk_Type__r.ANG_Description__c,' +
@@ -277,7 +288,6 @@ public class ISSP_ANG_CodeSearch {
 		for(ANG_Agency_Risk_Event__c event : Database.query(soqlStr)) {
 			riskEventsList.add(new RiskEvent(event));
 		}
-
 		return riskEventsList;
     }
 

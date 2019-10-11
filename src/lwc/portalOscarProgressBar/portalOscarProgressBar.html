@@ -1,0 +1,76 @@
+<template>
+    <div class="slds-align_absolute-center">
+
+        <div if:true={progressStatusList} class="stepWrap slds-m-around_large">
+            <template for:each={progressStatusList} for:item="node">
+                <span class="flex" key={node.status}>
+                    <span if:true={node.isDone} class="flexGrow">
+                        <span class="step">
+                            <span class="circle circleDone">
+                                <lightning-icon size="x-small" class="greenIcon" icon-name="utility:check"
+                                    alternative-text="Check">
+                                </lightning-icon>
+                            </span>
+                            <span class="notBreak">
+                                <lightning-formatted-rich-text value={node.title}>
+                                </lightning-formatted-rich-text>
+                            </span>
+                            <template if:false={node.isLastStatus}>
+                                <span class={node.class}></span>
+                            </template>
+                        </span>
+                    </span>
+
+                    <span if:true={node.isInProgress} class="flexGrow">
+                        <span class="step">
+                            <span class="circle circleInProgress">
+                                <lightning-icon size="x-small" class="orangeIcon padding" icon-name="utility:right"
+                                    alternative-text="Check">
+                                </lightning-icon>
+                            </span>
+                            <span class="notBreak">
+                                <lightning-formatted-rich-text value={node.title}>
+                                </lightning-formatted-rich-text>
+                            </span>
+                            <template if:false={node.isLastStatus}>
+                                <span class={node.class}></span>
+                            </template>
+                        </span>
+                    </span>
+
+                    <span if:true={node.isNotDone} class="flexGrow">
+                        <span class="step">
+                            <span class="circle circleIsNotDone">
+                            </span>
+                            <span class="notBreak">
+                                <lightning-formatted-rich-text value={node.title}>
+                                </lightning-formatted-rich-text>
+                            </span>
+                            <template if:false={node.isLastStatus}>
+                                <span class={node.class}></span>
+                            </template>
+                        </span>
+                    </span>
+
+                    <span if:true={node.isError} class="flexGrow">
+                        <span class="step">
+                            <span class="circle circleIsError">
+                                <lightning-icon size="x-small" class="redIcon rotateIcon" icon-name="utility:add"
+                                    alternative-text="Check">
+                                </lightning-icon>
+                            </span>
+                            <span class="notBreak">
+                                <lightning-formatted-rich-text value={node.title}>
+                                </lightning-formatted-rich-text>
+                            </span>
+                            <template if:false={node.isLastStatus}>
+                                <span class={node.class}></span>
+                            </template>
+                        </span>
+                    </span>
+
+                </span>
+            </template>
+        </div>
+    </div>
+</template>

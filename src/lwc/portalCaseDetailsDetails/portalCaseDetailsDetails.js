@@ -4,8 +4,10 @@ import { navigateToPage } from 'c/navigationUtils';
 
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import getFieldLabels from '@salesforce/apex/CSP_Utils.getSelectedColumns';
-import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
+
 import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
+import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
+
 
 import { getParamsFromPage } from 'c/navigationUtils';
 
@@ -16,6 +18,12 @@ import CaseDetails from '@salesforce/label/c.IDCard_CaseDetails';
 import RelatedAccount from '@salesforce/label/c.csp_CreateNewCaseMainPicklistLabel';
 import ISSP_Survey from '@salesforce/label/c.ISSP_Survey';
 import Open from '@salesforce/label/c.Open';
+
+import Email from '@salesforce/label/c.Email';
+import CSP_Remittantce_Date from '@salesforce/label/c.CSP_Remittantce_Date';
+import CSP_Case_Currency from '@salesforce/label/c.CSP_Case_Currency';
+import ISSP_SIDRA_Irregularity_Date from '@salesforce/label/c.ISSP_SIDRA_Irregularity_Date';
+import CSP_IATA_Country from '@salesforce/label/c.CSP_IATA_Country';
 
 
 /* PDF Labels */
@@ -30,8 +38,8 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track loading = true;
     @track caseDetails;
     @track caseId;
-    @track optionBuilder;
     @track surveyLink;
+    @track optionBuilder;
 
     @track pdfImage = PDFICON;
 
@@ -47,8 +55,13 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         RelatedAccount,
         ISSP_AMS_Download_PDF_Copy,
         ISSP_AMS_Download_PDF_NOC,
-	ISSP_Survey,
-        Open
+		ISSP_Survey,
+        Open,
+        Email,
+        CSP_Remittantce_Date,
+        CSP_Case_Currency,
+        ISSP_SIDRA_Irregularity_Date,
+        CSP_IATA_Country
     };
 
     acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];

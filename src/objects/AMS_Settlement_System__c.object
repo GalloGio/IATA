@@ -54,23 +54,23 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
-        <fullName>Allow_multiple_remittances__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>If checked will allow more than one value for Remittance Frequency for Agencies of the same country</description>
-        <externalId>false</externalId>
-        <inlineHelpText>If checked will allow more than one value for Remittance Frequency for Agencies of the same country</inlineHelpText>
-        <label>Allow multiple remittances</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>ANG_RHC_Amount_Equals_FS__c</fullName>
         <defaultValue>false</defaultValue>
         <description>If checked all agencies belonging to this Operation (BSP) will have the RHC Amount equal to the sum of the financial securities provided</description>
         <externalId>false</externalId>
         <inlineHelpText>If checked all agencies belonging to this Operation (BSP) will have the RHC Amount equal to the sum of the financial securities provided</inlineHelpText>
         <label>RHC Amount Equals FS</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Allow_multiple_remittances__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked will allow more than one value for Remittance Frequency for Agencies of the same country</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked will allow more than one value for Remittance Frequency for Agencies of the same country</inlineHelpText>
+        <label>Allow multiple remittances</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
