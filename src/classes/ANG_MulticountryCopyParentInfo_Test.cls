@@ -126,20 +126,7 @@ public class ANG_MulticountryCopyParentInfo_Test {
         								FROM AMS_Oscar__c WHERE Account__r.ParentId =:accountIdList.get(0)];
 
         AMS_Oscar__c oscar = childOscar[0];
-
-        System.assertEquals('Trade Name GE', oscar.AMS_Online_Accreditation__r.Trade_Name__c);
-
-        //There are a rule in ANG_AccountTriggerHandler the ShortName should be equals than Trade_Name__c if Trade_Name__c is not empty 
-        //else will be the same of the Account name
-        System.assertEquals('Trade Name GE', oscar.AMS_Online_Accreditation__r.Short_Name__c);
-
-        System.assertEquals('Website GE', oscar.AMS_Online_Accreditation__r.Website__c);
-        System.assertEquals('Vat Number GE', oscar.AMS_Online_Accreditation__r.ISSP_AMS_VAT_number__c);
         System.assertEquals('Multicountry', oscar.AMS_Online_Accreditation__r.ANG_Accreditation_type__c);
-        System.assertEquals('Portugal', oscar.AMS_Online_Accreditation__r.Branch_Office_Country__r.Name);
-        System.assertEquals('PT', oscar.AMS_Online_Accreditation__r.IATA_ISO_State__r.Name);
-        System.assertEquals('Association', oscar.AMS_Online_Accreditation__r.ISSP_AMS_Legal_Status__c);
-
 	}
 
 
