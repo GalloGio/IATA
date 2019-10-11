@@ -15837,6 +15837,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     </fields>
     <fields>
         <fullName>SIS_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
         <description>Used by SIS team to store the SIS ID for integration purposes</description>
         <externalId>false</externalId>
         <label>SIS ID</label>
@@ -15845,7 +15846,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
-        <unique>false</unique>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>SIS_Member_Code__c</fullName>
