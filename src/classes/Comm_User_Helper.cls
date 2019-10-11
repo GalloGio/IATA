@@ -92,6 +92,7 @@ global without sharing class Comm_User_Helper {
         u.Email = con.email;
         u.FirstName = con.firstName;
         u.LastName = con.lastName;
+        u.UserPermissionsSFContentUser = true;
         u.Date_ToU_accepted__c = system.Now();//TF - Accept Terms
         u.ToU_accepted__c = true;//TF - Accept Terms
         String thisNickname;
