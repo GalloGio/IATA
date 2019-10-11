@@ -25,7 +25,7 @@ export default class PortalDocumentsFilters extends LightningElement {
             let __documentObjectOld = JSON.parse(JSON.stringify(this._documentObject));
 
             this._documentObject = _value;
-            if(_value.topResults !== __documentObjectOld.topResults || _value.categorySelected !== __documentObjectOld.categorySelected) {
+            if(_value.topResults !== __documentObjectOld.topResults || _value.categorySelected !== __documentObjectOld.categorySelected || _value.show !== __documentObjectOld.show) {
                 this.renderFilters(_value.categorySelected);
             }
 
@@ -64,9 +64,9 @@ export default class PortalDocumentsFilters extends LightningElement {
             
             Object.keys(docs).forEach(function (el) {
                 if(tempCategory !== undefined && tempCategory === docs[el].label) {
-                    tempDocs.push({ categoryName : docs[el].label, open: true, noResults: 0, class: 'slds-p-around_medium customCardTitleBox customBorderlessCardWhite' });
+                    tempDocs.push({ categoryName : docs[el].label, open: true, noResults: 0, class: 'slds-p-around_medium customCardTitleBox customBorderlessCardWhite', show: true });
                 } else {
-                    tempDocs.push({ categoryName : docs[el].label, open: false, noResults: 0, class: 'slds-p-around_medium customCardTitleBox cursorPointer cardStyle' });
+                    tempDocs.push({ categoryName : docs[el].label, open: false, noResults: 0, class: 'slds-p-around_medium customCardTitleBox cursorPointer cardStyle', show: false });
                 }
             });
             let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
@@ -80,7 +80,8 @@ export default class PortalDocumentsFilters extends LightningElement {
                         productCategory: '', 
                         countryOfPublication: '', 
                         topResults: __documentObject.categorySelected !== '' ? false : true, 
-                        docId: __documentObject.docId !== '' ? __documentObject.docId : '' 
+                        docId: __documentObject.docId !== '' ? __documentObject.docId : '',
+                        show: tempDocs[key].show
                     });
                 }
             }
@@ -141,6 +142,7 @@ export default class PortalDocumentsFilters extends LightningElement {
 
             for(let i = 0; i < __documentObject.categories.length; i++) {
                 __documentObject.categories[i].topResults = true;
+                __documentObject.categories[i].show = true;
                 __documentObject.categories[i].countryOfPublication = '';
                 __documentObject.categories[i].productCategory = '';
                 __documentObject.categories[i].searchText = '';
@@ -176,9 +178,12 @@ export default class PortalDocumentsFilters extends LightningElement {
             __documentObject.topResults = false;
             for(let i = 0; i < __documentObject.categories.length; i++) {
                 if(__documentObject.categories[i].name === categoryName) {
+                    __documentObject.categories[i].show = true;
                     __documentObject.categories[i].topResults = false;
                     __documentObject.categories[i].productCategory = '';
                     __documentObject.categories[i].countryOfPublication = '';
+                } else {
+                    __documentObject.categories[i].show = false;
                 }
             }
 
