@@ -740,9 +740,8 @@
                                         $Label.ISSP_AMS_Noc_StepA_message)}
                                     </div>
                                     <apex:outputPanel id="nocMessage">
-                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange), 'flex', 'none')}; margin-bottom: 20px;">
-                                            {!$Label.ISSP_AMS_Noc_StepA_message_MC}<br/><br/>
-                                            {!IF(AND(selectedCountryIsos.size > 1, newForm.Scope_Of_Change__c != "HO Only", newForm.Scope_Of_Change__c != "HO - All Branches"), $Label.ISSP_ANG_NOC_GOGLOBAL_Info, '')}
+                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange, newForm.Scope_Of_Change__c != "HO Only"), 'flex', 'none')}; margin-bottom: 20px;">
+                                            {!$Label.ISSP_ANG_NOC_GOGLOBAL_Info}
                                         </div>
                                     </apex:outputPanel>
 
