@@ -1577,3 +1577,9 @@ visibility: hidden;
 .sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon svg {
     fill: #fff;
 }
+
+.blueLink a {
+	color: #1e32fa;
+}
+  
+
