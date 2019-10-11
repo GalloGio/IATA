@@ -46,7 +46,7 @@ Category: Passenger and Cargo</description>
     </milestones>
     <milestones>
         <milestoneName>Max. case age with IATA</milestoneName>
-        <minutesToComplete>12960</minutesToComplete>
+        <minutesToComplete>540</minutesToComplete>
         <timeTriggers>
             <actions>
                 <name>Warning_Maximum_Age_with_IATA</name>
