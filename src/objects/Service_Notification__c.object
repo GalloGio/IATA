@@ -118,11 +118,6 @@
         <columns>Valid_From__c</columns>
         <columns>Valid_To__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Header__c</field>
-            <operation>contains</operation>
-            <value>Message</value>
-        </filters>
         <label>All</label>
     </listViews>
     <nameField>

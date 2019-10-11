@@ -233,10 +233,18 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>IOSA_ISAGO__c</fullName>
+        <fullName>IOSA__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>IOSA/ISAGO</label>
+        <label>IOSA</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ISAGO__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>ISAGO</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -310,7 +318,8 @@
         <columns>Account_Role_Service_To__c</columns>
         <columns>Subscription_Status__c</columns>
         <columns>IATA_Member__c</columns>
-        <columns>IOSA_ISAGO__c</columns>
+        <columns>IOSA__c</columns>
+        <columns>ISAGO__c</columns>
         <columns>Go_to_Account__c</columns>
         <columns>Go_To_GADM_Data__c</columns>
         <columns>Go_To_Subscription__c</columns>
@@ -343,7 +352,8 @@
         <columns>Account_Role_Service_To__c</columns>
         <columns>Subscription_Status__c</columns>
         <columns>IATA_Member__c</columns>
-        <columns>IOSA_ISAGO__c</columns>
+        <columns>IOSA__c</columns>
+        <columns>ISAGO__c</columns>
         <columns>Go_to_Account__c</columns>
         <columns>Go_To_GADM_Data__c</columns>
         <columns>Go_To_Subscription__c</columns>
@@ -378,7 +388,8 @@
         <columns>Account_Role_Service_To__c</columns>
         <columns>Subscription_Status__c</columns>
         <columns>IATA_Member__c</columns>
-        <columns>IOSA_ISAGO__c</columns>
+        <columns>IOSA__c</columns>
+        <columns>ISAGO__c</columns>
         <columns>Go_to_Account__c</columns>
         <columns>Go_To_GADM_Data__c</columns>
         <columns>Go_To_Subscription__c</columns>
@@ -396,7 +407,8 @@
         <columns>Account_Role_Service_To__c</columns>
         <columns>Subscription_Status__c</columns>
         <columns>IATA_Member__c</columns>
-        <columns>IOSA_ISAGO__c</columns>
+        <columns>IOSA__c</columns>
+        <columns>ISAGO__c</columns>
         <columns>Go_to_Account__c</columns>
         <columns>Go_To_GADM_Data__c</columns>
         <columns>Go_To_Subscription__c</columns>
@@ -419,7 +431,8 @@
         <columns>Account_Role_Service_To__c</columns>
         <columns>IATA_Member__c</columns>
         <columns>Subscription_Status__c</columns>
-        <columns>IOSA_ISAGO__c</columns>
+        <columns>IOSA__c</columns>
+        <columns>ISAGO__c</columns>
         <columns>Go_to_Account__c</columns>
         <columns>Go_To_GADM_Data__c</columns>
         <columns>Go_To_Subscription__c</columns>
@@ -442,7 +455,8 @@
         <columns>Account_Role_Service_To__c</columns>
         <columns>Subscription_Status__c</columns>
         <columns>IATA_Member__c</columns>
-        <columns>IOSA_ISAGO__c</columns>
+        <columns>IOSA__c</columns>
+        <columns>ISAGO__c</columns>
         <columns>Go_to_Account__c</columns>
         <columns>Go_To_GADM_Data__c</columns>
         <columns>Go_To_Subscription__c</columns>
@@ -466,7 +480,8 @@
         <columns>NAME</columns>
         <columns>Subscription_Status__c</columns>
         <columns>IATA_Member__c</columns>
-        <columns>IOSA_ISAGO__c</columns>
+        <columns>IOSA__c</columns>
+        <columns>ISAGO__c</columns>
         <columns>Go_to_Account__c</columns>
         <columns>Go_To_GADM_Data__c</columns>
         <columns>Go_To_Subscription__c</columns>
@@ -489,7 +504,8 @@
         <columns>Account_Role_Service_To__c</columns>
         <columns>Subscription_Status__c</columns>
         <columns>IATA_Member__c</columns>
-        <columns>IOSA_ISAGO__c</columns>
+        <columns>IOSA__c</columns>
+        <columns>ISAGO__c</columns>
         <columns>Go_to_Account__c</columns>
         <columns>Go_To_GADM_Data__c</columns>
         <columns>Go_To_Subscription__c</columns>
@@ -512,6 +528,8 @@
         <columns>Account_Role_Service_To__c</columns>
         <columns>Subscription_Status__c</columns>
         <columns>IATA_Member__c</columns>
+        <columns>IOSA__c</columns>
+        <columns>ISAGO__c</columns>
         <columns>Go_to_Account__c</columns>
         <columns>Go_To_GADM_Data__c</columns>
         <columns>Go_To_Subscription__c</columns>
@@ -535,7 +553,8 @@
         <columns>Account_Role_Service_To__c</columns>
         <columns>Subscription_Status__c</columns>
         <columns>IATA_Member__c</columns>
-        <columns>IOSA_ISAGO__c</columns>
+        <columns>IOSA__c</columns>
+        <columns>ISAGO__c</columns>
         <columns>Go_to_Account__c</columns>
         <columns>Go_To_GADM_Data__c</columns>
         <columns>Go_To_Subscription__c</columns>
