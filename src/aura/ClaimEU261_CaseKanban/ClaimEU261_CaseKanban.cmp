@@ -1,3 +1,0 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes" >
-	<c:KanbanBoard kanbanColumns="CaseEU261" objName="Case" objFields="['CaseNumber', 'Contact.Name', 'Contact.Id', 'Subject', 'Status']" kanbanPicklistField="Status" listViewName="EU261"/>
-</aura:component>

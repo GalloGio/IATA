@@ -1,7 +1,0 @@
-<aura:component description="Service_Usage_Tracker" controller="Service_Usage_Tracker_CTRL" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global">
-
-    <aura:handler name="serviceUsageEvent" event="c:Service_Usage_Event" action="{! c.handleServiceUsageEvent}"/>
-
-    <c:GADM_TabsContainer />
-
-</aura:component>

@@ -1,5 +1,0 @@
-<aura:event type="APPLICATION" description="Data_Submission_Message_EVT">
-    <aura:attribute name="message" type="String"/>
-    <aura:attribute name="heading" type="String"/>
-    <aura:attribute name="messageType" type="String"/>
-</aura:event>

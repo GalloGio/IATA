@@ -1,7 +1,0 @@
-<aura:event type="COMPONENT" description="Service_Usage_Event">
-    <aura:attribute name="Service" type="String" />
-    <aura:attribute name="UserId" type="String"/>
-    <aura:attribute name="Target" type="String"/>
-    <aura:attribute name="Key" type="String"/>
-    <aura:attribute name="Type" type="String"/>
-</aura:event>

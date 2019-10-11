@@ -1,3 +1,0 @@
-<aura:event type="COMPONENT" description="GADM_PowerUser_EVT">
-    <aura:attribute name="isPowerUser" type="Boolean"/>
-</aura:event>

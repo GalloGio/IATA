@@ -1,3 +1,0 @@
-Dear {!IF(Contact.LastName= "", "User", Contact.FirstName + ' '+ Contact.LastName )},
-
-to access the GADM service go to *link*, log in and request the GADM service.

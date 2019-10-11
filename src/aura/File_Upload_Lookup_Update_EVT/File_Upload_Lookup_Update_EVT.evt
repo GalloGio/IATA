@@ -1,3 +1,0 @@
-<aura:event type="COMPONENT" description="File_Upload_Lookup_Update_EVT">
-    <aura:attribute name="sObjectId" type="Id" required="true" description="The Id of the selected user." />
-</aura:event>

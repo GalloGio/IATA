@@ -1,2 +1,0 @@
-Dear {!Contact.FirstName} {!Contact.LastName}, 
-submission period for *actor* start: *periodStart* submission period end: *periodEnd*

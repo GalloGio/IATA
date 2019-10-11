@@ -1,3 +1,0 @@
-<aura:event type="COMPONENT" description="Event to refresh tab">
-    <aura:attribute name="tabName" type="String"/>
-</aura:event>
