@@ -19460,14 +19460,6 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Draft changes must be submitted within 2 weeks, otherwise you will need to restart the change request.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Noc_StepA_message_MC</fullName>
-        <categories>ISSP AMS NoC</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Noc_StepA_message_MC</shortDescription>
-        <value>NoC will be effective only on selecting agencies from the same legal structure.</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Noc_Type_of_Change</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -23060,7 +23052,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NOC_GOGLOBAL_Info</shortDescription>
-        <value>Please note that by selecting multiple countries not all changes can be processed in the same Notice of Change</value>
+        <value>Please note that by selecting multiple countries and/or different legal entities not all changes can be processed in the same Notice of Change</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ONE_OR_MORE_AE</fullName>
