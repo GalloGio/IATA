@@ -71,7 +71,7 @@ Process: Case handling</description>
             <value>High</value>
         </milestoneCriteriaFilterItems>
         <milestoneName>Max. case age with IATA</milestoneName>
-        <minutesToComplete>7200</minutesToComplete>
+        <minutesToComplete>300</minutesToComplete>
         <timeTriggers>
             <actions>
                 <name>WarningEmail_Maximum_Case_Age_with_IATA</name>

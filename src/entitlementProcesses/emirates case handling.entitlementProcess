@@ -40,7 +40,7 @@ Emirates</description>
     </milestones>
     <milestones>
         <milestoneName>Max. case age with IATA</milestoneName>
-        <minutesToComplete>10080</minutesToComplete>
+        <minutesToComplete>420</minutesToComplete>
         <timeTriggers>
             <actions>
                 <name>Warning_Email_Maximum_Case_Age_with_IATA</name>
