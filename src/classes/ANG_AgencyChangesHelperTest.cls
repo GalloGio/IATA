@@ -1867,6 +1867,7 @@ public class ANG_AgencyChangesHelperTest {
 		oscar.Is_PCI_compliant__c = 'Yes';
 		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = 'Location type';
+		ANG_AgencyChangesHelper.isMigrationRunning = true;
 
 		update oscar;
 

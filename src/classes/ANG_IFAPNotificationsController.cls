@@ -26,8 +26,8 @@ public with sharing class ANG_IFAPNotificationsController {
 		if(!caseLst.isEmpty()){
 			currentCase = caseLst.get(0);
 			isKeyMulticountryIFAP = (currentCase.RecordType.DeveloperName == 'IATA_Financial_Review' && 
-															 currentCase.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY &&
-															 currentCase.Account.Identify_as_Multicountry_Key_Hierarchy__c);
+									currentCase.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY &&
+									currentCase.Account.Identify_as_Multicountry_Key_Hierarchy__c);
 		}
 
 	}

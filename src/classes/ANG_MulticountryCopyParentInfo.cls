@@ -42,7 +42,6 @@ public class ANG_MulticountryCopyParentInfo implements Queueable {
 
 			for(AMS_OSCAR__c osc : oscars){
 
-
 				System.debug('[ANG_MulticountryCopyParentInfo] Copiyng data from: ' + osc.Account__r.Parent.Name);
 
 				//Create new AMS_Pax_Accreditation_Form__c object for each Oscar
@@ -65,19 +64,19 @@ public class ANG_MulticountryCopyParentInfo implements Queueable {
 						== osc.Account__r.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c
 					&& ! osc.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c)
 				{
-		    		onlineAcc = new AMS_Pax_Accreditation_Form__c(
-		    			id = osc.AMS_Online_Accreditation__c, 
-		    			Remittance_frequency__c = osc.Account__r.Parent.Remittance_frequency__c
-		    		);
+					onlineAcc = new AMS_Pax_Accreditation_Form__c(
+						id = osc.AMS_Online_Accreditation__c, 
+						Remittance_frequency__c = osc.Account__r.Parent.Remittance_frequency__c
+					);
 
-	    			onlineAccList.add(onlineAcc);
-	    		}
-	    	}
-	    }
+					onlineAccList.add(onlineAcc);
+				}
+			}
+		}
 
-	    System.debug('[ANG_MulticountryCopyParentInfo] Before update Chield Staging area onlineAccList: ' + onlineAccList );
+		System.debug('[ANG_MulticountryCopyParentInfo] Before update Chield Staging area onlineAccList: ' + onlineAccList );
 
-	    if(!onlineAccList.isEmpty()) update onlineAccList;
+		if(!onlineAccList.isEmpty()) update onlineAccList;
 	}
 
 }

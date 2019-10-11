@@ -213,6 +213,7 @@ J-Joint Vent</inlineHelpText>
         <relationshipLabel>BSP Attributes</relationshipLabel>
         <relationshipName>BSP_Attributes</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>

@@ -24,7 +24,18 @@
                     <span style="color: #9a9eb0;">Status</span><br/>
                     <span style="font-size: 1.3rem;font-weight: 400;">{caseDetails.Portal_Case_Status__c}</span>
                 </div>
+
+                <!-- Portal Oscar Progress Bar  -->
+                
+                <template if:true={displayOscarProgressBar}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium text-xxxsmall" >
+                        <c-portal-oscar-progress-bar progress-status-list={progressStatusList} ></c-portal-oscar-progress-bar>
+                    </div>
+                </template>
+                
+
             </div>
+
             <div class="slds-grid slds-wrap">
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_5-of-12 slds-large-size_5-of-12 slds-p-around_medium" >
                     <div>

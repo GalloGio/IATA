@@ -68,11 +68,11 @@ public class ANG_MulticountryHelper {
 
 	public static Set<String> allowedLocationsSet = new Set<String>{'D', 'P'};
 
-    public static Set<String> locationTypesSet = new Set<String>{
-        AMS_Utils.HE, 
-        AMS_Utils.AE,
-        AMS_Utils.GE
-    };
+	public static Set<String> locationTypesSet = new Set<String>{
+		AMS_Utils.HE, 
+		AMS_Utils.AE,
+		AMS_Utils.GE
+	};
 
 	/**
 	* Verifies if the immediate parent 
@@ -89,8 +89,7 @@ public class ANG_MulticountryHelper {
 		integer nbrOfChangeCodes =
 			[SELECT
 				count()
-			 FROM
-				Agency_Applied_Change_Code__c
+			 FROM Agency_Applied_Change_Code__c
 			 WHERE								
 			 	 Change_Code__c = :changeCode 	
 			 AND Account__c IN 					
@@ -138,7 +137,7 @@ public class ANG_MulticountryHelper {
 	*
 	*/
 	public static Boolean shouldRunMulticountryValidations(Account account){
-    	return (allowedLocationsSet.contains(account.Location_Class__c) && account.ANG_IsNewGenAgency__c);
+		return (allowedLocationsSet.contains(account.Location_Class__c) && account.ANG_IsNewGenAgency__c);
 	}
 
 	/**
@@ -157,35 +156,35 @@ public class ANG_MulticountryHelper {
 
 		if(account.Location_Type__c == AMS_Utils.AE){
 
-           	if(account.IATA_ISO_Country__r.AMS_Settlement_System__c != account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
-                vw.valid = false;
-                vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error;
-            	return vw;
-            }
-
-        }
-        else if(account.Location_Type__c == AMS_Utils.HE){
-
-            String bspId = account.IATA_ISO_Country__r.AMS_Settlement_System__c;
-            String topParent = account.Top_Parent__c;
-
-            Set<Id> accountIds = accountsHePerBspMap.get(bspId+topParent);
-
-			if(account.Parent.Location_Type__c == AMS_Utils.GE && account.IATA_ISO_Country__r.AMS_Settlement_System__c == account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
-            	vw.valid = false;
-            	vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error;
+		   	if(account.IATA_ISO_Country__r.AMS_Settlement_System__c != account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
+				vw.valid = false;
+				vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error;
 				return vw;
 			}
 
-            if(accountIds != NULL && accountIds.size() > 1){
-            	vw.valid = false;
-                vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error;
-                return vw;
-            }
+		}
+		else if(account.Location_Type__c == AMS_Utils.HE){
 
-        }
+			String bspId = account.IATA_ISO_Country__r.AMS_Settlement_System__c;
+			String topParent = account.Top_Parent__c;
 
-        return vw;
+			Set<Id> accountIds = accountsHePerBspMap.get(bspId+topParent);
+
+			if(account.Parent.Location_Type__c == AMS_Utils.GE && account.IATA_ISO_Country__r.AMS_Settlement_System__c == account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
+				vw.valid = false;
+				vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error;
+				return vw;
+			}
+
+			if(accountIds != NULL && accountIds.size() > 1){
+				vw.valid = false;
+				vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error;
+				return vw;
+			}
+
+		}
+
+		return vw;
 
 	}
 
@@ -200,31 +199,30 @@ public class ANG_MulticountryHelper {
 	private static Map<Id, Account> fetchMulticountryAccounts(Set<Id> parentIdSet){
 
 		Map<Id, Account> accountMap = new Map<Id, Account>(
-            [SELECT
-                Id,
-                ParentId,
-                Top_Parent__c,
-                Location_Type__c,
-                Location_Class__c,
-                Parent.Location_Type__c,
-                IATA_ISO_Country__r.AMS_Settlement_System__c,
-                IATA_ISO_Country__r.Name,
-                Parent.IATA_ISO_Country__r.AMS_Settlement_System__c
-             FROM
-                Account
-             WHERE 
-                (Id IN :parentIdSet OR ParentId IN :parentIdSet)
-            /* AND
-                Location_Type__c IN :locationTypesSet */
-             AND
-             	(
-             	Top_Parent__r.Location_Type__c = :AMS_Utils.GE OR Location_Type__c = :AMS_Utils.GE) 
-            ]
-        );
+			[SELECT
+				Id,
+				ParentId,
+				Top_Parent__c,
+				Location_Type__c,
+				Location_Class__c,
+				Parent.Location_Type__c,
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				IATA_ISO_Country__r.Name,
+				Parent.IATA_ISO_Country__r.AMS_Settlement_System__c
+			 FROM Account
+			 WHERE 
+				(Id IN :parentIdSet OR ParentId IN :parentIdSet)
+			/* AND
+				Location_Type__c IN :locationTypesSet */
+			 AND
+			 	(
+			 	Top_Parent__r.Location_Type__c = :AMS_Utils.GE OR Location_Type__c = :AMS_Utils.GE) 
+			]
+		);
 
-       	System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryHelper - fetchMulticountryAccounts] Account Map: ' + accountMap);
+	   	System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryHelper - fetchMulticountryAccounts] Account Map: ' + accountMap);
 
-        return accountMap;
+		return accountMap;
 
 	}
 
@@ -239,27 +237,27 @@ public class ANG_MulticountryHelper {
 
 		Map<String, Set<Id>> accountsHePerBspMap = new Map<String, Set<Id>>();
 
-        for(Account acct : accountLst){
+		for(Account acct : accountLst){
 
-            if(acct.Location_Type__c == AMS_Utils.HE){
+			if(acct.Location_Type__c == AMS_Utils.HE){
 
-                String bspId     = acct.IATA_ISO_Country__r.AMS_Settlement_System__c;
-                String topParent = acct.Top_Parent__c;
-                String aggrKey   = bspId+topParent;
+				String bspId     = acct.IATA_ISO_Country__r.AMS_Settlement_System__c;
+				String topParent = acct.Top_Parent__c;
+				String aggrKey   = bspId+topParent;
 
-                if(accountsHePerBspMap.containsKey(aggrKey)){
-                    accountsHePerBspMap.get(aggrKey).add(acct.Id);
-                    continue;
-                }
+				if(accountsHePerBspMap.containsKey(aggrKey)){
+					accountsHePerBspMap.get(aggrKey).add(acct.Id);
+					continue;
+				}
 
-                accountsHePerBspMap.put(aggrKey, new Set<Id>{acct.Id});   
-            }
+				accountsHePerBspMap.put(aggrKey, new Set<Id>{acct.Id});   
+			}
 
-        }
+		}
 
-        return accountsHePerBspMap;
+		return accountsHePerBspMap;
 
-    }
+	}
 
 	/**
 	* Process the given accounts to make sure 
@@ -276,12 +274,12 @@ public class ANG_MulticountryHelper {
 
 		if(acctWithRelshipsMap.isEmpty()) return;
 
-        Map<String, Set<Id>> accountsHePerBspMap = aggregateHeadEntitiesForEachBSP(acctWithRelshipsMap.values());
-        
-        for(Account acct : accountLst){
-    	
-            Account acctWithRelships = acctWithRelshipsMap.get(acct.Id);
-           
+		Map<String, Set<Id>> accountsHePerBspMap = aggregateHeadEntitiesForEachBSP(acctWithRelshipsMap.values());
+		
+		for(Account acct : accountLst){
+		
+			Account acctWithRelships = acctWithRelshipsMap.get(acct.Id);
+		   
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryHelper - processMulticountryValidations] Processing account: ' + acct);
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryHelper - processMulticountryValidations] Processing account with relations: ' + acctWithRelships);
 
@@ -821,17 +819,13 @@ public class ANG_MulticountryHelper {
 		return acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 	}
 	
-	public static Boolean isAccountInMulticountryCountry(Id acctId)
+	public static List<IATA_ISO_Country__c> getAccountCountry(List<Account> accts)
 	{
-		IATA_ISO_Country__c cntry = getAccountCountry(acctId);
-		return isMulticountryCountry(cntry);
-	}
-	
-	public static IATA_ISO_Country__c getAccountCountry(Id acctId)
-	{
-		Account acct = [SELECT IATA_ISO_Country__c FROM Account WHERE Id = :acctId];
-		List<IATA_ISO_Country__c> cntry = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{ acct.IATA_ISO_Country__c });
-		return ! cntry.isEmpty() ? cntry[0] : null;
+		Set<Id> countries = new Set<Id>();
+		for (Account a : accts)
+			countries.add(a.IATA_ISO_Country__c);
+
+		return IATAIsoCountryDAO.getIsoCountriesByIds(countries);
 	}
 	
 	public static Boolean isMulticountryCountry(IATA_ISO_Country__c cntry)

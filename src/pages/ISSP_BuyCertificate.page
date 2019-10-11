@@ -5,6 +5,44 @@
 <apex:variable var="NotAgency" value="{!if($Profile.Name == 'ISS Portal Agency User (Partner)' || $Profile.Name == 'ISS Portal Agency Delegated Admin User','none','block')}" />
     -->
     <c:ISSP_Header ></c:ISSP_Header>
+    <style>
+    .btn-purchase{
+        display: block;
+        margin: 0 auto 10px auto;
+    }
+
+    .row-padded{
+        padding-bottom: 10px;
+    }
+
+    .textArea-resize{
+        resize: vertical;
+    }
+
+    .filterSelect{
+        margin-left: 10px;
+    }
+
+    .priceBtn{
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .btn_iata_cancel{
+        float: right;
+    }
+
+    .btn-wrapper{
+        margin-top: 15px;
+        padding: 0;
+    }
+
+    .alert .confirmationBtn{
+        width: 50% !important;
+        margin-top: 10px;
+    }
+    </style>
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
         <script>
       
 
@@ -23,9 +61,9 @@
 
 
     <body>
+        <c:ISSP_CustomNavigation />
         <div class="container">
-            <c:ISSP_CustomNavigation />
-            <div class="panel panel-primary">
+            <div class="panel-primary">
                 <div class="panel-heading head_panel_green">
                     <h3 class="panel-title">{!$Label.ISSP_IATAcertificate}</h3>
                 </div>
@@ -38,12 +76,8 @@
                                 </div>
                                 <div class="row">
                                     <!-- end main row -->
-                                    <div class="col-md-4">
-                                        <apex:image width="200px" url="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002fR5v&oid=00D2000000008TF&lastMod=1449614093000" />
-
-                                    </div>
                                     <div class="col-md-8">
-                                        <div class="row">
+                                        <div class="row row-padded">
                                             <div class="col-md-4">
                                                 <label class="lbl" for="IATACode">{!$Label.ISSP_MyProfile_IATACODE}</label>
                                             </div>
@@ -60,7 +94,7 @@
                                             </div>
                                         </div>
                                         <apex:actionregion >
-                                            <div class="row">
+                                            <div class="row row-padded">
                                                 <div class="col-md-4">
                                                     <label class="lbl" for="ProductCategory">{!$Label.ISSP_ProductCategory}</label>
                                                 </div>
@@ -72,7 +106,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row row-padded">
                                                 <div class="col-md-4">
                                                     <label class="lbl" for="ProductSubcategory">{!$Label.ISSP_ProductSubcategory}</label>
                                                 </div>
@@ -91,14 +125,14 @@
                                                     <apex:inputfield styleclass="form-control rec mandatory" value="{!newCase.QuantityProduct__c}" required="true" />
                                                 </div>
                                             </div>-->
-                                            <div class="row">
+                                            <div class="row row-padded">
                                                 <div class="col-md-4">
                                                     <label class="lbl" for="Description">{!$Label.ISSP_BuyCertificateText}</label>
                                                     
                                                
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <apex:inputtextarea rows="4" styleclass="form-control"  value="{!newCase.Description}"/>
+                                                    <apex:inputtextarea rows="4" styleclass="form-control textArea-resize"  value="{!newCase.Description}"/>
                                                 </div>
                                             </div>
                                         <div class="row"  style="display: {!if(iataCertificatesVisible, 'none', 'block')}">
@@ -106,30 +140,17 @@
                                                     {!$Label.ISSP_Certificate_Profile_Restriction}
 
                                                 </div>
-                                            </div>
-                                            
-                                            
-                                            
-                                        <div class="row">
-                                                <div class="col-md-4">
-                                                    <apex:outputText escape="false" value="{!$Label.ISSP_PriceList}"/>
-                                                </div>
-                                         </div>
-
-
-
-                                            
-                                        <div class="row"  style="display: {!if(iataCertificatesVisible, 'block', 'none')}">
-                                                <div class="col-md-3" >
-                                                    <button type="button" class="btn_iata_success btn btn-block"  id="confbutton" >{!$Label.ISSP_PURCHASE}</button>
-                                                  
-                                                </div>
-                                            </div>
-                                            
-</div>
-
-
-
+                                            </div>          
+                                    </div>
+                                    <div class="col-md-4">
+                                        <apex:image width="100%" url="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002fR5v&oid=00D2000000008TF&lastMod=1449614093000" />
+                                    </div>
+                                    <div class="col-md-12 priceBtn">
+                                        <apex:outputText escape="false" value="{!$Label.ISSP_PriceList}"/>
+                                    </div>
+                                    <div class="col-md-12"  style="display: {!if(iataCertificatesVisible, 'block', 'none')}">
+                                        <button type="button" class="iatabtn iatabtn-main btn-purchase"  id="confbutton" >{!$Label.ISSP_PURCHASE}</button>
+                                    </div>
                                 </div>
                             </div> <!-- end main row -->
                         <div class="col-md-12" id="confirmation"><!-- confirmation row -->
@@ -138,12 +159,12 @@
                                 <div class="col-md-12">
                                     {!$Label.ISSP_Certificate_Confirm}
                                 </div> 
-                              <div class="col-md-6">  
-                           <apex:commandbutton styleclass="btn_iata_success btn btn-block" action="{!Purchase}" value="{!$Label.ISSP_Confirm}" id="PurchaseButton" rerender="loadStatusSpinner" status="loadStatusSpinner" />
-                                </div>
-                                <div class="col-md-6"> 
-                                  <apex:commandbutton styleclass="btn_iata_cancel btn btn-block" action="{!home}" value="{!$Label.ISSP_Cancel}" id="CancelButton" />
-                                </div>            
+                                <div class="col-md-6 btn-wrapper"> 
+                                  <apex:commandbutton styleclass="btn iatabtn-flat iatabtn-right" action="{!home}" value="{!$Label.ISSP_Cancel}" id="CancelButton" />
+                                </div> 
+                                <div class="col-md-6 btn-wrapper">  
+                                    <apex:commandbutton styleclass="btn iatabtn-main" action="{!Purchase}" value="{!$Label.ISSP_Confirm}" id="PurchaseButton" rerender="loadStatusSpinner" status="loadStatusSpinner" />
+                                </div>           
                              </div><!--end confirmation div -->    
                             </div> <!-- end confirmation row --> 
 
@@ -159,8 +180,8 @@
                             <apex:inputhidden value="{!selectedList}" id="selectedItemHidden" />
 
                             <div class="row">
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <select class="form-control selector" id="testSelect" onchange="$('[id$=selectedItemHidden]').val($(this).val());refresh();">
+                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <select class="form-control selector filterSelect" id="testSelect" onchange="$('[id$=selectedItemHidden]').val($(this).val());refresh();">
                                         <apex:repeat value="{!ListViewNameList}" var="csName" id="theRepea1">
                                             <option value="{!csName}">{!$Label[caseListViewMap[csName].Label_API_name__c]}</option>
                                         </apex:repeat>
@@ -278,8 +299,8 @@
                     </div>
                 </div><!-- end panel body -->
             </div>
-            <c:ISSP_CustomFooter />
         </div>
+        <c:ISSP_CustomFooter />
 
     <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
     <style>

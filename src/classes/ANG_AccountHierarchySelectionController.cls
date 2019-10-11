@@ -196,6 +196,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
                 );
 
                 errorMessages.put(
+                    'Different BSP selected',
+                    'For change of location type to different legan entity, it is not possible to swap an AE with a HE from different BSP'
+                );
+
+                errorMessages.put(
                     'Standard or Lite to Multicountry hierarchy', 
                     'The selected new parent is part of a multicountry hierarchy. Please process a conversion in this scenario.'
                 );
@@ -1014,6 +1019,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
         integer selectedCount = 0;
         integer hierarchySize = hierarchyValues.size();
 
+        Integer selectedAE = 0;
+        Integer selectedHE = 0;
+
         for(HierarchyItem item : hierarchyValues){
 
             if(item.selected || item.main){
@@ -1032,6 +1040,10 @@ public with sharing class ANG_AccountHierarchySelectionController {
                     isSingleBSPSelected = false;
                 }
 
+                if (item.acc.Location_Type__c == AMS_Utils.HE)
+                    selectedHE++;
+                else if (item.acc.Location_Type__c == AMS_Utils.AE)
+                    selectedAE++;
             }
             
         }
@@ -1057,6 +1069,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
                 errorChecks.put('Only two agents selected with different location types', true);
             }
 
+        }
+        if (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY))
+        {
+            if (! isSingleBSPSelected && selectedHE == 1 && selectedAE == 1)
+                errorChecks.put('Different BSP selected', true);
         }
 
         if(tocList.contains(AMS_Utils.ANG_VMFR) && !allAgenciesFromSameBSPSelected){

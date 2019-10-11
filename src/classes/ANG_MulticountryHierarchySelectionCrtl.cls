@@ -44,7 +44,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		set;
 	}
 
-    private Set<String> notes{
+	private Set<String> notes{
 		get{
 			Set<String> toReturn = new Set<String>();
 			if(isConversionProcess){
@@ -260,43 +260,43 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
     @TestVisible
 	private Integer rowsPerPage = 100;
 
-    public Integer currentPage{
-        get{
-            if(currentPage == null){
-                currentPage = 0;
-            }
-            return currentPage;
-        }
-        set;
-    }
-    
+	public Integer currentPage{
+		get{
+			if(currentPage == null){
+				currentPage = 0;
+			}
+			return currentPage;
+		}
+		set;
+	}
+	
 	public Integer totalPages{
-        get{
-            return hierarchyValuesForDisplay.size();
-        }
-    }
-    
-    public List<List<HierarchyItem>> hierarchyValuesForDisplay{
-        get{
-            if(hierarchyValuesForDisplay == null){
-                hierarchyValuesForDisplay = new List<List<HierarchyItem>>();
+		get{
+			return hierarchyValuesForDisplay.size();
+		}
+	}
+	
+	public List<List<HierarchyItem>> hierarchyValuesForDisplay{
+		get{
+			if(hierarchyValuesForDisplay == null){
+				hierarchyValuesForDisplay = new List<List<HierarchyItem>>();
 
-                // create as many sub-lists as necessary
-                for(Integer i = 0; i <= (hierarchyValues.size()-1)/rowsPerPage; i++){
-                    hierarchyValuesForDisplay.add(new List<HierarchyItem>());
-                }
+				// create as many sub-lists as necessary
+				for(Integer i = 0; i <= (hierarchyValues.size()-1)/rowsPerPage; i++){
+					hierarchyValuesForDisplay.add(new List<HierarchyItem>());
+				}
 
-                // fill HierarchyItems in the sub-lists
-                Integer itemNumber = 0;
-                for(HierarchyItem item : hierarchyValues){
-                    hierarchyValuesForDisplay.get(itemNumber++/rowsPerPage).add(item);
-                }
-            }
+				// fill HierarchyItems in the sub-lists
+				Integer itemNumber = 0;
+				for(HierarchyItem item : hierarchyValues){
+					hierarchyValuesForDisplay.get(itemNumber++/rowsPerPage).add(item);
+				}
+			}
 
-            return hierarchyValuesForDisplay;
-        }
-        set;
-    }
+			return hierarchyValuesForDisplay;
+		}
+		set;
+	}
 
 	private static Id oscarMainAccount;
 
@@ -319,7 +319,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		oscarId = stdController.getId();
 		oscar = (AMS_OSCAR__c)stdController.getRecord();
 
-        if(Test.isRunningTest()) oscar =  [Select Id, RecordTypeId, Account__c, Process__c, Step6__c, ANG_Type_Of_Change__c, STEP45__c, ANG_Hierarchy_Created__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Id =:oscarId];
+		if(Test.isRunningTest()) oscar =  [Select Id, RecordTypeId, Account__c, Process__c, Step6__c, ANG_Type_Of_Change__c, STEP45__c, ANG_Hierarchy_Created__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Id =:oscarId];
 	
 	}
 
@@ -343,7 +343,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		}
 	}
 
-    public PageReference Beginning() { //user clicked beginning
+	public PageReference Beginning() { //user clicked beginning
 		currentPage = 0;
 		return null;
 	}
@@ -363,11 +363,11 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		return null;
 	}
 
-    public Boolean getDisablePrevious() { 
+	public Boolean getDisablePrevious() { 
 		//this will disable the previous and beginning buttons
 		return (currentPage <= 0);
 	}
-    
+	
 	public Boolean getDisableNext() { //this will disable the next and end buttons
 		return (currentPage >= hierarchyValuesForDisplay.size()-1);
 	}
@@ -390,9 +390,9 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				adjustAccountsParentship();
 
 				List<Account> accountsToUpdate = fetchAccounts();
-                
+				
 				if(!accountsToUpdate.isEmpty()){
-                    AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
+					AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
 					update accountsToUpdate;
 					createHierarchy(accountsToUpdate);
 					closeTab = true;
@@ -400,9 +400,9 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 				oscar.Step45__c = AMS_Utils.PASSED;
 				
-                Case caseToUpdate;
-                AMS_Pax_Accreditation_Form__c accreditationForm;
-                
+				Case caseToUpdate;
+				AMS_Pax_Accreditation_Form__c accreditationForm;
+				
 				selectMain();
 
 				if(oscarMainAccount != null){
@@ -431,7 +431,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 				if(Test.isRunningTest()){
 					Id accountIdToTest =  (new list<ID>(acctId))[0];
-		            acctId = new Set<Id>{accountIdToTest};
+					acctId = new Set<Id>{accountIdToTest};
 				}
 
 				ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(AcctId); 
@@ -541,7 +541,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		if(!relsToInsert.isEmpty()){
 			insert relsToInsert;
-		}else
+		} else
 			delete hierarchy;
 
 	}
@@ -552,7 +552,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		Set<Account> toReturn = new Set<Account>();
 
 		for(List<HierarchyItem> itemsList: hierarchy.values()){
-			For(HierarchyItem item: itemsList)
+			for(HierarchyItem item: itemsList)
 				if(item.wasChanged)
 					toReturn.add(item.acc);
 		}
@@ -562,48 +562,48 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 	private void adjustAccountsParentship(){
 
-			Id acctIdGEinBSP;
+		Id acctIdGEinBSP;
 
-			for(HierarchyItem item:hierarchyValues)
-				if(item.isTopParent)
-					acctIdGEinBSP = item.acc.Id;
+		for(HierarchyItem item:hierarchyValues)
+			if(item.isTopParent)
+				acctIdGEinBSP = item.acc.Id;
 
-			for(List<HierarchyItem> itemsList: hierarchy.values()){
+		for(List<HierarchyItem> itemsList: hierarchy.values()){
 
-				Id acctIdHEinBSP;
+			Id acctIdHEinBSP;
 
-				for(HierarchyItem item: itemsList)
-					if(item.isHE)
-						acctIdHEinBSP = item.acc.Id;
+			for(HierarchyItem item: itemsList)
+				if(item.isHE)
+					acctIdHEinBSP = item.acc.Id;
 
 
-				for(HierarchyItem item: itemsList){
+			for(HierarchyItem item: itemsList){
 
-					if(item.isAE){
-						if(acctIdHEinBSP == null){
-							item.acc.ParentId = acctIdGEinBSP; 
-							item.wasChanged = true;
-						}else{
-							item.acc.ParentId = acctIdHEinBSP;
-							item.wasChanged = true;
-						}					
-					}else if(item.isHE){
-							item.acc.ParentId = acctIdGEinBSP;
-							item.wasChanged = true;
-					}
-
-					if(!item.isTopParent){
-						item.acc.Top_Parent__c = acctIdGEinBSP;						
+				if(item.isAE){
+					if(acctIdHEinBSP == null){
+						item.acc.ParentId = acctIdGEinBSP; 
 						item.wasChanged = true;
 					}else{
-						item.acc.Top_Parent__c = null;
-						item.acc.ParentId = null;						
+						item.acc.ParentId = acctIdHEinBSP;
 						item.wasChanged = true;
-					}
+					}					
+				}else if(item.isHE){
+						item.acc.ParentId = acctIdGEinBSP;
+						item.wasChanged = true;
+				}
 
+				if(!item.isTopParent){
+					item.acc.Top_Parent__c = acctIdGEinBSP;						
+					item.wasChanged = true;
+				}else{
+					item.acc.Top_Parent__c = null;
+					item.acc.ParentId = null;						
+					item.wasChanged = true;
 				}
 
 			}
+
+		}
 
 	}
 
@@ -654,8 +654,8 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			currentPD.account__c = item.acc.Id;
 
 			if(item.isHE){
-					currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.HE;
-					item.acc.Location_type__c = AMS_Utils.HE;
+				currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.HE;
+				item.acc.Location_type__c = AMS_Utils.HE;
 			} 
 			else {
 				currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.AE;

@@ -3983,7 +3983,7 @@ private class ISSP_AMS_Accreditation_Test {
         System.runAs(mcUser) { //STEP A
             PageReference pageRef = Page.ISSP_AMS_Accreditation;
             pageRef.getParameters().put('sectorValue', 'Travel_Agent');
-            pageRef.getParameters().put('accredType', 'New HE multicountry - Multicountry');
+            pageRef.getParameters().put('accredType', 'New HE Multicountry - Multicountry');
             pageRef.getParameters().put('step', '1');
             
             Test.setCurrentPage(pageRef);
@@ -4409,7 +4409,7 @@ private class ISSP_AMS_Accreditation_Test {
                         Subject = 'New Head Entity - GoGlobal - Portugal', 
                         CurrencyIsoCode = 'USD', 
                         CaseArea__c = 'Accreditation Process', 
-                        Reason1__c = 'New HE multicountry', 
+                        Reason1__c = 'New HE Multicountry', 
                         Type_of_customer__c = 'IATA Travel Agent',
                         Visible_on_ISS_Portal__c = true);
     }
