@@ -310,7 +310,7 @@ public class portalIftpTestClass {
         Contact_Role_Certification__c contRoleCertifGT111 = new Contact_Role_Certification__c(Name = 'Certification GT 1', Account_Contact_Role__c = accountContactRoleITPStudent.Id, Certification__c = certGeneralTraining1.Id, Expiration_Date__c = date.today().addDays(20), Proficiency__c = 'Level 2', AssessmentId__c = 'Assessment100');
         Contact_Role_Certification__c contRoleCertifGT2 = new Contact_Role_Certification__c(Name = 'Certification GT 2', Account_Contact_Role__c = accountContactRoleITPStudent.Id, Certification__c = certGeneralTraining2.Id, Expiration_Date__c = date.today().addDays(11), Proficiency__c = 'Level 2', AssessmentId__c = 'Assessment2');
         Contact_Role_Certification__c contRoleCertifGT3 = new Contact_Role_Certification__c(Name = 'Certification GT 3', Account_Contact_Role__c = accountContactRoleITPStudent.Id, Certification__c = certGeneralTraining3.Id, Expiration_Date__c = date.today().addDays(11), Proficiency__c = 'Level 3', AssessmentId__c = 'Assessment3');
-        Contact_Role_Certification__c contRoleCertifPlane1 = new Contact_Role_Certification__c(Name = 'Certification Plane 1', Account_Contact_Role__c = accountContactRoleITPStudent.Id, Certification__c = certPlane1.Id, Expiration_Date__c = date.today().addDays(12), Proficiency__c = 'Level 2', AssessmentId__c = 'Assessment4');
+        Contact_Role_Certification__c contRoleCertifPlane1 = new Contact_Role_Certification__c(Name = 'Certification Plane 1A', Account_Contact_Role__c = accountContactRoleITPStudent.Id, Certification__c = certPlane1.Id, Expiration_Date__c = date.today().addDays(12), Proficiency__c = 'Level 2', AssessmentId__c = 'Assessment4');
         Contact_Role_Certification__c contRoleCertifPlane2 = new Contact_Role_Certification__c(Name = 'Certification Plane 2', Account_Contact_Role__c = accountContactRoleITPStudent.Id, Certification__c = certPlane2.Id, Expiration_Date__c = date.today().addDays(13), Proficiency__c = 'Level 3', AssessmentId__c = 'Assessment5');
         Contact_Role_Certification__c contRoleCertifPlane3 = new Contact_Role_Certification__c(Name = 'Certification Plane 3', Account_Contact_Role__c = accountContactRoleITPStudent.Id, Certification__c = certPlane3.Id, Expiration_Date__c = date.today().addDays(30), Proficiency__c = 'Level 2', AssessmentId__c = 'Assessment50');
         Contact_Role_Certification__c contRoleCertifPlane31 = new Contact_Role_Certification__c(Name = 'Certification Plane 3', Account_Contact_Role__c = accountContactRoleITPStudent.Id, Certification__c = certPlane3.Id, Expiration_Date__c = date.today().addDays(13), Proficiency__c = 'Level 2', AssessmentId__c = 'Assessment51');
@@ -358,21 +358,6 @@ public class portalIftpTestClass {
         insert proficiencyRecordsList;
 
         id auxFolderId = [select id from folder where name = 'Public Folder' limit 1].id;
-		
-		//Create Insert Station Document
-        // Document stationInsDocument = new Document();
-		// String sBody = 'code\n' +
-		// 	'CND\n' +
-		// 	'CRA\n' +
-		// 	'DZN\n' +
-		// 	'DVA'; 
-        // stationInsDocument.Body = Blob.valueOf(sBody);
-        // stationInsDocument.ContentType = 'text/csv';
-        // stationInsDocument.DeveloperName = 'station_ins_document';
-        // stationInsDocument.IsPublic = true;
-        // stationInsDocument.Name = 'Station Ins Document';
-        // stationInsDocument.FolderId = auxFolderId;
-        // insert stationInsDocument;
 
         //Create Insert Employee Document
         ContentVersion stationInsDocument = new ContentVersion();
@@ -381,11 +366,9 @@ public class portalIftpTestClass {
 			'GVX\n' +
             'aab'; 
         stationInsDocument.VersionData = Blob.valueOf(sBody);
-        //stationInsDocument.ContentType = 'text/csv';
         stationInsDocument.PathOnClient = 'station_ins_document.csv';
         stationInsDocument.IsMajorVersion = true;
         stationInsDocument.Title = 'Station Ins Document';
-        //stationInsDocument.FolderId = auxFolderId;
         insert stationInsDocument;
 
         // Create delete employees document
@@ -393,11 +376,9 @@ public class portalIftpTestClass {
 		String sBody4 = 'Employee Code\n' +
 			'Abc'; 
         employeesCodesDelDocument.VersionData = Blob.valueOf(sBody4);
-        //stationInsDocument.ContentType = 'text/csv';
         employeesCodesDelDocument.PathOnClient = 'employees_del_document.csv';
         employeesCodesDelDocument.IsMajorVersion = true;
         employeesCodesDelDocument.Title = 'Employees Del Document';
-        //stationInsDocument.FolderId = auxFolderId;
         insert employeesCodesDelDocument;
 
         ContentVersion employeesCodesDelDocument2 = new ContentVersion();
@@ -405,26 +386,10 @@ public class portalIftpTestClass {
 			'Abc\n' +
             'MMM'; 
         employeesCodesDelDocument2.VersionData = Blob.valueOf(sBody5);
-        //stationInsDocument.ContentType = 'text/csv';
         employeesCodesDelDocument2.PathOnClient = 'employees_del_document2.csv';
         employeesCodesDelDocument2.IsMajorVersion = true;
         employeesCodesDelDocument2.Title = 'Employees Del Document 2';
-        //stationInsDocument.FolderId = auxFolderId;
         insert employeesCodesDelDocument2;
-
-        //Create Insert Employee Document
-        // Document empInsDocument = new Document();
-		// String sBody2 = 'Employee Code,First Name,Last Name,Coordinator,Business Email,Stations Codes\n' +
-		// 	'"MZ414","Abel14","Chain14","YES","AbChain14@demo.com","GVA"\n' +
-		// 	'"MA415","Abel15","Chain15","YES","AbChain15@demo.com","GVA"\n' +
-		// 	'"MA416","Abel16","Chain16","YES","AbChain16@demo.com","GVA"\n'; 
-        // empInsDocument.Body = Blob.valueOf(sBody2);
-        // empInsDocument.ContentType = 'text/csv';
-        // empInsDocument.DeveloperName = 'emp_ins_document';
-        // empInsDocument.IsPublic = true;
-        // empInsDocument.Name = 'Emp Ins Document';
-        // empInsDocument.FolderId = auxFolderId;
-        // insert empInsDocument;
 
         //Create Insert Employee Document
         ContentVersion empInsDocument = new ContentVersion();
@@ -434,11 +399,9 @@ public class portalIftpTestClass {
 			'"MA415","Abel15","Chain15","Title","","AbChain15@demo.com","GVX; PTX; FRX"\n' +
 			'"MA416","Abel16","Chain16","Title","123456","AbChain16@demo.com","GVX"\n'; 
         empInsDocument.VersionData = Blob.valueOf(sBody2);
-        //empInsDocument.ContentType = 'text/csv';
         empInsDocument.PathOnClient = 'emp_ins_document.csv';
         empInsDocument.IsMajorVersion = true;
         empInsDocument.Title = 'Emp Ins Document';
-        //empInsDocument.FolderId = auxFolderId;
         insert empInsDocument;
 
         ContentVersion empInsDocument2 = new ContentVersion();
@@ -449,11 +412,9 @@ public class portalIftpTestClass {
             '"MZ414","Abel14","Chain14","Title","123456","AbChain14@demo.com","PTX"\n' + 
             '"Abc","Abel14","Chain14","Title","123456","AbChain14@demo.com","PTX"\n'; 
         empInsDocument2.VersionData = Blob.valueOf(sBody3);
-        //empInsDocument.ContentType = 'text/csv';
         empInsDocument2.PathOnClient = 'emp_ins_document2.csv';
         empInsDocument2.IsMajorVersion = true;
         empInsDocument2.Title = 'Emp Ins Document2';
-        //empInsDocument.FolderId = auxFolderId;
         insert empInsDocument2;
 
         ContentVersion empInsDocument3 = new ContentVersion();
@@ -462,11 +423,9 @@ public class portalIftpTestClass {
             '"Abc","Abel14","Chain14","Title","123456","AbChain14@demo.com","FRX"\n' +
             '"MA415","Abel15","Chain15","Title","","AbChain15@demo.com","FRX; PTX"\n'; 
         empInsDocument3.VersionData = Blob.valueOf(sBody6);
-        //empInsDocument.ContentType = 'text/csv';
         empInsDocument3.PathOnClient = 'emp_ins_document3.csv';
         empInsDocument3.IsMajorVersion = true;
         empInsDocument3.Title = 'Emp Ins Document3';
-        //empInsDocument.FolderId = auxFolderId;
         insert empInsDocument3;
 
         List<ISSP_CS__c> isspCs = new List<ISSP_CS__c>();

@@ -25,8 +25,8 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
     @track toDateMinValue;
     @track toDateMaxValue;
     @track data;
-           fullData = null;
-           originalData = null;
+    fullData = null;
+    originalData = null;
     @track columns;
     @track sortedBy;
     @track sortedDirection;
