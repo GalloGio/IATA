@@ -261,9 +261,9 @@ public class portalIftpTrainingRecordsTest {
         lToSave3.add(dataToSave3);
 
         System.runAs(u2) {
-            Boolean res = portalIftpTrainingRecords.updateCertificationEnroll(lToSave);
-            Boolean res2 = portalIftpTrainingRecords.updateCertificationEnroll(lToSave2);
-            Boolean res3 = portalIftpTrainingRecords.updateCertificationEnroll(lToSave3);
+            res = portalIftpTrainingRecords.updateCertificationEnroll(lToSave);
+            res2 = portalIftpTrainingRecords.updateCertificationEnroll(lToSave2);
+            res3 = portalIftpTrainingRecords.updateCertificationEnroll(lToSave3);
 
         }
         Test.stopTest();
