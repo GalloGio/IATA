@@ -277,7 +277,7 @@ public without sharing class OneId_RegistrationProcessController {
             || (acc.Sector__c == 'Travel Agent' 
                 && ((acc.Category__c == 'IATA Passenger Sales Agent'&& (acc.RecordType.DeveloperName == 'IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account')) || (acc.Category__c == 'Non-IATA Travel Agent' && (acc.RecordType.DeveloperName == 'Non_IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account'))))
             || (acc.Sector__c == 'Airline Supplier' 
-                && (acc.Category__c == 'Global Distribution System' || acc.Category__c == 'Content Aggregator' || acc.Category__c== 'Systems Solutions Provider')
+                && (acc.Category__c == 'Global Distribution System' || acc.Category__c == 'Content Aggregator' || acc.Category__c== 'System Solutions Provider')
                 && (acc.RecordType.DeveloperName == 'Others' || acc.RecordType.DeveloperName == 'Standard_Account'));
         return isEligible;
     }
