@@ -102,7 +102,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         }
 
         if(error){
-            console.log('error : ' + error);
+            console.error('error : ' + error);
         }
     }
 
@@ -154,12 +154,12 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                 this.loading = false;
             })
             .catch(error => {
-                console.log('getITPStations - Error : ' + error);
+                console.error('getITPStations - Error : ' + error);
                 this.loading = false;
             }); 
         })
         .catch(error => {
-            console.log('getITPStations - Error : ' + error);
+            console.error('getITPStations - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
         });  
@@ -299,14 +299,13 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                 this.originalData = this.data;
                 this.fullData = this.data;
                 this.dataRecords = true;
-                console.log('this.data ', this.data);
             } else {
                 this.dataRecords = false; 
             }
             this.loading = false;
         })
         .catch(error => {
-            console.log('handleSearch - Error : ', error);
+            console.error('handleSearch - Error : ', error);
 
             this.mainErrorMessage = error;
             this.error = error;
@@ -487,7 +486,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                     
                 })
                 .catch(error => {
-                    console.log('handleSearch - Error : ', error);
+                    console.error('handleSearch - Error : ', error);
     
                     const event = new ShowToastEvent({
                         title: 'Save Enrollments',

@@ -31,17 +31,14 @@ export default class PortalIftpImportEmployees extends LightningElement {
         
         getUserInfo()
             .then(result => {
-                console.log(result);
                 let myResult = JSON.parse(JSON.stringify(result));
                 
                 this.userInfo = myResult;
-                console.log(' this.userInfo: ',  this.userInfo);
-                console.log(' this.userInfo.accountRole: ',  this.userInfo.accountRole);
                 this.myRecordId = this.userInfo.accountRole;
 
             })
             .catch(error => {
-                console.log('getITPStations - Error : ' + error);
+                console.error('PortalIftpImportEmployees - getUserInfo - Error : ' + error);
                 this.mainErrorMessage = error;
                 this.error = error;
             });  
@@ -59,8 +56,6 @@ export default class PortalIftpImportEmployees extends LightningElement {
     }
 
     handleChangeshowOnlyFailed(event){
-        console.log('event', event.detail.checked);
-        console.log('event',  JSON.parse(JSON.stringify(event.detail)));
 
         let isChecked = event.detail.checked;
 
@@ -76,24 +71,16 @@ export default class PortalIftpImportEmployees extends LightningElement {
     }
 
     handleUploadInsertFinish(event){
-        console.log('handleUploadInsertFinish - begin');
         this.resultsTitle = "Employees to Insert";
         this.loading = true;
-        //const uploadedFiles = event.detail;
         const uploadedFiles = JSON.parse(JSON.stringify(event.detail));
         
         let docId = uploadedFiles[0].documentId;
-        console.log('PortalIftpImportStations - handleUploadFinish - uploadedFiles: ',uploadedFiles );
-        console.log('PortalIftpImportStations - handleUploadFinish - uploadedFiles.documentId: ', uploadedFiles[0].documentId);
         
         this.showSearch = true;
         
         importEmployeesCSVFile({fileId: docId })
             .then(results => {
-                console.log('handleSearch - results : ' + results);
-                console.log('handleSearch - results.length : ' + results.length);
-                console.log('handleSearch - results:1 : ' + results[1]);
-
 
                 if(results && results.length > 0) {
                     this.importResultsData = results;
@@ -107,7 +94,7 @@ export default class PortalIftpImportEmployees extends LightningElement {
 
             })
             .catch(error => {
-                console.log('getITPStations - Error : ' + error);
+                console.error('PortalIftpImportEmployees - importEmployeesCSVFile - Error : ' + error);
                 this.mainErrorMessage = error;
                 this.error = error;
             });      
@@ -121,17 +108,11 @@ export default class PortalIftpImportEmployees extends LightningElement {
         const uploadedFiles = JSON.parse(JSON.stringify(event.detail));
         
         let docId = uploadedFiles[0].documentId;
-        console.log('PortalIftpImportStations - handleUploadInactivateFinish - uploadedFiles: ',uploadedFiles );
-        console.log('PortalIftpImportStations - handleUploadInactivateFinish - uploadedFiles.documentId: ', uploadedFiles[0].documentId);
         
         this.showSearch = true;
 
         inactivateEmployeesCSVFile({fileId: docId })
         .then(results => {
-            console.log('handleUploadInactivateFinish - results : ' + results);
-            console.log('handleUploadInactivateFinish - results.length : ' + results.length);
-            console.log('handleUploadInactivateFinish - results:1 : ' + results[1]);
-
 
             if(results && results.length > 0) {
                 this.importResultsData = results;
@@ -145,14 +126,13 @@ export default class PortalIftpImportEmployees extends LightningElement {
 
         })
         .catch(error => {
-            console.log('handleUploadInactivateFinish - Error : ' + error);
+            console.error('handleUploadInactivateFinish - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
         });
     }
 
     // Sort Columns In Import Employees Results Datatable
-
     // The method onsort event handler
     updateColumnSorting(event) {
         var fieldName = event.detail.fieldName;
