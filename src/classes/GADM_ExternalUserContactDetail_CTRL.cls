@@ -62,6 +62,20 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
             contactRolesIds.add(service.Contact_Role__c);
         }
 
+        boolean selectedUserIsPowerUser = false;
+        boolean selectedUserIsSuperUser = false;
+
+        for(Contact_Roles__c selectedRole : selectedUserRoles) {
+            if(selectedRole.Name == 'Service Power User') {
+                selectedUserIsPowerUser = true;
+                continue;
+            }
+            if(selectedRole.Name == 'Service Super User') {
+                selectedUserIsSuperUser = true;
+                continue;
+            }
+        }
+
         List<Contact_Roles__c> standardGadmRoles = [SELECT Id, Name FROM Contact_Roles__c WHERE Id = :contactRolesIds];
         for(Contact_Roles__c role : standardGadmRoles) {
             //power user role cannot be taken
@@ -92,6 +106,27 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
                 } else{
                     continue;
                 }
+            }else if (role.Name == 'GADM User') {
+                if (isPowerUser && selectedUserIsPowerUser) {
+                    Role dataRole = new Role();
+                    dataRole.role = role;
+                    dataRole.isChecked = selectedUserRoles.contains(role);
+                    dataRole.isEditable = !selectedUserRoles.contains(role);
+                    managementData.roles.put(role.Id, dataRole);
+                } else if(isSuperUser && selectedUserIsSuperUser) {
+                    Role dataRole = new Role();
+                    dataRole.role = role;
+                    dataRole.isChecked = selectedUserRoles.contains(role);
+                    dataRole.isEditable = !selectedUserRoles.contains(role);
+                    managementData.roles.put(role.Id, dataRole);
+                } else {
+                    Role dataRole = new Role();
+                    dataRole.role = role;
+                    dataRole.isChecked = selectedUserRoles.contains(role);
+                    dataRole.isEditable = true;
+                    managementData.roles.put(role.Id, dataRole);
+                }
+
             } else {
                 Role dataRole = new Role();
                 dataRole.role = role;
