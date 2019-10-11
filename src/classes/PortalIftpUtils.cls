@@ -1603,9 +1603,11 @@ public without sharing class PortalIftpUtils {
 
     @AuraEnabled(cacheable=false)
     public static String getRedirectURL(){
-
+        
+        String baseUrl = Site.getBaseSecureUrl();
+        String pathPrefix = Site.getPathPrefix().replace('/s', '');
         ISSP_CS__c url = ISSP_CS__c.getValues('Absorb SSO');
-        return url.Value__c;
+        return baseUrl + pathPrefix + url.Value__c;
         
     }
     private static String clearString(String s){

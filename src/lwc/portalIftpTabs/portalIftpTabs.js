@@ -146,12 +146,10 @@ export default class portalIftpTabs extends NavigationMixin(LightningElement) {
                 },
                 true // Replaces the current page in your browser history with the URL
             );
-            //console.log('Redirect URL: ' + result);
-            //window.open('www.youraddress.com','_top')
 
         })
         .catch(error => {
-            console.log('getUserInfo - Error : ' + error);
+            console.error('handleRedirect - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
         });
