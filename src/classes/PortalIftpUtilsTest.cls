@@ -105,7 +105,7 @@ public class PortalIftpUtilsTest {
                 roleAddr.Description__c = 'test upd ' + i;
             }
             PortalIftpUtils.InsertStationWrapper updStationWrapper = PortalIftpUtils.updateStation(roleAddrList3, null);
-            System.assertEquals(updStationWrapper.succeeded, true);
+            System.assert(updStationWrapper.succeeded);
 
             Address__c addr = PortalIftpUtils.getITPStationEmployees(add2Id);
             System.assertEquals(addr.Code__c, 'GVX');
@@ -220,7 +220,7 @@ public class PortalIftpUtilsTest {
             toDelete.add(roleAddressITP);
 
             PortalIftpUtils.InsertStationWrapper insertStationRes = PortalIftpUtils.insertStation(toDelete);
-            System.assertEquals(insertStationRes.succeeded, true);
+            System.assert(insertStationRes.succeeded);
         }
     
         Test.stopTest();
@@ -305,7 +305,7 @@ public class PortalIftpUtilsTest {
         
         System.runAs(u1) {
             Boolean res = PortalIftpUtils.removeProficiency(rolAddrId);
-            System.assertEquals(res, true);
+            System.assert(res);
         }
         Test.stopTest();
 
