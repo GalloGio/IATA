@@ -125,7 +125,7 @@ The Account Role record should be named after the functional capability for whic
     </fields>
     <fields>
         <fullName>Global_ID__c</fullName>
-        <displayFormat>aB5-{0000000000}</displayFormat>
+        <displayFormat>aB5{0000000000}</displayFormat>
         <externalId>false</externalId>
         <label>Global ID</label>
         <trackTrending>false</trackTrending>
