@@ -474,6 +474,17 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public String selectedCoutriesForNoCMC {get; set;}
+    public String goGlobalDocumentId {
+        get {
+            List<ContentDocument> goGlobalGuide = [SELECT Id, Title, LatestPublishedVersionId
+                                                FROM ContentDocument
+                                                WHERE Title = 'GoGlobal Accreditation User Guide'
+                                                LIMIT 1];
+            
+            return goGlobalGuide.isEmpty() ? '' : goGlobalGuide[0].LatestPublishedVersionId;
+        } 
+        set;
+    }
     
     public ISSP_AMS_Accreditation() {
         isNewCase = true;
