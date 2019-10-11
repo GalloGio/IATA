@@ -1,5 +1,6 @@
 public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
+    @TestVisible
 	private String oscarId{
 		get{
 			if(String.isEmpty(oscarId)) oscarId = ApexPages.currentPage().getParameters().get('Id');
@@ -256,6 +257,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		}
 	}
 
+    @TestVisible
 	private Integer rowsPerPage = 100;
 
 	public Integer currentPage{
@@ -693,7 +695,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'There should be at least 2 BSPs involved in the hierarchy.'));
 			return false;
 		}
-
+        
 		for(BSPAttributes bspAtt: bspMap.values()){
 
 			if(isConversionProcess){

@@ -135,12 +135,13 @@ private class ANG_MulticountryConversionsTest {
 	standardAeFR.ParentId = standardHeFR.Id;
 	standardAeFR.Location_Type__c = AMS_Utils.AE;
 	standardAeFR.Location_Class__c = 'P';
-	standardAeFR.IATA_ISO_Country__c = countryUK.Id;
+	standardAeFR.IATA_ISO_Country__c = countryFR.Id;
 	standardAeFR.RecordTypeId = agencyRecTypeId;
 	standardAeFR.IATACode__c = '999999994';
 	standardAeFR.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 	standardAeFR.Status__c = 'Approved';
 	standardAeFR.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
+	standardAeFR.Remittance_frequency__c = 'W';
 
 	insert new List<Account>{standardAePT, standardAeUK, standardAeFR};
 
@@ -395,6 +396,15 @@ private class ANG_MulticountryConversionsTest {
 	ANG_MulticountryHierarchySelectionCrtl selectionCrtl = new ANG_MulticountryHierarchySelectionCrtl(sc);
 	List<ANG_MulticountryHierarchySelectionCrtl.HierarchyItem> hierarchyValues = selectionCrtl.hierarchyValues;
 
+	System.assertEquals(oscar.id, selectionCrtl.oscarId);
+	System.assert(! selectionCrtl.oscarFieldList.isEmpty());
+	System.assert(! selectionCrtl.accountFieldList.isEmpty());
+	System.assert(! selectionCrtl.noteList.isEmpty());
+	System.assertEquals(false, selectionCrtl.selectAll);
+	System.assertEquals(true, selectionCrtl.editable);
+	System.assertEquals(false, selectionCrtl.showTargetAgency);
+	System.assertEquals(true, selectionCrtl.showTopPanel);
+
 	for(ANG_MulticountryHierarchySelectionCrtl.HierarchyItem it : hierarchyValues) {
 	  if(it.acc.Name == 'Standard AE UK') it.isAE = true;
 	  if(it.acc.Name == 'Standard HE FR') it.isHE = true;
@@ -437,10 +447,85 @@ private class ANG_MulticountryConversionsTest {
 	}
 
 	selectionCrtl.saveConversion();
-	System.assert(findApexPagesMessage('There cannot be an HE account in the same BSP of the GE account.'));		 
+	System.assert(findApexPagesMessage('There cannot be an HE account in the same BSP of the GE account.'));	
+      
+	// test pagination
+	System.assertNotEquals(0, selectionCrtl.rowsPerPage);
+	selectionCrtl.rowsPerPage = 1;
+	System.assertEquals(4, selectionCrtl.totalPages);
+		
+	System.assertEquals(0, selectionCrtl.currentPage);
+	System.assertEquals(true, selectionCrtl.getDisablePrevious());
+	selectionCrtl.Next();
+	System.assertEquals(1, selectionCrtl.currentPage);
+	selectionCrtl.End();
+	System.assertEquals(3, selectionCrtl.currentPage);
+	System.assertEquals(true, selectionCrtl.getDisableNext());
+	selectionCrtl.Previous();
+	System.assertEquals(2, selectionCrtl.currentPage);
+	selectionCrtl.Beginning();
+	System.assertEquals(0, selectionCrtl.currentPage);
   
 	Test.stopTest();
   }
+
+	@isTest
+	public static void conversionHierarchySelectionSaveTest()
+	{
+
+		AMS_OSCAR__c oscar = [SELECT Id, STEP45__c,  Process__c,  Account__c, Oscar_Communication_Case_Id__c, RecordTypeId FROM AMS_OSCAR__c LIMIT 1 ];
+
+		List<AMS_Process_Detail__c> processDetails = new List<AMS_Process_Detail__c>();
+
+		List<Account> accountList = [SELECT ID, Name, Location_type__c FROM Account Where Name IN ( 'Standard HE PT','Standard HE FR','Standard AE FR' ) AND ID <> :oscar.Account__c];
+
+		//Create AMS_Process_Detail for the existing Accounts - excluding the Oscar's Account
+		for(Account acc : accountList){
+			AMS_Process_Detail__c pd = new AMS_Process_Detail__c();
+			pd.Account__c = acc.ID;
+			pd.Oscar__c = oscar.Id;
+			pd.Case__c = oscar.Oscar_Communication_Case_Id__c;
+
+			processDetails.add(pd);
+		}
+		insert processDetails;
+
+		PageReference pageRef = Page.ANG_MulticountryHierarchySelection;
+		Test.setCurrentPageReference(pageRef);
+
+		ApexPages.CurrentPage().getparameters().put('pid', oscar.id);
+		ApexPages.StandardController sc = new ApexPages.standardController(oscar); 
+
+		Test.startTest();       
+
+		ANG_MulticountryHierarchySelectionCrtl selectionCrtl = new ANG_MulticountryHierarchySelectionCrtl(sc);
+		List<ANG_MulticountryHierarchySelectionCrtl.HierarchyItem> hierarchyValues = selectionCrtl.hierarchyValues;
+
+		// test save
+		for (ANG_MulticountryHierarchySelectionCrtl.HierarchyItem it : hierarchyValues)
+		{
+			if(it.acc.Name == 'Standard HE PT'){
+				it.isHE = false;
+				it.isAE = false;
+				it.main = true;
+			}
+			if(it.acc.Name == 'Standard HE FR'){
+				it.isHE = true;
+				it.isAE = false;
+				it.main = false;
+			}
+			if(it.acc.Name == 'Standard AE FR'){
+				it.isHE = false;
+				it.isAE = true;
+				it.main = false;
+			}
+		}
+		selectionCrtl.saveConversion();
+		System.assertEquals(0, ApexPages.getMessages().size(), 'Found: ' + ApexPages.getMessages());
+		selectionCrtl.save();
+
+		Test.stopTest();
+	}
 
 
   @isTest static void conversionHierarchySelectionSuccessTest(){
