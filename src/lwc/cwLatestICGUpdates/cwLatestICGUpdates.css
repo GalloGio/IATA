@@ -1,0 +1,18 @@
+.btn-latest-icg-updates-custom{
+    text-transform: uppercase;
+    background: #F04632;
+    position: relative;
+    padding: 10 30px 0 15px;
+    padding-top: 10px !important;
+    padding-right: 30px;
+    padding-bottom: 0px;
+    padding-left: 15px;
+    border-color: #F04632;
+    color: #FFFFFF;
+}
+
+.certification-title{
+    height: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}

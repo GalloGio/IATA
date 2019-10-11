@@ -1,0 +1,926 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <name>Set_Extraordinary_Circumstances_Yes</name>
+        <label>Set Extraordinary Circumstances Yes</label>
+        <locationX>1027</locationX>
+        <locationY>1488</locationY>
+        <assignmentItems>
+            <assignToReference>Extraordinary_Circumstances</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Y</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <choices>
+        <name>A_collision_between_mobile_boarding_stairs_and_an_aircraft</name>
+        <choiceText>A collision between mobile boarding stairs and an aircraft</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>A collision between mobile boarding stairs and an aircraft.</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Airline_Staff_Crew_strike</name>
+        <choiceText>Airline Staff/Crew strike</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Airline Staff/Crew strike</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Airworthiness_Directive_issued</name>
+        <choiceText>An Airworthiness Directive issued in short space of time requiring immediate corrective action before aircraft can be flown.</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>An Airworthiness Directive issued in short space of time requiring immediate corrective action before aircraft can be flown.</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ATC_Strike</name>
+        <choiceText>ATC Strike</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ATC Strike</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Bad_Weather</name>
+        <choiceText>Bad Weather</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Bad Weather</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Bird_Strike</name>
+        <choiceText>Bird Strike</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Bird Strike</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Bomb_discovery</name>
+        <choiceText>Bomb discovery or bomb scare on-board or at airport of departure/arrival or connection</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Bomb discovery or bomb scare on-board or at airport of departure/arrival or connection</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Damage_due_to_sabotage</name>
+        <choiceText>Damage due to sabotage</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Damage due to sabotage</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Failures_of_components_when_under_warranty</name>
+        <choiceText>Failures of components when under warranty</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Failures of components when under warranty</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Fog</name>
+        <choiceText>Fog</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Fog</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Freak_weather</name>
+        <choiceText>Freak weather</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freak weather</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Hidden_manufacturing_defects</name>
+        <choiceText>Hidden manufacturing defects</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Hidden manufacturing defects</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Hijacking</name>
+        <choiceText>Hijacking</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Hijacking</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Hurricane</name>
+        <choiceText>Hurricane</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Hurricane</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Lightning_strike</name>
+        <choiceText>Lightning strike</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Lightning strike</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Other</name>
+        <choiceText>Other</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Other</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Political_or_civil_unrest</name>
+        <choiceText>Political or civil unrest</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Political or civil unrest</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Pre_mature_failure_of_equipment</name>
+        <choiceText>Pre-mature failure of equipment</choiceText>
+        <dataType>String</dataType>
+    </choices>
+    <choices>
+        <name>Removal_of_unaccompanied_baggage_due</name>
+        <choiceText>Removal of unaccompanied baggage due</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Removal of unaccompanied baggage due</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Removal_of_unruly_passenger_for_security</name>
+        <choiceText>Removal of unruly passenger for security</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Removal of unruly passenger for security</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Security_related</name>
+        <choiceText>Security related</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Security related</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Sickness_affecting_the_cabin_crew_and_or_pilots</name>
+        <choiceText>Sickness affecting the cabin crew and/or pilots</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Sickness affecting the cabin crew and/or pilots</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Strong_wind</name>
+        <choiceText>Strong wind</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Strong wind</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Supply_of_aircraft_fuel_is_limited</name>
+        <choiceText>Supply of aircraft fuel is limited or unavailable without pre-notification</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Supply of aircraft fuel is limited or unavailable without pre-notification</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>technical_problem_ocurrend_unexpectedly</name>
+        <choiceText>A technical problem, which occurred unexpectedly and was not attributable to poor maintenance</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>A technical problem, which occurred unexpectedly and was not attributable to poor maintenance</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Technical_related</name>
+        <choiceText>Technical related</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Technical related</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Unlawful_acts_such_as_terrorism_or_sabotage</name>
+        <choiceText>Unlawful acts such as terrorism or sabotage</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Unlawful acts such as terrorism or sabotage</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Weather_related</name>
+        <choiceText>Weather related</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Weather related</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>kind_of_event_caused_flight_delay_Decision</name>
+        <label>kind of event caused flight delay Decision</label>
+        <locationX>862</locationX>
+        <locationY>466</locationY>
+        <defaultConnector>
+            <targetReference>kind_of_Other_related_incident_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>kind_of_event_caused_flight_delay_Decision_Weather_Related</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_event_caused_flight_delay</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Weather_related</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>kind_of_weather_related_incident_Screen</targetReference>
+            </connector>
+            <label>kind of event caused flight delay Decision Weather Related</label>
+        </rules>
+        <rules>
+            <name>kind_of_event_caused_flight_delay_Decision_Technical_Related</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_event_caused_flight_delay</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Technical_related</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>kind_of_technical_related_incident_Screen</targetReference>
+            </connector>
+            <label>kind of event caused flight delay Decision Technical Related</label>
+        </rules>
+        <rules>
+            <name>kind_of_event_caused_flight_delay_Decision_Security_Related</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_event_caused_flight_delay</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Security_related</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>kind_of_security_related_incident_Screen</targetReference>
+            </connector>
+            <label>kind of event caused flight delay Decision Security Related</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>kind_of_Other_related_incident_Decision</name>
+        <label>kind of Other related incident Decision</label>
+        <locationX>1577</locationX>
+        <locationY>904</locationY>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>kind_of_Other_related_incident_Decision_Political_or_aircraft_fuel_or_ATC_Strike</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_Other_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Political_or_civil_unrest</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>kind_of_Other_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Supply_of_aircraft_fuel_is_limited</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>kind_of_Other_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ATC_Strike</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>beyond_the_control_of_an_airline_extraordinary_circumstance_Screen</targetReference>
+            </connector>
+            <label>kind of Other related incident Decision Political or aircraft fuel or ATC Strike</label>
+        </rules>
+        <rules>
+            <name>kind_of_Other_related_incident_Decision_Bird_Strike</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_Other_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Bird_Strike</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Bird_Strike_Explanation</targetReference>
+            </connector>
+            <label>kind of Other related incident Decision Bird Strike</label>
+        </rules>
+        <rules>
+            <name>kind_of_Other_related_incident_Decision_Airline_Staff_Crew_Strike</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_Other_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Airline_Staff_Crew_strike</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Airline_Staff_Crew_strike_Explanation_Screen</targetReference>
+            </connector>
+            <label>kind of Other related incident Decision Airline Staff Crew Strike</label>
+        </rules>
+        <rules>
+            <name>kind_of_Other_related_incident_Decision_Sickness_Crew</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_Other_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Sickness_affecting_the_cabin_crew_and_or_pilots</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Sickness_affecting_the_cabin_crew_Explanation_Screen</targetReference>
+            </connector>
+            <label>kind of Other related incident Decision Sickness Crew</label>
+        </rules>
+        <rules>
+            <name>kind_of_Other_related_incident_Decision_Collision</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_Other_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>A_collision_between_mobile_boarding_stairs_and_an_aircraft</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Colision_Explanation_Screen</targetReference>
+            </connector>
+            <label>kind of Other related incident Decision Collision</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>kind_of_technical_related_incident_Decision</name>
+        <label>kind of technical related incident Decision</label>
+        <locationX>709</locationX>
+        <locationY>874</locationY>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>kind_of_technical_related_incident_Decision_Hidden_Manufacturing_or_Sabotage</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_technical_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Hidden_manufacturing_defects</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>kind_of_technical_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Damage_due_to_sabotage</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Extraordinary_circumstance_Screen</targetReference>
+            </connector>
+            <label>kind of technical related incident Decision Hidden Manufacturing or Sabotage</label>
+        </rules>
+        <rules>
+            <name>kind_of_technical_related_incident_Decision_tech_prob_equipment_airworthiness</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_technical_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>technical_problem_ocurrend_unexpectedly</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>kind_of_technical_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Pre_mature_failure_of_equipment</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>kind_of_technical_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Failures_of_components_when_under_warranty</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>kind_of_technical_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Airworthiness_Directive_issued</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Not_Extraordinary_circumstance_Screen</targetReference>
+            </connector>
+            <label>kind of technical related incident Decision tech prob or equipment fail or Airworthiness</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>kind_of_weather_related_incident_Decision</name>
+        <label>kind of weather related incident Decision</label>
+        <locationX>374</locationX>
+        <locationY>890</locationY>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>kind_of_weather_related_incident_Decision_Bad_Weather_Or_Lightning_Strike</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_weather_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Bad_Weather</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>kind_of_weather_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Lightning_strike</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Not_considered_extraordinary_circumstance_Compensation_due</targetReference>
+            </connector>
+            <label>kind of weather related incident Decision Bad Weather Or Lightning Strike</label>
+        </rules>
+        <rules>
+            <name>kind_of_weather_related_incident_Decision_Fog</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_weather_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Fog</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Fog_explanation_screen</targetReference>
+            </connector>
+            <label>kind of weather related incident Decision Fog</label>
+        </rules>
+        <rules>
+            <name>kind_of_weather_related_incident_Decision_Strong_Wind</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_weather_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Strong_wind</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Strong_Wind_Screen</targetReference>
+            </connector>
+            <label>kind of weather related incident Decision Strong Wind</label>
+        </rules>
+        <rules>
+            <name>kind_of_weather_related_incident_Decision_Hurricane</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>kind_of_weather_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Hurricane</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>kind_of_weather_related_incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Freak_weather</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Hurricane_Explanation_Screen</targetReference>
+            </connector>
+            <label>kind of weather related incident Decision Hurricane</label>
+        </rules>
+    </decisions>
+    <interviewLabel>Claim EU261 Deter {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Claim EU261 Determine extraordinary circumstances</label>
+    <processType>Flow</processType>
+    <screens>
+        <name>Airline_Staff_Crew_strike_Explanation_Screen</name>
+        <label>Airline Staff/Crew strike Explanation Screen</label>
+        <locationX>1532</locationX>
+        <locationY>1253</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>AirlineStaffCrewstrikeExplanation</name>
+            <fieldText>Not considered extraordinary circumstance. Compensation due</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>beyond_the_control_of_an_airline_extraordinary_circumstance_Screen</name>
+        <label>beyond the control of an airline extraordinary circumstance Screen</label>
+        <locationX>1242</locationX>
+        <locationY>1256</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Set_Extraordinary_Circumstances_Yes</targetReference>
+        </connector>
+        <fields>
+            <name>beyondthecontrolofanairline</name>
+            <fieldText>This is beyond the control of an airline therefore extraordinary circumstance prevails. No compensation due as long as:
+1)	You provide proof of the circumstances alleged and why these circumstances should be considered to be extraordinary. It must also clearly demonstrate how these circumstances resulted in the disruption of the flight.
+2)	After demonstrating the existence of extraordinary circumstances, you must also explain what reasonable measures you took on order to mitigate the disruption.
+3)	The incident needs to be evaluated in the context of the category to which it exists.
+If the above three points prevail in your favour, then no compensation due.</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Bird_Strike_Explanation</name>
+        <label>Bird Strike Explanation</label>
+        <locationX>1379</locationX>
+        <locationY>1254</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Set_Extraordinary_Circumstances_Yes</targetReference>
+        </connector>
+        <fields>
+            <name>BirdStrike</name>
+            <fieldText>The Court of Justice of the European Union (CJEU) is the chief judicial authority of the European Union. On the 4th May 2017, it ruled that a collision between a bird and an aircraft should be classified as extraordinary under EU261/2004.
+Extraordinary circumstance prevails. No compensation due as long as:
+1)	You provide proof of the circumstances alleged and why these circumstances should be considered to be extraordinary. It must also clearly demonstrate how these circumstances resulted in the disruption of the flight.
+2)	After demonstrating the existence of extraordinary circumstances, you must also explain what reasonable measures you took on order to mitigate the disruption.
+3)	The incident needs to be evaluated in the context of the category to which it exists.
+If the above three points prevail in your favour, then no compensation due.
+
+&lt;a href=&quot;http://curia.europa.eu/juris/document/document.jsf?text=&amp;docid=190327&amp;pageIndex=0&amp;doclang=en&amp;mode=lst&amp;dir=&amp;occ=first&amp;part=1&amp;cid=157262&quot;&gt;See Related Case to Bird Strike&lt;/a&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Colision_Explanation_Screen</name>
+        <label>Colision Explanation Screen</label>
+        <locationX>1817</locationX>
+        <locationY>1258</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ColisionExplanation</name>
+            <fieldText>This is not an extraordinary circumstance. Compensation due. Siewert and Others v Condor Flugdienst GmbH ECJ Case C 394/14
+
+&lt;a href=&quot;https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A62014CO0394&quot;&gt;Siewert v Condor&lt;/a&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Extraordinary_circumstance_prevails_Screen</name>
+        <label>Extraordinary circumstance prevails Screen</label>
+        <locationX>1054</locationX>
+        <locationY>1271</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Set_Extraordinary_Circumstances_Yes</targetReference>
+        </connector>
+        <fields>
+            <name>Extraordinarycircumstanceprevails</name>
+            <fieldText>Extraordinary circumstance prevails
+You must however provide proof of the circumstances alleged and why these circumstances should be considered to be extraordinary. It must also clearly demonstrate how these circumstances resulted in the disruption of the flight.</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Extraordinary_circumstance_Screen</name>
+        <label>Extraordinary circumstance Screen</label>
+        <locationX>850</locationX>
+        <locationY>1275</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Set_Extraordinary_Circumstances_Yes</targetReference>
+        </connector>
+        <fields>
+            <name>Extraordinarycircumstance</name>
+            <fieldText>Extraordinary circumstance should prevail as long as:
+1) You provide proof of the circumstances alleged and why these circumstances should be considered to be extraordinary. It must also clearly demonstrate how these circumstances resulted in the disruption of the flight.
+2) After demonstrating the existence of extraordinary circumstances, you must also explain what reasonable measures you took on order to mitigate the disruption.
+3) The incident needs to be evaluated in the context of the category to which it exists.
+If the above three points prevail in your favour, then no compensation due.</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Fog_explanation_screen</name>
+        <label>Fog Explanation Screen</label>
+        <locationX>416</locationX>
+        <locationY>1283</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Fog_explanation</name>
+            <fieldText>Fog is not an uncommon occurrence particularly in the UK at certain times of the year therefore cannot be considered an extraordinary circumstance unless Air Traffic Control must shut down the airport and divert or cancel specific flights. If however traffic is restricted and you are notified to divert or cancel flights of your choosing, then this is considered as part of normal day to day operations and not extraordinary circumstance.  
+Compensation due unless you can prove that Air Traffic Control instructed you to divert or cancel specific flights.</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Hurricane_Explanation_Screen</name>
+        <label>Hurricane Explanation Screen</label>
+        <locationX>126</locationX>
+        <locationY>1285</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Set_Extraordinary_Circumstances_Yes</targetReference>
+        </connector>
+        <fields>
+            <name>HurricaneExplanation</name>
+            <fieldText>Extraordinary circumstance should prevail as long as:
+1) You provide proof of the circumstances alleged and why these circumstances should be considered to be extraordinary. It must also clearly demonstrate how these circumstances resulted in the disruption of the flight.
+2) After demonstrating the existence of extraordinary circumstances, you must also explain what reasonable measures you took on order to mitigate the disruption.
+3) The incident needs to be evaluated in the context of the category to which it exists.
+If the above three points prevail in your favour, then no compensation due.
+
+&lt;a href=&quot;http://www.261casecheck.org/tag/weather-conditions/&quot;&gt;see other cases related to Weather Conditions&lt;/a&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>kind_of_event_caused_flight_delay_Screen</name>
+        <label>kind of event caused flight delay Screen</label>
+        <locationX>865</locationX>
+        <locationY>379</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>kind_of_event_caused_flight_delay_Decision</targetReference>
+        </connector>
+        <fields>
+            <name>kind_of_event_caused_flight_delay</name>
+            <choiceReferences>Weather_related</choiceReferences>
+            <choiceReferences>Technical_related</choiceReferences>
+            <choiceReferences>Security_related</choiceReferences>
+            <choiceReferences>Other</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>What kind of event caused the flight delay? Was it</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>basedOnTheUK</name>
+            <fieldText>*UK jurisdiction only</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>kind_of_Other_related_incident_Screen</name>
+        <label>kind of Other related incident Screen</label>
+        <locationX>1565</locationX>
+        <locationY>809</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>kind_of_Other_related_incident_Decision</targetReference>
+        </connector>
+        <fields>
+            <name>kind_of_Other_related_incident</name>
+            <choiceReferences>Political_or_civil_unrest</choiceReferences>
+            <choiceReferences>Supply_of_aircraft_fuel_is_limited</choiceReferences>
+            <choiceReferences>ATC_Strike</choiceReferences>
+            <choiceReferences>Bird_Strike</choiceReferences>
+            <choiceReferences>Airline_Staff_Crew_strike</choiceReferences>
+            <choiceReferences>Sickness_affecting_the_cabin_crew_and_or_pilots</choiceReferences>
+            <choiceReferences>A_collision_between_mobile_boarding_stairs_and_an_aircraft</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>kind of Other related incident</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>kind_of_security_related_incident_Screen</name>
+        <label>kind of security related incident Screen</label>
+        <locationX>1040</locationX>
+        <locationY>787</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Extraordinary_circumstance_prevails_Screen</targetReference>
+        </connector>
+        <fields>
+            <name>kind_of_security_related_incident</name>
+            <choiceReferences>Unlawful_acts_such_as_terrorism_or_sabotage</choiceReferences>
+            <choiceReferences>Removal_of_unaccompanied_baggage_due</choiceReferences>
+            <choiceReferences>Bomb_discovery</choiceReferences>
+            <choiceReferences>Removal_of_unruly_passenger_for_security</choiceReferences>
+            <choiceReferences>Hijacking</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>kind of security related incident</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>kind_of_technical_related_incident_Screen</name>
+        <label>kind of technical related incident Screen</label>
+        <locationX>708</locationX>
+        <locationY>798</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>kind_of_technical_related_incident_Decision</targetReference>
+        </connector>
+        <fields>
+            <name>kind_of_technical_related_incident</name>
+            <choiceReferences>Hidden_manufacturing_defects</choiceReferences>
+            <choiceReferences>Damage_due_to_sabotage</choiceReferences>
+            <choiceReferences>technical_problem_ocurrend_unexpectedly</choiceReferences>
+            <choiceReferences>Pre_mature_failure_of_equipment</choiceReferences>
+            <choiceReferences>Failures_of_components_when_under_warranty</choiceReferences>
+            <choiceReferences>Airworthiness_Directive_issued</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>kind of technical related incident</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>kind_of_weather_related_incident_Screen</name>
+        <label>kind of weather related incident Screen</label>
+        <locationX>375</locationX>
+        <locationY>802</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>kind_of_weather_related_incident_Decision</targetReference>
+        </connector>
+        <fields>
+            <name>kind_of_weather_related_incident</name>
+            <choiceReferences>Bad_Weather</choiceReferences>
+            <choiceReferences>Lightning_strike</choiceReferences>
+            <choiceReferences>Fog</choiceReferences>
+            <choiceReferences>Strong_wind</choiceReferences>
+            <choiceReferences>Freak_weather</choiceReferences>
+            <choiceReferences>Hurricane</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>kind of weather related incident</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Not_considered_extraordinary_circumstance_Compensation_due</name>
+        <label>Not considered extraordinary circumstance. Compensation due</label>
+        <locationX>555</locationX>
+        <locationY>1282</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NotconsideredextraordinarycircumstanceCompensationdue</name>
+            <fieldText>Not considered extraordinary circumstance. Compensation due
+
+&lt;a href=&quot;http://www.261casecheck.org/tag/weather-conditions/&quot;&gt;see other cases related to Weather Conditions&lt;/a&gt;
+
+&lt;a href=&quot;http://www.261casecheck.org/tag/lightning/&quot;&gt;see other cases related to Lightning Strike&lt;/a&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Not_Extraordinary_circumstance_Screen</name>
+        <label>Not Extraordinary circumstance Screen</label>
+        <locationX>703</locationX>
+        <locationY>1279</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NotExtraordinarycircumstance</name>
+            <fieldText>Not considered extraordinary circumstance. Compensation due</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Sickness_affecting_the_cabin_crew_Explanation_Screen</name>
+        <label>Sickness affecting the cabin crew Explanation Screen</label>
+        <locationX>1671</locationX>
+        <locationY>1256</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>SicknessaffectingthecabincrewExplanation</name>
+            <fieldText>This is not extraordinary except in the case where the plane has been diverted due to a member of crew falling ill. In this instance extraordinary circumstance may prevail.</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Strong_Wind_Screen</name>
+        <label>Strong Wind Screen</label>
+        <locationX>265</locationX>
+        <locationY>1281</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>StrongWindExplanation</name>
+            <fieldText>Other typically wintry conditions in many countries in the EU, such as strong winds and heavy rainfall should not usually be sufficient to cause significantly long delays. However if the wind is so strong that it makes landing or take-off very difficult for the pilots and Air Traffic Control must shut down the airport and divert or cancel specific flights.
+Compensation due unless you can prove that Air Traffic Control instructed you to divert or cancel specific flights.
+
+&lt;a href=&quot;http://www.261casecheck.org/tag/weather-conditions/&quot;&gt;see other cases related to Weather Conditions&lt;/a&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <startElementReference>kind_of_event_caused_flight_delay_Screen</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>Extraordinary_Circumstances</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </variables>
+</Flow>

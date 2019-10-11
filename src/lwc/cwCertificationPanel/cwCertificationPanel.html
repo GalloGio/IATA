@@ -1,0 +1,58 @@
+<template>
+    <div class="hidden-md">
+        <div style={backGroundImage} >
+            <div style="height: 20px;"></div>
+            <p class="h1 text-center" style="font-weight: bold;">{title}</p>
+            <div style="height: 40px;"></div>
+            <div class="slds-grid slds-gutters" >
+                <div class="slds-col px-4 slds-col slds-size_4-of-12" >
+                    <c-cw-certification-section title="Certifications of Excellency" 
+                                                    certification-type="Certifications of Excellency"
+                                                    certification-empty-text= "Validation of excellence beyond adherence to IATA standards to improve the level of competency, operational and technical preparedness in the handling and transport of special cargo, identifying the “best in class” industry stakeholders"
+                                                    back-ground-style="bg-white" 
+                                                    should-be-open={excellencyOpen}
+                                                    oncertificationclicked={handleCertificationClicked}
+                    ></c-cw-certification-section>
+                </div>
+                <div class="slds-col px-4 slds-col slds-size_4-of-12" >
+                    <c-cw-certification-section title="Operational Certifications" 
+                                                certification-type="Operational Certification"
+                                                certification-empty-text= "Validation of companies' compliance with IATA standards, guidelines and recommended practices for handling operations"
+                                                back-ground-style="bg-white"  
+                                                should-be-open={operationalOpen}
+                                                oncertificationclicked={handleCertificationClicked}
+                    ></c-cw-certification-section>
+                </div>
+                <div class="slds-col px-4 slds-col slds-size_4-of-12" >
+                    <c-cw-certification-section title="Assessments" 
+                                                certification-type="Assessments" 
+                                                certification-empty-text= "Independent assessment and improvement of the environmental management of airlines"
+                                                back-ground-style="bg-white" 
+                                                should-be-open={assessmentsOpen}
+                                                oncertificationclicked={handleCertificationClicked}
+                    ></c-cw-certification-section> 
+                </div>
+            </div>
+            <div class="hidden-md">
+                <c-cw-latest-i-c-g-updates-container title="Latest ICG Updates"></c-cw-latest-i-c-g-updates-container>
+            </div>
+            <div style="height: 80px;"></div>
+        </div>
+    </div>
+    <div class="visible-md">
+        <div style="background-color:#FAC833; width:100vw;" class="col-12">
+            <div style="height: 20px;"></div>
+            <p class="h1 text-center" style="font-weight: bold;">{title}</p>
+            <div style="height: 40px;"></div>
+            <div class="row" >
+                <div class="col-md-12" >
+                    <c-cw-certification-carousel></c-cw-certification-carousel> 
+
+                </div>
+            </div>
+            <div style="height: 10px;"></div>
+        </div>
+
+    </div>
+    
+</template>

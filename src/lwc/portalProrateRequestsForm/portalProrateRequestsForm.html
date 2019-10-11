@@ -1,0 +1,1055 @@
+<template >
+    <style>
+        .slds-modal__container{
+            max-width: 70rem !important;
+            width:70% !important;
+        }
+        .slds-textarea {
+            width:100% !important;
+        }
+        .diet-veg{
+            background-color : yellowgreen !important;
+        }
+        
+    </style>
+    <template if:true={showMeNow}>
+            <template if:true={loading}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </template>
+        <div class="slds-card_boundary">
+            <!--<lightning-card  if:true={isactionedit} >
+                <div slot="title" style="text-align:center">
+                    <lightning-button variant="brand" label="Save"  onclick={fetchUpdateClaim} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </lightning-card>
+            <br>-->
+            <h3>Prorate Request : {baggageClaim.Name}</h3>
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    Documentation
+                </div>
+                <div class="slds-p-around_medium slds-grid slds-wrap">
+                    <div class="slds-col">
+                        <a data-toggle="modal" onclick={handleOpenModalCorrectProcInvoic} href="#proratehelp" >Correct process of prorates invoicing</a> <!-- left column -->
+                        <br>
+                        <a data-toggle="modal" href="support-reach-us?category=Baggage_Prorate&topic=BP_Baggage_Prorate&subtopic=BP_General_Information" >Question about Baggage Proration service? Click here</a> <!-- left column -->
+                        
+                    </div>
+                    <div class="slds-col">
+                        <a data-toggle="modal" onclick={handleOpenModalResolution780}  href="#Resolution780" >Resolution 780 (including list of supporting documents)</a> <!-- right column -->
+                        <br>
+                        <a data-toggle="modal" onclick={handleOpenModalResolution754}  href="#Resolution754" >Resolution 754</a> <!-- right column -->
+                    </div>
+                </div>
+            </lightning-card>
+            <br>
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    PIR Identification
+                </div>
+                <div class="slds-p-around_medium slds-grid slds-gutters">
+                    <div class="slds-col"><!--LEFT COLUMN-->
+                        <label>Parent PIR File Ref.</label>
+                        <br>
+                        <lightning-formatted-url value="ISSP_Baggage_Proration_form?id={baggageClaim.Parent_PIR_Form__c}&mid=M6S1"  label={baggageClaim.PIR_File_Ref__c} target="_blank" if:false={isNew}></lightning-formatted-url>
+                        <br>
+                        <lightning-input
+                            label="Airport (Arrival)" 
+                            value={baggageClaim.Airport_Arrival__c}
+                            readonly>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col"><!--RIGTH COLUMN-->
+                        
+                        <lightning-input
+                            label="Airline issuing" 
+                            value={baggageClaim.Airline_issuing__c}
+                            readonly>
+                        </lightning-input>
+                        
+                        <lightning-input
+                            label="Email (Prorate Dept.) Airline issuing" 
+                            value={baggageClaim.Email_Prorate_Dept_Airline_issuing__c}
+                            readonly>
+                        </lightning-input>
+                    </div>
+                </div>
+            </lightning-card>
+            <br>
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    Prorate Request Information
+                </div>
+                
+                <div class="slds-p-around_medium slds-grid slds-gutters">
+                    <div class="slds-col"><!--LEFT COLUMN-->
+                        <lightning-input
+                            label="Prorate Request N°" 
+                            value={baggageClaim.Name} 
+                            readonly>
+                        </lightning-input>
+                        <lightning-input
+                            label="Status" 
+                            value={baggageClaim.Status__c} 
+                            readonly
+                            if:false={isactionedit}>
+                        </lightning-input>
+                        <lightning-combobox label="Status" if:true={isactionedit} name="portalStatusOptions" value={portalStatus} options={portalStatusOptions} onchange={handlePortalStatusChange}>
+                        </lightning-combobox>
+                        <lightning-input
+                            label="Date Proceed to payment" 
+                            value={fetchProceedToPaymentDate} 
+                            readonly>
+                        </lightning-input>
+                        <lightning-input
+                            label="Days to Go vs 60-Day-Limit" 
+                            value={baggageClaim.Days_to_Go_vs_60_Day_Limit__c}   
+                            readonly>
+                        </lightning-input>
+                        <label>Created By </label><br>
+                        {baggageClaim.CreatedBy.Name},
+                        <br>
+                        <lightning-formatted-date-time value={baggageClaim.CreatedDate} year="numeric" month="short" day="2-digit" weekday="narrow"></lightning-formatted-date-time>
+                    </div>
+                    <div class="slds-col"><!--RIGTH COLUMN-->
+                        <lightning-input
+                            label="Airline receiving 2-letter Designator Code" 
+                            value={baggageClaim.X2_letter_Airline_Code__c} 
+                            readonly
+                            if:false={isactionedit}>
+                        </lightning-input>
+                        <lightning-input
+                            data-id='focusOnError'
+                            label="Airline receiving 2-letter Designator Code" 
+                            value={baggageClaim.X2_letter_Airline_Code__c} 
+                            onchange={handleX2letterAirlineCode}
+                            onblur={handleX2letterAirlineCodeBlur}
+                            if:true={isactionedit}>
+                        </lightning-input>
+                        <!--<lightning-card style="color:red;" if:true={errorX2letterAirlineCode}>
+                                Invalid Airline Designator Code
+                        </lightning-card>-->
+                        <lightning-input
+                            label="Airline receiving" 
+                            value={baggageClaim.Airline_receiving_formula__c} 
+                            readonly>
+                        </lightning-input>
+                        <lightning-input
+                            label="Email (Prorate Dept.) Airline receiving" 
+                            value={baggageClaim.Email_Prorate_Dept_Airline_receiving__c} 
+                            readonly>
+                        </lightning-input>
+                        <lightning-input
+                            label="Request Sent Date" 
+                            value={baggageClaim.Request_Sent_Date_Formated__c} 
+                            readonly>
+                        </lightning-input>
+                        <lightning-input
+                            label="Days Prorate Request duration" 
+                            value={baggageClaim.Days_Baggage_Claim_duration__c} 
+                            readonly>
+                        </lightning-input>
+                        <label>Last Modified By </label><br>
+                        {baggageClaim.LastModifiedBy.Name},
+                        <br>
+                        <lightning-formatted-date-time value={baggageClaim.LastModifiedDate} year="numeric" month="short" day="2-digit" weekday="narrow"></lightning-formatted-date-time>
+                    </div>
+                </div>
+            </lightning-card>
+            <br>
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    Passenger information
+                </div>
+                <div class="slds-p-around_medium slds-grid slds-gutters">
+                    <div class="slds-col"><!--LEFT COLUMN-->
+                        <lightning-input
+                            label="Title" 
+                            value={baggageClaim.Title__c} 
+                            readonly>
+                        </lightning-input>
+                        <lightning-input
+                            label="Passenger's First Name" 
+                            value={baggageClaim.Passenger_s_First_Name__c} 
+                            readonly>
+                        </lightning-input>
+                    
+                    </div>
+                    <div class="slds-col"><!--RIGTH COLUMN-->
+                        <lightning-input
+                            label="Passenger's initials" 
+                            value={baggageClaim.Passenger_s_initials__c} 
+                            readonly>
+                        </lightning-input>
+                        <lightning-input
+                            label="Passenger's Last Name" 
+                            value={baggageClaim.Passenger_s_Last_Name__c} 
+                            readonly>
+                        </lightning-input>
+                    </div>
+                </div>
+            </lightning-card>
+            <br> 
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    Amount paid to end customer
+                </div>
+                <div class="slds-p-around_medium slds-grid slds-gutters">
+                    <div class="slds-col"><!--LEFT COLUMN-->
+                        <lightning-input
+                            label="Currency Claim" 
+                            value={baggageClaim.Parent_PIR_Form__r.PIR_Currency_Claim__c} 
+                            readonly>
+                        </lightning-input>
+                        <label>Passenger Claim Amount</label>
+                        <br>
+                        <lightning-formatted-number value={baggageClaim.Parent_PIR_Form__r.PIR_Passenger_Claim_Amount__c} maximum-fraction-digits="2"></lightning-formatted-number>
+                    </div>
+                    <div class="slds-col"><!--RIGTH COLUMN-->
+                        <lightning-input
+                            label="Currency of conversion" 
+                            value={baggageClaim.Parent_PIR_Form__r.PIR_Currency_of_conversion__c} 
+                            readonly>
+                        </lightning-input>
+                        <label>Passenger Converted Amount</label>
+                        <br>
+                        <lightning-formatted-number value={baggageClaim.Parent_PIR_Form__r.Amount__c} maximum-fraction-digits="2"></lightning-formatted-number>
+                    </div>
+                </div>
+            </lightning-card>
+            <br>
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    Prorated Amount
+                </div>
+                <div class="slds-p-around_medium slds-grid slds-gutters">
+                    <div class="slds-col"><!--LEFT COLUMN-->
+                        <lightning-input
+                            label="Calculation details" 
+                            value={baggageClaim.Calculation_details__c} 
+                            readonly
+                            if:false={isactionedit}>
+                        </lightning-input>
+                        <lightning-textarea
+                        label="Calculation details" 
+                        value={baggageClaim.Calculation_details__c} 
+                        onchange={handleCalculationdetails}
+                        if:true={isactionedit}>
+                         ></lightning-textarea>
+                    </div>
+                    <div class="slds-col"><!--RIGTH COLUMN-->
+                        <lightning-input
+                            label="Currency" 
+                            value={baggageClaim.PIR_Currency__c} 
+                            readonly>
+                        </lightning-input>
+                        <label>Total Prorated Amount Due</label>
+                        <br>
+                        <lightning-formatted-number value={baggageClaim.PIR_Total_Prorated_Amount_Due__c} maximum-fraction-digits="2"></lightning-formatted-number>
+                    </div>
+                </div>
+            </lightning-card>
+            <br>
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    Flight Information
+                </div>
+                <div class="slds-p-around_medium slds-grid slds-gutters">
+                    <template if:true={flightInformationList}>
+                        <lightning-datatable hide-checkbox-column  key-field="Id" data={flightInformationList} columns={columnsFlightInformationList} onrowaction={handleRowflightInformationListAction}>
+                        </lightning-datatable>            
+                    </template>
+                </div>
+            </lightning-card>
+            <br>
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    Baggage Information
+                </div>
+                <div class="slds-p-around_medium slds-grid slds-gutters">
+                    <template if:true={bagInformationList}>
+                        <lightning-datatable  hide-checkbox-column key-field="Id" data={bagInformationList} columns={columnsBagInformationList} onrowaction={handleRowBagInformationList}>
+                        </lightning-datatable>            
+                    </template>
+                </div>
+            </lightning-card>
+            <br>
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    Attachments
+                </div>
+                <div class="slds-p-around_medium slds-grid slds-gutters">
+                    <lightning-card>
+                        <div slot="title">
+                            <lightning-button if:false={isactionedit} variant="brand" label="Add attachment"  onclick={handleAddAttachmentsClick} class="slds-m-left_x-small"></lightning-button>           
+                    
+                        </div>
+                        <div class="slds-p-around_medium slds-grid slds-gutters">
+                            <template if:true={baggageClaim.AmazonFiles__r}>
+                                <lightning-datatable  hide-checkbox-column key-field="Id" data={baggageClaim.AmazonFiles__r} columns={columnsAttachments} onrowaction={handleRowAttachemntAction}>
+                                </lightning-datatable>            
+                            </template> 
+                        </div>
+                    </lightning-card>
+                </div>
+            </lightning-card>
+            <br>
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    Comments
+                </div>
+                <div class="slds-p-around_medium slds-grid slds-gutters">
+                    <lightning-card>
+                        <div slot="title">
+                            <lightning-button if:false={isactionedit} variant="brand" label="Create new comment"  onclick={handleCreateNewCommentClick} class="slds-m-left_x-small"></lightning-button>
+                    
+                        </div>
+                        <div class="slds-p-around_medium slds-grid slds-gutters">
+                            <template if:true={claimCommentsLis}>
+                                <lightning-datatable hide-checkbox-column key-field="Id" data={claimCommentsLis} columns={columnsComents} onrowaction={handleRowCommentAction}>
+                                </lightning-datatable>       
+                            </template>
+                        </div>
+                    </lightning-card>
+                </div>
+            </lightning-card>
+        </div>
+    </template>
+    <template if:true={goToNewAttachment}>
+        <lightning-card>
+            <div slot="title" style="text-align:center">
+                <lightning-button variant="brand" label="Back"  onclick={handleBackNewAttachmentClick} class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </lightning-card>
+        <c-protal-prorate-requests-form-new-attachment onaddnewattachment={onAddNewAttachment} recid={IdPIRForm}></c-protal-prorate-requests-form-new-attachment>
+        <lightning-card>
+            <div slot="title" style="text-align:center">
+                <lightning-button variant="brand" label="Back"  onclick={handleBackNewAttachmentClick} class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </lightning-card>
+    </template>
+    <template if:true={goToNewComment}>
+        <lightning-card>
+            <div slot="title" style="text-align:center">
+                <lightning-button variant="brand" label="Back"  onclick={handleBackNewCommenClick} class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </lightning-card>
+        <c-protal-prorate-requests-form-new-comment onaddnewcomment={onAddNewComment} recid={baggageClaim.Id}></c-protal-prorate-requests-form-new-comment>
+    </template>
+    <!--MODAL'S -->
+    <template if:true={showModalOpenParentProrateRequest}>
+        <div style="height: 50%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+    
+                    <div class="slds-is-relative slds-scrollable_y">  
+                        <header class="slds-modal__header">
+                            <div class="slds-clearfix">
+                                <div class="slds-float_right"
+                                    ><lightning-button variant="neutral" label="Close"   onclick={handleCloseModalParentProrateRequest} class="slds-m-right_x-small"></lightning-button>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <lightning-card if:false={checkNavigation}>
+                                <div slot="title" style="text-align:center">
+                                    <lightning-button if:true={isactioneditPirForm} variant="brand" label="Save"  onclick={handleSaveChldClickPirForm} class="slds-m-left_x-small"></lightning-button>
+                                    <lightning-button if:true={isactioneditPirForm} variant="brand" label="Cancel"  onclick={handleCancelChldClickPirForm} class="slds-m-left_x-small"></lightning-button>
+                                    <lightning-button if:false={isactioneditPirForm} variant="brand" label="Edit"  onclick={handleEditChldClickPirForm} class="slds-m-left_x-small"></lightning-button>
+                                </div>
+                            </lightning-card>
+                            <c-portal-prorate-pir-form 
+                            onremoveparentloading={onRemoveLoading} 
+                            onremovebuttonsave={removeButtonSave} 
+                            onchecksecondlevel={onCheckNavigation}
+                            recid={baggageClaim.Parent_PIR_Form__c}
+                            oncreate={handleCreate}></c-portal-prorate-pir-form>
+                            <lightning-card if:false={checkNavigation}>
+                                <div slot="title" style="text-align:center">
+                                    <lightning-button if:true={isactioneditPirForm} variant="brand" label="Save"  onclick={handleSaveChldClickPirForm} class="slds-m-left_x-small"></lightning-button>
+                                    <lightning-button if:true={isactioneditPirForm} variant="brand" label="Cancel"  onclick={handleCancelChldClickPirForm} class="slds-m-left_x-small"></lightning-button>
+                                    <lightning-button if:false={isactioneditPirForm} variant="brand" label="Edit"  onclick={handleEditChldClickPirForm} class="slds-m-left_x-small"></lightning-button>
+                                </div>
+                            </lightning-card>
+                        </div>
+                        <footer class="slds-modal__footer">
+                                <lightning-button variant="neutral" label="Close"  onclick={handleCloseModalParentProrateRequest} class="slds-m-right_x-small"></lightning-button>
+                        </footer>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open modal-form-background"></div>
+        </div><!--end modal content-->
+    </template>
+    <template if:true={showModalEditBagInformation}>
+        <div style="height: 50%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+    
+                    <div class="slds-is-relative slds-scrollable_y">  
+                        <header class="slds-modal__header">
+                            <h2 class="slds-text-heading_medium slds-hyphenate"><b>Edit Baggage Information:</b></h2>
+                            <div class="slds-clearfix">
+                                <div class="slds-float_right"
+                                    ><lightning-button variant="neutral" label="Cancel"  onclick={handleCloseModalEditBagInformation} class="slds-m-right_x-small"></lightning-button>
+                                    <lightning-button variant="neutral" label="Save"  onclick={handleSaveModalEditBagInformation} class="slds-m-right_x-small"></lightning-button>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div class="slds-p-around_medium slds-grid slds-gutters">
+                                    <div class="slds-col"><!--LEFT COLUMN-->
+                                        <lightning-input
+                                            type="checkbox"
+                                            label="Prorated" 
+                                            onchange={handlechangeIs_Bag_1_Selected}
+                                            checked={dataToEditBagInformation.Is_Bag_1_Selected__c}>
+                                        </lightning-input>
+                                        <lightning-input
+                                            type="text"
+                                            label="Bag Tag N°" 
+                                            value={dataToEditBagInformation.Bag_Tag_Number__c} 
+                                            onchange={handlechangeBag_Tag_Number}>
+                                        </lightning-input>
+                                        <lightning-combobox label="Color"  name="portalStatusOptionsBaggageInformationPIRColor" value={portalStatusBaggageInformationPIRColor} options={portalStatusOptionsBaggageInformationPIRColor} onchange={handleBaggageInformationPIRColorChange}></lightning-combobox>
+                                     </div>
+                                    <div class="slds-col"><!--RIGTH COLUMN-->
+                                        <lightning-input
+                                            type="text"
+                                            label="Bag N°" 
+                                            value={dataToEditBagInformation.Bag_Number__c} readonly>
+                                        </lightning-input>
+                                        <lightning-combobox label="Type" name="portalStatusOptionsBaggageInformationType" value={portalStatusBaggageInformationType} options={portalStatusOptionsBaggageInformationType} onchange={handleBaggageInformationTypeChange}></lightning-combobox>
+                                     </div>
+                                </div>
+                        </div>
+                        <footer class="slds-modal__footer">
+                                <lightning-button variant="neutral" label="Cancel"  onclick={handleCloseModalEditBagInformation} class="slds-m-right_x-small"></lightning-button>
+                                <lightning-button variant="neutral" label="Save"  onclick={handleSaveModalEditBagInformation} class="slds-m-right_x-small"></lightning-button>
+                        </footer>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open modal-form-background"></div>
+        </div><!--end modal content-->
+    </template>
+    <template if:true={showModalEditFlightInformation}>
+        <div style="height: 50%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+    
+                    <div class="slds-is-relative slds-scrollable_y">  
+                        <header class="slds-modal__header">
+                            <h2 class="slds-text-heading_medium slds-hyphenate"><b>Edit Flight Information:</b></h2>
+                            <div class="slds-clearfix">
+                                <div class="slds-float_right"
+                                    ><lightning-button variant="neutral" label="Cancel"  onclick={handleCloseModalEditFlightInformation} class="slds-m-right_x-small"></lightning-button>
+                                    <lightning-button variant="neutral" label="Save"  onclick={handleSaveModalEditFlightInformation} class="slds-m-right_x-small"></lightning-button>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div class="slds-p-around_medium slds-grid slds-gutters">
+                                    <div class="slds-col"><!--LEFT COLUMN-->
+                                        <lightning-input
+                                            type="checkbox"
+                                            label="Prorated" 
+                                            checked={dataToEditFlightInformation.Is_Segment_1_Selected__c} 
+                                            onchange={handlechangeIs_Segment_1_Selected}>
+                                        </lightning-input>
+                                        <lightning-input
+                                            type="text"
+                                            label="Airline (Tracing System)" 
+                                            value={dataToEditFlightInformation.PIR_Airline__c} 
+                                            onchange={handlechangePIR_Airline}>
+                                        </lightning-input>
+                                        <lightning-input
+                                            type="text"
+                                            label="To" 
+                                            value={dataToEditFlightInformation.To__c} 
+                                            onchange={handlechangeTo}>
+                                        </lightning-input>
+                                        <lightning-input
+                                            type="date"
+                                            label="Flight Date" 
+                                            value={dataToEditFlightInformation.PIR_Flight_Date__c} 
+                                            onchange={handlechangePIR_Flight_Date}>
+                                        </lightning-input>
+                                        <lightning-input
+                                            type="text"
+                                            label="Miles" 
+                                            value={dataToEditFlightInformation.PIR_Miles__c} 
+                                            onchange={handlechangePIR_Miles}>
+                                        </lightning-input>
+                                        <lightning-input
+                                            type="text"
+                                            label="Amount Due" 
+                                            value={dataToEditFlightInformation.PIR_Amount_Due__c} readonly>
+                                        </lightning-input>
+                                     </div>
+                                    <div class="slds-col"><!--RIGTH COLUMN-->
+                                        <lightning-input
+                                            type="text"
+                                            label="Segment Nº" 
+                                            value={dataToEditFlightInformation.PIR_Segment_1__c} readonly>
+                                        </lightning-input>
+                                        <lightning-input
+                                            type="text"
+                                            label="From" 
+                                            value={dataToEditFlightInformation.PIR_From__c} 
+                                            onchange={handlechangePIR_From}>
+                                        </lightning-input>
+                                        <lightning-input
+                                            type="text"
+                                            label="Flight N°" 
+                                            value={dataToEditFlightInformation.PIR_Flight_Number__c} 
+                                            onchange={handlechangePIR_Flight_Number}>
+                                        </lightning-input>
+                                        <lightning-input
+                                            type="text"
+                                            label="Ticket N°" 
+                                            value={dataToEditFlightInformation.PIR_Ticket_Number__c} 
+                                            onchange={handlechangePIR_Ticket_Number}>
+                                        </lightning-input>
+                                        <lightning-input
+                                            type="text"
+                                            label="Percentage" 
+                                            value={dataToEditFlightInformation.PIR_Percentage__c} 
+                                            onchange={handlechangePIR_Percentage}>
+                                        </lightning-input>
+                                     </div>
+                                </div>
+                        </div>
+                        <footer class="slds-modal__footer">
+                                <lightning-button variant="neutral" label="Cancel"  onclick={handleCloseModalEditFlightInformation} class="slds-m-right_x-small"></lightning-button>
+                                <lightning-button variant="neutral" label="Save"  onclick={handleSaveModalEditFlightInformation} class="slds-m-right_x-small"></lightning-button>
+                        </footer>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open modal-form-background"></div>
+        </div><!--end modal content-->
+    </template>
+    <template if:true={showModalComment}>
+        <div style="height: 50%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+    
+                    <div class="slds-is-relative slds-scrollable_y">  
+                        <header class="slds-modal__header">
+                            <h2 class="slds-text-heading_medium slds-hyphenate"><b>Comment: {commmentToModal.Name}</b></h2>
+                            <div class="slds-clearfix">
+                                <div class="slds-float_right"
+                                    ><lightning-button variant="neutral" label="Close"  onclick={handleCloseModalComment} class="slds-m-right_x-small"></lightning-button>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <lightning-card>
+                                <div slot="title" style="text-align:center">
+                                    <lightning-button variant="brand" label="Reply"  onclick={handleNewAttachmentClickModal} class="slds-m-left_x-small"></lightning-button>
+                                </div>
+                            </lightning-card>
+                            <lightning-card>
+                                <div slot="title">
+                                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                                    Comment Identification
+                                </div>
+                                <div class="slds-p-around_medium slds-grid slds-gutters">
+                                    <div class="slds-col"><!--LEFT COLUMN-->
+                                        <label>Parent Prorate Request</label>
+                                        <br>                        
+                                        <a data-toggle="modal" onclick={handleOpenModalParentProrateRequest} >{commmentToModal.Baggage_Claim__r.Name}</a> <!-- left column -->
+                                        <lightning-input
+                                            label="Parent PIR Ref" 
+                                            value={commmentToModal.Baggage_Claim__r.PIR_File_Ref__c} 
+                                            readonly>
+                                        </lightning-input>
+                                    </div>
+                                    <div class="slds-col"><!--RIGTH COLUMN-->
+                                        <lightning-input
+                                            label="Email (Prorate Dept.) Airline issuing" 
+                                            value={commmentToModal.Email_Prorate_Dept_Airline_issuing__c} 
+                                            readonly>
+                                        </lightning-input>
+                                        <lightning-input
+                                            label="Email (Prorate Dept.) Airline receiving" 
+                                            value={commmentToModal.Email_Prorate_Dept_Airline_receiving__c} 
+                                            readonly>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                            </lightning-card>
+                            <br>
+                            <lightning-card>
+                                <div slot="title">
+                                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                                    Comment
+                                </div>
+                                <div class="slds-p-around_medium slds-grid slds-gutters">
+                                    <lightning-textarea 
+                                    class="slds-textarea"
+                                    label="Text"
+                                    value={commmentToModal.Comments__c}
+                                    readonly></lightning-textarea>
+                                </div>
+                            </lightning-card>
+                        </div>
+                        <footer class="slds-modal__footer">
+                                <lightning-button variant="neutral" label="Close"  onclick={handleCloseModalComment} class="slds-m-right_x-small"></lightning-button>
+                        </footer>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open modal-form-background"></div>
+        </div><!--end modal content-->
+    </template>
+    <template if:true={showModalCorrectProcInvoic}>
+        <div>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+    
+                    <div class="slds-is-relative slds-scrollable_y">
+                            
+                        <header class="slds-modal__header">
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>The correct process of prorates invoicing</b></h2>
+                            <div class="slds-clearfix">
+                                <div class="slds-float_right"
+                                    ><lightning-button variant="neutral" label="Close"  onclick={handleCloseModalCorrectProcInvoic} class="slds-m-right_x-small"></lightning-button>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        
+                            Dear baggage claims and prorates officers,
+                            <p></p>
+                            We would like to kindly remind you about the correct way of invoicing baggage claims:<BR>
+                        
+                            <h4>Part 1</h4>
+                            
+                            In accordance with IATA Reso 780 5.4, Baggage Claims and Proration, a party receiving a baggage claim, and having participated in the carriage of the passenger, will process the claim to a conclusion with the passenger... 
+                            When it is established in which airline's custody the mishandling occurred the claim receiving airline will deal with other participating or responsible airline(s)' baggage claim/prorate offices to achieve an agreement for prorate. All necessary supporting documents as per paragraph 5.4.8 should be attached to prorate notice and dealt between baggage claims/prorate offices.<BR>
+                                
+                            <h4>Part 2</h4>
+                            Unless payment has been agreed by your prorate office you should not make any payment. Payments are automatically agreed if participating or responsible airline(s) fail to respond within 60 days from the date of request for payment. <BR>   
+                            <BR>
+                            Once a decision between respective baggage claims/prorate offices has been made the list of agreed invoice billings to the responsible carrier(s) has to be uploaded into IATA SIS Clearing House to action the payments (outlined in IATA SIS RAM manual), attaching related tracing file reference number(s) and the flight date(s). In case there is no tracing file number any other reference that will be understand by Finance dealing with the invoices.
+                            The agreed payment cannot be refused by SIS, only by the claim/prorate offices in part 1 of the process. The part 2 should be automatic.<BR>
+                            <BR>
+                            We would also like to kindly remind you that having an up to date contact details on DFT page in WorldTracer and/or an equivalent page in NetTracer is necessary! Prorates should be handled by email as a matter of preference.<BR>
+                            <BR>
+                            Thank you in advance for your cooperation.<BR>
+                            <BR>
+                            IATA Baggage Services <BR>
+                            <b>baggageservices@iata.org </b>
+                            
+                        </div>
+                        <footer class="slds-modal__footer">
+                                <lightning-button variant="neutral" label="Close"  onclick={handleCloseModalCorrectProcInvoic} class="slds-m-right_x-small"></lightning-button>
+                        </footer>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open modal-form-background"></div>
+        </div><!--end modal content-->
+    </template>
+    <template if:true={showModalResolution780}>
+            <div style="height: 50%;">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+        
+                        <div class="slds-is-relative slds-scrollable_y">
+                                
+                            <header class="slds-modal__header">
+                                <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate"><b>RESOLUTION 780 (including list of supporting documents)</b></h2>
+                                <div class="slds-clearfix">
+                                        <div class="slds-float_right"
+                                            ><lightning-button variant="neutral" label="Close"  onclick={handleCloseModalResolution780} class="slds-m-right_x-small"></lightning-button>
+                                        </div>
+                                    </div>
+        
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+            
+                                    <h3>IATA INTERLINE TRAFFIC AGREEMENT - PASSENGER </h3>
+                                    <BR>
+                                    <BR>
+                                        <h4>Article 4—Mishandled Baggage</h4>
+                                    <BR>
+                                    <BR>
+                                    <b>4.1</b> Where baggage fails to accompany an interline passenger the following procedures shall apply.
+                                    <BR><BR>
+                                    <b>4.1.1</b> The airline on which the passenger travelled to the point of stopover or final destination and where the passenger is missing baggage, shall be responsible for raising a Property Irregularity Report (PIR), tracing the missing baggage and for its delivery to the passenger in accordance with Resolution 743a. Nevertheless, at the request of the passenger, any carrying airline shall establish the tracing status from the carrier to whom the loss was originally reported. When a passenger reports missing baggage at the connecting point where the passenger is required to submit through-checked bag-gage for customs clearance or government-imposed security check, without relieving the final airline from its responsibility, the delivering airline to such connecting point shall be responsible for:
+                                    <BR><BR>
+                                    <b>4.1.1.1</b>  immediately initiating tracing for the missing baggage in accordance with current agreed procedures provided that there is sufficient time to obtain and record the baggage and flight data required for tracing; and
+                                    <BR><BR>
+                                    <b>4.1.1.2</b>  informing the airline referred to in 4.1.1 of the baggage missing at the connecting point and of the tracing initiated and its results; and
+                                    <BR><BR>
+                                    <b>4.1.1.2</b>  informing the airline referred to in 4.1.1 of the baggage missing at the connecting point and of the tracing initiated and its results; and
+                                    <BR><BR>
+                                    <b>4.1.1.3</b>  arranging for forwarding the missing baggage to the airline referred to in 4.1.1 for delivery to the passenger.4.1.1.2  informing the airline referred to in 4.1.1 of the baggage missing at the connecting point and of the tracing initiated and its results; and4.1.1.3  arranging for forwarding the missing baggage to the airline referred to in 4.1.1 for delivery to the passenger.
+                                    <BR><BR>
+                                    <b>4.1.2</b>    When the address to which the baggage is to be delivered is on the routing shown in the ticket each airline shall transport the baggage without charge in accordance with such routing.
+                                    <BR><BR>
+                                    <b>4.1.3</b>    When the address to which the baggage is to be delivered is not on the routing shown in the ticket the baggage shall be forwarded to the airport nearest such address, and, at the expense of the airline responsible for the mishandling, re-forwarded from such point by appropriate transport means to the delivery address.
+                                    <BR><BR>
+                                    <b>4.1.4</b>    Mishandled baggage shall be forwarded without charge by the fastest possible means using the services of any Member, to the airport nearest to the passenger's address. Forwarding of such expedite baggage should not be restricted nor delayed at an interline connecting point for security reasons provided:
+                                    <BR><BR>
+                                    <b>4.1.4.1</b>  it is identified by the forwarding airline that the bag was mishandled; or
+                                    <BR><BR>
+                                    <b>4.1.4.2</b>  it is established that a claim for the bag has been made; or
+                                    <BR><BR>
+                                    <b>4.1.4.3</b>  it is electronically and/or physically screened.
+                                    <BR><BR>
+                                    <b>4.1.5</b> At its airport of destination expedite baggage shall be delivered to the passenger:
+                                    <BR><BR>
+                                    <b>4.1.5.1</b>  by the Member on whose flight the passenger had travelled to the final destination or point of stopover; or
+                                    <BR><BR>
+                                    <b>4.1.5.2</b>  in case that Member should not be represented at such place, by the Member on whose flight the expedite baggage arrived at such airport.
+                                    <BR><BR>
+                                    <b>4.1.6</b> There is no prorating on delivery expenses. Delivery costs from such airport to the passenger may be recharged by the delivering carrier (not the delivering vendor) to the Member responsible for the mishandling.
+                                    <BR><BR>
+                                    In the case of 4.1.5.2, the Member responsible for the mishandling shall be indicated in the box “Expense Of” on the expedite tag.
+                                    <BR><BR>
+                                    When a Member delivers the baggage as handling agent for another Member (principal) any recharging of delivery costs by the handling agent to the principal shall not be governed by this Resolution.
+                                    <BR><BR>
+                                    The amount recharged shall be supported by proof of the cost incurred, either the PIR reference to allow the receiving Airline to check baggage tracing system files using the available transactions within the system, or if no compatible system is used, and or a non-IATA Carrier a copy of the PIR report, or in the case of 4.1.5.2 by the original or copy of the expedite tag.
+                                    <BR><BR>
+                                    <b>4.1.7</b> Each party hereto agrees to assume responsibility for establishing procedures for tracing mishandled inter-line baggage and for the expedient processing and settlement of claims as indicated in article 5.4 of this resolution. It is recommended that parties use the tracing procedures shown in Recommended Practice 1743a and make the relevant entries into an industry recognized computerized tracing system.
+
+                                    <h4>Article 5</h4>
+
+                                    <h5>5.4 BAGGAGE CLAIMS AND PRORATION</h5>
+
+                                    <b>5.4.1</b>    A party receiving a baggage claim, and having participated in the carriage of the passenger, will process the claim to a conclusion, with the passenger, in accordance with the law of the country of settlement. The tariff/policy of the claim-settling carrier will be applied to all baggage claim settlements. This covers interim expense policy, exclusion and liability. Such settlement will then be reimbursed to the settling carrier in accordance with 5.4.2 or 5.4.3.
+                                    <BR><BR>
+                                    <b>5.4.2</b>    When it is established in which airline's custody the mishandling (meaning damage, delay, loss, or pilfer-age) occurred, that airline will accept the claim settlement arising from such mishandling as incurred by the settling carrier.
+                                    <BR><BR>
+                                    <b>5.4.4</b>    When it is not established which airline is responsible, each Carrying Airline that participated in the carriage of the passenger shall share the claim settlement on the basis of the flown mileage between all ticketed points of each carrying airline. Baggage transfer records do not count as proof of transfer/no transfer unless this is agreed on between the airlines concerned. Reason for loss codes and fault stations are for in house use only, they do not constitute proof of error in proration claims and delivery charges. When the weight of the bag(s) is not known, liability amounts may be determined by applying the table of weights currently recommended by IATA for the settlement of interline baggage claims (see Recommended Practice 1751).
+                                    <BR><BR>
+                                    <b>5.4.5</b>    Within sixty (60) days of the date of settlement the claim receiving airline will send a request for payment to the other participating or responsible airline(s) at their baggage prorate office, providing them with relevant claim settlement documents. The IATA currency exchange rate on the date of flight should be applied in the calculation of the amount to prorate.
+                                    <BR><BR>
+                                    When any type of marketing/commercial, partner, or code share agreement exists, the request for payment will be sent to the carrier whose airline designator appears in the carrier box of the ticketed flight coupon involved in the claim. The marketing carrier may recharge the operating carrier depending on their established agreements. If such notice is not given in time by the claim receiving carrier, acceptance of any will be at the discretion of the participating or responsible airline(s).
+                                    <BR><BR>
+                                    <b>5.4.6</b>    All requests for claim settlement shall be paid by the participating or responsible airline(s) within sixty (60) days from the date of request for payment. Failure to respond will signify agreement to the recharge.
+                                    <BR><BR>
+                                    <b>5.4.7</b>    Requests for prorate and provision of supporting documentation shall be made directly to the baggage prorate office, not through the interline billing and settlement process, using the format shown in Appendix ‘C’ “PRORATE NOTICE” (published separately) as a cover sheet for the following documents which are required to support any claim under this agreement including re-quests for 100%:
+                                    <BR><BR>
+                                    <b>5.4.7.1</b>  one copy of a coupon of the passenger's ticket or the ticket number;
+                                    <BR><BR>
+                                    <b>5.4.7.2</b>  one copy of the baggage identification tag or its number;
+                                    <BR><BR>
+                                    <b>5.4.7.3</b>  one copy of the claim prepared by the passenger, not required in connection with interim expenses;
+                                    <BR><BR>
+                                    <b>5.4.7.4</b>  either (1) full computerized PIR output from a Baggage Tracing System or (2) complete manual Property Irregularity Report together with copies of evidence of adequate tracing action, except when the prorated shares amount to USD100.00 or less;
+                                    <BR><BR>
+                                    <b>5.4.7.5</b>  evidence of payment to the passenger;
+                                    <BR><BR>
+                                    <b>5.4.7.6</b>  a statement showing the prorated share of each participating airline.
+                                    <BR><BR>
+                                    <b>5.4.7.7</b> Invoice billings to the responsible carrier(s) through the airline clearing house will be sent electronically following the electronic billing process outlined in Article 8 and the IATA Clearing House procedures manual.
+                                    <BR><BR>
+                                    <b>5.4.8</b>    If the claim receiving airline uses transportation in lieu of cash to settle the total claim, such airline shall not request proration settlement from any other airline. If the claim receiving airline uses transportation in lieu of cash to settle a portion of the claim, such airline shall bill the other claim participating airline(s) its prorated share of the amount of the settlement not covered by transportation in lieu of cash.
+                                    <BR><BR>
+                                    <b>5.4.9</b>    The profiles contained in Recommended Practice 1780 of typical interline baggage claims, are intended to assist baggage claims personnel in determining how to prorate an interline claim, thus avoiding disputes between airlines and unnecessary correspondence. The profiles are based on the rules outlined in Articles 3 and 5 of this Agreement.
+                                    <BR><BR>
+                                    <b>5.5</b> In the event that any claim is made or suit is commenced against a party hereto, indemnified as above, such party shall give prompt written notice to the appropriate other party hereto and shall furnish as requested all available communications, legal processes, data, papers, records and other information, material to the resistance or defense of such claim or suit.
+                                
+                            </div>
+                            <footer class="slds-modal__footer">
+                                    <lightning-button variant="neutral" label="Close"  onclick={handleCloseModalResolution780} class="slds-m-right_x-small"></lightning-button>
+                            </footer>
+                        </div>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open modal-form-background"></div>
+            </div><!--end modal content-->
+        </template>
+        <template if:true={showModalResolution754}>
+                
+                <div  style="height: 50%; width:80%">
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+            
+                            <div class="slds-is-relative slds-scrollable_y">
+                                    
+                                <header class="slds-modal__header">
+                                    <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate"><b>RESOLUTION 754</b></h2>
+                                    <div class="slds-clearfix">
+                                            <div class="slds-float_right"
+                                                ><lightning-button variant="neutral" label="Close"  onclick={handleCloseModalResolution754} class="slds-m-right_x-small"></lightning-button>
+                                            </div>
+                                        </div>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                
+                                        <h3>PROFILES OF INTERLINE BAGGAGE CLAIMS AND PROOF OF FAULT FOR BAGGAGE PRORATES</h3>
+                                        <BR>
+                                        <BR>
+                                        PSC(35)754<BR>    
+                                        Expiry: Indefinite<BR>
+                                        Type:<BR>
+                                        Effective: June 2015<BR>
+                                        <BR>
+                                        RESOLVED that:<BR>
+                                        <BR>
+                                        The Profiles of typical interline baggage claims and suggestions for supporting proof of the fault evidence are intended to assist baggage claims personnel in determining the cases when an interline baggage claim can result in 100% prorate, thus avoiding disputes and unnecessary correspondence between carriers. 
+                                        <BR><BR>
+                                        When it is not established which airline is responsible for the mishandling (meaning damage, delay, loss or pilferage), each Carrying Airline that participated in the carriage of the passenger shall share the claim settlement on the basis of the flown mileage between all ticketed points of each carrying airline (Resolution 780 5.4.3).
+                                        <BR><BR>
+                                        In the following profiles, it is assumed that the last carrier is the airline that received the claim. However, any claim receiving airline will handle the claim according to Article 5.4.1 of Resolution 780.
+                                        
+                                        
+                                        <h4>Baggage profile 1 – Tag less baggage</h4>
+                                        
+                                        Passenger travels:<BR>
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        with Airline B from Station 2 to Station 3<BR>
+                                        <BR>
+                                        Problem: <BR>
+                                        Baggage is identified as tag less and/or there is an OHD (On-hand) and/or FWD (Forwarding advice message) from the airport of origin (Station 1).
+                                        <BR><BR>
+                                        Solution: Airline A is responsible for the mishandling. Airline B prorates Airline A 100%.
+                                        <BR><BR>
+                                        Proof of the fault of mishandling: OHD and/or FWD from the airport of origin (Station 1).
+                                        <BR><BR>
+                                        Problem:<BR>
+                                        Baggage is identified as tag less and/or there is an OHD (On-hand) and/or FWD (Forwarding advice message) from the transfer airport (Station 2).
+                                        <BR><BR>
+                                        Solution: Each Carrying Airline that participated in the carriage of the passenger shall share the claim settlement on the basis of flown mileage between all ticketed points of each carrying airline as per Article 5.4.3 of Resolution 780, unless other proof of fault of the mishandling can be obtained.
+                                        <BR><BR>
+                                        Proof of the fault of mishandling: baggage tracking records - BRS (Baggage Reconciliation System) and/or BHS (Baggage Handling System).
+                                        
+                                        <h4>Baggage profile 2 – Delayed delivery</h4>
+                                        
+                                        Passenger travels:<BR> 
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        with Airline B from Station 2 to Station 3<BR>
+                                        <BR>
+                                        Problem: Airline B never receives the baggage from Airline A.
+                                        <BR><BR>
+                                        Solution: The responsibility for baggage by the delivering carrier is relieved only when the baggage has been delivered to the receiving carrier.
+                                        Where a handling agent is involved, the handling agent acts on behalf of the delivering carrier until the point at which the baggage has been delivered to the receiving carrier, even if the receiving carrier is handled by the same handling agent.
+                                        Airline B prorates Airline A 100%.
+                                        <BR><BR>
+                                        Proof of the fault of mishandling: <BR>
+                                        FWD from Airline A from the airport of origin (Station 1) and/or <BR>
+                                        FWD from any other station apart Station 2 and/or <BR>
+                                        Expedite tag and/or<BR>
+                                        Old tag on the baggage which has not been removed and/or<BR>
+                                        PNR and/or check-in records and/or<BR>
+                                        Baggage tracking records – BRS and/or BHS and/or local tracking system record.
+                                        
+                                        
+                                        <h4>Baggage profile 3 – Baggage misrouted by originating Carrier</h4>
+                                        
+                                        Passenger travels:<BR>
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        with Airline B from Station 2 to Station 3<BR>
+                                        <BR>
+                                        Problem: Airline A misroutes the baggage to a wrong destination than Station 2.
+                                        <BR><BR>
+                                        Solution: Airline B prorates Airline A 100%.
+                                        <BR><BR>
+                                        Proof of the fault of mishandling: <BR>
+                                        OHD tag less and/or FWD from Airline A from the airport of origin (Station 1) and/or<BR> 
+                                        FWD from any other station apart Station 2 and/or<BR>
+                                        OHD tag less<BR>
+                                        Original tag with a wrong destination (in case the baggage got miss tagged) on it and/or<BR>
+                                        Expedite tag and/or<BR>
+                                        Old tag on the baggage which has not been removed and/or<BR>
+                                        PNR and/or check-in records and/or<BR>
+                                        Check-in error - wrong name tag on the baggage and/or<BR>
+                                        Baggage tracking records - BRS and/or BHS and/or local tracking system record.<BR>
+                                        
+                                        
+                                        <h4>Baggage profile 4 – Transfer within Minimum Connecting time (definition of MCT as per Resolution 765)</h4>
+                                        
+                                        For the purpose of this Resolution, 
+                                        <BR><BR>
+                                        Passenger travels:<BR>
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        with Airline B from Station 2 to Station 3<BR>
+                                        <BR>
+                                        Problem: Airline A delivers the baggage within the MCT of the transfer airport (Station 2) but Airline B misloads it and the baggage doesn’t arrive to Station 3.
+                                        <BR><BR>
+                                        Solution: Airline B is 100% responsible for the mishandling. No prorate applicable.
+                                        <BR><BR>
+                                        Proof of the fault:<BR>
+                                        Baggage tracking records - BRS and/or BHS and/or Flight records.<BR>
+                                        It is the responsibility of the Local Minimum Connecting Time Group at respective airport to establish local MCTs as set in Resolution 765. MCTs (including exceptional bilateral MCT) are outlined in the IATA Standard Schedules Information Manual (SSIM).
+                                        
+                                        <h4>Baggage profile 5 – Transfer not within Minimum Connecting time (MCT)</h4>
+                                        
+                                        Passenger travels:<BR>
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        with Airline B from Station 2 to Station 3<BR>
+                                        <BR>
+                                        Problem: Airline A flight to the transfer airport (Station 2) is delayed and MCT is not kept. Consequently, Airline B misleads the baggage.
+                                        <BR><BR>
+                                        Airline A is responsible for the mishandling. Airline B prorates Airline A 100%.
+                                        <BR><BR>
+                                        Proof of the fault of mishandling: <BR>
+                                        Baggage tracking records - BRS and/or BHS and/or Flight records.<BR>
+                                        It is the responsibility of the Local Minimum Connecting Time Group at respective airport to establish local MCTs as set in Resolution 765. MCTs (including exceptional bilateral MCT) are outlined in the IATA Standard Schedules Information Manual (SSIM).
+                                        
+                                        
+                                        <h4>Baggage profile 6 – Early departure (not respecting MCT)</h4>
+                                        
+                                        Passenger travels:<BR>
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        with Airline B from Station 2 to Station 3<BR>
+                                        <BR>
+                                        Problem: Airline A delivers the baggage within the MCT of the transfer airport (Station 2) but Airline B does not respect the MCT and the flight leaves. Consequently, the baggage is misled and doesn’t arrive to Station 3.
+                                        <BR><BR>
+                                        Solution: Airline B is 100% responsible for the mishandling. No prorate applicable.
+                                        <BR><BR>
+                                        Proof of the fault:<BR>
+                                        Baggage tracking records - BRS and/or BHS and/or Flight records.<BR>
+                                        It is the responsibility of the Local Minimum Connecting Time Group at respective airport to establish local MCTs as set in Resolution 765. MCTs (including exceptional bilateral MCT) are outlined in the IATA Standard Schedules Information Manual (SSIM).
+                                        
+                                        
+                                        <h4>Baggage profile 7 – Delayed delivery by a third party at the transfer airport</h4>
+                                        
+                                        Passenger travels:<BR>
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        with Airline B from Station 2 to Station 3<BR>
+                                        <BR>
+                                        Problem: Airline A flight arrives to the transfer airport (Station 2) on time (within the MCT), however the baggage is delivered to Airline B with a delay caused by a third party (not the handling agent) involved in the baggage delivery process at respective airport, e.g. local authority.
+                                        <BR><BR>
+                                        Solution: <BR>
+                                        Each Carrying Airline that participated in the carriage of the passenger shall share the claim settlement on the basis of flown mileage between all ticketed points of each carrying airline as per Article 5.4.3 of Resolution 780, unless other proof of fault of the mishandling can be obtained.
+                                        <BR><BR>
+                                        Proof of the fault:<BR>
+                                        Baggage tracking records - BRS and/or BHS and/or Flight records.
+                                        
+                                        <h4>Baggage profile 8 – Short tagging</h4>
+                                        
+                                        Passenger travels:<BR>
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        with Airline B from Station 2 to Station 3<BR>
+                                        <BR>
+                                        Problem: Airline A issues the bag tag only to Station 2, however the final destination on passenger ticket is Station 3.
+                                        <BR><BR>
+                                        Solution: Airline A is responsible for the mishandling. Airline B prorates Airline A 100%.
+                                        <BR><BR>
+                                        Proof of the fault of mishandling: <BR>
+                                        Copy of the ticket and/or PNR and/or check-in records and/or<BR>
+                                        Original or copy of bag tag and/or baggage claim receipt and/or<BR>
+                                        FWD from Airline A at Station 2.<BR>
+                                        
+                                        
+                                        <h4>Baggage profile 9 – Through check-in on separate tickets</h4>
+                                        
+                                        Passenger travels:<BR>
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        and on a separate ticket with Airline B from Station 2 to Station 3<BR>
+                                        
+                                        Problem: Airline A tags the baggage as far as Station 3. Baggage never arrives to Station 3.
+                                        <BR><BR>
+                                        Solution: Airline B prorates Airline A 100%. When originating carrier accepts through check-in on separate tickets, it will be considered as the proof of fault and will result in 100% prorate, unless a specific agreement between carriers exists.
+                                        <BR><BR>
+                                        Proof of the fault of mishandling: <BR>
+                                        Copy of the ticket and/or PNR and/or check-in records and/or<BR>
+                                        Original or copy of bag tag and/or baggage claim receipt and/or<BR>
+                                        FWD from Airline A at Station 2.<BR>
+                                        
+                                        <h4>Baggage profile 10 – Through check-in – no Interline agreement between Carriers</h4>
+                                        
+                                        Passenger travels:<BR>
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        with Airline B from Station 2 to Station 3<BR>
+                                        There is no interline agreement between Airline A and Airline B.<BR>
+                                        <BR>
+                                        Problem: Airline A tags the baggage as far as Station 3. Baggage never arrives to Station 3.
+                                        <BR><BR>
+                                        Solution: Airline B prorates Airline A 100%. When originating carrier accepts through check-in and no Interline agreement exists between the carrier, it will be considered as the proof of fault and will result in 100% prorate.
+                                        <BR><BR>
+                                        Proof of the fault of mishandling: <BR>
+                                        Copy of the ticket and/or PNR and/or check-in records and/or<BR>
+                                        Original or copy of bag tag and/or baggage claim receipt and/or<BR>
+                                        FWD from Airline A at Station 2.<BR>
+                                        
+                                        <h4>Baggage profile 11 – Passenger does not collect the baggage for Customs Clearance</h4>
+                                        
+                                        Passenger travels:<BR>
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        with Airline B from Station 2 to Station 3<BR>
+                                        Customs Clearance is required at the transfer airport.<BR>
+                                        <BR>
+                                        Problem: At the final destination (Station 3) when making the claim, the passenger admits that he forgot to collect the bag for Customs Clearance at the transfer airport.
+                                        <BR><BR>
+                                        Solution: No prorate applicable.
+                                        <BR><BR>
+                                        Proof of fault:<BR>
+                                        Baggage tracing system record (PIR) and/or<BR>
+                                        PNR and/or check-in records and/or booking records and/or<BR>
+                                        FWD from Airline A at Station 2 and/or<BR>
+                                        OHD from Station 2 to advise that bag was not collected by passenger.<BR>
+                                        
+                                        
+                                        
+                                        <h4>Baggage profile 12 – Passenger re-routed or involuntary re-routed</h4>
+                                        
+                                        Passenger routed:<BR>
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        with Airline B from Station 2 to Station 3<BR>
+                                        <BR>
+                                        Passenger actually travels:<BR>
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        with Airline B from Station 2 to Station 4<BR>
+                                        with Airline C from Station 4 to Station 3<BR>
+                                        <BR>
+                                        Problem: Airline B re-routes the passenger but not the baggage. Baggage is subsequently lost.
+                                        <BR><BR>
+                                        Solution: Airline C prorates Airline B 100%.
+                                        <BR><BR>
+                                        Proof of the fault of mishandling: <BR>
+                                        Baggage tracing system record (PIR) and/or<BR>
+                                        PNR and/or check-in records and/or booking records and/or<BR>
+                                        FWD from Airline A at Station 2 and/or<BR>
+                                        OHD from Station 2 to advise that bag is not tagged to final destination due to flight changes and/or<BR>
+                                        Original or copy of bag tag and/or baggage claim receipt (with different information to PNR).
+                                        
+                                        
+                                        <h4>Baggage profile 13 – Damage or Pilferage</h4>
+                                        
+                                        Passenger travels:<BR>
+                                        with Airline A from Station 1 to Station 2<BR>
+                                        with Airline B from Station 2 to Station 3<BR>
+                                        <BR>
+                                        Problem: <BR>
+                                        At the final destination (Station 3) passenger makes the claim for damage or pilferage
+                                        <BR><BR>
+                                        Solution:<BR>
+                                        Each Carrying Airline that participated in the carriage of the passenger shall share the claim settlement on the basis of flown mileage between all ticketed points of each carrying airline as per Article 5.4.3 of Resolution 780.
+                                        <BR><BR>
+                                        Proof of fault:<BR>
+                                        Both airlines handled the baggage and/or<BR>
+                                        Baggage tracking records - BRS and/or BHS and/or<BR>
+                                        PNR and/or check-in records and/or<BR>
+                                        Original or copy of bag tag and/or<BR>
+                                        Baggage tracing system record (PIR).
+                                        
+                                    
+                                </div>
+                                <footer class="slds-modal__footer">
+                                        <lightning-button variant="neutral" label="Close"  onclick={handleCloseModalResolution754} class="slds-m-right_x-small"></lightning-button>
+                                </footer>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open modal-form-background"></div>
+                </div><!--end modal content-->
+            </template>
+</template>

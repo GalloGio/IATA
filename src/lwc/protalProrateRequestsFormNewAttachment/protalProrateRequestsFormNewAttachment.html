@@ -1,0 +1,19 @@
+<template>
+    <lightning-card>
+        <div slot="title">
+            <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+            Add Attachement
+        </div>
+        <template if:true={loading}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+        <div class="slds-p-around_medium slds-grid slds-gutters">
+            <input class="btn" style="display:none" data-id="inputFile" type="file"  onchange={handleUploadFinished}/>   
+            <lightning-button label="Upload File" onclick={handlestartUploadFile}></lightning-button>
+            
+            <lightning-card style="color:red;" if:true={showErrorMessage}>
+                {errorMessage}
+        </lightning-card>
+        </div>
+    </lightning-card>
+</template>

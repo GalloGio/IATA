@@ -1,0 +1,69 @@
+<template>
+
+    <br />
+    <!--template if:true={selectedOne}  >
+            <div class="highlighted">
+                <div style="text-align: center; color: green;">
+                    selected one
+                </div>
+                <c-cw-search-result input={selectedOne}></c-cw-search-result>
+            </div>
+        </template>-->
+
+
+    <!-- <div class="resultWrapper"> -->
+
+    <div class="slds-theme_default row col-md-12">
+        <ul class="nav nav-tabs" id="tabs" role="tablist" style="width:100%;">
+            <li class="nav-item">
+                <a class="nav-link" style="padding-top:10px;" id="tab1" data-toggle="tab" href="#all" role="tab" aria-controls="tab1"
+                    aria-selected="false"> ALL <span class="count-filter-tab-span">(4300)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" id="tab2" data-toggle="tab" href="#airline" role="tab" aria-controls="tab2"
+                    aria-selected="true"><img src={airline} style="width:30px; margin-bottom:-10px;" /> &nbsp;&nbsp;AIRLINE <p class="count-filter-tab">(233)</p></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab3" data-toggle="tab" href="#airportoperator" role="tab" aria-controls="tab3"
+                    aria-selected="false"><img src={airportoperator} style="width:30px; margin-bottom:-10px;" />
+                    &nbsp;&nbsp;AIRPORT OPERATOR<p class="count-filter-tab">(1200)</p></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab4" data-toggle="tab" href="#freight" role="tab" aria-controls="tab4"
+                    aria-selected="false"><img src={freight} style="width:30px; margin-bottom:-10px;;" /> &nbsp;&nbsp;FREIGHT FW<p class="count-filter-tab">(1200)</p></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab5" data-toggle="tab" href="#trucker" role="tab" aria-controls="tab5"
+                    aria-selected="false"><img src={trucker} style="width:30px; margin-bottom:-10px;" /> &nbsp;&nbsp;TRUCKER<p class="count-filter-tab">(2500)</p></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab6" data-toggle="tab" href="#cargohandling" role="tab" aria-controls="tab6"
+                    aria-selected="false"><img src={cargohandling} style="width:30px; margin-bottom:-10px;" /> &nbsp;&nbsp;CARGO HANDLING FACILITY<p class="count-filter-tab">(1299)</p></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab7" data-toggle="tab" href="#shipper" role="tab" aria-controls="tab7"
+                    aria-selected="false"><img src={shipper} style="width:30px; margin-bottom:-10px;" /> &nbsp;&nbsp;SHIPPER<p class="count-filter-tab">(45)</p></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab8" data-toggle="tab" href="#ramphandler" role="tab" aria-controls="tab8"
+                    aria-selected="false"><img src={ramphandler} style="width:30px; margin-bottom:-10px;" /> &nbsp;&nbsp;RAMP HANDLER<p class="count-filter-tab">(120)</p></a>
+            </li>
+        </ul>
+    </div>
+    <div class="slds-theme_default col-md-12 row text-right option-results">
+        <div class="col-md-2 offset-md-10">
+            <a>Sort By &#9660;</a>&nbsp;&nbsp;<a><img src={print} style="width:20px;" /></a>&nbsp;&nbsp;<a><img src={share} style="width:20px;" /></a>
+        </div>
+    </div>
+
+
+    <div class="slds-theme_default col-md-12 row">
+        <template for:each={lstResults} for:item="singleResult">
+            <div key={singleResult.facility.name} class="resultBox">
+                <c-cw-search-result input={singleResult}></c-cw-search-result>
+            </div>
+        </template>
+    </div>
+    <br />
+
+</template>

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <choices>
+        <name>Flight_was_overbooked_Passenger_volunteered</name>
+        <choiceText>Flight was overbooked. Passenger volunteered not to fly in exchange for agreed benefits.</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Flight was overbooked. Passenger volunteered not to fly in exchange for agreed benefits.</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Flight_was_overbooked_Passenger_was_denied_boarding_against_his_her_will</name>
+        <choiceText>Flight was overbooked. Passenger was denied boarding, against his/her will</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Flight was overbooked. Passenger was denied boarding, against his/her will</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Government_request_regulation_or_security_directives</name>
+        <choiceText>Government request, regulation or security directives</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Government request, regulation or security directives</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_appeared_to_be_intoxicated_or_under_the_influence_of_drugs</name>
+        <choiceText>Passenger appeared to be intoxicated or under the influence of drugs</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger appeared to be intoxicated or under the influence of drugs</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_arrived_at_boarding_gate_too_late_to_board_flight</name>
+        <choiceText>Passenger arrived at boarding gate too late to board flight</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger arrived at boarding gate too late to board flight</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_assaulted_other_passenger_s_and_or_airline_employees</name>
+        <choiceText>Passenger assaulted other passenger(s) and/or airline employee(s) and/or gate agent(s) and/or flight crew</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger assaulted other passenger(s) and/or airline employee(s) and/or gate agent(s) and/or flight crew</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_caused_a_disturbance</name>
+        <choiceText>Passenger caused a disturbance such that the captain or member of the cockpit crew had to leave the cockpit to attend to the disturbance</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger caused a disturbance such that the captain or member of the cockpit crew had to leave the cockpit to attend to the disturbance</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_exhibited_disorderly_offensive_abusive_or_violent_conduct</name>
+        <choiceText>Passenger exhibited disorderly, offensive, abusive or violent conduct</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger exhibited disorderly, offensive, abusive or violent conduct</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_failed_to_comply</name>
+        <choiceText>Passenger failed to comply with or interfered with the duties of the flight crew members, federal regulations or security directives</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger failed to comply with or interfered with the duties of the flight crew members, federal regulations or security directives</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_failed_to_comply_with_the_terms_and_conditions_of_the_contract</name>
+        <choiceText>Passenger failed to comply with the terms and conditions of the contract of carriage</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger failed to comply with the terms and conditions of the contract of carriage</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_failed_to_produce_adequate_travel_documents_eg_appropriate_VISA</name>
+        <choiceText>Passenger failed to produce adequate travel documents (eg appropriate VISA)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger failed to produce adequate travel documents (eg appropriate VISA)</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_refused_to_produce_satisfactory_proof_of_identification</name>
+        <choiceText>Passenger refused to produce satisfactory proof of identification</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger refused to produce satisfactory proof of identification</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_s_identification_card_passport_did_not_match_the_name_on_the_ticket</name>
+        <choiceText>Passenger’s identification card/passport did not match the name on the ticket</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger’s identification card/passport did not match the name on the ticket</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_was_barefoot_and_not_properly_clothed</name>
+        <choiceText>Passenger was barefoot and not properly clothed</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger was barefoot and not properly clothed</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_was_both_blind_and_deaf_and_unaccompanied</name>
+        <choiceText>Passenger was both blind and deaf and unaccompanied</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger was both blind and deaf and unaccompanied</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_was_carrying_concealed_or_unconcealed_deadly_or_dangerous_weapons</name>
+        <choiceText>Passenger was carrying concealed or unconcealed deadly or dangerous weapons</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger was carrying concealed or unconcealed deadly or dangerous weapons</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_was_pregnant_in_their_ninth_month_without_a_doctor_s_certificate</name>
+        <choiceText>Passenger was pregnant in their ninth month, without a doctor’s certificate</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger was pregnant in their ninth month, without a doctor’s certificate</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Passenger_was_unwilling_or_unable_to_follow_airlines_policy</name>
+        <choiceText>Passenger was unwilling or unable to follow airlines policy on smoking or use of other smokeless material</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Passenger was unwilling or unable to follow airlines policy on smoking or use of other smokeless material</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Yes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>denied_boardning_Reason_decision</name>
+        <label>denied boardning Reason decision</label>
+        <locationX>532</locationX>
+        <locationY>227</locationY>
+        <defaultConnector>
+            <targetReference>no_compensation_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>Flight_was_overbooked_Passenger_was_denied_option</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>What_was_the_Reason_for_Denied_Boarding</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Flight_was_overbooked_Passenger_was_denied_boarding_against_his_her_will</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Was_passenger_compensated_immediately_Screen</targetReference>
+            </connector>
+            <label>Flight was overbooked. Passenger was denied option</label>
+        </rules>
+        <rules>
+            <name>Flight_was_overbooked_Passenger_volunteered_option</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>What_was_the_Reason_for_Denied_Boarding</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Flight_was_overbooked_Passenger_volunteered</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Already_Compensated_Screen</targetReference>
+            </connector>
+            <label>Flight was overbooked. Passenger volunteered option</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Was_passenger_compensated_immediately_Decision</name>
+        <label>Was passenger compensated immediately Decision</label>
+        <locationX>373</locationX>
+        <locationY>473</locationY>
+        <defaultConnector>
+            <targetReference>Compensation_due_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>Yes_option</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Was_passenger_compensated_immediately_at_the_time</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Yes</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>no_compensation_Screen</targetReference>
+            </connector>
+            <label>Yes option</label>
+        </rules>
+    </decisions>
+    <interviewLabel>Claim EU261 1 Flight {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Claim EU261 Denied Boarding</label>
+    <processType>Flow</processType>
+    <screens>
+        <name>Already_Compensated_Screen</name>
+        <label>Already Compensated Screen</label>
+        <locationX>869</locationX>
+        <locationY>420</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>AlreadyCompensatedText</name>
+            <fieldText>Benefits already received. 
+No further compensation due.</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Compensation_due_Screen</name>
+        <label>Compensation due Screen</label>
+        <locationX>371</locationX>
+        <locationY>618</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>CompensationDueText</name>
+            <fieldText>Compensation Due</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>denied_boarding_Reason_Screen</name>
+        <label>denied boarding Reason Screen</label>
+        <locationX>531</locationX>
+        <locationY>105</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>denied_boardning_Reason_decision</targetReference>
+        </connector>
+        <fields>
+            <name>What_was_the_Reason_for_Denied_Boarding</name>
+            <choiceReferences>Flight_was_overbooked_Passenger_was_denied_boarding_against_his_her_will</choiceReferences>
+            <choiceReferences>Flight_was_overbooked_Passenger_volunteered</choiceReferences>
+            <choiceReferences>Passenger_refused_to_produce_satisfactory_proof_of_identification</choiceReferences>
+            <choiceReferences>Passenger_s_identification_card_passport_did_not_match_the_name_on_the_ticket</choiceReferences>
+            <choiceReferences>Passenger_failed_to_produce_adequate_travel_documents_eg_appropriate_VISA</choiceReferences>
+            <choiceReferences>Passenger_exhibited_disorderly_offensive_abusive_or_violent_conduct</choiceReferences>
+            <choiceReferences>Passenger_failed_to_comply</choiceReferences>
+            <choiceReferences>Passenger_arrived_at_boarding_gate_too_late_to_board_flight</choiceReferences>
+            <choiceReferences>Passenger_appeared_to_be_intoxicated_or_under_the_influence_of_drugs</choiceReferences>
+            <choiceReferences>Passenger_was_barefoot_and_not_properly_clothed</choiceReferences>
+            <choiceReferences>Passenger_was_pregnant_in_their_ninth_month_without_a_doctor_s_certificate</choiceReferences>
+            <choiceReferences>Passenger_was_both_blind_and_deaf_and_unaccompanied</choiceReferences>
+            <choiceReferences>Passenger_was_carrying_concealed_or_unconcealed_deadly_or_dangerous_weapons</choiceReferences>
+            <choiceReferences>Passenger_was_unwilling_or_unable_to_follow_airlines_policy</choiceReferences>
+            <choiceReferences>Passenger_assaulted_other_passenger_s_and_or_airline_employees</choiceReferences>
+            <choiceReferences>Passenger_caused_a_disturbance</choiceReferences>
+            <choiceReferences>Government_request_regulation_or_security_directives</choiceReferences>
+            <choiceReferences>Passenger_failed_to_comply_with_the_terms_and_conditions_of_the_contract</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>What was the Reason for Denied Boarding?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>no_compensation_Screen</name>
+        <label>no compensation Screen</label>
+        <locationX>547</locationX>
+        <locationY>479</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NoCompensationText</name>
+            <fieldText>No Compensation</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Was_passenger_compensated_immediately_Screen</name>
+        <label>Was passenger compensated immediately Screen</label>
+        <locationX>371</locationX>
+        <locationY>350</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Was_passenger_compensated_immediately_Decision</targetReference>
+        </connector>
+        <fields>
+            <name>Was_passenger_compensated_immediately_at_the_time</name>
+            <choiceReferences>Yes</choiceReferences>
+            <choiceReferences>No</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Was passenger compensated immediately at the time?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <startElementReference>denied_boarding_Reason_Screen</startElementReference>
+    <status>Active</status>
+</Flow>

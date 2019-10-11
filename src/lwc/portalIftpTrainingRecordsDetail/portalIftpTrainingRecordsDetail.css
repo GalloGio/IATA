@@ -1,0 +1,8 @@
+.mainSearchClass label{
+    display: none !important;
+}
+
+.align-right-class{
+    display: flex;
+    justify-content: end;
+}

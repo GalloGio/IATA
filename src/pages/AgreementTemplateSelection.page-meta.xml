@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>43.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>Allows the user to select the appropriate template to create a new agreement that will be send for signature in Adobe Sign</description>
+    <label>AgreementTemplateSelection</label>
+    <packageVersions>
+        <majorNumber>19</majorNumber>
+        <minorNumber>5</minorNumber>
+        <namespace>echosign_dev1</namespace>
+    </packageVersions>
+</ApexPage>

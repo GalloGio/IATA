@@ -1,0 +1,16 @@
+<template>
+    <div class="row-home" style="margin-top:100px;">
+        <div class="col-md-12 goback" >
+          <a href="https://sit-customer-portal-iata.cs109.force.com/identity/s/"> &lt; back</a>
+        </div>
+        <div class="col-md-3">
+            <c-cw-results-page-search-bar onsearch={getRecordsFromEngine} initial-search={initialSearch}></c-cw-results-page-search-bar>
+        </div>
+        <div class="col-md-9">
+            <div style="width:100%;">
+                <img style="width:100%;" src="https://staticmapmaker.com/img/google@2x.png" />
+            </div>
+            <c-cw-search-result-wrapper lst-results={results}></c-cw-search-result-wrapper>
+        </div>
+    </div>
+</template>

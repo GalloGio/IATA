@@ -1,0 +1,239 @@
+<apex:page controller="ISSP_AMS_PASS_Accreditation"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           language="{!displayLanguage}"
+           standardStylesheets="true"
+           applyBodyTag="false"
+           applyHtmlTag="false"
+>
+
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="1" title="{!IF(newlabels,$Label.ISSP_AMS_First_Page_Summary_Header_New,$Label.ISSP_AMS_First_Page_Summary_Header)}" collapsible="false">
+                <apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
+                    <apex:outputText value="{!$Label.ISSP_AMS_Step1_Operation_Type}"/>
+                    <apex:outputText value="{!newForm.Agent_Type__c}"/>
+                    <apex:outputText value="{!$Label.ISSP_AMS_Step1_Approval_Sought}" />
+                    <apex:outputText value="{!newForm.Agent_Type__c + ' - ' + IF(newCase.Reason1__c=='New HO', $Label.ISSP_AMS_Reason_New_HO, $Label.ISSP_AMS_Reason_New_Branch)}"/>
+                    <apex:outputText value="{!$Label.ISSP_CountryConcerned}"/>
+                    <apex:outputText value="{!amsAllLangCountryLabel}"/>
+                </apex:panelGrid>
+            </apex:pageBlockSection>
+
+            <div style="page-break-after:always;margin-top:30px;">
+                <apex:pageBlockSection columns="1" collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputpanel >
+                                {!$Label.ISSP_AMS_STEP_3_1_Title_PASS_BRANCH}
+                        </apex:outputpanel>
+                    </apex:facet>
+                    <apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2" rowClasses="cgo-readonly">
+
+                        <apex:outputText value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsLegalNameENG, $ObjectType.Account.fields.Legal_name__c.Label)}" />
+                        <apex:outputField value="{!hqAccount.Name}"/>
+                        <apex:outputText value="{!$ObjectType.Account.fields.TradeName__c.Label}" />
+                        <apex:outputField value="{!hqAccount.TradeName__c}"/>
+                        <apex:outputText value="{!$Label.ISSP_AMS_Step3_HO_Full_Address}" />
+                        <apex:outputText value="{!hqAccount.BillingStreet}
+	                            {!hqAccount.BillingCity} {!hqAccount.BillingPostalCode}
+	                            {!hqAccount.BillingState} {!hqAccount.BillingCountry} "/>
+                        <apex:outputText value="{!$ObjectType.Account.fields.Website.Label}" />
+                        <apex:outputField value="{!hqAccount.Website}"/>
+                        <apex:outputText value="{!$ObjectType.Account.fields.Phone.Label}" />
+                        <apex:outputField value="{!hqAccount.Phone}"/>
+                        <apex:outputText value="{!$ObjectType.Account.fields.Email__c.Label}" />
+                        <apex:outputField value="{!hqAccount.Email__c}"/>
+                        <apex:outputText value="{!$ObjectType.Account.fields.Mobile__c.Label}" />
+                        <apex:outputField value="{!hqAccount.Mobile__c}"/>
+                        <apex:outputText value="{!$ObjectType.Account.fields.Fax.Label}" />
+                        <apex:outputField value="{!hqAccount.Fax}"/>
+                        <apex:outputText value="{!$ObjectType.Account.fields.IATACode__c.Label}" />
+                        <apex:outputField value="{!hqAccount.IATACode__c}" rendered="{!amsOfficeType != 'HO'}"/>
+                        <apex:outputText rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}" value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label, isocountry.Tax_Number_label__c)}" />
+                        <apex:outputField rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}" value="{!hqAccount.VAT_Number__c}"/>
+                        <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Map_Company_Type_to_Legal_Status__c.Label}" />
+                        <apex:outputField value="{!newForm.Map_Company_Type_to_Legal_Status__c}"/>
+                    </apex:panelGrid>
+                </apex:pageBlockSection>
+            </div>
+            <apex:pageBlockSection columns="1" collapsible="false">
+                <apex:facet name="header">
+                    <apex:outputpanel >
+                    {!$Label.ISSP_AMS_STEP_3_2_Title_PASS_BRANCH}
+                        <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
+                    </apex:outputpanel>
+                </apex:facet>
+                <apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
+                    <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Street_name_number__c.Label}" />
+                    <apex:outputField value="{!newForm.Branch_Office_Street_name_number__c}"/>
+                    <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_City__c.Label}" />
+                    <apex:outputField value="{!newForm.Branch_Office_City__c}"/>
+                    <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Postal_code__c.Label}" />
+                    <apex:outputField value="{!newForm.Branch_Office_Postal_code__c}"/>
+                    <apex:outputText value="{!$Label.ISSP_Country}" />
+                    <apex:outputField value="{!isocountry.Name}"/>
+                    <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}" />
+                    <apex:outputField value="{!newForm.Branch_Office_Phone__c}"/>
+                    <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_FAX__c.Label}" />
+                    <apex:outputField value="{!newForm.Branch_Office_FAX__c}"/>
+                    <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Email__c.Label}" />
+                    <apex:outputField value="{!newForm.Branch_Office_Email__c}"/>
+                    <apex:outputText rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}" value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label, isocountry.Tax_Number_label__c)}" />
+                    <apex:outputField rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}" value="{!newForm.ISSP_AMS_VAT_number__c}"/>
+
+                </apex:panelGrid>
+            </apex:pageBlockSection>
+            <div style="page-break-after:always;margin-top:30px;">
+
+                <!-- ************************* section Local Details (Local language) ************************* -->
+                <apex:pageBlockSection columns="1" collapsible="false" rendered="{!isocountry.Local_language_Agency_details_required__c}">
+                    <apex:facet name="header">
+                        <apex:outputpanel >
+                        {!txtLocalAgencyDetailsTitle}
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
+                        </apex:outputpanel>
+                    </apex:facet>
+                    <apex:outputText value="{!txtLocalAgencyDetailsPleaseEnter}"/>
+                    <apex:panelGrid columns="4" width="100%" cellpadding="10%" columnClasses="col1_regular, col2_regular">
+                        <apex:outputLabel value="{!txtLocalAgencyDetailsLegalName}"/>
+                        <apex:outputField value="{!newForm.Local_Legally_Registered_Name__c}" />
+                        <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+                        <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+
+                        <apex:outputText value="{!txtLocalAgencyDetailsPhysicalAddress}" style="font-weight:bold; font-size:110%"/>
+                        <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+                        <apex:outputText value="{!txtLocalAgencyDetailsCorrespondenceAddress}" style="font-weight:bold; font-size:110%"/>
+                        <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Street__c.Label}"/>
+                        <apex:outputField value="{!newForm.Local_Physical_Address_Street__c}" />
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Street__c.Label}"/>
+                        <apex:outputField value="{!newForm.Local_Postal_Address_Street__c}" styleClass="PostalStreet"/>
+
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_City__c.Label}"/>
+                        <apex:outputField value="{!newForm.Local_Physical_Address_City__c}" />
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_City__c.Label}"/>
+                        <apex:outputField value="{!newForm.Local_Postal_Address_City__c}"/>
+
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Postal_Code__c.Label}"/>
+                        <apex:outputField value="{!newForm.Local_Physical_Address_Postal_Code__c}" />
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Postal_Code__c.Label}"/>
+                        <apex:outputField value="{!newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode"/>
+
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Province__c.Label}"/>
+                        <apex:outputField value="{!newForm.Local_Physical_Address_Province__c}" />
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Province__c.Label}"/>
+                        <apex:outputField value="{!newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince"/>
+
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Area__c.Label}"/>
+                        <apex:outputField value="{!newForm.Local_Physical_Address_Area__c}" />
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Area__c.Label}"/>
+                        <apex:outputField value="{!newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
+
+                        <apex:outputLabel value="Country"/>
+                        <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_COUNTRY_EN__c)}" label="Country"/>
+                        <apex:outputLabel value="Country"/>
+                        <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_COUNTRY_EN__c)}" label="Country"/>
+                    </apex:panelGrid>
+                </apex:pageBlockSection>
+            </div>
+
+            <div style="page-break-after:always;margin-top:30px;">
+                <apex:pageBlockSection columns="1" collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputpanel >
+                        {!$Label.ISSP_AMS_PASS_Branch_Form_SECTION3}
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section3}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
+                        </apex:outputpanel>
+                    </apex:facet>
+                    <apex:panelGrid columns="1" width="100%" cellpadding="10%">
+                        <apex:dataTable value="{!List_AgencyContacts}" var="agencycon" width="100%" columnsWidth="15%,30%,25%,30%">
+                            <apex:facet name="header">{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION3_1}</apex:facet>
+                            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+                                <apex:facet name="header">{!$Label.ISSP_AMS_Name}</apex:facet>
+                                <apex:outputText value="{!agencycon.First_name__c} {!agencycon.Last_name__c} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Local_First_name__c + ' ' + agencycon.Local_Last_Name__c + ')','')}"/>
+                            </apex:column>
+                            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+                                <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Q3_Contact_Details}</apex:facet>
+                                    {!$ObjectType.Contact.fields.Phone.Label}: {!agencycon.Phone__c}<br/>
+                                    {!$ObjectType.Contact.fields.MobilePhone.Label}: {!agencycon.Mobile__c}<br/>
+                                    {!$ObjectType.Contact.fields.Email.Label}: {!agencycon.Email__c}<br/>
+                                    {!$ObjectType.Contact.fields.FAX.Label}: {!agencycon.FAX__c}<br/>
+                            </apex:column>
+                            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" width="20%" >
+                                <apex:facet name="header">{!$Label.ISSP_AMS_Roles_and_Responsibilities}</apex:facet>
+                                <apex:outputText rendered="{!agencycon.Agency_owner__c}" value="{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_owner__c}"/><br/>
+                                <apex:outputText rendered="{!agencycon.PASS_contact__c}" value="PASS Contact:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.PASS_contact__c}"/><br/>
+                                <apex:outputText rendered="{!agencycon.Agency_role__c}" escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_role__c}"/><br/>
+                                <apex:outputText rendered="{!agencycon.Authorised_signatory__c}" value="{!$Label.ISSP_AMS_Authorised_Sig}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Authorised_signatory__c}"/><br/>
+                            </apex:column>
+                        </apex:dataTable>
+                        <br/>
+                    </apex:panelGrid>
+                    <apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
+                        <apex:outputText value="{!$Label.ISSP_AMS_PASS_Branch_Form_SECTION4_Q1}" />
+                        <apex:outputField value="{!newForm.Separate_user_access__c}"/>
+                        <apex:outputText value="{!$Label.ISSP_AMS_PASS_Branch_Form_SECTION4_Q2}" />
+                        <apex:outputField value="{!newForm.Head_Office_have_access__c}"/>
+                    </apex:panelGrid>
+                </apex:pageBlockSection>
+            </div>
+
+            <div style="page-break-after:always;">
+                <apex:pageBlockSection columns="1" collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputpanel >
+                        {!$Label.ISSP_AMS_PASS_Branch_Form_SECTION4}
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section6" style="float:right"/>
+                        </apex:outputpanel>
+                    </apex:facet>
+                    <apex:outputText value="{!$Label.ISSP_AMS_PASS_Branch_Form_SECTION4_Q3}" style="font-size:115%; padding-top:15px"/>
+                    <apex:panelGrid columns="3" width="80%" cellpadding="5%">
+                        <apex:outputField value="{!newForm.Billing_payment_Head_Office__c}" />
+                        <apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION4_lbl2}"/>
+                        <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                        <apex:outputField value="{!newForm.Billing_payment_Branch_Office__c}" />
+                        <apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION4_lbl3}"/>
+                        <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                        <apex:outputField value="{!newForm.Billing_payment_Bilateral__c}" />
+                        <apex:outputText value="{!$Label.ISSP_AMS_PASS_Branch_Form_SECTION4_Q3_TXT4}"/>
+                        <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                        <apex:outputField value="{!newForm.Billing_payment_Another_Branch__c}" />
+                        <apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION4_lbl4}"/>
+                        <apex:outputField rendered="{!newForm.Billing_payment_Another_Branch__c==true}" value="{!newForm.Branch_Office_Code__c}" />
+                    </apex:panelGrid>
+
+                    <apex:outputPanel rendered="{!newForm.Billing_payment_Branch_Office__c==true}">
+                        <apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION4_lbl5}" style="font-size:115%; padding-top:15px"/>
+                        <apex:panelGrid columns="2" >
+                            <apex:outputField value="{!newForm.Payment_Via_Bank_Transfer__c}" />
+                            <apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION4_lbl6}"/>
+                            <apex:outputField value="{!newForm.Payment_Via_Direct_Debit__c}" />
+                            <apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION4_lbl7}"/>
+                        </apex:panelGrid>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+            </div>
+
+            <apex:pageBlockSection columns="1" collapsible="false" rendered="{!OR(amsAgentType=='IATA Cargo Agent',amsAgentType=='EACP Intermediary')}">
+                <apex:facet name="header">
+                    <apex:outputpanel >
+                    {!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5}
+                        <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section5}" value="{!$Label.ISSP_EditSection}" id="Edit-Section6" style="float:right"/>
+                    </apex:outputpanel>
+                </apex:facet>
+                <apex:panelGrid columns="1" width="100%" headerClass="bg-primary" cellpadding="10%" >
+                    <apex:dataTable value="{!trainedStaffList}" var="trainedStaff" width="100%" columnsWidth="25%,25%,25%,25%">
+                        <apex:column headerValue="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header1}" value="{!trainedStaff.Name}" headerClass="pdfHeader"/>
+                        <apex:column headerValue="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header2}" value="{!trainedStaff.Position_trained_staff__c}" headerClass="pdfHeader"/>
+                        <apex:column headerValue="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header3}" value="{!trainedStaff.Training_dangerous_goods_completed__c}" headerClass="pdfHeader"/>
+                        <apex:column headerValue="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4}" value="{!trainedStaff.Valid_until__c}" headerClass="pdfHeader"/>
+                    </apex:dataTable>
+                </apex:panelGrid>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+    </apex:form>
+
+</apex:page>

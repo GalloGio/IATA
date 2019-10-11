@@ -1,0 +1,590 @@
+<apex:component >
+    <apex:attribute name="ctrl" description="controller" type="ISSP_APProcess" required="true"/>
+    <apex:attribute name="readOnly" description="show read only version to create a pdf" type="Boolean" required="false" default="false"/>
+
+    <apex:variable var="isSISMember" value="{!OR(ctrl.isISPAActive,ctrl.isISUAActive)}"/>
+
+    <apex:pageBlockSection columns="2" id="section1" collapsible="true">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 1 - Company Information
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr>
+            <td colspan="2"><div class="blue-label text-center">{!$Label.ISSP_SIS_Membership_ISPA_Section1_Subtitle1}</div></td>
+            <td colspan="2"><div class="blue-label text-center">{!$Label.ISSP_SIS_Membership_ISPA_Section1_Subtitle2}</div></td>
+        </tr>
+        <apex:outputpanel ></apex:outputpanel>
+
+        <tr>
+            <td colspan="2"></td>
+            <td colspan="2"><a target="_blank" onclick="section1CopyInfo()" class="copy-info">{!$Label.ISSP_SIS_Membership_ISPA_Section1_CopyButton}</a></td>
+        </tr>
+        <apex:outputpanel ></apex:outputpanel>
+
+        <apex:inputField value="{!ctrl.newform.Legal_Name_of_account__c}" rendered="{!AND(ctrl.hqaccount.Legal_name__c==null,!readOnly)}" label="{!$Label.ISSP_SIS_Membership_Legal_Name_of_the_Airline}" styleclass="required form-origin-legalname" />
+        <apex:outputField value="{!ctrl.hqaccount.Legal_name__c}" rendered="{!OR(ctrl.hqaccount.Legal_name__c!=null,readOnly)}" title="{!$Label.ISSP_SIS_Membership_Legal_Name_of_the_Airline}"/>
+
+        <apex:inputField value="{!ctrl.newform.Legal_Name_of_company__c}" rendered="{!AND(!isSISMember,!readOnly)}" label="{!$Label.ISSP_SIS_Membership_Legal_Name_of_the_Airline}" styleclass="form-legalname required"/>
+        <apex:outputField value="{!ctrl.newform.Legal_Name_of_company__c}" rendered="{!OR(isSISMember,readOnly)}" title="{!$Label.ISSP_SIS_Membership_Legal_Name_of_the_Airline}"/>
+
+        <apex:pageBlockSectionItem/>
+        <apex:inputField value="{!ctrl.newform.Airline_trade_name__c}" rendered="{!AND(!isSISMember,!readOnly)}" label="{!$Label.ISSP_SIS_Membership_Trade_Name}" styleclass="required"/>
+        <apex:outputField value="{!ctrl.newform.Airline_trade_name__c}" rendered="{!OR(isSISMember,readOnly)}" title="{!$Label.ISSP_SIS_Membership_Trade_Name}"/>
+
+        <apex:outputField value="{!ctrl.hqaccount.Airline_designator__c}" title="{!$Label.ISSP_SIS_Membership_Airline_Designator_Code}"/>
+        <apex:pageBlockSectionItem />
+
+        <apex:outputField styleclass="account-field" value="{!ctrl.hqaccount.BillingStreet}" title="{!$Label.ISSP_SIS_Membership_Head_Office_Street}"/>
+
+        <apex:inputField value="{!ctrl.newform.Company_address__c}" rendered="{!AND(!isSISMember,!readOnly)}" label="{!$Label.ISSP_SIS_Membership_Head_Office_Street}" styleclass="form-address required"/>
+        <apex:outputField value="{!ctrl.newform.Company_address__c}" rendered="{!OR(isSISMember,readOnly)}" title="{!$Label.ISSP_SIS_Membership_Head_Office_Street}"/>
+
+        <apex:outputField styleclass="account-field" value="{!ctrl.hqaccount.BillingCity}" title="{!$Label.ISSP_SIS_Membership_Head_Office_City_Name}"/>
+
+        <apex:inputField  value="{!ctrl.newform.Company_city__c}" rendered="{!AND(!isSISMember,!readOnly)}" label="{!$Label.ISSP_SIS_Membership_Head_Office_City_Name}" styleclass="form-city required"/>
+        <apex:outputField value="{!ctrl.newform.Company_city__c}" rendered="{!OR(isSISMember,readOnly)}" title="{!$Label.ISSP_SIS_Membership_Head_Office_City_Name}"/>
+
+        <apex:outputField styleclass="account-field" value="{!ctrl.hqaccount.BillingState}" title="{!$Label.ISSP_SIS_Membership_Head_Office_State_Name}"/>
+
+        <apex:inputField value="{!ctrl.newform.Company_State__c}" rendered="{!AND(!isSISMember,!readOnly)}" label="{!$Label.ISSP_SIS_Membership_Head_Office_State_Name}" styleclass="form-state"/>
+        <apex:outputField value="{!ctrl.newform.Company_State__c}" rendered="{!OR(isSISMember,readOnly)}" title="{!$Label.ISSP_SIS_Membership_Head_Office_State_Name}"/>
+
+        <apex:outputField styleclass="account-field" value="{!ctrl.hqaccount.BillingPostalCode}" title="{!$Label.ISSP_SIS_Membership_Head_Office_Postal_Code}"/>
+
+        <apex:inputField value="{!ctrl.newform.Postal_code__c}" rendered="{!AND(!isSISMember,!readOnly)}" label="{!$Label.ISSP_SIS_Membership_Head_Office_Postal_Code}" styleclass="form-postalcode"/>
+        <apex:outputField value="{!ctrl.newform.Postal_code__c}" rendered="{!OR(isSISMember,readOnly)}" title="{!$Label.ISSP_SIS_Membership_Head_Office_Postal_Code}"/>
+
+        <apex:outputField styleclass="account-field" value="{!ctrl.hqaccount.BillingCountry}" title="{!$Label.ISSP_SIS_Membership_Head_Office_Country}"/>
+
+        <apex:pageBlockSectionItem rendered="{!AND(!isSISMember,!readOnly)}">
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Head_Office_Country}"/>
+            <apex:selectList value="{!ctrl.newform.Company_Country__c}" styleclass="form-country select2 required">
+                <apex:selectOptions value="{!ctrl.countryNameList}"/>
+            </apex:selectList>
+        </apex:pageBlockSectionItem>
+        <apex:outputField value="{!ctrl.newform.Company_Country__c}" title="{!$Label.ISSP_SIS_Membership_Head_Office_Country}" rendered="{!OR(isSISMember,readOnly)}"/>
+
+        <apex:outputField styleclass="account-field" value="{!ctrl.hqaccount.Email__c}" title="Head Office Email"/>
+
+        <apex:inputField value="{!ctrl.newform.Contact_Email__c}" rendered="{!AND(!isSISMember,!readOnly)}" label="Head Office Email" styleclass="form-email"/>
+        <apex:outputField value="{!ctrl.newform.Contact_Email__c}" rendered="{!OR(isSISMember,readOnly)}" title="Head Office Email"/>
+
+        <apex:pageBlockSectionItem />
+
+        <apex:inputField value="{!ctrl.newform.TAX_VAT_Registration_Number__c}" rendered="{!AND(!isSISMember,!readOnly)}"/>
+        <apex:outputField value="{!ctrl.newform.TAX_VAT_Registration_Number__c}" rendered="{!OR(isSISMember,readOnly)}"/>
+
+        <apex:inputField value="{!ctrl.newform.Desired_date_to_start_in_ICH__c}" rendered="{!!readOnly}" styleclass="date required"/>
+        <apex:outputField value="{!ctrl.newform.Desired_date_to_start_in_ICH__c}" rendered="{!readOnly}"/>
+
+        <apex:inputField value="{!ctrl.newform.Desired_date_to_start_in_SIS__c}" rendered="{!AND(!isSISMember,!readOnly)}" styleclass="date required"/>
+        <apex:outputField value="{!ctrl.newform.Desired_date_to_start_in_SIS__c}" rendered="{!OR(isSISMember,readOnly)}"/>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section2" collapsible="true">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 2 - Corporate Compliance
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Is your company a publicly traded company?"/>
+            <apex:actionRegion >
+                <apex:selectRadio value="{!ctrl.newform.Is_publicly_traded_company__c}" styleclass="radio-short required" rendered="{!!readOnly}">
+                    <apex:selectOption itemValue="Yes" itemLabel="Yes"/>
+                    <apex:selectOption itemValue="No" itemLabel="No"/>
+                    <apex:actionSupport event="onchange" rerender="section2" status="WaitingStatus"/>
+                </apex:selectRadio>
+                <apex:outputField value="{!ctrl.newform.Is_publicly_traded_company__c}" rendered="{!readOnly}"/>
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!ctrl.newform.Is_publicly_traded_company__c=='Yes'}">
+            <apex:outputLabel value="Confirm on which stock exchange the company is listed"/>
+            <apex:pageBlockSectionItem >
+                <apex:inputField styleclass="required" style="width:30%;" value="{!ctrl.newform.Stock_Exchange_Name__c}" rendered="{!!readOnly}"/>
+                <apex:outputField value="{!ctrl.newform.Stock_Exchange_Name__c}" rendered="{!readOnly}"/>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+
+        <apex:outputPanel rendered="{!ctrl.newform.Is_publicly_traded_company__c=='Yes'}">
+            <tr><td colspan="4" class="required"><div class="strong-label">Please attach an scan copy of the following document:</div></td></tr>
+            <apex:outputText ></apex:outputText>
+            <tr><td colspan="4" class="required">
+                <apex:iframe scrolling="false" height="180px"
+                src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=1&reqRequired=Mandatory&reqName={!URLENCODE('Certificate Of Registration/Incorporation')}&reqDescription=&reqIdentifier=CertificateRegistration&onlyOne=true"/>
+            </td></tr>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!ctrl.newform.Is_publicly_traded_company__c=='No'}">
+            <tr>
+                <td colspan="4">
+                    <div class="strong-label">In addition to the below, if any of the owners/shareholders are a legal entity ICH will require the company registration
+                        and shareholders list for each entity.</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div class="strong-label">Please attach an scan copy of the following documents:</div>
+                </td>
+            </tr>
+            <apex:outputText></apex:outputText>
+            <tr>
+                <td colspan="4" class="required">
+                    <apex:iframe scrolling="false" height="180px" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=2&reqRequired=Mandatory&reqName={!URLENCODE('Certificate Of Registration/Incorporation')}&reqDescription=&reqIdentifier=CertificateRegistration&onlyOne=true"
+                    />
+                </td>
+            </tr>
+            <apex:outputText></apex:outputText>
+            <tr>
+                <td colspan="4" class="required">
+                    <apex:iframe scrolling="false" height="190px" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=3&reqRequired=Mandatory&reqName={!URLENCODE('List of shareholders')}&reqDescription={!URLENCODE('It has to be an official document or on company’s letterhead, signed by an officer of the company, company stamped and dated,
+                                including the percentage of ownership/number of shares owned.')}&reqIdentifier=ShareholdersList&onlyOne=false"
+                    />
+                </td>
+            </tr>
+            
+            <apex:outputText></apex:outputText>
+            <tr>
+                <td colspan="4" class="required">
+                    <apex:iframe scrolling="false" height="180px" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=4&reqRequired=Mandatory&reqName={!URLENCODE('Shareholders information (Excel file)')}&reqDescription={!URLENCODE('For each shareholder and officer include a copy of their valid passport, complete legal name, nationality, date of birth
+                                and passport number.')}&reqIdentifier=Shareholders_information&onlyOne=false" />
+                </td>
+            </tr>
+        </apex:outputPanel>
+
+        <script>setRequired();</script>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section3" collapsible="true">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 3 - Contact Details
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4">
+            <div class="strong-label">The airline/ associate will need to provide the following:</div>
+        </td></tr>
+
+        <apex:outputPanel rendered="{!!ctrl.isSISMember}">
+            <tr><td colspan="4">
+                <div class="blue-label text-center">SIS</div>
+            </td></tr>
+
+            <tr><td colspan="4">
+                <div class="blue-label-title">Super User</div>
+            </td></tr>
+            <tr><td colspan="4">
+                <div class="strong-label">This user will be granted administrator access rights associated to their company’s SIS membership type. The user will have the ability to create as many users as required and grant appropriate permissions to users in IS-Web. After your company is activated in SIS if you want to change the Super User please log a query in our IATA Customer Portal.</div>
+            </td></tr>
+        </apex:outputPanel>
+
+        <apex:pageBlockSectionItem />
+
+        <tr><td colspan="4">
+            <div class="blue-label text-center">ICH</div>
+        </td></tr>
+
+        <tr><td colspan="4">
+            <div class="blue-label-title">ICH Primary Contacts</div>
+        </td></tr>
+        <tr><td colspan="4">
+            <div class="strong-label">Will receive copies of all ICH communications including Circulars, system changes, requests for information or confirmation, and acknowledgements of changes to instructions and officers, and
+                <ol type="a">
+                    <li>If there is one Primary Contact, such Primary Contact is to be nominated by those two signatories of this application form; and</li>
+                    <li>If the nominated Principal Contact is the CFO, a second Principal Contact must also be nominated.</li>
+                </ol>
+            </div>
+        </td></tr>
+
+        <tr><td colspan="4">
+            <div class="blue-label-title">ICH Financial Contacts</div>
+        </td></tr>
+        <tr><td colspan="4">
+            <div class="strong-label">Each Company should have two (2) designated Financial Contacts to allow the ICH Finance team to have a point of contact in case of issues relating to payment or settlement with the ICH.</div>
+        </td></tr>
+
+        <tr><td colspan="4">
+            <div class="blue-label-title">ICH – System Notifications</div>
+        </td></tr>
+        <tr><td colspan="4">
+            <div class="strong-label">
+                The ICH system sends the following notifications, please select the type of notification(s) that you wish to receive by each contact
+                <ol type="a">
+                    <li>Advice Day Message – contacts receive the balance due to or due from ICH for the current clearance period.</li>
+                    <li>Claim Confirmation – contacts receive a confirmation of the claim submission amount for the current clearance period.</li>
+                    <li>Clearance Initialization – contacts receive a notice of when the next clearance period is open.</li>
+                </ol>
+                Note:  Following initial set up of contacts by the ICH, changes will be managed by the Member in SIS
+            </div>
+        </td></tr>
+
+        <apex:pageBlockSectionItem />
+
+        <tr><td colspan="4">
+            <apex:inputCheckbox value="{!ctrl.isSISSuperUser}" styleclass="required hidden" rendered="{!!ctrl.isSISMember}"/>
+            <apex:inputCheckbox value="{!ctrl.isICHPrimary}" styleclass="required hidden"/>
+            <apex:inputCheckbox value="{!ctrl.isICHFinancial}" styleclass="required hidden"/>
+            <apex:inputCheckbox value="{!ctrl.isICHAdvice}" styleclass="required hidden"/>
+            <apex:inputCheckbox value="{!ctrl.isICHClearConfirmation}" styleclass="required hidden"/>
+            <apex:inputCheckbox value="{!ctrl.isICHClearInitialization}" styleclass="required hidden"/>
+            <apex:outputPanel layout="block" styleclass="alert alert-danger" html-role="danger" 
+                rendered="{!AND(!ctrl.isSISMember,!ctrl.isSISSuperUser) || NOT(AND(ctrl.isICHPrimary,ctrl.isICHFinancial,ctrl.isICHAdvice,ctrl.isICHClearConfirmation,ctrl.isICHClearInitialization))}">
+                <ul>
+                    <apex:outputText value="<li>Only one contact must be SIS Super User</li>" rendered="{!AND(!ctrl.isSISMember,!ctrl.isSISSuperUser)}" escape="false"/>
+                    <apex:outputText value="<li>At least one contact must be ICH Primary</li>" rendered="{!!ctrl.isICHPrimary}" escape="false"/>
+                    <apex:outputText value="<li>At least one contact must be ICH Financial</li>" rendered="{!!ctrl.isICHFinancial}" escape="false"/>
+                    <apex:outputText value="<li>At least one contact must be ICH Advice Day Contact</li>" rendered="{!!ctrl.isICHAdvice}" escape="false"/>
+                    <apex:outputText value="<li>At least one contact must be ICH Clearance Confirmation Contact</li>" rendered="{!!ctrl.isICHClearConfirmation}" escape="false"/>
+                    <apex:outputText value="<li>At least one contact must be ICH Clearance Initialization Contact</li>" rendered="{!!ctrl.isICHClearInitialization}" escape="false"/>
+                </ul>
+            </apex:outputPanel>
+        </td></tr>
+
+        <tr><td colspan="4">
+            <a href="#" onclick="newContact();return false;" class="link-not-highlighted" style="margin-left:15px">
+                <span class="glyphicon glyphicon-plus"></span>Add Contact
+            </a>
+        </td></tr>
+
+        <tr><td colspan="4">
+            <apex:pageBlockTable id="contactEndorementTable" value="{!ctrl.listContactEndorsement}" var="contactEndorsement"  styleClass="table-hover table table-condensed table-responsive">
+                <apex:column headerValue="Name" value="{!contactEndorsement.Salutation__c} {!contactEndorsement.First_Name__c} {!contactEndorsement.Last_Name__c}"/>
+                <apex:column headerValue="Email" value="{!contactEndorsement.Email__c}"/>
+                <apex:column styleclass="center" headerClass="center" rendered="{!!ctrl.isSISMember}">
+                    <apex:facet name="header">SIS<br/>Super<br/>User</apex:facet>
+                    <span class="glyphicon glyphicon-{!IF(CONTAINS(contactEndorsement.Position__c,'SIS Super User'),'check','unchecked')}"/>
+                </apex:column>
+                <apex:column styleclass="center" headerClass="center">
+                    <apex:facet name="header">ICH<br/>Primary<br/>Contact</apex:facet>
+                    <span class="glyphicon glyphicon-{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Primary Contact'),'check','unchecked')}"/>
+                </apex:column>
+                <apex:column styleclass="center" headerClass="center">
+                    <apex:facet name="header">ICH<br/>Financial<br/>Contact</apex:facet>
+                    <span class="glyphicon glyphicon-{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Financial Contact'),'check','unchecked')}"/>
+                </apex:column>
+                <apex:column styleclass="center" headerClass="center">
+                    <apex:facet name="header">ICH<br/>Advice Day<br/>Contact</apex:facet>
+                    <span class="glyphicon glyphicon-{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Advice Day Contact'),'check','unchecked')}"/>
+                </apex:column>
+                <apex:column styleclass="center" headerClass="center">
+                    <apex:facet name="header">ICH Clearance<br/>Confirmation<br/>Contact</apex:facet>
+                    <span class="glyphicon glyphicon-{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Clearance Confirmation Contact'),'check','unchecked')}"/>
+                </apex:column>
+                <apex:column styleclass="center" headerClass="center">
+                    <apex:facet name="header">ICH Clearance<br/>Initialization<br/>Contact</apex:facet>
+                    <span class="glyphicon glyphicon-{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Clearance Initialization Contact'),'check','unchecked')}"/>
+                </apex:column>
+                <apex:column >
+                    <a class="glyphicon glyphicon-pencil link-not-highlighted" href="#" onclick="editContact('{!contactEndorsement.Id}');return false;"></a>
+                </apex:column>
+                <apex:column >
+                    <a class="glyphicon glyphicon-trash link-not-highlighted" href="#" onclick="deleteContact('{!contactEndorsement.Id}');return false;"></a>
+                </apex:column>
+            </apex:pageBlockTable>
+        </td></tr>
+        <script>$(".checked").prop("checked",true);</script>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="2" id="section4" collapsible="true">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                {!$Label.ISSP_SIS_Membership_ISPA_Section4_Title}
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4">
+            <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISPA_Section4_Subtitle1}</div>
+            <a class="link-highlighted" href="https://www.iata.org/services/finance/sis/Documents/ISPA-Attachment-A-Pricing-Schedule.pdf" target="#">Attachment A-Pricing Schedule</a>
+            <div id="ISSP_SIS_Membership_ISPA_Section4_Subtitle2" class="strong-label"></div>
+        </td></tr>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Is_AA_Member__c.label}"/>
+            <apex:actionRegion >
+                <apex:selectRadio value="{!ctrl.newForm.Is_AA_Member__c}" styleclass="radio-short required">
+                    <apex:selectOption itemValue="Yes" itemLabel="Yes"/>
+                    <apex:selectOption itemValue="No" itemLabel="No"/>
+                    <apex:actionSupport event="onchange" rerender="section4" status="WaitingStatus"/>
+                </apex:selectRadio>
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!ctrl.newForm.Is_AA_Member__c!=null}">
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Digital_Signature_application__c.label}"/>
+            <apex:actionRegion >
+                <apex:selectRadio value="{!ctrl.newForm.Digital_Signature_application__c}" styleclass="radio-short required">
+                    <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                    <apex:selectOption itemValue="No" itemLabel="Off"/>
+                    <apex:actionSupport event="onchange" rerender="section4" status="WaitingStatus"/>
+                </apex:selectRadio>
+                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_Digital_Signature_Application_Helptext}"
+                    styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!ctrl.newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Billing_Value_Determination__c.label}"/>
+            <apex:actionRegion >
+                <apex:selectRadio value="{!ctrl.newForm.Billing_Value_Determination__c}" styleclass="radio-short required">
+                    <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                    <apex:selectOption itemValue="No" itemLabel="Off"/>
+                    <apex:actionSupport event="onchange" rerender="section4" status="WaitingStatus"/>
+                </apex:selectRadio>
+                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_Billing_Value_Determination_Helptext}"
+                    styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!ctrl.newForm.Is_AA_Member__c=='No'}"/>
+
+        <apex:pageBlockSectionItem rendered="{!ctrl.newForm.Is_AA_Member__c!=null}">
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Digital_Signature_verification__c.label}"/>
+            <apex:actionRegion >
+                <apex:selectRadio value="{!ctrl.newForm.Digital_Signature_verification__c}" styleclass="radio-short required">
+                    <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                    <apex:selectOption itemValue="No" itemLabel="Off"/>
+                    <apex:actionSupport event="onchange" rerender="section4" status="WaitingStatus"/>
+                </apex:selectRadio>
+                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_Digital_Signature_Verification_Helptext}"
+                    styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!ctrl.newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Billing_Value_Confirmation__c.label}"/>
+            <apex:actionRegion >
+                <apex:selectRadio value="{!ctrl.newForm.Billing_Value_Confirmation__c}" styleclass="radio-short required">
+                    <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                    <apex:selectOption itemValue="No" itemLabel="Off"/>
+                    <apex:actionSupport event="onchange" rerender="section4" status="WaitingStatus"/>
+                </apex:selectRadio>
+                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_Billing_Value_Confirmation_Helptext}"
+                    styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!ctrl.newForm.Is_AA_Member__c=='No'}"/>
+
+        <apex:pageBlockSectionItem rendered="{!ctrl.newForm.Is_AA_Member__c!=null}">
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Legal_Archiving__c.label}"/>
+            <apex:actionRegion >
+                <apex:selectRadio value="{!ctrl.newForm.Legal_Archiving__c}" styleclass="radio-short required">
+                    <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                    <apex:selectOption itemValue="No" itemLabel="Off"/>
+                    <apex:actionSupport event="onchange" rerender="section4" status="WaitingStatus"/>
+                </apex:selectRadio>
+                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_Legal_Archiving_Helptext}"
+                    styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!ctrl.newForm.Is_AA_Member__c=='Yes'}">
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Auto_billing__c.label}"/>
+            <apex:actionRegion >
+                <apex:selectRadio value="{!ctrl.newForm.Auto_billing__c}" styleclass="radio-short required">
+                    <apex:selectOption itemValue="Yes" itemLabel="On"/>
+                    <apex:selectOption itemValue="No" itemLabel="Off"/>
+                    <apex:actionSupport event="onchange" rerender="section4" status="WaitingStatus"/>
+                </apex:selectRadio>
+                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_AutoBilling_Helptext} {!$Label.ISSP_SIS_Membership_AutoBilling_Helptext2}"
+                    styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!ctrl.newForm.Is_AA_Member__c=='No'}"/>
+        <script>
+            setRequired();
+            $('#ISSP_SIS_Membership_ISPA_Section4_Subtitle2').html('{!$Label.ISSP_SIS_Membership_ISPA_Section4_Subtitle2}');
+        </script>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section5" collapsible="true">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                {!$Label.ISSP_SIS_Membership_ISPA_Section5_Title}
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:outputText styleclass="strong-label" value="{!$Label.ISSP_SIS_Membership_ISPA_Section5_Subtitle1}" escape="false"/>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Do_you_have_an_iiNET_account__c.label}"/>
+            <apex:actionRegion >
+                <apex:selectRadio value="{!ctrl.newForm.Do_you_have_an_iiNET_account__c}" styleclass="radio-short required">
+                    <apex:selectOption itemValue="Yes" itemLabel="Yes"/>
+                    <apex:selectOption itemValue="No" itemLabel="No"/>
+                    <apex:actionSupport event="onchange" rerender="section5" status="WaitingStatus"/>
+                </apex:selectRadio>
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+
+        <apex:inputField value="{!ctrl.newForm.IINET_account_number__c}" styleclass="required" html-pattern="[A-Z]{2}[0-9]{2}" html-placeholder="Example: AA11" style="width: auto" rendered="{!ctrl.newForm.Do_you_have_an_iiNET_account__c=='Yes'}"/>
+
+        <apex:outputText styleclass="strong-label" value="{!$Label.ISSP_SIS_Membership_ISPA_Section5_Subtitle2}" escape="false" rendered="{!ctrl.newForm.Do_you_have_an_iiNET_account__c=='No'}"/>
+
+        <script>setRequired();</script>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section6" collapsible="true">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 6 - IATA Clearing House – Currency of Clearance &amp; Settlement Selection
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:outputText styleclass="blue-label-title" value="ICH Manual Regulation 13" escape="false"/>
+        <apex:outputText styleclass="" value="The Clearance House standard currencies of Clearance (and, for the avoidance of doubt, for invoicing between Members), shall be the USD, the GBP and the EUR. Each Member shall  choose any one of standard these standard currencies or such other currency as may be accepted  by the Clearing House Manager for Clearance from time to time, and shall notify the Clearing House Manager of that choice; such notice shall remain in effect for at least twelve months. A Member may from time to time change its chosen currency by giving three months prior written notice to the Clearing House Manager, provided that such notice of change of currency shall remain in effect for at least twelve months.  The Clearing House Manager shall promptly notify all Members of the selected currency of Clearance and changes thereto." escape="false"/>
+        <!-- Select Currency Clearance  -->
+        <apex:outputText styleclass="strong-label" value="Please indicate your selected Currency of Clearance" escape="false"/>
+        <apex:pageBlockSectionItem rendered="{!!readOnly}">
+            <apex:outputLabel value=""/>
+            <apex:actionRegion >
+                <apex:selectRadio styleClass="radio-currency-clearance required" layout="pageDirection" value="{!ctrl.ICHCurrencyClearance}">
+                    <apex:selectOptions value="{!ctrl.ICHCurrencyClearanceOptions}"/>
+                    <apex:actionSupport event="onchange" rerender="section6,section7" status="WaitingStatus"/>
+                </apex:selectRadio>
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:outputText value="{!ctrl.ICHCurrencyClearanceLabel}" rendered="{!readOnly}"/>
+
+        <apex:outputText styleclass="blue-label-title" value="ICH Manual Regulation 14" escape="false"/>
+        <apex:outputText styleclass="" value="Clearances shall be effected in USD, except that Clearance between Members who have both chosen GBP or EUR under Regulation 13 shall be in GBP or EUR respectively as applicable.  All claims will be submitted by Members in the applicable currency of Clearance.  Members may choose a currency of Clearance other than USD, GBP or the EUR as may be agreed and made available by the Clearing House from time to time, the Clearing House to charge such Members a  service fee in that regard." escape="false"/>
+        <apex:outputText styleclass="strong-label" value="Table of Clearance Currency" escape="false"/>
+
+        <div class="regular-table regular-table-center no-page-break">
+            <table style="width: 50%; margin-left: 10%;">
+                <tr><th class="back-color-1"></th><th colspan="3" class="back-color-1">Zone of Billed Member</th></tr>
+                <tr><th class="back-color-2">Zone of Billing Member</th><th class="back-color-1">A</th><th class="back-color-1">B</th><th class="back-color-1">D</th></tr>
+                <tr><td class="back-color-2">A</td><td>GBP</td><td>USD</td><td>USD</td></tr>
+                <tr><td class="back-color-2">B</td><td>USD</td><td>USD</td><td>USD</td></tr>
+                <tr><td class="back-color-2">D</td><td>USD</td><td>USD</td><td>EUR</td></tr>
+            </table>
+        </div>
+
+        <apex:outputText styleclass="strong-label" value="Note:" escape="false"/>
+        <apex:outputText styleclass="" value="Miscellaneous charges not billed in the applicable Currency of Clearance (in local currency) shall be converted to the applicable Currency of Clearance using the applicable Five Day Rates. See ICH Manual Regulation 16 for more details." escape="false"/>
+
+        <apex:outputText styleclass="blue-label-title" value="ICH Manual Regulation 18" escape="false"/>
+        <apex:outputText styleclass="" value="Currencies of settlement are the currencies in which Members are required to settle balances due by them to the Clearing House, or in which they receive settlements from the Clearing House of balances due to them. The currencies of settlement (subject to Regulation 19) are USD, GBP, EUR, and any other currency as may be accepted and made available by the Clearing House Manager from time to time under Regulation 14, applicable as follows: Settlements by or to such Members will normally be made in the applicable currency of Clearance.  Any Member may, however by giving three months prior written to the Clearing House, choose USD, GBP EUR, or any other currency as may be accepted and made available by the Clearing House Manager from time to time under Regulation 14 as the currency of settlement for its transactions.  Such notice shall remain in effect for at least twelve months." escape="false"/>
+        <apex:outputPanel rendered="{!!readOnly}">
+            <!-- Selected Clearance A -->
+            <apex:outputPanel rendered="{!ctrl.newform.ICH_Currency_of_Clearance__c='A'}">
+                <apex:outputText styleclass="strong-label" value="As your selection in Currency of Clearance was Zone A, please select one of the following three options available for the Currency of Settlement:" escape="false"/>
+                <apex:actionRegion >
+                    <apex:selectRadio styleClass="radio-currency-clearance required" layout="pageDirection" value="{!ctrl.newform.ICH_Currency_of_Settlement__c}">
+                        <apex:selectOption itemValue="GBP" itemLabel="Entirely in GBP; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD would be converted into GBP using the exchange rate on Advice Day and Zone A GBP would remain the GBP amountsubmitted into clearance, therefore arriving at one GBP payable or receivable amount."/>
+                        <apex:selectOption itemValue="USD" itemLabel="Entirely in USD; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD remain the USD amount submitted into clearance and Zone A GBP would be converted into USD on Advice Day, using the exchange rate on Advice Day, therefore arriving at one USD payable or receivable amount."/>
+                        <apex:selectOption itemValue="GBP-USD" itemLabel="In GBP with respect to balance with other Zone A members and in USD with respect to all other zones; therefore amounts submitted into clearance (in the currency of clearance) would be settled exactly as reported, thus is arriving at one USD payable or receivable amount and one GBP payable or receivable amount."/>
+                        <apex:actionSupport event="onchange" rerender="section7" status="WaitingStatus"/>
+                    </apex:selectRadio>
+                </apex:actionRegion>
+            </apex:outputPanel>
+            <!-- Selected Clearance B -->
+            <apex:outputPanel rendered="{!ctrl.newform.ICH_Currency_of_Clearance__c='B'}">
+                <apex:outputText styleclass="strong-label" value="As your selection in Currency of Clearance was Zone B, please select one of the following three options available for the Currency of Settlement" escape="false"/>
+                <apex:actionRegion >
+                    <apex:selectRadio styleClass="radio-currency-clearance required" layout="pageDirection" value="{!ctrl.newform.ICH_Currency_of_Settlement__c}">
+                        <apex:selectOption itemValue="USD" itemLabel="Entirely in USD; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A, B, C and D in USD be remain as reported in USD therefore arriving at one USD payable or receivable amount."/>
+                        <apex:selectOption itemValue="EUR" itemLabel="Entirely in EUR; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A, B, C and D in USD would be converted into EUR using the exchange rate on Advice Day, therefore arriving at one EUR payable or receivable amount."/>
+                        <apex:selectOption itemValue="EUR-USD" itemLabel="In EUR and USD; amount submitted into clearance in USD for a specific Group (A, B or D) for which your company wishes to receive EUR, the USD amount would be converted to EUR on Advice Day, using the banking rate of the day, thus is arriving at one USD payable or receivable amount and one EUR payable or receivable amount."/>
+                        <apex:actionSupport event="onchange" rerender="section7" status="WaitingStatus"/>
+                    </apex:selectRadio>
+                </apex:actionRegion>
+            </apex:outputPanel>
+            <!-- Selected Clearance D -->
+            <apex:outputPanel rendered="{!ctrl.newform.ICH_Currency_of_Clearance__c='D'}">
+                <apex:outputText styleclass="strong-label" value="As your selection in Currency of Clearance was Zone D, please select one of the following three options available for the Currency of Settlement" escape="false" />
+                <apex:actionRegion >
+                    <apex:selectRadio styleClass="radio-currency-clearance required" layout="pageDirection" value="{!ctrl.newform.ICH_Currency_of_Settlement__c}">
+                        <apex:selectOption itemValue="EUR" itemLabel="Entirely in EUR; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A, B and C in USD would be converted into EUR using the exchange rate on Advice Day and Zone D EUR would remain the EUR amount submitted into clearance, therefore arriving at one EUR payable or receivable amount."/>
+                        <apex:selectOption itemValue="USD" itemLabel="Entirely in USD; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A and B in USD remain the USD amount submitted into clearance and Zone D EUR would be converted into USD on Advice Day, using the exchange rate on Advice Day, therefore arriving at one USD payable or receivable amount."/>
+                        <apex:selectOption itemValue="EUR-USD" itemLabel="In EUR with respect to balance with other Zone D members and in USD with respect to all other zones; therefore amounts submitted into clearance (in the currency of clearance) would be settled exactly as reported, thus is arriving at one USD payable or receivable amount and one EUR payable or receivable amount."/>
+                        <apex:actionSupport event="onchange" rerender="section7" status="WaitingStatus"/>
+                    </apex:selectRadio>
+                </apex:actionRegion>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!readOnly}">
+            <apex:outputText styleclass="strong-label" value="Entirely in GBP; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD would be converted into GBP using the exchange rate on Advice Day and Zone A GBP would remain the GBP amountsubmitted into clearance, therefore arriving at one GBP payable or receivable amount." rendered="{!ctrl.newform.ICH_Currency_of_Settlement__c=='GBP'}"/>
+            <apex:outputText styleclass="strong-label" value="Entirely in USD; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD remain the USD amount submitted into clearance and Zone A GBP would be converted into USD on Advice Day, using the exchange rate on Advice Day, therefore arriving at one USD payable or receivable amount." rendered="{!ctrl.newform.ICH_Currency_of_Settlement__c=='USD'}"/>
+            <apex:outputText styleclass="strong-label" value="In GBP with respect to balance with other Zone A members and in USD with respect to all other zones; therefore amounts submitted into clearance (in the currency of clearance) would be settled exactly as reported, thus is arriving at one USD payable or receivable amount and one GBP payable or receivable amount." rendered="{!ctrl.newform.ICH_Currency_of_Settlement__c=='GBP-USD'}"/>
+            <apex:outputText styleclass="strong-label" value="Entirely in EUR; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A, B, C and D in USD would be converted into EUR using the exchange rate on Advice Day, therefore arriving at one EUR payable or receivable amount." rendered="{!ctrl.newform.ICH_Currency_of_Settlement__c=='EUR'}"/>
+            <apex:outputText styleclass="strong-label" value="In EUR and USD; amount submitted into clearance in USD for a specific Group (A, B or D) for which your company wishes to receive EUR, the USD amount would be converted to EUR on Advice Day, using the banking rate of the day, thus is arriving at one USD payable or receivable amount and one EUR payable or receivable amount." rendered="{!ctrl.newform.ICH_Currency_of_Settlement__c=='EUR-USD'}"/>
+        </apex:outputPanel>
+        <script>setRequired();</script>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section7" collapsible="true">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                Section 7 - Bank Accounts
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:outputText styleclass="strong-label" value="ICH Account" escape="false"/>
+        <apex:outputText styleclass="" value="The member banking details are mandatory and to be used by the IATA Clearing House for the purpose of making payment to a member that is in a receiving position &ldquo;Balance Due from ICH&rdquo; once a clearance period has been finalized." escape="false"/>
+
+        <apex:variable var="show2bankMandate" value="{!OR(ctrl.newform.ICH_Currency_of_Settlement__c=='GBP-USD',ctrl.newform.ICH_Currency_of_Settlement__c=='EUR-USD')}"/>
+
+        <!-- Bank Mandate upload for GBP, EUR and USD -->
+        <apex:outputPanel rendered="{!NOT(show2bankMandate)}">
+            <apex:iframe scrolling="false" height="160px"
+                src="/ISSP_FormUpload?caseId={!ctrl.newCase.Id}&reqCnt=5&reqRequired=Mandatory&reqName={!URLENCODE('Bank Mandate Form')}&reqDescription=&reqIdentifier=BankMandate1&onlyOne=true"/>
+        </apex:outputPanel>
+        <!-- Bank Mandate upload for GBP-USD and EUR-USD -->
+        <apex:outputPanel rendered="{!show2bankMandate}">
+            <apex:iframe scrolling="false" height="160px"
+                src="/ISSP_FormUpload?caseId={!ctrl.newCase.Id}&reqCnt=6&reqRequired=Mandatory&reqName={!URLENCODE('Bank Mandate Form')} 1&reqDescription=&reqIdentifier=BankMandate1&onlyOne=true"/>
+            <apex:iframe scrolling="false" height="160px"
+                src="/ISSP_FormUpload?caseId={!ctrl.newCase.Id}&reqCnt=7&reqRequired=Mandatory&reqName={!URLENCODE('Bank Mandate Form')} 2&reqDescription=&reqIdentifier=BankMandate2&onlyOne=true"/>
+        </apex:outputPanel>
+
+        <apex:outputText styleclass="strong-label" value="SIS Account" escape="false"/>
+        <apex:selectRadio value="{!ctrl.newform.Do_you_want_to_add_Bank_Details__c}" styleClass="radio-currency-clearance required" layout="pageDirection">
+            <apex:selectOption itemValue="Yes" itemLabel="Yes" rendered="{!NOT(show2bankMandate)}"/>
+            <apex:selectOption itemValue="Yes, use form 1" itemLabel="Yes, Use Bank Mandate Form 1" rendered="{!show2bankMandate}"/>
+            <apex:selectOption itemValue="Yes, use form 2" itemLabel="Yes, Use Bank Mandate Form 2" rendered="{!show2bankMandate}"/>
+            <apex:selectOption itemValue="No" itemLabel="No"/>
+        </apex:selectRadio>
+
+        <script>setRequired();</script>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section8" collapsible="true">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                {!$Label.ISSP_SIS_Membership_ISPA_Section8_Title}
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4" >
+            <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISPA_Section8_Subtitle1}</div>
+        </td></tr>
+        <apex:outputText ></apex:outputText>
+
+        <apex:variable value="{!IF(ctrl.IsValidDueDiligence,'Optional','Mandatory')}" var="mandatoryDoc"/>
+
+        <apex:iframe scrolling="false" height="180px"
+            src="/ISSP_FormUpload?caseId={!ctrl.newForm.Case__c}&reqCnt=9&reqRequired={!mandatoryDoc}&reqName=Corporate Registration&reqDescription=&reqIdentifier=COI&onlyOne=true"/>
+
+        <apex:iframe scrolling="false" height="260px"
+            src="/ISSP_FormUpload?caseId={!ctrl.newForm.Case__c}&reqCnt=10&reqRequired={!mandatoryDoc}&reqName=Shareholders List&reqDescription=List of owners / shareholders including:<br/><ul><li>Number of shares issued</li><li>Percentage of ownership per shareholder</li><li>Signed by an officer of the company</li><li>Copies of the shareholders passports</li></ul>&reqIdentifier=Shareholders_List&onlyOne=true"/>
+
+        <apex:iframe scrolling="false" height="180px" rendered="{!ctrl.newForm.Do_you_want_to_add_Bank_Details__c='Yes'}"
+            src="/ISSP_FormUpload?caseId={!ctrl.newForm.Case__c}&reqCnt=11&reqRequired=Mandatory&reqName=Passport Of Signatories&reqDescription=Copy of the passport of the signatories of the Bank Details form&reqIdentifier=Passport&onlyOne=true"/>
+
+        <tr><td colspan="4">
+            <div class="strong-label">
+                {!$Label.ISSP_SIS_Membership_ISPA_Section8_Subtitle2}
+            </div>
+        </td></tr>
+        <apex:outputText ></apex:outputText>
+
+    </apex:pageBlockSection>
+</apex:component>

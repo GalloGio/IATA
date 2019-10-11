@@ -1,0 +1,12 @@
+.this .logo-small {
+    width: 100px;
+  }
+
+.no-padding {
+    padding-right: 0px !important;
+    padding-left: 0px !important; 
+}
+
+.selected {
+    color:#F04632 !important;
+}

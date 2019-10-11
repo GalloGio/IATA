@@ -1,0 +1,72 @@
+<aura:component description="Data_Submission_Detail">
+
+    <aura:attribute name="data" type="Object[]" description="Data submission record to display" />
+
+    <aura:registerEvent name="Data_Submission_Event" type="c:Data_Submission_Event"/>
+
+    <div class="page_container">
+
+        <div class="slds-grid slds-wrap">
+
+            <div class="slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-small-size--1-of-12">
+                <!--LEFT COLUMN-->
+            </div>
+
+            <div class="slds-large-size--6-of-12 slds-medium-size--6-of-12 slds-small-size--10-of-12">
+                <!-- MAIN CONTENT-->
+                <div class="slds-col--padded slds-size--12-of-12 slds-small-size--10-of-12">
+                    <h2>Detail Information</h2>
+                </div>
+
+                <div class="slds-grid slds-wrap slds-col--padded slds-size--12-of-12 slds-small-size--12-of-12">
+
+                    <aura:iteration items="{!v.data}" var="field">
+                        <aura:if isTrue="{! not(empty(field.value))}">
+
+                            <aura:if isTrue="{!or(not(empty(field.value)), not(empty(field.label)))}">
+                                <div class="{!(field.field_type == 'TEXTAREA' ? 'slds-large-size--12-of-12 ' : 'slds-large-size--6-of-12 ') + 'slds-col--padded slds-p-bottom--large slds-small-size--12-of-12'}">
+                                    <label class="slds-form-element__label labels" >{!field.label}</label>
+                                    <aura:if isTrue="{!field.field_type == 'TEXTAREA'}">
+
+                                        <p><lightning:formattedText value="{!field.value}"/></p>
+
+                                        <aura:set attribute="else">
+                                            <aura:if isTrue="{!field.field_type == 'DATETIME'}"><br/>
+                                                <ui:outputDateTime value="{!field.value}" format="DD/MM/YYYY"/>
+
+                                                <aura:set attribute="else">
+                                                    <p><lightning:formattedText value="{!field.value}"/></p>
+                                                </aura:set>
+
+                                            </aura:if>
+
+                                        </aura:set>
+                                    </aura:if>
+                                </div>
+                            </aura:if>
+                        </aura:if>
+                    </aura:iteration>
+
+                </div>
+
+                <div class="slds-col--padded slds-size--12-of-12">
+                    <div class="chooseButton">
+                        <button class="btn btn-primary btn-grey" onclick="{! c.fireBackEvt }">Back</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="slds-large-size--3-of-12 slds-medium-size--3-of-12 slds-small-size--1-of-12">
+                <!--RIGHT COLUMN-->
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+</aura:component>

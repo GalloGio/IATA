@@ -1,0 +1,203 @@
+<template>
+    <div class="col-md-12 bg-search-section hidden-md" style="width:100vw;">
+        <div class="col-md-6 offset-md-3 text-center" style="padding: 140px 0px 140px 0px">
+            <div class="text-center" style="color:white">
+                <h1 style="font-size:3.5rem; font-weight: 600;">IATA CARGO GATEWAY</h1>
+                <br />
+                <h4 style="font-size:1.9rem">The one-stop portal for all your air cargo needs</h4>
+            </div>
+            <div style="color:white; text-align:left;">
+                <br /><br />
+                <h3 style="font-size:1rem">Find your cargo business partner</h3>
+            </div>
+            
+            <div class="row-no-margin containercombo" style="padding:5px !important;"
+                onmouseleave={closeSearchTypeCombo}>
+                <div id="searchtypebox" class="searchtypebox col-xl-3 col-lg-4" style="padding:0px;" onmouseleave={closeSearchTypeCombo}>
+                    <div id="selectedtype" class="selectedtype" onmouseover={displaySearchTypeCombo}>
+                        <template if:true={isLocation}>
+                            <table>
+                                <tr>
+                                    <td><img style="width:28px;" src={searchbylocation} /></td>
+                                    <td style="color:#1E32FA;">
+                                        <p style="padding: 11px 3px 11px 3px;">Search by <br />location</p>
+                                    </td>
+                                    <td><img style="width:15px;" src={bluearrow} /></td>
+                                </tr>
+                            </table>
+                        </template>
+<template if:true={isCertification}>
+                            <table>
+                                <tr>
+                                    <td><img style="width:36px;" src={searchbycertification} /></td>
+                                    <td style="color:#1E32FA;">
+                                        <p style="padding: 11px 3px 11px 3px;">Search by <br />certification</p>
+                                    </td>
+                                    <td><img style="width:15px;" src={bluearrow} /></td>
+                                </tr>
+                            </table>
+                        </template>
+<template if:true={isCompanyName}>
+                            <table>
+                                <tr>
+                                    <td><img style="width:26px;" src={searchbycompany} /></td>
+                                    <td style="color:#1E32FA;">
+                                        <p style="padding: 11px 3px 11px 3px; font-size:13px !important;"
+                                            class="company-name-text">Search by <br />company name</p>
+                                    </td>
+                                    <td><img style="width:15px;" src={bluearrow} /></td>
+                                </tr>
+                            </table>
+                        </template>
+</div>
+<div id="searchtypecombo" class="searchtypecombo" if:true={showSearchTypeCombo}>
+    <table id="searchtypestable" class="searchtypestable">
+        <tr onclick={setCertificationSearchType}>
+            <td class="cellpadding"><img style="width:20px;" src={searchbycertification} /></td>
+            <td style="color:#1E32FA;">
+                <p>Search by certification</p>
+            </td>
+        </tr>
+        <tr onclick={setCompanyNameSearchType}>
+            <td class="cellpadding"><img style="width:20px;" src={searchbycompany} /></td>
+            <td style="color:#1E32FA;">
+                <p>Search by company name</p>
+            </td>
+        </tr>
+        <tr onclick={setLocationSearchType}>
+            <td class="cellpadding"><img style="width:20px;" src={searchbylocation} /></td>
+            <td style="color:#1E32FA;">
+                <p>Search by location</p>
+            </td>
+        </tr>
+    </table>
+</div>
+</div>
+<div id="searchboxdiv" class="searchboxdiv input-group col-xl-9 col-lg-8" style="padding:0px;" onmouseleave={closeSearchTypeCombo}>
+    <div class="col-md-12" style="padding:0px;">
+        <div class="input-group">
+            <input id="searchbox" type="text" class="form-control searchbox" value={searchValue} onfocus={closeSearchTypeCombo} onmouseover={closeSearchTypeCombo} placeholder={searchBoxPlaceholder} list="predictiveresults-1" onkeyup={predictiveSearch}>
+            <span class="input-group-btn">
+                                <button onclick={resultsPage} class="searchbutton btn search" type="button"><img
+                                        src={searchIcon} class="searchbuttonimg" alt="Search" /></button>
+                            </span>
+        </div>
+    </div>
+    <div class="col-md-12" style="padding:0px;">
+        <datalist id="predictiveresults">
+                            <template for:each={predictiveValues} for:item='item'>
+                                <option key={item.key} value={item.key}>{item.key} ({item.value})</option>
+                            </template>
+                        </datalist>
+    </div>
+</div>
+
+
+
+
+
+
+
+</div>
+<div class="col-md-6 offset-md-6 searchbarlinks" style="text-align:right;">
+    <a href="#" style="color:white !important;">Search Assistant</a> &nbsp;&nbsp; <span style="color:white !important;">|</span> &nbsp;&nbsp;
+    <a href="#" style="color:white !important;">Advanced search</a>
+</div>
+</div>
+</div>
+
+
+
+<!--MOBILE/TABLET VERSION-->
+<div class="col-12 bg-blue visible-md col-no-margin" style="width:100vw;">
+    <div class="col-12" style="padding: 50px 0px 50px 0px">
+        <div class="text-center" style="color:white">
+            <h1 style="font-size:2.2rem; font-weight: 600;">IATA CARGO GATEWAY</h1>
+
+            <h4 style="font-size:1.5rem">The one-stop portal for all your<br /> air cargo needs</h4>
+        </div>
+        <div class="text-center" style="color:white;">
+            <div class="col-10 offset-1"><br />
+                <hr class="white-hr"><br /></div>
+
+            <h3 style="font-size:1.2rem">Find your cargo business partner</h3>
+        </div>
+        <br />
+
+        <div class="row-no-margin containercombo" style="padding:5px !important;" onmouseleave={closeSearchTypeCombo}>
+            <div id="searchtypeboxr" class="searchtypebox col-10 offset-1" style="padding:0px;" onmouseleave={closeSearchTypeCombo}>
+                <div id="selectedtyper" class="selectedtype-responsive" onmouseover={displaySearchTypeCombo}>
+                    <template if:true={isLocation}>
+                            <p style="color:#ffc90d;">
+                                <img style="width:20px;" src={searchbylocationresp} />
+                                &nbsp;Search by location&nbsp;
+                                <img style="width:15px;" src={yellowarrow} />
+                            </p>
+                        </template>
+                    <template if:true={isCertification}>
+                            <p style="color:#ffc90d">
+                                <img style="width:25px;" src={searchbycertificationresp} />
+                                &nbsp;Search by certification&nbsp;
+                                <img style="width:15px;" src={yellowarrow} />                              
+                            </p>
+                        </template>
+                    <template if:true={isCompanyName}>
+                            <p style="color:#ffc90d">
+                                <img style="width:18px;" src={searchbycompanyresp} />
+                                &nbsp;Search by company name&nbsp;
+                                <img style="width:15px;" src={yellowarrow} />
+                            </p>
+                        </template>
+                </div>
+                <div id="searchtypecombor" class="searchtypecombo-responsive" if:true={showSearchTypeCombo}>
+                    <table id="searchtypestabler" class="searchtypestable">
+                        <tr onclick={setCertificationSearchType}>
+                            <td class="cellpadding"><img style="width:20px;" src={searchbycertification} /></td>
+                            <td style="color:#1E32FA;">
+                                <p>Search by certification</p>
+                            </td>
+                        </tr>
+                        <tr onclick={setCompanyNameSearchType}>
+                            <td class="cellpadding"><img style="width:20px;" src={searchbycompany} /></td>
+                            <td style="color:#1E32FA;">
+                                <p>Search by company name</p>
+                            </td>
+                        </tr>
+                        <tr onclick={setLocationSearchType}>
+                            <td class="cellpadding"><img style="width:20px;" src={searchbylocation} /></td>
+                            <td style="color:#1E32FA;">
+                                <p>Search by location</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <div id="searchboxdivr" class="searchboxdiv input-group col-10 offset-1" style="padding:0px;" onmouseleave={closeSearchTypeCombo}>
+                <div class="col-md-12" style="padding:0px;">
+                    <div class="input-group">
+                        <input id="searchboxr" type="text" class="form-control searchbox" value={searchValue} onfocus={closeSearchTypeCombo} onmouseover={closeSearchTypeCombo} placeholder={searchBoxPlaceholder} list="predictiveresults-1" onkeyup={predictiveSearch}>
+                    </div>
+                </div>
+                <div class="col-md-12" style="padding:0px;">
+                    <datalist id="predictiveresultsr">
+                            <template for:each={predictiveValues} for:item='item'>
+                                <option key={item.key} value={item.key}>{item.key} ({item.value})</option>
+                            </template>
+                        </datalist>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="col-10 offset-1 row col-no-padding">
+            <div class="col-6 searchbarlinks text-left col-no-padding">
+                <a href="#" style="color:white !important;">Advanced <br />search</a>
+            </div>
+            <div class="col-6 text-right col-no-padding">
+                <a style="margin-top:0px !important; width:90%;" onclick={resultsPage} class="btn btn-primary btn-blue link-button">SEARCH</a>
+            </div>
+        </div>
+    </div>
+</div>
+</template>

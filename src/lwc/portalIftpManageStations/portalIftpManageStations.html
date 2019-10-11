@@ -1,0 +1,316 @@
+<!-- Training Records Summary Search -->
+<template>
+    <!-- Error panel -->
+    <template if:true={error}>
+        <c-error-panel errors={error} main-error-message={mainErrorMessage}></c-error-panel>
+    </template>
+    
+    <template if:true={showSearch}>
+        <div class="slds-card_boundary">
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    ITP Manage Stations
+                </div>
+                <p class="slds-p-horizontal_small">
+                    <template if:true={loading}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+                    <template if:false={loading}>
+                        <div class="slds-p-around_medium slds-grid slds-wrap slds-gutters_x-small">
+                            <div class="slds-col">
+                                <lightning-button
+                                    variant="success" class="slds-m-left_x-small"
+                                    label="Add Station"
+                                    onclick={handleAddStation}>
+                                </lightning-button>
+                            </div>
+                        </div>
+                        <div if:true={dataRecords}>
+                            <lightning-datatable
+                                key-field="code"
+                                data={data}
+                                columns={columns}
+                                hide-checkbox-column
+                                sorted-by={sortedBy} 
+                                sorted-direction={sortedDirection}
+                                onsort={updateColumnSorting}
+                                onrowaction={handleRowAction}>
+                            </lightning-datatable>
+                        </div>
+                        <div if:false={dataRecords}>
+                            <div class="slds-text-align_center">
+                                <div class="slds-text-heading_medium">
+                                    <h3>No Results</h3>
+                                </div>
+                            </div>                            
+                        </div>                    
+                    </template>
+                </p>
+            </lightning-card>
+        </div>
+    </template>
+
+    <!-- Add NEW MODAL -->
+    <template if:true={openNewModal}>
+        <div style="height: 50%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeNewModal}>
+                            <lightning-icon icon-name="utility:close" size="medium">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Add New Station</h2>
+                    </header>
+                    <template if:true={loadingNew}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+                    <template if:false={loadingNew}>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                            <!-- Search stations -->
+                            <div  class="div_container slds-p-around_medium">
+                                <div  class="slds-size_9-of-12">
+                                    <lightning-input
+                                        name="Search when user hits the 'enter' key"
+                                        placeholder="Search Stations"
+                                        label="Search Stations"
+                                        type="search"
+                                        onchange={handleChangeSearch}
+                                        onkeyup={handleKeyUp}
+                                    ></lightning-input>
+                                </div>
+                                <div  class="slds-size_3-of-12 addAirlineButtonContainer">
+                                    <lightning-button label="Search" variant="neutral" onclick={handleSearchOnClick}></lightning-button>
+                                </div>
+                            </div>
+
+                            <!-- Datatable with search results, selectable 1 only -->
+                            
+                            <div if:true={showSearchResults} class="slds-m-top_medium slds-m-bottom_x-large">
+                                <div slot="title">
+                                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                                    Select the Station from the table below
+                                </div>
+                        
+                                <!-- Row actions -->
+                                <div  class="div_container slds-p-around_medium">
+                                    <div  class="slds-size_12-of-12" style="height: 300px;">
+                                        <lightning-datatable
+                                            key-field="id"
+                                            data={newData}
+                                            columns={columnsAddNewStation}
+                                            sorted-by={sortedByStationOptions} 
+                                            sorted-direction={sortedDirectionStationOptions}
+                                            onsort={updatecolumnsAddNewStationSorting}
+                                            max-row-selection=1
+                                            onrowselection={getSelectedRows}>
+                                        </lightning-datatable>
+                                    </div>
+                                </div>
+                            </div>
+                            <div if:false={showSearchResults} class="slds-m-top_medium slds-m-bottom_x-large">
+                                <div slot="title" if:false={stationAlreadyAdded}>
+                                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                                    No Results Found
+                                </div>
+                                <div slot="title" if:true={stationAlreadyAdded}>
+                                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                                    Station already an ITP station.
+                                </div>                                  
+                            </div>
+                        </div>
+                    </template>
+                    <footer class="slds-modal__footer">
+                        <lightning-button if:true={showSaveButton} class='addStationSave' label="Save" variant="neutral" onclick={handleNewSave}></lightning-button>
+                        <lightning-button label="Cancel" variant="neutral" onclick={handleCancel}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+
+    <!-- Edit/Delete MODAL -->
+    <template if:true={openmodal}>
+        <div style="height: 50%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open modal-form">
+                <div class="slds-modal__container">
+                    <div class="slds-is-relative">
+                        <template if:true={loadingDeleteSpinner}><lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner></template>
+                        <template if:true={loadingEditSpinner}><lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner></template>
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleEditDeleteCancel}>
+                                <lightning-icon icon-name="utility:close" size="medium">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{modalTitle}</h2>
+                        </header>
+                        <template if:false={loadingEditSpinner}>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    
+                                <lightning-input 
+                                    name="Code"
+                                    label="Code"
+                                    value={editData.code}
+                                    placeholder="Code"
+                                    disabled>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="City"
+                                    label="City"
+                                    value={editData.city}
+                                    placeholder="City"
+                                    disabled>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="Name"
+                                    label="Name"
+                                    value={editData.airportDescription}
+                                    placeholder="Name"
+                                    disabled>
+                                </lightning-input>
+                                <lightning-input 
+                                    name="Description"
+                                    label="Notes"
+                                    value={editData.description}
+                                    placeholder="Description"
+                                    disabled={isActionDelete} 
+                                    onchange={handleChangeDescription}>
+                                </lightning-input>
+                            </div>
+                            <div if:true={isActionEdit} class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                                <h3 id="modal-heading-03" class="slds-text-heading_small slds-hyphenate">OJT Document</h3>
+                                <c-lwc-file-upload
+                                    label-name="Upload Station OJT Document"
+                                    class="changeUploadFileTextToSelectFile"
+                                    my-record-id={editData.id} 
+                                    onuploadfinish={handleUploadFinish}>
+                                </c-lwc-file-upload>
+                            </div>
+                        </template>
+                        <footer class="slds-modal__footer">
+                            <lightning-button if:true={isActionEdit} label="Save" class='addStationSave' variant="neutral" onclick={handleSave}></lightning-button>
+                            <lightning-button if:true={isActionDelete} label="Delete" variant="neutral" onclick={handleRequestDelete}></lightning-button>
+                            <lightning-button class="cancelButton" label="Cancel" variant="neutral" onclick={handleEditDeleteCancel}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </footer>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open modal-form-background"></div>
+        </div>
+    </template>
+    <!-- Confirmation MODAL -->
+    <template if:true={openConfirmationModal}>
+        <div style="height: 50%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-05" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container" style="width: 20%;">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeConfirmationModal}>
+                            <lightning-icon icon-name="utility:close" size="medium">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-05" class="slds-text-heading_medium slds-hyphenate">{askForconfirmationMessage}</h2>
+                    </header>
+                    <template if:true={loadingDeleteSpinner}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+                    <template if:false={loadingDeleteSpinner}>
+                        <footer class="slds-modal__footer">
+                            <lightning-button label="Delete" variant="neutral" onclick={deleteConfirmation}>
+                            </lightning-button>
+                            <lightning-button class="cancelButton" label="Cancel" variant="neutral"
+                                onclick={closeConfirmationModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </footer>
+                    </template>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+    <!-- Manage Stations MODAL Manage Airline -->
+    <template if:true={openAddAirlineModal}>
+        <div style="height: 50%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-04" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-is-relative">
+                        <lightning-spinner if:true={loadingManageAirlinesSpinner} alternative-text="Loading" size="medium"></lightning-spinner>
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={handleManageAirlinesCancel}>
+                                <lightning-icon icon-name="utility:close" size="medium">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">{modalTitle}</h2>
+                        </header>
+                        <template if:false={loadingManageAirlinesSpinner}>
+                            <div class="min-height-class slds-modal__content slds-p-around_medium" id="modal-content-id-4">
+                                <label class="slds-form-element__label slds-no-flex">Airlines</label>
+                                <div if:true={showAirlinesList}>
+                                    <div  class="div_container slds-p-around_medium">
+                                        <div  class="slds-size_9-of-12">
+                                            <lightning-combobox 
+                                                name="airlines"
+                                                value={Value}
+                                                placeholder="Select Airline"
+                                                options={airlinesProneToAdd}
+                                                onchange={handleChangeAirlinesProneToAdd}>
+                                            </lightning-combobox>
+                                        </div>
+                                        <div  class="slds-size_3-of-12 addAirlineButtonContainer">
+                                            <lightning-button label="Add Airline" variant="success" onclick={handleAddAirlineToItpStation}></lightning-button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div if:false={showAirlinesList}>
+                                    <div class="slds-text-align_center">
+                                        <div class="slds-text-heading_small">
+                                                <h4>No more airlines to be added.</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="slds-form-element__label slds-no-flex">Airlines Selected</label>
+                                <div  class="div_container slds-p-around_medium">
+                                    <div  class="slds-size_12-of-12">
+                                        <lightning-datatable 
+                                            key-field="airlineName" 
+                                            hide-checkbox-column
+                                            data={recordToManageNewAirlinesList} 
+                                            columns={columnsManageNewAirlinesList}
+                                            sorted-by={manageAirlinesSortedBy} 
+                                            sorted-direction={manageAirlinesSortedDirection}
+                                            onsort={updatecolumnsManageNewAirlinesListSorting}
+                                            onrowaction={handleManageStationAirlinesRowAction}
+                                            hidden={hasNoAirlines}>
+                                        </lightning-datatable>
+                                    </div>
+                                </div>
+                                <div if:true={hasNoAirlines}>
+                                    <div class="slds-text-align_center">
+                                        <div class="slds-text-heading_small">
+                                            <h4>No Airlines Associated with this ITP.</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <footer class="slds-modal__footer">
+                            <lightning-button if:true={manageAirlinesHasChanges} label="Save" class='addStationSave' variant="neutral" onclick={handleManageAirlinesSave}>
+                            </lightning-button>
+                            <lightning-button class="cancelButton" label="Cancel" variant="neutral" onclick={handleManageAirlinesCancel}>
+                            </lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </footer>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template> 
+</template>

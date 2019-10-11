@@ -1,0 +1,76 @@
+.letraAzul {
+    color:  aqua;
+    background-color: black;
+}
+.letraVerde {
+    color:  green;
+    background-color: blueviolet;
+}
+.red{
+    color: red;
+}
+.textoizquierda{
+    text-align: left;
+    font-size: 13px;
+}
+.black{
+    background-color: yellowgreen;
+}
+.bg-white{
+    background-color: white;
+}
+.titulogrande{
+    text-align: center;
+    font-size: 44px;
+}
+
+.center{
+    text-align: center;
+}
+
+.boton {
+    
+    border: 1px solid #2e518b; /*anchura, estilo y color borde*/
+    padding: 5px; /*espacio alrededor texto*/
+    background-color: #2e518b; /*color botón*/
+    color: #ffffff; /*color texto*/
+    font-family: 'Helvetica', sans-serif; /*tipografía texto*/
+
+}
+
+.bocadillo-cuadrado {
+    position: relative;
+    height: 200px;
+    width: 300px;
+    background: white;
+    box-shadow: 1px 12px 33px rgba(0, 0, 0, 0.5);
+}
+.bocadillo-cuadrado:before {
+    border: 25px solid white;
+    content: '';
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    bottom: -48px;
+    left: calc(50% - 25px)
+}
+
+.bocadillo{
+    border-radius: 30px;
+    background-color: #808080;
+    color: #fff;
+    padding: 30px;
+    width: 300px;
+    font-family: 'Trebuchet ms';
+    font-size: 1em
+   }
+   .bocadillo:before {
+    content:"";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 20px solid #808080;
+    border-left: 18px solid transparent;
+    margin: 68px 0 0 250px;
+   }

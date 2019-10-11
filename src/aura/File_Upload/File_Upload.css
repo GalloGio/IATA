@@ -1,0 +1,132 @@
+.THIS.container {
+    min-height:300px;
+    background-color:white;
+}
+
+.THIS .drop_zone {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    background-color: #FFFFFF;
+    outline: 2px dashed grey;
+    outline-offset: -10px;
+    border: solid 10px #F2F2F2;
+    height: 300px;
+    width: 75%;
+    margin: 0 auto;
+}
+
+.THIS .containerMargin{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color:white;
+}
+.THIS .chooseButton {
+    display: table;
+    margin: 0 auto;
+}
+
+.THIS .dragDropMessage {
+    margin: auto;
+        position: absolute;
+
+}
+
+.THIS .lookup {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.THIS .fileTable {
+    margin: 30px auto;
+    width: 75%;
+    padding: 10px;
+}
+
+.THIS thead p {
+    font-family: aktiv-grotesk;
+    font-size: 18px;
+    color: #666666;
+}
+
+.THIS .listHeader {
+    font-family: aktiv-grotesk-bold;
+    font-size: 18px;
+    color: #666666;
+    line-height: 22px;
+    margin-bottom: 10px;
+}
+
+.THIS tbody td p{
+    font-family: aktiv-grotesk;
+    font-size: 14px;
+    color: #666666;
+}
+
+.THIS .listText {
+    font-family: aktiv-grotesk;
+    font-size: 15px;
+    color: #666666;
+    width:92%;
+    float:left;
+}
+
+.THIS .listIcon {
+    float: right;
+}
+
+.THIS .listRow {
+    line-height: 2rem;
+}
+
+
+.THIS .submitButton {
+    margin: 0 auto;
+    display: table;
+}
+
+
+.THIS .dragDropMessage p{
+    font-family: aktiv-grotesk-bold;
+    font-size: 22px;
+    color: #666666;
+    text-align: center;
+    line-height: 2rem;
+}
+
+.THIS .inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.THIS .gadmContent {
+    width: 100%;
+}
+
+.THIS .designedActors {
+    margin-top: 2rem;
+}
+
+.THIS .noRight {
+    margin:auto;
+    font-family: aktiv-grotesk;
+    font-size: 15px;
+    color: #666666;
+}
+
+.THIS .disable_content {
+    opacity: 0.4;
+    pointer-events:none;
+}
+
+.THIS .helpEmail {
+    text-align:center;
+    font-family: aktiv-grotesk;
+    font-size: 15px;
+    color: #666666;
+    padding-top:40px;
+}

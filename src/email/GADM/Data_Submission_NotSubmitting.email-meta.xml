@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Data_Submission_NotSubmitting</name>
+    <style>none</style>
+    <subject>No data submissions</subject>
+    <textOnly>Dear {!Contact.FirstName} {!Contact.LastName}, we did not receive data for *actor* for *monthsNotSubmitting* months. Please submit the data.  IATA</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

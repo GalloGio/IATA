@@ -1,0 +1,68 @@
+<messaging:emailTemplate subject="{!FLOOR(relatedTo.Days_to_Go_vs_60_Day_Limit__c)} Days remaining to reply to Prorate Request {!relatedTo.Name}"   relatedToType="Baggage_Claim__c">
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=0152000000111UE&oid=00D2000000008TF"/>--><BR/>
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+
+Message addressed to the Baggage Proration Department of: {!relatedTo.Airline_receiving__r.Name} <BR/>
+<BR/>
+
+You are supposed to reply to Prorate Request comments before the 60-Day-Limit.<BR/>
+{!FLOOR(relatedTo.Days_to_Go_vs_60_Day_Limit__c)} Days are remaining before this limit on the following Prorate Request:<BR/>
+<BR/>
+
+<table style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">
+
+<tr>
+<td> Airline Issuing: </td>  <td> {!relatedTo.Airline_issuing__c} </td>
+</tr>
+
+<tr>
+<td> PIR File Ref: </td>  <td> {!relatedTo.PIR_File_Ref__c} </td>
+</tr>
+
+<tr>
+<td>Prorate Request Number: </td> <td> {!relatedTo.Name} </td>
+</tr>
+
+<tr>
+<td> Passenger Name: </td>  <td> {!relatedTo.Passenger_s_First_Name__c} {!relatedTo.Passenger_s_Last_Name__c}</td>
+</tr>
+
+<tr>
+<td>Proration Amount <b>due to your Airline</b>: </td> <td> {!relatedTo.PIR_Currency__c} {!relatedTo.PIR_Total_Prorated_Amount_Due__c} </td>
+</tr>
+
+</table>
+
+<BR/>
+You can access this Prorate Request by clicking on the following link:<BR/>
+
+<center><br />
+<a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
+href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_Baggage_Proration_Claim?Id={!relatedTo.id}">Prorate Request : {!relatedTo.Name}</a>
+  </center>
+
+
+{!$Label.ISSP_Email_ThankYou}<BR/>
+<BR/>
+{!$Label.ISSP_Email_IataService}<BR/>
+
+<p>
+<!--The URL of the following image is the one of PROD-->
+<!--<apex:image value="https://iata--transform--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000VVJN" width="176" height="89" />-->
+<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000"/>
+</a>
+</p>
+
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000"/>
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=015w0000001yKkp&oid=00D2000000008TF"/>-->
+<BR/>
+
+</span>
+</div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

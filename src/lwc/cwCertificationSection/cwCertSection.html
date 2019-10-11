@@ -1,0 +1,49 @@
+<template >
+    <template if:true={result}>
+        <div class={backGroundStyle}>
+                <p class="h3 text-center bg-blue" style="padding:30px;font-weight: 600; font-size:1.5rem" >{title}</p>
+                <div class="slds-col slds-size_12-of-12"> 
+                    <template if:true={isCertificationResults} for:each={certificationMapInfo} for:item="certificationMap"> 
+                        <lightning-layout-item  key={certificationMap.row} padding="around-small">
+                            <div class="slds-grid slds-wrap slds-grid_align-center">
+                                <template key={certificationMap.row} for:each={certificationMap.data} for:item="certification">
+                                    <!-- For dynamic style: in the next div slds-size_(number of certification to show)-of-12 -->
+                                    <div key={certification.Id} class="slds-col slds-size_4-of-12">
+                                        <c-cw-certification key={certification.Id} certification={certification} onselected={getCertificationDetail}></c-cw-certification> 
+                                    </div>
+                                </template>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </div>
+                <div class="px-3 py-3">
+                    <template if:false={selectedCertification} >
+                        <div style="height: 20px;"></div>
+                        <div class="text-center"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                        <div style="height: 20px;"></div>
+                    </template>
+                </div>
+            
+                <template if:true={selectedCertification} >
+                    <template if:true={shouldBeOpen} >
+                        <div class={textStyle} style="width: 100%">
+                            <c-cw-text-container key={selectedCertification.Id}
+                                                title={selectedCertification.Name__c}
+                                                button-url={selectedCertification.link__c}
+                                                title-color="titulogrande"
+                                                text={selectedCertification.description__c}
+                                                text-color="textoizquierda"
+                                                button-text="SEE MORE"
+                                                button-text-two="SHOW CERTIFIED ENTITIES"
+                                                close-button="X"
+                                                button-color="btn btn-primary link-button btn-blue"
+                                                onclosetextcontainer={handleTextContainerClose}> 
+                            </c-cw-text-container>
+                        </div>
+                    </template>
+                </template>
+
+            
+        </div>
+    </template>
+</template>

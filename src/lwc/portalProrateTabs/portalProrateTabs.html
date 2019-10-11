@@ -1,0 +1,16 @@
+<template>
+    
+    <div slot="title">
+        <lightning-icon icon-name="utility:right" size="medium" variant="error"></lightning-icon>
+        <b>Baggage Proration</b>
+    </div>
+    
+    <lightning-tabset variant="scoped">
+        <lightning-tab label="PIR Forms" title="PIR Forms" value='PIR'>
+            <c-portal-prorate-pir-form-list oncreate={handleCreate} onselect={handleSelect}></c-portal-prorate-pir-form-list>
+        </lightning-tab> 
+        <lightning-tab label="Prorate Requests" title="Prorate Requests" value='Request'>
+            <c-portal-prorate-requests-list></c-portal-prorate-requests-list>
+        </lightning-tab>              
+    </lightning-tabset>
+</template>

@@ -1,0 +1,21 @@
+<template>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="companyIconBox"> 
+                <img src={getLogoUrl} alt="logo"/>
+            </div>
+        </div>
+         <div class="col-md-7" style="margin-top:10px;">
+            <div class="title">
+                <strong>{input.name}</strong>
+            </div>
+            <div>
+                <span>{input.accountName} {input.type}</span>
+            </div>
+            <div class="type">
+                <img class="typeButton" style="width:20px;" src={getCompanyTypeImage} alt="type"/>&nbsp;&nbsp;<strong>{input.recordTypeName}</strong>
+            </div>
+        </div>
+    
+    </div>
+</template>

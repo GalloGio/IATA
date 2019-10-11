@@ -1,0 +1,33 @@
+.THIS {
+    
+} 
+.THIS .slds-item {
+    border: 1px solid rgb(139, 164, 186);
+    border-radius: 0.25rem;
+    background-clip: padding-box;
+    padding: 0.45rem;
+    margin: 0.5rem;
+    box-shadow: 0.5px 0.5px;
+}
+.THIS .stageContainer{
+    float:left;
+}
+.THIS .dropZone{
+    border-width: 0px 0.5px 0.5px 0.5px;
+    border-color: rgba(37, 116, 169, 0.74);
+    border-style: solid;
+}
+.THIS .pipelineHeader {
+    background-color: rgba(37, 116, 169, 0.74);
+    color: white;
+    border: 0.25px solid white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.THIS .hiddenText {
+    visibility: hidden;
+    display:none;
+}
+.THIS .iconContainer svg{
+    fill: white;
+}

@@ -1,0 +1,204 @@
+<apex:page renderas="pdf" controller="ISSP_APProcess"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="false"
+           applyBodyTag="false"
+           >
+<head>
+    <style>
+        @page {
+            margin-top: 3.5cm;
+            margin-bottom: 2cm;
+            margin-left: 1.5cm;
+            margin-right: 1.5cm;
+            @top-center {content: element(header);}
+            @bottom-center {content: element(footer);}
+        }
+
+        body {
+            font-family: 'Arial Unicode MS';
+            font-size: 11px;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        div.header {padding: 10px;position: running(header);}
+        div.footer {display: block;padding: 5px;position: running(footer);}
+
+        .pagenumber:before {content: counter(page);}
+        .pagecount:before {content: counter(pages);}
+
+        .pbSubheader {
+            color: #fff;
+            padding-left:10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            font-weight:700;
+            background-color: #337ab7;
+            width: 100%;
+            margin-top:10px;
+        }
+        th {
+            width: 190px;
+            text-align: right;
+            padding: 2px 10px 2px 2px;
+            margin: 2px;
+            font-size: 110%;
+        }
+        td {
+            width: 190px;
+            text-align: left;
+            padding: 2px 2px 2px 10px;
+            margin: 2px;
+        }
+        .blue-label {
+            background-color: rgb(217, 237, 247);
+            font-size: 13px;
+            width: 512px;
+            margin: 3px;
+            padding: 2px;
+            text-align: center;
+            font-weight: bold;
+            border: 10px solid white;
+        }
+        .bold {
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+        .underline {
+            text-decoration: underline;
+        }
+        .italic {
+            font-style: italic;
+        }
+        .justify {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .align-left{
+            text-align: left;
+        }
+        .grey-box{
+            background-color: lightgrey;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid black;
+            width: 200px;
+        }
+        .margin-3 {
+            margin-left: 3em;
+        }
+        .margin-4 {
+            margin-left: 4em;
+        }
+        .margin-6 {
+            margin-left: 6em;
+        }
+        .margin-9 {
+            margin-left: 9em;
+        }
+        .indent-1_5 {
+            text-indent: -1.5em;
+        }
+        .indent-2 {
+            text-indent: -2em;
+        }
+        .indent-2_5 {
+            text-indent: -2.5em;
+        }
+        .indent-3 {
+            text-indent: -3em;
+        }
+        .no-page-break {
+            page-break-inside: avoid;
+        }
+        .new-line {
+            page-break-before: always;
+        }
+        /** Styles for the table of contents**/
+        .table-contents {
+          width: 100%;
+        }
+        .table-contents table {
+          width: 80%;
+          margin-left: 10%;
+          margin-right: 10%;
+        }
+        .table-contents table tr td {
+          overflow: hidden;
+          white-space: nowrap;
+        }
+        .table-contents table tr td:nth-child(1) {
+          width: 4em;
+        }
+        .table-contents table tr td:nth-child(2) {
+          width: 35em;
+        }
+        .table-contents table tr td:nth-child(3) {
+          width: 4em;
+        }
+        .table-contents span:after {
+          content: " ........................................................................................................................................";
+        }
+        /** Styles for a regular table with headers**/
+        .regular-table {
+          width: 100%;
+        }
+        .regular-table table {
+          border-collapse: collapse;
+        }
+        .regular-table table,
+        .regular-table tr,
+        .regular-table td,
+        .regular-table th {
+          border: 1px solid black;
+        }
+        .regular-table-center table,
+        .regular-table-center tr,
+        .regular-table-center td,
+        .regular-table-center th {
+          text-align: center;
+        }
+        .regular-table-height-2_5 tr {
+          height: 2.5em;
+        }
+        .regular-table th {
+          font-weight: bold;
+          font-family: sans-serif;
+        }
+        .regular-table table tr th:nth-child(1),
+        .regular-table table tr td:nth-child(1) {
+          width: 10em;
+          font-weight: bold;
+          font-family: sans-serif;
+        }
+        footer {
+            text-align: left;
+        }
+</style>
+</head>
+
+<body>
+
+    <div class="panel-heading head_panel_green">
+        <h3 class="panel-title">{!PageTitle}</h3>
+    </div>
+
+    <apex:pageBlock id="main-block">
+        <apex:form >
+            <apex:outputPanel rendered="{!strAreaType=='Airline Joining'}">
+                <c:ICH_Form_IATA_Member ctrl="{!thisController}" rendered="{!IsICHType_IATAMember}" readonly="true"/>
+                <c:ICH_Form_Non_IATA_Member ctrl="{!thisController}" rendered="{!IsICHType_NonIATAMember}" readonly="true"/>
+                <c:ICH_Form_AssociateAggregator ctrl="{!thisController}" rendered="{!IsICHType_AssociateAggregator}" readonly="true"/>
+                <c:ICH_Form_AssociateSubsidiary ctrl="{!thisController}" rendered="{!OR(IsICHType_AssociateSubsidiary,IsICHType_AssociateSP)}" readonly="true"/>
+                <c:ICH_Form_SponsoredAirline ctrl="{!thisController}" rendered="{!IsICHType_SponsoredAirline}" readonly="true"/>
+                <c:ICH_Form_SponsoredAssociates ctrl="{!thisController}" rendered="{!IsICHType_SponsoredAssociates}" readonly="true"/>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!strAreaType=='Airline Change'}">
+                <c:ICH_Form_Changes ctrl="{!thisController}" readonly="true"/>
+            </apex:outputPanel>
+        </apex:form>
+    </apex:pageBlock>
+</body>
+</apex:page>

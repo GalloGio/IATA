@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>29.0</apiVersion>
+    <available>true</available>
+    <description>Airline Receiving creates a comment on a Prorate Request. Airline Issuing is emailed.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>ISSP_PIR_New_PIR_Comment_by_receiver</name>
+    <style>none</style>
+    <subject>New comment on Prorate Request  - Receiver:</subject>
+    <type>visualforce</type>
+</EmailTemplate>

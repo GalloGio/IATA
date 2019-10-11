@@ -1,0 +1,71 @@
+<template>
+    <style>
+        .slds-textarea {
+            width:100% !important;
+        }
+    </style>
+    <template if:true={loading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <template if:true={showMeNow}>
+        <div class="slds-card_boundary">
+                <lightning-card>
+                    <div slot="title" style="text-align:center">
+                        <lightning-button variant="success" label="Add Comment" onclick={handleAddCommentClick} class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </lightning-card>
+                <br>
+                <h3>Comment</h3>
+                <lightning-card>
+                    <div slot="title">
+                        <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                        Comment Identification
+                    </div>
+                    <div class="slds-p-around_medium slds-grid slds-gutters">
+                        <div class="slds-col"><!--LEFT COLUMN-->
+                            <label>Parent Prorate Request</label>
+                            <br>
+                            <lightning-formatted-url if:true={BaggageClaimName} value="ISSP_Baggage_Proration_Claim?id={recid}&mid=M6S1"  label={BaggageClaimName} target="_blank" ></lightning-formatted-url>      
+                            <lightning-input
+                                label="Parent PIR Ref" 
+                                value={PIRFileRef} 
+                                readonly>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col"><!--RIGTH COLUMN-->
+                            <lightning-input
+                                label="Email (Prorate Dept.) Airline issuing" 
+                                value={rec.Email_Prorate_Dept_Airline_issuing__c} 
+                                readonly>
+                            </lightning-input>
+                            <lightning-input
+                                label="Email (Prorate Dept.) Airline receiving" 
+                                value={rec.Email_Prorate_Dept_Airline_receiving__c} 
+                                readonly>
+                            </lightning-input>
+                        </div>
+                    </div>
+                </lightning-card>
+                <br>
+                <lightning-card>
+                    <div slot="title">
+                        <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                        Comment
+                    </div>
+                    <div class="slds-p-around_medium slds-grid slds-gutters">
+                        <lightning-textarea 
+                        required 
+                        class="slds-textarea"
+                        label="Text"
+                        value={rec.Comments__c}
+                        onchange={handleCommentChange}></lightning-textarea>
+                    </div>
+                </lightning-card>
+                <!--<lightning-card>
+                    <div slot="title" style="text-align:center">
+                        <lightning-button variant="success" label="Add Comment" onclick={handleAddCommentClick} class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </lightning-card>-->
+            </div>
+    </template>
+</template>

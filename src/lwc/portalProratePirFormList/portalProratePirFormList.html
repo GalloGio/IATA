@@ -1,0 +1,74 @@
+<!-- Training Records Detail Search -->
+<template>
+        <template if:true={showForm}>
+            <lightning-card if:false={checkNavigation}>
+                    <div slot="title" style="text-align:center">
+                        <lightning-button variant="brand" label="Back"  onclick={handleBackClick} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button if:true={isActionEdit} variant="brand" label="Save"  onclick={handleSaveChldClick} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button if:true={isActionEdit} variant="brand" label="Cancel"  onclick={handleCancelChldClick} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button if:false={isActionEdit} variant="brand" label="Edit"  onclick={handleEditChldClick} class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </lightning-card>
+                <br>                
+            <br>
+            
+            <c-portal-prorate-pir-form isactionedit={isActionEdit} 
+                                        recid={IdPIRForm} 
+                                        onremoveparentloading={onRemoveLoading} 
+                                        onremovebuttonsave={removeButtonSave} 
+                                        onchecksecondlevel={onCheckNavigation}
+                                        onrefreshlist={handleRefreshList}></c-portal-prorate-pir-form>
+            
+            <lightning-card if:false={checkNavigation}>
+                    <div slot="title" style="text-align:center">
+                        <lightning-button variant="brand" label="Back"  onclick={handleBackClick} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button if:true={isActionEdit} variant="brand" label="Save"  onclick={handleSaveChldClick} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button if:true={isActionEdit} variant="brand" label="Cancel"  onclick={handleCancelChldClick} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button if:false={isActionEdit} variant="brand" label="Edit"  onclick={handleEditChldClick} class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </lightning-card>
+                <br>
+        </template>
+        <template if:true={showSearch}>
+            <div class="slds-card_boundary">
+                <lightning-card>
+                    <div slot="title">
+                        <lightning-icon icon-name="utility:right" size="small" variant="error"></lightning-icon>
+                        PIR Forms
+                    </div>
+                    <div slot="actions" >
+                        <lightning-button variant="brand" class="slds-m-right_x-small" label="Create New PIR"
+                            onclick={handleCreateNewPIR}>
+                        </lightning-button>
+                    </div>
+                    <div></div>
+                    <p class="slds-p-horizontal_small">
+                        <template if:true={loading}>
+                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                        </template>
+                        <template if:false={loading}>
+                            <div if:true={dataRecords}>
+                                <lightning-datatable
+                                    key-field="Id"
+                                    data={data}
+                                    columns={columns}
+                                    sorted-by={sortedBy}
+                                    sorted-direction={sortedDirection}
+                                    onsort={updateColumnSorting}
+                                    onrowaction={handleRowAction}
+                                    hide-checkbox-column>
+                                </lightning-datatable>
+                            </div>
+                            <div if:false={dataRecords}>
+                                <div class="slds-text-align_center">
+                                    <div class="slds-text-heading_medium">
+                                        <h3>No Results</h3>
+                                    </div>
+                                </div>                            
+                            </div>                    
+                        </template>
+                    </p>
+                </lightning-card>
+            </div>
+        </template>
+    </template>

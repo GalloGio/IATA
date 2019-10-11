@@ -1,0 +1,5 @@
+Dear {!echosign_dev1__SIGN_Agreement__c.Case_Owner_Name__c},
+
+The agreement "{!echosign_dev1__SIGN_Agreement__c.Name}" is now {!echosign_dev1__SIGN_Agreement__c.echosign_dev1__StatusVisible__c} and requires you to update the Authorized Signatories Package in the respective account.
+
+For direct access to the agreement, please click on this link {!echosign_dev1__SIGN_Agreement__c.Link}

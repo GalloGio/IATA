@@ -1,0 +1,8 @@
+<aura:component controller="ClaimEU261_ExtractCSVController">          
+    <div class="slds-grid" style="margin-right: 16px;">
+	    <div class="slds-col slds-has-flexi-truncate"/>
+	    <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom--xx-small">
+		    <lightning:button label="Extract CSV" iconName="utility:download" onclick="{!c.downloadCsv}"/>
+		</div>
+	</div>
+</aura:component>

@@ -1,0 +1,145 @@
+<apex:page controller="AgreementController" lightningStylesheets="true">
+
+    <apex:includeScript value="{!URLFOR($Resource.echosign_dev1__jquery321)}"/>
+	<apex:includeScript value="{!URLFOR($Resource.Tablesorter, 'jquery.tablesorter.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.Tablesorter,'/themes/blue/style.css')}" />
+    
+    <html>
+
+        <style>
+            table.tablesorter {
+                margin:0px 0pt 0px !important;
+            }
+    	</style>
+        
+        <body>
+    
+            <apex:slds />
+    
+            <div class="slds-page-header">
+    
+                <div class="slds-media">
+    
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-case">
+                            <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#case" />
+                            </svg>
+                        </span>
+                    </div>
+    
+                    <br />
+    
+                    <div class="slds-media__body">
+                        <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="">{!cse.CaseNumber} - {!cse.Subject}</h1>
+                        <br />
+                        <h2><b>Account</b>: {!cse.Account.Name}</h2>
+                        <h2><b>IATA Code</b>: {!cse.Account.IATACode__c}</h2>
+                        <h2><b>Case owner</b>: {!cse.Owner.Name}</h2>
+                        <br />
+                        <p class="slds-text-body-regular slds-line-height_reset">Create a new agreement from template</p>
+                    </div>
+    
+                    <div>
+                        <apex:outputPanel id="filterPanel" rendered="{!NOT(errorExists)}">
+    
+                            <apex:form >
+                                <label class="slds-form-element__label">Agreement Type:</label>
+                            	<apex:selectList styleClass="slds-input slds-combobox__input" value="{!templateTypeFilter}" title="Select a type" label="Select a type" multiselect="false" size="1" onkeypress="return searchOnEnterKey(event);">
+                            		<apex:selectOptions value="{!templateTypesLst}" />
+                            	</apex:selectList>
+                            	<br />
+                            	<br />
+                            	<label class="slds-form-element__label">Global text search:</label>
+                                <apex:inputText value="{!templateNameFilter}" styleClass="slds-input" onkeypress="return searchOnEnterKey(event);"/>
+                                <br />
+                                <apex:actionFunction name="doSearchEnterKey" action="{!doSearch}" oncomplete="refreshTableSorter()" rerender="formPanel" />
+                                <apex:commandButton styleClass="slds-button slds-button_neutral slds-float_right" value="Search" action="{!doSearch}" oncomplete="refreshTableSorter()" rerender="formPanel" />
+                            </apex:form>
+    
+                        </apex:outputPanel>
+                    </div>
+    
+                </div>
+    
+            </div>
+    
+            <apex:outputPanel id="formPanel">
+    
+                <apex:form >
+                    <div class="slds-section-title--divider">Case Agreement Template List</div> 
+    
+                    <apex:dataTable id="templatesTable" title="Select the desired template" value="{!templates}" var="temp" styleClass="slds-table slds-table--bordered slds-table--striped slds-is-sortable tablesorter" rendered="{!NOT(errorExists)}">
+                        <apex:column >
+                            <apex:inputCheckbox value="{!temp.selected}" disabled="{!errorExists}"/>
+                        </apex:column>
+                        <apex:column id="type" headerValue="Type" value="{!temp.template.echosign_dev1__Agreement_Type__r.Description__c}"/>
+                        <apex:column headerValue="Name" value="{!temp.template.Name}"/>
+                        <apex:column headerValue="Description" value="{!temp.template.Description__c}"/>
+                        <apex:column headerValue="Signature Type" value="{!temp.template.echosign_dev1__Signature_Type__c}" />
+                        <apex:column headerValue="Language" value="{!temp.template.echosign_dev1__Language__c}" />
+                        <apex:column headerValue="HQ Country Based" value="{!temp.template.HQ_Country_Based__c}" />
+                        <apex:column headerValue="Further Edit Required" value="{!temp.template.Further_Edit_Required__c}" />
+                    </apex:dataTable>
+    
+                    <br />
+                    
+                    <apex:pageMessages />
+    
+                    <apex:outputPanel id="buttonsPanel">
+                        <apex:commandButton styleClass="slds-button slds-button_neutral" value="Automatically Send" action="{!sendAgreementAutomatically}" reRender="formPanel" oncomplete="onLoad()" rendered="{!NOT(errorExists)}"/>
+                        <apex:commandButton styleClass="slds-button slds-button_neutral" value="Edit Agreement" action="{!editAgreement}" reRender="formPanel" oncomplete="onLoad()" rendered="{!NOT(errorExists)}"/>
+                        <apex:commandButton styleClass="slds-button slds-button_neutral" value="Return" action="{!returnToCase}" />
+                    </apex:outputPanel>
+    
+                </apex:form>
+    
+            </apex:outputPanel>
+         
+        </body>
+
+        <script type="text/javascript">
+    
+            var j$ = jQuery.noConflict();
+    
+            j$( document ).ready(function() {
+                onLoad();
+            });
+    
+            function onLoad(){
+    
+                var $checkboxes = j$("input[type='checkbox']");
+    
+                $checkboxes.change(function(){
+                    $checkboxes.not(this).prop("checked", false);
+                });
+			   
+			   	refreshTableSorter();
+			       
+            }
+            
+            function refreshTableSorter(){
+            	//Hack to remove the script tag that 
+            	//is added when the table is rerendered
+            	j$("table[id*='templatesTable'] td[id*='type'] script").remove();
+        		j$("table[id*='templatesTable']").tablesorter();
+            	j$("table[id*='templatesTable']").trigger('update');
+            }
+    
+            function searchOnEnterKey(ev){
+            
+                if(window.event && (window.event.keyCode == 13 || ev.which == 13)){
+                	//assignTableSorter();
+                    doSearchEnterKey();
+                    return false;
+                }
+    
+                return true;
+    
+            }
+    
+        </script>
+
+ 	</html>
+
+</apex:page>

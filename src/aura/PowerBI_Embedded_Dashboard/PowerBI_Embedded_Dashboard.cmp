@@ -1,0 +1,24 @@
+<aura:component controller="PowerBI_Embedded_Dashboard_CTRL" description="PowerBI_Embedded_Dashboard">
+
+    <aura:attribute name="dashboard" type="Object"/>
+    <aura:attribute name="userDetail" type="Object"/>
+
+    <!--SHOW SPINNER-->
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+
+    <!--EVENTS-->
+    <aura:registerEvent name="backEvent" type="c:PowerBI_Embedded_Dashboard_Back_EVT"/>
+    <aura:registerEvent name="serviceUsageEvent" type="c:Service_Usage_Event"/>
+    <aura:attribute name="cssStyle" type="String" />
+    <!--HANDLER-->
+    <aura:handler name="init" value="{!this}" action="{! c.init}"/>
+    <style>{!v.cssStyle}</style>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <div>
+
+        <!--EMBEDDED DASHBOARD-->
+        <div aura:id="iframe"></div>
+    </div>
+
+
+</aura:component>

@@ -1,0 +1,171 @@
+<template>
+
+  <!--HiDDEN RESPONSIVE VERSION-->
+  <div class="hidden-sm">
+    <footer class="bg-black70 color-white ">
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <div>
+              <img src={logoOther} class="logo-small" alt="IATA Logo">
+            </div>
+            <div class="col tagline">
+              <template if:true={metadataFooterTitle.data}>
+                <h2>{FooterTitleDescription}</h2>
+              </template>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <template if:true={metadataAirlines.data}>
+            <h3>{AirlinesName}</h3>
+            <ul>
+              <li><a style="color: white !important" href={AirlinesURL} target="_blank">{AirlinesURL}</a></li>
+            </ul>
+          </template>
+        </div>
+        <div class="col-3">
+          <template if:true={metadataAviation.data}>
+            <h3>{AviationName}</h3>
+            <ul>
+              <li><a style="color: white !important" href={AviationURL} target="_blank">{AviationURL} </a></li>
+            </ul>
+          </template>
+        </div>
+        <div class="col social">
+          <div class="row">
+            <template if:true={metadataTwitter.data}>
+              <div class="social-item"><a title={twitterName} href={twitterURL} target="_blank"><img src={twitter}
+                    alt="Twitter" class="img-fluid"></a></div>
+            </template>
+            <template if:true={metadataFacebook.data}>
+              <div class="social-item"><a title={FacebookName} href={FacebookURL} target="_blank"><img src={facebook}
+                    alt="Facebook" class="img-fluid"></a></div>
+            </template>
+            <template if:true={metadataLinkedIn.data}>
+              <div class="social-item"><a title={LinkedinName} href={LinkedinURL} target="_blank"><img src={linkedin}
+                    alt="LinkedIn" class="img-fluid"></a></div>
+            </template>
+            <template if:true={metadataYoutube.data}>
+              <div class="social-item"><a title={YoutubeName} href={YoutubeURL} target="_blank"><img src={youtube}
+                    alt="YouTube" class="img-fluid"></a></div>
+            </template>
+            <template if:true={metadataRSS.data}>
+              <div class="social-item"><a title={RSSName} href={RSSURL} target="_blank"><img src={rss} alt="RSS"
+                    class="img-fluid"></a></div>
+            </template>
+          </div>
+        </div>
+      </div>
+      <div class="row copy">
+        <div class="col">
+          <template if:true={metadataFooterCopyright.data}>
+            <p>© {FooterCopyrightDescription}</p>
+          </template>
+        </div>
+        <div class="col text-right color-white">
+          <p>
+            <template if:true={metadataPrivacy.data}>
+              <a href={PrivacyURL} class="color-white">{PrivacyName}</a>
+            </template> |
+            <template if:true={metadataLegal.data}>
+              <a href={LegalURL} class="color-white">{LegalName}</a>
+            </template>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <!--VISIBLE RESPONSIVE VERSION-->
+  <div class="visible-sm">
+    <div class="bg-black70 color-white" style="padding: 20px !important">
+      <div class="row">
+        <div class="col-12 text-center">
+          <img src={logoOther} style="width:35%" alt="IATA Logo">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-center">
+          <h2>{FooterTitleDescription}</h2>
+        </div>
+      </div>
+      <br /><br />
+      <div class="row-home">
+        <div class="col-6 text-left">
+          <h3>{AirlinesName}</h3>
+          <a style="color: white !important" href={AirlinesURL} target="_blank">{AirlinesURL}</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-left">
+          <a style="color: white !important" href={AviationURL} target="_blank"><span style="font-size: 1.2rem;font-weight: 600;">{AviationName}</span>&nbsp;{AviationURL} </a>
+        </div>
+      </div>
+      <div class="row-home">
+        <div class="col-6 text-center" style="padding-top:23px;">
+          <div class="col-6 offset-4">
+            <template if:true={metadataTwitter.data}>
+              <div class="social-item"><a title={twitterName} href={twitterURL} target="_blank"><img src={twitter}
+                    alt="Twitter" class="img-fluid"></a></div>
+            </template>
+          </div>
+        </div>
+        <div class="col-6 text-center">
+          <div class="col-6 offset-2">
+            <template if:true={metadataFacebook.data}>
+              <div class="social-item"><a title={FacebookName} href={FacebookURL} target="_blank"><img style="width:70px;" src={facebook}
+                    alt="Facebook" /></a></div>
+            </template>
+          </div>
+        </div>
+      </div>
+      <div class="row-home">
+        <div class="col-6 text-center">
+          <div class="col-6 offset-4">
+            <template if:true={metadataLinkedIn.data}>
+              <div class="social-item"><a title={LinkedinName} href={LinkedinURL} target="_blank"><img src={linkedin}
+                    alt="LinkedIn" class="img-fluid"></a></div>
+            </template>
+          </div>
+        </div>
+        <div class="col-6 text-center" style="padding-top:23px;">
+          <div class="col-6 offset-2">
+            <template if:true={metadataYoutube.data}>
+              <div class="social-item"><a title={YoutubeName} href={YoutubeURL} target="_blank"><img src={youtube}
+                    alt="YouTube" class="img-fluid"></a></div>
+            </template>
+          </div>
+        </div>
+      </div>
+      <div class="row-home">
+        <div class="col-12 text-center">
+          <div class="col-4 offset-4">
+            <template if:true={metadataRSS.data}>
+              <div class="social-item"><a title={RSSName} href={RSSURL} target="_blank"><img src={rss} alt="RSS"
+                    class="img-fluid"></a></div>
+            </template>
+          </div>
+        </div>
+      </div>
+      <div class="row-home">
+        <div class="col-12 text-center">
+          <template if:true={metadataFooterCopyright.data}>
+            <p>© {FooterCopyrightDescription}</p>
+          </template>
+          
+          <template if:true={metadataPrivacy.data}>
+            <a href={PrivacyURL} class="color-white">{PrivacyName}</a>
+          </template> |
+          <template if:true={metadataLegal.data}>
+            <a href={LegalURL} class="color-white">{LegalName}</a>
+          </template>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</template>

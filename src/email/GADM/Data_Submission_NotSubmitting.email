@@ -1,0 +1,4 @@
+Dear {!Contact.FirstName} {!Contact.LastName},
+we did not receive data for *actor* for *monthsNotSubmitting* months. Please submit the data.
+
+IATA

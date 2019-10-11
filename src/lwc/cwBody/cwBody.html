@@ -1,0 +1,348 @@
+<template>
+    <lightning-layout multiple-rows pull-to-boundary="small" horizontal-align="spread"
+        style="background-color:#D4E5FF; margin-top: 4%; padding-top:0px;">
+        <lightning-layout-item padding="" size="12" flexibility="grow" small-device-size="12" style="padding-top:0px;"
+            medium-device-size="12">
+
+            <div class="row-home" data-id="search" style="margin-top: 0px; margin-bottom: 0px;">
+                <c-cw-Landing-Search-Bar></c-cw-Landing-Search-Bar>
+            </div>
+
+
+
+            <div class="col-xl-10 offset-xl-1 col-lg-10 offset-lg-1 col-sm-12 col-md-12"
+                style="background-color: white;">
+
+                <div class="row-home" data-id="abouticg" style="margin-top:0px; padding-top:30px; padding-bottom:30px;">
+                    <div class="col-md-6">
+                        <c-cw-Text-Container title="What is the IATA Cargo Gateway?" title_color="" text="The IATA Cargo Gateway is the industry platform for validated cargo capacity and infrastructure information. 
+                            Find the right cargo business partner for your needs, from specific infrastructure requirements such as temperature-controlled rooms to IATA certifications.
+                            The ICG makes it easier for you to find the right services where you need them."
+                            text2="The platform only lists information validated through the different IATA Certification and Accreditation programs. It guarantees that all the data is accurate, enabling you to make better decisions for your business"
+                            text_color="black" background_color="#FFFFFF">
+                        </c-cw-Text-Container>
+                    </div>
+                    <div class="col-md-4">
+                        <c-cw-Text-Container title="Do you manage a Cargo Facility?" title_color='#ffffff'
+                            text="Attract new customers by creating a free profile on the IATA Cargo Gateway. Stand out from your competitiors and highlight  your facility's capacities and IATA certifications and accreditations."
+                            text_color="white" button_text="REGISTER NOW"
+                            button_color="btn btn-primary btn-blue link-button" button_url="http://www.google.com"
+                            button_position="text-center" background_color="#1E32FA">
+                        </c-cw-Text-Container>
+                    </div>
+                    <!--HIDDEN RESPONSIVE VERSION-->
+                    <div class="col-md-2 hidden-sm">
+                        <img src={adv1} alt="adv1" style="width:100%" />
+                        <img src={adv2} alt="adv2" style="width:100%; margin-top:25px;" />
+                    </div>
+                </div>
+
+                <!--VISIBLE RESPONSIVE VERSION-->
+                <div class="row visible-sm">
+                    <div class="col-12">
+                        <img src={adv1} alt="adv1" style="width:50%; padding:10px;" />
+                        <img src={adv2} alt="adv2" style="width:50%; padding:10px;" />
+                    </div>
+                </div>
+
+
+                <div class="row-home" id="validationprog">
+                    <c-cw-certification-panel title="IATA Validation Programs" back-ground-style="bg-yellow">
+                    </c-cw-certification-panel>
+                </div>
+
+                <!--HIDDEN RESPONSIVE VERSION-->
+                <div class="hidden-md">
+                    <div class="row-home" id="smartfaclity">
+                        <div class="col-6">
+                            <img src={employees} alt="IATA employees" style="width:100%" />
+                        </div>
+                        <div class="col-6">
+                            <c-cw-Text-Container title="Smart Facility Remote Validation" title_color="#1E32FA"
+                                text="The Smart Facility Remote Validation assesses the equipment and infrastructure of a facility in a fast and easy way. You only need to fill an online questionnaire and upload the documents to confirm that the information is accurate."
+                                text2="The Remote Validation makes it easier for cargo handling facilities to improve or update their ICG profile quickly. It is an excellent way to bridge the gap towards an upcoming IATA audit."
+                                text3="Remote validations are also an integral part of each Smart Facility Operational Capacity Audit. They allow auditors to focus on the procedural assessment of the cargo handling facility. "
+                                text_color="" button_text="LEARN MORE" button_color="btn btn-primary link-button"
+                                button_url="http://www.google.com" button_position="text-right"
+                                background_color="#FFFFFF">
+                            </c-cw-Text-Container>
+                        </div>
+                    </div>
+                </div>
+
+                <!--VISIBLE RESPONSIVE VERSION-->
+                <div class="visible-md">
+                    <div class="row col-12">
+                        <c-cw-Text-Container title="Smart Facility Remote Validation" title_color="#1E32FA">
+                        </c-cw-Text-Container>
+                    </div>
+                    <div class="row col-12">
+                        <c-cw-Text-Container title="" title_color="#ffffff"
+                            text="The Smart Facility Remote Validation assesses the equipment and infrastructure of a facility in a fast and easy way. You only need to fill an online questionnaire and upload the documents to confirm that the information is accurate."
+                            text2="The Remote Validation makes it easier for cargo handling facilities to improve or update their ICG profile quickly. It is an excellent way to bridge the gap towards an upcoming IATA audit."
+                            text3="Remote validations are also an integral part of each Smart Facility Operational Capacity Audit. They allow auditors to focus on the procedural assessment of the cargo handling facility. "
+                            text_color="#ffffff" button_text="LEARN MORE" button_color="btn btn-primary link-button"
+                            button_url="http://www.google.com" button_position="text-right" background_color="#1E32FA">
+                        </c-cw-Text-Container>
+                    </div>
+                </div>
+
+
+                <!--VISIBLE RESPONSIVE VERSION-->
+                <div class="visible-md">
+                    <div class="row-home" id="latestupdates">
+                        <div class="col-12">
+                            <c-cw-latest-i-c-g-updates-container title="Latest ICG Updates">
+                            </c-cw-latest-i-c-g-updates-container>
+                        </div>
+                    </div>
+                </div>
+
+                <!--HIDDEN RESPONSIVE VERSION-->
+                <div class="row-home hidden-sm">
+                    <div class="col-md-8 offset-md-2">
+                        <img src={adv3} alt="adv3" style="width:100%" />
+                    </div>
+                </div>
+
+                <!--VISIBLE RESPONSIVE VERSION-->
+                <div class="row visible-sm" style="margin-top:40px; margin-bottom:40px;">
+                    <div class="col-12">
+                        <h2 style="color:#1E32FA; text-align:center">
+                            "This is a Lorem Ipsum Quote to separate </br>and keep breath between blocks"
+                        </h2>
+                    </div>
+                </div>
+
+
+                <div class="row-home" id="latestnews">
+
+                    <!--HIDDEN RESPONSIVE VERSION-->
+                    <div class="col-xl-3 col-lg-12 col-md-12 hidden-md">
+                        <div style="background-color:#FAC832; border-bottom: 15px solid #1E32FA">
+                            <h1 style="padding:40px 25px 30px 35px ; text-align:left; font-weight: 600;">
+                                IATA </br>LATEST </br>NEWS
+                            </h1>
+                        </div>
+                    </div>
+
+                    <!--VISIBLE RESPONSIVE VERSION-->
+                    <div class="col-12 visible-md text-center">
+                        <div style="background-color:#FAC832; border-bottom: 15px solid #1E32FA">
+                            <h2 style="padding:30px 10px 30px 10px ; font-weight: 600;">
+                                IATA LATEST NEWS
+                            </h2>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-3 col-lg-12 col-md-12">
+                        <c-cw-Text-Container title="Air cargo and e-commerce, enabling global trade "
+                            title_color="#1E32FA"
+                            text="The air cargo industry is transforming to capitalize on e-commerce by building global standards, creating partnerships and fostering innovation. IATA works with the industry in embracing new initiatives and technologies that enable speed, visibility, and predictability."
+                            button_position="text-left" button_text="LEARN MORE"
+                            button_color="btn btn-primary link-button" background_color="#FFFFFF">
+                        </c-cw-Text-Container>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-md-12">
+                        <img src={airport} alt="IATA Logo" style="width:100%" />
+                    </div>
+                </div>
+
+
+                <div class="visible-sm text-center">
+                    <div class="row-home carousel-home">
+                        <div class="col-12">
+                            <div class="col-md-12 services-home-one overlay services-home-article fullcolor car-item item-active"
+                                data-target-id="1">
+                                <h2
+                                    style="color:black; padding: 25px 15px 50px 5px; text-align:left; font-weight: bold;">
+                                    IATA Smart</br>
+                                    Facility</br>
+                                    Program
+                                </h2>
+                                <a class="btn btn-primary btn-yellow link-button service-home-btn"
+                                    style="margin: 20px 0px 20px 10px;" href="#" target="">SEE MORE</a>
+                            </div>
+
+
+                            <div class="col-md-12 services-home-two overlay services-home-article fullcolor car-item item-inactive"
+                                data-target-id="2">
+                                <h2
+                                    style="color:black; padding: 25px 15px 50px 5px; text-align:left;font-weight: bold;">
+                                    IATA Smart</br>
+                                    IATA</br>
+                                    Consulting:</br>
+                                    Unbiased</br>
+                                    and Neutral</br>
+                                    Assessments
+                                </h2>
+                                <a class="btn btn-primary btn-yellow link-button service-home-btn"
+                                    style="margin: 20px 0px 20px 10px;" href="#" target="">SEE MORE</a>
+                            </div>
+
+
+                            <div class="col-md-12 services-home-three overlay services-home-article fullcolor car-item item-inactive"
+                                data-target-id="3">
+
+                                <h2
+                                    style="color:black; padding: 25px 15px 50px 5px; text-align:left; font-weight: bold;">
+                                    IATA Smart</br>
+                                    Developing</br>
+                                    professionals</br>
+                                    for</br>
+                                    tomorrow's</br>
+                                    air transport</br>
+                                    industry
+                                </h2>
+                                <a class="btn btn-primary btn-yellow link-button service-home-btn"
+                                    style="margin: 20px 0px 20px 10px;" href="#" target="">SEE MORE</a>
+
+                            </div>
+
+                            <div class="col-md-12 services-home-four overlay services-home-article fullcolor car-item item-inactive"
+                                data-target-id="4">
+
+                                <h2
+                                    style="color:black; padding: 25px 15px 50px 5px; text-align:left;font-weight: bold;">
+                                    IATA Smart</br>
+                                    Access the</br>
+                                    full TACT</br>
+                                    rates</br>
+                                    database</br>
+                                    online
+                                </h2>
+                                <a class="btn btn-primary btn-yellow link-button service-home-btn"
+                                    style="margin: 20px 0px 20px 10px;" href="#" target="">SEE MORE</a>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row col-6 offset-3 text-center indicators">
+                            <div class="col-3 text-center">
+                                <div class="bullet current" data-target-id="1" onclick={carouselchange}></div>
+                            </div>
+                            <div class="col-3 text-center">
+                                <div class="bullet" data-target-id="2" onclick={carouselchange}></div>
+                            </div>
+                            <div class="col-3 text-center">
+                                <div class="bullet" data-target-id="3" onclick={carouselchange}></div>
+                            </div>
+                            <div class="col-3 text-center">
+                                <div class="bullet" data-target-id="4" onclick={carouselchange}></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="hidden-sm">
+                    <div class="row-home">
+                        <div class="col-xl-3 col-lg-3 col-md-6">
+                            <div class="col-md-12 services-home-one overlay services-home-article fullcolor"
+                                style="height:400px;">
+                                <h2
+                                    style="color:black; padding: 25px 15px 50px 5px; text-align:left; font-weight: bold;">
+                                    IATA Smart</br>
+                                    Facility</br>
+                                    Program
+                                </h2>
+                                <a class="btn btn-primary btn-yellow link-button service-home-btn"
+                                    style="margin: 20px 0px 20px 10px;" href="#" target="">SEE MORE</a>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-6">
+                            <div class="col-md-12 services-home-two overlay services-home-article fullcolor"
+                                style="height:400px;">
+                                <h2
+                                    style="color:black; padding: 25px 15px 50px 5px; text-align:left;font-weight: bold;">
+                                    IATA Smart</br>
+                                    IATA</br>
+                                    Consulting:</br>
+                                    Unbiased</br>
+                                    and Neutral</br>
+                                    Assessments
+                                </h2>
+                                <a class="btn btn-primary btn-yellow link-button service-home-btn"
+                                    style="margin: 20px 0px 20px 10px;" href="#" target="">SEE MORE</a>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-6">
+                            <div class="col-md-12 services-home-three overlay services-home-article fullcolor"
+                                style="height:400px;">
+                                <h2
+                                    style="color:black; padding: 25px 15px 50px 5px; text-align:left; font-weight: bold;">
+                                    IATA Smart</br>
+                                    Developing</br>
+                                    professionals</br>
+                                    for</br>
+                                    tomorrow's</br>
+                                    air transport</br>
+                                    industry
+                                </h2>
+                                <a class="btn btn-primary btn-yellow link-button service-home-btn"
+                                    style="margin: 20px 0px 20px 10px;" href="#" target="">SEE MORE</a>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-6">
+                            <div class="col-md-12 services-home-four overlay services-home-article fullcolor"
+                                style="height:400px;">
+                                <h2
+                                    style="color:black; padding: 25px 15px 50px 5px; text-align:left;font-weight: bold;">
+                                    IATA Smart</br>
+                                    Access the</br>
+                                    full TACT</br>
+                                    rates</br>
+                                    database</br>
+                                    online
+                                </h2>
+                                <a class="btn btn-primary btn-yellow link-button service-home-btn"
+                                    style="margin: 20px 0px 20px 10px;" href="#" target="">SEE MORE</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <!--HIDDEN RESPONSIVE VERSION-->
+                <div class="row-home hidden-sm" style="margin-top:70px; margin-bottom:70px;">
+                    <div class="col-md-8 offset-md-2">
+                        <h1 style="color:#1E32FA; text-align:center">
+                            "This is a Lorem Ipsum Quote to separate </br>and keep breath between blocks"
+                        </h1>
+                    </div>
+                </div>
+
+
+
+                <div class="row-home" id="about3">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"
+                        style="padding-right:0px; background-color: #1e32fa;">
+
+                        <c-cw-Text-Container title="About IATA" title_color='#ffffff'
+                            text="The International Air Transport Association (IATA) is the trade association for the world’s airlines, representing some 290 airlines or 82% of total air traffic. We support many areas of aviation activity and help formulate industry policy on critical aviation issues."
+                            text_color="white" background_color="#1E32FA">
+                        </c-cw-Text-Container>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" style="padding-left:0px;padding-right:0px;">
+                        <div class="embed-responsive embed-responsive-21by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/R4PdVFjtdCI"
+                                allowfullscreen></iframe>
+                        </div>
+                        <!-- <iframe height="297" width="782.5" src="https://www.youtube.com/embed/R4PdVFjtdCI"
+                                allowfullscreen></iframe>-->
+
+                    </div>
+                </div>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
