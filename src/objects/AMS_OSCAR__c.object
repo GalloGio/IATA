@@ -55937,45 +55937,6 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Reason_for_unsuccessful_application__c</picklist>
-            <values>
-                <fullName>Agent Application relinquished%2F no reply from Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Agreements not provided</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Corporate Compliance Requirements not met</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Financial Accounts Requirements not met</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Financial Security Requirements not met</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Incomplete Documentation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Local Inspection Requirements not met</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Risk History with IATA failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Unpaid Application Fees</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Received_Bank_Guarantee_currency__c</picklist>
             <values>
                 <fullName>AED</fullName>

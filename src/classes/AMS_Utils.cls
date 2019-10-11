@@ -241,7 +241,7 @@ public without sharing class AMS_Utils {
     public static final String NEWFORM_AGENTTYPE_MULTICOUNTRY = 'Multicountry';
     public static final String CASE_REASON_HE_STANDARD = 'New HE standard';
     public static final String CASE_REASON_HE_LITE = 'New HE lite';
-    public static final String CASE_REASON_HE_MULTICOUNTRY = 'New HE multicountry';
+    public static final String CASE_REASON_HE_MULTICOUNTRY = 'New HE Multicountry';
     public static final String CASE_REASON_ASSOCIATE_ENTITY_STANDARD = 'New AE';
     public static final String CASE_REASON_NEW_HO = 'New HO';
     public static final String CASE_REASON_AE_STANDARD = 'New AE standard';

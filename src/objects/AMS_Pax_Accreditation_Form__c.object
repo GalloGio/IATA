@@ -5033,6 +5033,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
         <fullName>New_Head_Office_IATA_Code__c</fullName>
         <externalId>false</externalId>
         <label>New Head Office IATA Code</label>

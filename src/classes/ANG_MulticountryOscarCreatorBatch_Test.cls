@@ -56,7 +56,7 @@ public class ANG_MulticountryOscarCreatorBatch_Test
 		oscarCase.AccountId = a1.Id;
 		oscarCase.ContactId = co1.Id;
 		oscarCase.Origin = 'Portal';
-		oscarCase.reason1__c = 'New HE multicountry';
+		oscarCase.reason1__c = 'New HE Multicountry';
 		insert oscarCase;
 		
 		ID rtNew = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Travel Agent - Head Entity Standard no Cash').getRecordTypeId();
@@ -174,7 +174,7 @@ public class ANG_MulticountryOscarCreatorBatch_Test
 		oscarCase.AccountId = a1.Id;
 		oscarCase.ContactId = co1.Id;
 		oscarCase.Origin = 'Internal User';
-		oscarCase.reason1__c = 'New HE multicountry';
+		oscarCase.reason1__c = 'New HE Multicountry';
 		insert oscarCase;
 		
 		ID rtNew = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Travel Agent - Head Entity Standard no Cash').getRecordTypeId();
