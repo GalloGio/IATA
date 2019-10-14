@@ -152,13 +152,25 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
+    <externalSharingModel>Private</externalSharingModel>
     <fields>
         <fullName>Code__c</fullName>
         <caseSensitive>false</caseSensitive>
-        <description>Unique code for each certificate</description>
         <externalId>false</externalId>
         <label>Code</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>ExtKey__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>use to uniquely identify a record and to prevent duplicates</description>
+        <externalId>true</externalId>
+        <label>ExtKey</label>
         <length>50</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -225,8 +237,6 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>Status__c</columns>
-        <columns>Code__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
