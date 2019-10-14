@@ -772,11 +772,11 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             HttpRequest req = new HttpRequest();
             req.setHeader('Content-Type', 'application/json; charset=UTF-8');
             req.setEndpoint('callout:IFTP_Absorb_Reset_Pass/users/' + globalId + '/password');
-            req.setMethod('DELETE');
+            req.setMethod('POST');
             req.setBody(jsonBody);
             Http http = new Http();
             HTTPResponse res = http.send(req);
-            if (res.getStatusCode() == 200) {
+            if (res.getStatusCode() == 204) {
                 return true;
             }
             System.debug(res.getBody());
