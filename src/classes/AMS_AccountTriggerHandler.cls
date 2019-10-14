@@ -499,7 +499,7 @@ public class AMS_AccountTriggerHandler {
 
         System.debug(loggingLevel.FINE, '____ [cls AMS_AccountTriggerHandler - handleDDUpdates] ddAccounts - ' + ddAccounts.keySet());
 
-        List<AMS_OSCAR__c> oscars = [SELECT Id, Account__c  FROM AMS_OSCAR__c WHERE Account__c IN :ddAccounts.keySet() AND Status__c NOT IN :closedStatus];
+        List<AMS_OSCAR__c> oscars = [SELECT Id, Account__c  FROM AMS_OSCAR__c WHERE Account__c IN :ddAccounts.keySet() AND Status__c NOT IN :closedStatus AND STEP17__c = 'In Progress'];
         for(AMS_OSCAR__c oscar : oscars){
             Account acc = ddAccounts.get(oscar.Account__c);
 
