@@ -45,7 +45,7 @@
             pageView: "actualSize",
             accessToken: "{!accessToken}",
             settings : {
-                filterPaneEnabled: false,
+                filterPaneEnabled: true,
                 navContentPaneEnabled: false,
                 background: models.BackgroundType.Transparent
             }
