@@ -106,6 +106,12 @@ private class ISSP_AmazonS3_Test {
             testCase.Account_Concerned__c = child.Id;
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
+
+			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
+			newForm.IsGSA__c = 'No';
+			newForm.CurrencyIsoCode = country.CurrencyIsoCode;
+			newForm.SAAM_Case__c = testCase.Id;
+			insert newForm;
         
             UtilityCS__c newCS = new UtilityCS__c();
             newCS.Name = 'Emails';
