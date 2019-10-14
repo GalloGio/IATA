@@ -3773,7 +3773,7 @@ private class ISSP_AMS_Accreditation_Test {
         Test.startTest();
 
         System.runAs(fetchUser('conChildIcc@test11.com')) {
-            ISSP_AMS_Accreditation cont = new ISSP_AMS_Accreditation();
+            ISSP_AMS_Accreditation cont = icc_initialize();
 
             cont.iatacode = '121321343';
             cont.iatanAccount = AMS_UTILS.IATAN_PASSENGER_AGENT;
