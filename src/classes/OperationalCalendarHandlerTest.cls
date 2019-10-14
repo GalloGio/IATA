@@ -33,6 +33,7 @@ private class OperationalCalendarHandlerTest {
         
         Test.StartTest();
         Operational_Calendar__c operation = new Operational_Calendar__c(
+            RecordTypeId = OperationalCalendarHandler.ISS_RECORDTYPE_ID,
             Visible_on_the_portal__c = true,
             Operation_Code__c= 'SP_BSP_Y_EUR_D',
             Period_Code__c= '20180202M'
@@ -67,6 +68,7 @@ private class OperationalCalendarHandlerTest {
         
         Test.StartTest();
         Operational_Calendar__c operation = new Operational_Calendar__c(
+            RecordTypeId = OperationalCalendarHandler.ISS_RECORDTYPE_ID,
             Visible_on_the_portal__c = true,
             Operation_Code__c= 'SP_CAS_E_EUR_X',
             Period_Code__c= '20180202M'
@@ -107,6 +109,7 @@ private class OperationalCalendarHandlerTest {
         String frequency = 'D';
         
         Operational_Calendar__c operation = new Operational_Calendar__c(
+            RecordTypeId = OperationalCalendarHandler.ISS_RECORDTYPE_ID,
             Visible_on_the_portal__c = true,
             Operation_Code__c= 'SP_CAS_E_EUR_X',
             Period_Code__c= '20180202M',
@@ -163,6 +166,7 @@ private class OperationalCalendarHandlerTest {
         insert issOperation;
         
         Operational_Calendar__c operation = new Operational_Calendar__c(
+            RecordTypeId = OperationalCalendarHandler.ISS_RECORDTYPE_ID,
             Visible_on_the_portal__c = true,
             Operation_Code__c= 'SP_CAS_E_EUR_X',
             Period_Code__c= '20180202M'
