@@ -290,6 +290,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }set;
     }
 
+	@TestVisible
     private List<SelectOption> populateRightOptions(List<String> split) {
 
         List<SelectOption> rightopts = new List<SelectOption>();

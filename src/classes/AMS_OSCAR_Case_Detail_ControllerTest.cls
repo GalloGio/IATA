@@ -189,6 +189,155 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 		Test.stopTest();
 	}
+
+	@isTest
+	public static void test_OSCARCaseRemmintancePerState()
+	{
+        Test.startTest();
+        
+		Case c = [SELECT Id FROM Case WHERE Oscar__c IN (SELECT Id FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '') LIMIT 1];
+
+		Id aRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+			Name= 'Testland',
+			Region__c = 'Americas',
+			Iso_code__c = 'TL',
+			ISO_Code_Numeric__c=99,
+			BSP__c = 'Yes',
+			ANG_Enable_NewGen__c = true,
+			OSCAR_enabled__c = true
+		);
+
+		insert country;
+
+		Account a = new Account(
+			Name='TesteAccount',
+			Location_Class__c = 'P',
+			Location_Type__c = 'HE',
+			Reason_for_creation__c = 'Headquarter is missing',
+			RecordTypeId = aRTId,
+			IATA_ISO_Country__c = country.id
+		);
+
+		insert a;
+
+		AMS_Pax_Accreditation_Form__c accredForm = [SELECT Id, Branch_Office_Country__c FROM AMS_Pax_Accreditation_Form__c][0];
+
+		accredForm.Branch_Office_Country__c = country.Id;
+		accredForm.Location_Class__c = 'P';
+		accredForm.CASS_Number__c = '';
+		accredForm.Remittance_frequency__c = 'W';
+
+		update accredForm;
+
+		AMS_Oscar__c oscar = [SELECT Id, Process__c, Account__c, ANG_Type_Of_Change__c FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != ''];
+
+		oscar.Account__c = a.Id;
+		oscar.Process__c = AMS_Utils.NGCHANGES;
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
+		oscar.RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES;
+
+		update oscar;
+
+		Id settlementRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
+
+		AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(
+			Name = 'test settlement',
+			RecordTypeId = settlementRTId,
+			Remittance_Frequency_per_State__c = true
+		);
+
+		insert settlement;
+
+		country.AMS_Settlement_System__c = settlement.Id;
+		update country;
+
+		AMS_Operation__c opCode = new AMS_Operation__c(
+			Name = 'test operation',
+			Settlement__c = settlement.id,
+			Allow_multiple_remittances__c = false,
+			Country__c = country.id
+		);
+
+		insert opCode;
+
+		List<ANG_BSP_Attributes__c> bSPAttributes = new List<ANG_BSP_Attributes__c>();
+
+		ANG_BSP_Attributes__c bSPAttributes1 = new ANG_BSP_Attributes__c(
+			Class_Type__c  = 'P',
+			Remittance_Frequency__c = 'D',
+			Operation__c = opCode.Id,
+			BSP__c = settlement.Id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_BSP_Attributes__c', 'Remittance_Frequency')
+		);
+		bSPAttributes.add(bSPAttributes1);
+
+		ANG_BSP_Attributes__c bSPAttributes2 = new ANG_BSP_Attributes__c(
+			Class_Type__c  = 'P',
+			Remittance_Frequency__c = 'V',
+			Operation__c = opCode.Id,
+			BSP__c = settlement.Id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_BSP_Attributes__c', 'Remittance_Frequency')
+		);
+		bSPAttributes.add(bSPAttributes2);
+		
+		insert bSPAttributes;
+
+		AMS_Agency_Operations__c agencyOp = new AMS_Agency_Operations__c(
+			Account__c = a.id,
+			Operation__c = opCode.Id
+		);
+
+		insert agencyOp;
+
+
+		PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
+		pg.getParameters().put('id', c.Id);
+		Test.setCurrentPage(pg);
+
+		AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();	
+				
+		controller.accreditationObj.Remittance_Frequency__c = controller.getRfPicklistValues()[0].getValue();
+
+		controller.save();
+		
+		opCode.Allow_multiple_remittances__c = true;
+		update opcode;
+
+		controller = new AMS_OSCAR_Case_Detail_Controller();
+
+		controller.oscarobj.RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES;
+		controller.oscarobj.Process__c = AMS_Utils.NGCHANGES;
+		controller.oscarobj.ANG_Type_Of_Change__c = 'VMFR';
+
+		System.assert(!controller.getRfPicklistValues().isEmpty());
+
+		System.assertEquals('4 times per month', controller.remittanceFrequencyToShow);
+
+		controller.accreditationObj.Remittance_Frequency__c = 'V';
+
+		System.assert(controller.remittanceFrequencyToShow.contains('Weekly'));
+
+		controller.accreditationObj.Remittance_Frequency__c = 'V;D';
+
+		System.assert(controller.remittanceFrequencyToShow.contains('Daily'));
+		System.assert(controller.isNewAE == false);
+		System.assert(controller.displayErrorMsg == false);
+        
+        System.assertEquals(false, controller.isNewMulticountryAE);
+        System.assertEquals(false, controller.isAEAccount);
+        System.assertEquals(false, controller.isDuplicatedDGR);
+        System.assertEquals(null, controller.duplicatedDGR_msg);
+        System.assertEquals(1, controller.getItemsForPreferredRHC().size());
+        System.assertEquals(3, controller.getAvailableAccModel().size());
+        System.assertEquals(2, controller.populateRightOptions(new List<String> { 'W', 'D' }).size());
+        System.assertEquals(1, controller.getRfPicklistValues().size());
+        System.assertEquals(false, controller.isOSCARCorrection);
+        System.assertEquals(false, controller.isStandardAgency);
+
+		Test.stopTest();
+	}
 	
     @isTest static void test_OSCARCaseDetail3(){
         
