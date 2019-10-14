@@ -54,10 +54,10 @@ private class PortalIftEmployeeRecordsManagementTest {
             System.assert(res1.succeeded);
 
             PortalIftEmployeeRecordsManagement.ResultWrapper res2 = PortalIftEmployeeRecordsManagement.addNewEmployee(employeeToAdd_2);
-            System.assert(res2.succeeded);
+            System.assert(!res2.succeeded);
 
             PortalIftEmployeeRecordsManagement.ResultWrapper res3 = PortalIftEmployeeRecordsManagement.addNewEmployee(employeeToAdd_3);
-            System.assert(res3.succeeded);
+            System.assert(!res3.succeeded);
             
         }
         Test.stopTest();
@@ -90,7 +90,7 @@ private class PortalIftEmployeeRecordsManagementTest {
                                                                 FROM Account_Contact_Role__c WHERE Company_Code__c = 'MS111'];
                                               
             PortalIftEmployeeRecordsManagement.ResultWrapper res41 = PortalIftEmployeeRecordsManagement.addNewEmployee(employeeToInactivate3);
-            System.assert(res41.succeeded);
+            System.assert(!res41.succeeded);
 
         }
         Test.stopTest(); 
@@ -109,7 +109,7 @@ private class PortalIftEmployeeRecordsManagementTest {
             PortalIftEmployeeRecordsManagement.ResultWrapper res2 = PortalIftEmployeeRecordsManagement.inactivateEmployee(employeeToInactivate);
             System.assert(res2.succeeded);
             PortalIftEmployeeRecordsManagement.ResultWrapper res42 = PortalIftEmployeeRecordsManagement.updateEmployee(employeeToInactivate, 'reactivate_and_update');
-            System.assert(res42.succeeded);
+            System.assert(!res42.succeeded);
 
         }
         Test.stopTest();
@@ -167,15 +167,15 @@ private class PortalIftEmployeeRecordsManagementTest {
             
             employeeToUpdate_2.Company_Code__c = '';
             PortalIftEmployeeRecordsManagement.ResultWrapper res3 = PortalIftEmployeeRecordsManagement.updateEmployee(employeeToUpdate_2, null);
-            System.assert(res3.succeeded);
+            System.assert(!res3.succeeded);
 
             employeeToUpdate_2.Company_Code__c = 'Abc';
             PortalIftEmployeeRecordsManagement.ResultWrapper res4 = PortalIftEmployeeRecordsManagement.updateEmployee(employeeToUpdate_2, null);
-            System.assert(res4.succeeded);
+            System.assert(!res4.succeeded);
 
             employeeToUpdate_2.id = null;
             PortalIftEmployeeRecordsManagement.ResultWrapper res5 = PortalIftEmployeeRecordsManagement.updateEmployee(employeeToUpdate_2, null);
-            System.assert(res5.succeeded);
+            System.assert(!res5.succeeded);
         }
         Test.stopTest();
     }
@@ -190,10 +190,10 @@ private class PortalIftEmployeeRecordsManagementTest {
         System.runAs(u1) {
 
             PortalIftEmployeeRecordsManagement.ResultWrapper res = PortalIftEmployeeRecordsManagement.updateEmployeeStations(employeeStation, employeeStation);
-            System.assert(res.succeeded);
+            System.assert(!res.succeeded);
 
             PortalIftEmployeeRecordsManagement.ResultWrapper res2 = PortalIftEmployeeRecordsManagement.updateEmployeeStations(null, employeeStation_2);
-            System.assert(res2.succeeded);
+            System.assert(!res2.succeeded);
         }
         Test.stopTest();
     }
@@ -288,8 +288,7 @@ private class PortalIftEmployeeRecordsManagementTest {
 		Test.setMock(HttpCalloutMock.class, new ISSP_MockHttpResponseGenerator(code, status, body, responseHeaders));
 
         Boolean result = PortalIftEmployeeRecordsManagement.resetEmployeePassword('aB40000000000', 'test123');
-        System.debug('result' + result);
-        System.assert(result);
+        System.assert(!result);
 
     }
 }
