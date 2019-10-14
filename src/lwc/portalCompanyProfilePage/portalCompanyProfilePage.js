@@ -21,6 +21,8 @@ import getPortalAdmins from '@salesforce/apex/PortalServicesCtrl.getPortalAdmins
 import LANG from '@salesforce/i18n/lang';
 
 import { getParamsFromPage } from 'c/navigationUtils';
+import { reduceErrors } from 'c/ldsUtils';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 
 
@@ -39,6 +41,7 @@ import CountryLabel from '@salesforce/label/c.ISSP_Country';
 import NoResults from '@salesforce/label/c.CSP_NoSearchResults';
 import ISSP_Inactivate from '@salesforce/label/c.ISSP_Inactivate';
 import ISSP_Activate from '@salesforce/label/c.ISSP_Activate';
+import ISSP_Download from '@salesforce/label/c.ISSP_Download';
 
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -153,7 +156,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
         return (this.loggedUser == null || this.loggedUser.Contact == null || this.loggedUser.Contact.AccountId == null);
     }
 
-    @track _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP, CSP_Portal_Administrators, NoResults, ISSP_Inactivate, ISSP_Activate };
+    _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP, CSP_Portal_Administrators, NoResults, ISSP_Inactivate, ISSP_Activate, ISSP_Download };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -439,7 +442,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     retrieveContacts() {
         let offset = this.contactsOffset;
-        getContacts({ offset: offset }).then(result => {
+        getContacts({ offset: offset, batchSize: 15 }).then(result => {
+            
             let _oldContactsWrapper = offset !== 0 ? JSON.parse(JSON.stringify(this.contactsWrapper)) : [];
             let _contactsWrapper = JSON.parse(JSON.stringify(result));
             for (let i = 0; i < _contactsWrapper.length; i++) {
@@ -809,5 +813,77 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     denyAccess(event) {
         this.action = event.target.dataset.item;
+    }
+
+    getAllContactsToExport() {
+        this.contactsLoaded = false;
+        getContacts({ offset: 0, batchSize: 50000 })
+            .then(result => {
+                this.allContacts = this.processContacts(result, []);
+                this.downloadCSV();
+            })
+            .catch(error => {
+                this.contactsLoaded = true;
+                const toastEvent = new ShowToastEvent({
+                    title: 'Error',
+                    message: reduceErrors(error).join(', '),
+                    variant: 'error'
+                });
+                this.dispatchEvent(toastEvent);
+        });
+    }
+
+    downloadCSV() {
+        let rowEnd = '\n';
+        let csvString = '';
+        let rowDataLabel = new Set();
+        let rowDataFieldsMap = [];
+        let allContacts = this.contactFields.ROWS;
+
+        // CSV Header
+        allContacts.forEach(function (record) {
+            Object.keys(record).forEach(function (key) {
+                rowDataLabel.add(record.label);
+                rowDataFieldsMap[record.fieldName] = record.label;
+            });
+        });
+
+        rowDataLabel = Array.from(rowDataLabel);
+        csvString += rowDataLabel.join(','); // columns
+        csvString += rowEnd;
+
+        // get the data from allContacts based on key value (columns name) from rowDataFieldsMap
+        for(let i=0; i < this.allContacts.length; i++) {
+            let colValue = 0;
+
+            for(let key in rowDataFieldsMap) {
+                if(rowDataFieldsMap.hasOwnProperty(key)) {
+                    let rowKey = key; // get columns name
+                    
+                    if(colValue > 0) {
+                        csvString += ',';
+                    }
+                    // If the column is undefined, it as blank in the CSV.
+                    let value = this.allContacts[i][rowKey] === undefined ? '' : this.allContacts[i][rowKey]; 
+                    csvString += '"'+ value +'"';
+                    colValue++;
+                }
+            }
+            csvString += rowEnd;
+        }
+
+        // Creating anchor element to download
+        let downloadElement = document.createElement('a');
+
+        // This  encodeURI encodes special characters, except: , / ? : @ & = + $ # (Use encodeURIComponent() to encode these characters).
+        downloadElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csvString);
+        downloadElement.target = '_self';
+        // CSV File Name
+        downloadElement.download = 'exportContacts.csv';
+        // below statement is required if you are using firefox browser
+        document.body.appendChild(downloadElement);
+        // click() Javascript function to download CSV file
+        downloadElement.click();
+        this.contactsLoaded = true;
     }
 }
