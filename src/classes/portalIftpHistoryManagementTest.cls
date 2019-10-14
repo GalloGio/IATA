@@ -14,6 +14,7 @@ private class portalIftpHistoryManagementTest {
                                                                                 'ITP Student', 
                                                                                 'Student');
             portalIftpHistoryManagement.insertIntoIftpHistory(ih);
+            System.assertEquals(2, Integer.valueof(ih.Event_Type__c));                                   
 
             List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
             IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Stop_Working_at_Station, 
@@ -22,7 +23,8 @@ private class portalIftpHistoryManagementTest {
                                                             'Student',
                                                             'PTX',
                                                             'Lisbon'
-                                                            );
+                                                            );                                    
+            System.assertEquals(4, Integer.valueof(ihrec.Event_Type__c));
             IftpHistoryRecordsToBeInserted.add(ihrec);
 
             IFTP_History__c ihrec2 = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Loose_Proficiency, 
@@ -35,6 +37,8 @@ private class portalIftpHistoryManagementTest {
                                                 'Yes',
                                                 'Coordinator, ITP Training'
                                                 );
+                                    
+            System.assertEquals(4, Integer.valueof(ihrec.Event_Type__c));
             IftpHistoryRecordsToBeInserted.add(ihrec2);
 
             portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
@@ -57,10 +61,11 @@ private class portalIftpHistoryManagementTest {
             List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
             IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP, 
                                                 'Abc', 
-                                                ITP_Name,
                                                 'ITP Student',
                                                 'Student'
                                                 );
+            System.assertEquals(1, Integer.valueof(ihrec.Event_Type__c));
+
             IftpHistoryRecordsToBeInserted.add(ihrec);                                                            
 
             IFTP_History__c ihrec2 = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Receives_Proficiency, 
@@ -73,27 +78,28 @@ private class portalIftpHistoryManagementTest {
                                                 'Yes',
                                                 'Coordinator, ITP Training'
                                                 );
+            System.assertEquals(5, Integer.valueof(ihrec2.Event_Type__c));
+
             IftpHistoryRecordsToBeInserted.add(ihrec2);
 
             IFTP_History__c ihrec3 = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP, 
                                                 'Cba', 
-                                                ITP_Name,
                                                 'ITP Student2', 
                                                 'Student2'
                                                 );
+            System.assertEquals(1, Integer.valueof(ihrec3.Event_Type__c));
+                                             
             IftpHistoryRecordsToBeInserted.add(ihrec3);
 
-            System.debug('IftpHistoryRecordsToBeInserted - ihrec: ' + ihrec);
-            System.debug('IftpHistoryRecordsToBeInserted - ihrec2: ' + ihrec2);
-            System.debug('IftpHistoryRecordsToBeInserted - ihrec3: ' + ihrec3);
-            System.debug('IftpHistoryRecordsToBeInserted: ' + IftpHistoryRecordsToBeInserted);
-
+            System.assert(IftpHistoryRecordsToBeInserted.size() > 0, 'Fail IftpHistoryRecordsToBeInserted list is empty!'); 
             portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
 
             String monthValue = String.valueOf( Date.Today().month() );
             String yearValue = String.valueOf( Date.Today().year() );            
 
-            List<portalIftpHistoryManagement.ITPReportWrapper> report = portalIftpHistoryManagement.getProficiencyReport(ITP_Name, monthValue, yearValue);
+            List<portalIftpHistoryManagement.ITPReportWrapper> report = new List<portalIftpHistoryManagement.ITPReportWrapper>();
+            report = portalIftpHistoryManagement.getProficiencyReport(ITP_Name, monthValue, yearValue);
+            System.assert(report.size() > 0, 'Fail getProficiencyReport list is empty!'); 
 
         }
         Test.stopTest();

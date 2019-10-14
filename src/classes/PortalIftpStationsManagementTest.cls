@@ -47,7 +47,10 @@ public class PortalIftpStationsManagementTest {
             toInsert.add(newRecord);
                     
             PortalIftpStationsManagement.UpdateItpAddressAirlinesResultsWrapper ins1del1 = PortalIftpStationsManagement.updateItpAddressAirlines(toInsert[0].itpAccRolId, toInsert, null);
+            System.assert(ins1del1.succeeded);
             PortalIftpStationsManagement.UpdateItpAddressAirlinesResultsWrapper ins1del2 = PortalIftpStationsManagement.updateItpAddressAirlines(toInsert[0].itpAccRolId, toInsert, toInsertDelete);
+            System.assert(ins1del2.succeeded);
+
         }
         Test.stopTest();
 
@@ -77,6 +80,8 @@ public class PortalIftpStationsManagementTest {
             }
           
             PortalIftpStationsManagement.UpdateItpAddressAirlinesResultsWrapper ins = PortalIftpStationsManagement.updateItpAddressAirlines(toInsertDelete[0].itpAccRolId, null, toInsertDelete);
+            System.assert(ins.succeeded);
+
         
         }
         Test.stopTest();
@@ -107,8 +112,13 @@ public class PortalIftpStationsManagementTest {
             }
             
             PortalIftpStationsManagement.UpdateItpAddressAirlinesResultsWrapper del = PortalIftpStationsManagement.updateItpAddressAirlines(toInsertDelete[0].itpAccRolId, toInsertDelete, null);
+            System.assert(del.succeeded);
+
 
             PortalIftpStationsManagement.UpdateItpAddressAirlinesResultsWrapper insdel = PortalIftpStationsManagement.updateItpAddressAirlines(toInsertDelete[0].itpAccRolId, toInsertDelete, toInsertDelete);
+            System.assert(insdel.succeeded);
+
+
         }
         Test.stopTest();
 
@@ -137,6 +147,9 @@ public class PortalIftpStationsManagementTest {
             }
 
             PortalIftpStationsManagement.UpdateItpAddressAirlinesResultsWrapper insdel = PortalIftpStationsManagement.updateItpAddressAirlines(toInsertDelete[0].itpAccRolId, toInsertDelete, toInsertDelete);
+            System.assert(insdel.succeeded);
+
+
         }
         Test.stopTest();
 
@@ -164,6 +177,8 @@ public class PortalIftpStationsManagementTest {
         toDelete.add(roleAddressITP);
 
         PortalIftpUtils.InsertStationWrapper insertStationRes = PortalIftpUtils.insertStation(toDelete);
+        System.assert(insertStationRes.succeeded);
+
         
         PortalIftpUtils.StationRecordsWrapper rolAddrStationToBeDeleted = new PortalIftpUtils.StationRecordsWrapper();
         rolAddrStationToBeDeleted.id = insertStationRes.stationsToInsertList[0].id;
@@ -173,6 +188,9 @@ public class PortalIftpStationsManagementTest {
         List<PortalIftpStationsManagement.AirlinesItpAddressWrapper> stationToBeDeletedAirlinesList = new List<PortalIftpStationsManagement.AirlinesItpAddressWrapper>();
         
         PortalIftpStationsManagement.DeleteStationResultsWrapper res = PortalIftpStationsManagement.deleteStationFromItp(rolAddrStationToBeDeleted, stationToBeDeletedAirlinesList);
+        System.assert(!res.succeeded);
+
+
         
         }
     
