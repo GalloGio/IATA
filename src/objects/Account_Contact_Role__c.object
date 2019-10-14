@@ -213,7 +213,7 @@
     </fields>
     <fields>
         <fullName>Global_ID__c</fullName>
-        <displayFormat>aB4-{000000000}</displayFormat>
+        <displayFormat>aB4{0000000000}</displayFormat>
         <externalId>false</externalId>
         <label>Global ID</label>
         <trackHistory>false</trackHistory>
@@ -350,30 +350,6 @@
     </nameField>
     <pluralLabel>Account Contacts Role</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
-    <recordTypes>
-        <fullName>Master</fullName>
-        <active>true</active>
-        <description>Master RecordType</description>
-        <label>Master</label>
-        <picklistValues>
-            <picklist>Contact_Role__c</picklist>
-            <values>
-                <fullName>Primary Contact</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Service_Rendered__c</picklist>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TIP</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
     <recordTypes>
         <fullName>Payment_Provider_Contact</fullName>
         <active>true</active>
