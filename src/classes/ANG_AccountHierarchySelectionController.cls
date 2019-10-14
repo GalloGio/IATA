@@ -777,34 +777,35 @@ public with sharing class ANG_AccountHierarchySelectionController {
     
     public void handleSelection() {
 
-            
-        Map<Id,HEPerBSP> tempHesPerBSPs = new Map<Id,HEPerBSP>();
-        for (HierarchyItem i : hierarchy.values()){
+        if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY)){ 
+            Map<Id,HEPerBSP> tempHesPerBSPs = new Map<Id,HEPerBSP>();
+            for (HierarchyItem i : hierarchy.values()){
 
-            Id currentBSP = i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
-            if((i.selected || i.main) && !existingBSPs.contains(currentBSP)){
+                Id currentBSP = i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
+                if((i.selected || i.main) && !existingBSPs.contains(currentBSP)){
 
-                if(!tempHesPerBSPs.containsKey(currentBSP)) 
-                    tempHesPerBSPs.put(currentBSP, new HEPerBSP(currentBSP, i.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, i.acc.IATA_ISO_Country__r.name));
-                
-                tempHesPerBSPs.get(currentBSP).possibleAccounts.put(i.acc.ID,i.acc);
+                    if(!tempHesPerBSPs.containsKey(currentBSP)) 
+                        tempHesPerBSPs.put(currentBSP, new HEPerBSP(currentBSP, i.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, i.acc.IATA_ISO_Country__r.name));
+                    
+                    tempHesPerBSPs.get(currentBSP).possibleAccounts.put(i.acc.ID,i.acc);
 
-                if (i.acc.Location_Type__c == AMS_Utils.GE || i.acc.Location_Type__c == AMS_Utils.HE){
-                    //tempHesPerBSPs.get(currentBSP).hasParentDefined = true;
-                    tempHesPerBSPs.get(currentBSP).p.parentid = i.acc.id;
+                    if (i.acc.Location_Type__c == AMS_Utils.GE || i.acc.Location_Type__c == AMS_Utils.HE){
+                        //tempHesPerBSPs.get(currentBSP).hasParentDefined = true;
+                        tempHesPerBSPs.get(currentBSP).p.parentid = i.acc.id;
+                    }
                 }
             }
-        }
 
-        //now need to set again the selected parents
-        for(HEPerBSP old : hesPerBSPs.values()){
-            if(old.p.Parentid != null && tempHesPerBSPs.containsKey(old.bspId) && tempHesPerBSPs.get(old.bspId).p.Parentid == null && tempHesPerBSPs.get(old.bspId).possibleAccounts.containsKey(old.p.Parentid)){
-                //tempHesPerBSPs.get(old.bspId).hasParentDefined = true;
-                tempHesPerBSPs.get(old.bspId).p.Parentid = old.p.parentid;
+            //now need to set again the selected parents
+            for(HEPerBSP old : hesPerBSPs.values()){
+                if(old.p.Parentid != null && tempHesPerBSPs.containsKey(old.bspId) && tempHesPerBSPs.get(old.bspId).p.Parentid == null && tempHesPerBSPs.get(old.bspId).possibleAccounts.containsKey(old.p.Parentid)){
+                    //tempHesPerBSPs.get(old.bspId).hasParentDefined = true;
+                    tempHesPerBSPs.get(old.bspId).p.Parentid = old.p.parentid;
+                }
             }
-        }
 
-        hesPerBSPs = tempHesPerBSPs;
+            hesPerBSPs = tempHesPerBSPs;
+        }
     }
 
     public PageReference FetchNewParent(){
