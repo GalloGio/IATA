@@ -13,10 +13,6 @@ public without sharing class portalIftpEmployeeCtrl {
     private static List<ISSPCaseListView__c> csCaseListViews;
     public static Map<String, ISSPCaseListView__c> caseListViewMap;
 
-
-    //public portalIFTPTrainingRecords() {
-    //}
-
     /* 
     * @description Main method that returns a list of cases 
     * @params
@@ -45,7 +41,6 @@ public without sharing class portalIftpEmployeeCtrl {
                 FROM User 
                 WHERE Id = :userId
             ];
-            System.debug('____ [cls PortalCasesCtrl - initialization] myUser - ' + myUser);
 
             if(myUser.ContactId != null) {
 				List <Portal_Application_Right__c> appRightList = [
@@ -55,18 +50,10 @@ public without sharing class portalIftpEmployeeCtrl {
                     AND Right__c = 'Access Granted'
                     AND Portal_Application__r.Name = 'IFTP'
                 ];
-                /*
-		        if(!appRightList.isEmpty()) {
-                    System.debug(LoggingLevel.FINE, '____ [cls PortalCasesCtrl - initialization] appRightList - ' + appRightList);
-		            apUser = true;
-		        }
-                */
+
                 myAccountId = myUser.Contact.AccountId;
             }
-            
-            //initFilters();
-            //initCaseListViewMap();
-            
+
         } catch(Exception exp) {
                 ISSP_Utilities.exceptionDump(exp);
         }
@@ -148,17 +135,13 @@ public without sharing class portalIftpEmployeeCtrl {
     }
 
     @AuraEnabled (cacheable=false)
-    //public static List<TrainingRecordsWrapper> updateCertificationProficiency(Map<String,Object> searchValues){
     public static Boolean updateCertificationProficiency(List<Object> dataToSave){
         List<Contact_Role_Certification__c> certToUpdate = new List<Contact_Role_Certification__c>();
         
         for(Object rec : dataToSave){
             Contact_Role_Certification__c auxCert = (Contact_Role_Certification__c)JSON.deserialize(JSON.serialize(rec ), Contact_Role_Certification__c.class);
             certToUpdate.add(auxCert);
-        }
-
-        System.debug('____ [cls portalIftpEmployeeCtrl - updateCertificationProficiency] certToUpdate - ' + certToUpdate );
-        
+        }       
         update certToUpdate;
 
         return true;
@@ -172,47 +155,17 @@ public without sharing class portalIftpEmployeeCtrl {
     */
     private static PagedResult getTrainingRecordsPagination() {
         String queryString;
-        //Set<String> fieldPathSet = new Set<String>{'CaseNumber'};
 
-        //for(Schema.FieldSetMember f : getFields()) { 
-        //    fieldPathSet.add(f.getFieldPath());
-        //}
-
-        //String query = ' Name, Account_Contact_Role__c, Account_Contact_Role__r.First_Name__c, Certification__c, CreatedDate ';
         String query = ' Name, Account_Contact_Role__c, Certification__c, CreatedDate ';
         Boolean hasStatus = false;
-        
-        /*
-        for(String fieldPath : fieldPathSet) {
-            if(fieldPath.trim() == 'Status') {
-                hasStatus = true;
-            }
-            query +=  ',' + fieldPath;
-        }
 
-        if(!hasStatus) {
-            query += ', Status';
-        }
-        */
-
-        //String queryConditions = getQueryConditions();
-
-        //queryString = 'SELECT ' + query.substring(1) + ' FROM Account_Contact_Role__c ' + queryConditions + ' ORDER BY LastModifiedDate DESC ';
         queryString = 'SELECT ' + query.substring(1) + ' FROM Contact_Role_Certification__c ORDER BY LastModifiedDate DESC ';
 
-        /*
-        if(!seeAllCases) {
-            queryString += 'LIMIT 4';
-        }
-        */
-
         PagedResult result =  new PagedResult();
-        //result.totalItemCount = Database.countQuery('SELECT count() FROM Case ' + queryConditions);
         result.totalItemCount = Database.countQuery('SELECT count() FROM Contact_Role_Certification__c ');
         result.records = Database.query(queryString);
 
         System.debug(LoggingLevel.FINE, '____ [cls PortalCasesCtrl - getCases] queryString - ' + queryString);
-        System.debug('____ [cls PortalCasesCtrl - getCases] queryResult - ' + result.records.size() + ' record(s) - ' + result.records);
 
         return result;
     }
