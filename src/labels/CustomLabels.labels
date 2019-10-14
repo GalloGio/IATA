@@ -1575,6 +1575,14 @@ IATA Customer Service</value>
         <value>Learn More</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_GDI_Learn_More_Text</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Learn_More_Text</shortDescription>
+        <value>You are under the Go-global Accreditation model and are able to obtain a GDI limit. Our partner brokers at Aon and Marsh will be happy to assist with the application process or any queries you may have and you can contact them at the following email addresses: iata.gdi@aon.com or iata.gdi@marsh.com </value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_GDI_Navigate_Portal</fullName>
         <categories>ISSP, ANG, GDI</categories>
         <language>en_US</language>

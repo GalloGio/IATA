@@ -188,7 +188,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <p><b>
-                                                    <apex:outputText value="Linda will provide the final version of this text" style="color: red;"/>
+                                                    <apex:outputText value="{!$Label.ANG_ISSP_GDI_Learn_More_Text}"/>
                                             </b></p>
                                         </div>
                                         <div class="modal-footer">
