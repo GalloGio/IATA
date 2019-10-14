@@ -26,7 +26,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			TCA_Sanity_check__c = 'CAD',
 			TCA_Application_withdrawal__c = 'CWD',
 			Valid_Accreditation_Models__c = 'ALL'
-			);
+		);
 
 		insert confs;
 

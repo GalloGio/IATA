@@ -520,7 +520,8 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			Name = 'ChangeAccreditationType', 
 			TC_Accreditation_Type__c = true,
 			TCA_Sanity_check__c = 'CHI', 
-			TCA_Application_withdrawal__c = 'CWD'
+			TCA_Application_withdrawal__c = 'CWD',
+			Valid_Accreditation_Models__c = 'Cash;Cashless;Legacy'
 		);
 
 		insert chgCfg;
@@ -573,7 +574,8 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			Name = 'ChangeAccreditationType', 
 			TC_Accreditation_Type__c = true,
 			TCA_Sanity_check__c = 'CHI', 
-			TCA_Application_withdrawal__c = 'CWD'
+			TCA_Application_withdrawal__c = 'CWD',
+			Valid_Accreditation_Models__c = 'Cash;Cashless;Legacy'
 		);
 
 		insert chgCfg;

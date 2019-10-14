@@ -2830,6 +2830,7 @@ public class ANG_AgencyChangesHelperTest {
         changeLocationTypeDiffLegalEnt.TCA_Sanity_check__c = 'CDL';
         changeLocationTypeDiffLegalEnt.TCA_Manager_approval__c = 'CDF';
         changeLocationTypeDiffLegalEnt.TCA_Application_withdrawal__c = 'CWD';
+        changeLocationTypeDiffLegalEnt.Valid_Accreditation_Models__c = 'ALL';
 
         insert new List<ANG_AgencyChangesConfig__c>{changeLocationTypeDiffLegalEnt};
 
