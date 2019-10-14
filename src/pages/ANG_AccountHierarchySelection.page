@@ -128,7 +128,7 @@
 				</apex:pageBlockSection>
 				<apex:pageBlockSection id="dependentFields">
 					<apex:inputField value="{!oscar.New_parent__c}" rendered="{!showTargetAgency}">
-						<apex:actionSupport event="onchange" status="blockEditing" reRender="notes,BSPTable" action="{!FetchNewParent}"/>
+						<apex:actionSupport event="onchange" status="blockEditing" reRender="notes,BSPTable" action="{!FetchNewParent}" oncomplete="forceRerenderBSPTable()"/>
 					</apex:inputField>
 				</apex:pageBlockSection>
 
