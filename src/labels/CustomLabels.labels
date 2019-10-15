@@ -3553,7 +3553,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Email Welcome Part 3</shortDescription>
-        <value>&lt;a href=&quot;http://portal.iata.org&quot;&gt;Take me to the Portal!&lt;/a&gt;</value>
+        <value>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Take me to the Portal!&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Email_Welcome_Part_4</fullName>

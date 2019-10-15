@@ -336,7 +336,9 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     public static boolean sendRegistrationEmailVF(RegistrationParameters params, string userId){
         Boolean result = false;
-        string oneTimeUrl = generateOneTimeUrl(params);
+        String portalUrl = '';
+        if(Network.getNetworkId() != null) portalUrl = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('/login'));
+        string profileUrl = portalUrl + '/my-profile';
 
         if (userId == null || userId == ''){
             userId = UserInfo.getUserId();
@@ -346,7 +348,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             }
         }
 
-        Map<String, String> emailMap = generateEmailBodyParamsForRegistration(params, oneTimeUrl);
+        Map<String, String> emailMap = generateEmailBodyParamsForRegistration(params, portalUrl, profileUrl);
         result = sendEmailVF(params.email, 'CSP_New_Member_Welcome_Email_VF', emailMap, userId);
         return result;
     }
@@ -914,7 +916,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
     }
 
-    public static Map<String,String> generateEmailBodyParamsForRegistration(RegistrationParameters params, string communityUrl) {
+    public static Map<String,String> generateEmailBodyParamsForRegistration(RegistrationParameters params, string portalUrl, string profileUrl) {
 
         String headerImageName = Label.CSP_Email_Header_Image;
         String footerImageName = Label.CSP_Email_Footer_Image;
@@ -933,7 +935,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 '{!HeaderUrl}'                                   => headerImageUrl,
                 '{!FooterUrl}'                                   => footerImageUrl,
                 '{!Receiving_User.FirstName}'                    => params.Firstname,
-                '{!Community_Url}'                               => communityUrl,
+                '{!Community_Url}'                               => profileUrl,
+                '{!Portal_Url}'                                  => portalUrl,
                 '{!$Label.CSP_Email_Here}'                       => Label.CSP_Email_Here,
                 '{!$Label.ISSP_Email_do_not_reply}'              => Label.ISSP_Email_do_not_reply,
                 '{!$Label.CSP_Dear}'                             => Label.CSP_Dear,

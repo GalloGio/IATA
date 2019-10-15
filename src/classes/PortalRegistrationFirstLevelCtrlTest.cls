@@ -13,6 +13,20 @@ public class PortalRegistrationFirstLevelCtrlTest {
         setting.Value__c = UserInfo.getUserId();
         insert setting;
 
+        //create notification template for user creation
+        Notification_template__c template = new Notification_template__c(
+                Identifier__c = 'Lvl 2 Registration reminder',
+                Message__c = '<p>Test Message</p><p>[URL]</p><p>[CustomerName]</p>',
+                Alert_Contact_By_Email__c = false,
+                Alert_Contact_By_Push_Notification__c = true,
+                Subject__c = 'Test Subject',
+                Type__c = 'Information',
+                Notification_color__c = '#007FFF',
+                CriticalNotification__c = true,
+                Expire_in_days__c = 1
+        );
+        insert template;
+
         //Create Community Languages
         Preferred_Language_on_ISS_Portal__c lang1 = new Preferred_Language_on_ISS_Portal__c();
         lang1.Name = 'English';
