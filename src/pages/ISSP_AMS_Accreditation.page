@@ -517,7 +517,7 @@
                 
                 checkLocationQuestion();
 
-                reRenderAccountsNoc();
+                //reRenderAccountsNoc();
             }
         }
 
@@ -526,6 +526,8 @@
                 $('[id$="nocThirdQuestion"]').css('display', 'none');
                 toggleCountryMultiSelection(true, false);
                 $('#brcountry').text("{!amsAllLangCountryLabel}");
+
+                $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned}";
             }
             
             if ($('[id$="LocationType"]').find("input")[1].checked) { 
@@ -537,32 +539,32 @@
                 } else {
                     $('[id$="nocThirdQuestion"]').css('display', 'block');
                 }
+
+                $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned}";
             }
 
             if ($('[id$="LocationType"]').find("input")[2].checked) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
                     toggleCountryMultiSelection(false, true);
+                    $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
                 } else {
                     toggleCountryMultiSelection(true, false);
                     $('#brcountry').text("{!amsAllLangCountryLabel}");
                 }
 
                 $('[id$="nocThirdQuestion"]').css('display', 'none');
-
-                $('[for$="countryconcerned"]')[0].innerText = "{!$Label.ANG_ISSP_CountryConcerned_AEs}";
             }
 
             if ($('[id$="LocationType"]').find("input")[3].checked) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
                     toggleCountryMultiSelection(false, true);
+                    $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
                 } else {
                     toggleCountryMultiSelection(true, false);
                     $('#brcountry').text("{!amsAllLangCountryLabel}");
                 }
 
                 $('[id$="nocThirdQuestion"]').css('display', 'none');
-
-                $('[for$="countryconcerned"]')[0].innerText = "{!$Label.ANG_ISSP_CountryConcerned_AEs}";
             }
         }
 
@@ -672,7 +674,7 @@
 
                             <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" oncomplete="populateLegalAndSeparateFields();" />
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
-                            <apex:actionFunction action="{!resetHierarchy}" name="reRenderAccountsNoc" reRender="branchaccountsel"/>
+                            <apex:actionFunction name="reRenderAccountsNoc" action="{!resetHierarchy}" reRender="branchaccountsel"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions, nocFormQuestions" oncomplete=""/>
                             <apex:actionFunction name="reRenderNocMessage" reRender="nocMessage"/>
                             <apex:actionFunction name="selectAllAEs" action="{!doSelectAll}" status="blockEditing" reRender="table" />
