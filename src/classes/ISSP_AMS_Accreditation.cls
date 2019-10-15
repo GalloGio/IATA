@@ -2509,6 +2509,13 @@ public without sharing class ISSP_AMS_Accreditation {
         updateAccountByBranchApp(newSFDCAccount);
         upsert newSFDCAccount;
 
+        Map<Id, Account> mcHierarchyAccountsMap = new Map<Id, Account>(mcHierarchyAccounts);
+        Account parentAux = mcHierarchyAccountsMap.get(newForm.Same_Legal_Entity_Agency_Account__c);
+
+        if (isMultiCountryAccredittedAddingAEs() && newForm.AE_separate_Legal_Entity__c == 'No') {
+            copyOwnersFromSelectedLegalName(newSFDCAccount, parentAux.Id); 
+        }
+
         //Populate Online Accred. form (Staging area) with missing values from Branch account
         newForm.ISSP_Branch_AccountId__c = newSFDCAccount.Id;
         newForm.Account_Name__c = newSFDCAccount.Name;
@@ -2533,13 +2540,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
         Boolean isFirstHE = accountsByBSP.get(newForm.Branch_Office_Country__r.AMS_Settlement_System__c) == null || 
             accountsByBSP.get(newForm.Branch_Office_Country__r.AMS_Settlement_System__c).isEmpty();
-
-        Map<Id, Account> mcHierarchyAccountsMap = new Map<Id, Account>(mcHierarchyAccounts);
-        Account parentAux = mcHierarchyAccountsMap.get(newForm.Same_Legal_Entity_Agency_Account__c);
-
-        if (isMultiCountryAccredittedAddingAEs() && newForm.AE_separate_Legal_Entity__c == 'No') {
-            copyOwnersFromSelectedLegalName(SFDCAccount, parentAux.Id); 
-        }
 
         if (isMultiCountryNewAE || getIsAccreditationModelNotNullOrLegacy()) {
             if (isFirstHE) {
