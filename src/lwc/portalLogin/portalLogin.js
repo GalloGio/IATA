@@ -17,7 +17,7 @@ import login from '@salesforce/apex/PortalLoginCtrl.login';
 /* ==============================================================================================================*/
 import Login                                from '@salesforce/label/c.login';
 import CSP_Email                            from '@salesforce/label/c.CSP_Email';
-import OneId_Password                       from '@salesforce/label/c.OneId_Password';
+import CSP_Password                         from '@salesforce/label/c.CSP_Password';
 import CSP_Change_Email                     from '@salesforce/label/c.CSP_Change_Email';
 import CSP_Forgot_Password                  from '@salesforce/label/c.CSP_Forgot_Password';
 import CSP_Troubleshooting_Info             from '@salesforce/label/c.CSP_Troubleshooting_Info';
@@ -73,7 +73,7 @@ export default class PortalLogin extends LightningElement {
     _labels = {
         Login,
         CSP_Email,
-        OneId_Password,
+        CSP_Password,
         CSP_Change_Email,
         CSP_Forgot_Password,
         CSP_Troubleshooting_Info,
@@ -287,6 +287,7 @@ export default class PortalLogin extends LightningElement {
             }else{
                 login({username: this.email, password: this.password, landingPage: this.startURL }).then(result => {
                     var response = JSON.parse(JSON.stringify(result));
+                    console.log('response: ', response);
                     if(response.isSuccess == true){
                         navigateToPage(response.sessionUrl, {});
                     }else{

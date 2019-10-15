@@ -101,4 +101,9 @@ public with sharing class PortalRegistrationUtils {
         }
 
     }
+
+    @AuraEnabled
+    public static Boolean isDisposableCheckActive(){
+        return Forbidden_Disposable_Email_Domain_Check__c.getInstance().is_active__c;
+    }
 }

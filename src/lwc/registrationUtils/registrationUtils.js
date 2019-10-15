@@ -4,6 +4,7 @@
 import { LightningElement } from 'lwc';
 import getUserLoc from '@salesforce/apex/PortalRegistrationUtils.getUserLocation';
 import isSystemAdmin from '@salesforce/apex/PortalRegistrationUtils.isSystemAdmin';
+import isDisposableCheckActive from '@salesforce/apex/PortalRegistrationUtils.isDisposableCheckActive';
 
 export default class RegistrationUtils {
 
@@ -40,23 +41,33 @@ export default class RegistrationUtils {
     checkEmailIsDisposable(email){
         return new Promise(
             (resolve, reject) => {
-                var request = new XMLHttpRequest();
-                request.open('GET', "https://disposable.debounce.io/?email=" + email, true);
-                request.onload = function () {
-                    console.log('request.responseText: ', request.responseText);
-                    if (request.status >= 200 && request.status < 400) {
-                        resolve(JSON.parse(request.responseText).disposable);
+                isDisposableCheckActive().then(result => {
+                    if(result == true){
+                        var request = new XMLHttpRequest();
+                        request.open('GET', "https://disposable.debounce.io/?email=" + email, true);
+                        request.onload = function () {
+                            console.log('request.responseText: ', request.responseText);
+                            if (request.status >= 200 && request.status < 400) {
+                                resolve(JSON.parse(request.responseText).disposable);
+                            }
+                            else {
+                               console.log(request.statusText);
+                               reject(request.statusText);
+                            }
+                        }
+                        request.onerror = function () {
+                            console.log(request.statusText);
+                            reject(request.statusText);
+                        }
+                        request.send();
+                    }else{
+                        resolve(result);
                     }
-                    else {
-                       console.log(request.statusText);
-                       reject(request.statusText);
-                    }
-                }
-                request.onerror = function () {
-                    console.log(request.statusText);
-                    reject(request.statusText);
-                }
-                request.send();
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
             }
         );
     }

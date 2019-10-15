@@ -26,6 +26,15 @@ public with sharing class PortalLoginCtrl {
         public boolean userIsFrozen{get;set;}
     }
 
+    public static set<string> oldPortalRedirectSet {
+        get{
+            if(oldPortalRedirectSet==null){
+                oldPortalRedirectSet = new set<string>{'ISS Portal DPC','ISS Portal DPC Admin','ISS Portal PwC2'};
+            }
+            return oldPortalRedirectSet;
+        } set;
+    }
+
     @AuraEnabled(cacheable=true)
     public static LoginConfig getInitialConfig(){
         LoginConfig config = new LoginConfig();
@@ -65,7 +74,7 @@ public with sharing class PortalLoginCtrl {
 
         try{
 
-            list<User> userList = DAL_ISSP.getUserListByNameOrEmail(username);
+            list<User> userList = getUserListByNameOrEmail(username);
 
             //Errors validation
             if (username == '' || password == ''){
@@ -96,25 +105,23 @@ public with sharing class PortalLoginCtrl {
                 return result;
             }
 
+            //overrides to old portal
+            if(oldPortalRedirectSet.contains(oneUser.profile.Name) || oneUser.CNS_Account_or_Agency__c){
+                startUrl = OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Homepage');
+                if(oneUser.CNS_Account_or_Agency__c){
+                    startUrl += '?communityName=CNS';
+                }
+            }
 
             username=null != oneUser ? oneUser.Username : username;
 
-            OneIdUtils.Mode mode=null;
-            mode=OneIdUtils.Mode.CSP;
+            system.debug('startUrl: ' + startUrl);
 
             System.PageReference pageRef = Site.login(username, password, startUrl);
 
-            system.debug('page reference return from login: '+pageRef);
             result.isSuccess = true;
             result.sessionUrl = pageRef.getUrl();
-
-            //todo:replace this part for customer portal logic
-            /*
-            if (userListConfirmTempPassword[0].UID__c != '' && userListConfirmTempPassword[0].UID__c != null){
-                pageRef = Site.login(username, password, OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/OneId_ChangePassword'+serviceNameParam));
-            }
-            */
-
+            system.debug('result: ' + result);
             return result;
         }
         catch (Exception ex) {
@@ -125,6 +132,19 @@ public with sharing class PortalLoginCtrl {
             result.sessionUrl = '';
             return result;
         }
+    }
+
+    public static list<User> getUserListByNameOrEmail(String nameOrEmail) {
+        return
+        [SELECT Id, Username, ContactId, Email, Portal_User_Frozen__c,
+                IsActive, Portal_User_Frozen_Checkbox__c, Contact.Community__c,
+                Profile.Name, CNS_Account_or_Agency__c
+        FROM User
+        WHERE (Username=: nameOrEmail
+        OR email =: nameOrEmail)
+        AND (IsActive = true OR Portal_User_Frozen_Checkbox__c = true)
+        AND ContactId != ''
+        limit 1];
     }
 
     @TestVisible
