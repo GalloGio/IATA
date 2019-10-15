@@ -56,7 +56,7 @@ private class ANG_MulticountryRHCTest {
 		);
 
 		insert new List<AMS_Settlement_System__c>{bspPT, bspFR};
-        
+		
 		List<Operational_Calendar__c> opCalendarList = new List<Operational_Calendar__c>();
 
 		Operational_Calendar__c ptCalendarWeekly = new Operational_Calendar__c(
@@ -65,7 +65,7 @@ private class ANG_MulticountryRHCTest {
 			ISS_operation__c = bspPT.Id, 
 			Last_day__c = Date.today().addDays(10)
 		);
-    
+	
 		Operational_Calendar__c frCalendarWeekly = new Operational_Calendar__c(
 			First_Day__c = Date.today().addDays(10), 
 			Frequency_code__c = 'D', 
@@ -215,16 +215,14 @@ private class ANG_MulticountryRHCTest {
 		Financial_Institution__c fi = 
 			[SELECT 
 				Id 
-			 FROM 
-			 	Financial_Institution__c 
+			 FROM Financial_Institution__c 
 			 LIMIT 1
 			];
 
 		Account accountGE = 
 			[SELECT 
 				Id 
-			 FROM 
-			 	Account 
+			 FROM Account 
 			 WHERE 
 			 	Location_Type__c = :AMS_Utils.GE 
 			 LIMIT 1
@@ -261,8 +259,7 @@ private class ANG_MulticountryRHCTest {
 			[SELECT 
 				Id, 
 				ANG_RHC_Amount_Forecasted__c 
-			 FROM 
-			 	ANG_RHC_Information__c 
+			 FROM ANG_RHC_Information__c 
 			 WHERE 
 			 	ANG_AccountId__c = :accountGE.Id
 			];
@@ -276,16 +273,14 @@ private class ANG_MulticountryRHCTest {
 		Financial_Institution__c fi = 
 			[SELECT 
 				Id 
-			 FROM 
-			 	Financial_Institution__c 
+			 FROM Financial_Institution__c 
 			 LIMIT 1
 			];
 
 		Account accountGE = 
 			[SELECT 
 				Id 
-			 FROM 
-			 	Account 
+			 FROM Account 
 			 WHERE 
 			 	Location_Type__c = :AMS_Utils.GE 
 			 LIMIT 1
@@ -320,8 +315,7 @@ private class ANG_MulticountryRHCTest {
 			[SELECT 
 				Id, 
 				ANG_RHC_Amount_Forecasted__c 
-			 FROM 
-			 	ANG_RHC_Information__c 
+			 FROM ANG_RHC_Information__c 
 			 WHERE 
 			 	ANG_AccountId__c = :accountGE.Id
 			];
@@ -337,8 +331,7 @@ private class ANG_MulticountryRHCTest {
 				ANG_RHC_Amount_Forecasted__c, 
 				ANG_RHC_Amount_Provisional__c, 
 				ANG_Exceeding_Financial_Security__c 
-			 FROM 
-			 	ANG_RHC_Information__c 
+			 FROM ANG_RHC_Information__c 
 			 WHERE 
 			 	ANG_AccountId__c = :accountGE.Id
 			];
@@ -355,8 +348,7 @@ private class ANG_MulticountryRHCTest {
 				ANG_RHC_Amount_Forecasted__c, 
 				ANG_RHC_Amount_Provisional__c, 
 				ANG_Exceeding_Financial_Security__c 
-			 FROM 
-			 	ANG_RHC_Information__c 
+			 FROM ANG_RHC_Information__c 
 			 WHERE 
 			 	ANG_AccountId__c = :accountGE.Id
 			];
@@ -380,8 +372,7 @@ private class ANG_MulticountryRHCTest {
 		Account accountGE = 
 			[SELECT 
 				Id 
-			 FROM 
-			 	Account 
+			 FROM Account 
 			 WHERE 
 			 	Location_Type__c = :AMS_Utils.GE 
 			 LIMIT 1
@@ -424,7 +415,7 @@ private class ANG_MulticountryRHCTest {
 			AccountId = accountGE.Id,
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')
 		);
-    
+	
 		insert caseOscar;
 
 		ANG_RHC_Information__c rhcInfo = 
@@ -432,8 +423,7 @@ private class ANG_MulticountryRHCTest {
 				Id, 
 				ANG_RHC_Amount__c, 
 				ANG_RHC_Amount_Forecasted__c 
-			 FROM 
-			 	ANG_RHC_Information__c 
+			 FROM ANG_RHC_Information__c 
 			 WHERE 
 			 	ANG_AccountId__c = :accountGE.Id
 			];
@@ -451,8 +441,7 @@ private class ANG_MulticountryRHCTest {
 				Id, 
 				ANG_RHC_Amount__c, 
 				ANG_RHC_Amount_Forecasted__c 
-			 FROM 
-			 	ANG_RHC_Information__c 
+			 FROM ANG_RHC_Information__c 
 			 WHERE 
 			 	ANG_AccountId__c = :accountGE.Id
 			];

@@ -1,5 +1,25 @@
 public class AMS_OSCAR_ProcessViewerController {
     
+    public class HideOptionStepWrapper {
+        public String stepName;
+        public String process;
+        public String optToHide;
+
+        public HideOptionStepWrapper(String stepName, String process, String optToHide){
+            this.stepName = stepName;
+            this.process = process;
+            this.optToHide = optToHide;
+        }
+    }
+
+    private static Map<String, List<HideOptionStepWrapper>> hideOptsByStepMap = new Map<String, List<HideOptionStepWrapper>>{
+        'STEP45__c' => 
+            new List<HideOptionStepWrapper>{
+                new HideOptionStepWrapper('STEP45__c', AMS_Utils.NGCONVERSIONTOMULTICOUNTRY, AMS_Utils.NOT_APPLICABLE),
+                new HideOptionStepWrapper('STEP45__c', AMS_Utils.NEWGESTANDARD, AMS_Utils.NOT_APPLICABLE)
+            }
+    };
+
     private static final String CLASS_BLACK = '';
     private static final String CLASS_RED = 'red';
     private static final String CLASS_GREEN = 'green';
@@ -386,8 +406,13 @@ public class AMS_OSCAR_ProcessViewerController {
             picklistValues.add(new SelectOption(currentPickValue, currentPickValue));
         }
         
+        Set<String> optsToHideSet = fetchOptsToHideByFieldName(fr.getName());
 
         for( Schema.PicklistEntry f : ple) {
+            if(optsToHideSet.contains(f.getValue())){
+                //Discard this picklist value
+                continue;
+            }            
             //this is a workaround to make the current value of the field the default value of the picklist
             if(currentPickValue != f.getValue() 
                 && (dependentPicklistValues.isEmpty() ||  dependentPicklistValues.contains(f.getValue()))
@@ -548,6 +573,22 @@ public class AMS_OSCAR_ProcessViewerController {
             getDisplayFieldsPickValues(p);
         }
 
+    }
+
+    private Set<String> fetchOptsToHideByFieldName(String fieldName){
+        Set<String> optsToHideSet = new Set<String>();
+
+        List<HideOptionStepWrapper> stepWrapperLst = hideOptsByStepMap.get(fieldName);
+
+        if(stepWrapperLst != NULL){
+            for(HideOptionStepWrapper hosw : stepWrapperLst){
+                if(oscar.Process__c == hosw.process){
+                    optsToHideSet.add(hosw.optToHide);
+                }
+            }
+        }
+
+        return optsToHideSet;
     }
 
 }

@@ -22388,6 +22388,8 @@ The product will only appear on the Online Store when the date entered in this f
         <searchResultsAdditionalFields>Media__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Effective_From__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Delivery_Fulfillment_Support__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IATA_ORG_Group__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IEC_Use_on_IATA_org__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>

@@ -1153,19 +1153,16 @@ private class ANG_RollbackEngineHelperTest {
 		update oscar;
 
         Test.StopTest();
-	
 
-		//delete references to the old Risk alerts
-		delete [Select Id From ANG_Risk_Alert__c];
-
-		ANG_Risk_Alert__c newRTSAlert = new ANG_Risk_Alert__c(
+		rtsAlert = new ANG_Risk_Alert__c(
+				Id = rtsAlert.Id,
         		ANG_Account__c = a1.id,
         		Monitored_Account__c = heAccount.id,
         		ANG_Agent_Sales__c = 1234567,
         		ANG_EventId__c = 'RTS Alert - Test1 Agency OK',
         		ANG_Severity__c = 'Red'
         	);
-		insert newRTSAlert;
+		update rtsAlert;
 
 		heAccount.ParentId = a1.Id;
 		heAccount.Top_Parent__c = a1.Id;

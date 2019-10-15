@@ -1042,14 +1042,15 @@ private class ANG_MulticountryHelperTest {
 	@isTest
 	public static void testIsAccountInMulticountryCountry()
 	{
-		List<Account> accounts = [SELECT Id FROM Account 
+		List<Account> accounts = [SELECT Id, IATA_ISO_Country__c
+								  FROM Account 
 								  WHERE Name IN ('MC Account GE PT')
 								  ORDER BY Name ASC];
 		Test.startTest();
-		Boolean isMulticountry = ANG_MulticountryHelper.isAccountInMulticountryCountry(accounts.get(0).Id);
+		List<IATA_ISO_Country__c> countries = ANG_MulticountryHelper.getAccountCountry(accounts);
+		for (IATA_ISO_Country__c c : countries)
+			system.assert(ANG_MulticountryHelper.isMulticountryCountry(c));
 		Test.stopTest();
-
-		system.assert(isMulticountry);
 	}
 
 }

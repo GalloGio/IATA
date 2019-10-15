@@ -92,7 +92,7 @@
                 <behavior>Readonly</behavior>
                 <field>Status_SIDRA__c</field>
             </layoutItems>
-			<layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Group_Single_Agent__c</field>
             </layoutItems>

@@ -134,6 +134,18 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>ANG_Account_Country_ISO_Code__c</fullName>
+        <description>Stores the Country ISO Code for the related account</description>
+        <externalId>false</externalId>
+        <formula>ANG_AccountId__r.Country_ISO_Code__c</formula>
+        <label>Account Country ISO Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_CashCondition__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Reports the cash conditions of the account. This information is filled by the account trigger and should no be updated manually. It&apos;s used on the calculation of RHC Amount and Forecasted RHC Amount</description>

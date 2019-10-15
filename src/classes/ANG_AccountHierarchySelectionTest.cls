@@ -413,8 +413,7 @@ private class ANG_AccountHierarchySelectionTest {
 				ANG_Type_Of_Change__c, 
 				Change_of_location_type_behavior__c,
 				Account__r.ANG_Accreditation_Model__c
-			 FROM
-			 	AMS_OSCAR__c 
+			 FROM AMS_OSCAR__c 
 			 WHERE 
 			 	ANG_Type_Of_Change__c = :AMS_Utils.CONVERTTOLEGACY 
 			 LIMIT 1
@@ -480,8 +479,7 @@ private class ANG_AccountHierarchySelectionTest {
 				ANG_Type_Of_Change__c, 
 				Change_of_location_type_behavior__c,
 				Account__r.ANG_Accreditation_Model__c	 
-			 FROM
-			 	AMS_OSCAR__c 
+			 FROM AMS_OSCAR__c 
 			 WHERE 
 			 	ANG_Type_Of_Change__c = :AMS_Utils.CONVERTTOLEGACY 
 			 LIMIT 1

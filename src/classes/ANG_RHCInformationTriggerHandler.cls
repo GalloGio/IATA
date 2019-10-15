@@ -38,7 +38,7 @@ public class ANG_RHCInformationTriggerHandler{
 				updatedFlagsForRHCEqsFS.add(rhc);
 
 		if (!updatedFlagsForRHCEqsFS.isEmpty()) ANG_RHCHelper.calculateRHCAmount(updatedFlagsForRHCEqsFS);
-        
+		
 		assessOscarAccreditationForecastRHC(filterByIATACode(triggerNew));
 
 	}
@@ -144,22 +144,22 @@ public class ANG_RHCInformationTriggerHandler{
 		}*/
 
 		if(!accIds.isEmpty()) {
-            if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs()) { 
-                Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
-            } else {
-                if(System.isBatch() && Limits.getQueueableJobs() == 1) {
-                    Datetime execTime = Datetime.now().addSeconds(5);
-                    String hour = String.valueOf(execTime.hour());
-                    String min = String.valueOf(execTime.minute()); 
-                    String ss = String.valueOf(execTime.second());
-                    String nextFireTime = ss + ' ' + min + ' ' + hour + ' * * ?';
-                    System.schedule('ANG_UpdateRHCInformationScheduler ' + String.valueOf(Math.random()), nextFireTime, 
-                        new ANG_UpdateRHCInformationScheduler(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
-                } else {
-                    System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
-                }               
-            }
-        }        	
+			if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs()) { 
+				Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
+			} else {
+				if(System.isBatch() && Limits.getQueueableJobs() == 1) {
+					Datetime execTime = Datetime.now().addSeconds(5);
+					String hour = String.valueOf(execTime.hour());
+					String min = String.valueOf(execTime.minute()); 
+					String ss = String.valueOf(execTime.second());
+					String nextFireTime = ss + ' ' + min + ' ' + hour + ' * * ?';
+					System.schedule('ANG_UpdateRHCInformationScheduler ' + String.valueOf(Math.random()), nextFireTime, 
+						new ANG_UpdateRHCInformationScheduler(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
+				} else {
+					System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
+				}               
+			}
+		}        	
 	}
 
 	/* as per NEWGEN-1085
@@ -185,7 +185,7 @@ public class ANG_RHCInformationTriggerHandler{
 		if(!toDeactivateAccounts.isEmpty()){
 			
 			Map<Id, List<AMS_Agencies_relationhip__c>> toDeactivateAccountsMap = AMS_HierarchyHelper.getAccountsHierarchies(toDeactivateAccounts);
-			            
+						
 			if(isEmptySetOfLists(toDeactivateAccountsMap.values())){		
 				toUpdate.addAll(performFOPaction(toDeactivateAccounts,UPPERFLUCTUATION));
 			}else{
@@ -197,7 +197,7 @@ public class ANG_RHCInformationTriggerHandler{
 		if(!toActivateAccounts.isEmpty()){
 			
 			Map<Id, List<AMS_Agencies_relationhip__c>> toActivateAccountsMap = AMS_HierarchyHelper.getAccountsHierarchies(toActivateAccounts);
-			            
+						
 			if(isEmptySetOfLists(toActivateAccountsMap.values())){ // does not have a hierarchy
 				toUpdate.addAll(performFOPaction(toActivateAccounts,LOWERFLUCTUATION));
 			}else{
@@ -268,7 +268,7 @@ public class ANG_RHCInformationTriggerHandler{
 
 		String statusFOP = action == UPPERFLUCTUATION ? 'Non-Active' : 'Active';
 
-        Id formOfPaymentRT = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
+		Id formOfPaymentRT = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
 
 		List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts and ANG_FormOfPayment_ID__c = 'CA' and recordTypeId = :formOfPaymentRT and Account__r.recordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
 
@@ -295,7 +295,7 @@ public class ANG_RHCInformationTriggerHandler{
 		Set<Id> accountIds = accountsAndStatus.keySet();
 
 		List<Agency_Applied_Change_code__c> activeChangeCodes =
-		    new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]);
+			new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]);
 
 		//map accountId -> active change code
 		Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
@@ -350,7 +350,7 @@ public class ANG_RHCInformationTriggerHandler{
 	*/
 
   public static void assessOscarAccreditationForecastRHC(List<ANG_RHC_Information__c> rhcLst){
-        
+		
 		if(!AMS_OscarTriggerHandler.applyRHCForecast || rhcLst.size() > 1)
 			return;
 
@@ -365,25 +365,19 @@ public class ANG_RHCInformationTriggerHandler{
 
 	private void handleRhcUpdate(){
 
-		//Need to fetch the countries to check the country specifics 
-		Set<ID> setAccountIDs = new Set<ID>();
-		Map<ID,ID> mapAccountIDsPerIsoCountriesIDs = new Map<ID,ID>();
-
-		for(ANG_RHC_Information__c rhc : triggerNew) setAccountIDs.add(rhc.ANG_AccountId__c);
-
-		for(Account acc: [SELECT ID, IATA_ISO_Country__c FROM Account WHERE ID IN :setAccountIDs]) mapAccountIDsPerIsoCountriesIDs.put(acc.id, acc.IATA_ISO_Country__c);
-
-
 		Set<Id> toNotify = new Set<Id>();
 		
 		for(ANG_RHC_Information__c rhc : triggerNew){
-			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(rhc.ANG_AccountId__c) && rhc.ANG_RHC_Amount_Forecasted__c != oldMap.get(rhc.Id).ANG_RHC_Amount_Forecasted__c){
-				
-				Boolean sendNotification = true;
-				
-				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{mapAccountIDsPerIsoCountriesIDs.get(rhc.ANG_AccountId__c)}).get(0).AMS_Country_Specific_Attributes__r)
-					if (att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && att.Block_notification_on_RHC_amount_update__c) sendNotification = false;
-				
+			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(rhc.ANG_AccountId__c) && rhc.ANG_RHC_Amount__c != oldMap.get(rhc.Id).ANG_RHC_Amount__c){
+				Boolean sendNotification = true;	
+
+				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{rhc.ANG_Account_Country_ISO_Code__c}).get(0).AMS_Country_Specific_Attributes__r){
+					if(att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && att.Block_notification_on_RHC_amount_update__c){
+						sendNotification = false;
+						break;
+					}
+				}
+
 				if(sendNotification) toNotify.add(rhc.ANG_AccountId__c);
 			}
 		}

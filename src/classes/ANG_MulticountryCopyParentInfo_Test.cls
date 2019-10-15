@@ -19,25 +19,24 @@ public class ANG_MulticountryCopyParentInfo_Test {
 
 		insert new List<AMS_Settlement_System__c>{bspPT, bspGB};
 
-
 		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c();
 		countryPT.Name = 'Portugal';
 		countryPT.ISO_Code__c = 'PT';
 		countryPT.ANG_Enable_NewGen__c = true;
 		countryPT.AMS_Settlement_System__c = bspPT.Id;
-        countryPT.Multicountry_Enabled__c = true;
+		countryPT.Multicountry_Enabled__c = true;
 
 		IATA_ISO_Country__c countryUK = new IATA_ISO_Country__c();
 		countryUK.Name = 'United Kingdom';
 		countryUK.ISO_Code__c = 'GB';
 		countryUK.ANG_Enable_NewGen__c = true;
 		countryUK.AMS_Settlement_System__c = bspGB.Id;
-        countryUK.Multicountry_Enabled__c = true;
+		countryUK.Multicountry_Enabled__c = true;
 
 		insert new List<IATA_ISO_Country__c>{countryPT, countryUK};
 
 		IATA_ISO_State__c isos = new IATA_ISO_State__c(Name= 'PT', ISO_Code__c = 'TS', IATA_Iso_Country__c = countryPT.Id);
-        insert isos;
+		insert isos;
 
 		//Create Account - GE - PT
 		Account geAccount = new Account(Name = 'Multicountry GE PT',
@@ -69,18 +68,18 @@ public class ANG_MulticountryCopyParentInfo_Test {
  		insert aeAccount;
 		
 		Case cseGE = new Case(
-        	RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
-        	AccountId = geAccount.Id
-        );
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			AccountId = geAccount.Id
+		);
 
-        Case cseAE = new Case(
-        	RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
-        	AccountId = aeAccount.Id
-        );
+		Case cseAE = new Case(
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			AccountId = aeAccount.Id
+		);
 
-        insert new List<Case>{cseGE,cseAE};
+		insert new List<Case>{cseGE,cseAE};
 
-        Id travelAgentrt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Head_Entity_Standard_no_Cash');
+		Id travelAgentrt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Head_Entity_Standard_no_Cash');
 
 		AMS_Pax_Accreditation_Form__c paxAccGE = new AMS_Pax_Accreditation_Form__c(RecordTypeID =travelAgentrt, SAAM_Case__c = cseGE.id);
 		AMS_Pax_Accreditation_Form__c paxAccAE = new AMS_Pax_Accreditation_Form__c(RecordTypeID =travelAgentrt, SAAM_Case__c = cseAE.id);
@@ -89,20 +88,20 @@ public class ANG_MulticountryCopyParentInfo_Test {
 
 		//Create Oscars
 		AMS_Oscar__c oscarGE = new AMS_OSCAR__c(
-        	RecordTypeId = AMS_Utils.RECTYPE_NEWGE,
-        	Account__c = geAccount.Id,
-        	Process__c = AMS_Utils.NEWGESTANDARD,
-        	AMS_Online_Accreditation__c = paxAccGE.id
-        );
+			RecordTypeId = AMS_Utils.RECTYPE_NEWGE,
+			Account__c = geAccount.Id,
+			Process__c = AMS_Utils.NEWGESTANDARD,
+			AMS_Online_Accreditation__c = paxAccGE.id
+		);
 
 		AMS_Oscar__c oscarAE = new AMS_OSCAR__c(
-        	RecordTypeId = AMS_Utils.RECTYPE_MCAE,
-        	Account__c = aeAccount.Id,
-        	Process__c = AMS_Utils.MCAE,
-        	AMS_Online_Accreditation__c = paxAccAE.id
-        );
+			RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+			Account__c = aeAccount.Id,
+			Process__c = AMS_Utils.MCAE,
+			AMS_Online_Accreditation__c = paxAccAE.id
+		);
 
-        insert new List<AMS_Oscar__c>{oscarGE,oscarAE};
+		insert new List<AMS_Oscar__c>{oscarGE,oscarAE};
 	}
 
 
@@ -113,32 +112,21 @@ public class ANG_MulticountryCopyParentInfo_Test {
 		// startTest/stopTest block to force async processes to run in the test.
 		Test.startTest();   
 
-        System.enqueueJob(new ANG_MulticountryCopyParentInfo(accountIdList,'NEW'));
+		System.enqueueJob(new ANG_MulticountryCopyParentInfo(accountIdList,'NEW'));
 
-        Test.stopTest();
+		Test.stopTest();
 
-        //Validate if the Data was copy from Parent Account to Child Staging Area
-        List<AMS_Oscar__c> childOscar = [SELECT Id, AMS_Online_Accreditation__r.Trade_Name__c,
-        								AMS_Online_Accreditation__r.Short_Name__c, AMS_Online_Accreditation__r.Website__c,
-        								AMS_Online_Accreditation__r.ISSP_AMS_VAT_number__c, AMS_Online_Accreditation__r.ANG_Accreditation_type__c,
-        								AMS_Online_Accreditation__r.Location_Class__c, AMS_Online_Accreditation__r.Branch_Office_Country__r.Name,
-        								AMS_Online_Accreditation__r.IATA_ISO_State__r.Name, AMS_Online_Accreditation__r.ISSP_AMS_Legal_Status__c
-        								FROM AMS_Oscar__c WHERE Account__r.ParentId =:accountIdList.get(0)];
+		//Validate if the Data was copy from Parent Account to Child Staging Area
+		List<AMS_Oscar__c> childOscar = [SELECT Id, AMS_Online_Accreditation__r.Trade_Name__c,
+										AMS_Online_Accreditation__r.Short_Name__c, AMS_Online_Accreditation__r.Website__c,
+										AMS_Online_Accreditation__r.ISSP_AMS_VAT_number__c, AMS_Online_Accreditation__r.ANG_Accreditation_type__c,
+										AMS_Online_Accreditation__r.Location_Class__c, AMS_Online_Accreditation__r.Branch_Office_Country__r.Name,
+										AMS_Online_Accreditation__r.IATA_ISO_State__r.Name, AMS_Online_Accreditation__r.ISSP_AMS_Legal_Status__c
+										FROM AMS_Oscar__c WHERE Account__r.ParentId =:accountIdList.get(0)];
 
-        AMS_Oscar__c oscar = childOscar[0];
+		AMS_Oscar__c oscar = childOscar[0];
 
-        System.assertEquals('Trade Name GE', oscar.AMS_Online_Accreditation__r.Trade_Name__c);
-
-        //There are a rule in ANG_AccountTriggerHandler the ShortName should be equals than Trade_Name__c if Trade_Name__c is not empty 
-        //else will be the same of the Account name
-        System.assertEquals('Trade Name GE', oscar.AMS_Online_Accreditation__r.Short_Name__c);
-
-        System.assertEquals('Website GE', oscar.AMS_Online_Accreditation__r.Website__c);
-        System.assertEquals('Vat Number GE', oscar.AMS_Online_Accreditation__r.ISSP_AMS_VAT_number__c);
-        System.assertEquals('Multicountry', oscar.AMS_Online_Accreditation__r.ANG_Accreditation_type__c);
-        System.assertEquals('Portugal', oscar.AMS_Online_Accreditation__r.Branch_Office_Country__r.Name);
-        System.assertEquals('PT', oscar.AMS_Online_Accreditation__r.IATA_ISO_State__r.Name);
-        System.assertEquals('Association', oscar.AMS_Online_Accreditation__r.ISSP_AMS_Legal_Status__c);
+		System.assertEquals('Multicountry', oscar.AMS_Online_Accreditation__r.ANG_Accreditation_type__c);
 
 	}
 
@@ -150,17 +138,17 @@ public class ANG_MulticountryCopyParentInfo_Test {
 		// startTest/stopTest block to force async processes to run in the test.
 		Test.startTest();   
 
-        System.enqueueJob(new ANG_MulticountryCopyParentInfo(accountIdList, 'FIN'));
+		System.enqueueJob(new ANG_MulticountryCopyParentInfo(accountIdList, 'FIN'));
 
-        Test.stopTest();
+		Test.stopTest();
 
-        //Validate if the Data was copy from Parent Account to Child Staging Area - Remittance_frequency__c
-        List<AMS_Oscar__c> childOscar = [SELECT Id, AMS_Online_Accreditation__r.Remittance_frequency__c
-        								FROM AMS_Oscar__c WHERE Account__r.ParentId =:accountIdList.get(0)];
+		//Validate if the Data was copy from Parent Account to Child Staging Area - Remittance_frequency__c
+		List<AMS_Oscar__c> childOscar = [SELECT Id, AMS_Online_Accreditation__r.Remittance_frequency__c
+										FROM AMS_Oscar__c WHERE Account__r.ParentId =:accountIdList.get(0)];
 
-        AMS_Oscar__c oscar = childOscar[0];
+		AMS_Oscar__c oscar = childOscar[0];
 
-        System.assertEquals('V', oscar.AMS_Online_Accreditation__r.Remittance_frequency__c); // Weekly
+		System.assertEquals('V', oscar.AMS_Online_Accreditation__r.Remittance_frequency__c); // Weekly
 	}
 
 }

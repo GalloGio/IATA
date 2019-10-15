@@ -584,7 +584,7 @@ global class AMS_OSCAR_Webservice {
                     AMS_OscarTriggerHandler.applyRHCForecast = true;
                 }
     
-                update oscar;
+                update currentOscar;
                 
                 if(isNGChangeOfHierarchyWithNewRHC){
                 
