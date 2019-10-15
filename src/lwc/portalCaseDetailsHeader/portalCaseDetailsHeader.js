@@ -15,6 +15,12 @@ import ISSP_Survey from '@salesforce/label/c.ISSP_Survey';
 import Open from '@salesforce/label/c.Open';
 import CSP_RecipientsQuestion from '@salesforce/label/c.CSP_RecipientsQuestion';
 import CSP_Recipients from '@salesforce/label/c.CSP_Recipients';
+import ISSP_CaseNumber from '@salesforce/label/c.ISSP_CaseNumber';
+import ISSP_Subject from '@salesforce/label/c.ISSP_CaseNumber';
+import CSP_Status from '@salesforce/label/c.CSP_Status';
+import CSP_CreatedOn from '@salesforce/label/c.CSP_CreatedOn';
+import CSP_LastUpdate from '@salesforce/label/c.CSP_LastUpdate';
+import CSP_Manage_Recipients from '@salesforce/label/c.CSP_Manage_Recipients';
 export default class PortalHomeCalendar extends LightningElement {
 
     @track loading = true;
@@ -38,7 +44,13 @@ export default class PortalHomeCalendar extends LightningElement {
         ISSP_Survey,
         Open,
         CSP_RecipientsQuestion,
-        CSP_Recipients
+		CSP_Recipients,
+		ISSP_CaseNumber,
+		ISSP_Subject,
+		CSP_Status,
+		CSP_CreatedOn,
+		CSP_LastUpdate,
+		CSP_Manage_Recipients
     }
 
     connectedCallback() {
@@ -119,6 +131,9 @@ export default class PortalHomeCalendar extends LightningElement {
         this.showManageRecipientsPopup = false;
     }
     
+	get hasSurveyLink() {
+        return this.surveyLink !== undefined && this.surveyLink.length > 0;
+    }
 
     addNewRecipientButtonClick(){
 
