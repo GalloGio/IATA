@@ -179,6 +179,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
                                                 Application_Status__c = 'Pending',
                                                 Type_Of_Application__c = 'New',
                                                 IATA_Code__c = a.IATAcode__c,
+                                                ITDI_Courses_Fee__c = 0,
                                                 RecordTypeId = rt
 
                                                ));
@@ -260,6 +261,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
                                                 IATA_Code__c = a.IATAcode__c,
                                                 Applicable_fee__c = 50,
                                                 ID_Card_Fee__c = 50,
+                                                ITDI_Courses_Fee__c = 0,
                                                 RecordTypeId = rtsingle,
                                                 Photo__c =  'filename.jpg' + i
                                                ));
@@ -485,6 +487,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
                                             IATA_Code__c = a.IATAcode__c,
                                             Applicable_fee__c = 50,
                                             ID_Card_Fee__c = 50,
+                                            ITDI_Courses_Fee__c = 0,
                                             RecordTypeId = rtsingle,
 
                                             Photo__c =  'filename.jpg',
@@ -617,6 +620,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
                                             IATA_Code__c = a.IATAcode__c,
                                             Applicable_fee__c = 50,
                                             ID_Card_Fee__c = 50,
+                                            ITDI_Courses_Fee__c = 0,
                                             RecordTypeId = rtsingle,
                                             Photo__c =  'filename.jpg'
                                            ));
@@ -730,6 +734,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
                                             IATA_Code__c = a.IATAcode__c,
                                             Applicable_fee__c = 50,
                                             ID_Card_Fee__c = 50,
+                                            ITDI_Courses_Fee__c = 0,
                                             RecordTypeId = rtsingle,
 
                                             Photo__c =  'filename.jpg',
@@ -828,6 +833,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
                                             IATA_Code__c = a.IATAcode__c,
                                             Applicable_fee__c = 50,
                                             ID_Card_Fee__c = 50,
+                                            ITDI_Courses_Fee__c = 0,
                                             RecordTypeId = rtsingle,
                                             Photo__c =  'filename.jpg'
 
