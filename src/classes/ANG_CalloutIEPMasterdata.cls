@@ -31,7 +31,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		req.setHeader('Content-Type', 'application/json');
 	 	req.setMethod(action);
 	 	req.setTimeout(120000);
-		req.setEndpoint('callout:'+namedCredential + '/' + iataCode);
+		req.setEndpoint('callout:' + namedCredential);
 		req.setBody(body);
 
 		System.debug('ANG_CalloutIEPMasterdata:Endpoint:' + req.getEndpoint());
@@ -102,9 +102,6 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		private String body;
 		private String action;
 		private String namedCredential;
-		private String endPointCredential;
-		private String clientId;
-		private String clientSecret;
 		private String changeCodeId;
 		private String agencyUpdateId;
 		private String iataCode;
