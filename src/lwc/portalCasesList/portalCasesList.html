@@ -16,11 +16,11 @@
         <lightning-layout-item class="slds-text-align_right slds-p-around_xx-small" size="12" flexibility="auto" large-device-size="7" medium-device-size="9" style="width: 65%;">
             <lightning-layout-item class="slds-text-align_right paddingRight" size="3" flexibility="auto" small-device-size="3" medium-device-size="3">
                 <!-- FILTER -->
-                <button if:true={filtered} style="margin: 0; text-align: left; display: inline-block;" class="slds-m-right_small slds-button slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
-                    {label.CSP_Filtered}<img style="float: right; margin-right: 10px;" src={filteredIconUrl}>
+                <button if:true={filtered} class="slds-m-right_small slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
+                    {label.CSP_Filtered}<img src={filteredIconUrl}>
                 </button>
-                <button if:false={filtered} style="margin: 0; text-align: left; display: inline-block;" class="slds-m-right_small slds-button slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
-                    {label.CSP_Filter}<img style="float: right; margin-right: 10px;" src={filterIconUrl}>
+                <button if:false={filtered} class="slds-m-right_small slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
+                    {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
                 </button>
             </lightning-layout-item>
             <!-- LIST VIEW -->
