@@ -286,8 +286,7 @@ private class ANG_RiskForecastPropertiesControllerTest {
                 Location_Type__c,
                 Location_Class__c,
                 IATA_ISO_Country__c
-             FROM
-                Account
+             FROM Account
              WHERE
                 Location_Type__c = :AMS_Utils.GE
             ];

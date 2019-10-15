@@ -445,8 +445,7 @@ public class ANG_RHCHelper {
 				Max_FA_Points__c,
 				RHC_Amnt_Calc_Type__c,
 				Limit_Cash_Condition__c
-			 FROM
-			 	ANG_BSP_Attributes__c
+			 FROM ANG_BSP_Attributes__c
 			 WHERE
 			 	BSP__c IN :bspIdSet
 			]
@@ -479,8 +478,7 @@ public class ANG_RHCHelper {
 			[SELECT
 				Id,
 				Preferred_Language__c
-			 FROM
-			 	Contact
+			 FROM Contact
 			 WHERE
 			 	Id IN :contactIdSet
 			]
@@ -495,8 +493,7 @@ public class ANG_RHCHelper {
 				ANG_Forecasted_RHC_Effective_date__c,
 				ANG_AccountId__r.ANG_HE_RiskStatus__c,
 				ANG_AccountId__r.ANG_HE_CashCondition__c
-			 FROM
-				ANG_RHC_Information__c
+			 FROM ANG_RHC_Information__c
 			 WHERE
 				ANG_AccountId__c IN :accountIdSet
 			]

@@ -721,8 +721,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             pendingCases = 
                 [SELECT 
                     COUNT() 
-                 FROM
-                    Case
+                 FROM Case
                  WHERE
                      AccountId IN :hierarchyAccountIds 
                  AND RecordType.DeveloperName = 'OSCAR_Communication' 

@@ -662,8 +662,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 				Id,
 				Name,
 				ANG_FA_Opt_Out__c
-			 FROM
-				Account
+			 FROM Account
 			 WHERE
 				ParentId = :oscar.Account__c
 			]
@@ -677,8 +676,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			[SELECT
 				Id,
 				Status
-			 FROM
-				Case
+			 FROM Case
 			 WHERE
 				AccountId = :oscar.Account__c
 			 AND
