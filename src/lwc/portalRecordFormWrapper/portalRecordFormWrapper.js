@@ -12,6 +12,8 @@ import { navigateToPage } from 'c/navigationUtils';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 import goToPrivacyPortal from '@salesforce/apex/PortalProfileCtrl.goToPrivacyPortal';
+import getAccountDomains from '@salesforce/apex/PortalProfileCtrl.getAccountDomains';
+import getMapHierarchyAccounts from '@salesforce/apex/PortalProfileCtrl.getMapHierarchyAccounts';
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
@@ -20,11 +22,13 @@ import Area from '@salesforce/label/c.csp_WorkingAreas';
 import ServicesTitle from '@salesforce/label/c.CSP_Services_Title';
 import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
 import CompleteField from '@salesforce/label/c.csp_CompleteField';
+import RelocateAccount from '@salesforce/label/c.ISSP_Relocate_Contact';
 
 import IdCardNumber from '@salesforce/label/c.ISSP_IDCard_VER_Number';
 import IdCardValidTo from '@salesforce/label/c.ISSP_IDCard_Valid_To';
 import CSP_Error_Message_Mandatory_Fields_Contact from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
 import LastLoginDate from '@salesforce/label/c.csp_LastLoginDate';
+import CompanyInformation_EMADOMVAL_Title from '@salesforce/label/c.ISSP_CompanyInformation_EMADOMVAL_Title';
 
 import remove from '@salesforce/label/c.Button_Remove';
 import contact from '@salesforce/label/c.ISSP_Contact';
@@ -50,6 +54,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api services;
     @api showfunction;
 
+    @api relatedAccounts = [];
+
     @api isForEdit = false;
 
     @track isLoading = true;
@@ -71,14 +77,34 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track contactTypeStatus = [];
 
     @track changeUserPortalStatus = false;
+    @track openRelocateAccount = false;
 
     @track hasError = false;
-
+    @track accountEmailDomains = [];
+    @track emailDomain = false;
+    @track canRelocate = true;
     @api
     get fields() { return this.fieldsLocal; }
     set fields(value) { this.fieldsLocal = value; }
 
-    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area, ServicesTitle, InvalidValue, CompleteField, IdCardNumber, IdCardValidTo, remove, contact, CSP_Error_Message_Mandatory_Fields_Contact,LastLoginDate};
+    _labels = {
+        SaveLabel,
+        CancelLabel,
+        MembershipFunction,
+        Area,
+        ServicesTitle,
+        InvalidValue,
+        CompleteField,
+        IdCardNumber,
+        IdCardValidTo,
+        remove,
+        contact,
+        CSP_Error_Message_Mandatory_Fields_Contact,
+        LastLoginDate,
+        RelocateAccount,
+        CompanyInformation_EMADOMVAL_Title
+    };
+    
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -141,6 +167,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         isAdmin().then(result => {
             this.showEdit = result && this.showEdit;
         });
+
+        this.getAccountEmailDomains();
     }
 
     get accessibilityGetter() {
@@ -188,10 +216,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     handleSucess(event) {
-        const updatedRecord = event.detail.id;
         this.isSaving = false;
 
-        let listSelected = JSON.parse(JSON.stringify(this.listSelected));
         this.closeModal();
 
         this.updateMembershipFunctions(event.detail);
@@ -524,7 +550,11 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.listSelected = fieldValue;
 
     }
-
+    
+    opensRelocateAccount() {
+        this.checkCanRelocate();
+    }
+    
     openChangeUserPortalStatus() {
         this.changeUserPortalStatus = true;
     }
@@ -532,12 +562,14 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     closePortalChangeUserStatus() {
         this.removeContact = false;
         this.changeUserPortalStatus = false;
+        this.openRelocateAccount = false;
     }
 
     closePortalChangeUserStatusWithRefresh() {
         this.dispatchEvent(new CustomEvent('refreshview'));
         this.removeContact = false;
         this.changeUserPortalStatus = false;
+        this.openRelocateAccount = false;
     }
 
     get canSave() {
@@ -561,17 +593,45 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         return this.services !== undefined && this.services.length > 0;
     }
 
-    get hasStaticServices(){
-            return this.staticFields !== undefined && this.staticFields.services !== undefined && this.staticFields.services.length>0;
-        }
+    get hasStaticServices() {
+        return this.staticFields !== undefined && this.staticFields.services !== undefined && this.staticFields.services.length > 0;
+    }
 
-    
-    navigateToPrivacyPortal(){
+
+    navigateToPrivacyPortal() {
         goToPrivacyPortal({})
-        .then(results => {
-            window.open(results);
+            .then(results => {
+                window.open(results);
+            });
+    }
+
+    get accountDomains() {
+        return this.accountEmailDomains;
+    }
+
+    getAccountEmailDomains() {
+        getAccountDomains({ accountId: this.recordId }).then(result => {
+            this.accountEmailDomains = result;
         });
     }
 
+    openEmailDomain() {
+        this.emailDomain = true;
+    }
+
+    closeEmailDomain() {
+        this.getAccountEmailDomains();
+        this.emailDomain = false;
+    }
+
+    checkCanRelocate() {
+        let contactId = this.recordId;
+        getMapHierarchyAccounts({ contactId: contactId })
+        .then(result => {
+            this.isLoading = false;
+            this.openRelocateAccount = true;
+            this.relatedAccounts = JSON.parse(JSON.stringify(result));
+        });
+    }
 
 }

@@ -7,13 +7,19 @@ private class ANG_OSCARNewGenTest {
 
 		AMS_OSCAR__c oscar = [SELECT Id, RPM_Approval__c, Oscar_Communication_Case_Id__c, STEP12__c FROM AMS_OSCAR__c limit 1];
 
-		oscar.STEP12__c = AMS_Utils.PASSED;
-		oscar.Validation_Status__c = AMS_Utils.PASSED;
-		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		Test.startTest();
+        
+		oscar.STEP12__c = AMS_Utils.PASSED;       
+        update oscar;
 		oscar.STEP34__c = AMS_Utils.PASSED;
 		oscar.STEP35__c = AMS_Utils.PASSED;
-
+		oscar.Bank_Guarantee_Requested__c = Date.today();
+        update oscar;
+        oscar.Validation_Status__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		update oscar;
+        
+        Test.stopTest();
 
 		//confirm that email sent is on the case
 		List<EmailMessage> approvalEmail = [SELECT Id, ParentId FROM EmailMessage WHERE ParentId =: oscar.Oscar_Communication_Case_Id__c];

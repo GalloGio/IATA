@@ -789,6 +789,10 @@
         <name>ANG_ISSP_AFP_NoCreditCardMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ASD_HelpText --></label>
+        <name>ANG_ISSP_ASD_HelpText</name>
+    </customLabels>
+    <customLabels>
         <label>Type d’accréditation</label>
         <name>ANG_ISSP_AccreditationType</name>
     </customLabels>
@@ -807,6 +811,18 @@
     <customLabels>
         <label>Filiale(s):</label>
         <name>ANG_ISSP_AssociateEntity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BOP --></label>
+        <name>ANG_ISSP_BOP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BOP Access Link --></label>
+        <name>ANG_ISSP_BOP_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_BOP_China_URL --></label>
+        <name>ANG_ISSP_BOP_China_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- Case reason used in the case subject --></label>
@@ -1141,6 +1157,10 @@
         <name>ANG_ISSP_ProductComparisonFeature10Tooltip</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ProductComparisonFeature11 --></label>
+        <name>ANG_ISSP_ProductComparisonFeature11</name>
+    </customLabels>
+    <customLabels>
         <label>Fonctionnalité1 Tooltip</label>
         <name>ANG_ISSP_ProductComparisonFeature1Tooltip</name>
     </customLabels>
@@ -1289,6 +1309,10 @@
         <name>ANG_ISSP_RHC_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG ISSP RHC Information China --></label>
+        <name>ANG_ISSP_RHC_Information_China</name>
+    </customLabels>
+    <customLabels>
         <label>Demander une actualisation du solde</label>
         <name>ANG_ISSP_RHC_Request_Balance_Update</name>
     </customLabels>
@@ -1435,6 +1459,10 @@
     <customLabels>
         <label><!-- Account information updated --></label>
         <name>Account_information_updated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Accreditation date --></label>
+        <name>Accreditation_date</name>
     </customLabels>
     <customLabels>
         <label><!-- Action --></label>
@@ -1744,6 +1772,10 @@
         <name>CSP_Accept_Terms_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Account Domain Created --></label>
+        <name>CSP_Account_Domain_Created</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Add_All --></label>
         <name>CSP_Add_All</name>
     </customLabels>
@@ -1762,6 +1794,10 @@
     <customLabels>
         <label>Annonce</label>
         <name>CSP_Announcement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Apply --></label>
+        <name>CSP_Apply</name>
     </customLabels>
     <customLabels>
         <label>Cet article a-t-il été utile ?</label>
@@ -1852,6 +1888,10 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Case_Currency --></label>
+        <name>CSP_Case_Currency</name>
+    </customLabels>
+    <customLabels>
         <label>Cas</label>
         <name>CSP_Cases</name>
     </customLabels>
@@ -1888,6 +1928,14 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
+    </customLabels>
+    <customLabels>
         <label>Refuser l&apos;accès utilisateur</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1912,8 +1960,20 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Domain Error Message --></label>
+        <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
         <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
         <label>Nous contacter</label>
@@ -1960,6 +2020,14 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Filter --></label>
+        <name>CSP_Filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filtered --></label>
+        <name>CSP_Filtered</name>
+    </customLabels>
+    <customLabels>
         <label>Pour vous</label>
         <name>CSP_ForYou</name>
     </customLabels>
@@ -1970,6 +2038,14 @@
     <customLabels>
         <label>Bonjour [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_IATA_Country --></label>
+        <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_IMPORTANT --></label>
+        <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
         <label>Se déconnecter</label>
@@ -2008,6 +2084,10 @@
         <name>CSP_NewServiceUserMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP New Email Domain --></label>
+        <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
         <label>Aucun compte associé à afficher.</label>
         <name>CSP_NoAccount</name>
     </customLabels>
@@ -2036,12 +2116,24 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Payment --></label>
+        <name>CSP_Payment</name>
+    </customLabels>
+    <customLabels>
         <label>Nous avons besoin de votre contribution pour traiter votre dossier.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Period --></label>
+        <name>CSP_Period</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_PortalPath --></label>
         <name>CSP_PortalPath</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Portal_Administrators --></label>
+        <name>CSP_Portal_Administrators</name>
     </customLabels>
     <customLabels>
         <label>Statut du portail</label>
@@ -2084,8 +2176,32 @@
         <name>CSP_RecentCases</name>
     </customLabels>
     <customLabels>
+        <label>Votre question concerne-t-elle un cas en cours ?</label>
+        <name>CSP_RecentCases_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Sinon, faites défiler vers le bas pour nous contacter.</label>
+        <name>CSP_RecentCases_HelpText2</name>
+    </customLabels>
+    <customLabels>
+        <label>Dossiers en cours</label>
+        <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Record Deleted --></label>
+        <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
         <label>Articles apparentés</label>
         <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Remittantce_Date --></label>
+        <name>CSP_Remittantce_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveAllFilters --></label>
+        <name>CSP_RemoveAllFilters</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_RemoveContact_Reason --></label>
@@ -2280,6 +2396,10 @@
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Success --></label>
+        <name>CSP_Success</name>
+    </customLabels>
+    <customLabels>
         <label>Assistance</label>
         <name>CSP_Support</name>
     </customLabels>
@@ -2310,6 +2430,38 @@
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_1_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_1_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_2_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_2_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_3_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_3_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_4_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_4_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -9967,6 +10119,10 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AMS_NoC_PDF_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Partner --></label>
+        <name>ISSP_AMS_NoC_Partner</name>
+    </customLabels>
+    <customLabels>
         <label>Veuillez vous assurer que le % du total de propriété est égal à 100 %.</label>
         <name>ISSP_AMS_NoC_Percent_Ownership</name>
     </customLabels>
@@ -11901,6 +12057,10 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_Country_Req</name>
     </customLabels>
     <customLabels>
+        <label><!-- Type of Agency --></label>
+        <name>ISSP_ANG_Country_Reqs_Type_Of_Agency</name>
+    </customLabels>
+    <customLabels>
         <label>Hiérarchie complète</label>
         <name>ISSP_ANG_ENTIRE_HIERARCHY</name>
     </customLabels>
@@ -12041,7 +12201,7 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_OPTION_PAX_HE_standard</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Nos dossiers indiquent que vous figurez en tant que Contact IFAP pour votre agence. Si c’est toujours le cas, veuillez demander un Examen financier, ou indiquez le nouveau Contact IFAP sur la page &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Informations sur la société&lt;/a&gt; avant de confirmer votre demande.&quot;</label>
+        <label>Nos dossiers indiquent que vous figurez en tant que Contact IFAP pour votre agence. Si c’est toujours le cas, veuillez demander un Examen financier, ou indiquez le nouveau Contact IFAP sur la page &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Informations sur la société&lt;/a&gt; avant de confirmer votre demande.</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</name>
     </customLabels>
     <customLabels>
@@ -12851,6 +13011,14 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label><!-- ISSP Change Request Description --></label>
         <name>ISSP_Change_Request_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP China Domestic --></label>
+        <name>ISSP_China_Domestic</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP China International --></label>
+        <name>ISSP_China_International</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email --></label>
@@ -14226,6 +14394,46 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_IDCard_Valid_To</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_IDFS_Title_01 --></label>
+        <name>ISSP_IDFS_Title_01</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_02 --></label>
+        <name>ISSP_IDFS_Title_02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_03 --></label>
+        <name>ISSP_IDFS_Title_03</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_04 --></label>
+        <name>ISSP_IDFS_Title_04</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_05 --></label>
+        <name>ISSP_IDFS_Title_05</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_06 --></label>
+        <name>ISSP_IDFS_Title_06</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_07 --></label>
+        <name>ISSP_IDFS_Title_07</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_08 --></label>
+        <name>ISSP_IDFS_Title_08</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_09 --></label>
+        <name>ISSP_IDFS_Title_09</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_10 --></label>
+        <name>ISSP_IDFS_Title_10</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP IFACP Endorsement Changes --></label>
         <name>ISSP_IFACP_Endorsement_Changes</name>
     </customLabels>
@@ -15042,7 +15250,7 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
         <name>ISSP_PCI_Time</name>
     </customLabels>
     <customLabels>
-        <label>Avis d&apos;inactivité</label>
+        <label>Avis d&amp;apos;inactivité</label>
         <name>ISSP_PCI_Title</name>
     </customLabels>
     <customLabels>
@@ -15386,6 +15594,10 @@ Veuillez noter que de nombreuses factures de IATA pour les agents accrédités s
     <customLabels>
         <label>Espèces</label>
         <name>ISSP_RHC_HUB_AFP_Cash</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP RHC HUB AFP China --></label>
+        <name>ISSP_RHC_HUB_AFP_China</name>
     </customLabels>
     <customLabels>
         <label>Carte de crédit</label>
@@ -17218,6 +17430,18 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
     <customLabels>
         <label><!-- KALE_SUPPORT_EMAIL --></label>
         <name>KALE_SUPPORT_EMAIL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI1RT --></label>
+        <name>KPI1RT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI1Reason --></label>
+        <name>KPI1Reason</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI2 --></label>
+        <name>KPI2</name>
     </customLabels>
     <customLabels>
         <label><!-- Kavi email notification part 1 --></label>
@@ -19599,6 +19823,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>Priority_4_Trivial_Defects</name>
     </customLabels>
     <customLabels>
+        <label><!-- ProcessEffAge --></label>
+        <name>ProcessEffAge</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Product --></label>
         <name>Product</name>
     </customLabels>
@@ -19725,6 +19953,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customLabels>
         <label><!-- Remaining_Owners --></label>
         <name>Remaining_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Remittance frequency --></label>
+        <name>Remittance_frequency</name>
     </customLabels>
     <customLabels>
         <label><!-- Renewal_Number --></label>
@@ -19983,6 +20215,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- TSI USA Only --></label>
+        <name>TSI_USA_Only</name>
+    </customLabels>
+    <customLabels>
         <label>Tâches</label>
         <name>Tasks_Notification</name>
     </customLabels>
@@ -20177,6 +20413,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customLabels>
         <label><!-- Contacting us --></label>
         <name>contacting_us</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Relocation --></label>
+        <name>csp_AccountRelocateSuccess</name>
     </customLabels>
     <customLabels>
         <label>Processus d&apos;accréditation</label>

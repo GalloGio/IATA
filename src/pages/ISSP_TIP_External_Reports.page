@@ -26,6 +26,37 @@
 	    <link type="text/css" rel="stylesheet" href="{!URLFOR($Resource.DataTablesBootstrapCSS,'dataTables.bootstrap.min.css')}"/>
 
 	  	<style>
+			@font-face {
+        	    font-family: 'DaMaWebFont';
+        	    font-weight: 400;
+        	    font-style: normal;
+        	    src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot')}");
+        	    /* IE9 Compat Modes */
+        	    src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot?#iefix')}") format('embedded-opentype'),
+        	    /* IE6-IE8 */
+        	    url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff2')}") format('woff2'),
+        	    /* Super Modern Browsers */
+        	    url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff')}") format('woff');
+        	    /* Pretty Modern Browsers */
+        	}
+        	@font-face {
+        	    font-family: 'DaMaWebFont';
+        	    font-weight: 500;
+        	    font-style: normal;
+        	    src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot')}");
+        	    /* IE9 Compat Modes */
+        	    src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot?#iefix')}") format('embedded-opentype'),
+        	    /* IE6-IE8 */
+        	    url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff2')}") format('woff2'),
+        	    /* Super Modern Browsers */
+        	    url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff')}") format('woff');
+        	    /* Pretty Modern Browsers */
+        	}
+        	body {
+        	    font-family: DaMaWebFont !important;
+        	    color: #333;
+        	}
+
 	      .section-header {
 	        background-color: rgb(43, 120, 228);
 	        color: white;
@@ -237,12 +268,13 @@
 
 		</script>
 
-  		<body>
+  		<body style="padding-right: 0px; padding-left: 0px;">
+			<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
 
-  			<main class="container">
-		      	<c:ISSP_CustomNavigation />
+			<c:ISSP_CustomNavigation />
+  			<main class="container" style="margin-top: 40px;">
 		      		<!--apex:form id="mainFrm"-->
-		      			<div class="row">
+		      			<div class="row" style="margin-right: -30px;  margin-left: -30px;">
 
 				  		  	<section name="remittance-holding" style="display: block;">
 
@@ -306,6 +338,7 @@
 				        </div>
 				  <!--/apex:form-->
 			</main>
-  		</body>
+		  </body>
+		  <c:ISSP_CustomFooter/>
     </html>
 </apex:page>

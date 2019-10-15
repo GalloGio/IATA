@@ -46,6 +46,8 @@
     </script>
 
     <!-- Modal -->
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
+
 <div class="modal fade" id="ModalCountryReqs" tabIndex="-1" data-backdrop='false' role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -159,18 +161,18 @@
                 <h3 class="panel-title">Airline Participation Joining Process</h3>
             </div>
     <div class="panel-body" id="body-enquiries">
-        <div class="progress">
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            A. Participation Country &amp; Type
+        <div class="progress iata-tabs">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                <span class="progress-tab-step">A</span> Participation Country &amp; Type
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-            B. {!strLoB} Country Requirements
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
+                <span class="progress-tab-step">B</span> {!strLoB} Country Requirements
             </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            C. CASS Joining Form
+            <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                <span class="progress-tab-step">C</span> CASS Joining Form
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            D. Submit to IATA
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                <span class="progress-tab-step">D</span> Submit to IATA
             </div>
         </div>
 
@@ -186,17 +188,17 @@
                         <apex:actionStatus id="blockButtons">
                             <apex:facet name="start">
                                 <apex:outputPanel layout="none">
-                                    <apex:commandButton disabled="true" value="Previous"/>
-                                    <apex:commandButton disabled="true" value="Next"/>
-                                    <apex:commandButton disabled="true" value="Save Draft and Leave"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" disabled="true" value="Next"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" disabled="true" value="Previous"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" disabled="true" value="Save Draft and Leave"/>
                                 </apex:outputPanel>
                             </apex:facet>
                             
                             <apex:facet name="stop">
                                 <apex:outputPanel layout="none">
-                                    <apex:commandButton action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous"/>   
-                                    <apex:commandButton action="{!saveBSPFormAndGoForward}" status="blockButtons" value="Next"/>
-                                    <apex:commandButton action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave"/>                
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!saveBSPFormAndGoForward}" status="blockButtons" value="Next"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous"/> 
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave"/>                
                                 </apex:outputPanel>
                             </apex:facet>
                         </apex:actionStatus>      

@@ -1,92 +1,173 @@
 public with sharing class PortalFAQsCtrl {
 
     public static Integer RESULTS_PER_PAGE = 10;
+    public static String LANGUAGE;
 
-    public static PortalFAQs__mdt portalFaqCMTD{
-        get{            
-            if(portalFaqCMTD==null){
-                if(!Test.isRunningTest()){
-                    portalFaqCMTD=[SELECT DataCategoryVisibility__c FROM PortalFAQs__mdt WHERE DeveloperName ='PortalFAQs' LIMIT 1];
-                }else{
-                    portalFaqCMTD=new  PortalFAQs__mdt(DataCategoryVisibility__c='[{"topicName":"Accreditation_Travel_Agent","topicLabel":"Accreditation Travel Agent","childs":{"IATA ID Card":"ID_Card","Irregularities & Defaults":"PAX_Irregularities_Defaults"}}]');
-                }
-            }
-            return portalFaqCMTD;
-        }
-        set;
-    } 
-
+    /*
+    * @description Return a FAQ structure based on the user visibility.
+    * @description Joining metadata records from Portal FAQs with setup configuration from Data Category Visibility if internal user or just metadata records if guest user
+    * @params
+    * @return List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>
+    */
     @AuraEnabled(cacheable=true)    
-    public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getCategoryTiles() {
-        List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstOriginal = PortalFAQsCtrl.getFAQsInfo();
+    public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getFAQsInfo() {
+        return convertStructure(DescribeDataCategoryGroupStructures.getFaqsStructure());               
+    }
 
-        List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstAux = new List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
-        
-        for(DescribeDataCategoryGroupStructures.DataCategoryWrapper globalWrapperAux : lstOriginal){
+    /*
+    * @description Same as getFAQsInfo method, but here is specific for guest user because we're setting the language
+    * @params String lang
+    * @return List<FAQCategoryWrapper>
+    */
+    @AuraEnabled(cacheable=true)    
+    public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getFAQsInfoByLanguage(String lang) {
+        return convertStructure(DescribeDataCategoryGroupStructures.getPublicFaqsStructure(lang));               
+    }
 
-            Boolean found = false;
+    @AuraEnabled(cacheable=false)
+    public static void updateMetadata(String strNewMetadata){
+        List<MetadataWrapper> lstNewMetadata =  (List<MetadataWrapper>)JSON.deserialize(strNewMetadata , List<MetadataWrapper>.class);
 
-            for(DescribeDataCategoryGroupStructures.DataCategoryWrapper wrapperAux : lstAux){
-                if(wrapperAux.categoryName == globalWrapperAux.categoryName){
-                    found = true;
+        List<PortalFAQs__mdt> lstCurrentMetadata = DescribeDataCategoryGroupStructures.getAllFAQs();
+        List<DescribeDataCategoryGroupStructures.FAQCategoryWrapper> lstFAQsStructure = DescribeDataCategoryGroupStructures.getFAQDataCategorySetupStructure();
+        String userLanguage = UserInfo.getLanguage();
+
+        List<CustomMetadataCallback.CustomMetadataType> customMetadataToUpsert = new List<CustomMetadataCallback.CustomMetadataType>();
+
+        for(MetadataWrapper metaAux : lstNewMetadata){
+            PortalFAQs__mdt metaFound = null;
+
+            for(PortalFAQs__mdt currentMetaAux : lstCurrentMetadata){                
+                if( (String.isNotBlank(metaAux.categoryName) && String.isBlank(metaAux.topicName) && String.isBlank(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName) ||
+                    (String.isNotBlank(metaAux.categoryName) && String.isNotBlank(metaAux.topicName) && String.isBlank(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName && currentMetaAux.DataTopicName__c == metaAux.topicName) || 
+                    (String.isNotBlank(metaAux.categoryName) && String.isNotBlank(metaAux.topicName) && String.isNotBlank(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName && currentMetaAux.DataTopicName__c == metaAux.topicName && currentMetaAux.DataSubtopicName__c == metaAux.subtopicName)
+                ){
+                    metaFound = currentMetaAux; 
                     break;
                 }
             }
 
-            if(!found){
-                if(globalWrapperAux.categoryName != 'All'){
-                    lstAux.add(globalWrapperAux);
+
+            if(metaFound != null){
+                // update just the order and active fields, because the other are the same
+                CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType(); 
+                cmdtDT.strMDTAndRecord = 'PortalFAQs__mdt.' + metaFound.DeveloperName;
+                cmdtDT.strMasterLabel = metaFound.MasterLabel;
+                cmdtDT.fieldLIST = new List<String>{ 'Order__c', 'Active__c'};
+                cmdtDT.valueLIST = new List<Object>{ Integer.valueof(metaAux.order), true};
+                customMetadataToUpsert.add(cmdtDT);
+            }else{
+                //insert new meta
+                
+                //new category
+                if(String.isNotBlank(metaAux.categoryName) && String.isBlank(metaAux.topicName) && String.isBlank(metaAux.subtopicName)){
+                    
+                    String hashBase64SHA1 = EncodingUtil.convertToHex(Crypto.generateDigest('SHA1',Blob.valueOf(metaAux.categoryName)));
+                    String label = DescribeDataCategoryGroupStructures.getLabelFromDescribe('' + metaAux.categoryName, null, null, 'category', lstFAQsStructure );
+
+                    CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType(); 
+                    cmdtDT.strMDTAndRecord = 'PortalFAQs__mdt.' + 'x' + hashBase64SHA1.substring(0,34);
+                    cmdtDT.strMasterLabel = '' + 'x' + hashBase64SHA1.substring(0,34);
+                    cmdtDT.fieldLIST = new List<String>{'DataCategoryName__c', 'FAQsStructure__c', 'Order__c', 'Active__c', 'DataCategoryLabel_'+ userLanguage + '__c'};
+                    cmdtDT.valueLIST = new List<Object>{'' + metaAux.categoryName, true, Integer.valueof(metaAux.order), true, '' + label};
+                    customMetadataToUpsert.add(cmdtDT);
+
                 }
+
+                //new topic
+                if(String.isNotBlank(metaAux.categoryName) && String.isNotBlank(metaAux.topicName) && String.isBlank(metaAux.subtopicName)){
+                    
+                    String hashBase64SHA1 = EncodingUtil.convertToHex(Crypto.generateDigest('SHA1', Blob.valueOf(metaAux.categoryName + metaAux.topicName)));
+                    String label = DescribeDataCategoryGroupStructures.getLabelFromDescribe('' + metaAux.categoryName, '' + metaAux.topicName, null, 'topic', lstFAQsStructure );
+
+                    CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType(); 
+                    cmdtDT.strMDTAndRecord = 'PortalFAQs__mdt.' + 'x' + hashBase64SHA1.substring(0,34);
+                    cmdtDT.strMasterLabel = '' + 'x' + hashBase64SHA1.substring(0,34);
+                    cmdtDT.fieldLIST = new List<String>{'DataCategoryName__c', 'DataTopicName__c', 'FAQsStructure__c', 'Order__c', 'Active__c', 'DataCategoryLabel_'+ userLanguage + '__c'};
+                    cmdtDT.valueLIST = new List<Object>{'' + metaAux.categoryName, '' + metaAux.topicName, true, Integer.valueof(metaAux.order), true, '' + label};
+                    customMetadataToUpsert.add(cmdtDT);
+
+                }
+
+                //new subtopic
+                if(String.isNotBlank(metaAux.categoryName) && String.isNotBlank(metaAux.topicName) && String.isNotBlank(metaAux.subtopicName)){
+                    
+                    String hashBase64SHA1 = EncodingUtil.convertToHex(Crypto.generateDigest('SHA1',Blob.valueOf(metaAux.categoryName + metaAux.topicName + metaAux.subtopicName)));
+                    String label = DescribeDataCategoryGroupStructures.getLabelFromDescribe('' + metaAux.categoryName, '' + metaAux.topicName, '' + metaAux.subtopicName, 'subtopic', lstFAQsStructure );
+
+                    CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType(); 
+                    cmdtDT.strMDTAndRecord = 'PortalFAQs__mdt.' + 'x' + hashBase64SHA1.substring(0,34);
+                    cmdtDT.strMasterLabel = '' + 'x' + hashBase64SHA1.substring(0,34);
+                    cmdtDT.fieldLIST = new List<String>{'DataCategoryName__c', 'DataTopicName__c', 'DataSubtopicName__c', 'FAQsStructure__c', 'Order__c', 'Active__c', 'DataCategoryLabel_'+ userLanguage + '__c'};
+                    cmdtDT.valueLIST = new List<Object>{'' + metaAux.categoryName, '' + metaAux.topicName,'' + metaAux.subtopicName, true, Integer.valueof(metaAux.order), true, '' + label};
+                    customMetadataToUpsert.add(cmdtDT);
+
+                }
+
+
             }
-
-
         }
 
-
-
-        return lstAux;               
+        CustomMetadataCallback.Upsert_MDT_Value(customMetadataToUpsert);
     }
 
-    @AuraEnabled(cacheable=true)    
-    public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getFAQsInfo() {
-        List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> userAccess = DescribeDataCategoryGroupStructures.describeDataCategoryGroupStructureResults();
+    public class MetadataWrapper{
+        @AuraEnabled
+        public String categoryName {get; set;}
+        @AuraEnabled
+        public String topicName {get; set;}
+        @AuraEnabled
+        public String subtopicName {get; set;}
+        @AuraEnabled
+        public String order {get; set;}
 
-        
-        List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> faqList = (List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>) JSON.deserialize(portalFaqCMTD.DataCategoryVisibility__c, List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>.class);
+        public MetadataWrapper(){}
 
-        Set<String> hasTopicAccess = new Set<String>();
-        for(DescribeDataCategoryGroupStructures.DataCategoryWrapper dctw2 : userAccess) {
-            for(String st : dctw2.childs.keySet()) {
-                hasTopicAccess.add(dctw2.childs.get(st));
-            }
-        }
+    }
 
-        Map<String, DescribeDataCategoryGroupStructures.DataCategoryWrapper> subTopicDataCategoryMap = new Map<String, DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
-        for(DescribeDataCategoryGroupStructures.DataCategoryWrapper dcwTopic : faqList) {
-            if(!dcwTopic.childs.keySet().isEmpty()) {
-                for(String dcwSubTopic : dcwTopic.childs.keySet()) {
-                    if(hasTopicAccess.contains(dcwTopic.childs.get(dcwSubTopic))) {
-                        if(!subTopicDataCategoryMap.containsKey(dcwTopic.topicName)) {
-                            subTopicDataCategoryMap.put(dcwTopic.topicName, new DescribeDataCategoryGroupStructures.DataCategoryWrapper(dcwTopic.topicName, dcwTopic.topicLabel, dcwTopic.categoryName, dcwTopic.categoryLabel, new Map<String, String>()));
-                        }
+    private static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> convertStructure(List<DescribeDataCategoryGroupStructures.FAQCategoryWrapper> lstToConvert){
+        List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstToReturn = new List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
 
-                        subTopicDataCategoryMap.get(dcwTopic.topicName).childs.put(dcwSubTopic, dcwTopic.childs.get(dcwSubTopic));
-                    }
+        for(DescribeDataCategoryGroupStructures.FAQCategoryWrapper categoryAux : lstToConvert){
+            for(DescribeDataCategoryGroupStructures.FAQTopicWrapper topicAux : categoryAux.lstTopics){
+                Map<String,String> mapSubtopics = new Map<String,String>();
+                Map<String,String> mapSubtopicsEn = new Map<String,String>();
+                for(DescribeDataCategoryGroupStructures.FAQSubtopicWrapper subtopicAux : topicAux.lstSubtopics){
+                    mapSubtopics.put(subtopicAux.subtopicLabel, subtopicAux.subtopicName);
+                    mapSubtopicsEn.put(subtopicAux.subtopicName, subtopicAux.subtopicLabelEn);
                 }
+
+                lstToReturn.add(new DescribeDataCategoryGroupStructures.DataCategoryWrapper(topicAux.topicName, topicAux.topicLabel, topicAux.topicLabelEn,
+                                                                                            categoryAux.categoryName, categoryAux.categoryLabel, categoryAux.categoryLabelEn,
+                                                                                            mapSubtopics, mapSubtopicsEn));
             }
         }
 
-        System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getFAQsInfo] subTopicDataCategoryMap - ' + subTopicDataCategoryMap.values());
+        return lstToReturn;
+    }
 
-        return subTopicDataCategoryMap.values();               
+    @AuraEnabled
+    public static List<FAQ__kav> getArticlesByLanguage(String selectedParams, String lang) {
+        LANGUAGE = lang;
+        
+        return getArticlesWithParam(selectedParams, 15);
     }
 
     @AuraEnabled(cacheable=true)
     public static List<FAQ__kav> getArticles(String selectedParams) {
-        String query = 'SELECT Id, ArticleNumber, Title, Answer__c FROM FAQ__kav WHERE PublishStatus=\'Online\' WITH DATA CATEGORY FAQs__c BELOW ' + String.escapeSingleQuotes(selectedParams) + ' ORDER BY ArticleTotalViewCount DESC LIMIT 15';
-        System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticles] query - ' + query);
+        return getArticlesWithParam(selectedParams, 15);
+    }
 
-        return Database.query(query);
+    @AuraEnabled(cacheable=true)
+    public static List<FAQ__kav> getArticlesWithParam(String selectedParams, Integer limitParam) {
+        String queryOne = 'SELECT Id, ArticleNumber, Title, Answer__c FROM FAQ__kav WHERE PublishStatus=\'Online\'';
+        String queryTwo = String.isNotBlank(LANGUAGE) ? ' AND Language = \'' + LANGUAGE + '\'' : '';
+        String queryThree = ' WITH DATA CATEGORY FAQs__c BELOW ' + String.escapeSingleQuotes(selectedParams) + ' ORDER BY ArticleTotalViewCount DESC LIMIT ' + limitParam;
+        
+        String finalQuery = queryOne + queryTwo + queryThree;
+        System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticles] finalQuery - ' + finalQuery);
+
+        return Database.query(finalQuery);
     }
 
     @AuraEnabled(cacheable=true)
@@ -130,7 +211,7 @@ public with sharing class PortalFAQsCtrl {
     public static PagedResult getFilteredFAQsResultsPage(String searchKey, String requestedPage){
         PortalSearchFilterWrapper filtersWrapper = (PortalSearchFilterWrapper) JSON.deserialize(searchKey, PortalSearchFilterWrapper.class);
         Integer requestedPageAux = integer.valueof(requestedPage);
-
+        System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] filtersWrapper - ' + filtersWrapper);
         List<FAQ__kav> lstToReturn = new List<FAQ__kav>();
         //Create an empty default return object
         PagedResult result = new PagedResult();
@@ -141,8 +222,15 @@ public with sharing class PortalFAQsCtrl {
 
             List<String> subtopics = new List<String>();
             if(filtersWrapper.faqsComponent == null || filtersWrapper.faqsComponent.faqSubtopicsList == null || filtersWrapper.faqsComponent.faqSubtopicsList.isEmpty()){
-                List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstStructure = PortalFAQsCtrl.getFAQsInfo();
-                if(lstStructure != null && !lstStructure.isEmpty()){
+                List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstStructure = new List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
+                //Get FAQ structure based on the user visibility
+                if(String.isNotBlank(filtersWrapper.language)) {
+                    lstStructure = PortalFAQsCtrl.getFAQsInfoByLanguage(filtersWrapper.language);
+                } else {
+                    lstStructure = PortalFAQsCtrl.getFAQsInfo();
+                }
+
+                if(!lstStructure.isEmpty()) {
                     for(DescribeDataCategoryGroupStructures.DataCategoryWrapper category : lstStructure){
                         if(category.categoryName != 'All'){
                             for(String subtopicAux : category.childs.values()){
@@ -158,18 +246,28 @@ public with sharing class PortalFAQsCtrl {
                 }
             }
 
-            String levels = '(' + String.join(subtopics,' , ') + ' ) ';
+            String levels = '';
+            if(!subtopics.isEmpty()) levels = '(' + String.join(subtopics,' , ') + ' ) ';
             
             String queryPartOne = 'FIND \'' + String.escapeSingleQuotes(filtersWrapper.searchText) + '\' IN ALL FIELDS '+
-                           'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\' ';
-            String queryPartTwo = ' ) WITH DATA CATEGORY FAQs__c BELOW ' + levels ;
+                           'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\'';
+            String queryLanguage = filtersWrapper.guestUser != null && filtersWrapper.guestUser ? ' AND Language = \'' + filtersWrapper.language + '\'' : '';
+            String queryPartTwo = ' WITH DATA CATEGORY FAQs__c BELOW ' + levels ;
 
 
             //Since SOSL don't have count, the first requested page is queried to all records
             //and then the count is retrived from the returned results list. For the next pages
             //limit and offset is used to improve loading times. 
             if(requestedPageAux == 0){
-                String finalQuery = queryPartOne + queryPartTwo;
+                String finalQuery;
+                if(String.isNotBlank(queryLanguage)) {
+                    finalQuery = queryPartOne + queryLanguage + ')';
+                } else {
+                    finalQuery = queryPartOne + ')';
+                }
+                if(String.isNotBlank(levels)) finalQuery += queryPartTwo;
+
+                System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] finalQuery - ' + finalQuery);
                 List<List<SObject>> searchList = Search.query(finalQuery);
                 List<FAQ__kav> tmpList = (List<FAQ__kav>)searchList[0];
 
@@ -181,10 +279,12 @@ public with sharing class PortalFAQsCtrl {
                 result.totalItemCount = tmpList.size();
             }else{
                 Integer offset = requestedPageAux * PortalFAQsCtrl.RESULTS_PER_PAGE;
-                String offsetQuery = ' LIMIT ' + PortalFAQsCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ' ';
+                String offsetQuery = ' LIMIT ' + PortalFAQsCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ')';
 
-                String finalQuery = queryPartOne + offsetQuery + queryPartTwo;
-
+                String finalQuery = queryPartOne + offsetQuery;
+                if(String.isNotBlank(queryPartTwo)) finalQuery += queryPartTwo;
+                
+				System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] finalQuery - ' + finalQuery);
                 List<List<SObject>> searchList = Search.query(finalQuery);
                 List<FAQ__kav> tmpList = (List<FAQ__kav>)searchList[0];
                 result.records = tmpList;

@@ -6,19 +6,21 @@ private class AMS_OscarCase_RiskMgmt_Test {
         list<IATA_ISO_Country__c> lsCountries = new list<IATA_ISO_Country__c>();
         lsCountries.add(New IATA_ISO_Country__c(Name='Country1', Enable_Risk_Change_Codes__c=false, iso_code__c='01'));
         lsCountries.add(New IATA_ISO_Country__c(Name='Country2', Enable_Risk_Change_Codes__c=true, iso_code__c='02'));
+        lsCountries.add(new IATA_ISO_Country__c(Name = 'China', ISO_Code__c = 'CN', ANG_Enable_Newgen__c = TRUE, Enable_Risk_Change_Codes__c = TRUE));
         insert lsCountries;
 
         //Create Accounts
         id AgencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        list<Account> lsAccntHO = new list<Account>();
-        lsAccntHO.add(new Account(Name='Accnt1', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(0).Id, Location_Class__c='P', Location_type__c = 'HO', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA')); //Empty Location Class. Will give Error
-        lsAccntHO.add(new Account(Name='Accnt2', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(1).Id, Location_Class__c='C', Location_type__c = 'HO', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA'));
-        lsAccntHO.add(new Account(Name='Accnt3', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(1).Id, Location_Class__c='P', Location_type__c = 'HO', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA'));
-        insert lsAccntHO;
+        list<Account> lsAccnt = new list<Account>();
+        lsAccnt.add(new Account(Name='Accnt1', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(0).Id, Location_Class__c='P', Location_type__c = 'HO', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA')); //Empty Location Class. Will give Error
+        lsAccnt.add(new Account(Name='Accnt2', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(1).Id, Location_Class__c='C', Location_type__c = 'HO', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA'));
+        lsAccnt.add(new Account(Name='Accnt3', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(1).Id, Location_Class__c='P', Location_type__c = 'HO', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA'));
+        lsAccnt.add(new Account(Name='Accnt China', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(2).Id, Location_Class__c='P', Location_type__c = 'HE', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA'));
+        insert lsAccnt;
 
         list<Account> lsAccntBR = new list<Account>();
-        lsAccntBR.add(new Account(Name='Accnt3.1', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(1).Id, Location_Class__c='P', Location_type__c = 'BR', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA', ParentId = lsAccntHO.get(2).Id));
-        lsAccntBR.add(new Account(Name='Accnt3.2', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(1).Id, Location_Class__c='P', Location_type__c = 'BR', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA', ParentId = lsAccntHO.get(2).Id));
+        lsAccntBR.add(new Account(Name='Accnt3.1', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(1).Id, Location_Class__c='P', Location_type__c = 'BR', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA', ParentId = lsAccnt.get(2).Id));
+        lsAccntBR.add(new Account(Name='Accnt3.2', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(1).Id, Location_Class__c='P', Location_type__c = 'BR', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA', ParentId = lsAccnt.get(2).Id));
         insert lsAccntBR;
 
         insert new Account(Name='Accnt3.1.1', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(1).Id, Location_Class__c='P', Location_type__c = 'SA', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA', ParentId = lsAccntBR.get(0).Id);
@@ -37,7 +39,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
         lsConf.add(new AMS_ChangeCodes__c(Name='IRW', CHANGE_CODE__C='IRW', REASON_CODE__C='PREV', REASON_CODE_DESCRIPTION__C='PREV', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='SIDRA_Lite_Reason__c', FIELD1VALUES__C='VALUES:Financial Review Non-compliance;Financial Security Non-compliance;Annual fees', FIELD2__C='IRR_Withdrawal_Approval_Rejection__c', FIELD2VALUES__C='VALUES:Approved', FIELD3__C='IRR_Withdrawal_Reason__c', FIELD3VALUES__C='VALUES:Exception raised', FIELD4__C='Update_AIMS_IRRWITH__c', FIELD4VALUES__C='NOT Blank', FIELD5__C=null, FIELD5VALUES__C=null, FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='PREV', CLASS_TYPE__C='P;D;C;R;Q;I', BULLETIN_MEMO_TEXT__C='Withdrawal of Irregularity due to Agency Administrator\'s decision', BULLETIN_MEMO_TEXT2__C=null, BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=FALSE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE));
         lsConf.add(new AMS_ChangeCodes__c(Name='DWD', CHANGE_CODE__C='DWD', REASON_CODE__C='PREV;DEF;DFE', REASON_CODE_DESCRIPTION__C='PREV;DEF;DFE', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='DEF_Withdrawal_Approval_Rejection__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='DEF_Withdrawal_Reason__c', FIELD2VALUES__C='VALUES:Matching Error;Master Data Error;Administrative error;Other;Billing Error', FIELD3__C='Update_AIMS_REI_DEFWITH__c', FIELD3VALUES__C='NOT Blank', FIELD4__C='REI_ApprovalRejectin__c', FIELD4VALUES__C='VALUES:Approved', FIELD5__C='NOT_Sent__c', FIELD5VALUES__C='Blank', FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='PREV;DEF;DFE', CLASS_TYPE__C='P;D', BULLETIN_MEMO_TEXT__C='blabla', BULLETIN_MEMO_TEXT2__C='', BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=TRUE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE, Publish_HO_Only__c=TRUE));
 		lsConf.add(new AMS_ChangeCodes__c(Name='REI', CHANGE_CODE__C='REI', REASON_CODE__C='PREV;DEF;DFE', REASON_CODE_DESCRIPTION__C='PREV;DEF;DFE', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='DEF_Withdrawal_Approval_Rejection__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='DEF_Withdrawal_Reason__c', FIELD2VALUES__C='VALUES:Matching Error;Master Data Error;Administrative error;Other;Billing Error', FIELD3__C='Update_AIMS_REI_DEFWITH__c', FIELD3VALUES__C='Blank', FIELD4__C='REI_ApprovalRejectin__c', FIELD4VALUES__C='VALUES:Approved', FIELD5__C='NOT_Sent__c', FIELD5VALUES__C='Blank', FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='PREV;DEF;DFE', CLASS_TYPE__C='P;D', BULLETIN_MEMO_TEXT__C='blabla', BULLETIN_MEMO_TEXT2__C='', BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=TRUE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE, Publish_HO_Only__c=TRUE));
-
+        lsConf.add(new AMS_ChangeCodes__c(Name = 'ANG32b', Account_status_change__c = 'PREV;RVW', Billable__c = TRUE, Bulletin_Memo_Text__c = 'Agent reinstated after default following: <SIDRA Lite Reason>', Change_Code__c = 'SDR', Reason_Code_Description__c = 'PREV;RVW', Reason_Code__c = 'PREV;RVW', Integration_RecId__c = 'C', Apply_to_hierarchy__c = TRUE, Class_Type__c = 'P', Field1Values__c = 'VALUES:Agent Complied;Commissioner decision', Field1__c = 'Reason_of_REI_WD__c', Field2Values__c = 'Not Blank', Field2__c = 'Shut_Down_TKT_System_GDS_and_BSPlink__c', Field3Values__c = 'NOT Blank', Field3__c = 'Ticketing_Authority_Re_assigned__c', Field4Values__c = 'VALUES:Approved', Field4__c = 'REI_ApprovalRejectin__c', Field5Values__c = 'Not Blank', Field5__c = 'Update_AIMS_REI_DEFWITH__c', Field6Values__c = 'VALUES:DEF/SUS REI', Field6__c = 'Type_of_REI_WD__c', Publish_HO_Only__c = TRUE, Published_in_bulletin__c = TRUE, Record_Type__c = 'SIDRA_Lite', Risk_ChangeCode__c = TRUE, Extra_memo_text_for_HO__c = '<PLEASE NOTE CHANGE APPLIES TO THE ENTIRE HIERARCHY>', Billable_Location_Class__c = 'P;D', Accreditation_Model__c = 'NEWGEN', Field7Values__c = 'VALUES:Group', Field7__c = 'Group_Single_Agent__c'));
         insert lsConf;
 
         list<String> listAirlineId = new list<String>();
@@ -447,8 +449,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 5 --> Query issued: ' + Limits.getQueries());
 
-        string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, sMemo2, sMemo3, null, lsFS, '', true);
-        //string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, sMemo2, sMemo3, null, lsFS);
+        string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), sMemo1, sMemo2, sMemo3, null, lsFS, '', true);
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 6 --> Query issued: ' + Limits.getQueries());
 
@@ -515,8 +516,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 4 --> Query issued: ' + Limits.getQueries());
 
-        string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, null, null, lsCC, null, '', true);
-        //string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, null, null, lsCC, null);
+        string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), sMemo1, null, null, lsCC, null, '', true);
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 5 --> Query issued: ' + Limits.getQueries());
 
@@ -590,41 +590,41 @@ private class AMS_OscarCase_RiskMgmt_Test {
                                   , Account.CNS_Agency__c
                                   from case where id =: SidraLiteCase4.Id];
 
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'NOT BLANK', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'IRR_Type__c', 'BLANK', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'NOT EQUAL TO:Rejected', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'NOT EQUAL TO:Closed', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'GREATER THAN TODAY', null, mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'NOT BLANK', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'IRR_Type__c', 'BLANK', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'NOT EQUAL TO:Rejected', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'NOT EQUAL TO:Closed', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'GREATER THAN TODAY', mapExistingChangeCodes));
 
         // START: amtosantos, 2017-04-18, Increase Code Coverage
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'GREATER THAN TODAY OR EQUAL TO TODAY', null, mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'GREATER THAN TODAY OR EQUAL TO TODAY', mapExistingChangeCodes));
         //   END: amtosantos
 
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Update_AIMS_DEF__c', 'EQUAL TO TODAY', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<=:5000', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>=:1000', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>:1000', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<:5000', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'EXISTS:IRR', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'NOT EXISTS:DEF', null, mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Update_AIMS_DEF__c', 'EQUAL TO TODAY', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<=:5000', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>=:1000', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>:1000', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<:5000', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'EXISTS:IRR', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'NOT EXISTS:DEF', mapExistingChangeCodes));
 
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'VALUES:OPEN', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'SIDRA_Lite_Reason__c', 'VALUES:BANKRUPTCY', null, mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'VALUES:OPEN', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'SIDRA_Lite_Reason__c', 'VALUES:BANKRUPTCY', mapExistingChangeCodes));
 
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'IRR_Type__c', 'NOT BLANK', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'BLANK', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'NOT EQUAL TO:APPROVED', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'NOT EQUAL TO:OPEN', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Update_AIMS_DEF__c', 'GREATER THAN TODAY', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'EQUAL TO TODAY', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<=:1000', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>=:5000', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>:5000', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<:1000', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'EXISTS:DEF', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'NOT EXISTS:IRR', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'IRR_Withdrawal_Reason__c', 'VALUES:BlaBlaBla', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'VALUES:CLOSED', null, mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'IRR_Type__c', 'NOT BLANK', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'BLANK', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'NOT EQUAL TO:APPROVED', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'NOT EQUAL TO:OPEN', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Update_AIMS_DEF__c', 'GREATER THAN TODAY', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'EQUAL TO TODAY', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<=:1000', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>=:5000', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>:5000', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<:1000', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'EXISTS:DEF', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'NOT EXISTS:IRR', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'IRR_Withdrawal_Reason__c', 'VALUES:BlaBlaBla', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'VALUES:CLOSED', mapExistingChangeCodes));
 
         test.StopTest();
     }
@@ -858,4 +858,70 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         test.StopTest();
     }
+
+    @isTest static void fsNonComplianceConsequencesChinaHETest(){
+
+        AMS_OscarCase_RiskMgmt.runOnce();
+
+        Account acct = 
+            [SELECT 
+                Id
+             FROM 
+                Account 
+             WHERE Name='Accnt China'
+            ];
+
+        Case cse = new Case();
+
+        cse.AccountId = acct.Id;
+        cse.recordtypeId = SIDRALiteRTId;
+        cse.SIDRA_Lite_Reason__c = 'Bankruptcy';
+        cse.Reason_of_REI_WD__c = 'Agent Complied';
+        cse.Shut_Down_TKT_System_GDS_and_BSPlink__c = System.today().addDays(7);
+        cse.Ticketing_Authority_Re_assigned__c = System.today();
+        cse.REI_ApprovalRejectin__c = 'Approved';
+        cse.Update_AIMS_REI_DEFWITH__c = System.today().addDays(2);
+        cse.Type_of_REI_WD__c = 'DEF/SUS REI';
+
+        insert cse;
+
+        try {
+            cse.Group_Single_Agent__c = 'Group';
+            update cse;
+        }
+        catch(Exception e){
+            system.assert(e.getMessage().contains('This field is only available for China HE\'s Financial Security non-compliance'), 'The exception message should be: \'This field is only available for China HE\'s Financial Security non-compliance\'');
+        }
+
+        AMS_OscarCase_RiskMgmt.EndRun();
+
+        cse.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
+        cse.Group_Single_Agent__c = 'Group';
+
+        update cse;
+
+        List<Agency_applied_change_code__c> changeCodeLst = new List<Agency_applied_change_code__c>(
+            [SELECT
+                Id, 
+                Change_Code__c 
+             FROM 
+                Agency_applied_change_code__c 
+             WHERE 
+                Account__c = :acct.Id
+            ]
+        );
+
+        system.assertEquals(1, changeCodeLst.size(), 'Must have generated one change code');
+        system.assertEquals('SDR', changeCodeLst.get(0).Change_Code__c, 'Must have generated SDR change code');
+
+        try {
+            cse.Group_Single_Agent__c = 'Single';
+            update cse;
+        }
+        catch(Exception e){
+            system.assert(e.getMessage().contains('The field has already been set'), 'The exception message should be: \'The field has already been set\'');
+        }
+
+    }
+
 }

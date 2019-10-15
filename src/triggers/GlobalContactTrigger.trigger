@@ -678,7 +678,11 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
         /*Trigger.AfterUndelete*/
     
     	//Publish the platform events
-    	PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Contact__e', 'Contact', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+        if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+			System.enqueueJob(new PlatformEvents_Helper((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Contact__e', 'Contact', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
+		} else {
+    		PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Contact__e', 'Contact', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+		}
     }
     /*AFTER*/
 }

@@ -185,6 +185,8 @@
         <columns>Source__c</columns>
         <columns>Displayed_Message__c</columns>
         <columns>CREATED_DATE</columns>
+        <columns>Extra_Information__c</columns>
+        <columns>Data__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Source__c</field>

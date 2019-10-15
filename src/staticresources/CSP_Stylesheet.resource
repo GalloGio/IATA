@@ -147,6 +147,22 @@ body {
     fill: #1e32fa;
 }
 
+.blackIcon svg {
+  fill: black;
+}
+
+.orangeIcon svg {
+  fill: #ed7756;
+}
+
+.greenIcon svg {
+  fill: #289632;
+}
+
+.redIcon svg {
+  fill: red;
+}
+
 .whiteIcon svg {
     fill: #FFFFFF;
 }
@@ -417,15 +433,27 @@ lightning-datatable .slds-th__action {
     vertical-align: middle;
 }
 /* ############################################## */
+@media only screen and (max-device-width: 480px){
+  td.cellHidden{
+    display: none;
+  }
+  .casesListWrapper .slds-scrollable_y{
+    width: unset !important;
+  }
 
+  .casesListWrapper table{
+    width: 100% !important;
+  }
+}
 
+/* ############################################## */
 
 /* ############################################## */
 /* Casses for the popups */
 
 .modal {
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 2; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   padding-bottom: 50px;
   left: 0;
@@ -440,11 +468,23 @@ lightning-datatable .slds-th__action {
 
 .customPopupInteriorHalfScreenCentered {
     background-color: #F7F8FA;
-    width: 50%;
+    width: 35%;
     margin: auto;
     box-shadow: 5px 5px 20px #808080;
     border-radius: 1px;
     border: solid 1px #e2e2e2;
+}
+
+@media only screen and (max-width: 1000px) {
+    .customPopupInteriorHalfScreenCentered {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .customPopupInteriorHalfScreenCentered {
+        width: 90%;
+    }
 }
 
 /* ############################################## */
@@ -487,6 +527,17 @@ lightning-datatable .slds-th__action {
     width: 220px;
     word-break: break-word;
     border: none;
+}
+
+.containedButton button:disabled, .containedButton button:disabled:hover, .containedButton:disabled, .containedButton.disabledButton {
+    background-color: #f7f8fa;
+    color: #999999;
+    box-shadow: none;
+}
+@media screen and (max-width: 400px){
+  .reachusButton.containedButton button{
+    width: unset;
+  }
 }
 
 .containedButtonSlim, .containedButtonSlim button, .containedButtonSlim button:active, .containedButtonSlim button:visited, .containedButtonSlim button:focus {
@@ -550,37 +601,28 @@ lightning-datatable .slds-th__action {
     width: 200px;
 }
 
-.filterButton, .filterButton button, .filterButton button:active, .filterButton button:visited, .filterButton button:focus{
-    -webkit-transition-duration: 0.4s; /* Safari */
-  	transition-duration: 0.4s;
-    border-radius: 2px;
-  	background-color: #D0D6FA;
-    font-size: 14px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.71;
-    letter-spacing: normal;
-    text-align: left;
-    color: #3333ff;
-    min-height: 40px;
-    word-break: break-all;
-    border: none;
+.filterButton,
+.filterButton button,
+.filterButton button:active {
+  background-color: #d0d6fa;
+  transition-duration: 0.4s;
+  border-radius: 1px;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #3333ff;
+  min-height: 40px;
+  width: 220px;
+  word-break: break-all;
+  border: none;
 }
-.filterButton button:hover {
-	border-radius: 2px;
-    background-color: #D0D6FF;
-    font-size: 14px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.71;
-    letter-spacing: normal;
-    text-align: left;
-    color: #3333ff;
-    min-height: 40px;
-    word-break: break-all;
-    border: none;
+
+.fullWidth, .fullWidth button, .fullWidth button:active, .fullWidth button:visited, .fullWidth button:focus, .fullWidth button:hover {
+    width: 100%;
 }
 
 .outlinedButton, .outlinedButton button, .outlinedButton button:active, .outlinedButton button:visited, .outlinedButton button:focus{
@@ -652,6 +694,14 @@ lightning-datatable .slds-th__action {
 
 .slds-hint-parent {
   height: 66px;
+}
+
+.rowHeight .slds-hint-parent {
+  height: 30px;
+}
+
+.rowHeight .slds-table_header-fixed_container.slds-scrollable_x {
+  overflow: unset;
 }
 
 .text-black lightning-formatted-url a {
@@ -846,7 +896,7 @@ lightning-datatable .slds-th__action {
     left: 0px;
 }
 .slds-combobox_container .slds-input__icon_right lightning-primitive-icon:after{
-    content: '';
+    content: "";
     position: absolute;
     border-top: 6px solid #fff;
     border-bottom: 0;
@@ -856,7 +906,7 @@ lightning-datatable .slds-th__action {
     left: 0px;
 }
 .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:after{
-    content: '';
+    content: "";
     position: absolute;
     border-top: 0;
     border-bottom: 6px solid #fff;
@@ -864,6 +914,50 @@ lightning-datatable .slds-th__action {
     border-right: 5px solid transparent;
     top: 8px;
     left: 0px;
+}
+
+.languageSelection .slds-combobox_container
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+    content: "";
+    position: absolute;
+    border-top: 0;
+    border-bottom: 6px solid transparent;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: 8px;
+    left: 0px;
+  }
+
+.languageSelection .slds-combobox_container
+  .slds-is-open
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+    content: "";
+    position: absolute;
+    border-top: 0;
+    border-bottom: 6px solid transparent;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: 8px;
+    left: 0px;
+  }
+
+.languageSelection .slds-combobox_container input[role="textbox"]{
+    border:none;
+    background-color: transparent;
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: transparent;
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"] {
+    height: 32px;
+    color: #3333ff;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
 }
 
 .slds-combobox_container lightning-base-combobox-item:hover,
@@ -1364,6 +1458,14 @@ lightning-datatable .slds-th__action {
 .customPickList input:focus{
     border-color: #e6e6e6;
     box-shadow: none;
+}
+
+/* Date input */
+.dateField input {
+    background-color: #f7f8fa;
+    border-radius: 1px;
+    cursor: pointer;
+    border-color: #d4d4d4;
 }
 
 /* Custom card sizing Support Reach Us*/
