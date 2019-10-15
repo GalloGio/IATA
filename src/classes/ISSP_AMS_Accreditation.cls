@@ -850,7 +850,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     if (isNoticeOfChange && isMCAccredited && !String.isBlank(newForm.MultiCountry_Countries_Concerned__c)) {
                         List<String> isosMC = newForm.MultiCountry_Countries_Concerned__c.split(',');
 
-                        for (Integer i = 0; i < nonSelectedCountryIsos.size(); i++) {
+                        for (Integer i = nonSelectedCountryIsos.size()-1; i >= 0; i--) {
                             if (isosMC.contains(nonSelectedCountryIsos[i].getValue())) {
                                 selectedCountryIsos.add(nonSelectedCountryIsos[i]);
                                 nonSelectedCountryIsos.remove(i);
@@ -8030,7 +8030,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public Map<Id, HierarchyItem> hierarchy{
         get{
-            if(hierarchy == null) {
+            if(hierarchy == null || hierarchy.isEmpty()) {
                 System.debug('rui1: ' + previouslySelectedIATACodes);
                 hierarchy = new Map<Id, HierarchyItem>();
 
