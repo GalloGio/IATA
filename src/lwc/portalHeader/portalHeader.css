@@ -133,6 +133,9 @@
   cursor: pointer;
 }
 
+.buttonYouIATA{
+	white-space:nowrap;
+}
 .buttonService:hover:after,
 .buttonSupport:hover:after,
 .buttonYouIATA:hover:after,
