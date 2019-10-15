@@ -26,7 +26,7 @@ private class AcliMassUpdateTest {
            
            
            ID hdqid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-         	
+          
            account a = new account(name = 'pippo', NAme_on_AOC__c = 'pippo', acli_status__c = 'Active Company', recordtypeID = hdqid);
            insert a;
            PageReference pageRef = Page.ACliMassUpdate;
@@ -41,14 +41,21 @@ private class AcliMassUpdateTest {
           controller.convertToAccount();
           
           controller.tab = '1'; 
+          controller.First();
+           
+          accts =     controller.getAcliAccountsPage();
           controller.next();
           controller.previous();
 
+
           controller.UpdateAll();
+          controller.doNull();
+          controller.getStateOFF();
+          
 
              test.stopTEst();
           string newStatus = [SELECT ID, ACLI_STATUS__C FROM ACCOUNT WHERE ID =: A.ID LIMIT 1 ].ACLI_sTATUS__c;
-          SYSTEM.ASSERTEQUALS(NEWSTATUS,'Inactive Company');
+          SYSTEM.ASSERTEQUALS(NEWSTATUS,'Active Company');
 
     }
 }

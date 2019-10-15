@@ -5,9 +5,9 @@
     <name>EasyPay Support</name>
     <queueMembers>
         <roles>
-            <role>DistributionCustomerExperienceHOA</role>
-            <role>MADHubCSManagerA</role>
-            <role>MADHubCSstaffA</role>
+            <role>DistributionCustomerExperienceHO</role>
+            <role>MADHubCSManager</role>
+            <role>MADHubCSstaff</role>
         </roles>
     </queueMembers>
     <queueSobject>

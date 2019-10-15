@@ -49,7 +49,7 @@
 					            <!-- <h2 class="group-title">{!$Label.Login_information}</h2> -->
 					            <div class="field-group action-field-group field-user-name">
 					                
-					                <apex:iframe height="0" src="{!$Site.BaseUrl}/secur/logout.jsp" scrolling="false" id="logoutFrame"/>					
+					                <apex:iframe height="0" src="{!$Site.BaseRequestURL}/secur/logout.jsp" scrolling="false" id="logoutFrame"/>					
 								 
 					  	        	<h3>Please wait while logging out...</h3>
 					  	        	<br/>
@@ -80,7 +80,7 @@
 				j(document).ready( function() {
 		        	setTimeout(
 		        		function(){ 
-		            		document.location = '{!$Site.BaseUrl}/IEC_Home?doLogout=true';
+		            		document.location = '{!$Site.BaseRequestURL}/IEC_Home?doLogout=true';
 			        	}, 
 			        	4500);
 		        

@@ -101,7 +101,9 @@ public without sharing class AMS_Utils {
     public static final String CONVERTTONEWGENPILOT = 'Conversion to GoLite'; //ACAMBAS - NEWGEN-4445
     public static final String CONVERTTOLEGACY = 'Conversion to Domestic with Cash'; //ACAMBAS - NEWGEN-4445
     public static final String CONVERTTOINTERNATIONAL = 'Conversion to International'; //ACAMBAS - NEWGEN-4445
-    
+    public static final String OPT_OUT_ACCREDITATION_CFG_RT_NAME = 'Opt_out_at_Accreditation';
+    public static final String FA_OPT_OUT = 'Opt-Out';
+     
     public static final Map<String, List<String>> OSCARBackupProcessMap = new Map<String, List<String>>{
         NGCHANGES => new List<String>{'Step4__c'},
         NGCHINACONVERSION => new List<String>{'Step4__c', 'Step3__c'}
@@ -131,6 +133,10 @@ public without sharing class AMS_Utils {
     public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION};
     public static final Set<String> oscarPCICompliantValidationAttachement = new Set <String>{'Yes','Nil CC','Corporate Card'};
     public static final Set<String> oscarPCICompliantValidationExpiryDate = new Set <String>{'Yes','Nil CC'};
+
+    public static final Set<String> setChinaCountries = new Set <String>{'CN'};
+    public static final Set<String> setDomesticCountries = new Set<String>{'CN', 'ID'};
+
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
@@ -175,10 +181,14 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_BSP          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
 
     public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
+	public static final String RECTYPE_NEWGEN_CHANGES_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 	
     public static final String RECTYPE_AIRLINE      = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline');
     public static final String RECTYPE_AIRLINE_BR   = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline_BR');
 
+    //AMS Country Specific Attribute
+    public static final String RECTYPE_CSA_RISK_NOTIFICATION   = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','Risk_Notification');
+    
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
     public static final Set<String> IEP_PROCESSES = new Set<String>{IEPBANKACCOUNTSETUP, IEPMODELAACCOUNTSETUP, IEPMODELBACCOUNTSETUP,IEPMODELBPLUSACCOUNTSETUP};
@@ -329,6 +339,7 @@ public without sharing class AMS_Utils {
     public static final String CC = 'CC';
     public static final String CA = 'CA';
     public static final string EP = 'EP';
+    public static final string BOP = 'BOP';
     public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
     public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
     public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
@@ -477,17 +488,6 @@ public without sharing class AMS_Utils {
                                                         FROM AMS_ChangeCodes__c];
             }
             return CUSTOM_CHANGECODES;
-        }
-        private set;
-    }
-
-    public static List<AMS_ChangeCodes_Integration__c> CUSTOM_CHANGECODES_INTEGRATION {
-        get {
-            if(CUSTOM_CHANGECODES_INTEGRATION == null){
-                CUSTOM_CHANGECODES_INTEGRATION = [SELECT RecId_A__c,RecId_B__c,RecId_Res__c FROM AMS_ChangeCodes_Integration__c];
-
-            }
-            return CUSTOM_CHANGECODES_INTEGRATION;
         }
         private set;
     }
@@ -653,25 +653,9 @@ public without sharing class AMS_Utils {
 
         //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
 
-        String sRes = '';
+        AMS_ChangeCodes_Integration__c ccInt = AMS_ChangeCodes_Integration__c.getValues(sRecIdA + '_' + sRecIdB);
 
-        for (AMS_ChangeCodes_Integration__c cc : CUSTOM_CHANGECODES_INTEGRATION ){
-
-            if(cc.RecId_A__c.equalsIgnoreCase(sRecIdA)){
-                if(cc.RecId_B__c.equalsIgnoreCase(sRecIdB)){
-                    sRes = cc.RecId_Res__c;
-                    break;
-                }
-            }
-
-        }
-
-        //Just in case we don't get a result, we set the value for the most common RecId - "C"
-        if( sRes == ''){
-            sRes = 'C';
-        }
-
-        return sRes;
+        return ccInt == null ? 'C' : ccInt.RecId_Res__c;
     }
 
     public static Boolean isAddressEmpty(Account acc, String addressType) {
@@ -2599,10 +2583,10 @@ public without sharing class AMS_Utils {
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
         List<Portal_Application_Right__c> services = new List<Portal_Application_Right__c>();
 
-        authorizations = [SELECT Id,
-                                     ANG_FormOfPayment_ID__c
-                                FROM Agency_Authorization__c
-                               WHERE Account__c = :acc.Id AND Status__c = 'Active'];
+        authorizations = [SELECT Id, ANG_FormOfPayment_ID__c
+                        FROM Agency_Authorization__c
+                        WHERE Account__c = :acc.Id 
+                            AND (Status__c = 'Active' OR Status__c = 'Authorized')];
 
         if(con != null) {
             services = [SELECT Id, Application_Name__c, Right__c, Application_Start_URL__c

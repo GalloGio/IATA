@@ -175,3 +175,11 @@
 .negative-margin-left{
     margin-left: -9.0rem;
 }
+
+.recentCasesMargin {
+    width: 62%;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 270px;
+    max-width: 580px;
+}

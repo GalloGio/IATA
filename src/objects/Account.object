@@ -3636,7 +3636,7 @@
         <fullName>ANG_IsNewGenAgency__c</fullName>
         <description>To show information to analyst. To simplify triggers and classes.</description>
         <externalId>false</externalId>
-        <formula>(IATA_ISO_Country__r.ANG_Enable_NewGen__c  &amp;&amp;  OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;)) || (IATA_ISO_Country__r.Enable_NewGen_Pilot__c &amp;&amp; OR(TEXT(Location_Type__c) = &apos;HE&apos;, TEXT(Location_Type__c) = &apos;AE&apos;, TEXT(Location_Type__c) = &apos;GE&apos;) &amp;&amp; TEXT(Location_Class__c) = &apos;D&apos;)</formula>
+        <formula>AND(IATA_ISO_Country__r.ANG_Enable_NewGen__c  , OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is New Gen Agency</label>
         <trackHistory>false</trackHistory>
@@ -6123,6 +6123,44 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Business_City__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>City of the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business City</label>
+        <referenceTo>IATA_ISO_City__c</referenceTo>
+        <relationshipLabel>Accounts with Business City</relationshipLabel>
+        <relationshipName>Accounts_with_Billing_City</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Business_Postal_Code__c</fullName>
+        <description>Postal Code for the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business Postal Code</label>
+        <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_Street__c</fullName>
+        <description>Street of the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business Street</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>CAMP_Agreement__c</fullName>
@@ -15799,6 +15837,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     </fields>
     <fields>
         <fullName>SIS_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
         <description>Used by SIS team to store the SIS ID for integration purposes</description>
         <externalId>false</externalId>
         <label>SIS ID</label>
@@ -15807,7 +15846,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
-        <unique>false</unique>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>SIS_Member_Code__c</fullName>
@@ -23435,6 +23474,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <columns>ACCOUNT.PHONE1</columns>
         <columns>ACCOUNT.TYPE</columns>
         <columns>CORE.USERS.ALIAS</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>ACCOUNT.RECORDTYPE</field>
@@ -89228,10 +89268,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Financial Institution</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Public</fullName>
                 <default>false</default>
             </values>
             <values>

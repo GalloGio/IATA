@@ -608,7 +608,6 @@ public with sharing class ISSP_AMS_EBulletin {
             sRegion.add('Asia & Pacific');
         }
 
-
         if(sRegion.size() > 0){
             list<IATA_ISO_Country__c> isoList;
             if (applyLanguage == 'es') {
@@ -660,13 +659,17 @@ public with sharing class ISSP_AMS_EBulletin {
             
             for (IATA_ISO_Country__c iso : isoList) {
                 if(iso.Region__c != 'USA'){
-                    mCountries.put(iso.ISO_Code__c , iso);
+                    IATA_ISO_Country__c tempIso = new IATA_ISO_Country__c();
+                    tempIso.Name = iso.Name;
+                    tempIso.IATA_Country_SP__c = iso.IATA_Country_SP__c;
+                    tempIso.IATA_Country_FR__c = iso.IATA_Country_FR__c;
+                    tempIso.ISO_Code__c = iso.ISO_Code__c;
+                    mCountries.put(iso.ISO_Code__c , tempIso);
                 }
             }
         }
 
     }
-
 
    
     public void fetchAMSProcessForm() {

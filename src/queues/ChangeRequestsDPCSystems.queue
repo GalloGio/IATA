@@ -14,7 +14,7 @@
             <publicGroup>IDFSPassengerSystemOwners</publicGroup>
         </publicGroups>
         <roles>
-            <role>DistributionOperationalMgmtHOA</role>
+            <role>DistributionOperationalMgmtHO</role>
         </roles>
         <users>
             <user>wana@iata.org</user>
