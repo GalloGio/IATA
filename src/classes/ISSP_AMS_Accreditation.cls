@@ -1460,6 +1460,7 @@ public without sharing class ISSP_AMS_Accreditation {
             return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id
                 FROM Account
                 WHERE IATACode__c IN :branchCodes AND Location_Type__c = :AMS_Utils.HE
+                AND Status__c NOT IN ('Terminated','Not accreditated', 'Not in operation', 'Listed','')
                 ORDER BY Name, IATACode__c]);
         else
             return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id
@@ -8255,7 +8256,8 @@ system.debug('aqui sectorValue ' + sectorValue);
         if (!accountsToBeConverted.keyset().contains(accountToBeConverted.id)) {
             for (Account a: [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
                             Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c 
-                            FROM Account WHERE (Top_Parent__c = :accountToBeConverted.Id OR Id = :accountToBeConverted.Id) AND Top_Parent__c <>:con.Account.id AND Id <> :con.Account.id]) {
+                            FROM Account WHERE (Top_Parent__c = :accountToBeConverted.Id OR Id = :accountToBeConverted.Id) AND Top_Parent__c <>:con.Account.id AND Id <> :con.Account.id
+                            AND Status__c NOT IN ('Terminated','Not accreditated', 'Not in operation', 'Listed','')]) {
                 
                 if (String.isBlank(newForm.Agency_Codes_Concerned__c)) {
                     newForm.Agency_Codes_Concerned__c = a.IATACode__c;
