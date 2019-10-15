@@ -2144,6 +2144,46 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>Há alguns dias, você se inscreveu para fazer parte do Portal do Cliente da IATA. Obrigado e seja bem-vindo!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Criamos o Portal do Cliente da IATA para que ele personalize os produtos e serviços da IATA especificamente para você. Para tal, gostaríamos de conhecer você e sua organização um pouco mais.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Nós tornamos tudo mais fácil e rápido - basta &lt;strong&gt;&lt;a href=[URL]&gt;clicar aqui para preencher o seu perfil&lt;/a&gt;&lt;/strong&gt;.</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Você terá:</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· Entrada direta para serviços personalizados</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· Acesso total aos padrões e informações selecionadas da IATA</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· Suporte especializado de profissionais da IATA</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· E mais!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;Clique aqui para completar o seu perfil&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label>Tira melhor proveito do portal da IATA  – Complete o seu perfil!</label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Você pode gerenciar os usuários da lista abaixo.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -2162,10 +2202,6 @@
     <customLabels>
         <label>Nome</label>
         <name>CSP_Name</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP New Account To Address --></label>
-        <name>CSP_New_Account_To_Address</name>
     </customLabels>
     <customLabels>
         <label>Próximo</label>

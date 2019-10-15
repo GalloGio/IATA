@@ -2144,6 +2144,46 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>며칠 전에 국제항공운송협회 (IATA) 고객 포털의 회원으로 가입해주셔서 감사드리며, 회원이 되신 것을 환영합니다!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>저희는 고객님께 맞는 제품과 서비스를 제공해 드리기 위해 IATA 고객 포털을 구축했습니다. 저희가 그렇게 할 수 있도록 고객님과 고객님의 소속을 조금 더 잘 알고 싶습니다.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>저희가 그것을 쉽고 빠르게 만들었습니다. &lt;strong&gt;&lt;a href=[URL]&gt;프로필을 완료하시려면 여기를 클릭하십시오.&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>고객님께서는 다음 혜택을 얻으실 수 있습니다.</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· 맞춤형 서비스를 위한 직계 접속 권한</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· 선별된 국제항공운송협회 (IATA) 지식 &amp; 표준에 대한 전체 액세스</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· 국제항공운송협회 (IATA) 서비스 전문가의 전문화된 지원</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· 그리고 더 있습니다!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;프로필을 완료하시려면 여기를 클릭하십시오.&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>아래 목록에서 사용자를 관리하실 수 있습니다.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -2162,10 +2202,6 @@
     <customLabels>
         <label>이름</label>
         <name>CSP_Name</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP New Account To Address --></label>
-        <name>CSP_New_Account_To_Address</name>
     </customLabels>
     <customLabels>
         <label>다음</label>
@@ -5019,8 +5055,8 @@
         <name>IDCard_Confirm_Replacement</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;h2&gt;We didn&#39;t find any existing ID Card based on the personal informations you provided in Login Page.&lt;/h2&gt;&lt;/br&gt;&lt;/br&gt;
-Please, if it&#39;s the first time you are applying for an ID Card, confirm that the Agency details below are corrects and click &quot;&quot;Applying for a first ID Card&quot;&quot;; or &quot;&quot;Go back to the Login Page&quot;&quot; and enter a correct Personal Information.&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&quot;</label>
+        <label>&quot;&lt;h2&gt;We didn&apos;t find any existing ID Card based on the personal informations you provided in Login Page.&lt;/h2&gt;&lt;/br&gt;&lt;/br&gt;
+Please, if it&apos;s the first time you are applying for an ID Card, confirm that the Agency details below are corrects and click &quot;&quot;Applying for a first ID Card&quot;&quot;; or &quot;&quot;Go back to the Login Page&quot;&quot; and enter a correct Personal Information.&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&quot;</label>
         <name>IDCard_ContactNotFound</name>
     </customLabels>
     <customLabels>
