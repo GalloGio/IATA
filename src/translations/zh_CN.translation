@@ -2141,6 +2141,46 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>几天前，您注册加入了 国际航空运输协会（IATA）客户门户网站——谢谢，欢迎您的加盟！</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>我们建立 IATA 客户门户网站，旨在为您提供个性化的 IATA 产品和服务。为了能实现这一目标，我们希望更好地了解您及所在机构的情况。</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>为此，我们提供了如下更方便快捷的途径——只需  &lt;strong&gt;&lt;a href=[URL]&gt;点击这里填写您的个人资料&lt;/a&gt;&lt;/strong&gt; 。</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>您将尊享：</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· 直接进入（访问）量身定制的服务</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· 精心组织的 IATA 知识和标准数据库的完整访问权限</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· IATA 客服专家的专业支持</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· 和更多！</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;点击这里填写您的个人资料&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>您可以从下面的列表中管理用户。</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>

@@ -2141,6 +2141,46 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>Несколько дней назад Вы приняли решение стать частью клиентского портала ИАТА - спасибо и добро пожаловать!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Клиентский портал ИАТА был создан для того, чтобы у Вас была возможность получать товары и услуги ИАТА, которые подходят именно Вам. Чтобы мы имели возможность предоставить услуги, мы хотели бы узнать Вас и Вашу организацию немного лучше.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Мы сумели сделать это легко и быстро – просто  &lt;strong&gt;&lt;a href=[URL]&gt; нажмите здесь, чтобы заполнить свой профиль &lt;/a&gt;&lt;/strong&gt;.</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы получите:</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· Прямой вход для целевых услуг</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· Полный доступ к информации и стандартам Международной ассоциации воздушного транспорта (ИАТА)</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· Специализированная поддержка от профессиональных работников Международной ассоциации воздушного транспорта (ИАТА)</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· И многое другое!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt; Нажмите здесь, чтобы заполнить свой профиль &lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Вы можете управлять пользователями из списка ниже.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>

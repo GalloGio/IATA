@@ -2164,6 +2164,10 @@
         <name>CSP_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP New Account To Address --></label>
+        <name>CSP_New_Account_To_Address</name>
+    </customLabels>
+    <customLabels>
         <label>Suivant</label>
         <name>CSP_Next</name>
     </customLabels>

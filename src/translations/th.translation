@@ -2141,6 +2141,46 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>หลายวันก่อนหน้านี้ คุณได้ลงทะเบียนเพื่อเข้าร่วมเป็นส่วนหนึ่งของพอร์ทัลสำหรับลูกค้าIATA เราขอขอบคุณและยินดีต้อนรับ!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>เราได้สร้างพอร์ทัลสำหรับลูกค้าIATA เพื่อที่จะสามารถจัดผลิตภัณฑ์และบริการของ IATA ให้เหมาะสมสำหรับคุณโดยเฉพาะ เพื่อให้เราสามารถทำเช่นนั้นได้ เราอยากรู้จักคุณและองค์กรของคุณให้ดีขึ้นอีกสักเล็กน้อย</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>เราได้ทำให้ง่ายและรวดเร็ว - เพียงแค่ &lt;strong&gt;&lt;a href=[URL]&gt;คลิกที่นี่ เพื่อกรอกรายละเอียดของคุณ&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณจะได้รับ:</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· ทางเข้าสู่บริการที่จัดให้เหมาะกับคุณโดยตรง</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· การเข้าถึงความรู้และมาตรฐานของ IATA ทั้งหมดที่คัดสรรมาแล้ว</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· การให้บริการช่วยเหลือเฉพาะทางจากผู้เชี่ยวชาญด้านบริการของ IATA</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· และอีกมากมาย!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;คลิกที่นี่ เพื่อกรอกรายละเอียดของคุณ&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>คุณสามารถจัดการผู้ใช้ จากรายการด้านล่างนี้</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>

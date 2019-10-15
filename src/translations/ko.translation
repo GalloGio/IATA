@@ -2164,6 +2164,10 @@
         <name>CSP_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP New Account To Address --></label>
+        <name>CSP_New_Account_To_Address</name>
+    </customLabels>
+    <customLabels>
         <label>다음</label>
         <name>CSP_Next</name>
     </customLabels>
@@ -5015,8 +5019,8 @@
         <name>IDCard_Confirm_Replacement</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;h2&gt;We didn&apos;t find any existing ID Card based on the personal informations you provided in Login Page.&lt;/h2&gt;&lt;/br&gt;&lt;/br&gt;
-Please, if it&apos;s the first time you are applying for an ID Card, confirm that the Agency details below are corrects and click &quot;&quot;Applying for a first ID Card&quot;&quot;; or &quot;&quot;Go back to the Login Page&quot;&quot; and enter a correct Personal Information.&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&quot;</label>
+        <label>&quot;&lt;h2&gt;We didn&#39;t find any existing ID Card based on the personal informations you provided in Login Page.&lt;/h2&gt;&lt;/br&gt;&lt;/br&gt;
+Please, if it&#39;s the first time you are applying for an ID Card, confirm that the Agency details below are corrects and click &quot;&quot;Applying for a first ID Card&quot;&quot;; or &quot;&quot;Go back to the Login Page&quot;&quot; and enter a correct Personal Information.&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&quot;</label>
         <name>IDCard_ContactNotFound</name>
     </customLabels>
     <customLabels>

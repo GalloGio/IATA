@@ -2145,6 +2145,46 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>Vor einigen Tagen haben Sie sich für das International Air Transport Association (IATA) Kundenportal registriert - vielen Dank und herzlich willkommen!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Wir haben das International Air Transport Association (IATA) Kundenportal erschaffen, damit wir Produkte und Dienstleistungen der International Air Transport Association (IATA) speziell auf Ihre Bedürfnisse zuschneiden können. Damit wir das können, möchten wir Sie und Ihre Organisation ein bisschen besser kennenlernen.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Wir haben es einfach und schnell gemacht - einfach  &lt;strong&gt;&lt;a href=[URL]&gt; hier klicken, um Ihr Profil&lt;/a&gt;&lt;/strong&gt; zu vervollständigen.</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Sie erhalten:</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· Direkten Zugang zu maßgeschneiderten Serviceleistungen</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· Vollen Zugriff auf die kuratierten Informationen &amp; Standards der International Air Transport Association (IATA)</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· Fachkundigen Support durch die Service-Profis der International Air Transport Association (IATA)</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· Und vieles mehr!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt; Klicken Sie hier, um Ihr Profil&lt;/a&gt;&lt;/strong&gt; zu vervollständigen</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Sie können die Benutzer über die folgende Liste verwalten.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>

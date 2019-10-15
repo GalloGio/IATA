@@ -2144,6 +2144,46 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>数日前、お客様からはIATAカスタマーポータルの一員となるためのご登録をいただき、ありがとうございました。</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>弊社では、IATA製品とサービスをお客様向けにカスタマイズできるよう、IATAカスタマーポータルを構築いたしました。弊社からお客様により適切なお世話をさせていただくために、お客様および御社についてさらに詳しくお知らせいただきたいと存じます。</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;ここをクリックして&lt;/a&gt;&lt;/strong&gt;プロフィール情報を入力していただくだけで、簡単にできます。</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>お客様にとっての利点</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>・カスタマイズされたサービスに直通</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>・特別に精選されたIATAの知識および基準へのフルアクセス</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>・IATAサービスプロフェッショナルからの専門サポート</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>・ この他にも様々な特典がございます</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;ここをクリックして、プロフィール情報の入力をお願いいたします&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>以下のリストからユーザーを管理することができます。</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
