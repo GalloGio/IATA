@@ -87,11 +87,8 @@ public class AccountHandler{
         
         if(ANG_AgencyChangesHelper.changesContainer == null || ANG_ConversionHelper.isMigrationTool || System.isFuture() || System.isBatch()){
 			updateParentAccountFields(listAccountId);
-            }
-		else		
+        } else		
 			updateParentAccountFieldsFuture(listAccountId);
-
-
 	}
 
     @future(callout=false)
