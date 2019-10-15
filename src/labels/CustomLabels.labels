@@ -3165,6 +3165,14 @@ Payment required on receipt of this Payment Advice
         <value>Advanced Search</value>
     </labels>
     <labels>
+        <fullName>CSP_Breadcrumb_CaseDetails_Title</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Breadcrumb_CaseDetails_Title</shortDescription>
+        <value>Case Details</value>
+    </labels>
+    <labels>
         <fullName>CSP_Breadcrumb_CompanyProfile_Title</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
@@ -3393,6 +3401,13 @@ Payment required on receipt of this Payment Advice
         <value>Complete this field.</value>
     </labels>
     <labels>
+        <fullName>CSP_CreatedOn</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CreatedOn</shortDescription>
+        <value>Created on</value>
+    </labels>
+    <labels>
         <fullName>CSP_DateFrom</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3610,6 +3625,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Home_WelcomeTitle</shortDescription>
         <value>Welcome [username]</value>
+    </labels>
+	<labels>
+        <fullName>CSP_LastUpdate</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LastUpdate</shortDescription>
+        <value>Last Update</value>
     </labels>
     <labels>
         <fullName>CSP_LogOut</fullName>

@@ -23,7 +23,8 @@ import ISSP_SIDRA_Irregularity_Date from '@salesforce/label/c.ISSP_SIDRA_Irregul
 import CSP_IATA_Country from '@salesforce/label/c.CSP_IATA_Country';
 import CSP_AdditionalDetails from '@salesforce/label/c.csp_AdditionalDetails';
 import ISSP_Description from '@salesforce/label/c.ISSP_Description';
-
+import CSP_ContactName from '@salesforce/label/c.Contact_Name';
+import CSP_AccountName from '@salesforce/label/c.ICCS_Account_Name_Label';
 
 /* PDF Labels */
 import ISSP_AMS_Download_PDF_Copy from '@salesforce/label/c.ISSP_AMS_Download_PDF_Copy';
@@ -48,7 +49,8 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track nrDocs = 0;
 
     @track showNewDescriptionSection = false;
-    @track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
+	@track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
+	
 
     @track labels = {
         AddDocumentsMsg,
@@ -64,7 +66,9 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         ISSP_SIDRA_Irregularity_Date,
         CSP_IATA_Country,
         CSP_AdditionalDetails,
-        ISSP_Description
+		ISSP_Description,
+		CSP_ContactName,
+		CSP_AccountName
     };
 
     acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
@@ -164,9 +168,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     get showNrDocs() {
         return this.nrDocs > 0;
     }
-    get hasSurveyLink() {
-        return this.surveyLink !== undefined && this.surveyLink.length > 0;
-    }
+    
 
     get hasAccount() {
         return this.caseDetails !== undefined && this.caseDetails.AccountId !== undefined;
