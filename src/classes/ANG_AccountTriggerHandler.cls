@@ -915,11 +915,14 @@ public class ANG_AccountTriggerHandler {
 				Boolean sendNotification = true;
 				
 				//no need to iterate the Iso Countries, just passing the ID of the current account. Getting the first Element
-				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{acc.IATA_ISO_Country__c}).get(0).AMS_Country_Specific_Attributes__r)
-					if (att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && att.Block_notification_on_Risk_Status_update__c) sendNotification = false;
+				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{acc.IATA_ISO_Country__c}).get(0).AMS_Country_Specific_Attributes__r){
+					if (att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && att.Block_notification_on_Risk_Status_update__c){
+						sendNotification = false;
+						break;
+					}
+				}
 				
 				if(sendNotification) toNotify.add(acc.Id);
-
 			}
 		}
 
