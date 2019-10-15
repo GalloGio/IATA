@@ -140,7 +140,7 @@
 
         .row1 {padding-bottom:16px; vertical-align: text-top;}
     </style>
-    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
+    <!--<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>-->
 
     <script>
         var showProductComparisonLink = false;
@@ -160,8 +160,6 @@
         }
 
         var vOfficeType = '{!newCase.Reason1__c}';
-            console.log('vOfficeType '+vOfficeType);
-            console.log('Default country '+ defaultHQCountry);
         var operationType = '{!sectorvalue}';
         var hasPermission = true;
 
@@ -194,29 +192,8 @@
         }
 
         function toggleOfficeTypes(officeSelect, ctrylistid) {
-                //var mySelectOptions = $('select[name="' + ctrylistid + '"] option');
-                //var mySelect = $('select[name="' + ctrylistid + '"]');
             var officeTypeSel = $('select[name="' + officeSelect + '"]');
             vOfficeType = officeTypeSel.val();
-                /**
-                mySelectOptions.each(function() {
-                  if(vOfficeType=='New BR Abroad') {
-                    if(this.value != defaultHQCountry) {
-                        $(this).prop('disabled', false);
-                     } else {
-                        $(this).prop('disabled', true);
-                        mySelect.val('');
-                     }
-                  } else {
-                    if(this.value != defaultHQCountry) {
-                        $(this).prop('disabled', true);
-                     } else {
-                        $(this).prop('disabled', false);
-                        mySelect.val(defaultHQCountry);
-                     }
-                  }
-                });
-                **/
         }
 
         function isInArray(arr, val) {
@@ -275,13 +252,10 @@
                 vOfficeType = $lists.val();
                 var countriesMap = JSON.parse('{!jsonCountriesMap}');
                 var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Import Agent"];
-                console.log('no empty voffice '+vOfficeType);
                 if('{!isNoticeOfChange}'=='true' || vOfficeType=='')
                     isAllowedCountry = 't';
                 else{
                     var idx = vOfficeType.indexOf(' - ');
-
-                    console.log('vOfficeType goto '+vOfficeType);
 
                     if( (vOfficeType.substring(idx + 3).trim() == 'Legacy') || (vOfficeType.includes('Standard')) || (vOfficeType.includes('AE'))){
                         operationType = 'Travel_Agent';
@@ -289,26 +263,19 @@
                         operationType = 'Cargo_Agent';
                     }
 
-                    // NHO -
-                    console.log('vOfficeType.substring(0, idx) ' + operationType+'-'+vOfficeType.substring(0, idx));
-
                     var countryList = countriesMap[operationType+'-'+vOfficeType.substring(0, idx)];
 
                     var isAllowedCountry = false;
-                    console.log('countryList ' + countryList);
                     if(defaultHQCountry != null && countryList != undefined) {
                         var isAllowedCountry = countryList[countryList.indexOf(defaultHQCountry)+3];
                     }
-                    console.log('isAllowedCountry ' + isAllowedCountry);
-                    ///alert( $('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
                     var langId = '{!$Component.step1Form.step1Block.applylanguage}';
                     var langSel = $('select[name="' + langId + '"]');
                     var vLang = langSel.val();
 
-                        //For pilot only English & Spanish HO applications for pilot countries alllowed
+                    //For pilot only English & Spanish HO applications for pilot countries alllowed
 
                     if( $('input[name="' + myValue + '"][value=Travel_Agent]').prop("checked")) {
-                        console.log('Travel China Domestic: ' + isChinaDomestic());
                         if(isAllowedCountry=='f' || (isChinaDomestic() && !{!isocountry.ANG_Enable_NewGen__c})) {
                             bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Pax)}", function(result) {
                                 if(result) {
@@ -428,7 +395,6 @@
         var vReqNo
 
         function resetUploadBar() {
-        //$('.uploadbar-' + vReqNo).css('width', '0%');
             $("#loading-" + vReqNo).hide();
         }
 
@@ -709,7 +675,8 @@
                             <apex:actionFunction action="{!resetHierarchy}" name="reRenderAccountsNoc" reRender="branchaccountsel"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions, nocFormQuestions" oncomplete=""/>
                             <apex:actionFunction name="reRenderNocMessage" reRender="nocMessage"/>
-                            <apex:actionFunction name="selectAllAEs" action="{!doSelectAll}" status="blockEditing" reRender="table"/>
+                            <apex:actionFunction name="selectAllAEs" action="{!doSelectAll}" status="blockEditing" reRender="table" />
+                            <apex:actionFunction name="checkSelectAll" action="{!checkSelectAllAEs}" reRender="table" />
                             
                             <apex:pageBlock id="step1Block" mode="edit" >
                                 <apex:pageBlockButtons location="bottom" style="padding-left:100px">
@@ -872,7 +839,7 @@
                                                     <apex:facet name="header">
                                                         <apex:inputCheckbox value="{!selectAll}" onchange="selectAllAEs();"/>
                                                     </apex:facet>
-                                                    <apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}"/>
+                                                    <apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}" onchange="checkSelectAll();"/>
                                                 </apex:column>
 
                                                 <apex:column value="{!hi.acc['Name']}"/>

@@ -48,8 +48,7 @@ public class ANG_RHCAlertTriggerHandler{
                         Subject,
                         HtmlValue,
                         DeveloperName
-                     FROM
-                        EmailTemplate
+                     FROM EmailTemplate
                      WHERE
                         DeveloperName IN (
                             :RTS_NOTIFICATION_MANAGER_ORANGE, 

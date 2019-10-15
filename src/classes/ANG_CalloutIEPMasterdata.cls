@@ -1,46 +1,42 @@
 global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
-
 	global static String fetchEndPoint(ANG_CalloutMapping__c mappingObj){
 		return mappingObj.Credential__c;
 	}
-	
+
 	global static void doCallOut(Object obj, ANG_CalloutMapping__c mappingObj, String changeCodeId,String agencyUpdateId , String iataCode, Boolean isRunningBatch){
-		sendCallout(JSON.serialize(obj),mappingObj.Action__c, mappingObj.Named_Credential__c, fetchEndPoint(mappingObj), mappingObj.client_id__c, mappingObj.client_secret__c, changeCodeId, agencyUpdateId, iataCode, isRunningBatch);
+		sendCallout(JSON.serialize(obj), mappingObj.Action__c, mappingObj.Named_Credential__c, changeCodeId, agencyUpdateId, iataCode, isRunningBatch);
 	}
 
-	private static void sendCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId, String iataCode,Boolean isRunningBatch){
+	private static void sendCallout(String body, String action, String namedCredential, String changeCodeId, String agencyUpdateId, String iataCode,Boolean isRunningBatch){
 		if((System.isBatch() || System.isFuture()) && trigger.isExecuting){
-			System.enqueueJob(new executeCalloutQueueable(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId, iataCode));		
+			System.enqueueJob(new executeCalloutQueueable(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode));		
 		}		
 		else if(isRunningBatch || ANG_ConversionHelper.isMigrationTool || System.isBatch() || System.isFuture()){
-			executeCallout(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId, iataCode);
+			executeCallout(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode);
 		}
 		else {
-			executeCalloutFuture(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId, iataCode);
+			executeCalloutFuture(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode);
 		}
 	}
 
-
 	@future (callout=true)
-	private static void executeCalloutFuture(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId, String iataCode){
-		executeCallout(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId, iataCode);
+	private static void executeCalloutFuture(String body, String action, String namedCredential, String changeCodeId, String agencyUpdateId, String iataCode){
+		executeCallout(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode);
 	}
 
-
-	private static void executeCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId, String iataCode){
+	private static void executeCallout(String body, String action, String namedCredential, String changeCodeId, String agencyUpdateId, String iataCode){
 
 		HttpRequest req = new HttpRequest();
-        req.setHeader('Content-Type', 'application/json');
+		req.setHeader('Content-Type', 'application/json');
 	 	req.setMethod(action);
 	 	req.setTimeout(120000);
-		//req.setEndpoint('https://iata-agencies-process.cloudhub.io'+endPointCredential+body+'?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
-		req.setEndpoint('callout:'+namedCredential+endPointCredential+iataCode+'?client_id='+clientId+'&client_secret='+clientSecret);
+		req.setEndpoint('callout:'+namedCredential + '/' + iataCode);
 		req.setBody(body);
 
+		System.debug('ANG_CalloutIEPMasterdata:Endpoint:' + req.getEndpoint());
 		System.debug('ANG_CalloutIEPMasterdata:Callout request is:'+req.getBody());
    
-        
 		Http http = new Http();
 		HTTPResponse res;
 
@@ -52,7 +48,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 			ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
 			log.Agency_Applied_Change_code__c = changeCodeId;
-			log.Web_Service__c = 'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;
+			log.Web_Service__c = 'callout:'+namedCredential + body;
 			log.Input_Description__c= 'body:'+body;
 			log.Method__c = action;
 			log.Web_Service__c = String.valueOf(req);
@@ -61,7 +57,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 			log.Success__c = false;
 
 			//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_008', 'Agency MasterData', 'Mulesoft', 'Mulesoft', iataCode + ' ' + log.Error_Code__c, e.getMessage(), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
-            ServiceNow_Helper.sendRequestToSNOWMulesoft('SNOW1', iatacode, log);	
+			ServiceNow_Helper.sendRequestToSNOWMulesoft('SNOW1', iatacode, log);	
 			ANG_IEP_CalloutHelper.updateAgencyEvent(agencyUpdateId,false);			
 			
 			insert log;
@@ -74,8 +70,8 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
 
 		log.Agency_Applied_Change_code__c = changeCodeId;
-		log.Web_Service__c = 'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;
-		log.Input_Description__c= 'body:'+body;
+		log.Web_Service__c = 'callout:'+namedCredential + body;
+		log.Input_Description__c= 'body:' + body;
 		log.Method__c = action;
 		log.Web_Service__c = String.valueOf(req);
 
@@ -90,7 +86,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 			log.Error_Message__c = res.getStatus();
 			log.Success__c = false;
 			//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_008', 'Agency MasterData', 'Mulesoft', 'Mulesoft', iataCode + ' ' +  String.valueOf(res.getStatusCode()),  String.valueOf(res.getStatusCode()), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');			
-            ServiceNow_Helper.sendRequestToSNOWMulesoft('SNOW2', iatacode, log);
+			ServiceNow_Helper.sendRequestToSNOWMulesoft('SNOW2', iatacode, log);
 		}
 		else{
 			System.debug('ANG_CalloutIEPMasterdata: Payload sent with success.');
@@ -113,22 +109,17 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		private String agencyUpdateId;
 		private String iataCode;
 	
-	public executeCalloutQueueable(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId, String iataCode){
-		
-		this.body =	body;
-		this.action = action;
-		this.namedCredential = namedCredential;
-		this.endPointCredential = endPointCredential;
-		this.clientId =	clientId;
-		this.clientSecret =	clientSecret;
-		this.changeCodeId =	changeCodeId;
-		this.agencyUpdateId = agencyUpdateId;
-		this.iataCode =	iataCode;		
+		public executeCalloutQueueable(String body, String action, String namedCredential, String changeCodeId, String agencyUpdateId, String iataCode){
+			this.body =	body;
+			this.action = action;
+			this.namedCredential = namedCredential;
+			this.changeCodeId =	changeCodeId;
+			this.agencyUpdateId = agencyUpdateId;
+			this.iataCode =	iataCode;		
 		}
 
-	public void execute(QueueableContext context){
-
-		executeCallout(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId, iataCode);		
+		public void execute(QueueableContext context){
+			executeCallout(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode);		
 		}
 	
 	}

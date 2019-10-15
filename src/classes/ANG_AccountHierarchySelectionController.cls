@@ -780,7 +780,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
     
     public void handleSelection() {
 
-        
+        if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY)){ 
             Map<Id,HEPerBSP> tempHesPerBSPs = new Map<Id,HEPerBSP>();
             for (HierarchyItem i : hierarchy.values()){
 
@@ -809,6 +809,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
             hesPerBSPs = tempHesPerBSPs;
         }
+    }
 
     public PageReference FetchNewParent(){
 		
