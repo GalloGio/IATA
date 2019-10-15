@@ -21,7 +21,7 @@ public without sharing class PortalIftpStationsManagement {
                                                             account_role__r.account__r.Type,
                                                             account_role__r.account__r.Sector__c
                                                     FROM Account_Role_Service__c
-                                                    WHERE Account_Role_Services__r.name like 'IFTP - Airline'
+                                                    WHERE Account_Role_Services__r.name like 'IFTP%Airline'
                                                     ORDER BY account_role__r.account__r.name];
 
         List<AirlineRecordsWrapper> wrapIftpAirlines = new List<AirlineRecordsWrapper>();
