@@ -2,8 +2,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static Boolean testRunnningForNonBackup = false;
 	public static Boolean isMigrationRunning = false;
+	public static AChangeStructure changesContainer = null;
 	private static final Integer CHANGECODES_THRESHOLD = 25;
-
 
 	public class AChangeStructure{
 
@@ -149,7 +149,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			Boolean oscarHierFAOptOut;
 			Set<Id> accountHierarchyRelationships = new Set<Id>();
 
-			AChangeStructure changesContainer = new AChangeStructure();
+			changesContainer = new AChangeStructure();
 
 			System.debug('[ANG_AgencyChangesHelper][handleNewGenChangesProcess] -- types of changes selected are valid!');
 
