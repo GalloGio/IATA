@@ -122,8 +122,8 @@
 					    	<apex:outputPanel id="stepBloc" layout="block">
 						    	<apex:outputPanel styleClass="process" rendered="{!NOT(isOrderConfirmed)}">
 						        	<ol class="list steps">
-						                <li class="step step-1"><a href="{!$Site.BaseUrl}/IEC_CustomerInformation">{!$Label.PageTitleCustomerInformation}</a></li>
-						                <li class="step step-2"><a href="{!$Site.BaseUrl}/IEC_Shipping">{!$Label.PageTitleShippingPayment}</a></li>
+						                <li class="step step-1"><a href="{!$Site.BaseRequestURL}/IEC_CustomerInformation">{!$Label.PageTitleCustomerInformation}</a></li>
+						                <li class="step step-2"><a href="{!$Site.BaseRequestURL}/IEC_Shipping">{!$Label.PageTitleShippingPayment}</a></li>
 						                <li class="step step-3 active"><a href="javascript:void(0);">{!$Label.PageTitleConfirmOrder}</a></li>
 						            </ol>
 						        </apex:outputPanel>
@@ -523,7 +523,7 @@
 					        
 					            <apex:outputPanel styleClass="footer-actions confirm-order" layout="block" rendered="{!NOT(isOrderConfirmed)}">
 					                <ul class="list actions text-right">
-					                    <li><apex:outputLink value="{!$Site.BaseUrl}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink></li>
+					                    <li><apex:outputLink value="{!$Site.BaseRequestURL}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink></li>
 					                    <li>
 											<apex:actionFunction name="submitOrder" reRender="errorBloc,frmConfirmOrder, stepBloc,ContinueShopping" action="{!submitOrder}" status="submitStatus" oncomplete="$(window).scrollTop(0);j$.unblockUI();pushFinalOrderSubmit();" />
 								        	<button class="button wide" type="button" onclick="submitOrder();blockme();" style="{!IF(stopProcess, 'display:none', '')}">
@@ -547,7 +547,7 @@
 					        <apex:outputPanel id="ContinueShopping">
 						        <apex:variable var="cartEmpty" value="0" rendered="{!OR(vfOrder.orderItems == null, vfOrder.orderItems.size == 0, hasConfirm)}">
 									<div class="footer-actions text-right">
-										<a href="{!$Site.BaseUrl}/IEC_ProductList" class="button wide">{!$Label.Button_Continue_Shopping}</a>
+										<a href="{!$Site.BaseRequestURL}/IEC_ProductList" class="button wide">{!$Label.Button_Continue_Shopping}</a>
 							        </div>
 						        </apex:variable>
 					        </apex:outputPanel>					        

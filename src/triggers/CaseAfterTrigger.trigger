@@ -103,6 +103,13 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     /*Maps, Sets, Lists*/
     /***********************************************************************************************************************************************************/
     /*Share trigger code*/
+
+	/** WMO-564 **/
+	if(Trigger.isUpdate) {
+		CaseProcessTypeHelper.processOSCAREffAge(Trigger.new, Trigger.oldMap);
+	}
+	
+
     /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
 	if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete && !CaseChildHelper.noValidationsOnTrgCAseIFAP){
         System.debug('____ [cls CaseAfterTrigger - trgCaseIFAP_AfterInsertDeleteUpdateUndelete]');

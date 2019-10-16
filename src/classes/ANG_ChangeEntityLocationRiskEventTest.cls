@@ -211,6 +211,7 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 		oscar.STEP35__c = AMS_Utils.PASSED;
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		oscar.Bank_Guarantee_requested__c = Date.today();
 		update oscar;
 		
 		Case oscarCase = new Case(Id = oscar.Oscar_Communication_Case_Id__c);
@@ -276,6 +277,7 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 		oscar.STEP35__c = AMS_Utils.PASSED;
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		oscar.Bank_Guarantee_requested__c = Date.today();
 		update oscar;
 		
 		Case oscarCase = new Case(Id = oscar.Oscar_Communication_Case_Id__c);
@@ -323,6 +325,7 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 		oscar.STEP35__c = AMS_Utils.PASSED;
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		oscar.Bank_Guarantee_requested__c = Date.today();
 		update oscar;
 		
 		Case oscarCase = new Case(Id = oscar.Oscar_Communication_Case_Id__c);

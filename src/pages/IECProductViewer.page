@@ -29,7 +29,7 @@
 
         <div class="available-services-toggle__anchor available-services-a unloggued">
             <div class="available-services-toggle">
-                <p>IATA Member Airlines get preferential pricing! <a href="{!$Site.BaseUrl}/ieclogin" id="link1">Sign in now</a> or <a href="{!$Site.BaseUrl}/iecuserregistration" id="link2">create an account</a>
+                <p>IATA Member Airlines get preferential pricing! <a href="{!$Site.BaseRequestURL}/ieclogin" id="link1">Sign in now</a> or <a href="{!$Site.BaseRequestURL}/iecuserregistration" id="link2">create an account</a>
                 </p>
             </div>
         </div>
@@ -288,7 +288,7 @@
                                 <p>
                                     IATA Member Airlines get preferential pricing!
                                     <br/>
-                                    <a href="{!$Site.BaseUrl}/ieclogin">Sign in now</a> or <a href="{!$Site.BaseUrl}/iecuserregistration">create an account</a>
+                                    <a href="{!$Site.BaseRequestURL}/ieclogin">Sign in now</a> or <a href="{!$Site.BaseRequestURL}/iecuserregistration">create an account</a>
                                 </p>
                             </div>
                         </apex:variable>

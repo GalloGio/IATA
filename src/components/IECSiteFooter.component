@@ -16,19 +16,19 @@
         <div class="footerRight">
           <p>Products : 
 
-            <a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdGSS}">Global Systems Solution</a> <span class="sep">|</span> 
-            <a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdMDP}">Marketing Data Package</a> <span class="sep">|</span> 
-            <a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdGAD}">Global Agency Directory</a> <span class="sep">|</span>            
-            <a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdCACPro}">CheckACode</a>  
+            <a href="{!$Site.BaseRequestURL}/IEC_SearchResults?site-search={!sProdGSS}">Global Systems Solution</a> <span class="sep">|</span> 
+            <a href="{!$Site.BaseRequestURL}/IEC_SearchResults?site-search={!sProdMDP}">Marketing Data Package</a> <span class="sep">|</span> 
+            <a href="{!$Site.BaseRequestURL}/IEC_SearchResults?site-search={!sProdGAD}">Global Agency Directory</a> <span class="sep">|</span>            
+            <a href="{!$Site.BaseRequestURL}/IEC_SearchResults?site-search={!sProdCACPro}">CheckACode</a>  
              
 
 
           </p>
           <p>Info : 
-            <a href="{!$Site.BaseUrl}/IECAboutGDP">About Global Data</a> <span class="sep">|</span>             
+            <a href="{!$Site.BaseRequestURL}/IECAboutGDP">About Global Data</a> <span class="sep">|</span>             
             <a href="mailto:{!sContactEmail}?subject={!sContactSubject}" class="header__navigation-link">Contact Us</a><span class="sep">|</span> 
-            <a href="{!$Site.BaseUrl}/IECCustomers">Customers</a> <span class="sep">|</span> 
-            <a href="{!$Site.BaseUrl}/IECTerms">Terms of Use</a>       
+            <a href="{!$Site.BaseRequestURL}/IECCustomers">Customers</a> <span class="sep">|</span> 
+            <a href="{!$Site.BaseRequestURL}/IECTerms">Terms of Use</a>       
           </p>
         </div>
          <apex:image url="{!URLFOR($Resource.IECStyles,'img/')}logo.png" />
