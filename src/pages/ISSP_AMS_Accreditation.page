@@ -140,7 +140,7 @@
 
         .row1 {padding-bottom:16px; vertical-align: text-top;}
     </style>
-    <!--<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>-->
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
 
     <script>
         var showProductComparisonLink = false;

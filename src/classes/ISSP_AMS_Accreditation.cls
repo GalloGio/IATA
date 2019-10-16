@@ -8024,10 +8024,7 @@ public without sharing class ISSP_AMS_Accreditation {
         return new Pagereference(pageURL);
     }
 
-    public Map<Id, HierarchyItem> hierarchy{
-        get{
-            if(hierarchy == null || hierarchy.isEmpty()) {
-                System.debug('rui1: ' + previouslySelectedIATACodes);
+    public void populateHierarchy() {
                 hierarchy = new Map<Id, HierarchyItem>();
 
                 List<String> mcCountryIsos = new List<String>();
@@ -8065,13 +8062,12 @@ public without sharing class ISSP_AMS_Accreditation {
                         selectAll = isSelected;
                     }
 
-                    System.debug('mega select all: ' + selectAll);
-
                     hierarchy.put(a.Id, new HierarchyItem(a, isSelected));
                 }                           
             }
-            return hierarchy;
-        }
+
+    public Map<Id, HierarchyItem> hierarchy{
+        get;
         set;
     }
 
@@ -8097,6 +8093,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<HierarchyItem> hierarchyValues{
         get {
+            if (hierarchy == null) {
+                populateHierarchy();
+            }
             return hierarchy.values();
         }
     }
@@ -8121,11 +8120,13 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         if (!String.isBlank(previouslySelectedIATACodes)) {
-            previouslySelectedIATACodes.removeEnd(', ');
+            previouslySelectedIATACodes = previouslySelectedIATACodes.removeEnd(',');
         }
 
         hierarchy = null;
         hierarchyValuesForDisplay = null;
+
+        populateHierarchy();
     }
     
     public Integer totalPages{
@@ -8170,16 +8171,13 @@ public without sharing class ISSP_AMS_Accreditation {
         }
     }
 
-
     // ***********************************
     // ********* helper methods **********
     // ***********************************
 
     public void doSelectAll(){
-        System.debug('select all: ' + hierarchyValues);
         for(HierarchyItem hi : hierarchyValues){
             hi.selected = selectAll;
-            System.debug('sa: ' + hi.selected);
         }
     }
 
