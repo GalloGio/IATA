@@ -851,7 +851,7 @@
         							(function() {
         								var aux = "{!con.Account.ANG_Accreditation_Model__c}";        								
         								var l = document.querySelectorAll('[id$="allowedAccreditationModelSelect"]')[0];
-        								for(i = 0; i < l.length; i++) {
+        								for(i = l.length -1; i >=0 ; i--) {
         									if((aux == 'Cashless' || aux == 'Multicountry') && (l[i].value === "Cashless" || l[i].value === "Multicountry")) {
         										l.remove(i);
 											}

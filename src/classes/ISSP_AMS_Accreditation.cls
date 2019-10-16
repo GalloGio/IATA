@@ -3221,7 +3221,7 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public Pagereference goToStep3Section1() {
-        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_one';
+        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam ;
         
         if (isNoticeOfChange) {
              pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
@@ -3229,11 +3229,11 @@ public without sharing class ISSP_AMS_Accreditation {
             pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
         }
         
-        return new Pagereference(pageURL);
+        return new Pagereference(pageURL+'&step=3#nav_one');
     }
 
     public Pagereference goToStep3Section2() {
-        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_two';
+        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam ;
         
         if (isNoticeOfChange) {
              pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
@@ -3241,11 +3241,11 @@ public without sharing class ISSP_AMS_Accreditation {
             pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
         }
         
-        return new Pagereference(pageURL);
+        return new Pagereference(pageURL+'&step=3#nav_two');
     }
 
     public Pagereference goToStep3Section3() {
-        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_three';
+        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam ;
         
         if (isNoticeOfChange) {
              pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
@@ -3253,11 +3253,11 @@ public without sharing class ISSP_AMS_Accreditation {
             pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
         }
         
-        return new Pagereference(pageURL);
+        return new Pagereference(pageURL+'&step=3#nav_three');
     }
 
     public Pagereference goToStep3Section4() {
-        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_four';
+        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam;
         
         if (isNoticeOfChange) {
              pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
@@ -3265,11 +3265,11 @@ public without sharing class ISSP_AMS_Accreditation {
             pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
         }
         
-        return new Pagereference(pageURL);
+        return new Pagereference(pageURL +'&step=3#nav_four');
     }
 
     public Pagereference goToStep3Section5() {
-        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_five';
+        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam;
         
         if (isNoticeOfChange) {
              pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
@@ -3277,7 +3277,7 @@ public without sharing class ISSP_AMS_Accreditation {
             pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
         }
         
-        return new Pagereference(pageURL);
+        return new Pagereference(pageURL +'&step=3#nav_five');
     }
 
     public Pagereference goToStep3Section6() {
