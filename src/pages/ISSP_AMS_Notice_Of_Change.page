@@ -2353,26 +2353,32 @@
 			}
 		}
 
-		if ({!isMCAccredited} && {!isNoticeOfChange} && lScopeOfChange !== 'HO Only') {
-			setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
-			setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
-		}
-
 		if ({!isNoticeOfChange}) {
 			if (typeOfChange !== 'Yes' && {!CanChangeAccreditationType}) {
 				$j('[id$=iataChangeAccType]').prop('disabled', true);
 			}
 
+			if ({!isMCAccredited} && lScopeOfChange !== 'HO Only') {
+				setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+				setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+			}
+			
 			if ('{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
 				$j('[id$=notifyChangeLocationCheckbox]').prop('disabled', true);
 				setWarningBoxOnHoverMC($j('[id$=notifyChangeLocationCheckbox]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 
 				$j('[id$=notifyLegalDetailsChange]').prop('disabled', true);
+
+				if (!({!isMCAccredited} && lScopeOfChange !== 'HO Only')) {
 				setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+				}
 				
 				$j('[id$=notifyOwnershipChange]').prop('disabled', true);
+
+				if (!({!isMCAccredited} && lScopeOfChange !== 'HO Only')) {
 				setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
+		}
 		}
 		
 		//END - NoC Changes

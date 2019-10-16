@@ -140,7 +140,7 @@
 
         .row1 {padding-bottom:16px; vertical-align: text-top;}
     </style>
-    <!--<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>-->
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
 
     <script>
         var showProductComparisonLink = false;
@@ -210,7 +210,6 @@
             if(defaultHQCountry=='CN') {
                 var chinaAgentType = $('select[name="' + chinaAgentTypeId + '"]');
                 if(chinaAgentType.val() == 'Domestic') {
-                        console.log('in domestic');
                     return true;
                 }
             }
@@ -295,7 +294,6 @@
                     } else {
                         if(isAllowedCountry=='f' || isChinaDomestic()) {
                         // temporary for CNS
-                        console.log('{!communityName}');
                             if('{!communityName}'==='CNS') {
                                 bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)}", function(result) {
                                     if(result) {
@@ -516,8 +514,6 @@
                 $('[id$="branchaccountsel"]').first().insertAfter($('[id$="langGSA"]'));
                 
                 checkLocationQuestion();
-
-                //reRenderAccountsNoc();
             }
         }
 
@@ -597,7 +593,32 @@
                 $('#finalConfirmationNoCMCModal').modal('hide');
             });
         }
+
+        function checkSelectAllTimer() {
+            setTimeout(function() {
+                checkSelectAll();
+            }, 500);
+        }
+
     </script>
+
+    <apex:outputPanel id="correctHierarchy">
+        <script>
+            var selectedIATACodes = "{!previouslySelectedIATACodes}";
+
+            if (selectedIATACodes !== '') {
+                var hierarchy = $('[id$=hierarchyList]')[0].children[2].children;
+
+                for (var i = 0; i < hierarchy.length; i++) {
+                    if (~selectedIATACodes.indexOf(hierarchy[i].innerText.split('\t')[2])) {
+                        hierarchy[i].firstChild.children[0].checked = true;
+                    } else {
+                        hierarchy[i].firstChild.children[0].checked = false;
+                    }
+                }
+            }
+        </script>
+    </apex:outputPanel>
 
     <apex:outputPanel id="amscountrylabel">
         <script>
@@ -674,9 +695,10 @@
 
                             <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" oncomplete="populateLegalAndSeparateFields();" />
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
-                            <apex:actionFunction name="reRenderAccountsNoc" action="{!resetHierarchy}" reRender="branchaccountsel"/>
+                            <apex:actionFunction name="reRenderAccountsNoc" action="{!resetHierarchy}" status="blockEditing" oncomplete="reRenderBranchAccs();"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions, nocFormQuestions" oncomplete=""/>
                             <apex:actionFunction name="reRenderNocMessage" reRender="nocMessage"/>
+                            <apex:actionFunction name="reRenderBranchAccs" status="blockEditing" reRender="branchaccountsel, table, correctHierarchy" oncomplete=""/>
                             <apex:actionFunction name="selectAllAEs" action="{!doSelectAll}" status="blockEditing" reRender="table" />
                             <apex:actionFunction name="checkSelectAll" action="{!checkSelectAllAEs}" reRender="table" />
                             
@@ -841,7 +863,7 @@
                                                     <apex:facet name="header">
                                                         <apex:inputCheckbox value="{!selectAll}" onchange="selectAllAEs();"/>
                                                     </apex:facet>
-                                                    <apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}" onchange="checkSelectAll();"/>
+                                                    <apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}" onchange="checkSelectAllTimer();"/>
                                                 </apex:column>
 
                                                 <apex:column value="{!hi.acc['Name']}"/>

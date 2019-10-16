@@ -1526,10 +1526,6 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
 
-        if(newForm.Agency_Codes_Concerned__c != null) {
-            accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(',')).values();
-        }
-
         return getAccountOptions(accountList);
     }
 
@@ -8057,56 +8053,63 @@ system.debug('aqui sectorValue ' + sectorValue);
         return new Pagereference(pageURL);
     }
 
-    public Map<Id, HierarchyItem> hierarchy{
-        get{
-            if(hierarchy == null || hierarchy.isEmpty()) {
-                System.debug('rui1: ' + previouslySelectedIATACodes);
-                hierarchy = new Map<Id, HierarchyItem>();
+    public void populateHierarchy() {
+        hierarchy = new Map<Id, HierarchyItem>();
 
-                List<String> mcCountryIsos = new List<String>();
-                
-                for (SelectOption country: selectedCountryIsos) {
-                    mcCountryIsos.add(country.getValue());
-                }
-                
-                for(Account a : getBranchList(true)){
-                    branchAccountCount++;
-                
-                    if (isNoticeOfChange) {
-                        if (isMCAccredited) {
-                            if (!mcCountryIsos.contains(a.Country_ISO_Code__c)) {
-                                continue;
-                            }
-                        } else {
-                            if (a.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
-                                continue;
-                            }
-                        }
-                    }
-
-                    Boolean isSelected = false;
-
-                    if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
-                        isSelected = newForm.Agency_Codes_Concerned__c.contains(a.IATACode__c);
-                    }
-
-                    if (!String.isBlank(previouslySelectedIATACodes)) {
-                        isSelected = previouslySelectedIATACodes.contains(a.IATACode__c);
-                    }
-
-                    selectAll = isSelected || !selectAll;
-
-                    hierarchy.put(a.Id, new HierarchyItem(a, isSelected));
-                }                           
-            }
-            return hierarchy;
+        List<String> mcCountryIsos = new List<String>();
+        
+        for (SelectOption country: selectedCountryIsos) {
+            mcCountryIsos.add(country.getValue());
         }
+        
+        for(Account a : getBranchList(true)){
+            branchAccountCount++;
+        
+            if (isNoticeOfChange) {
+                if (isMCAccredited) {
+                    if (!mcCountryIsos.contains(a.Country_ISO_Code__c)) {
+                        continue;
+                    }
+                } else {
+                    if (a.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
+                        continue;
+                    }
+                }
+            }
+
+            Boolean isSelected = false;
+
+            if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
+                isSelected = newForm.Agency_Codes_Concerned__c.contains(a.IATACode__c);
+            }
+
+            if (!String.isBlank(previouslySelectedIATACodes)) {
+                isSelected = previouslySelectedIATACodes.contains(a.IATACode__c);
+            }
+
+            if (selectAll) {
+                selectAll = isSelected;
+            }
+
+            hierarchy.put(a.Id, new HierarchyItem(a, isSelected));
+        }                           
+    }
+
+    public Map<Id, HierarchyItem> hierarchy{
+        get;
         set;
     }
 
     public void checkSelectAllAEs() {
+        resetHierarchy();
+
+        selectAll = true;
+        
         for (String accountId: hierarchy.keySet()) {
-            selectAll = hierarchy.get(accountId).selected || !selectAll;
+            if (!hierarchy.get(accountId).selected) {
+                selectAll = false;
+                break;
+            }
         }
     }
 
@@ -8119,6 +8122,9 @@ system.debug('aqui sectorValue ' + sectorValue);
 
     public List<HierarchyItem> hierarchyValues{
         get {
+            if (hierarchy == null) {
+                populateHierarchy();
+            }
             return hierarchy.values();
         }
     }
@@ -8143,11 +8149,13 @@ system.debug('aqui sectorValue ' + sectorValue);
         }
 
         if (!String.isBlank(previouslySelectedIATACodes)) {
-            previouslySelectedIATACodes.removeEnd(', ');
+            previouslySelectedIATACodes = previouslySelectedIATACodes.removeEnd(',');
         }
 
         hierarchy = null;
         hierarchyValuesForDisplay = null;
+
+        populateHierarchy();
     }
     
     public Integer totalPages{
@@ -8192,16 +8200,13 @@ system.debug('aqui sectorValue ' + sectorValue);
         }
     }
 
-
     // ***********************************
     // ********* helper methods **********
     // ***********************************
 
     public void doSelectAll(){
-        System.debug('select all: ' + hierarchyValues);
         for(HierarchyItem hi : hierarchyValues){
             hi.selected = selectAll;
-            System.debug('sa: ' + hi.selected);
         }
     }
 
