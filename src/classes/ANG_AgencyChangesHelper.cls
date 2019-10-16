@@ -588,7 +588,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		AMS_OSCAR__c oldOSCAR = (AMS_OSCAR__c) Trigger.oldMap.get(oscar.Id);
 
-		AChangeStructure changesContainer = new AChangeStructure();
+		changesContainer = new AChangeStructure();
 
 		Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
 
