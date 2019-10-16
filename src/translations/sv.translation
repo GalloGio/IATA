@@ -1944,7 +1944,6 @@
         <label><!-- CSP_LogOut --></label>
         <name>CSP_LogOut</name>
     </customLabels>
-    </customLabels>
     <customLabels>
         <label><!-- CSP Lvl2 Reminder 1 --></label>
         <name>CSP_Lvl2_Reminder_1</name>
