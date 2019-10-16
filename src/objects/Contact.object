@@ -374,6 +374,15 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
+        <fields>
+            <fullName>Last_registration_notification_date__c</fullName>
+            <description>This field saves the lat day this contact was notified to finish the level 2 registration on CS Portal</description>
+            <externalId>false</externalId>
+            <label>Last registration notification date</label>
+            <required>false</required>
+            <trackHistory>false</trackHistory>
+            <type>Date</type>
+        </fields>
         <availableFields>
             <field>LastModifiedById</field>
             <isFieldManaged>false</isFieldManaged>
