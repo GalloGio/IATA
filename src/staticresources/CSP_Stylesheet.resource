@@ -1591,3 +1591,7 @@ visibility: hidden;
 .button_no_margin button{
     margin: -10px !important;
 }
+// Hides search icons from inputs in Edge and IE
+.searchBarBar input[type="text"]::-ms-clear {
+    display: none;
+}
