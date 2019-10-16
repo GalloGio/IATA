@@ -8065,7 +8065,11 @@ public without sharing class ISSP_AMS_Accreditation {
                         isSelected = previouslySelectedIATACodes.contains(a.IATACode__c);
                     }
 
-                    selectAll = isSelected || !selectAll;
+                    if (selectAll) {
+                        selectAll = isSelected;
+                    }
+
+                    System.debug('mega select all: ' + selectAll);
 
                     hierarchy.put(a.Id, new HierarchyItem(a, isSelected));
                 }                           
@@ -8076,8 +8080,15 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void checkSelectAllAEs() {
+        resetHierarchy();
+
+        selectAll = true;
+        
         for (String accountId: hierarchy.keySet()) {
-            selectAll = hierarchy.get(accountId).selected || !selectAll;
+            if (!hierarchy.get(accountId).selected) {
+                selectAll = false;
+                break;
+            }
         }
     }
 

@@ -597,6 +597,12 @@
                 $('#finalConfirmationNoCMCModal').modal('hide');
             });
         }
+
+        function checkSelectAllTimer() {
+            setTimeout(function() {
+                checkSelectAll();
+            }, 500);
+        }
     </script>
 
     <apex:outputPanel id="amscountrylabel">
@@ -674,9 +680,10 @@
 
                             <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" oncomplete="populateLegalAndSeparateFields();" />
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
-                            <apex:actionFunction name="reRenderAccountsNoc" action="{!resetHierarchy}" reRender="branchaccountsel"/>
+                            <apex:actionFunction name="reRenderAccountsNoc" action="{!resetHierarchy}" status="blockEditing" oncomplete="reRenderBranchAccs();"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions, nocFormQuestions" oncomplete=""/>
                             <apex:actionFunction name="reRenderNocMessage" reRender="nocMessage"/>
+                            <apex:actionFunction name="reRenderBranchAccs" status="blockEditing" reRender="branchaccountsel"/>
                             <apex:actionFunction name="selectAllAEs" action="{!doSelectAll}" status="blockEditing" reRender="table" />
                             <apex:actionFunction name="checkSelectAll" action="{!checkSelectAllAEs}" reRender="table" />
                             
@@ -841,7 +848,7 @@
                                                     <apex:facet name="header">
                                                         <apex:inputCheckbox value="{!selectAll}" onchange="selectAllAEs();"/>
                                                     </apex:facet>
-                                                    <apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}" onchange="checkSelectAll();"/>
+                                                    <apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}" onchange="checkSelectAllTimer();"/>
                                                 </apex:column>
 
                                                 <apex:column value="{!hi.acc['Name']}"/>
