@@ -333,10 +333,6 @@ export default class PortalLogin extends LightningElement {
         navigateToPage(this.labels.OneId_CSP_Troubleshooting_Link);
     }
 
-    handleNavigateToSelfRegisterIdentity(){
-        window.open('https://preprod-customer-portal-iata.cs109.force.com/identity/s/login/SelfRegister?language=en_US&serviceName=ISSP', "_self");
-    }
-
     /* ==============================================================================================================*/
     /* Helper Methods
     /* ==============================================================================================================*/

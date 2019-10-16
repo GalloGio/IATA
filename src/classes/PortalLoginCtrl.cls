@@ -106,11 +106,12 @@ public with sharing class PortalLoginCtrl {
             }
 
             //overrides to old portal
-            if(oldPortalRedirectSet.contains(oneUser.profile.Name) || oneUser.CNS_Account_or_Agency__c){
+            if(oldPortalRedirectSet.contains(oneUser.profile.Name)){
                 startUrl = OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Homepage');
-                if(oneUser.CNS_Account_or_Agency__c){
-                    startUrl += '?communityName=CNS';
-                }
+            }
+
+            if(oneUser.CNS_Account_or_Agency__c){
+                startUrl = OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Homepage/?communityName=CNS');
             }
 
             username=null != oneUser ? oneUser.Username : username;
