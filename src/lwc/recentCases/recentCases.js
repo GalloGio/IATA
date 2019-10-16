@@ -10,6 +10,7 @@ import CSP_RecentCases from '@salesforce/label/c.CSP_RecentCases';
 import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
 import CSP_RecentCases_Support from '@salesforce/label/c.CSP_RecentCases_Support';
 import CSP_RecentCases_HelpText from '@salesforce/label/c.CSP_RecentCases_HelpText';
+import CSP_RecentCases_HelpText2 from '@salesforce/label/c.CSP_RecentCases_HelpText2';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -18,7 +19,8 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         CSP_RecentCases,
         CSP_SeeAll,
         CSP_RecentCases_Support,
-        CSP_RecentCases_HelpText
+        CSP_RecentCases_HelpText,
+        CSP_RecentCases_HelpText2
     };
 
     @track data;
@@ -65,15 +67,16 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
                 this.cardBodyContent = "cardBodyContent";
                 this.rowHeight = "";
                 this.columns = [
-                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 137, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
+                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 137, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self',tooltip: {fieldName: 'CaseNumber'}} },
                     { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 130 },
-                    { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
+                    { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_self',tooltip:{fieldName: 'Subject'}}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
                     { label: results.Country_concerned__c, fieldName: 'Country', type: 'text' },
                     { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: { class: { fieldName: 'statusClass' } } }
                 ];
             } else {
                 this.title = this.label.CSP_RecentCases_Support;
                 this.helpText = this.label.CSP_RecentCases_HelpText;
+                this.helpText2 = this.label.CSP_RecentCases_HelpText2;
                 this.titleCss = "text-medium text-bold slds-align_absolute-center";
                 this.cardBodyContent = "cardBodyContentSmall";
                 this.rowHeight = "rowHeight";
@@ -110,6 +113,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
             this.loading = false;
         } else if (results.error) {
             this.loading = false;
+            if(this.specialCase) this.dispatchEvent(new CustomEvent('checkemptylist'));
         }
     }
 
@@ -126,6 +130,10 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         event.stopPropagation();
 
         navigateToPage(this.casesListUrl, {});
+    }
+
+    get tableClass(){
+        return this.specialCase?'slds-p-top_x-small':'';
     }
 
 }

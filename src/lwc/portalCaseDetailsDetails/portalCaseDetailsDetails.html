@@ -77,6 +77,33 @@
                             </span>
                         </div>
 			<!-- ROW 5 -->
+			<div if:true={optionBuilder}
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+                            <div if:true={optionBuilder.isSidraCase}>
+                                <span class="grey">{labels.Email}</span><br />
+                                <span> <lightning-formatted-email value={caseDetails.Contact.Email} ></lightning-formatted-email></span>
+                            </div>
+                        </div>
+
+                        <!-- ROW 7 -->
+                        <div if:true={optionBuilder}
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+                            <div if:true={optionBuilder.isSidraCase}>
+                                <span class="grey"> {labels.CSP_IATA_Country} </span><br />
+                                <span> {caseDetails.BSPCountry__c} </span>
+                            </div>
+                        </div>
+
+                        <!-- ROW 8 -->
+                        <div if:true={optionBuilder}
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
+                            <div if:true={optionBuilder.isSidraCase}>
+                                <div if:true={caseDetails.Update_AIMS_IRR__c}>
+                                    <span class="grey"> {labels.ISSP_SIDRA_Irregularity_Date} </span><br />
+                                    <span> <lightning-formatted-date-time value={caseDetails.Update_AIMS_IRR__c}></lightning-formatted-date-time></span>
+                                </div>
+                            </div>
+                        </div>
                         <div if:true={hasSurveyLink}
                              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
                             <span class="grey">{labels.ISSP_Survey}</span><br />

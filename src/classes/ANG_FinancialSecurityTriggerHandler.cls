@@ -89,19 +89,19 @@ public class ANG_FinancialSecurityTriggerHandler{
 	 * Fetch the given accounts and associated information records (RHC & Financial Securities)
 	 *
 	 * @param  accIdSet:         Set of account Ids associated with the financial securities
-	 * @param  fetchFromParents: Decides if the account query should fetch considering also the ParentId filter
+	 * @param  fetchFromParents: Decides if the account query should fetch considering also the Top_Parent__c filter
 	 * @return                   Returns the account records on an Map<Id, Account>
 	 */
 	private Map<Id, Account> fetchAccountsInformation(Set<Id> accIdSet, Boolean fetchFromParents){
 		Set<String> fsActiveStatus = ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET;
 		String accountsQuery = '' +
-			'SELECT Id, ParentId, ANG_isNewGenAgency__c, Location_Type__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.ANG_RHC_LocationType__c, ' +
+			'SELECT Id, Top_Parent__c, ANG_isNewGenAgency__c, Location_Type__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.ANG_RHC_LocationType__c, ' +
 			' (SELECT Id, CurrencyIsoCode FROM RHC_Informations__r), ' +
 			' (SELECT Id, Amount__c, Account__c, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, ANG_Minimum_Financial_Security__c, ANG_Financial_Security_Currency__c, ANG_isToUpdateRHC__c FROM Financial_Securities__r ORDER BY LastModifiedDate DESC) ' +
 			'FROM Account WHERE ( Id IN :accIdSet';
 
 		if(fetchFromParents){
-			accountsQuery += ' OR ParentId IN :accIdSet ';
+			accountsQuery += ' OR Top_Parent__c IN :accIdSet ';
 		}
 
 		accountsQuery += ')';
@@ -198,7 +198,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 			//the Total/Minimum Financial Security amounts calculations must consider
 			//financial security records from the entire hierarchy (not only HE's)
 			if(acct.IATA_ISO_Country__r.ANG_RHC_LocationType__c == 'Include all AEs'){
-				Id accId = acct.ParentId != NULL ? acct.ParentId : acct.Id;
+				Id accId = acct.Top_Parent__c != NULL ? acct.Top_Parent__c : acct.Id;
 				acctsToFetchAllHierarchy.add(accId);
 				includeAllAeFsLst.add(fs);
 			}
@@ -233,7 +233,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 				if(acct.Financial_Securities__r != NULL && acct.Financial_Securities__r.size() > 0){
 					
 					//If the current account has a parent means that we have to aggregate the amounts by the parent
-					Id accId = acct.ParentId != NULL ? acct.ParentId : acct.Id;
+					Id accId = acct.Top_Parent__c != NULL ? acct.Top_Parent__c : acct.Id;
 
 					//Sum all the financial security converted amounts and adds the resulting amount to the parent (if already exists on the map totalFsAmountAggregatedByParent)
 					processAggregatedAmountsByAccount(accId, totalFsAmountAggregatedByParent, ANG_Risk_Helper.sumFSConvertedAmounts(acct.Financial_Securities__r));
@@ -270,7 +270,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 				System.debug(LoggingLevel.FINE, '____ [cls ANG_FinancialSecurityTriggerHandler - calculateFinancialSecuritiesAmounts] totalFsAmountAggregatedByParent: ' + totalFsAmountAggregatedByParent);
 				for(Financial_Security__c fs : includeAllAeFsLst){
 					Account acct = this.accountsMap.get(fs.Account__c);
-					Id accId = acct.ParentId != NULL ? acct.ParentId : acct.Id;
+					Id accId = acct.Top_Parent__c != NULL ? acct.Top_Parent__c : acct.Id;
 					//Sets the total financial security amount on the related RHC considering the aggregated amount by head entity (parent)
 					setTotalFinancialSecurityAmountOnRHC(accId, accId + ANG_RHCHelper.RHC_INFO_STD_RT, totalFsAmountAggregatedByParent.get(accId));
 				}
@@ -306,7 +306,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 			//the Minimum Financial Security amount considers 
 			//the aggregated amounts for each head entity (parent)
 			if(acct.IATA_ISO_Country__r.ANG_RHC_LocationType__c == 'Include all AEs'){
-				Id accId = acct.ParentId != NULL ? acct.ParentId : acct.Id;
+				Id accId = acct.Top_Parent__c != NULL ? acct.Top_Parent__c : acct.Id;
 				String rhcKey = accId + ANG_RHCHelper.RHC_INFO_STD_RT;
 				setMinFinancialSecurityAmountOnRHC(accId, rhcKey, minFsAmountAggregatedByParent.get(accId));
 			}
@@ -381,14 +381,14 @@ public class ANG_FinancialSecurityTriggerHandler{
 	 * @param  rhcKey:   RHC unique key identifier (Account Id + RHC RecordTypeId) 
 	 * @param  fsAmount: Financial security amount to set
 	 */
-	private void setTotalFinancialSecurityAmountOnRHC(Id AccountID, String rhcKey, Decimal fsAmount){
+	private void setTotalFinancialSecurityAmountOnRHC(Id accountId, String rhcKey, Decimal fsAmount){
 		
 		ANG_RHC_Information__c rhcInfo = map2Insert.get(rhcKey);
 			
 		if(rhcInfo == NULL){
 			rhcInfo = new ANG_RHC_Information__c();
 			rhcInfo.ANG_UniqueKey__c = rhcKey;
-			rhcInfo.ANG_AccountId__c = AccountID;
+			rhcInfo.ANG_AccountId__c = accountId;
 		}
 
 		rhcInfo.ANG_Financial_Security__c = fsAmount;
@@ -421,7 +421,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 			if(accsMap.containsKey(String.valueOf(obj.get('Account__c'))))
 				fsToValidate.add(obj);
 		
-		AMS_Utils.runCurrencyValidations(fsToValidate);
+		AMS_Utils.runCurrencyValidations(fsToValidate, 'CurrencyIsoCode');
 	}
 
 	private void calculateTotalAmmount_Int008(){

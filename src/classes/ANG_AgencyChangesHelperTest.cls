@@ -1867,6 +1867,7 @@ public class ANG_AgencyChangesHelperTest {
 		oscar.Is_PCI_compliant__c = 'Yes';
 		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = 'Location type';
+		ANG_AgencyChangesHelper.isMigrationRunning = true;
 
 		update oscar;
 
@@ -2829,6 +2830,7 @@ public class ANG_AgencyChangesHelperTest {
         changeLocationTypeDiffLegalEnt.TCA_Sanity_check__c = 'CDL';
         changeLocationTypeDiffLegalEnt.TCA_Manager_approval__c = 'CDF';
         changeLocationTypeDiffLegalEnt.TCA_Application_withdrawal__c = 'CWD';
+        changeLocationTypeDiffLegalEnt.Valid_Accreditation_Models__c = 'ALL';
 
         insert new List<ANG_AgencyChangesConfig__c>{changeLocationTypeDiffLegalEnt};
 

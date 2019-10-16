@@ -22,11 +22,6 @@
                 return;
             }
 
-            if(financialReviewType == 'Multicountry Annual'){
-                alert('Error: It is not possible to notify the agent since the Financial Review Type is Multicountry Annual');
-                return;
-            }
-
             var remTemplate = "{!Case.EmailTemplate__c}";
         
             if(remTemplate != ""){

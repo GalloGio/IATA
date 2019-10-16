@@ -10,7 +10,7 @@
             <criteriaItems>
                 <field>Case.RecordType__c</field>
                 <operation>equals</operation>
-                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS)</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.Name</field>
@@ -4241,7 +4241,7 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>ICH_Help_Desk_ICH_General</assignedTo>
+            <assignedTo>ICH_Help_Desk_ICH_Finance</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -4279,7 +4279,7 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>ICH_Help_Desk_ICH_Membership</assignedTo>
+            <assignedTo>AirlineParticipationHeadOffice</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -6909,7 +6909,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <template>SIS_Help_Desk/SIS_Help_Desk_Case_Assignment</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>ICH_Help_Desk_ICH_General</assignedTo>
+            <assignedTo>ICH_Help_Desk_ICH_Finance</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -6972,7 +6972,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <template>SIS_Help_Desk/SIS_Help_Desk_Case_Assignment</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>ICH_Help_Desk_ICH_Membership</assignedTo>
+            <assignedTo>AirlineParticipationHeadOffice</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>

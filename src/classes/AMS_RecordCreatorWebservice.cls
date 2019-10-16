@@ -32,7 +32,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     private static String NEWNGLOBAL = 'ANG.NEW.GE.STANDARD.1.0';
     public static String CONVERT_TO_MC = 'ANG.CONVERT.ST.TO.MC';
 
-    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV, AMS_Utils.new_PASS_BR};
+    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV};
 
     public static Set<String> newgenChildProcess = new Set<String>{NEWNAE,MCAE}; 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
@@ -63,31 +63,35 @@ global without sharing class AMS_RecordCreatorWebservice {
                 throw new CalloutException('Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.');
                 //return 'Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.';
 
-            String realAccountId = fetchRealAccountId(typeOfProcess,accountId,caseId);
+            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Region_Formula__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
+
+            String realAccountId = fetchRealAccountId(typeOfProcess, accountId, cases);
 
             if(realAccountId == null){
                 //throw new CalloutException('For new BR Accounts, the communication case must have a concern account filled.');
                 realAccountId = accountId;
             }
 
-            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
-
             Id ownerId = null;
 
-            if(!cases.isEmpty() && !Test.isRunningTest()){
-                ownerId = cases.get(0).OwnerId;
+            if(!cases.isEmpty()){
+                Case cse = cases.get(0);
+
+                if(!Test.isRunningTest()){
+                    ownerId = cse.OwnerId;
+                }
+
+                if(cse.Origin == 'Portal' && (typeOfProcess == NEWNGLOBAL || typeOfProcess == MCAE || typeOfProcess == MAJOR_CHANGESNEWGEN_PV || typeOfProcess == CONVERT_TO_MC)){
+                    ownerId = AMS_OscarCaseTriggerHelper.fetchOscarRegionQueueId(cse.Account.Region_Formula__c);
+                }
             }
 
-
             if(typeOfProcess.equalsIgnoreCase(NEWCER_PV) && cases.get(0).Origin == 'Portal'){
-
                 String selectedAccount = cases.get(0).Account_Concerned__c;
                 oscarId = createOscar(selectedAccount,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId,accountId );
 
             } else {
-
                 oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId, accountId);
-
             }
 
             if(String.isBlank(oscarId))
@@ -153,17 +157,15 @@ global without sharing class AMS_RecordCreatorWebservice {
 		insert processDetailLst;
     }
 
-    private static String fetchRealAccountId(String typeOfProcess,String accountId,String caseId){
+    private static String fetchRealAccountId(String typeOfProcess, String accountId, List<Case> cases){
 
-        if(!(accountConcernedProcesses.contains(typeOfProcess.toUpperCase())))
+        if(!(accountConcernedProcesses.contains(typeOfProcess.toUpperCase()))){
             return accountId;
-
-        List<Case> cases = [SELECT Id, Account_Concerned__c from CASE where Id = :caseId LIMIT 1];
+        }
 
         if(!cases.isEmpty()){
                 System.debug('Changing the Account to the Account concerned. as the type of process is ' + typeOfProcess);
                 return cases.get(0).Account_Concerned__c;
-
         }else{
             System.debug('NOT Changing the Account as the type of process is ' + typeOfProcess);
         }
@@ -296,6 +298,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     }
 
+	@TestVisible
     private static String fetchOscarRecordType(String typeOfProcess){
 
         if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWGSA_PV) || typeOfProcess.equalsIgnoreCase(NEWAHA_PV) || typeOfProcess.equalsIgnoreCase(NEWMSO_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV))
@@ -421,7 +424,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             }
         }
 
-        Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWGESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.MCAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT};
+        Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWGESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.MCAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT, AMS_Utils.NGCONVERSIONTOMULTICOUNTRY};
         if(processesToUpdateCaseOnOscar.contains(processType)){
             oscar.Oscar_Communication_Case_Id__c = caseId;
         }

@@ -1,5 +1,4 @@
-<apex:page controller="ISSP_AMS_Accreditation" cache="false" 
-           sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" 
+<apex:page controller="ISSP_AMS_Accreditation" cache="false" sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false"
            standardStylesheets="false" language="{!displayLanguage}">
     <html>
         <c:ISSP_Header />
@@ -16,7 +15,8 @@
                 border-top: 1px solid #ddd;
             }
 
-            body, div.container {
+            body,
+            div.container {
                 background-color: rgb(240, 242, 245) !important;
             }
 
@@ -86,14 +86,28 @@
                 left: 50%;
             }
 
+            .customlink {
+                cursor: pointer;
+                color: #337ab7;
+            }
             .content-box {
                 box-shadow: 5px 5px 20px #e2e2e2;
                 background-color: white;
+                height: 100%;
             }
-            
             .content-box > .row {
                 padding-left: 15px;
                 padding-right: 15px;
+            }
+
+            .customlink:hover {
+                cursor: pointer;
+                color: #337ab7;
+                text-decoration: underline;
+            }
+            .mainRows{
+                display: flex;
+                flex-direction: row;
             }
 
             .padded-on-top {
@@ -344,9 +358,10 @@
                 <apex:actionFunction action="{!submitMultiCountryApplication}" name="submitMultiCountryApplication" status="loadStatusSpinner" rerender="other-forms, DraftCasespageblock, amsCasesMessage, ongoing-apps" oncomplete="reRenderAllSections();"/>
                 <apex:actionFunction action="{!discardMCApplication}" name="finalDiscardMCApplication" status="loadStatusSpinner" reRender="DraftCasespageblock, amsCasesMessage" oncomplete="reRenderAllSections();"/>
                     
-            <div class="" style="width: 100%">
-                    <div class="row">
-                        <section name="left-side-agency-accred" id="left-side-regular" class="col-md-7" style="min-height: 350px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCAccredited)), 'none', '')};">
+            <div class="container" style="width: 100%">
+                <div class="row mainRows">
+                    <section name="left-side-agency-accred" id="left-side-regular" class="col-md-7" style="min-height: 350px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCAccredited)), 'none', '')};">
+				<div class="content-box">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -354,13 +369,13 @@
                                 </div>
                             </header>
                                 
-                            <div class="row" style="padding-top: 20px">
-                                <div class="col-md-7">
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-md-12 padded-on-top">
                                         
                                 <!--<input type="button" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/>-->
-                                    <input type="button" style="display:{!IF(NOT(isHOAccredited),'','none')};" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Head_Entity, $Label.ISSP_AMS_Apply_New_Office))}"/>
+                                <input type="button" style="display:{!IF(NOT(isHOAccredited),'','none')};" class="iatabtn" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Head_Entity, $Label.ISSP_AMS_Apply_New_Office))}"/>
 
-                                    <input type="button" style="display:{!IF(isHOAccredited,'','none')};" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Associate_Entity, $Label.ISSP_AMS_Apply_New_Branch_Office)}"/>
+                                <input type="button" style="display:{!IF(isHOAccredited,'','none')};" class="iatabtn" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Associate_Entity, $Label.ISSP_AMS_Apply_New_Branch_Office)}"/>
 
                                 <br/>
                                         
@@ -414,7 +429,8 @@
                                     </apex:commandLink>
                                 </div>
                              </div>   
-                        </section>
+                </div>
+                    </section>
 
                         <section name="left-side-agency-accred-multicountry" id="left-side-mc" class="col-md-7" style="min-height: 350px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCAccredited)), '', 'none')};">
                             <header>
@@ -449,13 +465,13 @@
                                 
                             <div class="row bankDetails" style="padding-top: 20px">
                                 <div class="col-md-12" style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};">
-                                    <input type="button" class="btn btn_iata_primary" onClick="checkEligibility('true');return false;" value="{!$Label.ISSP_AMS_Step0_Change_Bank_Details}"/>
+                                    <input type="button" class="iatabtn btn btn_iata_primary" onClick="checkEligibility('true');return false;" value="{!$Label.ISSP_AMS_Step0_Change_Bank_Details}"/>
                                 </div>
                             </div>
                                     
                             <div class="row">
                                 <div class="col-md-12" style="padding-bottom: 10px; display:{!IF(agencyCategory != 'TIDS Agent','','none')};">
-                                    <apex:commandButton styleClass="btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}" disabled="{! revCaseOpen}"/><br/>
+                                    <apex:commandButton styleClass="iatabtn btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}" disabled="{! revCaseOpen}"/><br/>
                                     <div style="{!IF(!revCaseOpen, 'display:block', 'display:none')}">
                                     <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>
                                         
@@ -469,8 +485,8 @@
                         </section>
                     </div>
                     
-                    <div class="row">
-                        <section name="left-side-ongoing-apps" id="ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCAccredited)), 'none', '')}">
+                <div class="row mainRows">
+                    <section name="left-side-ongoing-apps" id="ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCAccredited)), 'none', '')}">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>

@@ -317,15 +317,15 @@ IF(ISBLANK(Email_Used_for_BSP_Creation__c),0,100),2)</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Authorized</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Non-Active</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Not Authorized</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Authorized</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -333,7 +333,8 @@ public without sharing class AMS_EBulletinReportHelper {
 
 		getEBulletinFields(filters, objectBaseQuery, csvFormat);
 
-		if(customFields.isHeaderCustomField(OWNERS)) customFields.ownersMap = getOwnersfromAACCAccounts(ccList);
+		if(customFields.isHeaderCustomField(OWNERS))
+			customFields.ownersMap = getOwnersfromAACCAccounts(ccList);
 
 		//Changes codes History Objects to print
 		//Map representing  Change Code ID => List<ChangeCodeChanges> from the AMS_Agency_A_Change_code_History__c
@@ -561,6 +562,7 @@ public without sharing class AMS_EBulletinReportHelper {
 	/** 
 		 Get EBulletin Settings with the Account / Oscar / Change Codes fields to be recovered 
 	*/
+	@TestVisible
     private static Map<ID,List<AMS_AccountRoleCreator.OwnerFieldsEntity>> getOwnersfromAACCAccounts(List <Agency_Applied_Change_code__c> ccList)
     {
         Set<ID> acctIDSet = getAccountIdsFromCC(ccList);
@@ -878,7 +880,8 @@ public without sharing class AMS_EBulletinReportHelper {
 	/** 
 		 Process Owners Info
 	*/
-	private static  List<AMS_AccountRoleCreator.OwnerFieldsEntity> decodeOwnersInfo(List<String> objValues)
+	@TestVisible
+	private static List<AMS_AccountRoleCreator.OwnerFieldsEntity> decodeOwnersInfo(List<String> objValues)
 	{
 					
 		Boolean removeHeader = true;

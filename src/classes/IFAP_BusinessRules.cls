@@ -190,7 +190,7 @@ public with sharing class IFAP_BusinessRules {
         System.debug('created cases : ' + cBatch.caseList);
     }
 
-    public static Map<ID, Boolean> IsStatusCanBeSelected(Boolean isOnCaseCreation, Map<Case, Case> UpdatedCases, Profile currentUserProfile, Boolean isAuthorizedUser) {
+        public static Map<ID, Boolean> IsStatusCanBeSelected(Boolean isOnCaseCreation, Map<Case, Case> UpdatedCases, Profile currentUserProfile, Boolean isAuthorizedUser) {
 
         Map<ID, Boolean> mapCaseStatusCanBeSelected = new Map<ID, Boolean>();
         Map<ID, Case> mapCaseActionNeeded = new Map<ID, Case>();
@@ -248,26 +248,28 @@ public with sharing class IFAP_BusinessRules {
                     }
                 }
 
-            if (caseStatus == CLOSEDOPTOUT || caseStatus == CLOSED_NON_COMPLIANCE)
-                return true;
-
-            if (caseStatus == AGENT_NOTIFIED_MAIL)
-                if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == AGENT_NOTIFIED_EMAIL || oldCaseStatus == AGENT_TO_BE_NOTIFIED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED)
-                    return true;
-
-            if (caseStatus ==  AGENT_TO_BE_NOTIFIED)
-                if (oldCaseStatus == ACTION_NEEDED)
-                    return true;
-
-            if (caseStatus == ASSESSMENT_PERFORMED) {
-                if (oldCaseStatus == QI_REJECTED)
-                    return true;
-
-                //special situation only for authorized users
-                if (isAuthorizedUser && (oldCaseStatus == REOPENED || oldCaseStatus == CLOSED))
-                    return true;
-
-            }
+                if (caseStatus == AGENT_NOTIFIED_MAIL)
+                    if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == AGENT_NOTIFIED_EMAIL || oldCaseStatus == AGENT_TO_BE_NOTIFIED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
+                    
+                if (caseStatus ==  AGENT_TO_BE_NOTIFIED)
+                    if (oldCaseStatus == ACTION_NEEDED){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
+                if (caseStatus == ASSESSMENT_PERFORMED) {
+                    if (oldCaseStatus == QI_REJECTED){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
+                    //special situation only for authorized users
+                    if (isAuthorizedUser && (oldCaseStatus == REOPENED || oldCaseStatus == CLOSED)){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
+                }
 
                 if (caseStatus == CLOSED){
                     //changing status to Closed is handled in the existing validation rule

@@ -40,7 +40,7 @@
             <div class="carousel__slide-wrapper">
               <h2 class="carousel__slide-text -heading">Global Systems Solution</h2>
               <p class="carousel__slide-text">Integrate and automate processes</p>
-              <a href="{!$Site.BaseUrl}/IECProductViewer?ProductCode={!sURLProdGSS}" class="carousel__slide-anchor customButton">Read more</a>
+              <a href="{!$Site.BaseRequestURL}/IECProductViewer?ProductCode={!sURLProdGSS}" class="carousel__slide-anchor customButton">Read more</a>
             </div>
            </div>
           </li>
@@ -50,7 +50,7 @@
             <div class="carousel__slide-wrapper">
               <h2 class="carousel__slide-text -heading">Marketing Data Package</h2>
               <p class="carousel__slide-text">Expand your distribution reach</p>
-              <a href="{!$Site.BaseUrl}/IECProductViewer?ProductCode={!sURLProdMDP}" class="carousel__slide-anchor customButton">Read more</a>
+              <a href="{!$Site.BaseRequestURL}/IECProductViewer?ProductCode={!sURLProdMDP}" class="carousel__slide-anchor customButton">Read more</a>
             </div>
            </div>
           </li>       
@@ -60,7 +60,7 @@
             <div class="carousel__slide-wrapper">
               <h2 class="carousel__slide-text -heading">Global Agency Directory</h2>
               <p class="carousel__slide-text">Locate qualified business partners</p>
-              <a href="{!$Site.BaseUrl}/IECProductViewer?ProductCode={!sURLProdGAD}" class="carousel__slide-anchor customButton">Read more</a>
+              <a href="{!$Site.BaseRequestURL}/IECProductViewer?ProductCode={!sURLProdGAD}" class="carousel__slide-anchor customButton">Read more</a>
             </div>
            </div>
           </li>
@@ -70,7 +70,7 @@
             <div class="carousel__slide-wrapper">
               <h2 class="carousel__slide-text -heading">CheckACode Professional</h2>
               <p class="carousel__slide-text">Validate IATA Codes online</p>
-              <a href="{!$Site.BaseUrl}/IECProductViewer?ProductCode={!sURLProdCACPro}" class="carousel__slide-anchor customButton">Read more</a>
+              <a href="{!$Site.BaseRequestURL}/IECProductViewer?ProductCode={!sURLProdCACPro}" class="carousel__slide-anchor customButton">Read more</a>
             </div>
            </div>
           </li> 
@@ -139,7 +139,7 @@ $(function() {
                         </apex:outputpanel>
                         <apex:outputpanel id="panelAccessEBro" layout="none" rendered="{!bProdAccessEBro}">
                             <li class="available-services__item">
-                                <a href="#"><img class="available-services__icon" src="{!$Site.BaseUrl}{!URLFOR($Resource.IECStyles,'img/')}mdp_mini.gif"/><h3 style="color :white;">E-Broadcast</h3></a>
+                                <a href="#"><img class="available-services__icon" src="{!$Site.BaseRequestURL}{!URLFOR($Resource.IECStyles,'img/')}mdp_mini.gif"/><h3 style="color :white;">E-Broadcast</h3></a>
                               <apex:commandLink action="{!NavigateTo}">
                                 <img class="available-services__icon" src="{!URLFOR($Resource.IECStyles,'img/')}mdp_mini.gif"/><h3 style="color :white;">E-Broadcast</h3>
                                 <apex:param name="sPageName" value="IECEBC_Dashboard" assignTo="{!sPageName}"/>
@@ -272,7 +272,7 @@ CACW end -->
             <div class="tab-container__text-area">
                 <h2 class="tab-container__text -heading">CheckACode Professional</h2>
                 <p class="tab-container__text">Online application enabling manual validation of IATA Numeric Codes and IATA/IATAN ID Cards.<br/>Protect your company revenue in a quick and efficient manner.</p>
-                <a href="{!$Site.BaseUrl}/IECProductViewer?ProductCode={!sURLProdCACPro}" class="tab-container__anchor customButton">Read more</a>
+                <a href="{!$Site.BaseRequestURL}/IECProductViewer?ProductCode={!sURLProdCACPro}" class="tab-container__anchor customButton">Read more</a>
             </div>
             <div class="tab-container__image-area">
                 <img src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc1.png" alt="CheckACode Professional" />
@@ -284,7 +284,7 @@ CACW end -->
             <div class="tab-container__text-area">
                 <h2 class="tab-container__text -heading">Global Agency Directory</h2>
                 <p class="tab-container__text">Online interactive application with access to the IATA agency database.<br/>Perform custom searches and locate potential business partners worldwide.</p>
-                <a href="{!$Site.BaseUrl}/IECProductViewer?ProductCode={!sURLProdGAD}" class="tab-container__anchor  customButton">Read more</a>
+                <a href="{!$Site.BaseRequestURL}/IECProductViewer?ProductCode={!sURLProdGAD}" class="tab-container__anchor  customButton">Read more</a>
             </div>
             <div class="tab-container__image-area">
                 <img src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc3.png" alt="Global Agency Directory" />
@@ -296,7 +296,7 @@ CACW end -->
             <div class="tab-container__text-area">
                 <h2 class="tab-container__text -heading">Marketing Data Package</h2>
                 <p class="tab-container__text">Subset of the IATA travel agency database delivered electronically in Excel&reg; format.<br/>Expand your reach through marketing and brand differentiation.</p>
-                <a href="{!$Site.BaseUrl}/IECProductViewer?ProductCode={!sURLProdMDP}" class="tab-container__anchor  customButton">Read more</a>
+                <a href="{!$Site.BaseRequestURL}/IECProductViewer?ProductCode={!sURLProdMDP}" class="tab-container__anchor  customButton">Read more</a>
             </div>
             <div class="tab-container__image-area">
                 <img src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc4.png" alt="Marketing Data Package" />
@@ -307,7 +307,7 @@ CACW end -->
             <div class="tab-container__text-area">
                 <h2 class="tab-container__text -heading">Global Systems Solutions</h2>
                 <p class="tab-container__text">Complete database of IATA agencies with ongoing updates designed for system integration.<br/>Radically improve your operational efficiency and productivity.</p>
-                <a href="{!$Site.BaseUrl}/IECProductViewer?ProductCode={!sURLProdGSS}" class="tab-container__anchor  customButton">Read more</a>
+                <a href="{!$Site.BaseRequestURL}/IECProductViewer?ProductCode={!sURLProdGSS}" class="tab-container__anchor  customButton">Read more</a>
             </div>
             <div class="tab-container__image-area">
                 <img src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc5.png" alt="Global Systems Solutions" />
@@ -338,7 +338,7 @@ CACW end -->
         </div>
       
        <h2 class="callout-banner__header">See What <br/><span>Global Data Products</span><br/> can bring you</h2>
-        <a class="customButton" href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sURLProdMDP}">Find out more</a>
+        <a class="customButton" href="{!$Site.BaseRequestURL}/IEC_SearchResults?site-search={!sURLProdMDP}">Find out more</a>
       
       
       <!-- 
@@ -367,7 +367,7 @@ CACW end -->
           <img class="block2" src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc2.png" />
         </div>
         <h2 class="callout-banner__header"><span>Interactive Statistics</span><br/>IATA agencies on maps and charts</h2>
-        <a class="customButton" href="{!$Site.BaseUrl}/IECGADMaps" style="width:95px;">View now</a>
+        <a class="customButton" href="{!$Site.BaseRequestURL}/IECGADMaps" style="width:95px;">View now</a>
       </div>
     </div>
   </div>

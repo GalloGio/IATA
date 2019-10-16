@@ -13,6 +13,7 @@ private class ANG_OSCARNewGenTest {
         update oscar;
 		oscar.STEP34__c = AMS_Utils.PASSED;
 		oscar.STEP35__c = AMS_Utils.PASSED;
+		oscar.Bank_Guarantee_Requested__c = Date.today();
         update oscar;
         oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;

@@ -138,7 +138,8 @@ public class AMS_OscarCaseTriggerHelper {
         if(oscarCases.isEmpty()) return;
 
         List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
-        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c, process__c
+        //WMO-564 copy case reason to oscar 
+        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c, Case_Reason__c  
                                                                    FROM AMS_OSCAR__c WHERE Id = :oscarIds]);
 
         for(Case c : oscarCases){
@@ -158,7 +159,12 @@ public class AMS_OscarCaseTriggerHelper {
 
                 changed = true;
             }
-
+            //WMO-564
+            if(oscar.Case_Reason__c != c.Reason1__c) {
+                oscar.Case_Reason__c = c.Reason1__c;
+                CaseProcessTypeHelper.populateOSCARAccProcess(oscar);
+                changed = true;
+            }
             if(oscar.BusinessHours__c != c.BusinessHoursId){
                 oscar.BusinessHours__c = c.BusinessHoursId;
                 changed = true;
@@ -198,31 +204,44 @@ public class AMS_OscarCaseTriggerHelper {
 
             String region = ag.Region_formula__c;
 
-            if(String.isBlank(region)) continue;
+            Id oscarQueueId = fetchOscarRegionQueueId(region);
 
-            if(region.contains('Americas')){
-                oscar.OwnerId = queues.get('AgencyManagementAmericas').Id;
-                System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - assignOscarToRegionQueue] Oscar assigned to Americas queue.');
+            if(oscarQueueId != NULL){
+                oscar.OwnerId = oscarQueueId;
             }
-            else if(region.contains('Europe')){
-                oscar.OwnerId = queues.get('CasesACCEuropeOffOnshore').Id;
-                System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - assignOscarToRegionQueue] Oscar assigned to Europe queue.');
-            }
-            else if(region.contains('China')){
-                oscar.OwnerId = queues.get('AgencyManagementChinaNAsia').Id;
-                System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - assignOscarToRegionQueue] Oscar assigned to China queue.');
-            }
-            else if(region.contains('Africa')){
-                oscar.OwnerId = queues.get('AgencyManagementAfricaME').Id;
-                System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - assignOscarToRegionQueue] Oscar assigned to Africa queue.');
-            }
-            else if(region.contains('Asia')){
-                oscar.OwnerId = queues.get('AgencyManagementAP').Id;
-                System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - assignOscarToRegionQueue] Oscar assigned to Asia queue.');
-            }
+
         }
     }
 
+    public static Id fetchOscarRegionQueueId(String region){
+
+        if(String.isBlank(region)){
+            return null;
+        }
+
+        if(region.contains('Americas')){
+            System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - fetchOscarRegionQueueId] Oscar assigned to Americas queue.');
+            return queues.get('AgencyManagementAmericas').Id;
+        }
+        if(region.contains('Europe')){
+            System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - fetchOscarRegionQueueId] Oscar assigned to Europe queue.');
+            return queues.get('CasesACCEuropeOffOnshore').Id;
+        }
+        if(region.contains('China')){
+            System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - fetchOscarRegionQueueId] Oscar assigned to China queue.');
+            return queues.get('AgencyManagementChinaNAsia').Id;
+        }
+        if(region.contains('Africa')){
+            System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - fetchOscarRegionQueueId] Oscar assigned to Africa queue.');
+            return queues.get('AgencyManagementAfricaME').Id;
+        }
+        if(region.contains('Asia')){
+            System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - fetchOscarRegionQueueId] Oscar assigned to Asia queue.');
+            return queues.get('AgencyManagementAP').Id;
+        }
+
+        return null;
+    }
 
     //All cases having a parent which has Record Type OSCAR Communication must have the OSCAR field automaticaly populated
     /*public static void fillOSCARLookup(list<Case> triggerNew){

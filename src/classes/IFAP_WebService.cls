@@ -299,8 +299,7 @@ global class IFAP_WebService {
                     (SELECT
                         Id,
                         ANG_Limit_Cash_Conditions__c
-                     FROM
-                        Location_Risk_Events__r
+                     FROM Location_Risk_Events__r
                      WHERE
                         ANG_Risk_Type__r.Name = 'Fail Financial Statements'
                      AND
@@ -315,19 +314,16 @@ global class IFAP_WebService {
 						FA_Second_Deadline_Date__c,
 						Financial_Review_Result__c,
 						Assessment_Performed_Date__c
-					FROM 
-						Cases 
+					FROM Cases 
 					WHERE 
 						Id = :caseId
 					),
 					(SELECT 
 						Id, 
 						Security_Status__c 
-					FROM 
-						Financial_Securities__r
+					FROM Financial_Securities__r
 					)
-				FROM 
-					Account 
+				FROM Account 
 				WHERE 
 					Id = :accountId
 				LIMIT 1

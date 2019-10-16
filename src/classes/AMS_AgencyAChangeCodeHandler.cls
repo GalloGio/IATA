@@ -229,6 +229,19 @@ public class AMS_AgencyAChangeCodeHandler {
 
                         mapAccntToUpdate.get(acc.Id).Reason__c = sReason;
                         mapAccntToUpdate.get(acc.Id).Previous_Reason__c = sAccntReason;
+
+                        if(ANG_AgencyChangesHelper.changesContainer <> null){ // TR18-150 - use the Map for NEWGEN Changes to store the changes in the account, which will be updated a step forward in the process.
+
+                            Account acctToUpdate = ANG_AgencyChangesHelper.changesContainer.accountsMap.get(acc.Id);
+
+                            if(acctToUpdate == null){
+                                acctToUpdate = mapAccntToUpdate.get(acc.Id);
+                                ANG_AgencyChangesHelper.changesContainer.addAccount(acctToUpdate);
+                            }else{
+                                acctToUpdate.Reason__c = mapAccntToUpdate.get(acc.Id).Reason__c;
+                                acctToUpdate.Previous_Reason__c = mapAccntToUpdate.get(acc.Id).Previous_Reason__c;
+                            } 
+                        }
 	    			}
     			}
     		}
@@ -245,14 +258,32 @@ public class AMS_AgencyAChangeCodeHandler {
                         mapAccntToUpdate.get(acc.Id).Date_Organisation_Status_attained__c = Date.Today();
                         mapAccntToUpdate.get(acc.Id).Status__c = sStatus;
                         mapAccntToUpdate.get(acc.Id).PreviousStatus__c = sAccntStatus;
+
+                        if(ANG_AgencyChangesHelper.changesContainer <> null){
+                                acc = ANG_AgencyChangesHelper.changesContainer.accountsMap.get(acc.Id);
+
+                            if(acc == null){
+                                ANG_AgencyChangesHelper.changesContainer.addAccount(mapAccntToUpdate.get(acc.Id));
+                            }else {
+                                acc.Date_Organisation_Status_attained__c = mapAccntToUpdate.get(acc.Id).Date_Organisation_Status_attained__c;
+                                acc.Status__c = mapAccntToUpdate.get(acc.Id).Status__c;
+                                acc.PreviousStatus__c = mapAccntToUpdate.get(acc.Id).PreviousStatus__c;
+                            }
+                        }
 	    			}
     			}
     		}
     	}
 
-        if(!mapAccntToUpdate.isEmpty()){
+        if(!mapAccntToUpdate.isEmpty() && ANG_AgencyChangesHelper.changesContainer == null){
+            System.debug('[AMS_AgencyAChangeCodeHandler] Preparing to update ' + mapAccntToUpdate.size() + ' accounts.');
             update mapAccntToUpdate.values();
 
+            mapAccntToUpdate = new Map<Id, Account>();
+        }
+
+        if(ANG_AgencyChangesHelper.changesContainer <> null){
+            System.debug('[AMS_AgencyAChangeCodeHandler] Post updating ' + mapAccntToUpdate.size() + ' accounts.');
             mapAccntToUpdate = new Map<Id, Account>();
         }
     }
