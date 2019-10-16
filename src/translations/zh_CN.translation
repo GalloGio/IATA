@@ -1889,6 +1889,10 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>国际航空运输协会 (IATA) 客户电子邮件确认</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>您的{0}访问请求已发送给门户网站管理员。如果您对此过程有任何疑问或要求，可以联系以下管理员：</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
@@ -1913,7 +1917,7 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
-        <label>尊敬的</label>
+        <label>尊敬的用户</label>
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
@@ -2001,7 +2005,7 @@
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;带我到门户网站！&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;带我到门户网站！&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
@@ -2333,6 +2337,10 @@
         <name>CSP_Reset_Password</name>
     </customLabels>
     <customLabels>
+        <label>重置您的 国际航空运输协会 (IATA) 客户门户密码</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>请输入新密码。</label>
         <name>CSP_Reset_Password_Info_1</name>
     </customLabels>
@@ -2595,6 +2603,10 @@
     <customLabels>
         <label>发生意外错误！</label>
         <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>欢迎使用 国际航空运输协会 (IATA) 客户门户</label>
+        <name>CSP_Welcome_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>直接访问 60 多种特地为您准备的 IATA 服务。</label>

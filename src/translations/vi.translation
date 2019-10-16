@@ -1891,6 +1891,10 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>Thư xác nhận Địa chỉ Email Cổng thông tin Chăm sóc Khách hàng của IATA</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>&quot;Yêu cầu truy cập {0} của bạn đã được gửi tới quản trị viên cổng thông tin. Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu nào về quy trình, bạn có thể liên hệ với quản trị viên bên dưới:&quot;</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
@@ -1915,7 +1919,7 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
-        <label>Kính chào quý khách,</label>
+        <label>Kính chào quý khách</label>
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
@@ -2003,7 +2007,7 @@
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;Đưa tôi đến Cổng thông tin!&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Đưa tôi đến Cổng thông tin!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
@@ -2335,6 +2339,10 @@
         <name>CSP_Reset_Password</name>
     </customLabels>
     <customLabels>
+        <label>Đặt lại mật khẩu của quý khách cho Cổng thông tin Chăm sóc Khách hàng IATA</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Xin quý khách vui lòng nhập mật khẩu mới của mình.</label>
         <name>CSP_Reset_Password_Info_1</name>
     </customLabels>
@@ -2597,6 +2605,10 @@
     <customLabels>
         <label>Một lỗi kỹ thuật không ngờ đã xảy ra!</label>
         <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Chào mừng quý khách đến với Cổng thông tin Chăm sóc Khách hàng của IATA</label>
+        <name>CSP_Welcome_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>Truy cập trực tiếp hơn 60 dịch vụ IATA, được lựa chọn đặc biệt cho bạn.</label>

@@ -1892,6 +1892,10 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>IATAカスタマーポータルのメールでの確認</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>{0}アクセスのリクエストがポータル管理者に配信されました。プロセスについてご質問やご要望がございましたら、以下の管理者までご連絡ください。</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
@@ -1916,7 +1920,7 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
-        <label>こんにちは。</label>
+        <label>こんにちは</label>
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
@@ -2004,7 +2008,7 @@
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;ポータルに連れて行ってください&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;ポータルに連れて行ってください&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
@@ -2337,6 +2341,10 @@
         <name>CSP_Reset_Password</name>
     </customLabels>
     <customLabels>
+        <label>IATAカスタマーポータルのパスワードをリセットする</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>新しいパスワードを入力してください。</label>
         <name>CSP_Reset_Password_Info_1</name>
     </customLabels>
@@ -2599,6 +2607,10 @@
     <customLabels>
         <label>予期せぬエラーが発生しました。</label>
         <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルへようこそ</label>
+        <name>CSP_Welcome_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>お客様の為に特別に選択された、60を超えるIATAサービスに直接アクセスすることが出来ます。</label>

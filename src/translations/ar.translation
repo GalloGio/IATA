@@ -1841,15 +1841,15 @@
         <name>CSP_Change_Password</name>
     </customLabels>
     <customLabels>
-        <label>لم نتمكن من تعيين كلمة مروركم الجديدة.</label>
+        <label>.لم نتمكن من تعيين كلمة مروركم الجديدة</label>
         <name>CSP_Change_Password_Error</name>
     </customLabels>
     <customLabels>
-        <label>الرجاء إدخال كلمة المرور الحالية، ثم تعيين كلمة مرور جديدة وتأكيدها.</label>
+        <label>.الرجاء إدخال كلمة المرور الحالية، ثم تعيين كلمة مرور جديدة وتأكيدها</label>
         <name>CSP_Change_Password_Info_1</name>
     </customLabels>
     <customLabels>
-        <label>يجب أن تحتوي كلمة المرور على 10 أحرف أو أكثر بما في ذلك حرف كبير واحد على الأقل ورقم ورمز (! @ # $٪ * () _ + ^ &amp;)</label>
+        <label>(&amp; ^ + _ () * %$ # @ !) يجب أن تحتوي كلمة المرور على 10 أحرف أو أكثر بما في ذلك حرف كبير واحد على الأقل ورقم ورمز</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
@@ -1857,11 +1857,11 @@
         <name>CSP_Check_Email</name>
     </customLabels>
     <customLabels>
-        <label>تم تعيين كلمة المرور بنجاح.</label>
+        <label>.تم تعيين كلمة المرور بنجاح</label>
         <name>CSP_Chg_Pass_Success_Msg_1</name>
     </customLabels>
     <customLabels>
-        <label>يمكنكم استخدام كلمة المرور الجديدة لتسجيل الدخول.</label>
+        <label>.يمكنكم استخدام كلمة المرور الجديدة لتسجيل الدخول</label>
         <name>CSP_Chg_Pass_Success_Msg_2</name>
     </customLabels>
     <customLabels>
@@ -1889,6 +1889,10 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>تأكيد البريد الإلكتروني في بوابة عملاء إياتا</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>تم إيصال طلب تمكين وصولكم ل {0} إلى مسؤولي البوابة. إذا كان لديكم أي أسئلة أو طلبات تتعلق بهذه العملية ، فيمكنكم التواصل مع أحد المسؤولين أدناه:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
@@ -1897,7 +1901,7 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
-        <label>هل أنتم جديدون في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA) ؟</label>
+        <label>؟(IATA - هل أنتم جديدون في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
@@ -1909,11 +1913,11 @@
         <name>CSP_Create_Password</name>
     </customLabels>
     <customLabels>
-        <label>لم نتمكن من تعيين كلمة مروركم الجديدة. الرجاء المحاولة مرة أخرى.</label>
+        <label>.لم نتمكن من تعيين كلمة مروركم الجديدة. الرجاء المحاولة مرة أخرى</label>
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
-        <label>عميلنا العزيز،</label>
+        <label>عميلنا العزيز</label>
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
@@ -1945,7 +1949,7 @@
         <name>CSP_Email</name>
     </customLabels>
     <customLabels>
-        <label>شكرًا لك على التسجيل في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA). أنت على بعد خطوة واحدة فقط للدخول!</label>
+        <label>.أنت على بعد خطوة واحدة فقط للدخول .(IATA - شكرًا لك على التسجيل في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
@@ -1953,7 +1957,7 @@
         <name>CSP_Email_Confirmation_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>لأسباب أمنية ، هذا الرابط صالح لمدة 8 ساعات. بعد انتهاء الوقت المحدد ، يجب عليك إعادة تقديم طلبك.</label>
+        <label>.لأسباب أمنية، هذا الرابط صالح لمدة 8 ساعات. بعد انتهاء الوقت المحدد، يجب عليك إعادة تقديم طلبك</label>
         <name>CSP_Email_Confirmation_Body_Part_3</name>
     </customLabels>
     <customLabels>
@@ -1969,7 +1973,7 @@
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
-        <label>لقد تلقينا طلبك لإعادة تعيين كلمة المرور الخاصة بك في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA).</label>
+        <label>.(IATA - لقد تلقينا طلبك لإعادة تعيين كلمة المرور الخاصة بك في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
     <customLabels>
@@ -1977,31 +1981,31 @@
         <name>CSP_Email_Password_Reset_Body_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>لتعيين كلمة مرور جديدة.</label>
+        <label>.لتعيين كلمة مرور جديدة</label>
         <name>CSP_Email_Password_Reset_Body_Part_3</name>
     </customLabels>
     <customLabels>
-        <label>لأسباب أمنية ، هذا الرابط صالح لمدة 8 ساعات. بعد انتهاء الوقت المحدد ، يجب عليك إعادة تقديم طلبك.</label>
+        <label>.لأسباب أمنية ، هذا الرابط صالح لمدة 8 ساعات. بعد انتهاء الوقت المحدد ، يجب عليك إعادة تقديم طلبك</label>
         <name>CSP_Email_Password_Reset_Body_Part_4</name>
     </customLabels>
     <customLabels>
-        <label>شكراً لكونكم جزء من الاتحاد الدولي للنقل الجوي (إياتا - IATA).</label>
+        <label>.(IATA - شكراً لكونكم جزء من الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Signature Part 2 --></label>
+        <label>(IATA - الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_Email_Signature_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>يسعدنا أن تكون معنا في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA)!</label>
+        <label>!(IATA - يسعدنا أن تكون معنا في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_Email_Welcome_Part_1</name>
     </customLabels>
     <customLabels>
-        <label>بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA) بها الكثير من الخدمات المفيدة ، ومعلومات المنتج ، ونصائح وأساليب مفيدة معدَّة خصيصا لك. يمكنك استخدامها للتواصل مع فريق خدمة العملاء لدينا بسهولة ، بما في ذلك الدردشة الحية أو الشراء مباشرة من متجرنا على الإنترنت. انها بوابتك إلى الاتحاد الدولي للنقل الجوي (إياتا - IATA)!</label>
+        <label>!(بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا) بها الكثير من الخدمات المفيدة، ومعلومات المنتج، ونصائح وأساليب مفيدة معدَّة خصيصا لك. يمكنك استخدامها للتواصل مع فريق خدمة العملاء لدينا بسهولة، بما في ذلك الدردشة الحية أو الشراء مباشرة من متجرنا على الإنترنت. انها بوابتك إلى الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;إنتقل إلى البوابة!&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;!إنتقل إلى البوابة&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
@@ -2009,27 +2013,27 @@
         <name>CSP_Email_Welcome_Part_4</name>
     </customLabels>
     <customLabels>
-        <label>نأمل أن تستمتعوا معنا باستخدام بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA)!</label>
+        <label>!(IATA - نأمل أن تستمتعوا معنا باستخدام بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
-        <label>يبدو أن لديكم بالفعل حساب مستخدم للبوابة. يرجى تسجيل الدخول باستخدام كلمة المرور الخاصة بكم.</label>
+        <label>.يبدو أن لديكم بالفعل حساب مستخدم للبوابة. يرجى تسجيل الدخول باستخدام كلمة المرور الخاصة بكم</label>
         <name>CSP_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>يرجى التحقق من بريدكم الإلكتروني والنقر على رابط إنشاء كلمة المرور.</label>
+        <label>.يرجى التحقق من بريدكم الإلكتروني والنقر على رابط إنشاء كلمة المرور</label>
         <name>CSP_Expired_Email_Success_Msg</name>
     </customLabels>
     <customLabels>
-        <label>انتهت صلاحية رابط التحقق.</label>
+        <label>.انتهت صلاحية رابط التحقق</label>
         <name>CSP_Expired_Link_Msg_1</name>
     </customLabels>
     <customLabels>
-        <label>لأسباب أمنية، تنتهي صلاحية رابط التحقق بعد 8 ساعات.</label>
+        <label>.لأسباب أمنية، تنتهي صلاحية رابط التحقق بعد 8 ساعات</label>
         <name>CSP_Expired_Link_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>يرجى التحقق من بريدكم الإلكتروني والنقر على رابط إنشاء كلمة المرور.</label>
+        <label>.يرجى التحقق من بريدكم الإلكتروني والنقر على رابط إنشاء كلمة المرور</label>
         <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
@@ -2081,7 +2085,7 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
-        <label>تم إنشاء حسابكم بنجاح! يمكنكم الآن اكتشاف ميزات بوابتنا. للمزيد من المحتوى المخصص، يرجى إكمال ملفكم الشخصي.</label>
+        <label>.تم إنشاء حسابكم بنجاح! يمكنكم الآن اكتشاف ميزات بوابتنا. للمزيد من المحتوى المخصص، يرجى إكمال ملفكم الشخصي</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
@@ -2097,15 +2101,15 @@
         <name>CSP_Forgot_Password</name>
     </customLabels>
     <customLabels>
-        <label>يبدو أنه ليس لدينا مستخدم مسجل لعنوان بريدكم الإلكتروني. يمكنكم إنشاء حساب جديد بسهولة.</label>
+        <label>.يبدو أنه ليس لدينا مستخدم مسجل لعنوان بريدكم الإلكتروني. يمكنكم إنشاء حساب جديد بسهولة</label>
         <name>CSP_Forgot_Password_Error_Message</name>
     </customLabels>
     <customLabels>
-        <label>يرجى إدخال عنوان بريدكم الإلكتروني المسجل لإعادة تعيين كلمة المرور الخاصة بكم. سنرسل لكم رابط إعادة التعيين إلى بريدكم الإلكتروني.</label>
+        <label>.يرجى إدخال عنوان بريدكم الإلكتروني المسجل لإعادة تعيين كلمة المرور الخاصة بكم. سنرسل لكم رابط إعادة التعيين إلى بريدكم الإلكتروني</label>
         <name>CSP_Forgot_Password_Info</name>
     </customLabels>
     <customLabels>
-        <label>الرجاء التحقق من مجلد البريد العشوائي الخاص بكم أولاً. إذا لم تتمكنوا من العثور على أي شيء في مجلد البريد العشوائي، فيُرجى محاولة إعادة تعيين كلمة المرور مرة أخرى بالنقر فوق &quot;حاول مجدداً&quot;.</label>
+        <label>.&quot;الرجاء التحقق من مجلد البريد العشوائي الخاص بكم أولاً. إذا لم تتمكنوا من العثور على أي شيء في مجلد البريد العشوائي، فيُرجى محاولة إعادة تعيين كلمة المرور مرة أخرى بالنقر فوق &quot;حاول مجدداً</label>
         <name>CSP_Forgot_Password_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2117,7 +2121,7 @@
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>نظرًا لأنكم لم تقوموا بتسجيل الدخول في آخر 90 يوماً ، فقد أرسلنا لكم رسالة بريد إلكتروني تحتوي كلمة مرور جديدة.</label>
+        <label>.نظرًا لأنكم لم تقوموا بتسجيل الدخول في آخر 90 يوماً ، فقد أرسلنا لكم رسالة بريد إلكتروني تحتوي كلمة مرور جديدة</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -2249,7 +2253,7 @@
         <name>CSP_Password_Rule_3</name>
     </customLabels>
     <customLabels>
-        <label>رمز واحد على الأقل (! @ # $٪ * () _ + ^ &amp;)</label>
+        <label>(&amp; ^ + _ () * %$ # @ !) رمز واحد على الأقل</label>
         <name>CSP_Password_Rule_4</name>
     </customLabels>
     <customLabels>
@@ -2265,7 +2269,7 @@
         <name>CSP_PortalPath</name>
     </customLabels>
     <customLabels>
-        <label>تسجيل الدخول للبوابة معطل حالياً. شكرًا على تفهمكم!</label>
+        <label>!تسجيل الدخول للبوابة معطل حالياً. شكرًا على تفهمكم</label>
         <name>CSP_Portal_Login_Disabled_Message</name>
     </customLabels>
     <customLabels>
@@ -2273,7 +2277,7 @@
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
-        <label>أوافق على &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;سياسة الخصوصية&lt;/a&gt; و &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;شروط الاستخدام&lt;/a&gt; الخاصة بالاتحاد الدولي للنقل الجوي (إياتا - IATA)</label>
+        <label>.الخاصة بالاتحاد الدولي للنقل الجوي &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;شروط الاستخدام&lt;/a&gt;و &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;سياسة الخصوصية&lt;/a&gt; أوافق على</label>
         <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
@@ -2301,11 +2305,11 @@
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
-        <label>قوموا بإكمال عملية التسجيل الأساسية للانضمام إلى بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA).</label>
+        <label>.(IATA - قوموا بإكمال عملية التسجيل الأساسية للانضمام إلى بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_Registration_Description</name>
     </customLabels>
     <customLabels>
-        <label>تم تعطيل تسجيل البوابة حاليًا. شكرًا لكم على تفهمكم!</label>
+        <label>!تم تعطيل تسجيل البوابة حاليًا. شكرًا لكم على تفهمكم</label>
         <name>CSP_Registration_Disabled_Message</name>
     </customLabels>
     <customLabels>
@@ -2313,7 +2317,7 @@
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>الرجاء التحقق من مجلد البريد العشوائي الخاص بك أولاً. إذا لم تتمكن من العثور على أي شيء في مجلد البريد العشوائي، فالرجاء محاولة التسجيل مرة أخرى بالنقر فوق زر &quot;حاول مرة أخرى&quot;.</label>
+        <label>.&quot;الرجاء التحقق من مجلد البريد العشوائي الخاص بك أولاً. إذا لم تتمكن من العثور على أي شيء في مجلد البريد العشوائي، فالرجاء محاولة التسجيل مرة أخرى بالنقر فوق زر &quot;حاول مرة أخرى</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2333,23 +2337,27 @@
         <name>CSP_Reset_Password</name>
     </customLabels>
     <customLabels>
-        <label>الرجاء إدخال كلمة مروركم الجديدة.</label>
+        <label>أعد ضبط كلمة المرور الخاصة بك في بوابة عملاء إياتا</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>.الرجاء إدخال كلمة مروركم الجديدة</label>
         <name>CSP_Reset_Password_Info_1</name>
     </customLabels>
     <customLabels>
-        <label>يجب أن تحتوي كلمة المرور على:</label>
+        <label>:يجب أن تحتوي كلمة المرور على</label>
         <name>CSP_Reset_Password_Info_2</name>
     </customLabels>
     <customLabels>
-        <label>تم تغيير كلمة مروركم بنجاح.</label>
+        <label>.تم تغيير كلمة مروركم بنجاح</label>
         <name>CSP_Reset_Password_Success_Msg_1</name>
     </customLabels>
     <customLabels>
-        <label>يمكنكم تسجيل الدخول باستخدام كلمة المرور الجديدة.</label>
+        <label>.يمكنكم تسجيل الدخول باستخدام كلمة المرور الجديدة</label>
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>تم تحديد مصدر عنوان IP لجهاز الكمبيوتر الخاص بكم على أنه في إحدى الدول المدرجة على قائمة الحظر من قبل السلطات الأمريكية. يتوافق النظام الأساسي الذي يدعم بوابة عملائنا مع لوائح الولايات المتحدة ، وبالتالي ، لا يمكننا حاليًا توفير الوصول إلى بوابة العملاء من عنوان IP الحالي الخاص بكم.&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt; الرجاء النقر هنا للاتصال بنا.&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;.الرجاء النقر هنا للاتصال بنا&lt;/a&gt; .تم تحديد مصدر عنوان (آيبي) لجهاز الكمبيوتر الخاص بكم على أنه في إحدى الدول المدرجة على قائمة الحظر من قبل السلطات الأمريكية. يتوافق النظام الأساسي الذي يدعم بوابة عملائنا مع لوائح الولايات المتحدة، وبالتالي، لا يمكننا حاليًا توفير الوصول إلى بوابة العملاء من عنوان (آيبي) الحالي الخاص بكم</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -2593,15 +2601,19 @@
         <name>CSP_TypeOfCase</name>
     </customLabels>
     <customLabels>
-        <label>حدث خطأ غير متوقع!</label>
+        <label>!حدث خطأ غير متوقع</label>
         <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
-        <label>يمكنكم الوصول مباشرة إلى أكثر من 60 خدمة يقدمها الاتحاد الدولي للنقل الجوي (إياتا - IATA)، تم اختيارها خصيصاً من أجلكم.</label>
+        <label>مرحبًا بكم في بوابة عملاء إياتا</label>
+        <name>CSP_Welcome_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>.يمكنكم الوصول مباشرة إلى أكثر من 60 خدمة يقدمها الاتحاد الدولي للنقل الجوي (إياتا)، تم اختيارها خصيصاً من أجلكم</label>
         <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
     </customLabels>
     <customLabels>
-        <label>الوصول إلى خدمات الاتحاد الدولي للنقل الجوي (إياتا - IATA)</label>
+        <label>(IATA - الوصول إلى خدمات الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_Welcome_Panel_Bullet_1_Title</name>
     </customLabels>
     <customLabels>
@@ -2613,7 +2625,7 @@
         <name>CSP_Welcome_Panel_Bullet_2_Title</name>
     </customLabels>
     <customLabels>
-        <label>اكتشفوا مجموعة مختارة من المنشورات والدورات التدريبية وغيرها من منتجات وخدمات الاتحاد الدولي للنقل الجوي (إياتا - IATA).</label>
+        <label>.(IATA - اكتشفوا مجموعة مختارة من المنشورات والدورات التدريبية وغيرها من منتجات وخدمات الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
     </customLabels>
     <customLabels>
@@ -2621,7 +2633,7 @@
         <name>CSP_Welcome_Panel_Bullet_3_Title</name>
     </customLabels>
     <customLabels>
-        <label>اذهبوا لمجموعتنا الواسعة من الأسئلة والأجوبة، واحصلوا على الدعم المباشر من الاتحاد الدولي للنقل الجوي (إياتا - IATA).</label>
+        <label>.(IATA - اذهبوا لمجموعتنا الواسعة من الأسئلة والأجوبة، واحصلوا على الدعم المباشر من الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
     </customLabels>
     <customLabels>
@@ -2629,11 +2641,11 @@
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
     </customLabels>
     <customLabels>
-        <label>احصلوا على ميزة الوصول إلى جميع خدمات الاتحاد الدولي للنقل الجوي (إياتا - IATA) الخاصة بكم وإدارتها. طالعوا معلومات المنتجات المختلفة واحصلوا على الدعم حول أي موضوع. نحن هنا من أجلكم.</label>
+        <label>.احصلوا على ميزة الوصول إلى جميع خدمات الاتحاد الدولي للنقل الجوي (إياتا) الخاصة بكم وإدارتها. طالعوا معلومات المنتجات المختلفة واحصلوا على الدعم حول أي موضوع. نحن هنا من أجلكم</label>
         <name>CSP_Welcome_Panel_Info</name>
     </customLabels>
     <customLabels>
-        <label>مرحبًا بكم في بوابة خدمة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA)</label>
+        <label>(IATA - مرحبًا بكم في بوابة خدمة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
@@ -18731,7 +18743,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label>فشلت محاولتكم لتسجيل الدخول. تأكدوا من صحة عنوان البريد الإلكتروني وكلمة المرور.</label>
+        <label>.فشلت محاولتكم لتسجيل الدخول. تأكدوا من صحة عنوان البريد الإلكتروني وكلمة المرور</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>

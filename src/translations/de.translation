@@ -1893,6 +1893,10 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>IATA-Kundenportal – E-Mail-Bestätigung</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Ihre {0} Zugriffsanfrage wurde an die Administratoren des Portals übermittelt. Wenn Sie Fragen oder Wünsche zu diesem Vorgang haben, können Sie sich an einen der folgenden Administratoren wenden:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
@@ -1917,7 +1921,7 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
-        <label>Sehr geehrter Kunde,</label>
+        <label>Sehr geehrter Kunde</label>
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
@@ -2005,7 +2009,7 @@
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;Bringt mich zum Portal!&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Bringt mich zum Portal!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
@@ -2319,7 +2323,7 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Registration_Existing_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>Bitte überprüfen Sie zuerst Ihren Spam-Ordner. Wenn Sie im Spam-Ordner nichts finden, versuchen Sie bitte erneut, sich zu registrieren, indem Sie auf die Schaltfläche „Erneut Versuchen“ klicken.</label>
+        <label>Bitte überprüfen Sie zuerst Ihren Spam-Ordner. Wenn Sie im Spam-Ordner nichts finden, versuchen Sie bitte erneut, sich zu registrieren, indem Sie auf die Schaltfläche &quot;Erneut Versuchen&quot; klicken.</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -2337,6 +2341,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Passwort zurücksetzen</label>
         <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Setzen Sie Ihr Passwort für das IATA-Kundenportal zurück</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>Bitte geben Sie Ihr neues Passwort ein.</label>
@@ -2601,6 +2609,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Ein unerwarteter Fehler ist aufgetreten!</label>
         <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Willkommen auf dem Kundenportal der IATA</label>
+        <name>CSP_Welcome_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>Sie erhalten direkten Zugriff auf mehr als 60 IATA- Dienstleistungen, die speziell für Sie ausgewählt wurden.</label>

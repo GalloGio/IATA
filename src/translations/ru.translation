@@ -1889,6 +1889,10 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>ИАТА клиентский портал Подтверждение электронной почты</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Ваш запрос на доступ к {0} был доставлен администраторам портала. Если у Вас есть какие-либо вопросы или пожелания по поводу этого процесса, Вы можете связаться с администратором ниже:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
@@ -1913,7 +1917,7 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
-        <label>Уважаемый!</label>
+        <label>Уважаемый</label>
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
@@ -2001,7 +2005,7 @@
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;Отведите меня на портал!&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Отведите меня на портал!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
@@ -2335,6 +2339,10 @@
         <name>CSP_Reset_Password</name>
     </customLabels>
     <customLabels>
+        <label>Сбросьте свой пароль для клиентского портала ИАТА</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Пожалуйста, введите ваш новый пароль.</label>
         <name>CSP_Reset_Password_Info_1</name>
     </customLabels>
@@ -2597,6 +2605,10 @@
     <customLabels>
         <label>Произошла непредвиденная ошибка!</label>
         <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Добро пожаловать на клиентский портал ИАТА</label>
+        <name>CSP_Welcome_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>Прямой доступ к более чем 60 услугам ИАТА, отобранным специально для вас.</label>

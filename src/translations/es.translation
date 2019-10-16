@@ -1891,6 +1891,10 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>Confirmación de correo electrónico del portal del cliente de IATA</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Su {0} solicitud de acceso se ha entregado a los administradores del portal. Si tiene alguna pregunta o petición sobre el proceso, puede ponerse en contacto con un administrador a continuación:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
@@ -1915,7 +1919,7 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
-        <label>Estimado/a:</label>
+        <label>Estimado/a</label>
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
@@ -2003,7 +2007,7 @@
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;¡Lléveme al Portal!&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;¡Lléveme al Portal!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
@@ -2336,6 +2340,10 @@
         <name>CSP_Reset_Password</name>
     </customLabels>
     <customLabels>
+        <label>Restablezca su contraseña para el portal del cliente IATA</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Introduzca su nueva contraseña.</label>
         <name>CSP_Reset_Password_Info_1</name>
     </customLabels>
@@ -2598,6 +2606,10 @@
     <customLabels>
         <label>¡Ocurrió un error inesperado!</label>
         <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Bienvenido al portal del cliente de IATA</label>
+        <name>CSP_Welcome_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>Acceda de forma directa a más de 60 servicios de IATA seleccionados específicamente para usted.</label>

@@ -1889,6 +1889,10 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>IATA Müşteri Portalı E-posta Onayı</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>{0} erişim isteğiniz portal yöneticilerine iletildi. İşlemle ilgili herhangi bir sorunuz veya talebiniz varsa, aşağıdaki bir yöneticiyle iletişime geçebilirsiniz:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
@@ -2001,7 +2005,7 @@
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;Beni Portala götürün!&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Beni Portala götürün!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
@@ -2333,6 +2337,10 @@
         <name>CSP_Reset_Password</name>
     </customLabels>
     <customLabels>
+        <label>IATA Müşteri Portalı şifrenizi sıfırlayın</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Lütfen yeni şifrenizi girin.</label>
         <name>CSP_Reset_Password_Info_1</name>
     </customLabels>
@@ -2595,6 +2603,10 @@
     <customLabels>
         <label>Beklenmeyen bir hata oluştu!</label>
         <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı&apos;na hoşgeldiniz</label>
+        <name>CSP_Welcome_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>Sizin için özel olarak seçilmiş 60&apos;tan fazla IATA servisine doğrudan erişin.</label>

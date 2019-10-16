@@ -1892,6 +1892,10 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>IATA Portal Pelanggan Email konfirmasi</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Permintaan akses {0} Anda telah dikirimkan ke administrator portal. Jika Anda memiliki pertanyaan atau permintaan tentang prosesnya, Anda dapat menghubungi administrator di bawah ini:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
@@ -1916,7 +1920,7 @@
         <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
-        <label>Yth.</label>
+        <label>Yth</label>
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
@@ -2004,7 +2008,7 @@
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;Bawa saya ke Portal!&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Bawa saya ke Portal!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
@@ -2337,6 +2341,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Reset_Password</name>
     </customLabels>
     <customLabels>
+        <label>Setel ulang kata sandi Anda untuk Portal Pelanggan IATA</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Silakan masukkan kata sandi baru Anda.</label>
         <name>CSP_Reset_Password_Info_1</name>
     </customLabels>
@@ -2599,6 +2607,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Terjadi kesalahan yang tak terduga!</label>
         <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Selamat datang di Portal Pelanggan IATA</label>
+        <name>CSP_Welcome_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>Akses langsung ke lebih dari 60 layanan IATA, dipilih khusus untuk Anda.</label>

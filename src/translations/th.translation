@@ -1889,6 +1889,10 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>การยืนยันอีเมลพอร์ทัลสำหรับลูกค้าIATA</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>คำขอเข้าถึง {0} ของคุณถูกส่งไปยังผู้ดูแลพอร์ทัลแล้ว หากคุณมีคำถามหรือคำขอเกี่ยวกับกระบวนการ คุณ สามารถติดต่อผู้ดูแลระบบ ตามด้านล่างนี้:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
@@ -2001,7 +2005,7 @@
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;นำฉันไปยังพอร์ทัล!&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;นำฉันไปยังพอร์ทัล!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
@@ -2333,6 +2337,10 @@
         <name>CSP_Reset_Password</name>
     </customLabels>
     <customLabels>
+        <label>รีเซ็ตรหัสผ่านที่คุณใช้สำหรับพอร์ทัลสำหรับลูกค้าIATA</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>กรุณาป้อนรหัสผ่านชุดใหม่ของคุณ</label>
         <name>CSP_Reset_Password_Info_1</name>
     </customLabels>
@@ -2595,6 +2603,10 @@
     <customLabels>
         <label>เกิดข้อผิดพลาดที่ไม่คาดคิดขึ้น!</label>
         <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>ยินดีต้อนรับสู่พอร์ทัลสำหรับลูกค้าIATA (สมาคมการขนส่งทางอากาศระหว่างประเทศ)</label>
+        <name>CSP_Welcome_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>เข้าถึงบริการของ IATA มากกว่า 60 รายการโดยตรง คัดสรรมาเพื่อคุณโดยเฉพาะ</label>

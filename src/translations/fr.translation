@@ -1892,6 +1892,10 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>Confirmation de l&apos;adresse e-mail du portail client IATA</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Votre demande d&apos;accès {0} a été envoyée aux administrateurs du portail. Si vous avez des questions ou des demandes concernant le processus, vous pouvez contacter un administrateur ci-dessous:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
@@ -2004,7 +2008,7 @@
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;http://portal.iata.org&quot;&gt;Emmenez-moi au portail !&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Emmenez-moi au portail !&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
@@ -2337,6 +2341,10 @@
         <name>CSP_Reset_Password</name>
     </customLabels>
     <customLabels>
+        <label>Réinitialisez votre mot de passe pour le portail client IATA</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Veuillez entrer votre nouveau mot de passe.</label>
         <name>CSP_Reset_Password_Info_1</name>
     </customLabels>
@@ -2599,6 +2607,10 @@
     <customLabels>
         <label>Une erreur inattendue s&apos;est produite!</label>
         <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Bienvenue sur le portail client IATA</label>
+        <name>CSP_Welcome_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>Accédez directement à plus de 60 services IATA, spécialement sélectionnés pour vous.</label>
