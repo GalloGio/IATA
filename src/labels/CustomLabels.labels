@@ -3649,6 +3649,14 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Manage_Portal_Users</shortDescription>
         <value>You can manage the users from the list below.</value>
     </labels>
+	<labels>
+        <fullName>CSP_Manage_Recipients</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Manage_Recipients</shortDescription>
+        <value>Manage Recipients</value>
+    </labels>
     <labels>
         <fullName>CSP_Manage_Service</fullName>
         <categories>CS Portal</categories>
