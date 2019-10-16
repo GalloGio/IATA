@@ -1686,4 +1686,9 @@ visibility: hidden;
 .blueLink a {
 	color: #1e32fa;
 }
+
+// Hides search icons from inputs in Edge and IE
+.searchBarBar input[type="text"]::-ms-clear {
+    display: none;
+}
   
