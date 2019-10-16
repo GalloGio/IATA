@@ -4,6 +4,7 @@ public without sharing class WorkflowHelper {
     public static final String CONTACT_TYPE = 'Contact';
     public static final String CASE_TYPE = 'Case';
 
+    //Account Record Types
     private static final ID AIRLINERT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
     private  static final ID GSART = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_GSA');
     private  static final Id STANDARDRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
@@ -19,6 +20,11 @@ public without sharing class WorkflowHelper {
             when 'Account' {
                 System.debug('[WorkflowHelper]: starting to process work for:'+objectType); 
                 performActionsAccount();
+                System.debug('[WorkflowHelper]: ended process work for:'+objectType); 
+            }
+            when 'Contact' {
+                System.debug('[WorkflowHelper]: starting to process work for:'+objectType); 
+                performActionsContact();
                 System.debug('[WorkflowHelper]: ended process work for:'+objectType); 
             }
             when else{
@@ -65,6 +71,29 @@ public without sharing class WorkflowHelper {
             setAccountBranchNamePos((List<Account>) newMap, oldMap <> null);
         }
     }
+
+    public static void performActionsContact(){
+
+        // runs on both Update and Insert
+
+        Map<Id,sObject> oldMap = trigger.oldMap;
+        List<sObject> newMap = trigger.new;
+
+        Contact oldCon;
+        Contact newCon;
+
+        for(sObject con: newMap){
+            
+            newCon = (Contact)con;
+            oldCon = oldMap == null ? null : oldMap.get(con.Id) == null ? null : (Contact)oldMap.get(con.Id);
+
+            updateRecordSharingCriteria(oldCon, newCon);
+            keyContactOptOut(oldCon, newCon);
+            updateIDCardContactCheckbox(oldCon, newCon);
+        }
+    }
+
+    /*ACCOUNT ACTIONS START*/
 
     //Updates the field Industry in the travel agent accounts that are uploaded from AIMS
     //Workflow Name: AIMS: Update Industry - travel agents
@@ -293,4 +322,48 @@ public without sharing class WorkflowHelper {
             }
     
     }
+    /*ACCOUNT ACTIONS END*/
+
+    /*CONTACT ACTIONS START*/
+
+    //Update Record Sharing Criteria AUX with values of Record Sharing Criteria
+    //Workflow Name: Field update with values of field Record Sharing Criteria
+    public static void updateRecordSharingCriteria(Contact oldContact , Contact newContact){
+
+        if((oldContact == null && newContact.Record_Sharing_Criteria__c != null) 
+            || (oldContact != null && oldContact.Record_Sharing_Criteria__c != newContact.Record_Sharing_Criteria__c)) {
+            
+            newContact.Record_Sharing_Criteria_AUX__c = newContact.Record_Sharing_Criteria__c.contains('IFG Active Users') ? 'IFG Active Users;' : (newContact.Record_Sharing_Criteria__c.contains('TIP User') ? 'TIP User;' : '');        
+        }
+    }
+
+    //Automatically Opt out all Key contact
+    //Workflow Name: Key contact Opt out
+    public static void keyContactOptOut(Contact oldContact , Contact newContact){
+
+        //For insert formula field not calculated yet. Use an auxiliar variable
+        Boolean accountManagementKeyContact = false;
+        if(oldContact == null){
+            Set<String> ceocfo = new Set<String>{'CEO', 'CFO', 'COO', 'CCO', 'CIO'};
+            accountManagementKeyContact = ceocfo.contains(newContact.CEO_CFO__c) || newContact.Membership_Main_Contact__c || (newContact.Function__c != null && newContact.Function__c != '');
+        }     
+
+        if((oldContact == null && accountManagementKeyContact)
+            || (oldContact != null && oldContact.Account_Management_Key_Contact__c != newContact.Account_Management_Key_Contact__c)) {
+
+            newContact.HasOptedOutOfEmail = true;
+            newContact.Marketing_Communications_Opt_in__c = false;
+        }
+    }
+
+    //Set the contact as a ID Card Contact Holder if VER Number is not null
+    //Workflow Name: Update ID card contact checkbox
+    public static void updateIDCardContactCheckbox(Contact oldContact , Contact newContact){
+
+        if(newContact.VER_Number__c != null && !newContact.ID_Card_Holder__c)
+            newContact.ID_Card_Holder__c = true;
+    }
+
+    /*CONTACT ACTIONS END*/
+
 }
