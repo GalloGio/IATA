@@ -2143,6 +2143,46 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>Hace unos días se registró para formar parte del Portal de clientes de IATA. ¡Gracias y bienvenido!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Hemos creado el Portal de clientes de IATA para que nuestros productos y servicios se adapten a sus necesidades específicas. Para que podamos hacerlo, nos gustaría conocer un poco más de usted y de su organización.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Lo hemos diseñado para que sea fácil y rápido - tan solo  &lt;strong&gt;&lt;a href=[URL]&gt;haga clic aquí para completar su perfil&lt;/a&gt;&lt;/strong&gt;.</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Obtendrá:</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· Acceso directo a servicios desarrollados a medida</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· Acceso completo a los conocimientos &amp; estándares de IATA curados</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· Soporte especializado de profesionales de servicio IATA</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· ¡Y más!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt; Haga clic aquí para completar su perfil &lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Puede gestionar los usuarios de la siguiente lista.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>

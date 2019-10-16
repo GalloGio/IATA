@@ -2143,6 +2143,46 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>Vài ngày trước, chúng tôi nhận thấy quý khách đã đăng ký mở tài khoản để trở thành một thành viên của Cổng thông tin Khách hàng IATA - Xin chân thành cảm ơn quý khách và chào mừng quý khách đã đến với chúng tôi!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi đã xây dựng Cổng thông tin Khách hàng IATA để đề xuất một số sản phẩm và dịch vụ của IATA dành riêng cho nhu cầu mua sắm và thị hiếu của quý khách. Để chúng tôi có thể tiến hành việc này, chúng tôi muốn biết thêm một vài thông tin chi tiết về bản thân quý khách và tổ chức của quý khách.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi đã cố gắng làm cho thao tác trên trở nên dễ dàng và nhanh chóng - tất cả những gì quý khách cần làm là hãy bấm  &lt;strong&gt;&lt;a href=[URL]&gt; lần vào đường dẫn dưới đây để hoàn thành hồ sơ của quý khách &lt;/a&gt;&lt;/strong&gt;.</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Quý khách sẽ nhận được:</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· Trực tiếp tiếp cận các dịch vụ được thiết kế dành riêng cho quý khách.</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· Toàn quyền truy cập vào những Thông tin &amp; Tiêu chuẩn được quản lý bởi IATA</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· Hỗ trợ Chuyên môn từ Các chuyên gia Dịch vụ của IATA</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· Và nhiều hơn thế nữa!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt; Xin quý khách vui lòng nhấn vào đây để hoàn tất hồ sơ cá nhân của quý khách &lt; /a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Bạn có thể quản lý người dùng từ danh sách dưới đây.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>

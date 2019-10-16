@@ -2141,6 +2141,46 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>Birkaç gün önce, IATA Müşteri Portalı&#39;nın bir katılımcısı olmak için kaydoldunuz - teşekkür ederiz ve hoş geldiniz!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı&#39;nı, IATA&#39;nın ürün ve hizmetlerini size özel oluşturması için kurduk. Bunu yapabilmemiz için sizi ve kurumunuzu biraz daha iyi tanımak istiyoruz.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Bunu kolay ve hızlı hale getirdik  &lt;strong&gt;&lt;a href=[URL]&gt;profilinizi tamamlamak için burayı tıklamanız yeterli&lt;/a&gt;&lt;/strong&gt;.</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Şunlara sahip olacaksınız:</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· Özel Hizmetler için Doğrudan Giriş</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· Düzenlenen IATA (Uluslararası Hava Taşımacılığı Birliği) Bilgi &amp; Standartlarına tam erişim</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· IATA (Uluslararası Hava Taşımacılığı Birliği) Servis Uzmanlarından Özel Destek</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· Ve dahası!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;Profilinizi tamamlamak için buraya tıklayın&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>kullanıcılarrı aşağıdaki listeden yönetebilirsiniz.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>

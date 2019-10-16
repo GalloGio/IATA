@@ -2145,6 +2145,46 @@ la seguente procedura per completarlo :
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>Qualche giorno fa, si è iscritto al Portale Clienti IATA: grazie per la sua adesione e benvenuto!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Abbiamo creato il Portale Clienti IATA per personalizzare i prodotti e i servizi IATA appositamente per lei. Per poterlo fare, vorremmo conoscere meglio lei e la sua organizzazione.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Il procedimento é facile e veloce, le basterà semplicemente &lt;strong&gt;&lt;a href=[URL]&gt;cliccare qui&lt;/a&gt;&lt;/strong&gt; per completare il suo profilo.</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Riceverà:</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· Accesso diretto a servizi personalizzati</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· Accesso completo alle Conoscenze IATA &amp; Standard</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· Supporto specializzato da parte dei professionisti dell&#39;assistenza IATA</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· E molto altro ancora!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;Clicchi qui per completare il suo profilo&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Gli utenti possono essere gestiti dalla lista qui sotto.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>

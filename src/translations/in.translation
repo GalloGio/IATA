@@ -2144,6 +2144,46 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>Beberapa hari yang lalu, Anda mendaftar untuk menjadi bagian dari Portal Pelanggan IATA. Terima kasih dan selamat datang!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami telah membuat Portal Pelanggan IATA untuk menyesuaikan produk dan layanan IATA, khusus untuk Anda. Agar kami dapat melakukan itu dengan lebih baik, kami ingin mengenal Anda dan organisasi Anda.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami telah membuatnya mudah dan cepat - hanya dengan &lt;strong&gt;&lt;a href=[URL]&gt; klik di sini untuk melengkapi profil Anda &lt;/a&gt;&lt;/strong&gt;.</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda akan mendapatkan:</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· Entri Langsung untuk Layanan yang Disesuaikan.</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· Akses Penuh ke Kurasi Pengetahuan &amp; Standar IATA (International Air Transport Association)</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· Dukungan Khusus dari Layanan Profesional IATA (International Air Transport Association)</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· Dan masih banyak lagi!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;Klik di sini untuk melengkapi profil Anda&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Anda dapat mengelola pengguna-pengguna dari daftar di bawah ini.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>

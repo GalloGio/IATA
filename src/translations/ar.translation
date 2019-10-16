@@ -2141,6 +2141,46 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>.قبل بضعة أيام، قمتم بالتسجيل لتصبحوا جزءً من بوابة عملاء الاتحاد الدولي للنقل الجوي، شكرًا لكم ونرحب بكم</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>.لقد صممنا بوابة عملاء إياتا بحيث تُكيّف منتجات وخدمات إياتا خصيصًا لكم. لكي نتمكن من القيام بذلك، نود أن نتعرف عليكم وعلى مؤسستكم أفضل قليلاً</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;انقروا هنا لإكمال ملفكم الشخصي&lt;/a&gt;&lt;/strong&gt; جعلنا الأمر سهلاً وسريعاً، فقط</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>:سوف تحصلون على</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>الدخول المباشر للخدمات المخصصة -</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>الوصول الكامل إلى معلومات و معايير إياتا المنسقة -</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>دعم متخصص من إياتا لخدمة المهنيين -</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>!وأكثر -</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;انقروا هنا لإكمال ملفكم الشخصي&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>يمكنكم إدارة المستخدمين من القائمة أدناه.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>

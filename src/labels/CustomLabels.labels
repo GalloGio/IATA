@@ -3827,6 +3827,86 @@ Payment required on receipt of this Payment Advice
         <value>Login Now</value>
     </labels>
     <labels>
+        <fullName>CSP_Lvl2_Reminder_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 1</shortDescription>
+        <value>Some days ago, you signed up to form part of the IATA Customer Portal - thank you and welcome!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 2</shortDescription>
+        <value>We´ve built the IATA Customer Portal so that it tailors the IATA products and services specifically for you. For us to be able to do that, we´d like to know you and your organization a bit better.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 3</shortDescription>
+        <value>We´ve made it easy and fast – just &lt;strong&gt;&lt;a href=[URL]&gt;click here to complete your profile&lt;/a&gt;&lt;/strong&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_4</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 4</shortDescription>
+        <value>You´ll get:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_5</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 5</shortDescription>
+        <value>· Direct Entry for Tailored Services</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_6</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 6</shortDescription>
+        <value>· Full Access to Curated IATA Knowledge &amp; Standards</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_7</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 7</shortDescription>
+        <value>· Specialized Support from IATA Service Professionals</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_8</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 8</shortDescription>
+        <value>· And more!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_9</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 9</shortDescription>
+        <value>&lt;strong&gt;&lt;a href=[URL]&gt;Click here to complete your profile&lt;/a&gt;&lt;/strong&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_Subject</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder Subject</shortDescription>
+        <value>Get the most out of the IATA Customer Portal – Complete you Profile!</value>
+    </labels>
+    <labels>
         <fullName>CSP_Manage_Portal_Users</fullName>
         <language>en_US</language>
         <protected>false</protected>

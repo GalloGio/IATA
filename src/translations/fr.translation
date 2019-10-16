@@ -2144,6 +2144,46 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
+        <label>Il y a quelques jours, vous vous êtes inscrit au portail client d&#39;IATA ; merci et bienvenue !</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Nous avons créé le portail client d&#39;IATA afin de personnaliser les produits et services IATA spécialement pour vous. Pour que nous puissions faire cela, nous aimerions mieux vous connaître, vous et votre organisation.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Nous avons rendu cela facile et rapide : il vous suffit de &lt;strong&gt;&lt;a href=[URL]&gt;cliquer ici pour compléter votre profil&lt;/a&gt;&lt;/strong&gt;.</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous aurez :</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· Un accès direct à des services personnalisés ;</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· Un accès complet aux connaissances et aux normes organisées d&#39;IATA ;</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· Une assistance spécialisée fournie par des professionnels des services IATA ;</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· Et bien plus !</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;Cliquez ici pour compléter votre profil&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Vous pouvez gérer les utilisateurs à partir de la liste ci-dessous.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
