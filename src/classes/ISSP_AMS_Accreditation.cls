@@ -815,7 +815,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (sectorValue != null) {
                     sector = sectorValue.replace('_', ' ');
 
-                    if (isocountry.ISO_Code__c == 'CN') {
+                    if (isocountry.ISO_Code__c == 'CN' && !sector.contains('-')) { //PRB41685 - Avoid duplication of the Local_Agent_Type__c value on the sector valor
                         sector += ' - ' + newForm.Local_Agent_Type__c;
                     }
 
@@ -1079,7 +1079,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             sector = sectorValue.replace('_', ' ');
 
-            if (isocountry.ISO_Code__c == 'CN') {
+            if (isocountry.ISO_Code__c == 'CN' && !sector.contains('-')) { //PRB41685 - Avoid duplication of the Local_Agent_Type__c value on the sector valor
                 sector += ' - ' + newForm.Local_Agent_Type__c;
             } 
 
@@ -4512,22 +4512,22 @@ public without sharing class ISSP_AMS_Accreditation {
         List<AMS_Pax_Accreditation_Form__c> newForms = Database.query(query);
         if (!newForms.isEmpty()) {
             newForm = newForms[0];
-        }
 
-        if (!String.isBlank(currentMCFormId)) {
-            mcformCountryISO = newForm.Branch_Office_Country__r.ISO_Code__c;
-            if (newForm.AE_separate_Legal_Entity__c == 'No') {
-                populateFieldsFromParentForm(newForm);
-            }
-        }
+			if (!String.isBlank(currentMCFormId)) {
+				mcformCountryISO = newForm.Branch_Office_Country__r.ISO_Code__c;
+				if (newForm.AE_separate_Legal_Entity__c == 'No') {
+					populateFieldsFromParentForm(newForm);
+				}
+			}
 
-        if (newForm.Branch_Office_Country__r.ISO_Code__c == 'CN' && newCase.Reason1__c == AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
-            if (newForm.SAAM_Case__r.Account.Category__c == 'Domestic Agent') {
-                newForm.Local_Agent_Type__c = 'Domestic';
-            } else {
-                newForm.Local_Agent_Type__c = 'International';
-            }
-        }
+			if (newForm.Branch_Office_Country__r.ISO_Code__c == 'CN' && newCase.Reason1__c == AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
+				if (newForm.SAAM_Case__r.Account.Category__c == 'Domestic Agent') {
+					newForm.Local_Agent_Type__c = 'Domestic';
+				} else {
+					newForm.Local_Agent_Type__c = 'International';
+				}
+			}
+		}
     }
 
     public void resetOwnership() { //NEWGEN-1249

@@ -11,7 +11,7 @@
             <publicGroup>IDFS_Asia_Pacific_Acting_CM_NZ</publicGroup>
         </publicGroups>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>APCustomerServiceStaffI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>APCustomerServiceStaff</roleAndSubordinateInternal>
             <roleAndSubordinateInternal>StaffAustralia</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>

@@ -13680,6 +13680,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         </valueSet>
     </fields>
     <fields>
+        <fullName>Is_parent_IATA_airline_member__c</fullName>
+        <description>If the Parent field Airline Member exists and it&apos;s different from the record, return false. This is used on the Account trigger to set the IATA_Member__c field for the accounts.</description>
+        <externalId>false</externalId>
+        <formula>OR(ParentId == null , Parent.IATA_Member__c == IATA_Member__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA airline member check</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_your_firm_handling_Dangerous_Goods__c</fullName>
         <externalId>false</externalId>
         <label>* Is your firm handling Dangerous Goods?</label>
@@ -100388,9 +100398,18 @@ AND(
     <validationRules>
         <fullName>Airline_HO_Name</fullName>
         <active>true</active>
-        <description>You are not allowed to change the field &quot;Account Name&quot;.</description>
-        <errorConditionFormula>ISCHANGED(Name) &amp;&amp;  RecordType.DeveloperName  = &apos;IATA_Airline&apos;</errorConditionFormula>
-        <errorDisplayField>Is_your_firm_handling_Dangerous_Goods__c</errorDisplayField>
+        <description>You are not allowed to change the field &quot;Account Name&quot;. The only Exception is if you are also changing one of the following:Legal_name__c,TradeName__c,Name_on_AOC__c. This assignment logic is done via Account Trigger.</description>
+        <errorConditionFormula>AND (	ISCHANGED(Name) ,
+		RecordType.DeveloperName  = &apos;IATA_Airline&apos;,
+		NOT(
+			OR(
+				ISCHANGED(Legal_name__c),
+				ISCHANGED(TradeName__c),
+				ISCHANGED(Name_on_AOC__c)
+			)
+		)
+	)</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
         <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
     </validationRules>
     <validationRules>
