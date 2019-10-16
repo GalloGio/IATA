@@ -10,10 +10,10 @@
             <publicGroup>IDFSAsiaPacificallusers</publicGroup>
         </publicGroups>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>APCustomerServiceStaffI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>APCustomerServiceStaff</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
         <roles>
-            <role>CountryManagerPhilippinesA</role>
+            <role>CountryManagerPhilippines</role>
         </roles>
     </queueMembers>
     <queueSobject>
