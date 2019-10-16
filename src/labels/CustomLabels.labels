@@ -3327,6 +3327,14 @@ Payment required on receipt of this Payment Advice
         <value>Are you sure you want to grant the access to &lt;b&gt;{0}&lt;/b&gt; for &lt;b&gt;{1}&lt;/b&gt;?</value>
     </labels>
     <labels>
+        <fullName>CSP_Confirmation_Email_Subject</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Confirmation Email Subject</shortDescription>
+        <value>IATA Customer Portal Email Confirmation</value>
+    </labels>
+    <labels>
         <fullName>CSP_Confirmed_Requested_Service_Message</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4218,6 +4226,14 @@ Payment required on receipt of this Payment Advice
         <value>Reset Password</value>
     </labels>
     <labels>
+        <fullName>CSP_Reset_Password_Email_Subject</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Reset Password Email Subject</shortDescription>
+        <value>Reset your password for IATA Customer Portal</value>
+    </labels>
+    <labels>
         <fullName>CSP_Reset_Password_Info_1</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4740,6 +4756,14 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <protected>false</protected>
         <shortDescription>CSP_Unexcepted_Error</shortDescription>
         <value>An unexpected error occured!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Email_Subject</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Welcome Email Subject</shortDescription>
+        <value>Welcome to IATA Customer Portal</value>
     </labels>
     <labels>
         <fullName>CSP_Welcome_Panel_Bullet_1_Desc</fullName>
