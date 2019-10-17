@@ -588,11 +588,11 @@ export default class PortalContactList extends LightningElement {
                     return 'amber';
                 }
             } else {
-                return 'underLinded';
+                return 'underLined';
             }
         }
 
-        return 'underLinded';
+        return 'underLined';
     }
 
     checkEmail(value) {
