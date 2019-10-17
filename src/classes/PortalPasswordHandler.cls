@@ -88,7 +88,8 @@ public without sharing class PortalPasswordHandler {
         String encodedPart = 'c=' + EncodingUtil.urlEncode(EncryptString(cleanUsername + SEPARATOR + password + SEPARATOR + user.uid__c + SEPARATOR + string.valueOf(system.now())), 'UTF-8');
 
         String prefix = '';
-        if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('/login'));
+        List<Network> networkList = [Select id from Network where name =: 'CS Portal' Limit 1];
+        if(!networkList.isEmpty()) prefix = Network.getLoginURL(networkList.get(0).Id).substring(0,Network.getLoginURL(networkList.get(0).Id).indexOf('/login'));
         String link = prefix + '/' + pageName + '?' + encodedPart;
         return link;
     }
