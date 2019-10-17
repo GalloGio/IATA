@@ -459,11 +459,11 @@
                 if ($.inArray(isoSelected, JSON.parse('{!hierarchyIsoCodesString}')) == -1) {
                     $('[id$=legalNameSelection]').css('display', 'block');
                     $('[name$=separateLegalEntitySelect]').filter('[value=Yes]').prop('checked', true);
-                    $('[name$=separateLegalEntitySelect]').attr('disabled', 'true');
+                    $('[name$=separateLegalEntitySelect]:not(:checked)').attr('disabled', 'true');
                     $('[id$=newLegalName]').css('display', 'block');
                     $('[id$=legalNameSelected]').val('');
                 } else {
-                    $('[name$=separateLegalEntitySelect]').removeAttr('disabled');
+                    $('[name$=separateLegalEntitySelect]:not(:checked)').removeAttr('disabled');
                     if ($('[name$=separateLegalEntitySelect]:checked').val() == 'No') {
                         $('[id$=legalNameSelection]').css('display', 'block');
                         $('[id$=legalNameSelected]').css('display', 'block');
