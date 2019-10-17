@@ -46,14 +46,15 @@
                                     </lightning-combobox>
                                 </lightning-layout-item>
                             </div>
-                            <div class="slds-col slds-size_1-of-1">
-                                <label class="form-label text-bold">
-                                    {reasonLabel}
-                                </label>
-                            </div>
+                            
                             <div class="slds-col slds-size_1-of-1">
                                 <lightning-layout-item size="7" flexibility="auto" padding="around-small"
-                                    if:true={inactiveStatus}>
+									if:true={inactiveStatus}>
+									<div class="slds-col slds-size_1-of-1">
+										<label class="form-label text-bold">
+											{label.reasonLabel}
+										</label>
+									</div>
                                     <lightning-combobox name="communitySelected" label={reasonLabel}
                                         placeholder={label.selectReasonLABEL} value={InactReasonVal}
                                         options={rejectRegionsOptions.data} onchange={handleReasonCommChange}
