@@ -97,6 +97,7 @@ export default class PortalIftpImportEmployees extends LightningElement {
                 console.error('PortalIftpImportEmployees - importEmployeesCSVFile - Error : ' + error);
                 this.mainErrorMessage = error;
                 this.error = error;
+                this.loading = false;
             });      
     }
 

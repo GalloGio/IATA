@@ -4,6 +4,12 @@ public without sharing class PortalIftEmployeeRecordsManagement {
     public static List<Account_Contact_Role__c> getAllITPEmployees(){
         PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
         Id accountId = ui.accountId;
+        return getAllITPEmployees(accountId);
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<Account_Contact_Role__c> getAllITPEmployees(Id accountId){
+        
         List<Account_Contact_Role__c> emps = [SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c,
                                                     Contact__c, Email__c,First_Name__c,Id,Integration_Status__c,
                                                     Last_Name__c,Name,Personal_Email__c,Contact_Roles__c,

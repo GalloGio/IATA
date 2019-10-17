@@ -208,7 +208,49 @@ export default class PortalIftpManageEmployees extends LightningElement {
                             this.auxSearchValues.stationCode = null;
                         }
                     }
-                } 
+                }
+                getITPStations({accountId: myResult.accountId})
+                .then(result2 => {
+                    let myResult2 = JSON.parse(JSON.stringify(result2));
+                    
+                    let myTopicOptions = [];
+        
+                    Object.keys(myResult2).forEach(function (el) {
+                        myTopicOptions.push({ label: myResult2[el].Code__c + ' - ' + myResult2[el].Description__c, value: myResult2[el].Code__c });
+                    });
+                    this.ITPStations = myResult2;
+                    myTopicOptions = this.sortData('value', 'asc', myTopicOptions);
+                    myTopicOptions.push({label: 'Not allocated', value: 'Not Allocated'});
+                    this.stationOptions = myTopicOptions;
+        
+                    this.showSearchCriteria = true;
+                    this.loadingSearchCriteria = false;
+        
+                    if(this.stationValue){
+                        //Reset this.stationValue if this.stationValue = code of deleted station
+                        let stationOptions = JSON.parse(JSON.stringify(this.stationOptions));
+                        let exists = false;
+                        stationOptions.forEach(opt =>{
+                            if(opt.value === this.stationValue){
+                                exists = true;
+                            }
+                        })
+                        if(!exists && this.auxSearchValues.stationCode !== 'Not Allocated'){
+                            this.stationValue = null;
+                            this.auxSearchValues.stationCode = null;
+                        }
+                    }
+                })
+                .catch(error => {
+                    const event = new ShowToastEvent({
+                        title: 'ITP Stations',
+                        message: 'Unable to get ITP\'s Stations data from database.',
+                        variant: 'error',
+                        mode: 'pester'
+                    });
+                    this.dispatchEvent(event);
+                    console.error('getITPStations - Error : ', error);
+                }); 
             }
 
         })
@@ -216,49 +258,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
             console.error('getITPStations - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
-        }); 
-
-        getITPStations()
-        .then(result => {
-            let myResult = JSON.parse(JSON.stringify(result));
-            
-            let myTopicOptions = [];
-
-            Object.keys(myResult).forEach(function (el) {
-                myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
-            });
-            this.ITPStations = myResult;
-            myTopicOptions = this.sortData('value', 'asc', myTopicOptions);
-            myTopicOptions.push({label: 'Not allocated', value: 'Not Allocated'});
-            this.stationOptions = myTopicOptions;
-
-            this.showSearchCriteria = true;
-            this.loadingSearchCriteria = false;
-
-            if(this.stationValue){
-                //Reset this.stationValue if this.stationValue = code of deleted station
-                let stationOptions = JSON.parse(JSON.stringify(this.stationOptions));
-                let exists = false;
-                stationOptions.forEach(opt =>{
-                    if(opt.value === this.stationValue){
-                        exists = true;
-                    }
-                })
-                if(!exists && this.auxSearchValues.stationCode !== 'Not Allocated'){
-                    this.stationValue = null;
-                    this.auxSearchValues.stationCode = null;
-                }
-            }
-        })
-        .catch(error => {
-            const event = new ShowToastEvent({
-                title: 'ITP Stations',
-                message: 'Unable to get ITP\'s Stations data from database.',
-                variant: 'error',
-                mode: 'pester'
-            });
-            this.dispatchEvent(event);
-            console.error('getITPStations - Error : ', error);
         }); 
     }
 

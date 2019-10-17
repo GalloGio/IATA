@@ -375,6 +375,7 @@ public without sharing class portalIftpTrainingRecords {
                         certStoredList.add(cert);
                         assessmentsByCertificationSubMap.put(cert.Certification__c, certStoredList);
                         certificationsByEmployeeIdCertificateIdMap.put(cert.Account_Contact_Role__c, assessmentsByCertificationSubMap);
+
                     } else {
                         // If employee in Map and Certification Not in Map
                         // Add certification and corresponding assessment to inner Map
@@ -574,7 +575,7 @@ public without sharing class portalIftpTrainingRecords {
         }
 
         //REQUIREMENT: IF EMPLOYEE HAS MORE THAN ONE VALID ASSESSMENT WITH PROFICIENCY 'NO' FOR A GIVEN NON GENERAL TRAINING FOR A GIVEN STATION ONLY THE MOST RECENT IS TO BE KEPT IN RESULTS LIST
-        
+
         // Create  Map<Id, Map<String, List<TrainingRecordsWrapper>>>
         // Outer map : key => id = Account_Contact_Role__c (employee's id)
         // Inner map : key => String = Certification__c (certification's name of NON general trainings certification)
@@ -583,37 +584,82 @@ public without sharing class portalIftpTrainingRecords {
         for(TrainingRecordsWrapper trw : ltrWrapper){
             if(trwByEmployeeIdCertificateNameMap.containsKey(trw.account_contact_role_Id)){
                 Map<String, List<TrainingRecordsWrapper>> innerMap2 = trwByEmployeeIdCertificateNameMap.get(trw.account_contact_role_Id);
-
                 if(innerMap2.containsKey(trw.trainingName)){
                     // If employee in Map and Certification in Map
                     // keep all assessments of that certification for that employee
                     List<TrainingRecordsWrapper> trwStoredList = innerMap2.get(trw.trainingName);
-                    if(trw.proficiency.equalsIgnoreCase('No')){
-                        Integer position = 0;
-                        Integer existsIndex = -1;
-                        Boolean exists = false;
-                        Date existingExpiryDate;
-                        for (position = 0; position < trwStoredList.size(); position++){
-                            if(trw.proficiency.equalsIgnoreCase(trwStoredList[position].proficiency) 
-                                && trw.station.equalsIgnoreCase(trwStoredList[position].station)){
-                                exists = true;
-                                existingExpiryDate = trwStoredList[position].expirationDate;
-                                existsIndex = position;
-                                break;
+                    if(trwStoredList.size() == 1){
+                        if(trw.proficiency.equalsIgnoreCase('No')){
+                            if(trwStoredList[0].proficiency.equalsIgnoreCase('Yes')){
+                                if(trwStoredList[0].expirationDate < trw.expirationDate){
+                                    //keep both
+                                    trwStoredList.add(trw);
+                                    innerMap2.put(trw.trainingName, trwStoredList);
+                                    trwByEmployeeIdCertificateNameMap.put(trw.account_contact_role_Id, innerMap2);
+                                }
+                            } else {
+                                // stored has proficiency 'No'   --  Keep most recent
+                                if(trwStoredList[0].expirationDate < trw.expirationDate){
+                                    trwStoredList.remove(0);
+                                    trwStoredList.add(trw);
+                                    innerMap2.put(trw.trainingName, trwStoredList);
+                                    trwByEmployeeIdCertificateNameMap.put(trw.account_contact_role_Id, innerMap2);
+                                }
                             }
-                        }
-                        if(!exists || (exists && existingExpiryDate < trw.expirationDate)){
-                            if(exists && existingExpiryDate < trw.expirationDate && existsIndex != -1){
-                               trwStoredList.remove(existsIndex); 
+                        } else {
+                            //trw to be added proficiency 'Yes'
+                            if(trwStoredList[0].proficiency.equalsIgnoreCase('Yes')){
+                                //IF both records have proficiency 'Yes' keep only must recent record
+                                if(trwStoredList[0].expirationDate < trw.expirationDate){
+                                    //replace for most recent
+                                    trwStoredList.remove(0);
+                                    trwStoredList.add(trw);
+                                    innerMap2.put(trw.trainingName, trwStoredList);
+                                    trwByEmployeeIdCertificateNameMap.put(trw.account_contact_role_Id, innerMap2);
+                                }
+                            } else {
+                                //trw stored proficiency 'No'
+                                if(trwStoredList[0].expirationDate < trw.expirationDate){
+                                    //replace for most recent
+                                    trwStoredList.remove(0);
+                                    trwStoredList.add(trw);
+                                    innerMap2.put(trw.trainingName, trwStoredList);
+                                    trwByEmployeeIdCertificateNameMap.put(trw.account_contact_role_Id, innerMap2);
+                                } else{
+                                    //keep both
+                                    trwStoredList.add(trw);
+                                    innerMap2.put(trw.trainingName, trwStoredList);
+                                    trwByEmployeeIdCertificateNameMap.put(trw.account_contact_role_Id, innerMap2);
+                                }
                             }
-                            trwStoredList.add(trw);
-                            innerMap2.put(trw.trainingName, trwStoredList);
-                            trwByEmployeeIdCertificateNameMap.put(trw.account_contact_role_Id, innerMap2);
                         }
                     } else {
-                        trwStoredList.add(trw);
-                        innerMap2.put(trw.trainingName, trwStoredList);
-                        trwByEmployeeIdCertificateNameMap.put(trw.account_contact_role_Id, innerMap2);
+                        if(trwStoredList.size() == 2){
+                            Integer index = 0;
+                            Boolean addRecord = false;
+                            for(index = 0; index < trwStoredList.size(); index++){
+                                if(trwStoredList[index].proficiency.equalsIgnoreCase('Yes')
+                                    && trwStoredList[index].proficiency.equalsIgnoreCase(trw.proficiency)
+                                    && trw.expirationDate > trwStoredList[index].expirationDate){
+                                        trwStoredList.remove(index);
+                                        index--;
+                                        addRecord = true;
+                                } else {
+                                    if(trwStoredList[index].proficiency.equalsIgnoreCase('No')
+                                        && trwStoredList[index].proficiency.equalsIgnoreCase(trw.proficiency)
+                                        && trw.expirationDate > trwStoredList[index].expirationDate){
+                                            trwStoredList.remove(index);
+                                            index--;
+                                            addRecord = true;
+                                    }
+                                }
+                            }
+                            if(addRecord){
+                                trwStoredList.add(trw);
+                                innerMap2.put(trw.trainingName, trwStoredList);
+                                trwByEmployeeIdCertificateNameMap.put(trw.account_contact_role_Id, innerMap2);
+                            }
+                        }
                     }
                 } else {
                     // If employee in Map and Certification Not in Map
@@ -943,11 +989,58 @@ public without sharing class portalIftpTrainingRecords {
             }
         }
 
+        // keep only last renewal
+        Map<Id, Map<String, List<TrainingRecordsWrapper>>> trwByEmployeeIdCertificateNameMap = new Map<Id, Map<String, List<TrainingRecordsWrapper>>>();
+        for(TrainingRecordsWrapper trw : ltrWrapper){
+            if(trwByEmployeeIdCertificateNameMap.containsKey(trw.account_contact_role_Id)){
+                Map<String, List<TrainingRecordsWrapper>> innerMap2 = trwByEmployeeIdCertificateNameMap.get(trw.account_contact_role_Id);
+                if(innerMap2.containsKey(trw.trainingName)){
+                    // If employee in Map and Certification in Map
+                    // keep all assessments of that certification for that employee
+                    List<TrainingRecordsWrapper> trwStoredList = innerMap2.get(trw.trainingName);
+                    //keep only must recent record
+                    if(trwStoredList[0].expirationDate < trw.expirationDate){
+                        //replace for most recent
+                        trwStoredList.remove(0);
+                        trwStoredList.add(trw);
+                        innerMap2.put(trw.trainingName, trwStoredList);
+                        trwByEmployeeIdCertificateNameMap.put(trw.account_contact_role_Id, innerMap2);
+                    }        
+                } else {
+                    // If employee in Map and Certification Not in Map
+                    // Add certification and corresponding assessment to inner Map
+                    List<TrainingRecordsWrapper> trwList = new List<TrainingRecordsWrapper>();
+                    trwList.add(trw);
+                    innerMap2.put(trw.trainingName, trwList);
+                    trwByEmployeeIdCertificateNameMap.put(trw.account_contact_role_Id, innerMap2);
+                }
+            } else {
+                //If employee not in Map, create new entry
+                Map<String, List<TrainingRecordsWrapper>> innerMap3 = new  Map<String, List<TrainingRecordsWrapper>>(); 
+                List<TrainingRecordsWrapper> trwList = new List<TrainingRecordsWrapper>();
+                trwList.add(trw);
+                innerMap3.put(trw.trainingName, trwList);
+                trwByEmployeeIdCertificateNameMap.put(trw.account_contact_role_Id, innerMap3);
+            }
+        }
+        List<TrainingRecordsWrapper> finalltrWrapper = new List<TrainingRecordsWrapper>();
+        //Populate list of records to be returned
+        for(Id empId: trwByEmployeeIdCertificateNameMap.keySet()){
+            Map<String, List<TrainingRecordsWrapper>> assessmentsByCertificationNameMap = trwByEmployeeIdCertificateNameMap.get(empId);
+            for(String trainingName: assessmentsByCertificationNameMap.keySet()){
+                List<TrainingRecordsWrapper> assessmentsList = assessmentsByCertificationNameMap.get(trainingName);
+                for(TrainingRecordsWrapper assessment : assessmentsList){
+                    finalltrWrapper.add(assessment);
+                }
+            }
+        }
+
+
         if(searchType != null && searchType.equalsIgnoreCase('RecordsSummary')){
             /* Remove Duplicates */
             Boolean exists = false;
             Integer index = -1;
-            for(TrainingRecordsWrapper rec: ltrWrapper){
+            for(TrainingRecordsWrapper rec: finalltrWrapper){
                 exists = false;
                 for(Integer i = 0; i < ltrWrapperNoDuplicates.size(); i++){
                     if(rec.itpName.equalsIgnoreCase(ltrWrapperNoDuplicates[i].itpName)){
@@ -1019,10 +1112,10 @@ public without sharing class portalIftpTrainingRecords {
         if(searchType != null && searchType.equalsIgnoreCase('RecordsSummary')){
             return ltrWrapperNoDuplicates;
         } else {
-            if(!ltrWrapper.isEmpty()){
-                ltrWrapper.sort();
+            if(!finalltrWrapper.isEmpty()){
+                finalltrWrapper.sort();
             }
-            return ltrWrapper;
+            return finalltrWrapper;
         }
     }
 

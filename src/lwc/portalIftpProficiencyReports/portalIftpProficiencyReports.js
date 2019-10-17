@@ -119,7 +119,9 @@ export default class portalIftpProficiencyReports extends LightningElement {
                             Object.keys(myResult2).forEach(function (el) {
                                 myTopicOptions.push({ label:myResult2[el].Name, value:myResult2[el].Name});
                             });
+
                             this.itpOptions = this.sortData('label', 'asc', myTopicOptions);
+                            this.itpValue = 'All';
                             this.cleanErrors();
                         })
                         .catch(error => {

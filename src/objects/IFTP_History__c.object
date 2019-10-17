@@ -218,14 +218,14 @@
         <externalId>false</externalId>
         <formula>CASE(Event_Type__c, 
 &quot;1&quot;, &quot;Employee Start Working for ITP&quot;, 
-&quot;2&quot;, &quot;Employee Stop Working for ITP&quot;,
-&quot;3&quot;, &quot;Employee Start Working at Station &quot;,
-&quot;4&quot;, &quot;Employee Stop Working at Station &quot;,
-&quot;5&quot;, &quot;Employee Receives Proficiency&quot;,
-&quot;6&quot;, &quot;Employee Loose Proficiency&quot;,
-&quot;7&quot;, &quot;Start Suppression&quot;,
-&quot;8&quot;, &quot;Stop Suppression&quot;,
-&quot;Other&quot;
+&quot;2&quot;, &quot;Employee Stop Working for ITP&quot;, 
+&quot;3&quot;, &quot;Employee Start Working at Station &quot;, 
+&quot;4&quot;, &quot;Employee Stop Working at Station &quot;, 
+&quot;5&quot;, &quot;Employee Receives Proficiency&quot;, 
+&quot;6&quot;, &quot;Employee Loose Proficiency&quot;, 
+&quot;7&quot;, &quot;Start Suppression&quot;, 
+&quot;8&quot;, &quot;Stop Suppression&quot;, 
+&quot;Other&quot; 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Event Type Description</label>
@@ -236,13 +236,13 @@
     </fields>
     <fields>
         <fullName>Event_Type__c</fullName>
-        <description>1 - Employee Start Working for ITP
-2 - Employee Stop Working for ITP
-3 - Employee Start Working at Station
-4 - Employee Stop Working at Station
-5 - Employee Receives Proficiency
-6 - Employee Loose Proficiency
-7 - Start Suppression
+        <description>1 - Employee Start Working for ITP 
+2 - Employee Stop Working for ITP 
+3 - Employee Start Working at Station 
+4 - Employee Stop Working at Station 
+5 - Employee Receives Proficiency 
+6 - Employee Loose Proficiency 
+7 - Start Suppression 
 8 - Stop Suppression</description>
         <externalId>false</externalId>
         <label>Event Type</label>
@@ -341,11 +341,53 @@
     <label>IFTP History</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Employee_Code__c</columns>
+        <columns>Employee_First_Name__c</columns>
+        <columns>Employee_Last_Name__c</columns>
+        <columns>Certification_Name__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Proficiency_Level__c</columns>
+        <columns>Address_City__c</columns>
+        <columns>ITP_Name__c</columns>
+        <columns>Event_Type_Description__c</columns>
+        <columns>Event_Type__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>ITP_Name__c</field>
+            <operation>equals</operation>
+            <value>Automation ITP</value>
+        </filters>
+        <filters>
+            <field>Event_Type__c</field>
+            <operation>equals</operation>
+            <value>5</value>
+        </filters>
         <label>All</label>
     </listViews>
+    <listViews>
+        <fullName>Only_Proficiency_5_and_6</fullName>
+        <columns>NAME</columns>
+        <columns>Employee_Code__c</columns>
+        <columns>Employee_First_Name__c</columns>
+        <columns>Employee_Last_Name__c</columns>
+        <columns>Certification_Name__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Proficiency_Level__c</columns>
+        <columns>Address_City__c</columns>
+        <columns>ITP_Name__c</columns>
+        <columns>Event_Type_Description__c</columns>
+        <columns>Event_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Event_Type__c</field>
+            <operation>contains</operation>
+            <value>5,6</value>
+        </filters>
+        <label>Only Proficiency 5 and 6</label>
+    </listViews>
     <nameField>
-        <displayFormat>IH-{00000}</displayFormat>
+        <displayFormat>IH-{0000000}</displayFormat>
         <label>IFTP History Name</label>
         <type>AutoNumber</type>
     </nameField>
