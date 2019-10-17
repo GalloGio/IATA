@@ -64,27 +64,7 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
         this.loadingSearchCriteria = true;
         registerListener('stationsChanged', this.handleStationsChanged, this);
        
-        getITPStations()
-            .then(result => {
-                let myResult = JSON.parse(JSON.stringify(result));
-
-                this.itpStations = myResult;
-                let myTopicOptions = [];
-
-                Object.keys(myResult).forEach(function (el) {
-                    //myTopicOptions.push({ label: myResult[el].City__c, value: myResult[el].Code__c });
-                    myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
-                });
-                this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
-                this.cleanErrors();
-            })
-            .catch(error => {
-                console.error('getITPStations - Error : ' + error);
-                this.mainErrorMessage = error;
-                this.error = error;
-            });  
-        
-        getCertificationTypes({certificationType: 'Aircraft'})
+         getCertificationTypes({certificationType: 'Aircraft'})
             .then(result => {
                 let myResult = JSON.parse(JSON.stringify(result));
                 
@@ -138,6 +118,25 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
                         this.stationValue = null;
                     }
                 }
+                getITPStations({accountId: myResult.accountId})
+                .then(result => {
+                    let myResult = JSON.parse(JSON.stringify(result));
+    
+                    this.itpStations = myResult;
+                    let myTopicOptions = [];
+    
+                    Object.keys(myResult).forEach(function (el) {
+                        //myTopicOptions.push({ label: myResult[el].City__c, value: myResult[el].Code__c });
+                        myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
+                    });
+                    this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
+                    this.cleanErrors();
+                })
+                .catch(error => {
+                    console.error('getITPStations - Error : ' + error);
+                    this.mainErrorMessage = error;
+                    this.error = error;
+                }); 
             }
 
         })
