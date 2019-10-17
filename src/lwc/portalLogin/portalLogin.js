@@ -67,6 +67,7 @@ export default class PortalLogin extends LightningElement {
     @track isEmailFieldReadOnly = false;
     @track isFrozen = false;
     @track isLoginDisabled = false;
+    @track isEmailInvalid = false;
     exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_point.svg';
     startURL = "";
 
@@ -218,7 +219,7 @@ export default class PortalLogin extends LightningElement {
             this.template.querySelector('[data-id="loginButton"]').classList.add('containedButtonDisabled');
             this.template.querySelector('[data-id="loginButton"]').classList.remove('containedButtonLogin');
         }
-        this._showLoginError(false, "");
+        this._showLoginError(false, "", false);
 
         if(event.keyCode == 13 && this.loginButtonDisabled == false){
             this.handleLogin();
@@ -262,7 +263,7 @@ export default class PortalLogin extends LightningElement {
 
         }
 
-        this._showLoginError(false, "");
+        this._showLoginError(false, "", false);
 
         if(event.keyCode == 13 && this.loginButtonDisabled == false){
             this.handleLogin();
@@ -281,7 +282,7 @@ export default class PortalLogin extends LightningElement {
         const RegistrationUtilsJs = new RegistrationUtils();
         RegistrationUtilsJs.checkEmailIsValid(`${this.email}`).then(result=> {
             if(result == false){
-                this._showLoginError(true, this.labels.CSP_Invalid_Email);
+                this._showLoginError(true, this.labels.CSP_Invalid_Email, true);
                 this.isLoading = false;
                 return;
             }else{
@@ -295,7 +296,7 @@ export default class PortalLogin extends LightningElement {
                         if(result.userIsFrozen == true){
                             this.showLoginForm = false;
                         }
-                        this._showLoginError(true, response.errorMessage);
+                        this._showLoginError(true, response.errorMessage, false);
                         this.isLoading = false;
                     }
                 })
@@ -353,11 +354,18 @@ export default class PortalLogin extends LightningElement {
         }
     }
 
-    _showLoginError(state, message){
+    _showLoginError(state, message, isEmailInvalid){
         var emailDiv = this.template.querySelector('[data-id="emailDiv"]');
         var passwordDiv = this.template.querySelector('[data-id="passwordDiv"]');
-        this.errorMessage = message;
-        this.showError = state;
+
+        if(isEmailInvalid == false){
+            this.errorMessage = message;
+            this.showError = state;
+            this.isEmailInvalid = false;
+        }else{
+            this.isEmailInvalid = true;
+        }
+
         this.displayTroubleshooting = state;
 
         if(state == true){

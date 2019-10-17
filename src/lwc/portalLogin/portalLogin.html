@@ -45,6 +45,9 @@
                                                         <input type="text" value={email} data-id="emailInput" placeholder=" " required="" class="slds-input"
                                                             onkeyup={handleEmailChange} onfocusout={handleEmailFocusOut} readonly={isEmailFieldReadOnly} />
                                                     </div>
+                                                <div if:true={isEmailInvalid}>
+                                                    <div class="slds-form-element__help">{labels.CSP_Invalid_Email}</div>
+                                                </div>
                                                 </div>
                                             </lightning-layout-item>
                                             <lightning-layout-item size="12">

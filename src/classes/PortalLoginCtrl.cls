@@ -111,7 +111,7 @@ public with sharing class PortalLoginCtrl {
             }
 
             if(oneUser.CNS_Account_or_Agency__c){
-                startUrl = OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Homepage/?communityName=CNS');
+                startUrl = OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Homepage?communityName=CNS');
             }
 
             username=null != oneUser ? oneUser.Username : username;
