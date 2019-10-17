@@ -40,9 +40,9 @@ public without sharing class portalIftpHistoryManagement {
         }
         return ih;
     }
-
+    
     @AuraEnabled (cacheable=false)    
-    public static IFTP_History__c createIftpHistoryRecord(Integer eventType,
+    public static IFTP_History__c createIftpHistoryRecord(Integer eventType, 
                                                             String employeeCode, 
                                                             String itpName, 
                                                             String employeeFirstName, 
@@ -114,6 +114,7 @@ public without sharing class portalIftpHistoryManagement {
     public static LoggedUserInfoWrapper getLoggedUserNameStr(){
         Id userId = System.UserInfo.getUserId();
         Contact loggedUserInfo = [SELECT FirstName, LastName, Account.Name FROM Contact WHERE id IN (SELECT ContactId FROM user WHERE Id = :userId) LIMIT 1];
+
 
         LoggedUserInfoWrapper userWrap = new LoggedUserInfoWrapper(loggedUserInfo.Account.Name ,loggedUserInfo.FirstName, loggedUserInfo.LastName);
 
@@ -193,8 +194,11 @@ public without sharing class portalIftpHistoryManagement {
                 // 2 - Employee Stop Working for ITP 
                 if(rec.Event_Type__c == '2'){
                     isWorking = false;
-                    if(workingEmp.contains(currentEmp)){
-                        workingEmp.remove(currentEmp);
+                    //Only remove from list if the month NOT equal the current Month
+                    if(Integer.valueOf(createdMonth) < Integer.valueOf(monthValue) ){
+                        if(workingEmp.contains(currentEmp)){
+                            workingEmp.remove(currentEmp);
+                        }
                     }
                 }
                
@@ -261,14 +265,18 @@ public without sharing class portalIftpHistoryManagement {
                 }
                 // 6 - Employee Loose Proficiency 
                 if(rec.Event_Type__c == '6'){
-                    Set<String> auxSet = new Set<String>();
 
-                    if(mapProfEmp.containsKey(rec.Employee_Code__c)){
-                        auxSet = mapProfEmp.get(rec.Employee_Code__c);
-                        if(auxSet.contains(rec.Certification_Name__c)){
-                            auxSet.remove(rec.Certification_Name__c);
+                    //Only remove from list if the month NOT equal the current Month
+                    if(Integer.valueOf(createdMonth) < Integer.valueOf(monthValue) ){
+                        Set<String> auxSet = new Set<String>();
+
+                        if(mapProfEmp.containsKey(rec.Employee_Code__c)){
+                            auxSet = mapProfEmp.get(rec.Employee_Code__c);
+                            if(auxSet.contains(rec.Certification_Name__c)){
+                                auxSet.remove(rec.Certification_Name__c);
+                            }
+                            mapProfEmp.put(rec.Employee_Code__c, auxSet);
                         }
-                        mapProfEmp.put(rec.Employee_Code__c, auxSet);
                     }                                          
                 }
                
@@ -328,17 +336,18 @@ public without sharing class portalIftpHistoryManagement {
         }
 
         
-
-
-        List<Contact_Role_Certification__c> lContRoleCerts = [SELECT Account_Contact_Role__r.Company_Code__c,
+        List<AggregateResult> lContRoleCerts = [SELECT Account_Contact_Role__r.Company_Code__c,
                                 Certification__c, Certification__r.Code__c, Certification__r.Name
                             FROM Contact_Role_Certification__c  
                             WHERE Account_Contact_Role__r.Company_Code__c IN :workingEmp
                             AND Account_Contact_Role__r.Contact__r.AccountId = :accId.Id
                             AND Certification__c IN :listCert
                             AND createddate < :checkDateNextMonth
-                            AND Expiration_Date__c > :checkDatePreviousMonth ];
-
+                            AND Expiration_Date__c > :checkDatePreviousMonth 
+                            GROUP BY Account_Contact_Role__r.Company_Code__c,
+                                Certification__c, Certification__r.Code__c, Certification__r.Name ];
+       
+  
         System.debug('[portalIftpHistoryManagement - getProficiencyReport]: lContRoleCerts:' + lContRoleCerts);
         System.debug('[portalIftpHistoryManagement - getProficiencyReport]: lContRoleCerts:' + lContRoleCerts.size());
 
@@ -346,24 +355,22 @@ public without sharing class portalIftpHistoryManagement {
         Integer numberModules = 0;
         Map<String,Integer> empModules = new Map<String,Integer>();
         
-        for(Contact_Role_Certification__c rec : lContRoleCerts){
+        for(AggregateResult rec : lContRoleCerts){
 
-            if(currentEmp != rec.Account_Contact_Role__r.Company_Code__c){
+            if(currentEmp != (String)rec.get('Company_Code__c')){
                  //Check 1st employee
                 if(currentEmp == ''){
-                    currentEmp = rec.Account_Contact_Role__r.Company_Code__c;
+                    currentEmp =  (String)rec.get('Company_Code__c');
                 }else{
-                    // empModules.put(currentEmp, numberModules);
-                    
                     //reset for new employee
                     numberModules = 0;
-                    currentEmp = rec.Account_Contact_Role__r.Company_Code__c;
+                    currentEmp = (String)rec.get('Company_Code__c');
                 }
             }
 
             if(mapProfEmp.containsKey(currentEmp)){
                 Set<String> auxSet2 = mapProfEmp.get(currentEmp);
-                if(auxSet2.contains(rec.Certification__r.Name)){
+                if(auxSet2.contains((String)rec.get('Name'))){
                     numberModules++;
                 }
             }
