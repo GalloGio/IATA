@@ -100,21 +100,28 @@ public without sharing class PortalIftpUtils {
     * @return List<Case>
     */
     @AuraEnabled(cacheable=false)
+    public static List<Address__c> getITPStations(Id accountId){
+        System.debug('getITPStations');
+        System.debug('accountId' + accountId);
+        List<Address__c> stations = [SELECT City__c, Code__c, Description__c 
+                                     FROM Address__c 
+                                     WHERE Id in (
+                                            SELECT Address__c 
+                                            FROM Role_Address__c 
+                                            WHERE Account_Role_Service__r.Account_Role__r.Account__c = :accountId
+                                            ) ];
+
+        return stations;
+    }
+
+    @AuraEnabled(cacheable=false)
     public static List<Address__c> getITPStations(){
 
         Id userId = System.UserInfo.getUserId();
 
         User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
 
-        List<Address__c> stations = [SELECT City__c, Code__c, Description__c 
-                                     FROM Address__c 
-                                     WHERE Id in (
-                                            SELECT Address__c 
-                                            FROM Role_Address__c 
-                                            WHERE Account_Role_Service__r.Account_Role__r.Account__c = :userAcc.contact.accountid
-                                            ) ];
-
-        return stations;
+        return getITPStations(userAcc.contact.accountid);
     }
 
     /* 
@@ -397,7 +404,7 @@ public without sharing class PortalIftpUtils {
     public static InsertStationWrapper updateStation(List<Object> dataToSave, String origin){
         List<Role_Address__c> stationsToUpdate = new List<Role_Address__c>();
         InsertStationWrapper irw;
-        List<Address__c> ITPStationsInDatabase = PortalIftpUtils.getITPStations();
+        List<Address__c> ITPStationsInDatabase = getITPStations();
         
         for(Object rec : dataToSave){
             Role_Address__c auxStation = (Role_Address__c)JSON.deserialize(JSON.serialize(rec ), Role_Address__c.class);
@@ -430,7 +437,7 @@ public without sharing class PortalIftpUtils {
 
             List<Role_Address__c> stationsToInsert = new List<Role_Address__c>();
 
-            List<Address__c> ITPStationsInDatabase = PortalIftpUtils.getITPStations();
+            List<Address__c> ITPStationsInDatabase = getITPStations();
 
             for(Object rec : dataToSave){
                 Role_Address__c auxStation = (Role_Address__c)JSON.deserialize(JSON.serialize(rec ), Role_Address__c.class);
@@ -472,11 +479,11 @@ public without sharing class PortalIftpUtils {
         List<ImportResultsWrapper> results = new List<ImportResultsWrapper>();
         try{
             
-            UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
+            UserInfoRecordsWrapper ui = getUserInfo();
 
             //SELECT Id, City__c, Code__c, Description__c FROM Address__c
-            List<Address__c> allAddr = PortalIftpUtils.getAllStations();
-            List<Address__c> userAddr = PortalIftpUtils.getITPStations();
+            List<Address__c> allAddr = getAllStations();
+            List<Address__c> userAddr = getITPStations();
             
             Map<String, Address__c> mAllAddr = new Map<String, Address__c>();
             Map<String, Address__c> mUserAddr = new Map<String, Address__c>();
@@ -582,17 +589,26 @@ public without sharing class PortalIftpUtils {
             UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 
             List<Account_Contact_Role__c> accEmps = PortalIftEmployeeRecordsManagement.getAllITPEmployees();
+            List<Address__c> allAddr = getAllStations();
+            List<Address__c> userAddr = getITPStations(ui.accountId);
 
-            List<Address__c> allAddr = PortalIftpUtils.getAllStations();
-            List<Address__c> userAddr = PortalIftpUtils.getITPStations();
-            Map<String, Account_Contact_Role__c> mAccEmps = new Map<String, Account_Contact_Role__c>();
             
+            Map<String, Account_Contact_Role__c> mAccEmps = new Map<String, Account_Contact_Role__c>();
+            Map<String, Address__c> mAllAddr = new Map<String, Address__c>();
+            Map<String, Address__c> mUserAddr = new Map<String, Address__c>();
+
             for(Account_Contact_Role__c emp : accEmps){
                 if(String.isNotBlank(emp.Company_Code__c)){
                     mAccEmps.put(emp.Company_Code__c, emp);
                 }   
             }
-
+            for(Address__c addr : allAddr){
+                mAllAddr.put(addr.Code__c, addr);
+            }
+            for(Address__c addr : userAddr){
+                mUserAddr.put(addr.Code__c, addr);
+            }
+            
             ContentVersion cv=[select id,ContentDocumentId,versiondata from Contentversion where ContentDocumentId=:fileId AND IsLatest = true ];
             Blob csvFileBody =cv.VersionData;
             String csvAsString= csvFileBody.toString();
@@ -648,7 +664,7 @@ public without sharing class PortalIftpUtils {
             List<Contact> contactsToUpdate = new List<Contact>();
             List<Account_Contact_Role__c> accContRoleToInsert = new List<Account_Contact_Role__c>();
             List<Account_Contact_Role__c> accContRoleToUpdate = new List<Account_Contact_Role__c>();
-            Map<String, List<String>> mapEmployeeStationCodes = new Map<String, List<String>>();
+            Map<String, Set<String>> mapEmployeeStationCodes = new Map<String, Set<String>>();
             List<Role_Address__c> roleAdressToInsert = new List<Role_Address__c>();
             List<Role_Address__c> roleAddressesToUpdatePrimaryStation = new List<Role_Address__c>();
             List<Role_Address__c> existingRoleAddresses = new List<Role_Address__c>();
@@ -691,26 +707,13 @@ public without sharing class PortalIftpUtils {
                         if(allMessages.size() == 0){
                             // stations: Splits string into separated station codes
                             List<String> auxstationsCodes = new List<String>();
-                            List<String> auxstationsCodes2 = new List<String>();
-                            List<String> stationsCodes = new List<String>();
+                            Set<String> stationsCodes = new Set<String>();
                             auxstationsCodes = stationsCodesString.split(';');
                             if(auxstationsCodes.size() > 0){
-                                // stations: trim codes
+
+                                // stations: trim codes and remove duplicates
                                 for(String code: auxstationsCodes){
-                                    auxstationsCodes2.add(code.trim());
-                                }
-                                // stations: remove duplicates
-                                Boolean notDuplicated = true;
-                                for(String code: auxstationsCodes2){
-                                    notDuplicated = true;
-                                    for(String c: stationsCodes){
-                                        if(c.equalsIgnoreCase(code)){
-                                            notDuplicated = false;
-                                        }
-                                    }
-                                    if(notDuplicated){
-                                        stationsCodes.add(code);
-                                    }     
+                                    stationsCodes.add(code.trim());
                                 }
                                 // Check if ITP has station 
                                 Boolean addrInITPAddrs = false;
@@ -718,18 +721,13 @@ public without sharing class PortalIftpUtils {
                                 for(String code: stationsCodes){
                                     addrInITPAddrs = false;
                                     toBeMapped = true;
-                                    for(Address__c station: userAddr){
-                                        if(station.Code__c.equalsIgnoreCase(code)){
-                                            addrInITPAddrs = true;
-                                        }
+                                    if(mUserAddr.containsKey(code)){
+                                        addrInITPAddrs = true;
                                     } 
                                     if(!addrInITPAddrs){
                                         Boolean exists = false;
-                                        for(Address__c addr: allAddr){
-                                            if(code.equalsIgnoreCase(addr.Code__c)){
-                                                exists = true;
-                                                break;
-                                            }
+                                        if(mAllAddr.containsKey(code)){
+                                            exists = true;
                                         }
 
                                         if(exists){
@@ -772,7 +770,6 @@ public without sharing class PortalIftpUtils {
                         cont.LastName = lastName;
                         cont.AssistantName = companyCode;
                         cont.AccountId = ui.accountId;
-                        //cont.Email = busEmail;
                         cont.Title = title;
                         cont.Phone = phone;
                         cont.Status__c = 'Active';
@@ -831,21 +828,27 @@ public without sharing class PortalIftpUtils {
             }
 
             if(contactsToInsert.size() > 0 || contactsToUpdate.size() > 0){
+                System.debug('### contactsToInsert.size() - ' + contactsToInsert.size());
+                System.debug('### contactsToUpdate.size() - ' + contactsToUpdate.size());
 
                 Savepoint sp = Database.setSavepoint();
                 try {
                     if(contactsToInsert.size() > 0){
                         insert contactsToInsert;
-
+                        System.debug('### here after insert contactsToInsert');
+                        Map<String, Contact> contByCodeMap = new Map<String, Contact>();
                         for(Contact c : contactsToInsert){
-                            for(Account_Contact_Role__c acr : accContRoleToInsert){
-                                if(c.AssistantName == acr.Company_Code__c){
-                                    acr.Contact__c = c.Id;
-                                    break;
-                                }
+                            contByCodeMap.put(c.AssistantName, c);
+                        }
+
+                        for(Account_Contact_Role__c acr : accContRoleToInsert){
+                            if(contByCodeMap.containsKey(acr.Company_Code__c)){
+                                acr.Contact__c = contByCodeMap.get(acr.Company_Code__c).Id;
                             }
                         }
+                        System.debug('### here before insert accContRoleToInsert');
                         insert accContRoleToInsert;
+                        System.debug('### here after insert accContRoleToInsert');
                     }
 
                     if(contactsToUpdate.size() > 0){
@@ -865,11 +868,12 @@ public without sharing class PortalIftpUtils {
                                                         Primary__c 
                                                     FROM Role_Address__c 
                                                     WHERE Account_Contact_Role__c IN :accContRoleToUpdate];
+                        System.debug('### here after  update accContRoleToUpdate');
                     }
                     // Insert in Role_Address__C (all records, from inserted and updateed contacts)
                     for(String key: mapEmployeeStationCodes.keySet()){
                         Id accountContactRoleID;
-                        List<String> stationsCodes = new List<String>();
+                        Set<String> stationsCodes = new Set<String>();
                         Boolean isUpdateEmployee = true;
                         if(mAccEmps.containsKey(key)){
                             accountContactRoleID = mAccEmps.get(key).Id;
@@ -888,38 +892,38 @@ public without sharing class PortalIftpUtils {
                         }
 
                         stationsCodes = mapEmployeeStationCodes.get(key);
-
-                        Boolean isFirstStation = true;
-                        for(String code: stationsCodes ){
-                            Boolean exists = false;
-                            if(isUpdateEmployee){
-                                // Check if station to be added is already a station of that employee
-                                Integer j = 0;
-                                while(j < existingRoleAddresses.size()){
-                                    if(existingRoleAddresses[j].Address__r.Code__c.equalsIgnoreCase(code) && existingRoleAddresses[j].Account_Contact_Role__r.Company_Code__c.equalsIgnoreCase(key)){
-                                        exists = true;
-                                        if(isFirstStation){
-                                            if(!existingRoleAddresses[j].Primary__c){
-                                                existingRoleAddresses[j].Primary__c = true;
-                                                roleAddressesToUpdatePrimaryStation.add(existingRoleAddresses[j]);
+                        if(accountContactRoleID != null){
+                            Boolean isFirstStation = true;
+                            for(String code: stationsCodes ){
+                                Boolean exists = false;
+                                if(isUpdateEmployee){
+                                    // Check if station to be added is already a station of that employee
+                                    Integer j = 0;
+                                    while(j < existingRoleAddresses.size()){
+                                        if(existingRoleAddresses[j].Address__r.Code__c.equalsIgnoreCase(code) && existingRoleAddresses[j].Account_Contact_Role__r.Company_Code__c.equalsIgnoreCase(key)){
+                                            exists = true;
+                                            if(isFirstStation){
+                                                if(!existingRoleAddresses[j].Primary__c){
+                                                    existingRoleAddresses[j].Primary__c = true;
+                                                    roleAddressesToUpdatePrimaryStation.add(existingRoleAddresses[j]);
+                                                }
+                                                isFirstStation = false;
+                                            } else{
+                                                if(existingRoleAddresses[j].Primary__c){
+                                                    existingRoleAddresses[j].Primary__c = false;
+                                                    roleAddressesToUpdatePrimaryStation.add(existingRoleAddresses[j]);
+                                                }
                                             }
-                                            isFirstStation = false;
-                                        } else{
-                                            if(existingRoleAddresses[j].Primary__c){
-                                                existingRoleAddresses[j].Primary__c = false;
-                                                roleAddressesToUpdatePrimaryStation.add(existingRoleAddresses[j]);
-                                            }
+                                            existingRoleAddresses.remove(j);                                                                                                                                                                                                                                                                                                
+                                            break;
+                                        } else {
+                                            j++;
                                         }
-                                        existingRoleAddresses.remove(j);                                                                                                                                                                                                                                                                                                
-                                        break;
-                                    } else {
-                                        j++;
                                     }
                                 }
-                            }
-                            if(!exists){
-                                for(Address__c station: allAddr){
-                                    if( code == station.Code__c){
+                                if(!exists){
+                                    if( mAllAddr.containsKey(code)){
+                                        Address__c station = mAllAddr.get(code);
                                         Role_Address__c roleAddressAux = new Role_Address__c();
                                         roleAddressAux.Account_Contact_Role__c = accountContactRoleID;
                                         roleAddressAux.Address__c = station.Id;
@@ -931,13 +935,16 @@ public without sharing class PortalIftpUtils {
                                         roleAdressToInsert.add(roleAddressAux);
                                         break;
                                     }
-                                }
-                            } 
+                                } 
+                            }
                         }
                     }
                     insert roleAdressToInsert;
+                    System.debug('### here after insert roleAdressToInsert');
+
                     if(roleAddressesToUpdatePrimaryStation.size() > 0){
                         update roleAddressesToUpdatePrimaryStation;
+                        System.debug('### here after update roleAddressesToUpdatePrimaryStation ');
                     }
 
                     // Create and Insert records on IFTP_History
@@ -1020,10 +1027,12 @@ public without sharing class PortalIftpUtils {
                     // delete records from role_address__c
                     // station related to employee records and employee proficiency related to station records
                     delete roleAdressToBeDeleted;
+                    System.debug('### here after delete roleAdressToBeDeleted ');
                     //insert all history records
                     if(IftpHistoryRecordsToBeInserted.size() > 0){
                         portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
                     }
+                    System.debug('### here after insertIntoIftpHistory');
 
                     for(ImportResultsWrapper r : results){
                         if(r.result ==  'Code ready to import'){

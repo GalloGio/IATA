@@ -134,7 +134,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                     }
                 }
             }
-            getITPStations()
+            getITPStations({accountId: myResult.accountId})
             .then(result => {
                 let myResult = JSON.parse(JSON.stringify(result));
                 let myTopicOptions = [];

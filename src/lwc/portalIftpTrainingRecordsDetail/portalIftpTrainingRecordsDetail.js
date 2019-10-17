@@ -199,7 +199,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
         if(allValid){
             this.showSearch = true;
-            if(this.itpOptions !== undefined && this.itpOptions.length < 2 ){
+            if(this.itpOptions !== undefined && this.itpOptions.length === 0 ){
                 this.dataRecords = false;
                 this.loading = false;
             } else {
