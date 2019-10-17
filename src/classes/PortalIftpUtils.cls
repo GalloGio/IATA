@@ -340,9 +340,24 @@ public without sharing class PortalIftpUtils {
     @AuraEnabled(cacheable=true)
     public static List<Account> getAllITP(){
 
+        String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'ITP');
+                    
+        List<Account_Role__c> accRoleCompanies = [SELECT Account__c 
+                                                    FROM Account_Role__c 
+                                                    WHERE RecordTypeId = :RECTYPE_ITP_AccRole 
+                                                    AND Account_Roles__r.Category__c = 'ITP'
+                                                    AND Account_Roles__r.Sector__c = 'Airline Supplier'];
+
+        Set<Id> accIds = new Set<Id>();
+        for(Account_Role__c ar : accRoleCompanies ){
+            accIds.add(ar.Account__c);
+        }
+
         List<Account> companies = [SELECT name  
                                             FROM Account 
-                                            WHERE Sector__c = 'Airline Supplier' AND Category__c = 'Fuel Supplier'];
+                                            WHERE Id IN :accIds
+                                            AND Sector__c = 'Airline Supplier' 
+                                            AND Category__c = 'Fuel Supplier'];
 
         return companies;
     }
