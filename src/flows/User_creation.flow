@@ -13,71 +13,6 @@
                 <stringValue>Notify Registration Lvl2</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_1_A1</name>
-        <label>Notify</label>
-        <locationX>100</locationX>
-        <locationY>200</locationY>
-        <actionName>Notify_Registration_Lvl2</actionName>
-        <actionType>flow</actionType>
-        <connector>
-            <targetReference>myWait_myRule_1</targetReference>
-        </connector>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>SObject</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>SObject</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue>Contact</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>SObject</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>SObject</name>
-            <value>
-                <elementReference>myVariable_current.Contact</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>ActionCallType</name>
-            <value>
-                <stringValue>process</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>flowSelection</name>
-            <value>
-                <stringValue>Notify Registration Lvl2</stringValue>
-            </value>
-        </processMetadataValues>
         <name>myWaitEvent_myWait_myRule_1_event_0_SA1</name>
         <label>Notify</label>
         <locationX>100</locationX>
@@ -402,7 +337,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_1_A1</targetReference>
+                <targetReference>myWait_myRule_1</targetReference>
             </connector>
             <label>Is GP account and not GP sector</label>
         </rules>
@@ -562,7 +497,7 @@
             <label>myPreWaitRule_myWait_myRule_1</label>
         </rules>
     </decisions>
-    <interviewLabel>User_creation-5_InterviewLabel</interviewLabel>
+    <interviewLabel>User_creation-6_InterviewLabel</interviewLabel>
     <label>User creation</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -685,13 +620,13 @@
             <inputParameters>
                 <name>TimeOffsetUnit</name>
                 <value>
-                    <stringValue>Hours</stringValue>
+                    <stringValue>Days</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>TimeOffset</name>
                 <value>
-                    <numberValue>1.0</numberValue>
+                    <numberValue>3.0</numberValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -737,13 +672,13 @@
             <inputParameters>
                 <name>TimeOffsetUnit</name>
                 <value>
-                    <stringValue>Hours</stringValue>
+                    <stringValue>Days</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>TimeOffset</name>
                 <value>
-                    <numberValue>2.0</numberValue>
+                    <numberValue>7.0</numberValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -789,13 +724,13 @@
             <inputParameters>
                 <name>TimeOffsetUnit</name>
                 <value>
-                    <stringValue>Hours</stringValue>
+                    <stringValue>Days</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>TimeOffset</name>
                 <value>
-                    <numberValue>3.0</numberValue>
+                    <numberValue>21.0</numberValue>
                 </value>
             </inputParameters>
             <inputParameters>
