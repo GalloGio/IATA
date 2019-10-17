@@ -525,12 +525,18 @@ public without sharing class PortalIftpUtils {
                     index++;
                 }
             }
+            //Remove duplicated station code
+            Set<String> stationCodesSet = new Set<String>();
+            for(Integer i=1;i<csvFileLines.size();i++){
+                String code = csvFileLines[i].trim();
+                stationCodesSet.add(code);
+            }
 
             List<Role_Address__c> stationsToInsert = new List<Role_Address__c>(); 
-            for(Integer i=1;i<csvFileLines.size();i++){
+            for(String code: stationCodesSet){
                 //string[] csvRecordData = csvFileLines[i].split(',');
                 
-                String code = csvFileLines[i].trim();
+                //String code = csvFileLines[i].trim();
 
                 if(mUserAddr.containsKey(code)){
                     Address__c addr = mUserAddr.get(code);
