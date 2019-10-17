@@ -79,6 +79,10 @@
         <value xsi:type="xsd:string">Data_Products</value>
     </values>
     <values>
+        <field>DataCategoryVisibility__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:type="xsd:string">Non_Technical_issue_Global_Agency_Directory</value>
     </values>
@@ -104,7 +108,7 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:double">9.0</value>
     </values>
     <values>
         <field>Permission_Set_Name__c</field>
