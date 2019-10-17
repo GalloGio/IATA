@@ -3133,6 +3133,14 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Add_User</shortDescription>
         <value>Add User</value>
     </labels>
+	<labels>
+        <fullName>CSP_AdditionalDetails</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Details Details page</shortDescription>
+        <value>Additional Details</value>
+    </labels>
     <labels>
         <fullName>CSP_Announcement</fullName>
         <language>en_US</language>
@@ -39822,15 +39830,7 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Select the topic covering the problem.</value>
-    </labels>
-        <labels>
-        <fullName>csp_AdditionalDetails</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Case Details Details page</shortDescription>
-        <value>Additonal Details</value>
-    </labels>
+    </labels>    
     <labels>
         <fullName>days_left</fullName>
         <language>en_US</language>
