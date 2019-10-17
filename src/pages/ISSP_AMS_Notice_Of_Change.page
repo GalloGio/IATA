@@ -2266,7 +2266,7 @@
 			where.parent().hover(function() {
 				whereToAppend.append(getWarningBox(warningMessage));
 			}, function() {
-				whereToAppend.html('');
+				removeMessage();
 			});
 		}
 
