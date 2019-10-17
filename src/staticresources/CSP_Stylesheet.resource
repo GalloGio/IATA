@@ -381,7 +381,7 @@ lightning-datatable .slds-th__action {
     vertical-align: middle;
 }
 
-.Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, 
+.Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, .Inprogress lightning-primitive-cell-wrapper lightning-formatted-text,
 .Escalated lightning-primitive-cell-wrapper lightning-formatted-text, .EscalatedInternally lightning-primitive-cell-wrapper lightning-formatted-text, 
 .EscalatedExternally lightning-primitive-cell-wrapper lightning-formatted-text, .ForReviewandAcceptance lightning-primitive-cell-wrapper lightning-formatted-text, 
 .OnHoldExternal lightning-primitive-cell-wrapper lightning-formatted-text, .OnHoldInternal lightning-primitive-cell-wrapper lightning-formatted-text, 
@@ -389,7 +389,7 @@ lightning-datatable .slds-th__action {
 .InputRequested lightning-primitive-cell-wrapper lightning-formatted-text, .PendingReconsideration lightning-primitive-cell-wrapper lightning-formatted-text,
 .ActionNeeded lightning-primitive-cell-wrapper lightning-formatted-text, .ActionNeeded span, .Open span, .InProgress span, .Escalated span,
 .EscalatedInternally span, .EscalatedExternally span, .ForReviewandAcceptance span, .OnHoldExternal span, .OnHoldInternal span,
-.Reopen span, .ClosedNotAccepted span, .InputRequested span, .PendingReconsideration span{
+.Reopen span, .ClosedNotAccepted span, .InputRequested span, .PendingReconsideration span, .Inprogress span{
     background-color: #fac832;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
