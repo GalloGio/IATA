@@ -27,16 +27,14 @@
                     <thead>
                         <tr>
                             <th class="tableLefty"></th>
-                            <template if:false={isAccount}>
-                                <th class="underLined">
-                                    <lightning-input 
-                                        type="checkbox"  
-                                        name="options"
-                                        checked={allContactsSelected}
-                                        onchange={handleRadioAllOptions}>
-                                    </lightning-input>
-                                </th>
-                            </template>
+                            <th class="underLined">
+                                <lightning-input 
+                                    type="checkbox"  
+                                    name="options"
+                                    checked={allContactsSelected}
+                                    onchange={handleRadioAllOptions}>
+                                </lightning-input>
+                            </th>
                             <th class="underLined">
                                 <!-- arrow spacer -->
                             </th>
@@ -50,11 +48,9 @@
                                         icon-name="utility:arrowdown" size="xx-small" data-name={field.fieldName}>></lightning-icon>
                                 </th>
                             </template>
-                            <template if:false={isAccount}>
-                                <th class="underLined">
-                                    <!-- three dots icon (contact access) -->
-                                </th>
-                            </template>
+                            <th class="underLined">
+                                <!-- three dots icon (contact access) -->
+                            </th>
                             <th class="tableLefty"></th>
                         </tr>
                     </thead>
@@ -63,17 +59,15 @@
                         <tbody key={record.Id}>
                             <tr>
                                 <td class="tableLefty"></td>
-                                <template if:false={isAccount}>
-                                    <td class="underLined">
-                                        <lightning-input 
-                                            type="checkbox" 
-                                            name="options"
-                                            checked={record.selected} 
-                                            data-item={record.Id} 
-                                            onchange={handleRadioOptions}>
-                                        </lightning-input>
-                                    </td>
-                                </template>
+                                <td class="underLined">
+                                    <lightning-input 
+                                        type="checkbox" 
+                                        name="options"
+                                        checked={record.selected} 
+                                        data-item={record.Id} 
+                                        onchange={handleRadioOptions}>
+                                    </lightning-input>
+                                </td>
                                 <td class="underLined chevronColumn" onclick={openRecordDetail} data-item={index}>
                                     <div class="cursorPointer inline-block">
                                         <lightning-icon class="darkBlueIcon" if:true={record.open}
@@ -100,37 +94,35 @@
                                         </span>
                                     </td>
                                 </template>
-                                <template if:false={isAccount}>
-                                    <td class="underLined">
-                                        <lightning-button-menu
-                                            class="removeArrowFromButtonMenu"        
-                                            variant="container" 
-                                            icon-name="utility:threedots_vertical" 
-                                            menu-alignment="right">
-                                                <lightning-menu-item
-                                                    data-item={record.Id}
-                                                    data-name="approve"
-                                                    class="text-bold"
-                                                    label="Approve"
-                                                    onclick={grantAccess}>
-                                                </lightning-menu-item>
-                                                <lightning-menu-item
-                                                    data-item={record.Id}
-                                                    data-name="approveAdmin"
-                                                    class="text-bold"
-                                                    label="Approve as Admin"
-                                                    onclick={grantAccess}>
-                                                </lightning-menu-item>                                            
-                                                <lightning-menu-item
-                                                    data-item={record.Id}
-                                                    data-name="inactive"
-                                                    class="text-bold"
-                                                    label="Inactive"
-                                                    onclick={denyAccess}>
-                                                </lightning-menu-item>
-                                        </lightning-button-menu>
-                                    </td>
-                                </template>
+                                <td class="underLined">
+                                    <lightning-button-menu
+                                        class="removeArrowFromButtonMenu"        
+                                        variant="container" 
+                                        icon-name="utility:threedots_vertical" 
+                                        menu-alignment="right">
+                                            <lightning-menu-item
+                                                data-item={record.Id}
+                                                data-name="approve"
+                                                class="text-bold"
+                                                label={_labels.ISSP_Activate}
+                                                onclick={grantAccess}>
+                                            </lightning-menu-item>
+                                            <lightning-menu-item
+                                                data-item={record.Id}
+                                                data-name="approveAdmin"
+                                                class="text-bold"
+                                                label={_labels.ISSP_MakeAdmin}
+                                                onclick={grantAccess}>
+                                            </lightning-menu-item>                                            
+                                            <lightning-menu-item
+                                                data-item={record.Id}
+                                                data-name="inactive"
+                                                class="text-bold"
+                                                label={_labels.ISSP_AMS_eBulletin_Disabled}
+                                                onclick={denyAccess}>
+                                            </lightning-menu-item>
+                                    </lightning-button-menu>
+                                </td>
                                 <td class="tableLefty"></td>
                             </tr>
 

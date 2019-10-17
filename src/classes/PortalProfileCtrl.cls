@@ -242,8 +242,8 @@ public static Contact contactInfo = new Contact();
 
 
     @AuraEnabled
-    public static List<ContactWrapper> getAccountContacts(Integer offset, Integer batchSize){
-        List<Contact> contacts = DAL_WithoutSharing.getContactsByAccountId(myContact.AccountId,offset,batchSize);
+    public static List<ContactWrapper> getAccountContacts(Integer offset){
+        List<Contact> contacts = DAL_WithoutSharing.getContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH);
         List<ContactWrapper> wrappers = getContactWrappers(contacts);
         return wrappers;
     }
