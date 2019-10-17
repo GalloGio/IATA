@@ -124,7 +124,7 @@ public with sharing class AttachmentListCtrl {
         
     }
 
-    @AuraEnabled(cacheable=false)
+    @AuraEnabled(cacheable=true)
     public static List<WrapperAttach> getAllAttachmentsByParentIdAndPortal(string parentId, boolean isPortal, boolean isSAAMorSIDRA,boolean withBody) {
     //public static List<WrapperAttach> getAllAttachments(String parentId, Boolean isPortal) {
         System.debug('parentId: ' + parentId);
@@ -196,6 +196,11 @@ public with sharing class AttachmentListCtrl {
 			//TransformationHelper.sendEmailSupport('FATAL: GenericAttachmentListController in function refreshList()  ' ,'STACKTRACE   ' + e.getStackTraceString()  + '  '  + e.getMessage());
 		}     
 		return listAttachments;
+    }
+
+    @AuraEnabled(cacheable=false)
+    public static List<WrapperAttach> getAllAttachmentsByParentIdAndPortalLightning(string parentId, boolean isPortal, boolean isSAAMorSIDRA,boolean withBody) {
+        return getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA, withBody); 
     }
     
     private static Boolean checkIfUSerHaveFullAccess(){

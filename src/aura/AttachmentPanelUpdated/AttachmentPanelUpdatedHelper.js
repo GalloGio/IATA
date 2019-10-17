@@ -697,13 +697,12 @@
     },
 
     helperGetAttachList: function (component) {
-
         var parentId = component.get("v.recordId");
         var isPortal = component.get("v.isPortal");
         var isSAAMorSIDRA = component.get("v.panelProperties").isSAAMorSIDRA;
 
         //get this page properties
-        var getLstAttachmentsAction = component.get("c.getAllAttachmentsByParentIdAndPortal");
+        var getLstAttachmentsAction = component.get("c.getAllAttachmentsByParentIdAndPortalLightning");
         getLstAttachmentsAction.setParams({
             "parentId": parentId,
             "isPortal": isPortal,
