@@ -23,7 +23,7 @@ export default class PortalHomeCalendar extends LightningElement {
     };
 
     @track loading = true;
-    @track caseDetails ;
+    @track caseDetails;
     @track lstMessages;
 
     @track newMessage = '';
@@ -31,7 +31,7 @@ export default class PortalHomeCalendar extends LightningElement {
     @track messageInputLoading = false;
 
     @track showCaseMessagingSection = false;
-    @track messagingHeight = 'height:400px;';
+    @track messagingHeight = 'display:none';
 
     conversationImageURL = CSP_PortalPath + 'CSPortal/Images/Icons/messageBallons.svg';
 
@@ -118,10 +118,10 @@ export default class PortalHomeCalendar extends LightningElement {
     toggleCaseMessagingSection(){
         if(this.showCaseMessagingSection){
             this.showCaseMessagingSection = false;
-            this.messagingHeight = 'height:400px;transition: height 0.3s ease;';
+            this.messagingHeight = 'display:none;';
         }else{
             this.showCaseMessagingSection = true;
-            this.messagingHeight = 'height:100%;transition: height 0.3s ease;';
+            this.messagingHeight = 'display:block;height:100%;transition: height 0.3s ease;';
         }
     }
 

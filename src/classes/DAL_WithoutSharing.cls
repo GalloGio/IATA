@@ -63,7 +63,8 @@ public static List<Contact> getContactsByAccountId(Id accountId, Integer offset,
 	                          User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
 	                          Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name,
                               Account_site__c, Account.RecordTypeId, Account.RecordType.Name, Account.BillingCity 
-	                          from Contact where AccountId IN:allBranches.keySet() and Status__c = 'Active' ORDER BY Name ASC LIMIT:batchSize OFFSET :offset ];
+	                          from Contact where AccountId IN:allBranches.keySet() and Status__c = 'Active' AND User_Portal_Status__c IN ('Pending Approval', 'Approved Admin', 'Approved User', '') 
+							  ORDER BY SortingOrder__c LIMIT:batchSize OFFSET :offset ];
 
 	if(!contacts.isEmpty()) {
 		return contacts;
