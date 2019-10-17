@@ -7,6 +7,9 @@ global class ANG_OscarProcessHelper {
     public static final String NEW_HE_CHANGE_ENTITY_LOCATION_ERROR_MSG = 'The \'Change of Entity Location\' and \'Change of Entity Location within EU\' fields cannot be checked at the same time.';
 
 	/* EasyPay Service Providers */
+	public static final Set<String> MODEL_A_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)'};
+	public static final Set<String> MODEL_B_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)','IATA EasyPay (MSTS)'};
+	public static final Set<String> MODEL_B_PLUS_PROVIDERS = new Set<String>{'IATA EasyPay (2C2P)'};
 	public static final Set<String> IEP_MODEL_PROVIDERS = new Set<String>{'Model A', 'Model B', 'Model B+'};
 
 	public static boolean isIATACodeGenerationRunning = false;
@@ -2159,12 +2162,24 @@ global class ANG_OscarProcessHelper {
 
 		Map<Id,Contact> contactAcc = new Map<Id,Contact>();
 
+		Set<String> selectedProviders;
+		
+		if (model == 'A' || model == 'setup') {
+			selectedProviders = MODEL_A_PROVIDERS;
+		} else if (model == 'B') {
+			selectedProviders = MODEL_B_PROVIDERS;
+		} else {
+			selectedProviders = MODEL_B_PLUS_PROVIDERS;
+		}
+
 		for (Contact con : [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, AccountId,
 			(SELECT Id, Portal_Application__r.Name FROM Portal_Application_Rights__r WHERE ANG_Portal_Service_Role__c = 'IEP Admin')
 			FROM Contact WHERE AccountId IN :accsMap.keySet() 
             AND Id IN (SELECT Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted'
                 AND ANG_Portal_Service_Role__c = 'IEP Admin'
-                AND Contact__r.Account.IATA_ISO_Country__r.ANG_IEP_Model__c IN :IEP_MODEL_PROVIDERS)]){
+                //AND Contact__r.Account.IATA_ISO_Country__r.ANG_IEP_Model__c = :selectedModel
+				AND Portal_Application__r.Name IN :selectedProviders)]){
+
                 
 			contactAcc.put(con.AccountId,con);
 		} 

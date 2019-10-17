@@ -514,6 +514,8 @@
                 $('[id$="branchaccountsel"]').first().insertAfter($('[id$="langGSA"]'));
                 
                 checkLocationQuestion();
+
+                checkSelectAll();
             }
         }
 
@@ -594,10 +596,29 @@
             });
         }
 
-        function checkSelectAllTimer() {
-            setTimeout(function() {
-                checkSelectAll();
-            }, 500);
+        function checkSelectAll() {
+            var hierarchy = $('[id$=hierarchyList]')[0].children[2].children;
+
+            var allChecked = true;
+            
+            for (var i = 0; i < hierarchy.length; i++) {
+                if (hierarchy[i].firstChild.children[0].checked === false) {
+                    allChecked = false;
+                    break;
+                }
+            }
+
+            $('[id$=allHierarchySelected]')[0].checked = allChecked;
+        }
+
+        function selectAllAEs() {
+            var hierarchy = $('[id$=hierarchyList]')[0].children[2].children;
+
+            var allChecked = $('[id$=allHierarchySelected]')[0].checked;
+            
+            for (var i = 0; i < hierarchy.length; i++) {
+                hierarchy[i].firstChild.children[0].checked = allChecked;
+            }
         }
 
     </script>
@@ -698,9 +719,8 @@
                             <apex:actionFunction name="reRenderAccountsNoc" action="{!resetHierarchy}" status="blockEditing" oncomplete="reRenderBranchAccs();"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions, nocFormQuestions" oncomplete=""/>
                             <apex:actionFunction name="reRenderNocMessage" reRender="nocMessage"/>
-                            <apex:actionFunction name="reRenderBranchAccs" status="blockEditing" reRender="branchaccountsel, table, correctHierarchy" oncomplete=""/>
-                            <apex:actionFunction name="selectAllAEs" action="{!doSelectAll}" status="blockEditing" reRender="table" />
-                            <apex:actionFunction name="checkSelectAll" action="{!checkSelectAllAEs}" reRender="table" />
+                            <!--<apex:actionFunction name="selectAllAEs" action="{!doSelectAll}" status="blockEditing" reRender="table" />-->
+                            <apex:actionFunction name="reRenderBranchAccs" status="blockEditing" reRender="branchaccountsel, table, correctHierarchy" oncomplete="checkSelectAll();"/>
                             
                             <apex:pageBlock id="step1Block" mode="edit" >
                                 <apex:pageBlockButtons location="bottom" style="padding-left:100px">
@@ -861,9 +881,9 @@
                                             <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
                                                 <apex:column >
                                                     <apex:facet name="header">
-                                                        <apex:inputCheckbox value="{!selectAll}" onchange="selectAllAEs();"/>
+                                                        <apex:inputCheckbox id="allHierarchySelected" value="{!selectAll}" onchange="selectAllAEs();"/>
                                                     </apex:facet>
-                                                    <apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}" onchange="checkSelectAllTimer();"/>
+                                                    <apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}" onchange="checkSelectAll();"/>
                                                 </apex:column>
 
                                                 <apex:column value="{!hi.acc['Name']}"/>
