@@ -157,7 +157,7 @@ global class AMS_OSCAR_Webservice {
     }
 
     WebService static String createAMLCaseWithNoOscarUpdate(AMS_OSCAR__c oscar) {
-        return execCreateAMLCase(oscar, false);
+        return execCreateAMLCase(oscar, false, false);
     }
 
     WebService static String createAMLCase(String oscarId) {
@@ -168,7 +168,11 @@ global class AMS_OSCAR_Webservice {
         return 'ERROR: OSCAR not found.';
     }
 
-    private static String execCreateAMLCase(AMS_OSCAR__c oscar, Boolean updateOscar) {
+    private static String execCreateAMLCase(AMS_OSCAR__c oscar, Boolean updateOscar){
+        return execCreateAMLCase(oscar, updateOscar, true);
+    }
+
+    private static String execCreateAMLCase(AMS_OSCAR__c oscar, Boolean updateOscar, Boolean toUpdateAccount) {
         String result = '';
 
         if (oscar.STEP17__c == AMS_Utils.IN_PROGRESS) return 'ERROR: Due Diligence already in progress';
@@ -206,7 +210,8 @@ global class AMS_OSCAR_Webservice {
                 update oscar;
             }
 
-            update new Account(Id = oscar.Account__c, Due_Diligence_Status__c = 'In Progress');
+            if(toUpdateAccount)
+                update new Account(Id = oscar.Account__c, Due_Diligence_Status__c = 'In Progress');
 
             return issCase.Id;
 
@@ -304,15 +309,16 @@ global class AMS_OSCAR_Webservice {
         if (step=='35') {
             if (oscar.Step35__c == 'Failed') return;
             throw new OSCARException(message);
-        }       
-        if (step=='44' && oscar.Step44__c == 'Failed') {
-            if (oscar.Process__c != AMS_Utils.NGANNUALREVAL) return;
-            throw new OSCARException(message);
         }
-        if (step=='44' && oscar.Step44__c == 'Passed') {
-            if (oscar.Process__c == AMS_Utils.NGANNUALREVAL) return;
-            message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Passed" in this step.';
-            throw new OSCARException(message);
+        if (step=='44') {
+            if(oscar.Process__c == AMS_Utils.NGANNUALREVAL) {
+                if (oscar.Step44__c == 'Passed') return;
+                message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Passed" in this step.';
+                throw new OSCARException(message);
+            } else {
+                if (oscar.Step44__c == 'Failed') return;
+                throw new OSCARException(message);
+            }
         }
         if (step=='RPM') {
             if (oscar.RPM_Approval__c == 'Authorize Disapproval') return;

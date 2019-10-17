@@ -5,19 +5,19 @@
     <name>Sales All</name>
     <queueMembers>
         <roles>
-            <role>DirectSalesAlternateChannelsA</role>
-            <role>CoordinatorDirectSalesA</role>
-            <role>DirectSalesAssociateArea1A</role>
-            <role>DirectSalesAssociateArea2A</role>
-            <role>DirectSalesAssociateArea3A</role>
-            <role>SalesAssistantDirectorAmericasA</role>
-            <role>SalesAssistantDirectorEuropeA</role>
-            <role>SalesAssistantDirectorAsiaPacA</role>
-            <role>DirectSalesAssistantDirectorA</role>
-            <role>SalesDirectorA</role>
-            <role>SalesManagersAmericasA</role>
-            <role>SalesManagersAsiaPacA</role>
-            <role>SalesManagersEuropeA</role>
+            <role>DirectSalesAlternateChannels</role>
+            <role>CoordinatorDirectSales</role>
+            <role>DirectSalesAssociateArea1</role>
+            <role>DirectSalesAssociateArea2</role>
+            <role>DirectSalesAssociateArea3</role>
+            <role>SalesAssistantDirectorAmericas</role>
+            <role>SalesAssistantDirectorEurope</role>
+            <role>SalesAssistantDirectorAsiaPac</role>
+            <role>DirectSalesAssistantDirector</role>
+            <role>SalesDirector</role>
+            <role>SalesManagersAmericas</role>
+            <role>SalesManagersAsiaPac</role>
+            <role>SalesManagersEurope</role>
         </roles>
     </queueMembers>
     <queueSobject>

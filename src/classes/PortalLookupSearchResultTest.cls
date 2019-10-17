@@ -12,6 +12,11 @@ public class PortalLookupSearchResultTest {
         String testIcon = test.getIcon();
         String testTitle = test.getTitle();
         String testSubtitle = test.getSubtitle();
+		
+		 map<String,String> fieldsMap= new map<String,String>();
+        fieldsMap.put('Name','Name');
+        test.setExtraFields(fieldsMap);
+        map<String,String> resultmap = test.getExtraFields();
         
     }
     

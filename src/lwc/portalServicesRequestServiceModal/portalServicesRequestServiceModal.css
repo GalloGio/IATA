@@ -148,3 +148,7 @@
 .richTextlinks.span a{
     color:#3333ff;
 }
+
+.fitToContent {
+    height: fit-content;
+}
