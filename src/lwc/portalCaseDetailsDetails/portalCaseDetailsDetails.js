@@ -21,7 +21,7 @@ import CSP_Remittantce_Date from '@salesforce/label/c.CSP_Remittantce_Date';
 import CSP_Case_Currency from '@salesforce/label/c.CSP_Case_Currency';
 import ISSP_SIDRA_Irregularity_Date from '@salesforce/label/c.ISSP_SIDRA_Irregularity_Date';
 import CSP_IATA_Country from '@salesforce/label/c.CSP_IATA_Country';
-import CSP_AdditionalDetails from '@salesforce/label/c.csp_AdditionalDetails';
+import CSP_AdditionalDetails from '@salesforce/label/c.CSP_AdditionalDetails';
 import ISSP_Description from '@salesforce/label/c.ISSP_Description';
 import CSP_ContactName from '@salesforce/label/c.Contact_Name';
 import CSP_AccountName from '@salesforce/label/c.ICCS_Account_Name_Label';
