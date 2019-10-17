@@ -26,6 +26,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 //custom labels
 import ISSP_Services from '@salesforce/label/c.ISSP_Services';
 import CSP_Support from '@salesforce/label/c.CSP_Support';
+import CSP_YouAndIATA from '@salesforce/label/c.CSP_YouAndIATA';
 import CSP_Breadcrumb_AdvancedSearch_Title from '@salesforce/label/c.CSP_Breadcrumb_AdvancedSearch_Title';
 import ICCS_Profile from '@salesforce/label/c.ICCS_Profile';
 import ISSP_MyProfile from '@salesforce/label/c.ISSP_MyProfile';
@@ -137,6 +138,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     _labels = {
         ISSP_Services,
         CSP_Support,
+        CSP_YouAndIATA,
         CSP_Breadcrumb_AdvancedSearch_Title,
         ICCS_Profile,
         ISSP_MyProfile,
@@ -171,6 +173,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     logoWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group_white.svg';
     servicesIcon = CSP_PortalPath + 'CSPortal/Images/Icons/service-white.svg';
     supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support-white.svg';
+    youAndIATA = CSP_PortalPath + 'CSPortal/Images/Icons/youiata-white.svg';
     profileIcon = CSP_PortalPath + 'CSPortal/Images/Icons/profile-white.svg';
     profileIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/profile-blue.svg';
     arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-white.svg';
@@ -222,8 +225,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     @track mobileMenuStyle = 'headerBarButton';
     @track buttonServiceStyle = 'slds-m-left_xx-large slds-p-left_x-small headerBarButton buttonService';
+    @track buttonYouIATAStyle = 'slds-m-left_medium slds-p-left_x-small headerBarButton buttonYouIATA';
     @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small headerBarButton buttonSupport';
     @track buttonSideMenuServiceStyle = 'headerBarButton buttonService';
+    @track buttonSideMenuYouIATAStyle = 'headerBarButton buttonYouIATA';
     @track buttonSideMenuSupportStyle = 'headerBarButton buttonSupport';
     @track buttonSideMenuSearchStyle = 'headerBarButton buttonSearch';
     @track buttonSideMenuProfileStyle = 'headerBarButton buttonProfile';
@@ -345,6 +350,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     navigateToSupport() {
         this.navigationCheck("support", "support");
         //this.navigateToOtherPage("support");
+    }
+
+    navigateToYouIata() {
+        this.navigationCheck("youIATA", "youIATA");
     }
 
     navigateToMyProfile() {
@@ -527,8 +536,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         let pagename = getPageName();
         
         this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
+        this.buttonYouIATAStyle = this.buttonYouIATAStyle.replace(/selectedButton/g, '');
         this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
         this.buttonSideMenuServiceStyle = this.buttonSideMenuServiceStyle.replace(/selectedButton/g, '');
+        this.buttonSideMenuYouIATAStyle = this.buttonSideMenuYouIATAStyle.replace(/selectedButton/g,'');
         this.buttonSideMenuSupportStyle = this.buttonSideMenuSupportStyle.replace(/selectedButton/g, '');
         this.buttonSideMenuSearchStyle = this.buttonSideMenuSearchStyle.replace(/selectedButton/g, '');
         this.buttonSideMenuProfileStyle = this.buttonSideMenuProfileStyle.replace(/selectedButton/g, '');
@@ -544,6 +555,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                         if (breadCrumbs[1].DeveloperName === 'services') {
                             this.buttonServiceStyle = `${this.buttonServiceStyle} selectedButton`;
                             this.buttonSideMenuServiceStyle = `${this.buttonSideMenuServiceStyle} selectedButton`;
+                        } else if (breadCrumbs[1].DeveloperName === 'youIATA') {
+                            this.buttonYouIATAStyle = `${this.buttonYouIATAStyle} selectedButton`;
+                            this.buttonSideMenuYouIATAStyle = `${this.buttonSideMenuYouIATAStyle} selectedButton`;
                         } else if (breadCrumbs[1].DeveloperName === 'support') {
                             this.buttonSupportStyle = `${this.buttonSupportStyle} selectedButton`;
                             this.buttonSideMenuSupportStyle = `${this.buttonSideMenuSupportStyle} selectedButton`;

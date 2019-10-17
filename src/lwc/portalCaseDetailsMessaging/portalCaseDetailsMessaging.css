@@ -27,7 +27,8 @@ textarea:focus{
 }
 
 .caseMessagesSelfBubbleContainer, .caseMessagesOtherBubbleContainer {
-    max-width: 60%;
+    /* max-width: 60%; */
+    min-width: 30%;
 }
 
 .caseMessagesSelfBubbleContainer {
@@ -46,28 +47,6 @@ textarea:focus{
 
 .caseMessagesSelfBubble, .caseMessagesOtherBubble {
     position: relative;   
-}
-
-.caseMessagesSelfBubble:after {
-    content: "";
-    position: absolute;
-    border-bottom: 8px solid #525252;
-    border-left: 8px solid #525252;
-    border-right: 8px solid transparent;
-    border-top: 8px solid transparent;
-    top: calc(100% - 16px);
-    right: -15px;
-}
-
-.caseMessagesOtherBubble:after {
-    content: "";
-    position: absolute;
-    border-bottom: 8px solid #ffffff;
-    border-left: 8px solid transparent;
-    border-right: 8px solid #ffffff;
-    border-top: 8px solid transparent;
-    top: calc(100% - 16px);
-    left: -15px;
 }
 
 .breakWord{
