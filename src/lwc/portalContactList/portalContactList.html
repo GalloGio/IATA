@@ -28,7 +28,7 @@
                         <tr>
                             <th class="tableLefty"></th>
                             <template if:false={isAccount}>
-                                <th class="underLinded">
+                                <th class="underLined">
                                     <lightning-input 
                                         type="checkbox"  
                                         name="options"
@@ -37,7 +37,7 @@
                                     </lightning-input>
                                 </th>
                             </template>
-                            <th class="underLinded">
+                            <th class="underLined">
                                 <!-- arrow spacer -->
                             </th>
                             <template for:each={fieldsList.ROWS} for:item="field" for:index="index">
@@ -51,7 +51,7 @@
                                 </th>
                             </template>
                             <template if:false={isAccount}>
-                                <th class="underLinded">
+                                <th class="underLined">
                                     <!-- three dots icon (contact access) -->
                                 </th>
                             </template>
@@ -64,7 +64,7 @@
                             <tr>
                                 <td class="tableLefty"></td>
                                 <template if:false={isAccount}>
-                                    <td class="underLinded">
+                                    <td class="underLined">
                                         <lightning-input 
                                             type="checkbox" 
                                             name="options"
@@ -74,7 +74,7 @@
                                         </lightning-input>
                                     </td>
                                 </template>
-                                <td class="underLinded chevronColumn" onclick={openRecordDetail} data-item={index}>
+                                <td class="underLined chevronColumn" onclick={openRecordDetail} data-item={index}>
                                     <div class="cursorPointer inline-block">
                                         <lightning-icon class="darkBlueIcon" if:true={record.open}
                                             icon-name="utility:chevrondown" size="xx-small" data-item={index}>
@@ -101,7 +101,7 @@
                                     </td>
                                 </template>
                                 <template if:false={isAccount}>
-                                    <td class="underLinded">
+                                    <td class="underLined">
                                         <lightning-button-menu
                                             class="removeArrowFromButtonMenu"        
                                             variant="container" 
