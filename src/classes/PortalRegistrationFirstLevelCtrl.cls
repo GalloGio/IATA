@@ -338,7 +338,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         Boolean result = false;
         String portalUrl = '';
         if(Network.getNetworkId() != null) portalUrl = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('/login'));
-        string profileUrl = portalUrl + '/my-profile';
+        string profileUrl = portalUrl + '/my-profile?triggerL2=true';
 
         if (userId == null || userId == ''){
             userId = UserInfo.getUserId();
