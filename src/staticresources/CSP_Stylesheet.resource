@@ -1740,3 +1740,49 @@ visibility: hidden;
     display: inline-flex;
     width: 100%;
 }
+
+.customBtn,
+.customBtn button,
+.customBtn:hover,
+.customBtn button:hover{
+    width: 100% !important;
+}
+
+.customBtn button{
+    padding: 16px 0;
+}
+
+.customBtn[disabled], .customBtn button:disabled{
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    border-radius: 1px;
+  	background-color: #f7f8fa;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #999999;
+    width: 100%;
+    word-break: break-all;
+    border: none;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.registration-modal .background-white>.slds-p-top_x-large.slds-p-bottom_x-small{
+    display: none;
+}
+
+.outlinedBtn button, .outlinedBtn button:hover{
+    background-color: #fff !important;
+    color: #1e32fa !important;
+    box-shadow: none !important;
+    border: 1px solid #1e32fa !important;
+}
+
+.topLabel{
+    padding: 32px 0;
+}
