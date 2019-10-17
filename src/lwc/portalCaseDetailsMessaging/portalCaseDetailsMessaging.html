@@ -4,18 +4,15 @@
     </template>
     <template if:false={loading}>
         <div if:true={hasMessages}>
-
             <div class="customCardTitleBox cursorPointer" onclick={toggleCaseMessagingSection}>
                 <div class="slds-p-around_medium">
-                    <lightning-icon class="darkBlueIcon" if:true={showCaseMessagingSection}
-                        icon-name="utility:chevrondown" size="xx-small"></lightning-icon>
-                    <lightning-icon class="darkBlueIcon" if:false={showCaseMessagingSection}
+                        <lightning-icon data-msgicon class="darkBlueIcon"
                         icon-name="utility:chevronright" size="xx-small"></lightning-icon>
                     <span class="slds-p-left_large">{label.CSP_CaseMessage_MessageTitle}</span>
                 </div>
             </div>
 
-            <div class="slds-scrollable caseMessagesContainer" style={messagingHeight}>
+                <div class="slds-scrollable caseMessagesContainer collapsed" data-msgdiv>
                 <div class="slds-grid slds-wrap slds-p-around_x-large messagesContainer">
 
                     <template for:each={lstMessages} for:item="message" for:index="index">
