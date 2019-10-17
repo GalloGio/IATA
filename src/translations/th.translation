@@ -2181,7 +2181,7 @@
         <name>CSP_Lvl2_Reminder_9</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <label>โปรดกรอกข้อมูลส่วนบุคคลของคุณ เพื่อให้สามารถใช้ประโยชน์สูงสุดได้จากพอร์ทัลสำหรับลูกค้าIATA!</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
