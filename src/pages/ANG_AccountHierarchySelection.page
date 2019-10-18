@@ -20,9 +20,7 @@
 
 		//NEWGEN-5859 - For Multicountry agencies remove the option Accreditation Type from the type of changes Multipicklist
 		$( document ).ready(function() {
-			if({!isMulticountry}){
-				$('[id$=typeOfChangeMultipicklist_unselected]').find('option:contains("Accreditation type")').remove();
-			}
+			removeAccreditationType();
 		});
 
  		function removeAccreditationType(){
@@ -123,14 +121,14 @@
 
 			<apex:panelGrid id="fields" columns="2" rendered="{!showTopPanel}">
 				<apex:pageBlockSection id="controlField" columns="1">
-					<apex:inputField id="typeOfChangeMultipicklist" value="{!oscar.ANG_Type_Of_Change__c}" rendered="{!NOT(isChinaConversion)}" onchange="removeAccreditationType();">
-						<apex:actionSupport event="onchange" status="blockEditing" reRender="dependentFields, notes, BSPTable"/>
+					<apex:inputField id="typeOfChangeMultipicklist" value="{!oscar.ANG_Type_Of_Change__c}" rendered="{!NOT(isChinaConversion)}">
+						<apex:actionSupport event="onchange" status="blockEditing" reRender="dependentFields, notes, BSPTable" oncomplete="removeAccreditationType();"/>
 					</apex:inputField>
 					<apex:outputField value="{!oscar.ANG_Type_Of_Change__c}" rendered="{!isChinaConversion}" />
 				</apex:pageBlockSection>
 				<apex:pageBlockSection id="dependentFields">
 					<apex:inputField value="{!oscar.New_parent__c}" rendered="{!showTargetAgency}">
-						<apex:actionSupport event="onchange" status="blockEditing" reRender="notes,BSPTable" action="{!FetchNewParent}"/>
+						<apex:actionSupport event="onchange" status="blockEditing" reRender="notes,BSPTable" action="{!FetchNewParent}" oncomplete="forceRerenderBSPTable()"/>
 					</apex:inputField>
 				</apex:pageBlockSection>
 
@@ -164,7 +162,7 @@
 					<apex:column >
 						<apex:facet name="header">
 							<apex:inputCheckbox value="{!selectAll}" disabled="{!isChinaConversion}">
-								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table,BSPTable"/>
+								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table,BSPTable,notes"/>
 							</apex:inputCheckbox>
 						</apex:facet>
 						
@@ -281,11 +279,11 @@
 						
 						
 
-						<apex:column value="{!hi.name}"/>
-						<apex:column value="{!hi.country}"/>
+						<apex:column value="{!hi.name}" headerValue="BSP Name"/>
+						<apex:column value="{!hi.country}" headerValue="Country"/>
 
 
-						<apex:column >
+						<apex:column headerValue="Account Name">
 							<apex:inputField id="Account" html-data-id="{!hi.bspId}" value="{!hi.p.parentid}" onclick="setBSP('{!hi.bspId}')" />
 						</apex:column>
 

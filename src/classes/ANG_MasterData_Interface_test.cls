@@ -270,8 +270,7 @@ private class ANG_MasterData_Interface_test {
                     Name,
                     IATACode__c,
                     Is_PCI_Compliant__c
-                 FROM
-                    Account 
+                 FROM Account 
                  WHERE 
                     Name = 'Uk Test' 
                  LIMIT 1

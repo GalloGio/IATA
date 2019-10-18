@@ -30,13 +30,13 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		List<AWSKey__c> AWS_KEYs = new List<AWSKey__c>{
 				new AWSKey__c(
-						name = 'adevconf',
-						Key__c = 'asd', 
-						Secret__c = 'asd',  
-						IAS_configuration_name__c = 'asdas', 
-						IAS_Access_Point__c = 'asd',
-						Bucket__c = 'asd',
-						AWS_ENDPOINT_URL__c = 'asd'
+					name = 'adevconf',
+					Key__c = 'asd', 
+					Secret__c = 'asd',  
+					IAS_configuration_name__c = 'asdas', 
+					IAS_Access_Point__c = 'asd',
+					Bucket__c = 'asd',
+					AWS_ENDPOINT_URL__c = 'asd'
 				)
 		};
 
@@ -625,8 +625,7 @@ private class ANG_MulticountryAgencyChangesTest {
 				Id, 
 				Account__c, 
 				Change_Code__c 
-			 FROM 
-				Agency_Applied_Change_code__c 
+			 FROM Agency_Applied_Change_code__c 
 			 WHERE 
 				OSCAR__c = :oscarId
 			 AND
@@ -660,8 +659,7 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Class__c, 
 				Location_Type__c,
 				Top_Parent__c
-			 FROM 
-				Account 
+			 FROM Account 
 			 WHERE 
 				Name = 'Multicountry AE PT'
 			 AND
@@ -739,8 +737,7 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Class__c, 
 				Location_Type__c,
 				Top_Parent__c
-			 FROM 
-				Account 
+			 FROM Account 
 			 WHERE 
 				Name = 'Multicountry AE UK'
 			 AND
@@ -818,8 +815,7 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Class__c, 
 				Location_Type__c,
 				Top_Parent__c
-			 FROM 
-				Account 
+			 FROM Account 
 			 WHERE 
 				Name = 'Multicountry AE PT'
 			 AND
@@ -902,8 +898,7 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Class__c, 
 				Location_Type__c,
 				Top_Parent__c
-			 FROM 
-				Account 
+			 FROM Account 
 			 WHERE 
 				Name = 'Multicountry AE FR'
 			 AND
@@ -986,8 +981,7 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Class__c, 
 				Location_Type__c,
 				Top_Parent__c
-			 FROM 
-				Account 
+			 FROM Account 
 			 WHERE 
 				Name = 'Multicountry AE UK'
 			 AND
@@ -1070,8 +1064,7 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Class__c, 
 				Location_Type__c,
 				Top_Parent__c
-			 FROM 
-				Account 
+			 FROM Account 
 			 WHERE 
 				Name = 'Multicountry HE FR'
 			 AND
@@ -1157,8 +1150,7 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Class__c, 
 				Location_Type__c,
 				ANG_Accreditation_Model__c
-			 FROM 
-				Account 
+			 FROM Account 
 			 WHERE 
 				Name = 'Multicountry HE FR'
 			 AND
@@ -1294,8 +1286,7 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Class__c, 
 				Location_Type__c,
 				Top_Parent__c
-			 FROM 
-				Account 
+			 FROM Account 
 			 WHERE
 				Location_Type__c = :AMS_Utils.GE
 			]
@@ -1391,8 +1382,7 @@ private class ANG_MulticountryAgencyChangesTest {
 				Location_Class__c, 
 				Location_Type__c,
 				Top_Parent__c
-			 FROM 
-				Account 
+			 FROM Account 
 			 WHERE
 				IATACode__c IN :iataCodesToSelectSet
 			]

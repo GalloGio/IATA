@@ -181,6 +181,9 @@ private class AMS_EBulletinReport_Test {
         Agency_Applied_Change_code__c irr = new Agency_Applied_Change_code__c(Account__c = acc1.Id, 
         	RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities'), Change_Code__c = 'IRR', Operation__c = 'A', Irregularities_Points__c = 1, Irregularities_Expired__c = false);
         aaccSet.add(irr);
+
+		AMS_EBulletinReportHelper.getOwnersfromAACCAccounts(aaccSet);
+		AMS_EBulletinReportHelper.decodeOwnersInfo(new List<String> { 'val1,val2' });
 		
 		//REVIEWS/NOTICES OF TERM.
 		

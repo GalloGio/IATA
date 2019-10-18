@@ -107,26 +107,28 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 			ANG_RHCInformationTriggerHandler.skipConvertAndSumFSAmounts = true;
 		}
 
-        For(String entity: technicalLogsMap.keySet()){
+        Map<Id, Id> rhcMapping = new Map<Id, Id>();
+
+        For(String entity: sortTechnicalLogs(technicalLogsMap.keySet())){
 
             if(entity == 'Account')
                 processRollbackAccounts(technicalLogsMap.get(entity));
-            if(entity == 'Contact')
+            else if(entity == 'Contact')
                 processRollbackContacts(technicalLogsMap.get(entity));
-            if(entity == 'AMS_Account_Role__c')
+            else if(entity == 'AMS_Account_Role__c')
                 processRollbackRoles(technicalLogsMap.get(entity));
-            if(entity == 'Agency_Authorization__c')
+            else if(entity == 'Agency_Authorization__c')
                 processRollbackFops(technicalLogsMap.get(entity));
-            if(entity == 'ANG_RHC_Information__c')
-                processRollbackRHCs(technicalLogsMap.get(entity));
-            if(entity == 'Financial_Security__c')
+            else if(entity == 'ANG_RHC_Information__c')
+                rhcMapping.putAll(processRollbackRHCs(technicalLogsMap.get(entity)));
+            else if(entity == 'Financial_Security__c')
                 processRollbackFSs(technicalLogsMap.get(entity));
-            if(entity == 'ANG_Agency_Risk_Event__c')
+            else if(entity == 'ANG_Agency_Risk_Event__c')
                 processRollbackREs(technicalLogsMap.get(entity));
-            if(entity == 'Portal_Application_Right__c')
+            else if(entity == 'Portal_Application_Right__c')
                 processRollbackPortalAppRights(technicalLogsMap.get(entity));
-            if(entity == 'ANG_Risk_Alert__c')
-                processRollbackRiskAlert(technicalLogsMap.get(entity));
+            else if(entity == 'ANG_Risk_Alert__c')
+                processRollbackRiskAlert(technicalLogsMap.get(entity), rhcMapping);
         }
 
         if(technicalLogsMap.get('AMS_Agencies_Hierarchy__c') != null || technicalLogsMap.get('AMS_Agencies_relationhip__c') != null || isHierarchyChange)
@@ -134,6 +136,52 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
         ANG_RHCInformationTriggerHandler.skipConvertAndSumFSAmounts = false;
 
+    }
+
+    private List<String> sortTechnicalLogs(Set<String> entities)
+    {
+        List<EntitiesPriorities> lst = new List<EntitiesPriorities>();
+        for (String entity : entities)
+            lst.add(new EntitiesPriorities(entity));
+        lst.sort();
+
+        List<String> orderLst = new List<String>();
+        for (EntitiesPriorities entity : lst)
+            orderLst.add(entity.entity);
+        return orderLst;
+    }
+
+    private class EntitiesPriorities implements Comparable
+    {
+        public final Map<String, Integer> PRIORITIES = new Map<String, Integer>
+        { // lower values first
+            'Account' => 1,
+            'Contact' => 2,
+            'AMS_Account_Role__c' => 3,
+            'Agency_Authorization__c' => 4,
+            'ANG_RHC_Information__c' => 5,
+            'Financial_Security__c' => 6,
+            'ANG_Agency_Risk_Event__c' => 7,
+            'Portal_Application_Right__c' => 8,
+            'ANG_Risk_Alert__c' => 9, // must be after ANG_RHC_Information__c
+            'AMS_Agencies_Hierarchy__c' => 998, // must be in the end
+            'AMS_Agencies_relationhip__c' => 999, // must be in the end
+            'DEFAULT' => 100 // used when the entity type is not defined on this map
+        };
+        public String entity;
+        public EntitiesPriorities(String entity)
+        {
+            this.entity = entity;
+        }
+        public Integer compareTo(Object compareTo)
+        {
+            EntitiesPriorities other = (EntitiesPriorities) compareTo;
+
+            Integer thisPriority = ! PRIORITIES.containsKey(this.entity) ? PRIORITIES.get('DEFAULT') : PRIORITIES.get(this.entity);
+            Integer otherPriority = ! PRIORITIES.containsKey(other.entity) ? PRIORITIES.get('DEFAULT') : PRIORITIES.get(other.entity);
+            
+            return thisPriority == otherPriority ? 0 : (thisPriority < otherPriority ? -1 : 1);
+        }
     }
 
     private void processRollbackAccounts(List<String> accountList){
@@ -240,7 +288,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         }
     }
     
-    private void processRollbackRHCs(List<String> RHCList){
+    private Map<Id, Id> processRollbackRHCs(List<String> RHCList){
         Map<Id, ANG_RHC_Information__c> RHCsToRollback = new Map<Id, ANG_RHC_Information__c>();
 
         for(String RHCstring: RHCList){
@@ -261,6 +309,11 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         if(!RHCsToRollback.values().isEmpty()){
             upsert RHCsToRollback.values();
         }
+        
+        Map<Id, Id> rhcMapping = new Map<Id, Id>();
+        for (Id rhcId : RHCsToRollback.keySet())
+            rhcMapping.put(rhcId, RHCsToRollback.get(rhcId).Id); // the new Ids
+        return rhcMapping;
     }
 
     private void processRollbackFSs(List<String> FSsList){
@@ -304,11 +357,13 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
     }
 
-    private void processRollbackRiskAlert(List<String> riskAlertList){
+    private void processRollbackRiskAlert(List<String> riskAlertList, Map<Id, Id> rhcMapping){
         List<ANG_Risk_Alert__c> riskAlertToRollback = new List<ANG_Risk_Alert__c>();
 
         for(String riskAlert: riskAlertList){
             ANG_Risk_Alert__c ra = (ANG_Risk_Alert__c) JSON.deserialize(riskAlert, ANG_Risk_Alert__c.class);
+            ra.ANG_RHC_Information__c = rhcMapping.containsKey(ra.ANG_RHC_Information__c) ?
+                rhcMapping.get(ra.ANG_RHC_Information__c) : ra.ANG_RHC_Information__c;
             riskAlertToRollback.add(ra);
         }
 
@@ -343,6 +398,14 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
             hierarchiesToDeleteIds.add(rel.Hierarchy__c);
         }
 
+        // when there are no relations left, the hierarchies have to be deleted anyway
+        for (AMS_Agencies_Hierarchy__c hie : [SELECT Id
+                                              FROM AMS_Agencies_Hierarchy__c
+                                              WHERE Main_Account__c IN :accountsRelatedList])
+        {
+            hierarchiesToDeleteIds.add(hie.Id);
+        }
+
         System.debug('relationsToDelete are:'+relationsToDelete);
 
         if(!relationsToDelete.isEmpty())
@@ -351,37 +414,34 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         if(!hierarchiesToDeleteIds.isEmpty())
             delete [Select Id from AMS_Agencies_Hierarchy__c where Id in :hierarchiesToDeleteIds];
 
-        if(hierarchyList == null && relationshipList == null)
-            return;
-
-        List<AMS_Agencies_relationhip__c> relationsToRollback = new List<AMS_Agencies_relationhip__c>();
-        List<AMS_Agencies_Hierarchy__c> hierarchiesToRollback = new List<AMS_Agencies_Hierarchy__c>();
-
+        // rollback hierarchies
         Map<Id,AMS_Agencies_Hierarchy__c> relationsBetweenHierarchy = new Map<Id,AMS_Agencies_Hierarchy__c>();
+        if (hierarchyList != null)
+        {
+            for(String hiearchy: hierarchyList){
+                AMS_Agencies_Hierarchy__c hierarchy = (AMS_Agencies_Hierarchy__c) JSON.deserialize(hiearchy, AMS_Agencies_Hierarchy__c.class);
 
-        for(String hiearchy: hierarchyList){
-            AMS_Agencies_Hierarchy__c hierarchy = (AMS_Agencies_Hierarchy__c) JSON.deserialize(hiearchy, AMS_Agencies_Hierarchy__c.class);
+                relationsBetweenHierarchy.put(hierarchy.Id, hierarchy);
+                hierarchy.Id = null;
+            }
 
-            Id oldHierarchyId = hierarchy.Id;
-
-            hierarchy.Id = null;
-
-            relationsBetweenHierarchy.put(oldHierarchyId,hierarchy);
-
+            if(!relationsBetweenHierarchy.values().isEmpty())
+                insert relationsBetweenHierarchy.values();
         }
 
-        if(!relationsBetweenHierarchy.values().isEmpty())
-            insert relationsBetweenHierarchy.values();
+        // rollback relationships
+        if (relationshipList != null)
+        {
+            List<AMS_Agencies_relationhip__c> relationsToRollback = new List<AMS_Agencies_relationhip__c>();
+            for(String relationStr: relationshipList){
+                AMS_Agencies_relationhip__c relation = (AMS_Agencies_relationhip__c) JSON.deserialize(relationStr, AMS_Agencies_relationhip__c.class);
+                relation.Id = null;
+                relation.Hierarchy__c = relationsBetweenHierarchy.get(relation.Hierarchy__c).Id;
+                relationsToRollback.add(relation);
+            }
 
-        for(String relationStr: relationshipList){
-            AMS_Agencies_relationhip__c relation = (AMS_Agencies_relationhip__c) JSON.deserialize(relationStr, AMS_Agencies_relationhip__c.class);
-            relation.Id = null;
-            relation.Hierarchy__c = relationsBetweenHierarchy.get(relation.Hierarchy__c).Id;
-            relationsToRollback.add(relation);
-        }
-
-        if(!relationsToRollback.isEmpty()){
-            upsert relationsToRollback;
+            if(!relationsToRollback.isEmpty())
+                upsert relationsToRollback;
         }
     }
 

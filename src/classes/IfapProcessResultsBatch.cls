@@ -242,7 +242,7 @@ System.debug('############ processPWCResults ' + pwcress);
                 qiscasenumbers.add(pwcres.caseNumber);
             }
             Map<String,Case> caseMap = new Map<String,Case>();
-            for(Case c : [SELECT CaseNumber, Status, OwnerId, Account.IATA_ISO_Country__r.AMS_Settlement_System__r.Name FROM Case WHERE CaseNumber IN :casenumbers])
+            for(Case c : [SELECT CaseNumber, Status, OwnerId, Account.ANG_Accreditation_Model__c, Account.IATA_ISO_Country__r.AMS_Settlement_System__r.Name FROM Case WHERE CaseNumber IN :casenumbers])
                 caseMap.put(c.CaseNumber, c);
 
             //Getting all IFAP Quality issues
@@ -331,15 +331,32 @@ System.debug('############ continue ' );
                                 }
                             }
                             */
-                            // AP: Assessment Performed Date update fix
-                            theCase.Financial_Review_Result__c = xml.getGFAStatus();
-                            theCase.Assessment_Performed_Date__c = Date.today();
 
-                            //if(bspCountryPointsMap.contains(theCase.Account.IATA_ISO_Country__r.AMS_Settlement_System__r.Name))
+                            if(xml.getFinancialCriteriaTotalScore() <> null && xml.getFinancialCriteriaTotalScore() <> ''){
+                                theCase.Financial_Assessment_Points__c = decimalTryParse(xml.getFinancialCriteriaTotalScore());
+                            }
 
-                                if(xml.getFinancialCriteriaTotalScore() <> null && xml.getFinancialCriteriaTotalScore() <> ''){
-                                    theCase.Financial_Assessment_Points__c = decimalTryParse(xml.getFinancialCriteriaTotalScore());
+                            //Assumption: if it is a multicountry agent there will always be points at this stage
+                            //Otherwise, the payload should contain an error code that 
+                            //will cause the case status to be updated to 'Sanity check Failure'
+                            if(theCase.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+
+                                if(theCase.Financial_Assessment_Points__c != NULL && theCase.Financial_Assessment_Points__c < 70){
+                                    theCase.Financial_Review_Result__c = AMS_Utils.FA_RESULT_UNSATISFACTORY_UPDATE_FS;
+                                    theCase.Assessment_Performed_Date__c = Date.today();
                                 }
+                                //Points >= 70
+                                else if(theCase.Financial_Assessment_Points__c != NULL){
+                                    theCase.Financial_Review_Result__c = AMS_Utils.FA_RESULT_SATISFACTORY_NO_ACTION;
+                                    theCase.Assessment_Performed_Date__c = Date.today();
+                                }
+
+                            }
+                            else {
+                                // AP: Assessment Performed Date update fix
+                                theCase.Financial_Review_Result__c = xml.getGFAStatus();
+                                theCase.Assessment_Performed_Date__c = Date.today();
+                            }
 
                             // FT: IFAP 4 enhancement if we are receiving a reply from a quality issue, we must set the Quality issue approved date
                             //also when case is going from Submitted to Assessment Performed and there is a Quality Issue

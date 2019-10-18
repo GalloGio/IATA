@@ -54,7 +54,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 			Region__c = 'Europe', 
 			ANG_Enable_NewGen__c = true,
 			AMS_Settlement_System__c = bsp_pt.Id,
-					Multicountry_Enabled__c = true
+			Multicountry_Enabled__c = true
 		);
 
 		IATA_ISO_Country__c countryGB = new IATA_ISO_Country__c(
@@ -63,7 +63,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 			Region__c = 'Europe', 
 			ANG_Enable_NewGen__c = true,
 			AMS_Settlement_System__c = bsp_gb.Id,
-					Multicountry_Enabled__c = true
+			Multicountry_Enabled__c = true
 		);
 
 		IATA_ISO_Country__c countryFR = new IATA_ISO_Country__c(
@@ -81,7 +81,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 			Region__c = 'Europe', 
 			ANG_Enable_NewGen__c = true,
 			AMS_Settlement_System__c = bsp_fr.Id,
-					Multicountry_Enabled__c = true
+			Multicountry_Enabled__c = true
 		);
 
 		List<IATA_ISO_Country__c> countryLst = new List<IATA_ISO_Country__c>{countryPT, countryGB, countryFR, countryMC};
@@ -122,8 +122,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 				Location_Type__c, 
 				Location_Class__c,
 				IATA_ISO_Country__r.AMS_Settlement_System__c
-			 FROM
-				Account
+			 FROM Account
 			 WHERE
 				 Name = 'HE Test Agency' 
 			 AND Location_Type__c = 'HE'
@@ -155,8 +154,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 			[SELECT 
 				Id, 
 				AMS_Settlement_System__c 
-			 FROM
-				IATA_ISO_Country__c 
+			 FROM IATA_ISO_Country__c 
 			 WHERE 
 				ISO_Code__c = 'PT'
 			];
@@ -197,8 +195,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 			[SELECT 
 				Id, 
 				AMS_Settlement_System__c 
-			 FROM
-				IATA_ISO_Country__c 
+			 FROM IATA_ISO_Country__c 
 			 WHERE 
 				ISO_Code__c = 'MC'
 			];
@@ -239,8 +236,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 			[SELECT 
 				Id, 
 				AMS_Settlement_System__c 
-			 FROM
-				IATA_ISO_Country__c 
+			 FROM IATA_ISO_Country__c 
 			 WHERE 
 				ISO_Code__c = 'GB'
 			];

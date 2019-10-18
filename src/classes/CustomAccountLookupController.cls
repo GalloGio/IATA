@@ -6,58 +6,58 @@ public with sharing class CustomAccountLookupController {
   public string staticFilter{get;set;} // search keyword
   
   public CustomAccountLookupController() {
-    account = new Account();
-    // get the current search string
-    searchString = System.currentPageReference().getParameters().get('lksrch');
-    string iataCodesParamenter = System.currentPageReference().getParameters().get('staticFilter');
-    staticFilter = '';
-    List<String> iatacodes = iataCodesParamenter.split(',');
-    for (String iataCode : iatacodes) staticFilter += '\''+iatacode+'\',';
-    staticFilter=staticFilter.removeEnd(',');
-    runSearch();  
+	account = new Account();
+	// get the current search string
+	searchString = System.currentPageReference().getParameters().get('lksrch');
+	string iataCodesParamenter = System.currentPageReference().getParameters().get('staticFilter');
+	staticFilter = '';
+	List<String> iatacodes = iataCodesParamenter.split(',');
+	for (String iataCode : iatacodes) staticFilter += '\''+iatacode+'\',';
+	staticFilter=staticFilter.removeEnd(',');
+	runSearch();  
   }
    
   // performs the keyword search
   public PageReference search() {
-    runSearch();
-    return null;
+	runSearch();
+	return null;
   }
   
   // prepare the query and issue the search command
   private void runSearch() {
-    // TODO prepare query string for complex serarches & prevent injections
-    results = performSearch(searchString);               
+	// TODO prepare query string for complex serarches & prevent injections
+	results = performSearch(searchString);               
   } 
   
   // run the search and return the records found. 
   private List<Account> performSearch(string searchString) {
 
-    String soql = 'select id, name, IATACode__c  from account';
-    soql = soql +  ' where  ID IN ('+staticFilter+')'; 
-    if(searchString != '' && searchString != null)
-      soql = soql +  ' AND (name LIKE \'%' + searchString +'%\' OR IATACODE__c LIKE \'%' + searchString +'%\')  ';
-    soql = soql + ' limit 25';
-    System.debug(soql);
-    return database.query(soql); 
+	String soql = 'select id, name, IATACode__c  from account';
+	soql = soql +  ' where  ID IN ('+staticFilter+')'; 
+	if(searchString != '' && searchString != null)
+	  soql = soql +  ' AND (name LIKE \'%' + searchString +'%\' OR IATACODE__c LIKE \'%' + searchString +'%\')  ';
+	soql = soql + ' limit 25';
+	System.debug(soql);
+	return database.query(soql); 
 
   }
   
   // save the new account record
   public PageReference saveAccount() {
-    insert account;
-    // reset the account
-    account = new Account();
-    return null;
+	insert account;
+	// reset the account
+	account = new Account();
+	return null;
   }
   
   // used by the visualforce page to send the link to the right dom element
   public string getFormTag() {
-    return System.currentPageReference().getParameters().get('frm');
+	return System.currentPageReference().getParameters().get('frm');
   }
-    
+	
   // used by the visualforce page to send the link to the right dom element for the text box
   public string getTextBox() {
-    return System.currentPageReference().getParameters().get('txt');
+	return System.currentPageReference().getParameters().get('txt');
   }
  
 }

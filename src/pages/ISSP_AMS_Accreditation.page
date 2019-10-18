@@ -160,8 +160,6 @@
         }
 
         var vOfficeType = '{!newCase.Reason1__c}';
-            console.log('vOfficeType '+vOfficeType);
-            console.log('Default country '+ defaultHQCountry);
         var operationType = '{!sectorvalue}';
         var hasPermission = true;
 
@@ -194,29 +192,8 @@
         }
 
         function toggleOfficeTypes(officeSelect, ctrylistid) {
-                //var mySelectOptions = $('select[name="' + ctrylistid + '"] option');
-                //var mySelect = $('select[name="' + ctrylistid + '"]');
             var officeTypeSel = $('select[name="' + officeSelect + '"]');
             vOfficeType = officeTypeSel.val();
-                /**
-                mySelectOptions.each(function() {
-                  if(vOfficeType=='New BR Abroad') {
-                    if(this.value != defaultHQCountry) {
-                        $(this).prop('disabled', false);
-                     } else {
-                        $(this).prop('disabled', true);
-                        mySelect.val('');
-                     }
-                  } else {
-                    if(this.value != defaultHQCountry) {
-                        $(this).prop('disabled', true);
-                     } else {
-                        $(this).prop('disabled', false);
-                        mySelect.val(defaultHQCountry);
-                     }
-                  }
-                });
-                **/
         }
 
         function isInArray(arr, val) {
@@ -233,7 +210,6 @@
             if(defaultHQCountry=='CN') {
                 var chinaAgentType = $('select[name="' + chinaAgentTypeId + '"]');
                 if(chinaAgentType.val() == 'Domestic') {
-                        console.log('in domestic');
                     return true;
                 }
             }
@@ -275,13 +251,10 @@
                 vOfficeType = $lists.val();
                 var countriesMap = JSON.parse('{!jsonCountriesMap}');
                 var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Import Agent"];
-                console.log('no empty voffice '+vOfficeType);
                 if('{!isNoticeOfChange}'=='true' || vOfficeType=='')
                     isAllowedCountry = 't';
                 else{
                     var idx = vOfficeType.indexOf(' - ');
-
-                    console.log('vOfficeType goto '+vOfficeType);
 
                     if( (vOfficeType.substring(idx + 3).trim() == 'Legacy') || (vOfficeType.includes('Standard')) || (vOfficeType.includes('AE'))){
                         operationType = 'Travel_Agent';
@@ -289,26 +262,19 @@
                         operationType = 'Cargo_Agent';
                     }
 
-                    // NHO -
-                    console.log('vOfficeType.substring(0, idx) ' + operationType+'-'+vOfficeType.substring(0, idx));
-
                     var countryList = countriesMap[operationType+'-'+vOfficeType.substring(0, idx)];
 
                     var isAllowedCountry = false;
-                    console.log('countryList ' + countryList);
                     if(defaultHQCountry != null && countryList != undefined) {
                         var isAllowedCountry = countryList[countryList.indexOf(defaultHQCountry)+3];
                     }
-                    console.log('isAllowedCountry ' + isAllowedCountry);
-                    ///alert( $('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
                     var langId = '{!$Component.step1Form.step1Block.applylanguage}';
                     var langSel = $('select[name="' + langId + '"]');
                     var vLang = langSel.val();
 
-                        //For pilot only English & Spanish HO applications for pilot countries alllowed
+                    //For pilot only English & Spanish HO applications for pilot countries alllowed
 
                     if( $('input[name="' + myValue + '"][value=Travel_Agent]').prop("checked")) {
-                        console.log('Travel China Domestic: ' + isChinaDomestic());
                         if(isAllowedCountry=='f' || (isChinaDomestic() && !{!isocountry.ANG_Enable_NewGen__c})) {
                             bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Pax)}", function(result) {
                                 if(result) {
@@ -328,7 +294,6 @@
                     } else {
                         if(isAllowedCountry=='f' || isChinaDomestic()) {
                         // temporary for CNS
-                        console.log('{!communityName}');
                             if('{!communityName}'==='CNS') {
                                 bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)}", function(result) {
                                     if(result) {
@@ -428,7 +393,6 @@
         var vReqNo
 
         function resetUploadBar() {
-        //$('.uploadbar-' + vReqNo).css('width', '0%');
             $("#loading-" + vReqNo).hide();
         }
 
@@ -495,11 +459,11 @@
                 if ($.inArray(isoSelected, JSON.parse('{!hierarchyIsoCodesString}')) == -1) {
                     $('[id$=legalNameSelection]').css('display', 'block');
                     $('[name$=separateLegalEntitySelect]').filter('[value=Yes]').prop('checked', true);
-                    $('[name$=separateLegalEntitySelect]').attr('disabled', 'true');
+                    $('[name$=separateLegalEntitySelect]:not(:checked)').attr('disabled', 'true');
                     $('[id$=newLegalName]').css('display', 'block');
                     $('[id$=legalNameSelected]').val('');
                 } else {
-                    $('[name$=separateLegalEntitySelect]').removeAttr('disabled');
+                    $('[name$=separateLegalEntitySelect]:not(:checked)').removeAttr('disabled');
                     if ($('[name$=separateLegalEntitySelect]:checked').val() == 'No') {
                         $('[id$=legalNameSelection]').css('display', 'block');
                         $('[id$=legalNameSelected]').css('display', 'block');
@@ -551,7 +515,7 @@
                 
                 checkLocationQuestion();
 
-                reRenderAccountsNoc();
+                checkSelectAll();
             }
         }
 
@@ -560,6 +524,8 @@
                 $('[id$="nocThirdQuestion"]').css('display', 'none');
                 toggleCountryMultiSelection(true, false);
                 $('#brcountry').text("{!amsAllLangCountryLabel}");
+
+                $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned}";
             }
             
             if ($('[id$="LocationType"]').find("input")[1].checked) { 
@@ -571,11 +537,14 @@
                 } else {
                     $('[id$="nocThirdQuestion"]').css('display', 'block');
                 }
+
+                $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned}";
             }
 
             if ($('[id$="LocationType"]').find("input")[2].checked) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
                     toggleCountryMultiSelection(false, true);
+                    $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
                 } else {
                     toggleCountryMultiSelection(true, false);
                     $('#brcountry').text("{!amsAllLangCountryLabel}");
@@ -587,6 +556,7 @@
             if ($('[id$="LocationType"]').find("input")[3].checked) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
                     toggleCountryMultiSelection(false, true);
+                    $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
                 } else {
                     toggleCountryMultiSelection(true, false);
                     $('#brcountry').text("{!amsAllLangCountryLabel}");
@@ -625,7 +595,51 @@
                 $('#finalConfirmationNoCMCModal').modal('hide');
             });
         }
+
+        function checkSelectAll() {
+            var hierarchy = $('[id$=hierarchyList]')[0].children[2].children;
+
+            var allChecked = true;
+            
+            for (var i = 0; i < hierarchy.length; i++) {
+                if (hierarchy[i].firstChild.children[0].checked === false) {
+                    allChecked = false;
+                    break;
+                }
+            }
+
+            $('[id$=allHierarchySelected]')[0].checked = allChecked;
+        }
+
+        function selectAllAEs() {
+            var hierarchy = $('[id$=hierarchyList]')[0].children[2].children;
+
+            var allChecked = $('[id$=allHierarchySelected]')[0].checked;
+            
+            for (var i = 0; i < hierarchy.length; i++) {
+                hierarchy[i].firstChild.children[0].checked = allChecked;
+            }
+        }
+
     </script>
+
+    <apex:outputPanel id="correctHierarchy">
+        <script>
+            var selectedIATACodes = "{!previouslySelectedIATACodes}";
+
+            if (selectedIATACodes !== '') {
+                var hierarchy = $('[id$=hierarchyList]')[0].children[2].children;
+
+                for (var i = 0; i < hierarchy.length; i++) {
+                    if (~selectedIATACodes.indexOf(hierarchy[i].innerText.split('\t')[2])) {
+                        hierarchy[i].firstChild.children[0].checked = true;
+                    } else {
+                        hierarchy[i].firstChild.children[0].checked = false;
+                    }
+                }
+            }
+        </script>
+    </apex:outputPanel>
 
     <apex:outputPanel id="amscountrylabel">
         <script>
@@ -702,16 +716,18 @@
 
                             <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" oncomplete="populateLegalAndSeparateFields();" />
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
-                            <apex:actionFunction action="{!resetHierarchy}" name="reRenderAccountsNoc" reRender="branchaccountsel"/>
+                            <apex:actionFunction name="reRenderAccountsNoc" action="{!resetHierarchy}" status="blockEditing" oncomplete="reRenderBranchAccs();"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions, nocFormQuestions" oncomplete=""/>
                             <apex:actionFunction name="reRenderNocMessage" reRender="nocMessage"/>
+                            <!--<apex:actionFunction name="selectAllAEs" action="{!doSelectAll}" status="blockEditing" reRender="table" />-->
+                            <apex:actionFunction name="reRenderBranchAccs" status="blockEditing" reRender="branchaccountsel, table, correctHierarchy" oncomplete="checkSelectAll();"/>
                             
                             <apex:pageBlock id="step1Block" mode="edit" >
                                 <apex:pageBlockButtons location="bottom" style="padding-left:100px">
                                     <apex:actionStatus id="buttonLoadingStep1">
                     <apex:facet name="stop">
                         <apex:outputPanel >
-                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" rendered="{!NOT(amsIsGSA=='YES')}" status="buttonLoadingStep1" reRender="step1Form"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" rendered="{!NOT(amsIsGSA=='YES')}" status="buttonLoadingStep1" reRender="step1Form" oncomplete="loadPageOptions();"/>
                             <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"  oncomplete="loadPageOptions();"/>
                         </apex:outputPanel>
                     </apex:facet>
@@ -735,9 +751,8 @@
                                         $Label.ISSP_AMS_Noc_StepA_message)}
                                     </div>
                                     <apex:outputPanel id="nocMessage">
-                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange), 'flex', 'none')}; margin-bottom: 20px;">
-                                            {!$Label.ISSP_AMS_Noc_StepA_message_MC}<br/><br/>
-                                            {!IF(AND(selectedCountryIsos.size > 1, newForm.Scope_Of_Change__c != "HO Only", newForm.Scope_Of_Change__c != "HO - All Branches"), $Label.ISSP_ANG_NOC_GOGLOBAL_Info, '')}
+                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange, newForm.Scope_Of_Change__c != "HO Only"), 'flex', 'none')}; margin-bottom: 20px;">
+                                            {!$Label.ISSP_ANG_NOC_GOGLOBAL_Info}
                                         </div>
                                     </apex:outputPanel>
 
@@ -866,11 +881,9 @@
                                             <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
                                                 <apex:column >
                                                     <apex:facet name="header">
-                                                        <apex:inputCheckbox value="{!selectAll}">
-                                                            <apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table"/>
-                                                        </apex:inputCheckbox>
+                                                        <apex:inputCheckbox id="allHierarchySelected" value="{!selectAll}" onchange="selectAllAEs();"/>
                                                     </apex:facet>
-                                                    <apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}"/>
+                                                    <apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}" onchange="checkSelectAll();"/>
                                                 </apex:column>
 
                                                 <apex:column value="{!hi.acc['Name']}"/>
@@ -889,25 +902,6 @@
                                                 </apex:facet>
                                             </apex:actionStatus>
                                         </apex:pageBlockSection>
-                                        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 				<!--##RN INC463820  -->
                                     </apex:outputPanel>
@@ -915,7 +909,7 @@
                             </apex:outputpanel>
 
                             <div class="form-group" id="countrySelection">
-                                <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ANG_ISSP_CountryConcerned_AEs}</label>
+                                <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ANG_ISSP_CountryConcerned}</label>
 
                                 <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
                                     <apex:outputPanel rendered="{!AND(isMCAccredited, isNoticeOfChange)}">
@@ -964,7 +958,7 @@
 
                                             <apex:outputPanel rendered="{!OR(isBankAccountChange != true, con.Account.Location_Type__c != 'AE')}">
                                                 <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptionsFirstQ">
-                                                    <apex:selectRadio required="true" id="typeOfChange" layout="pageDirection" label="{!$Label.ISSP_ANG_NOC_Type_Of_Change}" style="width:70%;" value="{!newForm.Type_of_Change__c}" >
+                                                    <apex:selectRadio id="typeOfChange" layout="pageDirection" label="{!$Label.ISSP_ANG_NOC_Type_Of_Change}" style="width:70%;" value="{!newForm.Type_of_Change__c}" >
                                                         <apex:selectOption itemValue="{!$Label.ISSP_Yes}" itemLabel="{!$Label.ISSP_Yes}"/>
 
                                                         <apex:selectOption itemValue="{!$Label.ISSP_No}" itemLabel="{!$Label.ISSP_No}"/>

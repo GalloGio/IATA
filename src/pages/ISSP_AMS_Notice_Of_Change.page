@@ -837,7 +837,7 @@
 										<apex:column value="{!acc.BillingCountry}"/>
 										<apex:column>
 											<apex:commandLink action="{!removeFromAccountsToConvert}" styleClass="glyphicon glyphicon-trash" rerender="accountsToBeConvertedPanel">
-												<apex:param value="{!acc.IATACode__c}" name="recordId" assignTo="{!accountToBeFetchedOrRemoved}" />
+												<apex:param value="{!acc.Id}" name="recordId" assignTo="{!accountToBeFetchedOrRemoved}" />
 											</apex:commandLink>
 										</apex:column>
 									</apex:pageBlockTable>
@@ -851,7 +851,7 @@
         							(function() {
         								var aux = "{!con.Account.ANG_Accreditation_Model__c}";        								
         								var l = document.querySelectorAll('[id$="allowedAccreditationModelSelect"]')[0];
-        								for(i = 0; i < l.length; i++) {
+        								for(i = l.length -1; i >=0 ; i--) {
         									if((aux == 'Cashless' || aux == 'Multicountry') && (l[i].value === "Cashless" || l[i].value === "Multicountry")) {
         										l.remove(i);
 											}
@@ -2266,7 +2266,7 @@
 			where.parent().hover(function() {
 				whereToAppend.append(getWarningBox(warningMessage));
 			}, function() {
-				whereToAppend.html('');
+				removeMessage();
 			});
 		}
 
@@ -2353,26 +2353,32 @@
 			}
 		}
 
-		if ({!isMCAccredited} && {!isNoticeOfChange} && lScopeOfChange !== 'HO Only') {
-			setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
-			setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
-		}
-
 		if ({!isNoticeOfChange}) {
 			if (typeOfChange !== 'Yes' && {!CanChangeAccreditationType}) {
 				$j('[id$=iataChangeAccType]').prop('disabled', true);
 			}
 
+			if ({!isMCAccredited} && lScopeOfChange !== 'HO Only') {
+				setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+				setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+			}
+			
 			if ('{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
 				$j('[id$=notifyChangeLocationCheckbox]').prop('disabled', true);
 				setWarningBoxOnHoverMC($j('[id$=notifyChangeLocationCheckbox]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 
 				$j('[id$=notifyLegalDetailsChange]').prop('disabled', true);
+
+				if (!({!isMCAccredited} && lScopeOfChange !== 'HO Only')) {
 				setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+				}
 				
 				$j('[id$=notifyOwnershipChange]').prop('disabled', true);
+
+				if (!({!isMCAccredited} && lScopeOfChange !== 'HO Only')) {
 				setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
+		}
 		}
 		
 		//END - NoC Changes

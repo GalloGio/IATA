@@ -160,7 +160,7 @@
             .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
             .col3 {width:50%}
             
-            .email-input {width: 180px;float:left;margin-left:11px}
+            .email-input {width: 180px;float:left;margin-left:5.5px}
             .email-label {
                 font-size:91%;
                 float:left;
@@ -186,7 +186,7 @@
                    
             .phone-input {width: 173px;float:left;margin-left:105px}
             .phone-label {
-                width: 182px;
+                width: 176px;
                 text-align: left;
                 font-size:91%;
                 float: left;
@@ -1386,7 +1386,7 @@
                         </apex:outputpanel>
                         </apex:facet>
 
-                    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought_Cash_Cashless}: {!IF(newCase.Reason1__c=='New HE standard', $Label.ISSP_AMS_Step3_Cash_Location, IF(newCase.Reason1__c == 'New HE multicountry', $Label.ISSP_AMS_Step3_Multicountry_Location, $Label.ISSP_AMS_Step3_Cashless_Location))}"/>
+                    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought_Cash_Cashless}: {!IF(newCase.Reason1__c=='New HE standard', $Label.ISSP_AMS_Step3_Cash_Location, IF(newCase.Reason1__c == 'New HE Multicountry', $Label.ISSP_AMS_Step3_Multicountry_Location, $Label.ISSP_AMS_Step3_Cashless_Location))}"/>
 
                     <apex:actionFunction name="setHeaderLabels" action="{!setPageLegalStatusLabels}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" reRender="contactList, newContact">
                         <apex:param name="setlegalstatus" assignTo="{!legalstatus}" value="" />

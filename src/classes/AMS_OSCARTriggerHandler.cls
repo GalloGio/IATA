@@ -11,6 +11,10 @@ public class AMS_OSCARTriggerHandler {
     //used to identify situations where the LocationType of an SA Agency should not be changed
     public static Boolean keepSALocationTypeFlag = false;
 
+	//WMO-564 - used to not run the trigger when the batch is recalculating the oscar age
+    public static Boolean isRunningAgeCalculator = false;
+
+
     // used to apply different rules when poulating RHC oBject on the Oscar's account 
     public static boolean applyRHCForecast = false;
 
@@ -775,8 +779,6 @@ public class AMS_OSCARTriggerHandler {
                 stepsOSCAR.add(fieldMap.get(fieldName).getDescribe().getLabel());
         }
 
-        List<AMS_OSCAR__c> oscarsToAssignRegionQueue = new List<AMS_OSCAR__c>();
-
         /*** AMSU-37 ***/
         Set<Id> accountIds = new Set<Id>();
         Set<String> reasonsToCheck = new Set<String> {AMS_Utils.APP_DISAPPROVED, AMS_Utils.APP_WITHDRAWN};
@@ -854,19 +856,9 @@ public class AMS_OSCARTriggerHandler {
             if(oscar.Process__c == AMS_Utils.CERTIFICATION) oscar.Sanity_check_deadline__c = Date.today()+90;
 
             if(oscar.Process__c != AMS_Utils.CERTIFICATE) oscar.Certificate_Quantity__c = null;
-            
-            AMS_Pax_Accreditation_Form__c stgArea = allOnlineAccr.get(oscar.AMS_Online_Accreditation__c);
-
-            if(oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY ||
-               (oscar.Process__c == AMS_Utils.NGCHANGES && stgArea.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)){
-                oscarsToAssignRegionQueue.add(oscar);
-            }
 
         }
 
-        if (!oscarsToAssignRegionQueue.isEmpty()){
-            AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscarsToAssignRegionQueue);
-        }
     }
 
     private static void copyDataFromTargetAgency(){
@@ -3596,8 +3588,18 @@ public class AMS_OSCARTriggerHandler {
         }
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
+            
+            Set<String> targetProcessesSet = new Set<String>{
+                AMS_Utils.NEWHELITE, 
+                AMS_Utils.NEWHESTANDARD, 
+                AMS_Utils.NEWGESTANDARD, 
+                AMS_Utils.NEWAE, 
+                AMS_Utils.MCAE, 
+                AMS_Utils.NGCHINACONVERSION, 
+                AMS_Utils.NGCONVERSIONTOMULTICOUNTRY
+            };
 
-            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE || updatedOscar.Process__c == AMS_Utils.MCAE || updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION){
+            if(targetProcessesSet.contains(updatedOscar.Process__c)){
 
                 if(updatedOscar.Process__c == AMS_Utils.MCAE && !ANG_MulticountryHelper.allowApprovalStep(updatedOscar)){
                     updatedOscar.addError(Label.ANG_Multicountry_Process_Parent_Account_Error);
@@ -3648,7 +3650,15 @@ public class AMS_OSCARTriggerHandler {
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Disapproval') {
 
-            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD){
+            Set<String> targetProcessesSet = new Set<String>{
+                AMS_Utils.NEWHELITE, 
+                AMS_Utils.NEWHESTANDARD, 
+                AMS_Utils.NEWGESTANDARD, 
+                AMS_Utils.MCAE, 
+                AMS_Utils.NGCONVERSIONTOMULTICOUNTRY
+            };
+
+            if(targetProcessesSet.contains(updatedOscar.Process__c)){
 
                 System.debug('Sending the email for the user to anounce disapproval of the oscar');
 
@@ -3673,10 +3683,6 @@ public class AMS_OSCARTriggerHandler {
             }
             updatedOSCAR.STEP2__c = 'Failed';
         }
-
-        if (oldOSCAR.Bank_Guarantee_amount__c == null && updatedOscar.Bank_Guarantee_amount__c != null)
-            updatedOSCAR.STEP12__c = 'In Progress';
-
 
         if (oldOSCAR.Validation_Status__c != updatedOscar.Validation_Status__c) {
             List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});

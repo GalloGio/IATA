@@ -496,6 +496,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		oscar.STEP35__c = AMS_Utils.PASSED;
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		oscar.Bank_Guarantee_Requested__c = Date.today();
 		update oscar;
 
 
@@ -519,7 +520,8 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			Name = 'ChangeAccreditationType', 
 			TC_Accreditation_Type__c = true,
 			TCA_Sanity_check__c = 'CHI', 
-			TCA_Application_withdrawal__c = 'CWD'
+			TCA_Application_withdrawal__c = 'CWD',
+			Valid_Accreditation_Models__c = 'Cash;Cashless;Legacy'
 		);
 
 		insert chgCfg;
@@ -572,7 +574,8 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			Name = 'ChangeAccreditationType', 
 			TC_Accreditation_Type__c = true,
 			TCA_Sanity_check__c = 'CHI', 
-			TCA_Application_withdrawal__c = 'CWD'
+			TCA_Application_withdrawal__c = 'CWD',
+			Valid_Accreditation_Models__c = 'Cash;Cashless;Legacy'
 		);
 
 		insert chgCfg;
@@ -590,15 +593,16 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 
 		system.assert(oscar.ANG_FA_Opt_Out__c == AMS_Utils.NOT_APPLICABLE, 'The OSCAR should have the default value \'' + AMS_Utils.NOT_APPLICABLE + '\' for \'Financial Assessment opt-in/opt-out\' before passing the sanity check');
 
+		Test.startTest();
+
 		oscar.Is_PCI_compliant__c = 'Yes';
 		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.STEP6__c = AMS_Utils.PASSED;
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE;
 		oscar.Change_effective_as_of__c = Date.Today();
-
-		Test.startTest();
-
 		update oscar;
+
+		Test.stopTest();
 
 		oscar = 
 			[SELECT 
@@ -613,16 +617,16 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			];
 
 		system.assert(oscar.ANG_FA_Opt_Out__c == AMS_Utils.FA_OPT_OUT, 'The OSCAR should have the value \'' + AMS_Utils.FA_OPT_OUT + '\' for \'Financial Assessment opt-in/opt-out\'');
-		
+			
 		oscar.STEP11__c = AMS_Utils.PASSED;
 		oscar.STEP2__c = AMS_Utils.PASSED;
 		oscar.STEP34__c = AMS_Utils.PASSED;
 		oscar.STEP35__c = AMS_Utils.PASSED;
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		//WMO-564
+		oscar.Bank_Guarantee_requested__c = Date.today();
 		update oscar;
-
-		Test.stopTest();
 		
 		assessfinancialReviewOptOut(oscar.Id);
 
@@ -658,8 +662,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 				Id,
 				Name,
 				ANG_FA_Opt_Out__c
-			 FROM
-				Account
+			 FROM Account
 			 WHERE
 				ParentId = :oscar.Account__c
 			]
@@ -673,8 +676,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			[SELECT
 				Id,
 				Status
-			 FROM
-				Case
+			 FROM Case
 			 WHERE
 				AccountId = :oscar.Account__c
 			 AND

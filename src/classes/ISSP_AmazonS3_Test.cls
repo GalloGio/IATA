@@ -106,6 +106,12 @@ private class ISSP_AmazonS3_Test {
             testCase.Account_Concerned__c = child.Id;
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
+
+			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
+			newForm.IsGSA__c = 'No';
+			newForm.CurrencyIsoCode = country.CurrencyIsoCode;
+			newForm.SAAM_Case__c = testCase.Id;
+			insert newForm;
         
             UtilityCS__c newCS = new UtilityCS__c();
             newCS.Name = 'Emails';
@@ -263,9 +269,9 @@ private class ISSP_AmazonS3_Test {
         insert cse;
 
         Test.startTest();
-        ISSP_AmazonS3_Ctrl.createAmazonFileObject(null, null, null, null);
-        ISSP_AmazonS3_Ctrl.createAmazonFileObject(cse.Id, 'filename', 10, 'filename');
-        ISSP_AmazonS3_Ctrl.isFileNameUnique(cse.Id, 'filename');
+        ISSP_AmazonS3_Ctrl.createAmazonFileObject(null, null, null, null, null);
+        ISSP_AmazonS3_Ctrl.createAmazonFileObject(cse.Id, 'filename', 'none', 10, 'filename');
+        ISSP_AmazonS3_Ctrl.isFileNameUnique(cse.Id, 'filename', 'none');
         Test.stopTest();
     }
 }

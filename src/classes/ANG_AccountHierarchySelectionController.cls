@@ -79,13 +79,19 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				if(tocList.contains(AMS_Utils.ANG_LOCATION)) notes.add('Change of location can be applied only to a single agency.');				
 				if(tocList.contains(AMS_Utils.ANG_HIERARCHY)) notes.add('Change of hierarchy will move all the selected agencies under the "New parent". The user must select a new parent which should be a HE or GE of another hierarchy or one of the selected AE.');
 				if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && oscar.New_parent__c != null && newParent != null){
-
+					Boolean diffDestination = diffDestination(oscar.New_parent__c);
                     //NEWGEN-5008 - TEST SCENARIO 2/A AND 2/B
                     if(this.isMulticountry){
-                        if(diffDestination(oscar.New_parent__c)) notes.add('The selected agencies will be linked to the new parent: ' + newParent.Name + '('+ newParent.IATACode__c +')');
-                        else notes.add('The selected agencies will be grouped into a new hierarchy, having as GE the new parent: '+ newParent.Name + '('+ newParent.IATACode__c +')');
+                        if(diffDestination){
+							notes.add('The selected agencies will be linked to the new parent: ' + newParent.Name + '('+ newParent.IATACode__c +')');
+
+							if(isOnlyGeBspLeft()){
+								notes.add('A conversion case from GoGlobal to GoStandard has been created, please proceed to that case to complete the process of the remaining locations.');
+							}
+						}
+						else notes.add('The selected agencies will be grouped into a new hierarchy, having as GE the new parent: '+ newParent.Name + '('+ newParent.IATACode__c +')');
                     }
-                    else if(diffDestination(oscar.New_parent__c)) notes.add('The selected agencies will be transformed into AE and linked to the "New parent: '+newParent.Name+'('+ newParent.IATACode__c+')'+'", therefore they will automatically get the Accreditation type "'+newParent.ANG_Accreditation_Model__c+'".');
+                    else if(diffDestination) notes.add('The selected agencies will be transformed into AE and linked to the "New parent: '+newParent.Name+'('+ newParent.IATACode__c+')'+'", therefore they will automatically get the Accreditation type "'+newParent.ANG_Accreditation_Model__c+'".');
                     else notes.add('The selected agencies will be grouped into a new hierarchy, having as HE the "New parent: '+newParent.Name+'('+newParent.IATACode__c+')". The new hierarchy will keep the actual accreditation type, unless the User selects also change of "Accreditation type".');
                 }
                 if(isMulticountry && tocList.contains(AMS_Utils.ANG_VMFR)) notes.add('VMFR must be applied to all agencies in the same BSP');
@@ -94,10 +100,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
                 if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)) notes.add('Change of accreditation type must be applied to the full hierarchy unless you are also selecting change of Hierarchy');
                 if(tocList.contains(AMS_Utils.CONVERTTONEWGENPILOT)){ notes.add('The conversion to GoLite must be applied to the full hierarchy'); }
                 else if(tocList.contains(AMS_Utils.CONVERTTOLEGACY)){ notes.add('The conversion to Domestic with Cash must be applied to the full hierarchy'); }
-                else if(tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL)){ notes.add('The conversion to International must be applied to the full hierarchy'); }
-                
-                if(diffDestination(oscar.New_parent__c) && onlyGE_BSPLeft() && diffDestination(oscar.New_parent__c)) notes.add('A conversion case from GoGlobal to GoStandard has been created, please proceed to that case to complete the process of the remaining locations.');
-            	
+                else if(tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL)){ notes.add('The conversion to International must be applied to the full hierarchy'); }            	
             }
 
             return notes;
@@ -193,6 +196,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
                 errorMessages.put(
                     'Only two agents selected with different location types',
                     'For change of location type, only two accounts can be selected with different location type'
+                );
+
+                errorMessages.put(
+                    'Different BSP selected',
+                    'For change of location type to different legan entity, it is not possible to swap an AE with a HE from different BSP'
                 );
 
                 errorMessages.put(
@@ -696,16 +704,13 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
              
         }
+        
+        Boolean pilotTypeOfChange = (tocList.contains(AMS_Utils.CONVERTTONEWGENPILOT) || tocList.contains(AMS_Utils.CONVERTTOLEGACY) || tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL));
 
-        if((tocList.contains(AMS_Utils.CONVERTTONEWGENPILOT) || tocList.contains(AMS_Utils.CONVERTTOLEGACY) || tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL)) && existsLocClassDomesticError){
+        if(pilotTypeOfChange && existsLocClassDomesticError){
             errorChecks.put('Require Location Class Domestic', true);
         }
 
-        ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar,oscar.Account__r.ANG_Accreditation_Model__c);
-
-        if(config == null){
-            errorChecks.put('Invalid Changes Combination', true);
-        }
         //retrieve error messages
         List<String> errors = new List<String>();
 
@@ -713,8 +718,18 @@ public with sharing class ANG_AccountHierarchySelectionController {
             if(errorChecks.get(error)) errors.add(errorMessages.get(error));
         }
 
+        ANG_AgencyChangesConfigHelper.ChangesConfig changesConfig = NULL;
+        
+        if(!pilotTypeOfChange){
+            changesConfig = ANG_AgencyChangesConfigHelper.getConfig(oscar,oscar.Account__r.ANG_Accreditation_Model__c);
+        }
+
+        Boolean validChangeCombination = (changesConfig != NULL || pilotTypeOfChange);
+
         //display error messages and stop execution by short-circuiting the if on the save method
-        if(errors.isEmpty()) return true;
+        if(errors.isEmpty() && validChangeCombination){
+            return true;
+        }
 
         for(String error : errors) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, error));
         return false;
@@ -765,34 +780,35 @@ public with sharing class ANG_AccountHierarchySelectionController {
     
     public void handleSelection() {
 
-            
-        Map<Id,HEPerBSP> tempHesPerBSPs = new Map<Id,HEPerBSP>();
-        for (HierarchyItem i : hierarchy.values()){
+        if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY)){ 
+            Map<Id,HEPerBSP> tempHesPerBSPs = new Map<Id,HEPerBSP>();
+            for (HierarchyItem i : hierarchy.values()){
 
-            Id currentBSP = i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
-            if((i.selected || i.main) && !existingBSPs.contains(currentBSP)){
+                Id currentBSP = i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
+                if((i.selected || i.main) && !existingBSPs.contains(currentBSP)){
 
-                if(!tempHesPerBSPs.containsKey(currentBSP)) 
-                    tempHesPerBSPs.put(currentBSP, new HEPerBSP(currentBSP, i.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, i.acc.IATA_ISO_Country__r.name));
-                
-                tempHesPerBSPs.get(currentBSP).possibleAccounts.put(i.acc.ID,i.acc);
+                    if(!tempHesPerBSPs.containsKey(currentBSP)) 
+                        tempHesPerBSPs.put(currentBSP, new HEPerBSP(currentBSP, i.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, i.acc.IATA_ISO_Country__r.name));
+                    
+                    tempHesPerBSPs.get(currentBSP).possibleAccounts.put(i.acc.ID,i.acc);
 
-                if (i.acc.Location_Type__c == AMS_Utils.GE || i.acc.Location_Type__c == AMS_Utils.HE){
-                    //tempHesPerBSPs.get(currentBSP).hasParentDefined = true;
-                    tempHesPerBSPs.get(currentBSP).p.parentid = i.acc.id;
+                    if (i.acc.Location_Type__c == AMS_Utils.GE || i.acc.Location_Type__c == AMS_Utils.HE){
+                        //tempHesPerBSPs.get(currentBSP).hasParentDefined = true;
+                        tempHesPerBSPs.get(currentBSP).p.parentid = i.acc.id;
+                    }
                 }
             }
-        }
 
-        //now need to set again the selected parents
-        for(HEPerBSP old : hesPerBSPs.values()){
-            if(old.p.Parentid != null && tempHesPerBSPs.containsKey(old.bspId) && tempHesPerBSPs.get(old.bspId).p.Parentid == null && tempHesPerBSPs.get(old.bspId).possibleAccounts.containsKey(old.p.Parentid)){
-                //tempHesPerBSPs.get(old.bspId).hasParentDefined = true;
-                tempHesPerBSPs.get(old.bspId).p.Parentid = old.p.parentid;
+            //now need to set again the selected parents
+            for(HEPerBSP old : hesPerBSPs.values()){
+                if(old.p.Parentid != null && tempHesPerBSPs.containsKey(old.bspId) && tempHesPerBSPs.get(old.bspId).p.Parentid == null && tempHesPerBSPs.get(old.bspId).possibleAccounts.containsKey(old.p.Parentid)){
+                    //tempHesPerBSPs.get(old.bspId).hasParentDefined = true;
+                    tempHesPerBSPs.get(old.bspId).p.Parentid = old.p.parentid;
+                }
             }
-        }
 
-        hesPerBSPs = tempHesPerBSPs;
+            hesPerBSPs = tempHesPerBSPs;
+        }
     }
 
     public PageReference FetchNewParent(){
@@ -1007,6 +1023,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
         integer selectedCount = 0;
         integer hierarchySize = hierarchyValues.size();
 
+        Integer selectedAE = 0;
+        Integer selectedHE = 0;
+
         for(HierarchyItem item : hierarchyValues){
 
             if(item.selected || item.main){
@@ -1025,6 +1044,10 @@ public with sharing class ANG_AccountHierarchySelectionController {
                     isSingleBSPSelected = false;
                 }
 
+                if (item.acc.Location_Type__c == AMS_Utils.HE)
+                    selectedHE++;
+                else if (item.acc.Location_Type__c == AMS_Utils.AE)
+                    selectedAE++;
             }
             
         }
@@ -1050,6 +1073,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
                 errorChecks.put('Only two agents selected with different location types', true);
             }
 
+        }
+        if (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY))
+        {
+            if (! isSingleBSPSelected && selectedHE == 1 && selectedAE == 1)
+                errorChecks.put('Different BSP selected', true);
         }
 
         if(tocList.contains(AMS_Utils.ANG_VMFR) && !allAgenciesFromSameBSPSelected){
@@ -1106,15 +1134,17 @@ public with sharing class ANG_AccountHierarchySelectionController {
             errorChecks.put('Multicountry change hierarchy must select GE', true);
     }
 
-    private boolean onlyGE_BSPLeft(){
-        
-         if(!this.isMulticountry) return false;
+    private boolean isOnlyGeBspLeft(){
+    
+        for (HierarchyItem i : hierarchy.values()){
+			if(!i.selected && !i.main && i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c == currentGE.IATA_ISO_Country__r.AMS_Settlement_System__c){
+				return true;
+			}
+		}
 
-        for (HierarchyItem i : hierarchy.values())    
-            if(!i.selected && !i.main && i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c != currentGE.IATA_ISO_Country__r.AMS_Settlement_System__c) return false;
-		
-            return true;
-    }
+		return false;
+    
+	}
 
     // ***********************************
     // *********** wrappers **************

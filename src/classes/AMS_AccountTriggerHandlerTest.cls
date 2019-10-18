@@ -284,7 +284,7 @@ private class AMS_AccountTriggerHandlerTest {
 								Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
 		insert a;
 
-		insert new AMS_Oscar__c(Account__c = a.Id, Status__c = 'Open');
+		insert new AMS_Oscar__c(Account__c = a.Id, Status__c = 'Open', STEP17__c = 'In Progress');
 
 		Test.startTest();
 

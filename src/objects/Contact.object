@@ -7148,57 +7148,6 @@ Formula field that copies the E&amp;F Type.</description>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
-        <fullName>Email_Status_Update__c</fullName>
-        <externalId>false</externalId>
-        <label>Email Status Update</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Email_Status__c</fullName>
-        <externalId>false</externalId>
-        <label>Email Status</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Invalid</fullName>
-                    <default>false</default>
-                    <label>Invalid</label>
-                </value>
-                <value>
-                    <fullName>Missing</fullName>
-                    <default>false</default>
-                    <label>Missing</label>
-                </value>
-                <value>
-                    <fullName>Bad Email</fullName>
-                    <default>false</default>
-                    <label>Bad Email</label>
-                </value>
-                <value>
-                    <fullName>Do not Email</fullName>
-                    <default>false</default>
-                    <label>Do not Email</label>
-                </value>
-                <value>
-                    <fullName>Email</fullName>
-                    <default>false</default>
-                    <label>Email</label>
-                </value>
-                <value>
-                    <fullName>Unknown</fullName>
-                    <default>true</default>
-                    <label>Unknown</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>Espiritu_Survey_Answered__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -10419,30 +10368,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Multicountry_Role__c</fullName>
-        <externalId>false</externalId>
-        <label>Multicountry Role</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Global</fullName>
-                    <default>false</default>
-                    <label>Global</label>
-                </value>
-                <value>
-                    <fullName>Local</fullName>
-                    <default>false</default>
-                    <label>Local</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
     </fields>
     <fields>
         <fullName>Name</fullName>
@@ -15601,33 +15526,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Email_Status__c</picklist>
-            <values>
-                <fullName>Bad Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Do not Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invalid</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Missing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Unknown</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Fax_Status__c</picklist>
             <values>
                 <fullName>Bad Number</fullName>
@@ -16354,17 +16252,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>iiNet</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Multicountry_Role__c</picklist>
-            <values>
-                <fullName>Global</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Local</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18502,33 +18389,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Email_Status__c</picklist>
-            <values>
-                <fullName>Bad Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Do not Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invalid</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Missing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Unknown</fullName>
-                <default>true</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Fax_Status__c</picklist>
             <values>
                 <fullName>Bad Number</fullName>
@@ -19559,17 +19419,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Multicountry_Role__c</picklist>
-            <values>
-                <fullName>Global</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Local</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Name</picklist>
             <values>
                 <fullName>Mr%2E</fullName>
@@ -20330,13 +20179,6 @@ Account.RecordType.DeveloperName = &quot;IATA_Agency&quot;
         <errorConditionFormula>aND(S_BSPlink__c&lt;&gt;0,ischanged(Email),$User.Username&lt;&gt;&quot;oscarl@iata.org&quot;,$User.Username&lt;&gt;&quot;rovedaa@iata.org&quot;,
 NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionFormula>
         <errorMessage>Changing a BSPlink user&apos;s email may cause problems with SSO.If the user&apos;s access to BSPlink is to be switched to another email, do the changes in BSPlink. Otherwise if the contact is changing their email, please post a comment on the portal chatter group</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Email_Update_Date_Must_be_Added</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND(ISCHANGED( Email_Status__c ), OR( Email_Status_Update__c    &lt;    TODAY(), ISNULL( Email_Status_Update__c  )))</errorConditionFormula>
-        <errorDisplayField>Email_Status_Update__c</errorDisplayField>
-        <errorMessage>Email Status has been modified, please enter update date</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Has_Authorized_Signatory_External</fullName>
