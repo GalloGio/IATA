@@ -35,14 +35,12 @@ public without sharing class RegistrationLvl2Email {
                 message.setSenderDisplayName('IATA Noreply');
             }                    
                 
-            message.setTargetObjectId(userId); //- I don't know Why but this doesn't work, instead use setToAddresses         
+            message.setTargetObjectId(userId);          
             message.setToAddresses(new List<String>{address});
-
-            //message.setWhatId(account.Id); This is important for the merge fields in template to work
             
             Id networkId = [SELECT Id FROM Network WHERE Name = 'CS Portal'].Id;
             string url = Network.getLoginURL(networkId).substring(0,Network.getLoginURL(networkId).indexOf('login'));
-            url = url + 'my-profile';
+            url = url + 'my-profile?triggerL2=true';
 
             
             String plainBody = message.getPlainTextBody();

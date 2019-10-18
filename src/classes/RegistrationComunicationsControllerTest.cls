@@ -176,7 +176,7 @@ private class RegistrationComunicationsControllerTest {
             List<Notification__c> notificationsBefore = [SELECT Id,Contact__c FROM Notification__c ];
             //FOR testing purposes sometimes the user creation (in test setup) is creating a notification
 
-            Map<String,String> result = RegistrationComunicationsController.sendLevel2RegistrationAlertToAll();
+            Map<String,String> result = RegistrationComunicationsController.sendBatchLevel2RegistrationAlert(new List<Id>{newContact.Id,newContact2.Id});
             Integer invocations = Limits.getEmailInvocations();
             List<Notification__c> notifications = [SELECT Id,Contact__c FROM Notification__c ];
         Test.stopTest();        

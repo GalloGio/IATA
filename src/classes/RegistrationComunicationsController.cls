@@ -30,7 +30,7 @@ public without sharing class RegistrationComunicationsController {
 
         if(contactIds == null || contactIds.size() == 0){
             return new Map<String,String>{EMAIL => NONE,NOTIFICATION => NONE};
-        }
+        } 
 
         Map<String,String> result = new Map<String,String>();
 
@@ -46,21 +46,6 @@ public without sharing class RegistrationComunicationsController {
 
         return result;
      }
-
-    @AuraEnabled
-    public static Map<String,String> sendLevel2RegistrationAlertToAll(){
-
-        List<User> users = [SELECT Id, ContactId FROM User WHERE ContactId != null AND Contact.Account.Is_General_Public_Account__c = true];
-        List<Id> contactIds = new List<Id>();
-
-        for(User user : users){
-            contactIds.add(user.contactId);
-        }
-
-        Map<String,String> result = sendBatchLevel2RegistrationAlert(contactIds);        
-        
-        return result;
-    }
 
     private static Boolean sendSingleEmail(Id contactId){   
         //MAX 150 adresses     
@@ -93,15 +78,12 @@ public without sharing class RegistrationComunicationsController {
                 message.setSenderDisplayName('IATA Noreply');
             }                    
              
-            message.setTargetObjectId(userId); //- I don't know Why but this doesn't work, instead use setToAddresses         
+            message.setTargetObjectId(userId);          
             message.setToAddresses(new List<String>{address});
-            
-            //message.setWhatId(account.Id); This is important for the merge fields in template to work
             
             String plainBody = message.getPlainTextBody();
 
             if(plainBody != null) {
-                //plainBody = plainBody.replace('[URL]', getPortalProfileUrl()).replace('[CustomerName]',contact.Name);
                 plainBody = plainBody.replace('[CustomerName]', contact.Name).replace('[URL]','"'+  getPortalProfileUrl() +'" target="_blank"');
                 message.setHtmlBody(plainBody);
             }        
@@ -137,21 +119,32 @@ public without sharing class RegistrationComunicationsController {
             EmailTemplate emailTemplate = [SELECT Id,Subject,Description,HtmlValue,DeveloperName,Body FROM EmailTemplate WHERE DeveloperName = 'CSP_Registration_L2_Email_VF'];
             OrgWideEmailAddress orgWideEmail  = [SELECT Id,Address FROM OrgWideEmailAddress WHERE Address='noreply@iata.org' Limit 1];     
 
-            List<User> users = [Select Id, ContactId FROM User WHERE ContactId IN :contactIds];
-            Map<Id,Id> userByContact = new Map<Id,Id>(); 
+            List<User> users = [Select Id, ContactId, LanguageLocaleKey FROM User WHERE ContactId IN :contactIds];
+            Map<Id,User> userByContact = new Map<Id,User>(); 
 
             for(User user : users){
-                userByContact.put(user.ContactId,user.Id);
+                userByContact.put(user.ContactId,user);
+            }
+
+            Map<String,Messaging.SingleEmailMessage> templatesByLanguage = new Map<String,Messaging.SingleEmailMessage>(); 
+            Messaging.SingleEmailMessage message;
+
+            for(User user :users){
+                if(!templatesByLanguage.containsKey(user.LanguageLocaleKey)){
+                    message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, user.Id, null);
+                    templatesByLanguage.put(user.LanguageLocaleKey, message);
+                }
             }
 
             String url = getPortalProfileUrl();
             Id currentuserId;
             String plainBody = null;
-            List<Messaging.SingleEmailMessage> messages = new List<Messaging.SingleEmailMessage>();
+            List<Messaging.SingleEmailMessage> messages = new List<Messaging.SingleEmailMessage>();               
 
             for(Contact contact : contacts.values()){
-                currentuserId = userByContact.get(contact.Id);
-                Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, currentuserId, null);
+                User currentuser = userByContact.get(contact.Id);
+                message = templatesByLanguage.get(currentuser.LanguageLocaleKey);
+
                 message.setReplyTo('noreply@iata.org'); 
                 message.setUseSignature(false); 
                 message.setBccSender(false); 
@@ -162,7 +155,7 @@ public without sharing class RegistrationComunicationsController {
                 }else{
                     message.setSenderDisplayName('IATA Noreply');
                 }    
-                message.setTargetObjectId(currentuserId); //- I don't know Why but this doesn't work, instead use setToAddresses         
+                message.setTargetObjectId(currentuserId);       
                 message.setToAddresses(new List<String>{contact.Email});
 
                 plainBody = message.getPlainTextBody();
@@ -206,7 +199,7 @@ public without sharing class RegistrationComunicationsController {
 
         Map<Id,Contact> contacts = new Map<Id,Contact>([SELECT Id, Name, Preferred_Language__c FROM CONTACT WHERE Id IN :contactIds]);
 
-        List<User> users = [Select Id,ContactId, LanguageLocaleKey FROM User WHERE ContactId = :contactIds];
+        List<User> users = [Select Id,ContactId, LanguageLocaleKey FROM User WHERE ContactId IN :contactIds];
 
         Notification_template__c notificationTemplate = 
     				[SELECT Subject__c, Name, Message__c, Language__c,Type__c,Notification_color__c,Alert_Contact_By_Email__c,
@@ -227,16 +220,29 @@ public without sharing class RegistrationComunicationsController {
         List<Notification__c> notifications = new List<Notification__c>();    
         Messaging.SingleEmailMessage message;
         Contact contact;
+        String url = getPortalProfileUrl();
+
+        Map<String,Messaging.SingleEmailMessage> templatesByLanguage = new Map<String,Messaging.SingleEmailMessage>();
+        Integer maxLanguages = (Integer) [SELECT COUNT_DISTINCT(LanguageLocaleKey) FROM User][0].get('expr0');
+
+        for(User user :users){
+            if(!templatesByLanguage.containsKey(user.LanguageLocaleKey)){
+                message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, user.Id, null);
+                templatesByLanguage.put(user.LanguageLocaleKey, message);
+            }
+            if(templatesByLanguage.size() == maxLanguages){
+                break;
+            }
+        }
 
         for(User user :users){
 
-            message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, user.Id, null);
-
             contact = contacts.get(user.ContactId);
+            message = templatesByLanguage.get(user.LanguageLocaleKey);
 
             notifications.add( new Notification__c(
                 Contact__c = user.ContactId,
-                Message__c = message.getPlainTextBody().replace('[CustomerName]',contact.Name).replace('[URL]','"'+  getPortalProfileUrl() +'" target="_blank"').replace('[HeaderUrl]',headerImageUrl),
+                Message__c = message.getPlainTextBody().replace('[CustomerName]',contact.Name).replace('[URL]','"'+  url +'" target="_blank"').replace('[HeaderUrl]',headerImageUrl),
                 Alert_Contact_By_Email__c = notificationTemplate.Alert_Contact_By_Email__c,
                 Alert_Contact_By_Push_Notification__c = notificationTemplate.Alert_Contact_By_Push_Notification__c,
                 Subject__c = message.getSubject(),
@@ -247,33 +253,6 @@ public without sharing class RegistrationComunicationsController {
                 Expiry_date__c = system.Now() + notificationTemplate.Expire_in_days__c
             ));
         }
-       /* 
-        List<Notification__c> notifications = new List<Notification__c>();
-
-        for (Contact contact : contacts) {
-            userLanguageTemplate = null;
-            for(Notification_template__c temp : templateList){
-                if( temp.LanguageLocaleKey__c == languages.get(contact.Id)){
-                    userLanguageTemplate = temp;
-                    break;
-                }
-            }
-            if(userLanguageTemplate == null){
-                userLanguageTemplate = defaultTemplate;
-            }
-            notifications.add( new Notification__c(
-                Contact__c = contact.Id,
-                Message__c = (userLanguageTemplate.Message__c).replace('[CustomerName]',contact.Name).replace('[URL','<a href="'+ getPortalProfileUrl() +'" target="_blank"><b>Click here to complete your profile</b></a>.'),
-                Alert_Contact_By_Email__c = userLanguageTemplate.Alert_Contact_By_Email__c,
-                Alert_Contact_By_Push_Notification__c = userLanguageTemplate.Alert_Contact_By_Push_Notification__c,
-                Subject__c = userLanguageTemplate.Subject__c,
-                Type__c = userLanguageTemplate.Type__c,
-                Notificatin_color__c = userLanguageTemplate.Message__c,
-                Notification_Campagne_Name__c = '',
-                Critical_notification__c = userLanguageTemplate.CriticalNotification__c,
-                Expiry_date__c = system.Now() + userLanguageTemplate.Expire_in_days__c
-            ));
-        }*/
 
         Database.SaveResult[] srList;
         try{
@@ -324,26 +303,7 @@ public without sharing class RegistrationComunicationsController {
 
         //Load the template with the user language
         Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, userId, null);
-/*
-        Notification_template__c userLanguageTemplate = null;
-        Notification_template__c defaultTemplate = null;
 
-        for(Notification_template__c template : templateList){
-            if(template.Language__c == 'English'){
-                defaultTemplate = template;
-            }
-            if(template.LanguageLocaleKey__c == userLanguageLocaleKey.substring(0,2)){
-                userLanguageTemplate = template;
-            }
-        } 
-
-        if(userLanguageTemplate == null){
-            if(defaultTemplate == null){
-                return new List<Boolean>{false};
-            }
-            userLanguageTemplate = defaultTemplate;
-        }
-*/
         String headerImageUrl='';
         List<Document> docs = [Select id From Document Where name= 'CSP_Notification_Header_Image'];
         if(docs.size() != 0){
@@ -351,18 +311,6 @@ public without sharing class RegistrationComunicationsController {
         }
         String url =  getPortalProfileUrl();
 
-        /*Notification__c notification = new Notification__c(
-            Contact__c = contactId,
-            Message__c = (userLanguageTemplate.Message__c).replace('[CustomerName]',contact.Name).replace('[URL]','<a href="'+ getPortalProfileUrl() +'" target="_blank"><b>Click here to complete your profile</b></a>'),
-            Alert_Contact_By_Email__c = userLanguageTemplate.Alert_Contact_By_Email__c,
-            Alert_Contact_By_Push_Notification__c = userLanguageTemplate.Alert_Contact_By_Push_Notification__c,
-            Subject__c = userLanguageTemplate.Subject__c,
-            Type__c = userLanguageTemplate.Type__c,
-            Notificatin_color__c = userLanguageTemplate.Notification_color__c,
-            Notification_Campagne_Name__c = '',
-            Critical_notification__c = userLanguageTemplate.CriticalNotification__c,
-            Expiry_date__c = system.Now() + userLanguageTemplate.Expire_in_days__c   
-        );*/
         Notification__c notification = new Notification__c(
             Contact__c = contactId,
             Message__c = message.getPlainTextBody().replace('[CustomerName]',contact.Name).replace('[URL]','"'+  url +'" target="_blank"').replace('[HeaderUrl]',headerImageUrl),
@@ -401,7 +349,7 @@ public without sharing class RegistrationComunicationsController {
     static private String getPortalProfileUrl(){
         Id networkId = [SELECT Id FROM Network WHERE Name = 'CS Portal'].Id;
         string url = Network.getLoginURL(networkId).substring(0,Network.getLoginURL(networkId).indexOf('login'));
-        url = url + 'my-profile';
+        url = url + 'my-profile?triggerL2=true';
         return url;
     }
 }
