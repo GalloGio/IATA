@@ -69,8 +69,23 @@ export default class portalIftpTabs extends NavigationMixin(LightningElement) {
             this.userInfo = myResult;
             console.log('-- [portalIftpTabs - getUserInfo] this.userInfo - ',  this.userInfo);
 
-            this.setUserAccess(this.userInfo);
-            this.setTabsVisibility(this.userInfo);
+            
+
+            // //Check User Access, for both ITP User and Airline User
+            // this.userInfo.accountRoleStatus === 'Active' - Not able to set to Airline users since these don't have acc cont roles
+            if( this.userInfo.accountRoleType === 'IFTP' && 
+                    this.userInfo.PortalApplication === 'IFTP' && 
+                    this.userInfo.PortalApplicationStatus === 'Access Granted' &&
+                    this.userInfo.accountRoleSrvName.indexOf('IFTP') !== -1 ){
+
+                        this.setUserAccess(this.userInfo);
+                        this.setTabsVisibility(this.userInfo);
+            }else{
+                this.mainErrorMessage = 'Currently you dont have access to IFTP Portal, please contact the Administrator';
+                let err = [];
+                err[0] = 'Setup to access:\n- Account role type = IFTP(ITP)\n- Account Role Status = ACtive\n- Portal Service = IFTP\n- Portal Service status = Access Granted';    
+                this.error = err;    
+            } 
             
         })
         .catch(error => {
