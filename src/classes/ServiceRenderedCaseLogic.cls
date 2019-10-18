@@ -53,8 +53,8 @@ public class ServiceRenderedCaseLogic {
             caseMap.get(caseIDPerAccId.get(AccPerIntAcc.get(k).id)));
                     
         }
-      //Only child accounts should have the recordType IATA_Airline_BR
-      }else if (AcctsToSavePerAccInt.get(k).ParentId != null){
+        //Only child accounts should have the recordType IATA_Airline_BR
+      }else if (AcctsToSavePerAccInt.get(k).ParentId != null){  
         AcctsToSavePerAccInt.get(k).RecordtypeId = Branch;
         acctToUpdate.add(AcctsToSavePerAccInt.get(k));
       }
@@ -348,6 +348,8 @@ public class ServiceRenderedCaseLogic {
   list<case> casesOkConsumer = new list<Case>();
   map<Id,list<Case>>  CasesPerConsumer = new map<Id,list<Case>>();
   
+  Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
+
   for(Case c: cases){
     if( CasesPerConsumer.get(c.AccountId) == null)
       CasesPerConsumer.put(c.AccountId,new list<Case>()); 
@@ -367,7 +369,8 @@ public class ServiceRenderedCaseLogic {
     }else {
       for(Id accID:CasesPerConsumer.keyset()) 
         for(case c:CasesPerConsumer.get(accID))
-          c.addError('The Consumer must be an Airline');
+			if(c.RecordType != caseRT)
+				c.addError('The Consumer must be an Airline');
     }
   }
   return casesOkConsumer;
