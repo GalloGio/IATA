@@ -1,6 +1,8 @@
 ({
     doInit : function(component, event, helper) {
         helper.getAccount(component);
+        helper.getCanEditOtherTypeofSubsidiaries(component);
+        helper.getHaveAMPAgencyManagement(component);
     },
     otherTypeofSubsidiariesOnclick : function(component) {
         component.set('v.otherTypeofSubsidiariesOldValue',component.get('v.record').Other_Type_of_Subsidiaries__c);

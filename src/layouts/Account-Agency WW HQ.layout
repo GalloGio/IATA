@@ -33,7 +33,7 @@
                 <field>Quality__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Legal_name__c</field>
             </layoutItems>
             <layoutItems>
@@ -51,11 +51,11 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Sector__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Category__c</field>
             </layoutItems>
             <layoutItems>
@@ -88,7 +88,7 @@
                 <field>BillingAddress</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>IATA_ISO_Country__c</field>
             </layoutItems>
             <layoutItems>
@@ -110,7 +110,7 @@
                 <field>Fax</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Website</field>
             </layoutItems>
         </layoutColumns>

@@ -19,4 +19,34 @@ public with sharing class AWW_AccountIdentificationCtrl {
         update accountDetails;
         return accountDetails;
     }
+    
+    @AuraEnabled
+    public static Boolean canEditOtherTypeofSubsidiaries(){
+         List<PermissionSetAssignment> permissions = [
+            SELECT PermissionSet.Name
+            FROM PermissionSetAssignment 
+            WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSet.Name =: 'AMP_Manage_Account_Ownership'
+        ];
+
+        if(permissions.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    @AuraEnabled
+    public static Boolean haveAMPAgencyManagement(){
+         List<PermissionSetAssignment> permissions = [
+            SELECT PermissionSet.Name
+            FROM PermissionSetAssignment 
+            WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSet.Name =: 'AMP_Agency_Management'
+        ];
+
+        if(permissions.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

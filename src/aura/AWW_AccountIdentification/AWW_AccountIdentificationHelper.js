@@ -14,6 +14,28 @@
 
         $A.enqueueAction(action);
     },
+    getHaveAMPAgencyManagement : function(component) {
+        var action = component.get("c.haveAMPAgencyManagement");
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (component.isValid() && state === "SUCCESS") {
+                component.set("v.haveAMPAgencyManagement", response.getReturnValue());
+            }
+        });
+
+        $A.enqueueAction(action);
+    },
+    getCanEditOtherTypeofSubsidiaries : function(component) {
+        var action = component.get("c.canEditOtherTypeofSubsidiaries");
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (component.isValid() && state === "SUCCESS") {
+                component.set("v.canEditOtherTypeofSubsidiaries", response.getReturnValue());
+            }
+        });
+
+        $A.enqueueAction(action);
+    },
     saveOtherTypeofSubsidiaries : function(component) {
         var action = component.get("c.saveAccountDetails");
         action.setParams({

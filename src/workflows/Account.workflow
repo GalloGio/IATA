@@ -452,8 +452,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <description>Set the name of an ACLI account (RT = Airline Headquarters ) using its Trade Name or AOC Name</description>
-        <formula>AND (   RecordType.DeveloperName = &apos;IATA_Airline&apos;,   OR( ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Legal_name__c ), ISCHANGED( Name_on_AOC__c ) )  )</formula>
+        <description>Set the name of an ACLI account (RT = Airline Headquarters OR RT = Agency WW HQ ) using its Trade Name or AOC Name</description>
+        <formula>AND (   OR(RecordType.DeveloperName = &apos;IATA_Airline&apos;, RecordType.DeveloperName = &apos;Agency_WW_HQ&apos;),   OR( ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Legal_name__c ), ISCHANGED( Name_on_AOC__c ) )  )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

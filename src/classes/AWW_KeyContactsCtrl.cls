@@ -21,7 +21,7 @@ public with sharing class AWW_KeyContactsCtrl {
                                      FROM Contact
                                      WHERE Account_Management_Key_Contact__c = true AND 
                                         (AccountId IN :topParents OR Account.Top_Parent__c IN :topParents OR AccountId = :accountId) 
-                                     ORDER BY Name, Key_Contacts_Order__c];
+                                     ORDER BY Key_Contacts_Order__c];
         
         return keyContacts;
     }
@@ -53,11 +53,29 @@ public with sharing class AWW_KeyContactsCtrl {
             this.accountLink = '/' + con.AccountId;
             this.accountSite = con.Account.Site;
             this.contactType = con.Airline_Contact_Type__c;
-            this.primaryFor = String.isBlank(con.Function__c) ? '' : con.Function__c.replace(';', '; ');
             this.title = con.Title;
             this.phone = con.Phone;
             this.mobile = con.MobilePhone;
             this.email = con.Email;
+
+            
+            String s = con.Function__c;
+            this.primaryFor = '';
+            if(s != null){
+                List<String> primaryForList = s.split(';');
+                for(Integer i = 0; i < primaryForList.size(); i++){
+                    this.primaryFor += primaryForList[i];
+
+                    if(i != primaryForList.size()-1){
+                        if(Math.mod(i,3) != 2){
+                            this.primaryFor += '; ';
+                        }
+                        else{
+                            this.primaryFor += ';<br/>';
+                        }                   
+                    }
+                }
+            }
         }
     }
 }

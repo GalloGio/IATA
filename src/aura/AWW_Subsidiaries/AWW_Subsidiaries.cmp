@@ -3,6 +3,7 @@
     <aura:attribute name="data" type="List"/>
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="canEdit" type="Boolean"/>
+    <aura:attribute name="canAdd" type="Boolean"/>
     <aura:attribute name="sortBy" type="String"/>
     <aura:attribute name="sortDirection" type="String"/>
 
@@ -21,7 +22,12 @@
         <div class="slds-box slds-p-around_none slds-theme_shade">
             <lightning:card class="bckColor" title="Agency Subsidiaries" iconName="standard:hierarchy">
                 <aura:set attribute="actions">
-                    <lightning:button variant="Neutral" label="Add" title="Add" onclick="{!c.add}" class="{!if(v.canEdit,'','slds-hide')}"/>  
+                    <aura:if isTrue="{!v.canEdit}">
+                        <lightning:button variant="Neutral" label="Add" title="Add" onclick="{!c.add}"/>   
+                    </aura:if>
+                    <aura:if isTrue="{!!v.canEdit}">
+                        <lightning:button variant="Neutral" label="Add" title="Add" onclick="{!c.add}" class="{!if(v.canAdd,'','slds-hide')}"/>   
+                    </aura:if>
                 </aura:set>
                 <div class="slds-m-around_x-small slds-table_bordered slds-border_left slds-border_right">
                     <lightning:datatable
