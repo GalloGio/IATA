@@ -26,7 +26,10 @@ public without sharing class PortalIftpUtils {
                             WHERE Id= :userId];
 
         
-        Account_Role_Service__c accRoleSrv = [SELECT Id, Account_Role__c FROM Account_Role_Service__c WHERE Account_Role__r.Account__c = :userAcc.contact.accountid];
+        Account_Role_Service__c accRoleSrv = [SELECT Id, Account_Role_Services__r.Name,
+                                                    Account_Role__c, Account_Role__r.Status__c, Account_Role__r.RecordType.Name
+                                                FROM Account_Role_Service__c 
+                                                WHERE Account_Role__r.Account__c = :userAcc.contact.accountid];
 
         List<Account_Contact_Role__c> lContactRole = [SELECT Id, Contact_Role__c, Contact_Roles__c, Contact_Roles__r.Name 
                                                     FROM Account_Contact_Role__c 
@@ -40,6 +43,12 @@ public without sharing class PortalIftpUtils {
                                             FROM Role_Address__c 
                                             WHERE Account_Contact_Role__r.Contact__c = :userAcc.contactId];
 
+        Portal_Application_Right__c par = [SELECT Right__c, Portal_Application__r.Name
+                                            FROM Portal_Application_Right__c
+                                            WHERE Contact__c = :userAcc.contactId
+                                            AND Portal_Application__r.Name = 'IFTP'
+                                            LIMIT 1];                                            
+
         if(lContactRole.size() > 0){
             contactRoleId = lContactRole[0].Id;
             contactRole = lContactRole[0].Contact_Role__c;
@@ -50,14 +59,21 @@ public without sharing class PortalIftpUtils {
             userId, 
             userAcc.contact.accountid, 
             accRoleSrv.Account_Role__c, 
+            accRoleSrv.Account_Role__r.Status__c,
+            accRoleSrv.Account_Role__r.RecordType.Name,
             accRoleSrv.Id, 
+            accRoleSrv.Account_Role_Services__r.Name,
             userAcc.contact.account.name, 
             userAcc.contact.account.recordtype.developername, 
             contactRoleId,
             contactRole,
             PortalContactRoles,
             userAcc.Profile_Name__c,
-            userAcc.contact.User_Portal_Status__c);
+            userAcc.contact.User_Portal_Status__c,
+            par.Portal_Application__r.Name,
+            par.Right__c
+            );
+
         if(!lRoleAddr.isEmpty()){
             userInfo.hasAssociatedStations = true;
             for(Role_Address__c rec : lRoleAddr){
@@ -69,6 +85,7 @@ public without sharing class PortalIftpUtils {
         userInfo.contactId = userAcc.contactId;
         userInfo.accountRegion = userAcc.Contact.Account.Region_formula__c;
         userInfo.accountCountry = userAcc.Contact.Account.IATA_ISO_Country__r.Name;
+
 
         return userInfo;
     }
@@ -1523,7 +1540,13 @@ public without sharing class PortalIftpUtils {
         @AuraEnabled
         public Id accountRole {get;set;}
         @AuraEnabled
+        public String accountRoleStatus {get;set;}
+        @AuraEnabled
+        public String accountRoleType {get;set;}
+        @AuraEnabled
         public Id accountRoleSrv {get;set;}
+        @AuraEnabled
+        public String accountRoleSrvName {get;set;}
         @AuraEnabled
         public String accountName {get;set;}
         @AuraEnabled
@@ -1548,6 +1571,10 @@ public without sharing class PortalIftpUtils {
         public String accountRegion {get;set;}
         @AuraEnabled
         public String accountCountry {get;set;}
+        @AuraEnabled
+        public String PortalApplication {get;set;}
+        @AuraEnabled
+        public String PortalApplicationStatus {get;set;}
 
 
         public UserInfoRecordsWrapper(  Id id, 
@@ -1573,6 +1600,42 @@ public without sharing class PortalIftpUtils {
             this.profile = profile;
             this.userPortalStatus = userPortalStatus;
             this.hasAssociatedStations = false;
+        }
+
+        public UserInfoRecordsWrapper(  Id id, 
+                                        Id accountId, 
+                                        Id accountRole, 
+                                        String accountRoleStatus,
+                                        String accountRoleType,
+                                        Id accountRoleSrv, 
+                                        String accountRoleSrvName,
+                                        String accountName, 
+                                        String accountRecordType, 
+                                        Id contactRoleId, 
+                                        String contactRole, 
+                                        String portalContactRole, 
+                                        String profile, 
+                                        String userPortalStatus,
+                                        String PortalApplication,
+                                        String PortalApplicationStatus){
+            this.id = id;                                            
+            this.accountId = accountId;
+            this.accountRole = accountRole;
+            this.accountRoleStatus = accountRoleStatus;
+            this.accountRoleType = accountRoleType;
+            this.accountRoleSrv = accountRoleSrv;
+            this.accountRoleSrvName = accountRoleSrvName;
+            this.accountName = accountName;                                            
+            this.accountRecordType = accountRecordType;  
+            this.contactRoleId = contactRoleId;
+            this.contactRole = contactRole;
+            this.portalContactRole = portalContactRole;
+            this.profile = profile;
+            this.userPortalStatus = userPortalStatus;
+            this.PortalApplication = PortalApplication;
+            this.PortalApplicationStatus = PortalApplicationStatus;
+            this.hasAssociatedStations = false;
+
         }
 
     }
