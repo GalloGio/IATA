@@ -39752,7 +39752,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GADM Data Submission help</shortDescription>
-        <value>Need help? Contact us at: {0}</value>
+        <value>Need help? Contact us at: </value>
     </labels>
     <labels>
         <fullName>GADM_Data_Submission_no_access</fullName>

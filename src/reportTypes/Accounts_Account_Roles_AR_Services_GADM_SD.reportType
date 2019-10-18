@@ -2489,7 +2489,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>IOSA_ISAGO__c</field>
+            <field>IOSA__c</field>
+            <table>Account.Account_Roles__r.Account_Role_Services__r.GADM_Account_Service_Details__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ISAGO__c</field>
             <table>Account.Account_Roles__r.Account_Role_Services__r.GADM_Account_Service_Details__r</table>
         </columns>
         <columns>

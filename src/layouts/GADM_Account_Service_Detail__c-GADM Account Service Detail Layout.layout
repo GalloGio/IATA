@@ -57,7 +57,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>IOSA_ISAGO__c</field>
+                <field>IOSA__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ISAGO__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
