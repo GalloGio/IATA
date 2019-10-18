@@ -118,8 +118,6 @@ public without sharing class PortalIftpUtils {
     */
     @AuraEnabled(cacheable=false)
     public static List<Address__c> getITPStations(Id accountId){
-        System.debug('getITPStations');
-        System.debug('accountId' + accountId);
         List<Address__c> stations = [SELECT City__c, Code__c, Description__c 
                                      FROM Address__c 
                                      WHERE Id in (
@@ -420,8 +418,7 @@ public without sharing class PortalIftpUtils {
         if(certificationType != null && certificationType != ''){
             certificationsWithLevel = [SELECT Certification__c, Certification__r.Name, Prerequisite_Level__c
                                         FROM IFTP_Certification_Detail__c
-                                        WHERE General_Training__c like 'No'
-                                        AND Certification__r.Type__c  = :certificationType ORDER BY Name];
+                                        WHERE General_Training__c like 'No'];
         }else{
             certificationsWithLevel = [SELECT Certification__c, Certification__r.Name, Prerequisite_Level__c
                                         FROM IFTP_Certification_Detail__c
@@ -866,14 +863,11 @@ public without sharing class PortalIftpUtils {
             }
 
             if(contactsToInsert.size() > 0 || contactsToUpdate.size() > 0){
-                System.debug('### contactsToInsert.size() - ' + contactsToInsert.size());
-                System.debug('### contactsToUpdate.size() - ' + contactsToUpdate.size());
 
                 Savepoint sp = Database.setSavepoint();
                 try {
                     if(contactsToInsert.size() > 0){
                         insert contactsToInsert;
-                        System.debug('### here after insert contactsToInsert');
                         Map<String, Contact> contByCodeMap = new Map<String, Contact>();
                         for(Contact c : contactsToInsert){
                             contByCodeMap.put(c.AssistantName, c);
@@ -884,9 +878,7 @@ public without sharing class PortalIftpUtils {
                                 acr.Contact__c = contByCodeMap.get(acr.Company_Code__c).Id;
                             }
                         }
-                        System.debug('### here before insert accContRoleToInsert');
                         insert accContRoleToInsert;
-                        System.debug('### here after insert accContRoleToInsert');
                     }
 
                     if(contactsToUpdate.size() > 0){
@@ -906,7 +898,6 @@ public without sharing class PortalIftpUtils {
                                                         Primary__c 
                                                     FROM Role_Address__c 
                                                     WHERE Account_Contact_Role__c IN :accContRoleToUpdate];
-                        System.debug('### here after  update accContRoleToUpdate');
                     }
                     // Insert in Role_Address__C (all records, from inserted and updateed contacts)
                     for(String key: mapEmployeeStationCodes.keySet()){
@@ -978,11 +969,9 @@ public without sharing class PortalIftpUtils {
                         }
                     }
                     insert roleAdressToInsert;
-                    System.debug('### here after insert roleAdressToInsert');
 
                     if(roleAddressesToUpdatePrimaryStation.size() > 0){
                         update roleAddressesToUpdatePrimaryStation;
-                        System.debug('### here after update roleAddressesToUpdatePrimaryStation ');
                     }
 
                     // Create and Insert records on IFTP_History
@@ -1065,12 +1054,10 @@ public without sharing class PortalIftpUtils {
                     // delete records from role_address__c
                     // station related to employee records and employee proficiency related to station records
                     delete roleAdressToBeDeleted;
-                    System.debug('### here after delete roleAdressToBeDeleted ');
                     //insert all history records
                     if(IftpHistoryRecordsToBeInserted.size() > 0){
                         portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
                     }
-                    System.debug('### here after insertIntoIftpHistory');
 
                     for(ImportResultsWrapper r : results){
                         if(r.result ==  'Code ready to import'){
@@ -1394,7 +1381,7 @@ public without sharing class PortalIftpUtils {
     */
 
     @AuraEnabled (cacheable=false)    
-    public static Boolean manageUploadStationOJT(Id fileId, Id recordID){
+    public static Boolean manageUploadStationOJT(Id fileId, Id recordID, String stationInfo){
         Boolean result = true;
         try{
             UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
@@ -1426,6 +1413,9 @@ public without sharing class PortalIftpUtils {
                 String baseUrl = URL.getSalesforceBaseUrl().toExternalForm();
 
                 String description = 'Request Station OJT File Validation: \n';
+                description += 'Station: ';
+                description += stationInfo;
+                description += ' \n';
                 description += 'See the file here: ';
                 description += baseUrl;
                 description += '/';
