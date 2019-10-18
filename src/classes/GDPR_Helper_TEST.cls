@@ -85,7 +85,6 @@ public class GDPR_Helper_TEST {
 		Test.startTest();
         Individual i = [SELECT id FROM Individual LIMIT 1];
 
-        GDPR_Helper.retrieveUserInfo('', false);
         GDPR_Helper.retrieveUserInfo(Comm_User_Helper.EncryptString(i.id), true);
         Test.stopTest();
 
