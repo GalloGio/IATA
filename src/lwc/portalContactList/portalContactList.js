@@ -276,7 +276,7 @@ export default class PortalContactList extends LightningElement {
         if(found) {
             this.loading = false;
             const toastEvent = new ShowToastEvent({
-                title: _lables.PKB2_js_error,
+                title: _labels.PKB2_js_error,
                 message: ISSP_SelectOneContact,
                 variant: 'error'
             });
@@ -295,7 +295,7 @@ export default class PortalContactList extends LightningElement {
                         this.refreshview();
                     } else {
                         const toastEvent = new ShowToastEvent({
-                            title: _lables.PKB2_js_error,
+                            title: _labels.PKB2_js_error,
                             message: results.errorMsg,
                             variant: 'error'
                         });
@@ -306,7 +306,7 @@ export default class PortalContactList extends LightningElement {
                 .catch(error => {
                     this.loading = false;
                     const toastEvent = new ShowToastEvent({
-                        title: _lables.PKB2_js_error,
+                        title: _labels.PKB2_js_error,
                         message: reduceErrors(error).join(', '),
                         variant: 'error'
                     });
@@ -388,7 +388,7 @@ export default class PortalContactList extends LightningElement {
                 .catch(error => {
                     this.loading = false;
                     const toastEvent = new ShowToastEvent({
-                        title: _lables.PKB2_js_error,
+                        title: _labels.PKB2_js_error,
                         message: reduceErrors(error).join(', '),
                         variant: 'error'
                     });

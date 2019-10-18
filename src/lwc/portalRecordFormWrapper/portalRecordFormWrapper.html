@@ -319,8 +319,15 @@
                                                 </lightning-messages>
 
                                                 <template if:true={showHelpText}>
-                                                    <div class="slds-p-horizontal_medium slds-p-vertical_small text-xxsmall blueLink">
-                                                        <lightning-formatted-rich-text value={labels.CSP_CompanyAdministration_Link} ></lightning-formatted-rich-text>
+													<div if:false={isAirline}>
+														<div class="slds-p-horizontal_medium slds-p-vertical_small text-xxsmall">
+															<lightning-formatted-rich-text value={labels.CSP_CompanyAdministration_Link} ></lightning-formatted-rich-text><br/>
+															<lightning-formatted-rich-text value={linkToDoChanges} ></lightning-formatted-rich-text><br/>
+															
+														</div>
+													</div>
+                                                    <div if:true={isAirline} class="slds-p-horizontal_medium slds-p-vertical_small text-xxsmall">
+                                                        <lightning-formatted-rich-text value={labels.CSP_Airline_Changes_Access} ></lightning-formatted-rich-text>
                                                     </div>
                                                 </template>
 
