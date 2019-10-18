@@ -36,7 +36,8 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         String inputStep = Apexpages.CurrentPage().getParameters().get('step');
         this.newForm = retrieveAPProcessForm(inputId);
         this.newCase = this.newForm.Case__r;
-        this.account = retrieveAccount(this.newForm.Airline__c);
+        Id accountId = this.newForm.Airline__c==null? this.newCase.AccountId: this.newForm.Airline__c;
+        this.account = retrieveAccount(accountId);
         this.sisType = retrieveSisType();
         // step 1 is for requirements, if there are no requirements then begin in step 2
         this.currentStep = this.sisType.Requirements_Text__c==null? 2: 1;

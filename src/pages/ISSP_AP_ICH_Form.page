@@ -1,6 +1,202 @@
 <apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false">
 <link href="{!URLFOR($Resource.ISSP_APProcess,'css/ich-form-main.min.css')}" rel="stylesheet" />
-<script src="{!URLFOR($Resource.ISSP_APProcess,'js/ich-form-main.min.js')}"></script>
+<script>
+    var EMAIL_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)";
+    $(document).ready(function() {
+        setRequired();
+        preventEnter();
+        setInvalidClass($(".form-container span.select2-selection"));
+        $(".form-container span.select2-selection").on('DOMSubtreeModified',function() {
+           setInvalidClass($(this));
+        });
+        // collapse all sections
+        $(".hideListButton").each(function( index, value ) {
+            twistSection(value);
+        });
+        twistSection($(".showListButton")[0]);
+    });
+    function setInvalidClass(jobj) {
+       if(jobj.text()=="") {
+           jobj.addClass("invalid");
+       } else {
+           jobj.removeClass("invalid");
+       }
+    }
+    function setRequired() {
+         $(".form-container input.required").prop('required',true);
+         $(".form-container textarea.required").prop('required',true);
+         $(".form-container table.required input").prop('required',true);
+         $(".form-container select.required").prop('required',true);
+         $(".form-container input.email").prop('pattern',EMAIL_PATTERN);
+    }
+
+    function preventEnter() {
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    }
+
+    function section1CopyInfo() {
+        var legalName = "{!hqAccount.Legal_name__c}";
+        if (legalName=="") legalName = $(".form-origin-legalname").val();
+        $(".form-legalname").val(legalName);
+        $(".form-address").val("{!hqAccount.BillingStreet}");
+        $(".form-city").val("{!hqAccount.BillingCity}");
+        $(".form-state").val("{!hqAccount.BillingState}");
+        $(".form-postalcode").val("{!hqAccount.BillingPostalCode}");
+        $(".form-country").val("{!hqAccount.IATA_ISO_Country__c}").trigger("change");
+        $(".form-email").val("{!hqAccount.Email__c}").trigger("change");
+    }
+
+    function twistSection(twisty) {
+        var parentDiv = twisty;
+        while (parentDiv.tagName != 'DIV') { parentDiv = parentDiv.parentNode; }
+        var div = parentDiv.nextSibling;
+        var elemWasOn = false;
+        if (div.style.display != 'none') {
+            div.style.display = 'none';
+            twisty.className ='showListButton';
+            elemWasOn = true;
+        } else {
+            div.style.display = 'block';
+            twisty.className ='hideListButton';
+            elemWasOn = false;
+        }
+    }
+
+    async function saveFormAndGoForward() {
+        var result = await verifyAllSections();
+        if (result) {
+            document.getElementById("hidden-input").value = "OK";
+            saveBSPFormAndGoForward();
+        } else {
+
+        }
+    }
+
+    function hideAllSections() {
+        $(".hideListButton").each( function(index,elem){
+            twistSection(this);
+        });
+    }
+
+    async function verifyAllSections() {
+        hideAllSections();
+        var sections = $(".showListButton");
+        for (var i=0; i<sections.length; i++) {
+            try {
+                var section = sections[i];
+                //find parent section div
+                while (section.tagName != 'DIV') { section = section.parentNode; }
+                section = section.parentNode;
+                // show section if not valid
+                if (!await validateSection(section)) {
+                    twistSection(sections[i]);
+                    return false;
+                }
+            } catch (e) {}
+        }
+        return true;
+    }
+
+    function getCheckUploadedFiles_Promise(files){
+        return new Promise( function (resolve, reject){
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.ISSP_APProcess.checkMandatoryFiles}',
+                '{!newCase.Id}',files, 
+                function(response, event){
+                    if(event.statusCode == '200'){
+                        resolve(response);
+                    } else {
+                        reject();
+                    }
+                },{ escape: true, timeout: 30000 }
+            );
+        });
+    }
+
+    function checkUploadedFiles(files) {
+        var CheckUploadedFiles_Promise = getCheckUploadedFiles_Promise(files);
+        CheckUploadedFiles_Promise.then( 
+            function (response){
+                return response;
+            },
+            function (err){
+                console.log('error checkUploadedFiles ' + err);
+               return false;
+            }
+        ).catch( function(err){
+            console.log('exception checkUploadedFiles ' + err);
+            return false;
+        });
+        return CheckUploadedFiles_Promise;
+    }
+
+    async function validateSection(section) {
+        var inputs = $(section).find(".required");
+        for (var i=0; i<inputs.length; i++) {
+            try {
+                var checkInput = inputs[i];
+                while (!["INPUT","SELECT","TEXTAREA"].includes(checkInput.tagName)) {
+                    checkInput = checkInput.children[0];
+                }
+                $(checkInput).removeClass("blink-me");
+                if (!checkInput.checkValidity()) {
+                    var input = $(checkInput);
+                    input.focus();
+                    input.addClass("blink-me");
+                    return false;
+                }
+            } catch (e) {}
+        }
+        // check file uploads (in iframes)
+        var iframes = $(section).find("iframe");
+        var fileNames = [];
+        for (var i=0; i<iframes.length; i++) {
+            try {
+                var iframe = iframes[i];
+                var name = parseURL(iframe.src).searchObject.reqIdentifier;
+                if (name!='undefined') fileNames.push(name);
+            } catch (e) {}
+        }
+        if (fileNames.length>0) {
+            return await checkUploadedFiles(fileNames);
+        }
+        return true;
+    }
+
+    function parseURL(url) {
+        var parser = document.createElement('a'),
+            searchObject = {},
+            queries, split, i;
+        parser.href = url;
+        queries = parser.search.replace(/^\?/, '').split('&');
+        for( i = 0; i < queries.length; i++ ) {
+            split = queries[i].split('=');
+            searchObject[split[0]] = split[1];
+        }
+        return {
+            protocol: parser.protocol,
+            host: parser.host,
+            hostname: parser.hostname,
+            port: parser.port,
+            pathname: parser.pathname,
+            search: parser.search,
+            searchObject: searchObject,
+            hash: parser.hash
+        };
+    }
+
+    async function saveContact() {
+        var section = $(".modalPanel")[0];
+        if (await validateSection(section)){
+            saveContactController();
+        }
+    }
+</script>
 
 <div class="panel-primary">
 

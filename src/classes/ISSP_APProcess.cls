@@ -1119,6 +1119,12 @@ global without sharing class ISSP_APProcess {
                 }
             }
 
+            List<String> listMandatoryFiles = getMandatoryFileList();
+            if (!checkMandatoryFiles(this.newCase.Id, listMandatoryFiles)) {
+                newForm.addError('There are missing files to upload, Please attach them before submitting the application.');
+                return null;
+            }
+
             if (this.isICH) {
                 if(!showTermsConditionsPopup) {
                     showTermsConditionsPopup = true;
@@ -1126,12 +1132,6 @@ global without sharing class ISSP_APProcess {
                 } else if (!newForm.Accept_terms_and_conditions__c) {
                     return null;
                 }
-            }
-
-            List<String> listMandatoryFiles = getMandatoryFileList();
-            if (!checkMandatoryFiles(this.newCase.Id, listMandatoryFiles)) {
-                newForm.addError('There are missing files to upload, Please attach them before submitting the application.');
-                return null;
             }
 
             newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null && isocountry.Airline_EasyPay_Opt_Out_Date__c <= Date.today() && isocountry.Airline_EasyPay_Opt_Out_Date__c != null);
@@ -1194,6 +1194,9 @@ global without sharing class ISSP_APProcess {
             if (getShowFormOfApplicationAndConcurrence()) {
                 listMandatoryFiles.add('FormOfApplicationAndConcurrence');
             }
+        }
+        if (isICH) {
+            listMandatoryFiles.add('SignedICHForm');
         }
         System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
         return listMandatoryFiles;

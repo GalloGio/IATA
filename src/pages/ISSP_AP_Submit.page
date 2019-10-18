@@ -335,10 +335,17 @@
                         </apex:outputpanel>
                     </apex:facet>
                     <apex:outputPanel >
-                        <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
-                        <apex:outputLink value="/ISSP_AP_ICH_Form_PDF?caseId={!newCase.Id}&step=3" style="color:#31708f; text-decoration: underline;" target="_new">
-                            Download ICH application Form
-                        </apex:outputLink>
+                        <apex:outputPanel rendered="{!ICHTermsAndConditionsUrl!=null}">
+                            <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
+                            <apex:outputLink value="{!ICHTermsAndConditionsUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">
+                                {!ICHTermsAndConditionsName}
+                            </apex:outputLink>
+                            <apex:iframe scrolling="false" height="150px"
+                            src="/ISSP_FormUpload?caseId={!newform.Case__c}&reqCnt=1&reqRequired=Mandatory&reqName={!URLENCODE('Upload signed ICH participation form')}&reqDescription=&reqIdentifier=SignedICHForm&onlyOne=true"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!ICHTermsAndConditionsUrl=null}">
+                            PDF form not available
+                        </apex:outputPanel>
                     </apex:outputPanel>
                 </apex:pageBlockSection>
 
