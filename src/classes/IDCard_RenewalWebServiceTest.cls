@@ -217,6 +217,31 @@ public class IDCard_RenewalWebServiceTest
     }
 
     @isTest
+    public static void testValidRequest_ExistingCase()
+    {
+        String typeOfCard = IDCard_MobileAppRenewalService.CARD_TYPE_PLASTIC;
+        String pCode = null;
+
+        // first renewal
+        Test.startTest();
+        testValidRequest_RenewalOnNewCard(false);
+        Test.stopTest();
+
+        // plastic card - close case to allow the second renewal
+        List<Case> cases = [SELECT Id, CaseNumber FROM Case];
+		String caseId = cases.get(0).CaseNumber;
+
+        // second renewal
+        IDCard_RenewalWebService.doPost();
+
+        Object actualResponse = getResponse(RestContext.response);
+        System.assertNotEquals(null, actualResponse);
+        System.assert(actualResponse instanceof Map<String, Object>);
+        String message = (String) ((Map<String, Object>) actualResponse).get('message');
+        System.assertEquals('Sorry, there was a problem with the ID Card renewal process due to an existing pending application case [' + caseId + ']. Please contact us for details', message, actualResponse); 
+    }
+
+    @isTest
     public static void testValidRequest_TwoRenewalsFromDifferentClients()
     {
         // first client

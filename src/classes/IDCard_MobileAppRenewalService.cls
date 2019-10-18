@@ -856,14 +856,17 @@ public with sharing class IDCard_MobileAppRenewalService
     {
         if (requestInformation.contact != null)
         {
-            List<Case> pendingCase = [SELECT Id 
+            List<Case> pendingCase = [SELECT Id, CaseNumber
                                     FROM Case
                                     WHERE RecordType.Name = 'ID Card Application'
                                         AND Contact.Id = :requestInformation.contact.Id
                                         AND status <> 'Closed'
                                         LIMIT 1];
             if (! pendingCase.isEmpty())
-                throw new IDCardException('There is already a pending case application');
+			{
+				String caseId = pendingCase.get(0).CaseNumber;
+				throw new IDCardException('Sorry, there was a problem with the ID Card renewal process due to an existing pending application case [' + caseId + ']. Please contact us for details');
+			}
         }
         
         String tempVerNumber = 'Z' + requestInformation.verNumber;
