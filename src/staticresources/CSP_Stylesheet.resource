@@ -1591,14 +1591,24 @@ visibility: hidden;
 .topLightGrayBorder.slds-border_top {
     border-top-width: 0px;
 }
+.no-show,
+.only-print {
+    display: none!important;
+    visibility: hidden!important;
+}
 @media print {
     #_hj_poll_container,
     #_hj_feedback_container,
+    .no-print,
     .userguiding-assistant-container,
     .navBar,
     .newHeader{
         display: none!important;
         visibility: hidden!important;
+    }
+    .only-print {
+        display: block!important;
+        visibility: visible!important;
     }
     .customCard {
         box-shadow: 0px 0px 0px #fff;

@@ -4,6 +4,9 @@
 			<div class="breadcrumbsHeight slds-p-top_xsmall slds-p-bottom_medium">
 				<c-portal-breadcrumbs></c-portal-breadcrumbs> 
 			</div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium no-show slds-text-right">
+                Printed date: {now}
+            </div>
             <div class="headerBarLogo slds-p-horizontal_x-small">
                 <span>
                     <img src={logoIcon}>
@@ -21,9 +24,6 @@
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium" >
                     <c-portal-case-details-details></c-portal-case-details-details>
                 </div>
-            </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium">
-                Printed date: {now}
             </div>
         </span>
     </c-portal-page-container>
