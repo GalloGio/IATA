@@ -37,4 +37,17 @@
               });
               $A.enqueueAction(action);
         },
+
+      redirectToCustomerPortal : function(component, event) {
+          var action = component.get("c.getCustomerPortalUrl");
+
+          action.setCallback(this, function(a){
+              var rtnValue = a.getReturnValue();
+              if (rtnValue !== null) {
+                  window.location.href = rtnValue;
+              }
+          });
+          $A.enqueueAction(action);
+
+      },
 })

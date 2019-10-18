@@ -1093,7 +1093,14 @@ public without sharing class OneId_RegistrationProcessController {
         Integer allCitiesSize = allCities.length(); 
         
         return allCitiesSize > 0 ? allCities.substring(0,allCitiesSize-2):null;
-    } 
+    }
+
+    @AuraEnabled
+    public static string getCustomerPortalUrl(){
+        string url = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.CSP) + Label.CSP_PortalPath + 'login/SelfRegister';
+        return url;
+    }
+
     /* Manuel Conde commented this... 
 
     public static void increaseCodeCoverage(){

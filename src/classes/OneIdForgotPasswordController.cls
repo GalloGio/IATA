@@ -75,4 +75,10 @@ public without sharing class OneIdForgotPasswordController {
             
         }
     }
+
+    @AuraEnabled
+    public static string getCustomerPortalUrl(){
+        string url = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.CSP) + Label.CSP_PortalPath + 'login/ForgotPassword';
+        return url;
+    }
 }
