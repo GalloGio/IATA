@@ -388,8 +388,7 @@ public without sharing class PortalIftpUtils {
         if(certificationType != null && certificationType != ''){
             certificationsWithLevel = [SELECT Certification__c, Certification__r.Name, Prerequisite_Level__c
                                         FROM IFTP_Certification_Detail__c
-                                        WHERE General_Training__c like 'No'
-                                        AND Certification__r.Type__c  = :certificationType ORDER BY Name];
+                                        WHERE General_Training__c like 'No'];
         }else{
             certificationsWithLevel = [SELECT Certification__c, Certification__r.Name, Prerequisite_Level__c
                                         FROM IFTP_Certification_Detail__c
