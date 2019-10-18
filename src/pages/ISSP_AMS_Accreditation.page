@@ -597,6 +597,7 @@
         }
 
         function checkSelectAll() {
+            if ($('[id$=hierarchyList]')[0]) {
             var hierarchy = $('[id$=hierarchyList]')[0].children[2].children;
 
             var allChecked = true;
@@ -609,6 +610,7 @@
             }
 
             $('[id$=allHierarchySelected]')[0].checked = allChecked;
+        }
         }
 
         function selectAllAEs() {
@@ -719,7 +721,6 @@
                             <apex:actionFunction name="reRenderAccountsNoc" action="{!resetHierarchy}" status="blockEditing" oncomplete="reRenderBranchAccs();"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions, nocFormQuestions" oncomplete=""/>
                             <apex:actionFunction name="reRenderNocMessage" reRender="nocMessage"/>
-                            <!--<apex:actionFunction name="selectAllAEs" action="{!doSelectAll}" status="blockEditing" reRender="table" />-->
                             <apex:actionFunction name="reRenderBranchAccs" status="blockEditing" reRender="branchaccountsel, table, correctHierarchy" oncomplete="checkSelectAll();"/>
                             
                             <apex:pageBlock id="step1Block" mode="edit" >

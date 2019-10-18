@@ -835,7 +835,7 @@
 										<apex:column value="{!acc.Name}"/>
 										<apex:column value="{!acc.IATACode__c}"/>
 										<apex:column value="{!acc.BillingCountry}"/>
-										<apex:column>
+										<apex:column >
 											<apex:commandLink action="{!removeFromAccountsToConvert}" styleClass="glyphicon glyphicon-trash" rerender="accountsToBeConvertedPanel">
 												<apex:param value="{!acc.Id}" name="recordId" assignTo="{!accountToBeFetchedOrRemoved}" />
 											</apex:commandLink>
@@ -849,11 +849,16 @@
 								<!-- It does not make sense the user change the accretitation model to the current one -->
 								<script type="text/javascript">
         							(function() {
-        								var aux = "{!con.Account.ANG_Accreditation_Model__c}";        								
+										var aux = "{!con.Account.ANG_Accreditation_Model__c}";
+										var mcEnabled = {!con.Account.IATA_ISO_Country__r.Multicountry_Enabled__c};
         								var l = document.querySelectorAll('[id$="allowedAccreditationModelSelect"]')[0];
         								for(i = l.length -1; i >=0 ; i--) {
         									if((aux == 'Cashless' || aux == 'Multicountry') && (l[i].value === "Cashless" || l[i].value === "Multicountry")) {
         										l.remove(i);
+											}
+
+											if (l[i].value === "Multicountry" && !mcEnabled) {
+												l.remove(i);
 											}
 											
         									if(aux == 'Cash' && l[i].value === "Cash") {
@@ -2279,7 +2284,7 @@
 				whereToAppend = where.parent().parent().next().children().last();
 			}
 
-			where.hover(function() {
+			where.parent().hover(function() {
 				if (!where[0].checked) {
 					whereToAppend.append(getWarningBox(warningMessage));
 				}

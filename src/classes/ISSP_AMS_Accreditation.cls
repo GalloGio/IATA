@@ -8200,15 +8200,7 @@ system.debug('aqui sectorValue ' + sectorValue);
         }
     }
 
-    // ***********************************
-    // ********* helper methods **********
-    // ***********************************
-
-    public void doSelectAll(){
-        for(HierarchyItem hi : hierarchyValues){
-            hi.selected = selectAll;
-        }
-    }
+    // *** helper methods ***
 
     public Boolean getDisablePrevious() { 
         //this will disable the previous and beginning buttons
