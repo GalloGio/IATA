@@ -81,7 +81,7 @@ public with sharing class PortalProfileCtrlTest {
             List<PortalProfileCtrl.FieldWrapper> createContactFields = PortalProfileCtrl.getContactFieldsToInsert();
 
 
-            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts(0, 15);
+            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts(0);
             List<PortalProfileCtrl.ContactWrapper> searchResults = PortalProfileCtrl.searchAccountContacts('searchQuery',0);
             List<Account> branches = PortalProfileCtrl.getCompanyBranches(0);
             List<Account> searchBranches = PortalProfileCtrl.searchCompanyBranches('test',0);
@@ -118,7 +118,7 @@ public with sharing class PortalProfileCtrlTest {
         User portalUser = ISSP_ObjectFactory.createPortalUser(con);
 
         System.runAs(portalUser){
-            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts(0, 15);
+            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts(0);
 
             contacts[0].selected = true;
             ApexMessageHandling contactsToApprove = PortalProfileCtrl.approve(JSON.serialize(contacts), 'Approved Admin');
@@ -165,7 +165,7 @@ public with sharing class PortalProfileCtrlTest {
         insert appRight;
 
         System.runAs(portalUser){
-            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts(0, 15);
+            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts(0);
 
             contacts[0].selected = true;
             ApexMessageHandling contactsToDeactivate = PortalProfileCtrl.inactivate(JSON.serialize(contacts), 'Retired');
@@ -211,7 +211,7 @@ public with sharing class PortalProfileCtrlTest {
         insert contactRole;
 
         System.runAs(portalUser){
-            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts(0, 15);
+            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts(0);
 
             contacts[0].selected = true;
             ApexMessageHandling contactsToDeactivate = PortalProfileCtrl.inactivate(JSON.serialize(contacts), 'Retired');
@@ -242,7 +242,7 @@ public with sharing class PortalProfileCtrlTest {
         User portalUser = ISSP_ObjectFactory.createPortalUser(con);
 
         System.runAs(portalUser){
-            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts(0, 15);
+            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts(0);
 
             contacts[0].selected = true;
             contacts[0].hasProducts = true;
@@ -274,7 +274,7 @@ public with sharing class PortalProfileCtrlTest {
         User portalUser = ISSP_ObjectFactory.createPortalUser(con);
 
         System.runAs(portalUser){
-            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts(0, 15);
+            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts(0);
 
             contacts[0].selected = true;
             ApexMessageHandling contactsToDeactivate = PortalProfileCtrl.inactivate(JSON.serialize(contacts), 'Retired');
