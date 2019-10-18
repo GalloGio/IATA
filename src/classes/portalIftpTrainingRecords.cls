@@ -1326,7 +1326,7 @@ public without sharing class portalIftpTrainingRecords {
                 }
 
                 if(IftpHistoryRecordsToBeInserted.size() > 0){
-                    insert IftpHistoryRecordsToBeInserted;
+                    portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
                 }
             }
             
@@ -1344,6 +1344,7 @@ public without sharing class portalIftpTrainingRecords {
         List<CertificationEnrollmentWrapper> dataToUpdate = (List<CertificationEnrollmentWrapper>)JSON.deserialize(JSON.serialize(dataToSave),List<CertificationEnrollmentWrapper>.class);
         List<Contact_Role_Certification__c> existing_contact_role_certification_list = new List<Contact_Role_Certification__c>();
         List<Contact_Role_Certification__c> contact_role_certification_to_update_list = new List<Contact_Role_Certification__c>();
+        List<Contact_Role_Certification__c> lContRolCertStop = new List<Contact_Role_Certification__c>();
         Set<Id> contact_role_certifications_id_list = new Set<Id>();
         Map<Id, CertificationEnrollmentWrapper> certificateToUpdateEnrollmentByIdMap = new Map<Id, CertificationEnrollmentWrapper>();
 
@@ -1367,12 +1368,56 @@ public without sharing class portalIftpTrainingRecords {
             } else if((existRec.Stopped__c == null || existRec.Stopped__c.equalsIgnoreCase('No')) && recordToUpdate.action.equalsIgnoreCase('Stop')){
                 existRec.Stopped__c = 'Yes';
                 contact_role_certification_to_update_list.add(existRec);
+                lContRolCertStop.add(existRec);
+            }
+        }
+        
+        List<Role_Address__c> proficiencyToStop = new List<Role_Address__c>();
+        List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
+        if(lContRolCertStop.size() > 0){
+            // set Proficiency_Status__c = Inactive for all related roleAddress records
+            // record entries in IFTP-History
+            proficiencyToStop = [SELECT Id, 
+                                    Address__r.Code__c,
+                                    Address__r.City__c, 
+                                    Proficiency_Granted_By__c, 
+                                    Proficiency_level__c,
+                                    Proficiency_Status__c,
+                                    Contact_Role_Certification__r.Certification__r.Name,
+                                    Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c,
+                                    Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c,
+                                    Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c
+                                    FROM Role_Address__c
+                                    WHERE Contact_Role_Certification__c  IN :lContRolCertStop]; 
+
+            
+            for(Role_Address__c rolAddr: proficiencyToStop){
+                rolAddr.Proficiency_Status__c = 'Inactive';
+
+                IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Loose_Proficiency, 
+                                                                rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c, 
+                                                                rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c, 
+                                                                rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c,
+                                                                rolAddr.Address__r.Code__c,
+                                                                rolAddr.Address__r.City__c,
+                                                                rolAddr.Contact_Role_Certification__r.Certification__r.Name,
+                                                                rolAddr.Proficiency_level__c,
+                                                                rolAddr.Proficiency_Granted_By__c
+                                                                );
+                IftpHistoryRecordsToBeInserted.add(ihrec);
             }
         }
 
         if(contact_role_certification_to_update_list.size() > 0){
             update contact_role_certification_to_update_list;
         }
+        if(proficiencyToStop.size() > 0){
+            update proficiencyToStop;
+            portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
+        }
+
+
+
     }
     
     @AuraEnabled (cacheable=false)
