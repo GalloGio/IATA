@@ -243,16 +243,18 @@
                                     onchange={handleChangeEditEmployeeDetails}>
                                 </lightning-input>
                                 <label class="slds-form-element__label slds-no-flex">Employee Stations</label>
-                                <lightning-datatable 
-                                    key-field="Code__c" 
-                                    hide-checkbox-column
-                                    data={recordToManageStationsList} 
-                                    columns={columnsShowEmployeeStations}
-                                    sorted-by={sortedrecordToManageStationsListBy} 
-                                    sorted-direction={sortedrecordToManageStationsListDirection}
-                                    onsort={updaterecordToManageStationsListSorting}
-                                    hidden={hasNoStations}>
-                                </lightning-datatable>
+                                <div  if:false={hasNoStations} class="slds-size_12-of-12" style="height: 200px;">
+                                    <lightning-datatable 
+                                        key-field="Code__c" 
+                                        hide-checkbox-column
+                                        data={recordToManageStationsList} 
+                                        columns={columnsShowEmployeeStations}
+                                        sorted-by={sortedrecordToManageStationsListBy} 
+                                        sorted-direction={sortedrecordToManageStationsListDirection}
+                                        onsort={updaterecordToManageStationsListSorting}
+                                        hidden={hasNoStations}>
+                                    </lightning-datatable>
+                                </div>
                                 <div if:true={hasNoStations}>
                                     <div class="slds-text-align_center">
                                         <div class="slds-text-heading_medium">
