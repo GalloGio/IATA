@@ -15523,7 +15523,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISS_Portal_Make_case_invisible</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15550,7 +15550,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISS_Portal_Make_case_visible</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 4 AND (2 OR 3)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15578,7 +15578,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISS_Portal_Make_case_invisible</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>25 AND (1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20 AND (NOT(23) AND 15))) AND 16 AND 18 AND 19 AND 21 AND 22 AND NOT(23 AND 24)) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15714,7 +15714,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISS_Portal_Make_case_visible</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>25 OR (((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR (23 AND 24)))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15) OR (10 AND 19 AND 20)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15850,7 +15850,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISS_Portal_Make_case_visible</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
