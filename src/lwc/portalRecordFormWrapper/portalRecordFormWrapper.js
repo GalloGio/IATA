@@ -13,6 +13,8 @@ import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 import goToPrivacyPortal from '@salesforce/apex/PortalProfileCtrl.goToPrivacyPortal';
 import getAccountDomains from '@salesforce/apex/PortalProfileCtrl.getAccountDomains';
+import checkIfIsAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
+import checkHasAccessToAccred from '@salesforce/apex/DAL_WithoutSharing.hasAccessToService'; // check if user has access to IATA Accreditation and changes
 import getMapHierarchyAccounts from '@salesforce/apex/PortalProfileCtrl.getMapHierarchyAccounts';
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
@@ -35,6 +37,9 @@ import contact from '@salesforce/label/c.ISSP_Contact';
 
 import CompanyInformation from '@salesforce/label/c.ISSP_CompanyInformation';
 import CSP_CompanyAdministration_Link from '@salesforce/label/c.CSP_CompanyAdministration_Link';
+import CSP_Travel_Agent_Accreditation_Changes_Access from '@salesforce/label/c.CSP_Travel_Agent_Accreditation_Changes_Access';
+import CSP_Travel_Agent_Accreditation_Changes_Request from '@salesforce/label/c.CSP_Travel_Agent_Accreditation_Changes_Request';
+import CSP_Airline_Changes_Access from '@salesforce/label/c.CSP_Airline_Changes_Access';
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
@@ -106,11 +111,16 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         RelocateAccount,
         CompanyInformation_EMADOMVAL_Title,
         CompanyInformation,
+		CSP_Travel_Agent_Accreditation_Changes_Access,
+		CSP_Travel_Agent_Accreditation_Changes_Request,
+		CSP_Airline_Changes_Access,
         CSP_CompanyAdministration_Link
     };
 
     @api tabName = '';
-    @track showHelpText = false;
+	@track isAdminUser = false;
+	@track isAirline=false;
+	@track linkToDoChanges='';
     
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
@@ -173,14 +183,33 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         isAdmin().then(result => {
             this.showEdit = result && this.showEdit;
             if (this._labels.CompanyInformation.trim() === this.tabName.trim()){
+				this.isAdminUser = result;
                 this.showEdit = true;
                 this.editBasics = true;
-                this.showHelpText = true;
             }
         });
+		checkIfIsAirlineUser().then(result=>{
+			this.isAirline = result;
+			if(!result){
+				
+				checkHasAccessToAccred({
+					str:'IATA%Acc%',
+					conId:null
+				}).then(result=>{
+					if(result)
+						this.linkToDoChanges =this._labels.CSP_Travel_Agent_Accreditation_Changes_Access;
+					else
+						this.linkToDoChanges =this._labels.CSP_Travel_Agent_Accreditation_Changes_Request;					
+				});
+			}
+
+		});
 
         this.getAccountEmailDomains();
     }
+	get showHelpText(){
+		return this.isAdminUser;
+	}
 
     get accessibilityGetter() {
 
