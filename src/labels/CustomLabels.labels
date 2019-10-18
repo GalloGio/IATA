@@ -3133,6 +3133,13 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Add_User</shortDescription>
         <value>Add User</value>
     </labels>
+	<labels>
+        <fullName>CSP_Airline_Changes_Access</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Airline_Changes_Access</shortDescription>
+        <value>You can submit your account details changes through the &lt;a href= "/csportal/s/support-reach-us"&gt;Reach Us Page&lt;/a&gt;</value>
+	</labels>
     <labels>
         <fullName>CSP_Announcement</fullName>
         <language>en_US</language>
@@ -3360,10 +3367,8 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_CompanyAdministration_Link</shortDescription>
-        <value>You can submit your account details changes through the IATA Accreditation and Changes service.
-&lt;br/&gt;
-&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Click here to directly access the IATA Accreditation and Changes&lt;/a&gt;</value>
-    </labels>
+        <value>You can submit your account details changes through the IATA Accreditation and Changes service.</value>
+	</labels>
     <labels>
         <fullName>CSP_CompanyCases</fullName>
         <language>en_US</language>
@@ -4411,6 +4416,20 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Title</shortDescription>
         <value>Title</value>
     </labels>
+	<labels>
+        <fullName>CSP_Travel_Agent_Accreditation_Changes_Access</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Travel_Agent_Accreditation_Changes_Access</shortDescription>
+        <value>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Click here to directly access the IATA Accreditation and Changes&lt;/a&gt;</value>
+	</labels>
+	<labels>
+        <fullName>CSP_Travel_Agent_Accreditation_Changes_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Travel_Agent_Accreditation_Changes_Request</shortDescription>
+        <value>&lt;a href=&quot;/csportal/s/manage-service?serviceId=a2w3E0000002lq0QAA&quot; target=&quot;_self&quot;&gt;Click here to request the IATA Accreditation and Changes&lt;/a&gt;</value>
+	</labels>
     <labels>
         <fullName>CSP_TypeOfCase</fullName>
         <categories>CS Portal</categories>
