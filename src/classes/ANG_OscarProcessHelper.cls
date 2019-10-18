@@ -2156,9 +2156,8 @@ global class ANG_OscarProcessHelper {
 			FROM Contact WHERE AccountId IN :accsMap.keySet() 
             AND Id IN (SELECT Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted'
                 AND ANG_Portal_Service_Role__c = 'IEP Admin'
-                //AND Contact__r.Account.IATA_ISO_Country__r.ANG_IEP_Model__c = :selectedModel
-				AND Portal_Application__r.Name IN :selectedProviders)]){
-
+                AND Contact__r.Account.IATA_ISO_Country__r.ANG_IEP_Model__c IN :IEP_MODEL_PROVIDERS)]){
+				//AND Portal_Application__r.Name IN :selectedProviders)]){
                 
 			contactAcc.put(con.AccountId,con);
 		} 

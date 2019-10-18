@@ -1,9 +1,10 @@
 public class ANG_ISSP_PortalServiceHelper {
 
-    private static final String IEP_PORTAL_SERVICES = 'IATA EasyPay (EDENRED),IATA EasyPay (MSTS),IATA EasyPay (WEX)';
+    private static final String IEP_PORTAL_SERVICES = 'IATA EasyPay (EDENRED),IATA EasyPay (MSTS),IATA EasyPay (WEX),IATA EasyPay (2C2P)';
     public static final String IATA_EASYPAY_EDENRED = 'IATA EasyPay (EDENRED)';
     public static final String IATA_EASYPAY_MSTS = 'IATA EasyPay (MSTS)';
     public static final String IATA_EASYPAY_WEX = 'IATA EasyPay (WEX)';
+    public static final String IATA_EASYPAY_2C2P = 'IATA EasyPay (2C2P)';
     private static set<String> IEP_PORTAL_SERVICES_SET;
     public static final String TRAVEL_AGENT = 'Travel Agent';
     public static final String CARGO_AGENT = 'Cargo Agent';
