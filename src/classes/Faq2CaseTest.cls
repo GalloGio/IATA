@@ -172,13 +172,6 @@ private class Faq2CaseTest {
             ButtonId__c = '573000000000000'
         );
         insert liveagent;
-        
-         ISSP_CS__c customSetting1 = new ISSP_CS__c();
-        customSetting1.Name = 'CS Portal Redirect';
-        customSetting1.Value__c = 'CSP';
-        customSetting1.defaultValue__c = '/s/';
-
-        insert customSetting1;
     }
 
     @isTest
@@ -235,7 +228,7 @@ private class Faq2CaseTest {
         system.debug('rrrrrrrrrr  ' + con.Owner.UserRoleId);
         insert con;
         System.debug('con Id: ' + con.Id);
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
@@ -318,7 +311,7 @@ private class Faq2CaseTest {
         con.Email = 'Test@test11.com';
         insert con;
         System.debug('con Id: ' + con.Id);
-         User newUser = createPortalUser(con);
+         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
@@ -377,7 +370,7 @@ private class Faq2CaseTest {
         con.Email = 'testxxaasddasdasd@test.com';
         con.AccountId= headQuarter.Id;
         insert con;
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
 
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1');
         insert country;
@@ -492,7 +485,7 @@ private class Faq2CaseTest {
         con.Email = 'Test@test11.com';
         insert con;
         System.debug('con Id: ' + con.Id);
-         User newUser = createPortalUser(con);
+         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
@@ -539,7 +532,7 @@ private class Faq2CaseTest {
         con.Email = 'Test@test11.com';
         insert con;
         System.debug('con Id: ' + con.Id);
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
@@ -583,7 +576,7 @@ private class Faq2CaseTest {
         con.Email = 'Test@test11.com';
         insert con;
         System.debug('con Id: ' + con.Id);
-         User newUser = createPortalUser(con);
+         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
@@ -629,7 +622,7 @@ private class Faq2CaseTest {
         con.Email = 'Test@test11.com';
         insert con;
         System.debug('con Id: ' + con.Id);
-         User newUser = createPortalUser(con);
+         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
@@ -683,7 +676,7 @@ private class Faq2CaseTest {
         con.Email = 'Test@test11.com';
         insert con;
         System.debug('con Id: ' + con.Id);
-         User newUser = createPortalUser(con);
+         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
@@ -741,7 +734,7 @@ private class Faq2CaseTest {
 		con.CNS_Contact__c = true;
         insert con;
         System.debug('con Id: ' + con.Id);
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
@@ -806,7 +799,7 @@ private class Faq2CaseTest {
         con.CNS_Contact__c = true;
         insert con;
         System.debug('con Id: ' + con.Id);
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
@@ -1010,7 +1003,7 @@ private class Faq2CaseTest {
         system.debug('con zzzzzz ' + con);
         
         //User
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
         con.OwnerId = newUser.Id;
         update con;
         system.debug('newUser zzzzzz ' + newUser);
@@ -1143,7 +1136,7 @@ private class Faq2CaseTest {
         system.debug('con zzzzzz ' + con);
         
         //User
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
         con.OwnerId = newUser.Id;
         update con;
         system.debug('newUser zzzzzz ' + newUser);
@@ -1155,7 +1148,7 @@ private class Faq2CaseTest {
 
         RestContext.request = req;
         RestContext.response= res;
-        
+
         System.runAs(newUser){
             Test.startTest();
                 vfISSP_FAQ2Case.CustomerSupporWrapperGet customerSupportInfo = vfISSP_FAQ2Case.doGet();
@@ -1227,7 +1220,7 @@ private class Faq2CaseTest {
         system.debug('con zzzzzz ' + con);
         
         //User
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
         con.OwnerId = newUser.Id;
         update con;
         system.debug('newUser zzzzzz ' + newUser);
@@ -1239,9 +1232,9 @@ private class Faq2CaseTest {
 
         RestContext.request = req;
         RestContext.response= res;
-        
+
         System.runAs(newUser){
-        Test.startTest();
+            Test.startTest();
                 vfISSP_FAQ2Case.CustomerSupporWrapperPost customerSupportInfo = vfISSP_FAQ2Case.doPost('0', 'CGO_Accreditations_Fees__c', 'AE', '', 'This is a test subject',
                                                                                     'This is a test description', 'Phone [NewGenAPP - Android]');
             Test.stopTest();
@@ -1285,7 +1278,7 @@ private class Faq2CaseTest {
         con.Email = 'testxxaasddasdasda@test.com';
         con.AccountId= headQuarter.Id;
         insert con;
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
 
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1');
         insert country;
@@ -1337,7 +1330,7 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
 
         System.runAs(newUser){
             Test.startTest();
@@ -1369,7 +1362,7 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
 
         System.runAs(newUser){
             Test.startTest();
@@ -1401,7 +1394,7 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
 
         System.runAs(newUser){
             Test.startTest();
@@ -1433,7 +1426,7 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
 
         System.runAs(newUser){
             FAQ__kav article = new FAQ__kav(
@@ -1477,7 +1470,7 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
 
         System.runAs(newUser){
             vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
@@ -1511,7 +1504,7 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
 
         Portal_Applications__c papp = new Portal_Applications__c();
         papp.Application_URL__c = '/ISSP_CurrencyCenterHome';
@@ -1556,7 +1549,7 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = createPortalUser(con);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
 
         System.runAs(newUser){
             vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
@@ -1583,35 +1576,4 @@ private class Faq2CaseTest {
             PageReference pr = ctrl.create();
         }
     }
-    
-    public static User createPortalUser(Contact con) {
-        String orgId = UserInfo.getOrganizationId();
-        String dateString = String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','');
-        Integer randomInt = Integer.valueOf(math.rint(math.random()*1000000));
-        String uniqueName = orgId + dateString;
-        String conId15 = con.Id;
-		
-        String UserNameStr=uniqueName+ string.valueof(randomInt) + '@test' + orgId + '.org';
-        String ComNickNameStr=con.email.substring(0, con.email.indexOf('@'))+randomInt;
-       
-       User newUser = new User(alias = 'dsfsdfds', 
-                                email = con.email, 
-                                emailencodingkey = 'UTF-8', 
-                                firstname = con.firstName, 
-                                lastname = con.lastname, 
-                                languagelocalekey = 'en_US', 
-                                localesidkey = 'en_US', 
-                                contactId = con.Id,
-                                FederationIdentifier = conId15,
-                                timezonesidkey = 'Asia/Dubai',
-                                Username = UserNameStr,
-                                PortalRole = 'Manager',
-                                CommunityNickname = ComNickNameStr,
-                               License_Cost_Center__c = 'ITO005CH01',
-                                ProfileId = [select Id from profile where Name='ISS Portal Delegated Admin User Full FAQ Access' limit 1].id,
-                                IsActive = true);
-        insert newUser;
-        return newUser;
-    }
-    
  }
