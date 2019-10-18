@@ -2284,7 +2284,7 @@
 				whereToAppend = where.parent().parent().next().children().last();
 			}
 
-			where.hover(function() {
+			where.parent().hover(function() {
 				if (!where[0].checked) {
 					whereToAppend.append(getWarningBox(warningMessage));
 				}
