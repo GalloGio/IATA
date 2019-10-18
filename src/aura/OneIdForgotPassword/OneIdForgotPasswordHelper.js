@@ -21,7 +21,7 @@
             $A.util.toggleClass(spinner, "slds-hide");
        });
         $A.enqueueAction(action);
-    }
+    },
 
     redirectToCustomerPortal : function(component, event) {
         var action = component.get("c.getCustomerPortalUrl");
