@@ -52,4 +52,9 @@ public with sharing class UserController {
         }
         return Database.countQuery(query);
     }
+
+    @AuraEnabled(cacheable=true) 
+    public static List<User> getAllGeneralPublicUsersIds(){
+        return [SELECT Id, ContactId FROM User WHERE ContactId != null AND Contact.Account.Is_General_Public_Account__c = true];
+    }
 }

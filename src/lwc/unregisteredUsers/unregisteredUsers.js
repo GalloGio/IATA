@@ -4,10 +4,10 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 //FROM APEX CUSTOM CLASSES
 import getGeneralPublicUsers from '@salesforce/apex/UserController.getGeneralPublicUsersByCategoryAndSector';
 import getTotalGeneralPublicUsers from '@salesforce/apex/UserController.getTotalGeneralPublicUsersByCategoryAndSector';
+import getUsersIds from '@salesforce/apex/UserController.getAllGeneralPublicUsersIds';
 import getItemsPerPage from '@salesforce/apex/UserController.getItemsPerPage'; 
 import singleNotification from '@salesforce/apex/RegistrationComunicationsController.sendSingleLevel2RegistrationAlert'
 import batchNotification from '@salesforce/apex/RegistrationComunicationsController.sendBatchLevel2RegistrationAlert';
-import notifyAll from '@salesforce/apex/RegistrationComunicationsController.sendLevel2RegistrationAlertToAll';
 import getSiteCompleteUrl from '@salesforce/apex/OneIdUtils.getSiteCompleteUrl';
 
 const columns = [
@@ -24,7 +24,10 @@ const columns = [
 
 const ERROR = 'error';
 const SUCCESS = 'success';
+const INFO = 'info';
 const GENERA_ERROR_MESSAGE = 'Some error ocurred while getting the list of users';
+
+let userIds = [];
 
 export default class UnregisteredUsers extends LightningElement {
     //Table data
@@ -46,8 +49,7 @@ export default class UnregisteredUsers extends LightningElement {
     @track category = '';
     @track sector = ''; 
     @track country = '';   
-    @track preferredLanguage = '';
-    
+    @track preferredLanguage = '';    
     
     //@track isFirstPage = true;
     //@track isLastPage = false;
@@ -57,6 +59,21 @@ export default class UnregisteredUsers extends LightningElement {
         try{
             this.ITEMS_PER_PAGE = await getItemsPerPage();
             this.orgUrl = await getSiteCompleteUrl();
+            let result = JSON.parse(JSON.stringify( await getUsersIds()));
+            let aux = [];
+            aux[0]=[];
+            let index= 0;
+            let counter = 0;
+            result.forEach(row => {  
+                if(counter === 50){
+                    counter = 0;
+                    index++;
+                    aux[index] = [];
+                }
+                aux[index].push(row.ContactId);
+                counter++;
+            });
+            userIds = aux;
         }catch(e){
             this.showToast(ERROR,'Error',GENERA_ERROR_MESSAGE);
         }
@@ -103,17 +120,7 @@ export default class UnregisteredUsers extends LightningElement {
     handleSubmitAccountFilters(event){
         // stop the form from submitting
         event.preventDefault(); 
-        /*
-        //reset navigatiton
-        this.page = 1;
-        this.previousPage = 1;
-
-        if(this.category !== event.detail.fields.Category__c || this.sector !== event.detail.fields.Sector__c){
-            this.category = event.detail.fields.Category__c;
-            this.sector = event.detail.fields.Sector__c;
-        } else {            
-            this.showToast(ERROR,'Error','No filter was changed');
-        }   */
+       
     }
 
     handleSubmitContactFilters(event){
@@ -212,7 +219,7 @@ export default class UnregisteredUsers extends LightningElement {
                 }
             } 
         }catch(error){
-            this.showToast(ERROR,'Error','Error creating notifications and emails');
+            this.showToast(ERROR,'Error','Error creating notifications and emails. You can try notify less users at a time');
         }
         
         this.selectedRows = [];
@@ -223,31 +230,65 @@ export default class UnregisteredUsers extends LightningElement {
             this.showToast(ERROR,'Error!',"There are no one to contact!");
             return; 
         }
-        try{
-            let result = await notifyAll();
-            if(result.notification !== undefined){
-                if(result.notification === 'all'){
-                    this.showToast(SUCCESS,'Notification success!',"All notifications were sent!"); 
-                }else if(result.notification === 'none'){
-                    this.showToast(ERROR,'Notification error!',"All notifications failed!"); 
-                }else{
-                    this.showToast(ERROR,'Notification error!',"Some notifications failed!"); 
-                }
-            } 
-            
-            if(result.email !== undefined){
-                if(result.email === 'all'){
-                    this.showToast(SUCCESS,'Email success!',"All emails were sent!"); 
-                }else if(result.email === 'none'){
-                    this.showToast(ERROR,'Email error!',"All emails failed!"); 
-                }{
-                    this.showToast(ERROR,'Email error!',"Some emails failed!"); 
-                }
-            } 
 
-        }catch(error){
-            this.showToast(ERROR,'Error','Error creating notifications');
-        }
+        this.showToast(INFO,'Notice!',"This operation might take a while!");
+
+    
+        let someEmailSucceded = false;
+        let someEmailFailed = false;
+        let notificationSucceded = false;
+        let notificationFailed = false;
+        let index = 0;
+        let arraySize = userIds.length;
+        
+        userIds.forEach( ids => {
+            
+            batchNotification({contactIds: ids}).then(result => {
+                index++;
+                if(result.notification !== undefined){
+                    if(result.notification === 'all'){
+                        notificationSucceded = true; 
+                    }else if(result.notification === 'none'){
+                        notificationFailed = true;
+                    }else{
+                        notificationSucceded = true;
+                        notificationFailed = true;
+                    }
+                } 
+                
+                if(result.email !== undefined){
+                    if(result.email === 'all'){
+                        someEmailSucceded = true;
+                    }else if(result.email === 'none'){
+                        someEmailFailed = true;
+                    }else {
+                        someEmailSucceded = true;
+                        someEmailFailed = true;
+                    }
+                }   
+
+                if(index === arraySize){
+                    if(!notificationFailed){
+                        this.showToast(SUCCESS,'Notification success!',"All notifications were sent!"); 
+                    }else if(!notificationSucceded){
+                        this.showToast(ERROR,'Notification error!',"All notifications failed! "); 
+                    }else{
+                        this.showToast(ERROR,'Notification error!',"Some notifications failed!"); 
+                    }
+                
+                    if(!someEmailFailed){
+                        this.showToast(SUCCESS,'Email success!',"All emails were sent!"); 
+                    }else if(!someEmailSucceded){
+                        this.showToast(ERROR,'Email error!',"All emails failed!"); 
+                    }else {
+                        this.showToast(ERROR,'Email error!',"Some emails failed!"); 
+                    } 
+                }
+            }).catch(() => {
+                this.showToast(ERROR,'Error','Error creating notifications');
+            });            
+        });      
+    
     }
 
     async handleRowAction(event){

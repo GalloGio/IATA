@@ -4,6 +4,30 @@ private class UserControllerTest {
     @TestSetup
     static void makeData(){
 
+        Document document;
+        document = new Document();
+        document.Body = Blob.valueOf('Some Text');
+        document.ContentType = 'application/pdf';
+        document.DeveloperName = 'CSP_Notification_Header_Image';
+        document.IsPublic = true;
+        document.Name = 'CSP_Notification_Header_Image';
+        document.FolderId =  UserInfo.getUserId(); //document will added the My Personal Documents folder
+        insert document;
+
+        Notification_template__c template = new Notification_template__c(
+                Identifier__c = 'Lvl 2 Registration reminder',
+                Message__c = '<p>Test Message</p><p>[URL]</p><p>[CustomerName]</p>',
+                Alert_Contact_By_Email__c = false,
+                Alert_Contact_By_Push_Notification__c = true,
+                Subject__c = 'Test Subject',
+                Type__c = 'Information',
+                Notification_color__c = '#007FFF',
+                CriticalNotification__c = true,
+                Expire_in_days__c = 1
+            );
+
+        insert template;
+
         IATA_ISO_Country__c country = new IATA_ISO_Country__c();
         country.Name = 'Canada';
         country.ISO_Code__c = 'CA';
@@ -108,22 +132,6 @@ private class UserControllerTest {
     }
 
     @isTest 
-    static void shouldReturnsOnlyGeneralPublicUsersFromCanada(){
-        Test.startTest();
-        List<User> users = UserController.getGeneralPublicUsersByCategoryAndSector('','Airline','','',0); 
-        Test.stopTest();
-        System.debug('VALINHO USERS');
-        System.debug(users);
-        System.debug(users.get(0).Contact.Account.IATA_ISO_Country__r.Name);
-        System.debug(users.get(1).Contact.Account.IATA_ISO_Country__r.Name);
-
-        System.assertNotEquals(null, users);
-        System.assertEquals(1, users.size());
-        System.assertEquals('Canada', users.get(0).Contact.Country__c);
-        System.assertEquals('Canada', users.get(0).Contact.Account.IATA_ISO_Country__r.Name);
-            }
-
-    @isTest 
     static void shouldReturnsOnlyGeneralPublicUsersSpeakingEnghlish(){
         Test.startTest();
         List<User> users = UserController.getGeneralPublicUsersByCategoryAndSector('Military','Airline',null,'English',0); 
@@ -156,16 +164,6 @@ private class UserControllerTest {
     }
 
     @isTest 
-    static void shouldReturnsUsersWithAccountsFromCanada(){
-        Test.startTest();
-        Integer users = UserController.getTotalGeneralPublicUsersByCategoryAndSector(null,'Airline','Canada',null); 
-        Test.stopTest();
-
-        System.assertNotEquals(null, users);
-        System.assertEquals(1, users);
-    }
-
-    @isTest 
     static void shouldReturnsUsersWithEnglishAsPreferredLanguage(){
         Test.startTest();
         Integer users = UserController.getTotalGeneralPublicUsersByCategoryAndSector('','Airline','','English'); 
@@ -183,6 +181,16 @@ private class UserControllerTest {
 
         System.assertNotEquals(null, users);
         System.assertEquals(2, users);
+    }
+
+    @isTest 
+    static void shouldReturnsAllGeneralPublicUsersIds(){
+        Test.startTest();
+        List<User> users = UserController.getAllGeneralPublicUsersIds(); 
+        Test.stopTest();
+
+        System.assertNotEquals(null, users);
+        System.assertEquals(2, users.size());
     }
 
 }
