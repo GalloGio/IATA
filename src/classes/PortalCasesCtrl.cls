@@ -739,14 +739,7 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
 	                                        WHERE ParentId = :caseId AND IsDeleted = false
 	                                                                                 ORDER BY CreatedDate ASC];
 
-
-	String labelDescription = Case.Description.getDescribe().getLabel(); //gets Case Description field label.
-
 	String caseDescription = caseToFirstComment.Description != null ? caseToFirstComment.Description : '';
-
-	if(caseDescription.contains(labelDescription + ' - ')) {
-		caseDescription = caseDescription.substringAfter(labelDescription + ' - ');
-	}
 
 	lstToReturn.add(new MessageWrapper(caseDescription,
 	                                   caseToFirstComment.CreatedDate,
