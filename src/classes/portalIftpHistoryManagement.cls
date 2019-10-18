@@ -403,7 +403,7 @@ public without sharing class portalIftpHistoryManagement {
                 String sEmpType = empType.containsKey(rec) ? empType.get(rec) : '' ;
                 System.debug('[portalIftpHistoryManagement - getProficiencyReport]: sEmpType:' + sEmpType);
                 if(sEmpType.contains('ITP Training Coordinator') && !sEmpType.contains('ITP Trainee')  && ikey == '0'){
-                    //continue;
+                    continue;
                 }
             }
 
