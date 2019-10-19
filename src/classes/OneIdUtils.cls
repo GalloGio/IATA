@@ -74,9 +74,9 @@ public without sharing class OneIdUtils {
         else{  
             String networkId = networks.get(m);
             
-            System.debug('final url ' + getOrgUrl()+networdUrl+networkId+sUrl);
+            System.debug('final url ' + networdUrl+networkId+sUrl);
             
-            COMMUNITY_COMPLETE_URL = getOrgUrl()+networdUrl+networkId+sUrl;
+            COMMUNITY_COMPLETE_URL = networdUrl+networkId+sUrl;
 
         }
         
