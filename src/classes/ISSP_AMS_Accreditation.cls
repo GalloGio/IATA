@@ -3516,6 +3516,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
 
                 if (newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry') {
+
+                    //In case of conversion from standard to multicountry overwrite the case reason
+                    newCase.Reason1__c = 'Accreditation Type';
+
                     if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
                         newForm.Agency_Codes_Concerned__c += ',';
                     }
@@ -8219,15 +8223,7 @@ system.debug('aqui sectorValue ' + sectorValue);
         }
     }
 
-    // ***********************************
-    // ********* helper methods **********
-    // ***********************************
-
-    public void doSelectAll(){
-        for(HierarchyItem hi : hierarchyValues){
-            hi.selected = selectAll;
-        }
-    }
+    // *** helper methods ***
 
     public Boolean getDisablePrevious() { 
         //this will disable the previous and beginning buttons
