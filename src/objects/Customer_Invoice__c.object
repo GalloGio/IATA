@@ -753,10 +753,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Delivered</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Dispute Accepted</fullName>
                 <default>false</default>
             </values>
@@ -777,7 +773,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>File Delivered to Billed Member</fullName>
+                <fullName>Unpaid Invoice</fullName>
                 <default>false</default>
             </values>
             <values>

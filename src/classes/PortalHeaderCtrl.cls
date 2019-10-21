@@ -64,9 +64,15 @@ public without sharing class PortalHeaderCtrl {
     * @return List<Customer_Invoice__c>
     */
     public static List<Customer_Invoice__c> getCustomerInvoices(String topParentId) {
+        List<String> statusList = new List<String>();
+        for(Customer_Invoices_Visible_Status__mdt visibleStatus : [SELECT MasterLabel FROM Customer_Invoices_Visible_Status__mdt]) {
+            statusList.add(visibleStatus.MasterLabel);
+        }
+        
         return [SELECT Id, Invoice_Number__c, CreatedDate, CreatedById
                 FROM Customer_Invoice__c 
-                WHERE (AccountId__c =: topParentId OR AccountId__r.Top_Parent__c =: topParentId)];
+                WHERE (AccountId__c =: topParentId OR AccountId__r.Top_Parent__c =: topParentId)
+                      AND Invoice_Status__c IN :statusList];
     }
 
     /* 
@@ -104,9 +110,9 @@ public without sharing class PortalHeaderCtrl {
             for (Portal_Application_Right__c application : userPortalServiceAccessRequestList){
                 // PORTAL SERVICE
                 NotificationItem notif = new NotificationItem(application.Portal_Application__c, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), application.CreatedDate, false, System.label.CSP_Task, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), false, 'Portal Service', application.Contact__r.Name);
-				notificationItemList.add(notif);
-            }
-			
+                notificationItemList.add(notif);
+                }
+
             //ACAMBAS - WMO-628: Begin
             for (Customer_Invoice__c invoice : customerInvoicesList){
                 // CUSTOMER INVOICES
