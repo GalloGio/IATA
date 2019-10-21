@@ -3806,6 +3806,16 @@ Payment required on receipt of this Payment Advice
         <value>Portal Status</value>
     </labels>
     <labels>
+        <fullName>CSP_Print</fullName>
+        <language>en_US</language>
+        <value>Print</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Printed_date</fullName>
+        <language>en_US</language>
+        <value>Printed date</value>
+    </labels>
+    <labels>
         <fullName>CSP_Profile_PrivacyManagement_Link</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
