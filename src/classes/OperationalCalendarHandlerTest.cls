@@ -17,6 +17,15 @@ private class OperationalCalendarHandlerTest {
         listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Airline Profil',Value__c=String.join(listAirlineId,',')));
         listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Agency Profile',Value__c=String.join(listAgencyId,',')));
         insert listCs;
+
+        Notification_template__c template = new Notification_template__c(Subject__c='template', Message__c='body');
+        insert template;
+
+        ISSP_Notifications_Trigger__c notification = new ISSP_Notifications_Trigger__c(
+            Name = 'Operational Calendar',
+            Notification_Template_Id__c = template.Id
+        );
+        insert notification;
     }
     
     @isTest
@@ -91,8 +100,6 @@ private class OperationalCalendarHandlerTest {
     
     @isTest
     private static void testCreateNotificationtToAgencyCASSUser() {
-        insert new Notification_template__c(Subject__c = 'Remittance change in Operational Calendar');
-        
         AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c(Name = 'CASS-AN');
         insert issOperation;
         
@@ -158,10 +165,6 @@ private class OperationalCalendarHandlerTest {
     
     @isTest
     private static void testCreateNotificationtToAirlineBSPUser() {
-        Notification_template__c settlementTemplate = new Notification_template__c(Subject__c = 'Settlement change in Operational Calendar');
-        Notification_template__c remittanceTemplate = new Notification_template__c(Subject__c = 'Remittance change in Operational Calendar');
-        insert new list<Notification_template__c>{settlementTemplate,remittanceTemplate};
-        
         AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c(Name = 'BSP-SP');
         insert issOperation;
         

@@ -197,6 +197,7 @@ public class ISSP_NotificationUtilities
      * in the input text using the variables in the input list
      */
     public static String replaceVariables(String text, list<String> listVars) {
+        if (text==null) return '';
         if (listVars==null) return text;
         for (Integer i=0; i<listVars.size(); i++) {
             String value = listVars[i];
