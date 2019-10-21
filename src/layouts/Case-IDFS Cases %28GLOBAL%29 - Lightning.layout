@@ -542,11 +542,6 @@
             <actionType>StandardButton</actionType>
             <sortOrder>15</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Escalate_within_IATA</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>16</sortOrder>
-        </platformActionListItems>
     </platformActionList>
     <quickActionList>
         <quickActionListItems>
