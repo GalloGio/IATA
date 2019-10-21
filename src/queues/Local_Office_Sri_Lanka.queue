@@ -5,12 +5,12 @@
     <name>Local Office - Sri Lanka</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>CountryManagerSriLankaI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>StaffSriLankaI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerSriLanka</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffSriLanka</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
         <roles>
-            <role>APCustomerServiceManagerA</role>
-            <role>APCustomerServiceStaffA</role>
+            <role>APCustomerServiceManager</role>
+            <role>APCustomerServiceStaff</role>
         </roles>
     </queueMembers>
     <queueSobject>
