@@ -418,6 +418,14 @@ export default class PortalContactList extends LightningElement {
         }
 
         this.contactsSelected = fieldValue;
+
+        let records = JSON.parse(JSON.stringify(this.records));
+
+        for (let i = 0; i < records.length; i++) {
+            if(records[i].Id === contactSelected) records[i].selected = true;
+        }
+
+        this.records = records;
         
         if(this.allContactsSelected && this.contactsSelected.length === 0) this.allContactsSelected = false;
 
