@@ -235,6 +235,57 @@ private class ANG_RiskEventGeneratorTest {
 		System.assertEquals(Date.newInstance(2017, 10, 15), riskEvents[0].ANG_Expiration_Date__c);
 		System.assertEquals(a.Id, riskEvents[0].ANG_HE_AccountId__c);
 	}
+
+	
+	@isTest static void testGenerateRiskEventOnChangeOfHierarchy() {
+
+		ANG_Risk_Event_Type__c riskType = [SELECT id, Name FROM ANG_Risk_Event_Type__c Limit 1];
+
+		ANG_Risk_Event_Configuration__c configChangeHierarchy = new ANG_Risk_Event_Configuration__c();
+		configChangeHierarchy.ANG_Risk_Event_Type__c = riskType.Id;
+		configChangeHierarchy.ANG_Risk_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE;
+		configChangeHierarchy.ANG_isUpdateOnly__c = false;
+		configChangeHierarchy.ANG_Object_Type__c =  'AMS_OSCAR__c';
+		configChangeHierarchy.ANG_Object_Record_Type__c = 'ANG_Agency_Changes';
+		configChangeHierarchy.ANG_TargetAgency__c = 'Related Account';
+		configChangeHierarchy.ANG_Field01__c = 'ANG_Type_Of_Change__c';
+		configChangeHierarchy.ANG_Field01_Conditions__c = 'Includes';
+		configChangeHierarchy.ANG_Field01_Values__c = 'Hierarchy';
+		//configChangeHierarchy.ANG_Field02__c = 'Risk_event_creation_date__c';
+		//configChangeHierarchy.ANG_Field02_Conditions__c = 'Equal to today';
+
+		insert configChangeHierarchy;
+
+		Account a = [SELECT Id, RecordTypeId FROM Account];
+		Id accRecType = a.RecordTypeId;
+
+		Account a1 = new Account(Name = 'Test1', RecordTypeId = accRecType, ParentId = a.Id);
+		Account a2 = new Account(Name = 'Test2', RecordTypeId = accRecType, ParentId = a.Id);
+		insert new List<Account>{a1, a2};
+
+		ANG_RiskEventGenerator.skip = true;
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.Id, RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES);
+		insert oscar;
+
+		AMS_Process_Detail__c p1 = new AMS_Process_Detail__c(Account__c = a.Id, OSCAR__c = oscar.Id);
+		AMS_Process_Detail__c p2 = new AMS_Process_Detail__c(Account__c = a2.Id, OSCAR__c = oscar.Id);
+		insert new List<AMS_Process_Detail__c>{p1, p2};
+
+		ANG_RiskEventGenerator.skip = false;
+
+		Test.startTest();
+
+		oscar.New_Parent__c = a1.id;
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		update oscar; // trigger the ANS_RiskEventGenerator 
+
+		List<ANG_Agency_Risk_Event__c> agencyRiskEvent = [SELECT id FROM ANG_Agency_Risk_Event__c];
+
+		System.assert(agencyRiskEvent.size() > 0);
+		Test.stopTest();
+
+	}	
 	
 	
 }

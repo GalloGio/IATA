@@ -110,7 +110,8 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     system.debug('################# QUERY : WHERE ClosedDate > :' + startd + ' AND ClosedDate < :' + endd + '\n' +
                  'AND ContactId <> NULL AND Contact.Email <> NULL \n' +
                  'AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = \'\'\n)' +
-                 'AND Instant_Survey_Feedback_requested__c = false');
+                 'AND Instant_Survey_Feedback_requested__c = false' +
+                 'AND ParentId == NULL');
 
     casesToBeProcessed.addAll([SELECT  RecordType.DeveloperName, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject,
                                ParentId, Type_of_customer__c, Phone_Redirected_to_Web__c, Case_Group__c, Origin, Region__c, Financial_Review_Type__c,
@@ -125,6 +126,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                AND ContactId <> NULL AND Contact.Email <> NULL
                                AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = '')
                                AND Instant_Survey_Feedback_requested__c = false
+                               AND ParentId = NULL //PRB41539
                                AND RecordType.DeveloperName NOT IN :excludedRecordTypesFromScope //ICSC-110 exclude Complaint cases
                                AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR' //WMO-571
                                    ORDER BY ClosedDate DESC]);

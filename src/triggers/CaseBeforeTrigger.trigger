@@ -144,6 +144,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 /***********************************************************************************************************************************************************/
     /*Share trigger code*/
     if (Trigger.isInsert || Trigger.isUpdate) {
+
+        /** WMO-564 **/
+        if(Trigger.isUpdate) {
+            CaseProcessTypeHelper.processKPI(Trigger.new, Trigger.oldMap);
+        }
+
 	// assigns default email address to be used on send email quick action
         //follows same logic as current classic functionality      
         for(Case c: trigger.new){
@@ -548,7 +554,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // WMO-517 exclued cases in recycle bin
                     if (c.RecordTypeId == AirlineCodingRTId && mapACCasesPerAccountId.get(c.AccountId) != null) {
                         system.debug('##ROW##');
-                        set<String> setInvalidReasons = new set<String>{'Baggage Tag Identifier Codes','Designator Form', '3 Digit Form', 'Location ID Form'};
+                        set<String> setInvalidReasons = new set<String>{'Baggage Tag Identifier Codes','Designator Form', '3 Digit Form'};
                         for (Case cse: mapACCasesPerAccountId.get(c.AccountId) ) {
                             if (cse.Reason1__c == c.Reason1__c && cse.Id != c.Id && setInvalidReasons.contains(c.Reason1__c) && !cse.Owner.Name.contains('Recycle')) {
                                 c.addError('There is already an open Airline Coding Application case with Reason "' + c.Reason1__c + '" on the selected Account. There can be only one open case of this type on an Account.');
@@ -1654,7 +1660,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             List<Case> caseLast24Hours = new List<Case>();
             Set<Id> accountIds = new Set<Id>();
             list<Id> listCasesUpdatedAIMS = new list<Id>();
-            
+            Set<Id> casesGroupSingleAgentModifiedSet = new Set<Id>();
+
             for (Case aCase : trigger.new) { // Fill a set of Account Ids for the cases select statement
                 Case aCaseOld = Trigger.oldMap.get(aCase.Id);
                 // Only for Sidra small amount cases, only cases created within the last 24 hours
@@ -1681,6 +1688,49 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     aCaseOld.Update_AIMS_Repayment_agreed__c == null &&
                     aCase.Update_AIMS_Repayment_agreed__c != null) {
                     listCasesUpdatedAIMS.add(aCase.Id);
+                }
+
+                //If Group_Single_Agent__c is being modified for Sidra Lite case
+                //We need to check if any change code was previously generated:
+                //If any change code was generated we need to prevent saving 
+                //This field must only be edited for China: we do not need to check the country here since 
+                //we have a validation rule preventing the field to be edited for Non China)
+                if(SidraLiteManager.runGroupSingleAgentSidraValidation && aCase.RecordTypeId == SIDRALiteCaseRecordTypeID && aCase.Group_Single_Agent__c != aCaseOld.Group_Single_Agent__c){
+                    casesGroupSingleAgentModifiedSet.add(aCase.Id);
+                    SidraLiteManager.runGroupSingleAgentSidraValidation = false;
+                }
+                
+            }
+
+            //Fetch change codes associated with the given SIDRA lite cases
+            if(!casesGroupSingleAgentModifiedSet.isEmpty()){
+                List<AggregateResult> changeCodesGeneratedAggLst = new List<AggregateResult>(
+                    [SELECT 
+                        SIDRA_Case__c CaseId,
+                        COUNT(Id) 
+                    FROM 
+                        Agency_Applied_Change_code__c
+                    WHERE
+                        SIDRA_Case__c IN :casesGroupSingleAgentModifiedSet
+                    GROUP BY
+                        SIDRA_Case__c
+                    ]
+                );
+
+                Integer i = 0;
+                Integer chgCodeSize = changeCodesGeneratedAggLst.size();
+                
+                while(i < chgCodeSize){       
+                    AggregateResult ar = changeCodesGeneratedAggLst.get(i);
+
+                    Id caseId = (Id) ar.get('CaseId');
+                    Integer chgCodeCount = (Integer) ar.get('expr0');
+
+                    if(chgCodeCount > 0){
+                        Trigger.newMap.get(caseId).Group_Single_Agent__c.addError('The field has already been set');
+                    }
+
+                    i++;
                 }
             }
 

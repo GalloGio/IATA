@@ -393,7 +393,7 @@
         <description>Billing  Street address option 1</description>
         <externalId>false</externalId>
         <label>Billing  Street address 1</label>
-        <length>80</length>
+        <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -834,7 +834,7 @@
         <description>Headquarters Street Address 1</description>
         <externalId>false</externalId>
         <label>HQ  Street Address 1</label>
-        <length>70</length>
+        <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>CategoryExceptions__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Hotel;Apartment and Villa Rental;Resort;Casino;Landmark;Musuem;Park (Theme Park);Box Office</value>
     </values>
     <values>
         <field>DataCategoryLabel_TR__c</field>
@@ -112,6 +112,6 @@
     </values>
     <values>
         <field>SectorExceptions__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Accommodation;Recreational</value>
     </values>
 </CustomMetadata>

@@ -5,7 +5,7 @@
     <name>Cases - Voicemail North Asia</name>
     <queueMembers>
         <roles>
-            <role>ChinaNAsiaCustomerServiceStaffA</role>
+            <role>ChinaNAsiaCustomerServiceStaff</role>
         </roles>
     </queueMembers>
     <queueSobject>

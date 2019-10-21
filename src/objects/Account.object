@@ -3636,7 +3636,7 @@
         <fullName>ANG_IsNewGenAgency__c</fullName>
         <description>To show information to analyst. To simplify triggers and classes.</description>
         <externalId>false</externalId>
-        <formula>(IATA_ISO_Country__r.ANG_Enable_NewGen__c  &amp;&amp;  OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;)) || (IATA_ISO_Country__r.Enable_NewGen_Pilot__c &amp;&amp; OR(TEXT(Location_Type__c) = &apos;HE&apos;, TEXT(Location_Type__c) = &apos;AE&apos;, TEXT(Location_Type__c) = &apos;GE&apos;) &amp;&amp; TEXT(Location_Class__c) = &apos;D&apos;)</formula>
+        <formula>AND(IATA_ISO_Country__r.ANG_Enable_NewGen__c  , OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is New Gen Agency</label>
         <trackHistory>false</trackHistory>
@@ -6123,6 +6123,44 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Business_City__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>City of the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business City</label>
+        <referenceTo>IATA_ISO_City__c</referenceTo>
+        <relationshipLabel>Accounts with Business City</relationshipLabel>
+        <relationshipName>Accounts_with_Billing_City</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Business_Postal_Code__c</fullName>
+        <description>Postal Code for the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business Postal Code</label>
+        <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_Street__c</fullName>
+        <description>Street of the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business Street</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>CAMP_Agreement__c</fullName>
@@ -13598,6 +13636,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         </valueSet>
     </fields>
     <fields>
+        <fullName>Is_parent_IATA_airline_member__c</fullName>
+        <description>If the Parent field Airline Member exists and it&apos;s different from the record, return false. This is used on the Account trigger to set the IATA_Member__c field for the accounts.</description>
+        <externalId>false</externalId>
+        <formula>OR(ParentId == null , Parent.IATA_Member__c == IATA_Member__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA airline member check</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_your_firm_handling_Dangerous_Goods__c</fullName>
         <externalId>false</externalId>
         <label>* Is your firm handling Dangerous Goods?</label>
@@ -15799,6 +15847,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     </fields>
     <fields>
         <fullName>SIS_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
         <description>Used by SIS team to store the SIS ID for integration purposes</description>
         <externalId>false</externalId>
         <label>SIS ID</label>
@@ -15807,7 +15856,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
-        <unique>false</unique>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>SIS_Member_Code__c</fullName>
@@ -89232,10 +89281,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>General Public</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -100267,9 +100312,18 @@ $Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c
     <validationRules>
         <fullName>Airline_HO_Name</fullName>
         <active>true</active>
-        <description>You are not allowed to change the field &quot;Account Name&quot;.</description>
-        <errorConditionFormula>ISCHANGED(Name) &amp;&amp;  RecordType.DeveloperName  = &apos;IATA_Airline&apos;</errorConditionFormula>
-        <errorDisplayField>Is_your_firm_handling_Dangerous_Goods__c</errorDisplayField>
+        <description>You are not allowed to change the field &quot;Account Name&quot;. The only Exception is if you are also changing one of the following:Legal_name__c,TradeName__c,Name_on_AOC__c. This assignment logic is done via Account Trigger.</description>
+        <errorConditionFormula>AND (	ISCHANGED(Name) ,
+		RecordType.DeveloperName  = &apos;IATA_Airline&apos;,
+		NOT(
+			OR(
+				ISCHANGED(Legal_name__c),
+				ISCHANGED(TradeName__c),
+				ISCHANGED(Name_on_AOC__c)
+			)
+		)
+	)</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
         <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
     </validationRules>
     <validationRules>

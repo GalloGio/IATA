@@ -386,6 +386,11 @@
         <columns>Permission_Set_Name__c</columns>
         <columns>ISO_Country_Codes1__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>FAQsStructure__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
         <label>Portal FAQs</label>
         <language>en_US</language>
     </listViews>
@@ -394,6 +399,7 @@
         <columns>MasterLabel</columns>
         <columns>DeveloperName</columns>
         <columns>DataCategoryName__c</columns>
+        <columns>DataTopicName__c</columns>
         <columns>DataSubtopicName__c</columns>
         <columns>FAQsStructure__c</columns>
         <columns>Account_Sector__c</columns>
@@ -404,8 +410,8 @@
         <filterScope>Everything</filterScope>
         <filters>
             <field>DataTopicName__c</field>
-            <operation>equals</operation>
-            <value>TIESS</value>
+            <operation>startsWith</operation>
+            <value>IATA_Publications</value>
         </filters>
         <label>TIESS</label>
         <language>en_US</language>

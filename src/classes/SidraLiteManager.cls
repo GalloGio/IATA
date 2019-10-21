@@ -4,6 +4,7 @@
 public with sharing class SidraLiteManager {
 
     public static Boolean BLOCK_EXECUTION = false;
+    public static Boolean runGroupSingleAgentSidraValidation = true;
 
     public static final Id RECORDTYPE_SIDRA_LITE = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
     public static final Id RECORDTYPE_SIDRA = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
@@ -202,14 +203,15 @@ public with sharing class SidraLiteManager {
             listAccountId.add(cse.AccountId);
         }
         // get parent IFAP cases with their Sidra lite children
-        map<Id,Case> mapParents = new map<Id,Case>();
+        map<Id,Case> mapParents = new map<Id,Case>(); 
         if (!listParentId.isEmpty()) {
             mapParents = new map<Id,Case>(
             [Select Id, RecordtypeId, Deadline_Date__c, FA_Letter_Sent__c, FA_Second_Deadline_Date__c, FirstFAnonComplianceDate__c,
             FirstFSnonComplianceDate__c, FS_Deadline_Date__c, FS_Second_Deadline_Date__c, Status, FS_Letter_Sent__c, secondFAnonComplianceDate__c,
             secondFSnonComplianceDate__c, FA_Third_Deadline_Date__c, FS_Third_Deadline_Date__c, Third_FA_non_Compliance_Date__c, Region__c,
-            BSPCountry__c, BusinessHoursId, Reason1__c, SAAM_Deadline_Date__c, New_IFAP_Deadline_date__c, Termination_date__c, AccountID, Financial_Review_Result__c, Assessment_Performed_Date__c,
+            BSPCountry__c, BusinessHoursId, Reason1__c, SAAM_Deadline_Date__c, New_IFAP_Deadline_date__c, Termination_date__c, AccountID, Financial_Review_Result__c, Assessment_Performed_Date__c, Account.Country_ISO_Code__c,
             Documentation_Complete__c, Bank_Guarantee_received__c, Has_the_agent_paid_invoice__c, isClosed, Bank_Guarantee_deadline__c, Comments__c,
+            Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c,
             (Select Id, CaseNumber, SIDRA_lite_Reason__c, SIDRA_Lite_Default_Date__c,SAAM_Deadline_Date__c, New_IFAP_Deadline_date__c, Termination_date__c, Comments__c  from Cases where RecordtypeId = :RECORDTYPE_SIDRA_LITE )
             from Case
             where RecordtypeId in (:RECORDTYPE_IFAP,:RECORDTYPE_SMAP,:RECORDTYPE_SAAM,:RECORDTYPE_OSCAR,:RECORDTYPE_INVOICING)
@@ -277,6 +279,12 @@ public with sharing class SidraLiteManager {
                 } else {
                     cse.addError('You cannot create a SIDRA Lite Case for this case type');
                 }
+
+                //NEWGEN-5117
+                if(cse.SIDRA_Lite_Reason__c == 'Financial Security Non-compliance' && cse.Account_Location_Type__c == AMS_Utils.AE 
+                    && AMS_Utils.setChinaCountries.contains(parentCase.Account.Country_ISO_Code__c))  
+                    cse.Group_Single_Agent__c = 'Single Agent';
+
             }
         }
         return listUpdateParent;
@@ -594,16 +602,9 @@ public with sharing class SidraLiteManager {
             }
             else {
             //ACAMBAS - WMO-485: End       
-            if (parentCase.Status == 'Sanity Check Failure') {
-                if ( cse.SIDRA_Lite_Reason__c != 'Sanity Check failure of financial statement' ) {
-                    cse.SIDRA_Lite_Reason__c.addError('Set right value here');
-                    throw new SidraLiteException('The SIDRA lite reason must be "Sanity Check failure of financial statement" for this scenario');
-                }
-            } else {
-                if ( cse.SIDRA_Lite_Reason__c != 'Financial Review Non-compliance' ) {
-                    cse.SIDRA_Lite_Reason__c.addError('Set right value here');
-                    throw new SidraLiteException('The SIDRA lite reason must be "Financial Review Non-compliance" for this scenario');
-                }
+            if ( cse.SIDRA_Lite_Reason__c != 'Financial Review Non-compliance' ) {
+                cse.SIDRA_Lite_Reason__c.addError('Set right value here');
+                throw new SidraLiteException('The SIDRA lite reason must be "Financial Review Non-compliance" for this scenario');
             }
             // finally update SIDRA lite case
             parentCase.FirstFAnonComplianceDate__c = Date.today();
