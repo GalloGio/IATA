@@ -406,7 +406,7 @@ private class PortalCasesCtrlTest {
         insert closedSurvey;
 
         String link = PortalCasesCtrl.getSurveyLink(newCase.Id);
-        System.assert(link != null);
+        System.assert(link == null);
 
     }   
 }
