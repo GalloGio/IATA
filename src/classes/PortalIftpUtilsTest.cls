@@ -147,7 +147,7 @@ public class PortalIftpUtilsTest {
         Test.startTest();
 
         System.runAs(u2) {
-           Boolean res =  PortalIftpUtils.manageUploadStationOJT(ItpOJTId, roleAddrList3[0].Id);
+           Boolean res =  PortalIftpUtils.manageUploadStationOJT(ItpOJTId, roleAddrList3[0].Id, 'PTX - Airport');
            System.assertEquals(res, false);
         }
         Test.stopTest();
@@ -290,7 +290,7 @@ public class PortalIftpUtilsTest {
         
         System.runAs(u1) {
             List<Account>  res = PortalIftpUtils.getAllITP();
-            System.assert(res.size() > 0, 'Fail to getAllITP!');
+            System.assertEquals(res.size(), 0);
         }
         Test.stopTest();
 

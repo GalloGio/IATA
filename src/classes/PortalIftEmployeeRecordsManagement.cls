@@ -1,15 +1,15 @@
 public without sharing class PortalIftEmployeeRecordsManagement {
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled(cacheable=false)
     public static List<Account_Contact_Role__c> getAllITPEmployees(){
         PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
         Id accountId = ui.accountId;
         return getAllITPEmployees(accountId);
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled(cacheable=false)
     public static List<Account_Contact_Role__c> getAllITPEmployees(Id accountId){
-        
+        //cacheable=false MANDATORY
         List<Account_Contact_Role__c> emps = [SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c,
                                                     Contact__c, Email__c,First_Name__c,Id,Integration_Status__c,
                                                     Last_Name__c,Name,Personal_Email__c,Contact_Roles__c,
@@ -154,9 +154,9 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                 contactToInsert.AssistantName = employeeToAdd.code.trim();
                 contactToInsert.AccountId = ui.accountId;
                 contactToInsert.Email = (employeeToAdd.busEmail == null )? '' :employeeToAdd.busEmail.trim();
-                //contactToInsert.Additional_Email__c = (employeeToAdd.personalEmail == null)? '' :employeeToAdd.personalEmail.trim();
                 contactToInsert.Title = employeeToAdd.title;
                 contactToInsert.Phone = employeeToAdd.phone;
+                contactToInsert.Status__c = 'Active';
                 if(String.isBlank(employeeToAdd.phone)){
                     contactToInsert.Phone = '00';
                 }
@@ -244,6 +244,9 @@ public without sharing class PortalIftEmployeeRecordsManagement {
         try {
             List<Role_Address__c> roleAdressToBeDeleted = new List<Role_Address__c>();
             List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
+            List<IFTP_History__c> IftpHistoryRecordsStopITP = new List<IFTP_History__c>();
+            List<IFTP_History__c> IftpHistoryRecordsStopStation = new List<IFTP_History__c>();
+            List<IFTP_History__c> IftpHistoryRecordsLooseProficiency= new List<IFTP_History__c>();
 
             Account_Contact_Role__c auxAccContRol = (Account_Contact_Role__c)JSON.deserialize(JSON.serialize(dataToInactivate), Account_Contact_Role__c.class);
 
@@ -260,7 +263,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                                                                                     auxAccContRol.Company_Code__c, 
                                                                                     auxAccContRol.First_Name__c, 
                                                                                     auxAccContRol.Last_Name__c);
-                IftpHistoryRecordsToBeInserted.add(ih);
+                IftpHistoryRecordsStopITP.add(ih);
 
                 roleAdressToBeDeleted = [SELECT Id,
                                                 Account_Contact_Role__c,
@@ -289,20 +292,22 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                                                                         rolAddr.Address__r.Code__c,
                                                                         rolAddr.Address__r.City__c
                                                                         );
-                        IftpHistoryRecordsToBeInserted.add(ihrec);
+                        IftpHistoryRecordsStopStation.add(ihrec);
                     } else {
-                        ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Loose_Proficiency, 
-                                                                            rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c, 
-                                                                            rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c, 
-                                                                            rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c,
-                                                                            rolAddr.Address__r.Code__c,
-                                                                            rolAddr.Address__r.City__c,
-                                                                            rolAddr.Contact_Role_Certification__r.Certification__r.Name,
-                                                                            rolAddr.Proficiency_level__c,
-                                                                            rolAddr.Proficiency_Granted_By__c
-                                                                            );
-                        IftpHistoryRecordsToBeInserted.add(ihrec);
-                    }
+                        if(String.isNotBlank(rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c)){
+                            ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Loose_Proficiency, 
+                                                                                rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c, 
+                                                                                rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c, 
+                                                                                rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c,
+                                                                                rolAddr.Address__r.Code__c,
+                                                                                rolAddr.Address__r.City__c,
+                                                                                rolAddr.Contact_Role_Certification__r.Certification__r.Name,
+                                                                                rolAddr.Proficiency_level__c,
+                                                                                rolAddr.Proficiency_Granted_By__c
+                                                                                );
+                            IftpHistoryRecordsLooseProficiency.add(ihrec);
+                        }
+                    }                 
                 }
                 Savepoint sp = Database.setSavepoint();
                 try {
@@ -312,8 +317,10 @@ public without sharing class PortalIftEmployeeRecordsManagement {
                     // station related to employee records and employee proficiency related to station records
                     delete roleAdressToBeDeleted;
                     //insert all history records
+                    IftpHistoryRecordsToBeInserted.addAll(IftpHistoryRecordsLooseProficiency);
+                    IftpHistoryRecordsToBeInserted.addAll(IftpHistoryRecordsStopStation);
+                    IftpHistoryRecordsToBeInserted.addAll(IftpHistoryRecordsStopITP);
                     portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
-
 
                     result = new ResultWrapper( auxAccContRol.Company_Code__c, 'Employee deleted successfully.', true);
                     result.accContRoleManaged = auxAccContRol;
@@ -331,8 +338,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
         }
         catch (Exception e){
             System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - inactivateEmployee] Exception - ' + e );
-            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - inactivateEmployee] Exception - ' + e.getStackTraceString() );
-                    
+            System.debug(LoggingLevel.ERROR, '____ [cls PortalEmployeeRecordsManagement - inactivateEmployee] Exception - ' + e.getStackTraceString() );   
             result = new ResultWrapper('', 'An error has occured while saving data', false);
         }  
 
@@ -360,7 +366,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
             Account_Contact_Role__c accCountRolInDatabase = [SELECT Id, Status__c FROM Account_Contact_Role__c WHERE Id = :employeeToUpdate.Id LIMIT 1];
 
-            if(accCountRolInDatabase.Status__c.equalsIgnoreCase('Active')){
+            if(accCountRolInDatabase.Status__c.equalsIgnoreCase('Active') || (accCountRolInDatabase.Status__c.equalsIgnoreCase('Inactive') && updateType != null && updateType == 'reactivate_and_update')){
 
                 // Check mandatory fields
                 if(String.isBlank(employeeToUpdate.Company_Code__c)){
@@ -460,10 +466,11 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             } else if(newRoleAddressesList.size() > 0){
                 accCountRoleId = newRoleAddressesList[0].Account_Contact_Role__c;
             }
-
-            Account_Contact_Role__c accCountRole = [SELECT Id, Status__c FROM Account_Contact_Role__c WHERE Id = :accCountRoleId LIMIT 1];
-
-            if(accCountRole.Status__c.equalsIgnoreCase('Active')){
+            Account_Contact_Role__c accCountRole;
+            if(accCountRoleId != null){
+                accCountRole = [SELECT Id, Status__c FROM Account_Contact_Role__c WHERE Id = :accCountRoleId LIMIT 1];
+            }
+            if(accCountRole != null && accCountRole.Status__c.equalsIgnoreCase('Active')){
 
                 for(Role_Address__c newRec: newRoleAddressesList ){
                     Boolean exists = false;

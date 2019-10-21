@@ -426,13 +426,10 @@ export default class PortalIftpManageEmployees extends LightningElement {
                         return validSoFar && inputCmp.checkValidity();
             }, true);
         this.loadingSpinner = false;
-        let allITPEmployees = [];
 
-        getAllITPEmployees()
+        getAllITPEmployees({accountId: this.userInfo.accountId})
         .then(result => {
-            let myResult = JSON.parse(JSON.stringify(result));
-            allITPEmployees = myResult;
-
+            let allITPEmployees = JSON.parse(JSON.stringify(result));
             let existsInactive = false;
             allITPEmployees.forEach(emp => {
                 if(emp.Company_Code__c === this.employeeToInsert.code.trim() && emp.Status__c ==='Inactive'){
@@ -455,7 +452,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
                     if(addNewEmployeeResult.succeeded){
                         this.openModal = false;
                         this.handleResetActionValues();
-                        //refreshApex(this.wiredITPEmployeesWithStationsInfoResult);
                         this.handleSearchButtonClick();
                         variant = 'success';
                         mode = 'pester';
@@ -725,13 +721,13 @@ export default class PortalIftpManageEmployees extends LightningElement {
     *                                                                              *
     * ******************************************************************************/
     handleDelete(){
+        this.loadingSpinner = true;
         this.openConfirmationModal = true;
     }
 
     deleteConfirmation(){
-        this.loadingSpinner = true;
         this.closeConfirmationModal();
-
+        this.loadingSpinner = true;
         let result;
         let index;
         let ITPEmployeesWithStationsInfo = JSON.parse(JSON.stringify(this.ITPEmployeesWithStationsInfo));
@@ -773,6 +769,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
 
     closeConfirmationModal(){
         this.openConfirmationModal = false;
+        this.loadingSpinner = false;
     }
 
     /*******************************************************************************
@@ -940,7 +937,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
 
     handleManageEmployeeStationsSave(){
         
-        this.loadingSpinner = true;
+        this.loadingModal = true;
         let recordToManage = JSON.parse(JSON.stringify(this.recordToManage));
         
         let recordToManageNewStationsList = JSON.parse(JSON.stringify(this.recordToManageNewStationsList));
@@ -1028,10 +1025,9 @@ export default class PortalIftpManageEmployees extends LightningElement {
                     mode: mode
                 });
                 this.dispatchEvent(event);
-                
+                this.loadingModal = false;
             });
         }
-        this.loadingSpinner = false;
     }
 
     /*******************************************************************************

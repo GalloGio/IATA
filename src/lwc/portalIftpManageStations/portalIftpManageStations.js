@@ -463,7 +463,9 @@ export default class PortalIftpManageStations extends LightningElement {
         this.loadingEditSpinner = true;
         const uploadedFiles = JSON.parse(JSON.stringify(event.detail));
         let docdId = uploadedFiles[0].documentId;
-        manageUploadStationOJT({fileId: docdId, recordID: this.editData.id})        
+        let stationInfo = this.editData.code + ' - ' + this.editData.airportDescription;
+
+        manageUploadStationOJT({fileId: docdId, recordID: this.editData.id, stationInfo: stationInfo})        
         .then(result =>{
             if(result){
                 const event = new ShowToastEvent({
