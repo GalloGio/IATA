@@ -147,9 +147,9 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -157,9 +157,11 @@
     <label>Customer Invoice</label>
     <nameField>
         <label>Customer Invoice Name</label>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Customer Invoices</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
@@ -173,9 +175,10 @@
         <relationshipName>Customer_Invoices</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Bank_Account_Name__c</fullName>
@@ -184,6 +187,7 @@
         <label>Bank Account Name</label>
         <length>80</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -195,6 +199,7 @@
         <label>Bank Account No</label>
         <length>80</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -206,6 +211,7 @@
         <label>Bank Code</label>
         <length>80</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -217,6 +223,7 @@
         <label>Bank Name</label>
         <length>100</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -229,6 +236,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Billed Member Accounting Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -241,6 +249,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Billed Member Designator Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -252,6 +261,7 @@
         <label>Billed Member Id</label>
         <length>13</length>
         <required>true</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -263,6 +273,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Billed Member Name</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -274,6 +285,7 @@
         <label>Billing Currency</label>
         <length>3</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -285,6 +297,7 @@
         <label>Billing Member Accounting Code</label>
         <length>12</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -296,6 +309,7 @@
         <label>Billing Member Designator Code</label>
         <length>2</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -307,6 +321,7 @@
         <label>Billing Member Id</label>
         <length>13</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -316,6 +331,7 @@
         <externalId>false</externalId>
         <label>Billing Member IS Sub Status</label>
         <required>true</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -323,12 +339,12 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>IATA_OFFICE</fullName>
+                    <fullName>IATA OFFICE</fullName>
                     <default>true</default>
                     <label>IATA OFFICE</label>
                 </value>
                 <value>
-                    <fullName>EF_AIRPORT</fullName>
+                    <fullName>E&amp;F AIRPORT</fullName>
                     <default>false</default>
                     <label>E&amp;F AIRPORT</label>
                 </value>
@@ -342,6 +358,7 @@
         <label>Billing Member Name</label>
         <length>100</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -353,6 +370,7 @@
         <label>Branch Code</label>
         <length>80</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -364,6 +382,7 @@
         <label>Charge Category</label>
         <length>25</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -375,6 +394,7 @@
         <label>CH Agreement Indicator</label>
         <length>5</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -386,6 +406,7 @@
         <label>Clearance Currency</label>
         <length>3</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -397,6 +418,7 @@
         <label>Currency Code</label>
         <length>3</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -408,6 +430,7 @@
         <label>Date Basis</label>
         <length>25</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -419,6 +442,7 @@
         <label>Description</label>
         <length>80</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -429,6 +453,7 @@
         <externalId>false</externalId>
         <label>Discount Due Date</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -440,6 +465,7 @@
         <precision>3</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -452,6 +478,7 @@
         <precision>7</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -464,8 +491,21 @@
         <precision>18</precision>
         <required>false</required>
         <scale>5</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fee_Codes_Display__c</fullName>
+        <description>Returns &quot;Annual Fee&quot; if Fee_Codes__c contains &quot;ANF&quot;, returns &quot;Products &amp; Services&quot; otherwise.</description>
+        <externalId>false</externalId>
+        <formula>IF(CONTAINS(Fee_Codes__c, &quot;ANF&quot;), &quot;Annual Fee&quot;, &quot;Products &amp; Services&quot;)</formula>
+        <label>Fee Codes Display</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -475,6 +515,7 @@
         <label>Fee Codes</label>
         <length>20</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -485,6 +526,7 @@
         <description>Indicates if the invoice has attachments</description>
         <externalId>false</externalId>
         <label>Has Attachments</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -495,6 +537,7 @@
         <label>IBAN</label>
         <length>80</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -505,6 +548,7 @@
         <externalId>false</externalId>
         <label>Invoice Date</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -516,6 +560,7 @@
         <label>Invoice ID</label>
         <length>32</length>
         <required>true</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -527,6 +572,7 @@
         <label>Invoice Number</label>
         <length>16</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -537,6 +583,7 @@
         <externalId>false</externalId>
         <label>Invoice Status</label>
         <required>true</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -604,11 +651,6 @@
                     <label>Rejected</label>
                 </value>
                 <value>
-                    <fullName>Unpaid Invoice</fullName>
-                    <default>false</default>
-                    <label>Unpaid Invoice</label>
-                </value>
-                <value>
                     <fullName>Viewed by Billed Member</fullName>
                     <default>false</default>
                     <label>Viewed by Billed Member</label>
@@ -617,6 +659,21 @@
                     <fullName>Dispute Resolved</fullName>
                     <default>false</default>
                     <label>Dispute Resolved</label>
+                </value>
+                <value>
+                    <fullName>Unpaid Invoice</fullName>
+                    <default>false</default>
+                    <label>Unpaid Invoice</label>
+                </value>
+                <value>
+                    <fullName>Disputed</fullName>
+                    <default>false</default>
+                    <label>Disputed</label>
+                </value>
+                <value>
+                    <fullName>Dispute Auto-Closed</fullName>
+                    <default>false</default>
+                    <label>Dispute Auto-Closed</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -627,6 +684,7 @@
         <externalId>false</externalId>
         <label>Net Due Date</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -637,6 +695,7 @@
         <label>Payment Status Billed Member</label>
         <length>100</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -648,6 +707,7 @@
         <label>Payment Status Billing Member</label>
         <length>100</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -659,6 +719,7 @@
         <label>Payment Terms Type</label>
         <length>25</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -670,6 +731,7 @@
         <label>Settlement Method</label>
         <length>1</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -682,6 +744,7 @@
         <precision>6</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -693,6 +756,7 @@
         <label>SWIFT</label>
         <length>11</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -705,6 +769,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -716,6 +781,7 @@
         <label>Transaction Type</label>
         <length>25</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -727,6 +793,7 @@
         <label>Type Of Service</label>
         <length>3</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -738,11 +805,11 @@
         <picklistValues>
             <picklist>Billing_Member_IS_Sub_Status__c</picklist>
             <values>
-                <fullName>EF_AIRPORT</fullName>
+                <fullName>E%26F AIRPORT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>IATA_OFFICE</fullName>
+                <fullName>IATA OFFICE</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -754,6 +821,10 @@
             </values>
             <values>
                 <fullName>Dispute Accepted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dispute Auto-Closed</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -769,11 +840,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Erroneous Invoice Do not Pay</fullName>
+                <fullName>Disputed</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Unpaid Invoice</fullName>
+                <fullName>Erroneous Invoice Do not Pay</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -802,6 +873,10 @@
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unpaid Invoice</fullName>
                 <default>false</default>
             </values>
             <values>

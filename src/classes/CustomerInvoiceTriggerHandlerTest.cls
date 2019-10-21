@@ -16,7 +16,7 @@ public class CustomerInvoiceTriggerHandlerTest {
         //User newUser = ISSP_ObjectFactory.createPortalUser(newCon1);
 
         Customer_Invoice__c newInv = new Customer_Invoice__c(Invoice_ID__c = 'id-123', Billed_Member_Id__c = '12345', 
-                                                             Billing_Member_IS_Sub_Status__c = 'IATA_OFFICE', Invoice_Status__c = 'Delivered');
+                                                             Billing_Member_IS_Sub_Status__c = 'IATA OFFICE', Invoice_Status__c = 'Unpaid Invoice');
         insert newInv;
     }
 

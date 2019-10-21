@@ -5,7 +5,7 @@
 import { LightningElement, track, api } from 'lwc';
 import BasicsSection from '@salesforce/label/c.csp_Basics_Section_label';
 import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
-
+import Attach_Proof_Of_Payment from '@salesforce/label/c.Attach_Proof_Of_Payment'; //WMO-699 - ACAMBAS
 
 export default class PortalInvoiceList extends LightningElement {
 
@@ -84,7 +84,7 @@ export default class PortalInvoiceList extends LightningElement {
 
 
 
-    _labels = { BasicsSection, CSP_NoSearchResults };
+    _labels = { BasicsSection, CSP_NoSearchResults, Attach_Proof_Of_Payment };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 

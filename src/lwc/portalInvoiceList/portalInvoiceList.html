@@ -4,7 +4,7 @@
 
 <!-- Portal Contact List -->
 <template>
-    <div class="slds-p-vertical_large customBorderlessCardWhite">
+    <div class="slds-p-vertical_large customBorderlessCardWhite" style="width: 100%; overflow-x: auto;">
 
         <!-- OPEN MODAL -->
         <template if:true={openmodel}>
@@ -69,6 +69,7 @@
                 <c-portal-record-form-wrapper object-name={objectName} record-id={record.Id} edit-fields={fieldsList.EDITS} static-fields={record} fields={fieldsList.VIEW} show-edit="" header-class="slds-float_right" showfunction="true" onrefreshview={refreshview}
                     services={record.services} section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
                 </c-portal-record-form-wrapper>
+                <p align="center" style="color:blue;">{labels.Attach_Proof_Of_Payment}</p>
                 <c-attachment-list-cmp shownorecords=false parentid='{record.Id}' isportal=true show-modal={showAddDocsModal} onupdateddocs={updateNdocs} accepted-formats={acceptedFormats}>
                 </c-attachment-list-cmp>
 

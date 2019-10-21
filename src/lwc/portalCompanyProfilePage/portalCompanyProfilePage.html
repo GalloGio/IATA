@@ -249,6 +249,14 @@
                                         <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
                                     </div>
                                 </template>
+
+
+
+    </template>
+
+    <!-- No invoices to be displayed -->
+    <template if:true={hasNoInvoices}>
+        <br><br><p align="center">{labels.No_Invoices_To_Display}</p> 
     </template>
 
     </template>

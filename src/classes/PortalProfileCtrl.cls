@@ -54,7 +54,8 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_INVOICE_NUMBER = System.label.Invoice_number;
     PRIVATE STATIC FINAL STRING LABEL_CURRENCY = System.label.ISSP_Currency;
     PRIVATE STATIC FINAL STRING LABEL_INVOICE_STATUS = System.label.Invoice_Status;
-    PRIVATE STATIC FINAL STRING LABEL_TOTAL_AMOUNT = System.label.Total_Amount;
+    PRIVATE STATIC FINAL STRING LABEL_INVOICE_AMOUNT = System.label.Invoice_Amount; //WMO-699 - ACAMBAS
+    PRIVATE STATIC FINAL STRING LABEL_FEE_CODES = System.label.Fee_Codes; //WMO-699 - ACAMBAS
     PRIVATE STATIC FINAL STRING LABEL_BILLING_MEMBER_ACCOUNTING_CODE = System.label.Billing_Member_Accounting_Code;
     PRIVATE STATIC FINAL STRING LABEL_BILLING_MEMBER_DESIGNATOR_CODE = System.label.Billing_Member_Designator_Code;
     PRIVATE STATIC FINAL STRING LABEL_BILLING_MEMBER_NAME = System.label.Billing_Member_Name;
@@ -65,7 +66,7 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL INTEGER BRANCH_BATCH = 15;
     PRIVATE STATIC FINAL INTEGER INVOICE_BATCH = 15; //WMO-627 - ACAMBAS
 
-    PRIVATE STATIC FINAL STRING IATA_INVOICE_TYPE = 'IATA_OFFICE'; //WMO-627 - ACAMBAS
+    PUBLIC STATIC FINAL STRING IATA_INVOICE_TYPE = 'IATA OFFICE'; //WMO-627 - ACAMBAS
 
 public static final Id RECORDTYPE_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 public static final Id RECORDTYPE_AIRLINE_BR = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
@@ -949,7 +950,7 @@ public static Contact contactInfo = new Contact();
     /** Outstanding Invoices section */
 
     @AuraEnabled
-    public static Map<String,List<FieldWrapper>> getInvoicesListFields(String invoiceType){
+    public static Map<String,List<FieldWrapper>> getInvoicesListFields(String invoiceType) {
 
         String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
         String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
@@ -958,27 +959,24 @@ public static Contact contactInfo = new Contact();
         List<String> toRow;
 
         if(invoiceType == IATA_INVOICE_TYPE && myContact.Account.RecordType.DeveloperName == 'IATA_Agency') {
-            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Status__c', 'Total_Amount__c', 'Billing_Currency__c', 'Invoice_Date__c'};
+            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Status__c', 'Billing_Currency__c', 'Total_Amount__c', 'Invoice_Date__c', 'Fee_Codes_Display__c'};
         }
         else {
-            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Status__c', 'Total_Amount__c', 'Billing_Currency__c', 
-                                     'Billing_Member_Accounting_Code__c', 'Billing_Member_Designator_Code__c', 'Billing_Member_Name__c', 'Invoice_Date__c'};   
+            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Status__c', 'Billing_Currency__c', 'Total_Amount__c', 
+                                     'Billing_Member_Accounting_Code__c', 'Billing_Member_Name__c', 'Invoice_Date__c', 'Fee_Codes_Display__c'};   
         }
 
         Map<String,String> fieldLabels = new Map<String,String>();
 
         fieldLabels.put('Invoice_Number__c', LABEL_INVOICE_NUMBER);
         fieldLabels.put('Invoice_Status__c', LABEL_INVOICE_STATUS);
-        fieldLabels.put('Total_Amount__c', LABEL_TOTAL_AMOUNT);
+        fieldLabels.put('Total_Amount__c', LABEL_INVOICE_AMOUNT);
         fieldLabels.put('Billing_Currency__c', LABEL_CURRENCY);
         fieldLabels.put('Billing_Member_Accounting_Code__c', LABEL_BILLING_MEMBER_ACCOUNTING_CODE);
-        fieldLabels.put('Billing_Member_Designator_Code__c', LABEL_BILLING_MEMBER_DESIGNATOR_CODE);
+        //fieldLabels.put('Billing_Member_Designator_Code__c', LABEL_BILLING_MEMBER_DESIGNATOR_CODE);
         fieldLabels.put('Billing_Member_Name__c', LABEL_BILLING_MEMBER_NAME);
         fieldLabels.put('Invoice_Date__c', LABEL_INVOICE_DATE);
-
-        /*for(String fieldName: toRow){
-            if(!fieldLabels.containsKey(fieldName)){ fieldLabels.put(fieldName,fieldName);}
-        }*/
+        fieldLabels.put('Fee_Codes_Display__c', LABEL_FEE_CODES);
 
         Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
 
@@ -1015,7 +1013,7 @@ public static Contact contactInfo = new Contact();
         }
 
         List<Customer_Invoice__c> invoices = 
-                [SELECT Id, Invoice_Number__c, Invoice_Status__c, Total_Amount__c, Billing_Currency__c, 
+                [SELECT Id, Invoice_Number__c, Invoice_Status__c, Total_Amount__c, Billing_Currency__c, Fee_Codes_Display__c,
                         Billing_Member_Accounting_Code__c, Billing_Member_Designator_Code__c, Billing_Member_Name__c, Invoice_Date__c,
                         Bank_Name__c, IBAN__c, SWIFT__c, Bank_Code__c, Branch_Code__c, Bank_Account_No__c, Bank_Account_Name__c
                  FROM Customer_Invoice__c 
@@ -1027,4 +1025,23 @@ public static Contact contactInfo = new Contact();
     }
 
     //WMO-627 - ACAMBAS: End
+
+    //WMO-699 - ACAMBAS: Begin
+    @AuraEnabled
+    public static Boolean isCountryEligibleForPaymentLink() {
+        String isoCountry = myContact.Account.IATA_ISO_Country__r.ISO_Code__c;
+
+        List<String> eligibleCountryList = new List<String>();
+        for(Customer_Invoice_Payment_Link__mdt eligibleCountry : [SELECT DeveloperName FROM Customer_Invoice_Payment_Link__mdt]) {
+            eligibleCountryList.add(eligibleCountry.DeveloperName);
+        }
+
+        if(eligibleCountryList.contains(isoCountry)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    //WMO-699 - ACAMBAS: End
 }

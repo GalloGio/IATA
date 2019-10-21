@@ -94,4 +94,41 @@ public with sharing class PortalProfileCtrlTest {
         }
     }
 
+    //WMO-699 - ACAMBAS: Begin
+    @IsTest
+    static void testInvoiceTabInfo() {
+
+        Account MyAgency = new Account(
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+                Name='MyAgency',
+                SIS_ID__c='12345',
+                ACLI_Status__c = 'Active Company',
+                MITA_Member__c = true,
+                BIETA_Member__c = true,
+                Airline_designator__c = 'AA',
+                IATACode__c = '123',
+                Airline_Prefix__c = '456');
+        insert MyAgency;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = MyAgency.Id;
+        con.Email='contact@MyAgency.com';
+        insert con;
+
+        portalUser = ISSP_ObjectFactory.createPortalUser(con);
+
+        Customer_Invoice__c newInv = new Customer_Invoice__c(Invoice_ID__c = 'id-123', Billed_Member_Id__c = '12345',
+                                                             Billing_Member_IS_Sub_Status__c = 'IATA OFFICE', Invoice_Status__c = 'Unpaid Invoice');
+        insert newInv;
+
+        System.runAs(portalUser) {
+            Map<String, List<PortalProfileCtrl.FieldWrapper>> branchFields = PortalProfileCtrl.getInvoicesListFields(PortalProfileCtrl.IATA_INVOICE_TYPE);
+            List<Customer_Invoice__c> invoices = PortalProfileCtrl.getCustomerInvoices();
+            PortalProfileCtrl.isCountryEligibleForPaymentLink();
+
+            System.assert(!invoices.isEmpty());
+        }
+    }
+    //WMO-699 - ACAMBAS: End
+
 }

@@ -14,6 +14,8 @@ import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 import goToPrivacyPortal from '@salesforce/apex/PortalProfileCtrl.goToPrivacyPortal';
 import getAccountDomains from '@salesforce/apex/PortalProfileCtrl.getAccountDomains';
 import getMapHierarchyAccounts from '@salesforce/apex/PortalProfileCtrl.getMapHierarchyAccounts';
+import isCountryEligibleForPaymentLink from '@salesforce/apex/PortalProfileCtrl.isCountryEligibleForPaymentLink'; //WMO-699 - ACAMBAS
+import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect'; //WMO-699 - ACAMBAS
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
@@ -33,6 +35,8 @@ import CompanyInformation_EMADOMVAL_Title from '@salesforce/label/c.ISSP_Company
 import remove from '@salesforce/label/c.Button_Remove';
 import contact from '@salesforce/label/c.ISSP_Contact';
 
+import See_Bank_Account_Details from '@salesforce/label/c.See_Bank_Account_Details'; //WMO-699 - ACAMBAS
+import Credit_Card_Payment_Link from '@salesforce/label/c.Credit_Card_Payment_Link'; //WMO-699 - ACAMBAS
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
@@ -70,6 +74,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track fieldsLocal;
     @track jobFunctions;
     @track removeContact = false;
+    @track isEligibleForPaymentLink; //WMO-699 - ACAMBAS
+    @track paymentLinkURL; //WMO-699 - ACAMBAS
 
     timeout = null;
 
@@ -102,7 +108,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         CSP_Error_Message_Mandatory_Fields_Contact,
         LastLoginDate,
         RelocateAccount,
-        CompanyInformation_EMADOMVAL_Title
+        CompanyInformation_EMADOMVAL_Title,
+        See_Bank_Account_Details,
+        Credit_Card_Payment_Link
     };
     
     get labels() { return this._labels; }
@@ -122,8 +130,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                 if (contact.Area__c != null) {
 
                     let values = contact.Area__c.split(";");
-                    values.forEach(function (value) {
-                        options.forEach(function (option) {
+                    values.forEach(function(value) {
+                        options.forEach(function(option) {
                             if (option.label == value) { option.checked = true; selectedV.push(option.value); }
                         });
                     });
@@ -161,14 +169,30 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                 this.functionOptions = options;
             });
 
-
         }
-        
-        isAdmin().then(result => {
-            this.showEdit = result && this.showEdit;
+
+        //WMO-699 - ACAMBAS: Begin
+        isCountryEligibleForPaymentLink().then(result => {
+            this.isEligibleForPaymentLink = result;
         });
 
-        this.getAccountEmailDomains();
+
+        paymentLinkRedirect().then(result => {
+            let myUrl;
+            if (result !== undefined && result !== '') {
+                myUrl = result;
+                if (!myUrl.startsWith('http')) {
+                    myUrl = window.location.protocol + '//' + myUrl;
+                }
+            }
+            this.paymentLinkURL = myUrl;
+
+        isAdmin().then(result => {
+            let creditCardPaymentLink = Credit_Card_Payment_Link.replace('{1}', this.paymentLinkURL);
+            this._labels.Credit_Card_Payment_Link = creditCardPaymentLink;
+        });
+        //WMO-699 - ACAMBAS: End
+
     }
 
     get accessibilityGetter() {
@@ -238,6 +262,21 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get isContact() {
         return this.objectName != null && this.objectName.toLowerCase() == 'contact';
     }
+
+    //WMO-699 - ACAMBAS: Begin
+    get isCustomerInvoice() {
+        return this.objectName != null && this.objectName.toLowerCase() == 'customer_invoice__c';
+    }
+
+    get displayPaymentLinkLabel() {
+        let isCustomerInvoiceObject = this.objectName != null && this.objectName.toLowerCase() == 'customer_invoice__c';
+        return this.isEligibleForPaymentLink && isCustomerInvoiceObject;
+    }
+
+    get getPaymentLinkURL() {
+            return this.paymentLinkURL;
+        }
+        //WMO-699 - ACAMBAS: End
 
     get showAreas() {
         return this.showarea;

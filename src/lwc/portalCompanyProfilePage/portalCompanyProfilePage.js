@@ -31,6 +31,7 @@ import FindBranch from '@salesforce/label/c.csp_Find_Branch';
 import FindContact from '@salesforce/label/c.csp_Find_Contact';
 import NewContact from '@salesforce/label/c.csp_CreateNewContact';
 import NoAccount from '@salesforce/label/c.CSP_NoAccount';
+import No_Invoices_To_Display from '@salesforce/label/c.No_Invoices_To_Display'; //WMO-699 - ACAMBAS
 import CSP_Branch_Offices from '@salesforce/label/c.CSP_Branch_Offices';
 import ISSP_Contacts from '@salesforce/label/c.ISSP_Contacts';
 import ISSP_Assign_IFAP from '@salesforce/label/c.ISSP_Assign_IFAP';
@@ -82,6 +83,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
     @track iataInvoiceFields; //WMO-627 - ACAMBAS
     @track efInvoiceFields; //WMO-627 - ACAMBAS
     @track editBasics = false;
+    @track IATAInvoicesNum; //WMO-699 - ACAMBAS
+    @track EFInvoicesNum; //WMO-699 - ACAMBAS
+    @track TotalInvoicesNum; //WMO-699 - ACAMBAS
 
     //Search
     @track searchMode = false;
@@ -165,81 +169,91 @@ export default class PortalCompanyProfilePage extends LightningElement {
         return (this.loggedUser == null || this.loggedUser.Contact == null || this.loggedUser.Contact.AccountId == null);
     }
 
-    @track _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP, CSP_Portal_Administrators, NoResults, CSP_Outstanding_Invoices, IATA_Invoices, EF_Invoices };
+    @track _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP, CSP_Portal_Administrators, NoResults, CSP_Outstanding_Invoices, IATA_Invoices, EF_Invoices, No_Invoices_To_Display };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
 
     connectedCallback() {
         //WMO-696 - ACAMBAS: Begin
-        let isInvoicesTabToBeDisplayed = new Promise((resolve, reject) => {
-            showIATAInvoices().then(result => {
-                this.displayInvoicesTab = result;
-            });
-
-            let error = false;
-            if (!error)
-                resolve();
-            else
-                reject();
+        showIATAInvoices().then(result => {
+            this.displayInvoicesTab = result;
+            this.displayTabs();
         });
         //WMO-696 - ACAMBAS: End
 
-        let displayTabs = new Promise((resolve, reject) => { //WMO-627 - ACAMBAS
-            isAdmin().then(result => {
-                this.isAdmin = result;
+        canEditBasics().then(result => {
+            this.editBasics = result;
+        });
 
-                let pageParams = getParamsFromPage();
-                let viewContacts = false;
-                let viewInvoices = false; //WMO-627 - ACAMBAS
+        getLoggedUser().then(result => {
+            this.loggedUser = JSON.parse(JSON.stringify(result));
+            this.objectid = this.loggedUser.Contact.AccountId;
+            this.userLoaded = true;
+        });
 
-                if (pageParams.tab !== undefined && pageParams.tab !== '') {
-                    if (pageParams.tab === 'contact') {
-                        viewContacts = true;
-                    }
-                    //WMO-627 - ACAMBAS: Begin
-                    else if (pageParams.tab === 'invoices') {
-                        viewInvoices = true;
-                    }
-                    //WMO-627 - ACAMBAS: End
+        this.refreshview();
+
+        getContactFieldsToInsert().then(result => {
+            this.fieldsListToCreate = result;
+        });
+    }
+
+    displayTabs() { //WMO-627 - ACAMBAS
+        isAdmin().then(result => {
+            this.isAdmin = result;
+
+            let pageParams = getParamsFromPage();
+            let viewContacts = false;
+            let viewInvoices = false; //WMO-627 - ACAMBAS
+
+            if (pageParams.tab !== undefined && pageParams.tab !== '') {
+                if (pageParams.tab === 'contact') {
+                    viewContacts = true;
                 }
+                //WMO-627 - ACAMBAS: Begin
+                else if (pageParams.tab === 'invoices') {
+                    viewInvoices = true;
+                }
+                //WMO-627 - ACAMBAS: End
+            }
 
             let tabsAux = [];
 
-                let tabNames = [];
-                if (this.displayInvoicesTab) { //WMO-696 - ACAMBAS
-                    tabNames = [this.labels.CompanyInformation, this.labels.CSP_Branch_Offices, this.labels.ISSP_Contacts, this.labels.CSP_Outstanding_Invoices]; //+'Company Calendar', 'Activity Log'];
-                } else {
-                    tabNames = [this.labels.CompanyInformation, this.labels.CSP_Branch_Offices, this.labels.ISSP_Contacts];
-                }
+            let tabNames = [];
+            if (this.displayInvoicesTab) { //WMO-696 - ACAMBAS
+                tabNames = [this.labels.CompanyInformation, this.labels.CSP_Branch_Offices, this.labels.ISSP_Contacts, this.labels.CSP_Outstanding_Invoices]; //+'Company Calendar', 'Activity Log'];
+            } else {
+                tabNames = [this.labels.CompanyInformation, this.labels.CSP_Branch_Offices, this.labels.ISSP_Contacts];
+            }
 
 
-                for (let i = 0; i < tabNames.length; i++) {
-                    let tabAux = {};
+            for (let i = 0; i < tabNames.length; i++) {
+                let tabAux = {};
 
-                    //Only Portal Admin can see other tabs
-                    if (i === 0 || this.isAdmin) {
-                        tabAux = {
-                            active: !viewContacts && !viewInvoices,
-                            label: tabNames[i],
-                            id: i,
-                            class: "slds-p-around_small cursorPointer text-darkGray"
-                        };
+                //Only Portal Admin can see other tabs
+                if (i === 0 || this.isAdmin) {
+                    tabAux = {
+                        active: !viewContacts && !viewInvoices,
+                        label: tabNames[i],
+                        id: i,
+                        class: "slds-p-around_small cursorPointer text-darkGray"
+                    };
 
-                        if (i === 2) {
-                            tabAux.active = viewContacts;
-                        }
-                        //WMO-627 - ACAMBAS: Begin
-                        else if (i === 3) {
-                            tabAux.active = viewInvoices;
-                        } else if (i !== 0) {
-                            tabAux.active = false;
-                        }
-                        //WMO-627 - ACAMBAS: end
+                    if (i === 2) {
+                        tabAux.active = viewContacts;
                     }
-
-                    tabsAux.push(tabAux);
+                    //WMO-627 - ACAMBAS: Begin
+                    else if (i === 3) {
+                        tabAux.active = viewInvoices;
+                    } else if (i !== 0) {
+                        tabAux.active = false;
+                    }
+                    //WMO-627 - ACAMBAS: end
                 }
+
+                tabsAux.push(tabAux);
+            }
 
             let noSearch = false;
 
@@ -259,96 +273,67 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 }
             }
 
-            //WMO-627 - ACAMBAS: Begin
-
-            let error = false;
-            if (!error)
-                resolve();
-            else
-                reject();
+            this.getIATAInvoices();
         });
+    }
 
-        let displaySubTabs = new Promise((resolve, reject) => {
-            //Check if there are E&F Invoices
-            getInvoices({ offset: 0, type: this.EF_INVOICE_TYPE }).then(result => {
-                //this.isFetching = false;
-                let subTabsAux = [];
-                let subTabNames;
+    getIATAInvoices() {
+        getInvoices({ offset: 0, type: this.IATA_INVOICE_TYPE }).then(result => {
+            this.IATAInvoicesNum = result.length;
+            this.displaySubTabs();
+        });
+    }
 
-                if (result.length === 0) {
-                    //Hide E&F Invoices tab if there are no E&F Invoices
-                    subTabNames = [this.labels.IATA_Invoices];
+    displaySubTabs() {
+        //Check if there are E&F Invoices
+        getInvoices({ offset: 0, type: this.EF_INVOICE_TYPE }).then(result => {
+
+            this.EFInvoicesNum = result.length; //WMO-699 - ACAMBAS
+
+            let subTabsAux = [];
+            let subTabNamesAux = [];
+
+            //WMO-699 - ACAMBAS: Begin
+            if (this.IATAInvoicesNum > 0) {
+                subTabNamesAux.push(this.labels.IATA_Invoices);
+            }
+            if (this.EFInvoicesNum > 0) {
+                subTabNamesAux.push(this.labels.EF_Invoices);
+            }
+            //WMO-699 - ACAMBAS: End
+
+            for (let i = 0; i < subTabNamesAux.length; i++) {
+                let subTabAux = {};
+
+                subTabAux = {
+                    label: subTabNamesAux[i],
+                    id: i,
+                    class: "slds-p-around_small cursorPointer text-darkGray"
+                };
+
+                if (i === 0) {
+                    subTabAux.active = true;
                 } else {
-                    subTabNames = [this.labels.IATA_Invoices, this.labels.EF_Invoices];
+                    subTabAux.active = false;
                 }
 
-                for (let i = 0; i < subTabNames.length; i++) {
-                    let subTabAux = {};
+                subTabsAux.push(subTabAux);
+            }
 
-                    subTabAux = {
-                        label: subTabNames[i],
-                        id: i,
-                        class: "slds-p-around_small cursorPointer text-darkGray"
-                    };
+            this.lstSubTabs = subTabsAux;
 
-                    if (i === 0) {
-                        subTabAux.active = true;
-                    } else {
-                        subTabAux.active = false;
-                    }
-
-                    subTabsAux.push(subTabAux);
-                }
-
-                this.lstSubTabs = subTabsAux;
-            });
-
-            let error = false;
-            if (!error)
-                resolve();
-            else
-                reject();
+            this.getInvoicesData();
         });
+    }
 
-        let getInvoicesData = new Promise((resolve, reject) => {
-            this.iataInvoicesLoaded = false;
-            this.efInvoicesLoaded = false;
+    getInvoicesData() {
+        if (this.IATAInvoicesNum > 0) {
             this.retrieveInvoices(this.IATA_INVOICE_TYPE);
-            this.isFetching = true;
-
-            let error = false;
-            if (!error) resolve();
-            else reject();
-        });
-
-        let displayInvoices = function() {
-            Promise.all([
-                isInvoicesTabToBeDisplayed, //WMO-696 - ACAMBAS
-                displayTabs,
-                displaySubTabs,
-                getInvoicesData
-            ]);
+        } else if (this.EFInvoicesNum > 0) {
+            this.retrieveInvoices(this.EF_INVOICE_TYPE);
         }
 
-        displayInvoices();
-
-        //WMO-627 - ACAMBAS: end
-
-        canEditBasics().then(result => {
-            this.editBasics = result;
-        });
-
-        getLoggedUser().then(result => {
-            this.loggedUser = JSON.parse(JSON.stringify(result));
-            this.objectid = this.loggedUser.Contact.AccountId;
-            this.userLoaded = true;
-        });
-
-        this.refreshview();
-
-        getContactFieldsToInsert().then(result => {
-            this.fieldsListToCreate = result;
-        });
+        this.isFetching = true;
     }
 
     refreshview() {
@@ -551,16 +536,13 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 }
                 //WMO-627 - ACAMBAS: Begin
                 else if (i == 3) {
-                    if (this.lstSubTabs[0] != null && this.lstSubTabs[0].active && !this.iataInvoicesLoaded) {
-                        //IATA Invoices
-                        //this.iataInvoicesLoaded = false;
+                    if (this.lstSubTabs[0] != null && this.lstSubTabs[0].active && this.IATAInvoicesNum > 0) {
+                        this.iataInvoicesLoaded = false;
                         this.retrieveInvoices(this.IATA_INVOICE_TYPE);
-                    } else if (!this.efInvoicesLoaded) {
-                        //E&F Invoices
-                        //this.efInvoicesLoaded = false;
+                    } else {
+                        this.efInvoicesLoaded = false;
                         this.retrieveInvoices(this.EF_INVOICE_TYPE);
                     }
-
                 }
                 //WMO-627 - ACAMBAS: End
             } else {
@@ -569,7 +551,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
         }
 
         this.lstTabs = tabsAux;
-
     }
 
     //WMO-627 - ACAMBAS: Begin
@@ -588,11 +569,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
                     if (i == 0 && !this.iataInvoicesLoaded) {
                         //IATA Invoices
-                        //this.iataInvoicesLoaded = false;
                         this.retrieveInvoices(this.IATA_INVOICE_TYPE);
                     } else if (i == 1 && !this.efInvoicesLoaded) {
                         //E&F Invoices
-                        //this.efInvoicesLoaded = false;
                         this.retrieveInvoices(this.EF_INVOICE_TYPE);
                     }
                 } else {
@@ -1012,6 +991,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
     get tab4Active() { return this.lstTabs[4] != null && this.lstTabs[4].active; }
     get tab5Active() { return this.lstTabs[5] != null && this.lstTabs[5].active; }
 
-    get subTab0Active() { return this.lstSubTabs[0] != null && this.lstSubTabs[0].active; }
-    get subTab1Active() { return this.lstSubTabs[1] != null && this.lstSubTabs[1].active; }
+    get subTab0Active() { return this.lstSubTabs[0] != null && this.lstSubTabs[0].active && this.IATAInvoicesNum > 0 }
+    get subTab1Active() { return (this.lstSubTabs[0] != null && this.lstSubTabs[0].active && this.IATAInvoicesNum == 0 && this.EFInvoicesNum > 0) || (this.lstSubTabs[1] != null && this.lstSubTabs[1].active); }
+    get hasNoInvoices() { return (this.IATAInvoicesNum + this.EFInvoicesNum) === 0; } //WMO-699 - ACAMBAS
 }

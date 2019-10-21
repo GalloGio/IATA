@@ -2711,6 +2711,13 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Attachment Name</value>
     </labels>
     <labels>
+        <fullName>Attach_Proof_Of_Payment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Attach_Proof_Of_Payment</shortDescription>
+        <value>Please attach your proof of payment in case you have paid this invoice.</value>
+    </labels>
+    <labels>
         <fullName>Attachments</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -4877,6 +4884,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <shortDescription>Creation date</shortDescription>
         <value>Creation date</value>
     </labels>
+	<labels>
+        <fullName>Credit_Card_Payment_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit_Card_Payment_Link</shortDescription>
+        <value>For credit card payment please click &lt;a href=&quot;{1}&quot; target=&quot;_blank&quot; style=&quot;color: blue; text-decoration-line: underline;&quot;&gt;here&lt;/a&gt;.</value>
+    </labels>
     <labels>
         <fullName>Credit_card_payment_msg</fullName>
         <language>en_US</language>
@@ -6196,6 +6210,13 @@ Message: {2}</value>
         <protected>false</protected>
         <shortDescription>FW</shortDescription>
         <value>FW</value>
+    </labels>
+    <labels>
+        <fullName>Fee_Codes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Fee Codes</shortDescription>
+        <value>Fee Codes</value>
     </labels>
     <labels>
         <fullName>Feed_Item_Invalid_Topics</fullName>
@@ -32943,6 +32964,13 @@ Please use hashtags (#) to define the topic(s) of your post.
 You can choose one or more of the following topics:</value>
     </labels>
     <labels>
+        <fullName>Invoice_Amount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Amount</shortDescription>
+        <value>Invoice Amount</value>
+    </labels>
+    <labels>
         <fullName>Invoice_Date</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -34511,6 +34539,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>NoSameName</shortDescription>
         <value>There is already an attachment with the same name. Please rename it.</value>
+    </labels>
+    <labels>
+        <fullName>No_Invoices_To_Display</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No_Invoices_To_Display</shortDescription>
+        <value>There is no outstanding invoices at the moment.</value>
     </labels>
     <labels>
         <fullName>No_Reply</fullName>
@@ -38097,6 +38132,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Section Title Top Sellers</shortDescription>
         <value>Top Sellers</value>
+    </labels>
+    <labels>
+        <fullName>See_Bank_Account_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>See_Bank_Account_Details</shortDescription>
+        <value>Please see below our bank account details for bank transfer payment.</value>
     </labels>
     <labels>
         <fullName>See_details</fullName>
