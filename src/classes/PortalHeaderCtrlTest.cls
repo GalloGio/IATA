@@ -3,7 +3,10 @@ private class PortalHeaderCtrlTest {
 
     @TestSetup
     static void testSetup(){
-        Account newAcc = new Account(Name='Account Test CSP Utils');
+
+        String IATA_AGENCY_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
+        Account newAcc = new Account(Name='Account Test CSP Utils', RecordTypeId = IATA_AGENCY_RT, SIS_ID__c = '12345');
         insert newAcc;
 
         Contact newCon1 = new Contact(AccountId = newAcc.Id, FirstName = 'John', LastName = 'Doe', Email = System.today().dayOfYear() + 'testemail1@csp.testclass', User_Portal_Status__c = 'Approved Admin');
@@ -25,6 +28,10 @@ private class PortalHeaderCtrlTest {
         Notification__c not3 = new Notification__c(Archive__c = true, Contact__c = newCon1.Id, Message__c = 'Test Notification - More views', Number_of_views__c = 3);
         insert new List<Notification__c>{not1,not2,not3};
 
+        //Invoice
+        Customer_Invoice__c newInv = new Customer_Invoice__c(Invoice_ID__c = 'id-123', Billed_Member_Id__c = '12345',
+                                                             Billing_Member_IS_Sub_Status__c = 'E&F AIRPORT', Invoice_Status__c = 'Unpaid Invoice');
+        insert newInv;
     }
 
     @IsTest
@@ -38,9 +45,10 @@ private class PortalHeaderCtrlTest {
             PortalHeaderCtrl.increaseNotificationView(notification.Id);
             Test.stopTest();
 
-            System.assertEquals( 2 , notItemList.size() );
+            System.assertEquals( 3 , notItemList.size() );
         }
     }
+
     @IsTest
     static void testredirectToChangePasswordPage(){
         string url =PortalHeaderCtrl.goToOldChangePassword();

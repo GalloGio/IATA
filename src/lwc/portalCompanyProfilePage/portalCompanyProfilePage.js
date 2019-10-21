@@ -45,6 +45,7 @@ import CSP_Outstanding_Invoices from '@salesforce/label/c.CSP_Outstanding_Invoic
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import IATA_Invoices from '@salesforce/label/c.CSP_IATA_Invoices'; //WMO-627 - ACAMBAS 
 import EF_Invoices from '@salesforce/label/c.CSP_EF_Invoices'; //WMO-627 - ACAMBAS
+import showIATAInvoices from '@salesforce/apex/PortalHeaderCtrl.showIATAInvoices'; //WMO-696 - ACAMBAS
 
 
 export default class PortalCompanyProfilePage extends LightningElement {
@@ -116,10 +117,13 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     @track showEdit = true;
     @track showIFAPBtn = false;
+
+    //Flag that defines if the Outstanding Invoices tab is to be displayed or not
+    @track displayInvoicesTab; //WMO-696 - ACAMBAS
     // ------------------- //
 
-    IATA_INVOICE_TYPE = 'IATA_OFFICE'; //WMO-627 - ACAMBAS
-    EF_INVOICE_TYPE = 'EF_AIRPORT'; //WMO-627 - ACAMBAS
+    IATA_INVOICE_TYPE = 'IATA OFFICE'; //WMO-627 - ACAMBAS
+    EF_INVOICE_TYPE = 'E&F AIRPORT'; //WMO-627 - ACAMBAS
     
 
     // Portal Admins
@@ -167,6 +171,19 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
 
     connectedCallback() {
+        //WMO-696 - ACAMBAS: Begin
+        let isInvoicesTabToBeDisplayed = new Promise((resolve, reject) => {
+            showIATAInvoices().then(result => {
+                this.displayInvoicesTab = result;
+            });
+
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
+        });
+        //WMO-696 - ACAMBAS: End
 
         let displayTabs = new Promise((resolve, reject) => { //WMO-627 - ACAMBAS
             isAdmin().then(result => {
@@ -187,9 +204,15 @@ export default class PortalCompanyProfilePage extends LightningElement {
                     //WMO-627 - ACAMBAS: End
                 }
 
-                let tabsAux = [];
-                this.isAdmin = true;
-                let tabNames = [this.labels.CompanyInformation, this.labels.CSP_Branch_Offices, this.labels.ISSP_Contacts, this.labels.CSP_Outstanding_Invoices]; //+'Company Calendar', 'Activity Log'];
+            let tabsAux = [];
+
+                let tabNames = [];
+                if (this.displayInvoicesTab) { //WMO-696 - ACAMBAS
+                    tabNames = [this.labels.CompanyInformation, this.labels.CSP_Branch_Offices, this.labels.ISSP_Contacts, this.labels.CSP_Outstanding_Invoices]; //+'Company Calendar', 'Activity Log'];
+                } else {
+                    tabNames = [this.labels.CompanyInformation, this.labels.CSP_Branch_Offices, this.labels.ISSP_Contacts];
+                }
+
 
                 for (let i = 0; i < tabNames.length; i++) {
                     let tabAux = {};
@@ -236,6 +259,29 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 }
             }
 
+            //WMO-627 - ACAMBAS: Begin
+
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
+        });
+
+        let displaySubTabs = new Promise((resolve, reject) => {
+            //Check if there are E&F Invoices
+            getInvoices({ offset: 0, type: this.EF_INVOICE_TYPE }).then(result => {
+                //this.isFetching = false;
+                let subTabsAux = [];
+                let subTabNames;
+
+                if (result.length === 0) {
+                    //Hide E&F Invoices tab if there are no E&F Invoices
+                    subTabNames = [this.labels.IATA_Invoices];
+                } else {
+                    subTabNames = [this.labels.IATA_Invoices, this.labels.EF_Invoices];
+                }
+
                 for (let i = 0; i < subTabNames.length; i++) {
                     let subTabAux = {};
 
@@ -277,6 +323,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
         let displayInvoices = function() {
             Promise.all([
+                isInvoicesTabToBeDisplayed, //WMO-696 - ACAMBAS
                 displayTabs,
                 displaySubTabs,
                 getInvoicesData
@@ -602,7 +649,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let status = contact.User_Portal_Status__c;
 
             let locationType = contact.Account.Location_Type__c ? contact.Account.Location_Type__c : '';
-            let iataCode = contact.IATA_Code__c ? contact.IATA_Code__c  : '';
+            let iataCode = contact.IATA_Code__c ? contact.IATA_Code__c : '';
 
             if (contact.Account.RecordType.Name === 'Airline Headquarters' || contact.Account.RecordType.Name === 'Airline Branch') {
                 contact.LocationCode = (contact.hasOwnProperty('IATA_Code__c') ? contact.IATA_Code__c : '') + (contact.hasOwnProperty('Account_site__c') ? ' (' + contact.Account_site__c + ')' : '') + ')';
@@ -958,10 +1005,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
         });
     }
 
-    get tab0Active() { return this.lstTabs[0] != null && this.lstTabs[0].active; }
-    get tab1Active() { return this.lstTabs[1] != null && this.lstTabs[1].active; }
-    get tab2Active() { return this.lstTabs[2] != null && this.lstTabs[2].active; }
-    get tab3Active() { return this.lstTabs[3] != null && this.lstTabs[3].active; }
+    get tab0Active() { return this.lstTabs[0] != null && this.lstTabs[0].active; } //company information
+    get tab1Active() { return this.lstTabs[1] != null && this.lstTabs[1].active; } //branch offices
+    get tab2Active() { return this.lstTabs[2] != null && this.lstTabs[2].active; } //contacts
+    get tab3Active() { return this.lstTabs[3] != null && this.lstTabs[3].active; } //outstanding invoices
     get tab4Active() { return this.lstTabs[4] != null && this.lstTabs[4].active; }
     get tab5Active() { return this.lstTabs[5] != null && this.lstTabs[5].active; }
 

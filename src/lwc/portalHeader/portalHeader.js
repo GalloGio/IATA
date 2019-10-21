@@ -13,6 +13,7 @@ import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs
 //notification apex method
 import getNotifications from '@salesforce/apex/PortalHeaderCtrl.getNotifications';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
+import showIATAInvoices from '@salesforce/apex/PortalHeaderCtrl.showIATAInvoices'; //WMO-696 - ACAMBAS
 import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
@@ -204,6 +205,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     //User Type
     @track userAdmin;
 
+    //Flag that defines if the IATA Invoices entry is displayed in the menu
+    @track displayInvoicesMenu; //WMO-696 - ACAMBAS
+
     //style variables for notifications
     @track sideMenuBarStyle;
     @track headerButtonNotificationsContainerStyle;
@@ -255,6 +259,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         isAdmin().then(result => {
             this.userAdmin = result;
         });
+
+        //WMO-696 - ACAMBAS: Begin
+        showIATAInvoices().then(result => {
+            this.displayInvoicesMenu = result;
+        });
+        //WMO-696 - ACAMBAS: End
 
         this.redirectChangePassword();
 

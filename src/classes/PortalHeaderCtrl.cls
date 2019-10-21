@@ -95,6 +95,7 @@ public without sharing class PortalHeaderCtrl {
 
         if ( isAdmin ) {
             String topParentId = loggedUser.Contact.Account.Top_Parent__c == null ? loggedUser.Contact.AccountId : loggedUser.Contact.Account.Top_Parent__c;
+
             userPortalAccessRequestList = getContactsToApprove(topParentId);
             userPortalServiceAccessRequestList = getPortalAppRightsToApprove(topParentId);
             customerInvoicesList = getCustomerInvoices(topParentId); //ACAMBAS - WMO-628 
@@ -109,9 +110,37 @@ public without sharing class PortalHeaderCtrl {
             
             for (Portal_Application_Right__c application : userPortalServiceAccessRequestList){
                 // PORTAL SERVICE
-                NotificationItem notif = new NotificationItem(application.Portal_Application__c, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), application.CreatedDate, false, System.label.CSP_Task, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), false, 'Portal Service', application.Contact__r.Name);
+                NotificationItem notif = new NotificationItem(application.Portal_Application__c, 
+                                                                String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), 
+                                                                application.CreatedDate, 
+                                                                false, 
+                                                                System.label.CSP_Task, 
+                                                                String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), 
+                                                                false, 
+                                                                'Portal Service', 
+                                                                application.Contact__r.Name);
                 notificationItemList.add(notif);
+            }
+
+            
+            if(showIATAInvoices()) {  //ACAMBAS - WMO-696
+                //ACAMBAS - WMO-628: Begin
+                for (Customer_Invoice__c invoice : customerInvoicesList){
+                    // CUSTOMER INVOICES
+                    NotificationItem notif = new NotificationItem(invoice.Id, 
+                                                                    'You have a new outstanding invoice from IATA: ' + invoice.Invoice_Number__c, 
+                                                                    invoice.CreatedDate, 
+                                                                    false, 
+                                                                    System.label.CSP_Task, 
+                                                                    'You have a new outstanding invoice from IATA: ' + invoice.Invoice_Number__c, 
+                                                                    false, 
+                                                                    'Customer Invoice', 
+                                                                    '');
+                    notificationItemList.add(notif);
                 }
+                //ACAMBAS - WMO-628: End
+            }
+            
 
             //ACAMBAS - WMO-628: Begin
             for (Customer_Invoice__c invoice : customerInvoicesList){
@@ -138,6 +167,31 @@ public without sharing class PortalHeaderCtrl {
 
         return notificationItemList;
     }
+
+    //WMO-696 - ACAMBAS: Begin
+     /* 
+    * @description If the account is Agency and the ISO country is not defined in the custom metadata XXX the IATA Invoices menu entry should be displayed
+    * @return true if the IATA Invoices menu entry is to be displayed.
+    */
+    @AuraEnabled
+    public static Boolean showIATAInvoices() {
+        User loggedUser = CSP_Utils.getLoggedUser();
+        Boolean isAgency = loggedUser.Contact.Account.RecordType.DeveloperName == 'IATA_Agency';
+        String isoCountry = loggedUser.Contact.Account.IATA_ISO_Country__r.ISO_Code__c;
+
+        List<String> hiddenCountryList = new List<String>();
+        for(Customer_Invoices_Hidden_Country__mdt hiddenCountry : [SELECT DeveloperName FROM Customer_Invoices_Hidden_Country__mdt]) {
+            hiddenCountryList.add(hiddenCountry.DeveloperName);
+        }
+
+        if(isAgency && hiddenCountryList.contains(isoCountry)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    //WMO-696 - ACAMBAS: End
 
      /* 
     * @description Increase the number of views of 1 notification.
