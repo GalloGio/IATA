@@ -374,7 +374,9 @@ lightning-datatable .slds-th__action {
 .Pendingcustomer lightning-primitive-cell-wrapper lightning-formatted-text, .ClosedRejected lightning-primitive-cell-wrapper lightning-formatted-text, 
 .ClosedDisapproved lightning-primitive-cell-wrapper lightning-formatted-text, .ClosedWithdrawn lightning-primitive-cell-wrapper lightning-formatted-text, 
 .AcceptedPendingBG lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedPendingDocs lightning-primitive-cell-wrapper lightning-formatted-text, 
-.AcceptedPendingAgreement lightning-primitive-cell-wrapper lightning-formatted-text, .Returnapplicationtocustomer lightning-primitive-cell-wrapper lightning-formatted-text{
+.AcceptedPendingAgreement lightning-primitive-cell-wrapper lightning-formatted-text, .Returnapplicationtocustomer lightning-primitive-cell-wrapper lightning-formatted-text,
+.Pendingcustomer span, .ClosedRejected span, .ClosedDisapproved span, .ClosedWithdrawn span, .AcceptedPendingBG span,
+.AcceptedPendingDocs span, .AcceptedPendingAgreement span, .Returnapplicationtocustomer span {
     background-color: #ffa499;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
@@ -387,13 +389,15 @@ lightning-datatable .slds-th__action {
     vertical-align: middle;
 }
 
-.Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, 
+.Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, .Inprogress lightning-primitive-cell-wrapper lightning-formatted-text,
 .Escalated lightning-primitive-cell-wrapper lightning-formatted-text, .EscalatedInternally lightning-primitive-cell-wrapper lightning-formatted-text, 
 .EscalatedExternally lightning-primitive-cell-wrapper lightning-formatted-text, .ForReviewandAcceptance lightning-primitive-cell-wrapper lightning-formatted-text, 
 .OnHoldExternal lightning-primitive-cell-wrapper lightning-formatted-text, .OnHoldInternal lightning-primitive-cell-wrapper lightning-formatted-text, 
 .Reopen lightning-primitive-cell-wrapper lightning-formatted-text, .ClosedNotAccepted lightning-primitive-cell-wrapper lightning-formatted-text, 
 .InputRequested lightning-primitive-cell-wrapper lightning-formatted-text, .PendingReconsideration lightning-primitive-cell-wrapper lightning-formatted-text,
-.ActionNeeded lightning-primitive-cell-wrapper lightning-formatted-text {
+.ActionNeeded lightning-primitive-cell-wrapper lightning-formatted-text, .ActionNeeded span, .Open span, .InProgress span, .Escalated span,
+.EscalatedInternally span, .EscalatedExternally span, .ForReviewandAcceptance span, .OnHoldExternal span, .OnHoldInternal span,
+.Reopen span, .ClosedNotAccepted span, .InputRequested span, .PendingReconsideration span, .Inprogress span{
     background-color: #fac832;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
@@ -407,7 +411,8 @@ lightning-datatable .slds-th__action {
 }
 
 .Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
-.Submitted lightning-primitive-cell-wrapper lightning-formatted-text{
+.Submitted lightning-primitive-cell-wrapper lightning-formatted-text
+.Closed span, .AcceptedFutureDate span, .Submitted span {
     background-color: #b1e8b5;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
@@ -420,7 +425,8 @@ lightning-datatable .slds-th__action {
     vertical-align: middle;
 }
 
-.Draft lightning-primitive-cell-wrapper lightning-formatted-text, .OpenEDMC lightning-primitive-cell-wrapper lightning-formatted-text{
+.Draft lightning-primitive-cell-wrapper lightning-formatted-text, .OpenEDMC lightning-primitive-cell-wrapper lightning-formatted-text,
+.Draft span, .OpenEDMC span{
     background-color: #f0f2f5;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
@@ -491,6 +497,28 @@ lightning-datatable .slds-th__action {
 
 /* ############################################## */
 /* Classes for the buttons */
+
+.containedButtonSmaller, 
+.containedButtonSmaller button {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 1px;
+  box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24),
+    0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  background-color: #3333ff;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  min-height: 50px;
+  width: 200px;
+  word-break: break-word;
+  border: none;
+}
 
 .containedButton, .containedButton button, .containedButton button:active, .containedButton button:visited, .containedButton button:focus {
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -1552,6 +1580,10 @@ visibility: hidden;
     background-image: url(/csportal/s/CSPortal/Images/Icons/more.svg);
 }
 
+.removeArrowFromButtonMenu button > :nth-child(2) {
+  display: none;
+}
+
 .introMessage span a {
     color: #3333ff;
 }
@@ -1646,3 +1678,17 @@ visibility: hidden;
 .sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon svg {
     fill: #fff;
 }
+
+.button_no_margin button{
+    margin: -10px !important;
+}
+
+.blueLink a {
+	color: #1e32fa;
+}
+
+/*-- Hides search icons from inputs in Edge and IE --*/
+.searchBarBar input[type="text"]::-ms-clear {
+    display: none;
+}
+  

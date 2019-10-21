@@ -13,6 +13,8 @@ import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 import goToPrivacyPortal from '@salesforce/apex/PortalProfileCtrl.goToPrivacyPortal';
 import getAccountDomains from '@salesforce/apex/PortalProfileCtrl.getAccountDomains';
+import checkIfIsAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
+import checkHasAccessToAccred from '@salesforce/apex/DAL_WithoutSharing.hasAccessToService'; // check if user has access to IATA Accreditation and changes
 import getMapHierarchyAccounts from '@salesforce/apex/PortalProfileCtrl.getMapHierarchyAccounts';
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
@@ -33,10 +35,15 @@ import CompanyInformation_EMADOMVAL_Title from '@salesforce/label/c.ISSP_Company
 import remove from '@salesforce/label/c.Button_Remove';
 import contact from '@salesforce/label/c.ISSP_Contact';
 
+import CompanyInformation from '@salesforce/label/c.ISSP_CompanyInformation';
+import CSP_CompanyAdministration_Link from '@salesforce/label/c.CSP_CompanyAdministration_Link';
+import CSP_Travel_Agent_Accreditation_Changes_Access from '@salesforce/label/c.CSP_Travel_Agent_Accreditation_Changes_Access';
+import CSP_Travel_Agent_Accreditation_Changes_Request from '@salesforce/label/c.CSP_Travel_Agent_Accreditation_Changes_Request';
+import CSP_Airline_Changes_Access from '@salesforce/label/c.CSP_Airline_Changes_Access';
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
-
+    
     @api sectionClass;
     @api headerClass;
     @api sectionTitle;
@@ -84,8 +91,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track emailDomain = false;
     @track canRelocate = true;
     @api
-    get fields() { return this.fieldsLocal; }
-    set fields(value) { this.fieldsLocal = value; }
+    get fields(){ return this.fieldsLocal;}
+    set fields(value){ this.fieldsLocal = value;}
 
     _labels = {
         SaveLabel,
@@ -102,8 +109,18 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         CSP_Error_Message_Mandatory_Fields_Contact,
         LastLoginDate,
         RelocateAccount,
-        CompanyInformation_EMADOMVAL_Title
+        CompanyInformation_EMADOMVAL_Title,
+        CompanyInformation,
+		CSP_Travel_Agent_Accreditation_Changes_Access,
+		CSP_Travel_Agent_Accreditation_Changes_Request,
+		CSP_Airline_Changes_Access,
+        CSP_CompanyAdministration_Link
     };
+
+    @api tabName = '';
+	@track isAdminUser = false;
+	@track isAirline=false;
+	@track linkToDoChanges='';
     
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
@@ -161,15 +178,38 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                 this.functionOptions = options;
             });
 
-
         }
         
         isAdmin().then(result => {
             this.showEdit = result && this.showEdit;
+            if (this._labels.CompanyInformation.trim() === this.tabName.trim()){
+				this.isAdminUser = result;
+                this.showEdit = true;
+                this.editBasics = true;
+            }
         });
+		checkIfIsAirlineUser().then(result=>{
+			this.isAirline = result;
+			if(!result){
+				
+				checkHasAccessToAccred({
+					str:'IATA%Acc%',
+					conId:null
+				}).then(result=>{
+					if(result)
+						this.linkToDoChanges =this._labels.CSP_Travel_Agent_Accreditation_Changes_Access;
+					else
+						this.linkToDoChanges =this._labels.CSP_Travel_Agent_Accreditation_Changes_Request;					
+				});
+			}
+
+		});
 
         this.getAccountEmailDomains();
     }
+	get showHelpText(){
+		return this.isAdminUser;
+	}
 
     get accessibilityGetter() {
 
@@ -179,22 +219,22 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         let fieldsToIterate = JSON.parse(JSON.stringify(this.fields));
 
         if (fieldsToIterate) {
-            fieldsToIterate.forEach(function (item) {
-                if (item.isAccessibility) {
-                    contactType = item.accessibilityList;
-                    item.accessibilityList.forEach(function (acc) {
-                        if (acc.checked) {
-                            contactTypeStatus.push(acc.label);
-                        }
-                    });
-                }
-            });
+        fieldsToIterate.forEach(function (item) {
+            if (item.isAccessibility) {
+                contactType = item.accessibilityList;
+                item.accessibilityList.forEach(function (acc) {
+                    if (acc.checked) {
+                        contactTypeStatus.push(acc.label);
+                    }
+                });
+            }
+        });
         }
 
         accessibilityTextLocal = contactTypeStatus.join(', ');
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
-
+        
         isAdmin().then(result => {
             this.showEdit = (result ? true : false);
         });
@@ -276,7 +316,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
         let fields = haveEditFields ? JSON.parse(JSON.stringify(this.editFields)) : JSON.parse(JSON.stringify(this.fields));
         let fieldsChanged = false;
-        let numberFields = ['Phone', 'MobilePhone', 'Phone_Number__c'];
+        let numberFields = ['Phone','MobilePhone','Phone_Number__c'];
         let requiredFields = [];
         let skipValidation = false;
 

@@ -12666,6 +12666,19 @@ IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>SortingOrder__c</fullName>
+        <description>Used to order the contact list on Company Profile (CSPortal)</description>
+        <externalId>false</externalId>
+        <formula>CASE(TEXT(User_Portal_Status__c), &#39;Pending Approval&#39;, 0, 1)</formula>
+        <label>Sorting Order</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>   
+    <fields>
         <fullName>Source_Customer_ID__c</fullName>
         <externalId>false</externalId>
         <label>Source Customer ID</label>
