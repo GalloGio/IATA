@@ -171,7 +171,7 @@ export default class PortalContactList extends LightningElement {
         if (!this.fieldsList) {
             return 0;
         } else {
-            return this.fieldsList.ROWS.length + 3; // Adding extra colspans for spacing columns
+            return this.fieldsList.ROWS.length + 5; // Adding extra colspans for spacing columns
         }
     }
 
@@ -418,6 +418,17 @@ export default class PortalContactList extends LightningElement {
         }
 
         this.contactsSelected = fieldValue;
+
+        let records = JSON.parse(JSON.stringify(this.records));
+
+        for (let i = 0; i < records.length; i++) {
+            if(records[i].Id === contactSelected) {
+                records[i].selected = true;
+                break;
+            }
+        }
+
+        this.records = records;
         
         if(this.allContactsSelected && this.contactsSelected.length === 0) this.allContactsSelected = false;
 
