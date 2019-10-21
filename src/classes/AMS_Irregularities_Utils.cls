@@ -42,7 +42,7 @@ public class AMS_Irregularities_Utils{
 			map<id, decimal> mapAccIRRperAgency = new map<id, decimal>();
 			Map<Id,Decimal> mapCurrentIrr = new Map<Id,Decimal>();
 
-			if(!mapAccountCase.isEmpty() && mapAccntToUpdate.isEmpty()) toUpdateAccts = true;
+			if(!mapAccountCase.isEmpty()) toUpdateAccts = true;
 			
 			for(ID a: setAccntIDs)
 				mapAccIRRperAgency.put(a, 0);

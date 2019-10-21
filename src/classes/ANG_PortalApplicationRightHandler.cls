@@ -17,8 +17,8 @@ public class ANG_PortalApplicationRightHandler {
 
 	public void onAfterInsert(){
 		insertUserProvAccount();
-		setConnectedAppsSSOPermission();		
-		manageShareUsers();	
+		setConnectedAppsSSOPermission();
+		manageShareUsers();
 	}
 	public void onAfterUpdate(){
 		setConnectedAppsSSOPermission();
@@ -241,11 +241,12 @@ public class ANG_PortalApplicationRightHandler {
 		
 		List<ISSP_External_Reports_Config__c> extRepConfigList = ISSP_External_Reports_Config__c.getall().values();
 		Set<Id> portalApps = new Set<Id>();
-		
+		Set<Id> portalContacts = new Set<Id>();
 		//Gets Portal Services IDs to filter the ISSP_External_Reports_Config__c to avoid later pulling every single record
 		for(Portal_Application_Right__c par : triggerNew){
 			if(par.Right__c == 'Access Granted'){
 				portalApps.add(par.Portal_Application__c);
+				portalContacts.add(par.Contact__c);
 			}
 		}
 		
@@ -271,16 +272,23 @@ public class ANG_PortalApplicationRightHandler {
 			
 			for(Portal_Application_Right__c par : triggerNew){
 				
-				Set<Id> usersToGetAccess = new Set<Id>();
-				
+				Map<Id,Set<Id>> usersToGetAccess = new Map<Id,Set<Id>>();
+								
 				for(ISSP_External_Report__c er : externalReports){
 					for(User u : users){
-						if(u.ContactId == par.Contact__c && u.AccountId == er.Account__c)
-							usersToGetAccess.add(u.Id);
+						if(u.ContactId == par.Contact__c && u.AccountId == er.Account__c){
+                            if(usersToGetAccess.containsKey(er.Id)){
+                                Set<Id> newUser = usersToGetAccess.get(er.Id);
+                                newUser.add(u.Id);
+                                usersToGetAccess.put(er.Id,newUser);
+                            }
+							else
+                                usersToGetAccess.put(er.Id, new Set<Id>{u.Id});
+						}
 					}
 					
 					if(!usersToGetAccess.isEmpty())
-						ExternalFilesUtils.setExternalReportsSharingSetting(usersToGetAccess, er.Id, 'Read');
+						System.enqueueJob(new ExternalFilesUtils(usersToGetAccess, 'Read'));
 				}
 			}
 		}

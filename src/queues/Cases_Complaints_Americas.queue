@@ -10,8 +10,8 @@
             <publicGroup>IDFSAmericasHUB</publicGroup>
         </publicGroups>
         <roles>
-            <role>MADHubCSManagerA</role>
-            <role>MADHubCSstaffA</role>
+            <role>MADHubCSManager</role>
+            <role>MADHubCSstaff</role>
         </roles>
         <users>
             <user>amaralf@iata.org</user>
