@@ -187,12 +187,16 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             }
             this.paymentLinkURL = myUrl;
 
-        isAdmin().then(result => {
             let creditCardPaymentLink = Credit_Card_Payment_Link.replace('{1}', this.paymentLinkURL);
             this._labels.Credit_Card_Payment_Link = creditCardPaymentLink;
         });
         //WMO-699 - ACAMBAS: End
 
+        isAdmin().then(result => {
+            this.showEdit = result && this.showEdit;
+        });
+
+        this.getAccountEmailDomains();
     }
 
     get accessibilityGetter() {
