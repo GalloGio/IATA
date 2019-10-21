@@ -109,7 +109,7 @@ private class PortalIftEmployeeRecordsManagementTest {
             PortalIftEmployeeRecordsManagement.ResultWrapper res2 = PortalIftEmployeeRecordsManagement.inactivateEmployee(employeeToInactivate);
             System.assert(res2.succeeded);
             PortalIftEmployeeRecordsManagement.ResultWrapper res42 = PortalIftEmployeeRecordsManagement.updateEmployee(employeeToInactivate, 'reactivate_and_update');
-            System.assert(!res42.succeeded);
+            System.assert(res42.succeeded);
 
         }
         Test.stopTest();
