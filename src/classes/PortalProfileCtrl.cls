@@ -807,7 +807,7 @@ public static Contact contactInfo = new Contact();
 
         wrapperMap.put(rowsFields,new List<FieldWrapper>());
         for(String fieldName : toRow){
-            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
         }
 
         wrapperMap.put(viewFields,new List<FieldWrapper>());
@@ -932,18 +932,18 @@ public static Contact contactInfo = new Contact();
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingCountry',false,true));
 
         for(String fieldName : toRow){
-            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
         }
 
 
         wrapperMap.put(viewFields,new List<FieldWrapper>());
         for(String fieldName : toView){
-            wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+            wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
         }
 
         wrapperMap.put(editFields,new List<FieldWrapper>());
         for(String fieldName : toEdit){
-            wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+            wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
         }
 
         return wrapperMap;
