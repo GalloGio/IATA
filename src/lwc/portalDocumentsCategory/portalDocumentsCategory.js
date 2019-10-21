@@ -40,10 +40,10 @@ export default class PortalDocumentsCategory extends LightningElement {
             let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
 
             this._documentObject = _value;
-            if((_value.topResults !== __documentObject.topResults ||
+            if(_value.topResults !== __documentObject.topResults ||
                 _value.searchText !== __documentObject.searchText ||
                 _value.productCategory !== __documentObject.productCategory ||
-                _value.countryOfPublication !== __documentObject.countryOfPublication) ||
+                _value.countryOfPublication !== __documentObject.countryOfPublication ||
                 _value.show !== __documentObject.show) {
 
                 this.resetPagination();
@@ -127,13 +127,15 @@ export default class PortalDocumentsCategory extends LightningElement {
                     let docsList = [];
                     for(let key in tempDocs) {
                         if (tempDocs.hasOwnProperty(key)) {
+                            
+                            let showDocument = this._documentObject.name == key ? this._documentObject.show : false;
                             if(this._documentObject.topResults === false) { // INFINITE SCROLL
                                 this.concatValues = this.concatValues.concat(tempDocs[this._documentObject.name]);
-                                docsList.push({ key: key, value: this.concatValues, noResults: this.totalResults });
-                                __documentObject.noResults = this.totalResults;
-                            } else {
+                                docsList.push({ key: key, value: this.concatValues, noResults: this.totalResults, show: showDocument });
+                                    __documentObject.noResults = this.totalResults;
+                                } else {
                                 let noResults = results.totalItemCount > 10 ? '10+' : results.totalItemCount;
-                                docsList.push({ key: key, value: tempDocs[key], noResults: noResults });
+                                docsList.push({ key: key, value: tempDocs[key], noResults: noResults, show: showDocument });
                                 if(__documentObject.name === key) {
                                     __documentObject.noResults = noResults;
                                 }

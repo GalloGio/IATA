@@ -47,7 +47,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
             categories: [],
             categorySelected: this.category,
             docId: this.docId,
-            topResults: this.topResults,
+            topResults: this.topResults
         };
 
         this.documentObject = _documentObject;
@@ -64,22 +64,11 @@ export default class PortalDocumentsSearchPage extends LightningElement {
     }
 
     handleFilter(event) {
-        this.loading = true; 
-        let detailObject = JSON.parse(JSON.stringify(event.detail));
-
-        this.documentObject = detailObject;
-        let _documentObject = JSON.parse(JSON.stringify(this.documentObject));
-        let _categories = [];
-
-        for(let i = 0; i < _documentObject.categories.length; i++) {
-            if(_documentObject.categories[i].name === detailObject.categorySelected) {
-                _categories[0] = _documentObject.categories[i];
-                break;
-            }
-        }
-
-        this.categories = [];
-        this.categories = Object.keys(_categories).length > 0 ? _categories : this.documentObject.categories;
+        this.loading = true;
+        
+        this.documentObject = JSON.parse(JSON.stringify(event.detail));
+        
+        this.categories = this.documentObject.categories;
 
         this.resultsToRender();
     }
@@ -95,7 +84,8 @@ export default class PortalDocumentsSearchPage extends LightningElement {
                     (detailObject.categories[i].noResults !== detailCategory.noResults) ||
                     detailObject.categories[i].searchText !== detailCategory.searchText ||
                     detailObject.categories[i].productCategory !== detailCategory.productCategory ||
-                    detailObject.categories[i].countryOfPublication !== detailCategory.countryOfPublication
+                    detailObject.categories[i].countryOfPublication !== detailCategory.countryOfPublication ||
+                    detailObject.categories[i].show !== detailCategory.show
                 )) {
                 detailObject.categories[i] = detailCategory;
                 break;
