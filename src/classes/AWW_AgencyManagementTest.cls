@@ -30,7 +30,7 @@ private class AWW_AgencyManagementTest {
     }
 
     @isTest static void testUserPermissions() {
-        List<PermissionSet> permissions = [SELECT Id, Name FROM PermissionSet WHERE Name IN ('AGM_FullAccess','AGM_ReadAccess') ORDER BY Name ASC];
+        List<PermissionSet> permissions = [SELECT Id, Name FROM PermissionSet WHERE Name IN ('AMP_admin','AMP_Profile_Visibility') ORDER BY Name ASC];
         List<PermissionSetAssignment> assignedPermissions = [SELECT Id FROM PermissionSetAssignment WHERE  AssigneeId = :UserInfo.getUserId() AND PermissionSetId IN :permissions];
         if(!assignedPermissions.isEmpty()) {
             delete assignedPermissions;
@@ -40,22 +40,24 @@ private class AWW_AgencyManagementTest {
         String userAccessRight = AWW_AccountProfileCtrl.getUserAccessRights();
         System.assertEquals('no access', userAccessRight);
 
+        System.debug('MR:::'+permissions[0]);
+        System.debug('MR:::'+permissions[1]);
+
         PermissionSetAssignment p1 = new PermissionSetAssignment(
             AssigneeId= UserInfo.getUserId(),
             PermissionSetId= permissions[0].Id
         );
         insert p1;
         userAccessRight = AWW_AccountProfileCtrl.getUserAccessRights();
-        System.assertEquals('full', userAccessRight);
+        System.assertEquals('read', userAccessRight);
         delete p1;
-
         PermissionSetAssignment p2 = new PermissionSetAssignment(
             AssigneeId= UserInfo.getUserId(),
             PermissionSetId= permissions[1].Id
         );
         insert p2;
         userAccessRight = AWW_AccountProfileCtrl.getUserAccessRights();
-        System.assertEquals('read', userAccessRight);
+        System.assertEquals('full', userAccessRight);
 
         Test.stopTest();
     }
