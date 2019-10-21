@@ -3334,6 +3334,12 @@ Payment required on receipt of this Payment Advice
         <value>Cases</value>
     </labels>
     <labels>
+        <fullName>CSP_Case_Details</fullName>
+        <language>en_US</language>
+        <shortDescription>CSP_Case_Details</shortDescription>
+        <value>Case-Detail_</value>
+    </labels>
+    <labels>
         <fullName>CSP_Community</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3808,11 +3814,13 @@ Payment required on receipt of this Payment Advice
     <labels>
         <fullName>CSP_Print</fullName>
         <language>en_US</language>
+        <shortDescription>CSP_Print</shortDescription>
         <value>Print</value>
     </labels>
     <labels>
         <fullName>CSP_Printed_date</fullName>
         <language>en_US</language>
+        <shortDescription>CSP_Printed_date</shortDescription>
         <value>Printed date</value>
     </labels>
     <labels>
