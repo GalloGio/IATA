@@ -369,7 +369,7 @@ public class ServiceRenderedCaseLogic {
     }else {
       for(Id accID:CasesPerConsumer.keyset()) 
         for(case c:CasesPerConsumer.get(accID))
-			if(c.RecordType != caseRT)
+			if(c.RecordTypeId != caseRT)
 				c.addError('The Consumer must be an Airline');
     }
   }
