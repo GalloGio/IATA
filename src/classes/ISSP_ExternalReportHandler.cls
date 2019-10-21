@@ -58,10 +58,11 @@ public class ISSP_ExternalReportHandler {
                  
                 //Get all users related to contacts
                 Map<Id,User> UserSharing_List = new Map<Id,User>([SELECT Id FROM User WHERE contactid IN: contactIds_haveAccess]);
-
-                //Give access to specific record to User or Group of Users  
-                ExternalFilesUtils.setExternalReportsSharingSetting(UserSharing_List.keySet(), er.Id, 'Read');
+                Map<Id,Set<Id>> reportUsersMap = new Map<Id,Set<Id>>();
+                reportUsersMap.put(er.Id, UserSharing_List.keySet());
                 
+                //Give access to specific record to User or Group of Users
+                System.enqueueJob(new ExternalFilesUtils(reportUsersMap, 'Read'));                  
             }
         }
     }

@@ -366,6 +366,13 @@ src/queues/CustomerServiceChinaNAsia.queue
 src/queues/Weblinkheadoffice.queue
 
 
+src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_com.md
+src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_fr.md
+src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_gq.md
+src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_net.md
+src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_pp_ua.md
+src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_usa_cc.md
+
 *.sublime-project
 *.sublime-settings
 *.sublime-workspace

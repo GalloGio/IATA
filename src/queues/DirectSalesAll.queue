@@ -4,11 +4,11 @@
     <name>Direct Sales - All</name>
     <queueMembers>
         <roles>
-            <role>CoordinatorDirectSalesA</role>
-            <role>DirectSalesAssociateArea1A</role>
-            <role>DirectSalesAssociateArea2A</role>
-            <role>DirectSalesAssociateArea3A</role>
-            <role>DirectSalesAssistantDirectorA</role>
+            <role>CoordinatorDirectSales</role>
+            <role>DirectSalesAssociateArea1</role>
+            <role>DirectSalesAssociateArea2</role>
+            <role>DirectSalesAssociateArea3</role>
+            <role>DirectSalesAssistantDirector</role>
         </roles>
     </queueMembers>
     <queueSobject>
