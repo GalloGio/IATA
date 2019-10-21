@@ -103,7 +103,7 @@
 
                                                     <a data-id="{!column.field_name}" class="slds-th__action slds-text-link--reset sortableField" onclick="{!c.changeSort}">
                                                         <div data-id="{!column.field_name}" class="slds-assistive-text">Sort </div>
-                                                        <div data-id="{!column.field_name}" class="slds-truncate sortableFieldName" title="{!column.field_label}">{!column.field_label}</div>
+                                                        <div data-id="{!column.field_name}" class="slds-truncate sortableFieldName" title="{!column.field_label}">{!column.field_label == 'Date' ? column.field_label + ' ' + v.userInformation.userTimeZone : column.field_label}</div>
                                                         <lightning:icon class="sortableFieldArrow" iconName="{! (v.SortOrder == 'DESC') ? 'utility:arrowdown' : 'utility:arrowup'}" size="xx-small"/>
                                                     </a>
 
@@ -180,9 +180,9 @@
                                                                     </aura:if>
                                                                     <aura:if isTrue="{!column.field_type == 'DATETIME'}">
                                                                         <aura:if isTrue="{!column.reference != null}">
-                                                                            <a id="{!column.reference}" onclick="{!c.navigateToSObject}"><ui:outputDateTime value="{!column.value}" format="DD/MM/YYYY"/></a>
+                                                                            <a id="{!column.reference}" onclick="{!c.navigateToSObject}"><ui:outputDateTime value="{!column.value}" format="DD/MM/YYYY HH:MM:SS"/></a>
                                                                             <aura:set attribute="else">
-                                                                                <ui:outputDateTime value="{!column.value}" format="DD/MM/YYYY"/>
+                                                                                <ui:outputDateTime value="{!column.value}" format="DD/MM/YYYY HH:MM:SS"/>
                                                                             </aura:set>
                                                                         </aura:if>
                                                                     </aura:if>
@@ -303,7 +303,7 @@
 
     <!--RECORD DETAIL-->
     <div aura:id="detailContainer" class="slds-hide">
-        <c:Data_Submission_Detail Data_Submission_Event="{!c.handleDetailsBackEvt}" data="{!v.detailsData}" />
+        <c:Data_Submission_Detail Data_Submission_Event="{!c.handleDetailsBackEvt}" data="{!v.detailsData}" userTimeZone="{! v.userInformation.userTimeZone}" />
     </div>
 
     <!--SPINNER-->

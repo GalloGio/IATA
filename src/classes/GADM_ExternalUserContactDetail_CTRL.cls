@@ -111,13 +111,13 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
                     Role dataRole = new Role();
                     dataRole.role = role;
                     dataRole.isChecked = selectedUserRoles.contains(role);
-                    dataRole.isEditable = !selectedUserRoles.contains(role);
+                    dataRole.isEditable = false;
                     managementData.roles.put(role.Id, dataRole);
                 } else if(isSuperUser && selectedUserIsSuperUser) {
                     Role dataRole = new Role();
                     dataRole.role = role;
                     dataRole.isChecked = selectedUserRoles.contains(role);
-                    dataRole.isEditable = !selectedUserRoles.contains(role);
+                    dataRole.isEditable = false;
                     managementData.roles.put(role.Id, dataRole);
                 } else {
                     Role dataRole = new Role();

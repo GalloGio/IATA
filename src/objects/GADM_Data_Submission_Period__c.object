@@ -57,6 +57,7 @@
         <defaultValue>0</defaultValue>
         <description>In due notification - no. of days before end day</description>
         <externalId>false</externalId>
+        <inlineHelpText>In Due Notification in days</inlineHelpText>
         <label>In Due Notification</label>
         <precision>2</precision>
         <required>false</required>
@@ -157,6 +158,7 @@
         <defaultValue>0</defaultValue>
         <description>Upcoming notification - no. of days to start date</description>
         <externalId>false</externalId>
+        <inlineHelpText>Upcoming Notification in days</inlineHelpText>
         <label>Upcoming Notification</label>
         <precision>2</precision>
         <required>false</required>

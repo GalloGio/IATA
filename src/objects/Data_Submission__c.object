@@ -228,6 +228,7 @@
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>CREATED_DATE</columns>
+        <columns>Submission_date__c</columns>
         <columns>Status__c</columns>
         <columns>Type__c</columns>
         <columns>Account__c</columns>

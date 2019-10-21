@@ -1,6 +1,7 @@
 <aura:component description="Data_Submission_Detail">
 
     <aura:attribute name="data" type="Object[]" description="Data submission record to display" />
+    <aura:attribute name="userTimeZone" type="String" default=""/>
 
     <aura:registerEvent name="Data_Submission_Event" type="c:Data_Submission_Event"/>
 
@@ -21,15 +22,14 @@
 
                             <aura:if isTrue="{!or(not(empty(field.value)), not(empty(field.label)))}">
                                 <div class="{!(field.field_type == 'TEXTAREA' ? 'slds-size_1-of-1 ' : 'slds-size_1-of-2 ') + 'slds-col--padded slds-p-bottom--large slds-size_1-of-1'}">
-                                    <label class="slds-form-element__label labels" >{!field.label}</label>
+                                    <label class="slds-form-element__label labels" >{!field.label == 'Date' ? field.label + ' ' + v.userTimeZone : field.label}</label>
                                     <aura:if isTrue="{!field.field_type == 'TEXTAREA'}">
 
                                         <p><lightning:formattedText value="{!field.value}"/></p>
 
                                         <aura:set attribute="else">
                                             <aura:if isTrue="{!field.field_type == 'DATETIME'}"><br/>
-                                                <ui:outputDateTime value="{!field.value}" format="DD/MM/YYYY"/>
-
+                                                <ui:outputDateTime value="{!field.value}" format="DD/MM/YYYY HH:MM:SS"/>
                                                 <aura:set attribute="else">
                                                     <p><lightning:formattedText value="{!field.value}"/></p>
                                                 </aura:set>

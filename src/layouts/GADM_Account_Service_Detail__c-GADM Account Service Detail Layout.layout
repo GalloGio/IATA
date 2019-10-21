@@ -45,7 +45,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Account_Code__c</field>
+                <field>IATA_Designator__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>

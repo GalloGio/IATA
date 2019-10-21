@@ -260,6 +260,8 @@ public without sharing class Data_Submission_List_CTRL {
         public List<Id> usersWithSameBusinessUnits {get; set;}
         @AuraEnabled
         public String queryWhereClause {get; set;}
+        @AuraEnabled
+        public String userTimeZone {get; set;}
 
     }
 
@@ -274,6 +276,21 @@ public without sharing class Data_Submission_List_CTRL {
         info.isDataSubmitter = false;
         info.visibleAccounts = new List<Account>();
         info.usersWithSameBusinessUnits = new List<Id>();
+
+        TimeZone userTimeZone = UserInfo.getTimeZone();
+        Integer userTimeZoneOffset = userTimeZone.getOffset(System.now());
+
+        String userTimeZoneString = null;
+
+        if(userTimeZoneOffset != null && userTimeZoneOffset != 0) {
+            if(userTimeZoneOffset > 0) {
+                userTimeZoneString = '(GMT + ' + userTimeZoneOffset/3600000 + ')';
+            }else{
+                userTimeZoneString = '(GMT ' + userTimeZoneOffset/3600000 + ')';
+            }
+        }
+
+        info.userTimeZone = userTimeZoneString;
 
         List<Contact_Roles__c> grantedRoles = Contact_Roles_Helper.getGrantedUserRoles(userId, 'GADM');
         if(! grantedRoles.isEmpty()) {

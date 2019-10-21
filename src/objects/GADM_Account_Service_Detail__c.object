@@ -54,17 +54,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Account_Code__c</fullName>
-        <externalId>false</externalId>
-        <formula>Account_Role_Service__r.Account_Role__r.Account__r.IATACode__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Code</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Account_Global_ID__c</fullName>
         <externalId>false</externalId>
         <formula>Account_Role_Service__r.Account_Role__r.Account__r.Global_ID__c</formula>
@@ -222,6 +211,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IATA_Designator__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account_Role_Service__r.Account_Role__r.Account__r.Airline_designator__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA Designator</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IATA_Member__c</fullName>
         <externalId>false</externalId>
         <formula>TEXT(Account_Role_Service__r.Account_Role__r.Account__r.Membership_status__c)</formula>
@@ -311,7 +311,7 @@
         <fullName>Active_GADM_Actors</fullName>
         <booleanFilter>1 AND (2 AND 3)</booleanFilter>
         <columns>Account_Name__c</columns>
-        <columns>Account_Code__c</columns>
+        <columns>IATA_Designator__c</columns>
         <columns>Region__c</columns>
         <columns>Country__c</columns>
         <columns>Account_Role_Service_From__c</columns>
@@ -345,7 +345,7 @@
     <listViews>
         <fullName>Africa_ME_GADM_Actors</fullName>
         <columns>Account_Name__c</columns>
-        <columns>Account_Code__c</columns>
+        <columns>IATA_Designator__c</columns>
         <columns>Region__c</columns>
         <columns>Country__c</columns>
         <columns>Account_Role_Service_From__c</columns>
@@ -381,7 +381,7 @@
     <listViews>
         <fullName>All_GADM_Actors</fullName>
         <columns>Account_Name__c</columns>
-        <columns>Account_Code__c</columns>
+        <columns>IATA_Designator__c</columns>
         <columns>Region__c</columns>
         <columns>Country__c</columns>
         <columns>Account_Role_Service_From__c</columns>
@@ -400,7 +400,7 @@
     <listViews>
         <fullName>Americas_GADM_Actors</fullName>
         <columns>Account_Name__c</columns>
-        <columns>Account_Code__c</columns>
+        <columns>IATA_Designator__c</columns>
         <columns>Region__c</columns>
         <columns>Country__c</columns>
         <columns>Account_Role_Service_From__c</columns>
@@ -424,7 +424,7 @@
     <listViews>
         <fullName>Asia_Pacific_GADM_Actors</fullName>
         <columns>Account_Name__c</columns>
-        <columns>Account_Code__c</columns>
+        <columns>IATA_Designator__c</columns>
         <columns>Region__c</columns>
         <columns>Country__c</columns>
         <columns>Account_Role_Service_From__c</columns>
@@ -448,7 +448,7 @@
     <listViews>
         <fullName>China_North_Asia_GADM_Actors</fullName>
         <columns>Account_Name__c</columns>
-        <columns>Account_Code__c</columns>
+        <columns>IATA_Designator__c</columns>
         <columns>Region__c</columns>
         <columns>Country__c</columns>
         <columns>Account_Role_Service_From__c</columns>
@@ -472,7 +472,7 @@
     <listViews>
         <fullName>Europe_GADM_Actors</fullName>
         <columns>Account_Name__c</columns>
-        <columns>Account_Code__c</columns>
+        <columns>IATA_Designator__c</columns>
         <columns>Region__c</columns>
         <columns>Country__c</columns>
         <columns>Account_Role_Service_From__c</columns>
@@ -497,7 +497,7 @@
     <listViews>
         <fullName>Expires_GADM_Actors</fullName>
         <columns>Account_Name__c</columns>
-        <columns>Account_Code__c</columns>
+        <columns>IATA_Designator__c</columns>
         <columns>Region__c</columns>
         <columns>Country__c</columns>
         <columns>Account_Role_Service_From__c</columns>
@@ -521,7 +521,7 @@
     <listViews>
         <fullName>In_Progress_GADM_Actors</fullName>
         <columns>Account_Name__c</columns>
-        <columns>Account_Code__c</columns>
+        <columns>IATA_Designator__c</columns>
         <columns>Region__c</columns>
         <columns>Country__c</columns>
         <columns>Account_Role_Service_From__c</columns>
@@ -546,7 +546,7 @@
         <fullName>Inactive_GADM_Actors</fullName>
         <booleanFilter>1 OR (2 AND 3)</booleanFilter>
         <columns>Account_Name__c</columns>
-        <columns>Account_Code__c</columns>
+        <columns>IATA_Designator__c</columns>
         <columns>Region__c</columns>
         <columns>Country__c</columns>
         <columns>Account_Role_Service_From__c</columns>
