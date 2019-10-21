@@ -880,5 +880,19 @@ public with sharing class AttachmentListCtrl {
         public String strRelationship {get; set;}
     }
 
+    //ACAMBAS - WMO-611: Begin
+    @AuraEnabled
+    public static Boolean updateParentRecord(String recordId) {
+        Customer_Invoice__c invoice = [SELECT Id, Has_Attachments__c FROM Customer_Invoice__c WHERE Id = :recordId LIMIT 1];
+
+        if(invoice != null && invoice.Has_Attachments__c != true) {
+            invoice.Has_Attachments__c = true;
+            update invoice;
+        }
+
+        return true;
+    }
+    //ACAMBAS - WMO-611: End
+
 
 }
