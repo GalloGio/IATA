@@ -197,6 +197,11 @@ public with sharing class AttachmentListCtrl {
 		}     
 		return listAttachments;
     }
+
+    @AuraEnabled(cacheable=false)
+    public static List<WrapperAttach> getAllAttachmentsByParentIdAndPortalLightning(string parentId, boolean isPortal, boolean isSAAMorSIDRA,boolean withBody) {
+        return getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA, withBody); 
+    }
     
     private static Boolean checkIfUSerHaveFullAccess(){
         List<AttachmentListLimitedAccess__c> perms = [SELECT SetupOwnerId , Name, Id FROM AttachmentListLimitedAccess__c 

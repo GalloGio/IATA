@@ -49,12 +49,14 @@ private  class AttachmentListCtrlTest {
         AttachmentListCtrl.PropertiesWrapper pw= AttachmentListCtrl.getPanelProperties(cse.id, false, '');
 
         List<WrapperAttach>wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false);
+        List<WrapperAttach>wrlist2= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortalLightning(cse.id, false,false,false);
         
         wrapperAttach wa= wrlist.get(0);
         AttachmentListCtrl.ReturnWrapper rw=AttachmentListCtrl.changeAttachVisibility(cse.id, wa.id, false, false);
         system.assertEquals(rw.severity,'SUCCESS');
         wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false);
         system.assertEquals(wrlist.get(0).permission.ShowToPortalUsers__c,true);
+        system.assertEquals(wrlist2.get(0).permission.ShowToPortalUsers__c,true);
 
     }
     static testMethod void testUpdateAttachment() {
