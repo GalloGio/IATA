@@ -37,14 +37,14 @@
                                     </span>
                                 </template>
 
-                            </div>
+</div>
 
-                        </div>
-                    </span>
-                </c-portal-page-container>
+</div>
+</span>
+</c-portal-page-container>
 
-                <c-portal-page-container style-class="light">
-                    <span slot="componentContent">
+<c-portal-page-container style-class="light">
+    <span slot="componentContent">
                         <!-- Profile: Navigation & Sections -->
                         <template if:true={tab0Active}>
                             <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large">
@@ -192,20 +192,81 @@
 
                         </template>
 
-                        <!-- Profile: Company Calendar -->
+                        <!-- Profile: Outstanding Invoices -->
                         <template if:true={tab3Active}>
+                            <!-- Sub-Sections nav bar -->
+                            <div class="slds-col slds-size_1-of-1 slds-m-vertical_medium">
+                                <template for:each={lstSubTabs} for:item="tab">
+                                    <span key={tab.id} class="slds-p-around_small text-small">
+                                        <!-- Active subtab -->
+                                        <span if:true={tab.active} data-item={tab.id}
+                                            class="slds-p-around_small text-bold selectedTab">
+                                            {tab.label}
+                                        </span>
+    <!-- Inactive subtab -->
+    <span if:false={tab.active} data-item={tab.id} class={tab.class} onmouseenter={onmouseenterSubTab} onmouseleave={onmouseleaveSubTab} onclick={onclickSubTab}>
+                                                                                {tab.label}
+                                                                            </span>
+    </span>
+    </template>
+    </div>
+
+    <!-- Sub-Tab: IATA Invoices -->
+    <template if:true={subTab0Active}>
+                                <template if:true={iataInvoicesLoaded}>                                       
+                                    <div class="slds-grid slds-wrap slds-m-top_x-small">
+                                        <c-portal-invoice-list object-name="Customer_Invoice__c" class="fullWidth"
+                                            default-sort="Name" fields-list={invoiceFields}
+                                            records={invoices}
+                                            recordid={recordid} accountid={accountid}
+                                            objectid={objectid} ongetrecords={getInvoices} fetching={isFetching}
+                                            onrefreshview={refreshview} onsearchrecords={searchRecords}>
+                                        </c-portal-invoice-list>
+                                    </div>
+                                </template>
+    <template if:false={iataInvoicesLoaded}>
+                                    <div class="slds-m-around_xx-large slds-is-relative">
+                                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                                    </div>
+                                </template>
+    </template>
+
+    <!-- Sub-Tab: E&F Invoices -->
+    <template if:true={subTab1Active}>
+                                <template if:true={efInvoicesLoaded}>                                       
+                                    <div class="slds-grid slds-wrap slds-m-top_x-small">
+                                        <c-portal-invoice-list is-account="false" object-name="Customer_Invoice__c" class="fullWidth"
+                                            default-sort="Name" fields-list={invoiceFields}
+                                            records={invoices}
+                                            recordid={recordid} accountid={accountid}
+                                            objectid={objectid} ongetrecords={getInvoices} fetching={isFetching}
+                                            onrefreshview={refreshview} onsearchrecords={searchRecords}>
+                                        </c-portal-invoice-list>
+                                    </div>
+                                </template>
+    <template if:false={efInvoicesLoaded}>
+                                    <div class="slds-m-around_xx-large slds-is-relative">
+                                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                                    </div>
+                                </template>
+    </template>
+
+    </template>
+
+    <!-- Profile: Company Calendar -->
+    <template if:true={tab4Active}>
                             Company Calendar
                         </template>
 
-                        <!-- Profile: Activity Log -->
-                        <template if:true={tab4Active}>
+    <!-- Profile: Activity Log -->
+    <template if:true={tab5Active}>
                             Activity Log
                         </template>
-                    </span>
-                </c-portal-page-container>
-            </template>
+    </span>
+</c-portal-page-container>
+</template>
 
-            <template if:true={noAccount}>
+<template if:true={noAccount}>
                 <c-portal-page-container style-class="light">
                     <span slot="componentContent">
                         {labels.NoAccount}
@@ -213,8 +274,8 @@
                 </c-portal-page-container>
 
             </template>
-        </div>
-    </template>
+</div>
+</template>
 
 
 </template>
