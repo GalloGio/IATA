@@ -65,6 +65,8 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL INTEGER BRANCH_BATCH = 15;
     PRIVATE STATIC FINAL INTEGER INVOICE_BATCH = 15; //WMO-627 - ACAMBAS
 
+    PRIVATE STATIC FINAL STRING IATA_INVOICE_TYPE = 'IATA_OFFICE'; //WMO-627 - ACAMBAS
+
 public static final Id RECORDTYPE_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 public static final Id RECORDTYPE_AIRLINE_BR = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
 public static final Id RECORDTYPE_AIRLINE_HQ = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
@@ -212,39 +214,6 @@ public static Contact contactInfo = new Contact();
 
         return branches;
     }
-
-    //WMO-627 - ACAMBAS: Begin
-    @AuraEnabled
-    public static List<Customer_Invoice__c> getCustomerInvoices() {
-        return getCustomerInvoices(0, 'IATA_OFFICE');
-    }
-
-    @AuraEnabled
-    public static List<Customer_Invoice__c> getCustomerInvoices(Integer offset, String type) {
-
-        /*Customer_Invoice__c inv = new Customer_Invoice__c();
-        inv.AccountId__c = '0014E000012hU7XQAU';
-        inv.Invoice_Number__c = 'inv129';
-        inv.Total_Amount__c = 299;
-        inv.Billing_Member_IS_Sub_Status__c = 'E&F AIRPORT';
-        insert inv;*/
-
-        system.debug('---myContact.AccountId: ' + myContact.AccountId);
-        system.debug('---offset: ' + offset);
-        system.debug('---type: ' + type);
-
-        List<Customer_Invoice__c> invoices = 
-                [SELECT Id, Invoice_Number__c, Payment_Status_Billing_Member__c, Total_Amount__c, Billing_Currency__c, 
-                        Billed_Member_Accounting_Code__c, Billed_Member_Designator_Code__c, Billed_Member_Name__c, Invoice_Date__c,
-                        Bank_Name__c, IBAN__c, SWIFT__c, Bank_Code__c, Branch_Code__c, Bank_Account_No__c, Bank_Account_Name__c
-                 FROM Customer_Invoice__c 
-                 WHERE AccountId__c = :myContact.AccountId AND Billing_Member_IS_Sub_Status__c = :type
-                 ORDER BY Invoice_Number__c ASC LIMIT:INVOICE_BATCH OFFSET :offset
-                ];
-
-        return invoices;
-    }
-    //WMO-627 - ACAMBAS: End
 
     public class ContactWrapper{
         @AuraEnabled
@@ -980,7 +949,7 @@ public static Contact contactInfo = new Contact();
     /** Outstanding Invoices section */
 
     @AuraEnabled
-    public static Map<String,List<FieldWrapper>> getInvoicesListFields(){
+    public static Map<String,List<FieldWrapper>> getInvoicesListFields(String invoiceType){
 
         //String rType = myContact.Account.RecordType.DeveloperName;
 
@@ -988,22 +957,27 @@ public static Contact contactInfo = new Contact();
         String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
         String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
 
+        List<String> toRow;
 
-        List<String> toRow = new List<String>{'Invoice_Number__c', 'Payment_Status_Billing_Member__c', 'Total_Amount__c', 
-                                              'Billing_Currency__c', 'Billed_Member_Accounting_Code__c', 'Billed_Member_Designator_Code__c', 
-                                              'Billed_Member_Name__c', 'Invoice_Date__c'};
-        
+        if(invoiceType == IATA_INVOICE_TYPE && myContact.Account.RecordType.DeveloperName == 'IATA_Agency') {
+            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Status__c', 'Total_Amount__c', 'Billing_Currency__c', 'Invoice_Date__c'};
+        }
+        else {
+            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Status__c', 'Total_Amount__c', 'Billing_Currency__c', 
+                                     'Billing_Member_Accounting_Code__c', 'Billing_Member_Designator_Code__c', 'Billing_Member_Name__c', 'Invoice_Date__c'};   
+        }
+
         Map<String,String> fieldLabels = new Map<String,String>();
 
         //FieldWrapper fw;
 
         fieldLabels.put('Invoice_Number__c', LABEL_INVOICE_NUMBER);
-        fieldLabels.put('Payment_Status_Billing_Member__c', LABEL_INVOICE_STATUS);
+        fieldLabels.put('Invoice_Status__c', LABEL_INVOICE_STATUS);
         fieldLabels.put('Total_Amount__c', LABEL_TOTAL_AMOUNT);
         fieldLabels.put('Billing_Currency__c', LABEL_CURRENCY);
-        fieldLabels.put('Billed_Member_Accounting_Code__c', LABEL_BILLING_MEMBER_ACCOUNTING_CODE);
-        fieldLabels.put('Billed_Member_Designator_Code__c', LABEL_BILLING_MEMBER_DESIGNATOR_CODE);
-        fieldLabels.put('Billed_Member_Name__c', LABEL_BILLING_MEMBER_NAME);
+        fieldLabels.put('Billing_Member_Accounting_Code__c', LABEL_BILLING_MEMBER_ACCOUNTING_CODE);
+        fieldLabels.put('Billing_Member_Designator_Code__c', LABEL_BILLING_MEMBER_DESIGNATOR_CODE);
+        fieldLabels.put('Billing_Member_Name__c', LABEL_BILLING_MEMBER_NAME);
         fieldLabels.put('Invoice_Date__c', LABEL_INVOICE_DATE);
 
         /*for(String fieldName: toRow){
@@ -1029,49 +1003,27 @@ public static Contact contactInfo = new Contact();
         wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_No__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_Name__c',false,true,true));
 
-        
-        
-
-        //fw = new FieldWrapper('Billed_Member_Accounting_Code__c',false,true,true);
-        //fw.isJobFunction = true;
-        //wrapperMap.get(viewFields).add(fw);
-        //wrapperMap.get(viewFields).add(new FieldWrapper('ContactServices',false,true));
-
-        //For Airlines & agencies only
-        /*if((rType == 'IATA_Airline_BR' || rType == 'IATA_Airline') || rType == 'IATA_Agency') {
-            wrapperMap.get(viewFields).add(new FieldWrapper('BSP_CASS_Payment_contact__c', true, true));
-            wrapperMap.get(viewFields).add(new FieldWrapper('Invoicing_Contact__c', true, true));
-        }*/
-
-        //wrapperMap.get(viewFields).add(new FieldWrapper('Authorized_Signatory__c',true,true));
-
-        //EDIT
-        wrapperMap.get(editFields).add(new FieldWrapper('Invoice_Number__c',true,true,true));
-        wrapperMap.get(editFields).add(new FieldWrapper('Payment_Status_Billing_Member__c',true,true));
-        wrapperMap.get(editFields).add(new FieldWrapper('Total_Amount__c',true,true));
-        /*wrapperMap.get(editFields).add(new FieldWrapper('Title',true,true));
-        wrapperMap.get(editFields).add(new FieldWrapper('Email',false,true));
-        wrapperMap.get(editFields).add(new FieldWrapper('MobilePhone',true,true));
-        fw = new FieldWrapper('Currency_Code__c',true,true);
-        fw.isRequired = true;
-        wrapperMap.get(editFields).add(fw);*/
-
-        //For Airlines & agencies only
-        /*if((rType == 'IATA_Airline_BR' || rType == 'IATA_Airline') || rType == 'IATA_Agency') {
-            wrapperMap.get(editFields).add(new FieldWrapper('BSP_CASS_Payment_contact__c', true, true));
-            wrapperMap.get(editFields).add(new FieldWrapper('Invoicing_Contact__c', true, true));
-        }*/
-
-        //wrapperMap.get(editFields).add(new FieldWrapper('Authorized_Signatory__c',true,true));
-
-        //Airline only
-        /*if(rType == 'IATA_Airline_BR' || rType == 'IATA_Airline'){
-            wrapperMap.get(editFields).add(new FieldWrapper('Airline_Credit_Risk_Manager__c',true,true));
-        }*/
-
-        //system.debug('---getInvoicesListFields - wrapperMap: ' + wrapperMap);
-
         return wrapperMap;
     }
+
+    @AuraEnabled
+    public static List<Customer_Invoice__c> getCustomerInvoices() {
+        return getCustomerInvoices(0, IATA_INVOICE_TYPE);
+    }
+
+    @AuraEnabled
+    public static List<Customer_Invoice__c> getCustomerInvoices(Integer offset, String type) {
+        List<Customer_Invoice__c> invoices = 
+                [SELECT Id, Invoice_Number__c, Invoice_Status__c, Total_Amount__c, Billing_Currency__c, 
+                        Billing_Member_Accounting_Code__c, Billing_Member_Designator_Code__c, Billing_Member_Name__c, Invoice_Date__c,
+                        Bank_Name__c, IBAN__c, SWIFT__c, Bank_Code__c, Branch_Code__c, Bank_Account_No__c, Bank_Account_Name__c
+                 FROM Customer_Invoice__c 
+                 WHERE AccountId__c = :myContact.AccountId AND Billing_Member_IS_Sub_Status__c = :type
+                 ORDER BY Invoice_Number__c ASC LIMIT:INVOICE_BATCH OFFSET :offset
+                ];
+
+        return invoices;
+    }
+
     //WMO-627 - ACAMBAS: End
 }

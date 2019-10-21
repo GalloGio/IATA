@@ -216,7 +216,7 @@
                                 <template if:true={iataInvoicesLoaded}>                                       
                                     <div class="slds-grid slds-wrap slds-m-top_x-small">
                                         <c-portal-invoice-list object-name="Customer_Invoice__c" class="fullWidth"
-                                            default-sort="Name" fields-list={invoiceFields}
+                                            default-sort="Name" fields-list={iataInvoiceFields}
                                             records={invoices}
                                             recordid={recordid} accountid={accountid}
                                             objectid={objectid} ongetrecords={getInvoices} fetching={isFetching}
@@ -236,7 +236,7 @@
                                 <template if:true={efInvoicesLoaded}>                                       
                                     <div class="slds-grid slds-wrap slds-m-top_x-small">
                                         <c-portal-invoice-list is-account="false" object-name="Customer_Invoice__c" class="fullWidth"
-                                            default-sort="Name" fields-list={invoiceFields}
+                                            default-sort="Name" fields-list={efInvoiceFields}
                                             records={invoices}
                                             recordid={recordid} accountid={accountid}
                                             objectid={objectid} ongetrecords={getInvoices} fetching={isFetching}
