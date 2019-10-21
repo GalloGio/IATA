@@ -171,7 +171,7 @@ export default class PortalContactList extends LightningElement {
         if (!this.fieldsList) {
             return 0;
         } else {
-            return this.fieldsList.ROWS.length + 3; // Adding extra colspans for spacing columns
+            return this.fieldsList.ROWS.length + 5; // Adding extra colspans for spacing columns
         }
     }
 
