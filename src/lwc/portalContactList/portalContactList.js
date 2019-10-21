@@ -423,7 +423,7 @@ export default class PortalContactList extends LightningElement {
 
         for (let i = 0; i < records.length; i++) {
             if(records[i].Id === contactSelected) {
-                records[i].selected = true;
+                records[i].selected = !records[i].selected;
                 break;
             }
         }
