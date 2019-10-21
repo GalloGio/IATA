@@ -18,6 +18,12 @@ public without sharing class GADM_ActorMembershipNotifier {
                 iataNoReplyId = iataNoReply.get(0).Id;
             }
 
+            String email = 'gadm@iata.org';
+            List<GADM_Settings__mdt> settings = [SELECT IATA_Email_Contact__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM'];
+            if(settings != null && settings.size() > 0){
+                email = settings[0].IATA_Email_Contact__c;
+            }
+
             for(NotifierWrapper wrapper : wrappers) {
                 Integer noOfDays = wrapper.priorDaysToNotify;
                 Date effectiveFrom = wrapper.effectiveFrom;
@@ -27,12 +33,6 @@ public without sharing class GADM_ActorMembershipNotifier {
                 List<User> users = wrapper.users;
 
                 if(contacts != null && contacts.size() > 0) {
-
-                    string email = 'gadm@iata.org';
-                    List<GADM_Settings__mdt> settings = [SELECT IATA_Email_Contact__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM'];
-                    if(settings != null && settings.size() > 0){
-                        email = settings[0].IATA_Email_Contact__c;
-                    }
 
                     for(Contact con : contacts) {
                         Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(upcomingEmailTemplate.Id, con.Id, null);
@@ -55,10 +55,15 @@ public without sharing class GADM_ActorMembershipNotifier {
                             replacedTextBody = replacedTextBody.replace('*effectiveTo*', String.valueOf(effectiveTo));
                         }
                         mail.setPlainTextBody(replacedTextBody);
-                        mail.setUseSignature(false);
+                        mail.setToAddresses(new List<string>{
+                                con.Email
+                        });
                         if(iataNoReplyId != null) {
                             mail.setOrgWideEmailAddressId(iataNoReplyId);
                         }
+                        mail.setSaveAsActivity(false);
+                        mail.setUseSignature(false);
+                        mail.setTreatTargetObjectAsRecipient(false);
                         emailMessages.add(mail);
 
                     }
@@ -69,7 +74,7 @@ public without sharing class GADM_ActorMembershipNotifier {
                     for(User u : users) {
                         Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(upcomingEmailTemplate.Id, u.Id, null);
                         String bodyHtml = mail.getHtmlBody();
-                        String replacedHtmlBody = bodyHtml.replace('*userName*', String.valueOf(u.FirstName + ' ' +u.LastName )).replace('*actorName*', accountName).replace('*noOfdays*', String.valueOf(noOfDays));
+                        String replacedHtmlBody = bodyHtml.replace('*userName*', String.valueOf(u.FirstName + ' ' +u.LastName )).replace('*email*', email).replace('*actorName*', accountName).replace('*noOfdays*', String.valueOf(noOfDays));
                         if(effectiveFrom != null) {
                             replacedHtmlBody = replacedHtmlBody.replace('*effectiveFrom*', String.valueOf(effectiveFrom));
                         }
@@ -79,7 +84,7 @@ public without sharing class GADM_ActorMembershipNotifier {
                         mail.setHtmlBody(replacedHtmlBody);
 
                         String bodyText = mail.getPlainTextBody();
-                        String replacedTextBody = bodyText.replace('*userName*', String.valueOf(u.FirstName + ' ' +u.LastName )).replace('*actorName*', accountName).replace('*noOfdays*', String.valueOf(noOfDays));
+                        String replacedTextBody = bodyText.replace('*userName*', String.valueOf(u.FirstName + ' ' +u.LastName )).replace('*email*', email).replace('*actorName*', accountName).replace('*noOfdays*', String.valueOf(noOfDays));
                         if(effectiveFrom != null) {
                             replacedTextBody = replacedTextBody.replace('*effectiveFrom*', String.valueOf(effectiveFrom));
                         }
@@ -87,10 +92,15 @@ public without sharing class GADM_ActorMembershipNotifier {
                             replacedTextBody = replacedTextBody.replace('*effectiveTo*', String.valueOf(effectiveTo));
                         }
                         mail.setPlainTextBody(replacedTextBody);
-                        mail.setUseSignature(false);
+                        mail.setToAddresses(new List<string>{
+                                u.Email
+                        });
                         if(iataNoReplyId != null) {
                             mail.setOrgWideEmailAddressId(iataNoReplyId);
                         }
+                        mail.setSaveAsActivity(false);
+                        mail.setUseSignature(false);
+                        mail.setTreatTargetObjectAsRecipient(false);
                         emailMessages.add(mail);
                     }
                 }
@@ -194,7 +204,7 @@ public without sharing class GADM_ActorMembershipNotifier {
                 }
 
 
-                Map<Id, Contact> contactsMap = new Map<Id, Contact>([SELECT Id, FirstName, LastName FROM Contact WHERE Id = :gadmAndPowerUsers]);
+                Map<Id, Contact> contactsMap = new Map<Id, Contact>([SELECT Id, FirstName, LastName, Email FROM Contact WHERE Id = :gadmAndPowerUsers]);
 
                 Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
 
@@ -232,7 +242,7 @@ public without sharing class GADM_ActorMembershipNotifier {
                 }
 
                 List<User> usersFromGroup = GADM_InternalUsersHandler.getUsersFromGroup(GADM_NOTIFICATION_GROUP);
-                Map<Id, User> usersMap = new Map<Id, User>([SELECT Id, FirstName, LastName FROM User WHERE Id = :usersFromGroup]);
+                Map<Id, User> usersMap = new Map<Id, User>([SELECT Id, FirstName, LastName, Email FROM User WHERE Id = :usersFromGroup]);
 
                 //create wrappers for users from public group
                 for(Account_Role__c accountRole : accountRoles) {
