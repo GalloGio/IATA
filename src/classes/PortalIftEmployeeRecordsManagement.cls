@@ -466,10 +466,11 @@ public without sharing class PortalIftEmployeeRecordsManagement {
             } else if(newRoleAddressesList.size() > 0){
                 accCountRoleId = newRoleAddressesList[0].Account_Contact_Role__c;
             }
-
-            Account_Contact_Role__c accCountRole = [SELECT Id, Status__c FROM Account_Contact_Role__c WHERE Id = :accCountRoleId LIMIT 1];
-
-            if(accCountRole.Status__c.equalsIgnoreCase('Active')){
+            Account_Contact_Role__c accCountRole;
+            if(accCountRoleId != null){
+                accCountRole = [SELECT Id, Status__c FROM Account_Contact_Role__c WHERE Id = :accCountRoleId LIMIT 1];
+            }
+            if(accCountRole != null && accCountRole.Status__c.equalsIgnoreCase('Active')){
 
                 for(Role_Address__c newRec: newRoleAddressesList ){
                     Boolean exists = false;

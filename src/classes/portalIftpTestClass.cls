@@ -34,7 +34,7 @@ public class portalIftpTestClass {
 
         //Create Accounts Roles
         List<Account_Roles__c> accRolesList = new List<Account_Roles__c>();
-        Account_Roles__c accRolesITP = new Account_Roles__c(Name = 'ITP');
+        Account_Roles__c accRolesITP = new Account_Roles__c(Name = 'ITP', Sector__c = 'Airline Supplier');
         Account_Roles__c accRolesAirline = new Account_Roles__c(Name = 'Airline');
         accRolesList.add(accRolesITP);
         accRolesList.add(accRolesAirline);
@@ -210,6 +210,17 @@ public class portalIftpTestClass {
         );
         insert u3;
         String user3Id = Site.createPortalUser(u3, accITP.Id, 'testpassword');
+
+        // User Portal_Application_Right__c
+        Portal_Applications__c pa = new Portal_Applications__c(Name = 'IFTP');
+        insert pa; 
+        List<Portal_Application_Right__c> lUserPAR = new List<Portal_Application_Right__c>() ;
+        Portal_Application_Right__c u3PAR = new Portal_Application_Right__c(Right__c = 'Access Granted', Portal_Application__c = pa.Id, Contact__c = cont3.Id);
+        Portal_Application_Right__c u4PAR = new Portal_Application_Right__c(Right__c = 'Access Granted', Portal_Application__c = pa.Id, Contact__c = cont4.Id);
+        lUserPAR.add(u3PAR);
+        lUserPAR.add(u4PAR);
+        
+        insert lUserPAR;
 
         //Create Account Contacts Roles
         Id accContactRole_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');

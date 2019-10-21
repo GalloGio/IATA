@@ -290,7 +290,7 @@ public class PortalIftpUtilsTest {
         
         System.runAs(u1) {
             List<Account>  res = PortalIftpUtils.getAllITP();
-            System.assert(res.size() > 0, 'Fail to getAllITP!');
+            System.assertEquals(res.size(), 0);
         }
         Test.stopTest();
 
