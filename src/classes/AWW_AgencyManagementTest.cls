@@ -40,9 +40,6 @@ private class AWW_AgencyManagementTest {
         String userAccessRight = AWW_AccountProfileCtrl.getUserAccessRights();
         System.assertEquals('no access', userAccessRight);
 
-        System.debug('MR:::'+permissions[0]);
-        System.debug('MR:::'+permissions[1]);
-
         PermissionSetAssignment p1 = new PermissionSetAssignment(
             AssigneeId= UserInfo.getUserId(),
             PermissionSetId= permissions[0].Id
