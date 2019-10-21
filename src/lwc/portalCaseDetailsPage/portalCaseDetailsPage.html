@@ -5,7 +5,7 @@
 				<c-portal-breadcrumbs></c-portal-breadcrumbs> 
 			</div>
             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium no-show slds-text-right">
-                Printed date: {now}
+                {label.CSP_Printed_Date}: {now}
             </div>
             <div class="headerBarLogo slds-p-horizontal_x-small">
                 <span>
@@ -14,7 +14,7 @@
             </div>
             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-top_large slds-m-bottom_xxsmall slds-text-right">
                 <span
-                    class="print-action slds-p-left_medium text-bold text-xxsmall text-blue" onclick={toPDF} onmousedown={downloadedOn}>Print <img src={printIcon}>
+                    class="print-action slds-p-left_medium text-bold text-xxsmall text-blue" onclick={toPDF} onmousedown={downloadedOn}>{label.CSP_Print} <img src={printIcon}>
                 </span>
             </div>
             <div class="slds-grid slds-wrap slds-gutters_medium" id="contentPdf">
