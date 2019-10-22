@@ -125,6 +125,10 @@ export default class PortalHomeCalendar extends LightningElement {
         this.toggleCollapsed('[data-msgicon ]', 'arrowExpanded');
         
     }
-
+	
+	toggleCollapsed(elem, cssclass) {
+		this.template.querySelector(elem).classList.toggle(cssclass);
+	}
+	
 
 }
