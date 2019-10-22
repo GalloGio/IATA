@@ -374,6 +374,8 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                     accreditationTypes.add(new SelectOption(accredModel, Label.ISSP_AMS_Associate_Entity_Cash));
                 } else if(accredModel == 'Cashless') {
                     accreditationTypes.add(new SelectOption(accredModel, Label.ISSP_AMS_Associate_Entity_Cashless));
+                } else if (accredModel == 'Multicountry') {
+                    accreditationTypes.add(new SelectOption(accredModel, Label.ISSP_AMS_Associate_Entity_Multicountry));
                 }
             } else {
                 accreditationTypes.add(new SelectOption('Legacy', Label.ISSP_AMS_OPTION_PAX_BRANCH));        
