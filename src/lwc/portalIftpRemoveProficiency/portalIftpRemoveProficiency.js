@@ -9,38 +9,38 @@ export default class PortalIftpRemoveProficiency extends LightningElement {
     @track loading = true;
 
     connectedCallback(){
+        
+        let errorMessage = 'An error has occured, please contact your administrator';
+
         removeProficiency({roleAddressId: this.recordId})
         .then(results => {
             if(results !== undefined){
                 this.loading = false;
                 this.handleLoad();
-                if(results == true){
-                    this.showSuccessToast();
+                if(results === true){
+                    this.showToast('Success', 'Proficiency removed successfully.', 'success');
                 }
                 else{
-                    this.showErrorToast();
+                    this.showToast('Error', errorMessage, 'error');
                 }
             }
             
+        }).catch(error => {
+            this.loading = false;
+            this.handleLoad();
+            if (error.body.message) {
+                errorMessage = error.body.message;
+            }
+            this.showToast('Remove Proficiency Not Applicable', errorMessage, 'error');
         });
         
-
-    }
- 
-    showSuccessToast() {
-        const event = new ShowToastEvent({
-            title: 'Success',
-            variant: 'success',
-            message: 'Proficiency removed successfully.',
-        });
-        this.dispatchEvent(event);
     }
 
-    showErrorToast() {
+    showToast(theTitle, theMessage, theVariant){
         const event = new ShowToastEvent({
-            title: 'Error',
-            variant: 'error',
-            message: 'An Error has occurred. Please contact your administtrator.',
+            title: theTitle,
+            message: theMessage,
+            variant: theVariant
         });
         this.dispatchEvent(event);
     }
