@@ -1,7 +1,8 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track,api } from 'lwc';
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import removeRecipient from '@salesforce/apex/PortalCasesCtrl.removeRecipient';
 import addNewRecipient from '@salesforce/apex/PortalCasesCtrl.addNewRecipient';
+import getHideForClosedCases from '@salesforce/apex/PortalCasesCtrl.getHideForClosedCases';
 import getOscarProgress from '@salesforce/apex/portal_OscarProgressBar.getOscarProgress';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -10,6 +11,8 @@ import { getParamsFromPage } from'c/navigationUtils';
 
 //custom label
 import CSP_PendingCustomerCase_Warning from '@salesforce/label/c.CSP_PendingCustomerCase_Warning';
+import ISSP_Case_Closed_More_Than_2_Months from '@salesforce/label/c.ISSP_Case_Closed_More_Than_2_Months';
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalHomeCalendar extends LightningElement {
 
@@ -21,12 +24,20 @@ export default class PortalHomeCalendar extends LightningElement {
     @track lstRecipients;
     @track newRecipient = '';
     @track haveRecipients = false;
+    @api isExpired = false;
+    @track expiredCard;
 
     @track pendingCustomerCase = false;
     pendingCustomerCaseWarningLabel = CSP_PendingCustomerCase_Warning;
 
     @track displayOscarProgressBar = false;
     @track progressStatusList = [];
+
+    //Icons
+    infoIcon = CSP_PortalPath + 'CSPortal/Images/Icons/info.svg';
+    
+        ISSP_Case_Closed_More_Than_2_Months,
+    }
 
     connectedCallback() {
         //get the parameters for this page
@@ -69,18 +80,29 @@ export default class PortalHomeCalendar extends LightningElement {
                 this.haveRecipients = false;
             }
 
-            console.log('results.Status: ' , results.Status);
-
             this.loading = false;
             this.pendingCustomerCase = results.Status === 'Pending customer';
 
-            console.log('pendingCustomerCase: ' , this.pendingCustomerCase);
         })
         .catch(error => {
             console.log('error: ' , error);
             this.loading = false;
         });
         
+        getHideForClosedCases({ caseId : this.pageParams.caseId })
+        .then(results => {
+            this.isExpired = results; //Disable
+
+            const selectedEvent = new CustomEvent("sendexpired", {
+                detail: this.isExpired
+              });
+
+            // Dispatches the event.
+            this.dispatchEvent(selectedEvent);
+        })
+        .catch(e => {
+            console.log(e);
+        });
     }
 
     getProgressBarStatus() {
