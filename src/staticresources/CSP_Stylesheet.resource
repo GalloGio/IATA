@@ -268,7 +268,6 @@ body {
     color:#FFFFFF;
     border-radius: 1px;
     font-size: 14px;
-    text-align: right;
   	font-weight: normal;
   	font-style: normal;
   	font-stretch: normal;
@@ -411,7 +410,7 @@ lightning-datatable .slds-th__action {
 }
 
 .Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
-.Submitted lightning-primitive-cell-wrapper lightning-formatted-text
+.Submitted lightning-primitive-cell-wrapper lightning-formatted-text,
 .Closed span, .AcceptedFutureDate span, .Submitted span {
     background-color: #b1e8b5;
     padding: 4px 6px 2px 6px;
