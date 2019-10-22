@@ -5,8 +5,8 @@
     <name>Local Office - Nepal</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>CountryManagerIndiaI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>StaffIndiaI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerIndia</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffIndia</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>

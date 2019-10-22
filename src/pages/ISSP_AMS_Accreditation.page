@@ -140,7 +140,7 @@
 
         .row1 {padding-bottom:16px; vertical-align: text-top;}
     </style>
-    <!--<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>-->
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
 
     <script>
         var showProductComparisonLink = false;
@@ -210,7 +210,6 @@
             if(defaultHQCountry=='CN') {
                 var chinaAgentType = $('select[name="' + chinaAgentTypeId + '"]');
                 if(chinaAgentType.val() == 'Domestic') {
-                        console.log('in domestic');
                     return true;
                 }
             }
@@ -295,7 +294,6 @@
                     } else {
                         if(isAllowedCountry=='f' || isChinaDomestic()) {
                         // temporary for CNS
-                        console.log('{!communityName}');
                             if('{!communityName}'==='CNS') {
                                 bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)}", function(result) {
                                     if(result) {
@@ -461,11 +459,11 @@
                 if ($.inArray(isoSelected, JSON.parse('{!hierarchyIsoCodesString}')) == -1) {
                     $('[id$=legalNameSelection]').css('display', 'block');
                     $('[name$=separateLegalEntitySelect]').filter('[value=Yes]').prop('checked', true);
-                    $('[name$=separateLegalEntitySelect]').attr('disabled', 'true');
+                    $('[name$=separateLegalEntitySelect]:not(:checked)').attr('disabled', 'true');
                     $('[id$=newLegalName]').css('display', 'block');
                     $('[id$=legalNameSelected]').val('');
                 } else {
-                    $('[name$=separateLegalEntitySelect]').removeAttr('disabled');
+                    $('[name$=separateLegalEntitySelect]:not(:checked)').removeAttr('disabled');
                     if ($('[name$=separateLegalEntitySelect]:checked').val() == 'No') {
                         $('[id$=legalNameSelection]').css('display', 'block');
                         $('[id$=legalNameSelected]').css('display', 'block');
@@ -517,7 +515,7 @@
                 
                 checkLocationQuestion();
 
-                reRenderAccountsNoc();
+                checkSelectAll();
             }
         }
 
@@ -526,6 +524,8 @@
                 $('[id$="nocThirdQuestion"]').css('display', 'none');
                 toggleCountryMultiSelection(true, false);
                 $('#brcountry').text("{!amsAllLangCountryLabel}");
+
+                $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned}";
             }
             
             if ($('[id$="LocationType"]').find("input")[1].checked) { 
@@ -537,32 +537,32 @@
                 } else {
                     $('[id$="nocThirdQuestion"]').css('display', 'block');
                 }
+
+                $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned}";
             }
 
             if ($('[id$="LocationType"]').find("input")[2].checked) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
                     toggleCountryMultiSelection(false, true);
+                    $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
                 } else {
                     toggleCountryMultiSelection(true, false);
                     $('#brcountry').text("{!amsAllLangCountryLabel}");
                 }
 
                 $('[id$="nocThirdQuestion"]').css('display', 'none');
-
-                $('[for$="countryconcerned"]')[0].innerText = "{!$Label.ANG_ISSP_CountryConcerned_AEs}";
             }
 
             if ($('[id$="LocationType"]').find("input")[3].checked) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
                     toggleCountryMultiSelection(false, true);
+                    $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
                 } else {
                     toggleCountryMultiSelection(true, false);
                     $('#brcountry').text("{!amsAllLangCountryLabel}");
                 }
 
                 $('[id$="nocThirdQuestion"]').css('display', 'none');
-
-                $('[for$="countryconcerned"]')[0].innerText = "{!$Label.ANG_ISSP_CountryConcerned_AEs}";
             }
         }
 
@@ -595,7 +595,53 @@
                 $('#finalConfirmationNoCMCModal').modal('hide');
             });
         }
+
+        function checkSelectAll() {
+            if ($('[id$=hierarchyList]')[0]) {
+            var hierarchy = $('[id$=hierarchyList]')[0].children[2].children;
+
+            var allChecked = true;
+            
+            for (var i = 0; i < hierarchy.length; i++) {
+                if (hierarchy[i].firstChild.children[0].checked === false) {
+                    allChecked = false;
+                    break;
+                }
+            }
+
+            $('[id$=allHierarchySelected]')[0].checked = allChecked;
+        }
+        }
+
+        function selectAllAEs() {
+            var hierarchy = $('[id$=hierarchyList]')[0].children[2].children;
+
+            var allChecked = $('[id$=allHierarchySelected]')[0].checked;
+            
+            for (var i = 0; i < hierarchy.length; i++) {
+                hierarchy[i].firstChild.children[0].checked = allChecked;
+            }
+        }
+
     </script>
+
+    <apex:outputPanel id="correctHierarchy">
+        <script>
+            var selectedIATACodes = "{!previouslySelectedIATACodes}";
+
+            if (selectedIATACodes !== '') {
+                var hierarchy = $('[id$=hierarchyList]')[0].children[2].children;
+
+                for (var i = 0; i < hierarchy.length; i++) {
+                    if (~selectedIATACodes.indexOf(hierarchy[i].innerText.split('\t')[2])) {
+                        hierarchy[i].firstChild.children[0].checked = true;
+                    } else {
+                        hierarchy[i].firstChild.children[0].checked = false;
+                    }
+                }
+            }
+        </script>
+    </apex:outputPanel>
 
     <apex:outputPanel id="amscountrylabel">
         <script>
@@ -672,11 +718,10 @@
 
                             <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" oncomplete="populateLegalAndSeparateFields();" />
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
-                            <apex:actionFunction action="{!resetHierarchy}" name="reRenderAccountsNoc" reRender="branchaccountsel"/>
+                            <apex:actionFunction name="reRenderAccountsNoc" action="{!resetHierarchy}" status="blockEditing" oncomplete="reRenderBranchAccs();"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions, nocFormQuestions" oncomplete=""/>
                             <apex:actionFunction name="reRenderNocMessage" reRender="nocMessage"/>
-                            <apex:actionFunction name="selectAllAEs" action="{!doSelectAll}" status="blockEditing" reRender="table" />
-                            <apex:actionFunction name="checkSelectAll" action="{!checkSelectAllAEs}" reRender="table" />
+                            <apex:actionFunction name="reRenderBranchAccs" status="blockEditing" reRender="branchaccountsel, table, correctHierarchy" oncomplete="checkSelectAll();"/>
                             
                             <apex:pageBlock id="step1Block" mode="edit" >
                                 <apex:pageBlockButtons location="bottom" style="padding-left:100px">
@@ -837,7 +882,7 @@
                                             <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
                                                 <apex:column >
                                                     <apex:facet name="header">
-                                                        <apex:inputCheckbox value="{!selectAll}" onchange="selectAllAEs();"/>
+                                                        <apex:inputCheckbox id="allHierarchySelected" value="{!selectAll}" onchange="selectAllAEs();"/>
                                                     </apex:facet>
                                                     <apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}" onchange="checkSelectAll();"/>
                                                 </apex:column>

@@ -109,7 +109,7 @@ public with sharing class PortalDocumentsController {
 
         queryConditions = ' WHERE IsLatest = true AND Title LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\'';
 
-        if(String.isNotBlank(category)) queryConditions += ' AND Document_Category__c LIKE \'%'+ String.escapeSingleQuotes(category) +'%\'';
+        if(String.isNotBlank(category)) queryConditions += ' AND Document_Category__c = \''+ String.escapeSingleQuotes(category) +'\'';
         if(String.isNotBlank(prodCat)) queryConditions += ' AND Product_Category__c LIKE \'%'+ String.escapeSingleQuotes(prodCat) +'%\'';
         if(String.isNotBlank(publiCountry)) queryConditions += ' AND Country_of_publication__c includes (\''+ String.escapeSingleQuotes(publiCountry) +'\')';
         if(String.isNotBlank(docId)) queryConditions += ' AND Id = \''+ String.escapeSingleQuotes(docId) +'\'';

@@ -815,7 +815,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (sectorValue != null) {
                     sector = sectorValue.replace('_', ' ');
 
-                    if (isocountry.ISO_Code__c == 'CN') {
+                    if (isocountry.ISO_Code__c == 'CN' && !sector.contains('-')) { //PRB41685 - Avoid duplication of the Local_Agent_Type__c value on the sector valor
                         sector += ' - ' + newForm.Local_Agent_Type__c;
                     }
 
@@ -855,7 +855,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     if (isNoticeOfChange && isMCAccredited && !String.isBlank(newForm.MultiCountry_Countries_Concerned__c)) {
                         List<String> isosMC = newForm.MultiCountry_Countries_Concerned__c.split(',');
 
-                        for (Integer i = 0; i < nonSelectedCountryIsos.size(); i++) {
+                        for (Integer i = nonSelectedCountryIsos.size()-1; i >= 0; i--) {
                             if (isosMC.contains(nonSelectedCountryIsos[i].getValue())) {
                                 selectedCountryIsos.add(nonSelectedCountryIsos[i]);
                                 nonSelectedCountryIsos.remove(i);
@@ -1079,7 +1079,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             sector = sectorValue.replace('_', ' ');
 
-            if (isocountry.ISO_Code__c == 'CN') {
+            if (isocountry.ISO_Code__c == 'CN' && !sector.contains('-')) { //PRB41685 - Avoid duplication of the Local_Agent_Type__c value on the sector valor
                 sector += ' - ' + newForm.Local_Agent_Type__c;
             } 
 
@@ -1524,10 +1524,6 @@ public without sharing class ISSP_AMS_Accreditation {
                     accountList.add(hi.acc);
                 }
             }
-        }
-
-        if(newForm.Agency_Codes_Concerned__c != null) {
-            accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(',')).values();
         }
 
         return getAccountOptions(accountList);
@@ -2510,6 +2506,13 @@ public without sharing class ISSP_AMS_Accreditation {
         updateAccountByBranchApp(newSFDCAccount);
         upsert newSFDCAccount;
 
+        Map<Id, Account> mcHierarchyAccountsMap = new Map<Id, Account>(mcHierarchyAccounts);
+        Account parentAux = mcHierarchyAccountsMap.get(newForm.Same_Legal_Entity_Agency_Account__c);
+
+        if (isMultiCountryAccredittedAddingAEs() && newForm.AE_separate_Legal_Entity__c == 'No') {
+            copyOwnersFromSelectedLegalName(newSFDCAccount, parentAux.Id); 
+        }
+
         //Populate Online Accred. form (Staging area) with missing values from Branch account
         newForm.ISSP_Branch_AccountId__c = newSFDCAccount.Id;
         newForm.Account_Name__c = newSFDCAccount.Name;
@@ -2534,13 +2537,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
         Boolean isFirstHE = accountsByBSP.get(newForm.Branch_Office_Country__r.AMS_Settlement_System__c) == null || 
             accountsByBSP.get(newForm.Branch_Office_Country__r.AMS_Settlement_System__c).isEmpty();
-
-        Map<Id, Account> mcHierarchyAccountsMap = new Map<Id, Account>(mcHierarchyAccounts);
-        Account parentAux = mcHierarchyAccountsMap.get(newForm.Same_Legal_Entity_Agency_Account__c);
-
-        if (isMultiCountryAccredittedAddingAEs() && newForm.AE_separate_Legal_Entity__c == 'No') {
-            copyOwnersFromSelectedLegalName(SFDCAccount, parentAux.Id); 
-        }
 
         if (isMultiCountryNewAE || getIsAccreditationModelNotNullOrLegacy()) {
             if (isFirstHE) {
@@ -3520,6 +3516,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
 
                 if (newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry') {
+
+                    //In case of conversion from standard to multicountry overwrite the case reason
+                    newCase.Reason1__c = 'Accreditation Type';
+
                     if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
                         newForm.Agency_Codes_Concerned__c += ',';
                     }
@@ -4512,22 +4512,22 @@ public without sharing class ISSP_AMS_Accreditation {
         List<AMS_Pax_Accreditation_Form__c> newForms = Database.query(query);
         if (!newForms.isEmpty()) {
             newForm = newForms[0];
-        }
 
-        if (!String.isBlank(currentMCFormId)) {
-            mcformCountryISO = newForm.Branch_Office_Country__r.ISO_Code__c;
-            if (newForm.AE_separate_Legal_Entity__c == 'No') {
-                populateFieldsFromParentForm(newForm);
-            }
-        }
+			if (!String.isBlank(currentMCFormId)) {
+				mcformCountryISO = newForm.Branch_Office_Country__r.ISO_Code__c;
+				if (newForm.AE_separate_Legal_Entity__c == 'No') {
+					populateFieldsFromParentForm(newForm);
+				}
+			}
 
-        if (newForm.Branch_Office_Country__r.ISO_Code__c == 'CN' && newCase.Reason1__c == AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
-            if (newForm.SAAM_Case__r.Account.Category__c == 'Domestic Agent') {
-                newForm.Local_Agent_Type__c = 'Domestic';
-            } else {
-                newForm.Local_Agent_Type__c = 'International';
-            }
-        }
+			if (newForm.Branch_Office_Country__r.ISO_Code__c == 'CN' && newCase.Reason1__c == AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
+				if (newForm.SAAM_Case__r.Account.Category__c == 'Domestic Agent') {
+					newForm.Local_Agent_Type__c = 'Domestic';
+				} else {
+					newForm.Local_Agent_Type__c = 'International';
+				}
+			}
+		}
     }
 
     public void resetOwnership() { //NEWGEN-1249
@@ -7864,7 +7864,8 @@ system.debug('aqui sectorValue ' + sectorValue);
                                                                             Same_Legal_Entity_Agency_Form__c, Same_Legal_Entity_Agency_Account__c, Account_Name__c, Location_Type__c,
                                                                             Branch_Office_Country__r.ISO_Code__c, Trade_Name__c, ISSP_AMS_Legal_Status__c,
                                                                             SAAM_Case__r.Status, Same_Legal_Entity_Agency_Form__r.Status__c,
-                                                                            Previous_Postal_code__c, Previous_Street_Name_Number__c, Previous_City__c, Full_Address__c
+                                                                            Previous_Postal_code__c, Previous_Street_Name_Number__c, Previous_City__c, Full_Address__c,
+																			Same_Legal_Entity_Agency_Id__c
                                                                         FROM AMS_Pax_Accreditation_Form__c
                                                                         WHERE SAAM_Case__c = :newCase.Id
                                                                         ORDER BY Name ASC];
@@ -7936,25 +7937,43 @@ system.debug('aqui sectorValue ' + sectorValue);
             }
 
             if (formToDelete.AE_separate_Legal_Entity__c == 'Yes') {
-                AMS_Pax_Accreditation_Form__c formToBeUpdated;
+                AMS_Pax_Accreditation_Form__c formToBeUpdated = null;
+                List<AMS_Pax_Accreditation_Form__c> otherForms = new List<AMS_Pax_Accreditation_Form__c>();
 
-                for (AMS_Pax_Accreditation_Form__c existingMCForm: mCApplicationFormMap.values()) {
-                    if (existingMCForm.Same_Legal_Entity_Agency_Form__c == formToDelete.Id) {
+				// get the updatable forms
+                for (AMS_Pax_Accreditation_Form__c existingMCForm : mCApplicationFormMap.values())
+				{
+                    if (existingMCForm.Same_Legal_Entity_Agency_Form__c == formToDelete.Id)
+					{
+						if (formToBeUpdated == null)
+							formToBeUpdated = existingMCForm;
+						else
+							otherForms.add(existingMCForm);
+					}
+				}
+
+				// update the forms
+                for (AMS_Pax_Accreditation_Form__c existingMCForm : mCApplicationFormMap.values())
+				{
+                    if (existingMCForm.Same_Legal_Entity_Agency_Form__c == formToDelete.Id)
+					{
                         existingMCForm.AE_separate_Legal_Entity__c = 'Yes';
+						if (existingMCForm.Same_Legal_Entity_Agency_Id__c == formToDelete.Id)  // Text type, it's not automatically removed
+                        	existingMCForm.Same_Legal_Entity_Agency_Id__c = formToBeUpdated == null || existingMCForm.Id == formToBeUpdated.Id ? null : formToBeUpdated.Id;
+						existingMCForm.Same_Legal_Entity_Agency_Form__c = formToBeUpdated == null || existingMCForm.Id == formToBeUpdated.Id ? null : formToBeUpdated.Id;
                         existingMCForm.Status__c = 'InProgress';
 
                         existingMCForm.Account_Name__c = formToDelete.Account_Name__c;
                         existingMCForm.Trade_Name__c = formToDelete.Trade_Name__c;
                         existingMCForm.ISSP_AMS_Legal_Status__c = formToDelete.ISSP_AMS_Legal_Status__c;
-
-                        formToBeUpdated = existingMCForm;
-                        break;
                     }
                 }
 
-                if (formToBeUpdated != null) {
-                    copyOwnersFromOtherForm(formToBeUpdated, executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency_Form__c)));
-                    update formToBeUpdated;
+                if (formToBeUpdated != null)
+				{
+                    copyOwnersFromOtherForm(formToBeUpdated, executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToDelete.Id)));
+					otherForms.add(formToBeUpdated);
+                    update otherForms;
                 }
             }
 
@@ -8057,56 +8076,63 @@ system.debug('aqui sectorValue ' + sectorValue);
         return new Pagereference(pageURL);
     }
 
-    public Map<Id, HierarchyItem> hierarchy{
-        get{
-            if(hierarchy == null) {
-                System.debug('rui1: ' + previouslySelectedIATACodes);
-                hierarchy = new Map<Id, HierarchyItem>();
+    public void populateHierarchy() {
+        hierarchy = new Map<Id, HierarchyItem>();
 
-                List<String> mcCountryIsos = new List<String>();
-                
-                for (SelectOption country: selectedCountryIsos) {
-                    mcCountryIsos.add(country.getValue());
-                }
-                
-                for(Account a : getBranchList(true)){
-                    branchAccountCount++;
-                
-                    if (isNoticeOfChange) {
-                        if (isMCAccredited) {
-                            if (!mcCountryIsos.contains(a.Country_ISO_Code__c)) {
-                                continue;
-                            }
-                        } else {
-                            if (a.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
-                                continue;
-                            }
-                        }
-                    }
-
-                    Boolean isSelected = false;
-
-                    if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
-                        isSelected = newForm.Agency_Codes_Concerned__c.contains(a.IATACode__c);
-                    }
-
-                    if (!String.isBlank(previouslySelectedIATACodes)) {
-                        isSelected = previouslySelectedIATACodes.contains(a.IATACode__c);
-                    }
-
-                    selectAll = isSelected || !selectAll;
-
-                    hierarchy.put(a.Id, new HierarchyItem(a, isSelected));
-                }                           
-            }
-            return hierarchy;
+        List<String> mcCountryIsos = new List<String>();
+        
+        for (SelectOption country: selectedCountryIsos) {
+            mcCountryIsos.add(country.getValue());
         }
+        
+        for(Account a : getBranchList(true)){
+            branchAccountCount++;
+        
+            if (isNoticeOfChange) {
+                if (isMCAccredited) {
+                    if (!mcCountryIsos.contains(a.Country_ISO_Code__c)) {
+                        continue;
+                    }
+                } else {
+                    if (a.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
+                        continue;
+                    }
+                }
+            }
+
+            Boolean isSelected = false;
+
+            if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
+                isSelected = newForm.Agency_Codes_Concerned__c.contains(a.IATACode__c);
+            }
+
+            if (!String.isBlank(previouslySelectedIATACodes)) {
+                isSelected = previouslySelectedIATACodes.contains(a.IATACode__c);
+            }
+
+            if (selectAll) {
+                selectAll = isSelected;
+            }
+
+            hierarchy.put(a.Id, new HierarchyItem(a, isSelected));
+        }                           
+    }
+
+    public Map<Id, HierarchyItem> hierarchy{
+        get;
         set;
     }
 
     public void checkSelectAllAEs() {
+        resetHierarchy();
+
+        selectAll = true;
+        
         for (String accountId: hierarchy.keySet()) {
-            selectAll = hierarchy.get(accountId).selected || !selectAll;
+            if (!hierarchy.get(accountId).selected) {
+                selectAll = false;
+                break;
+            }
         }
     }
 
@@ -8119,6 +8145,9 @@ system.debug('aqui sectorValue ' + sectorValue);
 
     public List<HierarchyItem> hierarchyValues{
         get {
+            if (hierarchy == null) {
+                populateHierarchy();
+            }
             return hierarchy.values();
         }
     }
@@ -8143,11 +8172,13 @@ system.debug('aqui sectorValue ' + sectorValue);
         }
 
         if (!String.isBlank(previouslySelectedIATACodes)) {
-            previouslySelectedIATACodes.removeEnd(', ');
+            previouslySelectedIATACodes = previouslySelectedIATACodes.removeEnd(',');
         }
 
         hierarchy = null;
         hierarchyValuesForDisplay = null;
+
+        populateHierarchy();
     }
     
     public Integer totalPages{
@@ -8192,18 +8223,7 @@ system.debug('aqui sectorValue ' + sectorValue);
         }
     }
 
-
-    // ***********************************
-    // ********* helper methods **********
-    // ***********************************
-
-    public void doSelectAll(){
-        System.debug('select all: ' + hierarchyValues);
-        for(HierarchyItem hi : hierarchyValues){
-            hi.selected = selectAll;
-            System.debug('sa: ' + hi.selected);
-        }
-    }
+    // *** helper methods ***
 
     public Boolean getDisablePrevious() { 
         //this will disable the previous and beginning buttons

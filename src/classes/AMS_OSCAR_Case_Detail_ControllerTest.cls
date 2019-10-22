@@ -191,7 +191,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 	}
 
 	@isTest
-	public static void test_OSCARCaseRemmintancePerState()
+	public static void test_OSCARCaseRemmitancePerState()
 	{
         Test.startTest();
         
@@ -327,8 +327,8 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
         
         System.assertEquals(false, controller.isNewMulticountryAE);
         System.assertEquals(false, controller.isAEAccount);
-        System.assertEquals(false, controller.isDuplicatedDGR);
-        System.assertEquals(null, controller.duplicatedDGR_msg);
+        //System.assertEquals(false, controller.isDuplicatedDGR);
+        //System.assertEquals(null, controller.duplicatedDGR_msg);
         System.assertEquals(1, controller.getItemsForPreferredRHC().size());
         System.assertEquals(3, controller.getAvailableAccModel().size());
         System.assertEquals(2, controller.populateRightOptions(new List<String> { 'W', 'D' }).size());

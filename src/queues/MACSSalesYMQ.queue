@@ -4,9 +4,9 @@
     <name>MACS Sales - YMQ</name>
     <queueMembers>
         <roles>
-            <role>DirectSalesAlternateChannelsA</role>
-            <role>SalesAssistantDirectorAmericasA</role>
-            <role>SalesManagersAmericasA</role>
+            <role>DirectSalesAlternateChannels</role>
+            <role>SalesAssistantDirectorAmericas</role>
+            <role>SalesManagersAmericas</role>
         </roles>
     </queueMembers>
     <queueSobject>

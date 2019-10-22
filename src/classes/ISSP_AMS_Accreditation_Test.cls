@@ -539,7 +539,6 @@ private class ISSP_AMS_Accreditation_Test {
         ISSP_AMS_Accreditation_Acc_Req2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'Cargo_Agent');
         insert ISSP_AMS_Accreditation_Acc_Req2;
 
-        Test.startTest();
         System.runAs(newUser) {
             Case testCase = ISSP_ObjectFactory.createNewCase();
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
@@ -614,6 +613,8 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.amsLocationType = 'New HO - IATA Passenger Sales Agent';
             ctrl.Save();
             ctrl.createAgencyContact();
+        
+			Test.startTest();
 
             ctrl.createInternationalSales();
             ctrl.cancelAgentUpdate();
@@ -1786,7 +1787,6 @@ private class ISSP_AMS_Accreditation_Test {
 
         User newUser = fetchUser('conBasicChild@test11.com');
 
-        Test.startTest();
         System.runAs(newUser) {
             Case testCase = fetchCaseToInsert(child);
             insert testCase;
@@ -1929,6 +1929,8 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.newContact.Prev_Job1_Address__c = 'test';
             ctrl.newContact.Prev_Job1_employer__c = 'test';
             ctrl.createAgencyContact();
+        
+			Test.startTest();
 
             ctrl.saveAMSFormAndGoToStep1();
             List<AMS_Accreditation_Contact__c> accList = ctrl.List_AgencyContacts;
@@ -2439,7 +2441,6 @@ private class ISSP_AMS_Accreditation_Test {
                                                                         FROM AMS_Accreditation_Requirement__c
                                                                         WHERE Name = 'TestReq1'];
 
-        Test.startTest();
         System.runAs(newUser) {
             Case testCase = fetchCaseToInsert(child);
             insert testCase;
@@ -2544,6 +2545,8 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.sector = 'Travel Agent';
             ctrl.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
             ctrl.goToFinalStep();
+        
+			Test.startTest();
 
             ctrl.sectorValue = 'Travel_Agent';
             ctrl.newCase.Reason1__c = 'New BR / IP';
@@ -2802,7 +2805,6 @@ private class ISSP_AMS_Accreditation_Test {
         List<AMS_Account_Role__c> accRoles = createAccountRoles(parent, con, p1.Id, child);
         insert accRoles;
 
-        Test.startTest();
         System.runAs(newUser) {
             Case testCase = fetchCaseToInsert(parent);
 
@@ -2855,6 +2857,8 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.save();
             ctrl.isScopeOfChangeChanged = true;
             ctrl.setOwners('Branch');
+
+        	Test.startTest();
 
             newForm.Scope_of_Change__c = 'HO - All Branches';
             newform.Accept_terms_and_conditions__c = true;
@@ -3104,13 +3108,13 @@ private class ISSP_AMS_Accreditation_Test {
             newForm2.Scope_of_Change__c = 'HO - Selected Branches';
             insert newForm2;
 
-            Test.startTest();
-
             ApexPages.currentPage().getParameters().put('caseId', testCase2.Id);
             ApexPages.currentPage().getParameters().put('isBankAccountChange', 'true');
             ApexPages.currentPage().getParameters().put('isNoticeOfChange', 'true');
             ISSP_AMS_Accreditation ctrl2 = new ISSP_AMS_Accreditation();
             ctrl2.newCase = testCase2;
+
+            Test.startTest();
 
             ctrl2.isNoticeOfChange = true;
             ctrl2.isBankAccountChange = true;
@@ -3427,7 +3431,6 @@ private class ISSP_AMS_Accreditation_Test {
 
         List<AMS_Account_Role__c> accRoles = createAccountRoles(parent, con, p1.Id, child);
 
-        Test.startTest();
         System.runAs(newUser) {
             Case testCase = ISSP_ObjectFactory.createNewCase();
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
@@ -3510,6 +3513,9 @@ private class ISSP_AMS_Accreditation_Test {
             Pagereference pr1 = ctrl.goToFinalStep();
 
             ApexPages.currentPage().getParameters().put('caseId', testCase2.Id);
+			
+        	Test.startTest();
+			
             ISSP_AMS_Accreditation ctrl2 = new ISSP_AMS_Accreditation();
             ctrl2.newCase = testCase2;
 
@@ -3697,7 +3703,7 @@ private class ISSP_AMS_Accreditation_Test {
         Test.stopTest();
     }
 
-    @isTest static void ISSP_AMS_Accreditation_Test_ICC_Basic() {
+    @isTest static void ISSP_AMS_Accreditation_Test_ICC_Basic_a() {
         Test.startTest();
 
         System.runAs(fetchUser('conChildIcc@test11.com')) {
@@ -3720,6 +3726,24 @@ private class ISSP_AMS_Accreditation_Test {
             pageRef = accr.save();
             accr.hqAccount.Company_Type__c = 'O';
             pageRef = accr.save();
+        }
+
+        Test.stopTest();
+    }
+
+    @isTest static void ISSP_AMS_Accreditation_Test_ICC_Basic_b() {
+        Test.startTest();
+
+        System.runAs(fetchUser('conChildIcc@test11.com')) {
+            ISSP_AMS_Accreditation accr = icc_initialize();
+
+            accr.isNoticeOfChange = true;
+            accr.isNewCase = true;
+            accr.newCase.Reason1__c = 'New BR / IP';
+            accr.hqAccount.Company_Type__c = 'Z';
+
+            PageReference pageRef = accr.save();
+
             accr.hqAccount.Company_Type__c = 'L';
             pageRef = accr.save();
             accr.hqAccount.Company_Type__c = 'E';
