@@ -85,8 +85,7 @@ public without sharing class ISSP_PersonalInformationWithoutSharing {
 											User.Contact.Name, 
 											User.Contact.Email,
 											User.Contact.AccountId,
-											User.Contact.Account.Name,  
-											User.isActive,
+											User.Contact.Account.Name,
 											User.Contact.Account.BillingCountry
 									   FROM AccountTeamMember 
 									WHERE accountId IN: accountIds 
