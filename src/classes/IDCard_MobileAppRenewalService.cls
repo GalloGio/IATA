@@ -338,6 +338,8 @@ public with sharing class IDCard_MobileAppRenewalService
     {
         String idCardType = getAccountType(requestInformation.account);
 
+		if (requestInformation.isUSAgent)
+			IDCardUtil.IdCardAIMSrt = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'WebStar');
         insert IDCardUtil.CreateIDCardObjectFromApplication(
             requestInformation.newIDCA, requestInformation.contact, idCardType);
 
@@ -348,18 +350,19 @@ public with sharing class IDCard_MobileAppRenewalService
             c2 = [SELECT Id, CaseNumber, Status FROM Case WHERE Id = :c2.Id];
         
         String pardotBody = getPardotBody(requestInformation);
-        futureLogicOnMobileRenewal(c2.Id, c2.CaseNumber, idCardType, requestInformation.newIDCA.Id, closeCase, pardotBody);
+        futureLogicOnMobileRenewal(c2.Id, c2.CaseNumber, idCardType, requestInformation.newIDCA.Id, closeCase, pardotBody, requestInformation.isUSAgent);
     }
 
     @Future(Callout=true)
     private static void futureLogicOnMobileRenewal(Id caseId, String caseNumber, String idCardType, Id newIDCAId,
-                            Boolean closeCase, String pardotBody)
+                            Boolean closeCase, String pardotBody, Boolean isUsAgent)
     {
-        approveCaseAndCreateIDC(caseId, caseNumber, idCardType, newIDCAId, closeCase);
+        approveCaseAndCreateIDC(caseId, caseNumber, idCardType, newIDCAId, closeCase, isUsAgent);
         postPardot(pardotBody);
     }
 
-    private static void approveCaseAndCreateIDC(Id caseId, String caseNumber, String idCardType, Id newIDCAId, Boolean closeCase)
+    private static void approveCaseAndCreateIDC(Id caseId, String caseNumber, String idCardType, Id newIDCAId,
+							Boolean closeCase, Boolean isUsAgent)
     {
         String result = IDCardUtil.UpdateCaseToApproved_Rejected(caseNumber, true, idCardType);
         if (! result.contains('true') && ! result.contains('false'))
@@ -372,6 +375,12 @@ public with sharing class IDCard_MobileAppRenewalService
             newIDCA.Single_Application_Processing_Step__c = 'Processed';
             update newIDCA;
         }
+		if (isUsAgent)
+		{
+            ID_Card_Application__c newIDCA = new ID_Card_Application__c(Id = newIDCAId);
+			newIDCA.Application_Status__c = 'Completed';
+            update newIDCA;
+		}
 
         if (closeCase)
             closeDigitalCase(caseId);
@@ -809,12 +818,13 @@ public with sharing class IDCard_MobileAppRenewalService
 
     private static ID_Card_Application__c getCurrentIDCA(RequestInformation requestInformation)
     {
-        ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
+        ID rectypeid1 = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
+        ID rectypeid2 = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'WebStar');
 
         List<ID_Card__c> allCards = [SELECT i.VER_Number__c, i.Middle_Initial__c, i.LastName__c, i.FirstName__c, i.Email__c,
                                         i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c, i.ID_Card_Application__c
                                      FROM ID_Card__c i
-                                     WHERE i.RecordTypeId = :rectypeid
+                                     WHERE i.RecordTypeId IN ( :rectypeid1, :rectypeid2 )
                                         AND i.VER_Number__c = :requestInformation.verNumber
                                         AND i.Card_Status__c != :IDCardUtil.CARDSTATUS_CANCELED
                                         AND i.ID_Card_Application__c != NULL
@@ -865,7 +875,7 @@ public with sharing class IDCard_MobileAppRenewalService
             if (! pendingCase.isEmpty())
 			{
 				String caseId = pendingCase.get(0).CaseNumber;
-				throw new IDCardException('Sorry, there was a problem with the ID Card renewal process due to an existing pending application case [' + caseId + ']. Please contact us for details');
+				throw new IDCardException('Sorry, there was a problem with the ID Card renewal process due to an existing pending application case [' + caseId + ']. Please contact us for details', IDCard_ServiceResponse.HTML_CONFLICT);
 			}
         }
         
@@ -1057,7 +1067,8 @@ public with sharing class IDCard_MobileAppRenewalService
 
     public static Contact getContact(String iataCode, String verNumber)
     {
-        ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
+        ID rectypeid1 = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
+        ID rectypeid2 = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'WebStar');
         
         List<Contact> contacts = [SELECT c.VER_Number_2__c, c.FirstName, c.LastName, c.Date_of_Birth__c,
                                     c.Account.IDCard_Key_Account__c, c.Account.Type, c.Account.Short_Name__c,
@@ -1066,7 +1077,7 @@ public with sharing class IDCard_MobileAppRenewalService
                                   FROM Contact c
                                   WHERE c.Id IN (SELECT i.Related_Contact__c
                                                  FROM ID_Card__c i
-                                                 WHERE i.RecordTypeId = :rectypeid)
+                                                 WHERE i.RecordTypeId IN ( :rectypeid1, :rectypeid2))
                                     AND c.RecordType.Name = 'Standard'
                                     AND c.Account.RecordType.Name = 'Agency'
                                     AND (c.Account.Status__c IN :IDCardUtil.ALLOWED_ACCOUNT_STATUS
@@ -1210,5 +1221,14 @@ public with sharing class IDCard_MobileAppRenewalService
         }
     }
 
-    public class IDCardException extends Exception { }
+    public class IDCardException
+		extends Exception
+	{
+		public Integer errorCode { get; set; }
+		public IDCardException(String msg, Integer errorCode)
+		{
+			this(msg);
+			this.errorCode = errorCode;
+		}
+	}
 }
