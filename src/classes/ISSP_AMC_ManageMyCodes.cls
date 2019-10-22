@@ -65,15 +65,6 @@ public class ISSP_AMC_ManageMyCodes {
 							caseDesignatorApplicationId = eachExistingCase.Id;
 						}
 					}
-				/*} else if (eachExistingCase.CaseArea__c == ISSP_AMC_Constants.AMC_CASE_CASEAREA_CODES_LOCATION_CODE) {
-					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
-						locationCodeApplicationId = participation.Id;
-					}
-					else {
-						if(eachExistingCase.Status != 'Closed'){
-							caseLocationCodeApplicationId = eachExistingCase.Id;
-						}
-					}*/
 				} else if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_BAGGAGE_FORM) {
 					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
 						baggageApplicationId = participation.Id;
