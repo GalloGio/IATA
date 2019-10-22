@@ -582,7 +582,7 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 &quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
 &quot;MSO Management&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
-&quot;Risk Profile and RHC&quot;, IF(Contact__r.Account.IATA_ISO_Country__r.ISO_Code__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
+&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
 &quot;ICCS&quot;, &quot;ICCS&quot;,
 Application_Name__c
 )</formula>
@@ -768,7 +768,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
     <label>Portal Service Access</label>
     <listViews>
         <fullName>All</fullName>
-        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
         <columns>Contact__c</columns>
         <columns>Portal_Application__c</columns>
         <columns>Right__c</columns>
@@ -783,6 +783,32 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <language>en_US</language>
         <sharedTo>
             <allPartnerUsers></allPartnerUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>Contact__c</columns>
+        <columns>Portal_Application__c</columns>
+        <columns>Right__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All_Internal</fullName>
+        <columns>Contact__c</columns>
+        <columns>Portal_Application__c</columns>
+        <columns>Right__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
         </sharedTo>
     </listViews>
     <listViews>
@@ -1062,6 +1088,25 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <excludedStandardButtons>Forward</excludedStandardButtons>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>ACRM_MIR_Service_Contact_Restriction</fullName>
+        <active>true</active>
+        <description>Contacts must have certain conditions in order to have access to Service &quot;Management Information Report&quot;</description>
+        <errorConditionFormula>AND(
+  Application_Name__c = &apos;Management Information Report&apos;,
+  ISPICKVAL(Right__c,&apos;Access Granted&apos;),
+  Contact__r.Distribution_Risk_Expert__c=false,
+  Contact__r.Airline_Credit_Risk_Manager__c=false,
+  Contact__r.PaConf_Representative__c=false,
+  NOT(ISPICKVAL(Contact__r.CEO_CFO__c,&apos;CFO&apos;)
+)
+)</errorConditionFormula>
+        <errorMessage>You are not allow to assign &quot;Management Information Report&quot; if the contact is not one of the following:
+  * Distribution Risk Expert
+  * Distribution Risk Leader
+  * PAConf Representative
+  * or be a CFO</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>Biller_Direct_Granted_Invoice_Type</fullName>
         <active>true</active>

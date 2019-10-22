@@ -44,7 +44,7 @@ private class ContactHandlerTest {
 	@isTest
     private static void testHasFinancialAssessment1() {
         loadAccounts();
-        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, Financial_Assessment_Contact__c = false);
+        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, Membership_Function__c = 'Cargo', Financial_Assessment_Contact__c = false);
 
         Test.startTest();
         insert contact;
@@ -62,7 +62,7 @@ private class ContactHandlerTest {
     @isTest
     private static void testHasFinancialAssessment2() {
         loadAccounts();
-        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, Financial_Assessment_Contact__c = true);
+        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, Membership_Function__c = 'Cargo', User_Portal_Status__c = 'Approved User', Financial_Assessment_Contact__c = true);
 
         Test.startTest();
         insert contact;
@@ -80,7 +80,7 @@ private class ContactHandlerTest {
     @isTest
     private static void testHasFinancialAssessment3() {
         loadAccounts();
-        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, Financial_Assessment_Contact__c = true);
+        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, Membership_Function__c = 'Cargo', User_Portal_Status__c = 'Approved User', Financial_Assessment_Contact__c = true);
         insert contact;
 
         Test.startTest();
@@ -100,7 +100,7 @@ private class ContactHandlerTest {
     @isTest
     private static void testHasFinancialAssessment4() {
         loadAccounts();
-        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, Financial_Assessment_Contact__c = true);
+        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, Membership_Function__c = 'Cargo', User_Portal_Status__c = 'Approved User', Financial_Assessment_Contact__c = true);
         insert contact;
 
         Test.startTest();
@@ -127,7 +127,7 @@ private class ContactHandlerTest {
     @isTest
     private static void testHasAdmin1() {
         loadAccounts();
-        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, User_Portal_Status__c = 'Active');
+        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, User_Portal_Status__c = 'Approved User', Membership_Function__c = 'Cargo');
 
         Test.startTest();
         insert contact;
@@ -145,7 +145,7 @@ private class ContactHandlerTest {
     @isTest
     private static void testHasAdmin2() {
         loadAccounts();
-        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, User_Portal_Status__c = 'Approved Admin');
+        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, User_Portal_Status__c = 'Approved Admin', Membership_Function__c = 'Cargo');
 
         Test.startTest();
         insert contact;
@@ -163,7 +163,7 @@ private class ContactHandlerTest {
     @isTest
     private static void testHasAdmin3() {
         loadAccounts();
-        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, User_Portal_Status__c = 'Approved Admin');
+        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, User_Portal_Status__c = 'Approved Admin', Membership_Function__c = 'Cargo');
         insert contact;
 
         Test.startTest();
@@ -184,7 +184,7 @@ private class ContactHandlerTest {
     @isTest
     private static void testHasAdmin4() {
         loadAccounts();
-        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, User_Portal_Status__c = 'Approved Admin');
+        Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id, User_Portal_Status__c = 'Approved Admin', Membership_Function__c = 'Cargo');
         insert contact;
 
         Test.startTest();
@@ -233,7 +233,7 @@ private class ContactHandlerTest {
 	private static void testUndeleteContact() {
 		loadAccounts();
 		Contact contact = new Contact(FirstName='test', LastName='test', AccountId=acc1.Id,
-			Financial_Assessment_Contact__c = true, User_Portal_Status__c = 'Approved Admin');
+			Financial_Assessment_Contact__c = true, User_Portal_Status__c = 'Approved Admin', Membership_Function__c = 'Cargo');
 		insert contact;
 		delete contact;
 
@@ -249,4 +249,470 @@ private class ContactHandlerTest {
 		Test.stopTest();
 	}
 
+    @isTest
+    private static void testGrantAccessToPortalAppsOnInsert() {
+        Account airline  = new Account(Name='testAirline', Sector__c = 'Airline');
+        insert airline;
+
+        Portal_Application_Contact_Visibility__mdt visibility = [
+                SELECT Id, Checkbox_Fieldname__c, Parent__r.MasterLabel
+                FROM Portal_Application_Contact_Visibility__mdt
+                WHERE Add_Service_On_Checked__c = true
+                LIMIT 1];
+        System.assert(visibility!=null);
+        System.assert(visibility.Checkbox_Fieldname__c!=null);
+        System.assert(visibility.Parent__r.MasterLabel!=null);
+
+        // create app
+        Portal_Applications__c app = new Portal_Applications__c(
+            Name=visibility.Parent__r.MasterLabel
+        );
+        insert app;
+
+        Test.startTest();
+        Contact contact = new Contact(
+            FirstName = 'fname',
+            LastName = 'lname',
+            AccountId = airline.Id,
+            Membership_Function__c = 'Cargo',
+            User_Portal_Status__c = 'Approved Admin'
+        );
+        contact.put(visibility.Checkbox_Fieldname__c,true);
+        insert contact;
+        Test.stopTest();
+
+        Contact result = [
+            SELECT Id, 
+                (SELECT Id FROM Portal_Application_Rights__r
+                WHERE Portal_Application__c = :app.Id
+                AND Right__c = 'Access Granted')
+            FROM Contact
+            WHERE Id = :contact.Id
+        ];
+        System.assertEquals(1,result.Portal_Application_Rights__r.size());
+    }
+
+    // Grant service on update when there is no app right record
+    @isTest
+    private static void testGrantAccessToPortalAppsOnUpdate() {
+        Account airline  = new Account(Name='testAirline', Sector__c = 'Airline');
+        insert airline;
+
+        Portal_Application_Contact_Visibility__mdt visibility = [
+                SELECT Id, Checkbox_Fieldname__c, Parent__r.MasterLabel
+                FROM Portal_Application_Contact_Visibility__mdt
+                WHERE Add_Service_On_Checked__c = true
+                LIMIT 1];
+        System.assert(visibility!=null);
+        System.assert(visibility.Checkbox_Fieldname__c!=null);
+        System.assert(visibility.Parent__r.MasterLabel!=null);
+
+        // create app
+        Portal_Applications__c app = new Portal_Applications__c(
+            Name=visibility.Parent__r.MasterLabel
+        );
+        insert app;
+        Contact contact = new Contact(
+            FirstName = 'fname',
+            LastName = 'lname',
+            AccountId = airline.Id,
+            Membership_Function__c = 'Cargo',
+            User_Portal_Status__c = 'Approved Admin'
+        );
+        insert contact;
+
+        Test.startTest();
+        contact.put(visibility.Checkbox_Fieldname__c,true);
+        update contact;
+        Test.stopTest();
+
+        Contact result = [
+            SELECT Id, 
+                (SELECT Id FROM Portal_Application_Rights__r
+                WHERE Portal_Application__c = :app.Id
+                AND Right__c = 'Access Granted')
+            FROM Contact
+            WHERE Id = :contact.Id
+        ];
+        System.assertEquals(1,result.Portal_Application_Rights__r.size());
+    }
+
+    // Grant service on update when there is an app right record with granted
+    @isTest
+    private static void testGrantAccessToPortalAppsOnUpdate2() {
+        Account airline  = new Account(Name='testAirline', Sector__c = 'Airline');
+        insert airline;
+
+        Portal_Application_Contact_Visibility__mdt visibility = [
+                SELECT Id, Checkbox_Fieldname__c, Parent__r.MasterLabel
+                FROM Portal_Application_Contact_Visibility__mdt
+                WHERE Add_Service_On_Checked__c = true
+                LIMIT 1];
+        System.assert(visibility!=null);
+        System.assert(visibility.Checkbox_Fieldname__c!=null);
+        System.assert(visibility.Parent__r.MasterLabel!=null);
+
+        // create app
+        Portal_Applications__c app = new Portal_Applications__c(
+            Name=visibility.Parent__r.MasterLabel
+        );
+        insert app;
+        Contact contact = new Contact(
+            FirstName = 'fname',
+            LastName = 'lname',
+            AccountId = airline.Id,
+            Membership_Function__c = 'Cargo',
+            User_Portal_Status__c = 'Approved Admin',
+            PaConf_Representative__c = true
+        );
+        insert contact;
+
+        insert new Portal_Application_Right__c(
+            Portal_Application__c = app.Id,
+            Contact__c = contact.Id,
+            Right__c = 'Access Granted'
+        );
+
+        Test.startTest();
+        contact.put(visibility.Checkbox_Fieldname__c,true);
+        update contact;
+        Test.stopTest();
+
+        Contact result = [
+            SELECT Id, 
+                (SELECT Id FROM Portal_Application_Rights__r
+                WHERE Portal_Application__c = :app.Id
+                AND Right__c = 'Access Granted')
+            FROM Contact
+            WHERE Id = :contact.Id
+        ];
+        System.assertEquals(1,result.Portal_Application_Rights__r.size());
+    }
+
+    // Grant service on update when there is an app right record with denied
+    @isTest
+    private static void testGrantAccessToPortalAppsOnUpdate3() {
+        Account airline  = new Account(Name='testAirline', Sector__c = 'Airline');
+        insert airline;
+
+        Portal_Application_Contact_Visibility__mdt visibility = [
+                SELECT Id, Checkbox_Fieldname__c, Parent__r.MasterLabel
+                FROM Portal_Application_Contact_Visibility__mdt
+                WHERE Add_Service_On_Checked__c = true
+                LIMIT 1];
+        System.assert(visibility!=null);
+        System.assert(visibility.Checkbox_Fieldname__c!=null);
+        System.assert(visibility.Parent__r.MasterLabel!=null);
+
+        // create app
+        Portal_Applications__c app = new Portal_Applications__c(
+            Name=visibility.Parent__r.MasterLabel
+        );
+        insert app;
+        Contact contact = new Contact(
+            FirstName = 'fname',
+            LastName = 'lname',
+            AccountId = airline.Id,
+            Membership_Function__c = 'Cargo',
+            User_Portal_Status__c = 'Approved Admin',
+            PaConf_Representative__c = true
+        );
+        insert contact;
+
+        insert new Portal_Application_Right__c(
+            Portal_Application__c = app.Id,
+            Contact__c = contact.Id,
+            Right__c = 'Access Denied'
+        );
+
+        Test.startTest();
+        contact.put(visibility.Checkbox_Fieldname__c,true);
+        update contact;
+        Test.stopTest();
+
+        Contact result = [
+            SELECT Id, 
+                (SELECT Id FROM Portal_Application_Rights__r
+                WHERE Portal_Application__c = :app.Id
+                AND Right__c = 'Access Granted')
+            FROM Contact
+            WHERE Id = :contact.Id
+        ];
+        System.assertEquals(1,result.Portal_Application_Rights__r.size());
+    }
+
+    // Revoke service on update when there is an app right record with Granted
+    @isTest
+    private static void testRevokeAccessToPortalAppsOnUpdate1() {
+        Account airline  = new Account(Name='testAirline', Sector__c = 'Airline');
+        insert airline;
+
+        Portal_Application_Contact_Visibility__mdt visibility = [
+                SELECT Id, Checkbox_Fieldname__c, Parent__r.MasterLabel
+                FROM Portal_Application_Contact_Visibility__mdt
+                WHERE Add_Service_On_Checked__c = true
+                LIMIT 1];
+        System.assert(visibility!=null);
+        System.assert(visibility.Checkbox_Fieldname__c!=null);
+        System.assert(visibility.Parent__r.MasterLabel!=null);
+
+        // create app
+        Portal_Applications__c app = new Portal_Applications__c(
+            Name=visibility.Parent__r.MasterLabel
+        );
+        insert app;
+        Contact contact = new Contact(
+            FirstName = 'fname',
+            LastName = 'lname',
+            AccountId = airline.Id,
+            Membership_Function__c = 'Cargo',
+            User_Portal_Status__c = 'Approved Admin',
+            PaConf_Representative__c = true
+        );
+        contact.put(visibility.Checkbox_Fieldname__c,true);
+        insert contact;
+
+        Contact result = [
+            SELECT Id, 
+                (SELECT Id FROM Portal_Application_Rights__r
+                WHERE Portal_Application__c = :app.Id
+                AND Right__c = 'Access Granted')
+            FROM Contact
+            WHERE Id = :contact.Id
+        ];
+
+        System.assertEquals(1,result.Portal_Application_Rights__r.size());
+
+        Test.startTest();
+        contact.put(visibility.Checkbox_Fieldname__c,false);
+        update contact;
+        Test.stopTest();
+
+        result = [
+            SELECT Id, 
+                (SELECT Id FROM Portal_Application_Rights__r
+                WHERE Portal_Application__c = :app.Id
+                AND Right__c = 'Access Denied')
+            FROM Contact
+            WHERE Id = :contact.Id
+        ];
+        System.assertEquals(1,result.Portal_Application_Rights__r.size());
+    }
+
+    // Revoke service on update when there is an app right record with Denied
+    @isTest
+    private static void testRevokeAccessToPortalAppsOnUpdate2() {
+        Account airline  = new Account(Name='testAirline', Sector__c = 'Airline');
+        insert airline;
+
+        Portal_Application_Contact_Visibility__mdt visibility = [
+                SELECT Id, Checkbox_Fieldname__c, Parent__r.MasterLabel
+                FROM Portal_Application_Contact_Visibility__mdt
+                WHERE Add_Service_On_Checked__c = true
+                LIMIT 1];
+        System.assert(visibility!=null);
+        System.assert(visibility.Checkbox_Fieldname__c!=null);
+        System.assert(visibility.Parent__r.MasterLabel!=null);
+
+        // create app
+        Portal_Applications__c app = new Portal_Applications__c(
+            Name=visibility.Parent__r.MasterLabel
+        );
+        insert app;
+        Contact contact = new Contact(
+            FirstName = 'fname',
+            LastName = 'lname',
+            AccountId = airline.Id,
+            Membership_Function__c = 'Cargo',
+            User_Portal_Status__c = 'Approved Admin',
+            PaConf_Representative__c = true
+        );
+        contact.put(visibility.Checkbox_Fieldname__c,true);
+        insert contact;
+
+        Contact result = [
+            SELECT Id, 
+                (SELECT Id FROM Portal_Application_Rights__r
+                WHERE Portal_Application__c = :app.Id)
+            FROM Contact
+            WHERE Id = :contact.Id
+        ];
+        System.assertEquals(1,result.Portal_Application_Rights__r.size());
+        Portal_Application_Right__c right = result.Portal_Application_Rights__r[0];
+        right.Right__c = 'Access Denied';
+        update right;
+
+        Test.startTest();
+        contact.put(visibility.Checkbox_Fieldname__c,false);
+        update contact;
+        Test.stopTest();
+
+        result = [
+            SELECT Id, 
+                (SELECT Id FROM Portal_Application_Rights__r
+                WHERE Portal_Application__c = :app.Id
+                AND Right__c = 'Access Denied')
+            FROM Contact
+            WHERE Id = :contact.Id
+        ];
+        System.assertEquals(1,result.Portal_Application_Rights__r.size());
+    }
+
+    // Revoke service on update when there is no app right record
+    @isTest
+    private static void testRevokeAccessToPortalAppsOnUpdate3() {
+        Account airline  = new Account(Name='testAirline', Sector__c = 'Airline');
+        insert airline;
+
+        Portal_Application_Contact_Visibility__mdt visibility = [
+                SELECT Id, Checkbox_Fieldname__c, Parent__r.MasterLabel
+                FROM Portal_Application_Contact_Visibility__mdt
+                WHERE Add_Service_On_Checked__c = true
+                LIMIT 1];
+        System.assert(visibility!=null);
+        System.assert(visibility.Checkbox_Fieldname__c!=null);
+        System.assert(visibility.Parent__r.MasterLabel!=null);
+
+        // create app
+        Portal_Applications__c app = new Portal_Applications__c(
+            Name=visibility.Parent__r.MasterLabel
+        );
+        insert app;
+        Contact contact = new Contact(
+            FirstName = 'fname',
+            LastName = 'lname',
+            AccountId = airline.Id,
+            Membership_Function__c = 'Cargo',
+            User_Portal_Status__c = 'Approved Admin',
+            PaConf_Representative__c = true
+        );
+        contact.put(visibility.Checkbox_Fieldname__c,true);
+        insert contact;
+
+        Contact result = [
+            SELECT Id, 
+                (SELECT Id FROM Portal_Application_Rights__r
+                WHERE Portal_Application__c = :app.Id)
+            FROM Contact
+            WHERE Id = :contact.Id
+        ];
+        if (result.Portal_Application_Rights__r.size()>0) {
+            delete result.Portal_Application_Rights__r;
+        }
+
+        Test.startTest();
+        contact.put(visibility.Checkbox_Fieldname__c,false);
+        update contact;
+        Test.stopTest();
+
+        result = [
+            SELECT Id, 
+                (SELECT Id FROM Portal_Application_Rights__r
+                WHERE Portal_Application__c = :app.Id)
+            FROM Contact
+            WHERE Id = :contact.Id
+        ];
+        System.assertEquals(0,result.Portal_Application_Rights__r.size());
+    }
+
+    @isTest
+    private static void testallowOnlyOneDistributionRiskLeader_Insert1() {
+        Account airline  = new Account(Name='testAirline', Sector__c = 'Airline');
+        insert airline;
+
+        Contact contact1 = new Contact(
+            FirstName = 'fname',
+            LastName = 'lname',
+            AccountId = airline.Id,
+            Membership_Function__c = 'Cargo',
+            User_Portal_Status__c = 'Approved Admin',
+            Airline_Credit_Risk_Manager__c = true
+        );
+
+        Contact contact2 = new Contact(
+            FirstName = 'fname2',
+            LastName = 'lname2',
+            AccountId = airline.Id,
+            Membership_Function__c = 'Cargo',
+            User_Portal_Status__c = 'Approved Admin',
+            Airline_Credit_Risk_Manager__c = true
+        );
+
+        Test.startTest();
+        insert contact1;
+        try {
+            insert contact2;
+            System.assert(false,'Exception expected');
+        } catch (Exception e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void testallowOnlyOneDistributionRiskLeader_Insert2() {
+        Account airline  = new Account(Name='testAirline', Sector__c = 'Airline');
+        insert airline;
+
+        Contact contact1 = new Contact(
+            FirstName = 'fname',
+            LastName = 'lname',
+            AccountId = airline.Id,
+            Membership_Function__c = 'Cargo',
+            User_Portal_Status__c = 'Approved Admin',
+            Airline_Credit_Risk_Manager__c = true
+        );
+
+        Contact contact2 = new Contact(
+            FirstName = 'fname2',
+            LastName = 'lname2',
+            AccountId = airline.Id,
+            Membership_Function__c = 'Cargo',
+            User_Portal_Status__c = 'Approved Admin',
+            Airline_Credit_Risk_Manager__c = true
+        );
+
+        Test.startTest();
+        try {
+            insert new list<Contact>{contact1,contact2};
+            System.assert(false,'Exception expected');
+        } catch (Exception e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void testallowOnlyOneDistributionRiskLeader_Update() {
+        Account airline  = new Account(Name='testAirline', Sector__c = 'Airline');
+        insert airline;
+
+        Contact contact1 = new Contact(
+            FirstName = 'fname',
+            LastName = 'lname',
+            AccountId = airline.Id,
+            Membership_Function__c = 'Cargo',
+            User_Portal_Status__c = 'Approved Admin',
+            Airline_Credit_Risk_Manager__c = true
+        );
+
+        Contact contact2 = new Contact(
+            FirstName = 'fname2',
+            LastName = 'lname2',
+            AccountId = airline.Id,
+            Membership_Function__c = 'Cargo',
+            User_Portal_Status__c = 'Approved Admin',
+            Airline_Credit_Risk_Manager__c = true
+        );
+
+        Test.startTest();
+        insert contact1;
+        try {
+            upsert new list<Contact>{contact1,contact2};
+            System.assert(false,'Exception expected');
+        } catch (Exception e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
 }

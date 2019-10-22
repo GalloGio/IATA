@@ -3243,7 +3243,9 @@ IF(TEXT(CEO_CFO__c)=&quot;CCO&quot;,IMAGE(&quot;/resource/CCO_Contact_image&quot
 &amp;&quot; &quot;&amp;
 IF(TEXT(CEO_CFO__c)=&quot;CIO&quot;,IMAGE(&quot;/resource/CIO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
-IF(Airline_Credit_Risk_Manager__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000002rRZF&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+IF(Airline_Credit_Risk_Manager__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000007L6nF&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(Distribution_Risk_Expert__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000007L6nK&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
 IF(PSG_Member__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SgT&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
@@ -3281,7 +3283,7 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
         <fullName>Airline_Credit_Risk_Manager__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Agent Credit Risk Manager</label>
+        <label>Distribution Risk Leader</label>
         <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6952,6 +6954,14 @@ IF(Account.IATACode__c != &apos;&apos;
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Distribution_Risk_Expert__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Distribution Risk Expert</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>DoNotCall</fullName>
         <trackHistory>false</trackHistory>
     </fields>
@@ -7146,6 +7156,57 @@ Formula field that copies the E&amp;F Type.</description>
     <fields>
         <fullName>Email</fullName>
         <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Email_Status_Update__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Status Update</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Email_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Invalid</fullName>
+                    <default>false</default>
+                    <label>Invalid</label>
+                </value>
+                <value>
+                    <fullName>Missing</fullName>
+                    <default>false</default>
+                    <label>Missing</label>
+                </value>
+                <value>
+                    <fullName>Bad Email</fullName>
+                    <default>false</default>
+                    <label>Bad Email</label>
+                </value>
+                <value>
+                    <fullName>Do not Email</fullName>
+                    <default>false</default>
+                    <label>Do not Email</label>
+                </value>
+                <value>
+                    <fullName>Email</fullName>
+                    <default>false</default>
+                    <label>Email</label>
+                </value>
+                <value>
+                    <fullName>Unknown</fullName>
+                    <default>true</default>
+                    <label>Unknown</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Espiritu_Survey_Answered__c</fullName>
@@ -15526,6 +15587,33 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Email_Status__c</picklist>
+            <values>
+                <fullName>Bad Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Do not Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Missing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Fax_Status__c</picklist>
             <values>
                 <fullName>Bad Number</fullName>
@@ -18389,6 +18477,33 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Email_Status__c</picklist>
+            <values>
+                <fullName>Bad Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Do not Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Missing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unknown</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Fax_Status__c</picklist>
             <values>
                 <fullName>Bad Number</fullName>
@@ -20018,6 +20133,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>
+        <fullName>ACRM_DRL_DRM_must_have_Job_Function</fullName>
+        <active>true</active>
+        <description>Distribution Risk Leader or Expert must have a Job Function</description>
+        <errorConditionFormula>AND(
+  OR(Airline_Credit_Risk_Manager__c, Distribution_Risk_Expert__c),
+		ISBLANK(Membership_Function__c)
+)</errorConditionFormula>
+        <errorDisplayField>Membership_Function__c</errorDisplayField>
+        <errorMessage>You must select a Job Function if this contact is a Distribution Risk Leader or Expert</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>ACRM_can_only_be_under_an_airline</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
@@ -20179,6 +20305,13 @@ Account.RecordType.DeveloperName = &quot;IATA_Agency&quot;
         <errorConditionFormula>aND(S_BSPlink__c&lt;&gt;0,ischanged(Email),$User.Username&lt;&gt;&quot;oscarl@iata.org&quot;,$User.Username&lt;&gt;&quot;rovedaa@iata.org&quot;,
 NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionFormula>
         <errorMessage>Changing a BSPlink user&apos;s email may cause problems with SSO.If the user&apos;s access to BSPlink is to be switched to another email, do the changes in BSPlink. Otherwise if the contact is changing their email, please post a comment on the portal chatter group</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Email_Update_Date_Must_be_Added</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND(ISCHANGED( Email_Status__c ), OR( Email_Status_Update__c    &lt;    TODAY(), ISNULL( Email_Status_Update__c  )))</errorConditionFormula>
+        <errorDisplayField>Email_Status_Update__c</errorDisplayField>
+        <errorMessage>Email Status has been modified, please enter update date</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Has_Authorized_Signatory_External</fullName>

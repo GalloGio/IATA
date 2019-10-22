@@ -923,8 +923,7 @@ public class ISSP_AvailableServices_Test {
         insert account;
 
         Test.startTest();
-        ISSP_AvailableServices controller = new ISSP_AvailableServices();
-        list<String> result = controller.getVisibleApplicationNames(account);
+        list<String> result = PortalApplicationSettingHelper.getVisibleApplicationNames(account);
         Test.stopTest();
     }
 }
