@@ -559,9 +559,9 @@ public class AMS_AccountTriggerHandler {
 
         Map<Id, IATA_ISO_City__c> citiesMap =  new Map<Id, IATA_ISO_City__c>([SELECT Name FROM IATA_ISO_City__c WHERE Id in :citiesIds]);
         
-        Map<Id, IATA_ISO_State__c> statesMap = new Map<Id, IATA_ISO_State__c>([SELECT Name FROM IATA_ISO_State__c WHERE Id in :statesIds]);
+        Map<Id, IATA_ISO_State__c> statesMap = new Map<Id, IATA_ISO_State__c>(IATAIsoStateDAO.getIsoStatesByIds(statesIds));
         
-        Map<Id, IATA_ISO_Country__c> countriesMap = new Map<Id, IATA_ISO_Country__c>([SELECT Name FROM IATA_ISO_Country__c WHERE Id in :countriesIds]);
+        Map<Id, IATA_ISO_Country__c> countriesMap = new Map<Id, IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(countriesIds));
         
         updateAddressAccordingToLookup(accs, citiesMap, statesMap, countriesMap, oldMap);        
     }
@@ -569,13 +569,13 @@ public class AMS_AccountTriggerHandler {
     private static void updateAddressAccordingToLookup(List<Account> accs, Map<Id, IATA_ISO_City__c> citiesMap, Map<Id, IATA_ISO_State__c> statesMap, Map<Id, IATA_ISO_Country__c> countriesMap, Map<Id,Account> oldMap ){
         
         for(Account a : accs){
-            if(oldMap.get(a.Id).Geoname_Billing_City__c != a.Geoname_Billing_City__c && a.Geoname_Billing_City__c != null) a.BillingCity  =  citiesMap.get(a.Geoname_Billing_City__c).Name ;
-            if(oldMap.get(a.Id).IATA_ISO_Billing_State__c != a.IATA_ISO_Billing_State__c && a.IATA_ISO_Billing_State__c != null) a.BillingState = statesMap.get(a.IATA_ISO_Billing_State__c).Name;
-            if(oldMap.get(a.Id).IATA_ISO_Country__c != a.IATA_ISO_Country__c && a.IATA_ISO_Country__c != null) a.BillingCountry = countriesMap.get(a.IATA_ISO_Country__c).Name;
+            if(oldMap.get(a.Id).Geoname_Billing_City__c != a.Geoname_Billing_City__c && a.Geoname_Billing_City__c != null) a.BillingCity  =  citiesMap.get(a.Geoname_Billing_City__c)!=null?citiesMap.get(a.Geoname_Billing_City__c).Name:null;
+            if(oldMap.get(a.Id).IATA_ISO_Billing_State__c != a.IATA_ISO_Billing_State__c && a.IATA_ISO_Billing_State__c != null) a.BillingState = statesMap.get(a.IATA_ISO_Billing_State__c)!=null?statesMap.get(a.IATA_ISO_Billing_State__c).Name:null;
+            if(oldMap.get(a.Id).IATA_ISO_Country__c != a.IATA_ISO_Country__c && a.IATA_ISO_Country__c != null) a.BillingCountry = countriesMap.get(a.IATA_ISO_Country__c)!=null?countriesMap.get(a.IATA_ISO_Country__c).Name:null;
 
-            if(oldMap.get(a.Id).Geoname_Shipping_City__c != a.Geoname_Shipping_City__c &&  a.Geoname_Shipping_City__c != null )  a.ShippingCity = citiesMap.get(a.Geoname_Shipping_City__c).Name;
-            if(oldMap.get(a.Id).IATA_ISO_Shipping_State__c != a.IATA_ISO_Shipping_State__c && a.IATA_ISO_Shipping_State__c != null) a.ShippingState = statesMap.get(a.IATA_ISO_Shipping_State__c).Name ;
-            if(oldMap.get(a.Id).IATA_ISO_Shipping_Country__c != a.IATA_ISO_Shipping_Country__c && a.IATA_ISO_Shipping_Country__c != null) a.ShippingCountry =  countriesMap.get(a.IATA_ISO_Shipping_Country__c).Name;
+            if(oldMap.get(a.Id).Geoname_Shipping_City__c != a.Geoname_Shipping_City__c &&  a.Geoname_Shipping_City__c != null )  a.ShippingCity = citiesMap.get(a.Geoname_Shipping_City__c)!=null?citiesMap.get(a.Geoname_Shipping_City__c).Name:null;
+            if(oldMap.get(a.Id).IATA_ISO_Shipping_State__c != a.IATA_ISO_Shipping_State__c && a.IATA_ISO_Shipping_State__c != null) a.ShippingState = statesMap.get(a.IATA_ISO_Shipping_State__c)!=null?statesMap.get(a.IATA_ISO_Shipping_State__c).Name:null;
+            if(oldMap.get(a.Id).IATA_ISO_Shipping_Country__c != a.IATA_ISO_Shipping_Country__c && a.IATA_ISO_Shipping_Country__c != null) a.ShippingCountry =  countriesMap.get(a.IATA_ISO_Shipping_Country__c)!=null?countriesMap.get(a.IATA_ISO_Shipping_Country__c).Name:null;
         }        
     }
 

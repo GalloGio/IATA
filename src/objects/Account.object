@@ -13707,7 +13707,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
                 <operation>equals</operation>
                 <valueField>$Source.IATA_ISO_Country__c</valueField>
             </filterItems>
-            <isOptional>false</isOptional>
+            <isOptional>true</isOptional>
         </lookupFilter>
         <referenceTo>IATA_ISO_State__c</referenceTo>
         <relationshipLabel>Accounts</relationshipLabel>

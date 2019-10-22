@@ -37,7 +37,7 @@ private class IECAddress_Svc_Test
 			insert accountHQ1;
 			Account accountHQ2 = new Account(Name = 'Test HQ 2', Sector__c = 'Test', Category__c = 'Test'
 			                               , BillingStreet ='Billing Street 2', BillingCity= 'Billing City 2', BillingPostalCode ='H0H0H0'
-			                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateOntario.Id
+			                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Shipping_Country__c = countryCanada.Id,IATA_ISO_Billing_State__c = stateOntario.Id
 			                               , ShippingStreet ='Shipping Street 2', ShippingCity = 'Shipping City 2', ShippingPostalCode ='H0H0H0'
 			                               , IATA_ISO_Shipping_State__c = stateOntario.Id);
 			insert accountHQ2;
