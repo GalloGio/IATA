@@ -1,26 +1,30 @@
 <template>
-
     <c-portal-page-container>
         <span slot="componentContent">
 			<div class="breadcrumbsHeight slds-p-top_xsmall slds-p-bottom_medium">
 				<c-portal-breadcrumbs></c-portal-breadcrumbs> 
 			</div>
-            <div class="slds-grid slds-wrap slds-gutters_medium">
-                
-                <!-- Portal Case Details Header -->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium no-show slds-text-right">
+                {label.CSP_Printed_Date}: {now}
+            </div>
+            <div class="headerBarLogo slds-p-horizontal_x-small">
+                <span>
+                    <img src={logoIcon}>
+                </span>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-top_large slds-m-bottom_xxsmall slds-text-right">
+                <span
+                    class="print-action slds-p-left_medium text-bold text-xxsmall text-blue" onclick={toPDF} onmousedown={downloadedOn}>{label.CSP_Print} <img src={printIcon}>
+                </span>
+            </div>
+            <div class="slds-grid slds-wrap slds-gutters_medium" id="contentPdf">
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium" >
                     <c-portal-case-details-header></c-portal-case-details-header>
                 </div>
-
-                <!-- Portal Case Details Details -->
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium" >
                     <c-portal-case-details-details></c-portal-case-details-details>
                 </div>
-
-                <!-- Portal Case Details Messaging was moved to PortalCaseDetailsDetails (Moved on MTSL-810)-->
-
             </div>
         </span>
     </c-portal-page-container>
-    
 </template>
