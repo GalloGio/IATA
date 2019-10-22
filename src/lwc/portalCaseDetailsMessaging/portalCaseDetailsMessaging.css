@@ -52,3 +52,11 @@ textarea:focus{
 .breakWord{
     word-break: break-all;
 }
+.collapsed{
+    visibility: collapse;
+    display: none;
+}
+
+.arrowExpanded{
+    transform: rotate(90deg);
+}
