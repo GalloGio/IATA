@@ -3,6 +3,7 @@
     <aura:attribute name="record" type="Account"/>
     <aura:attribute name="manager" type="Object"/>
     <aura:attribute name="canEdit" type="Boolean"/>
+    <aura:attribute name="canCancel" type="Boolean" default="true"/>
     <aura:attribute name="haveAMPAgencyManagement" type="Boolean" default="true"/>
     <aura:attribute name="canEditOtherTypeofSubsidiaries" type="Boolean" default="true"/>
     <aura:attribute name="otherTypeofSubsidiariesToEdit" type="Boolean" default="false"/>
@@ -136,6 +137,9 @@
                         </div>    
                     </aura:if>       
                 </aura:if>  
+                <aura:if isTrue="{!!v.canEditOtherTypeofSubsidiaries}">
+                        <lightning:textarea disabled="true" class="slds-p-top_x-small slds-p-horizontal_x-small" value="{!v.record.Other_Type_of_Subsidiaries__c}" label="Other Type of Subsidiaries"/>
+                </aura:if> 
             </div>            
         </div>
     </div>

@@ -42,6 +42,7 @@
             "accountDetails": component.get("v.record")
         });
         action.setCallback(this, function(response) {
+            component.set('v.canCancel',true);
             var state = response.getState();
             console.log("state", state);
             if (component.isValid() && state === "SUCCESS") {
