@@ -6315,12 +6315,17 @@ public without sharing class ISSP_AMS_Accreditation {
                     if (hqAccount.Status__c != 'Terminated' || hqAccount.Status__c == null) {
                         if (hqAccount.ShippingStreet == null){
                             hqAccount.ShippingStreet.addError(Label.ISSP_YouMustEnter);
-                            accountUpdated = false;
+                            errorFound = true;
                         }
 
                         if (hqAccount.ShippingCity == null){
                             hqAccount.ShippingCity.addError(Label.ISSP_YouMustEnter);
-                            accountUpdated = false;
+                            errorFound = true;
+                        }
+
+                        if (hqAccount.ShippingCountry == null){
+                            hqAccount.ShippingCountry.addError(Label.ISSP_YouMustEnter);
+                            errorFound = true;
                         }
                     } 
 
