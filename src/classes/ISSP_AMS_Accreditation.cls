@@ -1457,13 +1457,13 @@ public without sharing class ISSP_AMS_Accreditation {
 
     private Map<Id,Account> getSelectedBranchList(List<String> branchCodes) {
         if(newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry' && isNoticeOfChange)
-            return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id
+            return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id, IATA_ISO_Country__r.AMS_Settlement_System__c
                 FROM Account
                 WHERE IATACode__c IN :branchCodes AND Location_Type__c = :AMS_Utils.HE
                 AND Status__c NOT IN ('Terminated','Not accreditated', 'Not in operation', 'Listed','')
                 ORDER BY Name, IATACode__c]);
         else
-            return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id
+            return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id, IATA_ISO_Country__r.AMS_Settlement_System__c
                 FROM Account
                 WHERE IATACode__c IN :branchCodes
                 ORDER BY Name, IATACode__c]);
@@ -6970,6 +6970,32 @@ public without sharing class ISSP_AMS_Accreditation {
                 errorFound = true;
             }
         }
+
+		if (isNoticeOfChange && newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry')
+		{
+			// all the accounts accounts
+			List<String> accounts = (newForm.Agency_Codes_Concerned__c == null ? '' : newForm.Agency_Codes_Concerned__c).split(','); // the selected accounts
+			for (Account a : getBranchList(true)) // the hierarchy accounts
+				accounts.add(a.IataCode__c);
+			accounts.add(hqAccount.IATACode__c); // self account
+			List<String> accountCodes = new List<String>();
+			for (String account : accounts)
+			{
+				if (String.isNotBlank(account))
+					accountCodes.add(account);
+			}
+
+			// check BSP
+			Set<String> addedCountries = new Set<String>();
+			for (Account a : getSelectedBranchList(accountCodes).values())
+				addedCountries.add(a.IATA_ISO_Country__r.AMS_Settlement_System__c);
+			
+			if (addedCountries.size() < 2)
+			{
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_MC_Conversion_Countries));
+				errorFound = true;
+			}
+		}
 
         //Finally need to check that Local Address fields are completed for China, for all forms (HO & BR)
         if(isocountry.Local_language_Agency_details_required__c && !isNoticeOfChange) {
