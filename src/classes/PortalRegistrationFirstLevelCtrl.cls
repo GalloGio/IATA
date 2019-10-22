@@ -595,7 +595,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                     }
                 }
 
-                User usr = [select Id from User where Id=:Userinfo.getUserId()];
+                User usr = new User(Id = UserInfo.getUserId());
                 usr.LanguageLocaleKey = langKey;
                 usr.LocaleSidKey = langKey;
                 DataBase.SaveResult sr = DataBase.update(usr);
