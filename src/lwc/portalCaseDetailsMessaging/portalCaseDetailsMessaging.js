@@ -118,12 +118,14 @@ export default class PortalHomeCalendar extends LightningElement {
     toggleCaseMessagingSection(){
         if(this.showCaseMessagingSection){
             this.showCaseMessagingSection = false;
-            this.messagingHeight = 'display:none;';
         }else{
             this.showCaseMessagingSection = true;
-            this.messagingHeight = 'display:block;height:100%;transition: height 0.3s ease;';
         }
+        this.toggleCollapsed('[data-msgdiv]', 'collapsed');
+        this.toggleCollapsed('[data-msgicon ]', 'arrowExpanded');
     }
 
-
+    toggleCollapsed(elem, cssclass) {
+        this.template.querySelector(elem).classList.toggle(cssclass);
+    }
 }

@@ -1140,6 +1140,7 @@ lightning-datatable .slds-th__action {
 .attlist .slds-table_header-fixed_container,.attlist .slds-has-focus{
    background-color: #00000000;
    overflow-x: hidden;
+   width: 100%;
 }
 .attlist .slds-has-button-menu:hover{
   	background: #f6f7f9;
@@ -1692,3 +1693,78 @@ visibility: hidden;
     display: none;
 }
   
+.topLightGrayBorder.slds-border_top {
+    border-top-width: 0px;
+}
+.no-show,
+.only-print {
+    display: none!important;
+    visibility: hidden!important;
+}
+@media print {
+    #_hj_poll_container,
+    #_hj_feedback_container,
+    .no-print,
+    .userguiding-assistant-container,
+    .navBar,
+    .newHeader{
+        display: none!important;
+        visibility: hidden!important;
+    }
+    .only-print {
+        display: block!important;
+        visibility: visible!important;
+    }
+    .customCard {
+        box-shadow: 0px 0px 0px #fff;
+        border-radius: 0px;
+        border: solid 0px #fff;
+        background-color: rgba(255, 255, 255, 1);
+    }
+    .topLightGrayBorder,
+    .topLightGrayBorder.slds-border_top {
+        border-top: 1px solid rgb(30, 50, 252)
+    }
+    .attlist .slds-scrollable_y {
+        min-height: none!important;
+        max-height: none!important;
+        height: auto;
+    }
+    .attlist th:first-child {
+        display: none;
+        max-width: 1px;
+        visibility: hidden;
+    }
+    .attlist thead th:nth-child(2) {
+        min-width: 300px;
+        max-width: 300px;
+        width: 300px;
+    }
+    .attlist tbody td:nth-child(2) {
+        min-width: 300px;
+        max-width: 300px;
+        width: 300px;
+    }
+    .customCardTitleBox .slds-col.slds-size_1-of-1.slds-medium-size_2-of-12 {
+        width: 16.6666666667%;
+    }
+    .customCardTitleBox .slds-col.slds-size_1-of-1.slds-medium-size_8-of-12 {
+        width: 66.6666666667%;
+    }
+    .customCardTitleBox .ActionNeeded span,
+    .customCardTitleBox .Open span,
+    .customCardTitleBox .InProgress span,
+    .customCardTitleBox .Escalated span,
+    .customCardTitleBox .EscalatedInternally span,
+    .customCardTitleBox .EscalatedExternally span,
+    .customCardTitleBox .ForReviewandAcceptance span,
+    .customCardTitleBox .OnHoldExternal span,
+    .customCardTitleBox .OnHoldInternal span,
+    .customCardTitleBox .Reopen span,
+    .customCardTitleBox .ClosedNotAccepted span,
+    .customCardTitleBox .InputRequested span,
+    .customCardTitleBox .PendingReconsideration span {
+        white-space: nowrap;
+        padding: 4px 6px 2px 0px;
+    }
+}
