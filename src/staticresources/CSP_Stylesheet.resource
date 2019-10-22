@@ -1602,11 +1602,13 @@ visibility: hidden;
     .no-print,
     .userguiding-assistant-container,
     .navBar,
-    .newHeader{
+    .newHeader,
+    .newFooter,
+    .breadcrumbsHeight{
         display: none!important;
         visibility: hidden!important;
     }
-    .only-print {
+    .no-show {
         display: block!important;
         visibility: visible!important;
     }
@@ -1621,8 +1623,8 @@ visibility: hidden;
         border-top: 1px solid rgb(30, 50, 252)
     }
     .attlist .slds-scrollable_y {
-        min-height: none!important;
-        max-height: none!important;
+        min-height: 1px;
+        max-height: none;
         height: auto;
     }
     .attlist th:first-child {
