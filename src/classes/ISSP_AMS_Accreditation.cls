@@ -7864,7 +7864,8 @@ system.debug('aqui sectorValue ' + sectorValue);
                                                                             Same_Legal_Entity_Agency_Form__c, Same_Legal_Entity_Agency_Account__c, Account_Name__c, Location_Type__c,
                                                                             Branch_Office_Country__r.ISO_Code__c, Trade_Name__c, ISSP_AMS_Legal_Status__c,
                                                                             SAAM_Case__r.Status, Same_Legal_Entity_Agency_Form__r.Status__c,
-                                                                            Previous_Postal_code__c, Previous_Street_Name_Number__c, Previous_City__c, Full_Address__c
+                                                                            Previous_Postal_code__c, Previous_Street_Name_Number__c, Previous_City__c, Full_Address__c,
+																			Same_Legal_Entity_Agency_Id__c
                                                                         FROM AMS_Pax_Accreditation_Form__c
                                                                         WHERE SAAM_Case__c = :newCase.Id
                                                                         ORDER BY Name ASC];
@@ -7936,25 +7937,43 @@ system.debug('aqui sectorValue ' + sectorValue);
             }
 
             if (formToDelete.AE_separate_Legal_Entity__c == 'Yes') {
-                AMS_Pax_Accreditation_Form__c formToBeUpdated;
+                AMS_Pax_Accreditation_Form__c formToBeUpdated = null;
+                List<AMS_Pax_Accreditation_Form__c> otherForms = new List<AMS_Pax_Accreditation_Form__c>();
 
-                for (AMS_Pax_Accreditation_Form__c existingMCForm: mCApplicationFormMap.values()) {
-                    if (existingMCForm.Same_Legal_Entity_Agency_Form__c == formToDelete.Id) {
+				// get the updatable forms
+                for (AMS_Pax_Accreditation_Form__c existingMCForm : mCApplicationFormMap.values())
+				{
+                    if (existingMCForm.Same_Legal_Entity_Agency_Form__c == formToDelete.Id)
+					{
+						if (formToBeUpdated == null)
+							formToBeUpdated = existingMCForm;
+						else
+							otherForms.add(existingMCForm);
+					}
+				}
+
+				// update the forms
+                for (AMS_Pax_Accreditation_Form__c existingMCForm : mCApplicationFormMap.values())
+				{
+                    if (existingMCForm.Same_Legal_Entity_Agency_Form__c == formToDelete.Id)
+					{
                         existingMCForm.AE_separate_Legal_Entity__c = 'Yes';
+						if (existingMCForm.Same_Legal_Entity_Agency_Id__c == formToDelete.Id)  // Text type, it's not automatically removed
+                        	existingMCForm.Same_Legal_Entity_Agency_Id__c = formToBeUpdated == null || existingMCForm.Id == formToBeUpdated.Id ? null : formToBeUpdated.Id;
+						existingMCForm.Same_Legal_Entity_Agency_Form__c = formToBeUpdated == null || existingMCForm.Id == formToBeUpdated.Id ? null : formToBeUpdated.Id;
                         existingMCForm.Status__c = 'InProgress';
 
                         existingMCForm.Account_Name__c = formToDelete.Account_Name__c;
                         existingMCForm.Trade_Name__c = formToDelete.Trade_Name__c;
                         existingMCForm.ISSP_AMS_Legal_Status__c = formToDelete.ISSP_AMS_Legal_Status__c;
-
-                        formToBeUpdated = existingMCForm;
-                        break;
                     }
                 }
 
-                if (formToBeUpdated != null) {
-                    copyOwnersFromOtherForm(formToBeUpdated, executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency_Form__c)));
-                    update formToBeUpdated;
+                if (formToBeUpdated != null)
+				{
+                    copyOwnersFromOtherForm(formToBeUpdated, executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToDelete.Id)));
+					otherForms.add(formToBeUpdated);
+                    update otherForms;
                 }
             }
 
