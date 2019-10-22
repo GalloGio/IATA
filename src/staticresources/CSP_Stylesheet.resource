@@ -260,7 +260,6 @@ body {
     color:#FFFFFF;
     border-radius: 1px;
     font-size: 14px;
-    text-align: right;
   	font-weight: normal;
   	font-style: normal;
   	font-stretch: normal;
