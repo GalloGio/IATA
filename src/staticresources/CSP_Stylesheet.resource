@@ -403,7 +403,7 @@ lightning-datatable .slds-th__action {
 }
 
 .Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
-.Submitted lightning-primitive-cell-wrapper lightning-formatted-text
+.Submitted lightning-primitive-cell-wrapper lightning-formatted-text,
 .Closed span, .AcceptedFutureDate span, .Submitted span {
     background-color: #b1e8b5;
     padding: 4px 6px 2px 6px;
