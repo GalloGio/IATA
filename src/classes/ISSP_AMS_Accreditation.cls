@@ -8038,7 +8038,7 @@ system.debug('aqui sectorValue ' + sectorValue);
         insert contactsToBeCreated;
     }
 
-    public void discardMCApplication() {
+    public PageReference discardMCApplication() {
         isMultiCountryStarted = false;
 
         Map<Id, Case> amsDraftCasesMap = new Map<Id, Case>(AMSDraftCases);
@@ -8048,6 +8048,10 @@ system.debug('aqui sectorValue ' + sectorValue);
         deleteFormsAux(multiCountryApplicationForms);
 
         delete [SELECT Id FROM Case WHERE Id = :newCase.Id];
+
+		PageReference pageRef = Page.ISSP_AMSCases;
+		pageRef.setRedirect(true);
+		return pageRef;
     }
 
     private static void deleteFormsAux(List<AMS_Pax_Accreditation_Form__c> formsList) {
