@@ -163,7 +163,7 @@
 				</apex:column>
 	        	<apex:column style="vertical-align: text-top;" headerClass="checkbox-td">
 	  				<apex:facet name="header">{!$Label.ISSP_AMS_Additional_Data}</apex:facet>
-	   				{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!TEXT(agencycon.Financial_interest__c)}<br/>
+	   				{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!agencycon.Financial_Interest_Formated__c}<br/>
 					{!$ObjectType.AMS_Accreditation_Contact__c.fields.Time_devoted_to_Agency_business__c.Label}: {!TEXT(agencycon.Time_devoted_to_Agency_business__c)}<br/>
 	            </apex:column>
 
@@ -226,7 +226,7 @@
                 <apex:column value="{!agencycon.IATACode__c}">
                     <apex:facet name="header">{!$ObjectType.AMS_Accreditation_Contact__c.fields.IATACode__c.Label}</apex:facet>
                 </apex:column>
-                <apex:column value="{!agencycon.Financial_interest__c}">
+                <apex:column value="{!agencycon.Financial_Interest_Formated__c}">
                     <apex:facet name="header">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}</apex:facet>
                 </apex:column>
             </apex:pageBlockTable>

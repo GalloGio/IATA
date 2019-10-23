@@ -342,7 +342,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	private Boolean checkPreviousOwnership() {
 		Decimal percentage = 0;
         
-        for (AMS_Account_Role__c ar: [SELECT Percentage__c 
+        for (AMS_Account_Role__c ar: [SELECT Percentage__c, Percentage_Formated__c
                                       FROM AMS_Account_Role__c 
                                       WHERE Account__c = :currentAccount.account.Id 
                                       AND Active__c = true 
@@ -1060,7 +1060,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 													  Person__r.Lastname__c, Person__r.Email__c, Contact__c, Contact__r.FirstName,
 													  Contact__r.LastName, Contact__r.Email, Contact__r.Phone, Contact__r.OtherStreet,
 													  Contact__r.OtherCity, Contact__r.OtherPostalCode, Contact__r.OtherCountry, Legacy_External_ID__c,
-													  Contact__r.OtherState
+													  Contact__r.OtherState, Percentage_Formated__c
 			                                     From AMS_Account_Role__c
 			                                    where Account__c in :accounts
 			                                      and RecordTypeId = :rtAccRoleOwnership
@@ -1091,7 +1091,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     }
 
     private static List<AMS_Accreditation_Contact__c> dynamicAccredContactListQuery(AccredContactEnum paramCodeWhere, Set<Id> newFormIds) {
-    	String query = 'SELECT Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, ';
+    	String query = 'SELECT Id, Financial_Interest_Formated__c, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, ';
     	query += 'Agency_role__c, Email__c,Phone__c, Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c,';
         query += 'Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c, AddressStreet__c, AddressCity__c, AddressState__c, AddressCountry__c, AddressPostcode__c,';
         query += 'Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c, PhoneNational__c, FAX__c, Company_Name_Local__c ';
@@ -2094,7 +2094,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             currentAccount.fw.newform.Copy_Ownership_Records__c = string.join(idlist,',');
 
             if(currentAccount.fw.newform.Copy_Ownership_Records__c != '') {
-				List<AMS_Accreditation_Contact__c> contacts = [SELECT Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c,
+				List<AMS_Accreditation_Contact__c> contacts = [SELECT Id, Financial_Interest_Formated__c, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c,
 															Agency_role__c, Email__c,Phone__c, Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c,
 															Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c, AddressStreet__c, AddressCity__c, AddressState__c, AddressCountry__c, AddressPostcode__c,
 															Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c, PhoneNational__c, FAX__c, Company_Name_Local__c

@@ -442,7 +442,7 @@
                             </apex:column>
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" styleClass="paddedCell">
                                 <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Q3_Contact_Details}</apex:facet>
-                                <span style="display:{!IF(agencycon.Financial_interest__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!agencycon.Financial_interest__c}</span><br/>
+                                <span style="display:{!IF(agencycon.Financial_interest__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!agencycon.Financial_Interest_Formated__c}</span><br/>
                                 <!--<span style="display:{!IF(agencycon.Number_Of_Shares__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Number_Of_Shares__c.Label}: {!agencycon.Number_Of_Shares__c}</span><br/>-->
                                 <span style="display:{!IF(agencycon.Email__c == null,'none','')}">{!$ObjectType.Contact.fields.Email.Label}: {!agencycon.Email__c}</span><br/>
                                 
@@ -470,7 +470,7 @@
                             </apex:column>
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" styleClass="paddedCell">
                                 <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Q3_Contact_Details}</apex:facet>
-                                <span style="display:{!IF(agencycon.Financial_interest__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!agencycon.Financial_interest__c}</span><br/>
+                                <span style="display:{!IF(agencycon.Financial_interest__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!agencycon.Financial_Interest_Formated__c}</span><br/>
                                 <!--<span style="display:{!IF(agencycon.Number_Of_Shares__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Number_Of_Shares__c.Label}: {!agencycon.Number_Of_Shares__c}</span><br/>-->
                                 <span style="display:{!IF(agencycon.Email__c == null,'none','')}">{!$ObjectType.Contact.fields.Email.Label}: {!agencycon.Email__c}</span><br/>
                                 
@@ -496,7 +496,7 @@
                               <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name}"/>
                               <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Registration_number__c.Label}" value="{!agencycon.Registration_number__c}"/>
                               <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.IATACode__c.Label}" value="{!agencycon.IATACode__c}"/>
-                              <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_interest__c}"/>
+                              <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_Interest_Formated__c}"/>
                           </apex:dataTable>
                  </apex:outputPanel>
                 <apex:outputPanel rendered="{!hqAccount.Company_Type__c=='S'}"></apex:outputPanel>
@@ -507,7 +507,7 @@
                             <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name}"/>
                             <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Registration_number__c.Label}" value="{!agencycon.Registration_number__c}"/>
                             <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.IATACode__c.Label}" value="{!agencycon.IATACode__c}"/>
-                            <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_interest__c}"/>
+                            <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_Interest_Formated__c}"/>
                         </apex:dataTable>
                     </apex:outputPanel>
                     <apex:outputPanel layout="block" rendered="{!NOT(AND(newForm.Notify_Change_Ownership__c,List_CurrentCompanies.size>0))}"><!--In case no new companies--></apex:outputPanel>

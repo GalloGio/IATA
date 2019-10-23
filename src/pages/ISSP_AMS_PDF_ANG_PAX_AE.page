@@ -358,7 +358,7 @@
                                                     {!agencycon.AddressCountry__c}
                                                 </td>
                                                 <td>
-                                                    <span class="inner-title">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}:</span> {!TEXT(agencycon.Financial_interest__c)}<br/>
+                                                    <span class="inner-title">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}:</span> {!agencycon.Financial_Interest_Formated__c}<br/>
                                                     <span class="inner-title">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Time_devoted_to_Agency_business__c.Label}:</span> {!TEXT(agencycon.Time_devoted_to_Agency_business__c)}<br/>
                                                     <span class="inner-title">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Date_joined_agency__c.Label}:</span> {!TEXT(agencycon.Date_joined_agency__c)}<br/>
                                                     <span class="inner-title">{!$Label.ISSP_MyProfile_TITLE}:</span> {!agencycon.Job_title__c}
@@ -416,7 +416,7 @@
                                                 <td>{!agencycon.Name} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Company_Name_Local__c + ')','')}</td>
                                                 <td>{!agencycon.Registration_number__c}</td>
                                                 <td>{!agencycon.IATACode__c}</td>
-                                                <td>{!agencycon.Financial_interest__c}</td>
+                                                <td>{!agencycon.Financial_Interest_Formated__c}</td>
                                             </tr>
                                         </apex:repeat>
                                     </table>

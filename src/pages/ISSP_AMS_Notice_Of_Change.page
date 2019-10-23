@@ -1277,7 +1277,7 @@
 								<apex:column headerValue="{!$Label.ISSP_Owner}" value="{!owner.Name}"/>										
 								<apex:column footerClass="tbFooter" footerValue="TOTAL" headerValue="{!$Label.LAQ_Type}" value="{!$Label.ISSP_AMS_NoC_Curr_Company_Owner}" rendered="{!owner.RecordType.DeveloperName=='Previous_Company_Owner' && newForm.Is_change_ownership_or_shareholding__c}"/>
 								<apex:column footerClass="tbFooter" footerValue="TOTAL" headerValue="{!$Label.LAQ_Type}" value="{!$Label.ISSP_AMS_NoC_Current_Owner}" rendered="{!owner.RecordType.DeveloperName!='Previous_Company_Owner' && newForm.Is_change_ownership_or_shareholding__c}"/>
-								<apex:column footerValue="{!ROUND(Prev_Ownership_Total, 2)}%" value="{!owner.Financial_interest__c}"/>
+								<apex:column value="{!owner.Financial_Interest_Formated__c}"/>
 						</apex:pageBlockTable>
                     </apex:outputPanel>
                     
@@ -1290,7 +1290,7 @@
 								<apex:column headerValue="{!$Label.ISSP_Owner}" value="{!owner.Name}"/>
 								<apex:column footerClass="tbFooter" footerValue="TOTAL" headerValue="{!$Label.LAQ_Type}" value="{!$Label.ISSP_AMS_NoC_Prev_Company_Owner}" rendered="{!owner.RecordType.DeveloperName=='Current_Company_Owner'}"/>
 								<apex:column footerClass="tbFooter" footerValue="TOTAL" headerValue="{!$Label.LAQ_Type}" value="{!$Label.ISSP_AMS_NoC_Previous_Owner}" rendered="{!owner.RecordType.DeveloperName!='Current_Company_Owner'}"/>
-								<apex:column footerValue="{!ROUND(Curr_Ownership_Total, 2)}%" value="{!owner.Financial_interest__c}">
+								<apex:column value="{!owner.Financial_Interest_Formated__c}">
                                 	<apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Financial_Interest}"/></apex:facet>
 								</apex:column>
 							</apex:pageBlockTable> 
@@ -1307,7 +1307,7 @@
 							<apex:column value="{!agencycon.Agency_role__c}" >
 								<apex:facet name="header"><apex:outputText escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/></apex:facet>
 							</apex:column>
-							<apex:column headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_interest__c}"/>
+							<apex:column headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_Interest_Formated__c}"/>
                             
 							<apex:column >
 								<apex:actionStatus id="actEditContact" >
@@ -1347,7 +1347,7 @@
 							<apex:column id="roleTitle" value="{!agencycon.Agency_role__c}" >
 								<apex:facet name="header"><apex:outputText escape="false" value="{!CASE(roleLabelTypeAfterChange, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/></apex:facet>
 							</apex:column>
-                            <apex:column value="{!agencycon.Financial_interest__c}">
+                            <apex:column value="{!agencycon.Financial_Interest_Formated__c}">
                             	<apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Financial_Interest}"/></apex:facet>
 							</apex:column>
 								
@@ -1390,7 +1390,7 @@
 								<apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name}"/>
 								<apex:column value="{!agencycon.Registration_number__c}"/>
 								<apex:column value="{!agencycon.IATACode__c}"/>
-								<apex:column value="{!agencycon.Financial_interest__c}"/>
+								<apex:column value="{!agencycon.Financial_Interest_Formated__c}"/>
 						</apex:pageBlockTable>
 					</apex:outputPanel>
 					
@@ -1408,7 +1408,7 @@
 							<apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name}"/>
 							<apex:column value="{!agencycon.Registration_number__c}"/>
 							<apex:column value="{!agencycon.IATACode__c}"/>
-							<apex:column value="{!agencycon.Financial_interest__c}"/>
+							<apex:column value="{!agencycon.Financial_Interest_Formated__c}"/>
 							<apex:column >
 								<apex:commandLink action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();" rerender="currCompanyList, newCompany, newOwnerQuestions">
 									<apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
