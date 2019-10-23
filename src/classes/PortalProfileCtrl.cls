@@ -59,6 +59,12 @@ public static final Id RECORDTYPE_AIRLINE_BR = RecordTypeSingleton.getInstance()
 public static final Id RECORDTYPE_AIRLINE_HQ = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 public static final list<Id> VALID_ACCOUNT_RT = new list<String> {RECORDTYPE_AGENCY, RECORDTYPE_AIRLINE_BR, RECORDTYPE_AIRLINE_HQ};
 
+
+    public static Integer RESULTS_PER_PAGE = 10;
+
+    private static PortalSearchFilterWrapper profileFiltersWrapper;
+    public static PagedResult result;
+
 	public class PortalProfileException extends Exception {}
 
 public static Contact contactInfo = new Contact();
@@ -930,4 +936,154 @@ public static Contact contactInfo = new Contact();
         }
     }
 
+    @AuraEnabled (cacheable=false)
+    public static PagedResult getFilteredProfileResultsPage(String searchKey){
+        PortalSearchFilterWrapper filtersWrapper = (PortalSearchFilterWrapper) JSON.deserialize(searchKey, PortalSearchFilterWrapper.class);
+        
+        profileFiltersWrapper = filtersWrapper;
+        
+        result = new PagedResult();
+        result.totalItemCount = 0;
+        result.records = new List<ProfileWrapper>();
+        
+        List<List<SObject>> filteredProfiles = new List<List<SObject>>();
+        
+        filteredProfiles = getSearchProfiles(filtersWrapper.searchText);
+        
+        if(!filteredProfiles.isEmpty()) {
+            for(List<SObject> listfilteredProfiles : filteredProfiles) {
+                for(SObject eachFilteredProfileResult : listfilteredProfiles) {
+                    if(eachFilteredProfileResult.getSObjectType() == Schema.Contact.getSObjectType()) {
+                        Contact eachProfileResult = (Contact)eachFilteredProfileResult;
+                        result.records.add(new ProfileWrapper(eachProfileResult.Id,eachProfileResult.Name,eachProfileResult.User_Portal_Status__c,eachProfileResult.ISO_Country__r.Name == null ? '' : eachProfileResult.ISO_Country__r.Name, 'Contact' ));
+                    }
+                    else if(eachFilteredProfileResult.getSObjectType() == Schema.Account.getSObjectType()) {
+                        Account eachProfileResult = (Account)eachFilteredProfileResult;
+                        result.records.add(new ProfileWrapper(eachProfileResult.Id,eachProfileResult.Name,'',eachProfileResult.IATA_ISO_Country__r.Name == null ? '' : eachProfileResult.IATA_ISO_Country__r.Name, 'Account'));
+                    }
+                }
+            }
+        }
+        
+        return result;
+    }
+
+    @AuraEnabled(cacheable=false)
+    public static List<List<SObject> > getSearchProfiles(String searchKey) {
+        
+        String searchStr = String.escapeSingleQuotes(searchKey);
+        String wildCardStr = '*'+searchStr+'*';
+        String baseQuery = 'FIND \''+wildCardStr+'\' IN ALL FIELDS RETURNING ';
+        String countQuery = baseQuery;
+        String countryPortalStatusFilter = '';
+        String countryFilter = '';
+        
+        Map<Id,Account> allBranches = new Map<Id,Account>([select id from account where (id =: myContact.AccountId or parentId=: myContact.AccountId or top_parent__c =: myContact.AccountId)
+			and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer'))]);
+		Set<Id> allBranchesSet = allBranches.keySet();
+
+        countryPortalStatusFilter += ' WHERE AccountId IN :allBranchesSet ' + 
+								     ' AND User_Portal_Status__c IN (\'Pending Approval\', \'Approved Admin\', \'Approved User\') ' + 
+								     ' AND Status__c = \'Active\' ';
+        
+        if(profileFiltersWrapper.profileComponent.profileCountryFilter != null && profileFiltersWrapper.profileComponent.profileCountryFilter != '') {
+                countryPortalStatusFilter += ' AND ISO_Country__r.Name = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
+        }
+        if(profileFiltersWrapper.profileComponent.profileStatusFilter != null && profileFiltersWrapper.profileComponent.profileStatusFilter != '') {
+                countryPortalStatusFilter += ' AND User_Portal_Status__c = \'' + profileFiltersWrapper.profileComponent.profileStatusFilter + '\' ';
+        }
+        if (profileFiltersWrapper.profileComponent != null && profileFiltersWrapper.profileComponent.profileTypeFilter != null && profileFiltersWrapper.profileComponent.profileTypeFilter != 'Account') {
+           
+           baseQuery += profileFiltersWrapper.profileComponent.profileTypeFilter == 'Contact' ? ' Contact (Id, Name, User_Portal_Status__c, ISO_Country__r.Name ' + countryPortalStatusFilter + ' ) ' : ' Contact (Id, Name, User_Portal_Status__c, ISO_Country__r.Name ' + countryPortalStatusFilter + ' ), ';
+        }
+        
+        if(profileFiltersWrapper.profileComponent.profileCountryFilter != null && profileFiltersWrapper.profileComponent.profileCountryFilter != '') {
+            countryFilter = ' AND IATA_ISO_Country__r.Name = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
+        }
+        if (profileFiltersWrapper.profileComponent != null && profileFiltersWrapper.profileComponent.profileTypeFilter != null && profileFiltersWrapper.profileComponent.profileTypeFilter != 'Contact') {
+            baseQuery += ' Account (Id, Name, IATA_ISO_Country__r.Name WHERE (Id = \'' + myContact.AccountId +'\' OR ParentId = \'' + myContact.AccountId + '\' OR Top_Parent__c = \'' + myContact.AccountId +'\' ) '+ countryFilter + ') ';
+        }
+        
+        List<List<SObject> > lstListResults = Search.query(baseQuery);
+        
+        if(!lstListResults.isEmpty()) {
+            result.totalItemCount = lstListResults.size() == 2 ? lstListResults[0].size() + lstListResults[1].size() : lstListResults[0].size();
+        }
+        
+        return lstListResults;
+    }
+
+    public class ProfileWrapper{
+
+        @AuraEnabled
+        public String profileId;
+        
+        @AuraEnabled
+        public String profileName;
+
+        @AuraEnabled
+        public String profilePortalStatus;
+
+        @AuraEnabled
+        public String profileCountry;
+
+        @AuraEnabled
+        public String profileType;
+        
+        @AuraEnabled
+        public String profileUrl;
+
+        public ProfileWrapper(String profileIdAux, String profileNameAux, String profilePortalStatusAux, String profileCountryAux, String profileTypeAux){
+            this.profileId = profileIdAux;
+            this.profileName = profileNameAux;
+
+            if(profilePortalStatusAux == 'Approved Admin')
+                this.profilePortalStatus = System.Label.ISSP_Administrator;
+            else if (profilePortalStatusAux == 'Approved User')
+                this.profilePortalStatus = System.Label.ISSP_Active;
+            else
+                this.profilePortalStatus = profilePortalStatusAux;
+
+            this.profileCountry = profileCountryAux;
+
+            if(profileTypeAux == 'Account'){
+                this.profileType = System.Label.Company; //instead of Account set it "Company"
+                this.profileUrl = profileIdAux == myContact.AccountId ? System.Label.CSP_PortalPath + 'company-profile' : System.Label.CSP_PortalPath + 'company-profile?account='+profileIdAux;
+            }
+            else{
+                this.profileType = profileTypeAux; //set it to "Contact"
+                this.profileUrl = profileIdAux == myContact.Id ? System.Label.CSP_PortalPath + 'my-profile' : System.Label.CSP_PortalPath + 'company-profile?contact='+profileIdAux;
+            }
+        }
+    }
+
+    public class PagedResult {
+        @AuraEnabled
+        public Integer totalItemCount { get;set; }           
+        @AuraEnabled
+        public ProfileWrapper[] records { get;set; }
+        @AuraEnabled
+        public Boolean userAdmin { get;set; }
+        @AuraEnabled
+        public String url { get;set; }
+    }   
+
+    @AuraEnabled(cacheable=true)
+    public static List<CSP_Utils.PickListWrapper> typeOfProfilePortalCustomPicklist(){
+        List<CSP_Utils.PickListWrapper> lstPickValues = new List<CSP_Utils.PickListWrapper>();
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Account',System.Label.Company ));
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Contact',System.Label.Button_Contact ));
+
+        return lstPickValues;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<CSP_Utils.PickListWrapper> userPortalStatusCustomPicklist(){
+        List<CSP_Utils.PickListWrapper> lstPickValues = new List<CSP_Utils.PickListWrapper>();
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Approved Admin', System.Label.ISSP_Contacts_PortalAdmins));
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Approved User', System.Label.ISSP_Contacts_PortalUsers));
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Pending Approval', System.Label.ISSP_Contacts_PendingApproval));
+
+        return lstPickValues;
+    }
 }

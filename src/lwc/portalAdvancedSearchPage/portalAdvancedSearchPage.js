@@ -58,7 +58,8 @@ export default class PortalAdvancedSearchPage extends LightningElement {
         }
         if (this.pageParams.highlight !== undefined && 
                 (this.pageParams.highlight === 'servicesComponent' || this.pageParams.highlight === 'casesComponent' || 
-                 this.pageParams.highlight === 'faqsComponent' || this.pageParams.highlight === 'documentsComponent')) {
+                 this.pageParams.highlight === 'faqsComponent' || this.pageParams.highlight === 'documentsComponent' || 
+                 this.pageParams.highlight === 'profileComponent')) {
             hightlightComponent = this.pageParams.highlight;
         }
 
@@ -99,6 +100,15 @@ export default class PortalAdvancedSearchPage extends LightningElement {
                 documentCategoryFilter : "",
                 documentProductCategoryFilter : "",
                 documentCountryFilter : ""
+            },
+            profileComponent : {
+                show : false,
+                loading : true,
+                highlight : false,
+                nrResults : 0,
+                profileTypeFilter : "",
+                profileCountryFilter : "",
+                profileContactStatusFilter : ""
             }
         };
 
@@ -108,6 +118,7 @@ export default class PortalAdvancedSearchPage extends LightningElement {
             filteringObjectAux.casesComponent.show = true;
             filteringObjectAux.faqsComponent.show = true;
             filteringObjectAux.documentsComponent.show = true;
+            filteringObjectAux.profileComponent.show = true;
         }else{
             filteringObjectAux[hightlightComponent].highlight = true;
 
@@ -122,6 +133,9 @@ export default class PortalAdvancedSearchPage extends LightningElement {
             }
             if(hightlightComponent === 'documentsComponent'){
                 filteringObjectAux.documentsComponent.show = true;
+            }
+            if(hightlightComponent === 'profileComponent'){
+                filteringObjectAux.profileComponent.show = true;
             }
         }
 
@@ -195,12 +209,14 @@ export default class PortalAdvancedSearchPage extends LightningElement {
             if(this.searchText.length > 2 &&
                 
                 ((filteringObjectAux.servicesComponent.nrResults === 0 && filteringObjectAux.casesComponent.nrResults === 0 &&
-                filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.nrResults === 0) ||
+                filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.nrResults === 0 && 
+                filteringObjectAux.profileComponent.nrResults === 0) ||
                 
                 (filteringObjectAux.servicesComponent.nrResults === 0 && filteringObjectAux.servicesComponent.highlight ) ||
                 (filteringObjectAux.casesComponent.nrResults === 0 && filteringObjectAux.casesComponent.highlight ) ||
                 (filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.faqsComponent.highlight ) ||
-                (filteringObjectAux.documentsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.highlight )
+                (filteringObjectAux.documentsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.highlight )||
+                (filteringObjectAux.profileComponent.nrResults === 0 && filteringObjectAux.profileComponent.highlight )
 
                 )
                 ){
