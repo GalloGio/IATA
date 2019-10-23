@@ -54,6 +54,15 @@ public without sharing class ISSP_AMS_Accreditation {
     public String amsCountryLabel {get; set;}
     public String memberairlineid {get; set;}
     public String amsAllLangCountryLabel {get; set;}
+    public String amsAllLangCountryLabelForMC
+	{
+		get
+		{
+			IATA_ISO_Country__c country = fetchISOCountry(newForm.Branch_Office_Country__r.ISO_Code__c);
+			return getAmsAllLangCountryLabel(country, UserInfo.getLanguage());
+		}
+		set;
+	}
     public String amsContactCountry {get; set;}
     public String amsOfficeType {get; set;}
     public String amsAgentType {get; set;}
