@@ -41,4 +41,12 @@ public class OneIdForgotPasswordControllerTest {
 
         Test.stopTest();
     }
+
+    @isTest
+    public static void testGetCustomerPortalUrl(){
+        Test.startTest();
+        string url = OneIdForgotPasswordController.getCustomerPortalUrl();
+        Test.stopTest();
+        System.assertNotEquals(url, null);
+    }
 }

@@ -572,4 +572,12 @@ private class OneId_RegistrationProcessControllerTest {
                                                                                                                        'shippingCityId' => String.valueOf(city.Id),
                                                                                                                        'shippingStateId' => String.valueOf(state.Id)});
      }
+
+    @isTest
+    public static void testGetCustomerPortalUrl(){
+        Test.startTest();
+        string url = OneId_RegistrationProcessController.getCustomerPortalUrl();
+        Test.stopTest();
+        System.assertNotEquals(url, null);
+    }
 }

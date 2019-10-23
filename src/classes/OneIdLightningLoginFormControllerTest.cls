@@ -207,4 +207,12 @@ private class  OneIdLightningLoginFormControllerTest {
             OneIdLightningLoginFormController.login('Test@test11111.com', 'fakepwd', null, Label.TECH_GDPR_Community_Name);
         Test.stopTest();
     }
+
+    @isTest
+    public static void testGetCustomerPortalUrl(){
+        Test.startTest();
+        string url = OneIdLightningLoginFormController.getCustomerPortalUrl();
+        Test.stopTest();
+        System.assertNotEquals(url, null);
+    }
 }
