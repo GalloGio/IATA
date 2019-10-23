@@ -1696,8 +1696,7 @@ visibility: hidden;
 .topLightGrayBorder.slds-border_top {
     border-top-width: 0px;
 }
-.no-show,
-.only-print {
+.no-show {
     display: none!important;
     visibility: hidden!important;
 }
@@ -1716,6 +1715,17 @@ visibility: hidden;
     .no-show {
         display: block!important;
         visibility: visible!important;
+    }
+    .caseMessagesOtherBubbleContainer {
+        border: 1px solid #e2e2e2;
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+    .caseMessagesSelfBubble.slds-p-around_medium,
+    .caseMessagesSelfBubble.slds-p-around--medium,
+    .caseMessagesOtherBubble.slds-p-around_medium,
+    .caseMessagesOtherBubble.slds-p-around--medium {
+        padding: .5rem;
     }
     .customCard {
         box-shadow: 0px 0px 0px #fff;
