@@ -30,6 +30,9 @@
             <layoutItems>
                 <field>IsVisibleInPrm</field>
             </layoutItems>
+            <layoutItems>
+                <field>CreatedById</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -45,11 +48,6 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
-        <platformActionListItems>
-            <actionName>ChangeKnowledgeArticleVersionRecordType</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
         <platformActionListItems>
             <actionName>EditDraftKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
@@ -76,9 +74,22 @@
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>SubmitKnowledgeArticleVersionForApproval</actionName>
+            <actionName>ChangeKnowledgeArticleVersionRecordType</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>5</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>FAQ__kav.SubmitApproval</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>6</sortOrder>
+        </platformActionListItems>
     </platformActionList>
+    <relatedLists>
+        <fields>CreatedDate</fields>
+        <fields>StepStatus</fields>
+        <fields>OriginalActor</fields>
+        <fields>Actor</fields>
+        <fields>Comments</fields>
+        <relatedList>RelatedProcessHistoryList</relatedList>
+    </relatedLists>
 </Layout>
