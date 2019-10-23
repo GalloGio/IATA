@@ -649,13 +649,15 @@ export default class PortalCompanyProfilePage extends LightningElement {
                         let year = lastLogin.getFullYear();
                         let month;
 
-                try {
-                    month = lastLogin.toLocaleString(locale, { month: "long" });
-                    contact.LastLogin = month + ' ' + day + ', ' + year;
-                }
-                catch (e) {
-                    contact.LastLogin = day + '.' + (monthIndex + 1) + '. ' + year;
-                }
+                        try {
+							month = lastLogin.toLocaleString(locale, { month: "long" });
+							contact.LastLogin = month + ' ' + day + ', ' + year;
+						}
+						catch (e) {
+							contact.LastLogin = day + '.' + (monthIndex + 1) + '. ' + year;
+						}
+					}
+				}
             }
 
             if (services != null) {

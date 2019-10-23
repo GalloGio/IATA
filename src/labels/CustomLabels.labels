@@ -3793,6 +3793,14 @@ Payment required on receipt of this Payment Advice
         <value>Payment</value>
     </labels>
     <labels>
+        <fullName>CSP_Outstanding_Invoices</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Outstanding_Invoices</shortDescription>
+        <value>Outstanding Invoices</value>
+    </labels>
+    <labels>
         <fullName>CSP_PendingCustomerCase_Warning</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
