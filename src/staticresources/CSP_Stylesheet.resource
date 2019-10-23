@@ -712,6 +712,10 @@ lightning-datatable .slds-th__action {
     color: #33f;
 }
 
+.buttonAlignment, .buttonAlignment button {
+    bottom: -3px;
+}
+
 .heigthInfo {
     height: 70px;
 }
