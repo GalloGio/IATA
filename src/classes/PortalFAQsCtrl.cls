@@ -301,5 +301,50 @@ public with sharing class PortalFAQsCtrl {
         @AuraEnabled
         public SObject[] records { get;set; }
     }
+    @AuraEnabled
+    public static ApexMessageHandling updateArticleCategories(List<Id> articleTypeIds) {
+        List<FAQ__kav> lstArticleType =
+            [SELECT Id, Categories__c
+            FROM FAQ__kav
+            WHERE Id IN:articleTypeIds AND PublishStatus = 'Draft' AND ValidationStatus != 'Pending publication'];
 
+        if(!lstArticleType.isEmpty()) {
+            List<FAQ__DataCategorySelection> lstDC =
+                [SELECT ParentId, DataCategoryName
+                FROM FAQ__DataCategorySelection
+                WHERE ParentId IN:articleTypeIds];
+
+            Map<Id, String> datacategoryNameMap = new Map<Id, String>();
+            String str;
+            for(FAQ__DataCategorySelection dcObj:lstDC) {
+                if(datacategoryNameMap.containsKey(dcObj.ParentId)) {
+                    str = datacategoryNameMap.get(dcObj.ParentId);
+                    datacategoryNameMap.put(dcObj.ParentId, str + ',' + dcObj.DataCategoryName);
+                }
+                else {
+                    datacategoryNameMap.put(dcObj.ParentId, dcObj.DataCategoryName);
+                }
+            }
+
+            for(FAQ__kav artObj:lstArticleType) {
+                if(datacategoryNameMap.containsKey(artObj.Id)) {
+                    artObj.Categories__c = datacategoryNameMap.get(artObj.Id);
+                }
+            }
+
+            try {
+                update lstArticleType;
+                return new ApexMessageHandling();
+            } catch(DmlException e) {
+                return new ApexMessageHandling(false, e.getMessage());
+            }   
+        } else {
+            return new ApexMessageHandling(false, Label.CSP_PendingApproval);
+        }
+    }
+
+    @AuraEnabled
+    public static void submitArticleForApproval(String approvalNameOrId, Id recordId, Id userId, String comments) {
+        AMS_OSCAR_ApprovalHelper.submit(approvalNameOrId, recordId, userId, comments);
+    }
 }
