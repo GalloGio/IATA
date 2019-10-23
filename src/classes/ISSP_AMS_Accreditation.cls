@@ -3585,7 +3585,7 @@ public without sharing class ISSP_AMS_Accreditation {
             dmo.assignmentRuleHeader.useDefaultRule = true;
             Database.update(newCase, dmo);
 
-            String accountId = isNoticeOfChange ? accountConcerned.Id : vHQAccountId;
+            String accountId = isNoticeOfChange ? accountConcerned.Id : newCase.Reason1__c == AMS_UTILS.CASE_REASON_AE_MULTICOUNTRY ? newCase.AccountId : vHQAccountId;
 
             String typeOfProcess = 'NEW.HO.1.0';
             if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD) {
