@@ -6988,9 +6988,11 @@ public without sharing class ISSP_AMS_Accreditation {
 		get {
 			Set<String> addedCountries = new Set<String>();
 
+			if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
 			for (Account a: getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(',')).values()) {
 				addedCountries.add(a.IATA_ISO_Country__r.AMS_Settlement_System__c);
 			}
+			}			
 
 			return addedCountries.size() > 1;
 		}
