@@ -2368,7 +2368,7 @@
 				setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
 			
-			if ('{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
+			if ({!multipleCountriesSelected}) {
 				$j('[id$=notifyChangeLocationCheckbox]').prop('disabled', true);
 				setWarningBoxOnHoverMC($j('[id$=notifyChangeLocationCheckbox]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 

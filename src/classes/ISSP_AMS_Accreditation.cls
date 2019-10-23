@@ -364,8 +364,6 @@ public without sharing class ISSP_AMS_Accreditation {
         set;
     }
 
-    public Integer branchAccountCount {get; set;}
-
     public Boolean isNewPortal {
     get {
         if(isNewPortal == null) {
@@ -506,7 +504,6 @@ public without sharing class ISSP_AMS_Accreditation {
         agencyCodesConcerned = new List<SelectOption>();
 
         amsContactCountry = '';
-        branchAccountCount = 0;
 
         popContact();  //Get the contact details of currently logged in user
 
@@ -6987,6 +6984,19 @@ public without sharing class ISSP_AMS_Accreditation {
         return !errorFound;
     }
 
+	public Boolean multipleCountriesSelected {
+		get {
+			Set<String> addedCountries = new Set<String>();
+
+			for (Account a: getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(',')).values()) {
+				addedCountries.add(a.IATA_ISO_Country__r.AMS_Settlement_System__c);
+			}
+
+			return addedCountries.size() > 1;
+		}
+		set;
+	}
+
     private Boolean validateLocalDetails() {
         Boolean errorFound = false;
 
@@ -8068,8 +8078,6 @@ system.debug('aqui sectorValue ' + sectorValue);
         }
         
         for(Account a : getBranchList(true)){
-            branchAccountCount++;
-        
             if (isNoticeOfChange) {
                 if (isMCAccredited) {
                     if (!mcCountryIsos.contains(a.Country_ISO_Code__c)) {
