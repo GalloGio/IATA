@@ -39,7 +39,7 @@ global class IEC_REST_Zuora_TaxShipping {
             }
             else if (node.getAttribute('name', '') == 'zAmendmentDate')
             {
-                oSubInfo.zAmendmentDate = String.format('{2}-{0}-{1}T00:00:00', node.getText().split('/'));
+                oSubInfo.zAmendmentDate = String.format('{2}-{0}-{1}', node.getText().split('/'));
             }
             
             else if (node.getAttribute('name', '') == 'zEventCategory')

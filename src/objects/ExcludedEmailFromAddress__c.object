@@ -53,8 +53,10 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>ApplicationName__c</fullName>
+        <description>This is a picklist of applications that a case subject&apos;s email address can be excluded from. &quot;ANY&quot; stands for all applications. &quot;SIS&quot; stands for SIS applications. &quot;TTBS&quot; stands for TTBS applications</description>
         <externalId>false</externalId>
         <label>Application Name</label>
         <required>false</required>

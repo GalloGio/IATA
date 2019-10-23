@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email to be sent to the CNS case owner when deadline date is reached</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CNS_letterhead</letterhead>
+    <name>CNS Deadline Date Reached</name>
+    <style>freeForm</style>
+    <subject>CNS Collection process - First deadline reached</subject>
+    <textOnly>Dear colleague,
+
+Please note that first deadline date for the CNS collection process {!Case.CaseNumber} has been reached.
+
+Please trigger the SIDRA Lite action to communicate the placement of the agency under financial review.
+
+Account name: {!Case.Account}
+Case number {!Case.CaseNumber}
+
+
+Automatic message, please do not reply.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

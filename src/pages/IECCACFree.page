@@ -267,7 +267,7 @@
                                           <th width="40%" style="vertical-align: middle; background:none;"></th>
                                           <th width="30%" style="vertical-align: middle;background:none;"></th>
                                           <!--th width="30%" style="vertical-align: middle; background:#FF7D26;"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdCACPro}"  style="color: white;" onclick="changeCursorProgress(this);">Buy Now</a></th-->                                                                             
-                                          <th width="30%" style="vertical-align: middle; background:#FF7D26;"><a href="{!$Site.BaseUrl}/IEC_ProductDetail?id=0000000000751935"  style="color: white;" onclick="changeCursorProgress(this);">Buy Now</a></th>                                                                             
+                                          <th width="30%" style="vertical-align: middle; background:#FF7D26;"><a href="{!$Site.BaseRequestURL}/IEC_ProductDetail?id=0000000000751935"  style="color: white;" onclick="changeCursorProgress(this);">Buy Now</a></th>                                                                             
                                        </tr>
                                        
                                         <tr>

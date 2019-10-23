@@ -46,7 +46,7 @@ private class OneId_NDCMM_AccountSelection_CTRL_TEST {
                 recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others'),
                 IATA_ISO_Country__c = isoCountry.Id,
                 Sector__c = 'Airline Supplier',
-                Category__c = 'GDS'
+                Category__c = 'Global Distribution System'
             )
         };
         insert accs;
@@ -264,6 +264,6 @@ private class OneId_NDCMM_AccountSelection_CTRL_TEST {
     
         List<Account> acc1 = OneId_RegistrationProcessController.getAccountsBySectorAndCategory('Airline', '', isoCountry.Id, 'Air');
         List<Account> acc2 = OneId_RegistrationProcessController.getAccountsBySectorAndCategory('Travel Agent', 'IATA Passenger Sales Agent', isoCountry.Id, 'Sel');
-        List<Account> acc3 = OneId_RegistrationProcessController.getAccountsBySectorAndCategory('Airline Supplier', 'GDS', isoCountry.Id, 'Agg');
+        List<Account> acc3 = OneId_RegistrationProcessController.getAccountsBySectorAndCategory('Airline Supplier', 'Global Distribution System', isoCountry.Id, 'Agg');
     }
 }

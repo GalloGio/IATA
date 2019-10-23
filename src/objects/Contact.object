@@ -96,6 +96,7 @@
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>AMS_Oscar_Savepoint_Owner_fields</fullName>
         <description>Used to know which fields needed for rollback</description>
@@ -1809,6 +1810,151 @@
     <fieldSets>
         <fullName>FieldsExcludedFromTracking</fullName>
         <description>The fields in this list will be tracked on the Contact Tracking History object</description>
+        <displayedFields>
+            <field>Available_Services_Images__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>LastModifiedById</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>LastModifiedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Fax</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>EmailBouncedReason</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>EmailBouncedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IsEmailBounced</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__Needs_Score_Synced__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Instant_Survey_Last_survey_sent__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Instant_Survey_Last_feedback_received__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Available_Services__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_activity__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__grade__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__notes__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_search_type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_search_term__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_touch_url__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__conversion_object_type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__conversion_object_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__Pardot_Last_Scored_At__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__url__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__last_activity__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__pardot_hard_bounced__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__created_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__score__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__campaign__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__conversion_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__comments__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Pardot_Area_of_Interest__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>FieldsExcludedFromTracking</label>
     </fieldSets>
     <fieldSets>
@@ -2102,12 +2248,62 @@
         <label>RelatedListForAccount</label>
     </fieldSets>
     <fieldSets>
-        <fullName>zqu__Lookup_Popup_Window</fullName>
-        <availableFields>
-            <field>AccountId</field>
+        <fullName>zqu__Compare_Contact_Details</fullName>
+        <description>Used to compare a quote&apos;s contacts on the Update Zuora Account Information page.</description>
+        <displayedFields>
+            <field>FirstName</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
-        </availableFields>
+        </displayedFields>
+        <displayedFields>
+            <field>LastName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Email</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Phone</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingStreet</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__County__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingCity</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingState</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingCountry</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingPostalCode</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Contact Details</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__Lookup_Popup_Window</fullName>
         <availableFields>
             <field>AssistantName</field>
             <isFieldManaged>false</isFieldManaged>
@@ -2120,11 +2316,6 @@
         </availableFields>
         <availableFields>
             <field>Birthdate</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>zqu__County__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -2330,16 +2521,6 @@
         </availableFields>
         <availableFields>
             <field>Salutation</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>SystemModstamp</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Title</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -6967,57 +7148,6 @@ Formula field that copies the E&amp;F Type.</description>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
-        <fullName>Email_Status_Update__c</fullName>
-        <externalId>false</externalId>
-        <label>Email Status Update</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Email_Status__c</fullName>
-        <externalId>false</externalId>
-        <label>Email Status</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Invalid</fullName>
-                    <default>false</default>
-                    <label>Invalid</label>
-                </value>
-                <value>
-                    <fullName>Missing</fullName>
-                    <default>false</default>
-                    <label>Missing</label>
-                </value>
-                <value>
-                    <fullName>Bad Email</fullName>
-                    <default>false</default>
-                    <label>Bad Email</label>
-                </value>
-                <value>
-                    <fullName>Do not Email</fullName>
-                    <default>false</default>
-                    <label>Do not Email</label>
-                </value>
-                <value>
-                    <fullName>Email</fullName>
-                    <default>false</default>
-                    <label>Email</label>
-                </value>
-                <value>
-                    <fullName>Unknown</fullName>
-                    <default>true</default>
-                    <label>Unknown</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>Espiritu_Survey_Answered__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -7531,6 +7661,15 @@ IFAP Application.</description>
         <label>Global Governance Member</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Global_ID__c</fullName>
+        <description>global unique identifier</description>
+        <displayFormat>003{0000000000}</displayFormat>
+        <externalId>true</externalId>
+        <label>Global ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
     </fields>
     <fields>
         <fullName>HasOptedOutOfEmail</fullName>
@@ -8228,6 +8367,7 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
     </fields>
     <fields>
         <fullName>IndividualId</fullName>
+        <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -10284,6 +10424,16 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Number_of_Authorized_Signatory__c</fullName>
+        <description>Counts the number of occurrences in Authorized Signatory.</description>
+        <externalId>false</externalId>
+        <label>Number of Authorized Signatory</label>
+        <summaryForeignKey>Authorized_Signatory__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>OPS_Customer_ID__c</fullName>
         <externalId>false</externalId>
         <label>Customer ID</label>
@@ -10674,7 +10824,12 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <type>Picklist</type>
         <valueSet>
             <valueSetDefinition>
-                <sorted>false</sorted>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Arabic</fullName>
+                    <default>false</default>
+                    <label>Arabic</label>
+                </value>
                 <value>
                     <fullName>Chinese</fullName>
                     <default>false</default>
@@ -10691,9 +10846,14 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>French</label>
                 </value>
                 <value>
-                    <fullName>Korean</fullName>
+                    <fullName>German</fullName>
                     <default>false</default>
-                    <label>Korean</label>
+                    <label>German</label>
+                </value>
+                <value>
+                    <fullName>Indonesian</fullName>
+                    <default>false</default>
+                    <label>Indonesian</label>
                 </value>
                 <value>
                     <fullName>Italian</fullName>
@@ -10706,9 +10866,19 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Japanese</label>
                 </value>
                 <value>
+                    <fullName>Korean</fullName>
+                    <default>false</default>
+                    <label>Korean</label>
+                </value>
+                <value>
                     <fullName>Portuguese</fullName>
                     <default>false</default>
                     <label>Portuguese</label>
+                </value>
+                <value>
+                    <fullName>Russian</fullName>
+                    <default>false</default>
+                    <label>Russian</label>
                 </value>
                 <value>
                     <fullName>Spanish</fullName>
@@ -10716,14 +10886,19 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Spanish</label>
                 </value>
                 <value>
+                    <fullName>Thai</fullName>
+                    <default>false</default>
+                    <label>Thai</label>
+                </value>
+                <value>
                     <fullName>Turkish</fullName>
                     <default>false</default>
                     <label>Turkish</label>
                 </value>
                 <value>
-                    <fullName>Russian</fullName>
+                    <fullName>Vietnamese</fullName>
                     <default>false</default>
-                    <label>Russian</label>
+                    <label>Vietnamese</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -12903,7 +13078,7 @@ IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006
     <fields>
         <fullName>UIR__c</fullName>
         <externalId>false</externalId>
-        <label>UIR</label>
+        <label>UIR/PRIN</label>
         <length>8</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -13106,7 +13281,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <fullName>WebStar_ID__c</fullName>
         <caseSensitive>false</caseSensitive>
         <externalId>true</externalId>
-        <label>WebStar ID</label>
+        <label>WebStar P00 Key</label>
         <length>40</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -13501,6 +13676,32 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             <group>IDFSEuropeRegionalOffice</group>
             <group>IDFSUnitedKingdom</group>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Active_Currency_Center_Contacts</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CONTACT.PHONE1</columns>
+        <columns>CONTACT.EMAIL</columns>
+        <columns>CONTACT.TITLE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <filters>
+            <field>Available_Services__c</field>
+            <operation>includes</operation>
+            <value>Currency Center</value>
+        </filters>
+        <filters>
+            <field>CONTACT.EMAIL</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>Active Currency Center Contacts</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Agent_Credit_Risk_Manager_Contacts</fullName>
@@ -15321,33 +15522,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Email_Status__c</picklist>
-            <values>
-                <fullName>Bad Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Do not Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invalid</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Missing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Unknown</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18215,33 +18389,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Email_Status__c</picklist>
-            <values>
-                <fullName>Bad Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Do not Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invalid</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Missing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Unknown</fullName>
-                <default>true</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Fax_Status__c</picklist>
             <values>
                 <fullName>Bad Number</fullName>
@@ -19842,7 +19989,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <customTabListAdditionalFields>Use_Contact__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.EMAIL</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Services__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Available_Services_Images__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
@@ -19916,13 +20063,67 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <errorMessage>You should deactivate a user before changing his license</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Change_Internal_User_To_Admin</fullName>
+        <active>true</active>
+        <description>Internal Users can&apos;t change Portal Status to Administrator.</description>
+        <errorConditionFormula>AND( 
+ISPICKVAL( $User.UserType , &quot;Standard&quot;), 
+ISPICKVAL( Account.Sector__c, &quot;General Public&quot;), 
+ISPICKVAL( User_Portal_Status__c, &quot;Approved Admin&quot;),
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+        <errorMessage>Internal Users can&apos;t change Portal Status to Administrator.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Change_id_card_holder_account_name</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+
+
+ID_Card_Holder__c=true, 
+
+ISCHANGED(AccountId), 
+
+NOT(ISBLANK(PRIORVALUE(AccountId))), 
+
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;, 
+$UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot;	
+)	,	
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
+$UserRole.Name &lt;&gt; &quot;GDP&quot; 
+) 
+
+)</errorConditionFormula>
+        <errorMessage>This contact is an ID Card holder. please raise an internal case to ID Card team to move the contact to another account</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Change_id_card_holder_cont_name</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-ISPICKVAL($User.UserType,&quot;Standard&quot;),
 ID_Card_Holder__c=true,
+
+				or( 
+$User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
+$UserRole.Name &lt;&gt; &quot;GDP&quot; 
+),
+				
+				or(
+$User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;,
+$UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot; 
+) ,
+				
+	Or(			
+					and(
 ISCHANGED(LastName),
 UPPER(PRIORVALUE(LastName)) &lt;&gt; UPPER(LastName)
+									),
+					and(
+ISCHANGED(FirstName), 
+UPPER(PRIORVALUE(FirstName)) &lt;&gt; UPPER(FirstName)																		
+									)
+				)
 )</errorConditionFormula>
         <errorMessage>This contact is an ID Card holder. To change name, please raise an internal case to ID Card team</errorMessage>
     </validationRules>
@@ -19980,11 +20181,58 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
         <errorMessage>Changing a BSPlink user&apos;s email may cause problems with SSO.If the user&apos;s access to BSPlink is to be switched to another email, do the changes in BSPlink. Otherwise if the contact is changing their email, please post a comment on the portal chatter group</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Email_Update_Date_Must_be_Added</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND(ISCHANGED( Email_Status__c ), OR( Email_Status_Update__c    &lt;    TODAY(), ISNULL( Email_Status_Update__c  )))</errorConditionFormula>
-        <errorDisplayField>Email_Status_Update__c</errorDisplayField>
-        <errorMessage>Email Status has been modified, please enter update date</errorMessage>
+        <fullName>Has_Authorized_Signatory_External</fullName>
+        <active>true</active>
+        <description>External users can&apos;t edit the first and last name nor the email of the Account if there is at least 1 Authorized Signatory.</description>
+        <errorConditionFormula>AND(
+  Number_of_Authorized_Signatory__c &gt; 0,
+  OR(
+   ISCHANGED( FirstName ),
+   ISCHANGED( LastName ),
+   ISCHANGED( Email )  
+ ),
+  $User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Staff - HO&quot;,
+    NOT( ISPICKVAL($User.UserType, &quot;Standard&quot; )),
+   $User.ToU_accepted__c = TRUE
+)</errorConditionFormula>
+        <errorMessage>Please be aware that this is an airline signatory contact and that changes to them have to be done by IATA for security reasons. Please log a query on the CS portal.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Has_Authorized_Signatory_Internal</fullName>
+        <active>true</active>
+        <description>Internal users can&apos;t edit the first and last name nor the email of the Account if there is at least 1 Authorized Signatory.</description>
+        <errorConditionFormula>AND(
+  Number_of_Authorized_Signatory__c &gt; 0,
+  OR(
+   ISCHANGED( FirstName ),
+   ISCHANGED( LastName ),
+   ISCHANGED( Email )  
+ ),
+  $User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Staff - HO&quot;,
+    ISPICKVAL($User.UserType, &quot;Standard&quot; )
+)</errorConditionFormula>
+        <errorMessage>This is an Authorized Signatory contact so you can’t modify first name, last name or email address. Please contact Airline Participation team.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ID_card_Holder_no_change</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
+$UserRole.Name &lt;&gt; &quot;GDP&quot;	
+), 
+				
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;, 
+$UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot;	
+), 
+
+$User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,				
+
+ISCHANGED(ID_Card_Holder__c)
+)</errorConditionFormula>
+        <errorMessage>Your Salesforce profile is restricted to change the ID Card Holder checkbox. Please contact the ID Card team.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>IFAP_Contact_Under_Branch_Account</fullName>

@@ -54,9 +54,9 @@ private class IECUserManager_tst {
       Id recordTypeId;
       Id zid = IECUserManager.getContactId();
 
-	  currentContact.ownerid = currentUser.id;
-	  update currentContact;
-
+      currentContact.ownerid = currentUser.id;
+      update currentContact;
+      Test.startTest();
       System.runAs(currentUser) {
         recordTypeId = IECUserManager.getAccountRecordTypeByName(IECConstants.Account_RecordType_Airline);
 
@@ -111,8 +111,6 @@ private class IECUserManager_tst {
 
         zid = IECUserManager.getContactIdFromUsername(currentUser.Username);
 
-        Test.startTest();
-
         IECUserManager.notFirstLogin(pr, 'invalid@xpto.com', currentContact.Id);
 
         zbool = IECUserManager.isBillingAddressFilled(currentContact.Id);
@@ -149,7 +147,7 @@ private class IECUserManager_tst {
       currentContact = IECUserManager.getContactById(currentUser.ContactId);
       Id recordTypeId;
       Id zid = IECUserManager.getContactId();
-
+       Test.startTest();
       recordTypeId = IECUserManager.getAccountRecordTypeByName(IECConstants.Account_RecordType_Airline);
 
       try {
@@ -200,9 +198,11 @@ private class IECUserManager_tst {
       zbool = IECUserManager.isContactMandatoryFieldsFilled(currentContact, new IECVATUtil.VATConfiguration(country));
       User usr = IECUserManager.getUser(currentUser.Id);
       List<Account> accountList = IECUserManager.getAccountsByIATACode('X');
+      Test.stopTest();
     }
 
     static testMethod void testStaticMethods() {
+       
         IECUserManager.getClientType();
         IECUserManager.isUserLoggedIn();
         
@@ -227,7 +227,7 @@ private class IECUserManager_tst {
         currentUser = IECUserManager.CurrentUser;
         Contact oContact = IECUserManager.getContact();
         oContact = IECUserManager.getContactById(currentUser.ContactId);
-        
+        Test.startTest();
         Id idTest = IECUserManager.getCustomerPermissionSetId();
         System.runAs(currentUser) { 
           currentUser = IECUserManager.getCurrentUser();
@@ -257,5 +257,6 @@ private class IECUserManager_tst {
         catch (Exception ex) {
           
         }
+        Test.stopTest();
     }
 }

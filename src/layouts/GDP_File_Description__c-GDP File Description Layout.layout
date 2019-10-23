@@ -247,10 +247,10 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>zqu__ProductRatePlan__c.zqu__ZProduct__c</fields>
+        <fields>zqu__ProductRatePlan__c.zqu__Product__c</fields>
         <fields>zqu__ProductRatePlan__c.NAME</fields>
         <relatedList>GDP_File_Description_To_Rate_Plan__c.GDP_File_Description__c</relatedList>
-        <sortField>zqu__ProductRatePlan__c.zqu__ZProduct__c</sortField>
+        <sortField>zqu__ProductRatePlan__c.zqu__Product__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>

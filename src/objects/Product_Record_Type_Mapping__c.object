@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object serves as a mapping of required record types for products</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>false</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -52,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>false</enableSharing>
     <enableStreamingApi>false</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
     <fields>
         <fullName>Division__c</fullName>
         <description>This field corresponds to SAP Division Code</description>
@@ -65,6 +67,7 @@
     </fields>
     <fields>
         <fullName>Record_Type_for_Product__c</fullName>
+        <description>This field represents the corresponding Record Type for a Product. It can be &quot;Publication&quot;, &quot;GDP&quot;, &quot;Unclassified&quot;</description>
         <externalId>false</externalId>
         <label>Record Type for Product</label>
         <required>false</required>

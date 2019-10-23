@@ -22,6 +22,8 @@ public with sharing class ISSP_PortalUserStatusChange {
      //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
+    public static boolean fromLc =false; //flag to check if method running from lightning component
     
     public ISSP_PortalUserStatusChange(Apexpages.Standardcontroller ctrl){
         Map<String, String> communityMap = new Map<String, String>{'CNS' => 'CNS Customer Portal', 'IEC' => 'E-Commerce','ISSP' => 'ISS Customer Portal'};
@@ -231,6 +233,11 @@ public with sharing class ISSP_PortalUserStatusChange {
         } 
         return new map<String, String> { 'status' => 'ok' };
     }
+
+    @AuraEnabled
+    public static  map<String,String> preformActionNewPortal (string contactId,string portalStatus,string oldPortalStatus){
+        return preformAction(contactId, portalStatus, oldPortalStatus);
+    }
     
     public static  map<String,String> preformActionImmediate(string contactId,string portalStatus,string oldPortalStatus){
         string actionName = getActionName(portalStatus,oldPortalStatus);
@@ -376,7 +383,10 @@ public with sharing class ISSP_PortalUserStatusChange {
             system.debug('inserted newuser: ' + newUser.ID);
             // new email process
             String password = Comm_User_Helper.generateRandomString(6)+'1a';
-            System.setPassword(newUser.ID, password);
+            if(ISSP_PortalUserStatusChange.fromLc) //AURA workaround for not being able to access this method by API Call(lightning communication between apex)
+                setPasswordAssync(newUser.ID, password);
+            else
+                System.setPassword(newUser.ID, password);
             String cleanUsername = ISSP_Utilities.buildPortalUserName(con.email);
             cleanUsername = cleanUsername.replace('+', Comm_User_Helper.plusReplacer);
             string encodedPart = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
@@ -426,6 +436,7 @@ public with sharing class ISSP_PortalUserStatusChange {
     }
     
 /////////////////////////////////////////////////////////////////
+
 
     public static map<string,map<string,string>> actionsMap = new map<string,map<string,string>>{
             'New user' => new map<string,string>{
@@ -674,37 +685,43 @@ public with sharing class ISSP_PortalUserStatusChange {
     public static void futureUpdateUsers(set<string> conIdSet) {
         
         Map<Id,Contact> contactMap = new Map<Id,Contact>(
-        	[SELECT 
-        		Id,
-        		email,
-        		firstName,
-        		lastname,
-        		Title,
-        		Preferred_Language__c,
-        		Status__c, 
-        		(SELECT
-        			Id,
-        			Right__c
-        		 FROM
-        		 	Portal_Application_Rights__r 
-        		 WHERE 
-        		 	 Kavi_user__c = true 
-        		 AND Portal_Application__r.Name = 'Standards Setting Workspace'
-        		 )
-        	 FROM 
-        	 	Contact 
-        	 WHERE
-        	 	Id IN :conIdSet
-        	]
+            [SELECT 
+                Id,
+                email,
+                firstName,
+                lastname,
+                Title,
+                Preferred_Language__c,
+                Status__c, 
+                (SELECT
+                    Id,
+                    Right__c
+                 FROM
+                    Portal_Application_Rights__r 
+                 WHERE 
+                     Kavi_user__c = true 
+                 AND Portal_Application__r.Name = 'Standards Setting Workspace'
+                 )
+             FROM 
+                Contact 
+             WHERE
+                Id IN :conIdSet
+            ]
         );
         
         
         if(!contactMap.values().isEmpty()){
 
-	        List<User> usersToPushHL = new List<User>();
-	        Map<Id, Boolean> activeUserMap = new Map<Id, Boolean>();
+            List<User> usersToPushHL = new List<User>();
+            Map<Id, Boolean> activeUserMap = new Map<Id, Boolean>();
+            Set<Id> contactSet = contactMap.keySet();
 
-            list<User> userList = [select Id,ContactId, ContactKaviId__c,languagelocalekey,email,firstname,lastname,Title,IsActive,IsPortalEnabled,username from User where ContactId in:contactMap.keySet() OR ContactKaviId__c in:contactMap.keySet()];
+            String usersQuery = String.format('SELECT {0} FROM User WHERE {1}', 
+                new List<String>{String.join(HigherLogicIntegrationHelper.getQueryFields(), ', '),
+                'ContactId IN :contactSet OR ContactKaviId__c IN :contactSet'}
+            );
+
+            List<User> userList = (List<User>) Database.query(usersQuery);
 
             for(User user : userList){
                 //Code extension to consider internal users
@@ -733,16 +750,18 @@ public with sharing class ISSP_PortalUserStatusChange {
                 System.debug(LoggingLevel.FINE, '____ [cls ISSP_PortalUserStatusChange - futureUpdateUsers] Portal Application Rights associated: ' + parLst);
                 
                 if(parLst != null && !parLst.isEmpty()){
-                	String access = parLst.get(0).Right__c;
-                	usersToPushHL.add(user);
-                	activeUserMap.put(user.Id, access == 'Access Granted');
+                    String access = parLst.get(0).Right__c;
+                    usersToPushHL.add(user);
+                    activeUserMap.put(user.Id, access == 'Access Granted');
                 }
-				                
+                                
              }
 
             HigherLogicIntegrationHelper.pushPersonMembers(usersToPushHL, activeUserMap);
-            
+
+            ISSP_UserTriggerHandler.preventTrigger = true;
             WithoutSharingOperations.updateUserList(userList);
+            
         }
     }
     
@@ -1027,6 +1046,140 @@ public with sharing class ISSP_PortalUserStatusChange {
         }
         return errorMessageResult;
     }
+
+    @future
+    private static void setPasswordAssync(Id usrId,String pw){
+        System.setPassword(usrId, pw);
+    }
+   
+    @AuraEnabled(cacheable=true)
+    public static List<SelectOptionWrapper> getAvalaibleCommunities() {
+        List<SelectOptionWrapper> options = new List<SelectOptionWrapper>();
+        options.add(new SelectOptionWrapper('E-commerce','E-commerce'));
+        options.add(new SelectOptionWrapper('ISS Customer Portal','ISS Customer Portal'));
+        options.add(new SelectOptionWrapper('CNS Customer Portal','CNS Customer Portal'));
+        return options;
+    }  
+    
+
+    @AuraEnabled(cacheable=true)
+    public static List<SelectOptionWrapper> getRejectionReasons() {
+        List<SelectOptionWrapper> rejectionReasonOptions = new List<SelectOptionWrapper>();
+        rejectionReasonOptions.add(new SelectOptionWrapper('Retired', Label.ISSP_RejectReason_Retired));
+        rejectionReasonOptions.add(new SelectOptionWrapper('LeftCompany', Label.ISSP_RejectReason_Left));
+        rejectionReasonOptions.add(new SelectOptionWrapper('UnknownContact', Label.ISSP_RejectReason_Unknown));
+        return rejectionReasonOptions;
+    }  
+    
+    @AuraEnabled(cacheable=true)
+    public static List<SelectOptionWrapper> getUserPortalStatusOptions(String contactId) {
+        List<SelectOptionWrapper> portalStatusOptionsList = new List<SelectOptionWrapper>();
+        String contactType = ISSP_Utilities.getContactTypeById(contactId);
+        map<String,SelectOptionWrapper> mapPortalStatusOptions = new map<String,SelectOptionWrapper>();
+        for( Schema.PicklistEntry f : Contact.User_Portal_Status__c.getDescribe().getPicklistValues()) {
+            mapPortalStatusOptions.put(f.getValue(),new SelectOptionWrapper(f.getValue(),f.getLabel()));
+        }
+        portalStatusOptionsList = new List<SelectOptionWrapper>();
+        portalStatusOptionsList.add(mapPortalStatusOptions.get('Deactivated'));
+        portalStatusOptionsList.add(mapPortalStatusOptions.get('Approved Admin'));
+        if (contactType!='DPC') {
+            portalStatusOptionsList.add(mapPortalStatusOptions.get('Approved User'));
+        }
+
+        return portalStatusOptionsList;
+    }  
+
+     @AuraEnabled(cacheable=true)
+    public static boolean hasIdCard(string contactId) {
+        contact ct=[select id,
+        (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE NOT card_status__c like 'Cancelled%')        
+         from contact where id=:Id.valueOf(contactId)];
+
+        system.debug('PF');
+        system.debug(!ct.ID_Cards__r.isEmpty());
+        return !ct.ID_Cards__r.isEmpty();
+    }  
+
+    @AuraEnabled
+    public static ApexMessageHandling saveNewStatusAura(string community, string newValue, string contactId,string inactivationReason){
+      
+      system.debug('PF');
+      system.debug(community);
+      system.debug(newValue);
+      system.debug(contactId);
+      system.debug(inactivationReason);
+        List<String> firstCommunity = new List<String>();
+        List<String> errorMessages = new List<String>();
+        for (SelectOptionWrapper so : getAvalaibleCommunities()){
+            if (so.label == community){
+                firstCommunity.add(so.value);
+                firstCommunity.add(so.label);
+            }
+        }
+
+        List <Contact> contactList = [SELECT Id, User_Portal_Status__c, Email FROM Contact WHERE Id = :contactId];
+        
+        String theAction = '';
+        String oldValue = contactList[0].User_Portal_Status__c;
+        if(newValue==''||newValue==null)
+            newValue = 'New user';
+        if(oldValue==''||oldValue==null)
+            oldValue = 'New user';
+        if(actionsMap.get(oldValue)==null)
+            theAction = '';
+        if(actionsMap.get(oldValue).get(newValue)==null)
+            theAction = '';
+        theAction = actionsMap.get(oldValue).get(newValue);
+        system.debug('NEW VALUE: ' + newValue);
+        system.debug('OLD VALUE: ' + oldValue);
+        system.debug('ACTION: ' + theAction);
+        
+        //TF - S-01567 - If user has active services, cannot be inactivated
+        if (theAction == 'DisableTheUser' || theAction == 'DisableTheUserReject'){
+           
+            Contact cont =
+                [SELECT id,                
+                (select Id, Application_Name__c FROM Portal_Application_Rights__r
+                    WHERE Right__c = 'Access Granted' AND Portal_Application__r.Critical_Service__c = true),
+                (SELECT Id FROM IEC_Subscriptions_History__r)
+                FROM contact
+                where id =:contactId           
+                
+                ];
+
+            if (!cont.Portal_Application_Rights__r.isEmpty()){
+                String message = Label.ISSP_UserInactivation_ServiceMsg_1;
+                for (Portal_Application_Right__c thisAppRight : cont.Portal_Application_Rights__r){
+                    message += '<br/> - ' + thisAppRight.Application_Name__c;
+                }
+                message += Label.ISSP_UserInactivation_ServiceMsg_2;
+                //message += Label.ISSP_UserInactivation_ServiceMsg_3;
+                return new ApexMessageHandling(false,message);
+            }
+            
+            // Active Products 
+            if (!cont.IEC_Subscriptions_History__r.isEmpty()){               
+                return new ApexMessageHandling(false,Label.ISSP_InactiveUser_Subscription);
+            }
+        }
+        Savepoint sPointContact = Database.setSavepoint();     
+        String runActionResult='';
+        try{
+            ISSP_PortalUserStatusChange.fromLc = true;
+            runActionResult = runAction(contactId, contactList[0].Email, theAction, newValue, inactivationReason, firstCommunity);
+        }  catch(Exception e){
+            system.debug('PF'+e.getMessage());
+            Database.rollback(sPointContact);
+            return  new ApexMessageHandling(false,e.getMessage());
+        }
+        if(runActionResult !=''){
+            Database.rollback(sPointContact);
+            return  new ApexMessageHandling(false,runActionResult);
+        }
+        return new ApexMessageHandling();
+        
+    }
+
      
      public PageReference saveNewStatus(){
         firstCommunity = new List<String>();
@@ -1038,15 +1191,8 @@ public with sharing class ISSP_PortalUserStatusChange {
             }
         }
 
-        system.debug('firstCommunity: ' + firstCommunity);
-        system.debug('userExists: ' + userExists);
-        system.debug('createUser: ' + createUser);
-        system.debug('con.User_Portal_Status__c: ' + con.User_Portal_Status__c);
-        system.debug('con.Status__c: ' + con.Status__c);
-        system.debug('CONTACT ID: ' + con.Id);
         List <Contact> contactList = [SELECT Id, User_Portal_Status__c, Email FROM Contact WHERE Id = :con.Id];
-        system.debug('CURRENT STATUS: ' + contactList[0].User_Portal_Status__c);
-        system.debug('NEW STATUS: ' + con.User_Portal_Status__c);
+        
         String theAction = '';
         String newValue = con.User_Portal_Status__c;
         String oldValue = contactList[0].User_Portal_Status__c;
@@ -1082,6 +1228,7 @@ public with sharing class ISSP_PortalUserStatusChange {
                 return null;
             }
         }
+        
         if (theAction == 'DisableTheUser'){ 
             contactStatus = inactivationReason;
         }

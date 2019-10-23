@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fieldSets>
         <fullName>RelatedList</fullName>
         <description>This is used on the Risk Event HIstory related list on the account layout</description>
@@ -240,7 +241,7 @@
         <description>Enforces Cash Conditions on account (previously set on Risk Event Type). Meaning if an account has one active risk event with Limit Cash Conditions, Cash Conditions will be true.</description>
         <externalId>false</externalId>
         <label>Limit Cash Conditions</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

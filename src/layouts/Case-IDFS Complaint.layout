@@ -6,6 +6,7 @@
     <customButtons>Change_Routing</customButtons>
     <customButtons>IDFS_Request_Operational_Improvement</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
+    <customButtons>Reset_New_interactions</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
@@ -60,6 +61,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IATA_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Product__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -446,12 +451,12 @@
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Accept_Case</actionName>
+            <actionName>Move_to_Recycle_Bin_SIS_HD</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Move_to_Recycle_Bin_SIS_HD</actionName>
+            <actionName>E2CP__New_Comment_Lightning</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>4</sortOrder>
         </platformActionListItems>
@@ -529,6 +534,10 @@
         <fields>EndTime</fields>
         <fields>Status</fields>
         <relatedList>RelatedLiveChatTranscriptList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Case_Detail__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

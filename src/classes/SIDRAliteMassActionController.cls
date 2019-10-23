@@ -103,7 +103,7 @@ public with sharing class SIDRAliteMassActionController {
             + ' IFAP_Agent_Type__c, AccountId, CaseNumber, Origin, Subject, IFAP_Agent_Code__c, Region__c, Account_Billing_Country__c, BSPCountry__c,'
             + ' RecordtypeId, Reason1__c, Decision__c, Suspension_Date__c, Bank_Guarantee_deadline__c, SAAM_Deadline_Date__c, Key_Customer_Case__c,'
             + ' BSP_CASS__c, Termination_date_manual_entry__c, Termination_date__c, New_IFAP_Deadline_date__c, Documentation_Complete__c, Bank_Guarantee_received__c,Has_the_agent_paid_invoice__c, isClosed,'
-            + ' Account.Id, Account.Name, Account.Type, Account.Status__c, Account.Accumulated_Irregularities__c, Account.Category__c, Comments__c, OwnerId, Owner.Name, ContactId, Contact.Name,'
+            + ' Account.Id, Account.Name, Account.Type, Account.Status__c, Account.Accumulated_Irregularities__c, Account.Category__c, IATA_Code__c, Comments__c, OwnerId, Owner.Name, ContactId, Contact.Name,'
             + ' OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.STEP44__c, OSCAR__r.Step6__c, OSCAR__r.Step9__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step14__c, OSCAR__r.Step26__c, OSCAR__r.Step35__c, '
             + ' (Select Id, SIDRA_lite_Reason__c, Status, ParentId, RecordtypeId,'
             + '     FA_Letter_Sent__c, Deadline_Date__c, firstFAnonComplianceDate__c, FA_Second_Deadline_Date__c, FA_Third_Deadline_Date__c, secondFAnonComplianceDate__c,'
@@ -919,7 +919,8 @@ public with sharing class SIDRAliteMassActionController {
         Map <String, Schema.SObjectField> mapAccountFields = Schema.getGlobalDescribe().get('Account').getDescribe().fields.getMap();
 
         // create csv header
-        String content = '"Id"';
+        String content = '"' + mapCaseFields.get('IATA_Code__c').getDescribe().getLabel() + '"';
+        content += ',"Id"';
         content += ',"' + mapCaseFields.get('CaseNumber').getDescribe().getLabel() + '"';
         content += ',"' + mapCaseFields.get('Subject').getDescribe().getLabel() + '"';
         content += ',"' + mapCaseFields.get('Status').getDescribe().getLabel() + '"';
@@ -945,7 +946,8 @@ public with sharing class SIDRAliteMassActionController {
         content += '\n';
         // fill each line
         for (WrapperCase wrapper: this.listWrapperCase) {
-            content += '"' + wrapper.cse.Id + '"';
+            content += '"' + wrapper.cse.IATA_Code__c + '"';
+            content += ',"' + wrapper.cse.Id + '"';
             content += ',"' + wrapper.cse.CaseNumber + '"';
             content += ',"' + wrapper.cse.Subject + '"';
             content += ',"' + wrapper.cse.Status + '"';

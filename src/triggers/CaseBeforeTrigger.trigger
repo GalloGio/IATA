@@ -145,6 +145,19 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /*Share trigger code*/
     if (Trigger.isInsert || Trigger.isUpdate) {
 
+        /** WMO-564 **/
+        if(Trigger.isUpdate) {
+            CaseProcessTypeHelper.processKPI(Trigger.new, Trigger.oldMap);
+        }
+
+	// assigns default email address to be used on send email quick action
+        //follows same logic as current classic functionality      
+        for(Case c: trigger.new){
+            RecordType caseRTDevName=RecordTypeSingleton.getInstance().getRecordTypeById('Case',c.recordtypeId);
+            string email=IDFS_Util.getRecordTypeEmail(caseRTDevName.developerName, c.BSPCountry__c, c.Case_Group__c);
+            c.defaultEmailAddress__c=email;
+        }
+
         /*trgCaseIFAP Trigger*/
         if(trgCaseIFAP){ 
             System.debug('____ [cls CaseBeforeTrigger - trgCaseIFAP]');
@@ -541,7 +554,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // WMO-517 exclued cases in recycle bin
                     if (c.RecordTypeId == AirlineCodingRTId && mapACCasesPerAccountId.get(c.AccountId) != null) {
                         system.debug('##ROW##');
-                        set<String> setInvalidReasons = new set<String>{'Baggage Tag Identifier Codes','Designator Form'};
+                        set<String> setInvalidReasons = new set<String>{'Baggage Tag Identifier Codes','Designator Form', '3 Digit Form'};
                         for (Case cse: mapACCasesPerAccountId.get(c.AccountId) ) {
                             if (cse.Reason1__c == c.Reason1__c && cse.Id != c.Id && setInvalidReasons.contains(c.Reason1__c) && !cse.Owner.Name.contains('Recycle')) {
                                 c.addError('There is already an open Airline Coding Application case with Reason "' + c.Reason1__c + '" on the selected Account. There can be only one open case of this type on an Account.');
@@ -900,6 +913,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             System.debug('____ [cls CaseBeforeTrigger - trgCase Trigger.isInsert]');
             SidraLiteManager.insertSidraLiteCases(Trigger.new);
             DPCCasesUtil.addAdditionalContactsBefore(Trigger.new);
+            CNSCaseManager.insertCNSCases(Trigger.new); //ACAMBAS - WMO-482
         }
         /*trgCase Trigger.isInsert*/
 
@@ -1444,8 +1458,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
         if (trgCase){
             System.debug('____ [cls CaseBeforeTrigger - trgCase Trigger.isUpdate]');
-            SidraLiteManager.updateSidraLiteCases(Trigger.new, Trigger.old);
+            SidraLiteManager.updateSidraLiteCases(Trigger.newMap, Trigger.oldMap); //ACAMBAS - WMO-483: Changed parameters from lists to maps
             CaseDueDiligence.beforeUpdate(Trigger.newMap, Trigger.oldMap);
+            CNSCaseManager.updateCNSCases(Trigger.new, Trigger.oldMap); //ACAMBAS - WMO-482
         }
 
         /*trgProcessISSCase Trigger.isUpdate*/
@@ -1645,7 +1660,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             List<Case> caseLast24Hours = new List<Case>();
             Set<Id> accountIds = new Set<Id>();
             list<Id> listCasesUpdatedAIMS = new list<Id>();
-            
+            Set<Id> casesGroupSingleAgentModifiedSet = new Set<Id>();
+
             for (Case aCase : trigger.new) { // Fill a set of Account Ids for the cases select statement
                 Case aCaseOld = Trigger.oldMap.get(aCase.Id);
                 // Only for Sidra small amount cases, only cases created within the last 24 hours
@@ -1672,6 +1688,49 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     aCaseOld.Update_AIMS_Repayment_agreed__c == null &&
                     aCase.Update_AIMS_Repayment_agreed__c != null) {
                     listCasesUpdatedAIMS.add(aCase.Id);
+                }
+
+                //If Group_Single_Agent__c is being modified for Sidra Lite case
+                //We need to check if any change code was previously generated:
+                //If any change code was generated we need to prevent saving 
+                //This field must only be edited for China: we do not need to check the country here since 
+                //we have a validation rule preventing the field to be edited for Non China)
+                if(SidraLiteManager.runGroupSingleAgentSidraValidation && aCase.RecordTypeId == SIDRALiteCaseRecordTypeID && aCase.Group_Single_Agent__c != aCaseOld.Group_Single_Agent__c){
+                    casesGroupSingleAgentModifiedSet.add(aCase.Id);
+                    SidraLiteManager.runGroupSingleAgentSidraValidation = false;
+                }
+                
+            }
+
+            //Fetch change codes associated with the given SIDRA lite cases
+            if(!casesGroupSingleAgentModifiedSet.isEmpty()){
+                List<AggregateResult> changeCodesGeneratedAggLst = new List<AggregateResult>(
+                    [SELECT 
+                        SIDRA_Case__c CaseId,
+                        COUNT(Id) 
+                    FROM 
+                        Agency_Applied_Change_code__c
+                    WHERE
+                        SIDRA_Case__c IN :casesGroupSingleAgentModifiedSet
+                    GROUP BY
+                        SIDRA_Case__c
+                    ]
+                );
+
+                Integer i = 0;
+                Integer chgCodeSize = changeCodesGeneratedAggLst.size();
+                
+                while(i < chgCodeSize){       
+                    AggregateResult ar = changeCodesGeneratedAggLst.get(i);
+
+                    Id caseId = (Id) ar.get('CaseId');
+                    Integer chgCodeCount = (Integer) ar.get('expr0');
+
+                    if(chgCodeCount > 0){
+                        Trigger.newMap.get(caseId).Group_Single_Agent__c.addError('The field has already been set');
+                    }
+
+                    i++;
                 }
             }
 
@@ -2130,7 +2189,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 
                 for (AMS_OSCAR__C oscar : [select Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c,
                                            Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c,
-                                           Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c
+                                           Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c, Requested_Bank_Guarantee_currency__c
                                            from AMS_OSCAR__c where Id in :oscarIdcases.keySet()]) {
 
                     oscar = AMS_Utils.syncOSCARwithIFAP(trigger.oldMap.get(oscarIdcases.get(oscar.Id).Id), oscarIdcases.get(oscar.Id), oscar, false);
@@ -2205,5 +2264,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
         }
     }
+    
     /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/
 }

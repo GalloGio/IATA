@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object that represents and IFAP Accounting Issue. Contains the name of the wrong field, wrong value, value to use, a link to the issue and some comments</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -52,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Comment__c</fullName>
         <description>Comment</description>
@@ -76,6 +78,7 @@
     </fields>
     <fields>
         <fullName>IFAP_Reassessment__c</fullName>
+        <description>Related IFAP Quality Issue</description>
         <externalId>false</externalId>
         <label>Quality issue</label>
         <referenceTo>IFAP_Quality_Issue__c</referenceTo>

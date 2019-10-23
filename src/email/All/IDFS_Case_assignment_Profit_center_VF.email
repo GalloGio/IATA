@@ -1,0 +1,42 @@
+<messaging:emailTemplate recipientType="Contact"
+                         relatedToType="Case"
+                         subject="ASSIGNED CASE to {!relatedTo.Owner.Name} queue - {!relatedTo.CaseNumber} - {!relatedTo.Subject}">
+    <messaging:htmlEmailBody >
+        <html>
+            <body>
+                
+                <p>
+                    The following case has been assigned to the queue {!relatedTo.Owner.Name}. 
+                </p>
+                
+                <div>
+                    <p>
+                        Record type: {!relatedTo.RecordType.Name}<br></br>
+                        Region: {!relatedTo.Region__c} / Country: {!relatedTo.BSPCountry__c} <br></br>
+                        Case Area: {!relatedTo.CaseArea__c} <br></br>
+                        Reason: {!relatedTo.Reason1__c}<br></br>
+                    </p> 
+                    
+                    <p>
+                        Case number: {!relatedTo.CaseNumber} <br></br>
+                        Account site: {!relatedTo.Account.Site}<br></br>
+                        Case subject: {!relatedTo.Subject} <br></br>
+                        Case description: {!relatedTo.Description} <br></br>
+                    </p>
+                    
+                    <p>
+                        Product Name: {!relatedTo.Product__r.Name} <br></br>
+                        Product number: {!relatedTo.Product__r.SAP_Material_Number__c} <br></br>
+                        Product Manager: {!relatedTo.Product__r.Product_Manager_lookup__r.Name} <br></br>
+                        Name of the SME: {!relatedTo.Product__r.Name_of_SME__r.Name} <br></br>
+                    </p>
+                </div>
+                
+                <div>
+                    <apex:outputlink value="{!LEFT($Api.Partner_Server_URL_140,FIND('.com',$Api.Partner_Server_URL_140)+4)+relatedTo.Id}">{!relatedTo.CaseNumber}</apex:outputlink>
+                </div>
+                
+            </body>
+        </html>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

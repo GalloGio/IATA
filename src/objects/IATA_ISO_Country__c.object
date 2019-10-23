@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
     <fields>
         <fullName>AIMS_Area_ID__c</fullName>
         <description>Area identifier used by AIMS</description>
@@ -249,6 +250,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <default>false</default>
                     <label>Banking Model</label>
                 </value>
+                <value>
+                    <fullName>Model B+</fullName>
+                    <default>false</default>
+                    <label>Model B+</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -266,6 +272,32 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RHC_LocationType__c</fullName>
+        <description>Defines if RHC should take into account only the HE or include the AE from the hierarchy</description>
+        <externalId>false</externalId>
+        <label>RHC Location Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>HE only</fullName>
+                    <default>true</default>
+                    <label>HE only</label>
+                </value>
+                <value>
+                    <fullName>Include all AEs</fullName>
+                    <default>false</default>
+                    <label>Include all AEs</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Acli_Country__c</fullName>
@@ -2084,6 +2116,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <label>Venezuela</label>
                 </value>
                 <value>
+                    <fullName>Virgin British Islands</fullName>
+                    <default>false</default>
+                    <label>Virgin British Islands</label>
+                </value>
+                <value>
                     <fullName>Yemen</fullName>
                     <default>false</default>
                     <label>Yemen</label>
@@ -2208,6 +2245,15 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>Used to enable a country to use risk change code, generated from SIDRA or SIDRA Lite</inlineHelpText>
         <label>Enable Risk Change Codes</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Hide_Tax_Number_2_VAT_field_2__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Hide Tax Number 2 / VAT field 2</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -2570,6 +2616,16 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Region_Province_and_Cities_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Enabled: This country has Cities mapped by State</inlineHelpText>
+        <label>Region/Province and Cities Enabled</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Region__c</fullName>
         <externalId>false</externalId>
         <label>Region</label>
@@ -2684,6 +2740,17 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>State_Province_Picklist__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This checkbox defines whether the state is a text input or selectlist on the Annual Revalidation Form</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This checkbox defines whether the state is a text input or selectlist on the Annual Revalidation Form</inlineHelpText>
+        <label>State/Province Picklist</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Sub_Region__c</fullName>
         <externalId>false</externalId>
         <label>Sub Region</label>
@@ -2766,6 +2833,46 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Tax_Number_2_Format__c</fullName>
+        <externalId>false</externalId>
+        <label>Tax Number 2 Format</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tax_Number_2_Help_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Tax Number 2 Help Text</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Number_2_VAT_field_2_mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Tax Number 2 / VAT field 2 mandatory</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Number_2_label__c</fullName>
+        <externalId>false</externalId>
+        <label>Tax Number 2 label</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Tax_Number_VAT_field_mandatory__c</fullName>
         <defaultValue>false</defaultValue>
         <description>On Annual Revalidation form, checking this box will make Tax Number / VAT field mandatory</description>
@@ -2827,6 +2934,15 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <inlineHelpText>Enable Travel HO online accreditation applications for this country.</inlineHelpText>
         <label>Travel HO Country</label>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>VAT_2_Validation_Required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>VAT 2 Validation Required?</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

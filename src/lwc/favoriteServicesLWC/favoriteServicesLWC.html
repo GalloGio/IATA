@@ -1,0 +1,98 @@
+<template>
+
+    <c-portal-custom-card-container>
+
+        <span slot="cardTitle">
+            <span class="text-small">{label.CSP_FavoriteServices_Title}</span>
+        </span>
+
+        <span slot="cardButton">
+            <lightning-button variant="base" 
+                label={label.CSP_SeeAll} 
+                title={label.CSP_SeeAll}
+                icon-name="utility:forward" 
+                icon-position="right" 
+                onclick={goToServices}
+                class="slds-p-right_small blueCustomButtonLink">
+            </lightning-button>
+        </span>
+
+        <span slot="cardBody">
+
+            <div class="cardBodyContent">
+                <div class="spinnerContainer" if:true={isLoading}>
+                    <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
+                </div>
+
+                <div if:false={isLoading}>
+                    <div class="slds-grid slds-gutters_direct-xx-small">
+                        <div class="slds-col slds-size_5-of-6">
+                            <div class="slds-grid slds-gutters_direct-xx-small">
+                                <template for:each={favoriteServices} for:item='favoriteServicesRow'>
+                                    <div class="slds-col slds-size_1-of-3" key={favoriteServicesRow}>
+                                        <template for:each={favoriteServicesRow} for:item="favoriteServicesTile">
+                                            <article class={favoriteServicesTile.myclass} key={favoriteServicesTile.id}
+                                                onclick={redirect} data-appurl={favoriteServicesTile.Application_Start_URL__c}
+                                                data-requestable={favoriteServicesTile.Portal_Application__r.Requestable__c}
+                                                data-appfullurl={favoriteServicesTile.Portal_Application__r.Application_URL__c}
+                                                data-openwindow={favoriteServicesTile.Portal_Application__r.New_Window__c}
+                                                data-recordid={favoriteServicesTile.Id}
+                                                data-recordname={favoriteServicesTile.serviceName}>
+                                                <div class="noPointerEvents">
+                                                    <div class="extDivHeight">
+                                                        <lightning-icon icon-name="utility:forward_up" size="xx-small"
+                                                            slot="actions" class={favoriteServicesTile.extIconClass}>
+                                                        </lightning-icon>
+                                                    </div>
+                                                    <div class="imageContainer slds-m-horizontal_small imageDivHeight">
+                                                        <img class="serviceImageStyles" src={favoriteServicesTile.Portal_Application__r.Application_icon_URL__c}/>
+                                                    </div>
+                                                    <div class="tileText slds-truncate text-gray text-xxxsmall textDivHeight" >
+                                                        {favoriteServicesTile.serviceName}
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-6 slds-p-around_x-small">
+                            <div class="slds-card__body_inner bigTile aroundLinkBlueBorder">
+                                <div class="cursorPointer slds-illustration slds-illustration_small " onclick={goToAvailableServices}>
+                                    <div class="slds-align_absolute-center">
+                                        <div class="tileNewServiceIcon">+</div>
+                                    </div>
+                                    <div class="slds-align_absolute-center">
+                                        <h3 class="slds-text-heading_small tileNewServiceText text-blue text-bold">
+                                            {label.csp_Request_New_Service}
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-vertical_medium">
+                        <lightning-layout vertical-align="center" horizontal-align="center" if:true={showPagination}>
+                            <lightning-layout-item padding="horizontal-small">
+                                <a onclick={handlePrevious}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronleft" size="xx-small"> </lightning-icon></a>
+                            </lightning-layout-item>
+                            <template for:each={sliderIcons} for:item="sliderIcon">
+                                <lightning-layout-item class="slds-p-horizontal_xx-small" key={sliderIcon.id}>
+                                    <lightning-icon icon-name="utility:record" size="xx-small" class={sliderIcon.className}></lightning-icon>
+                                </lightning-layout-item>
+                            </template>
+                            <lightning-layout-item padding="horizontal-small">
+                                <a onclick={handleNext}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronright" size="xx-small"> </lightning-icon></a>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </div>
+            </div>
+
+        </span>
+
+    </c-portal-custom-card-container>
+
+
+</template>

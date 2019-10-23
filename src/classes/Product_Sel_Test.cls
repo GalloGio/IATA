@@ -6,20 +6,13 @@ private class Product_Sel_Test
     {
         TestDataGenerator.generateApexSetting(); 
 
-        
-
         //-- generate Products 
-        zqu__ZProduct__c zProduct = TestDataGenerator.generateZProducts(1, false)[0];
-        zProduct.SAPProductMaterialNo__c = '99999-99';
-        insert zProduct;
-
         Product2 product  = TestDataGenerator.generateProducts(1, false)[0];
-            product.ZProduct__c = zProduct.Id; 
             product.SAP_Material_Number__c = '99999-99';
         insert product; 
 
         //-- generate 6 Rate plans: standard, CustomerType, Coupon, Region, Country, presale
-        List<zqu__ProductRatePlan__c> zRatePlans = TestDataGenerator.generateZRatePlans(zProduct.Id,6,false);
+        List<zqu__ProductRatePlan__c> zRatePlans = TestDataGenerator.generateZRatePlans2(product.Id,6,false);
             zRatePlans[1].CustomerType__c = 'Member';
             zRatePlans[2].Couponcode__c = 'COUP-0007';
             zRatePlans[3].Region__c = 'Africa & Middle East';
@@ -84,7 +77,7 @@ private class Product_Sel_Test
             
             Map<String, PriceInfo_DTO> result = pSelector.getProductPriceInfo(new Set<String>{'99999-99'}, null,null,null,true);
 
-            Map<Id,Product2> result1 = pSelector.getProductByZproduct(new List<Id>{product.Id});
+            //Map<Id,Product2> result1 = pSelector.getProductByZproduct(new List<Id>{product.Id});
 
             Map<String, Product2> result2 = Product_Sel.getProductsByProductRatePlan(new set<String>{'123456789'});
 
@@ -183,7 +176,7 @@ private class Product_Sel_Test
         insert prods;
 
         // create dummy Zuora product
-        zqu__ZProduct__c prod = IECTestUtil.CreateSampleProduct('Product1');
+        Product2 prod = IECTestUtil.CreateSampleProduct2('Product1');
         prod.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
         prod.ProductCategory__c = IECConstants.ProductCategory_SF_CACPRO;
         insert prod;
@@ -194,7 +187,7 @@ private class Product_Sel_Test
         insert myProdCat;
 
         // create dummy product info
-        Product_Information__c myProdInfo = IECTestUtil.CreateSampleProductInfo('My product', myProdCat, prod);
+        Product_Information__c myProdInfo = IECTestUtil.CreateSampleProductInfo2('My product', myProdCat, prod);
         myProdInfo.Product_Audience__c = IECConstants.ProductInformationAudience_MEMBERAIRLINE;
         insert myProdInfo;
 
@@ -225,7 +218,7 @@ private class Product_Sel_Test
             Name = 'Product B',
             Description = 'Description for Product B',
             SAP_Material_Number__c = TestDataGenerator.generateProductCode(),
-            Zuora_Id__c = TestDataGenerator.generateZuoraFakeId(),
+            zqu__ZuoraId__c = TestDataGenerator.generateZuoraFakeId(),
             Effective_From__c = TestDataGenerator.DEFAULT_EFFECTIVE_START_DATE,
             Effective_To__c = TestDataGenerator.DEFAULT_EFFECTIVE_END_DATE,
             Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'

@@ -202,11 +202,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Formula_Zuora_Id__c</field>
-            <table>Product2</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Hide_Effective_To_Date_in_eCommerce__c</field>
             <table>Product2</table>
         </columns>
@@ -672,7 +667,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Zuora_Id__c</field>
+            <field>zqu__ZuoraId__c</field>
             <table>Product2</table>
         </columns>
         <masterLabel>Products</masterLabel>

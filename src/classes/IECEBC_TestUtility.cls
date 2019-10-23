@@ -48,14 +48,14 @@ public with sharing class IECEBC_TestUtility {
 	//  
 	
 	public static Product_Category__c oEbcProductCategory;
-	public static zqu__ZProduct__c oEbcProductMember;
-	public static zqu__ZProduct__c oEbcProductNonMember;
-	public static zqu__ZProduct__c oEbcProductAddOnStorage;
-	public static zqu__ZProduct__c oEbcProductAddOnReporting;
-	public static zqu__ZProduct__c oEbcProductEmailBlock;
-	public static zqu__ZProduct__c oEbcProductPayExactAmount;
+	public static Product2 oEbcProductMember;
+	public static Product2 oEbcProductNonMember;
+	public static Product2 oEbcProductAddOnStorage;
+	public static Product2 oEbcProductAddOnReporting;
+	public static Product2 oEbcProductEmailBlock;
+	public static Product2 oEbcProductPayExactAmount;
 	public static List<Product_Information__c> lEbcProductInfo;
-	public static Map<Id,Product_Information__c> mProductIdToProductInfoObj; // map from ZProduct.Id to Product_Information
+	public static Map<Id,Product_Information__c> mProductIdToProductInfoObj; // map from Product.Id to Product_Information
 	
 	public static zqu__ProductRatePlan__c oEbcPayAsYouGoProductRatePlanMember {get;private set;}	// pay as you go EBC
 	public static zqu__ProductRatePlan__c oEbcPayAsYouGoProductRatePlanNonMember {get;private set;} // pay as you go EBC
@@ -181,7 +181,7 @@ public with sharing class IECEBC_TestUtility {
 	//   lEbcProductInfo
 	public static void createEbcSetupAndRelatedData()
 	{
-		// create all EBC related Product_Category, zqu__ZProduct, Product_Information
+		// create all EBC related Product_Category, Product, Product_Information
 		createEbcRelatedProducts();
 		
 		// create all EBC Related Rate Plans and ProducRatePlanCharges
@@ -216,8 +216,8 @@ public with sharing class IECEBC_TestUtility {
 					, Pay_Exact_Amount_Member__c = oEbcProductRatePlanPaysExactAmount.Id
 					, Pay_Exact_Amount_Non_Member__c = oEbcProductRatePlanPaysExactAmount.Id
 					
-					, Member_Email_Block_Product__c = oEbcProductEmailBlock.Id
-					, Non_Member_Email_Block_Product__c = oEbcProductEmailBlock.Id
+					, New_Member_Email_Block_Product__c = oEbcProductEmailBlock.Id
+					, New_Non_Member_Email_Block_Product__c = oEbcProductEmailBlock.Id
 					
 					, Storage_Product_Rate_Plan__c = oEbcProductRatePlanAddOnStorage.Id
 					, Enhanced_Reporting_Product_Rate_Plan__c = oEbcProductRatePlanAddOnReporting.Id
@@ -233,47 +233,37 @@ public with sharing class IECEBC_TestUtility {
 	// output oEbcProductCategory, oEbcProduct*, lEbcProductInfo
 	private static void createEbcRelatedProducts()
 	{
-		oEbcProductCategory = CreateSampleProductCategory(IECConstants.ProductCategory_SF_EBROADCAST, true);
+		oEbcProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_EBROADCAST, true);
 		
 		oEbcProductCategory.Renewal_Window__c = EBC_RENEWAL_WINDOW;
 		insert oEbcProductCategory;
 		
-		// create ZProducts
-		oEbcProductMember = CreateSampleProduct('eBroadcast for Non-Members');
-		//oEbcProductMember.ProductAudience__c = 'Member Airline';
-		//oEbcProductMember.zqu__Category__c = 'Base Products';
+		// create Products
+		oEbcProductMember = IECTEstUtil.createSampleProduct2('eBroadcast for Non-Members');
 		oEbcProductMember.ProductCategory__c = IECConstants.ProductCategory_SF_EBROADCAST; // option undefined yet
-		oEbcProductMember.zqu__Description__c = 'eBroadcast for IATA Member Airlines';
+		oEbcProductMember.Description = 'eBroadcast for IATA Member Airlines';
 		
-		oEbcProductNonMember = CreateSampleProduct('eBroadcast for Non-Members');
-		//oEbcProductNonMember.ProductAudience__c = 'Non-Member Single';
-		//oEbcProductNonMember.zqu__Category__c = 'Base Products';
+		oEbcProductNonMember = IECTEstUtil.createSampleProduct2('eBroadcast for Non-Members');
 		oEbcProductNonMember.ProductCategory__c = IECConstants.ProductCategory_SF_EBROADCAST; // option undefined yet
-		oEbcProductNonMember.zqu__Description__c = 'eBroadcast for IATA Member Airlines';
+		oEbcProductNonMember.Description = 'eBroadcast for IATA Member Airlines';
 		
-		oEbcProductAddOnStorage = CreateSampleProduct('Additional Storage');
-		//oEbcProductAddOnStorage.ProductAudience__c = null;
-		//oEbcProductAddOnStorage.zqu__Category__c = 'Add On Services';
+		oEbcProductAddOnStorage = IECTEstUtil.createSampleProduct2('Additional Storage');
 		oEbcProductAddOnStorage.ProductCategory__c = IECConstants.ProductCategory_SF_EBROADCAST; // option undefined yet
-		oEbcProductAddOnStorage.zqu__Description__c = 'eBroadcast add on';
+		oEbcProductAddOnStorage.Description = 'eBroadcast add on';
 		
-		oEbcProductAddOnReporting = CreateSampleProduct('Enhanced Reporting');
-		//oEbcProductAddOnReporting.ProductAudience__c = null;
-		//oEbcProductAddOnReporting.zqu__Category__c = 'Add On Services';
+		oEbcProductAddOnReporting = IECTEstUtil.createSampleProduct2('Enhanced Reporting');
 		oEbcProductAddOnReporting.ProductCategory__c = IECConstants.ProductCategory_SF_EBROADCAST; // option undefined yet
-		oEbcProductAddOnReporting.zqu__Description__c = 'eBroadcast add on';
+		oEbcProductAddOnReporting.Description = 'eBroadcast add on';
 		
-		oEbcProductEmailBlock = CreateSampleProduct('Email Block');
-		//oEbcProductEmailBlock.ProductAudience__c = null;
-		//oEbcProductEmailBlock.zqu__Category__c = 'Email Blocks';
+		oEbcProductEmailBlock = IECTEstUtil.createSampleProduct2('Email Block');
 		oEbcProductEmailBlock.ProductCategory__c = IECConstants.ProductCategory_SF_EBROADCAST; // option undefined yet
-		oEbcProductEmailBlock.zqu__Description__c = 'eBroadcast Email Blocks';
+		oEbcProductEmailBlock.Description = 'eBroadcast Email Blocks';
 		
-		oEbcProductPayExactAmount = CreateSampleProduct('EBC Pay Exact Amount');
+		oEbcProductPayExactAmount = IECTEstUtil.createSampleProduct2('EBC Pay Exact Amount');
 		oEbcProductPayExactAmount.ProductCategory__c = IECConstants.ProductCategory_SF_EBROADCAST;
-		oEbcProductPayExactAmount.zqu__Description__c ='eBroadcast Pay Exact Amount';
+		oEbcProductPayExactAmount.Description ='eBroadcast Pay Exact Amount';
 		
-		List<zqu__ZProduct__c> lEbcProduct = new List<zqu__ZProduct__c>{oEbcProductMember, oEbcProductNonMember
+		List<Product2> lEbcProduct = new List<Product2>{oEbcProductMember, oEbcProductNonMember
 			, oEbcProductAddOnStorage, oEbcProductAddOnReporting, oEbcProductEmailBlock
 			, oEbcProductPayExactAmount };
 		insert lEbcProduct;
@@ -281,9 +271,9 @@ public with sharing class IECEBC_TestUtility {
 		//
 		lEbcProductInfo = new List<Product_Information__c>();
 		mProductIdToProductInfoObj = new Map<Id,Product_Information__c>();
-		for (zqu__ZProduct__c prd : lEbcProduct) 
+		for (Product2 prd : lEbcProduct) 
 		{
-			Product_Information__c oProdInfo = CreateSampleProductInfo( prd.Name, oEbcProductCategory, prd);
+			Product_Information__c oProdInfo = IECTestUtil.createSampleProductInfo2( prd.Name, oEbcProductCategory, prd);
 			oProdInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
 			lEbcProductInfo.add(oProdInfo);
 			mProductIdToProductInfoObj.put( prd.Id, oProdInfo);
@@ -300,38 +290,38 @@ public with sharing class IECEBC_TestUtility {
 	private static void createEbcRelatedRatePlansAndCharges()
 	{
 		lEbcProductRatePlanMember= new List<zqu__ProductRatePlan__c>();
-		lEbcProductRatePlanMember.add(CreateSampleProductRatePlan('Starter Edition M', false, oEbcProductMember));
-		lEbcProductRatePlanMember.add(CreateSampleProductRatePlan('Professional Edition M', false, oEbcProductMember));
-		lEbcProductRatePlanMember.add(CreateSampleProductRatePlan('Enterprise Edition M', false, oEbcProductMember));
-		lEbcProductRatePlanMember.add(CreateSampleProductRatePlan('Premium Edition M', false, oEbcProductMember));
+		lEbcProductRatePlanMember.add(createEbcSampleProductRatePlan('Starter Edition M', false, oEbcProductMember));
+		lEbcProductRatePlanMember.add(createEbcSampleProductRatePlan('Professional Edition M', false, oEbcProductMember));
+		lEbcProductRatePlanMember.add(createEbcSampleProductRatePlan('Enterprise Edition M', false, oEbcProductMember));
+		lEbcProductRatePlanMember.add(createEbcSampleProductRatePlan('Premium Edition M', false, oEbcProductMember));
 		
 		for (zqu__ProductRatePlan__c prp : lEbcProductRatePlanMember) {
 			prp.EBC_SubscriptionType__c = vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID;
 		}
 
 		lEbcProductRatePlanNonMember = new List<zqu__ProductRatePlan__c>();
-		lEbcProductRatePlanNonMember.add(CreateSampleProductRatePlan('Starter Edition N', false, oEbcProductNonMember));
-		lEbcProductRatePlanNonMember.add(CreateSampleProductRatePlan('Professional Edition N', false, oEbcProductNonMember));
-		lEbcProductRatePlanNonMember.add(CreateSampleProductRatePlan('Enterprise Edition N', false, oEbcProductNonMember));
-		lEbcProductRatePlanNonMember.add(CreateSampleProductRatePlan('Premium Edition N', false, oEbcProductNonMember));
+		lEbcProductRatePlanNonMember.add(createEbcSampleProductRatePlan('Starter Edition N', false, oEbcProductNonMember));
+		lEbcProductRatePlanNonMember.add(createEbcSampleProductRatePlan('Professional Edition N', false, oEbcProductNonMember));
+		lEbcProductRatePlanNonMember.add(createEbcSampleProductRatePlan('Enterprise Edition N', false, oEbcProductNonMember));
+		lEbcProductRatePlanNonMember.add(createEbcSampleProductRatePlan('Premium Edition N', false, oEbcProductNonMember));
 		for (zqu__ProductRatePlan__c prp : lEbcProductRatePlanNonMember) {
 			prp.EBC_SubscriptionType__c = vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID;
 		}
 		
-		oEbcPayAsYouGoProductRatePlanMember = CreateSampleProductRatePlan(vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO, false, oEbcProductMember);
+		oEbcPayAsYouGoProductRatePlanMember = createEbcSampleProductRatePlan(vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO, false, oEbcProductMember);
 		oEbcPayAsYouGoProductRatePlanMember.EBC_SubscriptionType__c = vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO;
-		oEbcPayAsYouGoProductRatePlanNonMember = CreateSampleProductRatePlan(vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO, false, oEbcProductNonMember);
+		oEbcPayAsYouGoProductRatePlanNonMember = createEbcSampleProductRatePlan(vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO, false, oEbcProductNonMember);
 		oEbcPayAsYouGoProductRatePlanNonMember.EBC_SubscriptionType__c = vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO;
 		
-		oEbcProductRatePlanAddOnStorage = CreateSampleProductRatePlan('Extra Storage', false, oEbcProductAddOnStorage);
-		oEbcProductRatePlanAddOnReporting = CreateSampleProductRatePlan('Extra Storage', false, oEbcProductAddOnReporting);
+		oEbcProductRatePlanAddOnStorage = createEbcSampleProductRatePlan('Extra Storage', false, oEbcProductAddOnStorage);
+		oEbcProductRatePlanAddOnReporting = createEbcSampleProductRatePlan('Extra Storage', false, oEbcProductAddOnReporting);
 		
 		lEbcProductRatePlanEmailBlock = new List<zqu__ProductRatePlan__c>();
-		lEbcProductRatePlanEmailBlock.add(CreateSampleProductRatePlan('Email Block 1', false, oEbcProductEmailBlock));
-		lEbcProductRatePlanEmailBlock.add(CreateSampleProductRatePlan('Email Block 2', false, oEbcProductEmailBlock));
-		lEbcProductRatePlanEmailBlock.add(CreateSampleProductRatePlan('Email Block 3', false, oEbcProductEmailBlock));
+		lEbcProductRatePlanEmailBlock.add(createEbcSampleProductRatePlan('Email Block 2', false, oEbcProductEmailBlock));
+		lEbcProductRatePlanEmailBlock.add(createEbcSampleProductRatePlan('Email Block 3', false, oEbcProductEmailBlock));
+		lEbcProductRatePlanEmailBlock.add(createEbcSampleProductRatePlan('Email Block 1', false, oEbcProductEmailBlock));
 		
-		oEbcProductRatePlanPaysExactAmount = CreateSampleProductRatePlan('Exact Amount', false, oEbcProductPayExactAmount);
+		oEbcProductRatePlanPaysExactAmount = createEbcSampleProductRatePlan('Exact Amount', false, oEbcProductPayExactAmount);
 		
 		
 		// insert all of product rate plans
@@ -361,29 +351,29 @@ public with sharing class IECEBC_TestUtility {
 		
 		for (zqu__ProductRatePlan__c oPrp : lEbcProductRatePlan)
 		{
-			Product_Rate_Plan_Information__c oPrpi = CreateSampleProductRatePlanInfo( oPrp.Name, false
-												, oPrp, mProductIdToProductInfoObj.get( oPrp.zqu__ZProduct__c) );
+			Product_Rate_Plan_Information__c oPrpi = IECTestUtil.createSampleProductRatePlanInfo( oPrp.Name, false
+												, oPrp, mProductIdToProductInfoObj.get( oPrp.zqu__Product__c) );
 			lProductRatePlanInformation.add(oPrpi);
 			mProductRatePlanIdToProductRatePlanInformationObj.put( oPrp.Id, oPrpi);
 			
 			// create product rate plan charge as needed.
-			if ( sProductIdWithRecurringFlatCharge.contains( oPrp.zqu__ZProduct__c)) {
+			if ( sProductIdWithRecurringFlatCharge.contains( oPrp.zqu__Product__c)) {
 				zqu__ProductRatePlanCharge__c oPrpCharge;
-				oPrpCharge = CreateSampleProductRatePlanCharge(oPrp, 'Charge Recurring Flat-' + oPrp.Name, 1);
+				oPrpCharge = IECTestUtil.createSampleProductRatePlanCharge(oPrp, 'Charge Recurring Flat-' + oPrp.Name, 1);
 				oPrpCharge.zqu__Type__c = RATE_PLAN_CHARGE_TYPE_RECURRING;
 				oPrpCharge.zqu__Model__c = IECConstants.ChargeModel_Zuora_FlatFeePricing;
 				lEbcProductRatePlanCharge.add(oPrpCharge);
 			}
-			if ( sProductIdWithOneTimeFlatCharge.contains( oPrp.zqu__ZProduct__c)) {
+			if ( sProductIdWithOneTimeFlatCharge.contains( oPrp.zqu__Product__c)) {
 				zqu__ProductRatePlanCharge__c oPrpCharge;
-				oPrpCharge = CreateSampleProductRatePlanCharge(oPrp, 'Charge One Time Flat-' + oPrp.Name, 1);
+				oPrpCharge = IECTestUtil.createSampleProductRatePlanCharge(oPrp, 'Charge One Time Flat-' + oPrp.Name, 1);
 				oPrpCharge.zqu__Type__c = RATE_PLAN_CHARGE_TYPE_ONE_TIME;
 				oPrpCharge.zqu__Model__c = IECConstants.ChargeModel_Zuora_FlatFeePricing;
 				lEbcProductRatePlanCharge.add(oPrpCharge);
 			}
-			if ( sProductIdWithOneTimePerUnitCharge.contains( oPrp.zqu__ZProduct__c)) {
+			if ( sProductIdWithOneTimePerUnitCharge.contains( oPrp.zqu__Product__c)) {
 				zqu__ProductRatePlanCharge__c oPrpCharge;
-				oPrpCharge = CreateSampleProductRatePlanCharge(oPrp, 'Charge One Time Per Unit-' + oPrp.Name, 1);
+				oPrpCharge = IECTestUtil.createSampleProductRatePlanCharge(oPrp, 'Charge One Time Per Unit-' + oPrp.Name, 1);
 				oPrpCharge.zqu__Type__c = RATE_PLAN_CHARGE_TYPE_ONE_TIME;
 				oPrpCharge.zqu__Model__c = IECConstants.ChargeModel_Zuora_PerUnitPricing;
 				lEbcProductRatePlanCharge.add(oPrpCharge);
@@ -398,110 +388,26 @@ public with sharing class IECEBC_TestUtility {
 	// ================================================================================
 	// create Subscription and related SubscriptionProductCharge
 	// for the test user (oUser, oAccount, oBillingAccount)
-	// input ProductRatePlan, ZProduct, EndSubscriptionDate
+	// input ProductRatePlan, Product, EndSubscriptionDate
 	// output oSubscription, oSubscriptionProductCharge
 	// return value: oSubscription
-	public static Zuora__Subscription__c createEbcSubscription(zqu__ProductRatePlan__c poProductRatePlan, zqu__ZProduct__c poProduct, Date pdEndSubscriptionDate)
+	public static Zuora__Subscription__c createEbcSubscription(zqu__ProductRatePlan__c poProductRatePlan, Product2 poProduct, Date pdEndSubscriptionDate)
 	{
 		// create dummy subscription
-		oSubscription = createSampleSubscription(oAccount.Id, oBillingAccount.Id, 'Subs 01', pdEndSubscriptionDate);
+		oSubscription = IECTestUtil.createSampleSubscription(oAccount.Id, oBillingAccount.Id, 'Subs 01', pdEndSubscriptionDate);
 		oSubscription.Zuora__Status__c = 'Active';
 		insert oSubscription;
 		
 		// create dummy subscription charge
-		oSubscriptionProductCharge = createSampleSubscriptionCharge(oSubscription.Id, pdEndSubscriptionDate.addMonths(-12)
+		oSubscriptionProductCharge = IECTestUtil.createSampleSubscriptionCharge2(oSubscription.Id, pdEndSubscriptionDate.addMonths(-12)
 																				, poProduct, poProductRatePlan
 																			   );
 		insert oSubscriptionProductCharge;
 
 		return oSubscription;
 	} // end of createEbcSubscription
-
-	
-    public static Product_Rate_Plan_Information__c CreateSampleProductRatePlanInfo(String sName, Boolean triable, zqu__ProductRatePlan__c oProductRatePlan, Product_Information__c oProductInfo) {
-        Product_Rate_Plan_Information__c prpi = new Product_Rate_Plan_Information__c();
-            prpi.Name = sName;
-            prpi.Related_Product_Information__c = oProductInfo.Id;
-            prpi.Product_Rate_Plan__c = oProductRatePlan.Id;
-            prpi.Active__c = true;
-            prpi.Monthly_Price__c = 10.00;
-            prpi.Display_As_Monthly_Fee__c = !triable;
-            //prpi.User_Interface_Display__c = 'Yes';
-            prpi.Order__c = 1;
-            prpi.Short_Description__c = 'Sample Product Rate Plan Information';
-            prpi.Long_Description__c = 'long desc';
-            
-            return prpi;
-    }
-    public static Zuora__Subscription__c createSampleSubscription(id idAccount, String sName, Date sEndDate) {
-        return createSampleSubscription(idAccount, null, sName, sEndDate);
-    }
-
-    public static Zuora__Subscription__c createSampleSubscription(id idAccount, id idBillingAccount, String sName, Date sEndDate) {
-        Zuora__Subscription__c subscription = new Zuora__Subscription__c();
-        String zuoraId =  IECUtil.NewGuid();
-        subscription.Zuora__External_Id__c = 
-            subscription.Zuora__Zuora_Id__c = zuoraId.substring(0, 32);
-        subscription.Zuora__RenewalTerm__c = '12 Months';
-        subscription.Zuora__Version__c = 1;
     
-        if (sName != null)
-            subscription.Name = sName;
-    
-        if (idAccount != null)
-            subscription.Zuora__Account__c = idAccount;
         
-        if (idBillingAccount != null)
-            subscription.Zuora__CustomerAccount__c = idBillingAccount;
-
-        if (sEndDate != null) { 
-            subscription.Zuora__SubscriptionEndDate__c = sEndDate;
-            subscription.Zuora__SubscriptionStartDate__c = sEndDate.addYears(-1).addDays(1); // Calculates start date 1 year before endDate
-            subscription.Zuora__TermStartDate__c = subscription.Zuora__SubscriptionStartDate__c;
-            subscription.Zuora__TermEndDate__c = subscription.Zuora__SubscriptionEndDate__c;
-        }
-        
-        return subscription;
-    }
-    
-    public static Zuora__SubscriptionProductCharge__c createSampleSubscriptionCharge(Id subscriptionId, Date sEffectiveDate, zqu__ZProduct__c oProduct, zqu__ProductRatePlan__c oProductRatePlan) {
-        string sZID = IECUtil.NewGuid().substring(0, 32);
-        return new Zuora__SubscriptionProductCharge__c(
-            Zuora__External_Id__c = sZID
-            , Zuora__Zuora_Id__c = sZID
-            , Name = 'CHARGETEST'
-            , Zuora__Subscription__c = subscriptionId
-            , Zuora__BillingPeriod__c = 'Annual'
-            , Zuora__EffectiveStartDate__c = sEffectiveDate
-            , Zuora__TotalContractValue__c = 25
-            , Zuora__MonthlyRecurringRevenue__c = 2
-            , Zuora__Price__c = 25
-            , Zuora__Quantity__c = 1
-            , Zuora__ExtendedAmount__c = 25
-            , Zuora__BillingPeriodStartDay__c = '19th of the month'
-            , Zuora__Model__c = IECConstants.ChargeModel_Zuora_FlatFeePricing
-            , Zuora__Type__c = 'Recurring'
-            , Zuora__RatePlanName__c = oProductRatePlan.Name
-            , Zuora__RatePlanDescription__c = oProductRatePlan.zqu__Description__c
-            , Zuora__RatePlanEffectiveEndDate__c = oProductRatePlan.zqu__EffectiveEndDate__c
-            , Zuora__ProductName__c = oProduct.Name
-            , Zuora__ProductSKU__c = oProduct.zqu__SKU__c
-            , Zuora__ProductEffectiveEndDate__c = oProduct.zqu__EffectiveEndDate__c
-        );
-    }
-    
-    public static zqu__ProductRatePlanCharge__c CreateSampleProductRatePlanCharge(zqu__ProductRatePlan__c oRelatedRatePlan, String sName, double dPrice) {
-        zqu__ProductRatePlanCharge__c ratePlanCharge = new zqu__ProductRatePlanCharge__c();
-            ratePlanCharge.Name = sName;
-            ratePlanCharge.zqu__ProductRatePlan__c = oRelatedRatePlan.Id;
-            ratePlanCharge.zqu__Deleted__c = false;
-            ratePlanCharge.zqu__ZuoraId__c = generateZuoraID();
-            ratePlanCharge.zqu__ListPrice__c = dPrice;
-            ratePlanCharge.zqu__Model__c = 'Flat Fee Pricing';
-            
-            return ratePlanCharge;
-    }
-    
 	public static Zuora.zApi.SubscribeResult createComplexSubscriptionResult(Boolean success) {
         Zuora.zApi.SubscribeResult res = new Zuora.zApi.SubscribeResult();
         if (success) {
@@ -531,72 +437,10 @@ public with sharing class IECEBC_TestUtility {
         return res;
     }
     
-    public static Zuora.zApi.AmendResult CreateSampleAmendResult() {
-        Zuora.zApi.AmendResult result = new Zuora.zApi.AmendResult();
-        result.Success = true;
-        result.PaymentTransactionNumber = '1234567890';
-        List<Zuora.zObject> lstInvoiceDatas = new List<Zuora.zObject>();
-        Zuora.zObject oInvoiceData = new Zuora.zObject('InvoiceData');
-        
-        Zuora.zObject oInvoice = new Zuora.zObject('Invoice');
-        oInvoice.setValue('AmountWithoutTax', 25.0);
-        oInvoice.setValue('TaxAmount', 0.2);
-        oInvoice.setValue('Amount', 25.2);
-        
-        Zuora.zObject oInvoiceItem = new Zuora.zObject('InvoiceItem');
-        oInvoiceItem.setValue('ChargeDate', Datetime.now());
-        oInvoiceItem.setValue('ChargeName', 'Test subscription charge');
-        oInvoiceItem.setValue('ServiceStartDate', Datetime.now());
-        oInvoiceItem.setValue('ServiceEndDate', Datetime.now().addYears(1).addDays(-1));
-        oInvoiceItem.setValue('UnitPrice', 42.0);
-        oInvoiceItem.setValue('ChargeAmount', 42.0);
-        
-        oInvoiceData.setValue('Invoice', oInvoice);
-        oInvoiceData.setValue('InvoiceItem', new List<Zuora.zObject>{ oInvoiceItem });
-        lstInvoiceDatas.add(oInvoiceData);
-        result.InvoiceDatas = lstInvoiceDatas;
-        return result;
-    }
-    
-    public static Product_Category__c CreateSampleProductCategory(string sProductCode, boolean bPricedProduct) {
-        Product_Category__c pc = new Product_Category__c ();
-            pc.Name = sProductCode;
-            pc.Button_Type__c = bPricedProduct ? IECConstants.ProductCategory_ButtonType_BuyNow : IECConstants.ProductCategory_ButtonType_GetAQuote;
-            pc.Renewal_Window__c = '600';
-            pc.Auto_Renewal_Window__c = '60';
-            pc.Display_Name__c = 'Sample Product Display Name';
-            pc.Short_Description__c = 'Sample Product Short Description';
-            pc.Long_Description__c = 'Sample Product Long Description';
-            pc.Application_URL__c = 'http://www.iata.org';
-            pc.Feature_1_Image__c
-                = pc.Feature_2_Image__c
-                = pc.Feature_3_Image__c
-                = pc.Feature_4_Image__c
-                = pc.Feature_5_Image__c
-                = pc.Feature_6_Image__c = 'http://www.deque.com/images/Deque_feature_icon_chckbx.png';
-            pc.Feature_1_Description__c
-                = pc.Feature_2_Description__c
-                = pc.Feature_3_Description__c
-                = pc.Feature_4_Description__c
-                = pc.Feature_5_Description__c
-                = pc.Feature_6_Description__c = 'Sample Product Feature Description'; 
-            pc.Section_2_Name__c
-                = pc.Section_3_Name__c
-                = pc.Section_5_Name__c = 'Sample Product Sections';
-            pc.Section_1_Show__c
-                = pc.Section_2_Show__c
-                = pc.Section_3_Show__c
-                = pc.Section_4_Show__c
-                = pc.Section_5_Show__c
-                = pc.Section_6_Show__c = true;
-            pc.Active__c = true;
-        return pc;
-    }
-    
-    public static zqu__ProductRatePlan__c CreateSampleProductRatePlan(String sName, Boolean triable, zqu__ZProduct__c oProduct) {
+    public static zqu__ProductRatePlan__c createEbcSampleProductRatePlan(String sName, Boolean triable, Product2 oProduct) {
         zqu__ProductRatePlan__c prp = new zqu__ProductRatePlan__c();
             prp.Name = sName;
-            prp.zqu__ZProduct__c = oProduct.Id;
+            prp.zqu__Product__c = oProduct.Id;
             prp.zqu__ZuoraId__c = 'PRP' + (Math.random()*1000000000);
             prp.zqu__EffectiveStartDate__c = Date.today().addDays(-15);
             prp.zqu__EffectiveEndDate__c = Date.today().addDays(15);
@@ -606,28 +450,6 @@ public with sharing class IECEBC_TestUtility {
             return prp;
     }
     
-    public static zqu__ZProduct__c CreateSampleProduct(String sName) {
-        return new zqu__ZProduct__c(
-            Name = sName
-            , zqu__ZuoraId__c = 'P-' + (Math.random()*1000000000)
-            , zqu__EffectiveStartDate__c = Date.today().addDays(-15)
-            , zqu__EffectiveEndDate__c = Date.today().addDays(15)
-            , zqu__SKU__c = 'SKU' + (Math.random()*1000000000)
-        );
-    }
-    public static Product_Information__c CreateSampleProductInfo(String sName, Product_Category__c oProductCategory, zqu__ZProduct__c oProduct) {
-        return CreateSampleProductInfo(sName, oProductCategory, oProduct, IECConstants.ProductInformationAudience_DEFAULT);
-    }
-    
-    public static Product_Information__c CreateSampleProductInfo(String sName, Product_Category__c oProductCategory, zqu__ZProduct__c oProduct, String productAudience) {
-        Product_Information__c pi = new Product_Information__c();
-            pi.Name = sName;
-            pi.Related_Product_Category__c = oProductCategory.Id;
-            pi.Related_Product__c = oProduct.Id;
-            pi.Product_Audience__c = productAudience;
-
-            return pi;
-    }
     
      public static User createSampleGuestUserAndLogin() {
         return createSampleGuestUserAndLogin(IECConstants.Account_ClientType_ThirdParty);
@@ -635,7 +457,7 @@ public with sharing class IECEBC_TestUtility {
     
     public static User createSampleGuestUserAndLogin(String ClientType) {
         // insert account
-        oAccount = createSampleAccount(ClientType);
+        oAccount = IECTestUtil.createSampleAccount(ClientType);
         insert oAccount;
 
         isoCountry = new IATA_ISO_Country__c();
@@ -671,7 +493,6 @@ public with sharing class IECEBC_TestUtility {
             , Zuora__BillToPostalCode__c = 'A9A9A9'
         );
 
-        //oBillingAccount = createSampleBillingAccount(oAccount, oContact);
         insert oBillingAccount; 
         system.debug('oBillingAccount->contact id : ' + oBillingAccount.Contact__c);
 
@@ -719,55 +540,6 @@ public with sharing class IECEBC_TestUtility {
 
         return u;
     }
-    
-    public static Zuora__CustomerAccount__c createSampleBillingAccount(Account oRelatedAccount) {
-        return createSampleBillingAccount(oRelatedAccount, null); 
-    }
-    
-    public static Zuora__CustomerAccount__c createSampleBillingAccount(Account oRelatedAccount, Contact oRelatedContact) {
-        return new Zuora__CustomerAccount__c(
-            Zuora__Account__c = oRelatedAccount.Id
-            , Contact__c = (oRelatedContact == null ? null : oRelatedContact.Id)
-            , Name = oRelatedAccount.Name
-            , CRMContactID__c = (oRelatedContact == null) ? null : String.valueOf(oRelatedContact.Id)
-            , Zuora__DefaultPaymentMethod__c = 'CreditCard'
-            , Zuora__BillToCity__c = 'Toronto'
-            , Zuora__BillToCountry__c = 'Canada'
-            , Zuora__BillToState__c = 'Ontario'
-            , Zuora__BillToAddress1__c = '123 Test St'
-            , Zuora__BillToPostalCode__c = 'A9A9A9'
-        );
-    }
-    public static Account createSampleAccount() {
-        return createSampleAccount(IECConstants.Account_ClientType_ThirdParty);
-    }
-    
-    public static Account createSampleAccount(String ClientType) {
-        oAccount = new Account();
-        oAccount.RecordTypeId = IECUserManager.getAccountRecordTypeForIEC(ClientType);
-        oAccount.BillingStreet = '123 main street';
-        oAccount.BillingPostalCode = 'H0H 0H0';
-        oAccount.BillingCountry = 'Canada';
-        oAccount.BillingCity = 'Montreal';
-        oAccount.Customer_Type__c = ClientType;
-        oAccount.Name = 'Company';
-
-
-        //IATA_ISO_Country__c isoCountry = CreateSampleIATAISOCountry();
-        //insert isoCountry;
-        //newAccount.IATA_ISO_Country__c = isoCountry.Id;
-
-
-        oAccount.OwnerId = IECUserManager.getIECAccountOwnerId();
-        
-        if (ClientType == IECConstants.Account_ClientType_MemberAirline) {
-            oAccount.Membership_status__c = IECConstants.Account_MembershipStatus_IATAMember;
-            oAccount.ICH_Member__c = true;
-        }
-
-        return oAccount;
-    }
-    
     
    
 } // IECEBC_TestUtility class

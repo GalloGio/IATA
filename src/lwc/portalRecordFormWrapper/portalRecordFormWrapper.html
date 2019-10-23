@@ -1,0 +1,581 @@
+<!--
+ - Created by pvavruska on 5/28/2019.
+ -->
+
+<!-- Portal Record Form Wrapper -->
+<template>
+
+    <template if:true={changeUserPortalStatus}>
+        <c-portal-change-user-status record-id={recordId} onrefreshview={closePortalChangeUserStatusWithRefresh}
+                                     onclosemodal={closePortalChangeUserStatus}
+                                     remove-contact={removeContact}></c-portal-change-user-status>
+    </template>
+
+    <template if:true={openRelocateAccount}>
+        <c-portal-relocate-account record-id={recordId} onclosemodal={closePortalChangeUserStatus}
+            onrefreshview={closePortalChangeUserStatusWithRefresh} related-accounts={relatedAccounts}></c-portal-relocate-account>
+    </template>
+
+    <template if:true={emailDomain}>
+        <c-portal-email-domain record-id={recordId} oncloseemaildomain={closeEmailDomain}></c-portal-email-domain>
+    </template>
+
+    <c-portal-profile-section class-name={sectionClass} header-class={headerClass}>
+        <span slot="sectionTitle">{sectionTitle}</span>
+        <span slot="sectionActions">
+            <lightning-icon if:true={canEditBasics} icon-name="utility:edit" size="x-small"
+                class="darkBlueIcon cursorPointer" onclick={openModal}></lightning-icon>
+        </span>
+        <span slot="componentContent">
+
+            <!-- VIEW RECORD -->
+            <lightning-record-view-form record-id={recordId} object-api-name={objectName} onload={loaded}>
+                <template if:false={isLoading}>
+                    <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_small">
+
+                        <template for:each={fields} for:item="field">
+                            <template if:true={field.isAccountDomainPermission}>
+                                <span key={field.fieldName}
+                                    class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <span class="specialLabel slds-m-left_xx-small">
+                                        {labels.CompanyInformation_EMADOMVAL_Title}
+                                    </span>
+                                    <span class="slds-m-left_x-small">
+                                        <lightning-icon icon-name="utility:edit" size="x-small"
+                                            class="darkBlueIcon cursorPointer" onclick={openEmailDomain}></lightning-icon>
+                                    </span>
+                                    <div class="textValue slds-m-left_xx-small">
+                                        <template for:each={accountDomains} for:item="domain">
+                                            <div key={domain.Name}> {domain.Name} </div>
+                                        </template>
+                                    </div>
+                                </span>
+                            </template>
+
+                            <template if:true={field.isAccessibility}>
+                                <span key={field.fieldName}
+                                    class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <span class="specialLabel">
+                                        {field.fieldName}
+                                    </span>
+                                    <div class="textValue">
+                                        {accessibilityGetter}
+                                    </div>
+                                </span>
+
+                                <div key={field.fieldName}
+                                    class="specialLabel slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                                    {labels.ServicesTitle}
+                                </div>
+
+                                <template if:true={hasServices}>
+                                    <template for:each={services} for:item="service">
+                                        <div key={service.recordService.ServiceName__c}
+                                            class="text-xsmall slds-m-left_medium slds-size_1-of-1">
+                                            <a class="text-blue" onclick={navigateTo}
+                                                data-url={service.recordService.Application_URL__c}
+                                                data-id={service.recordService.Id}>
+                                                {service.recordService.ServiceName__c}
+                                            </a>
+                                        </div>
+                                    </template>
+                                </template>
+
+                                <template if:false={hasServices}>
+                                    <div key={emptyServices} class="text-xsmall slds-m-left_medium slds-size_1-of-1">
+                                    </div>
+                                </template>
+                            </template>
+
+                            <template if:true={field.isContactServices}>
+                                <div key={field.fieldName}
+                                    class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue">
+                                    <div class="slds-form-element__label">
+                                        {labels.ServicesTitle}
+                                    </div>
+
+                                    <template if:true={hasStaticServices}>
+                                        <template for:each={staticFields.services} for:item="service">
+                                            <div key={service.recordService.Name} class="text-xsmall">
+                                                <a class="text-blue" onclick={navigateTo}
+                                                    data-url={service.recordService.Application_URL__c}
+                                                    data-id={service.recordService.Id}>
+                                                    {service.recordService.Name}
+                                                </a>
+                                            </div>
+                                        </template>
+                                    </template>
+
+                                    <template if:false={hasStaticServices}>
+                                        <div key={emptyStaticServices} class="text-xsmall"></div>
+                                    </template>
+                                </div>
+                            </template>
+
+
+
+                            <template if:false={field.isAccessibility}>
+                                <template if:false={field.isContactServices}>
+                                    <template if:false={field.isJobFunction}>
+                                        <template if:false={field.isIdCardInfo}>
+                                            <template if:false={field.isLastLogin}>
+                                                <span key={field.fieldName}
+                                                    class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                                    <div if:true={field.visible}>
+                                                        <template if:false={field.changeUserStatus}>
+                                                            
+                                                            <template if:true={field.canChangeAccount}>
+                                                                <lightning-icon if:true={canRelocate} icon-name="utility:rotate"
+                                                                    size="x-small"
+                                                                    class="darkBlueIcon cursorPointer leftIconPosition slds-m-vertical_large"
+                                                                    title={labels.RelocateAccount}
+                                                                    onclick={opensRelocateAccount}>
+                                                                </lightning-icon>
+                                                                
+                                                                <lightning-output-field class="labelValue textValue removeLinks"
+                                                                    field-name={field.fieldName}>
+                                                                </lightning-output-field>
+                                                            </template>
+
+                                                            <template if:false={field.canChangeAccount}>
+                                                                <lightning-output-field class="labelValue textValue"
+                                                                    field-name={field.fieldName}>
+                                                                </lightning-output-field>
+                                                            </template>
+                                                        </template>
+
+                                                        <template if:true={field.changeUserStatus}>
+                                                            <div class="changeUserStatus">
+
+                                                                <lightning-output-field class="labelValue textValue"
+                                                                    field-name={field.fieldName}>
+                                                                </lightning-output-field>
+                                                                <template if:false={isForEdit}>
+                                                                    <span class="changeUserStatusButton">
+                                                                        <lightning-icon icon-name="utility:custom_apps"
+                                                                            size="x-small"
+                                                                            class="darkBlueIcon cursorPointer"
+                                                                            onclick={openChangeUserPortalStatus}>
+                                                                        </lightning-icon>
+                                                                    </span>
+                                                                </template>
+                                                            </div>
+
+                                                        </template>
+                                                    </div>
+                                                </span>
+                                            </template>
+                                        </template>
+                                    </template>
+                                </template>
+
+                                <template if:true={field.isLastLogin}>
+                                    <div key={field.fieldName} class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue">
+                                        <div class="slds-form-element__label">
+                                            {labels.LastLoginDate}
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">{staticFields.LastLogin}</div>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <template if:true={field.isJobFunction}>
+                                    <div key={field.fieldName}
+                                        class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue">
+                                        <div class="slds-form-element__label">
+                                            {labels.MembershipFunction}
+                                        </div>
+
+                                        <div class="textValue">
+                                            <template if:true={hasFunction}>
+                                                <template for:each={jobFunctions} for:item="jobFunction">
+                                                    <div key={jobFunction}>
+                                                        <div class="slds-form-element__static">
+                                                            {jobFunction}
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </template>
+
+                                            <template if:false={hasFunction}>
+                                                <div class="slds-form-element__static"></div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
+
+                            <template if:true={field.isIdCardInfo}>
+                                <template if:true={hasIdCard}>
+                                    <div key={labels.IdCardNumber}
+                                        class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
+                                        <div class="slds-form-element__label">
+                                            {labels.IdCardNumber}
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">
+                                                {staticFields.cardNumber}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div key={labels.IdCardValidTo}
+                                        class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
+                                        <div class="slds-form-element__label">
+                                            {labels.IdCardValidTo}
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">
+                                                {staticFields.cardDate}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
+
+                            <template if:true={field.isPrivacyManagement}>
+                                <div key={labels.IdCardNumber}
+                                    class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-1 labelValue slds-form-element_stacked">
+                                    <div class="slds-form-element__label">
+                                        {field.label}
+                                    </div>
+                                    <div class="textValue">
+                                        <div class="slds-form-element__static">
+                                            <div class="text-xsmall slds-size_1-of-1">
+                                                <a class="text-blue" onclick={navigateToPrivacyPortal}>
+                                                    {field.link}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                        </template>
+                    </div>
+                </template>
+
+                <template if:true={isLoading}>
+                    <div class="slds-m-around_medium slds-is-relative">
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </div>
+                </template>
+            </lightning-record-view-form>
+
+
+
+            <!-- EDIT MODAL -->
+            <template if:true={showEditModal}>
+
+                <div class="modal">
+                    <div class="customPopupInteriorHalfScreenCentered">
+                        <!-- Popup Header -->
+                        <div class="slds-p-horizontal_large slds-p-vertical_medium editIcon">
+                            <span>Edit {objectName}</span>
+                            <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                                <template if:false={isSaving}>
+                                    <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                                        onclick={closeModal}></lightning-icon>
+                                </template>
+                            </span>
+                        </div>
+
+
+                        <!-- Popup Body -->
+                        <template if:true={recordId}>
+                            <div class="slds-is-relative">
+                                <lightning-record-edit-form record-id={recordId} object-api-name={objectName}
+                                    onload={loadedEdit} onsuccess={handleSucess} onsubmit={handleSubmit}
+                                    onerror={handleError}>
+
+                                    <template if:true={isSaving}>
+                                        <div class="modalSpinnerContainer">
+                                            <lightning-spinner alternative-text="Loading" size="medium">
+                                            </lightning-spinner>
+                                        </div>
+                                    </template>
+
+                                    <template if:true={hasError}>
+                                        <div class="whiteIcon text-xxsmall errorBox">
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-m-left_medium slds-size_12-of-13">
+                                                    {labels.CSP_Error_Message_Mandatory_Fields_Contact}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+
+                                    <div
+                                        class="slds-p-horizontal_small slds-p-horizontal_large slds-size_4-of-4 customWhiteBackground">
+                                        <template if:false={isLoadingEdit}>
+                                            <div
+                                                class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
+
+                                                <!-- Display same fields for edit -->
+                                                <template if:false={haveEditFields}>
+                                                    <template for:each={fields} for:item="field">
+                                                        <template if:true={field.isAccessibility}>
+                                                            <div key={field.fieldName}
+                                                                class="specialLabel slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                                                                {field.fieldName}
+                                                            </div>
+                                                            <template for:each={field.accessibilityList}
+                                                                for:item="accessibility">
+                                                                <div key={accessibility.label}
+                                                                    class="text-xsmall slds-size_1-of-2">
+                                                                    <div
+                                                                        class="slds-m-left_x-small slds-m-bottom_small">
+                                                                        <label class="checkbox-button">
+                                                                            <input data-check={accessibility.checked}
+                                                                                checked={accessibility.checked}
+                                                                                data-item={accessibility.label}
+                                                                                type="checkbox"
+                                                                                class="checkbox-button__input"
+                                                                                onchange={getValueSelectedTypeStatus}
+                                                                                name={accessibility.label}>
+                                                                            <span data-check={accessibility.checked}
+                                                                                data-item={accessibility.label}
+                                                                                class="checkbox-button__control"
+                                                                                onchange={getValueSelectedTypeStatus}></span>
+                                                                            <span data-check={accessibility.checked}
+                                                                                data-item={accessibility.label}
+                                                                                class="checkbox-button__label"
+                                                                                onchange={getValueSelectedTypeStatus}>
+                                                                                {accessibility.label}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                        </template>
+
+                                                        <template if:false={field.isAccessibility}>
+                                                            <template if:false={field.isIdCardInfo}>
+                                                                <template if:false={field.isJobFunction}>
+                                                                    <span key={field.fieldName}
+                                                                        class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
+                                                                        <div>
+                                                                            <!-- If field is visible -->
+                                                                            <template if:true={field.visible}>
+                                                                                <!-- If field is editable -->
+                                                                                <template if:false={field.outputOnly}>
+                                                                                    <template if:true={field.editable}>
+                                                                                        <lightning-input-field
+                                                                                            onchange={styleInputs}
+                                                                                            class="labelValue textValue"
+                                                                                            field-name={field.fieldName}>
+                                                                                        </lightning-input-field>
+
+                                                                                        <template
+                                                                                            if:true={field.invalid}>
+                                                                                            <div
+                                                                                                class="slds-form-element__help invalidValueLabel">
+                                                                                                {labels.InvalidValue}
+                                                                                            </div>
+                                                                                        </template>
+
+                                                                                        <template
+                                                                                            if:true={field.missing}>
+                                                                                            <div
+                                                                                                class="slds-form-element__help invalidValueLabel">
+                                                                                                {labels.CompleteField}
+                                                                                            </div>
+                                                                                        </template>
+                                                                                    </template>
+
+
+                                                                                    <!-- Read-only fields -->
+                                                                                    <template if:false={field.editable}>
+                                                                                        <lightning-input-field
+                                                                                            class="labelValue textValue disabledValue disabledInput"
+                                                                                            field-name={field.fieldName}
+                                                                                            disabled>
+                                                                                        </lightning-input-field>
+                                                                                    </template>
+                                                                                </template>
+
+                                                                                <template if:true={field.outputOnly}>
+                                                                                    <lightning-output-field
+                                                                                        class="labelValue textValue removeLinks"
+                                                                                        field-name={field.fieldName}>
+                                                                                    </lightning-output-field>
+                                                                                </template>
+                                                                            </template>
+                                                                        </div>
+                                                                    </span>
+                                                                </template>
+                                                            </template>
+                                                        </template>
+
+
+
+
+                                                    </template>
+                                                </template>
+
+                                                <!-- Display different set of fields for editing -->
+                                                <template if:true={haveEditFields}>
+                                                    <template for:each={editFields} for:item="field">
+                                                        <span key={field.fieldName}
+                                                            class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
+                                                            <div>
+                                                                <template if:true={field.visible}>
+                                                                    <template if:false={field.outputOnly}>
+                                                                        <template if:true={field.editable}>
+                                                                            <lightning-input-field
+                                                                                onchange={styleInputs}
+                                                                                class="labelValue textValue"
+                                                                                field-name={field.fieldName}>
+                                                                            </lightning-input-field>
+                                                                            <template if:true={field.invalid}>
+                                                                                <div
+                                                                                    class="slds-form-element__help invalidValueLabel">
+                                                                                    {labels.InvalidValue}</div>
+                                                                            </template>
+                                                                            <template if:true={field.missing}>
+                                                                                <div
+                                                                                    class="slds-form-element__help invalidValueLabel">
+                                                                                    {labels.CompleteField}</div>
+                                                                            </template>
+
+
+                                                                        </template>
+                                                                        <template if:false={field.editable}>
+                                                                            <lightning-input-field
+                                                                                class="labelValue textValue disabledValue disabledInput"
+                                                                                field-name={field.fieldName} disabled>
+                                                                            </lightning-input-field>
+                                                                        </template>
+                                                                    </template>
+
+                                                                    <template if:true={field.outputOnly}>
+                                                                        <lightning-output-field
+                                                                            class="labelValue textValue removeLinks"
+                                                                            field-name={field.fieldName}>
+                                                                        </lightning-output-field>
+                                                                    </template>
+                                                                </template>
+                                                            </div>
+                                                        </span>
+                                                    </template>
+                                                </template>
+
+                                                <!-- Working areas for contact -->
+                                                <template if:true={showAreas}>
+                                                    <div class="slds-hide">
+                                                        <lightning-input-field field-name="Area__c">
+                                                        </lightning-input-field>
+                                                    </div>
+
+                                                    <div
+                                                        class="text-small slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                                                        {labels.Area}
+                                                    </div>
+
+                                                    <template for:each={areasOptions} for:item="item">
+                                                        <div key={item.label}
+                                                            class="slds-size_1-of-1 slds-large-size_1-of-2">
+
+                                                            <div class="slds-m-left_x-small slds-m-bottom_small">
+                                                                <label class="checkbox-button">
+                                                                    <input data-item={item.label} data-type="Area__c"
+                                                                        type="checkbox" class="checkbox-button__input"
+                                                                        onchange={getValueSelected} name={item.label}
+                                                                        checked={item.checked}>
+                                                                    <span data-item={item.label} data-type="Area__c"
+                                                                        class="checkbox-button__control"
+                                                                        onchange={getValueSelected}></span>
+                                                                    <span data-item={item.label} data-type="Area__c"
+                                                                        class="checkbox-button__label"
+                                                                        onchange={getValueSelected}>{item.value}</span>
+                                                                </label>
+                                                            </div>
+
+                                                        </div>
+                                                    </template>
+
+                                                </template>
+
+                                                <!-- Working areas for contact -->
+                                                <template if:true={showMembershipFunction}>
+                                                    <div class="slds-hide">
+                                                        <lightning-input-field field-name="Membership_Function__c">
+                                                        </lightning-input-field>
+                                                    </div>
+
+                                                    <div
+                                                        class="workingAreas text-small slds-col slds-size_1-of-1 slds-m-top_medium slds-m-bottom_medium">
+                                                        {labels.MembershipFunction}
+                                                    </div>
+
+                                                    <template for:each={functionOptions} for:item="item">
+                                                        <div key={item.label}
+                                                            class="slds-size_1-of-1 slds-large-size_1-of-2">
+
+                                                            <div class="slds-m-left_x-small slds-m-bottom_small">
+                                                                <label class="checkbox-button">
+                                                                    <input data-item={item.label}
+                                                                        data-type="Membership_Function__c"
+                                                                        type="checkbox" class="checkbox-button__input"
+                                                                        onchange={getValueSelected} name={item.label}
+                                                                        checked={item.checked}>
+                                                                    <span data-item={item.label}
+                                                                        data-type="Membership_Function__c"
+                                                                        class="workingAreasChangeOnError checkbox-button__control"
+                                                                        onchange={getValueSelected}></span>
+                                                                    <span data-item={item.label}
+                                                                        data-type="Membership_Function__c"
+                                                                        class="checkbox-button__label"
+                                                                        onchange={getValueSelected}>{item.value}</span>
+                                                                </label>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </template>
+                                                </template>
+
+                                                <div class="slds-size_1-of-1 slds-large-size_1-of-1">
+                                                </div>
+
+                                            </div>
+                                        </template>
+
+                                        <template if:true={isLoadingEdit}>
+                                            <div class="slds-m-around_medium slds-is-relative">
+                                                <lightning-spinner alternative-text="Loading" size="medium">
+                                                </lightning-spinner>
+                                            </div>
+                                        </template>
+
+
+                                    </div>
+
+                                    <!-- Popup Footer -->
+                                    <div
+                                        class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix footer-btn-wrapper">
+
+                                        <a onclick={removeUser} if:true={allowContactDelete}><div class="removeLink">{removeContactLabel}</div></a>
+
+                                        <lightning-button class="slds-float_right containedButton"
+                                            label={labels.SaveLabel} type="submit" disabled={canSave} variant="brand">
+                                        </lightning-button>
+
+                                        <lightning-button
+                                            class="slds-float_right  containedButtonWhite slds-m-right_medium cancel-btn"
+                                            disabled={isSaving} label={labels.CancelLabel} variant=""
+                                            onclick={closeModal}></lightning-button>
+                                    </div>
+                                </lightning-record-edit-form>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+
+        </span>
+    </c-portal-profile-section>
+</template>

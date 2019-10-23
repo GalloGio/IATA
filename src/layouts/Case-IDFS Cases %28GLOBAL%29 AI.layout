@@ -6,6 +6,8 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Change_Routing</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
+    <customButtons>unbabelsc__Unbabel_Translate_Case</customButtons>
+    <customButtons>Translate_Last_Customer_Comment</customButtons>
     <customConsoleComponents>
         <subtabComponents>
             <containers>
@@ -38,7 +40,6 @@
         </subtabComponents>
     </customConsoleComponents>
     <emailDefault>false</emailDefault>
-    <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -65,6 +66,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Description</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>unbabelsc__Unbabel_Language__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>unbabelsc__Unbabel_Translated_Description__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -124,6 +133,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SuppliedEmail</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SuppliedPhone</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

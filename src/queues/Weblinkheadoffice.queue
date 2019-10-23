@@ -8,12 +8,13 @@
             <publicGroup>MACSWeblinkDashboards</publicGroup>
         </publicGroups>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>DistributionAirlineManagementHOI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>DistributionManagementHOI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>DistributionAirlineManagementHO</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>DistributionManagementHO</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
         <users>
             <user>khaderb@iata.org</user>
             <user>kovalskiyd@iata.org</user>
+            <user>vol@iata.org</user>
         </users>
     </queueMembers>
     <queueSobject>

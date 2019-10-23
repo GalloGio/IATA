@@ -10,7 +10,7 @@ global class AMS_HierarchyHelper {
 		system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> accountsIds ' + accountsIds);
 
 		if(!accountsIds.isEmpty()) {
-			for (AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c
+			for (AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Parent_Account__c, Parent_Account__r.IATACode__c, Child_Account__c, Child_Account__r.IATACode__c
 			                                      FROM AMS_Agencies_relationhip__c 
 			                                      WHERE Parent_Account__c IN :accountsIds OR Child_Account__c IN :accountsIds ]) {
 
@@ -38,9 +38,10 @@ global class AMS_HierarchyHelper {
 		//AMSU-134 added HO_Flag__c,Parent_agency__c, Child_Agency__c, Is_Newgen_Relation__c
 		if(hierarchyToAccounts.keyset().isEmpty()) return result;
 
-		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  
-												Child_Account__r.Status__c, Parent_Account__r.Status__c, Child_Account__r.Reason__c, Parent_Account__r.Reason__c,
-												HO_Flag__c, Parent_agency__c, Child_Agency__c, Is_Newgen_Relation__c
+		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c, Parent_Account__r.IATACode__c, Child_Account__c, Child_Account__r.IATACode__c,
+                                              Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  
+                                              Child_Account__r.Status__c, Parent_Account__r.Status__c, Child_Account__r.Reason__c, Parent_Account__r.Reason__c,
+                                              HO_Flag__c, Parent_agency__c, Child_Agency__c, Is_Newgen_Relation__c
 		                                      FROM AMS_Agencies_relationhip__c
 		                                      WHERE Hierarchy__c IN :hierarchyToAccounts.keyset() ]) {
 

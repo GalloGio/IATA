@@ -2,9 +2,9 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>User_Portal_Status</customButtons>
     <customButtons>Change_Owner</customButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>EnableCustomerPortal</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
-    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
     <layoutSections>
@@ -40,6 +40,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IATA_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Available_Services__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Available_Services_Images__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -384,6 +392,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Contact_Profile_Complete__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>WebStar_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

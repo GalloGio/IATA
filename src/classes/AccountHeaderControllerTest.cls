@@ -4,17 +4,19 @@ private class AccountHeaderControllerTest {
 	@testSetup static void setup(){
 		
 		// create test account1
-		Account account1 = new Account();
-		account1.Name = 'Test account 1';
-		account1.IATACode__c = '1234567';
-		account1.Type = 'IATA Cargo Agent';
-		account1.BillingCity = 'Lisboa';
-		account1.BillingCountry = 'Portugal';
-		account1.BillingStreet = 'some street';
-		account1.Location_Type__c = 'HO';
-		account1.Location_Class__c = 'C';
-		account1.Purge_Flag__c = false;
-
+		Account account1 = new Account(
+            Name = 'Test account 1',
+            IATACode__c = '1234567',
+            Type = AMS_Utils.SECTOR_PASSENGER,
+            Sector__c = AMS_Utils.SECTOR_PASSENGER,
+            Category__c = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT,
+            BillingCity = 'Lisboa',
+            BillingCountry = 'Portugal',
+            BillingStreet = 'some street',
+            Location_Type__c = 'HO',
+            Location_Class__c = 'C',
+            Purge_Flag__c = false
+		);
 		insert account1;		
 
 	}

@@ -892,8 +892,6 @@ public with sharing class IECOrder_Svc {
             LIMIT 1
         ];
 
-        System.debug('angielaz, validateQuoteNumberToConvert-->quotes: ' + quotes);
-
         return (quotes.size() == 1);
     }
 

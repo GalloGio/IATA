@@ -117,6 +117,14 @@
         <name>SIS_Help_Desk</name>
     </customApplications>
     <customApplications>
+        <label><!-- Service console lightning L1/L2 --></label>
+        <name>Service_console_lightning_l1l2</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Service --></label>
+        <name>Service_l1l2</name>
+    </customApplications>
+    <customApplications>
         <label><!-- TIP --></label>
         <name>TIP</name>
     </customApplications>
@@ -155,6 +163,82 @@
     <customLabels>
         <label><!-- AMS Conga Merge --></label>
         <name>AMS_Conga_Merge</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_CountrySAttr_Validation --></label>
+        <name>AMS_CountrySAttr_Validation</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami tidak dapat memeriksa alamat di lokasi yang ditentukan.</label>
+        <name>AMS_DQ_Cannot_Check</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami tidak dapat menemukan alamat itu. Jika Anda yakin bahwa input Anda benar, Anda tetap dapat mengirimnya.</label>
+        <name>AMS_DQ_Cannot_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami tidak dapat memvalidasi alamat tanpa kota {0}. Silakan isi kolom ini.</label>
+        <name>AMS_DQ_Cannot_Validate_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami tidak dapat memvalidasi alamat tanpa {0} kota dan jalan. Silakan isi kolom ini.</label>
+        <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami tidak dapat memvalidasi alamat tanpa {0} jalan. Silakan isi kolom ini.</label>
+        <name>AMS_DQ_Cannot_Validate_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>Periksa Alamat</label>
+        <name>AMS_DQ_Check_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label>Kota {0} wajib diisi. Harap isi kolom kota {1}.</label>
+        <name>AMS_DQ_City_Cumpulsory</name>
+    </customLabels>
+    <customLabels>
+        <label>Kota ini {0} tidak ada di basis data kami (atau ejaannya berbeda).</label>
+        <name>AMS_DQ_City_Not_in_Database</name>
+    </customLabels>
+    <customLabels>
+        <label>Kota ini {0} ada di basis data kami tetapi ternyata masuk dalam negara lain menurut basis data kami.</label>
+        <name>AMS_DQ_City_in_Another_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Kota ini {0} ada di basis data kami tetapi dikaitkan dengan Negara Bagian/Provinsi lain.</label>
+        <name>AMS_DQ_City_in_Another_State</name>
+    </customLabels>
+    <customLabels>
+        <label>Masukkan kota yang valid.</label>
+        <name>AMS_DQ_Enter_Valid_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
+        <label>Alamat yang cocok ditemukan.</label>
+        <name>AMS_DQ_Found_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label>Tinjau nama kota. Jika Anda yakin bahwa input Anda benar, klik kirim.</label>
+        <name>AMS_DQ_Review_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Tinjau nama negara dan/atau kota. Jika Anda yakin bahwa input Anda benar, klik kirim.</label>
+        <name>AMS_DQ_Review_Country_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Tinjau nama negara bagian/provinsi dan/atau kota.</label>
+        <name>AMS_DQ_Review_State</name>
+    </customLabels>
+    <customLabels>
+        <label>Tinjau negara bagian/provinsi dan/atau nama kota. Jika Anda yakin bahwa input Anda benar, klik kirim.</label>
+        <name>AMS_DQ_Review_State_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Jalan {0} wajib diisi. Harap isi kolom jalan {1}.</label>
+        <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS Due Diligence Lock --></label>
@@ -705,6 +789,10 @@
         <name>ANG_ISSP_AFP_NoCreditCardMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ASD_HelpText --></label>
+        <name>ANG_ISSP_ASD_HelpText</name>
+    </customLabels>
+    <customLabels>
         <label>Tipe Akreditasi</label>
         <name>ANG_ISSP_AccreditationType</name>
     </customLabels>
@@ -723,6 +811,18 @@
     <customLabels>
         <label>Entitas Asosiasi:</label>
         <name>ANG_ISSP_AssociateEntity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BOP --></label>
+        <name>ANG_ISSP_BOP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BOP Access Link --></label>
+        <name>ANG_ISSP_BOP_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_BOP_China_URL --></label>
+        <name>ANG_ISSP_BOP_China_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- Case reason used in the case subject --></label>
@@ -855,6 +955,10 @@
     <customLabels>
         <label>Saya setuju</label>
         <name>ANG_ISSP_GDI_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
     </customLabels>
     <customLabels>
         <label>Daftar Lembaga Keuangan yang menyediakan Asuransi Jaminan Keuangan di negara Anda</label>
@@ -1053,6 +1157,10 @@
         <name>ANG_ISSP_ProductComparisonFeature10Tooltip</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ProductComparisonFeature11 --></label>
+        <name>ANG_ISSP_ProductComparisonFeature11</name>
+    </customLabels>
+    <customLabels>
         <label>Tooltip Fitur 1</label>
         <name>ANG_ISSP_ProductComparisonFeature1Tooltip</name>
     </customLabels>
@@ -1199,6 +1307,10 @@
     <customLabels>
         <label>Informasi RHS</label>
         <name>ANG_ISSP_RHC_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG ISSP RHC Information China --></label>
+        <name>ANG_ISSP_RHC_Information_China</name>
     </customLabels>
     <customLabels>
         <label>Minta Update Saldo</label>
@@ -1349,6 +1461,10 @@
         <name>Account_information_updated</name>
     </customLabels>
     <customLabels>
+        <label><!-- Accreditation date --></label>
+        <name>Accreditation_date</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Action --></label>
         <name>Action</name>
     </customLabels>
@@ -1380,7 +1496,7 @@
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label>Mohon divalidasi alamat penagihan dan pengiriman Anda dengan mengklik &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt; tombol.</label>
+        <label>Silakan periksa alamat penagihan dan pengiriman Anda dengan mengklik tombol periksa alamat</label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>
@@ -1438,6 +1554,14 @@
     <customLabels>
         <label><!-- AirlineSuspensionEmailRecipientsEurope --></label>
         <name>AirlineSuspensionEmailRecipientsEurope</name>
+    </customLabels>
+    <customLabels>
+        <label>Semua Pemberitahuan</label>
+        <name>All_Notifications_Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>Pengumuman</label>
+        <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- Ask Delete Attachment --></label>
@@ -1628,6 +1752,770 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin --></label>
+        <name>CSP_ANG_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ANG_Portal_Admin_Authorized_Signature --></label>
+        <name>CSP_ANG_Portal_Admin_Authorized_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_About --></label>
+        <name>CSP_About</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Accept Terms Error --></label>
+        <name>CSP_Accept_Terms_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Account Domain Created --></label>
+        <name>CSP_Account_Domain_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_All --></label>
+        <name>CSP_Add_All</name>
+    </customLabels>
+    <customLabels>
+        <label>Tambahkan Dokumen Baru</label>
+        <name>CSP_Add_New_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_New_User --></label>
+        <name>CSP_Add_New_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_User --></label>
+        <name>CSP_Add_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Pengumuman</label>
+        <name>CSP_Announcement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Apply --></label>
+        <name>CSP_Apply</name>
+    </customLabels>
+    <customLabels>
+        <label>Apakah artikel ini membantu?</label>
+        <name>CSP_ArticleHelpful</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Branch Offices --></label>
+        <name>CSP_Branch_Offices</name>
+    </customLabels>
+    <customLabels>
+        <label>Pencarian Lanjutan</label>
+        <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Profil Perusahaan</label>
+        <name>CSP_Breadcrumb_CompanyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_FAQ_Title --></label>
+        <name>CSP_Breadcrumb_FAQ_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Beranda</label>
+        <name>CSP_Breadcrumb_Home_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Layanan</label>
+        <name>CSP_Breadcrumb_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_Support_CreateNewCase --></label>
+        <name>CSP_Breadcrumb_Support_CreateNewCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Hubungi Kami</label>
+        <name>CSP_Breadcrumb_Support_ReachUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Dukungan</label>
+        <name>CSP_Breadcrumb_Support_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
+        <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Batalkan</label>
+        <name>CSP_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>Batalkan Layanan {0}</label>
+        <name>CSP_CancelServiceActionLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda dapat membatalkan akses Anda ke {0}</label>
+        <name>CSP_CancelServiceMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Apakah Anda yakin ingin membatalkan akses ke {0}?</label>
+        <name>CSP_Cancel_Access_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Batalkan Akses</label>
+        <name>CSP_Cancel_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Batalkan Permintaan</label>
+        <name>CSP_Cancel_Request</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda dapat mengirim dan menerima pesan ke Layanan Pelanggan IATA (International Air Transport Association) tentang kasus ini.</label>
+        <name>CSP_CaseMessage_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Ketikkan komentar Anda di sini</label>
+        <name>CSP_CaseMessage_InputPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Pesan</label>
+        <name>CSP_CaseMessage_MessageTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Komentar Berhasil Ditambahkan</label>
+        <name>CSP_CaseMessage_SubmitSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>Nomor Kasus</label>
+        <name>CSP_CaseNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Case_Currency --></label>
+        <name>CSP_Case_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label>Kasus</label>
+        <name>CSP_Cases</name>
+    </customLabels>
+    <customLabels>
+        <label>Komunitas</label>
+        <name>CSP_Community</name>
+    </customLabels>
+    <customLabels>
+        <label>Lihat Kasus Perusahaan Saya</label>
+        <name>CSP_CompanyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>Profil Perusahaan</label>
+        <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>Apakah Anda yakin ingin menolak akses ke &lt;b&gt;{0}&lt;/b&gt; untuk &lt;b&gt;{1}&lt;/b&gt;?</label>
+        <name>CSP_Confirm_Deny_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>Apakah Anda yakin ingin memberikan akses ke &lt;b&gt;{0}&lt;/b&gt; untuk &lt;b&gt;{1}&lt;/b&gt;?</label>
+        <name>CSP_Confirm_Grant_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>Permintaan akses {0} Anda telah dikirimkan ke administrator portal. Jika Anda memiliki pertanyaan atau permintaan tentang prosesnya, Anda dapat menghubungi administrator di bawah ini:</label>
+        <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Continue --></label>
+        <name>CSP_Continue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Create_Contact_Complete_Field --></label>
+        <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
+    </customLabels>
+    <customLabels>
+        <label>Tolak Akses Pengguna</label>
+        <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Dokumen</label>
+        <name>CSP_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label>Semua Dokumen</label>
+        <name>CSP_DocumentsAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Dokumen</label>
+        <name>CSP_DocumentsLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan pilih kategori untuk dokumen yang Anda cari.</label>
+        <name>CSP_DocumentsSelCat</name>
+    </customLabels>
+    <customLabels>
+        <label>Negara Publikasi</label>
+        <name>CSP_Documents_PubliCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Domain Error Message --></label>
+        <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
+    </customLabels>
+    <customLabels>
+        <label>Hubungi Kami</label>
+        <name>CSP_FAQReachUsBanner_ButtonText</name>
+    </customLabels>
+    <customLabels>
+        <label>Buat kasus, mengobrol langsung dengan Perwakilan IATA (International Air Transport Association) atau hubungi kami.</label>
+        <name>CSP_FAQReachUsBanner_Text</name>
+    </customLabels>
+    <customLabels>
+        <label>Butuh lebih banyak bantuan?</label>
+        <name>CSP_FAQReachUsBanner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Pertanyaan yang Sering Diajukan</label>
+        <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih salah satu kategori utama</label>
+        <name>CSP_FAQ_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_FAQs_Title --></label>
+        <name>CSP_FAQs_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Layanan Favorit</label>
+        <name>CSP_FavoriteServices_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Fitur</label>
+        <name>CSP_Features_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Beri tahu kami cara membuat artikel ini lebih bermanfaat.</label>
+        <name>CSP_FeedbackBody</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami menghargai umpan balik Anda demi membantu kami meningkatkan kualitas artikel kami.</label>
+        <name>CSP_FeedbackBody2</name>
+    </customLabels>
+    <customLabels>
+        <label>Umpan Balik</label>
+        <name>CSP_FeedbackTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filter --></label>
+        <name>CSP_Filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filtered --></label>
+        <name>CSP_Filtered</name>
+    </customLabels>
+    <customLabels>
+        <label>Untuk Anda</label>
+        <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>Berikan Akses Pengguna</label>
+        <name>CSP_Grant_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Halo [username]</label>
+        <name>CSP_Home_WelcomeTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_IATA_Country --></label>
+        <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_IMPORTANT --></label>
+        <name>CSP_IMPORTANT</name>
+    </customLabels>
+    <customLabels>
+        <label>Keluar</label>
+        <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda dapat mengelola pengguna-pengguna dari daftar di bawah ini.</label>
+        <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>Kelola Layanan</label>
+        <name>CSP_Manage_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Kelola Layanan</label>
+        <name>CSP_Manage_Services</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Manage_Services --></label>
+        <name>CSP_Manage_Services_NoIEPAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Lihat Kasus Saya</label>
+        <name>CSP_MyCases</name>
+    </customLabels>
+    <customLabels>
+        <label>Nama</label>
+        <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewServiceUserMessage --></label>
+        <name>CSP_NewServiceUserMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP New Email Domain --></label>
+        <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label>Tidak ada Akun terkait untuk ditampilkan.</label>
+        <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda tidak memiliki kasus untuk saat ini.</label>
+        <name>CSP_NoCases1</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Tapi begitu Anda sudah memilikinya, Anda akan melihat yang terbaru di sini.&quot;</label>
+        <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>Tidak Ada Hasil</label>
+        <name>CSP_NoSearchResults</name>
+    </customLabels>
+    <customLabels>
+        <label>Jika perlu, Anda dapat menambahkan dokumen ke kasus.</label>
+        <name>CSP_No_Documents_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Kalender Mingguan</label>
+        <name>CSP_OperationalCalendar_HomeTileTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Lihat Bulanan</label>
+        <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Payment --></label>
+        <name>CSP_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami membutuhkan masukan Anda untuk melanjutkan kasus Anda.</label>
+        <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Period --></label>
+        <name>CSP_Period</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PortalPath --></label>
+        <name>CSP_PortalPath</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Portal_Administrators --></label>
+        <name>CSP_Portal_Administrators</name>
+    </customLabels>
+    <customLabels>
+        <label>Status Portal</label>
+        <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
+        <name>CSP_Profile_PrivacyManagement_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Text --></label>
+        <name>CSP_Profile_PrivacyManagement_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Title --></label>
+        <name>CSP_Profile_PrivacyManagement_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_URL --></label>
+        <name>CSP_Profile_PrivacyManagement_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Apa yang dimaksud dengan kasus dan kapan saya membutuhkannya?</label>
+        <name>CSP_Question1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question1URL --></label>
+        <name>CSP_Question1URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Bagaimana saya dapat melihat dan memperbarui keterangan suatu kasus?</label>
+        <name>CSP_Question2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Question2URL --></label>
+        <name>CSP_Question2URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Kasus Terkini</label>
+        <name>CSP_RecentCases</name>
+    </customLabels>
+    <customLabels>
+        <label>Apakah pertanyaan Anda terkait dengan kasus yang sedang berlangsung?</label>
+        <name>CSP_RecentCases_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Jika tidak, gulir ke bawah untuk menghubungi kami.</label>
+        <name>CSP_RecentCases_HelpText2</name>
+    </customLabels>
+    <customLabels>
+        <label>Kasus yang sedang berlangsung</label>
+        <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Record Deleted --></label>
+        <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>Artikel Terkait</label>
+        <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Remittantce_Date --></label>
+        <name>CSP_Remittantce_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveAllFilters --></label>
+        <name>CSP_RemoveAllFilters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveContact_Reason --></label>
+        <name>CSP_RemoveContact_Reason</name>
+    </customLabels>
+    <customLabels>
+        <label>Minta Layanan</label>
+        <name>CSP_Request_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Simpan</label>
+        <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>Cari berdasarkan perincian dokumen</label>
+        <name>CSP_SearchDocuments</name>
+    </customLabels>
+    <customLabels>
+        <label>Cari berdasarkan perincian TJU</label>
+        <name>CSP_SearchFAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>Pencarian Lanjutan</label>
+        <name>CSP_Search_AdvancedSearch</name>
+    </customLabels>
+    <customLabels>
+        <label>Negara</label>
+        <name>CSP_Search_Case_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Jenis</label>
+        <name>CSP_Search_Case_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Kategori</label>
+        <name>CSP_Search_Documents_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Jenis Produk</label>
+        <name>CSP_Search_Documents_ProdType</name>
+    </customLabels>
+    <customLabels>
+        <label>Negara yang Menerbitkan</label>
+        <name>CSP_Search_Documents_PubCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>Kategori</label>
+        <name>CSP_Search_FAQ_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Subtopik</label>
+        <name>CSP_Search_FAQ_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>Topik</label>
+        <name>CSP_Search_FAQ_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>Temukan layanan, kasus, dukungan, dan lainnya</label>
+        <name>CSP_Search_Home_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Cari pengguna layanan</label>
+        <name>CSP_Search_In_Contacts_In_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Tidak Ada Hasil Pencarian</label>
+        <name>CSP_Search_NoResults_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Maaf, tidak ada hasil untuk&quot;</label>
+        <name>CSP_Search_NoResults_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>Periksa ejaan kata kunci Anda atau coba lagi dengan kata kunci yang lain.</label>
+        <name>CSP_Search_NoResults_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>Cari Layanan</label>
+        <name>CSP_Search_Services_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Cari Dukungan</label>
+        <name>CSP_Search_Support_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Hasil teratas</label>
+        <name>CSP_Search_TopResults</name>
+    </customLabels>
+    <customLabels>
+        <label>Ketikkan kata kunci pencarian Anda</label>
+        <name>CSP_Search_TypeIn_text1</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan ketik kata yang lebih dari 2 huruf untuk memulai pencarian.</label>
+        <name>CSP_Search_TypeIn_text2</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih bagian filter untuk lebih meningkatkan hasil pencarian Anda.</label>
+        <name>CSP_Search_TypeIn_text3</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Mencari pada Nomor Kasus, Subjek/Perihal, atau Deskripsi&quot;</label>
+        <name>CSP_SearchingOn</name>
+    </customLabels>
+    <customLabels>
+        <label>Lihat Semua</label>
+        <name>CSP_SeeAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih Komunitas</label>
+        <name>CSP_SelectCommunity</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih Status Portal</label>
+        <name>CSP_SelectPortalStatus</name>
+    </customLabels>
+    <customLabels>
+        <label>Akses Layanan</label>
+        <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>Akses Diminta</label>
+        <name>CSP_Services_AccessRequested</name>
+    </customLabels>
+    <customLabels>
+        <label>Akses Diminta</label>
+        <name>CSP_Services_AccessRequestedTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Semua layanan yang tersedia untuk perusahaan Anda tercantum di bawah ini.</label>
+        <name>CSP_Services_AvailableServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Layanan yang Tersedia</label>
+        <name>CSP_Services_AvailableServicesTabTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Kunjungi Layanan</label>
+        <name>CSP_Services_GoToService</name>
+    </customLabels>
+    <customLabels>
+        <label>Kunjungi Layanan</label>
+        <name>CSP_Services_GoToServices</name>
+    </customLabels>
+    <customLabels>
+        <label>Mencari layanan?</label>
+        <name>CSP_Services_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Kelola Layanan</label>
+        <name>CSP_Services_ManageService</name>
+    </customLabels>
+    <customLabels>
+        <label>Layanan perusahaan Anda tercantum di bawah ini.</label>
+        <name>CSP_Services_MyServicesHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Layanan Saya</label>
+        <name>CSP_Services_MyServicesTabTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Lihat Layanan yang Tersedia</label>
+        <name>CSP_Services_RequestServiceBannerButton</name>
+    </customLabels>
+    <customLabels>
+        <label>Lihat rincian informasi layanan dan minta akses ke layanan yang tersedia.</label>
+        <name>CSP_Services_RequestServiceBannerSubtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Permintaan Layanan</label>
+        <name>CSP_Services_RequestServiceBannerTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Informasi Layanan</label>
+        <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>Layanan</label>
+        <name>CSP_Services_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Pengaturan</label>
+        <name>CSP_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Status --></label>
+        <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Kirim</label>
+        <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Success --></label>
+        <name>CSP_Success</name>
+    </customLabels>
+    <customLabels>
+        <label>Dukungan</label>
+        <name>CSP_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>Bagaimana kami dapat membantu?</label>
+        <name>CSP_Support_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda dapat mengunggah berkas pdf, jpeg, jpg, png, ppt, pptx, xls, xlsx, tif, tiff, zip. Ukuran berkas harus lebih kecil dari 50 MB.</label>
+        <name>CSP_Supported_File_Extensions</name>
+    </customLabels>
+    <customLabels>
+        <label>Tugas</label>
+        <name>CSP_Task</name>
+    </customLabels>
+    <customLabels>
+        <label>Terima kasih atas umpan balik Anda!</label>
+        <name>CSP_ThanksFeedback</name>
+    </customLabels>
+    <customLabels>
+        <label>Judul</label>
+        <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Jenis Kasus</label>
+        <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_1_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_1_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_2_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_2_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_3_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_3_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_4_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Announcements --></label>
+        <name>CSP_You_Dont_Have_Announcements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Notifications --></label>
+        <name>CSP_You_Dont_Have_Notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_You_Dont_Have_Tasks --></label>
+        <name>CSP_You_Dont_Have_Tasks</name>
+    </customLabels>
+    <customLabels>
+        <label>Risiko Kredit Agen</label>
+        <name>CSP_cpcc_Agent_Credit_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label>Tanda Tangan yang Berwenang</label>
+        <name>CSP_cpcc_Authorised_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>Kontak Pembayaran BSP (Rencana Tagihan dan Penyelesaian)/CASS (Sistem Cargo Account Settlement)</label>
+        <name>CSP_cpcc_BSP_CASS_Payment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>Status Jenis Kontak</label>
+        <name>CSP_cpcc_Contact_Type_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Kontak Penilaian Keuangan</label>
+        <name>CSP_cpcc_Financial_Assessment_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>Kontak Faktur</label>
+        <name>CSP_cpcc_Invoice_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label>Profil Kontak Baru</label>
+        <name>CSP_cpcc_New_Contact_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>Administrator Portal</label>
+        <name>CSP_cpcc_Portal_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label>Area Kerja</label>
+        <name>CSP_cpcc_Working_Areas</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih Alasan</label>
+        <name>CSP_selectReason</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Campaign already created --></label>
         <name>Campaign_already_created</name>
     </customLabels>
@@ -1660,6 +2548,10 @@
         <name>CaseKPI2_RecordType</name>
     </customLabels>
     <customLabels>
+        <label><!-- CaseRTtrackedByCS --></label>
+        <name>CaseRTtrackedByCS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CaseTypeReason1List1 --></label>
         <name>CaseTypeReason1List1</name>
     </customLabels>
@@ -1674,6 +2566,10 @@
     <customLabels>
         <label><!-- CaseValidation - Area --></label>
         <name>CaseValidation_Area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CaseValidation - Area2 --></label>
+        <name>CaseValidation_Area2</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
@@ -1742,6 +2638,10 @@
     <customLabels>
         <label><!-- Company name --></label>
         <name>Company_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ConfirmSendRecycleBin --></label>
+        <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
         <label><!-- Confirm password --></label>
@@ -1864,6 +2764,10 @@
         <name>CurrencyCenter_BSP_CASS_Proffile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_ICCS_Availability --></label>
+        <name>CurrencyCenter_BSP_ICCS_Availability</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -1894,6 +2798,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_CASS --></label>
         <name>CurrencyCenter_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_CASS_ICCS_Availability --></label>
+        <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
@@ -3284,7 +4192,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>Profil</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -7881,6 +8789,10 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label>Perhatian! Dengan menyalin informasi kepemilikan ke sebuah Agensi, Anda akan menghapus informasi kepemilikan lama dari Agensi target.</label>
+        <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Country Select --></label>
         <name>ISSP_AMS_Country_Select</name>
     </customLabels>
@@ -8565,6 +9477,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Local_Details_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator --></label>
+        <name>ISSP_AMS_MSO_Aggregator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator_Info --></label>
+        <name>ISSP_AMS_MSO_Aggregator_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_MSO_Alternatively --></label>
         <name>ISSP_AMS_MSO_Alternatively</name>
     </customLabels>
@@ -9173,6 +10093,10 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NoC_PDF_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Partner --></label>
+        <name>ISSP_AMS_NoC_Partner</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NoC Percent Ownership --></label>
         <name>ISSP_AMS_NoC_Percent_Ownership</name>
     </customLabels>
@@ -9661,6 +10585,10 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
+        <label>Pilih Akun Target</label>
+        <name>ISSP_AMS_Select_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>* Entitas Asosiasi yang Dipilih</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
@@ -9679,6 +10607,10 @@ In order to upload your financial documents, please, login to Customer Portal on
     <customLabels>
         <label><!-- ISSP_AMS_Signatory --></label>
         <name>ISSP_AMS_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>Negara Bagian/Provinsi</label>
+        <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_State_Names_Addresses_Field_Label --></label>
@@ -10287,6 +11219,10 @@ In order to upload your financial documents, please, login to Customer Portal on
     <customLabels>
         <label><!-- ISSP_AMS_Step3_ErrMsg_Time_Devoted --></label>
         <name>ISSP_AMS_Step3_ErrMsg_Time_Devoted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid --></label>
+        <name>ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step3 HO Full Address --></label>
@@ -11065,6 +12001,22 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
+        <label>Memeriksa...</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
+    </customLabels>
+    <customLabels>
+        <label>Tindakan ini memungkinkan Anda untuk menyalin detail kepemilikan dari akun ini ke lokasi yang dipilih milik hierarki Anda. Berikutnya Anda dapat memvisualisasikan perubahan yang diterapkan oleh tindakan ini pada agensi target, hanya setelah Mengonfirmasi Pembaruan atas semua detail di halaman ini.</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
+    </customLabels>
+    <customLabels>
+        <label>Agensi diproses</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
+    </customLabels>
+    <customLabels>
+        <label>Salin Progres Kepemilikan</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
+    </customLabels>
+    <customLabels>
         <label>Klik di sini untuk melanjutkan dengan Kepatuhan PCI</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
@@ -11075,6 +12027,10 @@ In order to upload your financial documents, please, login to Customer Portal on
     <customLabels>
         <label>Lihat Persyaratan Negara</label>
         <name>ISSP_ANG_Country_Req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Type of Agency --></label>
+        <name>ISSP_ANG_Country_Reqs_Type_Of_Agency</name>
     </customLabels>
     <customLabels>
         <label>Seluruh Hierarki</label>
@@ -11185,6 +12141,10 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_Local_Details_Copy_Address2</name>
     </customLabels>
     <customLabels>
+        <label><!-- Shipping same as Billing --></label>
+        <name>ISSP_ANG_Local_Details_Shipping_Same_As_Billing</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_MODEL_A_ONBOARDING_TITLE --></label>
         <name>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</name>
     </customLabels>
@@ -11213,7 +12173,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_OPTION_PAX_HE_standard</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Sesuai dengan data kami, Anda terdaftar sebagai Kontak IFAP untuk agensi Anda. Jika ini masih berlaku, silakan lanjutkan untuk memilih proses Tinjauan Keuangan, atau tugaskan personel yang benar sebagai kontak IFAP di halaman &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Informasi Perusahaan&lt;/a&gt; dan lanjutkan dengan permintaan ini.&quot;</label>
+        <label>Sesuai dengan data kami, Anda terdaftar sebagai Kontak IFAP untuk agensi Anda. Jika ini masih berlaku, silakan lanjutkan untuk memilih proses Tinjauan Keuangan, atau tugaskan personel yang benar sebagai kontak IFAP di halaman &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Informasi Perusahaan&lt;/a&gt; dan lanjutkan dengan permintaan ini.</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</name>
     </customLabels>
     <customLabels>
@@ -11314,7 +12274,7 @@ In order to upload your financial documents, please, login to Customer Portal on
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;Mengelola dana Sub-dompet yang ditetapkan&lt;/li&gt; &lt;li&gt;Mengelola akses dan Sub-dompet pengguna IATA EasyPay “Penerbit Tiket”&lt;/li&gt; &lt;li&gt;Menghasilkan Nomor IATA EasyPay dari dompet yang ditetapkan untuk digunakan menerbitkan tiket melalui GDS&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;Menghasilkan Nomor IATA EasyPay dari dompet mana saja yang ditetapkan untuk digunakan menerbitkan tiket melalui GDS&lt;/li&gt;&lt;/ul&gt;</label>
@@ -11375,6 +12335,10 @@ In order to upload your financial documents, please, login to Customer Portal on
     <customLabels>
         <label>&quot;Permintaan Perubahan Tipe Akreditasi dan/atau pemberitahuan kepada IATA mengenai perubahan Lokasi, Nama Perusahaan, Status Hukum, Kepemilikan/Pemegang Saham.&quot;</label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG Step0 Other Changes Msg RevCaseOpen --></label>
+        <name>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</name>
     </customLabels>
     <customLabels>
         <label>LANGKAH A - Konfirmasi Detail Agensi</label>
@@ -11873,6 +12837,10 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_Cargo_Agent_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Cargo --></label>
+        <name>ISSP_Cargo_Label_Value</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CaseCommentEmail --></label>
         <name>ISSP_CaseCommentEmail</name>
     </customLabels>
@@ -12016,6 +12984,14 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_Change_Request_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP China Domestic --></label>
+        <name>ISSP_China_Domestic</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP China International --></label>
+        <name>ISSP_China_International</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email --></label>
         <name>ISSP_ClickHereLogIn</name>
     </customLabels>
@@ -12026,6 +13002,10 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
     <customLabels>
         <label>Ditutup</label>
         <name>ISSP_ClosedIFAPCasesStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Closed_Non_Compliance --></label>
+        <name>ISSP_Closed_Non_Compliance</name>
     </customLabels>
     <customLabels>
         <label>Alamat</label>
@@ -12122,6 +13102,10 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
     <customLabels>
         <label>Nama Kontak</label>
         <name>ISSP_ContactName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
         <label>Informasi Kontak</label>
@@ -12824,6 +13808,14 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_EnterValidString</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
+    </customLabels>
+    <customLabels>
         <label>Masukkan teks</label>
         <name>ISSP_Enter_Value</name>
     </customLabels>
@@ -13112,6 +14104,10 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
+        <label>Dengan menyatakan keikutsertaan, pemasok Industri seperti maskapai, hotel, dan operator tur akan bisa mengedarkan pesan ke agensi Anda tentang produk, promosi, penjualan, dan kebijakan agensi.</label>
+        <name>ISSP_Gdp_Opt_In_Hint</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_GeneralPublicNotFound --></label>
         <name>ISSP_GeneralPublicNotFound</name>
     </customLabels>
@@ -13340,6 +14336,10 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_IATA_Designator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_IATA_Location_Code --></label>
+        <name>ISSP_IATA_Location_Code</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Registration --></label>
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
@@ -13362,6 +14362,46 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
     <customLabels>
         <label><!-- ISSP_MyProfile --></label>
         <name>ISSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_01 --></label>
+        <name>ISSP_IDFS_Title_01</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_02 --></label>
+        <name>ISSP_IDFS_Title_02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_03 --></label>
+        <name>ISSP_IDFS_Title_03</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_04 --></label>
+        <name>ISSP_IDFS_Title_04</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_05 --></label>
+        <name>ISSP_IDFS_Title_05</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_06 --></label>
+        <name>ISSP_IDFS_Title_06</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_07 --></label>
+        <name>ISSP_IDFS_Title_07</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_08 --></label>
+        <name>ISSP_IDFS_Title_08</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_09 --></label>
+        <name>ISSP_IDFS_Title_09</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_10 --></label>
+        <name>ISSP_IDFS_Title_10</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP IFACP Endorsement Changes --></label>
@@ -13708,7 +14748,7 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_MyOutstandingPaymentsCases</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Profil saya</label>
         <name>ISSP_MyProfile</name>
     </customLabels>
     <customLabels>
@@ -14136,6 +15176,14 @@ Jika Anda tetap mengalami kesulitan dalam proses registrasi ke Customer Portal, 
         <name>ISSP_PAX_Validating_VAT_Number</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP PAX Validating VAT Number 2 --></label>
+        <name>ISSP_PAX_Validating_VAT_Number_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Validating VAT Number 2 error --></label>
+        <name>ISSP_PAX_Validating_VAT_Number_2_error</name>
+    </customLabels>
+    <customLabels>
         <label><!-- c --></label>
         <name>ISSP_PAX_Validating_VAT_Number_error</name>
     </customLabels>
@@ -14518,6 +15566,10 @@ Harap diperhatikan bahwa faktur (invoice) IATA untuk agen yang terakreditasi dik
         <name>ISSP_RHC_HUB_AFP_Cash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP RHC HUB AFP China --></label>
+        <name>ISSP_RHC_HUB_AFP_China</name>
+    </customLabels>
+    <customLabels>
         <label>Kartu Kredit</label>
         <name>ISSP_RHC_HUB_AFP_Credit_Card</name>
     </customLabels>
@@ -14620,6 +15672,10 @@ Harap diperhatikan bahwa faktur (invoice) IATA untuk agen yang terakreditasi dik
     <customLabels>
         <label>Masukkan nama belakang Anda</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>Pilih negara Anda</label>
@@ -14898,8 +15954,16 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
+        <label>Perubahan, kecuali GDP Opt-in, harus dibuat selama proses Revalidasi Tahunan</label>
+        <name>ISSP_Rev_Case_Open_Acc_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP SELECT COUNTRY --></label>
         <name>ISSP_SELECT_COUNTRY</name>
+    </customLabels>
+    <customLabels>
+        <label>- Pilih Negara Bagian -</label>
+        <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP SELECT THREE or MORE --></label>
@@ -15544,6 +16608,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label><!-- ISSP Status change to Inactive --></label>
         <name>ISSP_Status_change_to_Inactive</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
     </customLabels>
     <customLabels>
         <label>Sub tipe</label>
@@ -16330,6 +17398,18 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>KALE_SUPPORT_EMAIL</name>
     </customLabels>
     <customLabels>
+        <label><!-- KPI1RT --></label>
+        <name>KPI1RT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI1Reason --></label>
+        <name>KPI1Reason</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI2 --></label>
+        <name>KPI2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Kavi email notification part 1 --></label>
         <name>Kavi_email_notification_part1</name>
     </customLabels>
@@ -16939,6 +18019,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
+        <label>Tandai sebagai telah dibaca</label>
+        <name>MarkAsRead_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -17031,6 +18115,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>New_product_email_subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- No Eligible User --></label>
+        <name>NoEligibleUserForContact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- NoSameName --></label>
         <name>NoSameName</name>
     </customLabels>
@@ -17065,6 +18153,22 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Not Applicable --></label>
         <name>Not_Applicable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Not In CNS Group Error --></label>
+        <name>Not_In_CNS_Group_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Pemberitahuan</label>
+        <name>Notification</name>
+    </customLabels>
+    <customLabels>
+        <label>Pemberitahuan</label>
+        <name>NotificationCenter_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Detail Pemberitahuan</label>
+        <name>NotificationDetail_Detail</name>
     </customLabels>
     <customLabels>
         <label><!-- Notions_Essentl_Tarif_Billet_Description --></label>
@@ -17117,6 +18221,18 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>Pilih kategori</label>
@@ -18602,6 +19718,18 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>Please_select_the_target_Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- PortalAccess --></label>
+        <name>PortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal Name to Redirect --></label>
+        <name>PortalNameRedirect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PortalService --></label>
+        <name>PortalService</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>
@@ -18660,6 +19788,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label><!-- Priority 4 (Trivial Defects) --></label>
         <name>Priority_4_Trivial_Defects</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ProcessEffAge --></label>
+        <name>ProcessEffAge</name>
     </customLabels>
     <customLabels>
         <label><!-- Product --></label>
@@ -18788,6 +19920,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label><!-- Remaining_Owners --></label>
         <name>Remaining_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Remittance frequency --></label>
+        <name>Remittance_frequency</name>
     </customLabels>
     <customLabels>
         <label><!-- Renewal_Number --></label>
@@ -18954,6 +20090,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>ShoppingCartQtyMsg</name>
     </customLabels>
     <customLabels>
+        <label><!-- Error displayed when a RO field is changed in a SIDRA Lite case --></label>
+        <name>SidraLiteROFieldError</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SignIn --></label>
         <name>SignIn</name>
     </customLabels>
@@ -19042,6 +20182,14 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- TSI USA Only --></label>
+        <name>TSI_USA_Only</name>
+    </customLabels>
+    <customLabels>
+        <label>Tugas</label>
+        <name>Tasks_Notification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Taxes --></label>
         <name>Taxes</name>
     </customLabels>
@@ -19098,6 +20246,14 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
+        <label>{0} meminta Akses ke Portal.</label>
+        <name>UserRequestPortalAccess</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} akses yang diminta ke layanan {1}</label>
+        <name>UserRequestServiceAccess</name>
+    </customLabels>
+    <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
     </customLabels>
@@ -19124,6 +20280,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label><!-- ViewCart --></label>
         <name>ViewCart</name>
+    </customLabels>
+    <customLabels>
+        <label>Lihat rincian</label>
+        <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
         <label><!-- View_6_more --></label>
@@ -19220,6 +20380,498 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label><!-- Contacting us --></label>
         <name>contacting_us</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account Relocation --></label>
+        <name>csp_AccountRelocateSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>Proses Akreditasi</label>
+        <name>csp_Accreditation_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih kategori utama</label>
+        <name>csp_ActionForCategoryPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>Layanan Akses</label>
+        <name>csp_ActionForTopicPicklist</name>
+    </customLabels>
+    <customLabels>
+        <label>Lengkapi formulir ini untuk melihat opsi dukungan yang disarankan</label>
+        <name>csp_ActionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_AgencyReadOnly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Profile section label --></label>
+        <name>csp_Basics_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Hubungi Kami</label>
+        <name>csp_Call_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Periode yang tersedia:</label>
+        <name>csp_Call_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Perwakilan IATA (International Air Transport Association) akan mulai mengerjakannya.</label>
+        <name>csp_CaseBeingWorked</name>
+    </customLabels>
+    <customLabels>
+        <label>Kasus berhasil dibuat.</label>
+        <name>csp_CaseCreatedSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda akan segera mendapat jawaban.</label>
+        <name>csp_CaseResponseGuarantee</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda dapat menambahkan komentar, dokumen, dan penerima jika ada pembaruan. Anda dapat melacak status dan melakukan pembaruan di</label>
+        <name>csp_CaseTracking</name>
+    </customLabels>
+    <customLabels>
+        <label>Buat Kasus</label>
+        <name>csp_Case_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Beri tahu kami apa yang dapat kami bantu</label>
+        <name>csp_Case_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Mengobrol dengan Kami</label>
+        <name>csp_Chat_Panel_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Mengobrol dengan Perwakilan IATA (International Air Transport Association)</label>
+        <name>csp_Chat_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Dapatkan dukungan langsung melalui portal IATA (International Air Transport Association), melalui telepon, atau obrolan.</label>
+        <name>csp_ChooseOption</name>
+    </customLabels>
+    <customLabels>
+        <label>Kontak Perusahaan</label>
+        <name>csp_CompanyContact_Section_label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Complete required field label --></label>
+        <name>csp_CompleteField</name>
+    </customLabels>
+    <customLabels>
+        <label>Terima kasih telah berbagi.</label>
+        <name>csp_Compliment</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA (International Air Transport Association) berupaya keras untuk menyediakan layanan pelanggan yang sangat baik dan kami senang mengetahui bahwa Anda juga peduli. Kami mempertimbangkan setiap umpan balik yang Anda berikan kepada kami.</label>
+        <name>csp_ComplimentInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>Pujian</label>
+        <name>csp_Compliment_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Keluhan</label>
+        <name>csp_Concern</name>
+    </customLabels>
+    <customLabels>
+        <label>Keluhan</label>
+        <name>csp_Concern_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih negara atau wilayah untuk permintaan Anda</label>
+        <name>csp_CountryOrRegionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label>Buat Kasus &amp; Tambahkan Lampiran</label>
+        <name>csp_CreateNewCaseAddAttachment</name>
+    </customLabels>
+    <customLabels>
+        <label>Berikan semua keterangan yang dapat membantu kami menyelidiki permintaan Anda</label>
+        <name>csp_CreateNewCaseMainInputBoxSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Deskripsi</label>
+        <name>csp_CreateNewCaseMainInputBoxTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Tambahkan pengguna Portal lain</label>
+        <name>csp_CreateNewCaseMainInputEmailsSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Penerima Tambahan</label>
+        <name>csp_CreateNewCaseMainInputEmailsTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Apa maksud dari pertanyaan Anda?</label>
+        <name>csp_CreateNewCaseMainInputSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Perihal</label>
+        <name>csp_CreateNewCaseMainInputTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Kode Akun Terkait</label>
+        <name>csp_CreateNewCaseMainPicklistLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Buat Kasus</label>
+        <name>csp_CreateNewCaseTopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda memilih</label>
+        <name>csp_CreateNewCaseTopSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Tolong berikan lebih banyak informasi kepada kami.</label>
+        <name>csp_CreateNewCaseTopSubSubLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Buat Kontak Baru</label>
+        <name>csp_CreateNewContact</name>
+    </customLabels>
+    <customLabels>
+        <label>Permintaan Darurat</label>
+        <name>csp_Emergency_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>Tinjauan Keuangan</label>
+        <name>csp_Financial_Review</name>
+    </customLabels>
+    <customLabels>
+        <label>Cari cabang</label>
+        <name>csp_Find_Branch</name>
+    </customLabels>
+    <customLabels>
+        <label>Cari kontak</label>
+        <name>csp_Find_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Facebook_URL --></label>
+        <name>csp_Footer_Facebook_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_IATA_Store --></label>
+        <name>csp_Footer_IATA_Store</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_IataStore_URL --></label>
+        <name>csp_Footer_IataStore_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Legal_URL --></label>
+        <name>csp_Footer_Legal_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Linkedin_URL --></label>
+        <name>csp_Footer_Linkedin_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Privacy_URL --></label>
+        <name>csp_Footer_Privacy_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Twitter_URL --></label>
+        <name>csp_Footer_Twitter_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Footer_Youtube_URL --></label>
+        <name>csp_Footer_Youtube_URL</name>
+    </customLabels>
+    <customLabels>
+        <label>Kunjungi Beranda</label>
+        <name>csp_GoToHomepage</name>
+    </customLabels>
+    <customLabels>
+        <label>Kunjungi Dukungan</label>
+        <name>csp_GoToSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>Pembayaran IATA (International Air Transport Association)</label>
+        <name>csp_IATA_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label>Admin IEP</label>
+        <name>csp_IEPAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label>Kontak Dukungan</label>
+        <name>csp_IntentionOnThisPage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_InvalidPhoneValue --></label>
+        <name>csp_InvalidPhoneValue</name>
+    </customLabels>
+    <customLabels>
+        <label>Apakah permintaan Anda darurat?</label>
+        <name>csp_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Login terakhir</label>
+        <name>csp_LastLoginDate</name>
+    </customLabels>
+    <customLabels>
+        <label>Obrolan tidak tersedia. Silakan hubungi atau buat kasus.</label>
+        <name>csp_LiveAgentBadConfig</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Waktu koneksi obrolan telah habis. Anda dapat menyegarkan halaman, atau membuat sebuah kasus&quot;</label>
+        <name>csp_LiveAgentTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>Waktu tunggu koneksi Agen Langsung habis. Harap segarkan halaman atau kontak Dukungan</label>
+        <name>csp_LiveTimeout</name>
+    </customLabels>
+    <customLabels>
+        <label>Pengelola Dompet Utama</label>
+        <name>csp_MasterWalletManager</name>
+    </customLabels>
+    <customLabels>
+        <label>Fungsi/Peran di Pekerjaan</label>
+        <name>csp_MembershipFunction</name>
+    </customLabels>
+    <customLabels>
+        <label>Perusahaan</label>
+        <name>csp_My_Profile_Company</name>
+    </customLabels>
+    <customLabels>
+        <label>E-mail</label>
+        <name>csp_My_Profile_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Jabatan Pekerjaan</label>
+        <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_NoPortalServiceNameFound</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih opsi dukungan yang Anda inginkan</label>
+        <name>csp_Options_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Proses</label>
+        <name>csp_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>Kontak Bisnis</label>
+        <name>csp_Profile_BusinessContact</name>
+    </customLabels>
+    <customLabels>
+        <label>E-Mail Perusahaan</label>
+        <name>csp_Profile_CompanyEmail</name>
+    </customLabels>
+    <customLabels>
+        <label>Kode IATA</label>
+        <name>csp_Profile_IATACode</name>
+    </customLabels>
+    <customLabels>
+        <label>Kontak Pribadi</label>
+        <name>csp_Profile_PersonalContact</name>
+    </customLabels>
+    <customLabels>
+        <label>Aksesibilitas Portal</label>
+        <name>csp_Profile_PortalAccessibility</name>
+    </customLabels>
+    <customLabels>
+        <label>Profesional</label>
+        <name>csp_Profile_Professional</name>
+    </customLabels>
+    <customLabels>
+        <label>Situs web</label>
+        <name>csp_Profile_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Dukungan</label>
+        <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>Agen Anda saat ini tidak memiliki Akun EasyPay IATA (International Air Transport Association) yang terbuka.&lt;br/&gt;&lt;br/&gt;Silakan hubungi Penanda Tangan Resmi Kantor Pusat Anda untuk meminta mereka membuka Akun EasyPay IATA (International Air Transport Association). Sebagai Administrator Portal, Anda dapat memperbarui &lt;a href=&quot;/my-profile&quot;&gt;Informasi Pribadi&lt;/a&gt; Anda untuk menunjuk diri Anda sebagai Penanda Tangan Resmi yang Sah, atau menunjuk admin portal yang benar dari halaman &lt;a href=&quot;/company-profile&quot;&gt;Administrasi Perusahaan -&gt; Kontak&lt;/a&gt; dan meminta mereka untuk membuka akun EasyPay Anda.&lt;br/&gt;&lt;br/&gt;Silakan &lt;a href=&quot;/Support-Reach-Us&quot;&gt;kontak dukungan&lt;/a&gt; jika Anda memerlukan bantuan.</label>
+        <name>csp_RequestService_ContactPortalAdmin_Alt</name>
+    </customLabels>
+    <customLabels>
+        <label>Agen Anda saat ini tidak memiliki Akun EasyPay IATA (International Air Transport Association) yang terbuka.&lt;br/&gt;&lt;br/&gt;Silakan hubungi Penanda Tangan Resmi Kantor Pusat Anda untuk meminta mereka membuka Akun EasyPay IATA (International Air Transport Association). Untuk membuka Akun EasyPay IATA (International Air Transport Association), Anda harus menjadi Administrator Portal dan Penanda Tangan Resmi untuk Agen Anda.&lt;br/&gt;&lt;br/&gt;Silakan &lt;a href=&quot;/Support-Reach-Us?&quot;&gt;kontak dukungan&lt;/a&gt; jika Anda memerlukan bantuan.</label>
+        <name>csp_RequestService_ContactPortalAdmin_LegalAuth</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_RequestService_ContactSupport</name>
+    </customLabels>
+    <customLabels>
+        <label>Penanda Tangan Resmi dari Lembaga Pusat Anda telah memulai pembukaan Akun IEP Agen Anda. Setelah Akun IEP berhasil dibuka, Anda akan dapat mengakses layanan ini.</label>
+        <name>csp_RequestService_IEPAccountOpenInProgress</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda sekarang akan diarahkan ke Portal EasyPay di mana Anda dapat melengkapi pengajuan untuk membuka akun EasyPay IATA (International Air Transport Association) Agen Anda.&lt;br/&gt;&lt;br/&gt;Dengan melanjutkan, Anda memberi persetujuan kepada IATA (International Air Transport Association) untuk mengirimkan nama depan, nama belakang, alamat email, dan kode IATA, serta informasi pribadi lain yang relevan yang tersedia untuk Pemasok EasyPay IATA (International Air Transport Association). Informasi ini hanya akan digunakan oleh Pemasok EasyPay IATA (International Air Transport Association) untuk tujuan membuka dan mengelola akun EasyPay Anda dan mengoperasikan layanan EasyPay secara umum, atau sebaliknya sebagaimana diwajibkan oleh hukum. &lt;br/&gt;&lt;br/&gt;Apakah Anda ingin melanjutkan?</label>
+        <name>csp_RequestService_ProceedIEPAccountOpen</name>
+    </customLabels>
+    <customLabels>
+        <label>Meminta Akses</label>
+        <name>csp_Request_New_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Pembayaran Penjualan</label>
+        <name>csp_Sales_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_SearchNotPerformed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceAccessConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_ServiceRequestConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label>Subtopik</label>
+        <name>csp_Sub_Topic_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Subtopik</label>
+        <name>csp_Subtopic</name>
+    </customLabels>
+    <customLabels>
+        <label>Saran</label>
+        <name>csp_Suggest_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Ini mungkin membantu</label>
+        <name>csp_Suggestion_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami di sini untuk membantu.</label>
+        <name>csp_SupportCategoriesInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>Pertanyaan</label>
+        <name>csp_SupportReachUs_AskTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami di sini untuk membantu.</label>
+        <name>csp_SupportReachUs_BasicInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>Kategori</label>
+        <name>csp_SupportReachUs_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Pujian</label>
+        <name>csp_SupportReachUs_ComplimentTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Keluhan</label>
+        <name>csp_SupportReachUs_ConcernTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Negara</label>
+        <name>csp_SupportReachUs_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Apakah permintaan Anda darurat?</label>
+        <name>csp_SupportReachUs_IsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Dapatkan dukungan langsung melalui portal IATA (International Air Transport Association), melalui telepon, atau obrolan.</label>
+        <name>csp_SupportReachUs_PlzChoosePath</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih kategori utama</label>
+        <name>csp_SupportReachUs_SelectCategory</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih negara atau wilayah untuk permintaan Anda</label>
+        <name>csp_SupportReachUs_SelectCountry</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih topik</label>
+        <name>csp_SupportReachUs_SelectTopic</name>
+    </customLabels>
+    <customLabels>
+        <label>Tampilkan Opsi Dukungan</label>
+        <name>csp_SupportReachUs_ShowSupportOptions</name>
+    </customLabels>
+    <customLabels>
+        <label>Lengkapi formulir untuk melihat opsi dukungan yang disarankan</label>
+        <name>csp_SupportReachUs_SpecifyCaseDetails</name>
+    </customLabels>
+    <customLabels>
+        <label>Saran</label>
+        <name>csp_SupportReachUs_SuggestTile</name>
+    </customLabels>
+    <customLabels>
+        <label>Topik</label>
+        <name>csp_SupportReachUs_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>Hubungi Kami</label>
+        <name>csp_SupportReachUs_WhatDoYouWant</name>
+    </customLabels>
+    <customLabels>
+        <label>Dukungan</label>
+        <name>csp_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Melalui dasbor ini, setiap Tim Bendahara maskapai bisa mendapatkan visibilitas penuh atas penjualan lewat kartu kredit yang masuk ke akun mereka, dan laporan penjualan lewat kartu kredit terkait yang dapat diunduh - di samping itu maskapai juga akan dapat melihat arus kas yang diproses oleh setiap sistem pelunasan pembayaran utama IATA (International Air Transport Association): BSP (Rencana Tagihan dan Penyelesaian), CASS (sistem Cargo Account Settlement), ICCS (Layanan Kliring Mata Uang) dan ICH (Kantor Kliring IATA (International Air Transport Association)).&quot;</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel1</name>
+    </customLabels>
+    <customLabels>
+        <label>Untuk informasi lebih lanjut, kunjungi: www.iata.org/treasurydashboard</label>
+        <name>csp_TDP_ServiceRequest_MediumLabel2</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda akan meminta informasi lebih lanjut tentang layanan komersial IATA (International Air Transport Association). Dengan mengeklik &quot;konfirmasi&quot;, Anda akan menerima semua perincian tentang cara berlangganan Premi Dasbor Bendahara IATA (International Air Transport Association) setiap bulan.</label>
+        <name>csp_TDP_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda akan meminta informasi lebih lanjut tentang layanan komersial IATA (International Air Transport Association). Dengan mengeklik &quot;konfirmasi&quot;, Anda akan menerima semua perincian tentang cara berlangganan Dasbor Bendahara IATA (International Air Transport Association) setiap bulan.</label>
+        <name>csp_TD_ServiceRequest_TopLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Penerbit Tiket</label>
+        <name>csp_TicketIssuer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request New Service --></label>
+        <name>csp_TimeoutIEP</name>
+    </customLabels>
+    <customLabels>
+        <label>Penerima belum ditambahkan. Silakan tekan tombol Tambah.</label>
+        <name>csp_ToastWarningRecipientNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label>Lihat Ringkasan Kasus</label>
+        <name>csp_ViewCaseSummary</name>
+    </customLabels>
+    <customLabels>
+        <label>Area Kerja</label>
+        <name>csp_WorkingAreas</name>
+    </customLabels>
+    <customLabels>
+        <label>Tampilkan Opsi Dukungan</label>
+        <name>csp_btn_Support_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Kesalahan saat membuat kasus</label>
+        <name>csp_errorCreatingCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Cari berdasarkan nama atau email</label>
+        <name>csp_searchEmailRecipientPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;Cari berdasarkan Kode IATA, lokasi, atau nama&quot;</label>
+        <name>csp_searchIataCodeLocationNamePlaceHolder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_toSelectSubTopic</name>
     </customLabels>
     <customLabels>
         <label><!-- days left --></label>
@@ -19450,6 +21102,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>regular_price</name>
     </customLabels>
     <customLabels>
+        <label><!-- resetPasswordConfirmMessage --></label>
+        <name>resetPasswordConfirmMessage</name>
+    </customLabels>
+    <customLabels>
         <label><!-- select all --></label>
         <name>select_all</name>
     </customLabels>
@@ -19462,7 +21118,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>AMS_GDP_Synchronizer</name>
     </customTabs>
     <customTabs>
-        <label><!-- AMS PCI Compliant Mass Oscar Creation --></label>
+        <label><!-- OSCAR mass action --></label>
         <name>AMS_PCI_Compliant_Mass_Oscar_Creation</name>
     </customTabs>
     <customTabs>

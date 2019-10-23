@@ -70,7 +70,7 @@
                     <apex:facet name="header">Actions</apex:facet>
                     <apex:commandLink value="{! $Label.ICCS_Update_Label}" action="{! wrappedPortalUser.updateUser}" rendered="{! !wrappedPortalUser.editMode}" rerender="portalUsersTable"/>
                     <apex:outputPanel rendered="{! wrappedPortalUser.editMode}">
-                        <apex:commandLink value="{! $Label.ICCS_Save_Action}" action="{! wrappedPortalUser.save}" rendered="{! wrappedPortalUser.portalUserStatus == 'Active'}" rerender="portalUsersTable"/>
+                        <apex:commandLink value="{! $Label.ICCS_Save_Action}" action="{! wrappedPortalUser.save}" rerender="portalUsersTable"/>
                         &nbsp;&nbsp;&nbsp;
                         <apex:commandLink value="{! $Label.ICCS_Cancel_Action}" action="{! wrappedPortalUser.cancel}" rerender="portalUsersTable"/>
                     </apex:outputPanel>

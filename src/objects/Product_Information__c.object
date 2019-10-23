@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Has_Most_Popular_Counter__c</fullName>
         <description>Technical field for Validation Rule use on maximum number of Most Popular Rate Plans per product</description>
@@ -67,6 +68,19 @@
         <summaryOperation>count</summaryOperation>
         <trackTrending>false</trackTrending>
         <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>New_Related_Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Related Product</inlineHelpText>
+        <label>New Related Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>New Products Information</relationshipLabel>
+        <relationshipName>New_Products_Information</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Product_Audience__c</fullName>
@@ -143,6 +157,7 @@
         <columns>NAME</columns>
         <columns>Product_Audience__c</columns>
         <columns>Related_Product__c</columns>
+        <columns>New_Related_Product__c</columns>
         <columns>Related_Product_Category__c</columns>
         <columns>OBJECT_ID</columns>
         <filterScope>Everything</filterScope>
@@ -154,6 +169,7 @@
         <columns>NAME</columns>
         <columns>Product_Audience__c</columns>
         <columns>Related_Product__c</columns>
+        <columns>New_Related_Product__c</columns>
         <columns>Related_Product_Category__c</columns>
         <columns>OBJECT_ID</columns>
         <filterScope>Everything</filterScope>
@@ -170,6 +186,7 @@
         <columns>NAME</columns>
         <columns>Product_Audience__c</columns>
         <columns>Related_Product__c</columns>
+        <columns>New_Related_Product__c</columns>
         <columns>Related_Product_Category__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -187,6 +204,7 @@
     <pluralLabel>Products Information</pluralLabel>
     <searchLayouts>
         <customTabListAdditionalFields>Related_Product__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>New_Related_Product__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Related_Product_Category__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Product_Audience__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>CREATEDBY_USER</customTabListAdditionalFields>

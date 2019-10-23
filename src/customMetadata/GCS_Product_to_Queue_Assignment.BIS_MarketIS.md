@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>Queue_API_Name__c</field>
-        <value xsi:type="xsd:string">GCS_MarketIS</value>
+        <value xsi:type="xsd:string">GCS_BIS</value>
     </values>
 </CustomMetadata>

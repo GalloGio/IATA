@@ -220,7 +220,13 @@
                 <button type="button" class="btn btn-download" data-toggle="modal" data-target="#selectCountries">
                     <span class="glyphicon download-icon" aria-hidden="true" />{!$Label.CurrencyCenter_Download_Pdf}
                 </button>
-                <button type="button" class="btn btn-download" onclick="window.open('/ISSP_FAQ2Case??MainNav=Queries&subNav=MyQueries&mid=M1S1&type=CurrencyRepatriationIssues&isocode={!Country_Profile__c.ISO_Code__c}','_blank');">
+                <button type="button" class="btn btn-download" onclick="if({!isNewPortal}){
+                    window.open('csportal/s/support-reach-us-create-new-case?category=Financial_Services&topic=Currency_Center&subtopic=Currency_Repatriation_Issues&countryISO={!Country_Profile__c.ISO_Code__c}&concerncase=false&emergency=false','_blank');
+                    }
+                    else{
+                    window.open('/ISSP_FAQ2Case??MainNav=Queries&subNav=MyQueries&mid=M1S1&type=CurrencyRepatriationIssues&isocode={!Country_Profile__c.ISO_Code__c}','_blank');
+                    }
+                    ">
                   <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;{!$Label.ISSP_F2CCreate}
                 </button>
               </div>

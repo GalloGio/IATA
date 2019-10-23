@@ -3,7 +3,8 @@
     <fieldUpdates>
         <fullName>GenerateUniqueKey</fullName>
         <field>UniqueKey__c</field>
-        <formula>IF(RecordType.DeveloperName = &apos;Remittance_Frequency&apos;, RecordType.DeveloperName &amp;&apos;.&apos;&amp;  Operation__r.Name  &amp;&apos;.&apos;&amp; TEXT(Class_Type__c) &amp;&apos;.&apos;&amp; TEXT(Remittance_Frequency__c),
+        <formula>IF(RecordType.DeveloperName = &apos;Remittance_Frequency&apos;, RecordType.DeveloperName &amp;&apos;.&apos;&amp;  CASESAFEID(BSP__c)  &amp;&apos;.&apos;&amp; TEXT(Class_Type__c) &amp;&apos;.&apos;&amp; TEXT(Remittance_Frequency__c) &amp; 
+	(IF(ISBLANK(CASESAFEID(ISO_State__c)), &apos;&apos;,&apos;.&apos;&amp; CASESAFEID(ISO_State__c))),  
 
  IF(RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;,  CASESAFEID(BSP__c) &amp;&apos;.&apos;&amp;  CASESAFEID(RecordTypeId) ,
 
@@ -26,10 +27,7 @@
         </actions>
         <active>true</active>
         <description>Generate Unique Key for BSP Attributes</description>
-        <formula>OR( 
-  RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;, 
-  RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;,
-  RecordType.DeveloperName = &apos;Remittance_Frequency&apos;)</formula>
+        <formula>OR(    RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;,    RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;,   RecordType.DeveloperName = &apos;Remittance_Frequency&apos;)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

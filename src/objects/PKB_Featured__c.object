@@ -54,6 +54,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Article_Number__c</fullName>
         <description>The article number of the article being linked to as a keyword or featured article. Not the same as the Article or Knowledge Article Version record ID.</description>

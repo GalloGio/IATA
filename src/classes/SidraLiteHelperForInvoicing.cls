@@ -91,12 +91,8 @@ public with sharing class SidraLiteHelperForInvoicing {
               } else if (SidraLiteUtil.isCargoCASS(account)) {
                   newCase.SIDRA_Lite_Default_Date__c = Date.today();
                   newCase.Reason_for_Default__c = ANNUAL_FEES;
-                  if (account.Category__c == 'IATA Cargo Agent') {
-                      newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
-                  }
-                  if (account.Category__c.startsWith('CASS Associate')) {
-                      newCase.Termination_date_manual_entry__c = Date.today().addMonths(3);
-                  }
+                  //WMO-522
+                  newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
               }
           } else {
               newCase.IRR_Withdrawal_Reason__c = 'Default Prev';

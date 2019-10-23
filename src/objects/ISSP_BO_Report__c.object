@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Report for Business Owners of ISSP, the report is being attached to this object</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -52,8 +53,10 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Report_Date__c</fullName>
+        <description>Represents the date when the attachments were reported</description>
         <externalId>false</externalId>
         <label>Posted Date</label>
         <required>false</required>
@@ -62,6 +65,7 @@
     </fields>
     <fields>
         <fullName>Report_Date_format__c</fullName>
+        <description>Represents a text format of the same date. The format is MM/DD/YYYY</description>
         <externalId>false</externalId>
         <formula>CASE(
   MONTH( Report_Date__c),
@@ -99,6 +103,25 @@ TEXT(year(Report_Date__c))</formula>
         <columns>Report_Date__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>for_a_specific_date</fullName>
+        <columns>NAME</columns>
+        <columns>Report_Date__c</columns>
+        <columns>Report_Date_format__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Report_Date__c</field>
+            <operation>greaterThan</operation>
+            <value>9/1/2019</value>
+        </filters>
+        <filters>
+            <field>Report_Date__c</field>
+            <operation>lessThan</operation>
+            <value>10/15/2019</value>
+        </filters>
+        <label>for a specific date</label>
         <language>en_US</language>
     </listViews>
     <nameField>

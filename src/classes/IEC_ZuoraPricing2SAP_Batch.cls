@@ -6,7 +6,7 @@ global class IEC_ZuoraPricing2SAP_Batch implements Database.Batchable<sObject>, 
     public static final String processingStep1 = 'Track changes';
     public static final String processingStep2 = 'Send to SAP';
     String strProcessingStep;
-    Map<Id, Product2> mapZProductId_Product;
+    Map<Id, Product2> mapProductId_Product;
 
 
     // constructor - used to specify step to execute
@@ -22,7 +22,7 @@ global class IEC_ZuoraPricing2SAP_Batch implements Database.Batchable<sObject>, 
         if (strProcessingStep == processingStep1)
         {
             // get products to track Zuora pricing
-            mapZProductId_Product = new IEC_ZuoraPricing2SAP_Svc().getTrackingProduct();
+            mapProductId_Product = new IEC_ZuoraPricing2SAP_Svc().getTrackingProduct2();
             
             // query Zuora pricing to track
             return Database.getQueryLocator([select Id, CurrencyIsoCode, IsDeleted
@@ -48,16 +48,16 @@ global class IEC_ZuoraPricing2SAP_Batch implements Database.Batchable<sObject>, 
                       , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.Region__c
                       , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.IsFreeShipping__c
                       , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.IsPreSale__c
-                      , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c
-                      , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.LastModifiedDate
-                      , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__Deleted__c
+                      , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__c
+                      , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__r.LastModifiedDate
+                      , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__r.zqu__Deleted__c
                       from zqu__ProductRatePlanChargeTier__c
-                      where zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c in :mapZProductId_Product.keySet()
+                      where zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__c in :mapProductId_Product.keyset()
                         and zqu__ProductRatePlanCharge__r.zqu__Type__c in ('One-Time', 'Recurring')
                         and ZRatePlan_CouponCode__c = null
                         and zqu__ProductRatePlanCharge__r.zqu__Model__c in ('Per Unit', 'Per Unit Pricing', 'Volume', 'Volume Pricing'
                                                                           , 'Discount-Fixed Amount', 'Discount-Percentage')
-                      order by zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c
+                      order by zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__c
                              , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c
                              , zqu__ProductRatePlanCharge__c
                              , zqu__Tier__c
@@ -84,7 +84,7 @@ global class IEC_ZuoraPricing2SAP_Batch implements Database.Batchable<sObject>, 
         IEC_ZuoraPricing2SAP_Svc svc = new IEC_ZuoraPricing2SAP_Svc();
         // save changed pricing information to tracking table 
         if (strProcessingStep == processingStep1 && scope.size() > 0)
-            svc.trackPricing((List<zqu__ProductRatePlanChargeTier__c>)scope, mapZProductId_Product);
+            svc.trackPricing((List<zqu__ProductRatePlanChargeTier__c>)scope, mapProductId_Product);
         // send pricing information to SAP
         else if (strProcessingStep == processingStep2 && scope.size() > 0)
             svc.sendPricing((List<IEC_ZuoraPricing2SAP_Tracking__c>)scope);

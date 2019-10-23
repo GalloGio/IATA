@@ -1,0 +1,36 @@
+<template>
+
+    
+    <div class="customTriangle" style={backgroundStyle} >
+        <div class=" searchDivStyle">
+            <c-portal-page-container>
+                <span slot="componentContent">
+                    <div class="text-white text-xlarge text-bold titlePadding">
+                        <div if:true={loadingGreeting} class="componentLoadingSpinner">
+                            <lightning-spinner alternative-text="Loading" size="small" variant="inverse"></lightning-spinner>
+                        </div>
+                        <div if:false={loadingGreeting} class="headerContainerShadow">
+                            <div>{greetinglabel} &nbsp;</div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-vertical_small">
+                        &nbsp;
+                    </div>
+
+                    <div class="background-white">
+                        <c-portal-search-bar-global-component 
+                            search-bar-placeholder={label.CSP_Search_Home_Placeholder} 
+                            show-cases
+                            show-services
+                            show-f-a-qs
+                            show-documents
+                            show-advanced-search>
+                        </c-portal-search-bar-global-component>
+                    </div>
+                </span>
+            </c-portal-page-container>
+        </div>
+    </div>
+    
+</template>

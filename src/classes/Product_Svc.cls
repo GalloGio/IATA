@@ -40,7 +40,7 @@ public class Product_Svc
         String excludeRecordType = Utility.getTextSetting('Zuora Exclude Product Record Type');
 
         //-- Validate products to be sent: Product must have SAP_Material_Number__c & Effective Dates
-        for(Product2 p : products)
+        for(Product2 p : products){
             if (p.RecordType.DeveloperName != null && !excludeRecordType.containsIgnoreCase(p.RecordType.DeveloperName))
             {
                 if(String.isNotBlank(p.SAP_Material_Number__c))
@@ -53,8 +53,14 @@ public class Product_Svc
                     }
 
                     //-- If product already has a ZuoraId then sent it to Zuora for Update 
-                    if(p.Zuora_Id__c != null || p.ZProduct__c != null) products2Update.add(p);
-                    else products2Create.add(p);  
+                    //if(p.Zuora_Id__c != null || p.ZProduct__c != null) products2Update.add(p);
+                    //-- If product already has a ZuoraId then sent it to Zuora for Update 
+                    if(String.isNotBlank(p.zqu__ZuoraId__c)){
+                        products2Update.add(p);
+                    }
+                    else{
+                        products2Create.add(p);  
+                    }
                 }
                 else
                 {
@@ -62,6 +68,7 @@ public class Product_Svc
                     productsWithoutCode.add(p);
                 }
             }
+        }
 
         //-- callouts Requests 
         if(products2Create.size() > 0  || products2Update.size() > 0)
@@ -97,28 +104,6 @@ public class Product_Svc
 
             if(results.size() > 0) ret = processZProductSaveResult(products, results);
         }
-
-        //-- If there are Invalid Product: Send Notification to Support
-        //if(!productsWithoutCode.isEmpty())
-        //{
-        //    List<String> errorsList = new List<String>();
-        //    for(Product2 p : productsWithoutCode)
-        //    {
-        //        String productURL = URL.getSalesforceBaseUrl().toExternalForm() + '/' + p.Id;
-        //        String err = String.format('<a href="{0}">{1}</a>', new List<String>{
-        //            productURL,
-        //            p.Name
-        //        });
-        //        errorsList.add(err);
-        //    }
-
-        //    String errorsString = String.join(errorsList, '<br />') ;
-
-        //    String msg = Label.Error_Invalid_Product_Number + '<br />' + errorsString;            
-        //    ret = msg; 
-
-        //    errorLogs.add(IECErrorLogger.createErrorLog('Product_Svc/saveZProducts', msg, 'Product cannot be created in Zuora', null));      
-        //}
 
         if(errorLogs.size() > 0) IECErrorLogger.logErrors(errorLogs);
 
@@ -243,7 +228,7 @@ public class Product_Svc
                 {
                     // Set Zuora Id of the Product
                     Product2 p = productByCode.get(material_number);
-                        p.Zuora_Id__c = zuoraIdByMaterialNumber.get(material_number);
+                    p.zqu__ZuoraId__c = zuoraIdByMaterialNumber.get(material_number);
                     products2Update.add(p);
                 }
             }
@@ -341,6 +326,9 @@ public class Product_Svc
         map<String,String> apiName_Label = productApiNames();
         map<String,String> new_oldValue = new map<String,String>();
         map<String,String> value_Label = new map<String,String>();
+
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        List<Messaging.SingleEmailMessage> messages = new List<Messaging.SingleEmailMessage>(); 
         
         for(Product2 product : products){
             
@@ -470,11 +458,15 @@ public class Product_Svc
                         bodyToSend = bodyToSend.replace('{!ListOfFields}', productId_FieldsTable.get(producId));
                     }
 
-                    //send the notification
-                    Utility.sendEmail(productEmails,subj,bodyToSend,true,null);
+                    //create email notification without sending
+                    message = Utility.sendEmail(productEmails,subj,bodyToSend,true,null, false);
+                    messages.add(message);
                 }
             }
         }
+        if(!messages.isEmpty())
+            //send the notification
+            Messaging.sendEmail(messages);
 
         //create all the tasks for PM
         if(taskToInsert.size() > 0){
@@ -824,8 +816,8 @@ public class Product_Svc
             //*** default activity code
             if (newList[i1].SAP_Material_Number__c != null)
                 newList[i1].Activity_Code__c = newList[i1].SAP_Material_Number__c.left(4);
-            newList[i1].ZProduct__c = null;
-            newList[i1].Zuora_Id__c = null;
+            //newList[i1].ZProduct__c = null;
+            //newList[i1].Zuora_Id__c = null;
         }
     } //*** end of "setDefaultValue"
     
@@ -915,7 +907,7 @@ public class Product_Svc
         for (Product2 product : newList) {
             if (product.IEC_Parent_Product__c == null) {
                 // parent product
-                if (isBlank(product.Accepted_Payment_Methods__c)) {
+                if (String.isBlank(product.Accepted_Payment_Methods__c)) {
                     if (Test.isRunningTest() == false) {
                         product.addError(Label.ACCEPTED_PAYMENT_METHODS_MANDATORY);
                     }
@@ -925,7 +917,7 @@ public class Product_Svc
                 String parentAcceptedPaymentMethod = acceptedPaymentMethodsMap.get(product.IEC_Parent_Product__c);
 
                 if (
-                    isBlank(product.Accepted_Payment_Methods__c) == false
+                    String.isBlank(product.Accepted_Payment_Methods__c) == false
                     &&
                     isEqual(product.Accepted_Payment_Methods__c, parentAcceptedPaymentMethod) == false
                 ) {
@@ -934,8 +926,8 @@ public class Product_Svc
                     }
                 } else {
                     // if blank, set to parent
-                    if (isBlank(product.Accepted_Payment_Methods__c)) {
-                        if (isBlank(parentAcceptedPaymentMethod)) {
+                    if (String.isBlank(product.Accepted_Payment_Methods__c)) {
+                        if (String.isBlank(parentAcceptedPaymentMethod)) {
                             if (Test.isRunningTest() == false) {
                                 product.addError(Label.PARENT_ACCEPTED_PAYMENT_METHODS_IS_EMPTY);
                             }
@@ -997,9 +989,27 @@ public class Product_Svc
         Database.executeBatch(new OrderItemAcceptedPaymentMethodsBatch(allProductIdSet), 50);
     } //*** end of replicateParentProductacceptedPaymentMethods
 
-    private static Boolean isBlank(String str) {
-        return (str == null || str.length() == 0 || str.trim().length() == 0);
-    }
+    //Product information is sent to Zuora after insert/update
+    //by the saveZProducts method. When that happens, we need 
+    //to populate the Zuora Id on the product and on the related
+    //ZProduct (this is needed because later Zuora will try to
+    //match it when uploading Rate Plans)
+    public static void propagateZuoraId(Map<Id, Product2> products, Map<Id, Product2> oldProducts){
+
+        Set<Id> productIds = new Set<Id>();
+        for(Product2 p : products.values()){
+            if(p.zqu__ZuoraId__c != null && oldProducts.get(p.Id).zqu__ZuoraId__c == null) productIds.add(p.Id);
+        }
+
+        if(productIds.isEmpty()) return;
+
+        List<zqu__ZProduct__c> zProducts = [SELECT Id, zqu__Product__c  FROM zqu__ZProduct__c WHERE zqu__Product__c IN :productIds AND zqu__ZuoraId__c = ''];
+        for(zqu__ZProduct__c zp : zProducts){
+            zp.zqu__ZuoraId__c = products.get(zp.zqu__Product__c).zqu__ZuoraId__c;
+        }
+
+        if(!zProducts.isEmpty()) update zProducts;
+    }//end of propagateZuoraId
 
     @testVisible
     private static Boolean isEqual(String str1, String str2) {

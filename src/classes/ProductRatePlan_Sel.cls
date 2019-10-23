@@ -9,7 +9,7 @@ public with sharing class ProductRatePlan_Sel extends Selector
 			zqu__ProductRatePlan__c.zqu__Description__c,
 			zqu__ProductRatePlan__c.zqu__EffectiveEndDate__c,
 			zqu__ProductRatePlan__c.zqu__EffectiveStartDate__c,
-			zqu__ProductRatePlan__c.zqu__ZProduct__c,
+			zqu__ProductRatePlan__c.zqu__Product__c,
 			zqu__ProductRatePlan__c.zqu__ZuoraId__c,
 			zqu__ProductRatePlan__c.FileFrequency__c,
 			zqu__ProductRatePlan__c.GSSFileType__c,
@@ -26,6 +26,7 @@ public with sharing class ProductRatePlan_Sel extends Selector
 	public Schema.SObjectType getSObjectType()	{
 		return zqu__ProductRatePlan__c.sObjectType;
 	}
+
 
 	/****************************************************************************************************
 	    Created by CGI, David D 2015-09-22

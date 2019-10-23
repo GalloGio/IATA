@@ -72,6 +72,17 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Case_Record_Type_ID__c</fullName>
+        <description>Field used in Omni Channel Case Creation work around. LVA_BeforeChatTriggerHandler</description>
+        <externalId>false</externalId>
+        <label>Case Record Type ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ChatDuration</fullName>
     </fields>
     <fields>

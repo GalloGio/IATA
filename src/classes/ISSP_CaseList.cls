@@ -306,7 +306,7 @@ global with sharing class ISSP_CaseList {
                 if(!isExtinstion){
                 	if (sortFullExp == 'CaseNumber ASC' && soqlOrder != '' & soqlOrder != null)
                 		sortFullExp = soqlOrder;
-					queryString = 'select '+query.substring(1) +' from Case  '+getQueryConditions()+' order by '+ sortFullExp;
+					queryString = 'select '+query.substring(1) +' from Case  '+getQueryConditions()+' order by '+ sortFullExp + ' Limit 10000';
                 }
                 else if(isNewGenApp){
                     queryString = 'select '+query.substring(1) +', Description, (SELECT Id, CreatedDate, CommentBody, CreatedById, CreatedBy.Name FROM CaseComments order by CreatedDate ASC limit 200) from Case  '+getQueryConditions()+' order by CreatedDate DESC limit 200';

@@ -9,7 +9,7 @@
         </publicGroups>
         <roleAndSubordinatesInternal>
             <roleAndSubordinateInternal>Distribution_Airline_Coding</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>DistributionAirlineManagementHOI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>DistributionAirlineManagementHO</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>

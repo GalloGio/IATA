@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object used to store the amount and document type of order items from SAP Invoices</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>false</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -52,8 +53,10 @@
     <enableSearch>true</enableSearch>
     <enableSharing>false</enableSharing>
     <enableStreamingApi>false</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
     <fields>
         <fullName>Amount__c</fullName>
+        <description>Represents the amount of order items, negative if &apos;CRM&apos;</description>
         <externalId>false</externalId>
         <label>Amount</label>
         <precision>18</precision>
@@ -65,6 +68,7 @@
     <fields>
         <fullName>OrderItem__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Order Item</description>
         <externalId>false</externalId>
         <label>Order Item</label>
         <referenceTo>OrderItem</referenceTo>

@@ -81,6 +81,7 @@ public without sharing class AMS_Utils {
     public static final String IEPBANKACCOUNTSETUP = 'IEP.BANK.ACCOUNT.SETUP';
     public static final String IEPMODELAACCOUNTSETUP = 'IEP.MODEL.A.ACCOUNT.SETUP';
     public static final String IEPMODELBACCOUNTSETUP = 'IEP.MODEL.B.ACCOUNT.SETUP';
+    public static final String IEPMODELBPLUSACCOUNTSETUP = 'IEP.MODEL.B.PLUS.ACCOUNT.SETUP';
     public static final String PCI_COMPLIANT    = 'PCI.COMPLIANT.1.0';
 
     //Process of type NewGen
@@ -100,7 +101,9 @@ public without sharing class AMS_Utils {
     public static final String CONVERTTONEWGENPILOT = 'Conversion to GoLite'; //ACAMBAS - NEWGEN-4445
     public static final String CONVERTTOLEGACY = 'Conversion to Domestic with Cash'; //ACAMBAS - NEWGEN-4445
     public static final String CONVERTTOINTERNATIONAL = 'Conversion to International'; //ACAMBAS - NEWGEN-4445
-    
+    public static final String OPT_OUT_ACCREDITATION_CFG_RT_NAME = 'Opt_out_at_Accreditation';
+    public static final String FA_OPT_OUT = 'Opt-Out';
+     
     public static final Map<String, List<String>> OSCARBackupProcessMap = new Map<String, List<String>>{
         NGCHANGES => new List<String>{'Step4__c'},
         NGCHINACONVERSION => new List<String>{'Step4__c', 'Step3__c'}
@@ -131,6 +134,10 @@ public without sharing class AMS_Utils {
     public static final Set<String> oscarPCICompliantValidationAttachement = new Set <String>{'Yes','Nil CC','Corporate Card'};
     public static final Set<String> oscarPCICompliantValidationExpiryDate = new Set <String>{'Yes','Nil CC'};
 
+    public static final Set<String> setChinaCountries = new Set <String>{'CN'};
+    public static final Set<String> setDomesticCountries = new Set<String>{'CN', 'ID'};
+
+
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
 
@@ -155,7 +162,9 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_BANK_ACCOUNT_SETUP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
     public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_A_ONBOARDING');
     public static final String RECTYPE_IEPMODELB    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_B_SCREENING');
+    public static final String RECTYPE_IEPMODELBPLUS    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_B_ONBOARDING');
     public static final String RECTYPE_GDI          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_GDI_SETUP');
+    public static final String RECTYPE_CHINA        = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China');
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
@@ -172,13 +181,17 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_BSP          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
 
     public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
+	public static final String RECTYPE_NEWGEN_CHANGES_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 	
     public static final String RECTYPE_AIRLINE      = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline');
     public static final String RECTYPE_AIRLINE_BR   = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline_BR');
 
+    //AMS Country Specific Attribute
+    public static final String RECTYPE_CSA_RISK_NOTIFICATION   = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','Risk_Notification');
+    
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
-    public static final Set<String> IEP_PROCESSES = new Set<String>{IEPBANKACCOUNTSETUP, IEPMODELAACCOUNTSETUP, IEPMODELBACCOUNTSETUP};
+    public static final Set<String> IEP_PROCESSES = new Set<String>{IEPBANKACCOUNTSETUP, IEPMODELAACCOUNTSETUP, IEPMODELBACCOUNTSETUP,IEPMODELBPLUSACCOUNTSETUP};
 
     //public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO, new_HO,new_BR,new_BR_ABROAD};
 
@@ -192,6 +205,7 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
+    public static final String ACC_S10_ENDORSED = 'Endorsed';
 
     public static final Set<String> ACTIVEAGENCYSTATUS = new Set<String>{ACC_S4_LISTED, ACC_S5_CASHNOCOMMISSION, ACC_S6_CASHWITHCOMMISSION, ACC_S7_UNDERREVIEW, ACC_S8_CHANGESPROCESSED, ACC_S9_APPROVED};
 
@@ -207,7 +221,9 @@ public without sharing class AMS_Utils {
     public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
     public static final String SECTOR_CARGO = 'Cargo Agent';
     public static final String SECTOR_PASSENGER = 'Travel Agent';
-    public static final String CATEGORY_CASSASSOCIATE = 'CASS Associate';
+    public static final String SECTOR_AIRLINE = 'Airline';
+    public static final String SECTOR_INFRASTRUCTURE = 'Infrastructure Partner';
+    public static final String SECTOR_IATA = 'IATA';
 
     public static final String NEWFORM_AGENTTYPE_CASH = 'Standard with Cash';
     public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
@@ -240,15 +256,26 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_CHG_DATA_MAINTENANCE = 'CHG – Data Maintenance';
 
     //set with the ifap status to update the account's last financial review
-    public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED};
+    public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED, CASE_STATUS_FINANCIAL_SECURITY_REQUESTED};
 
     public static final String CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT = 'IATA Travel Agent';
 
-    public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
+    public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';// To replaces uses with SECTOR_PASSENGER
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
+    public static final String CATEGORY_NON_IATA_PASSENGER = 'Non-IATA Passenger Agent';
+    public static final String CATEGORY_NON_IATA_TRAVEL = 'Non-IATA Travel Agent';
+    public static final String CATEGORY_PASSENGER_ONLY = 'Passenger Only';
     public static final String CATEGORY_DOMESTIC_AGENT = 'Domestic Agent';
     public static final String CATEGORY_IMPORT_AGENT = 'Import Agent';
     public static final String CATEGORY_COURIER = 'Courier';
+    public static final String CATEGORY_IATA_CARGO_AGENT = 'IATA Cargo Agent';
+    public static final String CATEGORY_CASSASSOCIATE = 'CASS Associate';
+    public static final String CATEGORY_ANSP = 'ANSP';
+    public static final String CATEGORY_AIRPORT_AUTHORITY = 'Airport Authority';
+    public static final String CATEGORY_AIRPORT_CONCESSIONAIRE = 'Airport Concessionaire';
+    public static final String CATEGORY_AIRPORT_OPERATOR = 'Airport Operator';
+	public static final String CATEGORY_TOUR_OPERATOR = 'Tour Operator';
+  	public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
 
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
@@ -312,6 +339,7 @@ public without sharing class AMS_Utils {
     public static final String CC = 'CC';
     public static final String CA = 'CA';
     public static final string EP = 'EP';
+    public static final string BOP = 'BOP';
     public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
     public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
     public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
@@ -331,6 +359,8 @@ public without sharing class AMS_Utils {
     public static final String APP_DISAPPROVED = '12-APPLICATION DISAPPROVED';
     public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
 
+    public static final String MBPDD_CHANGE_CODE = 'MBPDD';
+    
     public static String ENCRYPTION_KEY {
         get {
             return Test.isRunningTest() ? 'hasd==aSDFclDDGasjdhfclx' : AMS_SAP_Settings__c.getOrgDefaults().Encryption_Key__c;
@@ -458,17 +488,6 @@ public without sharing class AMS_Utils {
                                                         FROM AMS_ChangeCodes__c];
             }
             return CUSTOM_CHANGECODES;
-        }
-        private set;
-    }
-
-    public static List<AMS_ChangeCodes_Integration__c> CUSTOM_CHANGECODES_INTEGRATION {
-        get {
-            if(CUSTOM_CHANGECODES_INTEGRATION == null){
-                CUSTOM_CHANGECODES_INTEGRATION = [SELECT RecId_A__c,RecId_B__c,RecId_Res__c FROM AMS_ChangeCodes_Integration__c];
-
-            }
-            return CUSTOM_CHANGECODES_INTEGRATION;
         }
         private set;
     }
@@ -634,25 +653,9 @@ public without sharing class AMS_Utils {
 
         //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
 
-        String sRes = '';
+        AMS_ChangeCodes_Integration__c ccInt = AMS_ChangeCodes_Integration__c.getValues(sRecIdA + '_' + sRecIdB);
 
-        for (AMS_ChangeCodes_Integration__c cc : CUSTOM_CHANGECODES_INTEGRATION ){
-
-            if(cc.RecId_A__c.equalsIgnoreCase(sRecIdA)){
-                if(cc.RecId_B__c.equalsIgnoreCase(sRecIdB)){
-                    sRes = cc.RecId_Res__c;
-                    break;
-                }
-            }
-
-        }
-
-        //Just in case we don't get a result, we set the value for the most common RecId - "C"
-        if( sRes == ''){
-            sRes = 'C';
-        }
-
-        return sRes;
+        return ccInt == null ? 'C' : ccInt.RecId_Res__c;
     }
 
     public static Boolean isAddressEmpty(Account acc, String addressType) {
@@ -968,7 +971,7 @@ public without sharing class AMS_Utils {
 
         if(oscar == null){
             List<AMS_OSCAR__c> oscarlst = [select Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c, Financial_Review_Result__c,
-                                        Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c, Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c
+                                        Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c, Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c, Requested_Bank_Guarantee_Currency__c
                                         from AMS_OSCAR__c where Id = : updatedIFAPCase.OSCAR__c];
             if(!oscarlst.isEmpty())
                 oscar = oscarlst.get(0);
@@ -1085,7 +1088,7 @@ public without sharing class AMS_Utils {
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
                 ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
-                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode,
+                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Covered_Ownership__c,
                 (SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
@@ -1166,11 +1169,6 @@ public without sharing class AMS_Utils {
                     accountHasChanges = true;
                 }
 
-                if(acc.ShippingCountry != onlineAcc.Shipping_ISO_Country__r.Name){
-                    acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
-                    accountHasChanges = true;
-                }
-
                 if(onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true && (acc.ShippingState != onlineAcc.Shipping_ISO_State__r.Name || acc.BillingState != onlineAcc.IATA_ISO_State__r.Name)){
                     acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
                     acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
@@ -1216,9 +1214,6 @@ public without sharing class AMS_Utils {
 
         try {
 
-            if (!accountsToUpdate.isEmpty())
-                update accountsToUpdate;
-
             if(!stagingToAccount.isEmpty() && runOwnershipMigration){
 
                 Map<Id,AMS_OSCAR__c> mapOscars = new Map<Id,AMS_OSCAR__c>();
@@ -1228,6 +1223,20 @@ public without sharing class AMS_Utils {
 
                 AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, false, mapOscars, locationTypeByOscar, topParentByOscar);
             }
+
+            if(!AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.isEmpty()) {
+
+                for(Account accToUpdate : accountsToUpdate) {
+
+                    if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.id))
+                        accToUpdate.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accToUpdate.id);
+                    else if(accToUpdate.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.Top_Parent__c))
+                        accToUpdate.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accToUpdate.Top_Parent__c);
+                }
+            }
+
+            if (!accountsToUpdate.isEmpty())
+                update accountsToUpdate;
 
             if(!createRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(createRHCInfo, false);
 
@@ -1278,11 +1287,8 @@ public without sharing class AMS_Utils {
     public static Boolean ownershipIsToBeMigrated(String typesOfChange){
 
         Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
-        if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
-            return true;
-
-        return false;
-
+        
+        return (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'));
     }
 
     //Map data from staging area (AMS Online Accreditation) to account
@@ -1335,6 +1341,8 @@ public without sharing class AMS_Utils {
                 accountFieldNewValue.put('BillingCountry', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
             if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
                 accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
+            if (fieldsToMigrate.contains('Trade_Name__c'))
+                accountFieldNewValue.put('TradeName__c', oscarOnlineAccreditation.Trade_Name__c);
             if (fieldsToMigrate.contains('IATA_ISO_State__c'))
                 accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
 
@@ -1422,6 +1430,7 @@ public without sharing class AMS_Utils {
         Map<String, String> fieldsMapping = new Map<String, String>(fieldsMap.clone());
         fieldsMapping.put('Link_agent_name__c', 'Link_agent_name__c');
         fieldsMapping.put('Short_Name__c', 'Short_Name__c');
+        fieldsMapping.put('Covered_Ownership__c', 'ISSP_AMS_Total_Current_Ownership__c'); //Account -> Pax Accreditation  
 
         //AMSU-151
         fieldsMapping.put('In_a_Airport__c', 'ISSP_AMS_Premises_located_at_airport__c');
@@ -1460,7 +1469,7 @@ public without sharing class AMS_Utils {
             Set<Id> accountIds = new Set<Id>();
             accountIds.add(oscar.Account__c); 
             accountIds.addAll(accounts.keySet());
-            String query = 'SELECT id,recordTypeID,ParentId,Is_Branch_Abroad__c,IATA_ISO_Country__r.ISO_Code__c, Link_agent_name__r.Name, Reason__c, ';
+            String query = 'SELECT id,recordTypeID,ParentId,Is_Branch_Abroad__c,IATA_ISO_Country__r.ISO_Code__c, Link_agent_name__r.Name, Reason__c,  Top_Parent__c, CNS_Agency__c, Status__c,';
             if(!fieldsINtheQuery.contains('Location_Type__c')){
                 query += 'Location_Type__c, ';                
             }
@@ -1565,19 +1574,17 @@ public without sharing class AMS_Utils {
                         
                         system.debug('DDD oldValue:' + oldValue);
                         system.debug('DDD newValue:' + newValue);
-                        
-                        if (oldValue != newValue)
-                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
-                            
+                                                    
+                        if (oldValue != newValue || (accFieldApiName == 'Covered_Ownership__c' && AMS_AccountRoleCreator.isAccountRoleCreationRunning) ) //Correction with Change of Ownership
+                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));                       
 
                         acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
                     }
 
                 if(!objectChangesList.isEmpty()) { //AMSU-151
                     AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
-
                     accountsToUpdate.put(acc.Id,acctChangesStruct);
-                }
+                }else if(objectChangesList.isEmpty() && AMS_AccountRoleCreator.isAccountRoleCreationRunning) AMS_OSCARTriggerHandler.accToGenerateCC.add(acc);
             }
 
         }
@@ -2576,10 +2583,10 @@ public without sharing class AMS_Utils {
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
         List<Portal_Application_Right__c> services = new List<Portal_Application_Right__c>();
 
-        authorizations = [SELECT Id,
-                                     ANG_FormOfPayment_ID__c
-                                FROM Agency_Authorization__c
-                               WHERE Account__c = :acc.Id AND Status__c = 'Active'];
+        authorizations = [SELECT Id, ANG_FormOfPayment_ID__c
+                        FROM Agency_Authorization__c
+                        WHERE Account__c = :acc.Id 
+                            AND (Status__c = 'Active' OR Status__c = 'Authorized')];
 
         if(con != null) {
             services = [SELECT Id, Application_Name__c, Right__c, Application_Start_URL__c
@@ -2604,8 +2611,15 @@ public without sharing class AMS_Utils {
     *   Method that validates if the record fields contain only latin characters
     **/
     public static List<String> validateCharacters(sObject record, List<Schema.FieldSetMember> fieldsToCheck) {
+        //WMO-538
+		Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
+        String ISO_8859_1_regEx = regExCS != null && String.isNotBlank(regExCS.Text_1__c) ? regExCS.Text_1__c : '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        return validateCharacters(record, fieldsToCheck, ISO_8859_1_regEx);
+    }
+
+    public static List<String> validateCharacters(sObject record, List<Schema.FieldSetMember> fieldsToCheck,  String ISO_8859_1_regEx) {
         List<String> res = new List<String>();
-        String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
         for(Schema.FieldSetMember field : fieldsToCheck) {
@@ -2642,8 +2656,15 @@ public without sharing class AMS_Utils {
     *   Method that validates if the record fields contain only latin characters
     **/
     public static List<String> cleanAndUpdateSpecialChars(sObject record, List<Schema.FieldSetMember> fieldsToCheck, Boolean toUpdate) {
+        //WMO-538
+		Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
+        String ISO_8859_1_regEx = regExCS != null && String.isNotBlank(regExCS.Text_1__c) ? regExCS.Text_1__c : '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        return cleanAndUpdateSpecialChars(record, fieldsToCheck, toUpdate, ISO_8859_1_regEx);
+    }
+
+    public static List<String> cleanAndUpdateSpecialChars(sObject record, List<Schema.FieldSetMember> fieldsToCheck, Boolean toUpdate, String ISO_8859_1_regEx) {
         List<String> res = new List<String>();
-        String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
         for(Schema.FieldSetMember field : fieldsToCheck) {
@@ -2664,4 +2685,28 @@ public without sharing class AMS_Utils {
         return res;
     }
     /*** AMSU-195 End ***/
+
+    public static String beautifyErrorMessage(String message){
+		
+		try {
+
+	        Pattern patt  = Pattern.compile('(.+)EXCEPTION, ((.+)):(.+)');
+	        Matcher match = patt.matcher(message);
+			
+			if(match.matches()){
+		        //Extract useful message from the exception message
+		        String userFriendlyMsg = match.group(3);
+		        return userFriendlyMsg;
+			}
+				        
+		}catch(Exception e){
+			//If something went wrong with the matcher 
+			//we just return the original message
+			system.debug(LoggingLevel.ERROR, e.getMessage());
+		}
+
+		return message;
+
+    }
+
 }

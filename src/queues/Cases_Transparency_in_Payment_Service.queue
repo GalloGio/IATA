@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>noreply@iata.org</email>
+    <email>marins@iata.org</email>
     <name>Cases - Transparency in Payment Service</name>
     <queueMembers>
         <publicGroups>

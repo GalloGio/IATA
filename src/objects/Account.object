@@ -73,6 +73,7 @@
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
+    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>AMS_ACCOUNT_FIELDS_TO_VALIDATE</fullName>
         <description>This field set is used to know which fields cannot contain non latin characters</description>
@@ -2694,6 +2695,236 @@
         <label>FieldsExcludedFromTracking</label>
     </fieldSets>
     <fieldSets>
+        <fullName>GCS_CompanyContact</fullName>
+        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex. This set is used for all record types, field access is hardcoded.</description>
+        <displayedFields>
+            <field>Phone</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Fax</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Email__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Website</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>BillingStreet</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>BillingCity</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>BillingPostalCode</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>BillingCountry</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>GCS Company Contact</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>GCS_Profile_Agency</fullName>
+        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
+        <displayedFields>
+            <field>Legal_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>TradeName__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IATACode__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Sector__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Category__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Location_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_IEP_Status_FF__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Fin_statements_submission_deadline__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Accumulated_Irregularities__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>GCS Company Profile - Agency</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>GCS_Profile_Airline</fullName>
+        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
+        <displayedFields>
+            <field>Legal_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Name_on_AOC__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_designator__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ICAO_designator__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IATACode__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_Prefix__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Sector__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Category__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Location_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Field_Head_Office__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Membership_status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>GCS Company Profile - Airline</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>GCS_Profile_GSA</fullName>
+        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
+        <displayedFields>
+            <field>Legal_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IATACode__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Sector__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Category__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>GCS Company Profile - GSA</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>GCS_Profile_Others</fullName>
+        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
+        <displayedFields>
+            <field>Legal_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IATACode__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Sector__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Category__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>GCS Company Profile - Others</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>GCS_Profile_Standard</fullName>
+        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
+        <displayedFields>
+            <field>Legal_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IATACode__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Sector__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Category__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>GCS Company Profile - Standard</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>ISSP_Account_Portal_Search</fullName>
         <description>Portal</description>
         <displayedFields>
@@ -2922,6 +3153,91 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <label>TrackingHistory</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__CustomAccountFields</fullName>
+        <description>Fields in this field set will be included in the account data when quotes for new billing accounts are sent to Zuora.</description>
+        <label>Custom Account Fields</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__Fields_For_Select_Billing_Account</fullName>
+        <availableFields>
+            <field>AccountSource</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>AnnualRevenue</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Fax</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Industry</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>ParentId</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Phone</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Rating</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Sic</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>SicDesc</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Type</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <description>Fields in this field set will be displayed in the list of Select Billing Account Component</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>AccountNumber</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Account Fields</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__Lookup_Popup_Window</fullName>
+        <description>Fields in this field set will be displayed in the list of lookup component.</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>AccountNumber</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Lookup Popup Window</label>
     </fieldSets>
     <fields>
         <fullName>ACH_Member__c</fullName>
@@ -3320,7 +3636,7 @@
         <fullName>ANG_IsNewGenAgency__c</fullName>
         <description>To show information to analyst. To simplify triggers and classes.</description>
         <externalId>false</externalId>
-        <formula>(IATA_ISO_Country__r.ANG_Enable_NewGen__c  &amp;&amp;  OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;)) || (IATA_ISO_Country__r.Enable_NewGen_Pilot__c &amp;&amp; OR(TEXT(Location_Type__c) = &apos;HE&apos;, TEXT(Location_Type__c) = &apos;AE&apos;, TEXT(Location_Type__c) = &apos;GE&apos;) &amp;&amp; TEXT(Location_Class__c) = &apos;D&apos;)</formula>
+        <formula>AND(IATA_ISO_Country__r.ANG_Enable_NewGen__c  , OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is New Gen Agency</label>
         <trackHistory>false</trackHistory>
@@ -5742,31 +6058,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </valueSet>
     </fields>
     <fields>
-        <fullName>BSP_non_air__c</fullName>
-        <externalId>false</externalId>
-        <label>BSP non air</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Yes</fullName>
-                    <default>false</default>
-                    <label>Yes</label>
-                </value>
-                <value>
-                    <fullName>No</fullName>
-                    <default>false</default>
-                    <label>No</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>BSPlink_code__c</fullName>
         <externalId>false</externalId>
         <label>BSPlink code</label>
@@ -5832,6 +6123,44 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Business_City__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>City of the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business City</label>
+        <referenceTo>IATA_ISO_City__c</referenceTo>
+        <relationshipLabel>Accounts with Business City</relationshipLabel>
+        <relationshipName>Accounts_with_Billing_City</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Business_Postal_Code__c</fullName>
+        <description>Postal Code for the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business Postal Code</label>
+        <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_Street__c</fullName>
+        <description>Street of the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business Street</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>CAMP_Agreement__c</fullName>
@@ -6040,6 +6369,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Aircraft Manufacturer</label>
                 </value>
                 <value>
+                    <fullName>Airline Alliance</fullName>
+                    <default>false</default>
+                    <label>Airline Alliance</label>
+                </value>
+                <value>
                     <fullName>Airline Global Card Acquirer</fullName>
                     <default>false</default>
                     <label>Airline Global Card Acquirer</label>
@@ -6083,6 +6417,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <fullName>Banking Service</fullName>
                     <default>false</default>
                     <label>Banking Service</label>
+                </value>
+                <value>
+                    <fullName>Box Office</fullName>
+                    <default>false</default>
+                    <label>Box Office</label>
                 </value>
                 <value>
                     <fullName>Bus Line</fullName>
@@ -6130,6 +6469,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Consultancy Firm</label>
                 </value>
                 <value>
+                    <fullName>Coordinator</fullName>
+                    <default>false</default>
+                    <label>Coordinator</label>
+                </value>
+                <value>
                     <fullName>Courier</fullName>
                     <default>false</default>
                     <label>Courier</label>
@@ -6173,6 +6517,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <fullName>General Aviation</fullName>
                     <default>false</default>
                     <label>General Aviation</label>
+                </value>
+                <value>
+                    <fullName>General Public</fullName>
+                    <default>false</default>
+                    <label>General Public</label>
                 </value>
                 <value>
                     <fullName>Global Distribution System</fullName>
@@ -6302,7 +6651,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <value>
                     <fullName>Non-IATA Cargo Agent</fullName>
                     <default>false</default>
-                    <label>Non-IATA Cargo Agent</label>
+                    <label>Non-IATA Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>Non-IATA Passenger Agent</fullName>
@@ -6330,9 +6679,9 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Other Private Sector Association</label>
                 </value>
                 <value>
-                    <fullName>Park</fullName>
+                    <fullName>Park (Theme Park)</fullName>
                     <default>false</default>
-                    <label>Park</label>
+                    <label>Park (Theme Park)</label>
                 </value>
                 <value>
                     <fullName>Passenger and Cargo</fullName>
@@ -6355,6 +6704,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Processor</label>
                 </value>
                 <value>
+                    <fullName>Provider</fullName>
+                    <default>false</default>
+                    <label>Provider</label>
+                </value>
+                <value>
                     <fullName>Publishing</fullName>
                     <default>false</default>
                     <label>Publishing</label>
@@ -6375,6 +6729,16 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Security</label>
                 </value>
                 <value>
+                    <fullName>Sightseeing</fullName>
+                    <default>false</default>
+                    <label>Sightseeing</label>
+                </value>
+                <value>
+                    <fullName>Student</fullName>
+                    <default>false</default>
+                    <label>Student</label>
+                </value>
+                <value>
                     <fullName>System Solutions Provider</fullName>
                     <default>false</default>
                     <label>System Solutions Provider</label>
@@ -6390,9 +6754,14 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Tour Operator</label>
                 </value>
                 <value>
-                    <fullName>Training Centre</fullName>
+                    <fullName>Training Center</fullName>
                     <default>false</default>
-                    <label>Training Centre</label>
+                    <label>Training Center</label>
+                </value>
+                <value>
+                    <fullName>Transfer Service</fullName>
+                    <default>false</default>
+                    <label>Transfer Service</label>
                 </value>
                 <value>
                     <fullName>Travel Agency Association</fullName>
@@ -6407,18 +6776,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>IATA</controllingFieldValue>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>IATA Cargo Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>IATA</controllingFieldValue>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <valueName>IATA Head Office</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>IATA</controllingFieldValue>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <valueName>IATA Local office</valueName>
             </valueSettings>
             <valueSettings>
@@ -6434,7 +6795,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValue>Airline Supplier</controllingFieldValue>
                 <controllingFieldValue>Association</controllingFieldValue>
                 <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <controllingFieldValue>Education</controllingFieldValue>
+                <controllingFieldValue>Training</controllingFieldValue>
                 <controllingFieldValue>Equipment Manufacturer</controllingFieldValue>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <controllingFieldValue>General Sales Agent</controllingFieldValue>
@@ -6490,6 +6851,22 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <valueName>Railway Line</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Non-Airline Transportation</controllingFieldValue>
+                <valueName>Sightseeing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Non-Airline Transportation</controllingFieldValue>
+                <valueName>Tour Operator</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Non-Airline Transportation</controllingFieldValue>
+                <valueName>Transfer Service</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Recreational</controllingFieldValue>
+                <valueName>Box Office</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Recreational</controllingFieldValue>
                 <valueName>Casino</valueName>
             </valueSettings>
@@ -6503,21 +6880,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Recreational</controllingFieldValue>
-                <valueName>Park</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <valueName>Airline Point of Sale</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>CASS Associate</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Courier</valueName>
+                <valueName>Park (Theme Park)</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
@@ -6525,41 +6888,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <valueName>ERSP Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>General Sales Agent</controllingFieldValue>
-                <valueName>GSA General Sales Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <controllingFieldValue>General Sales Agent</controllingFieldValue>
-                <valueName>GSSA Cargo</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Handling Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <valueName>IATA Passenger Sales Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <valueName>IATA Regional Office</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>General Sales Agent</controllingFieldValue>
-                <valueName>IBCS consolidator</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Import Agent</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
@@ -6567,16 +6896,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Non-IATA Cargo Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <valueName>Non-IATA Passenger Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <valueName>Non-IATA Travel Agent</valueName>
             </valueSettings>
             <valueSettings>
@@ -6584,8 +6903,12 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <valueName>TIDS Agent</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <valueName>Tour Operator</valueName>
+                <controllingFieldValue>General Public</controllingFieldValue>
+                <valueName>General Public</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>General Public</controllingFieldValue>
+                <valueName>Student</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Accommodation</controllingFieldValue>
@@ -6661,6 +6984,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Association</controllingFieldValue>
+                <valueName>Airline Alliance</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Association</controllingFieldValue>
                 <valueName>Freight Forwarder Association</valueName>
             </valueSettings>
             <valueSettings>
@@ -6676,12 +7003,44 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <valueName>Travel Agency Association</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Education</controllingFieldValue>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>CASS Associate</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Courier</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Handling Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>IATA Cargo Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Import Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Non-IATA Cargo Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Training</controllingFieldValue>
                 <valueName>Academic/Research Body</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Education</controllingFieldValue>
-                <valueName>Training Centre</valueName>
+                <controllingFieldValue>Training</controllingFieldValue>
+                <valueName>Coordinator</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Training</controllingFieldValue>
+                <valueName>Provider</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Training</controllingFieldValue>
+                <valueName>Training Center</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Equipment Manufacturer</controllingFieldValue>
@@ -6714,6 +7073,14 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <valueName>Payment Provider</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>General Sales Agent</controllingFieldValue>
+                <valueName>GSA General Sales Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>General Sales Agent</controllingFieldValue>
+                <valueName>GSSA Cargo</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
@@ -9408,6 +9775,46 @@ OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;
                     <default>false</default>
                     <label>Other</label>
                 </value>
+                <value>
+                    <fullName>Billing city found in another state</fullName>
+                    <default>false</default>
+                    <label>Billing city found in another state</label>
+                </value>
+                <value>
+                    <fullName>Shipping city found in another state</fullName>
+                    <default>false</default>
+                    <label>Shipping city found in another state</label>
+                </value>
+                <value>
+                    <fullName>Billing city not found in our Database</fullName>
+                    <default>false</default>
+                    <label>Billing city not found in our Database</label>
+                </value>
+                <value>
+                    <fullName>Shipping city not found in our Database</fullName>
+                    <default>false</default>
+                    <label>Shipping city not found in our Database</label>
+                </value>
+                <value>
+                    <fullName>Billing Address not found by address doctor</fullName>
+                    <default>false</default>
+                    <label>Billing Address not found by address doctor</label>
+                </value>
+                <value>
+                    <fullName>Shipping Address not found by address doctor</fullName>
+                    <default>false</default>
+                    <label>Shipping Address not found by address doctor</label>
+                </value>
+                <value>
+                    <fullName>Billing city found in another country</fullName>
+                    <default>false</default>
+                    <label>Billing city found in another country</label>
+                </value>
+                <value>
+                    <fullName>Shipping city found in another country</fullName>
+                    <default>false</default>
+                    <label>Shipping city found in another country</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>3</visibleLines>
@@ -10363,6 +10770,32 @@ WSPN-Worldspan</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Geoname_Billing_City__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Geoname Billing City</label>
+        <referenceTo>IATA_ISO_City__c</referenceTo>
+        <relationshipLabel>Accounts with this Billing City</relationshipLabel>
+        <relationshipName>Accounts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Geoname_Shipping_City__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Geoname Shipping City</label>
+        <referenceTo>IATA_ISO_City__c</referenceTo>
+        <relationshipLabel>Accounts with this Shipping City</relationshipLabel>
+        <relationshipName>AccountsShipping</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Give_SIS_Membership__c</fullName>
         <description>Allow ISS portal users under this account to access to Join SIS e-Invoicing application</description>
         <externalId>false</externalId>
@@ -10393,6 +10826,15 @@ WSPN-Worldspan</inlineHelpText>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Global_ID__c</fullName>
+        <description>global unique identifier</description>
+        <displayFormat>001{0000000000}</displayFormat>
+        <externalId>true</externalId>
+        <label>Global ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
     </fields>
     <fields>
         <fullName>Guaranteed_amount__c</fullName>
@@ -13194,6 +13636,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         </valueSet>
     </fields>
     <fields>
+        <fullName>Is_parent_IATA_airline_member__c</fullName>
+        <description>If the Parent field Airline Member exists and it&apos;s different from the record, return false. This is used on the Account trigger to set the IATA_Member__c field for the accounts.</description>
+        <externalId>false</externalId>
+        <formula>OR(ParentId == null , Parent.IATA_Member__c == IATA_Member__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA airline member check</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_your_firm_handling_Dangerous_Goods__c</fullName>
         <externalId>false</externalId>
         <label>* Is your firm handling Dangerous Goods?</label>
@@ -15395,6 +15847,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     </fields>
     <fields>
         <fullName>SIS_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
         <description>Used by SIS team to store the SIS ID for integration purposes</description>
         <externalId>false</externalId>
         <label>SIS ID</label>
@@ -15403,7 +15856,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
-        <unique>false</unique>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>SIS_Member_Code__c</fullName>
@@ -15681,16 +16134,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <label>Association</label>
                 </value>
                 <value>
-                    <fullName>Cargo Agent</fullName>
-                    <default>false</default>
-                    <label>Cargo Agent</label>
-                </value>
-                <value>
-                    <fullName>Education</fullName>
-                    <default>false</default>
-                    <label>Education</label>
-                </value>
-                <value>
                     <fullName>Equipment Manufacturer</fullName>
                     <default>false</default>
                     <label>Equipment Manufacturer</label>
@@ -15699,6 +16142,16 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>Financial Institution</fullName>
                     <default>false</default>
                     <label>Financial Institution</label>
+                </value>
+                <value>
+                    <fullName>Cargo Agent</fullName>
+                    <default>false</default>
+                    <label>Freight Forwarder</label>
+                </value>
+                <value>
+                    <fullName>General Public</fullName>
+                    <default>false</default>
+                    <label>General Public</label>
                 </value>
                 <value>
                     <fullName>General Sales Agent</fullName>
@@ -15744,6 +16197,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>Recreational</fullName>
                     <default>false</default>
                     <label>Recreational</label>
+                </value>
+                <value>
+                    <fullName>Training</fullName>
+                    <default>false</default>
+                    <label>Training</label>
                 </value>
                 <value>
                     <fullName>Travel Agent</fullName>
@@ -17992,7 +18450,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>1</fullName>
+                    <fullName>NDC</fullName>
                     <default>false</default>
                     <label>TIDS for NDC</label>
                 </value>
@@ -23026,6 +23484,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <columns>ACCOUNT.PHONE1</columns>
         <columns>ACCOUNT.TYPE</columns>
         <columns>CORE.USERS.ALIAS</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>ACCOUNT.RECORDTYPE</field>
@@ -25983,6 +26442,18 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <group>IATAGulfArea</group>
             <group>IDFSAfricaMERegionalOffice</group>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Org_Account_Hierarchy</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>ACCOUNT.INDUSTRY</columns>
+        <columns>ACCOUNT.ADDRESS1_CITY</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <label>Org_Account_Hierarchy</label>
     </listViews>
     <listViews>
         <fullName>OthersuppliersEurope</fullName>
@@ -30085,17 +30556,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -33794,7 +34254,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35683,17 +36143,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -35951,7 +36400,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Park</fullName>
+                <fullName>Park%C2%A0%28Theme Park%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35999,7 +36448,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Training Centre</fullName>
+                <fullName>Training Center</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -39362,10 +39811,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
@@ -39407,6 +39852,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Recreational</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -41086,7 +41535,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43031,17 +43480,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -45447,10 +45885,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
@@ -45488,6 +45922,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Recreational</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -47175,7 +47613,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -49112,17 +49550,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -53175,7 +53602,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -55147,17 +55574,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -55415,7 +55831,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Park</fullName>
+                <fullName>Park%C2%A0%28Theme Park%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -55463,7 +55879,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Training Centre</fullName>
+                <fullName>Training Center</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -60507,10 +60923,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
@@ -60552,6 +60964,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Recreational</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -62239,7 +62655,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -64544,17 +64960,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -68257,7 +68662,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -70284,17 +70689,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -70540,7 +70934,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Park</fullName>
+                <fullName>Park%C2%A0%28Theme Park%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -70584,7 +70978,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Training Centre</fullName>
+                <fullName>Training Center</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -75549,10 +75943,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
@@ -75594,6 +75984,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Recreational</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -77281,7 +77675,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77953,7 +78347,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <recordTypes>
         <fullName>Others</fullName>
         <active>true</active>
-        <description>The new record type for TIESS, Non IATA agents, Partners - NEW data model</description>
+        <description>Use only for non-airline, non-agency accounts, that you have verified.</description>
         <label>Others</label>
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
@@ -79526,17 +79920,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -79786,7 +80169,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Park</fullName>
+                <fullName>Park%C2%A0%28Theme Park%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -79830,7 +80213,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Training Centre</fullName>
+                <fullName>Training Center</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -82451,10 +82834,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
@@ -82496,6 +82875,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Recreational</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -83359,7 +83742,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -83891,7 +84274,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <recordTypes>
         <fullName>Standard_Account</fullName>
         <active>true</active>
-        <description>New Record Type to be used for standard account</description>
+        <description>Use for all other accounts.</description>
         <label>Standard Account</label>
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
@@ -85468,17 +85851,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -85505,6 +85877,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Aircraft Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Alliance</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -85537,6 +85913,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Banking Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Box Office</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -85576,11 +85956,19 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Coordinator</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Courier</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Cruise Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -85616,6 +86004,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>General Public</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
@@ -85640,7 +86032,23 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA Head Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Local office</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Regional Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATAN Passenger Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -85708,11 +86116,15 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Other Equipment Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Park</fullName>
+                <fullName>Park%C2%A0%28Theme Park%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -85732,6 +86144,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Publishing</fullName>
                 <default>false</default>
             </values>
@@ -85748,6 +86164,14 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Sightseeing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Student</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>System Solutions Provider</fullName>
                 <default>false</default>
             </values>
@@ -85760,7 +86184,11 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Training Centre</fullName>
+                <fullName>Training Center</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transfer Service</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -88845,10 +89273,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
@@ -88890,6 +89314,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Recreational</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -89753,7 +90181,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -91945,17 +92373,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -92213,7 +92630,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Park</fullName>
+                <fullName>Park%C2%A0%28Theme Park%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -92261,7 +92678,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Training Centre</fullName>
+                <fullName>Training Center</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -97305,10 +97722,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
@@ -97350,6 +97763,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Recreational</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -99037,7 +99454,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -99895,9 +100312,18 @@ $Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c
     <validationRules>
         <fullName>Airline_HO_Name</fullName>
         <active>true</active>
-        <description>You are not allowed to change the field &quot;Account Name&quot;.</description>
-        <errorConditionFormula>ISCHANGED(Name) &amp;&amp;  RecordType.DeveloperName  = &apos;IATA_Airline&apos;</errorConditionFormula>
-        <errorDisplayField>Is_your_firm_handling_Dangerous_Goods__c</errorDisplayField>
+        <description>You are not allowed to change the field &quot;Account Name&quot;. The only Exception is if you are also changing one of the following:Legal_name__c,TradeName__c,Name_on_AOC__c. This assignment logic is done via Account Trigger.</description>
+        <errorConditionFormula>AND (	ISCHANGED(Name) ,
+		RecordType.DeveloperName  = &apos;IATA_Airline&apos;,
+		NOT(
+			OR(
+				ISCHANGED(Legal_name__c),
+				ISCHANGED(TradeName__c),
+				ISCHANGED(Name_on_AOC__c)
+			)
+		)
+	)</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
         <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
     </validationRules>
     <validationRules>
@@ -99916,16 +100342,17 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
     <validationRules>
         <fullName>Airline_HQ_Account_Type</fullName>
         <active>true</active>
-        <description>For Airline HQ only the Account Management Team can update the Account Type field</description>
+        <description>For Airline HQ only the Account Management Team can update the Account Type and Website field</description>
         <errorConditionFormula>AND(
- RecordType.DeveloperName=&apos;IATA_Airline&apos;,
- ISCHANGED(Account_Type__c),
- NOT(CONTAINS($Profile.Name, &quot;Developer&quot;)),
- NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)),
- NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
+RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+OR(
+ISCHANGED(Account_Type__c),
+ISCHANGED(Website)
+),
+NOT(CONTAINS($Profile.Name, &quot;System Administrator - automated processes&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
 )</errorConditionFormula>
-        <errorDisplayField>Account_Type__c</errorDisplayField>
-        <errorMessage>For Airline HQ, only the Account Management Team can update the Account Type field</errorMessage>
+        <errorMessage>For accounts with record type AL HQ, only the Account Management Team can update the content of the following fields: Account Type and Website</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Airline_HQ_IATA_Membership_Status_1</fullName>
@@ -99948,14 +100375,14 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
         <active>true</active>
         <description>Only airlines can be IATA members.</description>
         <errorConditionFormula>AND(
-	NOT(ISNEW()),
-	OR(
-		RecordType.DeveloperName=&apos;IATA_Airline&apos;,
-		RecordType.DeveloperName=&apos;Operator&apos;
-	),
-	ISCHANGED(Membership_status__c),
-	$Permission.Airline_HQ_MER_Membership,
-	NOT(ISPICKVAL(Sector__c,&quot;Airline&quot;))
+NOT(ISNEW()),
+OR(
+RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+RecordType.DeveloperName=&apos;Operator&apos;
+),
+$Permission.Airline_HQ_MER_Membership,
+NOT(ISPICKVAL(Sector__c,&apos;Airline&apos;)),
+NOT(ISPICKVAL(Membership_status__c,&apos;Non-IATA member&apos;))
 )</errorConditionFormula>
         <errorDisplayField>Membership_status__c</errorDisplayField>
         <errorMessage>Only airlines can be IATA members.</errorMessage>
@@ -99991,8 +100418,7 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
 		ISCHANGED(AOC_Expiry_Date__c),
 		ISCHANGED(Legal_name__c),
 		ISCHANGED(Area_of_Operation__c),
-		ISCHANGED(Membership_SITA__c),
-		ISCHANGED(MITA_Member__c)
+		ISCHANGED(Membership_SITA__c)
 	)
 )</errorConditionFormula>
         <errorMessage>The following fields can by updated only by the daily ACLI-SF process:
@@ -101205,5 +101631,16 @@ userid={!User.Id}</url>
         <openType>sidebar</openType>
         <page>pi__PardotAccountSendToPardot</page>
         <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>zqu__New_Quote</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>New Quote</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>{!URLFOR($Site.BaseRequestUrl+&apos;/apex/zqu__QuoteOption&apos;, null)}?crmAccountId={!Account.Id}&amp;retUrl=/{!Account.Id}</url>
     </webLinks>
 </CustomObject>

@@ -53,6 +53,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>End_Date__c</fullName>
         <description>End Date</description>
@@ -145,7 +146,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>99705030003</value>
+            <value>3430257</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -171,6 +172,24 @@
             <value>AMS 2 MDM - AgencyDetails</value>
         </filters>
         <label>AMS - Error</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>AMS_Error_Sent</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Operation__c</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Log__c</columns>
+        <columns>start_date__c</columns>
+        <columns>End_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Error</value>
+        </filters>
+        <label>AMS Error Sent</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -252,7 +271,7 @@
         <filters>
             <field>start_date__c</field>
             <operation>equals</operation>
-            <value>4/23/2019 12:00 AM</value>
+            <value>8/1/2019 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>

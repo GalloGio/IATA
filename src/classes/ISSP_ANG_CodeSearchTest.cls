@@ -7,12 +7,14 @@ private class ISSP_ANG_CodeSearchTest {
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
                 Name = 'Portugal_test',
                 ISO_Code__c = 'PT',
-                ANG_Enable_NewGen__c = true
+                ANG_Enable_NewGen__c = true,
+                BSP_Country_free_text__c='PT'
             );
 
         IATA_ISO_Country__c switzerland = new IATA_ISO_Country__c (
                 Name = 'Switzerland_test',
-                ISO_Code__c = 'HE'
+                ISO_Code__c = 'HE',
+                BSP_Country_free_text__c='HE'
             );
 
         insert portugal;
@@ -87,6 +89,22 @@ private class ISSP_ANG_CodeSearchTest {
 
         insert a3;
 
+        Account a4 = new Account (
+                name = 'Travel agency (child)',
+                RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+                ParentId = a3.id,
+                IATA_ISO_Country__c = portugal.id,
+                Sector__c = Ams_Utils.SECTOR_PASSENGER,
+                Status__c = Ams_Utils.ACC_S9_APPROVED,
+                Location_type__c = AMS_Utils.BR,
+                ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+                OwnerId = UserInfo.getUserId(),
+                IATACode__c = '87654321',
+                Location_Class__c = 'P'
+            );
+
+        insert a4;
+
         Agency_Authorization__c aa = new Agency_Authorization__c (
                 ANG_FormOfPayment_ID__c = 'CC',
                 Account__c = a1.id,
@@ -126,7 +144,26 @@ private class ISSP_ANG_CodeSearchTest {
         services.add( new  Services_Rendered__c(Services_Rendered_Status__c = 'Active',Services_Rendered_Type__c = 'BSP Participation',Services_Rendered_to_Airline__c = headquarter.id, Services_Rendered_By__c = headquarter.id));
      
         insert services;
+        
+        ANG_RHC_Information__c rhcInfoForPT = new ANG_RHC_Information__c(
+            ANG_CashCondition__c = true,
+            ANG_AccountId__c = a1.id
+        );
+        insert rhcInfoForPT;
 
+        ANG_RHC_Information__c rhcInfoForAE = new ANG_RHC_Information__c(
+            ANG_CashCondition__c = true,
+            ANG_AccountId__c = a4.id
+        );
+        insert rhcInfoForAE;
+        
+
+        IATA_Code_Search_Special_Countries__mdt sCountry = new IATA_Code_Search_Special_Countries__mdt(
+            Remittance_Holding_Capacity_Value__c = 'test',
+            DeveloperName = 'Portugal_test',
+            Label = 'Portugal_test'
+            );
+        
     }
 
     @isTest static void test1() {

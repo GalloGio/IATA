@@ -24,11 +24,12 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String IEP_BANK_ACCOUNT_SETUP = 'IEP.BANK.ACCOUNT.SETUP';
     public static String IEP_MODEL_A_ACCOUNT_SETUP = 'IEP.MODEL.A.ACCOUNT.SETUP';
     public static String IEP_MODEL_B_ACCOUNT_SETUP = 'IEP.MODEL.B.ACCOUNT.SETUP';
+    public static String IEP_MODEL_B_PLUS_ACCOUNT_SETUP = 'IEP.MODEL.B.PLUS.ACCOUNT.SETUP';
     public static string OPTINOPTOUT = 'ANG.FS.OPTINOUT';
     public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
 
 
-    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP, NEWVR_PV};
+    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP, IEP_MODEL_B_PLUS_ACCOUNT_SETUP, NEWVR_PV};
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
 
@@ -384,17 +385,21 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static void fillNewAEFieldsFromParent(String parentId, String accountId, String accreditationId){
 
         //Let's get the parent account
-        Account acct = [Select Id, ANG_Accreditation_Model__c, Location_type__c, Remittance_frequency__c, Parent.Remittance_frequency__c from Account where Id = :parentId];
+        Account acct = [SELECT Id, ANG_Accreditation_Model__c, Location_type__c, Remittance_frequency__c, Parent.Remittance_frequency__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c
+                        FROM Account WHERE Id = :parentId];
 
         AMS_Pax_Accreditation_Form__c accredObject = new AMS_Pax_Accreditation_Form__c(Id =accreditationId);
 
-        if(parentId == accountId && acct.Location_Type__c == 'AE'){
-            accredObject.Remittance_frequency__c = acct.Parent.Remittance_frequency__c;
-        }
-        else
-            accredObject.Remittance_frequency__c = acct.Remittance_frequency__c;
+        if(!acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c){
 
-        update accredObject;
+            if(parentId == accountId && acct.Location_Type__c == 'AE'){
+                accredObject.Remittance_frequency__c = acct.Parent.Remittance_frequency__c;
+            }
+            else
+                accredObject.Remittance_frequency__c = acct.Remittance_frequency__c;
+
+            update accredObject;
+        }
 
         Account acctChild = new Account(Id = accountId);
         acctChild.ANG_Accreditation_Model__c = acct.ANG_Accreditation_Model__c;

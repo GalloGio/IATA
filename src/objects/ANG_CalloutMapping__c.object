@@ -116,6 +116,18 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>fieldValue__c</fullName>
+        <description>Create the events only if the value of the field of the object is equal to the specified value</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Create the events only if the value of the field of the object is equal to the specified value</inlineHelpText>
+        <label>Trigger when Field Equal To</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>Newgen ISS Callout Mapping</label>
     <listViews>
         <fullName>All</fullName>
@@ -124,6 +136,7 @@
         <columns>Action__c</columns>
         <columns>Type__c</columns>
         <columns>Field__c</columns>
+        <columns>fieldValue__c</columns>
         <columns>Event_Type__c</columns>
         <columns>CalloutClass__c</columns>
         <columns>client_id__c</columns>

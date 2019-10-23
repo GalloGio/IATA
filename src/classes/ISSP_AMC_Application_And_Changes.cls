@@ -38,27 +38,18 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 
 					}
 					else {
-						if(eachExistingCase.Status != 'Closed'){
+						if(eachExistingCase.Status != 'Closed' && eachExistingCase.Status != 'Closed_Rejected'){
 							
 							caseDesignatorApplicationId = eachExistingCase.Id;
 						}
 						
-					}
-				} else if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_LOCATION_FORM) {
-					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
-						locationCodeApplicationId = participation.Id;
-					}
-					else {
-						if(eachExistingCase.Status != 'Closed'){
-							caseLocationCodeApplicationId = eachExistingCase.Id;
-						}
 					}
 				} else if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_BAGGAGE_FORM) {
 					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
 						baggageApplicationId = participation.Id;
 					}
 					else {
-						if(eachExistingCase.Status != 'Closed'){
+						if(eachExistingCase.Status != 'Closed' && eachExistingCase.Status != 'Closed_Rejected'){
 							
 							caseBaggageApplicationId = eachExistingCase.Id;
 						}
@@ -68,7 +59,7 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 						accountingOrPrefixApplicationId = participation.Id;
 					}
 					else {
-						if(eachExistingCase.Status != 'Closed'){
+						if(eachExistingCase.Status != 'Closed' && eachExistingCase.Status != 'Closed_Rejected'){
 							caseAccountingOrPrefixApplicationId = eachExistingCase.Id;
 						}
 					}
@@ -158,7 +149,7 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 
 
 		if(isDesignator == true){
-          	caseUrl = '/ISSP_AMC_Airline_Designators?participationId= '+ designatorApplicationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';	
+          	caseUrl = '/ISSP_AMC_Airline_Designators?participationId='+ designatorApplicationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';	
 		}
 		if(isAccountingPrefix == true){
 			caseUrl = '/ISSP_AMC_Accounting_Or_Prefix_Code?participationId=' + accountingOrPrefixApplicationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';

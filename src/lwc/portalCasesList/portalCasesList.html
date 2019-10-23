@@ -1,0 +1,145 @@
+<template>
+    <lightning-layout multiple-rows class="slds-m-top_x-large" pull-to-boundary="medium" horizontal-align="spread">
+        <!-- Search bar and buttons -->
+        <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow" large-device-size="6" medium-device-size="6">
+            <div class="bottomLightGrayBorder slds-m-around_small inputFilter">
+                <img src={searchIconUrl}>
+                <lightning-input name="newRecipientTextInput"
+                    placeholder={label.CSP_SearchingOn}
+                    class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchStyle"
+                    onkeyup={handleKeyUp}
+                    onchange={handleInputChange}
+                    value={filteringObject.searchText}>
+                </lightning-input>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-text-align_right slds-p-around_xx-small" size="12" flexibility="auto" large-device-size="6" medium-device-size="6">
+            <lightning-layout-item class="slds-text-align_right noPadding" size="3" flexibility="auto" small-device-size="3" medium-device-size="3">
+                <!-- FILTER -->
+                <button if:true={filtered} class="slds-button slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
+                    {label.CSP_Filtered}<img style="padding-left: 7rem;" src={filteredIconUrl}>
+                </button>
+                <button if:false={filtered} class="slds-button slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
+                    {label.CSP_Filter}<img style="padding-left: 7rem;" src={filterIconUrl}>
+                </button>
+            </lightning-layout-item>
+            <!-- LIST VIEW -->
+            <lightning-layout-item class="slds-text-align_right noPadding" size="3" flexibility="auto" small-device-size="3" medium-device-size="3">    
+                <lightning-button label={label.CSP_MyCases} class="containedButton slds-m-left_small" onclick={changeToUserCasesTableView} if:true={viewNormalUserCasesTableViewButton}></lightning-button>
+                <lightning-button label={label.CSP_CompanyCases} class="containedButton slds-m-left_small" onclick={changeToAdminCasesTableView} if:true={viewAdminUserCasesTableViewButton}></lightning-button>
+            </lightning-layout-item>
+        </lightning-layout-item>
+    </lightning-layout>
+
+    <!-- Cases list datatable -->
+    <div class="customCardWhite">
+        <div class="slds-m-around_medium">
+            <div if:true={loading} class="spinnerContainer">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+            <div if:false={loading}>
+                <div if:true={viewResults} class="casesListWrapper">
+                    <lightning-datatable 
+                        key-field="Id" 
+                        data={casesList} 
+                        columns={columns} 
+                        hide-checkbox-column min-column-width="140" class="casesListTableClass">
+                    </lightning-datatable>
+                    <div class="endOfTableCases"></div>
+                    <div if:true={loadingMoreResults} class="spinnerContainer">
+                        <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
+                    </div>
+                </div>
+                <div if:false={viewResults}>
+                    <c-portal-no-cases-banner></c-portal-no-cases-banner>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div if:true={viewCasesFiltersModal}>
+        <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+            <div class="modal">
+                <div class="customPopupInteriorHalfScreenCentered">
+                    <!-- Popup Header -->
+                    <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
+                        <span class="modalTitle">{label.CSP_Filter}</span>
+                        <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeCasesFilterModal}>
+                            <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                                onclick={closeCasesFilterModal}></lightning-icon>
+                        </span>
+                    </div>
+                    <div class="customWhiteBackground">
+                        <lightning-layout multiple-rows class="slds-p-horizontal_medium" pull-to-boundary="medium" horizontal-align="spread">
+
+                            <!-- Country pick -->
+                            <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow">
+                                <div class="slds-p-horizontal_large slds-p-vertical_medium" >
+                                    <lightning-combobox
+                                        class="cursorPointerComboBox text-xxsmall customPickList "
+                                        label={label.CSP_Search_Case_Country} value={filteringObject.casesComponent.caseCountryFilter}
+                                        placeholder=" " options={countryPickOptions}
+                                        onchange={countryPickOnchangeHandler}>
+                                    </lightning-combobox>
+                                </div>
+                            </lightning-layout-item>
+
+                            <!-- Creation Date (from) -->
+                            <lightning-layout-item class="slds-p-around_xx-small" size="6" flexibility="grow">
+                                <div class="slds-p-horizontal_large slds-p-vertical_medium" >
+                                    <lightning-input 
+                                        class="customPickList dateField" 
+                                        type="date" 
+                                        onchange={dateFromOnchangeHandler}
+                                        value={filteringObject.casesComponent.dateFromFilter}
+                                        label={label.CSP_DateFrom}>
+                                    </lightning-input>
+                                </div>
+                            </lightning-layout-item>
+
+                            <!-- Creation Date (to) -->
+                            <lightning-layout-item class="slds-p-around_xx-small" size="6" flexibility="grow">
+                                <div class="slds-p-horizontal_large slds-p-vertical_medium" >
+                                    <lightning-input 
+                                        class="customPickList dateField" 
+                                        type="date" 
+                                        onchange={dateToOnchangeHandler}
+                                        value={filteringObject.casesComponent.dateToFilter}
+                                        label={label.CSP_DateTo}>
+                                    </lightning-input>
+                                </div>  
+                            </lightning-layout-item>
+
+                            <!-- Contacts pick -->
+                            <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow">
+                                <div class="slds-p-horizontal_large slds-p-vertical_medium" if:true={viewContactsFilterPicklist}>
+                                    <lightning-combobox
+                                        class="cursorPointerComboBox text-xxsmall customPickList "
+                                        label={label.ISSP_Contact} value={filteringObject.casesComponent.caseContactFilter}
+                                        placeholder=" " options={contactPickOptions}
+                                        onchange={contactPickOnchangeHandler}>
+                                    </lightning-combobox>
+                                </div>
+                            </lightning-layout-item>
+
+                        </lightning-layout>
+                        <!-- BUTTON -->
+                        <div class="slds-align_absolute-center slds-p-around_large slds-grid slds-wrap topLightGrayBorder" style="text-align: center;">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-button variant="base" label={label.CSP_RemoveAllFilters}
+                                    onclick={resetFilters} class="slds-p-right_small blueCustomButtonLink">
+                                </lightning-button>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-button variant="brand" label={label.CSP_Apply}
+                                    onclick={applyFilters} class="slds-m-right_medium containedButton fullWidth">
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</template>

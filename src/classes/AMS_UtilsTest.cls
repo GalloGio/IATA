@@ -1,7 +1,5 @@
 @isTest
 private class AMS_UtilsTest {
-
-
     @isTest
     static void testEncriptDecript() {
 
@@ -234,7 +232,7 @@ private class AMS_UtilsTest {
         AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id);
         insert OSCAR;
 
-        AMS_OSCAR__c OSCAR2 = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id);
+        AMS_OSCAR__c OSCAR2 = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id, Bank_Guarantee_requested__c= Date.today());
         insert OSCAR2;
 
         Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
@@ -309,11 +307,22 @@ private class AMS_UtilsTest {
 
         List<AMS_OSCAR__c> oscarLst = [SELECT ID, Account__c,AMS_Online_Accreditation__c, Process__c from AMS_OSCAR__c];
 
+        A1.ShippingCountry = 'qweqwe';
+        A1.ShippingState = 'qweqwe';
+        A1.In_a_Airport__c = true;
+        A1.Company_Type__c = 'V';
+        A1.GDS__c = 'ABAC';
+        A1.ANG_Accreditation_Model__c = 'Cashless';
+
+        update A1;
+
         Test.startTest();
 
         AMS_Utils.copyDataToAccount(oscarLst);
 
         Test.stopTest();
+
+        Map<String, String> jsonSpecialChars = AMS_Utils.JsonSpecialChars;
 
     }
 
@@ -701,4 +710,97 @@ private class AMS_UtilsTest {
         AMS_Utils.findGapInRange(1,10,orderedSlotsOccupied);
      }
 
+    @isTest
+    static void customLabelTest() {
+        String result = AMS_Utils.getCustomLabel('');
+        System.assertEquals(result, '');
+
+        result = AMS_Utils.getCustomLabel('AMS_Conga_Merge');
+        System.assertEquals(result, 'Conga Merge');
+    }
+
+    @isTest
+    static void biggestDateTest() {
+        Date d1 = Date.today();
+        Date d2 = Date.today() + 1;
+
+        Date result = AMS_Utils.getBiggestDate(d1, d2);
+        System.assertEquals(result, d2);
+
+        result = AMS_Utils.getBiggestDate(d1, null);
+        System.assertEquals(result, d1);
+
+        result = AMS_Utils.getBiggestDate(null, d2);
+        System.assertEquals(result, d2);
+    }
+
+    @isTest
+    static void notNullTest() {
+        String result = AMS_Utils.notNull('hey');
+        System.assertEquals(result, 'hey');
+
+        result = AMS_Utils.notNull(null);
+        System.assertEquals(result, '');
+    }
+
+    @isTest
+    static void cnsReadableStatusTest() {
+        String result = AMS_Utils.getCNSReadableStatus('0');
+        System.assertEquals(result, 'Terminated');
+
+        result = AMS_Utils.getCNSReadableStatus('2');
+        //System.assertEquals(result, 'Pending');
+
+        result = AMS_Utils.getCNSReadableStatus('9');
+        //System.assertEquals(result, 'Active');
+
+        result = AMS_Utils.getCNSReadableStatus('8');
+    }
+
+    @isTest
+    static void statusDescFromChangeCodeTest() {
+        String result = AMS_Utils.getStatusDescFromChangeCode('NEW');
+        System.assertEquals(result, AMS_Utils.AACC_INPROGRESS);
+
+        result = AMS_Utils.getStatusDescFromChangeCode('FIN');
+        System.assertEquals(result, AMS_Utils.AACC_FINALIZED);
+
+        result = AMS_Utils.getStatusDescFromChangeCode('REC');
+        System.assertEquals(result, AMS_Utils.AACC_RECONSIDERED);
+
+        result = AMS_Utils.getStatusDescFromChangeCode('NWD');
+        System.assertEquals(result, AMS_Utils.AACC_WITHDRAWAL);
+    }
+
+    @isTest
+    static void recIdFromChangeCodeTest() {
+        insert new AMS_ChangeCodes__c(Change_Code__c = 'WWW', 
+                                    Billable__c = true,
+                                    Bulletin_Memo_Text__c = 'meh',
+                                    Reason_Code__c = 'meh',
+                                    Reason_Code_Description__c = 'meh',
+                                    Name = 'WWW',
+                                    Integration_RecId__c = 'm');
+
+        String result = AMS_Utils.getRecIdFromChangeCode('WWW');
+        System.assertEquals(result, 'm');
+
+        result = AMS_Utils.getRecIdFromChangeCode('asdas');
+        System.assertEquals(result, 'C');
+
+        result = AMS_Utils.getRecIdFromIntegrationMatriz('what', 'what');
+        System.assertEquals(result, 'C');
+    }
+
+    @isTest
+    static void decodeAMFromOscarProcessTest() {
+        String result = AMS_Utils.decodeAMFromOscarProcess(AMS_Utils.NEWHELITE, 'value');
+        System.assertEquals(result, AMS_Utils.ACCREDITATIONMODEL_CASHLESS);
+
+        result = AMS_Utils.decodeAMFromOscarProcess(AMS_Utils.NEWHESTANDARD, 'value');
+        System.assertEquals(result, AMS_Utils.ACCREDITATIONMODEL_CASH);
+
+        result = AMS_Utils.decodeAMFromOscarProcess('something', 'value');
+        System.assertEquals(result, 'value');
+    }
 }

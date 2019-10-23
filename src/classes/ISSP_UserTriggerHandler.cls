@@ -43,7 +43,7 @@ public without sharing class ISSP_UserTriggerHandler {
         }
 
         if(contactIdSet.size() > 0){
-            HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, contactIdSet, null);
+            HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, contactIdSet);
         }
         
         setPortalUserName(newUserList);
@@ -122,6 +122,8 @@ public without sharing class ISSP_UserTriggerHandler {
     //TF - SP9-A5
     public static void changeEmailFromContact (Map<Id, String> conEmailMap, Map<Id, String> conFirstNameMap, Map<Id, String> conLastNameMap, Set<Id> conEmailIdSet){
         system.debug('In ISSP_UserTriggerHandler.changeEmailFromContact');
+
+        if(conEmailIdSet.isEmpty()) return;
         
         List <User> userList = [SELECT Id, Email, ContactId, ContactKaviId__c
                                 FROM User 

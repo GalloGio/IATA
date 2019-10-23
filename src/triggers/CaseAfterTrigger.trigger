@@ -65,6 +65,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	Id CaseSAAMId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     Id OscarComRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     Id APCaseRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
+    Id CNSRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CNS_Collection_Process');
 /*Record type*/	
     
     /*Variables*/
@@ -102,6 +103,13 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     /*Maps, Sets, Lists*/
     /***********************************************************************************************************************************************************/
     /*Share trigger code*/
+
+	/** WMO-564 **/
+	if(Trigger.isUpdate) {
+		CaseProcessTypeHelper.processOSCAREffAge(Trigger.new, Trigger.oldMap);
+	}
+	
+
     /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
 	if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete && !CaseChildHelper.noValidationsOnTrgCAseIFAP){
         System.debug('____ [cls CaseAfterTrigger - trgCaseIFAP_AfterInsertDeleteUpdateUndelete]');
@@ -123,6 +131,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		if(!casesToConsider.isEmpty() && (trigger.isUpdate || trigger.isInsert)){
 			
 			Map<Id, List<Case>> casesPerAccount = new Map<Id, List<Case>>();
+			Set<Id> parentInsertedCaseIds = new Set<Id>(); //ACAMBAS - WMO-484
+			List<Case> parentInsertedCasesList = new List<Case>(); //ACAMBAS - WMO-484
 
 			//filter IFAP cases with the correct data and aggregate them per account
 			for(Case c : casesToConsider){
@@ -136,7 +146,43 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 						casesPerAccount.put(c.AccountId, new List<Case>());
 					casesPerAccount.get(c.AccountId).add(c);
 				}
+				//ACAMBAS - WMO-484: Begin
+				if(trigger.isInsert) {
+					parentInsertedCaseIds.add(c.ParentId);
+				}
+				//ACAMBAS - WMO-484: End
 			}
+
+			//ACAMBAS - WMO-484: Begin
+			if(!parentInsertedCaseIds.isEmpty())  {
+				parentInsertedCasesList = [SELECT Id, Deadline_Date__c, BusinessHoursId FROM Case WHERE Id IN :parentInsertedCaseIds AND RecordTypeId = :CNSRecordTypeID];
+			}
+
+			for(Case parentCase : parentInsertedCasesList) {
+				parentCase.Deadline_Date__c = BusinessHours.nextStartDate(parentCase.BusinessHoursId, Date.today().addDays(30)).date();
+			}
+
+			if(!parentInsertedCasesList.isEmpty()) {
+				//update parentInsertedCasesList;
+		        Integer enqueuedJobs=[select count() from asyncApexJob where JobType = 'BatchApex' and status in ('Processing', 'Preparing', 'Queued')];
+		        
+		        if(enqueuedJobs == 0 && !Test.isRunningTest()) {
+		        	System.enqueueJob(new AsyncDML_Util(parentInsertedCasesList, AsyncDML_Util.DML_UPDATE, false));
+		    	}
+		        else {
+		            Datetime now = Datetime.now().addSeconds(3);
+		            String hour = String.valueOf(now.hour());
+		            String min = String.valueOf(now.minute()); 
+		            String ss = String.valueOf(now.second());
+		            String day = String.valueOf(now.day());
+		            String month = String.valueOf(now.month());
+		            String year = String.valueOf(now.year());
+		            //parse to cron expression
+		            String nextFireTime = ss + ' ' + min + ' ' + hour + ' ' + day + ' ' + month + ' ? ' + year;
+		            System.schedule('ScheduledJob ' + String.valueOf(Math.random()), nextFireTime, new AsyncDML_Util_Schedulable(parentInsertedCasesList, AsyncDML_Util.DML_UPDATE, false));
+		        }
+			}
+			//ACAMBAS - WMO-484: End
 
 			if(!casesPerAccount.isEmpty())  {
 				//NewGen agents will handled by the ANG_CaseTriggerHandler, so we filter them out
@@ -794,7 +840,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 /*Trigger.isUpdate*/
 	else if (Trigger.isUpdate) {
 		
-		/*Risk Event Management*/
+		/*Risk Event Management - deprecated according to US NEWGEN-5656
 		List<Id> updatedIFAPS = new List<Id>();
 		for(Case c : Trigger.New){
 			if(c.RecordTypeId == IFAPcaseRecordTypeID && String.isNotBlank(c.Financial_Review_Result__c) && String.isBlank(Trigger.oldMap.get(c.Id).Financial_Review_Result__c)){
@@ -813,7 +859,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			}
 		}
   		
-  		/*Risk Event Management*/
+  		Risk Event Management - deprecated according to US NEWGEN-5656 */
 
         /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate*/
 		if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete){

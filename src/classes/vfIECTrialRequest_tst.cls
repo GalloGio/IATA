@@ -6,7 +6,7 @@
   */
 @isTest(SeeAllData=true)
 private class vfIECTrialRequest_tst {
-	private static zqu__ZProduct__c prod;
+	private static Product2 prod;
 	private static zqu__ProductRatePlan__c ratePlan;
 	private static zqu__ProductRatePlanCharge__c charge;
 	private static Product_Category__c myProdCat;
@@ -15,13 +15,13 @@ private class vfIECTrialRequest_tst {
 	
 	private static void Init(){
         // create dummy Zuora product
-    	prod = IECTestUtil.CreateSampleProduct('Product1');
+    	prod = IECTestUtil.CreateSampleProduct2('Product1');
     	prod.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
     	prod.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
     	insert prod;
     	
     	// create dummy Zuora rate plan
-    	ratePlan = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', true, prod);
+    	ratePlan = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 1', true, prod);
     	ratePlan.zqu__Deleted__c = false;
     	insert ratePlan;
     	
@@ -36,7 +36,7 @@ private class vfIECTrialRequest_tst {
         insert myProdCat;
         
         // create dummy product info
-        myProdInfo = IECTestUtil.CreateSampleProductInfo('My product', myProdCat, prod);
+        myProdInfo = IECTestUtil.CreateSampleProductInfo2('My product', myProdCat, prod);
         insert myProdInfo;
         
         // create dummy rate plan information
@@ -125,7 +125,7 @@ private class vfIECTrialRequest_tst {
 
     static testMethod void TestTrialRequest_Errors() {
     	System.debug('Unit Test: Start: TestTrialRequest_Errors');
-Trial__c trl ;
+		Trial__c trl ;
     	PageReference pgRef = Page.IECTrialRequest;
     	Test.setCurrentPage(pgRef);
     	
@@ -175,17 +175,6 @@ Trial__c trl ;
 	        // Insert a trial record on the contact
 	       IECSubscriptionManager.addTrialSubscription(baseCont.loggedCustomer.RelatedContact.Id, ratePlanInfo.Id);	        		        	
 
-
-
-
-        	
-   				
-	        //ID lclID = baseCont.loggedCustomer.RelatedContact.Id;
-			//contact c = [SELECT ID,EMAIL FROM CONTACT WHERE ID =:lclID limit 1];
-
-			//Throw new transformationException('c.eamil ' + baseCont.loggedCustomer.RelatedContact.Id );	        
-	        // Submit the trial request
-	       
 	        pgCont.activateTrial();
 	         
 	    //   throw new transformationException(' messages from the page ' + ApexPages.getMessages());
@@ -288,13 +277,13 @@ Trial__c trl ;
 	        pgCont.oContact.Tax_1_ID__c = 'Tax1ID';
 	        pgCont.updateContactInfo();
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Tax 2 ID'));
-//*** (Thai) add Test block to fix error "MIXED_DML_OPERATION"
-IECTestUtil.trgPortalUserAfterInserUpdate = true;
-ISSP_UserTriggerHandler.preventTrigger = true;
-Test.startTest();
-	        pgCont.oContact.Tax_2_ID__c = 'Tax2ID';
-	        pgCont.updateContactInfo();
-Test.stopTest();
+			//*** (Thai) add Test block to fix error "MIXED_DML_OPERATION"
+			IECTestUtil.trgPortalUserAfterInserUpdate = true;
+			ISSP_UserTriggerHandler.preventTrigger = true;
+			Test.startTest();
+		        pgCont.oContact.Tax_2_ID__c = 'Tax2ID';
+		        pgCont.updateContactInfo();
+			Test.stopTest();
 	        IFAP_BusinessRulesTest.createIsoCountry();
 	        // Misc Coverage
 	        pgCont.oBillingAddress.ISO_Country__c = ([SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c IN ('EG')])[0].Id;
