@@ -301,6 +301,12 @@ public with sharing class PortalFAQsCtrl {
         @AuraEnabled
         public SObject[] records { get;set; }
     }
+
+    /*
+    * @description Used in Submit for Approval Quick Action on FAQ__kav. Update field Categories according to selected Article Categories.
+    * @params List<Id> articleTypeIds
+    * @return ApexMessageHandling
+    */
     @AuraEnabled
     public static ApexMessageHandling updateArticleCategories(List<Id> articleTypeIds) {
         List<FAQ__kav> lstArticleType =
@@ -343,8 +349,14 @@ public with sharing class PortalFAQsCtrl {
         }
     }
 
+    /*
+    * @description Submit a record for approval.
+    * @params String approvalNameOrId, Id recordId, Id userId, String comments
+    * @return
+    */
     @AuraEnabled
     public static void submitArticleForApproval(String approvalNameOrId, Id recordId, Id userId, String comments) {
+        // Contains generic methods related to Approval Process, which can be used just passing params
         AMS_OSCAR_ApprovalHelper.submit(approvalNameOrId, recordId, userId, comments);
     }
 }
