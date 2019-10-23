@@ -1501,7 +1501,7 @@
 					                      	<div class="col-md-12">
 					                        	<apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies}" escape="false" />
 					                      	</div>
-                      						<apex:commandLink id="addcompany" style="margin-right:5px" onfocus="showNewCompanyDialog();" rendered="{!OR(newForm.AE_separate_Legal_Entity__c != 'No', isMCAccredited)}"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}</apex:commandLink>
+                      						<apex:commandLink id="addcompany" style="margin-right:5px" onfocus="showNewCompanyDialog();" rendered="{!newForm.AE_separate_Legal_Entity__c != 'No'}"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}</apex:commandLink>
 											<apex:outputPanel id="noCompanyInfo">
 												<apex:outputText value="{!$Label.ISSP_AMS_NoC_No_Company_Owners}" styleClass="alert alert-info" rendered="{!OR(AND(newForm.AE_separate_Legal_Entity__c == 'Yes', NOT(isMCAccredited)), AND(OR(amsOfficeType='Branch',newCase.Reason1__c=='New BR Abroad'), List_AgencyCompanies.size==0, isMCAccredited))}" />
 											</apex:outputPanel>  

@@ -75586,7 +75586,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <fullName>ANG_Block_sanity_check</fullName>
         <active>true</active>
         <description>Cannot set sanity check as &quot;Passed&quot; if the &quot;change effective as of&quot; is empty or in the future</description>
-        <errorConditionFormula>TEXT(Process__c)  = &apos;ANG.MAJOR.CHANGES.1.0&apos; &amp;&amp;  TEXT(STEP6__c) = &apos;Passed&apos;  &amp;&amp;  (Change_effective_as_of__c &gt;  TODAY() || ISBLANK(Change_effective_as_of__c))</errorConditionFormula>
+        <errorConditionFormula>OR(ISPICKVAL(Process__c, &apos;ANG.CONVERT.ST.TO.MC&apos;), ISPICKVAL(Process__c, &apos;ANG.MAJOR.CHANGES.1.0&apos;)) &amp;&amp; TEXT(STEP6__c) = &apos;Passed&apos;  &amp;&amp;  (Change_effective_as_of__c &gt;  TODAY() || ISBLANK(Change_effective_as_of__c))</errorConditionFormula>
         <errorMessage>Cannot set sanity check as &quot;Passed&quot; if the &quot;Change effective as of&quot; is empty or in the future</errorMessage>
     </validationRules>
     <validationRules>

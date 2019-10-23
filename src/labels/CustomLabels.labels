@@ -21748,6 +21748,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Please select who should be the Financial Administrator for your Agency.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Validation_MC_Conversion_Countries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Validation MC Conversion Countries</shortDescription>
+        <value>Please select agencies from at least 2 BSPs</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Validation_Percent_Ownership</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -22807,6 +22814,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP ANG Email HE Cashless Subject</shortDescription>
         <value>Agency Accreditation Head Entity GoLite Draft Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Email_HE_Multicountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Email HE Multicountry Subject</shortDescription>
+        <value>Agency Accreditation Head Entity GoGlobal Draft Application</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Enabel_Credit_Card_Codes</fullName>

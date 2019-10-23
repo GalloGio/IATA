@@ -6,7 +6,9 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 
 	global List<ANG_ConversionHelper.ConversionBatchItem> resultItems;
 
-	global Map<Id,Id> accountAccreditationFormsMap;
+	global Map<Id,AMS_Pax_Accreditation_Form__c> accountAccreditationFormsMap;
+	Case newCaseMC = null;
+	Account acct = null;
 
 	global ANG_MulticountryOscarCreatorBatch(Set<Id> accountIds) { 
 
@@ -30,10 +32,10 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 	
 	global void fetchAccreditationAreas(){
 
-		accountAccreditationFormsMap = new Map<Id,Id>();
+		accountAccreditationFormsMap = new Map<Id,AMS_Pax_Accreditation_Form__c>();
 
-		for(AMS_Pax_Accreditation_Form__c accr: [Select Id,ISSP_Branch_AccountId__c  from AMS_Pax_Accreditation_Form__c where ISSP_Branch_AccountId__c in:accountIds]){
-			accountAccreditationFormsMap.put(accr.ISSP_Branch_AccountId__c,accr.Id);
+		for(AMS_Pax_Accreditation_Form__c accr: [Select Id,ISSP_Branch_AccountId__c, (Select id,Case__c,name from AmazonFiles__r) from AMS_Pax_Accreditation_Form__c where ISSP_Branch_AccountId__c in:accountIds]){
+			accountAccreditationFormsMap.put(accr.ISSP_Branch_AccountId__c,accr);
 		}
 
 	}
@@ -46,9 +48,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 	
 		System.SavePoint sp = Database.setSavepoint();
 
-		Account acct = null;
 		AMS_OSCAR__c oscar = null;
-		Case newCaseMC = null;
 		AMS_Pax_Accreditation_Form__c stagingArea = null;
 		
 		try{
@@ -93,7 +93,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 				
 				System.debug('Origin is Portal and has already an accreditation.');
 
-				stagingArea = new AMS_Pax_Accreditation_Form__c(Id=accountAccreditationFormsMap.get(acct.Id));
+				stagingArea = new AMS_Pax_Accreditation_Form__c(Id=accountAccreditationFormsMap.get(acct.Id).Id);
 				stagingArea.SAAM_Case__c = newCaseMC.Id;
 				update stagingArea;
 
@@ -129,7 +129,24 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 	}
 	
 	global void finish(Database.BatchableContext BC) {
-		
+
+		if(accountAccreditationFormsMap.get(acct.Id).AmazonFiles__r != null){
+			Set<String> attatchmentsNameToTransfer = new Set<String>();
+			List<WrapperAttach> attatchments = WrapperAttach.getListAttachments(accountAccreditationFormsMap.get(acct.Id).AmazonFiles__r.get(0).case__c);
+
+			for(AmazonFile__c a : accountAccreditationFormsMap.get(acct.Id).AmazonFiles__r){
+				attatchmentsNameToTransfer.add(a.name);
+			}
+
+			for(WrapperAttach wa : attatchments){
+				if(attatchmentsNameToTransfer.contains(wa.fileAmazon.amazonFile.name)){
+					wa.transfer(newCaseMC.id);
+					wa.moveToBucket();
+				}
+			}
+
+			
+		}
 	}
 	
 }

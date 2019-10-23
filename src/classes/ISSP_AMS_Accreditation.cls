@@ -1454,13 +1454,13 @@ public without sharing class ISSP_AMS_Accreditation {
 
     private Map<Id,Account> getSelectedBranchList(List<String> branchCodes) {
         if(newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry' && isNoticeOfChange)
-            return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id
+            return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id, IATA_ISO_Country__r.AMS_Settlement_System__c
                 FROM Account
                 WHERE IATACode__c IN :branchCodes AND Location_Type__c = :AMS_Utils.HE
                 AND Status__c NOT IN ('Terminated','Not accreditated', 'Not in operation', 'Listed','')
                 ORDER BY Name, IATACode__c]);
         else
-            return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id
+            return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id, IATA_ISO_Country__r.AMS_Settlement_System__c
                 FROM Account
                 WHERE IATACode__c IN :branchCodes
                 ORDER BY Name, IATACode__c]);
@@ -3513,6 +3513,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
 
                 if (newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry') {
+
+                    //In case of conversion from standard to multicountry overwrite the case reason
+                    newCase.Reason1__c = 'Accreditation Type';
+
                     if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
                         newForm.Agency_Codes_Concerned__c += ',';
                     }
@@ -6969,6 +6973,32 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
 
+		if (isNoticeOfChange && newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry')
+		{
+			// all the accounts accounts
+			List<String> accounts = (newForm.Agency_Codes_Concerned__c == null ? '' : newForm.Agency_Codes_Concerned__c).split(','); // the selected accounts
+			for (Account a : getBranchList(true)) // the hierarchy accounts
+				accounts.add(a.IataCode__c);
+			accounts.add(hqAccount.IATACode__c); // self account
+			List<String> accountCodes = new List<String>();
+			for (String account : accounts)
+			{
+				if (String.isNotBlank(account))
+					accountCodes.add(account);
+			}
+
+			// check BSP
+			Set<String> addedCountries = new Set<String>();
+			for (Account a : getSelectedBranchList(accountCodes).values())
+				addedCountries.add(a.IATA_ISO_Country__r.AMS_Settlement_System__c);
+			
+			if (addedCountries.size() < 2)
+			{
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_MC_Conversion_Countries));
+				errorFound = true;
+			}
+		}
+
         //Finally need to check that Local Address fields are completed for China, for all forms (HO & BR)
         if(isocountry.Local_language_Agency_details_required__c && !isNoticeOfChange) {
             if (newForm.Local_Legally_Registered_Name__c == null) {
@@ -7877,7 +7907,8 @@ system.debug('aqui sectorValue ' + sectorValue);
                                                                             Same_Legal_Entity_Agency_Form__c, Same_Legal_Entity_Agency_Account__c, Account_Name__c, Location_Type__c,
                                                                             Branch_Office_Country__r.ISO_Code__c, Trade_Name__c, ISSP_AMS_Legal_Status__c,
                                                                             SAAM_Case__r.Status, Same_Legal_Entity_Agency_Form__r.Status__c,
-                                                                            Previous_Postal_code__c, Previous_Street_Name_Number__c, Previous_City__c, Full_Address__c
+                                                                            Previous_Postal_code__c, Previous_Street_Name_Number__c, Previous_City__c, Full_Address__c,
+																			Same_Legal_Entity_Agency_Id__c
                                                                         FROM AMS_Pax_Accreditation_Form__c
                                                                         WHERE SAAM_Case__c = :newCase.Id
                                                                         ORDER BY Name ASC];
@@ -7949,25 +7980,43 @@ system.debug('aqui sectorValue ' + sectorValue);
             }
 
             if (formToDelete.AE_separate_Legal_Entity__c == 'Yes') {
-                AMS_Pax_Accreditation_Form__c formToBeUpdated;
+                AMS_Pax_Accreditation_Form__c formToBeUpdated = null;
+                List<AMS_Pax_Accreditation_Form__c> otherForms = new List<AMS_Pax_Accreditation_Form__c>();
 
-                for (AMS_Pax_Accreditation_Form__c existingMCForm: mCApplicationFormMap.values()) {
-                    if (existingMCForm.Same_Legal_Entity_Agency_Form__c == formToDelete.Id) {
+				// get the updatable forms
+                for (AMS_Pax_Accreditation_Form__c existingMCForm : mCApplicationFormMap.values())
+				{
+                    if (existingMCForm.Same_Legal_Entity_Agency_Form__c == formToDelete.Id)
+					{
+						if (formToBeUpdated == null)
+							formToBeUpdated = existingMCForm;
+						else
+							otherForms.add(existingMCForm);
+					}
+				}
+
+				// update the forms
+                for (AMS_Pax_Accreditation_Form__c existingMCForm : mCApplicationFormMap.values())
+				{
+                    if (existingMCForm.Same_Legal_Entity_Agency_Form__c == formToDelete.Id)
+					{
                         existingMCForm.AE_separate_Legal_Entity__c = 'Yes';
+						if (existingMCForm.Same_Legal_Entity_Agency_Id__c == formToDelete.Id)  // Text type, it's not automatically removed
+                        	existingMCForm.Same_Legal_Entity_Agency_Id__c = formToBeUpdated == null || existingMCForm.Id == formToBeUpdated.Id ? null : formToBeUpdated.Id;
+						existingMCForm.Same_Legal_Entity_Agency_Form__c = formToBeUpdated == null || existingMCForm.Id == formToBeUpdated.Id ? null : formToBeUpdated.Id;
                         existingMCForm.Status__c = 'InProgress';
 
                         existingMCForm.Account_Name__c = formToDelete.Account_Name__c;
                         existingMCForm.Trade_Name__c = formToDelete.Trade_Name__c;
                         existingMCForm.ISSP_AMS_Legal_Status__c = formToDelete.ISSP_AMS_Legal_Status__c;
-
-                        formToBeUpdated = existingMCForm;
-                        break;
                     }
                 }
 
-                if (formToBeUpdated != null) {
-                    copyOwnersFromOtherForm(formToBeUpdated, executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency_Form__c)));
-                    update formToBeUpdated;
+                if (formToBeUpdated != null)
+				{
+                    copyOwnersFromOtherForm(formToBeUpdated, executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToDelete.Id)));
+					otherForms.add(formToBeUpdated);
+                    update otherForms;
                 }
             }
 
@@ -8006,7 +8055,7 @@ system.debug('aqui sectorValue ' + sectorValue);
         insert contactsToBeCreated;
     }
 
-    public void discardMCApplication() {
+    public PageReference discardMCApplication() {
         isMultiCountryStarted = false;
 
         Map<Id, Case> amsDraftCasesMap = new Map<Id, Case>(AMSDraftCases);
@@ -8016,6 +8065,10 @@ system.debug('aqui sectorValue ' + sectorValue);
         deleteFormsAux(multiCountryApplicationForms);
 
         delete [SELECT Id FROM Case WHERE Id = :newCase.Id];
+
+		PageReference pageRef = Page.ISSP_AMSCases;
+		pageRef.setRedirect(true);
+		return pageRef;
     }
 
     private static void deleteFormsAux(List<AMS_Pax_Accreditation_Form__c> formsList) {

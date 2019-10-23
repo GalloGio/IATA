@@ -463,7 +463,7 @@
                     $('[id$=newLegalName]').css('display', 'block');
                     $('[id$=legalNameSelected]').val('');
                 } else {
-                    $('[name$=separateLegalEntitySelect]').removeAttr('disabled');
+                    $('[name$=separateLegalEntitySelect]:not(:checked)').removeAttr('disabled');
                     if ($('[name$=separateLegalEntitySelect]:checked').val() == 'No') {
                         $('[id$=legalNameSelection]').css('display', 'block');
                         $('[id$=legalNameSelected]').css('display', 'block');

@@ -830,7 +830,7 @@ public class AMS_OSCARTriggerHandler {
             }
             else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
                 oscar.Sanity_check_deadline__c = Date.today();
-            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHANGES  || oscar.Process__c == AMS_Utils.NGCHINACONVERSION){
+            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHANGES  || oscar.Process__c == AMS_Utils.NGCHINACONVERSION || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
                 oscar.Sanity_check_deadline__c = Date.today() + 15;
                 oscar.OSCAR_Deadline__c = Date.today() + 30;
 
@@ -3062,7 +3062,7 @@ public class AMS_OSCARTriggerHandler {
             Boolean isAMSProcess = AMS_Utils.oscarAMSProcesses_ValidateOwnership.contains(oscar.Process__c);//AMSU-180
             Boolean run_validation = !((oscar.Location_Class__c == 'G') || (oscar.Location_Class__c == 'M') || (oscar.Location_Class__c == 'R')) && ((isAMSProcess && oscar.Process__c <> AMS_Utils.new_TIDS) || (oscar.Process__c == AMS_Utils.new_TIDS && oscar.Location_Type__c == 'HO'));
 
-            if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && (isNewGenProcess || run_validation) && oscar.ANG_Type_Of_Change__c <> AMS_Utils.ANG_VMFR && oscar.Type_of_change__c <> AMS_Utils.VFMR && oscar.process__c <> AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
+            if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && (isNewGenProcess || run_validation) && oscar.ANG_Type_Of_Change__c <> AMS_Utils.ANG_VMFR && oscar.Type_of_change__c <> AMS_Utils.VFMR){
 
                 if(contacts == null){
                     contacts = getAccreditationContacts(oscars);

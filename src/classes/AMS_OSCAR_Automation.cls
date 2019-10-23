@@ -60,7 +60,7 @@ public with sharing class AMS_OSCAR_Automation {
                     
                         oscar.Sanity_check_deadline__c = Date.today() + 14;
 
-                    } else if (Oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWGESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE){
+                    } else if (Oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWGESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
 
                         oscar.Sanity_check_deadline__c = Date.today() + 15;           
 

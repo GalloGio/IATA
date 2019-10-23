@@ -1000,7 +1000,7 @@
         <description>SCE: Case wrongly escalated</description>
         <protected>false</protected>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>

@@ -601,10 +601,4 @@
         <label>Closed_Non compliance</label>
         <closed>true</closed>
     </standardValue>
-    <standardValue>
-        <fullName>Assessment Finalized</fullName>
-        <default>false</default>
-        <label>Assessment Finalized</label>
-        <closed>false</closed>
-    </standardValue>
 </StandardValueSet>

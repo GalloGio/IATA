@@ -673,6 +673,15 @@
         <relatedList>Financial_Assessment_Result__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>AMS_Financial_Review_First_Quarter__c</fields>
+        <fields>AMS_Financial_Review_Second_Quarter__c</fields>
+        <fields>AMS_Financial_Review_Third_Quarter__c</fields>
+        <relatedList>AMS_Process_Detail__c.Case__c</relatedList>
+    </relatedLists> 
+    <relatedLists>
         <fields>NAME</fields>
         <fields>Reassessment_Rejection_Reason__c</fields>
         <fields>Challenge_Source__c</fields>
@@ -720,15 +729,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Instant_Surveys__c.Relationship_to_Case__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>MassChangeOwner</excludeButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>AMS_Financial_Review_First_Quarter__c</fields>
-        <fields>AMS_Financial_Review_Second_Quarter__c</fields>
-        <fields>AMS_Financial_Review_Third_Quarter__c</fields>
-        <relatedList>AMS_Process_Detail__c.Case__c</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
