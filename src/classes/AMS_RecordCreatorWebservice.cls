@@ -206,7 +206,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             insert hierarchy;
         }
 
-        AMS_Agencies_relationhip__c relationship = new AMS_Agencies_relationhip__c(Child_Account__c = accountToProcess.Id, Parent_Account__c = accountToProcess.Top_Parent__c, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = true);
+        AMS_Agencies_relationhip__c relationship = new AMS_Agencies_relationhip__c(Child_Account__c = accountToProcess.Id, Parent_Account__c = accountToProcess.ParentId, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = true);
 
         insert relationship;
 
