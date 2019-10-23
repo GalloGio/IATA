@@ -458,8 +458,8 @@
             if (isoSelected != '') {
                 if ($.inArray(isoSelected, JSON.parse('{!hierarchyIsoCodesString}')) == -1) {
                     $('[id$=legalNameSelection]').css('display', 'block');
-                    $('[name$=separateLegalEntitySelect]').filter('[value=Yes]').prop('checked', true);
-                    $('[name$=separateLegalEntitySelect]:not(:checked)').attr('disabled', 'true');
+                    $('[name$=separateLegalEntitySelect]').filter('[value=Yes]')[0].checked = true;
+                    $('[name$=separateLegalEntitySelect]').attr('disabled', 'true');
                     $('[id$=newLegalName]').css('display', 'block');
                     $('[id$=legalNameSelected]').val('');
                 } else {
@@ -496,13 +496,11 @@
         }
 
         function loadPageOptions() {
-            if({!isMultiCountryNewAE}) {
-                $('[id$=isSameLegal]').first().insertAfter($('[id$=countrySelection').first());
-                populateLegalAndSeparateFields();
-                enableDisableLegalName();
-                $('[id$=officetypelist]').prop('disabled', true);
-            }
+            loadMultiCountryAccred();
+            loadMultiCountryNoC();
+        }
 
+        function loadMultiCountryNoC() {
             if ({!isNoticeOfChange} && {!isStep1}) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
                     $('[id$="nocThirdQuestion"]').find("input")[1].checked = true; //default select as a temporary solution
@@ -516,6 +514,15 @@
                 checkLocationQuestion();
 
                 checkSelectAll();
+            }
+        }
+
+        function loadMultiCountryAccred() {
+            if({!isMultiCountryNewAE} && {!isStep1}) {
+                $('[id$=isSameLegal]').first().insertAfter($('[id$=countrySelection').first());
+                populateLegalAndSeparateFields();
+                enableDisableLegalName();
+                $('[id$=officetypelist]').prop('disabled', true);
             }
         }
 
@@ -706,11 +713,11 @@
                                 </div>
 							
 							</div>
-                            <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="optionsSetpA, langGSA, legalNameSelection, legalNames" oncomplete="if({!isMultiCountryNewAE}) {$('[id$=isSameLegal]').first().css('display', 'none'); populateLegalAndSeparateFields(); if ('{!sectorValue}' === 'Cargo_Agent') {
-                                $('[id$=legalNameSelection]').css('display', 'none');}}"> 
+                            <apex:actionFunction name="refreshOfficeTypes" reRender="optionsSetpA, langGSA, legalNameSelection, legalNames" oncomplete="if({!isMultiCountryNewAE}) {$('[id$=isSameLegal]').first().insertAfter($('[id$=countrySelection').first()); populateLegalAndSeparateFields(); if ('{!sectorValue}' === 'Cargo_Agent') {
+                                $('[id$=legalNameSelection]').css('display', 'none'); $('[id$=isSameLegal]').css('display', 'none');}}"> 
                                 <apex:param value="" assignTo="{!sectorValue}" name="sectorValue"/>
                             </apex:actionFunction>
-                            <apex:actionFunction action="{!null}" name="refreshGsaQuestion" reRender="langGSA">
+                            <apex:actionFunction name="refreshGsaQuestion" reRender="langGSA">
                                 <apex:param value="" assignTo="{!amsLocationType}" name="amsLocationType"/>
                             </apex:actionFunction>
                             <apex:actionFunction action="{!updateAmsCountry}" name="updateAmsCountry" oncomplete="getCountryFromController()" reRender="amscountrylabel">
@@ -858,9 +865,9 @@
                                                 <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptions">    
                                                     <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}'); checkLocationQuestion(); reRenderNocMessage();">
                                                         <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}" />
-                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_All_Branches}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}"/>                                                     
-                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_Some_Branches}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" />                                                       
-                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Associate_Entity}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), AND(isMCAccredited, branchAccountCount > 0))}" />
+                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_All_Branches}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), isMCAccredited)}"/>                                                     
+                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_Some_Branches}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), isMCAccredited)}" />                                                       
+                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Associate_Entity}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), isMCAccredited)}" />
                                                     </apex:selectRadio>
 
                                                 </apex:outputPanel>
@@ -1027,9 +1034,6 @@
                                 });
 
                                 if ({!isMultiCountryNewAE} == false) toggleCountries($('[id$=officetypelist]').val());
-
-                                //Disable country selection for the Pilot
-                    //document.getElementById('{!$Component.step1Form.step1Block.countryconcerned}').disabled=true;
 
                                 function operationTypeChanged(namEnabled, sectorValue, isHOAccredited, sector) {
                                     if (sectorValue === 'Cargo_Agent') {

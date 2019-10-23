@@ -373,8 +373,6 @@ public without sharing class ISSP_AMS_Accreditation {
         set;
     }
 
-    public Integer branchAccountCount {get; set;}
-
     public Boolean isNewPortal {
     get {
         if(isNewPortal == null) {
@@ -515,7 +513,6 @@ public without sharing class ISSP_AMS_Accreditation {
         agencyCodesConcerned = new List<SelectOption>();
 
         amsContactCountry = '';
-        branchAccountCount = 0;
 
         popContact();  //Get the contact details of currently logged in user
 
@@ -3601,7 +3598,7 @@ public without sharing class ISSP_AMS_Accreditation {
             dmo.assignmentRuleHeader.useDefaultRule = true;
             Database.update(newCase, dmo);
 
-            String accountId = isNoticeOfChange ? accountConcerned.Id : vHQAccountId;
+            String accountId = isNoticeOfChange ? accountConcerned.Id : newCase.Reason1__c == AMS_UTILS.CASE_REASON_AE_MULTICOUNTRY ? newCase.AccountId : vHQAccountId;
 
             String typeOfProcess = 'NEW.HO.1.0';
             if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD) {
@@ -7026,6 +7023,21 @@ public without sharing class ISSP_AMS_Accreditation {
         return !errorFound;
     }
 
+	public Boolean multipleCountriesSelected {
+		get {
+			Set<String> addedCountries = new Set<String>();
+
+			if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
+			for (Account a: getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(',')).values()) {
+				addedCountries.add(a.IATA_ISO_Country__r.AMS_Settlement_System__c);
+			}
+			}			
+
+			return addedCountries.size() > 1;
+		}
+		set;
+	}
+
     private Boolean validateLocalDetails() {
         Boolean errorFound = false;
 
@@ -8130,8 +8142,6 @@ system.debug('aqui sectorValue ' + sectorValue);
         }
         
         for(Account a : getBranchList(true)){
-            branchAccountCount++;
-        
             if (isNoticeOfChange) {
                 if (isMCAccredited) {
                     if (!mcCountryIsos.contains(a.Country_ISO_Code__c)) {
