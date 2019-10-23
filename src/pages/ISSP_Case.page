@@ -395,7 +395,7 @@
                                             <apex:outputpanel layout="block" styleclass="requiredBlock" />
                                             <apex:selectlist styleclass="form-control"
                                                 value="{!whoToContact}" required="true" multiselect="false" size="1"
-                                                onchange="autofillCCOthers(this);">
+                                                onchange="autofillCCOthers(this); manageCaseAreaAvaiableOptions(this)">
                                                 <apex:selectoptions value="{!lst_whoToContact}" />
                                             </apex:selectlist>
                                         </apex:outputpanel>
