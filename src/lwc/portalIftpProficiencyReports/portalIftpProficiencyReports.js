@@ -42,7 +42,7 @@ export default class portalIftpProficiencyReports extends LightningElement {
             { label: 'August', value: '8' },
             { label: 'September', value: '9' },
             { label: 'October', value: '10' },
-            { label: 'Novemver', value: '11' },
+            { label: 'November', value: '11' },
             { label: 'December', value: '12' }
         ];
     }
