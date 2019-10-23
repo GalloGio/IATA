@@ -165,11 +165,10 @@ export default class PortalSearchProfileList extends NavigationMixin(LightningEl
     retrieveResultsFromServer() {
 
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
-        console.log('Searching');
+
         getFilteredProfileResultsPage({ searchKey: JSON.stringify(filteringObjectAux) })
             .then(myResults => {
                 let results = JSON.parse(JSON.stringify(myResults));
-                console.log(results);
 
                 filteringObjectAux.profileComponent.nrResults = results.records.length;
 
@@ -218,26 +217,16 @@ export default class PortalSearchProfileList extends NavigationMixin(LightningEl
 
     loadMoreResults() {
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
-        console.log('Load More1');
         let requestedPageNumber = this.pageNumber + 1;
-        console.log('Load More2');
         this.pageNumber = requestedPageNumber;
-        console.log('Load More3');
         let slicedContactProfileList=[];
         let slicedAccountProfileList=[];
-        console.log('Load More4' + this.listAccounts);
         if (this.profileList.length < filteringObjectAux.profileComponent.nrResults) {
-            console.log('Load More5');
             slicedContactProfileList = this.listContacts.slice(0, 5 * (this.pageNumber+1));
-            console.log('Load More6');
             slicedAccountProfileList = this.listAccounts.slice(0, 5 * (this.pageNumber+1));
-            console.log('Load More7');
         }
-        console.log('Load More8');
         let profileListAux = slicedContactProfileList.concat(slicedAccountProfileList);
-        console.log('Load More9');
         this.profileList = profileListAux;
-        console.log(this.profileList);
         
         this.loadingMoreResults = false;
     }
