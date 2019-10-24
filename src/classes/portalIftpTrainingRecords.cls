@@ -1096,11 +1096,11 @@ public without sharing class portalIftpTrainingRecords {
                 for(TrainingRecordsWrapper rec: ltrWrapperNoDuplicates){
                     for(integer i = 0; i <cdocumentlist.size(); i++){
                         if(rec.OJT_file_global_id == cdocumentlist[i].Id){
-                            rec.OJT_file_ITP = '/sfc/servlet.shepherd/version/download/' + cdocumentlist[i].LatestPublishedVersionId;
+                            rec.OJT_file_ITP = Site.getBaseUrl() + '/sfc/servlet.shepherd/version/download/' + cdocumentlist[i].LatestPublishedVersionId;
                             rec.OJT_file_global_name = rec.itpName + ' Global OJT File';
                         } else{
                             if(rec.OJT_file_station_id == cdocumentlist[i].Id){
-                                rec.OJT_file_Station = '/sfc/servlet.shepherd/version/download/' + cdocumentlist[i].LatestPublishedVersionId;
+                                rec.OJT_file_Station = Site.getBaseUrl() + '/sfc/servlet.shepherd/version/download/' + cdocumentlist[i].LatestPublishedVersionId;
                                 rec.OJT_file_station_name =rec.itpName + ' Station OJT File';
                             }
                         }

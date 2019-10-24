@@ -306,7 +306,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
         let isNotAllocated = false;
         this.loading = true;
         this.showSearch = true;
-        if(this.auxSearchValues.stationCode === 'Not Allocated'){
+        if(this.auxSearchValues.stationCode === 'Not Allocated' || this.auxSearchValues.stationCode === null){
             isNotAllocated = true;
             this.stationValue = null;
             this.auxSearchValues.stationCode = null;

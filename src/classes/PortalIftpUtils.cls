@@ -1566,32 +1566,6 @@ public without sharing class PortalIftpUtils {
         @AuraEnabled
         public String PortalApplicationStatus {get;set;}
 
-
-        public UserInfoRecordsWrapper(  Id id, 
-                                        Id accountId, 
-                                        Id accountRole, 
-                                        Id accountRoleSrv, 
-                                        String accountName, 
-                                        String accountRecordType, 
-                                        Id contactRoleId, 
-                                        String contactRole, 
-                                        String portalContactRole, 
-                                        String profile, 
-                                        String userPortalStatus){
-            this.id = id;                                            
-            this.accountId = accountId;
-            this.accountRole = accountRole;
-            this.accountRoleSrv = accountRoleSrv;
-            this.accountName = accountName;                                            
-            this.accountRecordType = accountRecordType;  
-            this.contactRoleId = contactRoleId;
-            this.contactRole = contactRole;
-            this.portalContactRole = portalContactRole;
-            this.profile = profile;
-            this.userPortalStatus = userPortalStatus;
-            this.hasAssociatedStations = false;
-        }
-
         public UserInfoRecordsWrapper(  Id id, 
                                         Id accountId, 
                                         Id accountRole, 
@@ -1648,7 +1622,6 @@ public without sharing class PortalIftpUtils {
     @AuraEnabled(cacheable=false)
     public static Boolean removeProficiency(String roleAddressId){
 
-        try{
             Role_Address__c roleAddress = [SELECT Id, 
                                             Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c, 
                                             Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c, 
@@ -1656,6 +1629,16 @@ public without sharing class PortalIftpUtils {
                                             Address__r.Code__c, Contact_Role_Certification__r.Certification__r.Name, 
                                             Proficiency_level__c, Proficiency_Granted_By__c 
                                           FROM Role_Address__c WHERE Id=:roleAddressId];
+            
+        if(roleAddress.Proficiency_level__c == 'No'){
+            throw new AuraHandledException('Proficiency level is already set to No');
+        }
+        if(roleAddress.Contact_Role_Certification__r == null){
+            throw new AuraHandledException('This action is not applicable to this role address because it has no Contact Role Certification.');
+        }
+
+        try{
+
             roleAddress.Proficiency_level__c = 'No';
             update roleAddress;
             

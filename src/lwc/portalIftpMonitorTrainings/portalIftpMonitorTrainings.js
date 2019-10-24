@@ -471,7 +471,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                         } else if(rec.setEnroll === 'Stop'){
                             rec.enrolled = '';
                             rec.enrollmentStatus = 'Success';
-                            rec.enrollmentIcon = 'utility:check';
+                            rec.enrollmentIcon = 'utility:close';
                         }
                     }) 
                     this.data = auxData;  

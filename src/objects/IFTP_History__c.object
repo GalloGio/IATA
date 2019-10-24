@@ -222,7 +222,7 @@
 &quot;3&quot;, &quot;Employee Start Working at Station &quot;, 
 &quot;4&quot;, &quot;Employee Stop Working at Station &quot;, 
 &quot;5&quot;, &quot;Employee Receives Proficiency&quot;, 
-&quot;6&quot;, &quot;Employee Loose Proficiency&quot;, 
+&quot;6&quot;, &quot;Employee Lose Proficiency&quot;, 
 &quot;7&quot;, &quot;Start Suppression&quot;, 
 &quot;8&quot;, &quot;Stop Suppression&quot;, 
 &quot;Other&quot; 

@@ -299,9 +299,9 @@ public class portalIftpTestClass {
         IFTP_Certification_Detail__c certDetail4 = new IFTP_Certification_Detail__c(Name = 'Plane 1' , Certification__c = certPlane1.Id, 
                                                                         General_Training__c = 'No', Prerequisite_Level__c = 'Level 2');
         IFTP_Certification_Detail__c certDetail5 = new IFTP_Certification_Detail__c(Name = 'Plane 2' , Certification__c = certPlane2.Id, 
-                                                                        General_Training__c = 'No', Prerequisite_Level__c = 'Level 3');
-        IFTP_Certification_Detail__c certDetail6 = new IFTP_Certification_Detail__c(Name = 'Plane 3' , Certification__c = certPlane3.Id, 
                                                                         General_Training__c = 'No', Prerequisite_Level__c = 'Level 2');
+        IFTP_Certification_Detail__c certDetail6 = new IFTP_Certification_Detail__c(Name = 'Plane 3' , Certification__c = certPlane3.Id, 
+                                                                        General_Training__c = 'No', Prerequisite_Level__c = 'Level 3');
 
         iftpCertDetailList.add(certDetail1);
         iftpCertDetailList.add(certDetail2);
@@ -332,11 +332,12 @@ public class portalIftpTestClass {
         Contact_Role_Certification__c contRoleCertifGT10 = new Contact_Role_Certification__c(Name = 'Certification GT 1', Account_Contact_Role__c = accountContactRoleITPStudent2.Id, Certification__c = certGeneralTraining1.Id, Expiration_Date__c = date.today().addDays(10), Proficiency__c = 'Level 2', AssessmentId__c = 'Assessment6');
         Contact_Role_Certification__c contRoleCertifGT20 = new Contact_Role_Certification__c(Name = 'Certification GT 2', Account_Contact_Role__c = accountContactRoleITPStudent2.Id, Certification__c = certGeneralTraining2.Id, Expiration_Date__c = date.today().addDays(11), Proficiency__c = 'Level 2', AssessmentId__c = 'Assessment7');
         Contact_Role_Certification__c contRoleCertifGT30 = new Contact_Role_Certification__c(Name = 'Certification GT 3', Account_Contact_Role__c = accountContactRoleITPStudent2.Id, Certification__c = certGeneralTraining3.Id, Expiration_Date__c = date.today().addDays(12), Proficiency__c = 'Level 3', AssessmentId__c = 'Assessment8');
-        Contact_Role_Certification__c contRoleCertifPlane10 = new Contact_Role_Certification__c(Name = 'Certification Plane 1', Account_Contact_Role__c = accountContactRoleITPStudent2.Id, Certification__c = certPlane1.Id, Expiration_Date__c = date.today().addDays(10), Proficiency__c = 'Level 2', AssessmentId__c = 'Assessment9');
+        Contact_Role_Certification__c contRoleCertifPlane10 = new Contact_Role_Certification__c(Name = 'Certification Plane 1', Account_Contact_Role__c = accountContactRoleITPStudent2.Id, Certification__c = certPlane1.Id, Expiration_Date__c = date.today().addDays(-10), Proficiency__c = 'Level 2', AssessmentId__c = 'Assessment9');
         Contact_Role_Certification__c contRoleCertifPlane11 = new Contact_Role_Certification__c(Name = 'Certification Plane 1 renew', Account_Contact_Role__c = accountContactRoleITPStudent2.Id, Certification__c = certPlane1.Id, Expiration_Date__c = date.today().addDays(20), Proficiency__c = 'Level 2', AssessmentId__c = 'Assessment90');
         Contact_Role_Certification__c contRoleCertifPlane20 = new Contact_Role_Certification__c(Name = 'Certification Plane 2', Account_Contact_Role__c = accountContactRoleITPStudent2.Id, Certification__c = certPlane2.Id, Expiration_Date__c = date.today().addDays(13), Proficiency__c = 'Level 3', AssessmentId__c = 'Assessment10');
         Contact_Role_Certification__c contRoleCertifPlane21 = new Contact_Role_Certification__c(Name = 'Certification Plane 3', Account_Contact_Role__c = accountContactRoleITPStudent2.Id, Certification__c = certPlane3.Id, Expiration_Date__c = date.today().addDays(3), Proficiency__c = 'Level 2', AssessmentId__c = 'Assessment11');
         Contact_Role_Certification__c contRoleCertifPlane22 = new Contact_Role_Certification__c(Name = 'Certification Plane 3 renew', Account_Contact_Role__c = accountContactRoleITPStudent2.Id, Certification__c = certPlane3.Id, Expiration_Date__c = date.today().addDays(13), Proficiency__c = 'Level 2', AssessmentId__c = 'Assessment12');
+        
         contRoleCertifList.add(contRoleCertifGT1);
         contRoleCertifList.add(contRoleCertifGT111);
         contRoleCertifList.add(contRoleCertifGT2);
@@ -354,17 +355,28 @@ public class portalIftpTestClass {
         contRoleCertifList.add(contRoleCertifPlane20);
         contRoleCertifList.add(contRoleCertifPlane21);
         contRoleCertifList.add(contRoleCertifPlane22);
+
         insert contRoleCertifList;
 
         //Create Proficiency Records
         List<Role_Address__c> proficiencyRecordsList = new List<Role_Address__c>();
-        Role_Address__c proficiencyRec1 = new Role_Address__c(Name = 'Proficiency Record 1', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifPlane1.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'Yes', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
         Role_Address__c proficiencyRec2 = new Role_Address__c(Name = 'Proficiency Record 2', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifPlane2.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'Yes', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
         Role_Address__c proficiencyRec10 = new Role_Address__c(Name = 'Proficiency Record 10', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifPlane10.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'Yes', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
+        Role_Address__c proficiencyRec11 = new Role_Address__c(Name = 'Proficiency Record 11', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifPlane11.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'Yes', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
         Role_Address__c proficiencyRec20 = new Role_Address__c(Name = 'Proficiency Record 20', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifPlane20.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'Yes', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
+        Role_Address__c proficiencyRec3 = new Role_Address__c(Name = 'Proficiency Record 3', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifPlane3.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'No', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
+        Role_Address__c proficiencyRec31 = new Role_Address__c(Name = 'Proficiency Record 31', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifPlane31.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'No', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
+        Role_Address__c proficiencyRec311 = new Role_Address__c(Name = 'Proficiency Record 311', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifPlane21.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'Yes', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
+        Role_Address__c proficiencyRec312 = new Role_Address__c(Name = 'Proficiency Record 312', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifPlane22.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'Yes', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
 
-        proficiencyRecordsList.add(proficiencyRec1);
         proficiencyRecordsList.add(proficiencyRec2);
+        proficiencyRecordsList.add(proficiencyRec10);
+        proficiencyRecordsList.add(proficiencyRec11);
+        proficiencyRecordsList.add(proficiencyRec20);
+        proficiencyRecordsList.add(proficiencyRec3);
+        proficiencyRecordsList.add(proficiencyRec31);
+        proficiencyRecordsList.add(proficiencyRec311);
+        proficiencyRecordsList.add(proficiencyRec312);
 
         insert proficiencyRecordsList;
 
