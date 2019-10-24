@@ -269,7 +269,6 @@ public without sharing class AMS_Utils {
     // Case - Status
     public static final String CASE_STATUS_CLOSED = 'Closed';
     public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUESTED = 'Financial Security Requested';
-    public static final String CASE_STATUS_ASSESSMENT_FINALIZED = 'Assessment Finalized';
 
     // Case - Reason1__c //AMSU-165
     public static final String CASE_REASON_CHG_DATA_MAINTENANCE = 'CHG – Data Maintenance';

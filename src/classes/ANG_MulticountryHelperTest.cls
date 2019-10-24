@@ -939,7 +939,8 @@ private class ANG_MulticountryHelperTest {
 		ifap.Financial_Assessment_Points__c = 70;
 		ifap.Assessment_Performed_Date__c = System.today();
 		ifap.Financial_Review_Result__c = AMS_Utils.FA_RESULT_SATISFACTORY_NO_ACTION;
-		ifap.Status = AMS_Utils.CASE_STATUS_ASSESSMENT_FINALIZED;
+		ifap.Reason_for_change_of_Financial_result__c = 'Testing';
+		ifap.Status = AMS_Utils.CASE_STATUS_FINANCIAL_SECURITY_REQUESTED;
 
 		update ifap;
 
@@ -1015,8 +1016,9 @@ private class ANG_MulticountryHelperTest {
 		ifap.Financial_Assessment_Points__c = 70;
 		ifap.Assessment_Performed_Date__c = System.today();
 		ifap.Financial_Review_Result__c = AMS_Utils.FA_RESULT_SATISFACTORY_NO_ACTION;
-		ifap.Status = AMS_Utils.CASE_STATUS_ASSESSMENT_FINALIZED;
+		ifap.Status = AMS_Utils.CASE_STATUS_FINANCIAL_SECURITY_REQUESTED;
 		ifap.Exception_Approved_On__c = System.today();
+		ifap.Reason_for_change_of_Financial_result__c = 'Testing';
 
 		update ifap;
 
