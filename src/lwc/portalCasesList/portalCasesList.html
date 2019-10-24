@@ -1,8 +1,8 @@
 <template>
-    <div class="slds-grid slds-wrap slds-gutters_medium">
+    <div class="slds-grid slds-wrap slds-gutters_medium slds-p-top_x-large">
         <!-- Search bar and buttons -->
-        <div class="slds-text-align_right slds-p-horizontal_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
-            <div class="bottomLightGrayBorder slds-m-around_small inputFilter">
+        <div class="slds-text-align_right slds-p-horizontal_small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
+            <div class="bottomLightGrayBorder slds-m-vertical_small inputFilter">
                 <img src={searchIconUrl}>
                 <lightning-input name="newRecipientTextInput"
                     placeholder={label.CSP_SearchingOn}
@@ -13,23 +13,23 @@
                 </lightning-input>
             </div>
         </div>
-        <div class="slds-text-align_right slds-p-horizontal_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
-                <!-- FILTER -->
-            <button if:true={filtered} class="slds-button_icon slds-button__icon_right filterButton slds-m-around_xx-small" onclick={openCasesFilterModal}>
+        <div class="slds-text-align_right slds-p-horizontal_small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
+            <!-- FILTER -->
+            <button if:true={filtered} class="slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
                 {label.CSP_Filtered}
                 <img class="slds-float_right" src={filteredIconUrl}>
-                </button>
-            <button if:false={filtered} class="slds-button_icon slds-button__icon_right filterButton slds-m-around_xx-small" onclick={openCasesFilterModal}>
-                    {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
-                </button>
+            </button>
+            <button if:false={filtered} class="slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
+                {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
+            </button>
         </div>
-            <!-- LIST VIEW -->
-        <div class="slds-text-align_right slds-p-horizontal_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">    
-            <lightning-button label={label.CSP_MyCases} class="containedButton slds-m-around_xx-small" onclick={changeToUserCasesTableView} if:true={viewNormalUserCasesTableViewButton}></lightning-button>
-            <lightning-button label={label.CSP_CompanyCases} class="containedButton slds-m-around_xx-small" onclick={changeToAdminCasesTableView} if:true={viewAdminUserCasesTableViewButton}></lightning-button>
+        <!-- LIST VIEW -->
+        <div class="slds-text-align_right slds-p-horizontal_small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">    
+            <lightning-button label={label.CSP_MyCases} class="containedButton" onclick={changeToUserCasesTableView} if:true={viewNormalUserCasesTableViewButton}></lightning-button>
+            <lightning-button label={label.CSP_CompanyCases} class="containedButton" onclick={changeToAdminCasesTableView} if:true={viewAdminUserCasesTableViewButton}></lightning-button>
         </div>
-        <div class="slds-text-align_right slds-p-horizontal_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
-            <lightning-button label="Reach Us" class="containedButton slds-m-around_xx-small" onclick={openReachUs}></lightning-button>
+        <div class="slds-text-align_right slds-p-horizontal_small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
+            <lightning-button label="Reach Us" class="containedButton" onclick={openReachUs}></lightning-button>
         </div>
     </div>
 
@@ -88,7 +88,7 @@
                             </lightning-layout-item>
 
                             <!-- Creation Date (from) -->
-                            <lightning-layout-item class="slds-p-around_xx-small" size="6" flexibility="grow">
+                            <lightning-layout-item  class="slds-p-around_xx-small" size="6" flexibility="grow">
                                 <div class="slds-p-horizontal_large slds-p-vertical_medium" >
                                     <lightning-input 
                                         class="customPickList dateField" 
