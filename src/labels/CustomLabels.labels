@@ -4325,7 +4325,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Travel_Agent_Accreditation_Changes_Request</shortDescription>
-        <value>&lt;a href=&quot;/csportal/s/manage-service?serviceId=a2w3E0000002lq0QAA&quot; target=&quot;_self&quot;&gt;Click here to request the IATA Accreditation and Changes&lt;/a&gt;</value>
+        <value>&lt;a href=&quot;/csportal/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt;Click here to request the IATA Accreditation and Changes&lt;/a&gt;</value>
 	</labels>
     <labels>
         <fullName>CSP_TypeOfCase</fullName>
