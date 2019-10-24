@@ -5,8 +5,8 @@
     <name>NewGen PCI</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>AmericasAgencyManagementManagerI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>MADHubSupervisorI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>AmericasAgencyManagementManager</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>MADHubSupervisor</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>

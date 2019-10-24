@@ -144,6 +144,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 /***********************************************************************************************************************************************************/
     /*Share trigger code*/
     if (Trigger.isInsert || Trigger.isUpdate) {
+
+        /** WMO-564 **/
+        if(Trigger.isUpdate) {
+            CaseProcessTypeHelper.processKPI(Trigger.new, Trigger.oldMap);
+        }
+
 	// assigns default email address to be used on send email quick action
         //follows same logic as current classic functionality      
         for(Case c: trigger.new){
@@ -548,7 +554,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // WMO-517 exclued cases in recycle bin
                     if (c.RecordTypeId == AirlineCodingRTId && mapACCasesPerAccountId.get(c.AccountId) != null) {
                         system.debug('##ROW##');
-                        set<String> setInvalidReasons = new set<String>{'Baggage Tag Identifier Codes','Designator Form', '3 Digit Form', 'Location ID Form'};
+                        set<String> setInvalidReasons = new set<String>{'Baggage Tag Identifier Codes','Designator Form', '3 Digit Form'};
                         for (Case cse: mapACCasesPerAccountId.get(c.AccountId) ) {
                             if (cse.Reason1__c == c.Reason1__c && cse.Id != c.Id && setInvalidReasons.contains(c.Reason1__c) && !cse.Owner.Name.contains('Recycle')) {
                                 c.addError('There is already an open Airline Coding Application case with Reason "' + c.Reason1__c + '" on the selected Account. There can be only one open case of this type on an Account.');

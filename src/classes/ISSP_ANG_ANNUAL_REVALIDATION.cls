@@ -168,12 +168,19 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         }
         
 		Set<SelectOption> relAccs = new Set<SelectOption>();
+		Set<String> statusToExclude = new Set<String>{
+			'Terminated',
+			'Not Accredited',
+			'Not in operation',
+			'New application pending'
+		};
+
         for(AMS_Agencies_relationhip__c r : accountsList) {
-            if(r.Child_Account__c != currentAccount.account.Id && r.Child_Account__r.Status__c != 'Terminated'){
+            if(r.Child_Account__c != currentAccount.account.Id && (!statusToExclude.contains(r.Child_Account__r.Status__c)) && r.Child_Account__r.Status__c != null && r.Child_Account__r.IATACode__c != null){
                 relAccs.add(new SelectOption(String.valueOf(r.Child_Account__c), r.Child_Account__r.IATACode__c));
             }
             
-            if(r.Parent_Account__c != currentAccount.account.Id && r.Parent_Account__r.Status__c != 'Terminated'){
+            if(r.Parent_Account__c != currentAccount.account.Id && (!statusToExclude.contains(r.Parent_Account__r.Status__c)) && r.Parent_Account__r.Status__c != null && r.Parent_Account__r.IATACode__c != null){
                 relAccs.add(new SelectOption(String.valueOf(r.Parent_Account__c), r.Parent_Account__r.IATACode__c));
             }
         }

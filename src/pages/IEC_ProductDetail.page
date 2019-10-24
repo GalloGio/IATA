@@ -196,13 +196,13 @@
 
                             <!-- breadcrumb -->
                             <ol class="list breadcrumb">
-                                <li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
+                                <li><a href="{!$Site.BaseRequestURL}">{!$Label.Home}</a></li>
                                 <li>
-                                    <a style="{! IF(selectedCategory.value == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a>
+                                    <a style="{! IF(selectedCategory.value == '', 'display:none', '')}" href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a>
                                     <apex:outputText value="" rendered="{! selectedCategory.value == ''}" />
                                 </li>
                                 <li>
-                                    <a style="{! IF(selectedCategory.value == '' || selectedTopic == null || selectedTopic == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}&topic={!selectedTopic}">{!selectedTopicLabel}</a>
+                                    <a style="{! IF(selectedCategory.value == '' || selectedTopic == null || selectedTopic == '', 'display:none', '')}" href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!selectedCategory.value}&topic={!selectedTopic}">{!selectedTopicLabel}</a>
                                     <apex:outputText value="" rendered="{! selectedCategory.value == '' || selectedTopic == null || selectedTopic == ''}" />
                                 </li>
                                 <li>{!ecomProduct.ProductName}</li>
@@ -295,7 +295,7 @@
                                         <apex:outputPanel layout="block" rendered="{!loggedCustomer == null}">
                                             <p class="light">
                                                 IATA Member Airlines get preferential pricing.<br/>Sign in to view applicable pricing 
-                                                <a href="{!$Site.BaseUrl}/IEC_Login?returl=/IEC_ProductDetail?id={!ecomProduct.productNumber}" class="text-link"></a>
+                                                <a href="{!$Site.BaseRequestURL}/IEC_Login?returl=/IEC_ProductDetail?id={!ecomProduct.productNumber}" class="text-link"></a>
                                                 or&nbsp;
                                                 <apex:commandLink onclick="createAnAccountPush();" styleClass="text-link" action="{!register}" value="create an account" />
                                             </p>
@@ -368,7 +368,7 @@
                                         <apex:outputPanel rendered="{!pc.Name=='CACPRO'}">
                                             <li>
                                                 Difference between CAC Evaluation and CAC Professional 
-                                                <a onclick="differenceBetweenCACsPush();" href="javascript:void(window.open('{!$Site.BaseURL}/IECCACCompare','CAC','menubar=no,width=1011,height=784,toolbar=no,location=no,status=no,scrollbars=yes,resizable=no'))"> click here</a>                           
+                                                <a onclick="differenceBetweenCACsPush();" href="javascript:void(window.open('{!$Site.BaseRequestURL}/IECCACCompare','CAC','menubar=no,width=1011,height=784,toolbar=no,location=no,status=no,scrollbars=yes,resizable=no'))"> click here</a>                           
                                            </li>
                                                                        
                                         </apex:outputPanel>
@@ -401,7 +401,7 @@
                                         <section class="section-container resources" id="interactiveMap">
                                             <h2 class="section-title">Interactive Statistics</h2>
                                             <p class="light">IATA agencies on maps and charts</p>
-                                            <a class="button" href="{!$Site.BaseUrl}/IECGADMaps">View now</a>
+                                            <a class="button" href="{!$Site.BaseRequestURL}/IECGADMaps">View now</a>
                                         </section>
                                     </apex:outputPanel>
                                 </apex:outputPanel>
