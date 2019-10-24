@@ -1246,11 +1246,12 @@ public without sharing class ISSP_AMS_Accreditation {
         set;
     }
 
+    private Set<String> legalNames;
     public List<SelectOption> legalNameOptions {
         get {
             List<SelectOption> options = new List<SelectOption>{new SelectOption('', '-- Select a Legal Name --')};
             String selectedBSP;
-
+            legalNames = new Set<String>();
             for (String bsp: isosByBSPMap.keySet()) {
                 for (String iso: isosByBSPMap.get(bsp)) {
                     if (iso == mcformCountryISO) {
@@ -1266,8 +1267,11 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if (accountsByBSP.get(selectedBSP) != null) {
                 for (AgencyInfoByISOWrapper agency: accountsByBSP.get(selectedBSP)) {
-                    if(agency.locType != AMS_Utils.AE)
+                    //if(agency.locType != AMS_Utils.AE)
+                    if(!legalNames.contains(agency.legalName)){
                         options.add(new SelectOption(agency.accId, agency.legalName));
+                        legalNames.add(agency.legalName);
+                    }
                 }
             }
 
@@ -1808,6 +1812,11 @@ public without sharing class ISSP_AMS_Accreditation {
         if (!isNoticeOfChange) {
             if (isMultiCountryNewAE || isMCAccredited) {
                 amsLocationType = AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY;
+
+                if(legalNames != null && newForm.AE_separate_Legal_Entity__c == 'Yes' && legalNames.contains(newForm.Account_Name__c)){
+					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'To be defined'));
+					return null;
+				}
 
                 if (isMultiCountryNewAE && !isMCAccredited) {
                     newForm.Same_Legal_Entity_Agency_Form__c = newForm.Same_Legal_Entity_Agency_Id__c;
