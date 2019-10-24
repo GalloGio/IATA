@@ -878,38 +878,49 @@ export default class PortalIftpManageEmployees extends LightningElement {
 
         switch (actionName) {
             case 'delete':
-                for(let i = 0; i < recordToManageNewStationsList.length; i++){
-                    if(recordToManageNewStationsList[i].Code__c === code){
-                        if(recordToManageNewStationsList[i].Primary__c){
-                            isPrimary = true;
+                if(recordToManageNewStationsList.length === 1){
+                    const event2 = new ShowToastEvent({
+                        title: 'Manage Employee Stations Remove Station',
+                        message: 'Station on the list can\' be removed. Employee must have at least one station. ',
+                        variant: 'warning',
+                        mode: 'pester'
+                    });
+                    this.dispatchEvent(event2);
+                } else {
+                    for(let i = 0; i < recordToManageNewStationsList.length; i++){
+                        if(recordToManageNewStationsList[i].Code__c === code){
+                            if(recordToManageNewStationsList[i].Primary__c){
+                                isPrimary = true;
+                            }
+                            recordToManageNewStationsList.splice(i, 1);
+                            i = recordToManageNewStationsList.length;
                         }
-                        recordToManageNewStationsList.splice(i, 1);
-                        i = recordToManageNewStationsList.length;
                     }
-                }
-                stationsProneToAdd.push({ label: row.Code__c + ' - ' + row.Description__c, value: row.Code__c });
-                this.stationsProneToAdd = stationsProneToAdd;
-                this.recordToManageNewStationsList = recordToManageNewStationsList;
-                if(recordToManageNewStationsList.length > 0){
-                    if(isPrimary){
-                        const event2 = new ShowToastEvent({
-                            title: 'Manage Employee Stations Remove Station',
-                            message: 'You have removed the primary station. Choose another as primary.',
-                            variant: 'warning',
-                            mode: 'pester'
-                        });
-                        this.dispatchEvent(event2);
+                    stationsProneToAdd.push({ label: row.Code__c + ' - ' + row.Description__c, value: row.Code__c });
+                    this.stationsProneToAdd = stationsProneToAdd;
+                    this.recordToManageNewStationsList = recordToManageNewStationsList;
+                    if(recordToManageNewStationsList.length > 0){
+                        if(isPrimary){
+                            const event3 = new ShowToastEvent({
+                                title: 'Manage Employee Stations Remove Station',
+                                message: 'You have removed the primary station. Choose another as primary.',
+                                variant: 'warning',
+                                mode: 'pester'
+                            });
+                            this.dispatchEvent(event3);
+                        }
+                        this.recordToManageNewStationsList = this.sortData('Code__c', 'asc', JSON.parse(JSON.stringify(this.recordToManageNewStationsList)));
+                        this.hasNoStations = false;
+                    } else{
+                        this.hasNoStations = true;
                     }
-                    this.recordToManageNewStationsList = this.sortData('Code__c', 'asc', JSON.parse(JSON.stringify(this.recordToManageNewStationsList)));
-                    this.hasNoStations = false;
-                } else{
-                    this.hasNoStations = true;
-                }
-                if(stationsProneToAdd.length > 0){
-                    this.stationsProneToAdd = this.sortData('value', 'asc',JSON.parse(JSON.stringify(this.stationsProneToAdd)));
-                    this.showStationsList = true;
-                } else{
-                    this.showStationsList = false;
+
+                    if(stationsProneToAdd.length > 0){
+                        this.stationsProneToAdd = this.sortData('value', 'asc',JSON.parse(JSON.stringify(this.stationsProneToAdd)));
+                        this.showStationsList = true;
+                    } else{
+                        this.showStationsList = false;
+                    }
                 }
                 this.loadingSpinner = false;
                 break;
@@ -941,92 +952,99 @@ export default class PortalIftpManageEmployees extends LightningElement {
         let recordToManage = JSON.parse(JSON.stringify(this.recordToManage));
         
         let recordToManageNewStationsList = JSON.parse(JSON.stringify(this.recordToManageNewStationsList));
-        let originalStationsList = [];
-        let newStationsList = [];
-        let existsPrimary = false;
+
+        
         if(recordToManageNewStationsList.length > 0){
+            let originalStationsList = [];
+            let newStationsList = [];
+            let existsPrimary = false;
+            
             recordToManageNewStationsList.forEach(station =>{
                 if(station.Primary__c){
                     existsPrimary = true;
                 }
             })
-        }
         
-        if(!existsPrimary && recordToManageNewStationsList.length > 0){
-            const event2 = new ShowToastEvent({
-                title: 'Manage Employee Stations',
-                message: 'You need to select a station as primary before saving.',
-                variant: 'warning',
-                mode: 'pester'
-            });
-            this.dispatchEvent(event2);
-        } else {
-            if(recordToManage.Role_Addresses__r.length > 0){
-                recordToManage.Role_Addresses__r.forEach((rolAddr => {
-                    let r = {};
-                    r.Id = rolAddr.Id;
-                    r.Account_Contact_Role__c = recordToManage.Id;
-                    r.Address__c = rolAddr.Address__c;
-                    if(rolAddr.Primary__c){
-                        r.Primary__c = rolAddr.Primary__c;
-                    } else {
-                        r.Primary__c = false;
-                    }
-                    originalStationsList.push(r);
-                }))
-
-            }
-            
-            if(recordToManageNewStationsList.length > 0){
-                recordToManageNewStationsList.forEach(station =>{
-                    let r = {};
-                    r.Account_Contact_Role__c = recordToManage.Id;
-                    r.Address__c = station.Id;
-                    if(station.Primary__c){
-                        r.Primary__c = station.Primary__c;
-                    } else {
-                        r.Primary__c = false;
-                    }
-                    
-                    newStationsList.push(r);
-                })
-            }
-
-            updateEmployeeStations({originalStationsList: originalStationsList, newStationsList: newStationsList})
-            .then(r => {
-                let result = JSON.parse(JSON.stringify(r));
-                let variant;
-                let mode;
+        
+            if(!existsPrimary){
+                const event2 = new ShowToastEvent({
+                    title: 'Manage Employee Stations',
+                    message: 'You need to select a station as primary before saving.',
+                    variant: 'warning',
+                    mode: 'pester'
+                });
+                this.dispatchEvent(event2);
+            } else {
+                    recordToManage.Role_Addresses__r.forEach((rolAddr => {
+                        let r = {};
+                        r.Id = rolAddr.Id;
+                        r.Account_Contact_Role__c = recordToManage.Id;
+                        r.Address__c = rolAddr.Address__c;
+                        if(rolAddr.Primary__c){
+                            r.Primary__c = rolAddr.Primary__c;
+                        } else {
+                            r.Primary__c = false;
+                        }
+                        originalStationsList.push(r);
+                    }))
                 
-                if(result.succeeded){
-                    //refreshApex(this.wiredITPEmployeesWithStationsInfoResult);
-                    this.handleSearchButtonClick();
-                    variant = 'success';
-                    mode = 'pester';
-                    this.handleResetManageStationsValues();
-                    this.openStationsModal = false;
-                    fireEvent(this.pageRef, 'stationsChanged', null);
-                } else {
-                    if(result.result_message === 'Employee doesn\'t work for your ITP anymore.'){
-                        variant = 'warning';
-                        mode = 'pester';
+                    recordToManageNewStationsList.forEach(station =>{
+                        let r = {};
+                        r.Account_Contact_Role__c = recordToManage.Id;
+                        r.Address__c = station.Id;
+                        if(station.Primary__c){
+                            r.Primary__c = station.Primary__c;
+                        } else {
+                            r.Primary__c = false;
+                        }
+                        
+                        newStationsList.push(r);
+                    })
+
+                updateEmployeeStations({originalStationsList: originalStationsList, newStationsList: newStationsList})
+                .then(r => {
+                    let result = JSON.parse(JSON.stringify(r));
+                    let variant;
+                    let mode;
+                    
+                    if(result.succeeded){
+                        //refreshApex(this.wiredITPEmployeesWithStationsInfoResult);
                         this.handleSearchButtonClick();
+                        variant = 'success';
+                        mode = 'pester';
                         this.handleResetManageStationsValues();
                         this.openStationsModal = false;
+                        fireEvent(this.pageRef, 'stationsChanged', null);
+                    } else {
+                        if(result.result_message === 'Employee doesn\'t work for your ITP anymore.'){
+                            variant = 'warning';
+                            mode = 'pester';
+                            this.handleSearchButtonClick();
+                            this.handleResetManageStationsValues();
+                            this.openStationsModal = false;
+                        }
+                        variant = 'error';
+                        mode = 'sticky';
                     }
-                    variant = 'error';
-                    mode = 'sticky';
-                }
 
-                const event = new ShowToastEvent({
-                    title: 'Manage Employee Stations Result',
-                    message: result.result_message,
-                    variant: variant,
-                    mode: mode
+                    const event = new ShowToastEvent({
+                        title: 'Manage Employee Stations Result',
+                        message: result.result_message,
+                        variant: variant,
+                        mode: mode
+                    });
+                    this.dispatchEvent(event);
+                    this.loadingModal = false;
                 });
-                this.dispatchEvent(event);
-                this.loadingModal = false;
+            }
+        } else {
+            const event4 = new ShowToastEvent({
+                title: 'Manage Employee Stations Remove Station',
+                message: 'Unable to save changes. Employee has to be associated with at least one station. ',
+                variant: 'error',
+                mode: 'pester'
             });
+            this.dispatchEvent(event4);
         }
     }
 
