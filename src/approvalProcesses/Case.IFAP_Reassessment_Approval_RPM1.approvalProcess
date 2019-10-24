@@ -25,6 +25,10 @@
                 <name>martinyuks@iata.org</name>
                 <type>user</type>
             </approver>
+            <approver>
+                <name>sarrie@iata.org</name>
+                <type>user</type>
+            </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>

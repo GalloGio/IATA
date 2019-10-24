@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Message__c</field>
-        <value xsi:type="xsd:string">This account has a court case open. Please contact {!Case.Owner.Name} before interacting with the customer.</value>
+        <value xsi:type="xsd:string">This account and all their locations could be under injunction list or having a court case. Please contact Agency Management manager for more details</value>
     </values>
     <values>
         <field>Multiple_Records__c</field>
