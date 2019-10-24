@@ -310,8 +310,9 @@ public without sharing class portalIftpHistoryManagement {
                     listPreReqCertL3.add(rec.Certification__c);
                 }
             }else{
-                listCert.add(rec.Certification__c);
+                // listCert.add(rec.Certification__c); //IFTP-318 - fast correction only L2 certifications be counted
                 if(rec.Prerequisite_Level__c == 'Level 2'){
+                    listCert.add(rec.Certification__c); //IFTP-318 - fast correction only L2 certifications be counted
                     listCertL2.add(rec.Certification__c);
                 }
                 if(rec.Prerequisite_Level__c == 'Level 3'){
@@ -335,18 +336,26 @@ public without sharing class portalIftpHistoryManagement {
             accInfo.put(rec.Contact__r.Account.name, rec.Contact__r.AccountId);
         }
 
-        
-        List<AggregateResult> lContRoleCerts = [SELECT Account_Contact_Role__r.Company_Code__c,
+        //IFTP-313 - remove the expiry date filter
+        // List<AggregateResult> lContRoleCerts = [SELECT Account_Contact_Role__r.Company_Code__c,
+        //                         Certification__c, Certification__r.Code__c, Certification__r.Name
+        //                     FROM Contact_Role_Certification__c  
+        //                     WHERE Account_Contact_Role__r.Company_Code__c IN :workingEmp
+        //                     AND Account_Contact_Role__r.Contact__r.AccountId = :accId.Id
+        //                     AND Certification__c IN :listCert
+        //                     AND createddate < :checkDateNextMonth
+        //                     AND Expiration_Date__c > :checkDatePreviousMonth 
+        //                     GROUP BY Account_Contact_Role__r.Company_Code__c,
+        //                         Certification__c, Certification__r.Code__c, Certification__r.Name ];
+       List<AggregateResult> lContRoleCerts = [SELECT Account_Contact_Role__r.Company_Code__c,
                                 Certification__c, Certification__r.Code__c, Certification__r.Name
                             FROM Contact_Role_Certification__c  
                             WHERE Account_Contact_Role__r.Company_Code__c IN :workingEmp
                             AND Account_Contact_Role__r.Contact__r.AccountId = :accId.Id
                             AND Certification__c IN :listCert
                             AND createddate < :checkDateNextMonth
-                            AND Expiration_Date__c > :checkDatePreviousMonth 
                             GROUP BY Account_Contact_Role__r.Company_Code__c,
                                 Certification__c, Certification__r.Code__c, Certification__r.Name ];
-       
   
         System.debug('[portalIftpHistoryManagement - getProficiencyReport]: lContRoleCerts:' + lContRoleCerts);
         System.debug('[portalIftpHistoryManagement - getProficiencyReport]: lContRoleCerts:' + lContRoleCerts.size());
