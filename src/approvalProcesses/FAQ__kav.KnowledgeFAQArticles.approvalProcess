@@ -38,8 +38,8 @@
             </criteriaItems>
         </entryCriteria>
         <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
-        <label>Teste</label>
-        <name>Teste</name>
+        <label>New Articles</label>
+        <name>NewArticles</name>
     </approvalStep>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
@@ -325,6 +325,34 @@
         <allowDelegate>false</allowDelegate>
         <assignedApprover>
             <approver>
+                <name>NewGen</name>
+                <type>queue</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <entryCriteria>
+            <criteriaItems>
+                <field>FAQ__kav.New_Articles__c</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>FAQ__kav.Queues__c</field>
+                <operation>contains</operation>
+                <value>NewGen</value>
+            </criteriaItems>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>NewGen</label>
+        <name>NewGen</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
                 <name>Participation</name>
                 <type>queue</type>
             </approver>
@@ -343,8 +371,8 @@
             </criteriaItems>
         </entryCriteria>
         <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
-        <label>NewGen</label>
-        <name>NewGen</name>
+        <label>Participation</label>
+        <name>Participation</name>
         <rejectBehavior>
             <type>RejectRequest</type>
         </rejectBehavior>
@@ -504,6 +532,10 @@
             <field>FAQ__kav.CNS_Article__c</field>
             <operation>equals</operation>
             <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>FAQ__kav.Queues__c</field>
+            <operation>notEqual</operation>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
