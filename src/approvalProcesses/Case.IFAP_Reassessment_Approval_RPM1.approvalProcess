@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
-    <active>false</active>
+    <active>true</active>
     <allowRecall>false</allowRecall>
     <allowedSubmitters>
         <type>owner</type>
@@ -17,22 +17,6 @@
                 <name>abbadid@iata.org</name>
                 <type>user</type>
             </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
-        </assignedApprover>
-        <entryCriteria>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Africa &amp; Middle East</value>
-            </criteriaItems>
-        </entryCriteria>
-        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
-        <label>Step 1</label>
-        <name>Step_1</name>
-    </approvalStep>
-    <approvalStep>
-        <allowDelegate>true</allowDelegate>
-        <assignedApprover>
             <approver>
                 <name>cedrolav@iata.org</name>
                 <type>user</type>
@@ -41,21 +25,22 @@
                 <name>martinyuks@iata.org</name>
                 <type>user</type>
             </approver>
+            <approver>
+                <name>sarrie@iata.org</name>
+                <type>user</type>
+            </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
             <criteriaItems>
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
-                <value>Americas</value>
+                <value>Africa &amp; Middle East,Americas,Europe</value>
             </criteriaItems>
         </entryCriteria>
         <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
-        <label>step 2</label>
-        <name>step_2</name>
-        <rejectBehavior>
-            <type>RejectRequest</type>
-        </rejectBehavior>
+        <label>Step 1</label>
+        <name>Step_1</name>
     </approvalStep>
     <approvalStep>
         <allowDelegate>true</allowDelegate>
@@ -104,35 +89,8 @@
                 <value>China &amp; North Asia</value>
             </criteriaItems>
         </entryCriteria>
-        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
         <label>step 4</label>
         <name>step_4</name>
-        <rejectBehavior>
-            <type>RejectRequest</type>
-        </rejectBehavior>
-    </approvalStep>
-    <approvalStep>
-        <allowDelegate>true</allowDelegate>
-        <assignedApprover>
-            <approver>
-                <name>martinyuks@iata.org</name>
-                <type>user</type>
-            </approver>
-            <approver>
-                <name>sarrie@iata.org</name>
-                <type>user</type>
-            </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
-        </assignedApprover>
-        <entryCriteria>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Europe</value>
-            </criteriaItems>
-        </entryCriteria>
-        <label>step 5</label>
-        <name>step_5</name>
         <rejectBehavior>
             <type>RejectRequest</type>
         </rejectBehavior>
