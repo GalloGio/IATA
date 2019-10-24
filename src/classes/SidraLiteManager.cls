@@ -602,16 +602,9 @@ public with sharing class SidraLiteManager {
             }
             else {
             //ACAMBAS - WMO-485: End       
-            if (parentCase.Status == 'Sanity Check Failure') {
-                if ( cse.SIDRA_Lite_Reason__c != 'Sanity Check failure of financial statement' ) {
-                    cse.SIDRA_Lite_Reason__c.addError('Set right value here');
-                    throw new SidraLiteException('The SIDRA lite reason must be "Sanity Check failure of financial statement" for this scenario');
-                }
-            } else {
-                if ( cse.SIDRA_Lite_Reason__c != 'Financial Review Non-compliance' ) {
-                    cse.SIDRA_Lite_Reason__c.addError('Set right value here');
-                    throw new SidraLiteException('The SIDRA lite reason must be "Financial Review Non-compliance" for this scenario');
-                }
+            if ( cse.SIDRA_Lite_Reason__c != 'Financial Review Non-compliance' ) {
+                cse.SIDRA_Lite_Reason__c.addError('Set right value here');
+                throw new SidraLiteException('The SIDRA lite reason must be "Financial Review Non-compliance" for this scenario');
             }
             // finally update SIDRA lite case
             parentCase.FirstFAnonComplianceDate__c = Date.today();

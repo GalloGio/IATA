@@ -4,7 +4,7 @@
     <name>Incoming IS Cases</name>
     <queueMembers>
         <roles>
-            <role>SISCustomerSupportA</role>
+            <role>SISCustomerSupport</role>
         </roles>
     </queueMembers>
     <queueSobject>

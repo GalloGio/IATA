@@ -469,6 +469,13 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Name</fields>
+        <fields>ISO_Code__c</fields>
+        <fields>ISO_Code_Numeric__c</fields>
+        <fields>ANG_IEP_Model__c</fields>
+        <fields>ANG_Portal_Service__c</fields>
+    </miniLayout>
     <relatedLists>
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
