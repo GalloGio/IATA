@@ -8345,23 +8345,27 @@ system.debug('aqui sectorValue ' + sectorValue);
         }        
     }
 
-    public void removeFromAccountsToConvert() {
+    public void removeFromAccountsToConvert()
+	{
         for (Account a: [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Name, Location_Type__c, IATACode__c,
                             Top_Parent__r.Id, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode, Top_Parent__r.BillingCountry, Top_Parent__r.Name, Top_Parent__r.Location_Type__c, Top_Parent__r.IATACode__c 
-                            FROM Account WHERE Id = :accountToBeFetchedOrRemoved]) {
-            
-            for (Account acc: accountsToBeConverted.values()) {
-                if (acc.Id == a.Id || acc.Top_Parent__r.id == a.Top_Parent__r.id || acc.id == a.Top_Parent__r.id ) {
-                    
+                            FROM Account WHERE Id = :accountToBeFetchedOrRemoved])
+		{
+            for (Account acc: accountsToBeConverted.values())
+			{
+                if (acc.Id == a.Id
+					|| (acc.Top_Parent__r.id == a.Top_Parent__r.id && (acc.Top_Parent__r.id != null || a.Top_Parent__r.id != null))
+					|| (acc.id == a.Top_Parent__r.id && a.Top_Parent__r.id != null))
+				{
                     if (newForm.Agency_Codes_Concerned__c.contains(acc.IATACode__c + ',')) {
                         newForm.Agency_Codes_Concerned__c = newForm.Agency_Codes_Concerned__c.remove(acc.IATACode__c + ',');
-                    }else if (newForm.Agency_Codes_Concerned__c.contains(acc.IATACode__c)) {
+                    } else if (newForm.Agency_Codes_Concerned__c.contains(acc.IATACode__c)) {
                         newForm.Agency_Codes_Concerned__c = newForm.Agency_Codes_Concerned__c.remove(acc.IATACode__c);
-                }
-                    if(accountsToBeConverted.containsKey(acc.id)) accountsToBeConverted.remove(acc.id);
+                	}
+                    if (accountsToBeConverted.containsKey(acc.id))
+						accountsToBeConverted.remove(acc.id);
                 }
             }
-
         }
     }
 }
