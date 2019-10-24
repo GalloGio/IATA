@@ -185,6 +185,11 @@
   background-color: #1e32fa;
 }
 
+.headerButtonNotificationsContainer {
+	white-space: nowrap;
+}
+
+
 .headerButtonNotificationsContainer:hover {
   cursor: pointer;
 }
@@ -198,13 +203,12 @@
 }
 
 .notificationNumber {
-  background-color: #fac832;
-  font-size: 11px;
-  text-align: center;
-  z-index: 2;
-  float: right;
-  position: relative;
-  margin-left: -6px;
+	background-color: #fac832;
+	font-size: 11px;
+	text-align: center;
+	z-index: 2;
+	margin-left: -6px;
+	display: inline;
 }
 
 .headerButtonProfileContainer:hover .openProfile,
