@@ -53,7 +53,7 @@ public with sharing class ContactSyncUtils extends SObjectSyncUtils {
         String key;
         for (Account_Contact_Role__c accountContactRole : getACRFromSObjects(sObjects)) {
             // Only one platform event per Contact in a same Account
-            key = accountContactRole.Contact__c + '|' + accountContactRole.Account__c;
+            key = accountContactRole.Contact__c + '|' + accountContactRole.Account_Role__r.Account__c;
             if(!doneKeys.contains(key)) {
                 doneKeys.add(key);
 
