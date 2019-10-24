@@ -62,6 +62,11 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
+            <field>Process__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>Dossier_Reception_Date__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -3514,7 +3519,6 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
     </fields>
     <fields>
         <fullName>Process_Eff_Age__c</fullName>
-        <defaultValue>0</defaultValue>
         <externalId>false</externalId>
         <label>Process Eff. Age</label>
         <precision>18</precision>
