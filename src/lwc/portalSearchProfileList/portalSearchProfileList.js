@@ -165,16 +165,16 @@ export default class PortalSearchProfileList extends NavigationMixin(LightningEl
     retrieveResultsFromServer() {
 
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
-
-        getFilteredProfileResultsPage({ searchKey: JSON.stringify(filteringObjectAux) })
+        getFilteredProfileResultsPage({ profileFilterWrapper: JSON.stringify(filteringObjectAux) })
             .then(myResults => {
                 let results = JSON.parse(JSON.stringify(myResults));
+                let recordsString = JSON.parse(results.recordsString);
+                
+                filteringObjectAux.profileComponent.nrResults = recordsString.length;
 
-                filteringObjectAux.profileComponent.nrResults = results.records.length;
-
-                if (results.records && results.records.length > 10) {
-                    this.listAccounts = results.records.filter(obj => obj.profileType === this.label.Company);
-                    this.listContacts = results.records.filter(obj => obj.profileType === 'Contact');
+                if (recordsString && recordsString.length > 10) {
+                    this.listAccounts = recordsString.filter(obj => obj.profileType === this.label.Company);
+                    this.listContacts = recordsString.filter(obj => obj.profileType === 'Contact');
                     let slicedContactProfileList = this.listContacts.length > 5 ? this.listContacts.slice(0, 10 - this.listAccounts.slice(0, 5).length) : this.listContacts;
                     let slicedAccountProfileList = this.listAccounts.length > 5 ? this.listAccounts.slice(0, 10 - slicedContactProfileList.length) : this.listAccounts;
 

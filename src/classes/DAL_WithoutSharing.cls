@@ -139,4 +139,74 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
 		if(conId==null) conId=CSP_Utils.getLoggedUser().contactId; // if conId, checks current user
         return [select id from Portal_Application_Right__c where Contact__c =:conId and Right__c ='Access Granted' and Application_Name__c like :str limit 1].size()>0;
     }
+
+	/* 
+    * @description Returns list of Contacts and Accounts for Profile Search
+    * @return List of List of SObjects (Accounts and Contacts) 
+    */
+	@AuraEnabled(cacheable=false)
+    public static CSP_Utils.PagedResult getSearchProfiles(String portalSearchFilterWrapper, Contact myContact) {
+		PortalSearchFilterWrapper profileFiltersWrapper = (PortalSearchFilterWrapper) JSON.deserialize(portalSearchFilterWrapper, PortalSearchFilterWrapper.class);
+        CSP_Utils.PagedResult result = new CSP_Utils.PagedResult();
+
+		List<PortalProfileCtrl.ProfileWrapper> lstProfileWrapper = new List<PortalProfileCtrl.ProfileWrapper>();
+        
+        String searchStr = String.escapeSingleQuotes(profileFiltersWrapper.searchText);
+        String wildCardStr = '*'+searchStr+'*';
+        String baseQuery = 'FIND \''+wildCardStr+'\' IN ALL FIELDS RETURNING ';
+        String countQuery = baseQuery;
+        String countryPortalStatusFilter = '';
+        String countryFilter = '';
+        
+        Map<Id,Account> allBranches = new Map<Id,Account>([select id from account where (id =: myContact.AccountId or parentId=: myContact.AccountId or top_parent__c =: myContact.AccountId)
+			and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer'))]);
+		Set<Id> allBranchesSet = allBranches.keySet();
+
+        countryPortalStatusFilter += ' WHERE AccountId IN :allBranchesSet ' + 
+								     ' AND User_Portal_Status__c IN (\'Pending Approval\', \'Approved Admin\', \'Approved User\') ' + 
+								     ' AND Status__c = \'Active\' ';
+        
+        if(profileFiltersWrapper.profileComponent.profileCountryFilter != null && profileFiltersWrapper.profileComponent.profileCountryFilter != '') {
+                countryPortalStatusFilter += ' AND ISO_Country__r.Name = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
+        }
+        if(profileFiltersWrapper.profileComponent.profileStatusFilter != null && profileFiltersWrapper.profileComponent.profileStatusFilter != '') {
+                countryPortalStatusFilter += ' AND User_Portal_Status__c = \'' + profileFiltersWrapper.profileComponent.profileStatusFilter + '\' ';
+        }
+        if (profileFiltersWrapper.profileComponent != null && profileFiltersWrapper.profileComponent.profileTypeFilter != null && profileFiltersWrapper.profileComponent.profileTypeFilter != 'Account') {
+           
+           baseQuery += profileFiltersWrapper.profileComponent.profileTypeFilter == 'Contact' ? ' Contact (Id, Name, User_Portal_Status__c, ISO_Country__r.Name ' + countryPortalStatusFilter + ' ) ' : ' Contact (Id, Name, User_Portal_Status__c, ISO_Country__r.Name ' + countryPortalStatusFilter + ' ), ';
+        }
+        
+        if(profileFiltersWrapper.profileComponent.profileCountryFilter != null && profileFiltersWrapper.profileComponent.profileCountryFilter != '') {
+            countryFilter = ' AND IATA_ISO_Country__r.Name = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
+        }
+        if (profileFiltersWrapper.profileComponent != null && profileFiltersWrapper.profileComponent.profileTypeFilter != null && profileFiltersWrapper.profileComponent.profileTypeFilter != 'Contact') {
+            baseQuery += ' Account (Id, Name, IATA_ISO_Country__r.Name WHERE (Id = \'' + myContact.AccountId +'\' OR ParentId = \'' + myContact.AccountId + '\' OR Top_Parent__c = \'' + myContact.AccountId +'\' ) '+ countryFilter + ') ';
+        }
+        
+        List<List<SObject> > lstListResults = Search.query(baseQuery);
+        
+        if(!lstListResults.isEmpty()) {
+            result.totalItemCount = lstListResults.size() == 2 ? lstListResults[0].size() + lstListResults[1].size() : lstListResults[0].size();
+
+            for(List<SObject> listfilteredProfiles : lstListResults) {
+                for(SObject eachFilteredProfileResult : listfilteredProfiles) {
+                    if(eachFilteredProfileResult.getSObjectType() == Schema.Contact.getSObjectType()) {
+                        Contact eachProfileResult = (Contact)eachFilteredProfileResult;
+                        lstProfileWrapper.add(new PortalProfileCtrl.ProfileWrapper(eachProfileResult.Id,eachProfileResult.Name,eachProfileResult.User_Portal_Status__c,eachProfileResult.ISO_Country__r.Name == null ? '' : eachProfileResult.ISO_Country__r.Name, 'Contact' ));
+                    }
+                    else if(eachFilteredProfileResult.getSObjectType() == Schema.Account.getSObjectType()) {
+                        Account eachProfileResult = (Account)eachFilteredProfileResult;
+                        lstProfileWrapper.add(new PortalProfileCtrl.ProfileWrapper(eachProfileResult.Id,eachProfileResult.Name,'',eachProfileResult.IATA_ISO_Country__r.Name == null ? '' : eachProfileResult.IATA_ISO_Country__r.Name, 'Account'));
+                    }
+                }
+            }
+
+        	if(!lstProfileWrapper.isEmpty()){
+        	    result.recordsString = JSON.Serialize(lstProfileWrapper);
+        	}
+		}
+        
+        return result;
+    }
 }
