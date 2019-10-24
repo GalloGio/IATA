@@ -40,8 +40,7 @@ public without sharing class ISSP_AMS_Accreditation {
         PARAMCODE_IFAP_CONTACTS,
         PARAMCODE_TRAINED_STAFF,
         PARAMCODE_COPY_OWNERS,
-        PARAMCODE_MAIN_LEGAL_OWNERS_NA,
-        PARAMCODE_MAIN_LEGAL_OWNERS_ACC
+        PARAMCODE_MAIN_LEGAL_OWNERS_NA
     }
 
     private String vSAAMCaseId;
@@ -4737,9 +4736,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
         query += 'FROM AMS_Accreditation_Contact__c ';
 
-        if (paramCodeWhere == AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS_ACC) {
-            query += 'WHERE AMS_Pax_Accreditation_Form__r.SAAM_Case__r.AccountId = \'' + newform.Same_Legal_Entity_Agency_Account__c + '\'';
-        } else if (String.isBlank(parentFormId)) {
+        if (String.isBlank(parentFormId)) {
             query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + newForm.Id + '\' ';
         } else {
             query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + parentFormId + '\' ';
@@ -4796,10 +4793,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
             when PARAMCODE_MAIN_LEGAL_OWNERS_NA {
                 query += 'AND Agency_owner__c = true AND AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Status = \'Draft\' ';
-            }
-
-            when PARAMCODE_MAIN_LEGAL_OWNERS_ACC {
-                query += 'AND Agency_owner__c = true AND AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Status = \'Open\' ';
             }
         }
 
@@ -8094,15 +8087,41 @@ system.debug('aqui sectorValue ' + sectorValue);
         update newForm;
     }
 
-    public List<AMS_Accreditation_Contact__c> getOwnersFromMainLegalEntity() {
+    public List<OwnerContact> getOwnersFromMainLegalEntity() {
+        List<OwnerContact> owners = new List<OwnerContact>();
+        
         if (isHOAccredited) {
             if (newForm.Same_Legal_Entity_Agency_Account__c != null) {
-                return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS_ACC, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
-            } else {
-                return new List<AMS_Accreditation_Contact__c>();
+                for (AMS_Account_Role__c accRole: [SELECT Id, Percentage__c, Contact__r.FirstName, Contact__r.LastName, Contact__r.Email, Contact__r.Phone
+                                                FROM AMS_Account_Role__c
+                                                WHERE Account__c = :newform.Same_Legal_Entity_Agency_Account__c
+                                                    AND Valid__c = true 
+                                                    AND Active__c = true]) {
+                    owners.add(new OwnerContact(accRole.Contact__r.Email, accRole.Contact__r.Phone, accRole.Contact__r.FirstName, accRole.Contact__r.LastName, accRole.Percentage__c));
+                }
             }
         } else {
-            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS_NA, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, newForm.Same_Legal_Entity_Agency_Form__c));
+            for (AMS_Accreditation_Contact__c accCon: executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS_NA, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, newForm.Same_Legal_Entity_Agency_Form__c))) {
+                owners.add(new OwnerContact(accCon.Email__c, accCon.Phone__c, accCon.First_name__c, accCon.Last_name__c, accCon.Financial_interest__c));
+            }
+        }
+
+        return owners;
+    }
+
+    public class OwnerContact {
+        public String email {get; set;}
+        public String phone {get; set;}
+        public String firstName {get; set;}
+        public String lastName {get; set;}
+        public Decimal financialInterest {get; set;}
+        
+        public OwnerContact(String email, String phone, String firstName, String lastName, Decimal financialInterest) {
+            this.email = email;
+            this.phone = phone;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.financialInterest = financialInterest;
         }
     }
 
