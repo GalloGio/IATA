@@ -211,7 +211,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track headerButtonNotificationsContainerStyle;
     @track headerButtonNotificationsCloseIconStyle;
     @track headerButtonNotificationsStyle;
-    @track notificationNumberStyle;
+    @track notificationNumberStyle='display: none;';
     @track openNotificationsStyle;
     @track displayBodyStyle;
     @track displayNotificationStyle;
@@ -294,7 +294,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
             if (this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
                 this.notificationNumberStyle = 'display: none;';
-            }
+            }else{
+				this.notificationNumberStyle = 'display: inline;';
+				this.headerButtonNotificationsStyle='display: inline;vertical-align:top;';
+			}
 
         });
 
@@ -391,23 +394,23 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         this.openNotifications = !this.openNotifications;
 
         if (this.openNotifications) {
-			this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000; padding-right: 6px; padding-left: 6px;';
-			this.headerButtonNotificationsCloseIconStyle = 'display: flex; align-items: center; justify-content: center;';
-			this.headerButtonNotificationsStyle = 'display: none;';
-			this.notificationNumberStyle = 'display: none;';
-			this.openNotificationsStyle = 'display: block;';
-			this.showBackdrop = true;
-			this.displayBodyStyle = '';
-			this.displayNotificationStyle = 'width: 100%'
-			this.closeSideMenu();
-		} else {
-			this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
-			this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
-			this.headerButtonNotificationsStyle = 'display: inline;';
-			this.notificationNumberStyle = (this.numberOfNotifications === 0 ? 'display: none;' : 'display: inline;');
-			this.openNotificationsStyle = 'display: none;';
-			this.showBackdrop = false;
-		}
+            this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000; padding-right: 6px; padding-left: 6px;';
+            this.headerButtonNotificationsCloseIconStyle = 'display: flex; align-items: center; justify-content: center;';
+            this.headerButtonNotificationsStyle = 'display: none;';
+            this.notificationNumberStyle = 'display: none;';
+            this.openNotificationsStyle = 'display: block;';
+            this.showBackdrop = true;
+            this.displayBodyStyle = '';
+            this.displayNotificationStyle = 'width: 100%'
+            this.closeSideMenu();
+        } else {
+            this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
+            this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
+            this.headerButtonNotificationsStyle = 'display: inline;vertical-align:top;';
+            this.notificationNumberStyle = (this.numberOfNotifications === 0 ? 'display: none;' : 'display: inline;');
+            this.openNotificationsStyle = 'display: none;';
+            this.showBackdrop = false;
+        }
            
     }
 
