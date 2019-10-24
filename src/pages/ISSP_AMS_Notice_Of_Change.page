@@ -1036,7 +1036,7 @@
 								<apex:inputCheckbox html-data-group="agencyLocation" value="{!newForm.Confirm_Location_Details_are_correct__c}"/>
 							</apex:pageBlockSectionItem>
 						
-						<apex:pageBlockSectionItem labelStyle="width:40%;font-weight:" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Location_Details_are_correct__c==false,newForm.Notify_Change_Location__c==false, newForm.Scope_of_Change__c != 'HO - All Branches' , agencyCodesConcernedSize < 1), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
+						<apex:pageBlockSectionItem labelStyle="width:40%;font-weight:" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Location_Details_are_correct__c==false,newForm.Notify_Change_Location__c==false, newForm.Scope_of_Change__c != 'HO - All Branches'), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Location__c.Label}" style="color:black;font-size:110%"/>
 							<apex:inputCheckbox id="notifyChangeLocationCheckbox" html-data-group="agencyLocation" html-data-controls="agencyLocationComponent" value="{!newForm.Notify_Change_Location__c}"/>
 						</apex:pageBlockSectionItem>
@@ -2340,10 +2340,14 @@
 		//END NEWGEN-523
 
 		//NEWGEN-1227
-		if (lScopeOfChange === 'HO - All Branches' || lScopeOfChange === 'HO - Selected Branches' || {!agencyCodesConcernedSize} > 1) {
+		if (lScopeOfChange === 'HO - All Branches' || lScopeOfChange === 'HO - Selected Branches' || '{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
 			checkb.prop('checked', false);
 			checkb.prop('disabled', true);
 			setWarningBoxOnHover(checkb, '{!$Label.ISSP_NoC_Location_Warning}');
+		}
+		else if ('{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
+			$j('[id$=notifyChangeLocationCheckbox]').prop('disabled', true);
+			setWarningBoxOnHoverMC($j('[id$=notifyChangeLocationCheckbox]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 		}
 		//END - NEWGEN 1227
 				
@@ -2381,11 +2385,6 @@
 				if (!({!isMCAccredited} && lScopeOfChange !== 'HO Only')) {
 					setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 				}
-			}
-
-			if ('{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
-				$j('[id$=notifyChangeLocationCheckbox]').prop('disabled', true);
-				setWarningBoxOnHoverMC($j('[id$=notifyChangeLocationCheckbox]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
 		}
 		
