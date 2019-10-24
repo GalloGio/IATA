@@ -293,11 +293,14 @@ public without sharing class ISSP_ChangePassword {
             //if no Acc Cont Roles then create one and also create the Portal Service access
             if(accContRoleCheck.size() == 0){
 
-                Account_Role__c accRole = [SELECT id, account__r.recordtypeid, account__r.Sector__c, account__r.Category__c 
+                List<Account_Role__c> lAccRole = [SELECT id, account__r.recordtypeid, account__r.Sector__c, account__r.Category__c 
                                             FROM Account_Role__c 
                                             WHERE account__c = :userInfo.accountId AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
 
-                if(accRole != null){
+                Account_Role__c accRole = new Account_Role__c();
+
+                if(!lAccRole.isEmpty()){
+                    accRole = lAccRole[0];
                     bAccRole = true;
                     userAcc.recordtypeid = accRole.account__r.recordtypeid;
                     userAcc.Sector__c = accRole.account__r.Sector__c;
