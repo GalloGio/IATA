@@ -135,11 +135,11 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                 }
             }
             getITPStations({accountId: myResult.accountId})
-            .then(result => {
-                let myResult = JSON.parse(JSON.stringify(result));
+            .then(result_2 => {
+                let myResult_2 = JSON.parse(JSON.stringify(result_2));
                 let myTopicOptions = [];
-                Object.keys(myResult).forEach(function (el) {
-                    myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
+                Object.keys(myResult_2).forEach(function (el) {
+                    myTopicOptions.push({ label: myResult_2[el].Code__c + ' - ' + myResult_2[el].Description__c, value: myResult_2[el].Code__c });
                 });
                 myTopicOptions = this.sortData('label', 'asc', JSON.parse(JSON.stringify(myTopicOptions)));
 
@@ -187,9 +187,10 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
 
         let todaysDatePlus = new Date();
         
+        // eslint-disable-next-line radix
         todaysDatePlus.setDate(todaysDate.getDate() + parseInt(this.datePeriodValue) );
     
-        let todaysDateFormatted = todaysDate.getFullYear() + "-" + (todaysDate.getMonth() + 1) + "-" + todaysDate.getDate();
+        //let todaysDateFormatted = todaysDate.getFullYear() + "-" + (todaysDate.getMonth() + 1) + "-" + todaysDate.getDate();
         let todaysDatePlusFormatted = todaysDatePlus.getFullYear() + "-" + (todaysDatePlus.getMonth() + 1) + "-" + todaysDatePlus.getDate();
     
         switch(this.datePeriodValue){
@@ -251,7 +252,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
 
         if(this.expirationStatusValue === 'All'){
             for(i=0; i < this.expirationStatusOptions.length; i++){
-                if(this.expirationStatusOptions[i].value == 'All'){
+                if(this.expirationStatusOptions[i].value === 'All'){
                     auxExpirationStatus = '';
                 }else{
                     auxExpirationStatus = (auxExpirationStatus === '' ) ? this.expirationStatusOptions[i].value : auxExpirationStatus + ',' + this.expirationStatusOptions[i].value;
