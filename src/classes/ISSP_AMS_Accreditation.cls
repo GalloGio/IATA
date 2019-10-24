@@ -58,8 +58,23 @@ public without sharing class ISSP_AMS_Accreditation {
 	{
 		get
 		{
-			IATA_ISO_Country__c country = fetchISOCountry(newForm.Branch_Office_Country__r.ISO_Code__c);
-			return getAmsAllLangCountryLabel(country, UserInfo.getLanguage());
+			List<String> codes = newForm.Agency_Codes_Concerned__c.split(',');
+			if (accountConcerned != null)
+				codes.add(accountConcerned.IATACode__c);
+			Map<Id, Account> countries = getSelectedBranchList(codes);
+
+			Set<String> countriesLabels = new Set<String>();
+			for (Account a : countries.values())
+			{
+				IATA_ISO_Country__c country = fetchISOCountry(a.Country_ISO_Code__c);
+				countriesLabels.add(getAmsAllLangCountryLabel(country, UserInfo.getLanguage()));
+			}
+
+			String countriesLabel = '';
+			for (String s : countriesLabels)
+				countriesLabel += (countriesLabel == '' ? '' : ', ') + s;
+
+			return countriesLabel;
 		}
 		set;
 	}
@@ -1463,13 +1478,13 @@ public without sharing class ISSP_AMS_Accreditation {
 
     private Map<Id,Account> getSelectedBranchList(List<String> branchCodes) {
         if(newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry' && isNoticeOfChange)
-            return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id, IATA_ISO_Country__r.AMS_Settlement_System__c
+            return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id, IATA_ISO_Country__r.AMS_Settlement_System__c, Country_ISO_Code__c
                 FROM Account
                 WHERE IATACode__c IN :branchCodes AND Location_Type__c = :AMS_Utils.HE
                 AND Status__c NOT IN ('Terminated','Not accreditated', 'Not in operation', 'Listed','')
                 ORDER BY Name, IATACode__c]);
         else
-            return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id, IATA_ISO_Country__r.AMS_Settlement_System__c
+            return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id, IATA_ISO_Country__r.AMS_Settlement_System__c, Country_ISO_Code__c
                 FROM Account
                 WHERE IATACode__c IN :branchCodes
                 ORDER BY Name, IATACode__c]);
