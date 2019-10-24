@@ -50,3 +50,7 @@
 .align_button_right_class{
     float: right;
 }
+
+.modal_max_height {
+    max-height: 50vh;
+}

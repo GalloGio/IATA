@@ -179,7 +179,7 @@
                         </header>
                         <template if:false={loadingModal}>
                             <div if:false={isActionNew} 
-                                    class="slds-modal__content slds-p-around_medium"
+                                    class="slds-modal__content slds-p-around_medium modal_max_height"
                                     id="modal-content-id-1">
                                 <lightning-input 
                                     name="employee_code" 
@@ -422,7 +422,8 @@
                                         data={recordToManageNewStationsList} 
                                         columns={columnsManageEmployeeStations}
                                         onrowaction={handleManageEmployeeStationsRowAction}
-                                        hidden={hasNoStations}>
+                                        hidden={hasNoStations}
+                                        class='remove_focus'>
                                     </lightning-datatable>
                                 </div>
                                 <div if:true={hasNoStations} class="slds-size_12-of-12" style="height: 200px;">

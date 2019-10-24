@@ -324,6 +324,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
                         rec.Username = rec.Email__c;
                     } else {
                         rec.Username = rec.Name.substring(4, rec.Name.length);
+                        // eslint-disable-next-line radix
                         rec.Username = parseInt(rec.Username);
                         rec.Username = rec.Username.toString();
                     }
@@ -556,12 +557,10 @@ export default class PortalIftpManageEmployees extends LightningElement {
         const actionName = event.detail.action.name;
         const row = event.detail.row;
         let id = row.Id;
-        let index = -1;
 
         for(let i = 0; i < ITPEmployeesWithStationsInfo.length; i++){
             if(id === ITPEmployeesWithStationsInfo[i].Id){
                 this.recordToManage = ITPEmployeesWithStationsInfo[i];
-                index = i;
                 i = ITPEmployeesWithStationsInfo.length;
             }
         }
@@ -614,6 +613,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
             case 'resetPassword':
                 this.openResetPasswordModal = true;
                 this.modalTitle = 'Reset Password';
+                break;
             default:
         }
     }
@@ -952,13 +952,12 @@ export default class PortalIftpManageEmployees extends LightningElement {
         let recordToManage = JSON.parse(JSON.stringify(this.recordToManage));
         
         let recordToManageNewStationsList = JSON.parse(JSON.stringify(this.recordToManageNewStationsList));
-
         
         if(recordToManageNewStationsList.length > 0){
             let originalStationsList = [];
             let newStationsList = [];
             let existsPrimary = false;
-            
+
             recordToManageNewStationsList.forEach(station =>{
                 if(station.Primary__c){
                     existsPrimary = true;
