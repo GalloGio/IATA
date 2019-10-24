@@ -158,8 +158,10 @@
         for (var i=0; i<iframes.length; i++) {
             try {
                 var iframe = iframes[i];
-                var name = parseURL(iframe.src).searchObject.reqIdentifier;
-                if (name!='undefined') fileNames.push(name);
+                var parsedUrl = parseURL(iframe.src);
+                var name = parsedUrl.searchObject.reqIdentifier;
+                var required = parsedUrl.searchObject.reqRequired;
+                if (name!='undefined' && required=="Mandatory") fileNames.push(name);
             } catch (e) {}
         }
         if (fileNames.length>0) {

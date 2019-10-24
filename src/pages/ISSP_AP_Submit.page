@@ -349,7 +349,7 @@
                     </apex:outputPanel>
                 </apex:pageBlockSection>
 
-                <apex:pageBlockSection columns="1" collapsible="false" rendered="{!NOT(IsSISMember)}">
+                <apex:pageBlockSection columns="1" collapsible="false" rendered="{!AND(NOT(IsSISMember),listSISTypes.size>0)}">
                     <apex:facet name="header">
                         <apex:outputpanel >
                             {!$Label.ISSP_SIS_Membership_Participation_Agreement}
@@ -361,8 +361,11 @@
                             <apex:outputLink value="/ISSP_SISMembershipApplicationFormPDF?id={!newForm.Id}&sistype={!sisType}" style="color:#31708f; text-decoration: underline;" target="_new">
                                 Download SIS application Form ({!sisType})
                             </apex:outputLink>
+                            <apex:outputText value="  (please download and sign this agreement if you are applying to the ICH as an Airline)" rendered="{!sisType=='ISPA'}"/>
                         </apex:outputPanel>
                     </apex:repeat>
+                    <apex:iframe scrolling="false" height="180px"
+                    src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Upload signed SIS participation form&reqDescription=&reqIdentifier=SignedSISForm"/>
                 </apex:pageBlockSection>
 
                 <!-- Accept Discalimer -->

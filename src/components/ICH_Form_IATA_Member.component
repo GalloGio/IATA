@@ -593,11 +593,11 @@
         </div>
         <apex:actionRegion>
             <apex:selectRadio value="{!ctrl.newform.Do_you_want_to_add_Bank_Details__c}" styleClass="radio-currency-clearance required" layout="pageDirection" rendered="{!!readOnly}">
-                <apex:selectOption itemValue="No" itemLabel="No, nothing is needed" rendered="{!NOT(show2bankMandate)}"/>
-                <apex:selectOption itemValue="No, use form 1" itemLabel="No, Use Bank Mandate Form" rendered="{!NOT(show2bankMandate)}" />
-                <apex:selectOption itemValue="No, use form 1" itemLabel="No, Use Bank Mandate Form 1" rendered="{!show2bankMandate}"/>
-                <apex:selectOption itemValue="No, use form 2" itemLabel="No, Use Bank Mandate Form 2" rendered="{!show2bankMandate}"/>
-                <apex:selectOption itemValue="Yes" itemLabel="Yes, Use this SIS specific Bank Mandate"/>
+                    <apex:selectOption itemValue="No" itemLabel="No, nothing is needed" />
+                    <apex:selectOption itemValue="No, use form 1" itemLabel="No, Use ICH Bank Mandate Form" rendered="{!NOT(show2bankMandate)}" />
+                    <apex:selectOption itemValue="No, use form 1" itemLabel="No, Use ICH Bank Mandate Form 1" rendered="{!show2bankMandate}" />
+                    <apex:selectOption itemValue="No, use form 2" itemLabel="No, Use ICH Bank Mandate Form 2" rendered="{!show2bankMandate}" />
+                    <apex:selectOption itemValue="Yes" itemLabel="Yes, Use this SIS specific Bank Mandate" />
                 <apex:actionSupport event="onchange" rerender="section7" status="WaitingStatus" />
             </apex:selectRadio>
         </apex:actionRegion>

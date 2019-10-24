@@ -1197,6 +1197,9 @@ global without sharing class ISSP_APProcess {
         }
         if (isICH) {
             listMandatoryFiles.add('SignedICHForm');
+            if (!getIsSISMember() && !getListSISTypes().isEmpty()) {
+                listMandatoryFiles.add('SignedSISForm');
+            }
         }
         System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
         return listMandatoryFiles;
