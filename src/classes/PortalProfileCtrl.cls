@@ -1088,27 +1088,19 @@ public static Contact contactInfo = new Contact();
         return filteredProfiles;
     }
 
-    
-
     public class ProfileWrapper{
 
-        @AuraEnabled
-        public String profileId;
+        @AuraEnabled public String profileId;
         
-        @AuraEnabled
-        public String profileName;
+        @AuraEnabled public String profileName;
 
-        @AuraEnabled
-        public String profilePortalStatus;
+        @AuraEnabled public String profilePortalStatus;
 
-        @AuraEnabled
-        public String profileCountry;
+        @AuraEnabled public String profileCountry;
 
-        @AuraEnabled
-        public String profileType;
+        @AuraEnabled public String profileType;
         
-        @AuraEnabled
-        public String profileUrl;
+        @AuraEnabled public String profileUrl;
 
         public ProfileWrapper(String profileIdAux, String profileNameAux, String profilePortalStatusAux, String profileCountryAux, String profileTypeAux){
             this.profileId = profileIdAux;
