@@ -252,9 +252,7 @@ body {
 .lightBlueSendButton svg {
     fill:#a5adfd;
 }
-.caseMessagesContainer{
-    height: 350px;
-}
+
 .caseMessagesSelfBubble{
     background-color: #525252;
     color:#FFFFFF;

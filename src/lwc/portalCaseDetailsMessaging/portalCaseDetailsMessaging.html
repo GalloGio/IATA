@@ -17,7 +17,7 @@
                 <div class="slds-grid slds-wrap slds-p-around_x-large messagesContainer">
 
                     <template for:each={lstMessages} for:item="message" for:index="index">
-                        <div key={message.id} if:true={message.isSelf} class="caseMessagesOtherBubbleContainer">
+                        <div key={message.id} if:true={message.isSelf} class="caseMessagesSelfBubbleContainer">
                             <div class="slds-p-around_medium caseMessagesSelfBubble">
                                 <lightning-formatted-text value={message.messageText} class="breakWord">
                                 </lightning-formatted-text>
