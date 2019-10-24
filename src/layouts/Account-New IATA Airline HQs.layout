@@ -64,15 +64,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Business_Street__c</field>
+                <field>Hierarchy_Level__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Business_City__c</field>
+                <field>Verification_Status__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Business_Postal_Code__c</field>
+                <field>VAT_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>VAT_Number_2__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -132,6 +136,10 @@
                 <behavior>Edit</behavior>
                 <field>Baggage_Tag_Range_Code__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Accounting_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -172,10 +180,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ACLI_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Global_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -677,76 +681,6 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>E&amp;F Information</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_SubStatus__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Legacy_Code__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SAP_Number__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Additional_SAP_Nr__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Airline_ID__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Remitter_details__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_SIS_Location_ID__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Effective_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Liquidator_Administrator__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Status_Additional_Information__c</field>
-            </layoutItems>
-            <layoutItems>
-                <emptySpace>true</emptySpace>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Tax_ID_1__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Tax_ID_2__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
         <label>Ecommerce Information</label>
         <layoutColumns>
             <layoutItems>
@@ -894,6 +828,10 @@
                 <behavior>Readonly</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Global_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -913,7 +851,7 @@
                 <field>OwnerId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ACLI_SAP_Id__c</field>
             </layoutItems>
             <layoutItems>
@@ -994,6 +932,129 @@
         <fields>SIS_Status__c</fields>
         <fields>SIS_Sub_Status__c</fields>
     </miniLayout>
+    <platformActionList>
+        <actionListContext>Record</actionListContext>
+        <platformActionListItems>
+            <actionName>Account_Context_Activation</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>PartnerScorecard</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>CreateCallList</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>4</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>PrintableView</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>5</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>2</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ChangeRecordType</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>EnableAsPartner</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ChangeOwnerOne</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Share</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>8</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>JigsawSearch</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>XClean</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>10</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Submit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>11</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>AccountHierarchy</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>12</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>AccountAddToCampaign</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>13</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>CreateSurveyInvitation</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>14</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Delete</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>15</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>NewRelatedAccount</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>16</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Chatter_Broadcast_Tool</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>17</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Key_Account_Plan</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>18</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Web_App_View</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>19</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>CallHighlightAction</actionName>
+            <actionType>ProductivityAction</actionType>
+            <sortOrder>20</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>SmsHighlightAction</actionName>
+            <actionType>ProductivityAction</actionType>
+            <sortOrder>21</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>EmailHighlightAction</actionName>
+            <actionType>ProductivityAction</actionType>
+            <sortOrder>22</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>WebsiteHighlightAction</actionName>
+            <actionType>ProductivityAction</actionType>
+            <sortOrder>23</sortOrder>
+        </platformActionListItems>
+    </platformActionList>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Account__c</fields>
@@ -1019,6 +1080,17 @@
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>ORDERS.TOTAL_AMOUNT</fields>
         <relatedList>RelatedOrderList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Is_Business_Address__c</fields>
+        <fields>Country__c</fields>
+        <fields>State_Name__c</fields>
+        <fields>City_Name__c</fields>
+        <fields>Postal_Code__c</fields>
+        <fields>Street__c</fields>
+        <fields>Po_Box__c</fields>
+        <relatedList>Address__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <customButtons>Contact_Related_List</customButtons>
@@ -1171,17 +1243,15 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Effective_From_Date__c</fields>
-        <fields>Effective_To_Date__c</fields>
-        <fields>RECORDTYPE</fields>
-        <fields>Status__c</fields>
+        <fields>Functional_Role__c</fields>
+        <fields>Account_Roles__c</fields>
+        <fields>Business_Context__c</fields>
         <relatedList>Account_Role__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <customButtons>Mass_Update_Contracts</customButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>Product_Family__c</fields>
-        <fields>CONTRACT.NAME</fields>
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
         <fields>CONTRACT_TERM</fields>

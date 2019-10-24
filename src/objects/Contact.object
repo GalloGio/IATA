@@ -20983,4 +20983,18 @@ myuser={!User.Id}</url>
         <protected>false</protected>
         <url>/apex/pi__SendToPardot?contactEmail={!URLENCODE(Contact.Email)}&amp;contactId={!Contact.Id}&amp;serverUrl={!$Api.Partner_Server_URL_90}</url>
     </webLinks>
+	<fields>
+        <fullName>Global_ID__c</fullName>
+        <displayFormat>003{0000000000}</displayFormat>
+        <externalId>true</externalId>
+        <label>Global ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </fields>
+    <validationRules>
+        <fullName>No_Airport_Contact</fullName>
+        <active>true</active>
+        <errorConditionFormula>Account.RecordType.DeveloperName=&apos;Airport&apos;</errorConditionFormula>
+        <errorMessage>It is not possible to attach a contact to an Airport type Account</errorMessage>
+    </validationRules>
 </CustomObject>

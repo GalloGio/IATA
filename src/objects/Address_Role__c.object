@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Address_Role_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>AccountHierarchyLevel__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Address__r.Account__r.Hierarchy_Level__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AccountHierarchyLevel</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Address</label>
+        <referenceTo>Address__c</referenceTo>
+        <relationshipLabel>Addresses Role</relationshipLabel>
+        <relationshipName>Addresses_Role</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Global_ID__c</fullName>
+        <displayFormat>a0N{0000000000}</displayFormat>
+        <externalId>false</externalId>
+        <label>Global ID</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>Role_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Role Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Address_Roles</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SIS_Location_ID__c</fullName>
+        <description>An identifier in SIS that represents an Address that is only used as a Billing Address. As Salesforce is the master of Addresses, this identifier is needed so that it can be passed to SAP and in turn, to SIS so that invoices with the correct Address can be generated.</description>
+        <externalId>false</externalId>
+        <label>SIS Location ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Address Role</label>
+    <nameField>
+        <displayFormat>AR-{0000000}</displayFormat>
+        <label>Address Role Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Addresses Role</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>MASTER</fullName>
+        <active>true</active>
+        <label>MASTER</label>
+        <picklistValues>
+            <picklist>Role_Type__c</picklist>
+            <values>
+                <fullName>Billing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shipping</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>AirportShiptoOnly</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+Address__r.Account__r.RecordTypeDeveloperName__c =&quot;Airport&quot;,
+OR(
+ ISPICKVAL(Role_Type__c,&quot;Billing&quot;),
+ISPICKVAL(Role_Type__c,&quot;Business&quot;)
+)
+)</errorConditionFormula>
+        <errorMessage>Airport can Only have Shipping Role</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Avoid_Role_Creation</fullName>
+        <active>true</active>
+        <description>Avoid creating a role of billing or shipping if the account has not been created into SAP, meaning if Account_Activation_Context_Status__c on address role business context is not completed</description>
+        <errorConditionFormula>AND(
+NOT(Address__r.Account__r.Sold_To_Completed__c =&quot;Completed&quot;),
+NOT(ISPICKVAL( Role_Type__c ,&quot;Business&quot;)),
+NOT( Address__r.Account__r.RecordTypeDeveloperName__c =&quot;Airport&quot;),
+NOT( ISPICKVAL(Address__r.Account__r.Hierarchy_Level__c,&quot;Branch&quot;))
+)</errorConditionFormula>
+        <errorMessage>You can not create an additional address if the SOLD TO of the customer has not been created into SAP</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SIS_Location_ID_Billing_Role_Check</fullName>
+        <active>true</active>
+        <description>SIS Location ID with role of Billing only accepts numbers from 1 to 99</description>
+        <errorConditionFormula>AND(
+	NOT(ISBLANK(SIS_Location_ID__c)),
+	( ISPICKVAL(Role_Type__c,&quot;Billing&quot;)),
+	NOT(
+		OR(
+			REGEX(SIS_Location_ID__c, &quot;[1-9]{1}&quot;),
+			REGEX(SIS_Location_ID__c, &quot;[0-9]{2}&quot;)
+		)
+	)
+)</errorConditionFormula>
+        <errorMessage>SIS Location ID with role of Billing only accepts numbers from 1 to 99</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SIS_Location_ID_format_check</fullName>
+        <active>true</active>
+        <description>SIS Location ID just accepts values Main, and numbers from 1 to 99</description>
+        <errorConditionFormula>AND(
+NOT( ISPICKVAL(Role_Type__c ,&quot;Shipping&quot;)),
+NOT(ISBLANK(SIS_Location_ID__c)),
+AND( SIS_Location_ID__c &lt;&gt;&quot;Main&quot;,
+NOT(
+OR(
+REGEX(SIS_Location_ID__c, &quot;[1-9]{1}&quot;),
+REGEX(SIS_Location_ID__c, &quot;[0-9]{2}&quot;)
+)
+)
+)
+
+
+)</errorConditionFormula>
+        <errorMessage>SIS Location ID just accepts values Main, and numbers from 1 to 99</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SIS_location_ID_Main_value</fullName>
+        <active>true</active>
+        <description>The SIS Location ID with &quot;Main&quot; value is only available for a role type of Business</description>
+        <errorConditionFormula>AND(
+NOT(ISBLANK(SIS_Location_ID__c)),
+!(SIS_Location_ID__c=&quot;Main&quot; ),
+(ISPICKVAL(Role_Type__c,&quot;Business&quot;))
+)</errorConditionFormula>
+        <errorMessage>The SIS Location ID with &quot;Main&quot; value is only available for a role type of Business</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SIS_location_ID_shipping_role</fullName>
+        <active>true</active>
+        <description>The SIS Location ID field should be empty for a role type of shipping</description>
+        <errorConditionFormula>AND(
+ !(SIS_Location_ID__c=&quot;&quot; ),
+ (ISPICKVAL(Role_Type__c,&quot;Shipping&quot;))
+)</errorConditionFormula>
+        <errorMessage>The SIS Location ID field should be empty for a role type of shipping</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Sold_to_business_address_only</fullName>
+        <active>true</active>
+        <description>You can not create another role than &quot;Business&quot; for a Business Address</description>
+        <errorConditionFormula>AND(
+Address__r.Is_Business_Address__c =true,
+!ISPICKVAL(Role_Type__c , &quot;Business&quot;),
+NOT(
+OR(
+ (ISPICKVAL(Address__r.Account__r.Hierarchy_Level__c,&apos;branch&apos;)),
+ (Address__r.Account__r.RecordTypeDeveloperName__c =&apos;Airport&apos;)
+)
+)
+)</errorConditionFormula>
+        <errorMessage>You can not create another role than &quot;Business&quot; for a Business Address</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Sold_to_not_business_address</fullName>
+        <active>true</active>
+        <description>Avoid creating a role of business for a not &quot;business&quot; address</description>
+        <errorConditionFormula>AND(
+Address__r.Is_Business_Address__c =false,
+ISPICKVAL(Role_Type__c , &quot;Business&quot;)
+)</errorConditionFormula>
+        <errorMessage>You can not create a role of &quot;Business&quot; for a non Business Address</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>branchAccountSoldToAddress</fullName>
+        <active>true</active>
+        <description>A Branch account type can not have a Business Address</description>
+        <errorConditionFormula>AND( 
+AccountHierarchyLevel__c=&apos;Branch&apos;,
+ISPICKVAL( 	Role_Type__c ,&apos;Business&apos;)
+)</errorConditionFormula>
+        <errorMessage>A Branch account type can not have a Business Address</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

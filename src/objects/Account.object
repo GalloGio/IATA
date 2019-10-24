@@ -11141,6 +11141,7 @@ WSPN-Worldspan</inlineHelpText>
     <fields>
         <fullName>IATA_ISO_Country__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is the Country of where an Account is physically located.</description>
         <externalId>false</externalId>
         <label>ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
@@ -101642,5 +101643,1421 @@ userid={!User.Id}</url>
         <openType>replace</openType>
         <protected>false</protected>
         <url>{!URLFOR($Site.BaseRequestUrl+&apos;/apex/zqu__QuoteOption&apos;, null)}?crmAccountId={!Account.Id}&amp;retUrl=/{!Account.Id}</url>
+    </webLinks>
+	<fields>
+        <fullName>Business_City_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Business City</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_Geo_Coordinates__c</fullName>
+        <description>This is the Latitude and Longitude of where an Account is physically located.</description>
+        <displayLocationInDecimal>false</displayLocationInDecimal>
+        <externalId>false</externalId>
+        <label>Business Geo-Coordinates</label>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Location</type>
+    </fields>
+    <fields>
+        <fullName>Business_Po_Box__c</fullName>
+        <externalId>false</externalId>
+        <label>Business PO Box</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_Postal_Code__c</fullName>
+        <description>This is the Postal Code of where an Account is physically located.</description>
+        <externalId>false</externalId>
+        <label>Business Postal Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_State_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Business State</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_Street__c</fullName>
+        <description>This is the Street of where an Account is physically located.</description>
+        <externalId>false</externalId>
+        <label>Business Street</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Global_ID__c</fullName>
+        <displayFormat>001{0000000000}</displayFormat>
+        <externalId>false</externalId>
+        <label>Global ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>Hierarchy_Level__c</fullName>
+        <defaultValue>&quot;Single Location&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Hierarchy Level</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Domestic</fullName>
+                    <default>false</default>
+                    <label>Domestic</label>
+                </value>
+                <value>
+                    <fullName>Global</fullName>
+                    <default>false</default>
+                    <label>Global</label>
+                </value>
+                <value>
+                    <fullName>Branch</fullName>
+                    <default>false</default>
+                    <label>Branch</label>
+                </value>
+                <value>
+                    <fullName>Single Location</fullName>
+                    <default>true</default>
+                    <label>Single Location</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Holding_Parent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Holding Parent</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Branch</relationshipLabel>
+        <relationshipName>Holding_Parent</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is the Country of where an Account is physically located.</description>
+        <externalId>false</externalId>
+        <label>IATA ISO Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Accounts</relationshipLabel>
+        <relationshipName>Accounts_ISO_Country</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_Iso_Country_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA Iso Country Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_PO_Box_Address__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label> Is PO Box Address</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>RecordTypeDeveloperName__c</fullName>
+        <description>Used for flow, avoid requesting record type table</description>
+        <externalId>false</externalId>
+        <formula>RecordType.DeveloperName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RecordTypeDeveloperName</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sold_To_Completed__c</fullName>
+        <externalId>false</externalId>
+        <label>Sold_To_Completed</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TechUpdate_AddressFlow__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Tech Update Address Flow</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Verification_Status__c</fullName>
+        <defaultValue>&quot;Unverified&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Verification Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Unverified</fullName>
+                    <default>true</default>
+                    <label>Unverified</label>
+                </value>
+                <value>
+                    <fullName>Partial</fullName>
+                    <default>false</default>
+                    <label>Partial</label>
+                </value>
+                <value>
+                    <fullName>Verified</fullName>
+                    <default>false</default>
+                    <label>Verified</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <recordTypes>
+        <fullName>Airport</fullName>
+        <active>true</active>
+        <label>Airport</label>
+        <picklistValues>
+            <picklist>AccountSource</picklist>
+            <values>
+                <fullName>Advertisement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cold Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Existing Customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Colleague</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Consulting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incoming Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Phone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Relations %2F Referral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Purchased List</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seminar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Viral Campaign</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Virtual Lounge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Form %28MACS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web form %28IDFS Contacts%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Webinar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Website</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Hierarchy_Level__c</picklist>
+            <values>
+                <fullName>Branch</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Single Location</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Industry</picklist>
+            <values>
+                <fullName>Academic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accomodation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aerospace%2FDefence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Air Navigation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Air Traffic Control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Maintenance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Cargo Only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Suppliers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport %28Operators and Owners%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Analyst</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Associations%2C Alliances and NGOs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Rentals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cruise Lines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Entertainment Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equipment Manufacturers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Institutions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel and Energy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS Global Distribution System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Public</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Government %2F Policy Maker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Government and Regulatory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Governmental Institutions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotels and Resorts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IT Sector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-Flight Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industrial Equipment and Manufacturing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Association %26 Alliances</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Associations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Information %26 Communications Technology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International Air Transport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Library - Bookstore</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing%2C Communications and PR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Media or Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publishing and Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Railway</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Research and Academic Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Specialized Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tour Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tourism</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transportation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transportation - Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel and Tourism</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Ownership</picklist>
+            <values>
+                <fullName>Cooperative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation - For-Profit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation - Not-For-Profit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation - Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Liability Company %28LLC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Corporate %2F Individuals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Rating</picklist>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Enhanced</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not applicable</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Manufacturers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Global Card Acquirers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Point of Sale</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Apartment %26 Villa Rental</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Associations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CANSO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Associate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Rental</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Casino</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Civil Aviation Authorities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clearing Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Couriers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cruise Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Domestic Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERSP Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engine Manufacturers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Entertainment Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel Suppliers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS Global Distribution System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSA General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSSA Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Public</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handlers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Head Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Local Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Regional Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATAN Passenger Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IBCS consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IGHC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IT sector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Immigration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Individual Governments</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inspector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inter- Governmental Bodies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Large Component OEMs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low-cost carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MSO Member Sales Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maintenance%2C Repair%2C Providers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member airline supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NISI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOGs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Passenger Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Travel Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger and cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Private Sector Associations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Processor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Railway</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Railways%2C Cruise Ships</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regulators</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resort</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SSI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System Solutions Providers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tour Operators</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tourism Board</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training Centre</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Promotion Agencies</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Verification_Status__c</picklist>
+            <values>
+                <fullName>Unverified</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verified</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Branch</fullName>
+        <active>true</active>
+        <label>Branch</label>
+        <picklistValues>
+            <picklist>AccountSource</picklist>
+            <values>
+                <fullName>Advertisement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cold Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Existing Customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Colleague</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Consulting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incoming Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Phone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Relations %2F Referral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Purchased List</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seminar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Viral Campaign</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Virtual Lounge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Form %28MACS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web form %28IDFS Contacts%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Webinar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Website</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Hierarchy_Level__c</picklist>
+            <values>
+                <fullName>Branch</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Industry</picklist>
+            <values>
+                <fullName>Airline</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Ownership</picklist>
+            <values>
+                <fullName>Cooperative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation - For-Profit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation - Not-For-Profit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation - Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Liability Company %28LLC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Corporate %2F Individuals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Rating</picklist>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Enhanced</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not applicable</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Cargo Only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger and cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Verification_Status__c</picklist>
+            <values>
+                <fullName>Unverified</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Verified</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <validationRules>
+        <fullName>Address_StandardRecordtype</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND(
+ RecordType.DeveloperName =&apos;Standard_Account&apos;,
+NOT(ISBLANK( Business_City_Name__c ))
+)</errorConditionFormula>
+        <errorMessage>The bucket needs to be changed before entering an address.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Branch_ParentAccount</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+OR(
+ISPICKVAL(Hierarchy_Level__c,&apos;Domestic&apos;),
+ISPICKVAL(Hierarchy_Level__c,&apos;Branch&apos;)),
+ISBLANK( ParentId )
+)</errorConditionFormula>
+        <errorMessage>A branch or Domestic HQ account needs a Parent account</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Branch_SameCountryWithParentAccount</fullName>
+        <active>false</active>
+        <description>A Branch Account needs the same country as its Parent Account</description>
+        <errorConditionFormula>AND(
+
+   ISPICKVAL( Hierarchy_Level__c, &apos;Branch&apos;),
+   (NOT( Parent.IATA_ISO_Country__c =  IATA_ISO_Country__c ))
+)</errorConditionFormula>
+        <errorMessage>A Branch Account needs the same country as its Parent Account</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Herarchylevel_branch_for_Branch</fullName>
+        <active>true</active>
+        <description>The Herarchy level is &quot;branch&quot; for a Branch account</description>
+        <errorConditionFormula>AND(  !ISPICKVAL(  Hierarchy_Level__c  ,&quot;Branch&quot;),
+
+      RecordTypeDeveloperName__c = &apos;Branch&apos;
+
+)</errorConditionFormula>
+        <errorDisplayField>Hierarchy_Level__c</errorDisplayField>
+        <errorMessage>You need to change the Herarchy level to &quot;branch&quot; for a Branch account</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Airport_IATACode</fullName>
+        <active>true</active>
+        <description>A verified Airport needs a IATA Code.</description>
+        <errorConditionFormula>AND(  ISPICKVAL( Verification_Status__c ,&quot;Verified&quot;),
+
+      RecordTypeDeveloperName__c = &apos;Airport&apos;,
+
+      ISBLANK( IATACode__c )
+
+)</errorConditionFormula>
+        <errorDisplayField>IATACode__c</errorDisplayField>
+        <errorMessage>A verified Airport needs a IATA Code.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_BusinessAddress</fullName>
+        <active>true</active>
+        <description>The &quot;Verified&quot; value is available if a Business address is created.</description>
+        <errorConditionFormula>AND(  ISPICKVAL( Verification_Status__c ,&quot;Verified&quot;),
+
+      OR ( RecordTypeDeveloperName__c = &apos;Airport&apos;,
+           RecordTypeDeveloperName__c = &apos;Branch&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline_BR&apos;,
+           RecordTypeDeveloperName__c = &apos;Operator&apos;,
+           RecordTypeDeveloperName__c = &apos;Others&apos;,
+           RecordTypeDeveloperName__c = &apos;Standard_Account&apos;
+      ),
+
+      OR ( ISBLANK( IATA_ISO_Country__c ),
+           ISBLANK( Business_State_Name__c ),
+           ISBLANK( Business_City_Name__c ),
+           ISBLANK( Business_Postal_Code__c ),
+           AND ( ISBLANK( Business_Street__c ),
+                ISBLANK( Business_Po_Box__c )
+           )
+           
+      )
+
+)</errorConditionFormula>
+        <errorMessage>The &quot;Verified&quot; value is available if a Business address is created.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Creation_ChangeRT</fullName>
+        <active>true</active>
+        <description>At creation time and Record Type change, an account which is not a standard account needs to be verified</description>
+        <errorConditionFormula>AND(
+     OR( RecordTypeDeveloperName__c = &apos;Airport&apos;,
+         RecordTypeDeveloperName__c = &apos;Branch&apos;,
+         RecordTypeDeveloperName__c = &apos;Operator&apos;,
+         RecordTypeDeveloperName__c = &apos;Others&apos;
+     ),
+               
+     OR( ISNEW(),
+         ISCHANGED (RecordTypeId)
+     ),
+
+     OR(ISPICKVAL(Verification_Status__c,&apos;Unverified&apos;),
+        ISPICKVAL(Verification_Status__c,&quot;&quot;)
+     )
+)</errorConditionFormula>
+        <errorMessage>The account needs to be verified.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_LegalName</fullName>
+        <active>true</active>
+        <description>The &quot;Verified&quot; value is available if the E&amp;F account have a Legal Name (except Airport)</description>
+        <errorConditionFormula>AND(  ISPICKVAL( Verification_Status__c ,&quot;Verified&quot;),
+
+      OR ( RecordTypeDeveloperName__c = &apos;Branch&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline_BR&apos;,
+           RecordTypeDeveloperName__c = &apos;Operator&apos;,
+           RecordTypeDeveloperName__c = &apos;Others&apos;,
+           RecordTypeDeveloperName__c = &apos;Standard_Account&apos;
+      ),
+
+      ISBLANK( Legal_name__c )
+
+)</errorConditionFormula>
+        <errorDisplayField>Legal_name__c</errorDisplayField>
+        <errorMessage>The account needs to have a Legal Name.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Partial_BusiAddres</fullName>
+        <active>true</active>
+        <description>The &quot;Partial&quot; value is available if a Business address is created.</description>
+        <errorConditionFormula>AND(  ISPICKVAL( Verification_Status__c ,&quot;Partial&quot;),
+
+      OR ( ISBLANK( IATA_ISO_Country__c ),
+           ISBLANK( Business_State_Name__c ),
+           ISBLANK( Business_City_Name__c ),
+           ISBLANK( Business_Postal_Code__c ),
+           AND ( ISBLANK( Business_Street__c ),
+                ISBLANK( Business_Po_Box__c )
+           )
+      )
+
+)</errorConditionFormula>
+        <errorMessage>The &quot;Partial&quot; value is available if a Business address is created.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Partial_Category</fullName>
+        <active>true</active>
+        <description>Partial verification status is allowed for Operator account only with a category of General aviation or Military only</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Verification_Status__c, &apos;Partial&apos;),
+(RecordTypeDeveloperName__c = &quot;Operator&quot;),
+AND(
+!( ISPICKVAL(Category__c,&apos;General Aviation&apos;)),
+!( ISPICKVAL(Category__c,&apos;Military&apos;))))</errorConditionFormula>
+        <errorMessage>Partial verification status is allowed for Operator account only with a category of General aviation or Military only</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Partial_Operator</fullName>
+        <active>true</active>
+        <description>Partial verification status is allowed for Operator account only</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Verification_Status__c, &apos;Partial&apos;),
+!(RecordTypeDeveloperName__c = &quot;Operator&quot;))</errorConditionFormula>
+        <errorMessage>Partial verification status is allowed for Operator account only</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Partial_Permission</fullName>
+        <active>true</active>
+        <description>Only user with &quot;E&amp;F Account Partical Verification&quot; permission set</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Verification_Status__c, &apos;Partial&apos;),
+!$Permission.E_F_account_Partial_Verification
+)</errorConditionFormula>
+        <errorMessage>You do not have the permission to select &quot;Partial&quot; Verification status</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Permission</fullName>
+        <active>true</active>
+        <description>The &quot;Verified&quot; value is only available for E&amp;F accounts.</description>
+        <errorConditionFormula>AND(  ISPICKVAL( Verification_Status__c ,&quot;Verified&quot;),
+
+      !$Permission.E_F_Account_Verification,
+
+      OR( NOT( RecordTypeDeveloperName__c = &quot;Airport&quot;),
+          NOT( RecordTypeDeveloperName__c = &quot;IATA_Airline&quot;),
+          NOT( RecordTypeDeveloperName__c = &quot;IATA_Airline_BR&quot;),
+          NOT( RecordTypeDeveloperName__c = &quot;Operator&quot;),
+          NOT( RecordTypeDeveloperName__c = &quot;Others&quot;),
+          NOT( RecordTypeDeveloperName__c = &quot;Standard_Account&quot;)
+      )
+)</errorConditionFormula>
+        <errorMessage>The &quot;Verified&quot; value is only available for accounts you have access to.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Sector_Category</fullName>
+        <active>true</active>
+        <description>The &quot;Verified&quot; value is available if the E&amp;F account have a Sector and a Category. (Except Airport)</description>
+        <errorConditionFormula>AND(  ISPICKVAL( Verification_Status__c ,&quot;Verified&quot;),
+
+      OR ( RecordTypeDeveloperName__c = &apos;Branch&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline_BR&apos;,
+           RecordTypeDeveloperName__c = &apos;Operator&apos;,
+           RecordTypeDeveloperName__c = &apos;Others&apos;,
+           RecordTypeDeveloperName__c = &apos;Standard_Account&apos;
+      ),
+
+      ISBLANK( TEXT( Category__c ) )
+)</errorConditionFormula>
+        <errorDisplayField>Category__c</errorDisplayField>
+        <errorMessage>The account needs to have a Sector and a Category.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_VAT1</fullName>
+        <active>true</active>
+        <description>The &quot;Verified&quot; value is available if the E&amp;F account have a VAT Number 1. (Except Airport)</description>
+        <errorConditionFormula>AND(  ISPICKVAL( Verification_Status__c ,&quot;Verified&quot;),
+
+      OR ( RecordTypeDeveloperName__c = &apos;Branch&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline_BR&apos;,
+           RecordTypeDeveloperName__c = &apos;Operator&apos;,
+           RecordTypeDeveloperName__c = &apos;Others&apos;,
+           RecordTypeDeveloperName__c = &apos;Standard_Account&apos;
+      ),
+
+      ISBLANK( VAT_Number__c )
+)</errorConditionFormula>
+        <errorDisplayField>VAT_Number__c</errorDisplayField>
+        <errorMessage>The account needs to have a VAT Number 1.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Account_Context_Activation</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Account Context Activation</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/flow/Account_Context_Activation?AccountId={!Account.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Add_Address</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Add Address</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/flow/FULL_CUSTOMER_CREATION?AccountId={!Account.Id}</url>
     </webLinks>
 </CustomObject>

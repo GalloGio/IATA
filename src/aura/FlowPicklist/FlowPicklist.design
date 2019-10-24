@@ -1,0 +1,5 @@
+<design:component label="Picklist">
+    <design:attribute name="label" label="(Input) Label" />
+    <design:attribute name="concatedValues" label="(Input) Picklist values" />
+    <design:attribute name="value" label="(Output) Selected value" />
+</design:component>

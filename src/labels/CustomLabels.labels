@@ -40179,4 +40179,107 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+	<labels>
+        <fullName>AccountContextActivationEmailBody</fullName>
+        <categories>Account Context Activation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountContextActivationEmailBody</shortDescription>
+        <value>Dear {0},
+
+Please note the Customer creation process for the Account {1} has been sucessfully completed.
+
+Best Regards,
+
+SF Workflow Process</value>
+    </labels>
+    <labels>
+        <fullName>AccountContextActivationEmailSubject</fullName>
+        <categories>Account Context Activation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountContextActivationEmailSubject</shortDescription>
+        <value>Customer creation process for Account {0}</value>
+    </labels>
+    <labels>
+        <fullName>ComplianceProcessEmailBody</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ComplianceProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+The compliance approval for case number {1} failed concerning the following account {2}. Please check with compliance team, and once you are ready to try to activate the account again please relaunch the activation flow.
+
+Best regards
+
+Automated process from a new account activation</value>
+    </labels>
+    <labels>
+        <fullName>ComplianceProcessEmailSubject</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ComplianceProcessEmailSubject</shortDescription>
+        <value>Compliance Approval - {0}</value>
+    </labels>
+    <labels>
+        <fullName>EFComplianceReview</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EFComplianceReview</shortDescription>
+        <value>E&amp;F Compliance Review</value>
+    </labels>
+    <labels>
+        <fullName>SapProcessEmailBody</fullName>
+        <categories>Account Context Activation SAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SapProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+The SAP process failed concerning the following account {1}. Please, try to activate the account again please relaunch the activation flow.
+
+Best regards
+
+Automated process from a new account activation</value>
+    </labels>
+    <labels>
+        <fullName>SapProcessEmailSubject</fullName>
+        <categories>Account Context Activation SAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SapProcessEmailSubject</shortDescription>
+        <value>SAP Process - {0}</value>
+    </labels>
+    <labels>
+        <fullName>SisProcessCaseSubject</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessCaseSubject</shortDescription>
+        <value>SIS E&amp;F customer creation</value>
+    </labels>
+    <labels>
+        <fullName>SisProcessEmailBody</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+Please note the SIS Code request for case number  {1} has not been completed for the Account  {2}. If any further information is required, please check with the GDC-Participation Team.
+
+Best Regards
+SF Workflow Process</value>
+    </labels>
+    <labels>
+        <fullName>SisProcessEmailSubject</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessEmailSubject</shortDescription>
+        <value>SIS Approval - {0}</value>
+    </labels>
 </CustomLabels>

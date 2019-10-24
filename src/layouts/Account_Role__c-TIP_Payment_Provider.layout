@@ -22,10 +22,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Account_Roles__c</field>
+                <field>Functional_Role__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Flow_Status__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
@@ -132,6 +137,13 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Account_Role_Service__c.Account_Role__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>AccountName__c</fields>
+        <fields>Detailed_Account_Role__c</fields>
+        <fields>E_and_F_Status__c</fields>
+        <relatedList>E_and_F_Account_Role_Detail__c.Account_Role__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

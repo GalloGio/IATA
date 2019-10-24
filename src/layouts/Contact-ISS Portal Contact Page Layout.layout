@@ -171,6 +171,10 @@
         <fields>Application_Start_Icon__c</fields>
         <relatedList>Portal_Application_Right__c.Contact__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Address__c.Contact__c</relatedList>
+    </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

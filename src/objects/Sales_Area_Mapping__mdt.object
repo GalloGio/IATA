@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Business_Context_Configuration__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Business Context</label>
+        <referenceTo>Business_Context_Configuration__mdt</referenceTo>
+        <relationshipLabel>Sales Area Mappings</relationshipLabel>
+        <relationshipName>Sales_Area_Mappings</relationshipName>
+        <required>false</required>
+        <type>MetadataRelationship</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Area__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Sales Area</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>E&amp;F Standard</fullName>
+                    <default>true</default>
+                    <label>E&amp;F Standard</label>
+                </value>
+                <value>
+                    <fullName>E&amp;F India</fullName>
+                    <default>false</default>
+                    <label>E&amp;F India</label>
+                </value>
+                <value>
+                    <fullName>E&amp;F Venezuela</fullName>
+                    <default>false</default>
+                    <label>E&amp;F Venezuela</label>
+                </value>
+                <value>
+                    <fullName>E&amp;F Indonesia</fullName>
+                    <default>false</default>
+                    <label>E&amp;F Indonesia</label>
+                </value>
+                <value>
+                    <fullName>E&amp;F Canada</fullName>
+                    <default>false</default>
+                    <label>E&amp;F Canada</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Sales Area Mapping</label>
+    <pluralLabel>Sales Area Mappings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

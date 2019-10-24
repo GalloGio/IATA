@@ -424,6 +424,10 @@
         <fields>TASK.CLOSED</fields>
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Address__c.Contact__c</relatedList>
+    </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>

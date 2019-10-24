@@ -226,6 +226,10 @@
         <fields>EMAIL_STATUS.LAST_OPEN_DATE</fields>
         <relatedList>RelatedEmailStatusList</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Address__c.Contact__c</relatedList>
+    </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
