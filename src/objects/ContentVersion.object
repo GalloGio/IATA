@@ -2251,6 +2251,11 @@
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>Airline and Location Coding</fullName>
+                    <default>false</default>
+                    <label>Airline and Location Coding</label>
+                </value>
+                <value>
                     <fullName>AirportIS</fullName>
                     <default>false</default>
                     <label>AirportIS</label>
@@ -2299,6 +2304,11 @@
                     <fullName>MarketIS</fullName>
                     <default>false</default>
                     <label>MarketIS</label>
+                </value>
+                <value>
+                    <fullName>MITA/BIETA</fullName>
+                    <default>false</default>
+                    <label>MITA/BIETA</label>
                 </value>
                 <value>
                     <fullName>PaxIS</fullName>
