@@ -172,6 +172,8 @@ public without sharing class ISSP_ChangePassword {
         }
         catch (Exception ex) {
             errorMessage.add(ex.getMessage());
+            System.debug('ex.getMessage(): ' + ex.getMessage());
+            System.debug('ex.getStackTraceString(): ' + ex.getStackTraceString());
             return null;
         }
     }
@@ -281,26 +283,21 @@ public without sharing class ISSP_ChangePassword {
             Account userAcc = new Account();
 
             // String sLog = '';
-            String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'ITP');
+            String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
             // String RECTYPE_Others = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
             
             User userInfo = [SELECT id, accountId, ContactId FROM USER WHERE id=: UserInfo.getUserId()];
-            // sLog = 'userInfo.accountId: ' + userInfo.accountId+ '\n';
-            // sLog += 'RECTYPE_ITP_AccRole: ' + RECTYPE_ITP_AccRole+ '\n';
 
             List<Account_Contact_Role__c> accContRoleCheck = [SELECT id FROM Account_Contact_Role__c WHERE Service_Rendered__c = 'IFTP' AND Contact__c = :userInfo.ContactId];
             
             //if no Acc Cont Roles then create one and also create the Portal Service access
             if(accContRoleCheck.size() == 0){
 
-                List<Account_Role__c> lAccRole = [SELECT id, account__r.recordtypeid, account__r.Sector__c, account__r.Category__c 
+                Account_Role__c accRole = [SELECT id, account__r.recordtypeid, account__r.Sector__c, account__r.Category__c 
                                             FROM Account_Role__c 
                                             WHERE account__c = :userInfo.accountId AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
 
-                Account_Role__c accRole = new Account_Role__c();
-
-                if(!lAccRole.isEmpty()){
-                    accRole = lAccRole[0];
+                if(accRole != null){
                     bAccRole = true;
                     userAcc.recordtypeid = accRole.account__r.recordtypeid;
                     userAcc.Sector__c = accRole.account__r.Sector__c;
@@ -314,16 +311,10 @@ public without sharing class ISSP_ChangePassword {
                 
                     String RECTYPE_ITP_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
                 
-                    Contact_Roles__c contRoles = [SELECT id, Name FROM Contact_Roles__c WHERE Name = 'ITP Training Coordinator' limit 1];                       
                     Portal_Applications__c pa = [SELECT id FROM Portal_Applications__c WHERE name = 'IFTP' limit 1];
 
                     PermissionSet psAbsorb = [SELECT Id FROM PermissionSet WHERE Name = 'Absorb'];
                     
-
-                    if(contRoles != null){
-                        bContRole = true;
-                    }
-                
                     Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
                     // accContRoleToInsert.Company_Code__c = employeeToAdd.code.trim();
                     accContRoleToInsert.Service_Rendered__c = 'IFTP';
@@ -334,10 +325,6 @@ public without sharing class ISSP_ChangePassword {
                     }
 
                     accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
-
-                    if(bContRole){
-                        accContRoleToInsert.Contact_Roles__c = contRoles.id;
-                    }
 
                     accContRoleToInsert.Details__c = '';
                     accContRoleToInsert.Contact__c = userInfo.ContactId;

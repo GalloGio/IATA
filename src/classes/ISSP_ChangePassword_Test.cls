@@ -145,6 +145,52 @@ private class ISSP_ChangePassword_Test {
         newAccount.Category__c = 'Fuel Supplier';
 		insert newAccount;
  
+		//Create Portal Application
+        Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IFTP');
+        insert portalApp;
+
+		//Create Accounts Roles
+        List<Account_Roles__c> accRolesList = new List<Account_Roles__c>();
+        Account_Roles__c accRolesITP = new Account_Roles__c(Name = 'ITP');
+        Account_Roles__c accRolesAirline = new Account_Roles__c(Name = 'Airline');
+        accRolesList.add(accRolesITP);
+        accRolesList.add(accRolesAirline);
+        insert accRolesList;
+
+        //Create Accounts Services'
+        List<Account_Role_Services__c> accRoleServicesList = new List<Account_Role_Services__c>();
+        Account_Role_Services__c accRoleServicesITP = new Account_Role_Services__c(Name = 'IFTP-ITP', Account_Roles__c = accRolesITP.Id, Portal_Service__c = portalApp.Id);
+        Account_Role_Services__c accRoleServicesAirline = new Account_Role_Services__c(Name = 'IFTP - Airline', Account_Roles__c = accRolesAirline.Id, Portal_Service__c = portalApp.Id);
+        accRoleServicesList.add(accRoleServicesITP);
+        accRoleServicesList.add(accRoleServicesAirline);
+        insert accRoleServicesList;
+                   
+		 //Create Accounts Role
+        Id accRoleITP_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
+
+        List<Account_Role__c> accRoleList = new List<Account_Role__c>();
+        Account_Role__c accRoleITP = new Account_Role__c(Account__c = newAccount.Id, Account_Roles__c = accRolesITP.Id, RecordTypeId = accRoleITP_RT);
+      	accRoleList.add(accRoleITP);
+        insert accRoleList;
+        System.debug('accRoleList - ' + accRoleList);
+
+
+        //Create Accounts Service
+        List<Account_Role_Service__c> accRoleServiceList = new List<Account_Role_Service__c>();
+        Account_Role_Service__c accRoleServiceITP = new Account_Role_Service__c(Account_Role__c = accRoleITP.Id, Account_Role_Services__c = accRoleServicesITP.Id);
+        accRoleServiceList.add(accRoleServiceITP);
+        insert accRoleServiceList;
+
+ 		//Create Contact Roles
+        List<Contact_Roles__c> contactRolesList = new List<Contact_Roles__c>();
+        Contact_Roles__c contactRolesITPAdmin = new Contact_Roles__c(Name = 'ITP Administrator', Service__c = portalApp.Id);
+        Contact_Roles__c contactRolesITPCoord = new Contact_Roles__c(Name = 'ITP Training Coordinator', Service__c = portalApp.Id);
+        Contact_Roles__c contactRolesITPMaster = new Contact_Roles__c(Name = 'ITP Master', Service__c = portalApp.Id);
+        contactRolesList.add(contactRolesITPAdmin);
+        contactRolesList.add(contactRolesITPCoord);
+        contactRolesList.add(contactRolesITPMaster);
+        insert contactRolesList;
+ 
         // create Bill To contact info
         Contact newContact = new Contact();
         newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
