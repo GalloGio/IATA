@@ -8,7 +8,9 @@ public with sharing class FeedItemHelper {
 	public static void CheckPostTopics(list<FeedItem> lstTriggerNew) {
 		
 		// get the accounts of interest to which the feed items are linked - we only apply the logic to Airline HQ accounts that are IATA Members
-		set<Id> setRelatedAccountIds = new set<Id>();		
+		set<Id> setRelatedAccountIds = new set<Id>();	
+		set<String> setFeedItemTypes = new set<String>{'TextPost','ContentPost','LinkPost','PollPost','QuestionPost'};
+
 		for (FeedItem fi : lstTriggerNew) {
 			//check apostrophe ' (&#39) RN-INC339011
 			if (fi.body != null) {
@@ -22,7 +24,7 @@ public with sharing class FeedItemHelper {
 	
 				if (String.valueOf(fi.ParentId).startsWith('001') 
 					&& !regexMatcher.matches() 
-					&& fi.Type == 'TextPost') {
+					&& setFeedItemTypes.contains(fi.Type)) {
 						setRelatedAccountIds.add(fi.ParentId);
 				}
 			}

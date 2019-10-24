@@ -10,7 +10,7 @@
             <publicGroup>IDFSChinaNAsiaallusers</publicGroup>
         </publicGroups>
         <roles>
-            <role>ChinaNAsiaAgencyManagementStaffA</role>
+            <role>ChinaNAsiaAgencyManagementStaff</role>
         </roles>
     </queueMembers>
     <queueSobject>

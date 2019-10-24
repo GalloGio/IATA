@@ -286,21 +286,6 @@ public without sharing class ISSP_WS_Utilities {
     }
 
     /**
-        Find all valid SIS contacts from the input accounts to give them access
-        to SIS Joining app
-    **/
-    @future
-    public static void invokeGiveSISAppToAccountUsers(list<Id> listAccountId) {
-        list<User> listUser = [SELECT Id, ContactId FROM User WHERE ProfileId IN :ISSP_Constant.adminIdSet AND (Contact.AccountId IN :listAccountId OR Contact.Account.Top_Parent__c IN :listAccountId)];
-
-        list<Id> listContactId = new list<Id>();
-        for (User user: listUser) {
-            listContactId.add(user.contactId);
-        }
-        grantAccessToSIS(listContactId);
-    }
-
-    /**
         Grant access to SIS Membership application (not SIS App) to a list of contacts
     **/
     public static void grantAccessToSIS(list<Id> listContactId) {

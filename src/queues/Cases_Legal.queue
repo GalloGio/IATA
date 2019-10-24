@@ -5,7 +5,7 @@
     <name>Cases - Legal</name>
     <queueMembers>
         <roles>
-            <role>DistributionAgencyManagementHOA</role>
+            <role>DistributionAgencyManagementHO</role>
         </roles>
     </queueMembers>
     <queueSobject>
