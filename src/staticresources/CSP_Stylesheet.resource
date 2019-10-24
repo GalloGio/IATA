@@ -260,9 +260,7 @@ body {
 .lightBlueSendButton svg {
     fill:#a5adfd;
 }
-.caseMessagesContainer{
-    height: 350px;
-}
+
 .caseMessagesSelfBubble{
     background-color: #525252;
     color:#FFFFFF;
@@ -514,9 +512,10 @@ lightning-datatable .slds-th__action {
   text-align: center;
   color: #ffffff;
   min-height: 50px;
-  width: 200px;
+  width: 100%;
   word-break: break-word;
   border: none;
+  display: inline-block;
 }
 
 .containedButton, .containedButton button, .containedButton button:active, .containedButton button:visited, .containedButton button:focus {
@@ -534,9 +533,10 @@ lightning-datatable .slds-th__action {
     text-align: center;
     color: #ffffff;
     min-height: 40px;
-    width: 220px;
+    width: 100%;
     word-break: break-word;
     border: none;
+    display: inline-block;
 }
 .containedButton button:hover {
 	border-radius: 1px;
@@ -551,7 +551,7 @@ lightning-datatable .slds-th__action {
     text-align: center;
     color: #ffffff;
     min-height: 40px;
-    width: 220px;
+    width: 100%;
     word-break: break-word;
     border: none;
 }
@@ -619,13 +619,13 @@ lightning-datatable .slds-th__action {
     color: #33f;
     min-height: 40px;
     height: 56px;
-    width: 200px;
+    width: 100%;
     word-break: normal;
 }
 
 .containedButton-size {
     height: 56px;
-    width: 200px;
+    width: 100%;
 }
 
 .filterButton,
@@ -643,7 +643,7 @@ lightning-datatable .slds-th__action {
   text-align: center;
   color: #3333ff;
   min-height: 40px;
-  width: 220px;
+  width: 100%;
   word-break: break-all;
   border: none;
 }
