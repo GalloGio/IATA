@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Address_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Addresses</relationshipLabel>
+        <relationshipName>Addresses</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>City_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>City</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Citylookup__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>City lookup</label>
+        <referenceTo>IATA_ISO_City__c</referenceTo>
+        <relationshipLabel>Addresses</relationshipLabel>
+        <relationshipName>Addresses</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Addresses</relationshipLabel>
+        <relationshipName>Addresses</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Count_Roles_Billing__c</fullName>
+        <externalId>false</externalId>
+        <label>Count_Roles_Billing</label>
+        <summaryFilterItems>
+            <field>Address_Role__c.Role_Type__c</field>
+            <operation>equals</operation>
+            <value>Billing</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Address_Role__c.Address__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Count_Roles_Business__c</fullName>
+        <externalId>false</externalId>
+        <label>Count_Roles_Business</label>
+        <summaryFilterItems>
+            <field>Address_Role__c.Role_Type__c</field>
+            <operation>equals</operation>
+            <value>Business</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Address_Role__c.Address__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Count_Roles_Shipping__c</fullName>
+        <description>to be used in VR</description>
+        <externalId>false</externalId>
+        <label>Count_Roles_Shipping</label>
+        <summaryFilterItems>
+            <field>Address_Role__c.Role_Type__c</field>
+            <operation>equals</operation>
+            <value>Shipping</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Address_Role__c.Address__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Addresses</relationshipLabel>
+        <relationshipName>Addresses</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Geo_Coordinates__c</fullName>
+        <displayLocationInDecimal>false</displayLocationInDecimal>
+        <externalId>false</externalId>
+        <label>Geo-Coordinates</label>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Location</type>
+    </fields>
+    <fields>
+        <fullName>Is_Business_Address__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Business Address</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Po_Box__c</fullName>
+        <externalId>false</externalId>
+        <label>PO Box</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Postal_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Postal Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>State_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>State</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Statelookup__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Statelookup</label>
+        <referenceTo>IATA_ISO_State__c</referenceTo>
+        <relationshipLabel>Addresses</relationshipLabel>
+        <relationshipName>Addresses</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Street__c</fullName>
+        <externalId>false</externalId>
+        <label>Street</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TechUpdate_AddressFlow__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Tech Update Address Flow</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Address</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>Add-{0000000}</displayFormat>
+        <label>Address Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Addresses</pluralLabel>
+    <recordTypes>
+        <fullName>Address</fullName>
+        <active>true</active>
+        <label>Address</label>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>AirportOneRoleShipTo</fullName>
+        <active>true</active>
+        <errorConditionFormula>and( Count_Roles_Shipping__c &gt;1,
+ Account__r.RecordTypeDeveloperName__c =&quot;Airport&quot;)</errorConditionFormula>
+        <errorMessage>airport can have only one shipping role per address</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>BranchAccount_cant_create_AnotherAddress</fullName>
+        <active>true</active>
+        <description>Branch account can not create another address than the main address.</description>
+        <errorConditionFormula>AND( 
+     ISPICKVAL( Account__r.Hierarchy_Level__c ,&apos;Branch&apos;),
+     (Is_Business_Address__c =False)
+)</errorConditionFormula>
+        <errorMessage>For Branch account you can&apos;t create another address than the main address (Business address).</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>BusinessAddressModification</fullName>
+        <active>true</active>
+        <description>The Main Address must be edit only on Account</description>
+        <errorConditionFormula>AND(
+    ( TechUpdate_AddressFlow__c =FALSE),
+    (Is_Business_Address__c =TRUE),
+    or(ISCHANGED( Street__c),
+       ISCHANGED( Postal_Code__c ),
+       ISCHANGED( City_Name__c ),
+       ISCHANGED( Country__c ),
+       ISCHANGED( State_Name__c ),
+       ISCHANGED( Geo_Coordinates__Latitude__s ),
+       ISCHANGED( Geo_Coordinates__Longitude__s )
+    )
+)</errorConditionFormula>
+        <errorMessage>Modification of business account fields needs to be done on the related account</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OneRoleBilling</fullName>
+        <active>true</active>
+        <errorConditionFormula>Count_Roles_Billing__c &gt;1</errorConditionFormula>
+        <errorMessage>Only one Billing role per address is allowed</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OneRoleBusiness</fullName>
+        <active>true</active>
+        <errorConditionFormula>Count_Roles_Business__c &gt;1</errorConditionFormula>
+        <errorMessage>Only one Business role per address is allowed</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OneRoleShipping</fullName>
+        <active>true</active>
+        <errorConditionFormula>Count_Roles_Shipping__c &gt;1</errorConditionFormula>
+        <errorMessage>Only one Shipping role per address is allowed</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Street_POnumber</fullName>
+        <active>true</active>
+        <description>You can not fill Street and PO Number fields at the same time</description>
+        <errorConditionFormula>AND(
+ Is_Business_Address__c =false,
+NOT(ISBLANK(Street__c)),
+NOT(ISBLANK(Po_Box__c))
+)</errorConditionFormula>
+        <errorMessage>You can not fill Street and PO Number fields at the same time</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

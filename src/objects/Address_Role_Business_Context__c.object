@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Address_Role_Business_Context_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Account_Activation_Context_Status__c</fullName>
+        <description>Used to define the status of a flow</description>
+        <externalId>false</externalId>
+        <label>Account Activation Context Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Address_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Address Role</label>
+        <referenceTo>Address_Role__c</referenceTo>
+        <relationshipName>Address_Role_Business_Process</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Business_Context__c</fullName>
+        <externalId>false</externalId>
+        <label>Business Context</label>
+        <referenceTo>Business_Context__c</referenceTo>
+        <relationshipLabel>Address Role Business Context</relationshipLabel>
+        <relationshipName>Address_Role_Business_Context</relationshipName>
+        <relationshipOrder>1</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <label>Address Role Business Context</label>
+    <nameField>
+        <displayFormat>ARBP-{0000000}</displayFormat>
+        <label>Address Role Business Context Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Address Roles Business Context</pluralLabel>
+    <recordTypes>
+        <fullName>MASTER</fullName>
+        <active>true</active>
+        <label>MASTER</label>
+        <picklistValues>
+            <picklist>Account_Activation_Context_Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Avoid_create_record_parent_not_SAP</fullName>
+        <active>true</active>
+        <description>You can not create an address role business context record until the SOLD TO of the parent account is not created in SAP.</description>
+        <errorConditionFormula>AND(
+ISPICKVAL( Address_Role__r.Address__r.Account__r.Hierarchy_Level__c ,&quot;Branch&quot;),
+Address_Role__r.Address__r.Account__r.Parent.Sold_To_Completed__c &lt;&gt;&quot;Completed&quot;
+)</errorConditionFormula>
+        <errorMessage>You can not create an address role business context record until the SOLD TO of the parent account is not created in SAP.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

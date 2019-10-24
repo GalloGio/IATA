@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>E_F_Contact_Role_Detail_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>AccountFunctionalRole__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(E_F_Account_Role_Detail__r.Account_Role__r.Functional_Role__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Functional Role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact_Role__r.Account_Role__r.Account__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ContactFunctionalRole__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact_Role__r.Functional_Role__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact Functional Role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Role__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact Role</label>
+        <referenceTo>Account_Contact_Role__c</referenceTo>
+        <relationshipLabel>E&amp;F Contact Role Details</relationshipLabel>
+        <relationshipName>E_F_Contact_Role_Details</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contact_name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact_Role__r.Contact__r.FirstName &amp;&quot; &quot;&amp;  Contact_Role__r.Contact__r.LastName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Detailed_contact_role__c</fullName>
+        <externalId>false</externalId>
+        <label>Detailed contact role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Contact_Role_Details</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Display_Contact_Detailed_contact_role__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact_name__c &amp;&quot; - &quot;&amp; TEXT(Detailed_contact_role__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact and Detailed contact role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>E_F_Account_Role_Detail__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Account Role Detail</label>
+        <referenceTo>E_and_F_Account_Role_Detail__c</referenceTo>
+        <relationshipLabel>E&amp;F Contact Role Details</relationshipLabel>
+        <relationshipName>E_F_Contact_Role_Details</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <label>E&amp;F Contact Role Detail</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>EFCRD-{000000}</displayFormat>
+        <label>E&amp;F Contact Role Detail Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>E&amp;F Contact Role Details</pluralLabel>
+    <recordTypes>
+        <fullName>StandardEFContact</fullName>
+        <active>true</active>
+        <label>Standard E&amp;F Contact</label>
+        <picklistValues>
+            <picklist>Detailed_contact_role__c</picklist>
+            <values>
+                <fullName>Authorized Signatory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Decision maker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Display_Contact_Detailed_contact_role__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Contact_name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ContactFunctionalRole__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Account_name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>AccountFunctionalRole__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Display_Contact_Detailed_contact_role__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Account_name__c</searchFilterFields>
+        <searchFilterFields>AccountFunctionalRole__c</searchFilterFields>
+        <searchFilterFields>Contact_name__c</searchFilterFields>
+        <searchFilterFields>ContactFunctionalRole__c</searchFilterFields>
+        <searchResultsAdditionalFields>Display_Contact_Detailed_contact_role__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact_name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ContactFunctionalRole__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Detailed_contact_role__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

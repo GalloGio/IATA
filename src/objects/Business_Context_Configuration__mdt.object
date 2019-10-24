@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Account_Create_Permission_Name__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Account Create Permission Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Functional_Role__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Functional Role</label>
+        <referenceTo>Functional_Role__mdt</referenceTo>
+        <relationshipLabel>Business Context Configurations</relationshipLabel>
+        <relationshipName>Business_Context_Configurations</relationshipName>
+        <required>false</required>
+        <type>MetadataRelationship</type>
+        <unique>false</unique>
+    </fields>
+    <label>Business Context Configuration</label>
+    <listViews>
+        <fullName>ALL_alex</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>Account_Create_Permission_Name__c</columns>
+        <columns>Functional_Role__c</columns>
+        <columns>NamespacePrefix</columns>
+        <filterScope>Everything</filterScope>
+        <label>ALL alex</label>
+        <language>en_US</language>
+    </listViews>
+    <pluralLabel>Business Context Configurations</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
