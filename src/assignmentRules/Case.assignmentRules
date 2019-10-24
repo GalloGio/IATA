@@ -4,6 +4,39 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>GCSICCS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+or(
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Cases - Global&quot;
+),
+ISPICKVAL(Topic__c, &quot;ICCS - IATA Currency Clearance Service&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCSMITABIETA</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+or(
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Cases - Global&quot;
+),
+ISPICKVAL(Topic__c, &quot;Interline Agreements (MITA/BIETA)&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_Coding</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+or(
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Cases - Global&quot;
+),
+ISPICKVAL(Topic__c, &quot;IATA Codes (not applicable to Agents)&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>FDS_ICCS_Head_Office</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
