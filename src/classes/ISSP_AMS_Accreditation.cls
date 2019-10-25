@@ -1814,7 +1814,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 amsLocationType = AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY;
 
                 if(legalNames != null && newForm.AE_separate_Legal_Entity__c == 'Yes' && legalNames.contains(newForm.Account_Name__c)){
-					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'To be defined'));
+					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_ANG_Legal_Name_already_in_used));
 					return null;
 				}
 

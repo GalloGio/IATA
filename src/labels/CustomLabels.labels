@@ -23019,6 +23019,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>1. IATA Accredited Head Entity Details</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Legal_Name_already_in_used</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Legal_Name_already_in_used</shortDescription>
+        <value>Please note that this Legal Name already belongs to entity already existing or part of your ongoing application.
+Separate legal entities cannot share the same Legal Name.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Local_Details_Copy_Address2</fullName>
         <categories>ISSP, ANG</categories>
         <language>en_US</language>
