@@ -10,7 +10,7 @@ global class ANG_HierarchyUpdaterBatch implements Database.Batchable<sObject>, D
 	  
 	public static final Set<String> ALLOWEDRECORDTYPES = new Set<String>{ACCOUNT_AGENCY_RT};
    
-	public static final Set<String> INACTIVEAGENCYSTATUS = new Set<String>{AMS_Utils.ACC_S1_NOTACCREDITED,'Not Accredited',AMS_Utils.ACC_S3_NOTINOPERATION,AMS_Utils.ACC_S0_TERMINATED,'',null,AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING};
+	public static final Set<String> INACTIVEAGENCYSTATUS = new Set<String>{AMS_Utils.ACC_S1_NOTACCREDITED,'Not Accredited',AMS_Utils.ACC_S3_NOTINOPERATION,'',null};
 
 	global Map<Id, String> errorMap {get; set;}
 
@@ -173,7 +173,7 @@ global class ANG_HierarchyUpdaterBatch implements Database.Batchable<sObject>, D
 	} 
 
 	global String fetchGeneralHierarchyQuery(){
-		return 'Select Id, IATACODE__c , (select Id, Main_account__c from Main_Accounts__r), (select Id, hierarchy__c, Child_Account__c, Child_Account__r.Top_Parent__c from AMS_Agencies_relationships1__r ) from Account where IATACODE__c <> null and ParentId = null and Location_type__c in (\'HE\',\'GE\') and Location_Class__c in (\'P\',\'D\') and recordTypeId in:ALLOWEDRECORDTYPES and Status__c not in :INACTIVEAGENCYSTATUS LIMIT 50000';
+		return 'Select Id, IATACODE__c , (select Id, Main_account__c from Main_Accounts__r), (select Id, hierarchy__c, Child_Account__c, Child_Account__r.Top_Parent__c from AMS_Agencies_relationships1__r limit 1) from Account where IATACODE__c <> null and ParentId = null and Location_type__c in (\'HE\',\'GE\') and Location_Class__c in (\'P\',\'D\') and recordTypeId in:ALLOWEDRECORDTYPES and Status__c not in :INACTIVEAGENCYSTATUS AND Purge_Flag__c = false LIMIT 50000';
 	}
 
 
