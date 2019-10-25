@@ -836,7 +836,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
             for (HierarchyItem i : hierarchy.values()){
                 Id currentBSP = i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
-                if(resultHEPerBSP.containsKey(currentBSP) && hesPerBSPs.get(currentBSP).possibleAccounts.keySet().contains(resultHEPerBSP.get(currentBSP))){
+                if(resultHEPerBSP.containsKey(currentBSP) && hesPerBSPs.containsKey(currentBSP) && hesPerBSPs.get(currentBSP).possibleAccounts.keySet().contains(resultHEPerBSP.get(currentBSP))){
                     hesPerBSPs.get(currentBSP).p.parentid = resultHEPerBSP.get(currentBSP); 
                     //hesPerBSPs.get(currentBSP).hasParentDefined = true;
                 }
