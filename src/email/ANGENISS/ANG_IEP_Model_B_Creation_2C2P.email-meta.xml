@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
     <available>true</available>
-    <description>Sent when IEP Model B PLUS Account Setup OSCAR is created</description>
+    <description>Sent when IEP Model B Account Setup OSCAR is created</description>
     <encodingKey>UTF-8</encodingKey>
     <letterhead>IATADynamicSkyLetterhead</letterhead>
-    <name>ANG IEP Model B PLUS Creation 2C2P EN</name>
+    <name>ANG IEP Model B Creation 2C2P EN</name>
     <style>freeForm</style>
     <subject>Ref nr {!AMS_OSCAR__c.Name} – Registration of IEP Account</subject>
     <textOnly>Dear Sir/Madam,
