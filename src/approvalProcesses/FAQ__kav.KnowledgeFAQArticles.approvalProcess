@@ -8,8 +8,6 @@
     <approvalPageFields>
         <field>Title</field>
         <field>Owner</field>
-        <field>00N3E000003ZeQL</field>
-        <field>00N3E000003ZeTy</field>
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
