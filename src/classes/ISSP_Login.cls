@@ -126,6 +126,8 @@ public without sharing class ISSP_Login {
 		string startURL = ApexPages.currentPage().getParameters().get('startURL');
 		if (startURL!=null)
             pageLink = startURL;
+			
+		if(communityName =='CNS' && oneUser != null && !oneUser.CNS_Account_or_Agency__c) pageLink=''; // In case a non CNS users tries to login throught CNS Portal, will be redirected to the correct community
 
 		system.debug('pageLink: ' + pageLink);
         PageReference ans = Site.login(null != oneUser ? oneUser.Username : username, password, pageLink);
