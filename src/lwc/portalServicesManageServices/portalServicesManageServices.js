@@ -63,7 +63,6 @@ import Id from '@salesforce/user/Id';
 import getServiceDetails from '@salesforce/apex/PortalServicesCtrl.getServiceDetails';
 import getContacts from '@salesforce/apex/PortalServicesCtrl.getContactsAndStatusRelatedToServiceList';
 import searchContacts from '@salesforce/apex/PortalServicesCtrl.searchContactsInService';
-import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
 import denyUserAccess from '@salesforce/apex/PortalServicesCtrl.denyAccess';
