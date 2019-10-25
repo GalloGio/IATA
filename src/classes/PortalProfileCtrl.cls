@@ -59,6 +59,9 @@ public static final Id RECORDTYPE_AIRLINE_BR = RecordTypeSingleton.getInstance()
 public static final Id RECORDTYPE_AIRLINE_HQ = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 public static final list<Id> VALID_ACCOUNT_RT = new list<String> {RECORDTYPE_AGENCY, RECORDTYPE_AIRLINE_BR, RECORDTYPE_AIRLINE_HQ};
 
+
+    public static Integer RESULTS_PER_PAGE = 10;
+
 	public class PortalProfileException extends Exception {}
 
 public static Contact contactInfo = new Contact();
@@ -1077,4 +1080,68 @@ public static Contact contactInfo = new Contact();
         }
     }
 
+    @AuraEnabled (cacheable=false)
+    public static CSP_Utils.PagedResult getFilteredProfileResultsPage(String profileFilterWrapper){
+        
+        CSP_Utils.PagedResult filteredProfiles = DAL_WithoutSharing.getSearchProfiles(profileFilterWrapper, myContact);
+        
+        return filteredProfiles;
+    }
+
+    public class ProfileWrapper{
+
+        @AuraEnabled public String profileId;
+        
+        @AuraEnabled public String profileName;
+
+        @AuraEnabled public String profilePortalStatus;
+
+        @AuraEnabled public String profileCountry;
+
+        @AuraEnabled public String profileType;
+        
+        @AuraEnabled public String profileUrl;
+
+        public ProfileWrapper(String profileIdAux, String profileNameAux, String profilePortalStatusAux, String profileCountryAux, String profileTypeAux){
+            this.profileId = profileIdAux;
+            this.profileName = profileNameAux;
+
+            if(profilePortalStatusAux == 'Approved Admin')
+                this.profilePortalStatus = System.Label.ISSP_Administrator;
+            else if (profilePortalStatusAux == 'Approved User')
+                this.profilePortalStatus = System.Label.ISSP_Active;
+            else
+                this.profilePortalStatus = profilePortalStatusAux;
+
+            this.profileCountry = profileCountryAux;
+
+            if(profileTypeAux == 'Account'){
+                this.profileType = System.Label.Company; //instead of Account set it "Company"
+                this.profileUrl = profileIdAux == myContact.AccountId ? System.Label.CSP_PortalPath + 'company-profile' : System.Label.CSP_PortalPath + 'company-profile?account='+profileIdAux;
+            }
+            else{
+                this.profileType = profileTypeAux; //set it to "Contact"
+                this.profileUrl = profileIdAux == myContact.Id ? System.Label.CSP_PortalPath + 'my-profile' : System.Label.CSP_PortalPath + 'company-profile?contact='+profileIdAux;
+            }
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<CSP_Utils.PickListWrapper> typeOfProfilePortalCustomPicklist(){
+        List<CSP_Utils.PickListWrapper> lstPickValues = new List<CSP_Utils.PickListWrapper>();
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Account',System.Label.Company ));
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Contact',System.Label.Button_Contact ));
+
+        return lstPickValues;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<CSP_Utils.PickListWrapper> userPortalStatusCustomPicklist(){
+        List<CSP_Utils.PickListWrapper> lstPickValues = new List<CSP_Utils.PickListWrapper>();
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Approved Admin', System.Label.ISSP_Contacts_PortalAdmins));
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Approved User', System.Label.ISSP_Contacts_PortalUsers));
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Pending Approval', System.Label.ISSP_Contacts_PendingApproval));
+
+        return lstPickValues;
+    }
 }
