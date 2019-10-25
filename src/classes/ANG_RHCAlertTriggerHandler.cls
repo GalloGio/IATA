@@ -730,8 +730,7 @@ public class ANG_RHCAlertTriggerHandler{
                 for(Case parentCase :[Select Id, IATAcode__c,AccountId, Account.Name,Account.IATACode__c, Account.Site,Account.IATA_ISO_Country__r.ISO_Code__c, Region__c, BSPCountry__c, ParentId, OwnerId FROM Case WHERE Id IN: smapParentCases]){
 
                     accIsoCode.put(parentCase.AccountId,parentCase.Account.IATA_ISO_Country__r.ISO_Code__c);
-                    // INC476553
-                    sendNotificationToPortalAdmins( contactsPerAccount.get(accId) , 'X6_4_SMAP_After_RED_Alert_Agent_Notification_EN', redAlerts, parentCase);
+                    sendNotificationToPortalAdmins( contactsPerAccount.get(accId) , 'X6_4_SMAP_After_RED_Alert_Agent_Notification_EN', redAlerts, parentCase);                    
 
                     //NEWGEN-1933 fill fields on sidra case
                     sidraLiteCase = WSSidraLite.createCase(parentCase.id);
@@ -810,7 +809,11 @@ public class ANG_RHCAlertTriggerHandler{
         }
 
         if(!emailLst.isEmpty()){
-            Messaging.sendEmail(emailLst);
+            try{
+                Messaging.sendEmail(emailLst);
+            } catch(Exception e) {
+                System.debug('An exception occurred: in line ' + e.getLineNumber() + ' with message:' + e.getMessage());
+            }
         }
 
     }
@@ -872,7 +875,7 @@ public class ANG_RHCAlertTriggerHandler{
             }
 
             //Send email
-            if(!eTemplates.isEmpty()){
+            if(!eTemplates.isEmpty() && targetObjectId != null && !toAddresses.isEmpty()){
                 EmailTemplate template = eTemplates.get(0);
                 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                 mail.setTemplateId(template.Id);
@@ -882,7 +885,11 @@ public class ANG_RHCAlertTriggerHandler{
                 mail.setWhatId(sidraLiteCase.Id);
                 for (ANG_Risk_Alert__c riskAlert: riskAlerts) {
                     System.debug('::: riskAlert : ' + riskAlert);
-                    Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+                    try{
+                        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+                    } catch(Exception e) {
+                        System.debug('An exception occurred: in line ' + e.getLineNumber() + ' with message:' + e.getMessage());
+                    }
                 }
 
             }
@@ -941,8 +948,7 @@ public class ANG_RHCAlertTriggerHandler{
             System.debug('Warning: No email template or org wide email found');
             return emailLst;
         }
-
-        if(toAddressesNoUsers.isEmpty() && toAddressesUsers.isEmpty()){
+        if(toAddressesNoUsers.isEmpty() || toAddressesUsers.isEmpty()){
              System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
              return emailLst;
         }
