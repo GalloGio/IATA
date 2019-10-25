@@ -1,0 +1,53 @@
+<template>
+
+    <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large">
+
+        <!-- Sticky navigation -->
+        <div class="stickyNav slds-col slds-size_1-of-3">
+            <c-portal-company-profile-info-nav class="slds-large-show"
+                onnavigate={handleNavigation}></c-portal-company-profile-info-nav>
+        </div>
+
+        <!-- Profile sections -->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-3">
+
+            <template if:true={mapOfValues}>
+                <template for:each={mapOfValues} for:item="keyValue">
+                    <c-portal-record-form-wrapper key={keyValue.key} object-name="Account"
+                        record-id={loggedUser.Contact.AccountId} fields={keyValue.value}
+                        show-edit={canEditAccount} class="section" section-title={keyValue.key}
+                        data-name={keyValue.key} edit-basics={editBasics} tab-name={tabName}
+                        section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
+                    </c-portal-record-form-wrapper>
+                </template>
+
+                <div class="endOfPage"></div>
+
+            </template>
+
+            <!-- Portal Administrators -->
+            <c-portal-profile-section data-name="adminContacts" class-name="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section" class="section">
+                <span slot="sectionTitle">{labels.CSP_Portal_Administrators}</span>
+                
+                <span slot="sectionActions">
+                </span>
+
+                <span slot="componentContent">
+                    <div if:true={hasPortalAdmins} class="adminContactsTable">
+                        <lightning-datatable
+                            key-field="Id"
+                            data={portalAdminList}
+                            columns={portalAdminColumns}
+                            hide-checkbox-column="true">
+                        </lightning-datatable>
+                    </div>
+                    <div if:false={hasPortalAdmins}>
+                        {labels.CSP_NoSearchResults}
+                    </div>
+                </span>
+            </c-portal-profile-section>
+
+        </div>
+    </div>
+    
+</template>

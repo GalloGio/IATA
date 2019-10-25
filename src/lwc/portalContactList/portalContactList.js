@@ -85,6 +85,13 @@ export default class PortalContactList extends LightningElement {
     @track contactsSelected = [];
     @track allContactsSelected = false;
 
+    @track paginationObject = {
+        totalItems : 10,
+        currentPage : 1,
+        pageSize : 10,
+        maxPages : 3
+    }
+
     searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
     /* Dynamic fields*/
@@ -204,10 +211,10 @@ export default class PortalContactList extends LightningElement {
         this.openId = null;
         let recordIndex = parseInt(event.target.dataset.item, 10);
 
-        let records = JSON.parse(JSON.stringify(this.records));
+        let records = JSON.parse(JSON.stringify(this.pageRecords));
 
         for (let i = 0; i < records.length; i++) {
-            if (recordIndex == i && (records[i].open === undefined || records[i].open === false)) {
+            if (recordIndex === i && (records[i].open === undefined || records[i].open === false)) {
                 this.openId = records[i].Id;
                 records[i].open = true;
             } else {
@@ -215,7 +222,7 @@ export default class PortalContactList extends LightningElement {
             }
         }
 
-        this.records = records;
+        this.pageRecords = records;
     }
 
     get noSelected() {
@@ -418,8 +425,8 @@ export default class PortalContactList extends LightningElement {
         }
 
         this.contactsSelected = fieldValue;
-
-        let records = JSON.parse(JSON.stringify(this.records));
+        
+        let records = JSON.parse(JSON.stringify(this.pageRecords));
 
         for (let i = 0; i < records.length; i++) {
             if(records[i].Id === contactSelected) {
@@ -428,8 +435,8 @@ export default class PortalContactList extends LightningElement {
             }
         }
 
-        this.records = records;
-        
+        this.pageRecords = records;
+
         if(this.allContactsSelected && this.contactsSelected.length === 0) this.allContactsSelected = false;
 
         this.dispatchEvent(new CustomEvent('manageusers', { detail: this.contactsSelected.length }));
@@ -449,7 +456,7 @@ export default class PortalContactList extends LightningElement {
 
         this.contactsWrapper = recordsWrapper;
         
-        let records = JSON.parse(JSON.stringify(this.records));
+        let records = JSON.parse(JSON.stringify(this.pageRecords));
 
         for (let i = 0; i < records.length; i++) {
             if(this.allContactsSelected) {
@@ -460,7 +467,7 @@ export default class PortalContactList extends LightningElement {
             }
         }
 
-        this.records = records;
+        this.pageRecords = records;
 
         if(this.allContactsSelected) {
             this.allContactsSelected = false;
@@ -491,7 +498,7 @@ export default class PortalContactList extends LightningElement {
             }
     
             this.contactsWrapper = recordsWrapper;
-
+            
             let records = JSON.parse(JSON.stringify(this.records));
 
             for (let i = 0; i < records.length; i++) {
@@ -582,6 +589,7 @@ export default class PortalContactList extends LightningElement {
             this.originalRecords = records;
         }
 
+        this.resetPagination();
 
     }
 
@@ -707,6 +715,47 @@ export default class PortalContactList extends LightningElement {
 
     refreshview() {
         this.dispatchEvent(new CustomEvent('refreshview'));
+    }
+
+    //pagination methods
+
+    @track pageRecords = [];
+
+    resetPagination(){
+
+        this.paginationObject = {
+            totalItems : this.records.length,
+            currentPage : 1,
+            pageSize : 10,
+            maxPages : 3
+        }
+
+        this.pageRecords = [];
+        this.processPage();
+    }
+
+    handleSelectedPage(event){
+        //the event contains the selected page
+        this.loading = true;
+        this.allContactsSelected = false;
+        let requestedPage = event.detail;
+        let paginationObjectAux = JSON.parse(JSON.stringify(this.paginationObject)); 
+        paginationObjectAux.currentPage = requestedPage;
+        this.paginationObject = paginationObjectAux;
+        this.processPage();
+    }
+
+    processPage(){
+        let pageRecordsAux = [];
+        let realRequestedPage = this.paginationObject.currentPage-1;
+        let offset = realRequestedPage * this.paginationObject.pageSize;
+        let offsetLimit = offset + this.paginationObject.pageSize;
+        for(let i = offset; i < this.records.length && i < offsetLimit ; i++){
+            pageRecordsAux.push(this.records[i]);
+        }
+
+        this.pageRecords = pageRecordsAux;
+        this.loading = false;
     }
 
 }
