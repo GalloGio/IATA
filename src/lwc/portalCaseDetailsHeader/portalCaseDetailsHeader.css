@@ -49,4 +49,32 @@
 
 .recipients lightning-button{
     padding: 0 10px;
+.expiredCard {
+    background-color: #feeebe;
+    border-color: #ffeeba;
+}
+
+.caseClosed2W{
+  width: 1060px;
+  height: 40px;
+  /* font-family: AktivGrotesk; */
+  font-size: 12px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 40px;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: #4a4d61;
+  
+}
+
+.caseClosed2W img{
+  margin-top: -4px;
+  
+}
+
+.caseClosed2W span{
+  margin-left: 10px;
+  
 }
