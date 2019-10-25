@@ -470,9 +470,17 @@ global without sharing class AMS_RecordCreatorWebservice {
     }
 
     private static List<Account> getSelectedBranchList(List<String> branchCodes) {
+        Set<String> iataCodes = new Set<String>();
+        
+        for (String iataCode: branchCodes) {
+            if (!String.isBlank(iataCode)) {
+                iataCodes.add(iataCode);
+            }
+        }
+
         return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
                 FROM Account
-                WHERE IATACode__c IN :branchCodes
+                WHERE IATACode__c IN :iataCodes
                 ORDER BY Name, IATACode__c];
     }
 

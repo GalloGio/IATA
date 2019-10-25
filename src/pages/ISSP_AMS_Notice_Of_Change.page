@@ -2332,18 +2332,19 @@
 					addFinancialAssessmentContactItem.css('display', 'none');
 				} else {
 					if (element.value === 'Cash') {
-						addFinancialAssessmentContactItem.css('display', '');
-					}
+					addFinancialAssessmentContactItem.css('display', '');
 				}
 			}
+		}
 		}
 		//END NEWGEN-523
 
 		//NEWGEN-1227
-		if (lScopeOfChange === 'HO - All Branches' || lScopeOfChange === 'HO - Selected Branches' || '{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
+		if ((lScopeOfChange === 'HO - All Branches' || lScopeOfChange === 'HO - Selected Branches' || '{!newForm.Agency_Codes_Concerned__c}'.includes(",")) && {!BranchAccounts}.length > 0) {
 			checkb.prop('checked', false);
 			checkb.prop('disabled', true);
 			setWarningBoxOnHover(checkb, '{!$Label.ISSP_NoC_Location_Warning}');
+			setWarningBoxOnHoverMC($j('[id$=notifyChangeLocationCheckbox]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 		}
 		else if ('{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
 			$j('[id$=notifyChangeLocationCheckbox]').prop('disabled', true);
@@ -2363,28 +2364,29 @@
 			}
 		}
 
-		if ({!isNoticeOfChange}) {
-			if (typeOfChange !== 'Yes' && {!CanChangeAccreditationType}) {
-				$j('[id$=iataChangeAccType]').prop('disabled', true);
-			}
+		if (typeOfChange !== 'Yes' && {!CanChangeAccreditationType}) {
+			iataChangeAccType.prop('disabled', true);
+			iataChangeAccType.prop('checked', false);
 
-			if ({!isMCAccredited} && lScopeOfChange !== 'HO Only') {
-				setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
-				setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+			$j('[id$=allowedAccreditationModelSelectPanel]').css('display', 'none');
+		}
+
+		if ({!isMCAccredited} && lScopeOfChange !== 'HO Only') {
+			setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+			setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+		}
+		
+		if ({!multipleCountriesSelected} && {!BranchAccounts}.length > 0) {
+			$j('[id$=notifyLegalDetailsChange]').prop('disabled', true);
+
+			if (!({!isMCAccredited} && lScopeOfChange !== 'HO Only')) {
+			setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
 			
-			if ({!multipleCountriesSelected}) {
-				$j('[id$=notifyLegalDetailsChange]').prop('disabled', true);
+			$j('[id$=notifyOwnershipChange]').prop('disabled', true);
 
-				if (!({!isMCAccredited} && lScopeOfChange !== 'HO Only')) {
-				setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
-				}
-				
-				$j('[id$=notifyOwnershipChange]').prop('disabled', true);
-
-				if (!({!isMCAccredited} && lScopeOfChange !== 'HO Only')) {
-					setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
-				}
+			if (!({!isMCAccredited} && lScopeOfChange !== 'HO Only')) {
+				setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
 		}
 		

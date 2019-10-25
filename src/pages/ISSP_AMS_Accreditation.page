@@ -527,6 +527,7 @@
         }
 
         function checkLocationQuestion() {
+            if ($('[id$="LocationType"]').find("input")[0] && $('[id$="LocationType"]').find("input")[1] && $('[id$="LocationType"]').find("input")[2] && $('[id$="LocationType"]').find("input")[3]) {
             if ($('[id$="LocationType"]').find("input")[0].checked) {
                 $('[id$="nocThirdQuestion"]').css('display', 'none');
                 toggleCountryMultiSelection(true, false);
@@ -571,6 +572,7 @@
 
                 $('[id$="nocThirdQuestion"]').css('display', 'none');
             }
+        }
         }
 
         function toggleCountryMultiSelection(countryLabel, multiCountry) {
