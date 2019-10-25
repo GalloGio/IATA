@@ -31,6 +31,16 @@
             <!-- VIEW RECORD -->
             <lightning-record-view-form record-id={recordId} object-api-name={objectName} onload={loaded}>
                 <template if:false={isLoading}>
+                    <!--WMO-736 - ACAMBAS: Begin -->
+                    <template if:true={hasAccessToSISPortal}>
+                        <lightning-formatted-rich-text value={SISPortalLink}></lightning-formatted-rich-text><br><br>
+                    </template>
+                    <!--WMO-736 - ACAMBAS: End -->
+                    <!--WMO-699 - ACAMBAS: Begin -->
+                    <template if:true={isCustomerInvoice}>
+                        <b>{labels.See_Bank_Account_Details}</b><br><br>      
+                    </template>
+                    <!--WMO-699 - ACAMBAS: End -->
                     <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_small">
 
                         <template for:each={fields} for:item="field">
@@ -138,9 +148,14 @@
                                                             </template>
 
                                                             <template if:false={field.canChangeAccount}>
-                                                                <lightning-output-field class="labelValue textValue"
-                                                                    field-name={field.fieldName}>
-                                                                </lightning-output-field>
+                                                                <!--WMO-699 - ACAMBAS: Begin -->
+                                                        	    <template if:true={isCustomerInvoice}>
+                                                            	        <b><lightning-output-field field-name={field.fieldName}></lightning-output-field></b>
+                                                                    </template>
+                                                                    <template if:false={isCustomerInvoice}>
+                                                                        <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
+                                                                    </template>
+                                                                <!--WMO-699 - ACAMBAS: End -->
                                                             </template>
                                                         </template>
 
@@ -258,6 +273,13 @@
                         </template>
                     </div>
                 </template>
+
+                <!--WMO-699 - ACAMBAS: Begin -->
+                <template if:true={displayPaymentLinkLabel}>     
+                    <p class="underLinded">&nbsp;</p>
+                    <p class="underLinded"><lightning-formatted-rich-text value={labels.Credit_Card_Payment_Link}></lightning-formatted-rich-text></p>
+                </template>
+                <!--WMO-699 - ACAMBAS: End -->
 
                 <template if:true={isLoading}>
                     <div class="slds-m-around_medium slds-is-relative">
