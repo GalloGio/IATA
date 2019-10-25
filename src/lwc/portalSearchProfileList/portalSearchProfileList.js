@@ -165,17 +165,16 @@ export default class PortalSearchProfileList extends NavigationMixin(LightningEl
     retrieveResultsFromServer() {
 
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
-        console.log('Searching');
-        getFilteredProfileResultsPage({ searchKey: JSON.stringify(filteringObjectAux) })
+        getFilteredProfileResultsPage({ profileFilterWrapper: JSON.stringify(filteringObjectAux) })
             .then(myResults => {
                 let results = JSON.parse(JSON.stringify(myResults));
-                console.log(results);
+                let recordsString = JSON.parse(results.recordsString);
+                
+                filteringObjectAux.profileComponent.nrResults = recordsString.length;
 
-                filteringObjectAux.profileComponent.nrResults = results.records.length;
-
-                if (results.records && results.records.length > 10) {
-                    this.listAccounts = results.records.filter(obj => obj.profileType === this.label.Company);
-                    this.listContacts = results.records.filter(obj => obj.profileType === 'Contact');
+                if (recordsString && recordsString.length > 10) {
+                    this.listAccounts = recordsString.filter(obj => obj.profileType === this.label.Company);
+                    this.listContacts = recordsString.filter(obj => obj.profileType === 'Contact');
                     let slicedContactProfileList = this.listContacts.length > 5 ? this.listContacts.slice(0, 10 - this.listAccounts.slice(0, 5).length) : this.listContacts;
                     let slicedAccountProfileList = this.listAccounts.length > 5 ? this.listAccounts.slice(0, 10 - slicedContactProfileList.length) : this.listAccounts;
 
@@ -218,26 +217,16 @@ export default class PortalSearchProfileList extends NavigationMixin(LightningEl
 
     loadMoreResults() {
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
-        console.log('Load More1');
         let requestedPageNumber = this.pageNumber + 1;
-        console.log('Load More2');
         this.pageNumber = requestedPageNumber;
-        console.log('Load More3');
         let slicedContactProfileList=[];
         let slicedAccountProfileList=[];
-        console.log('Load More4' + this.listAccounts);
         if (this.profileList.length < filteringObjectAux.profileComponent.nrResults) {
-            console.log('Load More5');
             slicedContactProfileList = this.listContacts.slice(0, 5 * (this.pageNumber+1));
-            console.log('Load More6');
             slicedAccountProfileList = this.listAccounts.slice(0, 5 * (this.pageNumber+1));
-            console.log('Load More7');
         }
-        console.log('Load More8');
         let profileListAux = slicedContactProfileList.concat(slicedAccountProfileList);
-        console.log('Load More9');
         this.profileList = profileListAux;
-        console.log(this.profileList);
         
         this.loadingMoreResults = false;
     }
