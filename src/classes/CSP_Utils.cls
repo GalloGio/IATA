@@ -381,5 +381,20 @@ public with sharing class CSP_Utils {
         return loggedUser.Profile.Name.contains('Airline');
     }
 
-
+    /*
+    * Public class used thoughout the portal to return nr of records, a list of records and other properties
+    */
+    public class PagedResult {
+        @AuraEnabled
+        public Integer totalItemCount { get; set; }
+        @AuraEnabled
+        public SObject[] records { get; set; }
+        @AuraEnabled
+        public Boolean userAdmin { get; set; }
+        @AuraEnabled
+        public String url { get; set; }
+        @AuraEnabled
+        public String recordsString { get; set; }
+        
+    }
 }
