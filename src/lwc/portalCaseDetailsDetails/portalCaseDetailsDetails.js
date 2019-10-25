@@ -64,7 +64,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         CSP_IATA_Country
     };
 
-    acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
+    acceptedFormats = '.pdf, .jpeg, .jpg, .png, .ppt, .pptx, .xls, .xlsx, .tif, .tiff, .zip, .doc, .docx';
 
 
 
