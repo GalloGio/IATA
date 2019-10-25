@@ -258,7 +258,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 	private List<Account> getAccounts(Id selectedAccount)
 	{
-		List<Account> accountLst = new List<Account>(
+		List<Account> allAccountsLst = new List<Account>(
 			[SELECT
 				Id,
 				Name,
@@ -267,12 +267,28 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 				Top_Parent__c,
 				Location_Type__c,
 				IATA_ISO_Country__r.Name,
-				IATA_ISO_Country__r.AMS_Settlement_System__r.Name
+				IATA_ISO_Country__r.AMS_Settlement_System__r.Name,
+				(SELECT 
+					Id, Name, Status__c, IATACode__c, Top_Parent__c, Location_Type__c, 
+					IATA_ISO_Country__r.Name, IATA_ISO_Country__r.AMS_Settlement_System__r.Name
+				 FROM ChildAccounts
+				 WHERE 
+				 	Location_Type__c = :AMS_Utils.AE
+				 AND 
+				 	Status__c NOT IN (
+						'',
+						NULL,
+						:AMS_Utils.ACC_S4_LISTED,
+						:AMS_Utils.ACC_S0_TERMINATED, 
+						:AMS_Utils.ACC_S1_NOTACCREDITED, 
+						:AMS_Utils.ACC_S3_NOTINOPERATION
+					)
+				)
 			 FROM Account
 			 WHERE
-				(Id = :selectedAccount OR Top_Parent__c = :selectedAccount)
-			 AND
-				Location_Type__c IN (:AMS_Utils.HE, :AMS_Utils.AE)
+				 Id = :selectedAccount
+			 AND Location_Type__c = :AMS_Utils.HE
+			 AND ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_CASH
 			 AND
 				Status__c NOT IN (
 					'',
@@ -284,6 +300,15 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 				)
 			]
 		);
+
+		List<Account> accountLst = new List<Account>();
+
+		for(Account acct : allAccountsLst){
+			accountLst.add(acct);
+			if(acct.ChildAccounts != NULL && !acct.ChildAccounts.isEmpty()){
+				accountLst.addAll(acct.ChildAccounts);
+			}
+		}
 
 		return accountLst;
 	}

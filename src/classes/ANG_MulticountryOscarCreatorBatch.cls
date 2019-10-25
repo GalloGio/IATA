@@ -130,22 +130,24 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 	
 	global void finish(Database.BatchableContext BC) {
 
-		if(accountAccreditationFormsMap.get(acct.Id).AmazonFiles__r != null){
-			Set<String> attatchmentsNameToTransfer = new Set<String>();
-			List<WrapperAttach> attatchments = WrapperAttach.getListAttachments(accountAccreditationFormsMap.get(acct.Id).AmazonFiles__r.get(0).case__c);
+		if(accountAccreditationFormsMap != NULL && accountAccreditationFormsMap.containsKey(acct.Id)){
+			List<AmazonFile__c> amazonFilesLst = accountAccreditationFormsMap.get(acct.Id).AmazonFiles__r;
+			
+			if(amazonFilesLst != NULl && !amazonFilesLst.isEmpty()){
+				Set<String> attatchmentsNameToTransfer = new Set<String>();
+				List<WrapperAttach> attatchments = WrapperAttach.getListAttachments(amazonFilesLst.get(0).case__c);
 
-			for(AmazonFile__c a : accountAccreditationFormsMap.get(acct.Id).AmazonFiles__r){
-				attatchmentsNameToTransfer.add(a.name);
-			}
+				for(AmazonFile__c a : amazonFilesLst){
+					attatchmentsNameToTransfer.add(a.name);
+				}
 
-			for(WrapperAttach wa : attatchments){
-				if(attatchmentsNameToTransfer.contains(wa.fileAmazon.amazonFile.name)){
-					wa.transfer(newCaseMC.id);
-					wa.moveToBucket();
+				for(WrapperAttach wa : attatchments){
+					if(attatchmentsNameToTransfer.contains(wa.fileAmazon.amazonFile.name)){
+						wa.transfer(newCaseMC.id);
+						wa.moveToBucket();
+					}
 				}
 			}
-
-			
 		}
 	}
 	

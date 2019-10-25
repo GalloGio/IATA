@@ -69,6 +69,8 @@
         if ("{!mcAbleToSubmit}" == 'false') {
             $('#submitMCButton').attr('disabled', 'true');
         }
+        else
+            $('#submitMCButton').removeAttr('disabled');
     }
     </script>
     </apex:outputPanel>
