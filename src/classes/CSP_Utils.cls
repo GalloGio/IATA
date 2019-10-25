@@ -381,8 +381,6 @@ public with sharing class CSP_Utils {
         return loggedUser.Profile.Name.contains('Airline');
     }
 
-	
-
 
     /*
     * Public class used thoughout the portal to return nr of records, a list of records and other properties
@@ -400,5 +398,6 @@ public with sharing class CSP_Utils {
         public String recordsString { get; set; }
         
     }
+
 
 }
