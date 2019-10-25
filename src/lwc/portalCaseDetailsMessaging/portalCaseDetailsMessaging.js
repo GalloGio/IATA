@@ -30,8 +30,7 @@ export default class PortalHomeCalendar extends LightningElement {
     @track showSendMessageButton = false;
     @track messageInputLoading = false;
 
-    @track showCaseMessagingSection = false;
-    @track messagingHeight = 'display:none';
+    @track showCaseMessagingSection = true;
 
     conversationImageURL = CSP_PortalPath + 'CSPortal/Images/Icons/messageBallons.svg';
 
@@ -121,11 +120,15 @@ export default class PortalHomeCalendar extends LightningElement {
         }else{
             this.showCaseMessagingSection = true;
         }
+        
         this.toggleCollapsed('[data-msgdiv]', 'collapsed');
         this.toggleCollapsed('[data-msgicon ]', 'arrowExpanded');
+        
     }
+	
+	toggleCollapsed(elem, cssclass) {
+		this.template.querySelector(elem).classList.toggle(cssclass);
+	}
+	
 
-    toggleCollapsed(elem, cssclass) {
-        this.template.querySelector(elem).classList.toggle(cssclass);
-    }
 }

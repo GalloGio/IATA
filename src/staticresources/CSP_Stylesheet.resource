@@ -260,15 +260,12 @@ body {
 .lightBlueSendButton svg {
     fill:#a5adfd;
 }
-.caseMessagesContainer{
-    height: 350px;
-}
+
 .caseMessagesSelfBubble{
     background-color: #525252;
     color:#FFFFFF;
     border-radius: 1px;
     font-size: 14px;
-    text-align: right;
   	font-weight: normal;
   	font-style: normal;
   	font-stretch: normal;
@@ -411,7 +408,7 @@ lightning-datatable .slds-th__action {
 }
 
 .Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
-.Submitted lightning-primitive-cell-wrapper lightning-formatted-text
+.Submitted lightning-primitive-cell-wrapper lightning-formatted-text,
 .Closed span, .AcceptedFutureDate span, .Submitted span {
     background-color: #b1e8b5;
     padding: 4px 6px 2px 6px;
@@ -518,6 +515,7 @@ lightning-datatable .slds-th__action {
   width: 200px;
   word-break: break-word;
   border: none;
+  display: inline-block;
 }
 
 .containedButton, .containedButton button, .containedButton button:active, .containedButton button:visited, .containedButton button:focus {
@@ -538,6 +536,7 @@ lightning-datatable .slds-th__action {
     width: 220px;
     word-break: break-word;
     border: none;
+    display: inline-block;
 }
 .containedButton button:hover {
 	border-radius: 1px;
@@ -620,13 +619,13 @@ lightning-datatable .slds-th__action {
     color: #33f;
     min-height: 40px;
     height: 56px;
-    width: 200px;
+    width: 220px;
     word-break: normal;
 }
 
 .containedButton-size {
     height: 56px;
-    width: 200px;
+    width: 100%;
 }
 
 .filterButton,
@@ -740,6 +739,10 @@ lightning-datatable .slds-th__action {
     color: #000000;
 }
 
+.slds-button__icon_right,
+.slds-button__icon--right {
+    margin-left: 0;
+}
 /* ############################################## */
 /* Text Sizing */
 
@@ -1462,7 +1465,8 @@ lightning-datatable .slds-th__action {
     border: none;
 }
 
-.containedButtonWhite button {
+.containedButtonWhite button,
+.containedButtonWhite button:hover {
     background-color: #ffffff;
     transition-duration: 0.4s;
     border-radius: 1px;
@@ -1478,6 +1482,8 @@ lightning-datatable .slds-th__action {
     width: 220px;
     word-break: break-all;
     border: none;
+    display: inline-block;
+    min-height: 40px;
 }
 
 /* Custom picklist Support Reach Us*/

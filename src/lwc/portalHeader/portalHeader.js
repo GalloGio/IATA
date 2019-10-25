@@ -211,7 +211,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track headerButtonNotificationsContainerStyle;
     @track headerButtonNotificationsCloseIconStyle;
     @track headerButtonNotificationsStyle;
-    @track notificationNumberStyle;
+    @track notificationNumberStyle='display: none;';
     @track openNotificationsStyle;
     @track displayBodyStyle;
     @track displayNotificationStyle;
@@ -294,7 +294,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
             if (this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
                 this.notificationNumberStyle = 'display: none;';
-            }
+            }else{
+				this.notificationNumberStyle = 'display: inline;';
+				this.headerButtonNotificationsStyle='display: inline;vertical-align:top;';
+			}
 
         });
 
@@ -403,8 +406,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         } else {
             this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
             this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
-            this.headerButtonNotificationsStyle = 'display: block;';
-            this.notificationNumberStyle = (this.numberOfNotifications === 0 ? 'display: none;' : 'display: block;');
+            this.headerButtonNotificationsStyle = 'display: inline;vertical-align:top;';
+            this.notificationNumberStyle = (this.numberOfNotifications === 0 ? 'display: none;' : 'display: inline;');
             this.openNotificationsStyle = 'display: none;';
             this.showBackdrop = false;
         }
