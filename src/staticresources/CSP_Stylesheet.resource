@@ -489,7 +489,7 @@ lightning-datatable .slds-th__action {
   text-align: center;
   color: #ffffff;
   min-height: 50px;
-  width: 100%;
+  width: 200px;
   word-break: break-word;
   border: none;
   display: inline-block;
@@ -510,7 +510,7 @@ lightning-datatable .slds-th__action {
     text-align: center;
     color: #ffffff;
     min-height: 40px;
-    width: 100%;
+    width: 220px;
     word-break: break-word;
     border: none;
     display: inline-block;
@@ -528,7 +528,7 @@ lightning-datatable .slds-th__action {
     text-align: center;
     color: #ffffff;
     min-height: 40px;
-    width: 100%;
+    width: 220px;
     word-break: break-word;
     border: none;
 }
@@ -591,7 +591,7 @@ lightning-datatable .slds-th__action {
     color: #33f;
     min-height: 40px;
     height: 56px;
-    width: 100%;
+    width: 220px;
     word-break: normal;
 }
 
@@ -615,7 +615,7 @@ lightning-datatable .slds-th__action {
   text-align: center;
   color: #3333ff;
   min-height: 40px;
-  width: 100%;
+  width: 220px;
   word-break: break-all;
   border: none;
 }
@@ -707,6 +707,10 @@ lightning-datatable .slds-th__action {
     color: #000000;
 }
 
+.slds-button__icon_right,
+.slds-button__icon--right {
+    margin-left: 0;
+}
 /* ############################################## */
 /* Text Sizing */
 
@@ -1384,7 +1388,8 @@ lightning-datatable .slds-th__action {
     border: none;
 }
 
-.containedButtonWhite button {
+.containedButtonWhite button,
+.containedButtonWhite button:hover {
     background-color: #ffffff;
     transition-duration: 0.4s;
     border-radius: 1px;
@@ -1400,6 +1405,8 @@ lightning-datatable .slds-th__action {
     width: 220px;
     word-break: break-all;
     border: none;
+    display: inline-block;
+    min-height: 40px;
 }
 
 /* Custom picklist Support Reach Us*/
