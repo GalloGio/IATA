@@ -2358,9 +2358,11 @@
 			}
 		}
 
-		if ({!isNoticeOfChange}) {
 			if (typeOfChange !== 'Yes' && {!CanChangeAccreditationType}) {
-				$j('[id$=iataChangeAccType]').prop('disabled', true);
+			iataChangeAccType.prop('disabled', true);
+			iataChangeAccType.prop('checked', false);
+
+			$j('[id$=allowedAccreditationModelSelectPanel]').css('display', 'none');
 			}
 
 			if ({!isMCAccredited} && lScopeOfChange !== 'HO Only') {
@@ -2386,7 +2388,6 @@
 				$j('[id$=notifyChangeLocationCheckbox]').prop('disabled', true);
 				setWarningBoxOnHoverMC($j('[id$=notifyChangeLocationCheckbox]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
-		}
 		
 		//END - NoC Changes
 							
