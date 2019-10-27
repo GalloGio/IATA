@@ -140,24 +140,6 @@ public without sharing class PortalHeaderCtrl {
                 }
                 //ACAMBAS - WMO-628: End
             }
-            
-
-            //ACAMBAS - WMO-628: Begin
-            for (Customer_Invoice__c invoice : customerInvoicesList){
-                // CUSTOMER INVOICES
-                NotificationItem notif = new NotificationItem(invoice.Id, 
-                                                                'You have a new outstanding invoice from IATA: ' + invoice.Invoice_Number__c, 
-                                                                invoice.CreatedDate, 
-                                                                false, 
-                                                                System.label.CSP_Task, 
-                                                                'You have a new outstanding invoice from IATA: ' + invoice.Invoice_Number__c, 
-                                                                false, 
-                                                                'Customer Invoice', 
-                                                                '');
-                notificationItemList.add(notif);
-            }
-            //ACAMBAS - WMO-628: End
-
         }
 
         for(Notification__c notification : notificationList){
