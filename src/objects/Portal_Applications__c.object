@@ -991,7 +991,10 @@ Name
         AND(Name = &quot;Transparency in Payments (TIP)&quot;,
             ($User.Is_TIP_User__c)),
         AND(Name = &quot;Access BOP&quot;,
-            $User.ANG_Customer_Country_ISO__c = &quot;CN&quot;)
+            $User.ANG_Customer_Country_ISO__c = &quot;CN&quot;),
+        AND(Name = &quot;IATA Accreditation &amp; Changes&quot;,
+            NOT($User.CNS_Account_or_Agency__c),
+            NOT($User.ANG_Sector__c=&apos;Cargo Agent&apos;))
     )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
