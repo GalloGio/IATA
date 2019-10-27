@@ -6224,7 +6224,7 @@ Message: {2}</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Fee Codes</shortDescription>
-        <value>Fee Codes</value>
+        <value>Category</value>
     </labels>
     <labels>
         <fullName>Feed_Item_Invalid_Topics</fullName>
@@ -32976,7 +32976,7 @@ You can choose one or more of the following topics:</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Invoice Amount</shortDescription>
-        <value>Invoice Amount</value>
+        <value>Amount</value>
     </labels>
     <labels>
         <fullName>Invoice_Date</fullName>
@@ -32990,7 +32990,7 @@ You can choose one or more of the following topics:</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Invoice Status</shortDescription>
-        <value>Invoice Status</value>
+        <value>Status</value>
     </labels>
     <labels>
         <fullName>Invoice_number</fullName>
@@ -34129,6 +34129,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>Line of Business (LoB)</shortDescription>
         <value>Line of Business (LoB)</value>
+    </labels>
+    <labels>
+        <fullName>Link_To_SIS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Link To SIS</shortDescription>
+        <value>{1} For more information about this invoice &lt;a href=&quot;{2}&quot; target=&quot;_blank&quot; style=&quot;color: blue; text-decoration-line: underline;&quot;&gt;Go to SIS&lt;/a&gt;.</value>
     </labels>
     <labels>
         <fullName>LiveAgentButtonLanguage</fullName>
@@ -38146,7 +38153,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>See_Bank_Account_Details</shortDescription>
-        <value>Please see below our bank account details for bank transfer payment.</value>
+        <value>Please see below bank account details for bank transfer payment.</value>
     </labels>
     <labels>
         <fullName>See_details</fullName>

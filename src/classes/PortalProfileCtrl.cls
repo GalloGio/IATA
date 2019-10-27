@@ -959,11 +959,10 @@ public static Contact contactInfo = new Contact();
         List<String> toRow;
 
         if(invoiceType == IATA_INVOICE_TYPE && myContact.Account.RecordType.DeveloperName == 'IATA_Agency') {
-            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Status__c', 'Billing_Currency__c', 'Total_Amount__c', 'Invoice_Date__c', 'Fee_Codes_Display__c'};
+            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Date__c', 'Billing_Currency__c', 'Total_Amount__c', 'Fee_Codes_Display__c', 'Invoice_Status__c'};
         }
         else {
-            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Status__c', 'Billing_Currency__c', 'Total_Amount__c', 
-                                     'Billing_Member_Accounting_Code__c', 'Billing_Member_Name__c', 'Invoice_Date__c', 'Fee_Codes_Display__c'};   
+            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Date__c', 'Billing_Currency__c', 'Total_Amount__c', 'Fee_Codes_Display__c', 'Billing_Member_Name__c', 'Invoice_Status__c'};   
         }
 
         Map<String,String> fieldLabels = new Map<String,String>();
@@ -1014,11 +1013,11 @@ public static Contact contactInfo = new Contact();
 
         List<Customer_Invoice__c> invoices = 
                 [SELECT Id, Invoice_Number__c, Invoice_Status__c, Total_Amount__c, Billing_Currency__c, Fee_Codes_Display__c,
-                        Billing_Member_Accounting_Code__c, Billing_Member_Designator_Code__c, Billing_Member_Name__c, Invoice_Date__c,
+                        Billing_Member_Designator_Code__c, Billing_Member_Name__c, Invoice_Date__c,
                         Bank_Name__c, IBAN__c, SWIFT__c, Bank_Code__c, Branch_Code__c, Bank_Account_No__c, Bank_Account_Name__c
                  FROM Customer_Invoice__c 
                  WHERE AccountId__c = :myContact.AccountId AND Billing_Member_IS_Sub_Status__c = :type AND Invoice_Status__c IN :statusList
-                 ORDER BY Invoice_Number__c ASC LIMIT:INVOICE_BATCH OFFSET :offset
+                 ORDER BY Invoice_Date__c ASC LIMIT:INVOICE_BATCH OFFSET :offset
                 ];
 
         return invoices;

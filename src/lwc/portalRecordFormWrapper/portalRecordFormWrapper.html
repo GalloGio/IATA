@@ -31,9 +31,14 @@
             <!-- VIEW RECORD -->
             <lightning-record-view-form record-id={recordId} object-api-name={objectName} onload={loaded}>
                 <template if:false={isLoading}>
+                    <!--WMO-736 - ACAMBAS: Begin -->
+                    <template if:true={hasAccessToSISPortal}>
+                        <lightning-formatted-rich-text value={SISPortalLink}></lightning-formatted-rich-text><br><br>
+                    </template>
+                    <!--WMO-736 - ACAMBAS: End -->
                     <!--WMO-699 - ACAMBAS: Begin -->
                     <template if:true={isCustomerInvoice}>
-                        <p align="center" style="color:blue;">{labels.See_Bank_Account_Details}</p><br>      
+                        <b>{labels.See_Bank_Account_Details}</b><br><br>      
                     </template>
                     <!--WMO-699 - ACAMBAS: End -->
                     <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_small">

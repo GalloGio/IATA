@@ -127,4 +127,15 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
 		}
 	
 	}
+
+	/* 
+    * @description Return if a specific user has Access to a specific service
+    * @return boolean 
+    */
+    @AuraEnabled
+    public static Boolean hasAccessToService(string str,string conId) {       
+		if(conId==null) conId=CSP_Utils.getLoggedUser().contactId; // if conId, checks current user
+        return [select id from Portal_Application_Right__c where Contact__c =:conId and Right__c ='Access Granted' and Application_Name__c like :str limit 1].size()>0;
+    }
+
 }
