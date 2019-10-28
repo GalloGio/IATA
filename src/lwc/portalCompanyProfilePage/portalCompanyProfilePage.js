@@ -59,7 +59,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
     constructor() {
         super();
         var self = this;
-        window.addEventListener('scroll', function(e) { self.handleScroll(window.scrollY, self); });
+        window.addEventListener('scroll', function (e) { self.handleScroll(window.scrollY, self); });
     }
 
     @track isAdmin = false;
@@ -182,6 +182,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
         });
         //WMO-696 - ACAMBAS: End
 
+        isAdminAndIATAAgencyAcct().then(result => {
+            this.showIFAPBtn = result;
+        });
+        
         canEditBasics().then(result => {
             this.editBasics = result;
         });
@@ -196,6 +200,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
         getContactFieldsToInsert().then(result => {
             this.fieldsListToCreate = result;
+        });
+
+        checkCanEdit().then(result => {
+            this.showEdit = result;
         });
     }
 
@@ -627,8 +635,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let services = contacts[i].services;
             let status = contact.User_Portal_Status__c;
 
-            let locationType = contact.Account.Location_Type__c ? contact.Account.Location_Type__c : '';
-            let iataCode = contact.IATA_Code__c ? contact.IATA_Code__c : '';
+            contact.PortalStatus = status;
 
             if (contact.Account.RecordType.Name === 'Airline Headquarters' || contact.Account.RecordType.Name === 'Airline Branch') {
                 contact.LocationCode = (contact.hasOwnProperty('IATA_Code__c') ? contact.IATA_Code__c : '') + (contact.hasOwnProperty('Account_site__c') ? ' (' + contact.Account_site__c + ')' : '') + ')';
@@ -650,14 +657,14 @@ export default class PortalCompanyProfilePage extends LightningElement {
                         let month;
 
                         try {
-							month = lastLogin.toLocaleString(locale, { month: "long" });
-							contact.LastLogin = month + ' ' + day + ', ' + year;
-						}
-						catch (e) {
-							contact.LastLogin = day + '.' + (monthIndex + 1) + '. ' + year;
-						}
-					}
-				}
+                            month = lastLogin.toLocaleString(locale, { month: "long" });
+                            contact.LastLogin = month + ' ' + day + ', ' + year;
+                        }
+                        catch (e) {
+                            contact.LastLogin = day + '.' + (monthIndex + 1) + '. ' + year;
+                        }
+                    }
+                }
             }
 
             if (services != null) {
