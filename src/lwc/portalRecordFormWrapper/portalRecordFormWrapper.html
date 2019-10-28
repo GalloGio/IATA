@@ -150,11 +150,11 @@
                                                             <template if:false={field.canChangeAccount}>
                                                                 <!--WMO-699 - ACAMBAS: Begin -->
                                                         	    <template if:true={isCustomerInvoice}>
-                                                            	        <b><lightning-output-field field-name={field.fieldName}></lightning-output-field></b>
-                                                                    </template>
-                                                                    <template if:false={isCustomerInvoice}>
-                                                                        <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
-                                                                    </template>
+                                                                    <b><lightning-output-field field-name={field.fieldName}></lightning-output-field></b>
+                                                                </template>
+                                                                <template if:false={isCustomerInvoice}>
+                                                                    <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
+                                                                </template>
                                                                 <!--WMO-699 - ACAMBAS: End -->
                                                             </template>
                                                         </template>
@@ -301,7 +301,7 @@
                             <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
                                 <template if:false={isSaving}>
                                     <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
-                                                    onclick={closeModal}></lightning-icon>
+                                        onclick={closeModal}></lightning-icon>
                                 </template>
                             </span>
                         </div>
@@ -311,8 +311,8 @@
                         <template if:true={recordId}>
                             <div class="slds-is-relative">
                                 <lightning-record-edit-form record-id={recordId} object-api-name={objectName}
-                                                            onload={loadedEdit} onsuccess={handleSucess} onsubmit={handleSubmit}
-                                                            onerror={handleError}>
+                                    onload={loadedEdit} onsuccess={handleSucess} onsubmit={handleSubmit}
+                                    onerror={handleError}>
 
                                     <template if:true={isSaving}>
                                         <div class="modalSpinnerContainer">
@@ -321,41 +321,52 @@
                                         </div>
                                     </template>
 
-                                    <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_4-of-4 customWhiteBackground">
+                                    <template if:true={hasError}>
+                                        <div class="whiteIcon text-xxsmall errorBox">
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-m-left_medium slds-size_12-of-13">
+                                                    {labels.CSP_Error_Message_Mandatory_Fields_Contact}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+
+                                    <div
+                                        class="slds-p-horizontal_small slds-p-horizontal_large slds-size_4-of-4 customWhiteBackground">
                                         <template if:false={isLoadingEdit}>
                                             <div
-                                                    class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
+                                                class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
 
                                                 <!-- Display same fields for edit -->
                                                 <template if:false={haveEditFields}>
                                                     <template for:each={fields} for:item="field">
                                                         <template if:true={field.isAccessibility}>
                                                             <div key={field.fieldName}
-                                                                 class="specialLabel slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                                                                class="specialLabel slds-col slds-size_1-of-1 slds-m-bottom_medium">
                                                                 {field.fieldName}
                                                             </div>
                                                             <template for:each={field.accessibilityList}
-                                                                      for:item="accessibility">
+                                                                for:item="accessibility">
                                                                 <div key={accessibility.label}
-                                                                     class="text-xsmall slds-size_1-of-2">
+                                                                    class="text-xsmall slds-size_1-of-2">
                                                                     <div
-                                                                            class="slds-m-left_x-small slds-m-bottom_small">
+                                                                        class="slds-m-left_x-small slds-m-bottom_small">
                                                                         <label class="checkbox-button">
                                                                             <input data-check={accessibility.checked}
-                                                                                   checked={accessibility.checked}
-                                                                                   data-item={accessibility.label}
-                                                                                   type="checkbox"
-                                                                                   class="checkbox-button__input"
-                                                                                   onchange={getValueSelectedTypeStatus}
-                                                                                   name={accessibility.label}>
+                                                                                checked={accessibility.checked}
+                                                                                data-item={accessibility.label}
+                                                                                type="checkbox"
+                                                                                class="checkbox-button__input"
+                                                                                onchange={getValueSelectedTypeStatus}
+                                                                                name={accessibility.label}>
                                                                             <span data-check={accessibility.checked}
-                                                                                  data-item={accessibility.label}
-                                                                                  class="checkbox-button__control"
-                                                                                  onchange={getValueSelectedTypeStatus}></span>
+                                                                                data-item={accessibility.label}
+                                                                                class="checkbox-button__control"
+                                                                                onchange={getValueSelectedTypeStatus}></span>
                                                                             <span data-check={accessibility.checked}
-                                                                                  data-item={accessibility.label}
-                                                                                  class="checkbox-button__label"
-                                                                                  onchange={getValueSelectedTypeStatus}>
+                                                                                data-item={accessibility.label}
+                                                                                class="checkbox-button__label"
+                                                                                onchange={getValueSelectedTypeStatus}>
                                                                                 {accessibility.label}</span>
                                                                         </label>
                                                                     </div>
@@ -367,7 +378,7 @@
                                                             <template if:false={field.isIdCardInfo}>
                                                                 <template if:false={field.isJobFunction}>
                                                                     <span key={field.fieldName}
-                                                                          class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
+                                                                        class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
                                                                         <div>
                                                                             <!-- If field is visible -->
                                                                             <template if:true={field.visible}>
@@ -375,17 +386,25 @@
                                                                                 <template if:false={field.outputOnly}>
                                                                                     <template if:true={field.editable}>
                                                                                         <lightning-input-field
-                                                                                                onchange={styleInputs}
-                                                                                                class="labelValue textValue"
-                                                                                                field-name={field.fieldName}>
+                                                                                            onchange={styleInputs}
+                                                                                            class="labelValue textValue"
+                                                                                            field-name={field.fieldName}>
                                                                                         </lightning-input-field>
 
-                                                                                        <template if:true={field.invalid}>
-                                                                                            <div class="slds-form-element__help invalidValueLabel">{labels.InvalidValue}</div>
+                                                                                        <template
+                                                                                            if:true={field.invalid}>
+                                                                                            <div
+                                                                                                class="slds-form-element__help invalidValueLabel">
+                                                                                                {labels.InvalidValue}
+                                                                                            </div>
                                                                                         </template>
 
-                                                                                        <template if:true={field.missing}>
-                                                                                            <div class="slds-form-element__help invalidValueLabel">{labels.CompleteField}</div>
+                                                                                        <template
+                                                                                            if:true={field.missing}>
+                                                                                            <div
+                                                                                                class="slds-form-element__help invalidValueLabel">
+                                                                                                {labels.CompleteField}
+                                                                                            </div>
                                                                                         </template>
                                                                                     </template>
 
@@ -393,17 +412,17 @@
                                                                                     <!-- Read-only fields -->
                                                                                     <template if:false={field.editable}>
                                                                                         <lightning-input-field
-                                                                                                class="labelValue textValue disabledValue disabledInput"
-                                                                                                field-name={field.fieldName}
-                                                                                                disabled>
+                                                                                            class="labelValue textValue disabledValue disabledInput"
+                                                                                            field-name={field.fieldName}
+                                                                                            disabled>
                                                                                         </lightning-input-field>
                                                                                     </template>
                                                                                 </template>
 
                                                                                 <template if:true={field.outputOnly}>
                                                                                     <lightning-output-field
-                                                                                            class="labelValue textValue removeLinks"
-                                                                                            field-name={field.fieldName}>
+                                                                                        class="labelValue textValue removeLinks"
+                                                                                        field-name={field.fieldName}>
                                                                                     </lightning-output-field>
                                                                                 </template>
                                                                             </template>
@@ -423,37 +442,41 @@
                                                 <template if:true={haveEditFields}>
                                                     <template for:each={editFields} for:item="field">
                                                         <span key={field.fieldName}
-                                                              class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
+                                                            class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
                                                             <div>
                                                                 <template if:true={field.visible}>
                                                                     <template if:false={field.outputOnly}>
                                                                         <template if:true={field.editable}>
                                                                             <lightning-input-field
-                                                                                    onchange={styleInputs}
-                                                                                    class="labelValue textValue"
-                                                                                    field-name={field.fieldName}>
+                                                                                onchange={styleInputs}
+                                                                                class="labelValue textValue"
+                                                                                field-name={field.fieldName}>
                                                                             </lightning-input-field>
                                                                             <template if:true={field.invalid}>
-                                                                                <div class="slds-form-element__help invalidValueLabel">{labels.InvalidValue}</div>
+                                                                                <div
+                                                                                    class="slds-form-element__help invalidValueLabel">
+                                                                                    {labels.InvalidValue}</div>
                                                                             </template>
                                                                             <template if:true={field.missing}>
-                                                                                <div class="slds-form-element__help invalidValueLabel">{labels.CompleteField}</div>
+                                                                                <div
+                                                                                    class="slds-form-element__help invalidValueLabel">
+                                                                                    {labels.CompleteField}</div>
                                                                             </template>
 
 
                                                                         </template>
                                                                         <template if:false={field.editable}>
                                                                             <lightning-input-field
-                                                                                    class="labelValue textValue disabledValue disabledInput"
-                                                                                    field-name={field.fieldName} disabled>
+                                                                                class="labelValue textValue disabledValue disabledInput"
+                                                                                field-name={field.fieldName} disabled>
                                                                             </lightning-input-field>
                                                                         </template>
                                                                     </template>
 
                                                                     <template if:true={field.outputOnly}>
                                                                         <lightning-output-field
-                                                                                class="labelValue textValue removeLinks"
-                                                                                field-name={field.fieldName}>
+                                                                            class="labelValue textValue removeLinks"
+                                                                            field-name={field.fieldName}>
                                                                         </lightning-output-field>
                                                                     </template>
                                                                 </template>
@@ -470,26 +493,26 @@
                                                     </div>
 
                                                     <div
-                                                            class="text-small slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                                                        class="text-small slds-col slds-size_1-of-1 slds-m-bottom_medium">
                                                         {labels.Area}
                                                     </div>
 
                                                     <template for:each={areasOptions} for:item="item">
                                                         <div key={item.label}
-                                                             class="slds-size_1-of-1 slds-large-size_1-of-2">
+                                                            class="slds-size_1-of-1 slds-large-size_1-of-2">
 
                                                             <div class="slds-m-left_x-small slds-m-bottom_small">
                                                                 <label class="checkbox-button">
                                                                     <input data-item={item.label} data-type="Area__c"
-                                                                           type="checkbox" class="checkbox-button__input"
-                                                                           onchange={getValueSelected} name={item.label}
-                                                                           checked={item.checked}>
+                                                                        type="checkbox" class="checkbox-button__input"
+                                                                        onchange={getValueSelected} name={item.label}
+                                                                        checked={item.checked}>
                                                                     <span data-item={item.label} data-type="Area__c"
-                                                                          class="checkbox-button__control"
-                                                                          onchange={getValueSelected}></span>
+                                                                        class="checkbox-button__control"
+                                                                        onchange={getValueSelected}></span>
                                                                     <span data-item={item.label} data-type="Area__c"
-                                                                          class="checkbox-button__label"
-                                                                          onchange={getValueSelected}>{item.value}</span>
+                                                                        class="checkbox-button__label"
+                                                                        onchange={getValueSelected}>{item.value}</span>
                                                                 </label>
                                                             </div>
 
@@ -506,29 +529,29 @@
                                                     </div>
 
                                                     <div
-                                                            class="text-small slds-col slds-size_1-of-1 slds-m-top_medium slds-m-bottom_medium">
+                                                        class="workingAreas text-small slds-col slds-size_1-of-1 slds-m-top_medium slds-m-bottom_medium">
                                                         {labels.MembershipFunction}
                                                     </div>
 
                                                     <template for:each={functionOptions} for:item="item">
                                                         <div key={item.label}
-                                                             class="slds-size_1-of-1 slds-large-size_1-of-2">
+                                                            class="slds-size_1-of-1 slds-large-size_1-of-2">
 
                                                             <div class="slds-m-left_x-small slds-m-bottom_small">
                                                                 <label class="checkbox-button">
                                                                     <input data-item={item.label}
-                                                                           data-type="Membership_Function__c"
-                                                                           type="checkbox" class="checkbox-button__input"
-                                                                           onchange={getValueSelected} name={item.label}
-                                                                           checked={item.checked}>
+                                                                        data-type="Membership_Function__c"
+                                                                        type="checkbox" class="checkbox-button__input"
+                                                                        onchange={getValueSelected} name={item.label}
+                                                                        checked={item.checked}>
                                                                     <span data-item={item.label}
-                                                                          data-type="Membership_Function__c"
-                                                                          class="checkbox-button__control"
-                                                                          onchange={getValueSelected}></span>
+                                                                        data-type="Membership_Function__c"
+                                                                        class="workingAreasChangeOnError checkbox-button__control"
+                                                                        onchange={getValueSelected}></span>
                                                                     <span data-item={item.label}
-                                                                          data-type="Membership_Function__c"
-                                                                          class="checkbox-button__label"
-                                                                          onchange={getValueSelected}>{item.value}</span>
+                                                                        data-type="Membership_Function__c"
+                                                                        class="checkbox-button__label"
+                                                                        onchange={getValueSelected}>{item.value}</span>
                                                                 </label>
                                                             </div>
 
@@ -555,13 +578,16 @@
 
                                     <!-- Popup Footer -->
                                     <div
-                                        class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                                        class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix footer-btn-wrapper">
+
+                                        <a onclick={removeUser} if:true={allowContactDelete}><div class="removeLink">{removeContactLabel}</div></a>
+
                                         <lightning-button class="slds-float_right containedButton"
                                             label={labels.SaveLabel} type="submit" disabled={canSave} variant="brand">
                                         </lightning-button>
 
                                         <lightning-button
-                                            class="slds-float_right  containedButtonWhite slds-m-right_medium"
+                                            class="slds-float_right  containedButtonWhite slds-m-right_medium cancel-btn"
                                             disabled={isSaving} label={labels.CancelLabel} variant=""
                                             onclick={closeModal}></lightning-button>
                                     </div>
