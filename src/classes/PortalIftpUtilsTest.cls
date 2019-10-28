@@ -84,7 +84,7 @@ public class PortalIftpUtilsTest {
         Test.stopTest();
     }
 
-        static testMethod void portalIftpUtils_test1_2() {
+    static testMethod void portalIftpUtils_test1_2() {
 
         User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
 

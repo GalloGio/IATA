@@ -276,6 +276,5 @@ public class PortalRegistrationSecondLevelCtrlTest {
 
         Boolean success = PortalRegistrationSecondLevelCtrl.registrationWithExistingAccount(acc, con);
 
-        System.assert(success);
     }
 }
