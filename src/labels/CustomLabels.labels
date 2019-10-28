@@ -9109,7 +9109,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_FeesPhysical</shortDescription>
-        <value>Physical Card fee</value>
+        <value>Printing fee</value>
     </labels>
     <labels>
         <fullName>IDCard_FileUploadSuccess</fullName>
