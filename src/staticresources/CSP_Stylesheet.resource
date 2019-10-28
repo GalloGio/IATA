@@ -1711,4 +1711,5 @@ visibility: hidden;
         white-space: nowrap;
         padding: 4px 6px 2px 0px;
     }
+
 }
