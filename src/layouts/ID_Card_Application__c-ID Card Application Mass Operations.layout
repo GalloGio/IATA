@@ -79,11 +79,15 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>IDCard Fee Details</label>
+        <label>ID Card Fee Details</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ID_Card_Fee__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Physical_Card_Fee__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -92,6 +96,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ITDI_Courses_Fee__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ID_Card_Fee_Discount__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

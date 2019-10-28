@@ -251,7 +251,7 @@ global with sharing class IDCardUtil {
         
         decimal applicableFee = thePriceTable.ID_Card_Fee__c;
 
-        if (isToPrint)
+        if (isToPrint && !isWithExpedite)
             applicableFee += priceTable.Cost_of_Printer__c == null ? 0 : priceTable.Cost_of_Printer__c;
 
         if (isReissue)
@@ -295,19 +295,25 @@ global with sharing class IDCardUtil {
         Price_Table__c thePriceTable = priceTable;
 
         decimal applicableFee = thePriceTable.ID_Card_Fee__c;
+        decimal physFee = 0;
 
-        if (isToPrint)
-            applicableFee += priceTable.Cost_of_Printer__c == null ? 0 : priceTable.Cost_of_Printer__c;
+        if (isToPrint && !isWithExpedite)
+            physFee += priceTable.Cost_of_Printer__c == null ? 0 : priceTable.Cost_of_Printer__c;
 
         if (isReissue)
             applicableFee = applicableFee / 2;
+            physFee = physFee / 2;
 
         if (validPromo != null) {
             // apply reduction percentage
             detailledFee.put('IDCardFee', (applicableFee - (applicableFee * (validPromo.Promotion_Value__c / 100.0))));
+            detailledFee.put('PhysCardFee', (physFee - (physFee * (validPromo.Promotion_Value__c / 100.0))));
+            detailledFee.put('Discount', ((physFee + applicableFee) * (validPromo.Promotion_Value__c / 100.0)));
             detailledFee.put('PromoFee', (validPromo.Promotion_Value__c / 100.0));
         } else {
             detailledFee.put('IDCardFee', (applicableFee));
+            detailledFee.put('PhysCardFee', (physFee));
+            detailledFee.put('Discount', 0);
             detailledFee.put('PromoFee', 0);
         }
 

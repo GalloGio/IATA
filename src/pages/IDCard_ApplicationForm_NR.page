@@ -193,6 +193,7 @@
     //You need to wrap everything in document.ready because the select tag we are taregting needs to
     //be loaded in the DOM befire we can access it.
     $(document).ready(function() {
+        rerenderRenewPageValues();
         //-----EDIT THE NEXT TWO LINES-----
         var startYear=1930; //replace 1930 with whatever year you want to start with;
         var endYear=2034; //replace 2034 with whatever year you want to end with;
@@ -940,6 +941,9 @@ rendered="{!isEmployee}" accept="application/pdf" />
                     <br/>
                     
                     <apex:pageMessages id="ErrorMsgs" escape="false" />
+                    <apex:actionRegion>
+                        <apex:actionFunction name="rerenderRenewPageValues" reRender="panelIDCardFees"/>
+                    </apex:actionRegion>
                     <center>
                         <apex:actionStatus id="saveStatus">
                             
@@ -983,6 +987,7 @@ rendered="{!isEmployee}" accept="application/pdf" />
                                     </td>
                                 </tr>
                             </table>
+                            &nbsp;<br/>
                             <apex:outputText id="textExpedite" value="{!$Label.IDCard_Expedite_Text}" label="" rendered="{!AND(IsExpediteAvailable, IDCardApplicationNR.Card_Type__c == 'plastic')}"/>  
                             &nbsp;
                             <table id="expediteTable">
@@ -1086,7 +1091,13 @@ rendered="{!isEmployee}" accept="application/pdf" />
                             </apex:inputField>
                             <apex:outputText />
                             
-                            <apex:outputText value="{!IDCardApplicationNR.Applicable_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_FeeApplicable_Label}" />
+                            <apex:outputText value="{!IDCardApplicationNR.ID_Card_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_fee}" /><br/>
+                            <apex:outputText value="{!IDCardApplicationNR.Physical_Card_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_FeesPhysical}" /><br/>
+                            <apex:outputText value="{!IDCardApplicationNR.IDCard_Expedite_Delivery_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_ExpediteFee}" /><br/>
+                            <apex:outputText value="{!IDCardApplicationNR.ITDI_Courses_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.ID_Card_Training_Fee}" /><br/>
+                            <apex:outputText value="{!vatPrice} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.ID_Card_Taxes}" /><br/>
+                            <apex:outputText value="{!IDCardApplicationNR.ID_Card_Fee_Discount__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_Discount}" /><br/>
+                            <apex:outputText value="{!IDCardApplicationNR.Applicable_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.Total_Cost}" />                            
                             <apex:outputText value="{!$Label.IDCard_ExpediteDeliveryAddedtoCardPrice}" rendered="{!IsExpediteDeliveryAddedtoIDCardPrice}"/>
                             
                         </apex:pageBlockSection>

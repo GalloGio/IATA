@@ -191,6 +191,8 @@
     
     
     $(document).ready(function() {
+
+        rerenderRenewPageValues();
         
         var popupStatus = 0;
         
@@ -942,6 +944,7 @@ accept="application/pdf" />
                         
                         <apex:actionRegion >
                             <apex:pageMessages id="ErrorMsgs" escape="false" />
+                            <apex:actionFunction name="rerenderRenewPageValues" reRender="panelIDCardFees"/>
                         </apex:actionRegion>
                         
                         <center>
@@ -984,6 +987,7 @@ accept="application/pdf" />
                                             </td>
                                         </tr>
                                     </table>
+                                    &nbsp;<br/>
                                     <apex:outputText id="textExpedite" value="{!$Label.IDCard_Expedite_Text}" label="" rendered="{!AND(IsExpediteAvailable, IDCardApplicationRR.Card_Type__c == 'plastic')}"/>  
                                     &nbsp; 
                                     <table id="expediteTable">
@@ -1091,7 +1095,13 @@ reRender="panelApplicableFee, ErrorMsgs" />
                                     </apex:inputField>
                                     <apex:outputText />
                                     
-                                    <apex:outputText value="{!IDCardApplicationRR.Applicable_Fee__c} {!IDCardApplicationRR.CurrencyIsoCode}"  label="{!$Label.IDCard_FeeApplicable_Label}" />                            
+                                    <apex:outputText value="{!IDCardApplicationRR.ID_Card_Fee__c} {!IDCardApplicationRR.CurrencyIsoCode}"  label="{!$Label.IDCard_fee}" /><br/>
+                                    <apex:outputText value="{!IDCardApplicationRR.Physical_Card_Fee__c} {!IDCardApplicationRR.CurrencyIsoCode}"  label="{!$Label.IDCard_FeesPhysical}" /><br/>
+                                    <apex:outputText value="{!IDCardApplicationRR.IDCard_Expedite_Delivery_Fee__c} {!IDCardApplicationRR.CurrencyIsoCode}"  label="{!$Label.IDCard_ExpediteFee}" /><br/>
+                                    <apex:outputText value="{!IDCardApplicationRR.ITDI_Courses_Fee__c} {!IDCardApplicationRR.CurrencyIsoCode}"  label="{!$Label.ID_Card_Training_Fee}" /><br/>
+                                    <apex:outputText value="{!vatPrice} {!IDCardApplicationRR.CurrencyIsoCode}"  label="{!$Label.ID_Card_Taxes}" /><br/>
+                                    <apex:outputText value="{!IDCardApplicationRR.ID_Card_Fee_Discount__c} {!IDCardApplicationRR.CurrencyIsoCode}"  label="{!$Label.IDCard_Discount}" /><br/>
+                                    <apex:outputText value="{!IDCardApplicationRR.Applicable_Fee__c} {!IDCardApplicationRR.CurrencyIsoCode}"  label="{!$Label.Total_Cost}" />                            
                                     <apex:outputText value="{!$Label.IDCard_ExpediteDeliveryAddedtoCardPrice}" rendered="{!IsExpediteDeliveryAddedtoIDCardPrice}"/>                                  
                                 </apex:pageBlockSection>                       
                             </apex:actionRegion>

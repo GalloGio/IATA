@@ -4,6 +4,7 @@ public with sharing class IDCard_MobileAppRenewalService
     private static final String RENEWAL_ITEM_TRAINING_1 = 'TRAINING_1';
     private static final String RENEWAL_ITEM_TRAINING_2 = 'TRAINING_2';
     private static final String RENEWAL_ITEM_EXPEDITE = 'EXPEDITE';
+    private static final String RENEWAL_ITEM_PRINTING = 'PRINTING';
 
     public static final String CARD_TYPE_PLASTIC = 'plastic';
     public static final String CARD_TYPE_DIGITAL = 'digital';
@@ -488,6 +489,7 @@ public with sharing class IDCard_MobileAppRenewalService
 
         requestInformation.newIDCA.Payment_Credit_Card_Number__c = payment.cardNumber;
         requestInformation.newIDCA.Payment_Transaction_Number__c = payment.transactionNumber;
+        requestInformation.newIDCA.ID_Card_Fee_Discount__c = payment.discount;
         requestInformation.newIDCA.Payment_Amount__c = payment.amount != null ? payment.amount : 0;
         requestInformation.newIDCA.Payment_Date__c = convertDate(payment.orderDate);
         requestInformation.newIDCA.Payment_Currency__c = payment.cur != null ? payment.cur.toUpperCase() : null;
@@ -495,6 +497,7 @@ public with sharing class IDCard_MobileAppRenewalService
 
         IDCard_RenewalRequest.Items cardRenewal = getRequestItem(requestInformation.request, RENEWAL_ITEM_RENEWAL);
         IDCard_RenewalRequest.Items shipping = getRequestItem(requestInformation.request, RENEWAL_ITEM_EXPEDITE);
+        IDCard_RenewalRequest.Items printing = getRequestItem(requestInformation.request, RENEWAL_ITEM_PRINTING);
         IDCard_RenewalRequest.Items training1 = getRequestItem(requestInformation.request, RENEWAL_ITEM_TRAINING_1);
         IDCard_RenewalRequest.Items training2 = getRequestItem(requestInformation.request, RENEWAL_ITEM_TRAINING_2);
 
@@ -510,6 +513,7 @@ public with sharing class IDCard_MobileAppRenewalService
         requestInformation.newIDCA.Applicable_Fee__c = getRequestItemTotalAmount(requestInformation.request);
         requestInformation.newIDCA.ID_Card_Fee__c = cardRenewal == null ? 0 : cardRenewal.price;
         requestInformation.newIDCA.IDCard_Expedite_Delivery_Fee__c = shipping == null ? 0 : shipping.price;
+        requestInformation.newIDCA.Physical_Card_Fee__c = printing == null ? 0 : printing.price;
         requestInformation.newIDCA.ITDI_Courses_Fee__c = trainingFee == null ? 0 : trainingFee;
         requestInformation.newIDCA.CurrencyIsoCode = requestInformation.prices.CurrencyIsoCode;
 
