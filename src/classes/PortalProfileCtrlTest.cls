@@ -10,6 +10,28 @@ public with sharing class PortalProfileCtrlTest {
     public static List<Contact> Contacts;
     public static User portalUser;
 
+    @testSetup static void setup() {
+    	Account newAcc = new Account(Name='Account Test CSP Utils');
+    	insert newAcc;
+
+    	Contact newCon = new Contact(AccountId = newAcc.Id, FirstName = 'John', LastName = 'Doe', Email = System.today().dayOfYear() + 'testemail1@csp.testclass', User_Portal_Status__c = 'Approved Admin');
+    	insert newCon;
+
+    	User newUser = ISSP_ObjectFactory.createPortalUser(newCon);
+
+
+    	ID_Card__c idc= new ID_Card__c();
+    	idc.recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
+    	idc.Name_on_ID_Card__c='test card 1';
+    	idc.related_contact__C=newCon.id;
+    	idc.ver_number__c='123123';
+    	idc.Valid_From_Date__c=system.today().addDays(-200);
+    	idc.valid_to_Date__C=system.today().addDays(200);
+
+    	insert idc;
+
+    }
+
     @IsTest
     static void testProfileInfo(){
         Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
@@ -280,4 +302,42 @@ public with sharing class PortalProfileCtrlTest {
             ApexMessageHandling contactsToDeactivate = PortalProfileCtrl.inactivate(JSON.serialize(contacts), 'Retired');
         }
     }       
+
+    @IsTest
+    static void testGetFilteredProfileResultsPage(){
+
+    	PortalSearchFilterWrapper testPSFW = new PortalSearchFilterWrapper();
+
+    	testPSFW.searchText = 'MyAirline';
+    	testPSFW.profileComponent =  new PortalSearchFilterWrapper.profileComponent();
+    	testPSFW.profileComponent.show = true;
+    	testPSFW.profileComponent.loading = false;
+    	testPSFW.profileComponent.highlight = true;
+    	testPSFW.profileComponent.profileStatusFilter = '';
+    	testPSFW.profileComponent.profileTypeFilter = '';
+    	testPSFW.profileComponent.profileCountryFilter = '';
+
+    	User usr = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+    	System.runAs(usr){
+    		String serialized = JSON.serialize(testPSFW);
+    		CSP_Utils.PagedResult testPagedResult = PortalProfileCtrl.getFilteredProfileResultsPage(serialized);
+    		System.assert (testPagedResult.recordsString != null);
+
+    		String serialized2 = JSON.serialize(testPSFW);
+    		testPSFW.profileComponent.profileStatusFilter = 'Approved Admin';
+    		CSP_Utils.PagedResult testPagedResult1 = PortalProfileCtrl.getFilteredProfileResultsPage(serialized2);
+    		System.assert (testPagedResult1.recordsString != null);
+
+    		String serialized3 = JSON.serialize(testPSFW);
+    		testPSFW.profileComponent.profileTypeFilter = 'Contact';
+    		CSP_Utils.PagedResult testPagedResult2 = PortalProfileCtrl.getFilteredProfileResultsPage(serialized3);
+    		System.assert (testPagedResult2.recordsString != null);
+
+    		String serialized4 = JSON.serialize(testPSFW);
+    		testPSFW.profileComponent.profileCountryFilter = 'Portugal';
+    		CSP_Utils.PagedResult testPagedResult3 = PortalProfileCtrl.getFilteredProfileResultsPage(serialized4);
+    		System.assert (testPagedResult3.recordsString != null);
+    	}
+    }
 }
