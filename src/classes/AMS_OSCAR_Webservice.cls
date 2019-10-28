@@ -539,7 +539,7 @@ global class AMS_OSCAR_Webservice {
                 
                 AMS_OSCAR__c currentOscar = oscar[0];
 
-                if((currentOscar.Process__c == AMS_Utils.NEWHESTANDARD || currentOscar.Process__c == AMS_Utils.NEWGESTANDARD || (currentOscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval), currentOscar.ANG_Type_Of_Change__c))) && currentOscar.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL)
+                if((currentOscar.Process__c == AMS_Utils.NEWHESTANDARD || currentOscar.Process__c == AMS_Utils.NEWGESTANDARD || currentOscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || (currentOscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval), currentOscar.ANG_Type_Of_Change__c))) && currentOscar.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL)
                     return 'Error - In order to generate a risk event you need to have the Manager Approval.';
 
                 currentOscar.Risk_event_creation_date__c = System.today();
