@@ -1637,6 +1637,10 @@ visibility: hidden;
         max-height: none;
         height: auto;
     }
+    .attlist thead {
+        height: 40px;
+        border-bottom: 1px solid #999; 
+    } 
     
     .attlist thead,
     .attlist tbody {
@@ -1653,24 +1657,34 @@ visibility: hidden;
         visibility: hidden;
     }
     .attlist thead th:nth-child(2) {
-        min-width: 250px;
-        max-width: 250px;
-        width: 250px;
+        min-width: 450px;
+        max-width: 450px;
+        width: 450px!important;
     }
     .attlist thead th:nth-child(3) {
         min-width: 100px;
         max-width: 100px;
-        width: 100px;
+        width: 100px!important;
+    }
+    .attlist thead th:last-child {
+        min-width: 150px;
+        max-width: 150px;
+        width: 150px!important;
     }
     .attlist tbody td:nth-child(2) {
-        min-width: 250px;
-        max-width: 250px;
-        width: 250px;
+        min-width: 450px;
+        max-width: 450px;
+        width: 450px!important;
     }
     .attlist tbody td:nth-child(3) {
         min-width: 100px;
         max-width: 100px;
-        width: 100px;
+        width: 100px!important;
+    }
+    .attlist tbody td:last-child {
+        min-width: 150px;
+        max-width: 150px;
+        width: 150px!important;
     }
     .customCardTitleBox .slds-col.slds-size_1-of-1.slds-medium-size_2-of-12 {
         width: 16.6666666667%;
@@ -1694,4 +1708,6 @@ visibility: hidden;
         white-space: nowrap;
         padding: 4px 6px 2px 0px;
     }
+}@page {
+    margin: 0;
 }
