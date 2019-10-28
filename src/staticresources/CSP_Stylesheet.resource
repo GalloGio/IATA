@@ -1710,6 +1710,9 @@ visibility: hidden;
     display: none!important;
     visibility: hidden!important;
 }
+@page {
+    margin: 0;
+}
 @media print {
     #_hj_poll_container,
     #_hj_feedback_container,
@@ -1752,20 +1755,54 @@ visibility: hidden;
         max-height: none;
         height: auto;
     }
+    .attlist thead {
+        height: 40px;
+        border-bottom: 1px solid #999; 
+    } 
+    
+    .attlist thead,
+    .attlist tbody {
+        display: block;
+        position: relative;
+    }
+    .attlist thead th,
+    .attlist tbody td {
+        max-width: 150px;
+    }
     .attlist th:first-child {
         display: none;
         max-width: 1px;
         visibility: hidden;
     }
     .attlist thead th:nth-child(2) {
-        min-width: 300px;
-        max-width: 300px;
-        width: 300px;
+        min-width: 450px;
+        max-width: 450px;
+        width: 450px!important;
+    }
+    .attlist thead th:nth-child(3) {
+        min-width: 100px;
+        max-width: 100px;
+        width: 100px!important;
+    }
+    .attlist thead th:last-child {
+        min-width: 150px;
+        max-width: 150px;
+        width: 150px!important;
     }
     .attlist tbody td:nth-child(2) {
-        min-width: 300px;
-        max-width: 300px;
-        width: 300px;
+        min-width: 450px;
+        max-width: 450px;
+        width: 450px!important;
+    }
+    .attlist tbody td:nth-child(3) {
+        min-width: 100px;
+        max-width: 100px;
+        width: 100px!important;
+    }
+    .attlist tbody td:last-child {
+        min-width: 150px;
+        max-width: 150px;
+        width: 150px!important;
     }
     .customCardTitleBox .slds-col.slds-size_1-of-1.slds-medium-size_2-of-12 {
         width: 16.6666666667%;
