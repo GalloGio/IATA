@@ -2,7 +2,7 @@
 
     <aura:attribute name="label" type="String" default=""/>
     <aura:attribute name="valueLabel" type="String" default=""/>
-    <aura:attribute name="placeholder" type="String" default="Sélectionner une option"/>
+    <aura:attribute name="placeholder" type="String" default="{!$Label.c.SelectAnOption}"/>
     <aura:attribute name="searchable" type="Boolean" default="false"/>
     <aura:attribute name="options" type="List"/>
     <aura:attribute name="selItem" type="object"/>
