@@ -52,7 +52,7 @@ public without sharing class AddressRoleBusinessContextEventHandler {
 		List<Integration_Log__c> integrationLogs = new List<Integration_Log__c>();
 		for(AddressRoleBusinessContext__e addressRoleBusinessContextEvent : addressRoleBusinessContextEvents){
 			integrationLogs.add(new Integration_Log__c(
-					Object_Type__c = Address_Role_Business_Context__c.getSObjectType().getDescribe().getName(),
+					Object_Type__c = 'Address_Role_Business_Context__c',
 					Record_Id__c = addressRoleBusinessContextEvent.RecordId__c,
 					External_Transaction_Id__c = addressRoleBusinessContextEvent.ReplayId,
 					Status__c = 'In Progress'
