@@ -45,14 +45,19 @@
                         columns={columns} 
                         hide-checkbox-column min-column-width="140" class="casesListTableClass">
                     </lightning-datatable>
-                    <div class="endOfTableCases"></div>
-                    <div if:true={loadingMoreResults} class="spinnerContainer">
-                        <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
+                    <div class="endOfTableCases">
+                        <!-- PAGINATION -->
+                        <c-portal-paginator pagination-object-parent={paginationObject} onselectedpage={handleSelectedPage}></c-portal-paginator>
                     </div>
+                    <!-- <div if:true={loadingMoreResults} class="spinnerContainer">
+                        <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
+                    </div> -->
+
                 </div>
                 <div if:false={viewResults}>
                     <c-portal-no-cases-banner></c-portal-no-cases-banner>
                 </div>
+
             </div>
         </div>
     </div>
