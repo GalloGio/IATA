@@ -1555,26 +1555,10 @@ public without sharing class ISSP_Case {
                 setEmail.add(email);
             }
         }
+        
         User myUser = [SELECT Id, Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId()];
         List<CaseTeamMember> lsCaseTeamMembers = new List<CaseTeamMember>();
-        List<String> lsNewEmails = new List<String>();
-        // only add Users from Account_Concerned__c or from current user's account
-        List<User> lsUsers =
-            [SELECT Id, Name, Email, AccountId, Contact.AccountId
-            FROM User
-            WHERE Email IN :setEmail
-            AND isActive = true
-            AND Contact.AccountId IN (:newCase.Account_Concerned__c,:myUser.Contact.AccountId)];
-
-        for(User user : lsUsers) {
-            CaseTeamMember teammember = new CaseTeamMember(
-                ParentId = newCase.Id,
-                MemberId = user.Id,
-                TeamRoleId = PARTNER_USER_ROLE);
-            lsCaseTeamMembers.add(teammember);
-            lsNewEmails.add(user.Email);
-            setEmail.remove(user.Email);
-        }
+        Set<String> lsNewEmails = new Set<String>();
 
         //On DPC case creation with Priority, automatically add additional recipients
         Set<String> setEmailPriority = new Set<String>();
@@ -1599,7 +1583,7 @@ public without sharing class ISSP_Case {
             }                                   
         }
         if(JSONcontactSelected != null && JSONcontactSelected != ''){
-                setEmailPriority.add(JSONcontactSelected);
+                setEmailPriority.add(JSONcontactSelected.removeEnd(','));
         }
 
         if(!setEmailPriority.isEmpty()){
@@ -1639,18 +1623,23 @@ public without sharing class ISSP_Case {
             }
         }
 
+        List<String> listCCOthers = new List<String>();
+        for(String st: lsNewEmails){
+            listCCOthers.add(st);
+        }
         // insert found users as a team member of the case
         Savepoint sp = Database.setSavepoint();
         try {
             this.e2cpFieldAccess = new E2CPFieldAccess(newCase.Id);
             // modify the ccother field in the case before inserting the new team members
-            insertListAddressInE2CP_CCOthers(lsNewEmails);
+            insertListAddressInE2CP_CCOthers(listCCOthers);
             insert lsCaseTeamMembers;
             //finally sends an email to the full recipients list
             EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'New_DPC_Case'];
             sendMassEmail(newCase.Id,template.Id);
 
         } catch (DMLException e) {
+            System.debug('DMLException::: error ' + e);
             ApexPages.addMessages(e);
             Database.rollback(sp);
         }
