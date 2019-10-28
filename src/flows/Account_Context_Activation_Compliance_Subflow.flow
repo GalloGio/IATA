@@ -493,6 +493,12 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
                 <targetReference>Get_Compliant_Account</targetReference>
             </connector>
             <eventType>Subflow_Compliance__e</eventType>
+            <inputParameters>
+                <name>Account_Id__c</name>
+                <value>
+                    <elementReference>Account.Id</elementReference>
+                </value>
+            </inputParameters>
             <label>Case has been closed</label>
             <outputParameters>
                 <assignToReference>SublowComplianceEvent</assignToReference>
