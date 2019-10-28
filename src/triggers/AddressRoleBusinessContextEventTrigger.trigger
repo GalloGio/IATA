@@ -4,15 +4,15 @@
 * Author     : BTH
 */
 trigger AddressRoleBusinessContextEventTrigger on AddressRoleBusinessContext__e (after insert) {
-    AddressRoleBusinessContextEventHandler handler = new AddressRoleBusinessContextEventHandler();
+	AddressRoleBusinessContextEventHandler handler = new AddressRoleBusinessContextEventHandler();
 
-    /* Before Insert */
-    if (Trigger.isInsert && Trigger.isBefore) {
-        //handler.OnBeforeInsert(Trigger.new);
-    }
-    /* After Insert */ else if (Trigger.isInsert && Trigger.isAfter) {
-        handler.OnAfterInsert(Trigger.new);
-    }
+	/* Before Insert */
+	if (Trigger.isInsert && Trigger.isBefore) {
+		//handler.OnBeforeInsert(Trigger.new);
+	}
+	/* After Insert */ else if (Trigger.isInsert && Trigger.isAfter) {
+		handler.OnAfterInsert(Trigger.new);
+	}
 //    /* Before Update */ else if (Trigger.isUpdate && Trigger.isBefore) {
 //        handler.OnBeforeUpdate(Trigger.old, Trigger.new, Trigger.newMap);
 //    }

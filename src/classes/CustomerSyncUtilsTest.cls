@@ -5,226 +5,226 @@
 @IsTest
 public with sharing class CustomerSyncUtilsTest {
 
-    private final static String ACCOUNT_RT_DEV_NAME_STANDARD_ACCOUNT = 'Standard_Account';
-    private final static String BUSINESS_CONTEXT = 'E&F';
+	private final static String ACCOUNT_RT_DEV_NAME_STANDARD_ACCOUNT = 'Standard_Account';
+	private final static String BUSINESS_CONTEXT = 'E&F';
 
-    @TestSetup
-    public static void init() {
-        Map<String, RecordTypeInfo> accountRTInfo = Schema.Account.getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName();
+	@TestSetup
+	public static void init() {
+		Map<String, RecordTypeInfo> accountRTInfo = Schema.Account.getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName();
 
-        List<Business_Context__c> businessContexts = new List<Business_Context__c>();
-        businessContexts.add(new Business_Context__c(
-                Name = 'businessContext1',
-                Business_Context__c = BUSINESS_CONTEXT,
-                Sub_Context__c = 'E&F Standard'
+		List<Business_Context__c> businessContexts = new List<Business_Context__c>();
+		businessContexts.add(new Business_Context__c(
+				Name = 'businessContext1',
+				Business_Context__c = BUSINESS_CONTEXT,
+				Sub_Context__c = 'E&F Standard'
 
-        ));
-        insert businessContexts;
+		));
+		insert businessContexts;
 
-        IATA_ISO_Country__c iataIsoCountry = new IATA_ISO_Country__c(
-                Name = 'Country',
-                ISO_Code__c = 'CT',
-                ISO_Code_Numeric__c = 1
-        );
-        insert iataIsoCountry;
+		IATA_ISO_Country__c iataIsoCountry = new IATA_ISO_Country__c(
+				Name = 'Country',
+				ISO_Code__c = 'CT',
+				ISO_Code_Numeric__c = 1
+		);
+		insert iataIsoCountry;
 
-        List<Account> accounts = new List<Account>();
-        accounts.add(new Account(
-                Name = 'standardAccount',
-                RecordTypeId = accountRTInfo.get(ACCOUNT_RT_DEV_NAME_STANDARD_ACCOUNT).getRecordTypeId(),
-                Sector__c = 'Airline',
-                Category__c = 'Cargo'
-        ));
-        accounts.add(new Account(
-                Name = 'airportAccount',
-                RecordTypeId = CustomerSyncUtils.ACCOUNT_RECORDTYPEID_AIRPORT,
-                Sector__c = 'Airline',
-                Category__c = 'Cargo',
-                IATACode__c = 'OX',
-                Verification_Status__c = 'Verified',
-                IATA_ISO_Country__c = iataIsoCountry.Id,
-                Business_State_Name__c = 'State',
-                Business_City_Name__c = 'City',
-                Business_Postal_Code__c = 'Postal',
-                Business_Street__c = 'Street',
-                Business_Po_Box__c = 'PoBox'
-        ));
-        insert accounts;
-        accounts.add(new Account(
-                Name = 'branchAccount',
-                RecordTypeId = accountRTInfo.get(ACCOUNT_RT_DEV_NAME_STANDARD_ACCOUNT).getRecordTypeId(),
-                Hierarchy_Level__c = CustomerSyncUtils.ACCOUNT_HIERARCHY_LEVEL_BRANCH,
-                ParentId = accounts.get(0).Id,
-                Sector__c = 'Airline',
-                Category__c = 'Cargo'
-        ));
-        insert accounts.get(2);
+		List<Account> accounts = new List<Account>();
+		accounts.add(new Account(
+				Name = 'standardAccount',
+				RecordTypeId = accountRTInfo.get(ACCOUNT_RT_DEV_NAME_STANDARD_ACCOUNT).getRecordTypeId(),
+				Sector__c = 'Airline',
+				Category__c = 'Cargo'
+		));
+		accounts.add(new Account(
+				Name = 'airportAccount',
+				RecordTypeId = CustomerSyncUtils.ACCOUNT_RECORDTYPEID_AIRPORT,
+				Sector__c = 'Airline',
+				Category__c = 'Cargo',
+				IATACode__c = 'OX',
+				Verification_Status__c = 'Verified',
+				IATA_ISO_Country__c = iataIsoCountry.Id,
+				Business_State_Name__c = 'State',
+				Business_City_Name__c = 'City',
+				Business_Postal_Code__c = 'Postal',
+				Business_Street__c = 'Street',
+				Business_Po_Box__c = 'PoBox'
+		));
+		insert accounts;
+		accounts.add(new Account(
+				Name = 'branchAccount',
+				RecordTypeId = accountRTInfo.get(ACCOUNT_RT_DEV_NAME_STANDARD_ACCOUNT).getRecordTypeId(),
+				Hierarchy_Level__c = CustomerSyncUtils.ACCOUNT_HIERARCHY_LEVEL_BRANCH,
+				ParentId = accounts.get(0).Id,
+				Sector__c = 'Airline',
+				Category__c = 'Cargo'
+		));
+		insert accounts.get(2);
 
-        List<Address__c> addresses = new List<Address__c>();
-        addresses.add(new Address__c(
-                Account__c = accounts.get(0).Id,
-                Street__c = 'Street1',
-                Is_Business_Address__c = true
-        ));
-        addresses.add(new Address__c(
-                Account__c = accounts.get(1).Id,
-                Street__c = 'Street2'
-        ));
-        insert addresses;
+		List<Address__c> addresses = new List<Address__c>();
+		addresses.add(new Address__c(
+				Account__c = accounts.get(0).Id,
+				Street__c = 'Street1',
+				Is_Business_Address__c = true
+		));
+		addresses.add(new Address__c(
+				Account__c = accounts.get(1).Id,
+				Street__c = 'Street2'
+		));
+		insert addresses;
 
-        List<Address_Role__c> addressRoles = new List<Address_Role__c>();
-        addressRoles.add(new Address_Role__c(
-                Address__c = addresses.get(0).Id,
-                Role_Type__c = CustomerSyncUtils.ADDRESS_ROLE_ROLE_TYPE_BUSINESS
-        ));
-        addressRoles.add(new Address_Role__c(
-                Address__c = addresses.get(1).Id,
-                Role_Type__c = 'Shipping'
-        ));
-        insert addressRoles;
+		List<Address_Role__c> addressRoles = new List<Address_Role__c>();
+		addressRoles.add(new Address_Role__c(
+				Address__c = addresses.get(0).Id,
+				Role_Type__c = CustomerSyncUtils.ADDRESS_ROLE_ROLE_TYPE_BUSINESS
+		));
+		addressRoles.add(new Address_Role__c(
+				Address__c = addresses.get(1).Id,
+				Role_Type__c = 'Shipping'
+		));
+		insert addressRoles;
 
-        List<Address_Role_Business_Context__c> addressRoleBusinessContexts = new List<Address_Role_Business_Context__c>();
-        addressRoleBusinessContexts.add(new Address_Role_Business_Context__c(
-                Address_Role__c = addressRoles.get(0).Id,
-                Business_Context__c = businessContexts.get(0).Id
-        ));
-        addressRoleBusinessContexts.add(new Address_Role_Business_Context__c(
-                Address_Role__c = addressRoles.get(1).Id,
-                Business_Context__c = businessContexts.get(0).Id
-        ));
-        insert addressRoleBusinessContexts;
-    }
+		List<Address_Role_Business_Context__c> addressRoleBusinessContexts = new List<Address_Role_Business_Context__c>();
+		addressRoleBusinessContexts.add(new Address_Role_Business_Context__c(
+				Address_Role__c = addressRoles.get(0).Id,
+				Business_Context__c = businessContexts.get(0).Id
+		));
+		addressRoleBusinessContexts.add(new Address_Role_Business_Context__c(
+				Address_Role__c = addressRoles.get(1).Id,
+				Business_Context__c = businessContexts.get(0).Id
+		));
+		insert addressRoleBusinessContexts;
+	}
 
-    private static testMethod void testDoSynchronizationOnStandardAccountNotSynchronized(){
+	private static testMethod void testDoSynchronizationOnStandardAccountNotSynchronized(){
 
-        Address_Role_Business_Context__c addressRoleBusinessContext = [
-                SELECT Id, Address_Role__c, Address_Role__r.Address__c, Address_Role__r.Address__r.Account__r.Id
-                FROM Address_Role_Business_Context__c
-                WHERE Address_Role__r.Address__r.Account__r.Name = 'standardAccount'
-        ];
+		Address_Role_Business_Context__c addressRoleBusinessContext = [
+				SELECT Id, Address_Role__c, Address_Role__r.Address__c, Address_Role__r.Address__r.Account__r.Id
+				FROM Address_Role_Business_Context__c
+				WHERE Address_Role__r.Address__r.Account__r.Name = 'standardAccount'
+		];
 
-        Test.startTest();
+		Test.startTest();
 
-        update addressRoleBusinessContext;
-        update addressRoleBusinessContext.Address_Role__r;
-        update addressRoleBusinessContext.Address_Role__r.Address__r;
-        update addressRoleBusinessContext.Address_Role__r.Address__r.Account__r;
+		update addressRoleBusinessContext;
+		update addressRoleBusinessContext.Address_Role__r;
+		update addressRoleBusinessContext.Address_Role__r.Address__r;
+		update addressRoleBusinessContext.Address_Role__r.Address__r.Account__r;
 
-        Test.stopTest();
+		Test.stopTest();
 
-        System.assertEquals(0, PlatformEventUtils.events.size());
-    }
+		System.assertEquals(0, PlatformEventUtils.events.size());
+	}
 
-    private static testMethod void testDoSynchronizationOnStandardAccountSynchronized(){
+	private static testMethod void testDoSynchronizationOnStandardAccountSynchronized(){
 
-        Address_Role_Business_Context__c addressRoleBusinessContext = [
-                SELECT Id, Address_Role__c, Address_Role__r.Address__c, Address_Role__r.Address__r.Account__r.Id
-                FROM Address_Role_Business_Context__c
-                WHERE Address_Role__r.Address__r.Account__r.Name = 'standardAccount'
-        ];
+		Address_Role_Business_Context__c addressRoleBusinessContext = [
+				SELECT Id, Address_Role__c, Address_Role__r.Address__c, Address_Role__r.Address__r.Account__r.Id
+				FROM Address_Role_Business_Context__c
+				WHERE Address_Role__r.Address__r.Account__r.Name = 'standardAccount'
+		];
 
-        Test.startTest();
+		Test.startTest();
 
-        addressRoleBusinessContext.Account_Activation_Context_Status__c = CustomerSyncUtils.ACCOUNT_ACTIVATION_CONTEXT_STATUS_OK;
-        update addressRoleBusinessContext;
+		addressRoleBusinessContext.Account_Activation_Context_Status__c = CustomerSyncUtils.ACCOUNT_ACTIVATION_CONTEXT_STATUS_OK;
+		update addressRoleBusinessContext;
 
-        addressRoleBusinessContext.Address_Role__r.SIS_Location_ID__c = 'Main';
-        update addressRoleBusinessContext.Address_Role__r;
+		addressRoleBusinessContext.Address_Role__r.SIS_Location_ID__c = 'Main';
+		update addressRoleBusinessContext.Address_Role__r;
 
-        System.assertEquals(1, PlatformEventUtils.events.size());
+		System.assertEquals(1, PlatformEventUtils.events.size());
 
-        addressRoleBusinessContext.Address_Role__r.Address__r.Po_Box__c = '1';
-        update addressRoleBusinessContext.Address_Role__r.Address__r;
+		addressRoleBusinessContext.Address_Role__r.Address__r.Po_Box__c = '1';
+		update addressRoleBusinessContext.Address_Role__r.Address__r;
 
-        System.assertEquals(1, PlatformEventUtils.events.size());
+		System.assertEquals(1, PlatformEventUtils.events.size());
 
-        // TODO Pourquoi la mise à jour du compte ne met pas à jour l'adresse
-        addressRoleBusinessContext.Address_Role__r.Address__r.Account__r.Business_City_Name__c = 'City1';
-        update addressRoleBusinessContext.Address_Role__r.Address__r.Account__r;
+		// TODO Pourquoi la mise à jour du compte ne met pas à jour l'adresse
+		addressRoleBusinessContext.Address_Role__r.Address__r.Account__r.Business_City_Name__c = 'City1';
+		update addressRoleBusinessContext.Address_Role__r.Address__r.Account__r;
 
-        System.assertEquals(1, PlatformEventUtils.events.size());
+		System.assertEquals(1, PlatformEventUtils.events.size());
 
-        delete addressRoleBusinessContext;
+		delete addressRoleBusinessContext;
 
-        Test.stopTest();
+		Test.stopTest();
 
-        System.assertEquals(1, PlatformEventUtils.events.size());
-    }
+		System.assertEquals(1, PlatformEventUtils.events.size());
+	}
 
-    private static testMethod void testDoSynchronizationOnBranchSynchronized(){
-        Address_Role_Business_Context__c addressRoleBusinessContextParentAccount = [
-                SELECT Id, Address_Role__c, Address_Role__r.Address__c, Address_Role__r.Address__r.Account__r.Id
-                FROM Address_Role_Business_Context__c
-                WHERE Address_Role__r.Address__r.Account__r.Name = 'standardAccount'
-        ];
+	private static testMethod void testDoSynchronizationOnBranchSynchronized(){
+		Address_Role_Business_Context__c addressRoleBusinessContextParentAccount = [
+				SELECT Id, Address_Role__c, Address_Role__r.Address__c, Address_Role__r.Address__r.Account__r.Id
+				FROM Address_Role_Business_Context__c
+				WHERE Address_Role__r.Address__r.Account__r.Name = 'standardAccount'
+		];
 
-        Test.startTest();
+		Test.startTest();
 
-        addressRoleBusinessContextParentAccount.Account_Activation_Context_Status__c = CustomerSyncUtils.ACCOUNT_ACTIVATION_CONTEXT_STATUS_OK;
-        update addressRoleBusinessContextParentAccount;
+		addressRoleBusinessContextParentAccount.Account_Activation_Context_Status__c = CustomerSyncUtils.ACCOUNT_ACTIVATION_CONTEXT_STATUS_OK;
+		update addressRoleBusinessContextParentAccount;
 
-        List<Address__c> addresses = new List<Address__c>();
-        addresses.add(new Address__c(
-                Account__c = [SELECT Id FROM Account WHERE Name = 'branchAccount'].get(0).Id,
-                Street__c = 'Street',
-                Is_Business_Address__c = true
-        ));
-        insert addresses;
+		List<Address__c> addresses = new List<Address__c>();
+		addresses.add(new Address__c(
+				Account__c = [SELECT Id FROM Account WHERE Name = 'branchAccount'].get(0).Id,
+				Street__c = 'Street',
+				Is_Business_Address__c = true
+		));
+		insert addresses;
 
-        List<Address_Role__c> addressRoles = new List<Address_Role__c>();
-        addressRoles.add(new Address_Role__c(
-                Address__c = addresses.get(0).Id,
-                Role_Type__c = 'Shipping'
-        ));
-        insert addressRoles;
+		List<Address_Role__c> addressRoles = new List<Address_Role__c>();
+		addressRoles.add(new Address_Role__c(
+				Address__c = addresses.get(0).Id,
+				Role_Type__c = 'Shipping'
+		));
+		insert addressRoles;
 
-        List<Address_Role_Business_Context__c> addressRoleBusinessContexts = new List<Address_Role_Business_Context__c>();
-        addressRoleBusinessContexts.add(new Address_Role_Business_Context__c(
-                Address_Role__c = addressRoles.get(0).Id,
-                Business_Context__c = [SELECT Id FROM Business_Context__c WHERE Business_Context__c = :BUSINESS_CONTEXT].get(0).Id
-        ));
-        insert addressRoleBusinessContexts;
+		List<Address_Role_Business_Context__c> addressRoleBusinessContexts = new List<Address_Role_Business_Context__c>();
+		addressRoleBusinessContexts.add(new Address_Role_Business_Context__c(
+				Address_Role__c = addressRoles.get(0).Id,
+				Business_Context__c = [SELECT Id FROM Business_Context__c WHERE Business_Context__c = :BUSINESS_CONTEXT].get(0).Id
+		));
+		insert addressRoleBusinessContexts;
 
-        Test.stopTest();
+		Test.stopTest();
 
-        System.assertEquals(1, PlatformEventUtils.events.size());
-    }
+		System.assertEquals(1, PlatformEventUtils.events.size());
+	}
 
-    private static testMethod void testDoSynchronizationOnAirportSynchronized(){
-        Address_Role_Business_Context__c addressRoleBusinessContextAirportAuthority = [
-                SELECT Id, Address_Role__c, Address_Role__r.Address__c, Address_Role__r.Address__r.Account__r.Id
-                FROM Address_Role_Business_Context__c
-                WHERE Address_Role__r.Address__r.Account__r.Name = 'standardAccount'
-        ];
+	private static testMethod void testDoSynchronizationOnAirportSynchronized(){
+		Address_Role_Business_Context__c addressRoleBusinessContextAirportAuthority = [
+				SELECT Id, Address_Role__c, Address_Role__r.Address__c, Address_Role__r.Address__r.Account__r.Id
+				FROM Address_Role_Business_Context__c
+				WHERE Address_Role__r.Address__r.Account__r.Name = 'standardAccount'
+		];
 
-        Address_Role_Business_Context__c addressRoleBusinessContext = [
-                SELECT Id, Address_Role__c, Address_Role__r.Address__c, Address_Role__r.Address__r.Account__r.Id
-                FROM Address_Role_Business_Context__c
-                WHERE Address_Role__r.Address__r.Account__r.Name = 'airportAccount'
-        ];
+		Address_Role_Business_Context__c addressRoleBusinessContext = [
+				SELECT Id, Address_Role__c, Address_Role__r.Address__c, Address_Role__r.Address__r.Account__r.Id
+				FROM Address_Role_Business_Context__c
+				WHERE Address_Role__r.Address__r.Account__r.Name = 'airportAccount'
+		];
 
-        Test.startTest();
+		Test.startTest();
 
-        addressRoleBusinessContextAirportAuthority.Account_Activation_Context_Status__c = CustomerSyncUtils.ACCOUNT_ACTIVATION_CONTEXT_STATUS_OK;
-        update addressRoleBusinessContextAirportAuthority;
+		addressRoleBusinessContextAirportAuthority.Account_Activation_Context_Status__c = CustomerSyncUtils.ACCOUNT_ACTIVATION_CONTEXT_STATUS_OK;
+		update addressRoleBusinessContextAirportAuthority;
 
-        List<Account_Relationship__c> accountRelationships = new List<Account_Relationship__c>();
-        accountRelationships.add(new Account_Relationship__c(
-                Parent_Account__c = [SELECT Id FROM Account WHERE Name = 'standardAccount'].get(0).Id,
-                Child_Account__c = addressRoleBusinessContext.Address_Role__r.Address__r.Account__r.Id
-        ));
-        insert accountRelationships;
+		List<Account_Relationship__c> accountRelationships = new List<Account_Relationship__c>();
+		accountRelationships.add(new Account_Relationship__c(
+				Parent_Account__c = [SELECT Id FROM Account WHERE Name = 'standardAccount'].get(0).Id,
+				Child_Account__c = addressRoleBusinessContext.Address_Role__r.Address__r.Account__r.Id
+		));
+		insert accountRelationships;
 
-        System.assertEquals(1, PlatformEventUtils.events.size());
+		System.assertEquals(1, PlatformEventUtils.events.size());
 
-        update accountRelationships;
+		update accountRelationships;
 
-        System.assertEquals(1, PlatformEventUtils.events.size());
+		System.assertEquals(1, PlatformEventUtils.events.size());
 
-        delete accountRelationships;
+		delete accountRelationships;
 
-        Test.stopTest();
+		Test.stopTest();
 
-        System.assertEquals(1, PlatformEventUtils.events.size());
-    }
+		System.assertEquals(1, PlatformEventUtils.events.size());
+	}
 }
