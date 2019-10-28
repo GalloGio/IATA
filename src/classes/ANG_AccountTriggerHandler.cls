@@ -563,16 +563,16 @@ public class ANG_AccountTriggerHandler {
 			insert cases;
 
 			//populate field with operation with BSP attributes more frequent
-			String remitFreq = getHighestRemittanceFrequency(accounts);
-			Map<Id, String> multicoutryRemitFreqs = getHighestRemittanceFrequencies(getMulticountryAccounts(accounts));
+			Map<Id, String> remitFreqsMap = getHighestRemittanceFrequencies(accounts);
 
 			//create staging areas
 			List<AMS_Pax_Accreditation_Form__c> stgAreas = new List<AMS_Pax_Accreditation_Form__c>();
 			for(Account acc : accounts)
 			{
-				String currentRemitFreq = remitFreq;
-				if (multicoutryRemitFreqs.containsKey(acc.Id))
-					currentRemitFreq = multicoutryRemitFreqs.get(acc.Id);
+				String currentRemitFreq = '';
+				if (remitFreqsMap.containsKey(acc.Id)){
+					currentRemitFreq = remitFreqsMap.get(acc.Id);
+				}
 
 				AMS_Pax_Accreditation_Form__c stgArea = new AMS_Pax_Accreditation_Form__c();
 
@@ -741,36 +741,10 @@ public class ANG_AccountTriggerHandler {
 			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW12',e);
 		}
 	}
-
-	/**
-	returns the highest value for remittance Frequency existing on the BSP configurations related with the operation codes that are linked to the accounts
-	*/
-	private String getHighestRemittanceFrequency(List<Account> accs){
-		
-		String remitFreq = '';
-		List<Id> accsIds = new List<Id>();
-
-		for (Account a: accs)
-			accsIds.add(a.Id);
-
-		Map<Id,Account> agOpMap = ANG_AgencyChangesHelper.fetchAgOperationPerAccount(accsIds);
-		List<AMS_Settlement_System__c> ops = ANG_AgencyChangesHelper.fetchOperationConfiguration(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c','BSP'),
-		 agOpMap.keySet());
-
-		Integer aux = 0;
-		for(AMS_Settlement_System__c op: ops){
-			for(ANG_BSP_Attributes__c attr : op.BSP_Attributes__r){
-
-				if((Integer)attr.Remittances_Per_Year__c > aux){
-					aux = (Integer)attr.Remittances_Per_Year__c;
-					remitFreq = attr.Remittance_Frequency__c;
-				}
-			}
-		}
-
-		return remitFreq;
-	}
 	
+	/**
+	returns the highest value for remittance Frequency existing on the BSP configurations related linked to the accounts
+	*/
 	private Map<Id, String> getHighestRemittanceFrequencies(List<Account> accs)
 	{
 		if (accs.isEmpty())
@@ -780,30 +754,27 @@ public class ANG_AccountTriggerHandler {
 		for (Account a: accs)
 			accsIds.add(a.Id);
 
-		Map<Id, Account> agOpMap = ANG_AgencyChangesHelper.fetchAgOperationPerAccount(accsIds);
+		Map<Id, List<Account>> agOpMap = ANG_AgencyChangesHelper.fetchAgOperationPerAccount(accsIds);
 		List<AMS_Settlement_System__c> ops = ANG_AgencyChangesHelper.fetchOperationConfiguration(
 			RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP'),
 		 	agOpMap.keySet());
-		
+
+		Map<Id, String> freqMap = new Map<Id, String>();
+	
 		Map<Id, ANG_BSP_Attributes__c> attrMap = new Map<Id, ANG_BSP_Attributes__c>();
 		for (AMS_Settlement_System__c op : ops)
 		{
-			Account acct = agOpMap.get(op.Id);
+			List<Account> acctLst = agOpMap.get(op.Id);
 			
-			ANG_BSP_Attributes__c aux = attrMap.get(acct.Id);
-			for (ANG_BSP_Attributes__c attr : op.BSP_Attributes__r)
-			{
-				if (aux == null || (Integer) attr.Remittances_Per_Year__c > aux.Remittances_Per_Year__c)
-					aux = attr;
+			for(Account acct : acctLst){
+				ANG_BSP_Attributes__c aux = null;
+				for (ANG_BSP_Attributes__c attr : op.BSP_Attributes__r)
+				{
+					if (aux == null || (Integer) attr.Remittances_Per_Year__c > aux.Remittances_Per_Year__c)
+						aux = attr;
+				}
+				freqMap.put(acct.Id, (aux == null ? '' : aux.Remittance_Frequency__c));
 			}
-			attrMap.put(acct.Id, aux);
-		}
-		
-		Map<Id, String> freqMap = new Map<Id, String>();
-		for (Id acctId : attrMap.keySet())
-		{
-			ANG_BSP_Attributes__c attr = attrMap.get(acctId);
-			freqMap.put(acctId, (attr == null ? '' : attr.Remittance_Frequency__c));
 		}
 
 		return freqMap;

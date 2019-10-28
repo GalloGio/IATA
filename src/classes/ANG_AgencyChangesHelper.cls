@@ -2146,11 +2146,17 @@ public with sharing class ANG_AgencyChangesHelper {
 	/**
 	Returns a Map of Operations for the given accounts
 	*/
-	public static Map<Id,Account> fetchAgOperationPerAccount(List<Id> accIds) {
+	public static Map<Id, List<Account>> fetchAgOperationPerAccount(List<Id> accIds) {
 
-		Map<Id,Account> bspPerAcc = new Map<Id,Account>();
-		for(Account agOp : [SELECT Id, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.RecordType.Name FROM Account WHERE Id in :accIds])
-			bspPerAcc.put(agOp.IATA_ISO_Country__r.AMS_Settlement_System__c,agOp);
+		Map<Id, List<Account>> bspPerAcc = new Map<Id, List<Account>>();
+		for(Account agOp : [SELECT Id, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.RecordType.Name FROM Account WHERE Id in :accIds]){
+			List<Account> agOpLst = bspPerAcc.get(agOp.IATA_ISO_Country__r.AMS_Settlement_System__c);
+			if(agOpLst == null){
+				agOpLst = new List<Account>();
+			}
+			agOpLst.add(agOp);
+			bspPerAcc.put(agOp.IATA_ISO_Country__r.AMS_Settlement_System__c, agOpLst);
+		}
 
 		return bspPerAcc;
 	}

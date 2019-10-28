@@ -281,7 +281,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         } set;
     }
 
-    private Map<Id,Account> agencyOperations{
+    private Map<Id, List<Account>> agencyOperations{
         get{
             if(this.agencyOperations == null)
                 this.agencyOperations = ANG_AgencyChangesHelper.fetchAgOperationPerAccount(new List<Id>{oscarObj.Account__c});
