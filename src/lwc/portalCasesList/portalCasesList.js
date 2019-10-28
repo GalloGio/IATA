@@ -168,11 +168,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
             filteringObjectAux.casesComponent.nrResults = 0;
 
-            // if (this.pageNumber < 0) {
                 this.loading = true;
-            // } else {
-            //     this.loadingMoreResults = true;
-            // }
 
             this.filteringObject = filteringObjectAux;
 
@@ -239,7 +235,6 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
             this.filteringObject = filteringObjectAux;
 
                 this.casesList = [];
-                // this.loadingMoreResults = false;
             });
 
     }
