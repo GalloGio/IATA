@@ -7,17 +7,12 @@
  */
 public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 
-	public class CustomerSyncException extends Exception {
-	}
+	public class CustomerSyncException extends Exception {}
 
-	@TestVisible
-	private final static Id ACCOUNT_RECORDTYPEID_AIRPORT = Schema.Account.SObjectType.getDescribe().getRecordTypeInfosByDeveloperName().get('Airport').getRecordTypeId();
-	@TestVisible
-	private final static String ACCOUNT_HIERARCHY_LEVEL_BRANCH = 'Branch';
-	@TestVisible
-	private final static String ACCOUNT_ACTIVATION_CONTEXT_STATUS_OK = 'Completed';
-	@TestVisible
-	private final static String ADDRESS_ROLE_ROLE_TYPE_BUSINESS = 'Business';
+	@TestVisible private final static Id ACCOUNT_RECORDTYPEID_AIRPORT = Schema.Account.SObjectType.getDescribe().getRecordTypeInfosByDeveloperName().get('Airport').getRecordTypeId();
+	@TestVisible private final static String ACCOUNT_HIERARCHY_LEVEL_BRANCH = 'Branch';
+	@TestVisible private final static String ACCOUNT_ACTIVATION_CONTEXT_STATUS_OK = 'Completed';
+	@TestVisible private final static String ADDRESS_ROLE_ROLE_TYPE_BUSINESS = 'Business';
 
 	public enum Context {
 		Standard,
@@ -26,48 +21,47 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 	}
 
 	private static Map<String, List<String>> FIELDS_TO_CHECK_ON_UPDATE = new Map<String, List<String>>{
-			'Account' => new List<String>{
-					'EF_SIS_Designator__c',
-					'EF_SIS_Code__c',
-					'Category__c',
-					'Sector__c',
-					'Legal_name__c',
-					'Name',
-					'VAT_Number_2__c',
-					'VAT_Number__c',
-					'Email__c',
-					'Phone'
-			},
-			'Account_Relationship__c' => new List<String>{
-					'Child_Account__c',
-					'Parent_Account__c'
-			},
-			'Address__c' => new List<String>{
-					'Street__c',
-					'Po_Box__c',
-					'Postal_Code__c',
-					'City_Name__c',
-					'Country__c',
-					'Geo_Coordinates__Latitude__s',
-					'Geo_Coordinates__Longitude__s',
-					'State_Name__c',
-					'Account__c'
-			},
-			'Address_Role__c' => new List<String>{
-					'SIS_Location_ID__c',
-					'Role_Type__c',
-					'Address__c'
-			},
-			'Address_Role_Business_Context__c' => new List<String>{
-					'Account_Activation_Context_Status__c',
-					'Address_Role__c',
-					'Business_Context__c'
-			}
+		'Account' => new List<String>{
+			'EF_SIS_Designator__c',
+			'EF_SIS_Code__c',
+			'Category__c',
+			'Sector__c',
+			'Legal_name__c',
+			'Name',
+			'VAT_Number_2__c',
+			'VAT_Number__c',
+			'Email__c',
+			'Phone'
+		},
+		'Account_Relationship__c' => new List<String>{
+			'Child_Account__c',
+			'Parent_Account__c'
+		},
+		'Address__c' => new List<String>{
+			'Street__c',
+			'Po_Box__c',
+			'Postal_Code__c',
+			'City_Name__c',
+			'Country__c',
+			'Geo_Coordinates__Latitude__s',
+			'Geo_Coordinates__Longitude__s',
+			'State_Name__c',
+			'Account__c'
+		},
+		'Address_Role__c' => new List<String>{
+			'SIS_Location_ID__c',
+			'Role_Type__c',
+			'Address__c'
+		},
+		'Address_Role_Business_Context__c' => new List<String>{
+			'Account_Activation_Context_Status__c',
+			'Address_Role__c',
+			'Business_Context__c'
+		}
 	};
 
 	public CustomerSyncUtils() {
 		this.fieldsToCheckOnUpdate.putAll(FIELDS_TO_CHECK_ON_UPDATE);
-
 		this.accounts = new Map<Id, Account>();
 		this.synchronizedAccountIds = new Set<Id>();
 		this.airportAuthIdByAiportId = new Map<Id, Id>();
@@ -99,11 +93,8 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 	 * @param eventType (Insert, Update, Delete, Undelete)
 	 */
 	public void doSynchronisation(List<Context> contexts, List<SObject> sObjects, String eventType) {
-		System.debug('CustomerSyncUtils.doSynchronisation() - ' + eventType);
 
-		System.debug('sObjects.size() : ' + sObjects.size());
-		System.debug('sObjects : ' + sObjects);
-		if (sObjects.size() == 0) {
+		if (sObjects.size() == 0){
 			return;
 		}
 
@@ -113,29 +104,22 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 
 		PlatformEventUtils.clear();
 
-		System.debug('Processing data');
 		Account account;
 		for (Id accountId : ARBCIdsByAccountId.keySet()) {
 			if (!accounts.containsKey(accountId)) {
-				System.debug('Account not allowed : ' + accountId);
 				continue;
 			}
 			account = accounts.get(accountId);
-			System.debug('accountId : ' + accountId);
-			System.debug('account : ' + account);
 
 			if (!isAccountSynchronized(account)) {
-				System.debug('Account is synchronized : ' + accountId);
 				continue;
 			}
 
 			for (SObject sobj : ARBCIdsByAccountId.get(accountId)) {
-				System.debug('Address Role Business Context which will be synchronized : ' + sobj.Id);
-
 				PlatformEventUtils.add(new AddressRoleBusinessContext__e(
-						EventType__c = eventType,
-						RecordType__c = sobj.get('RecordTypeId') != null ? (String) sobj.getSObject('RecordType').get('DeveloperName') : '',
-						RecordId__c = sobj.Id
+					EventType__c = eventType,
+					RecordType__c = sobj.get('RecordTypeId') != null ? (String) sobj.getSObject('RecordType').get('DeveloperName') : '',
+					RecordId__c = sobj.Id
 				));
 			}
 
@@ -152,7 +136,6 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 	 * @return Address Role Business Context by Account Ids
 	 */
 	private Map<Id, List<SObject>> getARBCByAccountIdsFromSObjects(List<SObject> sObjects) {
-		System.debug('getARBCByAccountIdsFromSObjects()');
 
 		Map<Id, List<SObject>> ARBCIdsByAccountId = new Map<Id, List<SObject>>();
 
@@ -176,23 +159,18 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 			prevAddressRoleId = addressRoleId;
 		}
 
-		System.debug('ARBCIdsByAccountId : ' + ARBCIdsByAccountId);
 		return ARBCIdsByAccountId;
 	}
 
 	private List<Address_Role_Business_Context__c> getARBCFromSObjects(List<SObject> sObjects) {
-		System.debug('getARBCFromSObjects()');
 
 		Set<Id> ids = new Set<Id>();
 
-		String query = 'SELECT Id, RecordType.DeveloperName, Address_Role__c, Address_Role__r.Address__r.Account__c';
-		query += ' FROM Address_Role_Business_Context__c';
-		query += ' WHERE ';
+		String query = 'SELECT Id, RecordType.DeveloperName, Address_Role__c, Address_Role__r.Address__r.Account__c FROM Address_Role_Business_Context__c WHERE ';
 
 		// Context is observed by the current where clause
 		switch on sObjects.get(0) {
 			when Account account {
-				System.debug('from Account');
 				query += 'Address_Role__r.Address__r.Account__c';
 
 				for (SObject sobj : sObjects) {
@@ -200,7 +178,6 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 				}
 			}
 			when Account_Relationship__c accountRelationship {
-				System.debug('from Account Relationship');
 				query += 'Address_Role__r.Address__r.Account__c';
 
 				for (SObject sobj : sObjects) {
@@ -208,7 +185,6 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 				}
 			}
 			when Address__c address {
-				System.debug('from Address');
 				query += 'Address_Role__r.Address__c';
 
 				for (SObject sobj : sObjects) {
@@ -216,7 +192,6 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 				}
 			}
 			when Address_Role__c addressRole {
-				System.debug('from Address Role');
 				query += 'Address_Role__c';
 
 				for (SObject sobj : sObjects) {
@@ -224,7 +199,6 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 				}
 			}
 			when Address_Role_Business_Context__c addressRoleBusinessContext {
-				System.debug('from Address Role Business Context');
 				for (SObject sobj : sObjects) {
 					ids.add(sobj.Id);
 				}
@@ -253,11 +227,7 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 			}
 		}
 
-		query += ' IN :ids';
-
-		query += ' ORDER BY Address_Role__r.Address__r.Account__c DESC, Address_Role__r.Address__c DESC, Address_Role__c DESC, Id DESC';
-		System.debug('query : ' + query);
-		System.debug('ids : ' + ids);
+		query += ' IN :ids ORDER BY Address_Role__r.Address__r.Account__c DESC, Address_Role__r.Address__c DESC, Address_Role__c DESC, Id DESC';
 
 		// Apply filter : only one platform event per Address Role
 		List<Address_Role_Business_Context__c> addressRoleBusinessContexts = new List<Address_Role_Business_Context__c>();
@@ -285,16 +255,12 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 	 * @return True is if the current account is authorized for synchronization, false otherwise
 	 */
 	private void getAccountInformation(List<Context> contexts, Set<Id> ids) {
-		System.debug('getAccountInformation()');
 		Id accountId;
 		Set<Id> accountIds = new Set<Id>();
 
 		Boolean isStandardContext = contexts.contains(Context.Standard);
 		Boolean isAirportContext = contexts.contains(Context.Airport);
 		Boolean isBranchContext = contexts.contains(Context.Branch);
-		System.debug('isStandardContext : ' + isStandardContext);
-		System.debug('isAirportContext : ' + isAirportContext);
-		System.debug('isBranchContext : ' + isBranchContext);
 
 		// Given ids are not enough to handle every scenario => need to query account in order to select all needed Account
 		for (Account account : [
@@ -323,9 +289,6 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 			}
 		}
 
-		System.debug('accountIds.size() : ' + accountIds.size());
-		System.debug('accountIds : ' + accountIds);
-
 		// Get parent Account from Account Relationship (airport process)
 		if (isAirportContext && accountIds.size() > 0) {
 			for (Account_Relationship__c accountRelationship : [
@@ -337,8 +300,6 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 				accountIds.add(accountRelationship.Parent_Account__c);
 				airportAuthIdByAiportId.put(accountRelationship.Child_Account__c, accountRelationship.Parent_Account__c);
 			}
-			System.debug('airportAuthIdByAiportId : ' + airportAuthIdByAiportId);
-			System.debug('accountIds.size() : ' + accountIds.size());
 		}
 
 		// Get whole context for each selected Customer (Account, Address, AddressRole, AddressRoleBusinessContext)
@@ -372,14 +333,6 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 				accounts.put(accountId, addressRoleBusinessContext.Address_Role__r.Address__r.Account__r);
 			}
 		}
-
-		//System.debug('synchronizedAccountIds.size() : ' + synchronizedAccountIds.size());
-		//System.debug('synchronizedAccountIds : ' + synchronizedAccountIds);
-
-		System.debug('hasSynchronizedBusinessAddressAccountIds.size() : ' + hasSynchronizedBusinessAddressAccountIds.size());
-		System.debug('hasSynchronizedBusinessAddressAccountIds : ' + hasSynchronizedBusinessAddressAccountIds);
-
-		System.debug('accounts.size() : ' + accounts.size());
 	}
 
 	/**
@@ -390,11 +343,9 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 	 * @return True is if the current account is authorized for synchronization, false otherwise
 	 */
 	private Boolean isAccountSynchronized(Account account) {
-		System.debug('isAccountSynchronized()');
 
 		// For airport : airport authority must be synchronized
 		if (ACCOUNT_RECORDTYPEID_AIRPORT == account.RecordTypeId) {
-			System.debug('Airport');
 			if (airportAuthIdByAiportId.containsKey(account.Id)) {
 				return hasSynchronizedBusinessAddressAccountIds.contains(airportAuthIdByAiportId.get(account.Id));
 			} else {
@@ -403,12 +354,10 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 		}
 		// For branch : need to have their master account synchronized
 		else if (ACCOUNT_HIERARCHY_LEVEL_BRANCH == account.Hierarchy_Level__c) {
-			System.debug('Branch');
 			return hasSynchronizedBusinessAddressAccountIds.contains(account.ParentId);
 		}
 		// For other account : need to be synchronized
 		else {
-			System.debug('Standard');
 			return hasSynchronizedBusinessAddressAccountIds.contains(account.Id);
 		}
 	}

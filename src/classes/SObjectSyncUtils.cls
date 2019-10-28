@@ -4,13 +4,11 @@
 
 public virtual with sharing class SObjectSyncUtils {
 
-	public class SObjectSyncException extends Exception {
-	}
+	public class SObjectSyncException extends Exception {}
 
 	public final static String TYPE_INSERT = 'Insert';
 	public final static String TYPE_UPDATE = 'Update';
 	public final static String TYPE_DELETE = 'Delete';
-	public final static String TYPE_UNDELETE = 'Undelete';
 
 	public Map<String, List<String>> fieldsToCheckOnUpdate;
 
@@ -27,7 +25,6 @@ public virtual with sharing class SObjectSyncUtils {
 	 * @return List of SObjects which are allowed to be synchronized
 	 */
 	public List<SObject> getSObjectsToSynchronizeOnUpdate(List<SObject> oldSObjects, Map<Id, SObject> newRecordsMap) {
-		System.debug('getSObjectsToSynchronizeFromUpdate()');
 
 		List<SObject> sObjectsToSynchronize = new List<SObject>();
 		List<String> fieldListToCheck;
@@ -38,7 +35,6 @@ public virtual with sharing class SObjectSyncUtils {
 
 			if(fieldListToCheck == null){
 				fieldListToCheck = getFieldListToCheckOnUpdate(newSObject);
-				System.debug('fieldListToCheck : ' + fieldListToCheck);
 			}
 
 			if (hasSufficientUpdatesToBeSync(fieldListToCheck, oldSObject, newSObject)) {
@@ -53,7 +49,6 @@ public virtual with sharing class SObjectSyncUtils {
 		String sObjectName = sobj.getSObjectType().getDescribe().getName();
 
 		if(fieldsToCheckOnUpdate.containsKey(sObjectName)){
-			System.debug('from ' + sObjectName);
 			return fieldsToCheckOnUpdate.get(sObjectName);
 		} else {
 			// TODO throw exception with Custom Label
@@ -62,11 +57,9 @@ public virtual with sharing class SObjectSyncUtils {
 	}
 
 	private static Boolean hasSufficientUpdatesToBeSync(List<String> fieldListToCheck, SObject oldSObject, SObject newSObject) {
-		System.debug('hasSufficientUpdatesToBeSync()');
 
 		for(String fieldName : fieldListToCheck){
 			if(oldSObject.get(fieldName) != newSObject.get(fieldName)){
-				System.debug('Break on field : ' + fieldName);
 				return true;
 			}
 		}
