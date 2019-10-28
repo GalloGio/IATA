@@ -56,6 +56,18 @@ public class portalIftpTrainingRecordsTest {
         searchValues2.add('null');   //place holder for firstName
         searchValues2.add('null');   //place holder for lastName
         searchValues2.add('Abc');   //auxEmployeeCode
+
+        List<String> searchValues3 = new List<String>();
+        searchValues3.add('null');   //auxStations,
+        searchValues3.add('null');   //auxItp,
+        searchValues3.add('null');   //auxExpirationStatus,
+        searchValues3.add('null');   //auxAircraftType,
+        searchValues3.add('null');   //auxProficiency,
+        searchValues3.add('null');   //auxFromDate,
+        searchValues3.add('null');   //auxToDate,
+        searchValues3.add('null');   //place holder for firstName
+        searchValues3.add('null');   //place holder for lastName
+        searchValues3.add('null');   //auxEmployeeCode
        
         System.runAs(u2) {
 
@@ -63,6 +75,8 @@ public class portalIftpTrainingRecordsTest {
             System.assert(resultsList1.size() > 0, 'Fail to get getTrainingRecordsForMonitorTrainingsTest!');
             List<portalIftpTrainingRecords.TrainingRecordsWrapper> resultsList2 = portalIftpTrainingRecords.getTrainingRecordsForMonitorTrainings(searchValues2, searchType);
             System.assert(resultsList2.size() > 0, 'Fail to get getTrainingRecordsForMonitorTrainings!');
+            List<portalIftpTrainingRecords.TrainingRecordsWrapper> resultsList3 = portalIftpTrainingRecords.getTrainingRecordsForMonitorTrainings(searchValues3, searchType);
+            System.assert(resultsList3.size() > 0, 'Fail to get getTrainingRecordsForMonitorTrainings!');
 
         }
         Test.stopTest();
