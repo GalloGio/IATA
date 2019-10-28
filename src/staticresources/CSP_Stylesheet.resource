@@ -1595,6 +1595,9 @@ visibility: hidden;
     display: none!important;
     visibility: hidden!important;
 }
+@page {
+    margin: 0;
+}
 @media print {
     #_hj_poll_container,
     #_hj_feedback_container,
@@ -1708,6 +1711,4 @@ visibility: hidden;
         white-space: nowrap;
         padding: 4px 6px 2px 0px;
     }
-}@page {
-    margin: 0;
-}
+}
