@@ -16,8 +16,8 @@ public without sharing class IntegrationLogTriggerHandler {
 			if(isLinkedToAddressRoleBusinessContext(integrationLog)
 					&& statusHasChanged(integrationLog, oldIntegrationLog)){
 				sapEvents.add(new Subflow_SAP__e(
-						Integration_Log_Id__c = integrationLog.Id,
-						Address_Role_Business_Context_Id__c = integrationLog.Record_Id__c
+					Integration_Log_Id__c = integrationLog.Id,
+					Address_Role_Business_Context_Id__c = integrationLog.Record_Id__c
 				));
 			}
 		}
