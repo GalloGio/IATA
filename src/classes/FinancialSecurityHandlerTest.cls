@@ -63,7 +63,6 @@ private class FinancialSecurityHandlerTest {
 		Financial_Security__c fs = [SELECT Id, Account__c, Security_Status__c, Send_FS_acknowledgment__c FROM Financial_Security__c limit 1];
 		Test.startTest();
 		fs.Send_FS_acknowledgment__c = true;
-		FinancialSecurityUtil.acknowledgeRunning = true;
 		update fs;
 		Test.stopTest();       
 	}
