@@ -14,6 +14,7 @@ export default class PortalForgotPasswordCard extends LightningElement {
     @track selfRegistrationUrl;
     @track isSelfRegistrationEnabled;
     @track isSanctioned;
+    @track troubleShootingUrl;
 
     connectedCallback() {
        this.checkUserIsGuestOrAdmin();
@@ -30,6 +31,7 @@ export default class PortalForgotPasswordCard extends LightningElement {
                    this.selfRegistrationUrl       = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf(CSP_PortalPath));
                    this.loginUrl                  = result.loginUrl.substring(result.loginUrl.indexOf(CSP_PortalPath));
                    this.isSelfRegistrationEnabled = result.isSelfRegistrationEnabled;
+                   this.troubleShootingUrl        = result.troubleShootingUrl;
                    this.changeIsLoadingMain();
                });
            }

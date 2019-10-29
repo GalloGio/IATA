@@ -7,6 +7,8 @@ public without sharing class PortalForgotPasswordController {
         public String loginUrl{get;set;}
         @AuraEnabled
         public boolean isSelfRegistrationEnabled{get;set;}
+        @AuraEnabled
+        public String troubleShootingUrl{get;set;}
     }
 
     @AuraEnabled
@@ -18,6 +20,13 @@ public without sharing class PortalForgotPasswordController {
         config.selfRegistrationUrl = authConfig.getSelfRegistrationUrl();
         config.loginUrl = Network.getLoginURL(Network.getNetworkId());
         config.isSelfRegistrationEnabled = authConfig.getSelfRegistrationEnabled();
+        config.troubleShootingUrl = Label.CSP_PortalPath + 'faq-article?language=en_US&q=troubleshooting';
+
+        ISSP_CS__c cs = ISSP_CS__c.getInstance('TroubleShootingArticleId');
+        if(cs != null){
+            config.troubleShootingUrl = config.troubleShootingUrl + '&id1=' + cs.value__c;
+        }
+
         return config;
     }
 
