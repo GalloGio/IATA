@@ -53,8 +53,10 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Account__c</fullName>
+        <description>Parent Account</description>
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>

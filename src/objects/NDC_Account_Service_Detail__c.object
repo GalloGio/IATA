@@ -1,0 +1,948 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>NDC Capabilities data of the account role.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Account_Role_Service__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account Role Service</label>
+        <referenceTo>Account_Role_Service__c</referenceTo>
+        <relationshipLabel>NDC Account Service Details</relationshipLabel>
+        <relationshipName>NDC_Account_Role_Details</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Company_Type__c</fullName>
+        <description>Indicates if the company is an airline, a seller or an aggregator.</description>
+        <externalId>false</externalId>
+        <formula>CASE( 
+	Account_Role_Service__r.Account_Role__r.Account__r.RecordType.DeveloperName , 
+	&quot;IATA_Airline&quot;, &quot;Airline&quot;, 
+	&quot;Operator&quot;, &quot;Airline&quot;, 
+	&quot;Others&quot;, &quot;Aggregator&quot;, 
+	&quot;IATA_Agency&quot;, &quot;Seller&quot;,
+	&quot;Non_IATA_Agency&quot;, &quot;Seller&quot;, 
+	&quot;Standard_Account&quot;,
+	CASE(
+		Account_Role_Service__r.Account_Role__r.Account__r.Sector__c,
+		&quot;Airline&quot;,&quot;Airline&quot;,
+		&quot;Travel Agent&quot;,&quot;Seller&quot;,
+		&quot;Airline Supplier&quot;,&quot;Aggregator&quot;,
+		&quot;Not Applicable&quot;
+	),
+	&quot;Not Applicable&quot; 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Company Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Email__c</fullName>
+        <description>E-mail address that will receive the notification from partners who wants to connect</description>
+        <externalId>false</externalId>
+        <inlineHelpText>E-mail address that will receive the notification from partners who wants to connect</inlineHelpText>
+        <label>Contact Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Person__c</fullName>
+        <description>Name of the contact person.</description>
+        <externalId>false</externalId>
+        <label>Contact Person</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Content_Differentiation_Products_and_Se__c</fullName>
+        <description>Do you have products and services only available in your NDC API channel (e.g. content differentiation)?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Do you have products and services only available in your NDC API channel (e.g. content differentiation)?</inlineHelpText>
+        <label>Content Differentiation:Prod. &amp; Services</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>NDC_Airline_Profile__c</fullName>
+        <description>Is Airline Profile implemented?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Have you implemented Airline Profile?</inlineHelpText>
+        <label>Airline Profile</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>NDC_Capable__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the account is valid for NDC or not</description>
+        <externalId>false</externalId>
+        <label>NDC Capable</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>NDC_Certification_Level__c</fullName>
+        <description>NDC Certification Level</description>
+        <externalId>false</externalId>
+        <inlineHelpText>As per NDC certification registry available at www.iata.org/ndc-registry</inlineHelpText>
+        <label>NDC Certification Level</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>NDC@Scale</fullName>
+                    <default>false</default>
+                    <label>NDC@Scale</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>NDC_Content_Differentiation__c</fullName>
+        <description>Are offers only available in this company&apos;s NDC API channel?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Do you have priced offers only available in your NDC API channel (e.g. content differentiation)?</inlineHelpText>
+        <label>Content Differentiation : Priced Offers</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>NDC_Forms_of_Payment_Accepted__c</fullName>
+        <description>What forms of payment does this company accept?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>What forms of payment do you accept?</inlineHelpText>
+        <label>Forms of Payment Accepted</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Credit Cards</fullName>
+                    <default>false</default>
+                    <label>Credit Cards</label>
+                </value>
+                <value>
+                    <fullName>Alternative Forms of Payments</fullName>
+                    <default>false</default>
+                    <label>Alternative Forms of Payments</label>
+                </value>
+                <value>
+                    <fullName>Loyalty Redemption</fullName>
+                    <default>false</default>
+                    <label>Loyalty Redemption</label>
+                </value>
+                <value>
+                    <fullName>Vouchers</fullName>
+                    <default>false</default>
+                    <label>Vouchers</label>
+                </value>
+                <value>
+                    <fullName>Instalment</fullName>
+                    <default>false</default>
+                    <label>Instalment</label>
+                </value>
+                <value>
+                    <fullName>Invoice</fullName>
+                    <default>false</default>
+                    <label>Invoice</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>NDC_Forms_of_Remittance_and_Settlement__c</fullName>
+        <description>What forms of remittance and settlement does this company support?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>What forms of remittance and settlement do you support?</inlineHelpText>
+        <label>Forms of Remittance and Settlement</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ARC</fullName>
+                    <default>false</default>
+                    <label>ARC</label>
+                </value>
+                <value>
+                    <fullName>BSP</fullName>
+                    <default>false</default>
+                    <label>BSP</label>
+                </value>
+                <value>
+                    <fullName>TCH</fullName>
+                    <default>false</default>
+                    <label>TCH</label>
+                </value>
+                <value>
+                    <fullName>Others</fullName>
+                    <default>false</default>
+                    <label>Others</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>NDC_Personalisation__c</fullName>
+        <description>Can they do personalisation with NDC?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Can you do personalisation with NDC?</inlineHelpText>
+        <label>Personalisation</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>NDC_Public_Incentive_Schemes_for_Sellers__c</fullName>
+        <description>Do they have public incentive schemes for sellers?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Do you have public incentive schemes for sellers?</inlineHelpText>
+        <label>Public Incentive Schemes for Sellers</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>NDC_Rich_Content_Types__c</fullName>
+        <description>Types of Rich Content available</description>
+        <externalId>false</externalId>
+        <label>Rich Content Types</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Images</fullName>
+                    <default>false</default>
+                    <label>Images</label>
+                </value>
+                <value>
+                    <fullName>Videos</fullName>
+                    <default>false</default>
+                    <label>Videos</label>
+                </value>
+                <value>
+                    <fullName>Virtual Reality</fullName>
+                    <default>false</default>
+                    <label>Virtual Reality</label>
+                </value>
+                <value>
+                    <fullName>Augmented Reality</fullName>
+                    <default>false</default>
+                    <label>Augmented Reality</label>
+                </value>
+                <value>
+                    <fullName>Others</fullName>
+                    <default>false</default>
+                    <label>Others</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>NDC_Rich_Content__c</fullName>
+        <description>Do they make Rich content available in your NDC implementation?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Do you make Rich content available in your NDC implementation?</inlineHelpText>
+        <label>Rich Content</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>NDC_Schema_Version__c</fullName>
+        <description>Latest schema version used</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Please select all the schema versions supported in your API</inlineHelpText>
+        <label>Schema Version</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1.1.3</fullName>
+                    <default>false</default>
+                    <label>1.1.3</label>
+                </value>
+                <value>
+                    <fullName>15.2</fullName>
+                    <default>false</default>
+                    <label>15.2</label>
+                </value>
+                <value>
+                    <fullName>16.1</fullName>
+                    <default>false</default>
+                    <label>16.1</label>
+                </value>
+                <value>
+                    <fullName>16.2</fullName>
+                    <default>false</default>
+                    <label>16.2</label>
+                </value>
+                <value>
+                    <fullName>17.1</fullName>
+                    <default>false</default>
+                    <label>17.1</label>
+                </value>
+                <value>
+                    <fullName>17.2</fullName>
+                    <default>false</default>
+                    <label>17.2</label>
+                </value>
+                <value>
+                    <fullName>18.1</fullName>
+                    <default>false</default>
+                    <label>18.1</label>
+                </value>
+                <value>
+                    <fullName>18.2</fullName>
+                    <default>false</default>
+                    <label>18.2</label>
+                </value>
+                <value>
+                    <fullName>19.1</fullName>
+                    <default>false</default>
+                    <label>19.1</label>
+                </value>
+                <value>
+                    <fullName>19.2</fullName>
+                    <default>false</default>
+                    <label>19.2</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>NDC_Seller_Type__c</fullName>
+        <description>Type of NDC Seller</description>
+        <externalId>false</externalId>
+        <label>Seller Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Travel Agent</fullName>
+                    <default>false</default>
+                    <label>Travel Agent</label>
+                </value>
+                <value>
+                    <fullName>OTA</fullName>
+                    <default>false</default>
+                    <label>OTA</label>
+                </value>
+                <value>
+                    <fullName>TMC</fullName>
+                    <default>false</default>
+                    <label>TMC</label>
+                </value>
+                <value>
+                    <fullName>OBT</fullName>
+                    <default>false</default>
+                    <label>OBT</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>NDC_Servicing__c</fullName>
+        <description>Voluntary, Involuntary (one, both or blank)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Do you support Servicing NDC messages?</inlineHelpText>
+        <label>Servicing</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+                <value>
+                    <fullName>Voluntary</fullName>
+                    <default>false</default>
+                    <label>Voluntary</label>
+                </value>
+                <value>
+                    <fullName>Involuntary</fullName>
+                    <default>false</default>
+                    <label>Involuntary</label>
+                </value>
+                <value>
+                    <fullName>Voluntary and Involuntary</fullName>
+                    <default>false</default>
+                    <label>Voluntary and Involuntary</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>NDC_Travel_Agents_on_boarding_portal__c</fullName>
+        <description>Link to your onboarding site/ developper portal</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Link to your onboarding site/ developper portal</inlineHelpText>
+        <label>Travel Agents on-boarding portal</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>NDC_Type_of_CC_Accepted__c</fullName>
+        <description>What type of credit cards do they accept?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>What type of credit cards do you accept?</inlineHelpText>
+        <label>Type of Credit Cards Accepted</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Visa</fullName>
+                    <default>false</default>
+                    <label>Visa</label>
+                </value>
+                <value>
+                    <fullName>Mastercard</fullName>
+                    <default>false</default>
+                    <label>Mastercard</label>
+                </value>
+                <value>
+                    <fullName>UATP</fullName>
+                    <default>false</default>
+                    <label>UATP</label>
+                </value>
+                <value>
+                    <fullName>American Express</fullName>
+                    <default>false</default>
+                    <label>American Express</label>
+                </value>
+                <value>
+                    <fullName>Diners Club</fullName>
+                    <default>false</default>
+                    <label>Diners Club</label>
+                </value>
+                <value>
+                    <fullName>JCB</fullName>
+                    <default>false</default>
+                    <label>JCB</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>NDC_Type_of_Connectivity__c</fullName>
+        <description>Type of NDC Connectivitiy</description>
+        <externalId>false</externalId>
+        <label>Type of Connectivity</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>NDC Direct Connect</fullName>
+                    <default>false</default>
+                    <label>NDC Direct Connect</label>
+                </value>
+                <value>
+                    <fullName>NDC GDS Aggregator</fullName>
+                    <default>false</default>
+                    <label>NDC GDS Aggregator</label>
+                </value>
+                <value>
+                    <fullName>Other NDC Aggregator</fullName>
+                    <default>false</default>
+                    <label>Other NDC Aggregator</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>NDC_Types_of_Fares__c</fullName>
+        <description>What type of fares are available in their NDC API?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>What type of fares are available in your NDC API?</inlineHelpText>
+        <label>Offers : Types of Fares</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Corporate fares</fullName>
+                    <default>false</default>
+                    <label>Corporate fares</label>
+                </value>
+                <value>
+                    <fullName>Published fares</fullName>
+                    <default>false</default>
+                    <label>Published fares</label>
+                </value>
+                <value>
+                    <fullName>Private fares</fullName>
+                    <default>false</default>
+                    <label>Private fares</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Reach_Number_of_Sellers_Connected__c</fullName>
+        <description>Number of Sellers connected to your aggregation platform</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of Sellers connected to your aggregation platform</inlineHelpText>
+        <label>Reach - Number of Sellers Connected</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Submittable_for_Approval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the record is submittable for approval</description>
+        <externalId>false</externalId>
+        <label>Submittable for Approval</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Submitted_for_Approval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the record has already be submitted for approval</description>
+        <externalId>false</externalId>
+        <label>Submitted for Approval</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>NDC Account Service Detail</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>NDC-ARD-{000000}</displayFormat>
+        <label>NDC Account Role Details Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>NDC Account Service Details</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>NDC_Accepted_FoPs_is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+NOT(ISNEW()), 
+Company_Type__c == &apos;Airline&apos;, 
+ISBLANK(NDC_Forms_of_Payment_Accepted__c) 
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Forms_of_Payment_Accepted__c</errorDisplayField>
+        <errorMessage>Forms of Payment Accepted is Mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Airline_Profile_is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Company_Type__c == &apos;Airline&apos;, 
+ISBLANK(TEXT(NDC_Airline_Profile__c)) 
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Airline_Profile__c</errorDisplayField>
+        <errorMessage>Airline Profile is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Contact_Email_Is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Contact_Email__c == &apos;&apos; 
+)</errorConditionFormula>
+        <errorDisplayField>Contact_Email__c</errorDisplayField>
+        <errorMessage>Contact Email is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Contact_Person_Is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Contact_Person__c == &apos;&apos; 
+)</errorConditionFormula>
+        <errorDisplayField>Contact_Person__c</errorDisplayField>
+        <errorMessage>Contact Person is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Content_Diff_PC_is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Company_Type__c == &apos;Airline&apos;, 
+ISBLANK(TEXT(Content_Differentiation_Products_and_Se__c)) 
+)</errorConditionFormula>
+        <errorDisplayField>Content_Differentiation_Products_and_Se__c</errorDisplayField>
+        <errorMessage>Content Differentiation : Products and Services is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Content_Differentiation_is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Company_Type__c == &apos;Airline&apos;, 
+ISBLANK(TEXT(NDC_Content_Differentiation__c)) 
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Content_Differentiation__c</errorDisplayField>
+        <errorMessage>Content Differentiation is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Forms_of_Remittance_Sett_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Company_Type__c == &apos;Airline&apos;, 
+ISBLANK(NDC_Forms_of_Remittance_and_Settlement__c) 
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Forms_of_Remittance_and_Settlement__c</errorDisplayField>
+        <errorMessage>Forms of Remittance and Settlement is Mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Personalisation_is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Company_Type__c == &apos;Airline&apos;, 
+ISBLANK(TEXT(NDC_Personalisation__c)) 
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Personalisation__c</errorDisplayField>
+        <errorMessage>Personalisation is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Rich_Content_Types_is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Company_Type__c == &apos;Airline&apos;, 
+TEXT(NDC_Rich_Content__c) == &apos;Yes&apos;, 
+ISBLANK(NDC_Rich_Content_Types__c) 
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Rich_Content_Types__c</errorDisplayField>
+        <errorMessage>If Rich Content is set to &quot;Yes&quot;, the Rich Content Types field is Mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Rich_Content_is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Company_Type__c == &apos;Airline&apos;, 
+ISBLANK(TEXT(NDC_Rich_Content__c)) 
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Rich_Content__c</errorDisplayField>
+        <errorMessage>Rich Content is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Schema_mandatory_for_Airlines</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Company_Type__c == &apos;Airline&apos;, 
+ISBLANK(NDC_Schema_Version__c)
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Schema_Version__c</errorDisplayField>
+        <errorMessage>Schema Version is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Seller_Type_is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Company_Type__c == &apos;Seller&apos;, 
+ISBLANK(NDC_Seller_Type__c) 
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Seller_Type__c</errorDisplayField>
+        <errorMessage>Seller Type is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Servicing_is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Company_Type__c == &apos;Airline&apos;, 
+ISBLANK(TEXT(NDC_Servicing__c)) 
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Servicing__c</errorDisplayField>
+        <errorMessage>Servicing is Mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Type_of_CC_is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Company_Type__c == &apos;Airline&apos;, 
+ISBLANK(NDC_Type_of_CC_Accepted__c), 
+INCLUDES(NDC_Forms_of_Payment_Accepted__c, &apos;Credit Cards&apos;) 
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Type_of_CC_Accepted__c</errorDisplayField>
+        <errorMessage>If &quot;Credit Cards&quot; is selected in Forms of Payment accepted, the field Type of Credit Cards accepted is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Type_of_Connectivity_is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Company_Type__c == &apos;Seller&apos;, 
+ISBLANK(TEXT(NDC_Type_of_Connectivity__c)) 
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Type_of_Connectivity__c</errorDisplayField>
+        <errorMessage>Type of Connectivity is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NDC_Types_of_Fares_is_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISNEW()), 
+Company_Type__c == &apos;Airline&apos;, 
+ISBLANK(NDC_Types_of_Fares__c) 
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Types_of_Fares__c</errorDisplayField>
+        <errorMessage>Types of Fares is Mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Verify_Account_Record_Type</fullName>
+        <active>true</active>
+        <description>For an account to be NDC Capable, its record type must be either Airline Headquarters or Operator (for Airlines), IATA Agency or Non-IATA Agency (for Sellers) or Others (for Aggregators)</description>
+        <errorConditionFormula>AND(
+NDC_Capable__c  = true,
+Account_Role_Service__r.Account_Role__r.Account__r.RecordType.DeveloperName != &apos;IATA_Airline&apos;,
+Account_Role_Service__r.Account_Role__r.Account__r.RecordType.DeveloperName != &apos;IATA_Agency&apos;,
+Account_Role_Service__r.Account_Role__r.Account__r.RecordType.DeveloperName != &apos;Non_IATA_Agency&apos;,
+Account_Role_Service__r.Account_Role__r.Account__r.RecordType.DeveloperName != &apos;Others&apos;
+)</errorConditionFormula>
+        <errorDisplayField>NDC_Capable__c</errorDisplayField>
+        <errorMessage>For an account to be NDC Capable, its record type must be either Airline Headquarters or Operator (for Airlines), IATA Agency or Non-IATA Agency (for Sellers) or Others (for Aggregators)</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

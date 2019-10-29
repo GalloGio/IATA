@@ -1,0 +1,239 @@
+<template>
+
+    <div class="slds-theme_shade customCard">
+        <template if:false={loading}>
+            <div class="slds-text-align_center slds-p-top_xx-large">
+                <h1 class="text-large text-bold">{label.csp_SupportReachUs_IntentionOnThisPage}</h1>
+                <h2 class="text-xsmall">{label.csp_SupportReachUs_ChooseOption}</h2>
+            </div>
+            <div class="slds-p-around_xx-large">
+                <div class="slds-grid grid-margin-bottom-justified slds-wrap">
+                    <div onclick={tileClickHandler} data-id="001" class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
+                                    slds-medium-size_1-of-3 slds-large-size_1-of-8 
+                                    slds-m-horizontal_small active_panel cursorPointer">
+                        <div class="slds-p-top_large noPointerEvents">
+
+                            <img class="questionIcon" src={question_selected} if:true={isQuestion} />
+                            <img class="questionIcon" src={question_unselected} if:false={isQuestion} />
+                        </div>
+                        <div class="slds-p-top_large text-xsmall text-bold noPointerEvents">
+                            {label.csp_SupportReachUs_Ask_Label}
+                        </div>
+                    </div>
+                    <div onclick={tileClickHandler} data-id="002" class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
+                                    slds-medium-size_1-of-3 slds-large-size_1-of-8 
+                                    slds-m-horizontal_small default_panel customCard cursorPointer">
+                        <div class="slds-p-top_large noPointerEvents">
+                            <!-- <lightning-icon icon-name="utility:password" size="small"
+                                class="tileNewServiceIcon slds-current-color">
+                            </lightning-icon> -->
+                            <img class="questionIcon" src={concern_selected} if:true={isConcern} />
+                            <img class="questionIcon" src={concern_unselected} if:false={isConcern} />
+                        </div>
+                        <div class="slds-p-top_large text-xsmall text-bold noPointerEvents">
+                            {label.csp_SupportReachUs_Concern_Label}
+                        </div>
+                    </div>
+                    <div onclick={tileClickHandler} data-id="003" class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
+                                    slds-medium-size_1-of-3 slds-large-size_1-of-8 
+                                    slds-m-horizontal_small default_panel customCard cursorPointer">
+                        <div class="slds-p-top_large noPointerEvents">
+                            <!-- <lightning-icon icon-name="utility:task" size="small"
+                                class="tileNewServiceIcon slds-current-color">
+                            </lightning-icon> -->
+                            <img class="questionIcon" src={compliment_selected} if:true={isCompliment} />
+                            <img class="questionIcon" src={compliment_unselected} if:false={isCompliment} />
+                        </div>
+                        <div class="slds-p-top_large text-xsmall text-bold noPointerEvents">
+                            {label.csp_SupportReachUs_Compliment_Label}
+                        </div>
+                    </div>
+                    <!--div onclick={tileClickHandler} data-id="004"
+                                    class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
+                                    slds-medium-size_1-of-3 slds-large-size_1-of-8 
+                                     slds-m-horizontal_small default_panel customCard cursorPointer">
+                                    <div class="slds-p-top_large noPointerEvents">
+                                        <lightning-icon icon-name="utility:display_text" size="small"
+                                            class="tileNewServiceIcon slds-current-color">
+                                        </lightning-icon>
+                                    </div>
+                                    <div class="slds-p-top_xx-large text-xsmall text-bold noPointerEvents">
+                                        {label.csp_SupportReachUs_Suggest_Label}
+                                    </div>
+                                </div-->
+                </div>
+            </div>
+        </template>
+        <template if:false={isCompliment}>
+            <div class="customWhiteBackground">
+
+                <template if:true={showRecentCasesList}>
+                    <div class="recentCasesMargin">
+                        <c-recent-cases home-page = false special-case oncheckemptylist={hideRecentCasesList}></c-recent-cases>
+                    </div>
+                </template>
+
+                <div class="slds-text-align_center slds-p-top_xx-large">
+                    <h1 class="text-medium text-bold">{label.csp_SupportReachUs_SupportCategoriesInfo}</h1>
+                    <h2 class="text-xsmall slds-p-top_medium">{label.csp_SupportReachUs_ActionIndicator}</h2>
+                </div>
+                <div class="slds-align_absolute-center slds-p-bottom_xx-large">
+                    <div class="slds-large-size_4-of-7 slds-medium-size_2-of-3 slds-small-size_1-of-1">
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large category">
+                            <p class="text-xxsmall">{label.csp_SupportReachUs_Category}</p>
+                            <lightning-combobox name="progress"
+                                class="cursorPointerComboBox text-xxsmall customPickList"
+                                label={label.csp_SupportReachUs_ActionForCategoryPicklist} value={category}
+                                options={categoryOptions} dropdown-alignment="auto" onchange={categoryHandler}
+                                placeholder=" ">
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large topic" if:true={topicCB}>
+                            <p class="text-xxsmall">{label.csp_SupportReachUs_Topic_Label}</p>
+                            <lightning-combobox name="progress"
+                                class="cursorPointerComboBox text-xxsmall customPickList"
+                                label={label.csp_SupportReachUs_ActionForTopicPicklist} value={topic}
+                                options={topicOptions} dropdown-alignment="auto" onchange={topicHandler}
+                                placeholder=" ">
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large subtopic" if:true={subTopicCB}>
+                            <p class="text-xxsmall">{label.csp_SupportReachUs_Sub_Topic_Label}</p>
+                            <lightning-combobox name="progress"
+                                class="cursorPointerComboBox text-xxsmall customPickList"
+                                label={label.csp_SupportReachUs_toSelectSubTopicPicklist} value={subTopic}
+                                placeholder=" " dropdown-alignment="auto" options={subTopicOptions}
+                                onchange={subTopicHandler} data-id="topicCB">
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_xx-large country  " if:true={countryCB}>
+                            <p class="text-xxsmall">{label.csp_SupportReachUs_Country_Label}</p>
+                            <lightning-combobox name="progress"
+                                class="cursorPointerComboBox text-xxsmall customPickList "
+                                label={label.csp_SupportReachUs_CountryOrRegionIndicator} value={countryValue}
+                                placeholder=" " dropdown-alignment="auto" options={countryOptions}
+                                onchange={countryHandler}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-checkbox slds-p-bottom_xx-large slds-align_absolute-center emergency "
+                            if:true={emergencyButton}>
+                            <input type="checkbox" name="options" id="checkbox" value={isEmergency}
+                                onchange={handleEmergency} />
+                            <label class="slds-checkbox__label" for="checkbox">
+                                <span class="slds-checkbox_faux cursorPointer slds-m-right_xx-small"></span>
+                                <span class="text-xxsmall slds-p-horizontal_x-small">
+                                    {label.csp_SupportReachUs_IsEmergency}
+                                </span>
+                            </label>
+                        </div>
+                        <div class="slds-p-bottom_xx-large slds-p-top_large slds-align_absolute-center text-xsmall options "
+                            if:true={optionsButton}>
+                            <lightning-button onclick={supportOptionsHandler}
+                                label={label.csp_SupportReachUs_btn_Support_Label}
+                                class="containedButton cursorPointer">
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="endOfReachUs"></div>
+        </template>
+        <template if:true={isCompliment}>
+            <template if:true={showModal}>
+                <div class="slds-backdrop slds-backdrop_open">
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                        aria-describedby="modal-content-id-1"
+                        class="slds-modal slds-fade-in-open slds-text-align_center">
+                        <div class="dot-white overlap-top-center">
+                            <div class="dot-lightgreen">
+                                <div class="dot-white-medium dot-allign">
+                                    <div class="dot-green">
+                                        <div class="dot-white-small dot-allign">
+                                            <lightning-icon icon-name="utility:check" variant="success"
+                                                alternative-text="Approved" size="medium"
+                                                class="dot-allign slds-current-color success-variant">
+                                            </lightning-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-modal__container customCreateCaseModal">
+                            <div class="slds-p-top_xx-large">
+                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate 
+                                slds-align_absolute-center slds-p-top_xx-large text-bold">
+                                    {label.csp_SupportReachUs_Compliment}
+                                </h2>
+                            </div>
+                            <div class="slds-align_absolute-center slds-p-horizontal_xx-large slds-p-top_small">
+                                <span class="text-xsmall slds-text-align_center 
+                                    slds-p-horizontal_xx-large slds-align_absolute-center text-gray">
+                                    <p>
+                                        {label.csp_SupportReachUs_ComplimentInfo}
+                                    </p>
+                                </span>
+                            </div>
+                            <div class="slds-align_absolute-center slds-m-around_x-large slds-p-top_x-large">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <button class="containedButtonAlt uiButton contactSupport"
+                                            onclick={navigateToSupport}>
+                                            {label.csp_SupportReachUs_GoToSupport}
+                                        </button>
+                                    </div>
+                                    <div class="slds-col">
+                                        <button class="containedButton containedButton-size uiButton contactSupport"
+                                            onclick={navigateToHomepage}>
+                                            {label.csp_SupportReachUs_GoToHomepage}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </template>
+            <div class="customWhiteBackground">
+                <div class="slds-text-align_center slds-p-top_xx-large">
+                    <h1 class="text-medium text-bold">Share a Compliment</h1>
+                    <h2 class="text-xsmall slds-p-top_medium">We're glad to hear your compliments</h2>
+                </div>
+                <div class="slds-align_absolute-center">
+                    <div class="slds-size_1-of-2">
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large ">
+                            <p class="text-xxsmall">{label.csp_SupportReachUs_Country_Label}</p>
+                            <lightning-combobox name="progress" required
+                                class="hideInputLabel cursorPointerComboBox text-xxsmall customPickList"
+                                value={compliment_countryValue} placeholder=" " dropdown-alignment="auto"
+                                options={countryOptions} onchange={compliment_countryHandler}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large ">
+                            <p class="text-xxsmall">{label.csp_caseSubject.fieldApiName}</p>
+                            <p class="text-xxsmall slds-p-bottom_small">
+                                {label.csp_CreateNewCaseMainInputSubLabel}</p>
+                            <lightning-input data-id="subject"
+                                class="hideInputLabel text-xxsmall newRecipientTextInput slds-form-element customTextInput"
+                                required onchange={handleSubject}>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large">
+                            <p class="text-xxsmall">{label.csp_caseDescription.fieldApiName}</p>
+                            <p class="text-xxsmall slds-m-bottom_small">
+                                {label.csp_CreateNewCaseMainInputBoxSubLabel}</p>
+                            <lightning-textarea class="hideInputLabel text-xxsmall heightTextArea customTextArea"
+                                required onchange={handleDescription}>
+                            </lightning-textarea>
+                        </div>
+                        <div class="slds-p-bottom_xx-large slds-p-top_large slds-align_absolute-center text-xsmall">
+                            <lightning-button onclick={submitCompliment} label='Send'
+                                class="containedButton cursorPointer">
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+</template>

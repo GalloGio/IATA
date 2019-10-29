@@ -314,6 +314,17 @@ public virtual class IEC_PageController
 		}
 	}
 
+    public PageReference csPortalCommunityRedirect(){
+       String urlPath;
+       String urlRedirect = '/s/support-reach-us?category=Publications&topic=IATA_Store';
+
+       urlPath = OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.CSP, urlRedirect);
+       
+       PageReference cspPage = new PageReference(urlPath);
+       cspPage.setRedirect(true);
+       return cspPage;
+   }
+
 	public Pagereference logout() 
     {
         PageReference pr;

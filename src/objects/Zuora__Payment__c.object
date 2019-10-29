@@ -48,13 +48,14 @@
 The Payment object holds all of the information about an individual payment, including the payment amount and to which invoices the payment is applied.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Bypass_Trigger_Logic__c</fullName>
         <defaultValue>false</defaultValue>
@@ -282,10 +283,21 @@ The Payment object holds all of the information about an individual payment, inc
         <description>The date when the payment takes effect.</description>
         <externalId>false</externalId>
         <inlineHelpText>The date when the payment takes effect.</inlineHelpText>
-        <label>Effective Date</label>
+        <label>Effective Date (Deprecated)</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Zuora__Effective_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The date when the payment takes effect.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date when the payment takes effect.</inlineHelpText>
+        <label>Effective Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Zuora__External_Id__c</fullName>
@@ -416,12 +428,24 @@ The Payment object holds all of the information about an individual payment, inc
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Zuora__PaymentMethodId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The id of the payment method used for the payment.</description>
+        <externalId>false</externalId>
+        <label>Payment Method Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Zuora__PaymentMethod__c</fullName>
         <deprecated>false</deprecated>
         <description>The display name of the payment method used for the payment.</description>
         <externalId>false</externalId>
         <inlineHelpText>The display name of the payment method used for the payment.</inlineHelpText>
-        <label>Payment Method</label>
+        <label>Payment Method Name</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -440,9 +464,24 @@ The Payment object holds all of the information about an individual payment, inc
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Zuora__Payment_Method__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>The Payment Method that this payment is related to.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The Payment Method that this payment is related to.</inlineHelpText>
+        <label>Payment Method (Deprecated)</label>
+        <referenceTo>Zuora__PaymentMethod__c</referenceTo>
+        <relationshipLabel>Payment</relationshipLabel>
+        <relationshipName>Payment</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Zuora__ReferenceId__c</fullName>
         <deprecated>false</deprecated>
-        <description>The transaction ID returned by the payment gateway. Use this field to reconcile payments between your gateway and Z-Payments.</description>
+        <description>The transaction ID returned by the payment gateway. Use this field to reconcile payments between your gateway and Zuora Payments.</description>
         <externalId>false</externalId>
         <inlineHelpText>The transaction ID returned by the payment gateway. Use this field to reconcile payments between your gateway and Z-Payments.</inlineHelpText>
         <label>Reference ID</label>

@@ -7,7 +7,7 @@
             <publicGroup>IATABrazil</publicGroup>
         </publicGroups>
         <roles>
-            <role>AmericasCustomerServiceManagerA</role>
+            <role>AmericasCustomerServiceManager</role>
         </roles>
     </queueMembers>
     <queueSobject>

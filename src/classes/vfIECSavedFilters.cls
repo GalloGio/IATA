@@ -31,32 +31,21 @@ public without sharing class vfIECSavedFilters {
     
     public void deleteFilter() {
         try {
-        	//String sFilterId = lstSavedFilters.get(iFilterIndex).Id;
-        	//String sParam = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_APPFILTER_ID);
             delete lstSavedFilters.get(iFilterIndex);
             if (ProductLine != null) loadFilters(ProductLine);
             else loadFilters();
 
-			/*if (!String.isBlank(sParam)) {
-				sParam = IECUtil.DecodeDecryptParameter(sParam);
-				if (sParam == sFilterId) {
-					return Page.IECGADAdvanced;
-				}
-			}*/
-            //lstSavedFilters = IECApplicationsManager.LoadFilterByContact(loggedCustomer.RelatedContact.Id, false);
+			
         }
         catch (Exception e) {
         	sErrorMessage = 'Could not delete filter with error: ' + e.getMessage() + e.getStackTraceString();
-           //addErrorMessage('Could not delete filter with error: ' + e.getMessage() + e.getStackTraceString());
         }
-		//return null;
     }
     
     public PageReference runFilter() {
 		Pagereference pgRef = Page.IECGADResult;
 		IEC_Application_Filter__c filter = lstSavedFilters.get(iFilterIndex);
 		pgRef.getParameters().put(IECConstants.PARAM_APPFILTER_ID, IECUtil.EncryptEncodeParameter(filter.Id));
-		//pgRef.getParameters().put(IECConstants.PARAM_APPFILTER_ID, filter.Id);
 		pgRef.setRedirect(true);
 		return pgRef;
     }
@@ -65,7 +54,6 @@ public without sharing class vfIECSavedFilters {
 		Pagereference pgRef = Page.IECGADAdvanced;
 		IEC_Application_Filter__c filter = lstSavedFilters.get(iFilterIndex);
 		pgRef.getParameters().put(IECConstants.PARAM_APPFILTER_ID, IECUtil.EncryptEncodeParameter(filter.Id));
-		//pgRef.getParameters().put(IECConstants.PARAM_APPFILTER_ID, filter.Id);
 		pgRef.setRedirect(true);
 		return pgRef;
     }

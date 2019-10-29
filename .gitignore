@@ -43,7 +43,6 @@ src/applications/standard__Platform.app
 src/applications/standard__LightningSalesConsole.app
 src/applications/standard__LightningService.app
 src/layouts/Macro-Macro Layout.layout
-src/objects/CampaignMember.object
 
 src/profilesApex/Marketing\ User.profile
 src/profilesApex/Standard\ User.profile
@@ -252,7 +251,6 @@ src/profilesObjects/Premier\ Support\ User.profile
 src/profilesObjects/System\ Administrator.profile
 .project
 integration/mosaico
-src/layouts/ContentVersion-General.layout
 src/layouts/ContentVersion-Translations.layout
 src/layouts/Case-Case Layout.layout
 src/layouts/Case-Demo\ only\ for\ dev.layout
@@ -328,6 +326,53 @@ src/queues/ICH_Help_Desk_ICH_Membership.queue
 src/queues/ICH_Help_Desk_ICH_Operations.queue
 src/queues/Cases_Emirates.queue
 src/queues/PCI_Cases_GDC_SIN.queue
+src/queues/RecycleBinAfricaMiddleEast.queue
+src/queues/Asia_Pacific_PwC.queue
+src/queues/CasesACCEuropeOffOnshore.queue
+src/queues/CasesACCEuropeProducts.queue
+src/queues/CasesACCEuropeRisk.queue
+src/queues/CasesAirlinesSCE.queue
+src/queues/CasesInvoicingCIS.queue
+src/queues/OtherAll.queue
+src/queues/AGM_Internal.queue
+src/queues/Cases_Agent_Financial_Review.queue
+src/queues/Cases_CNS.queue
+src/queues/Communications_Web_uploads_Americas.queue
+src/queues/CustomerServiceAmericas.queue
+src/queues/EF.queue
+src/queues/RecycleBinAmericas.queue
+src/queues/RecycleBinAsiaPacific.queue
+src/queues/RecycleBinEurope.queue
+src/queues/RecycleBinOperationalManagementHO.queue
+src/queues/RecyclebinNorthAsia.queue
+src/queues/AGM_Internal.queue
+src/queues/CasesBolivia.queue
+src/queues/CasesBrazil.queue
+src/queues/CasesCanada.queue
+src/queues/CasesCentralAmerica.queue
+src/queues/CasesChile.queue
+src/queues/CasesColombia.queue
+src/queues/CasesEasternCaribbean.queue
+src/queues/CasesEcuador.queue
+src/queues/CasesMexico.queue
+src/queues/CasesPeru.queue
+src/queues/CasesUnitedStates.queue
+src/queues/CasesVenezuela.queue
+src/queues/CasesWesternCaribbean.queue
+src/queues/Cases_Agent_Financial_Review.queue
+src/queues/Cases_Americas_Airlines.queue
+src/queues/AgencyManagementChinaNAsia.queue
+src/queues/CustomerServiceChinaNAsia.queue
+src/queues/Weblinkheadoffice.queue
+
+
+src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_com.md
+src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_fr.md
+src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_gq.md
+src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_net.md
+src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_pp_ua.md
+src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_usa_cc.md
+
 *.sublime-project
 *.sublime-settings
 *.sublime-workspace

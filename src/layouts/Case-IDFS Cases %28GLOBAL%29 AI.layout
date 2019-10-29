@@ -6,6 +6,8 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Change_Routing</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
+    <customButtons>unbabelsc__Unbabel_Translate_Case</customButtons>
+    <customButtons>Translate_Last_Customer_Comment</customButtons>
     <customConsoleComponents>
         <subtabComponents>
             <containers>
@@ -38,7 +40,6 @@
         </subtabComponents>
     </customConsoleComponents>
     <emailDefault>false</emailDefault>
-    <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -47,6 +48,13 @@
         <editHeading>false</editHeading>
         <label>Description Information</label>
         <layoutColumns>
+            <layoutItems>
+                <height>45</height>
+                <page>DetailPageMessageClassicCase</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>50%</width>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Case_Remarks__c</field>
@@ -58,6 +66,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Description</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>unbabelsc__Unbabel_Language__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>unbabelsc__Unbabel_Translated_Description__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -117,6 +133,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SuppliedEmail</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SuppliedPhone</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -495,6 +515,10 @@
         <fields>EndTime</fields>
         <fields>Status</fields>
         <relatedList>RelatedLiveChatTranscriptList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Case_Detail__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

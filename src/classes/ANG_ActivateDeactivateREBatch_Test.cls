@@ -24,6 +24,28 @@ public class ANG_ActivateDeactivateREBatch_Test{
 			Identifier__c = 'Risk_Status_Upgrade'
 		);
 
+		Notification_Template__c nt = new Notification_Template__c();
+        
+                nt.Identifier__c ='Risk_Information_Update';
+                nt.Language__c ='English';
+                nt.Subject__c ='Risk Information Update';
+                nt.Type__c ='Information';
+                nt.Notification_color__c ='#007FFF';
+                nt.Expire_in_days__c =180;
+                nt.Admins_Users__c ='Administrators';
+                nt.Message__c = 
+        'We would like to inform you that your Risk Status has been updated. '+
+        'Your risk information now stands as follow:'+
+        '<br><br>Risk Status: #RISK_STATUS#'+
+        '<br>Cash conditions limited to Financial Security: #CASH_CONDITION#'+
+        '<br>RHC Amount: #RHC_AMOUNT#'+
+        '<br>RHC Effective Date: #RHC_EFFECTIVE_DATE#'+
+        '<p>Please check more details on the RHC Information page.'+
+        '<br>Thank you</p>'+
+        '<p>IATA – Global Delivery Center</p>';
+         
+        insert nt;
+
 		insert new AMS_ChangeCodes__c(Name = 'UpgradedRisk', Change_Code__c = 'UGR', Integration_RecId__c = 'C', Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Card payment methods are reinstated.');
 
 		ANG_Agency_Risk_Calculation__c calcA = new ANG_Agency_Risk_Calculation__c(RecordTypeId = ANG_Risk_Helper.RECTYPE_RISKSTATUSASSESSMENT, ANG_Financial_Review_Result__c = null, ANG_Risk_History_Assessment__c = AMS_Utils.PASSED, ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_A, ANG_Limit_Cash_Condition__c = false);
@@ -49,9 +71,9 @@ public class ANG_ActivateDeactivateREBatch_Test{
 		insert new List<IATA_ISO_Country__c>{isoCntr1, isoCntr2, isoCntr3};
 
 		//Account
-		Account acc1= new Account(Name='Acc1', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr1.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C);
-		Account acc2= new Account(Name='Acc2', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr2.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C);
-		Account acc3= new Account(Name='Acc3', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr3.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C);		
+		Account acc1= new Account(Name='Acc1', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr1.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C, Reason__c = '21-NEW APPLICATION');
+		Account acc2= new Account(Name='Acc2', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr2.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C, Reason__c = '21-NEW APPLICATION');
+		Account acc3= new Account(Name='Acc3', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr3.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C, Reason__c = '21-NEW APPLICATION');		
 		insert new List<Account>{acc1, acc2, acc3};
 
 		
@@ -87,6 +109,15 @@ public class ANG_ActivateDeactivateREBatch_Test{
 		Test.startTest();
 
 		Account acc2 =[select id from account where name='Acc2'];
+
+		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
+			ANG_AccountId__c = acc2.Id,
+			CurrencyIsoCode = 'EUR',
+			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO
+		);
+
+		insert rhcInfo;
+
 		Contact c = new Contact(FirstName = 'test', LastName = 'test', AccountId = acc2.Id, User_Portal_Status__c = 'Approved Admin', Email = 'testiata@yopmail.com');
 		insert c;
 

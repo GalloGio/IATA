@@ -152,7 +152,14 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 	public List<SelectOption> getBankOptions() {
 		List<SelectOption> banksListOptions = new List<SelectOption>();
 
-		List<Financial_Institution__c> countryBanksList = [SELECT Id, Name FROM Financial_Institution__c WHERE Country__c = :selectedCountrySurvey AND Institution_Type__c = 'Bank' AND (NOT Name LIKE '*%') ORDER BY Name LIMIT 999];
+		List<Financial_Institution__c> countryBanksList = [
+			SELECT Id, Name
+			FROM Financial_Institution__c 
+			WHERE RecordType.DeveloperName = 'Currency_Center_Bank'
+			AND Country__c = :selectedCountrySurvey
+			AND Institution_Type__c = 'Bank' 
+			AND (NOT Name LIKE '*%')
+			ORDER BY Name LIMIT 999];
 
 		if(!countryBanksList.isEmpty()) {
 			Set<String> bankNames = new Set<String>();
@@ -548,8 +555,7 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 		Set<Id> countryManagerEmailList = new Set<Id>();
 
 		List<String> managerNameList = new List<String>();
-		System.debug('query country ' + [SELECT Id, Name, Country_Manager__c FROM IATA_ISO_Country__c WHERE Name IN :wccsObjectMap.keySet() LIMIT 999]);
-		for(IATA_ISO_Country__c country: [SELECT Id, Name, Country_Manager__c FROM IATA_ISO_Country__c WHERE Name IN :wccsObjectMap.keySet() LIMIT 999]) {
+		for(IATA_ISO_Country__c country: IATAIsoCountryDAO.getIsoCountryByCountriesName(wccsObjectMap.keySet())) {
 			if(country.Country_Manager__c != null) {
 
 				countryManagerEmailList.add(country.Country_Manager__c);
@@ -988,7 +994,10 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 		String key = buildReportTypeMapKey('Blocked Amount', countryCurrency);
 
 		Decimal tempPercentage = 0;
-		
+
+		// ICCS value
+		wccsObject.typeReportMap.get(key).ICCS__c = null;
+
 		for(Currency_Center_Survey__c typeOper: wccsObject.typeOfOperationsMap.get(key)) {
 
 			//count the total percentage value
@@ -997,7 +1006,7 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 				tempPercentage += typeOper.Type_Of_Operations_Percentage__c;
 			}
 
-			if(typeOper.Type_of_Operations__c != null && typeOper.Type_of_Operations__c.equals('ICCS') && typeOper.Type_Of_Operations_Percentage__c < 100 && typeOper.Type_Of_Operations_Percentage__c > 0) {
+			if(typeOper.Type_of_Operations__c != null && typeOper.Type_of_Operations__c.equals('ICCS') && typeOper.Type_Of_Operations_Percentage__c <= 100 && typeOper.Type_Of_Operations_Percentage__c >= 0) {
 				System.debug(typeOper);
 				wccsObject.typeReportMap.get(key).ICCS__c = String.valueOf(typeOper.Type_Of_Operations_Percentage__c);
 				errorMessage = false;
@@ -1082,7 +1091,20 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 	public List<Currency_Center_Survey__c> 	bankResult 											{ get; set; }
 	public List<Currency_Center_Survey__c> 	typeOfOperationsResult 								{ get; set; }
 	public Map<String, Country_Profile__c>	countriesProfileIdMap								{ get; set; }
-	public Map<String, IATA_ISO_Country__c>	iataIsoCountryMap									{ get; set; }
+
+
+	public static Map<String, IATA_ISO_Country__c>	iataIsoCountryMap{ 
+		get{
+			if(iataIsoCountryMap == null){
+				iataIsoCountryMap = new Map<String, IATA_ISO_Country__c>();
+				for(IATA_ISO_Country__c countryObj: IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')) {
+					iataIsoCountryMap.put(countryObj.Name, countryObj);
+				}
+			}
+			return iataIsoCountryMap;
+		}
+	}
+
 	public String 							countriesSurveyString 								{ get; set; }
 
 	public void loadAll() {
@@ -1134,13 +1156,6 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 
 		for(Country_Profile__c countryObj: countriesProfileList) {
 			countriesProfileIdMap.put(countryObj.Id, countryObj);
-		}
-
-		//inicialize the map of countries
-		iataIsoCountryMap = new Map<String, IATA_ISO_Country__c>();
-
-		for(IATA_ISO_Country__c countryObj:  [SELECT ID, Name, CurrencyIsoCode FROM IATA_ISO_Country__c ORDER BY Name ASC]) {
-			iataIsoCountryMap.put(countryObj.Name, countryObj);
 		}
 	}
 

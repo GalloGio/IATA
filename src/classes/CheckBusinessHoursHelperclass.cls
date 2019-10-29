@@ -44,7 +44,6 @@ public with sharing class CheckBusinessHoursHelperclass {
             }
         }
         if (!ListOfKaleCases.isEmpty()){
-            system.debug('##ROW##');
             for (Case cObj: [Select id, CaseNumber, External_Reference_Number__c, Kale_Status__c, Description from Case where CaseNumber in : ListOfKaleCases]){
                 KaleCases.put(cObj.CaseNumber, cObj);
             }
@@ -63,7 +62,7 @@ public with sharing class CheckBusinessHoursHelperclass {
         for (Case newCaseObj: listNewCases){
             if (newCaseObj.CaseArea__c != null && newCaseObj.CaseArea__c == Label.SIS && newCaseObj.Status == Label.Escalated && (newCaseObj.Assigned_To__c != Label.SIS_Help_Desk_Agent 
                   && newCaseObj.Assigned_To__c != Label.SIS_Operations && newCaseObj.Assigned_To__c != Label.SIS_L2_Customer_Support)){
-                //modified July 2014 to lower SOQL queries
+                
                 Account theAccount = CBHAccountMap.get(newCaseObj.Assigned_To__c);
                 if (theAccount <> null){
                     system.debug('\nnewCaseObj.Assigned_To__c:_' + newCaseObj.Assigned_To__c + '_');
@@ -118,7 +117,7 @@ public with sharing class CheckBusinessHoursHelperclass {
                     || (newCaseObj.CaseArea__c == Label.ICH && newCaseObj.RecordTypeId == sisHelpDeskCaseRecordTypeID) 
                     || (newCaseObj.description != null && newCaseObj.description.contains(Label.Case_Area_ICH))){
                 //kareem ich get priority list
-                if (isPM_ICH_Not_Initialized){
+                if (isPM_ICH_Not_Initialized){ //Only do once
                     //Initialisation of variables needed for Before Insert           
                     priorityMappingListICH = [SELECT Case_Classification__c, Case_Type__c, Case_Reason__c, Priority__c FROM Priority_Mapping__c WHERE Application__c = : Label.ICH_Help_Desk];
                     isPM_ICH_Not_Initialized = false;
@@ -280,7 +279,6 @@ public with sharing class CheckBusinessHoursHelperclass {
                         if (parentCaseNumber.isEmpty()){
                             parentCaseNumber = [Select c.id, Kale_Status__c, c.CaseNumber, c.Subject, ownerid, SuppliedEmail From Case c where c.RecordTypeId != null
                                     and c.RecordTypeId = : sisHelpDeskCaseRecordTypeID and c.SuppliedEmail != null and c.Origin != null and c.Subject != null  
-                                    //and (owner.name like '%SIS Help Desk%')
                                     and c.ownerid != null and c.Origin = :Label.E_mail_to_Case_IS_Help_Desk];
                             if (!parentCaseNumber.isEmpty()){
                                 for (Case thisCase: parentCaseNumber){

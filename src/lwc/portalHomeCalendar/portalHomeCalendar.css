@@ -1,0 +1,78 @@
+.eventDot {
+    height: 8px;
+    width: 8px;
+    background-color: #000;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.billingAvailabilityEvent{
+    background-color: blueviolet;
+}
+
+.remittanceEvent{
+    background-color: #f050c8;
+}
+
+.settlementEvent {
+    background-color: #289632;
+
+}
+.airlineUploadEvent {
+    background-color: #4B5BFB;
+}
+
+.airlineCorrectionEvent {
+    background-color: #333333;
+}
+
+.agentCorrectionEvent {
+    background-color: #A5ADFD;
+}
+
+.CASSReportsEvent {
+    background-color: #FAC832;
+}
+
+.dayBoxSize{
+    width: 100%;
+    height:25px;
+}
+
+.selectedDay{
+    border: 2px solid #363ffb;
+    border-radius: 1px;
+    background-color: #363ffb;
+    color:white;
+}
+
+.selectedDayNotHighlighted{
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+.lightGrayBackgorund{
+    background-color:#f7f8fa;
+}
+
+.weekdayBar {
+    height: 40px;
+}
+
+.selectedDayBar {
+    height: 82px;
+    background-color:#f7f8fa;
+}
+
+.eventsList {
+    height: 160px;
+}
+
+.cardBodyContent {
+    height: 318px; 
+    overflow: hidden;
+}
+
+.eventClassNameContainer {
+    height: 12px;
+}

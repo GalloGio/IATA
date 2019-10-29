@@ -16,6 +16,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Location_Class__c</fullName>
+        <description>Account Location_Class value, comma separated</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Use keyword &quot;All&quot; to select all Location Classes</inlineHelpText>
+        <label>Location Class</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Recordtype__c</fullName>
         <description>Account Developer Name</description>
         <externalId>false</externalId>

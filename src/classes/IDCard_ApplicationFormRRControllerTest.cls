@@ -48,8 +48,8 @@ private class IDCard_ApplicationFormRRControllerTest {
         
         insert idCardAppToInsert;
         
-        Id contactId1 = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[5]);
-        Id contactId2 = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[6]);       
+        Contact contactId1 = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[5]);
+        Contact contactId2 = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[6]);       
        	
         // Test page without cookies
         PageReference controllerPage_NoCookies = Page.IDCard_ApplicationForm_RR;
@@ -88,13 +88,10 @@ private class IDCard_ApplicationFormRRControllerTest {
         controllerPageReissue.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[6].VER_Number__c)); 
         controllerPageReissue.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter('1'));                                      
     	Test.setCurrentPage (controllerPageReissue);  
-    	
-        // 
+    	 
         iDCard_ApplicationFormRRControllerReissue = new iDCard_ApplicationFormRRController();
 		
-       	//IDCardUtil.CreateIDCardApplicationCase(testData.IDCards_IDCardApplications[5], testData.IDCard_Accounts[0],true);       
-        //IDCardUtil.CreateIDCardApplicationCase(testData.IDCards_IDCardApplications[6], testData.IDCard_Accounts[0],true); 
-        List<Contact> relatedContact = [SELECT Id, LastName, FirstName, VER_Number__c FROM Contact WHERE Id IN (:contactId1, :contactId2)];  
+        List<Contact> relatedContact = [SELECT Id, LastName, FirstName, VER_Number__c FROM Contact WHERE Id IN (:contactId1.id, :contactId2.id)];  
         
         List<ID_Card__c> idCardToInsert = new List<ID_Card__c>();
        	

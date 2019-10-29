@@ -6,9 +6,11 @@ global without sharing class Comm_User_Helper {
   public static final string CNS = 'CNS';
   public static final String ONEIDENTITY = 'IDENTITY';
   public static final string FRED = 'FRED';
+  public static final string NDCMM = 'NDCMM';
   public static final string SEPARATOR = '@#@#@#';
   public static final string KEYTODECODE = 'Kg0m2vAj4VmBBviGAUehrw==';
   public static final string plusReplacer = '@@##';
+  public static final string WILDCARD = 'ALL';
 
   public static String EncryptString( String str) {
         Blob dataToEncrypt = Blob.valueOf(str);
@@ -160,7 +162,7 @@ global without sharing class Comm_User_Helper {
         String link ;
         String cleanUsername = u.userName.replace('+', plusReplacer);
 
-        if(community == ISSP || community == CNS || community == ONEIDENTITY || community == FRED){
+        if(community == ISSP || community == CNS || community == ONEIDENTITY || community == FRED || community == NDCMM){
             
             if (lang != null && lang != ''){
                 system.debug('LANG IN CREATE USER: ' + lang);
@@ -180,7 +182,7 @@ global without sharing class Comm_User_Helper {
                 String template ='';
                 Map<String,String> emailWrap = new Map<String,String>();
 
-                if(community == ISSP || community == ONEIDENTITY || community == FRED ){
+                if(community == ISSP || community == ONEIDENTITY || community == FRED  || community == NDCMM ){
                     link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?' + encodedPart;
 
                     if(community == ISSP){
@@ -189,6 +191,9 @@ global without sharing class Comm_User_Helper {
                     }else if(community == FRED){
                         template = 'Identity_Portal_FRED_New_User';            
                         link += '&serviceName=FRED';
+                    }else if(community == NDCMM){
+                        template = 'Identity_Portal_FRED_New_User';            
+                        link += '&serviceName=NDCMM';
                     }
                     else {
                       template = 'Identity_Portal_New_User';
@@ -198,12 +203,9 @@ global without sharing class Comm_User_Helper {
                     emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link,Comm_User_Helper.ONEIDENTITY, community); 
 
                 }else if(community == 'CNS'){
-                    link = Site.getBaseUrl()+ '/ISSP_First_Login?communityName=CNS&'+encodedPart;
-                    template = 'ISSP_New_Member_Welcome_Email_2_CNS'; 
-                    emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'CNS');                   
+                    link = Site.getBaseUrl()+ '/ISSP_First_Login?communityName=CNS&'+encodedPart; template = 'ISSP_New_Member_Welcome_Email_2_CNS';  emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'CNS');                   
                 }
-                Comm_User_Helper.sendEmail( template ,emailWrap, con, community);
-                permissionASS(new list<Id>{userId});
+                Comm_User_Helper.sendEmail( template ,emailWrap, con, community); permissionASS(new list<Id>{userId});
             }
         
         }else if(community == IEC){
@@ -233,7 +235,7 @@ global without sharing class Comm_User_Helper {
             }
 
         }
-        
+        addDefaultAppRights(con,con.Account);
 
         return userId;
         
@@ -248,11 +250,62 @@ global without sharing class Comm_User_Helper {
     
     
     }
-    
 
+    /**
+        Add application rights to the input contact based on the custom metadata
+        Portal_Application_Setting__mdt
+        Only to the first contact added to an account
+    **/
+    public static void addDefaultAppRights(Contact contact, Account account) {
+        try {
+            if (account==null) {
+                account = [SELECT Id,Sector__c,Category__c 
+                    FROM Account
+                    WHERE Id = :contact.AccountId];
+                contact.Account = account;
+            }
 
+            list<Contact> listOtherContacts = [
+                SELECT Id FROM Contact
+                WHERE AccountId = :account.Id
+                AND Id != :contact.Id];
+            //if the account has no other contacts it means that current contact is the first one
+            // so we try to add permission to the applications (if needed)
+            if (listOtherContacts.isEmpty()) {
+                // Find app names with Auto Grant Service
+                list<String> listAppNames = new list<String>();
+                for (Portal_Application_Setting__mdt setting: [
+                        SELECT id, MasterLabel,
+                            (SELECT Sector__c, Category__c
+                            FROM Portal_Application_Visibilities__r
+                            WHERE Auto_grant_service__c = true
+                            AND Sector__c = :account.Sector__c
+                            AND Category__c IN (:account.Category__c,:WILDCARD))
+                        FROM Portal_Application_Setting__mdt]) {
+                    if (setting.Portal_Application_Visibilities__r.size()>0) {
+                        listAppNames.add(setting.MasterLabel);
+                    }
+                }
 
+                // give right to all found apps
+                list<Portal_Application_Right__c> listAppRight = new list<Portal_Application_Right__c>();
+                for ( Portal_Applications__c app: [SELECT Id FROM Portal_Applications__c WHERE Name IN :listAppNames]) {
+                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+                    newRight.Contact__c = contact.Id;
+                    newRight.Portal_Application__c = app.Id;
+                    newRight.Right__c = 'Access Granted';
+                    listAppRight.add(newRight);
+                }
 
+                //insert rights
+                if (!listAppRight.isEmpty()) {
+                    insert listAppRight;
+                }
+            }
+        } catch (Exception e) {
+            System.debug('ERROR in Comm_User_Helper.addDefaultAppRights, couldn\'t create app rights for ' + contact + ':\n ' + e.getMessage());
+        }
+    }
 
     public static  Map<String, String> IEC_builMessageWrapper(contact con , string password , string link){
         Map<String, String> mapBodyParamsIssp = new map<String,String>{
@@ -292,11 +345,7 @@ global without sharing class Comm_User_Helper {
                 // Build the header image URL from the document information
               imageURL = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+doc[0].id+'&oid='+userinfo.getorganizationid();            
             // If there is a service name, that should determine the community name
-            if(!String.isBlank(serviceName)) {
-                communityName = serviceName;
-                if(serviceName == 'FRED'){
-                    communityName += '+';
-                }
+            if(!String.isBlank(serviceName)) { communityName = serviceName; if(serviceName == 'FRED'){ communityName += '+'; }
             }
             else communityName = 'Identity';
         }
@@ -343,15 +392,7 @@ global without sharing class Comm_User_Helper {
         if (bccCS){
             String bccEmail = UserInfo.getUserEmail();
             system.debug('bccEmail: ' + bccEmail);
-            ew = new EmailMessageWrapper( noreplyemail,
-                                            con.Email,
-                                            null,
-                                            bccEmail,
-                                            null,
-                                            new map<string,string>(),
-                                            null,
-                                            mapBodyParamsIssp
-                                            );
+            ew = new EmailMessageWrapper( noreplyemail, con.Email, null, bccEmail, null,  new map<string,string>(), null, mapBodyParamsIssp );
         }
         else{
             

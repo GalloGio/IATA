@@ -6,6 +6,7 @@
     <queueMembers>
         <publicGroups>
             <publicGroup>GCS_L1L2_Queues_Members</publicGroup>
+            <publicGroup>GCSBIS</publicGroup>
         </publicGroups>
     </queueMembers>
     <queueSobject>

@@ -129,7 +129,7 @@ public without sharing class AMS_OSCAR_Savepoint implements Queueable {
 	private List<Technical_Logs__c> createOwnersSavepoint() {
 		List<Technical_Logs__c> result = new List<Technical_Logs__c>();
 		Set<Id> accountIds = mapAccountIdToOscarId.keySet();
-		Id ownerRTId = AMS_Utils.AccountRoleOwnershipRT;
+		Id ownerRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		
 		List<String> fieldsStr = new List<String>();
 

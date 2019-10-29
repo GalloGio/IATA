@@ -1,0 +1,11 @@
+Dear {!IATA_Process_Orchestrator_Step_Action__c.Approver__c}, 
+
+There is a new code request for your approval. 
+
+Case:{!IATA_Process_Orchestrator_Step_Action__c.Associated_Case__c} 
+Account: {!IATA_Process_Orchestrator_Step_Action__c.Account__c} 
+Subject: {!IATA_Process_Orchestrator_Step_Action__c.Subject__c} 
+
+Please click in the link to access the case detail and the approval page: {!IATA_Process_Orchestrator_Step_Action__c.Link} 
+
+Best Regards

@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fieldSets>
         <fullName>ISSP_Available_Services</fullName>
         <description>ISSP_Available_Services</description>
@@ -529,6 +530,16 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <visibleLines>25</visibleLines>
     </fields>
     <fields>
+        <fullName>GDPR_PrivacyStatement__c</fullName>
+        <description>URL to privacy statement (document or web page) for each service</description>
+        <externalId>false</externalId>
+        <label>GDPR_PrivacyStatement</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>GSA__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -719,7 +730,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
-&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;Risk Profile and RHC&quot;, IF($User.ANG_Customer_Country_ISO__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
 &quot;ICCS&quot;,&quot;ICCS&quot;,
 Name 
 )</formula>
@@ -745,32 +756,67 @@ Name
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Service_Description__c</fullName>
+        <fullName>Service_Description_List_A__c</fullName>
+        <description>Contains first portion of Portal Services Description Labels</description>
         <externalId>false</externalId>
-        <formula>CASE( Name ,
-&quot;BSPLink&quot;, $Label.BSPLink_Description,
-&quot;CassLink&quot;, $Label.CASSLink_Description,
+        <formula>CASE(Name , 
+&quot;BSPLink&quot;, $Label.BSPLink_Description, 
+&quot;CassLink&quot;, $Label.CASSLink_Description, 
 &quot;E-Bulletin&quot;, $Label.ISSP_EBulletin_Description, 
-&quot;IFAP&quot;, $Label.IFAP_Description,
-&quot;Join BSP / CASS&quot;, $Label.ISSP_Join_BSP_CASS_Description,
-&quot;BSP / CASS Change Request&quot;, $Label.ISSP_Change_Request_Description,
-&quot;BSP / CASS Change of Bank details&quot;, $Label.ISSP_AP_Bank_Details_Change_Description,
-&quot;Management Information Report&quot;, $Label.ISSP_MIR_Description,
-&quot;Resource Center&quot;, $Label.ISSP_Resource_Center_Description,
-&quot;Treasury Dashboard&quot;, $Label.ISSP_TD_Description,
-&quot;Simplified Interline Settlement&quot;, $Label.ISSP_SIS_1_Description,
+&quot;IFAP&quot;, $Label.IFAP_Description, 
+&quot;Join BSP / CASS&quot;, $Label.ISSP_Join_BSP_CASS_Description, 
+&quot;BSP / CASS Change Request&quot;, $Label.ISSP_Change_Request_Description, 
+&quot;BSP / CASS Change of Bank details&quot;, $Label.ISSP_AP_Bank_Details_Change_Description, 
+&quot;Management Information Report&quot;, $Label.ISSP_MIR_Description, 
+&quot;Resource Center&quot;, $Label.ISSP_Resource_Center_Description, 
+&quot;Treasury Dashboard&quot;, $Label.ISSP_TD_Description, 
+&quot;Simplified Interline Settlement&quot;, $Label.ISSP_SIS_1_Description, 
 &quot;SIS Help Desk&quot;, $Label.ISSP_SIS_2_Description, 
 &quot;SIS&quot;, $Label.ISSP_SIS_3_Description, 
-&quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description,
-&quot;Paypal&quot;, $Label.ISSP_Payment_Link_Description_CNS,
-&quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace,
+&quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description, 
+&quot;Paypal&quot;, $Label.ISSP_Payment_Link_Description_CNS, 
+&quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace, 
 &quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
 &quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_ICE_Description,
+&quot;Risk Profile and RHC&quot;, IF($User.ANG_Customer_Country_ISO__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
 &quot;&quot;
-      )</formula>
+       )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Service Description List A</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Description_List_B__c</fullName>
+        <description>Second Portion of Service Description Labels</description>
+        <externalId>false</externalId>
+        <formula>CASE(Name , 
+&quot;Risk Profile and RHC&quot;,$Label.ISSP_ANG_RHC_InformationDescription,
+&quot;MSO Management&quot;,$Label.ISSP_AMS_MSO_GSA_MSO_Service_Description,
+&quot;Join SIS e-Invoicing&quot;,$Label.ISSP_SIS_Membership_Description,
+&quot;ICCS&quot;,$Label.ICCS_Service_Description,
+&quot;IATA Code Search&quot;,$Label.ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION,
+&quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Service Description List B</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( NOT(ISNULL(Service_Description_List_A__c))  , Service_Description_List_A__c,
+				IF(NOT(ISNULL(Service_Description_List_B__c)), Service_Description_List_B__c, 
+							&quot;&quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service Description</label>
         <required>false</required>
@@ -912,46 +958,41 @@ Name
     <fields>
         <fullName>Visible__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(OR(Name = &quot;IFG Production&quot;, Name = &quot;IFG Sandbox&quot;),
-$User.IFG_Account_Member__c
-,
-OR( 
-   
-    AND( 
-    Agency__c = true, 
-    $User.Customer_type__c=&quot;Agency&quot; 
-    ), 
-    AND( 
-    VisibleCNS__c= true, 
-    $User.Customer_type__c=&quot;CNS Agency&quot; 
-    ), 
-    AND( 
-    Not_ICH_Airline__c = true, 
-    CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
-    NOT(CONTAINS($User.Customer_type__c,&quot;ICH&quot;)) 
-    ), 
-    AND( 
-    ICH_Airline__c = true, 
-    CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
-    CONTAINS($User.Customer_type__c,&quot;ICH&quot;) 
-    ), 
-    AND( 
-    GSSA__c = true, 
-    CONTAINS($User.Customer_type__c,&quot;GSSA&quot;) 
-    ), 
-    AND( 
-    Name = &quot;Resource Center&quot;, 
-    CONTAINS($UserRole.Name ,&quot;General Public&quot;) 
-    ), 
-    AND( 
-    Others__c = true, 
-    CONTAINS($User.Contact_Account_Record_Type__c  ,&quot;Others&quot;) 
-    ), 
-    AND(Name = &quot;Payment Link&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)), 
-    AND(Name = &quot;Paypal&quot;,$User.CNS_Account_or_Agency__c),
-    AND(Name = &quot;Resource Center&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)),
-    AND(Name = &quot;Transparency in Payments (TIP)&quot;,($User.Is_TIP_User__c))
-)
+        <formula>IF(OR(
+    Name = &quot;IFG Production&quot;, Name = &quot;IFG Sandbox&quot;),
+    $User.IFG_Account_Member__c,
+    OR( 
+        AND(Agency__c = true, 
+            $User.Customer_type__c=&quot;Agency&quot;,
+            NOT(Name = &quot;Access BOP&quot;)), 
+        AND(VisibleCNS__c= true, 
+            $User.Customer_type__c=&quot;CNS Agency&quot;), 
+        AND(Not_ICH_Airline__c = true,
+            Name != &quot;Payment Link&quot;, 
+            CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
+            NOT(CONTAINS($User.Customer_type__c,&quot;ICH&quot;))), 
+        AND(ICH_Airline__c = true, 
+            Name != &quot;Payment Link&quot;, 
+            CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
+            CONTAINS($User.Customer_type__c,&quot;ICH&quot;)), 
+        AND(GSSA__c = true, 
+            CONTAINS($User.Customer_type__c,&quot;GSSA&quot;)), 
+        AND(Name = &quot;Resource Center&quot;, 
+            CONTAINS($UserRole.Name ,&quot;General Public&quot;)), 
+        AND(Others__c = true, 
+            CONTAINS($User.Contact_Account_Record_Type__c  ,&quot;Others&quot;)), 
+        AND(Name = &quot;Payment Link&quot;, 
+            NOT($User.Customer_type__c=&quot;CNS Agency&quot;)), 
+        AND(Name = &quot;Paypal&quot;,
+            $User.CNS_Account_or_Agency__c),
+        AND(Name = &quot;Resource Center&quot;, 
+            NOT($User.Customer_type__c=&quot;CNS Agency&quot;),
+            NOT(CONTAINS($User.Customer_type__c,&quot;Airline&quot;))),
+        AND(Name = &quot;Transparency in Payments (TIP)&quot;,
+            ($User.Is_TIP_User__c)),
+        AND(Name = &quot;Access BOP&quot;,
+            $User.ANG_Customer_Country_ISO__c = &quot;CN&quot;)
+    )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>

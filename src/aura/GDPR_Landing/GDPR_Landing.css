@@ -1,0 +1,27 @@
+.THIS .titleParagraph {
+    font-weight: bold;
+    font-size:15px;
+}
+
+.THIS .fields{
+    max-width: 300px;
+    height: 40px !important;
+}
+.THIS .labels{
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.THIS .noTop {    
+    margin: 0px;    
+}
+
+.THIS .IATA_UlLi {
+    list-style-image: url(/dataprivacy/s/sfsites/c/resource/GDPR_Portal/img/icon-bullet-point.svg);
+    margin: 10px 40px;
+}
+
+.THIS .inputHeight{
+    height:40px;
+}

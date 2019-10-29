@@ -375,4 +375,84 @@ private class AmazonFinancialTest {
     
     }
     
+    @isTest static void canUploadFinancialReviewDocumentsTest(){
+
+        createAmazonCredential();
+
+        AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
+            Name = 'BSP-SG',
+            RecordTypeId = AMS_Utils.RECTYPE_BSP
+        );
+
+        insert bspSG;
+
+        IATA_ISO_Country__c countrySG = new IATA_ISO_Country__c (
+            Name = 'Singapore',
+            ISO_Code__c = 'SG',
+            AMS_Settlement_System__c = bspSG.Id,
+            ANG_Enable_NewGen__c = true
+        );
+
+        insert countrySG;
+
+        Account agentSG = new Account(
+            Name = 'Agent SG',
+            IATACode__c ='999999999',
+            Status__c = AMS_Utils.ACC_S9_APPROVED,
+            Location_Type__c = AMS_Utils.HE,
+            RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+            IATA_ISO_Country__c = countrySG.Id,
+            Location_Class__c = 'P',
+            Remittance_frequency__c = 'M',
+            ANG_HE_RiskStatus__c = 'A',
+            Type = 'IATA Passenger Sales Agent',
+            BillingCountry = 'Singapore'
+        );
+
+        insert agentSG;
+
+        Contact contSG = new Contact(
+            FirstName = 'Agent',
+            LastName = 'Singapore',
+            Type_of_Contact__c = 'IFAP Contact',
+            AccountId = agentSG.Id,
+            Email = 'agent.singapore@test.com',
+            Financial_Assessment_Contact__c = true
+        );
+
+        insert contSG;
+
+        Case caseSG = new Case(
+            ContactId = contSG.Id,
+            AccountId = agentSG.Id,
+            Subject = 'Financial Review',
+            Description = 'Financial Review - 2018',
+            Status = 'Agent to be Notified',
+            RecordTypeId = AMS_Utils.RECTYPE_IFAP,
+            IFAP_Financial_Year__c = '2018',
+            Deadline_Date__c = System.today().addDays(-7)
+        );
+
+        CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
+
+        insert caseSG;
+
+        PageReference pageRef = Page.AmazonFinancial;
+        Test.setCurrentPage(pageRef);
+
+        ApexPages.StandardController stand = new ApexPages.StandardController(caseSG);
+        AmazonFinancialCtrl controller = new AmazonFinancialCtrl(stand);
+
+        system.assert(!controller.canUploadAndDelete);
+
+        caseSG.Status = 'Closed_Non compliance';
+        update caseSG;
+
+        stand = new ApexPages.StandardController(caseSG);
+        controller = new AmazonFinancialCtrl(stand);
+
+        system.assert(controller.canUploadAndDelete);
+
+    }
+
 }

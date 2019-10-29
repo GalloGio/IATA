@@ -124,7 +124,7 @@ public without sharing class LightningConnectedAppHelper {
 				// INC431553 : For verifiers, limits don't apply
 	            Id verifierRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Verifiers');
 	            Account acc = [select RecordTypeId from Account where Id =: usr.AccountId];
-				if(verifierRecordTypeId != acc.RecordTypeId){
+				if(verifierRecordTypeId == acc.RecordTypeId){
                     automaticRole = 'Secondary User';
             }
         }

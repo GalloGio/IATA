@@ -13,16 +13,9 @@ public with sharing class ProductRatePlanCharge_Dom
 	    ProductRatePlanCharge_Dom exe = new ProductRatePlanCharge_Dom();
 	    
 	    //*** call handler method corresponding to trigger event
-	    if (trigger.isBefore) 
-	    {
-	        /*if (trigger.isInsert) exe.onBeforeInsert();*/
-	        /*else if (trigger.isUpdate) exe.onBeforeUpdate();*/
-	        /*else if (trigger.isDelete) exe.onBeforeDelete();*/
-	    } else if (trigger.isAfter) 
-	    {
+	    if (trigger.isAfter) {
 	        if (trigger.isInsert) exe.onAfterInsert();
 	        else if (trigger.isUpdate) exe.onAfterUpdate();
-	        /*else if (trigger.isDelete) exe.onAfterDelete();*/
 	    }
 	} //*** end of "triggerHandler"
 
@@ -57,21 +50,6 @@ public with sharing class ProductRatePlanCharge_Dom
 	    Created by CGI, David D 2015-09-22
 	        Method for event
 	****************************************************************************************************/
-	/*private void onBeforeInsert() 
-	{
-	    getData(true, false);
-	}*/
-
-	/*private void onBeforeUpdate() 
-	{
-	    getData(true, true);	    
-	}*/
-	
-	/*private void onBeforeDelete() 
-	{
-	    getData(false, true);	    
-	}*/
-
 	private void onAfterInsert() 
 	{
 	    getData(true, false);
@@ -87,9 +65,5 @@ public with sharing class ProductRatePlanCharge_Dom
 	    //-- Set Stantard Price 
 	    ProductRatePlanCharge_Svc.setStandardPrice(newMap, oldMap);
 	}
-	
-	/*private void onAfterDelete() 
-	{
-	    getData(false, true);
-	}*/
+
 }

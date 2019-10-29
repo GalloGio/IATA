@@ -109,6 +109,7 @@ private class AMS_OSCAR_TriggerICCTest {
         oscar.STEP2__c = 'Passed';
         oscar.STEP1__c = 'Passed';
 		oscar.STEP2__c = 'Passed';
+        oscar.Bank_Guarantee_Requested__c = Date.today();
         
         update oscar;
 
@@ -165,7 +166,7 @@ private class AMS_OSCAR_TriggerICCTest {
         oscar.RPM_Approval__c = 'Authorize Disapproval';
         oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
-
+        oscar.Bank_Guarantee_Requested__c = Date.today();
         update oscar;
 
         Test.stopTest();
@@ -177,7 +178,7 @@ private class AMS_OSCAR_TriggerICCTest {
 
         AMS_Pax_Accreditation_Form__c stagingArea = [Select Id from AMS_Pax_Accreditation_Form__c LIMIT 1];
 
-        Test.startTest();
+        Case cse = [SELECT Id, OSCAR__c FROM Case LIMIT 1];
         
         AMS_Oscar__c oscar =  new AMS_Oscar__c(
                 Name = 'Test Oscar 4',
@@ -190,6 +191,9 @@ private class AMS_OSCAR_TriggerICCTest {
         
         insert oscar;
 
+        cse.OSCAR__c = oscar.Id;
+        update cse;
+
         /*** AMSU-180 ***/
         AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
             Name= 'test owner',
@@ -198,10 +202,13 @@ private class AMS_OSCAR_TriggerICCTest {
             Email__c= 'owner.test@test.com',
             Phone__c= '123456789',
             Financial_interest__c= 100,
+            Agency_Owner__c = true,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
             RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
+
+        Test.startTest();
 
         oscar.First_Step_Completed__c = true;
         oscar.STEP6__c = 'Passed';
@@ -220,7 +227,7 @@ private class AMS_OSCAR_TriggerICCTest {
 
         AMS_Pax_Accreditation_Form__c stagingArea = [Select Id from AMS_Pax_Accreditation_Form__c LIMIT 1];
 
-        Test.startTest();
+        Case cse = [SELECT Id, OSCAR__c FROM Case LIMIT 1];
         
         AMS_Oscar__c oscar =  new AMS_Oscar__c(
                 Name = 'Test Oscar 5',
@@ -233,6 +240,9 @@ private class AMS_OSCAR_TriggerICCTest {
      
         insert oscar;
 
+        cse.OSCAR__c = oscar.Id;
+        update cse;
+
         /*** AMSU-180 ***/
         AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
             Name= 'test owner',
@@ -241,10 +251,13 @@ private class AMS_OSCAR_TriggerICCTest {
             Email__c= 'owner.test@test.com',
             Phone__c= '123456789',
             Financial_interest__c= 100,
+            Agency_Owner__c = true,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
             RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
+
+        Test.startTest();
 
         oscar.First_Step_Completed__c = true;
         oscar.STEP6__c = 'Passed';
@@ -263,7 +276,7 @@ private class AMS_OSCAR_TriggerICCTest {
 
         AMS_Pax_Accreditation_Form__c stagingArea = [Select Id from AMS_Pax_Accreditation_Form__c LIMIT 1];
 
-        Test.startTest();
+        Case cse = [SELECT Id, OSCAR__c FROM Case LIMIT 1];
         
         AMS_Oscar__c oscar =  new AMS_Oscar__c(
                 Name = 'Test Oscar 6',
@@ -277,6 +290,9 @@ private class AMS_OSCAR_TriggerICCTest {
 
         insert oscar;
 
+        cse.OSCAR__c = oscar.Id;
+        update cse;
+
         /*** AMSU-180 ***/
         AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
             Name= 'test owner',
@@ -285,10 +301,13 @@ private class AMS_OSCAR_TriggerICCTest {
             Email__c= 'owner.test@test.com',
             Phone__c= '123456789',
             Financial_interest__c= 100,
+            Agency_Owner__c = true,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
             RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
+
+        Test.startTest();
 
         oscar.First_Step_Completed__c = true;
         oscar.STEP6__c = 'Passed';

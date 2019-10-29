@@ -18,7 +18,7 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 	 	map<Id,Agency_Authorization__c> mapOldAuthP = new map<Id,Agency_Authorization__c>();
          
          for(Agency_Authorization__c a : triggerNew){
-             if(a.recordtypeid == Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId()){
+             if(a.recordtypeid == RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment')){
                  listAuthp.add(a);
                  mapOldAuthP.put(a.id, new Agency_Authorization__c(id = a.id));
              }
@@ -32,7 +32,7 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
  		List<Agency_Authorization__c> listAuthP = new List<Agency_Authorization__c>();
  		
  		for(Agency_Authorization__c a : triggerNew){
- 			if(a.recordtypeid == Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId())
+ 			if(a.recordtypeid == RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment'))
  				listAuthp.add(a);
  		}
 

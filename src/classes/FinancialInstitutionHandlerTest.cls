@@ -12,6 +12,7 @@ public with sharing class FinancialInstitutionHandlerTest {
         insert cse;
         
         Financial_Institution__c institution = new Financial_Institution__c(
+            RecordTypeId = FinancialInstitutionHandler.RT_GENERIC_FI_ID,
             Related_IATA_agent_account__c = account.Id,
             First_Call_Letter_Required__c = 'No'
         );

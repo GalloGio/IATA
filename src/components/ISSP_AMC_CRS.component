@@ -1,0 +1,204 @@
+<apex:component >
+    <apex:attribute name="participation" description="Requirement" type="Participation_Online_Application__c" required="true" />
+    <apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="false" />
+    <style>
+        .textDecor{
+            padding-top: 7px;
+            margin-bottom: 0;
+        }
+    </style>
+    <div class="panel panel-primary" id="CRS">
+        <div class="panel-heading">
+                {!$Label.ISSP_AMC_CRS}
+        </div>
+
+        <div class="panel-body">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-md-offset-1 col-md-9">
+                        <div>
+                        {!$Label.ISSP_AMC_CRS_QUESTION}
+                            <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Local_Details_No_Local_FirstName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-2 col-sm-offset-0 textDecor">
+                        <apex:outputText value="{!$Label.ISSP_AMC_NAME_AIRLINE}"/>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="{!IF(AND(hasError, OR(participation.Name_of_Airline__c == null, participation.Name_of_Airline__c == "")), 'has-error has-feedback', '')}">
+                            <apex:inputText id="IATACode" maxlength="40" onchange="validateLatinChar(this)" styleClass="form-control allchar" value="{!participation.Name_of_Airline__c}"/>
+                            <span class="{!IF(AND(hasError, OR(participation.Name_of_Airline__c == null, participation.Name_of_Airline__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                            <span class="sr-only">(error)</span>
+                            
+                            <div style="color: #a94442" class="errormessage"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-2 col-sm-offset-0 textDecor">
+                        <apex:outputText value="{!$Label.ISSP_AMC_IATA_AIRLINE_CODE}"/>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="{!IF(AND(hasError, OR(participation.Reciprocal_Two_Way_IATA_Airline_Code__c == null, participation.Reciprocal_Two_Way_IATA_Airline_Code__c == "")), 'has-error has-feedback', '')}">
+                            <apex:inputText id="IATAYear" size="2" maxlength="2" onchange="codeValidation2Character(this)" styleClass="form-control prefcode" value="{!participation.Reciprocal_Two_Way_IATA_Airline_Code__c}" />
+                            <span class="{!IF(AND(hasError, OR(participation.Reciprocal_Two_Way_IATA_Airline_Code__c == null, participation.Reciprocal_Two_Way_IATA_Airline_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                            <span class="sr-only">(error)</span>
+                            
+                            <div style="color: #a94442" class="errormessage"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <apex:outputPanel id="CRSCB">
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-md-offset-1 col-md-6">
+                            <apex:outputText value="{!$Label.ISSP_AMC_PROVIDING_TICKETING_TO_AIRLINE}"/>
+                        </div>
+                        <apex:selectRadio id="changeItem2" value="{!participation.Providing_ticketing_services_to_airline__c}" styleClass="{!IF(AND(hasError, participation.Providing_ticketing_services_to_airline__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
+                            <apex:actionSupport event="onchange" rerender="CRSCB" status="Loading" />
+                            <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
+                            <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
+                        </apex:selectRadio>
+                    </div>
+                </apex:outputPanel>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        $(document).ready(function(){
+            var codeList = document.getElementsByClassName('prefcode');
+            var charList = document.getElementsByClassName('allchar');
+            for(var i=0; i<codeList.length; i++){              
+                if(codeList[i].value != null && codeList[i].value != ""){
+                    codeValidation2Character(codeList[i]);
+                }
+            }
+            for(var i=0; i<charList.length; i++){              
+                if(charList[i].value != null && charList[i].value != ""){
+                    validateLatinChar(charList[i]);
+                }
+            }
+        });
+
+        //validate if latin chars are being used
+        function validateLatinChar(element) {
+            var x = element.parentElement.classList;
+            var y = element.parentElement.children;
+            var filter = /([^A-Za-z0-9\s]+)/;
+            if(element.value  != null && element.value != ""){
+                if (filter.test(element.value)) {
+                    //x.remove("{!IF(AND(hasError, OR(participation.Name_of_Airline__c == null, participation.Name_of_Airline__c == "")), 'has-error has-feedback', '')}");
+                    x.add("has-error");
+                    x.add("has-feedback");
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "{!IF(AND(hasError, OR(participation.Name_of_Airline__c == null, participation.Name_of_Airline__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}"){
+                            //y[i].classList.remove("{!IF(AND(hasError, OR(participation.Name_of_Airline__c == null, participation.Name_of_Airline__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}");
+                            y[i].classList.add("glyphicon");
+                            y[i].classList.add("glyphicon-remove"); 
+                            y[i].classList.add("form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            element.value= "";
+                            y[i].innerHTML = "{!$Label.ISSP_AMC_ONLY_ALPHANUM_ALLOWED}";
+
+                        }                   
+                    }
+                } 
+                else{
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            //y[i].classList.add("{!IF(AND(hasError, OR(participation.Name_of_Airline__c == null, participation.Name_of_Airline__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}");
+                            y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            y[i].innerHTML = ""
+                        }
+                    }
+                    //x.add("{!IF(AND(hasError, OR(participation.Name_of_Airline__c == null, participation.Name_of_Airline__c == "")), 'has-error has-feedback', '')}");
+                    x.remove("has-error");
+                    x.remove("has-feedback");
+                }
+            }
+            else{
+                for (var i = 0; i < y.length; i++) {
+                    if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                        //y[i].classList.add("{!IF(AND(hasError, OR(participation.Name_of_Airline__c == null, participation.Name_of_Airline__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}");
+                        y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                    }
+                    if(y[i].classList =="errormessage"){
+                        y[i].innerHTML = ""
+                    }
+                }
+                //x.add("{!IF(AND(hasError, OR(participation.Name_of_Airline__c == null, participation.Name_of_Airline__c == "")), 'has-error has-feedback', '')}");
+                x.remove("has-error");
+                x.remove("has-feedback");
+            }
+        }
+
+    //Two Character Code Validation
+        function codeValidation2Character(element) {
+            var x = element.parentElement.classList;
+            var y = element.parentElement.children;
+            var filter = /^([0-9]{2})+$/;
+            var filter2 = /^([a-zA-Z0-9]*\W+[a-zA-Z0-9]*)+$/;
+            if(element.value  != null && element.value != ""){
+                if (filter.test(element.value) || filter2.test(element.value) || element.value.length != 2) {
+                    //x.remove("{!IF(AND(hasError, OR(participation.Reciprocal_Two_Way_IATA_Airline_Code__c == null, participation.Reciprocal_Two_Way_IATA_Airline_Code__c == "")), 'has-error has-feedback', '')}");
+                    x.add("has-error");
+                    x.add("has-feedback");
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "{!IF(AND(hasError, OR(participation.Reciprocal_Two_Way_IATA_Airline_Code__c == null, participation.Reciprocal_Two_Way_IATA_Airline_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}"){
+                            //y[i].classList.remove("{!IF(AND(hasError, OR(participation.Reciprocal_Two_Way_IATA_Airline_Code__c == null, participation.Reciprocal_Two_Way_IATA_Airline_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}");
+                            y[i].classList.add("glyphicon");
+                            y[i].classList.add("glyphicon-remove"); 
+                            y[i].classList.add("form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            element.value= "";
+                            y[i].innerHTML = "{!$Label.ISSP_AMC_IATA_CODE_VALIDATION}";
+
+                        }                   
+                    }
+                } 
+                else{
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            //y[i].classList.add("{!IF(AND(hasError, OR(participation.Reciprocal_Two_Way_IATA_Airline_Code__c == null, participation.Reciprocal_Two_Way_IATA_Airline_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}");
+                            y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            y[i].innerHTML = ""
+                        }
+                    }
+                    //x.add("{!IF(AND(hasError, OR(participation.Reciprocal_Two_Way_IATA_Airline_Code__c == null, participation.Reciprocal_Two_Way_IATA_Airline_Code__c == "")), 'has-error has-feedback', '')}");
+                    x.remove("has-error");
+                    x.remove("has-feedback");
+                }
+            }
+            else{
+                for (var i = 0; i < y.length; i++) {
+                    if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                        //y[i].classList.add("{!IF(AND(hasError, OR(participation.Reciprocal_Two_Way_IATA_Airline_Code__c == null, participation.Reciprocal_Two_Way_IATA_Airline_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}");
+                        y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                    }
+                    if(y[i].classList =="errormessage"){
+                        y[i].innerHTML = ""
+                    }
+                }
+                //x.add("{!IF(AND(hasError, OR(participation.Reciprocal_Two_Way_IATA_Airline_Code__c == null, participation.Reciprocal_Two_Way_IATA_Airline_Code__c == "")), 'has-error has-feedback', '')}");
+                x.remove("has-error");
+                x.remove("has-feedback");
+            }
+        }
+    </script>
+</apex:component>

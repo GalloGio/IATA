@@ -124,15 +124,24 @@ public without sharing class ISSP_TIP_Home_Controller {
         get{
             if(isoCodeCountryMap==null){
                 isoCodeCountryMap= new map<string,IATA_ISO_Country__C>();
-                for(IATA_ISO_Country__C  isoc : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+
+                List<IATA_ISO_Country__c> auxIsoCountries = IATAIsoCountryDAO.getIsoCountries();
+                List<IATA_ISO_Country__c> filteredIsoCountries = new List<IATA_ISO_Country__c>();
+
+                for(IATA_ISO_Country__c c : auxIsoCountries) {
+                    if(c.ISO_Code__c == c.BSP_Country_free_text__c) {
+                        filteredIsoCountries.add(c);
+                    }
+                }
+
+                for(IATA_ISO_Country__C  isoc : IATAIsoCountryDAO.sortIATAIsoCountryList(filteredIsoCountries, 'Name')){
                     isoCodeCountryMap.put(isoc.ISO_Code__c,isoc);    
                 }
             }
             return isoCodeCountryMap;
         }
         set;
-    }
-    
+    }    
 
     public List<selectOption> bspCountrList{
         get{

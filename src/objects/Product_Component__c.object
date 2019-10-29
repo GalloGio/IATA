@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
     <fields>
         <fullName>ANG_Description_Label__c</fullName>
         <description>API name of the label to be used as the product name in the product comparisson page.</description>
@@ -106,7 +107,7 @@
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Number</type>
-        <unique>true</unique>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Product__c</fullName>

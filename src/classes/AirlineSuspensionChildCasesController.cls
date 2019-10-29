@@ -16,12 +16,7 @@ public with sharing class AirlineSuspensionChildCasesController {
 					'FROM Case ' +  
 					'WHERE ParentId =\'' + caseId + '\' ' + 
 					'ORDER BY ' + strSortField + ' ' + (isSortASC ? 'ASC' : 'DESC');
-        	/*
-        	List<Case> lstChildSuspensionCases = [SELECT Id, CaseNumber, Subject, Status, Region__c, BSPCountry__c, CaseArea__c, Owner.Name, 
-        												(SELECT Id, ParentId, CommentBody FROM CaseComments ORDER BY CreatedDate DESC LIMIT 1)  
-        												FROM Case 
-        												WHERE ParentId =: caseId
-        												ORDER BY CaseArea__c ASC];*/
+
         	
         	List<Case> lstChildSuspensionCases = (List<Case>)Database.query(query);
         	
@@ -39,7 +34,6 @@ public with sharing class AirlineSuspensionChildCasesController {
 		    return tmpCaseList;
 		} set;}
 	
-	
     public AirlineSuspensionChildCasesController (ApexPages.StandardController controller) {
     	if (controller.getRecord().Id != null ) {
         	caseId = controller.getRecord().Id;
@@ -50,25 +44,20 @@ public with sharing class AirlineSuspensionChildCasesController {
         	strPreviousSortField = 'CaseNumber';
         	isSortASC = true;
         	
-        	
     	} else {
     		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Invalid Case'));
     	}
-    	
     }
-    
     
     public void SortTable() {
     	// Check to see if the same header was clicked twice in a row, which means the user want to sort in the opposite order
-    	if (strSortField == strPreviousSortField) {
-    		isSortASC = !isSortASC;
-    	} else {
+    	if (strSortField == strPreviousSortField) {	isSortASC = !isSortASC; } 
+        else {
     		// if not, just take note of the new "previous field"
     		strPreviousSortField = strSortField;
     		isSortASC = true;
     	}
     	
-    	//List<ChildCaseWrapper> tmplist = caseList;
     }
     
     public class ChildCaseWrapper {

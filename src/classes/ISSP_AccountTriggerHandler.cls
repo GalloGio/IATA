@@ -24,12 +24,12 @@ public with sharing class ISSP_AccountTriggerHandler
 	{
 	    Set<Id> newAccountsIds = new Set<Id>();
 		list<Portal_Application_Right__c> kaviList = [SELECT Id, Right__c, Contact__r.AccountId, Contact__r.Account.Field_Head_Office__c, Contact__r.Account.Location_Type__c, Contact__r.Account.ParentId, Contact__r.Account.Parent.ParentId
-                                                FROM Portal_Application_Right__c
-                                                WHERE ((Contact__r.Account.Field_Head_Office__c!='Branch' AND Contact__r.Account.ParentId=null AND Contact__r.AccountId in:newAccountMap.keySet())
-                                                	   OR (((Contact__r.Account.Field_Head_Office__c='Branch' OR Contact__r.Account.ParentId!=null) AND Contact__r.Account.Parent.ParentId=null) AND Contact__r.Account.ParentId in:newAccountMap.keySet())
-                                                	   OR (Contact__r.Account.ParentId!=null AND Contact__r.Account.Parent.ParentId!=null AND Contact__r.Account.Parent.ParentId in:newAccountMap.keySet()))
-                                                AND Right__c = 'Access Granted'
-                                                AND Portal_Application__r.Name LIKE 'Standards Setting Workspace%'];
+                                                	  FROM Portal_Application_Right__c
+                                                	  WHERE ((Contact__r.Account.Field_Head_Office__c!='Branch' AND Contact__r.Account.ParentId=null AND Contact__r.AccountId in:newAccountMap.keySet())
+                                                	  	OR (((Contact__r.Account.Field_Head_Office__c='Branch' OR Contact__r.Account.ParentId!=null) AND Contact__r.Account.Parent.ParentId=null) AND Contact__r.Account.ParentId in:newAccountMap.keySet())
+                                                	   	OR (Contact__r.Account.ParentId!=null AND Contact__r.Account.Parent.ParentId!=null AND Contact__r.Account.Parent.ParentId in:newAccountMap.keySet()))
+                                                	  AND Right__c = 'Access Granted'
+                                                	  AND Portal_Application__r.Name LIKE 'Standards Setting Workspace%'];
 
 		Map<Id, Id> legacyContactMap = new Map<Id, Id>();
 		
@@ -185,18 +185,14 @@ public with sharing class ISSP_AccountTriggerHandler
 	 * Created By:  Niv.Goldenberg 19-11-2014
  	 * Modified By: Niv.Goldenberg 20-11-2014
 	 */
-	private static List<Contact> getRelevantContacts(Set<Id> setAccountsToNotify)
-	{
-		List <Contact> contactList = [SELECT Id, AccountId, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :setAccountsToNotify];
-		List <Contact> contactListReturn = new List <Contact>();
-		if (!contactList.isEmpty()){
-			for (Contact thisContact : contactList){
-				if (thisContact.User_Portal_Status__c=='Approved Admin' || thisContact.BSP_CASS_Payment_contact__c || thisContact.Financial_Assessment_Contact__c)
-					contactListReturn.add(thisContact);
-			}
-		}
-		return contactListReturn;
-		//return [SELECT Id, AccountId FROM Contact WHERE AccountId IN :setAccountsToNotify];
+	private static List<Contact> getRelevantContacts(Set<Id> setAccountsToNotify){
+
+	    String queryString = 'SELECT ' + String.join(ISSP_NotificationUtilities.getAllContactFields(), ',') 
+	    + ' FROM Contact ' 
+	    + ' WHERE AccountId IN :setAccountsToNotify '
+	    + ' AND (User_Portal_Status__c = \'Approved Admin\' OR BSP_CASS_Payment_contact__c = true OR Financial_Assessment_Contact__c = true)';
+
+	    return Database.query(queryString); 					
 	}
 
 	/**

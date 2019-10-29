@@ -17,11 +17,13 @@ public class ANG_PortalApplicationRightHandler {
 
 	public void onAfterInsert(){
 		insertUserProvAccount();
-		setConnectedAppsSSOPermission();		
+		setConnectedAppsSSOPermission();
+		manageShareUsers();
 	}
 	public void onAfterUpdate(){
 		setConnectedAppsSSOPermission();
 		checkMinimumUsersAllowedUpdate();
+		manageShareUsers();
 	}
 	public void onBeforeDelete(){
 		checkMinimumUsersAllowedDelete();
@@ -233,4 +235,62 @@ public class ANG_PortalApplicationRightHandler {
 			newMap.get(par.id).addError(System.label.ANG_ISSP_Min_Users_With_Role_Error_Msg.replace('$$ROLE$$', par.ANG_Portal_Service_Role__c));
 		}
 	}	
+	
+	/** ENHC0012690 **/
+	private void manageShareUsers(){
+		
+		List<ISSP_External_Reports_Config__c> extRepConfigList = ISSP_External_Reports_Config__c.getall().values();
+		Set<Id> portalApps = new Set<Id>();
+		Set<Id> portalContacts = new Set<Id>();
+		//Gets Portal Services IDs to filter the ISSP_External_Reports_Config__c to avoid later pulling every single record
+		for(Portal_Application_Right__c par : triggerNew){
+			if(par.Right__c == 'Access Granted'){
+				portalApps.add(par.Portal_Application__c);
+				portalContacts.add(par.Contact__c);
+			}
+		}
+		
+		Set<String> relevantERCs = new Set<String>();
+		
+		for(ISSP_External_Reports_Config__c erc: extRepConfigList){
+			if(portalApps.contains(erc.Portal_Service_Id__c)){
+				relevantERCs.add(erc.Report_ID__c);
+			}
+		}
+		
+		List<ISSP_External_Report__c> externalReports = [SELECT Id, Account__c, Report_ID__c FROM ISSP_External_Report__c WHERE Report_ID__c in :relevantERCs];
+		
+		if(!externalReports.isEmpty()){
+			
+			Set<Id> accountIDs = new Set<Id>();
+			
+			for(ISSP_External_Report__c er : externalReports){
+				accountIDs.add(er.Account__c);
+			}
+			
+			List<User> users = [SELECT Id, ContactId, AccountId FROM User WHERE AccountId in :accountIDs AND isActive = true];
+			
+			for(Portal_Application_Right__c par : triggerNew){
+				
+				Map<Id,Set<Id>> usersToGetAccess = new Map<Id,Set<Id>>();
+								
+				for(ISSP_External_Report__c er : externalReports){
+					for(User u : users){
+						if(u.ContactId == par.Contact__c && u.AccountId == er.Account__c){
+                            if(usersToGetAccess.containsKey(er.Id)){
+                                Set<Id> newUser = usersToGetAccess.get(er.Id);
+                                newUser.add(u.Id);
+                                usersToGetAccess.put(er.Id,newUser);
+                            }
+							else
+                                usersToGetAccess.put(er.Id, new Set<Id>{u.Id});
+						}
+					}
+					
+					if(!usersToGetAccess.isEmpty())
+						System.enqueueJob(new ExternalFilesUtils(usersToGetAccess, 'Read'));
+				}
+			}
+		}
+	}
 }

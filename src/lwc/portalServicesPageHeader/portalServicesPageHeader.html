@@ -1,0 +1,30 @@
+<template>
+    <div style={backgroundStyle}>
+        <c-portal-page-container>
+            <span slot="componentContent">
+                <c-portal-breadcrumbs show-in-white=true></c-portal-breadcrumbs>
+
+                <div class="slds-p-vertical_x-large text-white text-xlarge text-bold headerContainerShadow">
+                    <div>{label.CSP_Services_HeaderTitle}</div>
+                </div>
+            </span>
+        </c-portal-page-container>
+    </div>
+
+    <c-portal-page-container>
+        <span slot="componentContent">
+            <!-- SEARCH BAR -->
+            <div class="background-white searchBarPosition">
+                <c-portal-search-bar-global-component 
+                    search-bar-placeholder={label.CSP_Search_Services_Placeholder} 
+                    show-services
+                    show-advanced-search>
+                </c-portal-search-bar-global-component>
+            </div>
+        </span>
+    </c-portal-page-container>
+
+    <!-- Empty space after search bar -->
+    <div class="brackground-silverGray emptyGrayAreaSize">&nbsp;</div>
+    
+</template>

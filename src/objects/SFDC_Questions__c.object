@@ -54,6 +54,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Answer_Format__c</fullName>
         <description>Only includes Radio Button today, as that is what the scoring supports.  When multiple answers can be chosen a multi select option can be added.</description>

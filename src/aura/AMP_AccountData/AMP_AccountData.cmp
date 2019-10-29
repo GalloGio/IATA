@@ -42,6 +42,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
                 <label class="slds-form-element__label">IATA Code</label>
@@ -64,14 +65,13 @@
         
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
-                <label class="slds-form-element__label" >ICAO Designator</label>
+                <label class="slds-form-element__label">Business Address</label>
                 <div class="slds-form-element__control">
-                    <!--<force:outputField value="{!v.account.ICAO_designator__c}" />-->
-                    {!v.account.ICAO_designator__c}
+					
                 </div>
             </div>   
         </div>
-    	
+
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
                 <label class="slds-form-element__label" >ISO Country</label>
@@ -81,7 +81,7 @@
                 </div>
             </div>            
         </div>
-        
+
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
                 <label class="slds-form-element__label" >Region</label>
@@ -91,27 +91,7 @@
                 </div>
             </div>   
         </div>
-        
-        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label">Website</label>
-                <div class="slds-form-element__control cut-overflow">
-                    <!--<force:outputField value="{!v.account.Website}" />-->
-                    <a href="{!v.account.Website}" target="_blank">{!v.account.Website}</a>
-                </div>
-            </div>   
-        </div>
-        
-        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" >Training Website</label>
-                <div class="slds-form-element__control cut-overflow">
-                    <!--<force:outputField value="{!v.account.IATATrainingUrl__c}" />-->
-                    <a href="{!v.account.IATATrainingUrl__c}" target="_blank">{!v.account.IATATrainingUrl__c}</a>
-                </div>
-            </div>   
-        </div>
-            	
+
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
                 <label class="slds-form-element__label" >Ownership Type</label>
@@ -121,7 +101,27 @@
                 </div>
             </div>            
         </div>
-
+                
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Website</label>
+                <div class="slds-form-element__control cut-overflow">
+                    <!--<force:outputField value="{!v.account.Website}" />-->
+                    <a href="{!v.account.Website}" target="_blank">{!v.account.Website}</a>
+                </div>
+            </div>   
+        </div>
+            	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" >ICAO Designator</label>
+                <div class="slds-form-element__control">
+                    <!--<force:outputField value="{!v.account.ICAO_designator__c}" />-->
+                    {!v.account.ICAO_designator__c}
+                </div>
+            </div>   
+        </div>
+        
 		<div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
         </div>
     </div>

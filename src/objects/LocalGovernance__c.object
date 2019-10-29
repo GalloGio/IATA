@@ -58,6 +58,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
     <fields>
         <fullName>AM_Top_Level_Group__c</fullName>
         <defaultValue>false</defaultValue>
@@ -1203,10 +1204,6 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>ICAP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JALWG</fullName>
                 <default>false</default>
             </values>
             <values>

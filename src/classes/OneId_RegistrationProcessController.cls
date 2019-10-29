@@ -16,6 +16,48 @@ public without sharing class OneId_RegistrationProcessController {
     }
 	
 	@AuraEnabled
+    public static List<Account> getAccountsBySectorAndCategory(String sector, String cat, String country, String userInput) {
+        String recordTypesSet = '';
+        String categoryFilter = '';
+
+		if(sector == 'Airline'){
+			recordTypesSet = '(\'IATA_Airline\',\'Operator\')';
+			categoryFilter = ' AND Category__c = \'' + cat + '\'';
+		}
+		else if(sector == 'Travel Agent'){
+			if(cat == 'IATA Passenger Sales Agent'){
+				recordTypesSet = '(\'IATA_Agency\',\'Standard_Account\')';
+			}
+			else if(cat == 'Non-IATA Travel Agent'){
+				recordTypesSet = '(\'Non_IATA_Agency\',\'Standard_Account\')';
+			}
+			categoryFilter = ' AND Category__c = \'' + cat + '\'';
+		}
+		else if(sector == 'Airline Supplier'){
+			recordTypesSet = '(\'Others\',\'Standard_Account\')';
+			categoryFilter = ' AND Category__c in (\'Global Distribution System\',\'Content Aggregator\', \'System Solutions Provider\')';
+		}
+		
+		if(recordTypesSet == ''){
+			System.debug('NDCMM - invalid sector-category combination : "' + sector + '" - "' + cat + '"');
+			return new List<Account>();
+		}
+
+        String queryStr = 'SELECT Id, IATACode__c, Airline_designator__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry FROM Account WHERE ';
+        queryStr += ' RecordType.DeveloperName in ' + recordTypesSet;
+        queryStr += ' AND Sector__c = \'' + sector + '\'';
+        queryStr += categoryFilter;
+        queryStr += ' AND IATA_ISO_Country__c = \'' + country + '\'';
+        queryStr += ' AND Name like \'%' + userInput + '%\'';
+
+        system.debug(queryStr);
+
+        list<Account> accs = Database.query(queryStr);
+        system.debug(accs);
+        return accs;
+    }
+    
+    @AuraEnabled
     public static String findLocation(String ipAddress){
 
         HttpRequest req = new HttpRequest();
@@ -65,9 +107,57 @@ public without sharing class OneId_RegistrationProcessController {
                 }
             }
         }
+        // This part has to be made generic, using the serviceName parameter
+        if(!userInformation.isGuest && serviceName == 'NDCMM'){
+            User usr = [SELECT ContactId, AccountId 
+                        FROM User 
+                        WHERE Id =: UserInfo.getUserId()];
+
+            getNDCMMUserInformation(userInformation, usr.ContactId, usr.AccountId);
+        }
         return userInformation;
     }
 
+    private static void getNDCMMUserInformation(UserInformation userInformation, Id contactId, Id accountId){
+        // Step 1 : check if user requested access to NDC Matchmaker Service
+        // Step 1.1 : Retrieve the NDC Matchmaker Portal Service Id
+        One_Id_Service_Provider_Config__c oneIdService = [SELECT Portal_Service__c 
+                                                          FROM One_Id_Service_Provider_Config__c 
+                                                          WHERE Service_Provider_Name__c = 'NDCMM' 
+                                                          AND RecordType.DeveloperName = 'Service_Provider' LIMIT 1];
+        
+        // Step 1.2 : Retrieve the Portal Service Access record
+        List<Portal_Application_Right__c> portalApplicationRights = [SELECT Right__c, Access_Pending_Detail__c 
+                                                                     FROM Portal_Application_Right__c 
+                                                                     WHERE Portal_Application__c =: oneIdService.Portal_Service__c 
+                                                                     AND Contact__c =: contactId];
+        
+        userInformation.isServiceUser = !portalApplicationRights.isEmpty();
+        
+        // if access has already been requested yet, we can stop here
+        if(userInformation.isServiceUser){
+            //Don't return now because we need contact info to pass to email component
+            //return userInformation;
+        }
+        
+        Account acc = [SELECT Name, Sector__c, Category__c, RecordType.DeveloperName FROM Account WHERE Id =: accountId];
+        
+        // Step 2 : check if user's Account is eligible
+        userInformation.isServiceEligible = isNDCMMEligible(acc);
+        
+        // if account is not eligible, we can stop here
+        if(!userInformation.isServiceEligible){
+            return;
+        }
+        
+        // Step 3 : set Contact and Account
+        userInformation.con = [SELECT Id, Email, Salutation, FirstName, LastName, Title, Membership_Function__c, Phone, MobilePhone, Fax
+                               FROM Contact 
+                               WHERE Id =: contactId];
+        
+        userInformation.acc = acc;		
+    }
+    
     public class UserInformation {
         @AuraEnabled
         Boolean isGuest {get; set;}
@@ -83,6 +173,8 @@ public without sharing class OneId_RegistrationProcessController {
         Contact con {get;set;}
         @AuraEnabled
         Account acc {get;set;}
+        @AuraEnabled
+        Boolean accessRequested {get; set;}
     }
 
     @AuraEnabled
@@ -94,12 +186,16 @@ public without sharing class OneId_RegistrationProcessController {
 
         System.Debug('Information ::: Contact List : ' + conList + ' isEmailAddressAvailable ? ' + userInformation.isEmailAddressAvailable + ' Service Name : ' + serviceName);
 
+        userInformation.isContactInserted = conList.size() > 0;
+        //setting default value. If contact and email don't exist, user will be eligible
+        userInformation.isServiceEligible = !(userInformation.isContactInserted && userInformation.isEmailAddressAvailable);
+        
         if((!conList.isEmpty()) && userInformation.isEmailAddressAvailable){
             //String UID = Comm_User_Helper.NewGuid();
             //Id userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false);
             //Boolean userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false) != null ? TRUE : FALSE;
 
-            if(serviceName != 'FRED'){
+            if(serviceName != 'FRED' && serviceName != 'NDCMM'){
 	            isAlreadyContact = true;
     	        Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName);
             
@@ -114,7 +210,7 @@ public without sharing class OneId_RegistrationProcessController {
                 	System.Debug('User NOT created!');
             	}
             }
-            else{
+            else if(serviceName == 'FRED'){
                 userInformation.isContactInserted = true;
                 userInformation.con = conList.get(0);
                 Account acc = [SELECT Name, RecordTypeId, RecordType.Name, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: conList.get(0).Account.Id];
@@ -130,11 +226,18 @@ public without sharing class OneId_RegistrationProcessController {
                 }                
                 userInformation.acc = acc;                
             }
+            else{
+                userInformation.isContactInserted = true;
+                userInformation.con = conList.get(0);
+                userInformation.acc = [SELECT Name, Sector__c, Category__c, RecordType.DeveloperName FROM Account WHERE Id =: conList.get(0).Account.Id];
+
+                getNDCMMUserInformation(userInformation, userInformation.con.Id, userInformation.acc.Id);
+            }
         }
 
         if(!userInformation.isEmailAddressAvailable){
             // Retrieve existing user information
-            List<User> usrs = [SELECT Id, AccountId FROM User where Email =: email];
+            List<User> usrs = [SELECT Id, ContactId, AccountId FROM User where Email =: email];
             if(!usrs.isEmpty()){
                 User usr = usrs[0];
                 Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: usr.AccountId];
@@ -157,6 +260,9 @@ public without sharing class OneId_RegistrationProcessController {
                         }
                     }
                 }
+                if(serviceName == 'NDCMM'){
+	                getNDCMMUserInformation(userInformation, usrs[0].ContactId, usrs[0].AccountId);
+                }
             }
             userInformation.isContactInserted = false;
         }
@@ -165,6 +271,51 @@ public without sharing class OneId_RegistrationProcessController {
         return userInformation;            
     }
 
+    private static Boolean isNDCMMEligible(Account acc){
+        Boolean isEligible =  (acc.Sector__c == 'Airline' 
+                               && (acc.RecordType.DeveloperName == 'IATA_Airline' || acc.RecordType.DeveloperName == 'Operator'))
+            || (acc.Sector__c == 'Travel Agent' 
+                && ((acc.Category__c == 'IATA Passenger Sales Agent'&& (acc.RecordType.DeveloperName == 'IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account')) || (acc.Category__c == 'Non-IATA Travel Agent' && (acc.RecordType.DeveloperName == 'Non_IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account'))))
+            || (acc.Sector__c == 'Airline Supplier' 
+                && (acc.Category__c == 'Global Distribution System' || acc.Category__c == 'Content Aggregator' || acc.Category__c== 'System Solutions Provider')
+                && (acc.RecordType.DeveloperName == 'Others' || acc.RecordType.DeveloperName == 'Standard_Account'));
+        return isEligible;
+    }
+
+
+    @AuraEnabled
+    public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email) {
+        // Method to test if another user existin in all SF instances to avoid having an error at the end of the process
+        Savepoint sp = Database.setSavepoint();
+
+        try {
+            User testingUser = new User(LastName = 'DUMMY',
+                 FirstName='DUMMY',
+                 Alias = 'DUMMY',
+                 CommunityNickname = 'DUMMY',
+                 Email = email,
+                 Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
+                 ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
+                 ContactId = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
+                 TimeZoneSidKey = 'GMT',
+                 LanguageLocaleKey = 'en_US',
+                 EmailEncodingKey = 'UTF-8',
+                 LocaleSidKey = 'en_US',
+                 License_Cost_center__c = 'ISF005CH01'
+            );
+            system.debug(testingUser);
+            insert testingUser;
+
+            // Rollback to avoid creation of the user
+            Database.rollback(sp);
+            return true;
+
+        } catch(Exception e) {
+            System.debug(loggingLevel.ERROR, '____ [cls OneId_RegistrationProcessControllere - checkIsUsernameIsAvailableInGlobalSalesforce] e.getMessage() - ' + e.getMessage());
+            Database.rollback(sp);
+            return false;
+        }
+    }
     
     @AuraEnabled
     public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {
@@ -212,7 +363,7 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     public static Account returnRelatedAcc(Id accID){
-        return [SELECT id, Name, ParentId, Ownerid, Recordtypeid, Category__c, Category_Other_Value__c, BillingCountry, IATA_ISO_Country__c, IATA_ISO_Shipping_Country__c, Sector__c, Reason_for_creation__c FROM Account WHERE ID =: accID];
+        return [SELECT id, Name, ParentId, Ownerid, Recordtypeid, Category__c, Category_Other_Value__c, BillingCountry, IATA_ISO_Country__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c, Sector__c, Reason_for_creation__c FROM Account WHERE ID =: accID];
     }
 
 
@@ -262,6 +413,7 @@ public without sharing class OneId_RegistrationProcessController {
             'BillingState',
             'BillingStreet',
             'Category__c',
+            'Category_Other_Value__c',
             'Email__c',
             'IATACode__c',
             'Legal_name__c',
@@ -288,12 +440,12 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     @AuraEnabled
-    public static List<String> getContactJobFunctionValues(){
-        List<String> values =  new  List<String>();
+    public static List<PicklistEntry> getContactJobFunctionValues(){
+        List<PicklistEntry> values =  new  List<PicklistEntry>();
 
         List<Schema.PicklistEntry> controllingFieldValues = Schema.Contact.Function__c.getDescribe().getPickListValues();
         for (Schema.PicklistEntry p : controllingFieldValues){
-           values.add(p.getLabel());
+           values.add(new PicklistEntry(p.getLabel(), p.getValue()));
         }
         return values;
     }
@@ -354,18 +506,50 @@ public without sharing class OneId_RegistrationProcessController {
         return OneId_AddressDoctor.validate((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class));
     }
 
+    //Method created as a workaround due to not be able to populate lookups in the Lightning Component. This was a quick fix in order to not change registration method signature. 
+    //Probably the way to set this IDs should be reviewed. 
+    @AuraEnabled
+    public static boolean registrationAux(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
+        
+        if(cityAndStateIds != null){
+            String billingCityId = (String) cityAndStateIds.get('billingCityId');
+            String billingStateId = (String) cityAndStateIds.get('billingStateId');
+            String shippingCityId = (String) cityAndStateIds.get('shippingCityId');
+            String shippingStateId = (String) cityAndStateIds.get('shippingStateId');
+            
+            if(!String.isBlank(billingCityId)){
+                acc.Geoname_Billing_City__c = billingCityId;                
+            }
+
+            if(!String.isBlank(billingStateId)){
+                acc.ISO_State__c = billingStateId;
+                acc.IATA_ISO_Billing_State__c = billingStateId;                            
+            }
+
+            if(!String.isBlank(shippingCityId)){
+                acc.Geoname_Shipping_City__c = shippingCityId;                
+            }
+
+            if(!String.isBlank(shippingStateId)){
+                acc.IATA_ISO_Shipping_State__c = shippingStateId;                            
+            }
+        }
+
+        return OneId_RegistrationProcessController.registration(acc, con, serviceName);
+    }
     @AuraEnabled
     public static boolean registration(Account acc, Contact con, String serviceName){
+              
         system.debug('OneId registration process starting...');
         system.debug('account  --> ' + acc);
         system.debug('contact  --> ' + con);
         system.debug('serviceName  --> ' + serviceName);
 
-        if(serviceName == null)
+       if(serviceName == null)
             serviceName = 'IDENTITY';
 
         //it's general public account? create contact / user
-        if(acc.Sector__c == 'General Public'){
+        if(acc.Id == null && acc.Sector__c == 'General Public'){
             List<Account> gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and  IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];
             if(!gpAccount.isEmpty()) acc.Id  = gpAccount[0].Id;
         }
@@ -425,7 +609,7 @@ public without sharing class OneId_RegistrationProcessController {
 
         //create contact        
         con.ISO_Country__c = acc.IATA_ISO_Country__c;
-        con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Country__c;
+        con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c;
         con.Country__c = acc.IATA_ISO_Country__c;
         con.Preferred_Language__c = languageString;
         con.IATA_ISO_Billing_State__c = acc.IATA_ISO_Billing_State__c;
@@ -455,6 +639,42 @@ public without sharing class OneId_RegistrationProcessController {
                 }
                 
             }
+            
+            // We need to create a Case
+            if(serviceName == 'NDCMM'){
+                
+                //Fetching the assignment rules on case
+                List<AssignmentRule> arList = [SELECT Id FROM AssignmentRule WHERE SobjectType = 'Case' AND Active = true limit 1];
+                
+                //Creating the DMLOptions for "Assign using active assignment rules" checkbox
+                Database.DMLOptions dmlOpts = new Database.DMLOptions();
+                if(arList.size() > 0) {
+                    dmlOpts.assignmentRuleHeader.assignmentRuleId = arList[0].id;
+                }
+
+                Case cse = new Case(
+                	Subject = 'NDC Matchmaker - Validate Account and Contact',
+                	Status = 'New',
+                    AccountId = acc.Id,
+                    ContactId = con.Id,
+                    Origin = 'Portal',
+                    RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('NDC Management').getRecordTypeId()
+                );
+
+                cse.setOptions(dmlOpts);
+                insert cse;
+                
+                // We also need to create a Portal Application Right
+                // This part has to be made generic for all services in the future
+		        One_Id_Service_Provider_Config__c oneIdService = [select Portal_Service__c from One_Id_Service_Provider_Config__c where Service_Provider_Name__c = 'NDCMM' and RecordType.DeveloperName = 'Service_Provider' limit 1];
+                
+				Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
+                	Portal_Application__c = oneIdService.Portal_Service__c,
+                    Right__c = 'Access Requested',
+                    Contact__c = con.Id
+                );
+                insert portalApplicationRight;
+            }            
         } catch(exception ex){            
             Database.rollback(sp);
             System.debug(ex);
@@ -487,10 +707,17 @@ public without sharing class OneId_RegistrationProcessController {
                 if (!String.isBlank(acc.BillingCountry)) {
                     List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
                     if (cn.size()!=0) {
-                        acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
+                        acc.IATA_ISO_Country__c = cn[0].id;
                     }
                 }
-            
+                
+                if (!String.isBlank(acc.ShippingCountry)) {
+                    List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.ShippingCountry});
+                    if (cn.size()!=0) {
+                        acc.IATA_ISO_Shipping_Country__c = cn[0].id;
+                    }
+                }
+
                 database.insert(acc);
             }
           
@@ -521,13 +748,46 @@ public without sharing class OneId_RegistrationProcessController {
                     newRight.Portal_Application__c = appListId;
                     insert newRight;
                }
-            }else if(!isAlreadyContact){
+
+            //Start ACLI
+                // ACLI Requirement: The first user registering under a new airline account will get it automatically.
+            }else if(acc.Sector__c == 'Airline' && isNewAcc &&
+                        acc.RecordTypeId == Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId() ){
+
+                System.debug('Adding ACLI service');
+                con.Primary_Contact__c = true;
+                con.User_Portal_Status__c = 'Approved Admin';
+
+                checkConAvailable(con);
+
+                con.account=acc;
+
+                //ACLI Requirement: if first user on an Airline account then the user gets automatically the Coding Service
+                Id appListId;
+                ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+                if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes__c)){
+                    appListId = serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes__c;
+
+                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+                    newRight.Contact__c = con.Id;
+                    newRight.Right__c = 'Access Granted';
+                    newRight.Portal_Application__c = appListId;
+                    insert newRight;
+                }
+
+
+            }
+            //End ACLI
+            else if(!isAlreadyContact){
                 checkConAvailable(con);
                 system.debug('::: Is not a contact already: ' + con);
-            }else{
+            }
+            else{
+                checkConAvailable(con);
                 updateContactInFuture(String.valueOf(con.Id), con.Community__c, String.valueOf(con.User_Portal_Status__C), con.Email, con.AccountId);
                 system.debug('::: Is contact already UPDATING: ' + con);
                 //update con;
+
             }
 
 
@@ -670,229 +930,122 @@ public without sharing class OneId_RegistrationProcessController {
         }
         return null;
     }
-  
-  
-  public static void increaseCodeCoverage(){
-      Integer i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
+   @AuraEnabled
+    public static StatesAndAlternateNames getStates(String country){
+        List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, (SELECT IATA_ISO_State__r.Name, GeonameName__c, GeonameHierarchy_label__c, Name FROM IATA_ISO_Cities__r ) FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
+        Map<ID, IATA_ISO_City__c> ma = new Map<ID,IATA_ISO_City__c>([SELECT GeonameAlternateNames__c FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name = :country]);
+        StatesAndAlternateNames states = new StatesAndAlternateNames(liis, ma);
+
+        return states;
     }
+    
+    @TestVisible
+    public class StatesAndAlternateNames{
+        @AuraEnabled 
+        public List<IATA_ISO_State__c> states;
+        
+        @AuraEnabled
+        public Map<ID, IATA_ISO_City__c> idAndAlternateNames;
+
+         public StatesAndAlternateNames(List<IATA_ISO_State__c> states, Map<ID, IATA_ISO_City__c> idAndAlternateNames){
+           this.states = states;
+           this.idAndAlternateNames = idAndAlternateNames;  
+        }
+        
+    }
+
+    /* Manuel Conde commented this... 
+
+    public static void increaseCodeCoverage(){
+        Integer i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+    }
+
+     */
 
 }

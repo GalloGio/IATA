@@ -104,4 +104,29 @@ public class IfapXmlParserTest {
 		System.assert(true, reassessmentRequest.getReassessmentRejectionReason() == 'reason');
 	}
 
+	private static testmethod void parseIfapResultTestFinancialCriteria() {
+		IfapXmlParser demo = new IfapXmlParser();
+
+		String str ='<?xml version="1.0" ?>'+
+			+'<WorkflowIntegrationDictionary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
+			+'<SalesforceCaseNumber>00000002</SalesforceCaseNumber>'
+			+'<File>'
+			+'<FileName>MX-P-8653021.pdf</FileName>'
+			+'<FileType>FinancialAssessmentResult</FileType>'
+			+'</File>'
+			+'<GFAStatus>Unsatisfactory - New Financial Security</GFAStatus>'
+			+'<FinancialCriteriaTotalScore>100</FinancialCriteriaTotalScore>'
+			+'<FinancialSecurity><Amount>100</Amount><Currency_x>EUR</Currency_x></FinancialSecurity>'
+			+'<Error>'
+			+'<ErrorCode>0</ErrorCode>'
+			+'</Error>'
+			+'</WorkflowIntegrationDictionary>';
+
+		XmlStreamReader reader = new XmlStreamReader(str);
+		IfapXmlParser.IfapResult ReassessmentRequest = demo.parseIfapResult(reader);
+		System.debug(ReassessmentRequest);
+
+		System.assertEquals('100',ReassessmentRequest.getFinancialCriteriaTotalScore());
+
+	}
 }

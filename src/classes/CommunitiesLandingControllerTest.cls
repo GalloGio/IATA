@@ -8,4 +8,12 @@
         controller.forwardToStartPage();
 		controller.fakemethod();
       }
+    
+     @IsTest(SeeAllData=true) public static void testCommunitiesLandingControllerGDPR() {
+        // Instantiate a new controller with all parameters in the page
+        Test.setCurrentPageReference(new PageReference('Page.CommunitiesLanding')); 
+        System.currentPageReference().getParameters().put('serviceName', Label.TECH_GDPR_Community_Name);
+        CommunitiesLandingController controller = new CommunitiesLandingController();
+        controller.forwardToStartPage();
+      }
 }

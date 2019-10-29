@@ -4,7 +4,7 @@ private class IEC_SubscriptionsControllerTest
 	private static List<Zuora__Subscription__c> lstSubscriptionList;
 	private static List<Zuora__SubscriptionProductCharge__c> lstSubscriptionCharge;
 
-	private static zqu__ZProduct__c oProduct;
+	private static Product2 oProduct;
 	private static zqu__ProductRatePlan__c oProductRatePlan;
 	private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
 
@@ -41,10 +41,10 @@ private class IEC_SubscriptionsControllerTest
         if (bCreateCharge) {
             // create dummy subscription charge
             lstSubscriptionCharge = new List<Zuora__SubscriptionProductCharge__c> {
-                IECTestUtil.createSampleSubscriptionCharge(subs01.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
-                , IECTestUtil.createSampleSubscriptionCharge(subs02.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
-                , IECTestUtil.createSampleSubscriptionCharge(subs03.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
-                , IECTestUtil.createSampleSubscriptionCharge(subs04.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
+                IECTestUtil.createSampleSubscriptionCharge2(subs01.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
+                , IECTestUtil.createSampleSubscriptionCharge2(subs02.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
+                , IECTestUtil.createSampleSubscriptionCharge2(subs03.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
+                , IECTestUtil.createSampleSubscriptionCharge2(subs04.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
             };
             insert lstSubscriptionCharge;
 
@@ -67,13 +67,13 @@ private class IEC_SubscriptionsControllerTest
         insert productAccess;
 
         // create dummy Zuora product
-        zqu__ZProduct__c prod = IECTestUtil.CreateSampleProduct('Product1');
+        Product2 prod = IECTestUtil.CreateSampleProduct2('Product1');
         prod.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
         prod.ProductCategory__c = IECConstants.ProductCategory_SF_CACPRO;
         insert prod;
         
         // create dummy Zuora rate plan
-        zqu__ProductRatePlan__c ratePlan = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, prod);
+        zqu__ProductRatePlan__c ratePlan = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 1', false, prod);
         ratePlan.zqu__Deleted__c = false;
         insert ratePlan;
         
@@ -88,7 +88,7 @@ private class IEC_SubscriptionsControllerTest
         insert myProdCat;
         
         // create dummy product info
-        Product_Information__c myProdInfo = IECTestUtil.CreateSampleProductInfo('My product', myProdCat, prod);
+        Product_Information__c myProdInfo = IECTestUtil.CreateSampleProductInfo2('My product', myProdCat, prod);
         myProdInfo.Product_Audience__c = IECConstants.ProductInformationAudience_MEMBERAIRLINE;
         insert myProdInfo;
 

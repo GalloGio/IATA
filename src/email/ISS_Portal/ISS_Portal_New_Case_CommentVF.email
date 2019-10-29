@@ -15,7 +15,7 @@
 
 {!$Label.ISSP_Email_aNewComment}
 <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
-<a href="{!$Label.ISSP_Email_PortalUrl}{!relatedTo.id}{!IF(relatedTo.CNSCase__c, '&CommunityName=CNS','')}">{!relatedTo.CaseNumber}</a>.<BR/>
+<a href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">{!relatedTo.CaseNumber}</a>.<BR/>
 </apex:outputPanel>
 <apex:outputPanel rendered="{!!relatedTo.Visible_on_ISS_Portal__c}">
 {!relatedTo.CaseNumber}.<BR/>
@@ -33,7 +33,7 @@
 {!$Label.ISSP_Email_YouCanAccess}
 <center><br />
 <a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
-href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_Case?caseId={!relatedTo.id}{!IF(relatedTo.CNSCase__c, '&CommunityName=CNS','')}">{!IF(relatedTo.CNSCase__c, $Label.ISSP_Email_CNS_Portal, $Label.ISSP_Email_IataPortal)}</a>
+href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">{!IF(relatedTo.CNSCase__c, $Label.ISSP_Email_CNS_Portal, $Label.ISSP_Email_IataPortal)}</a>
   </center>
 </apex:outputPanel>
 <BR/>

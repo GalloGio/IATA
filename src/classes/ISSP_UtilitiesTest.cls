@@ -15,7 +15,7 @@ private  class ISSP_UtilitiesTest {
 	    	ISSP_Utilities.SendErrorNotificationEMail('test');
 	    	ISSP_Utilities.getContactTypeById(con.Id);
 	    	ISSP_Utilities.sendEmailToAdmins(Con.Id);
-	    	ISSP_Utilities.DMLOpt(new set<string>{testCase.Id});
+	    	ISSP_Utilities.DMLOpt(new set<ID>{testCase.Id});
 			ISSP_Utilities.isCNS();
 	    }
 
@@ -53,7 +53,7 @@ private  class ISSP_UtilitiesTest {
 	    	ISSP_Utilities.SendErrorNotificationEMail('test');
 	    	ISSP_Utilities.getContactTypeById(con.Id);
 	    	ISSP_Utilities.sendEmailToAdmins(Con.Id);
-	    	ISSP_Utilities.DMLOpt(new set<string>{testCase.Id});
+	    	ISSP_Utilities.DMLOpt(new set<ID>{testCase.Id});
 			ISSP_Utilities.isCNS();
 
 

@@ -10,20 +10,20 @@ public with sharing class vfIECUpgrade extends IECPageController {
   public Boolean bExpandedTCs {get; set;}
   public Boolean bExpandedAutoRenewal {get; set;}
   public Boolean bExpandedPaymentMethod {get; set;}
-    public Boolean needToFillContactInfo { get; set; }
-    public Boolean inEditContactInfo { get; set; }
-    public Boolean isCountryFilled { get; set; }
-    public IECAddress__c oBillingAddress { get; set; }
-    public IECAddress__c oOriginalBillingAddress { get; set; }
-    public Location__c oBillingLocation { get; set; }
-    public IECVATUtil.VATConfiguration vatConfig { get; set; }
+  public Boolean needToFillContactInfo { get; set; }
+  public Boolean inEditContactInfo { get; set; }
+  public Boolean isCountryFilled { get; set; }
+  public IECAddress__c oBillingAddress { get; set; }
+  public IECAddress__c oOriginalBillingAddress { get; set; }
+  public Location__c oBillingLocation { get; set; }
+  public IECVATUtil.VATConfiguration vatConfig { get; set; }
   public Decimal dICHMinAmount {get; private set;}
-    public Decimal dCreditCardMaxAmount {get; private set;}
-    
-    public boolean displayPopUp {get; set;} 
+  public Decimal dCreditCardMaxAmount {get; private set;}
+  
+  public boolean displayPopUp {get; set;} 
 
   private String sSubscriptionId;
-    public String sPurchaseOrder { get; set; }
+  public String sPurchaseOrder { get; set; }
   private List<Product_Rate_Plan_Information__c> lstRatePlanInfoUpgradeTargets;
   
   public Zuora__Subscription__c oSubscription { get; private set; }
@@ -87,7 +87,6 @@ public with sharing class vfIECUpgrade extends IECPageController {
   public Product_Rate_Plan_Information__c oRatePlanInfoTargetUpgrade { get; private set; }
   public List<UIUpgradableRatePlan> lstUIRatePlanInfoUpgradeTargets { get; set; }
   public Decimal subTotal { get; private set; }
-//  public Decimal taxes { get; private set; }
   public Decimal taxCharge { get; private set; }
   public Decimal shippingCharge { get; private set; }
   public Decimal total { get; private set; }
@@ -549,12 +548,6 @@ public with sharing class vfIECUpgrade extends IECPageController {
       if (String.isBlank(selectedPaymentMethodType))
         throw new IECApplicationException(Label.IEC_Error_PleaseSelectPaymentMethod);
       
-      /* Commented on 7-7-2014: Luc has put this on hold till further notice (Spira #9408)
-      // check if PO is not empty when choosing ICH payment method
-      if (String.isBlank(sPurchaseOrder) && selectedPaymentMethodType == 'ICH')
-        throw new IECApplicationException(Label.IEC_Error_PO_Required);
-      */
-      
       // parse the selected payment method type
       IECConstants.PaymentType ePmType = IECConstants.parsePaymentMethodToEnum(selectedPaymentMethodType);
       
@@ -628,8 +621,6 @@ public with sharing class vfIECUpgrade extends IECPageController {
         }
         else {
           String sErrors = IECZuoraHelper.getErrorMessagesString(upgradeResult.errors, '<br />');
-          //for (Zuora.zObject error: upgradeResult.errors)
-          //  sErrors += error.getValue('Message');
           upgradeSuccessful = false;
           throw new IECApplicationException(Label.IEC_Error_CannotUpgrade + '<br />' + sErrors);
         }
@@ -771,7 +762,7 @@ public with sharing class vfIECUpgrade extends IECPageController {
           sPaymentMethod = 'Credit Card<BR/>';
           for(IECZuoraHelper.PaymentMethod pm : paymentMethods) {
             if (pm.zId == selectedCreditCardPaymentId) {
-              sPaymentMethod += pm.creditCardType + ' ' + pm.CreditCardMaskNumber ;//+ '<BR>' + pm.creditCardExpirationMonth + '/' + pm.creditCardExpirationYear;
+              sPaymentMethod += pm.creditCardType + ' ' + pm.CreditCardMaskNumber ;
               break;
             }
           }          
@@ -800,9 +791,6 @@ public with sharing class vfIECUpgrade extends IECPageController {
             if (loggedCustomer.PaymentMethods != null && loggedCustomer.PaymentMethods.size() > 0) {
                 paymentMethods = IECZuoraHelper.convertFromzObjectListToPaymentMethod(loggedCustomer.PaymentMethods);
             }
-            
-            // check all payment type for if they allow the total amount (with taxes)
-            //isPaymentAvailableWithBankTransfer = IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_BankTransfer, total);
             
             // if the user can pay by ICH, check amount
             if (hasICHCode) {
@@ -1009,9 +997,6 @@ public with sharing class vfIECUpgrade extends IECPageController {
     }
     
     
-    
-    
-    
   /**
    * Let the user modify the Contact Info
    */
@@ -1066,7 +1051,7 @@ public with sharing class vfIECUpgrade extends IECPageController {
         vatConfig = null;
       }
       else {
-                vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country__c); // Changed by Samy (2016-03-01) from Country__c
+        vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country__c); // Changed by Samy (2016-03-01) from Country__c
 
         if (vatConfig != null && vatConfig.TaxIDMandatory) {
           if (vatConfig.ShowTax1) {
@@ -1107,14 +1092,11 @@ public with sharing class vfIECUpgrade extends IECPageController {
           }
         }
 
-                if (lstStateProvince.size() > 1 && String.isBlank(oBillingAddress.ISO_State__c)) // Changed by Samy (2016-03-01) from State__c
-                {
-                    lstErrorMessages.add(Label.IEC_Error_Required_field + ' State/Province');
-                }
-                /*
-                if (String.isBlank(oBillingAddress.ZipCode__c))
-                    lstErrorMessages.add(Label.IEC_Error_Required_field + ' Zip/Postal code');
-                */
+        if (lstStateProvince.size() > 1 && String.isBlank(oBillingAddress.ISO_State__c)) // Changed by Samy (2016-03-01) from State__c
+        {
+            lstErrorMessages.add(Label.IEC_Error_Required_field + ' State/Province');
+        }
+               
       }
       
       if (lstErrorMessages.isEmpty()) {
@@ -1265,8 +1247,6 @@ public with sharing class vfIECUpgrade extends IECPageController {
     public void setInvoiceData(Zuora.zObject oInvData) {
       Zuora.zObject invoice = (Zuora.zObject)oInvData.getValue('Invoice');
       subTotal = (Decimal)invoice.getValue('AmountWithoutTax');
-      //taxes = (Decimal)invoice.getValue('TaxAmount');
-      //total = (Decimal)invoice.getValue('Amount');
       
       List<Object> invoiceItems = oInvData.getArrayValue('InvoiceItem');
       if(invoiceItems != null) {

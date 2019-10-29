@@ -12,7 +12,24 @@ global with sharing class WSJavascript {
         
         Database.insert(events, false);
         
-		SignaturitRest.updateEmailStatus(new List<Tracked_Email__c>{te});
+        SignaturitRest.updateEmailStatus(new List<Tracked_Email__c>{te});
     }
 
+    /**
+        Send an email to the input case suign the input template
+    **/
+    webservice static void sendEmail(Id caseId, String templateName) {
+        Case cse = [SELECT Id, ContactId FROM Case WHERE Id = :caseId];
+        EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = :templateName];
+        OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage(); 
+        mail.setOrgWideEmailAddressId(orgAddress.Id);
+        mail.setTemplateId(template.Id);
+        mail.setTargetObjectId(cse.ContactId);
+        mail.setWhatId(cse.Id);
+        mail.setTreatTargetObjectAsRecipient(true);
+        mail.setSaveAsActivity(true);
+        Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+    }
 }

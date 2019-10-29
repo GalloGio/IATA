@@ -33,7 +33,7 @@ private class ISSP_SISMembershipApplicationForm_CTest {
         insert country;
         Account account = new Account(
             Name = 'test Account',
-            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IATA_Agency').getRecordTypeId(),
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency'),
             Sector__c = 'Airline',
             Category__c = 'CASS Associate',
             BillingCountry = country.Name,

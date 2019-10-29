@@ -438,6 +438,15 @@
                             </div>
                             </apex:outputPanel>
                             
+                            <!-- WMO-578 --> 
+                            <apex:outputPanel styleClass="billingStreetPanel">
+                                <label for="aggregator" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_AMS_MSO_Aggregator}</label>
+                                <div class="col-lg-9" style="padding-top:7px;">
+                                    <apex:inputField id="aggregator" value="{!accreditationForm.Trade_Name__c}"/>
+                                    <apex:image value="/img/msg_icons/info16.png" style="padding-left: 5px;" title="{!$Label.ISSP_AMS_MSO_Aggregator_Info}" />
+                                </div>
+                            </apex:outputPanel>
+                            
                             <br/>
                         </apex:pageBlockSection>
 
@@ -539,6 +548,15 @@
                                     <div class="col-lg-9" style="">
                                         <apex:outputField id="emailAddress" value="{!accreditationForm.Branch_Office_Email__c}"/>
                             </div>
+                                </apex:outputPanel>
+                                
+                                <!-- WMO-578 -->
+                                <apex:outputPanel styleClass="billingStreetPanel">
+                                    <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_AMS_MSO_Aggregator}</label>
+                                    
+                                    <div class="col-lg-9" style="">
+                                        <apex:outputField id="tradeNameAgg" value="{!accreditationForm.Trade_Name__c}"/>
+                                    </div>
                                 </apex:outputPanel>
 
                                 <br/>

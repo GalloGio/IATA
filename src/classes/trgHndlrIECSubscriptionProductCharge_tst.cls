@@ -9,7 +9,7 @@
 private class trgHndlrIECSubscriptionProductCharge_tst {
 	private static Product_Category__c oProductCategory;
 	private static Product_Information__c oProductInfo;
-	private static zqu__ZProduct__c oProduct;
+	private static Product2 oProduct;
 	private static zqu__ProductRatePlan__c oProductRatePlan;
 	private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge;
 	private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
@@ -19,13 +19,13 @@ private class trgHndlrIECSubscriptionProductCharge_tst {
     static testMethod void TestSubscriptionCharge() {
     	System.debug('Unit Test: Start: TestSubscriptionCharge');
         // create dummy Zuora product
-    	oProduct = IECTestUtil.CreateSampleProduct('Product1');
+    	oProduct = IECTestUtil.CreateSampleProduct2('Product1');
     	oProduct.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
     	oProduct.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
     	insert oProduct;
     	
     	// create dummy Zuora rate plan
-    	oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, oProduct);
+    	oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 1', false, oProduct);
     	oProductRatePlan.zqu__Deleted__c = false;
     	insert oProductRatePlan;
     	
@@ -40,7 +40,7 @@ private class trgHndlrIECSubscriptionProductCharge_tst {
         insert oProductCategory;
         
         // create dummy product info
-        oProductInfo = IECTestUtil.CreateSampleProductInfo('My product', oProductCategory, oProduct);
+        oProductInfo = IECTestUtil.CreateSampleProductInfo2('My product', oProductCategory, oProduct);
         insert oProductInfo;
         
         // create dummy rate plan information
@@ -59,7 +59,7 @@ private class trgHndlrIECSubscriptionProductCharge_tst {
 	        insert subscription;
 	        
 	        // create dummy subscription charge
-	        subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+	        subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
 	        insert subscriptionCharge;
 	        update subscriptionCharge;
         }

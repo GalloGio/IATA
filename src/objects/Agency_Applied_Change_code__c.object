@@ -52,6 +52,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>AIMS_ID__c</fullName>
         <description>Used as unique identified for change codes coming from AIMS. It&apos;s concatenation of AGT REF, CHANGE CODE, DATETIME when CC was raised. Values coming from the query, no login in SFDC</description>
@@ -1012,6 +1013,18 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Integration_RecId__c</fullName>
+        <description>Value for RecId on the Integration process with SAP PI, 3 possible values: A (Addition), C (Change) and D (Termination)</description>
+        <externalId>false</externalId>
+        <label>Integration RecId</label>
+        <length>1</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Irregularities_Expired__c</fullName>
         <defaultValue>false</defaultValue>
         <description>If true, irregularities points are not summed in the account. It expires 12 months after the Effective_Date__c</description>
@@ -1702,6 +1715,16 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Skip_Agency_Update__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Defines if the change code should or should not be picked by the DPC integration</description>
+        <externalId>false</externalId>
+        <label>Skip Agency Update</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Source__c</fullName>
         <description>Identify the source of the IRR (Ext system)</description>
         <externalId>false</externalId>
@@ -1756,6 +1779,30 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <type>Checkbox</type>
     </fields>
     <label>Agency Applied Change code</label>
+    <listViews>
+        <fullName>RVW</fullName>
+        <columns>NAME</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>RVW</value>
+        </filters>
+        <filters>
+            <field>Reason_Code__c</field>
+            <operation>equals</operation>
+            <value>61</value>
+        </filters>
+        <filters>
+            <field>Reason_Description__c</field>
+            <operation>equals</operation>
+            <value>NON COMPLIANCE TO FINANCIAL CRITERIA</value>
+        </filters>
+        <label>RVW</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>AACC-{000000}</displayFormat>
         <label>Change code details</label>

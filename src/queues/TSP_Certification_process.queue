@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>noreply@iata.org</email>
+    <name>TSP Certification process</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersincludingACCA</publicGroup>
+        </publicGroups>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>IFG_Team</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>iiNet_Business_Team</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+        <users>
+            <user>nietoa@iata.org</user>
+            <user>asiainb@iata.org</user>
+            <user>jimenezm@iata.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

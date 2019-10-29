@@ -1,0 +1,48 @@
+.searchCasesList {
+    display: inline-block;
+    width: 80%;
+}
+
+.inputFilter {
+    display: flex;
+    align-items: center;
+}
+
+.inputFilter lightning-input {
+    width: 100%;
+    margin-top: -1px;
+}
+
+.noRecentCases {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nrResultsSpinner{
+    position: relative;
+    display: inline-block;
+    margin: 6px 8px;
+    width: 16px;
+    vertical-align: middle;
+}
+
+.noPadding {
+    padding: 0px;
+}
+
+.filterButton{
+    padding-left: 5px;
+}
+
+/* MODAL */
+
+.modalTitle{
+    font-size: 20px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: normal;
+    color: #333;
+}

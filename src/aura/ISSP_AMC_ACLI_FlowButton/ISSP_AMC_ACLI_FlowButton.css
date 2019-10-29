@@ -1,0 +1,3 @@
+.THIS .forceToastMessage .slds-notify--toast{
+    white-space : pre-line !important;
+}

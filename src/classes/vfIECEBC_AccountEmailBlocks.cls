@@ -8,7 +8,7 @@
   *  - The user interaction will result in selectedProductRatePlan and selectedProductRatePlanWrapper currently not saved
   *  - This class needs to be global for the ProductratePlanWrapper to be sortable.
   *  - Displayed productRatePlanWrapperOptionList is sorted based on currentEmailCredits  
-  *  - Note that we do not use zqu__ZProduct__r.ProductCategory__c as the base for selecting the Product Rate Plan here.
+  *  - Note that we do not use zqu__Product__r.ProductCategory__c as the base for selecting the Product Rate Plan here.
   *  
   * History: 
   *  - 20160809-sl: initial workable version.
@@ -46,11 +46,11 @@ global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_C
 	}
 	
 	// =======================================================================-
-	// zqu__ZProduct__c.Id related for the Email Block Product Rate Plan
+	// Product2.Id related for the Email Block Product Rate Plan
 	// this is based on what defined in EBC_Setup and whether the user is a member
 	private Id emailBlockProductId {
 		get{
-			Id prodId = (isMember) ? IECEBC_Utility.ebcSetup.Member_Email_Block_Product__c : IECEBC_Utility.ebcSetup.Non_Member_Email_Block_Product__c;
+			Id prodId = (isMember) ? IECEBC_Utility.ebcSetup.New_Member_Email_Block_Product__c : IECEBC_Utility.ebcSetup.New_Non_Member_Email_Block_Product__c;
 			return prodId;
 		}
 	}
@@ -141,11 +141,11 @@ global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_C
 						from Product_Rate_Plan_Informations__r order by Order__c, Id)
 					
 					from zqu__ProductRatePlan__c 
-					where zqu__ZProduct__r.Id = : emailBlockProductId
+					where zqu__Product__r.Id = : emailBlockProductId
 							and zqu__Deleted__c != true
 							and zqu__EffectiveStartDate__c <= TODAY
 							and zqu__EffectiveEndDate__c >= TODAY
-					order by zqu__ZProduct__r.zqu__EffectiveEndDate__c ASC, Id DESC
+					order by zqu__Product__r.zqu__EffectiveEndDate__c ASC, Id DESC
 					limit 100]);
 					
 				productRatePlanOptionList = prodRatePlanMap.values();

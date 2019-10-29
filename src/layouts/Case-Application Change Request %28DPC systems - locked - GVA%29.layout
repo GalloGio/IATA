@@ -506,6 +506,9 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <relatedList>RelatedTeamMemberList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedRecordConnectionList</relatedList>
     </relatedLists>
     <relatedLists>

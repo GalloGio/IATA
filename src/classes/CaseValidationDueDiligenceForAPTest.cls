@@ -1,7 +1,7 @@
 @isTest
 private class CaseValidationDueDiligenceForAPTest {
 
-    public static final Id RT_ICCS_ASP_ID = Schema.SObjectType.Case.RecordTypeInfosByDeveloperName.get('IDFS_Airline_Participation_Process').getRecordTypeId();
+    public static final Id RT_ICCS_ASP_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case','IDFS_Airline_Participation_Process');
 
     static testMethod void testController() {
         insert new Case_Reason_Service__c(Name = 'SIS Client', Service__c = 'SIS Client', Provider_Required__c = false);

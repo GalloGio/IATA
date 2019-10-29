@@ -1,0 +1,36 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="OneId_NDCProductsAndServicesController">
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <aura:attribute type="String" name="recId"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="relatedList" type="List"/>
+    <aura:attribute name="selectedRowsList" type="List"/>
+    <aura:attribute name="errors" type="Object" default="[]"/>
+    <aura:attribute name="draftValues" type="Object" default="[]"/>
+    <aura:attribute name="loaded" type="Boolean" default="false"/>
+    <aura:attribute name="cardTitle" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div aura:id="mainContainer" class="slds-container_medium slds-container_center slds-p-vertical_large">
+        <lightning:card  title="Products And Services" class="slds-m-vertical_x-large">
+            <lightning:spinner alternativeText="Loading" aura:id="spinner"/>
+            <aura:set attribute="actions">
+                    <lightning:button label="New" title="New" onclick="{! c.handleShowProductModal }"/>
+                <lightning:button label="Delete" title="Delete" onclick="{! c.deleteSelectedRecords }"/>
+            </aura:set>
+            <p class="slds-p-horizontal_small">
+                <aura:if isTrue="{! v.relatedList.length > 0}">
+                    <lightning:datatable columns="{! v.columns }"
+                                         data="{! v.relatedList }"
+                                         keyField="AirlineId"
+                                         errors="{! v.errors }"
+                                         draftValues="{! v.draftValues }"
+                                         onsave="{! c.handleSaveEdition }"
+                                         onrowselection="{! c.updateSelectedRows }"
+                                         class="slds-p-vertical_large"/>
+                    <aura:set attribute="else">
+                        <ui:outputText value="No products and services selected"/>
+                    </aura:set>
+                </aura:if>
+            </p>
+        </lightning:card>
+    </div>   
+</aura:component>

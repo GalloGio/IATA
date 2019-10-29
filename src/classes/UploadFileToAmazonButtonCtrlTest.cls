@@ -52,8 +52,7 @@ public class UploadFileToAmazonButtonCtrlTest {
 		Long filesize = 100;
 		String amazonKey = 'path/testfileName.pdf';
 		String fileName='ICE POP';
-		RecordTypeInfo rtInfo = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get('File');
-		Id RTId = rtInfo.getRecordTypeId();
+		Id RTId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c','File');
 
 		AmazonFile__c azFile = new AmazonFile__c(
 				Name='ICE POP',

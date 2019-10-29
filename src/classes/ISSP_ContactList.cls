@@ -81,13 +81,11 @@ public with sharing class ISSP_ContactList {
             rejectionReasonOptions = new List<SelectOption>();
             rejectionReasonOptions.add(new SelectOption('Retired', Label.ISSP_RejectReason_Retired));
             rejectionReasonOptions.add(new SelectOption('LeftCompany', Label.ISSP_RejectReason_Left));
-            //rejectionReasonOptions.add(new SelectOption('AccessDenied', Label.ISSP_RejectReason_Denied));
             rejectionReasonOptions.add(new SelectOption('UnknownContact', Label.ISSP_RejectReason_Unknown));
             
             inactiveReasonOptions = new List<SelectOption>();
             inactiveReasonOptions.add(new SelectOption('Retired', Label.ISSP_RejectReason_Retired));
             inactiveReasonOptions.add(new SelectOption('LeftCompany', Label.ISSP_RejectReason_Left));
-            //inactiveReasonOptions.add(new SelectOption('AccessDenied', Label.ISSP_RejectReason_Denied));
             inactiveReasonOptions.add(new SelectOption('UnknownContact', Label.ISSP_RejectReason_Unknown));
             
             AlphaList = new list<String> {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Other', 'All'};
@@ -200,7 +198,6 @@ public with sharing class ISSP_ContactList {
     }
     
     public Pagereference refresh(){ 
-        //system.debug('selectedList: ' + selectedList);
         if(String.isNotBlank(selectedList)){
             buttonChange = contactListViewMap.get(selectedList).Button_Change__c;
             buttonActivate = contactListViewMap.get(selectedList).Button_Activate__c;
@@ -213,10 +210,8 @@ public with sharing class ISSP_ContactList {
     }
     public string getQueryConditions() {
         
-        //string t =  selectedList==null||selectedList=='' ? '' : contactListViewMap.get(selectedList).SOQL_Filter__c;
         system.debug('contactListViewMap >>> ' + contactListViewMap);
-        //String queryConditions =  String.isBlank(selectedList) ? '' : contactListViewMap.get(selectedList).SOQL_Filter__c;
-        //if (selectedList == null) selectedList = '';
+
         if(contactListViewMap == null || contactListViewMap.isEmpty())
             return 'WHERE ID = NULL';
         
@@ -382,8 +377,7 @@ public with sharing class ISSP_ContactList {
         public Boolean isDataEmpty(object oneData) {
             ISSPContactListView__c contactListViewItem = (ISSPContactListView__c)oneData;
             return String.isBlank(contactListViewItem.Profiles_Id__c);
-            //Set<string> profilesIdSet = new Set<string>(contactListViewItem.Profiles_Id__c.split(';'));
-            //return profilesIdSet.contains(profileId15);
+
         }
         
     }
@@ -414,18 +408,18 @@ public with sharing class ISSP_ContactList {
     
     public void reject(){
         errorMessage = new list<string>();
-        Set <Id> contactIds = new Set <Id>();
+        List<Contact> cls = new List<Contact>();
         for (contactWrapper thisContactRecord : contactList){
             system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
             if (thisContactRecord.selected){
-                contactIds.add(thisContactRecord.recordContact.Id);
+                cls.add(thisContactRecord.recordContact);
             }
         }
-        if (contactIds.size() == 0){
+        if (cls.isEmpty()){
             errorMessage.add(Label.ISSP_SelectOneContact);
         }
-        else if (contactIds.size() > 0){
-            processMultiplePortalUserStatusChange(contactIds, 'Rejected', 'Rejected');
+        else{
+            processMultiplePortalUserStatusChange(cls, 'Rejected', 'Rejected');
         }
         refresh();
     }
@@ -456,6 +450,7 @@ public with sharing class ISSP_ContactList {
         resetIdCard();
         errorMessage = new list<string>();
         Set <Id> contactIds = new Set <Id>();
+        List<Contact> cls = new List<Contact>();
         String productMessage = '';
         for (contactWrapper thisContactRecord : contactList){
             system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
@@ -467,6 +462,7 @@ public with sharing class ISSP_ContactList {
                     productMessage = productMessage + '</br>'+thisContactRecord.recordContact.Name;
                 }
                 contactIds.add(thisContactRecord.recordContact.Id);
+                cls.add(thisContactRecord.recordContact);
             }
         }
         if (productMessage != ''){
@@ -474,7 +470,7 @@ public with sharing class ISSP_ContactList {
         }
         else
         {
-            if (contactIds.size() == 0){
+            if (contactIds.isEmpty()){
                 errorMessage.add(Label.ISSP_SelectOneContact);
             }
             else if (contactIds.size() > 0){
@@ -533,7 +529,7 @@ public with sharing class ISSP_ContactList {
                 }
                 //ACAMBAS - TIP-282 End 
                 else{
-                    processMultiplePortalUserStatusChange(contactIds, 'Deactivated', contactStatus);
+                    processMultiplePortalUserStatusChange(cls, 'Deactivated', contactStatus);
                 }
             }
         }
@@ -542,59 +538,65 @@ public with sharing class ISSP_ContactList {
     
     public void activateContact(){
         errorMessage = new list<string>();
-        Set <Id> contactIds = new Set <Id>();
+        List<Contact> cls = new List<Contact>();
         for (contactWrapper thisContactRecord : contactList){
             system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
             if (thisContactRecord.selected){
-                contactIds.add(thisContactRecord.recordContact.Id);
+                cls.add(thisContactRecord.recordContact);
             }
         }
-        if (contactIds.size() == 0){
+        if (cls.isEmpty()){
             errorMessage.add(Label.ISSP_SelectOneContact);
         }
-        else if (contactIds.size() > 0){
-            processMultiplePortalUserStatusChange(contactIds, 'Approved User', 'Active');
+        else{
+            processMultiplePortalUserStatusChange(cls, 'Approved User', 'Active');
         }
         refresh();
     }
     
     public void makeAdmin(){
         errorMessage = new list<string>();
-        Set <Id> contactIds = new Set <Id>();
+        List<Contact> cls = new List<Contact>();
         for (contactWrapper thisContactRecord : contactList){
             system.debug('EMAIL: ' + thisContactRecord.recordContact.Email + ' SELECTED: ' + thisContactRecord.selected);
             if (thisContactRecord.selected){
-                contactIds.add(thisContactRecord.recordContact.Id);
+                cls.add(thisContactRecord.recordContact);
             }
         }
-        if (contactIds.size() == 0){
+        if (cls.size() == 0){
             errorMessage.add(Label.ISSP_SelectOneContact);
         }
-        else if (contactIds.size() > 1){
+        else if (cls.size() > 1){
             errorMessage = new list<string>();
             errorMessage.add(Label.ISSP_SelectOnlyOneContact);
         }
-        else if (contactIds.size() > 0){
-            processMultiplePortalUserStatusChange(contactIds, 'Approved Admin', 'Active');
+        else if (cls.size() > 0){
+            processMultiplePortalUserStatusChange(cls, 'Approved Admin', 'Active');
         }
         refresh();
     }
-    
+
     public void processMultiplePortalUserStatusChange(Set<Id> contactIds, String action, String inactivationReason){
-        system.debug('ACTION: ' + action);
-        system.debug('IDS: ' + contactIds);
+
         List <Contact> processContactList = [SELECT Id, Name, User_Portal_Status__c, Email FROM Contact WHERE Id IN :contactIds];
+        processMultiplePortalUserStatusChange(processContactList,action, inactivationReason);
+    }
+    
+    public void processMultiplePortalUserStatusChange(List<Contact> processContactList, String action, String inactivationReason){
+        system.debug('ACTION: ' + action);
+        system.debug('IDS: ' + processContactList);
+
         if (!processContactList.isEmpty()){
+            system.debug('STATUS: ' + processContactList[0].User_Portal_Status__c);
+            String currentStatus = processContactList[0].User_Portal_Status__c;
+            if (currentStatus == '' || currentStatus == null){
+                currentStatus = 'New user';
+            }
+            String theAction = ISSP_PortalUserStatusChange.actionsMap.get(currentStatus).get(action);
+            
             for (Contact thisContact : processContactList){
-                system.debug('STATUS: ' + processContactList[0].User_Portal_Status__c);
-                String currentStatus = processContactList[0].User_Portal_Status__c;
-                if (currentStatus == '' || currentStatus == null){
-                    currentStatus = 'New user';
-                }
-                String theAction = ISSP_PortalUserStatusChange.actionsMap.get(currentStatus).get(action);
                 Savepoint sPointContact = Database.setSavepoint();
-                //thisContact.User_Portal_Status__c = action;
-                //update thisContact;
+
                 String theResult = ISSP_PortalUserStatusChange.runAction(thisContact.Id, thisContact.Email, theAction, action, inactivationReason, null);
                 system.debug('theResult: ' + theResult);
                 if (theResult != ''){
@@ -611,26 +613,7 @@ public with sharing class ISSP_ContactList {
         }
     }
     
-    /*
-    public void disableUser(String contactId){
-        update new Contact(Id=contactId,User_Portal_Status__c='Deactivated');
-        ISSP_PortalUserStatusChange.futureDisabelUser(contactId);
-        Set <Id> teamMemberIdSet = new Set <Id>();
-        list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled from User u where contactId =:contactId];
-        for(User u : usersToUpdate){
-            teamMemberIdSet.add(u.Id);
-        }
-        if (!teamMemberIdSet.isEmpty()){
-            ISSP_HierarchyAccountTeamAccounts.deleteHierarchyAccountTeamMemberAccounts(teamMemberIdSet);
-        }
-    }
-    
-    public void rejectUser(String contactId){
-        update new Contact(Id=contactId,User_Portal_Status__c='Deactivated', Status__c='Inactive');
-        ISSP_PortalUserStatusChange.futureDisabelUser(contactId);
-    }
-    */
-    
+
     @future
     public static void updateContact (String contactId, String userStatus){
         system.debug('updating contact: ' + contactId);

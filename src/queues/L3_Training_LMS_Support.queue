@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>L3-Training-LMS-Support</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>L3_Training_LMS_Support</publicGroup>
+        </publicGroups>
+        <users>
+            <user>karlssonb@iata.org</user>
+            <user>waddellj@iata.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

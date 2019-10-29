@@ -166,6 +166,8 @@
         <fields>Date_of_Meeting__c</fields>
         <fields>Date_Legal_Requested_to_Sign_Off_Minutes__c</fields>
         <relatedList>LocalGovernance_Meeting__c.Local_Governance__c</relatedList>
+        <sortField>Date_of_Meeting__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>

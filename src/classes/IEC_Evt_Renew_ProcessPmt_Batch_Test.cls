@@ -11,11 +11,11 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 	private static void InitializeData()
 	{
 		 //-- Generate Setting 
-        delete [select Id from Apex_Setting__c where Name like 'ECommerce Products Filter%'];
+        delete [select Id from Apex_Setting__c where Name like 'IEC evt renewal%'];
         List<Apex_Setting__c> lstSetting = new List<Apex_Setting__c>();
         lstSetting.add(new Apex_Setting__c(Name='IEC evt renewal batch size for taxes', Number_1__c=1));
         lstSetting.add(new Apex_Setting__c(Name='IEC evt renewal processPmt batch size', Number_1__c=5));
-        Database.insert(lstSetting, false);
+        upsert lstSetting;
         
 		/* Possible scenarios and generated errors in the batch are as follows
 			[0] ERROR - Tax and Shipping have not been calculated on the order
@@ -97,19 +97,9 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 		//oProduct.Activity_Code__c = '8888';
 		oProduct.Activity_Code__c = oProduct.SAP_Material_Number__c.left(4);
 		oProduct.Line_of_Business__c = 'Publications';
+        oProduct.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'Publication');
  		update oProduct;
  		
-		//zqu__ZProduct__c zProduct = [SELECT Id, SAPProductMaterialNo__c FROM zqu__ZProduct__c WHERE Id = :oProduct.ZProduct__c];
-		//zProduct.SAPProductMaterialNo__c = '8888-98';
-    	//update zProduct;
- 		
- 		//Product2 p = [SELECT SAP_Material_Number__c
-		//		, Display_to_ECommerce__c
-		//		, Line_of_Business__c
-		//		, IEC_Parent_Product__c
-		//		, Restricted_Customer_Type__c
-		//	FROM Product2 WHERE ID = :oProduct.Id][0];
-
 
 		//Create IEC_Event_Subscription__c
 		lstSubscription = new List<IEC_Event_Subscription__c>();
@@ -125,7 +115,6 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
         Location__c locSoldTo = TestDataGenerator.generateLocations(IECConstants.SOLDTO, oAddress.Id, lstAccount[0].Id, NULL, '321231');
         Location__c locBillTo = TestDataGenerator.generateLocations(IECConstants.BILLTO, oAddress.Id, lstAccount[0].Id, lstContact[0].Id, '123123');
         Location__c locShipTo = TestDataGenerator.generateLocations(IECConstants.SHIPTO, oAddress.Id, lstAccount[0].Id, lstContact[0].Id, '456654');
-        
         /*****************************************
 	    **	Create Orders
 	    *****************************************/
@@ -143,11 +132,9 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 
 	        lstOrder[i].IEC_Event_Release__c = oEventRelease.Id;
 	        lstOrder[i].IEC_Event_Subscription__c = lstSubscription[i].Id;
-	        
 	        lstOrder[i].SoldTo_Location__c = locSoldTo.Id;
 	        lstOrder[i].BillTo_Location__c = locBillTo.Id;
 	        lstOrder[i].ShipTo_Location__c = locShipTo.Id;
-	        
         }
         lstOrder[0].IEC_Event_Subscription__c = null;
         lstOrder[1].IEC_Event_Subscription__c = null;
@@ -188,7 +175,7 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 		IEC_Evt_Renew_ProcessPmt_Batch batch = new IEC_Evt_Renew_ProcessPmt_Batch(oEventRelease.Id);
 		Database.ExecuteBatch(batch,7);
 		Test.stopTest();
-		
+
 		// Run the asserts after the STOPTEST to make sure the batch has finished
 		List<IEC_Event_Release_Log__c> lstLog = [SELECT Id, Order__c FROM IEC_Event_Release_Log__c WHERE IEC_Event_Release__c = :oEventRelease.Id AND Order__c IN :setOrderId];
 		//System.assertEquals(5, lstLog.size(), 'Five errors should be generated based on the document scenarios in the InitializeData function.');

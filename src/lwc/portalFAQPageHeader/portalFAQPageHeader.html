@@ -1,0 +1,29 @@
+<template>
+    <div class="portalFAQPageHeader">
+        <c-portal-page-container>
+            <span slot="componentContent">
+                <div>
+                    <div class="breadcrumbsHeight">
+                        <c-portal-breadcrumbs show-in-white=true last-breadcrumb-label={category}></c-portal-breadcrumbs>
+                    </div>
+
+                    <div class="headerContainer">
+                        <div class="headerIconContainer">
+                            <div class="headerIconDiv">    
+                                <img src={iconLink}/>
+                            </div>
+                        </div>
+                        <div class="slds-p-left_small headerTextContainer">
+                            <div class="headerTextAlign">
+                                <div  class="slds-p-top_medium text-white text-xxxsmall text-bold slds-text-title_caps">{label.CSP_FAQ_HeaderTitle}</div>
+                                <div  class="slds-p-vertical_x-small text-white text-large text-bold">{category}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </span>
+        </c-portal-page-container>
+    </div>
+    
+</template>

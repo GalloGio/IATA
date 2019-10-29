@@ -71,6 +71,20 @@ public with sharing class ISSP_Homepage {
 
         UserLanguage = UserLanguage();
     }
+    
+    public Boolean isPortalNavigationBar {
+    get {
+        if(isPortalNavigationBar == null) {
+            User usr = [SELECT Id, Profile.Name FROM User WHERE Id =: UserInfo.getUserId()];
+
+            isPortalNavigationBar = ISSP_CS__c.getValues('CS Portal Redirect') == null || usr.Profile.Name.toUpperCase().contains('DPC') || usr.Profile.Name.toUpperCase().contains('PWC');
+        }
+
+        system.debug('SS## isPortalNavigationBar: ' + isPortalNavigationBar);
+        return isPortalNavigationBar;
+    }
+    set;
+    }
 
     public void populateVariables(){
         sidraCaseIdToShow='';
@@ -85,7 +99,7 @@ public with sharing class ISSP_Homepage {
         con = [SELECT Id, Credit_Card_Payment_Link__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c,
                 Account.Top_Parent__c, AccountId,Account.Industry, Account.Accumulated_Irregularities__c, Account.Category__c, 
                 Account.Status__c, Account.CNS_Agency__c, Account.Sector__c, Account.RecordTypeId, Account.Is_Branch_Abroad__c,
-                Account.Location_Type__c 
+                Account.Location_Type__c, Account.Location_Class__c, Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c 
             FROM Contact 
             WHERE Id = :user.ContactId];
         
@@ -163,7 +177,8 @@ public with sharing class ISSP_Homepage {
             From Portal_Application_Right__c p 
             where p.Contact__c =: user.ContactId and (p.Right__c = 'Access Granted'  or p.Right__c = 'Access Requested') and p.Portal_Application__r.Hide_on_Homepage__c = false ORDER BY p.Right__c DESC,p.Portal_Application__r.Name];   
 
-        Set<String> allowedLocTypes = new Set<String>{'HO', 'HE', 'AO'};
+        Set<String> allowedLocTypes = new Set<String>{'HO', 'HE', 'AO', 'GE'};
+        Set<String> allowedLocClass = new Set<String>{'P', 'D'};
         externalLinksList = new List<Portal_Applications__c>();
 
         for (Portal_Applications__c pApp: [SELECT Name, Description__c, Service_Description__c, Service_Description_Label__c, Visible__c, 
@@ -177,8 +192,9 @@ public with sharing class ISSP_Homepage {
             if (pApp.Name == 'Insurance Providers') {
                 if (((con.Account.Sector__c == 'Travel Agent' || con.Account.Sector__c == 'Cargo Agent') && con.Account.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) && 
                     (allowedLocTypes.contains(con.Account.Location_Type__c) || con.Account.Is_Branch_Abroad__c == 'Yes') &&
-                    (AMS_Utils.ACTIVEAGENCYSTATUS.contains(con.Account.Status__c) || con.Account.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) &&
-                    (con.Financial_Assessment_Contact__c || con.User_Portal_Status__c == 'Approved Admin')) {
+                    allowedLocClass.contains(con.Account.Location_Class__c) &&
+                    (AMS_Utils.ACTIVEAGENCYSTATUS.contains(con.Account.Status__c) || con.Account.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING || con.Account.Status__c == AMS_Utils.ACC_S10_ENDORSED) &&
+                    (con.Financial_Assessment_Contact__c || con.User_Portal_Status__c == 'Approved Admin') && con.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c) {
                     externalLinksList.add(pApp);
                 }
             } else if (pApp.ANG_Flag_Restrict_Accredited_Agent__c && pApp.ANG_Flag_Restrict_Sector__c) {
@@ -249,6 +265,10 @@ public with sharing class ISSP_Homepage {
             return new Pagereference('https://' + host+ '/ISSP_Login');
         }
         else{
+
+            if (  CSP_Utils.isNewPortalActive() ) {
+                return CSP_Utils.redirectToNewPortalPage('');
+            }
             //TF - force logout for TD
             PageReference newPR = ISSP_TD.toLogout_TD();
             if (newPR != null){

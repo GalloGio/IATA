@@ -19,7 +19,10 @@
         <apex:outputPanel rendered="{!BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}">        
             <a href="{!$Label.ISSP_Email_PortalUrl}">{!$Label.ISSP_Email_Here}</a>
         </apex:outputPanel>
-        <apex:outputPanel rendered="{! NOT BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}">        
+        <apex:outputPanel rendered="{!BEGINS(relatedTo.Portal_Application__r.Name, 'One Id NDC Matchmaker')}">
+            <a href="{!$Label.OneId_URL_javaScript + '/' + $Label.OneId_Community_Name + '/login/?language=en_US&serviceName=NDCMM'}">{!$Label.ISSP_Email_Here}</a>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{! NOT OR(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'),BEGINS(relatedTo.Portal_Application__r.Name, 'One Id NDC Matchmaker'))}">        
             <a href="{!$Label.ISSP_Email_PortalUrl}">{!$Label.ISSP_Email_Here}</a>.
         </apex:outputPanel>
            

@@ -694,7 +694,14 @@ global with sharing class ANG_ConversionHelper {
 			container.struct.migrated = true;
 
 			toReturn.add(container.struct);
-			topParents.add(container.struct.topParentId);
+
+			/*
+			MT Enhancement 2019/03/11- Not Accredited Agencies with RHC Object
+			*/
+			if(!String.isBlank(container.struct.iataCodeTopParent)){
+				topParents.add(container.struct.topParentId);	
+			}
+			
 
 		}
 
@@ -766,7 +773,7 @@ global with sharing class ANG_ConversionHelper {
 				accountIdsToSearch.add(struct.topParentId);
 		}
 
-		List<Account> accountsSearched = [SELECT Id, Name, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, Location_Class__c, ParentId, Status__c, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.ISO_Code__c, Remittance_frequency__c, Financial_Review_Result__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_RiskStatus__c, ANG_Accreditation_Model__c, Email__c,ANG_CashCondition__c, IATACode__c, (select Id, ANG_Financial_Security__c, ANG_RHC_Amount__c from RHC_Informations__r), Guaranteed_amount__c,IATA_ISO_Country__r.CurrencyIsoCode, ANG_IEP_Status__c, CNS_Agency__c from Account where Id in :accountIdsToSearch];
+		List<Account> accountsSearched = [SELECT Id, Name, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, Location_Class__c, ParentId, Status__c, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.ISO_Code__c, Remittance_frequency__c, Financial_Review_Result__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_RiskStatus__c, ANG_Accreditation_Model__c, Email__c,ANG_CashCondition__c, IATACode__c, (select Id, ANG_Financial_Security__c, ANG_RHC_Amount__c from RHC_Informations__r), Guaranteed_amount__c,IATA_ISO_Country__r.CurrencyIsoCode, ANG_IEP_Status__c, CNS_Agency__c, RecordTypeId from Account where Id in :accountIdsToSearch];
 
 		Map<Id,Account> accountsSearchedMap = new Map<Id,Account>();
 
@@ -895,21 +902,19 @@ global with sharing class ANG_ConversionHelper {
 				Id soloId = struct.relations.get(0).Child_Account__c;
 
 				allAgencies.get(soloId).Location_Type__c = 'HE';
-				allAgencies.get(soloId).ANG_Accreditation_Model__c = 'Cash';
-				allAgencies.get(soloId).ANG_HE_RiskHistoryAssessment__c = 'Passed';
-				allAgencies.get(soloId).ANG_HE_CashCondition__c = false;
-				//allAgencies.get(soloId).Is_PCI_compliant__c = 'Yes';
-				
-				if(allAgencies.get(soloId).ANG_IEP_Status__c ==null)
-					allAgencies.get(soloId).ANG_IEP_Status__c  = 'No IEP Account';
-
+				if(allAgencies.get(soloId).RecordTypeId != ANG_ConversionHelper.ACCOUNT_STANDARD_RT){
+					allAgencies.get(soloId).ANG_Accreditation_Model__c = 'Cash';
+					allAgencies.get(soloId).ANG_HE_RiskHistoryAssessment__c = 'Passed';
+					allAgencies.get(soloId).ANG_HE_CashCondition__c = false;
+					
+					if(allAgencies.get(soloId).ANG_IEP_Status__c ==null)
+						allAgencies.get(soloId).ANG_IEP_Status__c  = 'No IEP Account';
+				}
 				allAgencies.get(soloId).Organization_Last_Change_Date__c = System.today();
 				allAgencies.get(soloId).Top_Parent__c = null;
 				allAgencies.get(soloId).ParentId = null;
 
 				accountsToUpdate.add(allAgencies.get(soloId));
-
-
 			}
 			else{// Now, let's create a new hierarchy if needed and a new Set of Relations...
 
@@ -920,45 +925,36 @@ global with sharing class ANG_ConversionHelper {
 					insert newHierarchy;
 				}
 
-				For(Account acct: accountsToCreateNewHierarchy){
+				for(Account acct: accountsToCreateNewHierarchy){
 					
 					if(acct.Id == struct.topParentId){
-
 						allAgencies.get(acct.Id).Location_Type__c = 'HE';
-						allAgencies.get(acct.Id).ANG_Accreditation_Model__c = 'Cash';
-						allAgencies.get(acct.Id).ANG_HE_RiskHistoryAssessment__c = 'Passed';
-						allAgencies.get(acct.Id).ANG_HE_CashCondition__c = false;
-						//allAgencies.get(acct.Id).Is_PCI_compliant__c = 'Yes';
-
-						if(allAgencies.get(acct.Id).ANG_IEP_Status__c ==null)
-							allAgencies.get(acct.Id).ANG_IEP_Status__c  = 'No IEP Account';
-
-						allAgencies.get(acct.Id).Organization_Last_Change_Date__c = System.today();
+						
 						allAgencies.get(acct.Id).Top_Parent__c = null;
 						allAgencies.get(acct.Id).ParentId = null;
 
 					}else{
-					
 						relationsToAdd.add(new AMS_Agencies_relationhip__c(Parent_Account__c = struct.topParentId, Child_Account__c = acct.Id, Hierarchy__c = newHierarchy.id));
 
 						allAgencies.get(acct.Id).Location_Type__c = 'AE';
-						allAgencies.get(acct.Id).ANG_Accreditation_Model__c = 'Cash';
-						allAgencies.get(acct.Id).ANG_HE_RiskHistoryAssessment__c = 'Passed';
-						allAgencies.get(acct.Id).ANG_HE_CashCondition__c = false;
-						//allAgencies.get(acct.Id).Is_PCI_compliant__c = 'Yes';
-
-						if(allAgencies.get(acct.Id).ANG_IEP_Status__c ==null)
-							allAgencies.get(acct.Id).ANG_IEP_Status__c  = 'No IEP Account';
-
-						allAgencies.get(acct.Id).Organization_Last_Change_Date__c = System.today();
+						
 						allAgencies.get(acct.Id).Top_Parent__c = struct.topParentId;
 						allAgencies.get(acct.Id).ParentId = struct.topParentId;
 
 					}
+					
+					if(allAgencies.get(acct.Id).RecordTypeId != ANG_ConversionHelper.ACCOUNT_STANDARD_RT){
+						allAgencies.get(acct.Id).ANG_Accreditation_Model__c = 'Cash';
+						allAgencies.get(acct.Id).ANG_HE_RiskHistoryAssessment__c = 'Passed';
+						allAgencies.get(acct.Id).ANG_HE_CashCondition__c = false;
+						
+						if(allAgencies.get(acct.Id).ANG_IEP_Status__c ==null)
+							allAgencies.get(acct.Id).ANG_IEP_Status__c  = 'No IEP Account';
+					}
+
+					allAgencies.get(acct.Id).Organization_Last_Change_Date__c = System.today();
 
 					accountsToUpdate.add(allAgencies.get(acct.Id));
-
-
 				}
 
 			}
@@ -1008,34 +1004,34 @@ global with sharing class ANG_ConversionHelper {
 
 
 		}else if(struct.isSingleAgencyHierarchy){
-			
 			if(allAgencies.get(struct.topParentId).Location_Type__c == AMS_Utils.AO && allAgencies.get(struct.topParentId).Status__c == AMS_Utils.ACC_S4_LISTED)
 				allAgencies.get(struct.topParentId).Status__c = AMS_Utils.ACC_S9_APPROVED;		
 			
 			if(allAgencies.get(struct.topParentId).Status__c == AMS_Utils.ACC_S0_TERMINATED && !TOPLEVELLOCATIONTYPES.contains(allAgencies.get(struct.topParentId).Location_Type__c)){
 				allAgencies.get(struct.topParentId).Location_Type__c = 'AE';					
-			}
-			else
+			} else {
+
 				if(TOPLEVELLOCATIONTYPES.contains(allAgencies.get(struct.topParentId).Location_Type__c))
 					allAgencies.get(struct.topParentId).Location_Type__c = 'HE';			
 				else
 					allAgencies.get(struct.topParentId).Location_Type__c = 'AE';		
 
-			allAgencies.get(struct.topParentId).ANG_Accreditation_Model__c = 'Cash';
-			allAgencies.get(struct.topParentId).ANG_HE_RiskHistoryAssessment__c = 'Passed';
-			allAgencies.get(struct.topParentId).ANG_HE_CashCondition__c = false;
-			//allAgencies.get(struct.topParentId).Is_PCI_compliant__c = 'Yes';
 
-			if(allAgencies.get(struct.topParentId).ANG_IEP_Status__c == null)
-				allAgencies.get(struct.topParentId).ANG_IEP_Status__c  = 'No IEP Account';
+				if(allAgencies.get(struct.topParentId).RecordTypeId != ANG_ConversionHelper.ACCOUNT_STANDARD_RT){
+					allAgencies.get(struct.topParentId).ANG_Accreditation_Model__c = 'Cash';
+					allAgencies.get(struct.topParentId).ANG_HE_RiskHistoryAssessment__c = 'Passed';
+					allAgencies.get(struct.topParentId).ANG_HE_CashCondition__c = false;
+					
+					if(allAgencies.get(struct.topParentId).ANG_IEP_Status__c == null)
+						allAgencies.get(struct.topParentId).ANG_IEP_Status__c  = 'No IEP Account';
+				}
 
 
-			allAgencies.get(struct.topParentId).Organization_Last_Change_Date__c = System.today();
+				allAgencies.get(struct.topParentId).Organization_Last_Change_Date__c = System.today();
 
-			accountsToUpdate.add(allAgencies.get(struct.topParentId));
-
-		}
-		else{
+				accountsToUpdate.add(allAgencies.get(struct.topParentId));
+			}
+		} else{
 
 				for(AMS_Agencies_relationhip__c rel: struct.relations){
 
@@ -1054,40 +1050,40 @@ global with sharing class ANG_ConversionHelper {
 							allAgencies.get(rel.Parent_Account__c).Status__c = AMS_Utils.ACC_S9_APPROVED;	
 
 						allAgencies.get(rel.Parent_Account__c).Location_Type__c = 'HE';
-						allAgencies.get(rel.Parent_Account__c).ANG_Accreditation_Model__c = 'Cash';
-						allAgencies.get(rel.Parent_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
-						allAgencies.get(rel.Parent_Account__c).ANG_HE_CashCondition__c = false;
-						//allAgencies.get(rel.Parent_Account__c).Is_PCI_compliant__c = 'Yes';
-
-						if(allAgencies.get(rel.Parent_Account__c).ANG_IEP_Status__c ==null)
-							allAgencies.get(rel.Parent_Account__c).ANG_IEP_Status__c  = 'No IEP Account';
-
+						if(allAgencies.get(rel.Parent_Account__c).RecordTypeId != ANG_ConversionHelper.ACCOUNT_STANDARD_RT){
+							allAgencies.get(rel.Parent_Account__c).ANG_Accreditation_Model__c = 'Cash';
+							allAgencies.get(rel.Parent_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
+							allAgencies.get(rel.Parent_Account__c).ANG_HE_CashCondition__c = false;
+							
+							if(allAgencies.get(rel.Parent_Account__c).ANG_IEP_Status__c ==null)
+								allAgencies.get(rel.Parent_Account__c).ANG_IEP_Status__c  = 'No IEP Account';
+						}						
 						allAgencies.get(rel.Parent_Account__c).Organization_Last_Change_Date__c = System.today();
 
 
 						//if(!(rel.child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED && rel.Child_Account__r.Expiry_Date__c < frontierDate)) { // let's ignore it
 							
-							allAgencies.get(rel.Child_Account__c).Location_Type__c = 'AE';
+						allAgencies.get(rel.Child_Account__c).Location_Type__c = 'AE';
+						if(allAgencies.get(rel.Child_Account__c).RecordTypeId != ANG_ConversionHelper.ACCOUNT_STANDARD_RT){
 							allAgencies.get(rel.Child_Account__c).ANG_Accreditation_Model__c = 'Cash';
 							allAgencies.get(rel.Child_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 							allAgencies.get(rel.Child_Account__c).ANG_HE_CashCondition__c = false;
-							//allAgencies.get(rel.Child_Account__c).Is_PCI_compliant__c = 'Yes';
-
+							
 							if(allAgencies.get(rel.Child_Account__c).ANG_IEP_Status__c ==null)
 								allAgencies.get(rel.Child_Account__c).ANG_IEP_Status__c  = 'No IEP Account';
+						}
+						allAgencies.get(rel.Child_Account__c).Organization_Last_Change_Date__c = System.today();
 
-							allAgencies.get(rel.Child_Account__c).Organization_Last_Change_Date__c = System.today();
-
-							if(allAgencies.get(rel.Child_Account__c).ParentId != struct.topParentId)
-								allAgencies.get(rel.Child_Account__c).ParentId = struct.topParentId;
+						if(allAgencies.get(rel.Child_Account__c).ParentId != struct.topParentId)
+							allAgencies.get(rel.Child_Account__c).ParentId = struct.topParentId;
 
 
-							if(rel.child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED && (!ALLOWEDLOCATIONCLASSES.contains(rel.Child_Account__r.Location_Class__c))){
-								if(allAgencies.get(rel.Child_Account__c).Location_Class__c <> TIDSLOCALTIONCLASS)
-									allAgencies.get(rel.Child_Account__c).Location_Class__c = 'P';
-							}
+						if(rel.child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED && (!ALLOWEDLOCATIONCLASSES.contains(rel.Child_Account__r.Location_Class__c))){
+							if(allAgencies.get(rel.Child_Account__c).Location_Class__c <> TIDSLOCALTIONCLASS)
+								allAgencies.get(rel.Child_Account__c).Location_Class__c = 'P';
+						}
 
-							accountsToUpdate.add(allAgencies.get(rel.Child_Account__c));
+						accountsToUpdate.add(allAgencies.get(rel.Child_Account__c));
 						//}
 
 						rel.Hierarchy__r.Migrated__c= true;
@@ -1173,14 +1169,14 @@ global with sharing class ANG_ConversionHelper {
 							allAgencies.get(rel.Child_Account__r.Top_Parent__c).Status__c = AMS_Utils.ACC_S9_APPROVED;	
 
 					allAgencies.get(rel.Child_Account__r.Top_Parent__c).Location_Type__c = 'HE';
-					allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_Accreditation_Model__c = 'Cash';
-					allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
-					allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_CashCondition__c = false;
-					//allAgencies.get(rel.Child_Account__r.Top_Parent__c).Is_PCI_compliant__c = 'Yes';
-
-					if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_IEP_Status__c ==null)
-						allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_IEP_Status__c  = 'No IEP Account';
-
+					if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).RecordTypeId != ANG_ConversionHelper.ACCOUNT_STANDARD_RT){
+						allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_Accreditation_Model__c = 'Cash';
+						allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
+						allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_CashCondition__c = false;
+						
+						if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_IEP_Status__c ==null)
+							allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_IEP_Status__c  = 'No IEP Account';
+					}	
 
 					allAgencies.get(rel.Child_Account__r.Top_Parent__c).Organization_Last_Change_Date__c = System.today();
 

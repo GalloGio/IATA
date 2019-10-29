@@ -107,6 +107,16 @@
         <label>Internal</label>
     </standardValue>
     <standardValue>
+        <fullName>ISPA</fullName>
+        <default>false</default>
+        <label>ISPA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ISUA</fullName>
+        <default>false</default>
+        <label>ISUA</label>
+    </standardValue>
+    <standardValue>
         <fullName>Others</fullName>
         <default>false</default>
         <label>Others</label>
@@ -175,6 +185,11 @@
         <fullName>TFC update</fullName>
         <default>false</default>
         <label>TFC update</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TOU</fullName>
+        <default>false</default>
+        <label>TOU</label>
     </standardValue>
     <standardValue>
         <fullName>TTBS systems log-in/credentials</fullName>

@@ -55,7 +55,7 @@ private class trgIDCard_Case_BeforeUpdateTest
             
             insert idCardAppToInsert;
             
-            Id contactId1 = IDCardUtil.CreateContactWhenNewCardIsApproved(idCardAppToInsert[0]);   
+            Contact contactId1 = IDCardUtil.CreateContactWhenNewCardIsApproved(idCardAppToInsert[0]);   
             
             
             IDCardUtil.CreateIDCardApplicationCase(idCardAppToInsert[0], testData.IDCard_Accounts[0]);
@@ -69,7 +69,7 @@ private class trgIDCard_Case_BeforeUpdateTest
             relatedCase[0].ID_Card_Status__c = IDCardUtil.CASECARDSTATUS_APPROVED;
             update relatedCase[0];
             
-            relatedContact = [SELECT Id, LastName, FirstName, VER_Number__c, IATA_Code__c, Account.RecordType.Name, Account.Status__c, Date_of_Birth__c FROM Contact WHERE Id =:contactId1];  
+            relatedContact = [SELECT Id, LastName, FirstName, VER_Number__c, IATA_Code__c, Account.RecordType.Name, Account.Status__c, Date_of_Birth__c FROM Contact WHERE Id =:contactId1.id];  
             
             List<ID_Card__c> idCardToInsert = new List<ID_Card__c>();          
             idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(idCardAppToInsert[0], relatedContact[0]));            

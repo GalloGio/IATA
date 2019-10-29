@@ -12,6 +12,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 				FolderId = UserInfo.getUserId()
 				);
 		}
+		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+		insert new User(FirstName = 'Test1 User', Division = 'UnitTest', License_Cost_Center__c = 'AAA000AA00', Username = 'test1@iata.org.amsdev1', LastName = 'Test1', Email = 'test1@iata.org', Alias = 'Test1', CommunityNickname = 'Test1', TimeZoneSidKey = 'Europe/Brussels', LocaleSidKey = 'en_US', EmailEncodingKey = 'UTF-8', ProfileId = testProfile.Id, LanguageLocaleKey = 'en_US');
 
 		insert new Notification_template__c (
 			Subject__c = 'Some subject',
@@ -851,8 +853,10 @@ private class ANG_RHCAlertTriggerHandler_test {
 		Account a1 = [Select id From Account LIMIT 1];
 		System.debug('Account to create OSCAR ::: ' + a1);
 
-		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
+
+		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false, Status__c = 'Active');
 		insert co1;
+
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Process__c = AMS_Utils.NGFOP, Account__c = a1.id, RecordTypeId = AMS_Utils.RECTYPE_NEWGENFOP);
 
@@ -902,8 +906,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 		oscar.AMS_Online_Accreditation__c = theAccreditation.Id;
 		update oscar;
 
-		
-
 		return oscar;
 	}
 
@@ -928,16 +930,16 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 	    insert op;
 	    
-	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id);
+	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active', email = 'cooltestcontact@testcontact.com', User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM);
 	    insert con;
 
 	    //NEWGEN-2005
-	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com');
+	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com', Active__c = true);
 
 	    test.StartTest();
 
 	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
-		    Recordtypeid=Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+		    Recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
 		    ang_Severity__c='Red',
 		    ANG_Account__c = a.Id
 	    );
@@ -995,16 +997,16 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 	    insert op;
 	    
-	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id);
+	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active', email = 'cooltestcontact@testcontact.com', User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM);
 	    insert con;
 
 	    //NEWGEN-2005
-	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com');
-	    
+	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com', Active__c = true);
+	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true);
 	    test.StartTest();
 	    
 	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
-		    Recordtypeid=Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+		    Recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
 		    ang_Severity__c='Red',
 		    ANG_Account__c = a.Id
 	    );
@@ -1014,6 +1016,69 @@ private class ANG_RHCAlertTriggerHandler_test {
 	    
 	    List<Case> c = [Select Id From Case Where AccountId = :a.Id and RecordType.Name='SIDRA Lite' limit 1];
 	    System.assertEquals(c.size(), 1, 'Sidra lite case was not created');
+	}
+
+	private static testmethod void testOrangeAlertCreationNoConfigurationMatched(){
+	    // no configuration for the account country found, so it will use the default one
+	    AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-PT');
+	    insert iss;
+
+	    IATA_ISO_Country__c  country2= new IATA_ISO_Country__c(
+		    Name = 'Portugal', 
+		    ISO_Code__c = 'PT',
+		    AMS_Settlement_System__c = iss.id,
+		    ANG_Enable_NewGen__c = true
+	    );
+
+	    insert country2 ;
+
+	    AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
+	        IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where iso_code__C='WW'].id,
+	        ANG_Create_Sidra_Lite__c= true, 
+	        ANG_Remove_Ticketing_Authority__c= false,
+	        ANG_Send_Email_Agent__c=false ,
+	        ANG_RTS_Severity__c='Orange',
+	        recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification')
+	    );
+
+	    insert csa;
+
+	    Account a = new Account(
+	    	name='acc1',
+		    Location_Type__c='HE',
+		    Location_Class__c='P',
+		    IATAcode__c = '0000',
+		    Remittance_frequency__c='M',
+		    ANG_Accreditation_Model__c ='Cash',
+		    IATA_ISO_Country__c = country2.id,
+		    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency')
+	    );
+	   	insert a;     	   
+
+	    operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id, 
+	    	First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
+
+	    insert op;
+	    
+	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active');
+	    insert con;
+
+	    //NEWGEN-2005
+	    insert new RTS_Senior_Manager__c(Name = 'Test1', Email__c = 'test.2005@yopmail.com');
+	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true);
+	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test3', Email__c = 'test1@iata.org', Active__c = true);
+	    
+	    
+	    test.StartTest();
+	    
+	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
+		    Recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
+		    ang_Severity__c='Orange',
+		    ANG_Account__c = a.Id
+	    );
+	    insert ra;
+	    
+	    test.StopTest();
 	}
 
 }

@@ -87,7 +87,7 @@ public class HigherLogicIntegrationWS {
 			
 			requestBody.TenantCode = '{!$Credential.Username}';
 			
-			String requestBodyJSON = JSON.serialize(requestBody);
+			String requestBodyJSON = JSON.serializePretty(requestBody);
 			
 			HttpRequest request = new HttpRequest();
 			
@@ -97,6 +97,7 @@ public class HigherLogicIntegrationWS {
 			request.setHeader('content-type', 'application/json');
 			request.setBody(requestBodyJSON);
 			
+			addLog('invoke', '200', requestBodyJSON);
 			System.debug(LoggingLevel.FINE, '____ [cls HigherLogicIntegrationWS - invoke] WS Request Body: ' + request.getBody());
 			
 			Http http = new Http();
@@ -144,8 +145,22 @@ public class HigherLogicIntegrationWS {
 			
 			User user = (User) sObj;
 
-			Id accountId = user.ContactId == null ? ProvisionKaviAccess.getFakeAccount().Id : user.Contact.AccountId;
-			String accountName = user.ContactId == null ? ProvisionKaviAccess.getFakeAccount().Name : user.Contact.Account.Name;
+			Id accountId = user.Contact.AccountId;
+			String accountName = user.Contact.Account.Name;
+			
+			if(String.isNotBlank(user.Contact.Account.Parent.ParentId)){
+				accountId = user.Contact.Account.Parent.ParentId;
+				accountName = user.Contact.Account.Parent.Parent.Name;
+			}
+			else if(String.isNotBlank(user.Contact.Account.ParentId)){
+				accountId = user.Contact.Account.ParentId;
+				accountName = user.Contact.Account.Parent.Name;
+			}
+		    else if(String.isBlank(user.ContactId)){
+				Account a = ProvisionKaviAccess.IATASSWAccount;
+			    accountId = a.Id;
+			    accountName = a.Name;
+		    }
 			
 			// Active status is defined based on the Portal Application Right
 			// PAR with Access Granted => ACTIVE
@@ -250,7 +265,7 @@ public class HigherLogicIntegrationWS {
 		
 		HigherLogicResponse response = invoke(request);
 		
-		processHigherLogicResponse('pushMembers', response);
+		addLog('pushMembers', response.statusCode, response.responseBody);
 		
 	}
 	
@@ -261,8 +276,10 @@ public class HigherLogicIntegrationWS {
 	* @param wsResponse: HigherLogicResponse
 	*
 	*/
-	private static void processHigherLogicResponse(String action, HigherLogicResponse wsResponse){
-		wsServiceLogLst.add(createNewWSLog(action, wsResponse));
+	private static String addLog(String action, String errorCode, String body){
+		ISSP_Web_Service_Log__c log = createNewWSLog(action, errorCode, body);
+		wsServiceLogLst.add(log);
+		return JSON.serializePretty(log);
 	}
 	
 	/**
@@ -275,7 +292,7 @@ public class HigherLogicIntegrationWS {
 	* @return newLog: ISSP_Web_Service_Log__c
 	*
 	*/
-	private static ISSP_Web_Service_Log__c createNewWSLog(String wsMethod, HigherLogicResponse wsResponse){
+	private static ISSP_Web_Service_Log__c createNewWSLog(String wsMethod, String errorCode, String body){
 		
 		ISSP_Web_Service_Log__c newLog = new ISSP_Web_Service_Log__c();
 		
@@ -284,8 +301,8 @@ public class HigherLogicIntegrationWS {
 		newLog.System__c		 = 'Standards Setting Workspace';
 		newLog.User__c			 = UserInfo.getUserId();
 		newLog.Finished__c		 = System.now();
-		newLog.Error_Code__c	 = wsResponse.statusCode;
-		newLog.Error_Message__c	 = wsResponse.responseBody;
+		newLog.Error_Code__c	 = errorCode;
+		newLog.Error_Message__c	 = body;
 
 		if(newLog.Error_Code__c == '200'){
 			newLog.Success__c = true;

@@ -5,10 +5,6 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
 
   if (!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'AccountTrigger')) { return; }
 
-  //NOT NEEDED ANYMORE AS PER NEWGEN-796 - DTULLO: added to skip trigger execution if aggreagating data for PwC
-  //if(AMS_Batch_AggregatePwcData.bIsAMS_Batch_AggregatePwcDataRunning){return;}
-
-
   if (trigger.isBefore && (trigger.isInsert || trigger.isupdate )) {
 
     AccountTriggerHelper.copyInfoFromHqToBranchOnInsertAndUpdate(trigger.New, trigger.OldMap);
@@ -21,7 +17,6 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
   }
 
   if (trigger.isAfter && trigger.isUpdate) {
-    //trgCopyInfoFromHQToBROnHQUpdate trgCopyInfoFromHQToBROnHQUpdatetest
     if (trigger.newmap <> null)
       AccountTriggerHelper.CopyFromHqToBRAfterUpdate(trigger.newMap);
     if (newgenCS.Push_Notifications_State__c) {
@@ -81,9 +76,18 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
         ISSP_SIS_AccountHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
     }
 
-	
-//Trigger the platform events
-    if(trigger.isAfter)
-    	PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
 
+//Trigger the platform events
+    if(trigger.isAfter){
+      if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !ANG_ConversionHelper.isMigrationTool && !System.isFuture() && !System.isBatch()) {
+        System.enqueueJob(new PlatformEvents_Helper((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
+      } else {
+    	  PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+      }
+    }
+
+  //HK TR18-150 - Move all fields updates (workflows) on Account, Case and Contact to the trigger
+  if(Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate)){
+    WorkflowHelper.performActions(WorkflowHelper.ACCOUNT_TYPE); 
+  }
 }

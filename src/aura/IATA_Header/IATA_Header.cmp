@@ -1,0 +1,10 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+        <ltng:require styles="{!$Resource.GDPR_Portal  + '/css/screen.css'}" />
+    <div class="row bg-blue fixCommunity">            
+        <div>
+            <img src="{!$Resource.GDPR_Portal + '/img/iata-logo-other.svg'}" alt="IATA Logo" class="img-fluid logo-second_small gdpr" />
+        </div>
+        <hr/>
+        <div class="col name side name-600" style="font-size: 23px; margin-top:15px;">Signup &amp; Privacy Portal </div>
+    </div>
+</aura:component>

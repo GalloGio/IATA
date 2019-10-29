@@ -1,4 +1,4 @@
-<apex:page standardController="Account" extensions="AMS_AgencyContactsController" showHeader="false" sidebar="false" action="{!buildStructure}">
+<apex:page standardController="Account" extensions="AMS_AgencyContactsController" showHeader="false" sidebar="false" >
 <!--<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"/>-->
 <apex:stylesheet value="{!URLFOR($Resource.jquerytools,'/jquery.dataTables.css')}"/>
 <apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery-1.10.2.min.js')}"/>
@@ -19,29 +19,6 @@ function openSubtab(subtabUrl, subTabTitle)
      }
 </script>
 <apex:pageBlock >
-<!--<apex:pageBlockSection collapsible="false" columns="1">
-    <apex:form >
-        <apex:pageBlockTable value="{!contactTable}" var="item" id="tableContacts">
-            <apex:column headerValue="Name">
-                <apex:commandLink onclick="openSubtab('/{!item.employee.id}','{!item.employee.Name}');return false;">{!item.employee.Name}</apex:commandLink>
-            </apex:column>
-             <apex:column headerValue="Phone">
-              <apex:outputLink value="sip:{!item.employee.Contact__r.Phone}">{!item.employee.Contact__r.Phone}</apex:outputLink>
-             </apex:column>
-             <apex:column headerValue="Mobile">
-              <a href='tel:{!item.employee.Contact__r.MobilePhone}'>{!item.employee.Contact__r.MobilePhone}</a>
-             </apex:column>
-           
-            <apex:column value="{!item.employee.Contact__r.Email}" headerValue="Email"/>
-            <apex:column headerValue="Type" style="text-align:center;">
-                <apex:image value="{!item.perImage}" title="{!item.perName}" rendered="{!NOT(ISBLANK(item.perImage))}"/>
-                <apex:image value="{!item.adminImage}" title="{!item.adminName}" rendered="{!NOT(ISBLANK(item.adminImage))}"/>
-                <apex:image value="{!item.finImage}" title="{!item.finName}" rendered="{!NOT(ISBLANK(item.finName))}"/>
-            </apex:column>
-        </apex:pageBlockTable>
-    </apex:form>
-</apex:pageBlockSection>-->
-
 
 <!--<apex:pageBlockSection collapsible="false" columns="1">-->
     <apex:form >
@@ -49,35 +26,25 @@ function openSubtab(subtabUrl, subTabTitle)
         <thead>
           <tr>
             <th>Name</th>
-            <!--<th>Phone</th>
-            <th>Mobile</th>
-            <th>Email</th>-->
             <th>Type</th>
           </tr>
         </thead>
         <tbody>
           <apex:repeat value="{!contactTable}" var="item">    
             <tr>
-              <td><!--<apex:commandLink onclick="openSubtab('/{!item.employee.id}','{!item.employee.Name}');return false;" styleClass="hasTooltip">{!item.employee.Name}</apex:commandLink>-->
+              <td>
               <apex:commandLink onclick="openSubtab('/{!item.person.id}','{!item.person.Name}');return false;" styleClass="hasTooltip">{!item.person.Name}</apex:commandLink>
                 <div class="hidden">
                     <b>Phone: </b>
                     <apex:outputText id="Phone" value="{!item.person.Phone__c}"/><br/><br/>
-                    <!--<apex:outputText id="Phone" value="{!item.employee.Contact__r.Phone}"/><br/><br/>-->
                     <b>Mobile: </b>
                     <apex:outputText id="Mobile" value="{!item.person.Mobile__c}"/><br/><br/>
-                    <!--<apex:outputText id="Mobile" value="{!item.employee.Contact__r.MobilePhone}"/><br/><br/>-->
                     <b>Email: </b>
                     <apex:outputText id="Email" value="{!item.person.Email__c}"/><br/><br/>
-                    <!--<apex:outputText id="Email" value="{!item.employee.Contact__r.Email}"/><br/><br/>-->
                 </div>  
               </td>
-              <!--<td><apex:outputLink value="sip:{!item.employee.Contact__r.Phone}">{!item.employee.Contact__r.Phone}</apex:outputLink></td>
-              <td><a href='tel:{!item.employee.Contact__r.MobilePhone}'>{!item.employee.Contact__r.MobilePhone}</a></td>
-              <td>{!item.employee.Contact__r.Email}</td>-->
               <td style="text-align:center;">
                 <apex:image value="{!URLFOR($Resource.AMS_Icons, item.noContactImage)}" title="{!item.noContactName}" rendered="{!NOT(ISBLANK(item.noContactImage))}"/>
-                <!--<apex:image value="{!item.perImage}" title="{!item.perName}" rendered="{!NOT(ISBLANK(item.perImage))}"/>-->
                 <apex:image value="{!item.adminImage}" title="{!item.adminName}" rendered="{!NOT(ISBLANK(item.adminImage))}"/>
                 <apex:image value="{!item.finImage}" title="{!item.finName}" rendered="{!NOT(ISBLANK(item.finName))}"/>
               </td>
@@ -86,7 +53,6 @@ function openSubtab(subtabUrl, subTabTitle)
         </tbody>
       </table>
     </apex:form>
-<!--</apex:pageBlockSection>-->
 <script>
     $(document).ready(function() {
       $('#tableContactsteste').dataTable();

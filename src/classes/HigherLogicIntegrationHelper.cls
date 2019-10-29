@@ -8,12 +8,10 @@ public class HigherLogicIntegrationHelper {
 	public static String DISABLE_EXISTING_MEMBERS = 'DISABLE_EXISTING_MEMBERS';
 	public static String GRANT_ACCESS = 'GRANT_ACCESS';
 	public static String REMOVE_ACCESS = 'REMOVE_ACCESS';
-	
-	private static Map<String,Schema.RecordTypeInfo> recordTypesMap = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName();
 
-	private static String AGENCY_RECORD_TYPE_ID = recordTypesMap.get('IATA_Agency').getRecordTypeId();
-	private static String BRANCH_RECORD_TYPE_ID = recordTypesMap.get('IATA_Airline_BR').getRecordTypeId();
-	private static String HEADQUARTER_RECORD_TYPE_ID = recordTypesMap.get('IATA_Airline').getRecordTypeId();
+	private static String AGENCY_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+	private static String BRANCH_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+	private static String HEADQUARTER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 	
     private static List<Account> fetchAccountRecords(Set<Id> accountIdSet){
     	
@@ -52,22 +50,18 @@ public class HigherLogicIntegrationHelper {
 	* @return Id: accountId
 	*
 	*/
-	private static Id fetchAssociatedAccountId(Id accountId, Id recordTypeId, String airlineType, Id parentId, Id parent2Id){
+	private static Id fetchAssociatedAccountId(User u){
 					
-		if(recordTypeId == BRANCH_RECORD_TYPE_ID && airlineType == 'Branch' && parentId != null){
-			return parentId;
-		}
+		Id accountId = u.Contact.AccountId;
 		
-		if(recordTypeId == AGENCY_RECORD_TYPE_ID && parentId != null && parent2Id == null){
-			return parentId;
+		if(String.isNotBlank(u.Contact.Account.Parent.ParentId)){
+			accountId = u.Contact.Account.Parent.ParentId;
 		}
-		
-		if(recordTypeId == AGENCY_RECORD_TYPE_ID && parentId != null && parent2Id != null){
-			return parent2Id;
+		else if(String.isNotBlank(u.Contact.Account.ParentId)){
+			accountId = u.Contact.Account.ParentId;
 		}
 		
 		return accountId;
-		
 	}
 	
 	/*
@@ -121,9 +115,7 @@ public class HigherLogicIntegrationHelper {
 				ContactKaviId__c,
 				Contact.AccountId,
 				Contact.Account.ParentId,
-				Contact.Account.RecordTypeId,
-				Contact.Account.Parent.ParentId,
-				Contact.Account.Field_Head_Office__c
+				Contact.Account.Parent.ParentId
 			 FROM
 			 	User 
 			 WHERE
@@ -135,7 +127,7 @@ public class HigherLogicIntegrationHelper {
 		Map<Id, Id> contactIdMap = new Map<Id, Id>();
 
 		for(User newUser : newUsersLst){
-			Id accId = fetchAssociatedAccountId(newUser.Contact.AccountId, newUser.Contact.Account.RecordTypeId, newUser.Contact.Account.Field_Head_Office__c, newUser.Contact.Account.ParentId, newUser.Contact.Account.Parent.ParentId);
+			Id accId = fetchAssociatedAccountId(newUser);
 			contactIdMap.put(accId, newUser.ContactId != null ? newUser.ContactId : newUser.ContactKaviId__c);
 		}
 		
@@ -147,55 +139,61 @@ public class HigherLogicIntegrationHelper {
 		HigherLogicIntegrationWS.flushWebServiceLogs();
 		
 	}
+
+	public static List<String> getQueryFields() {
+		return new List<String>{
+			'Id',
+			'ContactKaviId__c',
+			'Username',
+			'Title',
+			'FirstName',
+			'LastName',
+			'Phone',
+			'Fax',
+			'IsActive',
+			'City',
+			'MobilePhone',
+			'State',
+			'Country',
+			'Street',
+			'Email',
+			'PostalCode',
+			'ContactId',
+			'Contact.Account.RecordTypeId',
+			'Contact.Account.Field_Head_Office__c',
+			'Contact.AccountId',
+			'Contact.Account.Name',
+			'Contact.Account.ParentId',
+			'Contact.Account.Parent.Name',
+			'Contact.Account.Parent.ParentId',
+			'Contact.Account.Parent.Parent.Name'
+		};
+	}
 	
 	/**
 	* Processes each User/Account pair 
 	* and pushes their detail into HigherLogic
 	*
-	* @param operation: String
+	* @param operation: String . One of 4 possible values: PUSH_MEMBERS, PUSH_INTERNAL_MEMBERS, PUSH_EXISTING_MEMBERS, DISABLE_EXISTING_MEMBERS
 	* @param contactIdSet: Set<Id>
-	* @param provAcctId: Id
 	*
 	*/
 	@future(callout=true)
-	public static void pushPersonCompanyMembers(String operation, Set<Id> contactIdSet, Id provAcctId){
+	public static void pushPersonCompanyMembers(String operation, Set<Id> contactIdSet){
 	
-		String usersQuery =
-			' SELECT                                  ' +
-			' 	Id,                                   ' +
-			' 	ContactKaviId__c,                     ' +
-			' 	Username,                             ' +
-			' 	Title,                                ' +
-			' 	FirstName,                            ' +
-			' 	LastName,                             ' +
-			' 	Phone,                                ' +
-			' 	Fax,                                  ' +
-			' 	IsActive,                             ' +
-			' 	City,                                 ' +
-			' 	MobilePhone,                          ' +
-			' 	State,                                ' +
-			' 	Country,                              ' +
-			' 	Street,                               ' +
-			' 	Email,                                ' +
-			' 	PostalCode,                           ' +
-			'   ContactId,							  ' +
-			' 	Contact.Account.RecordTypeId,         ' +
-			' 	Contact.Account.Field_Head_Office__c, ' +
-			' 	Contact.AccountId,                    ' +
-			' 	Contact.Account.Name,                 ' +
-			' 	Contact.Account.ParentId,             ' +
-			' 	Contact.Account.Parent.ParentId       ' +
-			' FROM                                    ' +
-			' 	User                                  ' +
-			' WHERE									  ';
-			
+		String whereClause = '';
 		if (operation == PUSH_INTERNAL_MEMBERS){
-			usersQuery += ' ContactKaviId__c IN :contactIdSet ';
+			whereClause += ' ContactKaviId__c IN :contactIdSet ';
 		}
 		else {
-			usersQuery += ' ContactId IN :contactIdSet ';
+			whereClause += ' ContactId IN :contactIdSet ';
 		}
-		
+
+		String usersQuery = String.format('SELECT {0} FROM User WHERE {1}', 
+			new List<String>{String.join(getQueryFields(), ', '),
+			whereClause}
+		);			
+				
 		List<User> userLst = (List<User>) Database.query(usersQuery);
 		
 		List<sObject> membersToPushLst = new List<sObject>();
@@ -244,11 +242,13 @@ public class HigherLogicIntegrationHelper {
 				continue;	
 			}
 			
-			Id accId = provAcctId;
+			Id accId;
 			
 			if (operation == PUSH_MEMBERS){
-				accId = fetchAssociatedAccountId(newUser.Contact.AccountId,newUser.Contact.Account.RecordTypeId, newUser.Contact.Account.Field_Head_Office__c, newUser.Contact.Account.ParentId, newUser.Contact.Account.Parent.ParentId);
+				accId = fetchAssociatedAccountId(newUser);
 			}
+			//Only for Internal users
+			else accId = ProvisionKaviAccess.IATASSWAccount.Id;
 
 			newAccountsIds.add(accId);
 			contactIdMap.put(accId, contactId);

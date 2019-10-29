@@ -96,6 +96,7 @@
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>AMS_Oscar_Savepoint_Owner_fields</fullName>
         <description>Used to know which fields needed for rollback</description>
@@ -1809,6 +1810,151 @@
     <fieldSets>
         <fullName>FieldsExcludedFromTracking</fullName>
         <description>The fields in this list will be tracked on the Contact Tracking History object</description>
+        <displayedFields>
+            <field>Available_Services_Images__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>LastModifiedById</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>LastModifiedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Fax</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>EmailBouncedReason</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>EmailBouncedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IsEmailBounced</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__Needs_Score_Synced__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Instant_Survey_Last_survey_sent__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Instant_Survey_Last_feedback_received__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Available_Services__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_activity__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__grade__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__notes__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_search_type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_search_term__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_touch_url__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__conversion_object_type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__conversion_object_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__Pardot_Last_Scored_At__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__url__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__last_activity__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__pardot_hard_bounced__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__created_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__score__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__campaign__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__conversion_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__comments__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Pardot_Area_of_Interest__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>FieldsExcludedFromTracking</label>
     </fieldSets>
     <fieldSets>
@@ -2102,12 +2248,62 @@
         <label>RelatedListForAccount</label>
     </fieldSets>
     <fieldSets>
-        <fullName>zqu__Lookup_Popup_Window</fullName>
-        <availableFields>
-            <field>AccountId</field>
+        <fullName>zqu__Compare_Contact_Details</fullName>
+        <description>Used to compare a quote&apos;s contacts on the Update Zuora Account Information page.</description>
+        <displayedFields>
+            <field>FirstName</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
-        </availableFields>
+        </displayedFields>
+        <displayedFields>
+            <field>LastName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Email</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Phone</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingStreet</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__County__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingCity</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingState</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingCountry</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingPostalCode</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Contact Details</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__Lookup_Popup_Window</fullName>
         <availableFields>
             <field>AssistantName</field>
             <isFieldManaged>false</isFieldManaged>
@@ -2120,11 +2316,6 @@
         </availableFields>
         <availableFields>
             <field>Birthdate</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>zqu__County__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -2330,16 +2521,6 @@
         </availableFields>
         <availableFields>
             <field>Salutation</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>SystemModstamp</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Title</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -6613,6 +6794,15 @@ IF(Account.IATACode__c != &apos;&apos;
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Data_Protection_Officer__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Identification of a DPO in an organization. Used in privacy management portal (GDPR)</description>
+        <externalId>false</externalId>
+        <label>Data Protection Officer</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Data_Quality_Description__c</fullName>
         <externalId>false</externalId>
         <formula>IF( Data_Quality_Score__c =100,&quot;All Contact Details Captured&quot;, &quot;Missing: &quot;&amp;IF( LEN( Phone ) = 0, &quot;Phone, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(LEN( Email) = 0, &quot;Email, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( LEN( MailingStreet ) = 0, &quot;Complete Address, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( LEN(Title) = 0, &quot;Job Title, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( ISPICKVAL( Salutation,&quot;&quot;), &quot;Salutation&quot;,&quot;&quot;))</formula>
@@ -6956,57 +7146,6 @@ Formula field that copies the E&amp;F Type.</description>
     <fields>
         <fullName>Email</fullName>
         <trackHistory>true</trackHistory>
-    </fields>
-    <fields>
-        <fullName>Email_Status_Update__c</fullName>
-        <externalId>false</externalId>
-        <label>Email Status Update</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Email_Status__c</fullName>
-        <externalId>false</externalId>
-        <label>Email Status</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Invalid</fullName>
-                    <default>false</default>
-                    <label>Invalid</label>
-                </value>
-                <value>
-                    <fullName>Missing</fullName>
-                    <default>false</default>
-                    <label>Missing</label>
-                </value>
-                <value>
-                    <fullName>Bad Email</fullName>
-                    <default>false</default>
-                    <label>Bad Email</label>
-                </value>
-                <value>
-                    <fullName>Do not Email</fullName>
-                    <default>false</default>
-                    <label>Do not Email</label>
-                </value>
-                <value>
-                    <fullName>Email</fullName>
-                    <default>false</default>
-                    <label>Email</label>
-                </value>
-                <value>
-                    <fullName>Unknown</fullName>
-                    <default>true</default>
-                    <label>Unknown</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
     </fields>
     <fields>
         <fullName>Espiritu_Survey_Answered__c</fullName>
@@ -7522,6 +7661,15 @@ IFAP Application.</description>
         <label>Global Governance Member</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Global_ID__c</fullName>
+        <description>global unique identifier</description>
+        <displayFormat>003{0000000000}</displayFormat>
+        <externalId>true</externalId>
+        <label>Global ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
     </fields>
     <fields>
         <fullName>HasOptedOutOfEmail</fullName>
@@ -8219,6 +8367,7 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
     </fields>
     <fields>
         <fullName>IndividualId</fullName>
+        <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -8229,6 +8378,325 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <trackHistory>false</trackHistory>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Industry__c</fullName>
+        <externalId>false</externalId>
+        <label>Industry</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Academic</fullName>
+                    <default>false</default>
+                    <label>Academic</label>
+                </value>
+                <value>
+                    <fullName>Aerospace/Defence</fullName>
+                    <default>false</default>
+                    <label>Aerospace/Defence</label>
+                </value>
+                <value>
+                    <fullName>Aircraft Maintenance</fullName>
+                    <default>false</default>
+                    <label>Aircraft Maintenance</label>
+                </value>
+                <value>
+                    <fullName>Airline</fullName>
+                    <default>false</default>
+                    <label>Airline</label>
+                </value>
+                <value>
+                    <fullName>Airline - Cargo Only</fullName>
+                    <default>false</default>
+                    <label>Airline - Cargo Only</label>
+                </value>
+                <value>
+                    <fullName>Air Navigation</fullName>
+                    <default>false</default>
+                    <label>Air Navigation</label>
+                </value>
+                <value>
+                    <fullName>Airport</fullName>
+                    <default>false</default>
+                    <label>Airport</label>
+                </value>
+                <value>
+                    <fullName>Airport (Operators and Owners)</fullName>
+                    <default>false</default>
+                    <label>Airport (Operators and Owners)</label>
+                </value>
+                <value>
+                    <fullName>Air Traffic Control</fullName>
+                    <default>false</default>
+                    <label>Air Traffic Control</label>
+                </value>
+                <value>
+                    <fullName>Analyst</fullName>
+                    <default>false</default>
+                    <label>Analyst</label>
+                </value>
+                <value>
+                    <fullName>Associations, Alliances and NGOs</fullName>
+                    <default>false</default>
+                    <label>Associations, Alliances and NGOs</label>
+                </value>
+                <value>
+                    <fullName>Cargo Agent</fullName>
+                    <default>false</default>
+                    <label>Cargo Agent</label>
+                </value>
+                <value>
+                    <fullName>Car Rentals</fullName>
+                    <default>false</default>
+                    <label>Car Rentals</label>
+                </value>
+                <value>
+                    <fullName>Consulting</fullName>
+                    <default>false</default>
+                    <label>Consulting</label>
+                </value>
+                <value>
+                    <fullName>Cruise Lines</fullName>
+                    <default>false</default>
+                    <label>Cruise Lines</label>
+                </value>
+                <value>
+                    <fullName>Engineering</fullName>
+                    <default>false</default>
+                    <label>Engineering</label>
+                </value>
+                <value>
+                    <fullName>Financial Institutions</fullName>
+                    <default>false</default>
+                    <label>Financial Institutions</label>
+                </value>
+                <value>
+                    <fullName>Freight Forwarding</fullName>
+                    <default>false</default>
+                    <label>Freight Forwarding</label>
+                </value>
+                <value>
+                    <fullName>Fuel and Energy</fullName>
+                    <default>false</default>
+                    <label>Fuel and Energy</label>
+                </value>
+                <value>
+                    <fullName>GDS Global Distribution System</fullName>
+                    <default>false</default>
+                    <label>GDS Global Distribution System</label>
+                </value>
+                <value>
+                    <fullName>General Public</fullName>
+                    <default>false</default>
+                    <label>General Public</label>
+                </value>
+                <value>
+                    <fullName>Global Media</fullName>
+                    <default>false</default>
+                    <label>Global Media</label>
+                </value>
+                <value>
+                    <fullName>Government / Policy Maker</fullName>
+                    <default>false</default>
+                    <label>Government / Policy Maker</label>
+                </value>
+                <value>
+                    <fullName>Government and Regulatory</fullName>
+                    <default>false</default>
+                    <label>Government and Regulatory</label>
+                </value>
+                <value>
+                    <fullName>Ground Handling</fullName>
+                    <default>false</default>
+                    <label>Ground Handling</label>
+                </value>
+                <value>
+                    <fullName>Hotels and Resorts</fullName>
+                    <default>false</default>
+                    <label>Hotels and Resorts</label>
+                </value>
+                <value>
+                    <fullName>IATA</fullName>
+                    <default>false</default>
+                    <label>IATA</label>
+                </value>
+                <value>
+                    <fullName>Industrial Equipment and Manufacturing</fullName>
+                    <default>false</default>
+                    <label>Industrial Equipment and Manufacturing</label>
+                </value>
+                <value>
+                    <fullName>Industry Association &amp; Alliances</fullName>
+                    <default>false</default>
+                    <label>Industry Association &amp; Alliances</label>
+                </value>
+                <value>
+                    <fullName>Industry Provider</fullName>
+                    <default>false</default>
+                    <label>Industry Provider</label>
+                </value>
+                <value>
+                    <fullName>In-Flight Services</fullName>
+                    <default>false</default>
+                    <label>In-Flight Services</label>
+                </value>
+                <value>
+                    <fullName>Information &amp; Communications Technology</fullName>
+                    <default>false</default>
+                    <label>Information &amp; Communications Technology</label>
+                </value>
+                <value>
+                    <fullName>Insurance</fullName>
+                    <default>false</default>
+                    <label>Insurance</label>
+                </value>
+                <value>
+                    <fullName>Legal</fullName>
+                    <default>false</default>
+                    <label>Legal</label>
+                </value>
+                <value>
+                    <fullName>Library - Bookstore</fullName>
+                    <default>false</default>
+                    <label>Library - Bookstore</label>
+                </value>
+                <value>
+                    <fullName>Marketing, Communications and PR</fullName>
+                    <default>false</default>
+                    <label>Marketing, Communications and PR</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Publishing and Media</fullName>
+                    <default>false</default>
+                    <label>Publishing and Media</label>
+                </value>
+                <value>
+                    <fullName>Railway</fullName>
+                    <default>false</default>
+                    <label>Railway</label>
+                </value>
+                <value>
+                    <fullName>Research and Academic Training</fullName>
+                    <default>false</default>
+                    <label>Research and Academic Training</label>
+                </value>
+                <value>
+                    <fullName>Security</fullName>
+                    <default>false</default>
+                    <label>Security</label>
+                </value>
+                <value>
+                    <fullName>Specialized Media</fullName>
+                    <default>false</default>
+                    <label>Specialized Media</label>
+                </value>
+                <value>
+                    <fullName>Tour Operator</fullName>
+                    <default>false</default>
+                    <label>Tour Operator</label>
+                </value>
+                <value>
+                    <fullName>Transportation - Other</fullName>
+                    <default>false</default>
+                    <label>Transportation - Other</label>
+                </value>
+                <value>
+                    <fullName>Travel Agent</fullName>
+                    <default>false</default>
+                    <label>Travel Agent</label>
+                </value>
+                <value>
+                    <fullName>Travel and Tourism</fullName>
+                    <default>false</default>
+                    <label>Travel and Tourism</label>
+                </value>
+                <value>
+                    <fullName>International Air Transport</fullName>
+                    <default>false</default>
+                    <label>International Air Transport</label>
+                </value>
+                <value>
+                    <fullName>Airline Suppliers</fullName>
+                    <default>false</default>
+                    <label>Airline Suppliers</label>
+                </value>
+                <value>
+                    <fullName>Education</fullName>
+                    <default>false</default>
+                    <label>Education</label>
+                </value>
+                <value>
+                    <fullName>Equipment Manufacturers</fullName>
+                    <default>false</default>
+                    <label>Equipment Manufacturers</label>
+                </value>
+                <value>
+                    <fullName>Financial</fullName>
+                    <default>false</default>
+                    <label>Financial</label>
+                </value>
+                <value>
+                    <fullName>General Sales Agent</fullName>
+                    <default>false</default>
+                    <label>General Sales Agent</label>
+                </value>
+                <value>
+                    <fullName>Governmental Institutions</fullName>
+                    <default>false</default>
+                    <label>Governmental Institutions</label>
+                </value>
+                <value>
+                    <fullName>Industry Associations</fullName>
+                    <default>false</default>
+                    <label>Industry Associations</label>
+                </value>
+                <value>
+                    <fullName>Marketing</fullName>
+                    <default>false</default>
+                    <label>Marketing</label>
+                </value>
+                <value>
+                    <fullName>Media or Publishing</fullName>
+                    <default>false</default>
+                    <label>Media or Publishing</label>
+                </value>
+                <value>
+                    <fullName>Tourism</fullName>
+                    <default>false</default>
+                    <label>Tourism</label>
+                </value>
+                <value>
+                    <fullName>IT Sector</fullName>
+                    <default>false</default>
+                    <label>IT Sector</label>
+                </value>
+                <value>
+                    <fullName>Transportation</fullName>
+                    <default>false</default>
+                    <label>Transportation</label>
+                </value>
+                <value>
+                    <fullName>Accomodation</fullName>
+                    <default>false</default>
+                    <label>Accomodation</label>
+                </value>
+                <value>
+                    <fullName>Entertainment Industry</fullName>
+                    <default>false</default>
+                    <label>Entertainment Industry</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Instant_Survey_Last_feedback_received__c</fullName>
@@ -9956,6 +10424,16 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Number_of_Authorized_Signatory__c</fullName>
+        <description>Counts the number of occurrences in Authorized Signatory.</description>
+        <externalId>false</externalId>
+        <label>Number of Authorized Signatory</label>
+        <summaryForeignKey>Authorized_Signatory__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>OPS_Customer_ID__c</fullName>
         <externalId>false</externalId>
         <label>Customer ID</label>
@@ -10036,6 +10514,111 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <label>PAConf Representative</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Pardot_Area_of_Interest__c</fullName>
+        <description>For GDPR, field used to synchronize field Area_of_Interest of Pardot in SF and to store in individual object</description>
+        <externalId>false</externalId>
+        <label>Pardot_Area_of_Interest</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Air navigation services</fullName>
+                    <default>false</default>
+                    <label>Air navigation services</label>
+                </value>
+                <value>
+                    <fullName>Airline management</fullName>
+                    <default>false</default>
+                    <label>Airline management</label>
+                </value>
+                <value>
+                    <fullName>Airline operations and quality</fullName>
+                    <default>false</default>
+                    <label>Airline operations and quality</label>
+                </value>
+                <value>
+                    <fullName>Airport planning, operations and management</fullName>
+                    <default>false</default>
+                    <label>Airport planning, operations and management</label>
+                </value>
+                <value>
+                    <fullName>Cargo</fullName>
+                    <default>false</default>
+                    <label>Cargo</label>
+                </value>
+                <value>
+                    <fullName>Civil aviation</fullName>
+                    <default>false</default>
+                    <label>Civil aviation</label>
+                </value>
+                <value>
+                    <fullName>Dangerous goods</fullName>
+                    <default>false</default>
+                    <label>Dangerous goods</label>
+                </value>
+                <value>
+                    <fullName>Economics</fullName>
+                    <default>false</default>
+                    <label>Economics</label>
+                </value>
+                <value>
+                    <fullName>Environment</fullName>
+                    <default>false</default>
+                    <label>Environment</label>
+                </value>
+                <value>
+                    <fullName>Fares and ticketing</fullName>
+                    <default>false</default>
+                    <label>Fares and ticketing</label>
+                </value>
+                <value>
+                    <fullName>Financial services and revenue management</fullName>
+                    <default>false</default>
+                    <label>Financial services and revenue management</label>
+                </value>
+                <value>
+                    <fullName>Flight operations</fullName>
+                    <default>false</default>
+                    <label>Flight operations</label>
+                </value>
+                <value>
+                    <fullName>Ground operations</fullName>
+                    <default>false</default>
+                    <label>Ground operations</label>
+                </value>
+                <value>
+                    <fullName>Law and regulations</fullName>
+                    <default>false</default>
+                    <label>Law and regulations</label>
+                </value>
+                <value>
+                    <fullName>Passenger services</fullName>
+                    <default>false</default>
+                    <label>Passenger services</label>
+                </value>
+                <value>
+                    <fullName>Safety</fullName>
+                    <default>false</default>
+                    <label>Safety</label>
+                </value>
+                <value>
+                    <fullName>Security and risk management</fullName>
+                    <default>false</default>
+                    <label>Security and risk management</label>
+                </value>
+                <value>
+                    <fullName>Travel and tourism</fullName>
+                    <default>false</default>
+                    <label>Travel and tourism</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>Participants_count__c</fullName>
@@ -10241,7 +10824,12 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <type>Picklist</type>
         <valueSet>
             <valueSetDefinition>
-                <sorted>false</sorted>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Arabic</fullName>
+                    <default>false</default>
+                    <label>Arabic</label>
+                </value>
                 <value>
                     <fullName>Chinese</fullName>
                     <default>false</default>
@@ -10258,9 +10846,14 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>French</label>
                 </value>
                 <value>
-                    <fullName>Korean</fullName>
+                    <fullName>German</fullName>
                     <default>false</default>
-                    <label>Korean</label>
+                    <label>German</label>
+                </value>
+                <value>
+                    <fullName>Indonesian</fullName>
+                    <default>false</default>
+                    <label>Indonesian</label>
                 </value>
                 <value>
                     <fullName>Italian</fullName>
@@ -10273,9 +10866,19 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Japanese</label>
                 </value>
                 <value>
+                    <fullName>Korean</fullName>
+                    <default>false</default>
+                    <label>Korean</label>
+                </value>
+                <value>
                     <fullName>Portuguese</fullName>
                     <default>false</default>
                     <label>Portuguese</label>
+                </value>
+                <value>
+                    <fullName>Russian</fullName>
+                    <default>false</default>
+                    <label>Russian</label>
                 </value>
                 <value>
                     <fullName>Spanish</fullName>
@@ -10283,14 +10886,19 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Spanish</label>
                 </value>
                 <value>
+                    <fullName>Thai</fullName>
+                    <default>false</default>
+                    <label>Thai</label>
+                </value>
+                <value>
                     <fullName>Turkish</fullName>
                     <default>false</default>
                     <label>Turkish</label>
                 </value>
                 <value>
-                    <fullName>Russian</fullName>
+                    <fullName>Vietnamese</fullName>
                     <default>false</default>
-                    <label>Russian</label>
+                    <label>Vietnamese</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -12470,7 +13078,7 @@ IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006
     <fields>
         <fullName>UIR__c</fullName>
         <externalId>false</externalId>
-        <label>UIR</label>
+        <label>UIR/PRIN</label>
         <length>8</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -12673,7 +13281,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <fullName>WebStar_ID__c</fullName>
         <caseSensitive>false</caseSensitive>
         <externalId>true</externalId>
-        <label>WebStar ID</label>
+        <label>WebStar P00 Key</label>
         <length>40</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -13070,6 +13678,32 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Active_Currency_Center_Contacts</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CONTACT.PHONE1</columns>
+        <columns>CONTACT.EMAIL</columns>
+        <columns>CONTACT.TITLE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <filters>
+            <field>Available_Services__c</field>
+            <operation>includes</operation>
+            <value>Currency Center</value>
+        </filters>
+        <filters>
+            <field>CONTACT.EMAIL</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>Active Currency Center Contacts</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Agent_Credit_Risk_Manager_Contacts</fullName>
         <columns>ACCOUNT.SITE</columns>
         <columns>ACCOUNT.NAME</columns>
@@ -13102,6 +13736,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <columns>CORE.USERS.ALIAS</columns>
         <columns>CONTACT.CREATED_DATE</columns>
         <columns>PARENT.NAME</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <label>All Contacts</label>
         <language>en_US</language>
@@ -14891,33 +15526,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Email_Status__c</picklist>
-            <values>
-                <fullName>Bad Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Do not Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invalid</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Missing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Unknown</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Fax_Status__c</picklist>
             <values>
                 <fullName>Bad Number</fullName>
@@ -15143,6 +15751,253 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>SDR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Industry__c</picklist>
+            <values>
+                <fullName>Academic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accomodation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aerospace%2FDefence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Air Navigation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Air Traffic Control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Maintenance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Cargo Only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Suppliers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport %28Operators and Owners%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Analyst</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Associations%2C Alliances and NGOs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Rentals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cruise Lines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Entertainment Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equipment Manufacturers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Institutions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel and Energy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS Global Distribution System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Public</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Government %2F Policy Maker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Government and Regulatory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Governmental Institutions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotels and Resorts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IT Sector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-Flight Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industrial Equipment and Manufacturing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Association %26 Alliances</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Associations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Information %26 Communications Technology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International Air Transport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Library - Bookstore</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing%2C Communications and PR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Media or Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publishing and Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Railway</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Research and Academic Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Specialized Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tour Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tourism</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transportation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transportation - Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel and Tourism</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15403,31 +16258,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <picklistValues>
             <picklist>Name</picklist>
             <values>
-                <fullName>Admiral</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Capt%2E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Col%2E</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Dr%2E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Frau</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Herr</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Lt Col%2E</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15443,31 +16274,82 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
                 <default>false</default>
             </values>
             <values>
-                <fullName>Off%2E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Private</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Prof%2E</fullName>
                 <default>false</default>
             </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Pardot_Area_of_Interest__c</picklist>
             <values>
-                <fullName>Sgt%2E</fullName>
+                <fullName>Air navigation services</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sr%2E</fullName>
+                <fullName>Airline management</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sra%2E</fullName>
+                <fullName>Airline operations and quality</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Srta%2E</fullName>
+                <fullName>Airport planning%2C operations and management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Civil aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Economics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fares and ticketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial services and revenue management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law and regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security and risk management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel and tourism</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17507,33 +18389,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Email_Status__c</picklist>
-            <values>
-                <fullName>Bad Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Do not Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Email</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invalid</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Missing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Unknown</fullName>
-                <default>true</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Fax_Status__c</picklist>
             <values>
                 <fullName>Bad Number</fullName>
@@ -17977,6 +18832,253 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Industry__c</picklist>
+            <values>
+                <fullName>Academic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accomodation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aerospace%2FDefence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Air Navigation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Air Traffic Control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Maintenance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Cargo Only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Suppliers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport %28Operators and Owners%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Analyst</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Associations%2C Alliances and NGOs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Rentals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cruise Lines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Entertainment Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equipment Manufacturers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Institutions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel and Energy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS Global Distribution System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Public</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Government %2F Policy Maker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Government and Regulatory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Governmental Institutions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotels and Resorts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IT Sector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-Flight Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industrial Equipment and Manufacturing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Association %26 Alliances</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Associations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Information %26 Communications Technology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International Air Transport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Library - Bookstore</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing%2C Communications and PR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Media or Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publishing and Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Railway</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Research and Academic Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Specialized Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tour Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tourism</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transportation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transportation - Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel and Tourism</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>LOB_Interest__c</picklist>
             <values>
                 <fullName>Advertising</fullName>
@@ -18328,6 +19430,81 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Pardot_Area_of_Interest__c</picklist>
+            <values>
+                <fullName>Air navigation services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline operations and quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport planning%2C operations and management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Civil aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Economics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fares and ticketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial services and revenue management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law and regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security and risk management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel and tourism</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18812,7 +19989,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <customTabListAdditionalFields>Use_Contact__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.EMAIL</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Services__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Available_Services_Images__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
@@ -18840,6 +20017,16 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <searchResultsAdditionalFields>CONTACT.EMAIL</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
+    <validationRules>
+        <fullName>ACRM_can_only_be_under_an_airline</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+        Airline_Credit_Risk_Manager__c = true,
+        NOT(ISPICKVAL(Account.Sector__c, &apos;Airline&apos;))
+        )</errorConditionFormula>
+        <errorDisplayField>Airline_Credit_Risk_Manager__c</errorDisplayField>
+        <errorMessage>Airline credit risk manager can only flagged for contacts under airline accounts</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>CFOCEO_contact_under_AL_HQ_only</fullName>
         <active>true</active>
@@ -18876,13 +20063,67 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <errorMessage>You should deactivate a user before changing his license</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Change_Internal_User_To_Admin</fullName>
+        <active>true</active>
+        <description>Internal Users can&apos;t change Portal Status to Administrator.</description>
+        <errorConditionFormula>AND( 
+ISPICKVAL( $User.UserType , &quot;Standard&quot;), 
+ISPICKVAL( Account.Sector__c, &quot;General Public&quot;), 
+ISPICKVAL( User_Portal_Status__c, &quot;Approved Admin&quot;),
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+        <errorMessage>Internal Users can&apos;t change Portal Status to Administrator.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Change_id_card_holder_account_name</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+
+
+ID_Card_Holder__c=true, 
+
+ISCHANGED(AccountId), 
+
+NOT(ISBLANK(PRIORVALUE(AccountId))), 
+
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;, 
+$UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot;	
+)	,	
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
+$UserRole.Name &lt;&gt; &quot;GDP&quot; 
+) 
+
+)</errorConditionFormula>
+        <errorMessage>This contact is an ID Card holder. please raise an internal case to ID Card team to move the contact to another account</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Change_id_card_holder_cont_name</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-ISPICKVAL($User.UserType,&quot;Standard&quot;),
 ID_Card_Holder__c=true,
+
+				or( 
+$User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
+$UserRole.Name &lt;&gt; &quot;GDP&quot; 
+),
+				
+				or(
+$User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;,
+$UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot; 
+) ,
+				
+	Or(			
+					and(
 ISCHANGED(LastName),
 UPPER(PRIORVALUE(LastName)) &lt;&gt; UPPER(LastName)
+									),
+					and(
+ISCHANGED(FirstName), 
+UPPER(PRIORVALUE(FirstName)) &lt;&gt; UPPER(FirstName)																		
+									)
+				)
 )</errorConditionFormula>
         <errorMessage>This contact is an ID Card holder. To change name, please raise an internal case to ID Card team</errorMessage>
     </validationRules>
@@ -18940,11 +20181,58 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
         <errorMessage>Changing a BSPlink user&apos;s email may cause problems with SSO.If the user&apos;s access to BSPlink is to be switched to another email, do the changes in BSPlink. Otherwise if the contact is changing their email, please post a comment on the portal chatter group</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Email_Update_Date_Must_be_Added</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND(ISCHANGED( Email_Status__c ), OR( Email_Status_Update__c    &lt;    TODAY(), ISNULL( Email_Status_Update__c  )))</errorConditionFormula>
-        <errorDisplayField>Email_Status_Update__c</errorDisplayField>
-        <errorMessage>Email Status has been modified, please enter update date</errorMessage>
+        <fullName>Has_Authorized_Signatory_External</fullName>
+        <active>true</active>
+        <description>External users can&apos;t edit the first and last name nor the email of the Account if there is at least 1 Authorized Signatory.</description>
+        <errorConditionFormula>AND(
+  Number_of_Authorized_Signatory__c &gt; 0,
+  OR(
+   ISCHANGED( FirstName ),
+   ISCHANGED( LastName ),
+   ISCHANGED( Email )  
+ ),
+  $User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Staff - HO&quot;,
+    NOT( ISPICKVAL($User.UserType, &quot;Standard&quot; )),
+   $User.ToU_accepted__c = TRUE
+)</errorConditionFormula>
+        <errorMessage>Please be aware that this is an airline signatory contact and that changes to them have to be done by IATA for security reasons. Please log a query on the CS portal.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Has_Authorized_Signatory_Internal</fullName>
+        <active>true</active>
+        <description>Internal users can&apos;t edit the first and last name nor the email of the Account if there is at least 1 Authorized Signatory.</description>
+        <errorConditionFormula>AND(
+  Number_of_Authorized_Signatory__c &gt; 0,
+  OR(
+   ISCHANGED( FirstName ),
+   ISCHANGED( LastName ),
+   ISCHANGED( Email )  
+ ),
+  $User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Staff - HO&quot;,
+    ISPICKVAL($User.UserType, &quot;Standard&quot; )
+)</errorConditionFormula>
+        <errorMessage>This is an Authorized Signatory contact so you can’t modify first name, last name or email address. Please contact Airline Participation team.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ID_card_Holder_no_change</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
+$UserRole.Name &lt;&gt; &quot;GDP&quot;	
+), 
+				
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;, 
+$UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot;	
+), 
+
+$User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,				
+
+ISCHANGED(ID_Card_Holder__c)
+)</errorConditionFormula>
+        <errorMessage>Your Salesforce profile is restricted to change the ID Card Holder checkbox. Please contact the ID Card team.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>IFAP_Contact_Under_Branch_Account</fullName>

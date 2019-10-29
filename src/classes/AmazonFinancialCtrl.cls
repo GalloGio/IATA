@@ -15,20 +15,22 @@ global class AmazonFinancialCtrl {
   private static final AmazonCredentials CREDENTIALS = AmazonCredentials.getCredentials(IfapToolManager.IFAPCONFIGARATIONNAME);
   public string AMAZONURL {get; private set;}
 
-
+  private Set<String> caseStatusUploadAllowed = new Set<String>{
+    'Agent Notified (Mail)',
+    'Agent Notified (Email)',
+    'Action Needed',
+    'Sanity Check Failure',
+    'Closed_Non compliance'
+  };
 
   public boolean canUploadAndDelete {
     get {
       if (cse == null || cse.id == null) return true;
       Case thiscse = [Select id, Status from Case where id = :cse.id];
-      return (thiscse.Status.equals('Agent Notified (Mail)') ||
-      thiscse.Status.equals('Agent Notified (Email)') ||
-	  thiscse.Status.equals('Action Needed') ||
-      thiscse.Status.equals('Sanity Check Failure'));
+      return caseStatusUploadAllowed.contains(thiscse.Status);
     }
     set;
   }
-
 
   public boolean hasMessage {get{return (ApexPages.hasmessages());} private set;}
   @TestVisible
@@ -251,9 +253,7 @@ global class AmazonFinancialCtrl {
       case check = [Select id, status FROM Case where Id =: cse.id limit 1];
         if (check.status <> 'Submitted') {
           TransformationHelper.NoStatusValidation = true;
-          //CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
           cse.status = 'Submitted';
-          //  cse.IsComplaint__c = true;
           update cse;
           TransformationHelper.NoStatusValidation = false;
 
