@@ -18,9 +18,6 @@
 	<body>
 		<apex:repeat value="{!certificates}" var="page">
 			<apex:repeat value="{!page}" var="acc">
-				<div style="position: absolute;color: #dddddd;opacity: 0.2;font-size: 9em;font-weight: bold;top: 76%;z-index: -999;">
-					{!IF(ISBLANK($CurrentPage.Parameters.year), YEAR(TODAY()), $CurrentPage.Parameters.year)}
-				</div>
 				<table class="tabeStyle" id="myTable">
 					<tr style="height: 223px;">
 						<td style="width: 50%;">
@@ -74,7 +71,7 @@
 					</tr>
 					<tr  style="height: 223px;">
 						<td>
-							<table  style="height:200px;;width: 100%;">
+							<table  style="height:200px;width: 100%;">
 								<tr>
 									<td>
 										<apex:pageBlock rendered="{!(acc.Region_formula__c == 'Africa & Middle East' || acc.Region_formula__c == 'Americas' || acc.Region_formula__c == 'Europe')}">
@@ -101,7 +98,7 @@
 										</apex:pageBlock>
 									</td>
 								</tr>
-								<tr>
+								<tr style="position: relative;">
 									<td style="font-size: 10px;width:170px;">
 										<hr style="width:80%;margin:0px;"></hr>
 										<apex:pageBlock rendered="{!(acc.Region_formula__c == 'Africa & Middle East' || acc.Region_formula__c == 'Americas' || acc.Region_formula__c == 'Europe')}">
@@ -127,6 +124,11 @@
 										<apex:pageBlock rendered="{!acc.Region_formula__c == 'Asia & Pacific'}">
 											<apex:outputText value="{!allLabels['ASPAC_CMYK_Signature2'].Description_Signature__c}" style="white-space:pre;" escape="false"/>
 										</apex:pageBlock>
+									</td>
+									<td>
+										<div style="position: absolute;color: #dddddd;opacity: 0.2;font-size: 9em;font-weight: bold;top:-45%;z-index: -999;">
+											{!IF(ISBLANK($CurrentPage.Parameters.year), YEAR(TODAY()), $CurrentPage.Parameters.year)}
+										</div>
 									</td>
 								</tr>
 							</table>
