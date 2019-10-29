@@ -356,7 +356,7 @@ public without sharing class PortalIftpUtils {
 	@AuraEnabled(cacheable=true)
 	public static List<Account> getAllITP(){
 
-		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'ITP');
+		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
 
 		List<Account_Role__c> accRoleCompanies = [SELECT Account__c
 													FROM Account_Role__c
@@ -620,11 +620,11 @@ public without sharing class PortalIftpUtils {
 
 		try{
 
-			String RECTYPE_ITP = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
+			String RECTYPE_ITP = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'IFTP');
 
 			UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 
-			List<Account_Contact_Role__c> accEmps = PortalIftEmployeeRecordsManagement.getAllITPEmployees();
+			List<Account_Contact_Role__c> accEmps = PortalIftEmployeeRecordsManagement.getAllITPEmployees(ui.accountId);
 			List<Address__c> allAddr = getAllStations();
 			List<Address__c> userAddr = getITPStations(ui.accountId);
 
@@ -1314,7 +1314,7 @@ public without sharing class PortalIftpUtils {
 
 				insert cdl;
 
-				//Create case for upload file validation 
+				//Create case for upload file validation
 				//ContentDocument cdocument = [select id,LatestPublishedVersionId, title from ContentDocument where Id = :fileId LIMIT 1];
 				ContentVersion cversion = [select id, title, versiondata, fileType from ContentVersion where ContentDocumentId = :fileId LIMIT 1];
 
