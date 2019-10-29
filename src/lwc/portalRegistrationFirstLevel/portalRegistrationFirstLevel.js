@@ -48,7 +48,6 @@ import CSP_Registration_Retry_Message           from '@salesforce/label/c.CSP_Re
 import CSP_Try_Again                            from '@salesforce/label/c.CSP_Try_Again';
 import CSP_Troubleshooting_Info                 from '@salesforce/label/c.CSP_Troubleshooting_Info';
 import CSP_Troubleshooting                      from '@salesforce/label/c.CSP_Troubleshooting';
-import OneId_CSP_Troubleshooting_Link           from '@salesforce/label/c.OneId_CSP_Troubleshooting_Link';
 import CSP_Unexcepted_Error                     from '@salesforce/label/c.CSP_Unexcepted_Error';
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
 
@@ -119,7 +118,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         CSP_Try_Again,
         CSP_Troubleshooting_Info,
         CSP_Troubleshooting,
-        OneId_CSP_Troubleshooting_Link,
         CSP_Unexcepted_Error,
         CSP_PortalPath
     }

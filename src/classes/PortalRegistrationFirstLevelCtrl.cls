@@ -25,6 +25,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         public CountryInformation countryInfo{get;set;}
         @AuraEnabled
         public List<CSP_Utils.PickListWrapper> languageList{get;set;}
+        @AuraEnabled
+        public string troubleShootingUrl{get;set;}
     }
 
     public class RegistrationConfirmationConfig{
@@ -48,6 +50,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         public string extraChoice{get;set;}
         @AuraEnabled
         public boolean isGeneralPublic{get;set;}
+        @AuraEnabled
+        public string troubleShootingUrl{get;set;}
     }
 
     public class RegistrationResult{
@@ -113,7 +117,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             wrapper.value = wrapper.value.toLowerCase();
             config.languageList.add(wrapper);
         }
-
+        config.troubleShootingUrl = Label.CSP_PortalPath + 'faq-article?language=en_US&q=troubleshooting';
+        ISSP_CS__c cs = ISSP_CS__c.getInstance('TroubleShootingArticleId');
+        if(cs != null){
+            config.troubleShootingUrl = config.troubleShootingUrl + '&id1=' + cs.value__c;
+        }
         return config;
     }
 
@@ -219,7 +227,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             CSP_Utils.PickListWrapper wrapper = new CSP_Utils.PickListWrapper(portalLang.Language__c, portalLang.Language__c);
             config.languageList.add(wrapper);
         }
-
+        config.troubleShootingUrl = Label.CSP_PortalPath + 'faq-article?language=en_US&q=troubleshooting';
+        ISSP_CS__c cs = ISSP_CS__c.getInstance('TroubleShootingArticleId');
+        if(cs != null){
+            config.troubleShootingUrl = config.troubleShootingUrl + '&id1=' + cs.value__c;
+        }
         return config;
 
     }

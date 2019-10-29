@@ -29,7 +29,6 @@ import CSP_Submit                               from '@salesforce/label/c.CSP_Su
 import ISSP_Registration_MyInformation          from '@salesforce/label/c.ISSP_Registration_MyInformation';
 import CSP_Troubleshooting_Info                 from '@salesforce/label/c.CSP_Troubleshooting_Info';
 import CSP_Troubleshooting                      from '@salesforce/label/c.CSP_Troubleshooting';
-import OneId_CSP_Troubleshooting_Link           from '@salesforce/label/c.OneId_CSP_Troubleshooting_Link';
 import CSP_Unexcepted_Error                     from '@salesforce/label/c.CSP_Unexcepted_Error';
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
 
@@ -85,7 +84,6 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
         ISSP_Registration_MyInformation,
         CSP_Troubleshooting_Info,
         CSP_Troubleshooting,
-        OneId_CSP_Troubleshooting_Link,
         CSP_Unexcepted_Error,
         CSP_PortalPath
     }
