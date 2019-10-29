@@ -247,7 +247,7 @@ private class ANG_HierarchyTriggerTest {
 
 		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='Agency HE 1',Short_Name__c='Agency HE 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
 		Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='HE',Name='Agency HE 1',Short_Name__c='Agency HE 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
-		Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='HE',Name='Agency HE 2',Short_Name__c='Agency HE 2', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED);
+		Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='HE',Name='Agency HE 2',Short_Name__c='Agency HE 2', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED, Purge_Flag__c = true);
 		  
 		insert new List<Account>{a1,a2,a3};
 
