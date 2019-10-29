@@ -103003,25 +103003,6 @@ ISPICKVAL(Verification_Status__c, &apos;Partial&apos;),
         <errorDisplayField>Category__c</errorDisplayField>
         <errorMessage>The account needs to have a Sector and a Category.</errorMessage>
     </validationRules>
-    <validationRules>
-        <fullName>EF_VerificationStatus_VAT1</fullName>
-        <active>true</active>
-        <description>The &quot;Verified&quot; value is available if the E&amp;F account have a VAT Number 1. (Except Airport)</description>
-        <errorConditionFormula>AND(  ISPICKVAL( Verification_Status__c ,&quot;Verified&quot;),
-
-      OR ( RecordTypeDeveloperName__c = &apos;Branch&apos;,
-           RecordTypeDeveloperName__c = &apos;IATA_Airline&apos;,
-           RecordTypeDeveloperName__c = &apos;IATA_Airline_BR&apos;,
-           RecordTypeDeveloperName__c = &apos;Operator&apos;,
-           RecordTypeDeveloperName__c = &apos;Others&apos;,
-           RecordTypeDeveloperName__c = &apos;Standard_Account&apos;
-      ),
-
-      ISBLANK( VAT_Number__c )
-)</errorConditionFormula>
-        <errorDisplayField>VAT_Number__c</errorDisplayField>
-        <errorMessage>The account needs to have a VAT Number 1.</errorMessage>
-    </validationRules>
     <webLinks>
         <fullName>Account_Context_Activation</fullName>
         <availability>online</availability>
