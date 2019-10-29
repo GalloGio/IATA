@@ -1279,113 +1279,27 @@ public without sharing class PortalIftpUtils {
 		return results;
 	}
 
-	/*
-		Method: manageUploadGlobalOJT
-		For this method is necessary to have a library on Salesforce to place the file, in order to
-		allow sharing (pdf download).
-		To acomplish this make sure to have the library created, with permissions for a specific
-		public group (that contains all the necessary groups of users) as 'Portal Partner', and keep the id
-		of the library in a custom setting as follows: custom settings->ISS cs -> 'IFTP-DocumentLibrary'
 
-	*/
 	@AuraEnabled (cacheable=false)
 	public static Boolean manageUploadGlobalOJT(Id fileId){
-		Boolean result = true;
-		try{
-			UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
-			Id ownerId = [Select Id FROM group WHERE Type = 'Queue' and Name = 'IFTP'].Id;
-
-			ID ProcessRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
-
-			Savepoint sp = Database.setSavepoint();
-			try {
-				Account_Role__c accRole = new Account_Role__c();
-				accRole.id = ui.accountRole;
-				accRole.OJT_file_id__c = fileId;
-				accRole.OJT_file_validated__c = false;
-				update accRole;
-
-				ContentDocumentLink cdl = new ContentDocumentLink();
-				cdl.ContentDocumentId = fileId;
-				cdl.ShareType = 'I';
-				cdl.Visibility = 'AllUsers';
-				//cdl.LinkedEntityId = '0581j00000050jV';
-				cdl.LinkedEntityId = ISSP_CS__c.getValues('IFTP-DocumentLibrary').Value__c;
-
-				insert cdl;
-
-				//Create case for upload file validation
-				//ContentDocument cdocument = [select id,LatestPublishedVersionId, title from ContentDocument where Id = :fileId LIMIT 1];
-				ContentVersion cversion = [select id, title, versiondata, fileType from ContentVersion where ContentDocumentId = :fileId LIMIT 1];
-
-				String ojt_global_file_c_version_id = cversion.id;
-				String baseUrl = URL.getSalesforceBaseUrl().toExternalForm();
-
-				String description = 'Request Global OJT File Validation: \n';
-
-
-				Case transferCase = new Case();
-				transferCase.recordtypeID = ProcessRTId;
-				transferCase.AccountId = ui.accountId;
-				transferCase.OwnerId = ownerId;
-				transferCase.Subject = 'Request Global OJT File Validation';
-				transferCase.Description = description;
-				transferCase.ContactId = ui.contactId;
-				transferCase.Status = 'Open';
-				transferCase.Visible_on_ISS_Portal__c = true;
-				transferCase.CaseArea__c = 'IATA Fuelling Training Portal (IFTP)';
-				transferCase.Reason1__c  = 'IFTP OJT File Validation';
-				transferCase.Region__c = ui.accountRegion;
-				transferCase.BSPCountry__c = ui.accountCountry;
-
-				insert transferCase;
-
-				Attachment att = new Attachment();
-				att.ParentId = transferCase.Id;
-				att.Name = cversion.title + '.' + cversion.fileType;
-				att.Body = cversion.VersionData;
-
-				insert att;
-			}
-			catch (DMLException e) {
-				result = false;
-				System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException - ' + e );
-				System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException - ' + e.getStackTraceString() );
-				Database.rollback(sp);
-				try{
-					List<ContentDocument> fileList = new List<ContentDocument>();
-					fileList.add(new ContentDocument(id = fileId));
-					delete fileList;
-				}
-				catch (DMLException eDML) {
-					result = false;
-					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException delete fileList - ' + eDML );
-					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException delete fileList - ' + eDML.getStackTraceString() );
-
-				}
-
-			}
-		}
-		catch (Exception ex){
-			result = false;
-			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] Exception - ' + ex );
-			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] Exception - ' + ex.getStackTraceString() );
-		}
-		return result;
+		return manageUploadOJTFile('Global', fileId, null, null);
 	}
-
-	/*
-		Method: manageUploadStationOJT
-		For this method is necessary to have a library on Salesforce to place the file, in order to
-		allow sharing (pdf download).
-		To acomplish this make sure to have the library created, with permissions for a specific
-		public group (that contains all the necessary groups of users) as 'Portal Partner', and keep the id
-		of the library in a custom setting as follows: custom settings->ISS cs -> 'IFTP-DocumentLibrary'
-
-	*/
 
 	@AuraEnabled (cacheable=false)
 	public static Boolean manageUploadStationOJT(Id fileId, Id recordID, String stationInfo){
+		return manageUploadOJTFile('Station', fileId, recordID, stationInfo);
+	}
+	/*
+		Method: manageUploadOJTFile
+		For this method is necessary to have a library on Salesforce to place the file, in order to
+		allow sharing (pdf download).
+		To acomplish this make sure to have the library created, with permissions for a specific
+		public group (that contains all the necessary groups of users) as 'Portal Partner', and keep the id
+		of the library in a custom setting as follows: custom settings->ISS cs -> 'IFTP-DocumentLibrary'
+
+	*/
+	@AuraEnabled (cacheable=false)
+	public static Boolean manageUploadOJTFile(String type, Id fileId, Id recordID, String stationInfo){
 		Boolean result = true;
 		try{
 			UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
@@ -1395,38 +1309,48 @@ public without sharing class PortalIftpUtils {
 
 			Savepoint sp = Database.setSavepoint();
 			try {
-				Role_Address__c rolAddr = new Role_Address__c();
-				rolAddr.id = recordID;
-				rolAddr.OJT_File_Id__c = fileId;
-				rolAddr.OJT_file_validated__c = false;
-				update rolAddr;
-
-				ContentDocumentLink cdl = new ContentDocumentLink();
-				cdl.ContentDocumentId = fileId;
-				cdl.ShareType = 'I';
-				cdl.Visibility = 'AllUsers';
-				//cdl.LinkedEntityId = '0581j00000050jV';
-				cdl.LinkedEntityId = ISSP_CS__c.getValues('IFTP-DocumentLibrary').Value__c;
-				insert cdl;
+				if(type.equalsIgnoreCase('Station')){
+					Role_Address__c rolAddr = new Role_Address__c();
+					rolAddr.id = recordID;
+					rolAddr.OJT_File_Id__c = fileId;
+					rolAddr.OJT_file_validated__c = false;
+					update rolAddr;
+				} else {
+					if(type.equalsIgnoreCase('Global')){
+						Account_Role__c accRole = new Account_Role__c();
+						accRole.id = ui.accountRole;
+						accRole.OJT_file_id__c = fileId;
+						accRole.OJT_file_validated__c = false;
+						update accRole;
+					}
+				}
+				if(!Test.isRunningTest()){
+					ContentDocumentLink cdl = new ContentDocumentLink();
+					cdl.ContentDocumentId = fileId;
+					cdl.ShareType = 'I';
+					cdl.Visibility = 'AllUsers';
+					cdl.LinkedEntityId = ISSP_CS__c.getValues('IFTP-DocumentLibrary').Value__c;
+					insert cdl;
+				}
 
 				//Create case for upload file validation
-				//ContentDocument cdocument = [select id,LatestPublishedVersionId, title from ContentDocument where Id = :fileId LIMIT 1];
 				ContentVersion cversion = [select id, title, versiondata, fileType from ContentVersion where ContentDocumentId = :fileId AND IsLatest = true  LIMIT 1];
-				//String ojt_global_file_url =  cdocument.LatestPublishedVersionId;
-				String ojt_station_file_c_version_id = cversion.id;
-				String baseUrl = URL.getSalesforceBaseUrl().toExternalForm();
-
-				String description = 'Request Station OJT File Validation: \n';
-				description += 'Station: ';
-				description += stationInfo;
-				description += ' \n';
-
-
+				String description;
+				String subject;
+				if(type.equalsIgnoreCase('Station')){
+					description = 'Request Station OJT File Validation: \n' + 'Station: ' + stationInfo + ' \n';
+					subject = 'Request Station OJT File Validation';
+				} else {
+					if(type.equalsIgnoreCase('Global')){
+						description = 'Request Global OJT File Validation \n';
+						subject = 'Request Global OJT File Validation';
+					}
+				}
 				Case transferCase = new Case();
 				transferCase.recordtypeID = ProcessRTId;
 				transferCase.AccountId = ui.accountId;
 				transferCase.OwnerId = ownerId;
-				transferCase.Subject = 'Request Station OJT File Validation';
+				transferCase.Subject = subject;
 				transferCase.Description = description;
 				transferCase.ContactId = ui.contactId;
 				transferCase.Status = 'Open';
@@ -1435,39 +1359,36 @@ public without sharing class PortalIftpUtils {
 				transferCase.Reason1__c  = 'IFTP OJT File Validation';
 				transferCase.Region__c = ui.accountRegion;
 				transferCase.BSPCountry__c = ui.accountCountry;
-
 				insert transferCase;
 
 				Attachment att = new Attachment();
 				att.ParentId = transferCase.Id;
 				att.Name = cversion.title + '.' + cversion.fileType;
 				att.Body = cversion.VersionData;
-
 				insert att;
 			}
 			catch (DMLException e) {
-				System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException - ' + e );
-				System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException - ' + e.getStackTraceString() );
-				Database.rollback(sp);
 				result = false;
+				System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadOJTFile] DMLException - ' + e );
+				System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadOJTFile] DMLException - ' + e.getStackTraceString() );
+				Database.rollback(sp);
 				try{
 					List<ContentDocument> fileList = new List<ContentDocument>();
 					fileList.add(new ContentDocument(id = fileId));
 					delete fileList;
 				}
 				catch (DMLException eDML) {
-					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException delete fileList - ' + eDML );
-					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException delete fileList - ' + eDML.getStackTraceString());
 					result = false;
+					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadOJTFile] DMLException delete fileList - ' + eDML );
+					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadOJTFile] DMLException delete fileList - ' + eDML.getStackTraceString());
 				}
 			}
 		}
 		catch (Exception ex){
-			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] Exception - ' + ex );
-			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] Exception - ' + ex.getStackTraceString() );
 			result = false;
+			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadOJTFile] Exception - ' + ex );
+			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadOJTFile] Exception - ' + ex.getStackTraceString() );
 		}
-
 		return result;
 	}
 
