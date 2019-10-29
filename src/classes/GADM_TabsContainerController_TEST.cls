@@ -180,6 +180,16 @@ public  class GADM_TabsContainerController_TEST {
     }
 
     @IsTest
+    private static void checkSessionCacheCoverageTest() {
+        //can not be tested during deployment as session cache does not exist. Making coverage
+        Boolean presentInCache;
+        Test.startTest();
+        presentInCache = GADM_TabsContainerController.checkSessionCache(UserInfo.getUserId(), 'checkSessionCacheCoverageTest');
+        Test.stopTest();
+        System.assertEquals(false, presentInCache, 'Key is not preset in cache');
+    }
+
+    @IsTest
     private static void getUserGrantedRolesTest() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'Neo.Smith.test@somedomain.com'];
