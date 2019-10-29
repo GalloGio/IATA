@@ -695,6 +695,10 @@ public class ANG_MulticountryHelper {
 				toReturn.addRhcInformationToDeactivate(acquiredAgency.RHC_Informations__r[0]);
 			}
 
+			if(acquiredAgency.Main_Accounts__r != NULL){
+				toReturn.addHierarchyToDelete(acquiredAgency.Main_Accounts__r[0]);
+			}
+
 		}
 
 		acquiredAgency.ANG_FA_Opt_out__c = thw.targetGE.ANG_FA_Opt_out__c;

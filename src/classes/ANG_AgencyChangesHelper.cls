@@ -31,6 +31,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		public Set<Id> accountsChanged;
 
 		public Map<Id,AMS_Agencies_Hierarchy__c> hierarchies;
+		public List<AMS_Agencies_Hierarchy__c> hierarchiesToDeleteLst;
 
 		public AChangeStructure(){
 			relationsMap = new Map<Id, AMS_Agencies_relationhip__c>();
@@ -51,6 +52,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			agencyAuthorizationToUpdateLst = new List<Agency_Authorization__c>();
 			calculateRiskAssessmentMap = new Map<Id, Map<Id, Integer>>();
 			riskAlertsToUpdateLst = new List<ANG_Risk_Alert__c>();
+			hierarchiesToDeleteLst = new List<AMS_Agencies_Hierarchy__c>();
 		}
 
 		public void addAccount(Account account){
@@ -78,7 +80,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		public void addHierarchy(AMS_Agencies_Hierarchy__c hierarchy){
 			hierarchies.put(hierarchy.Id, hierarchy);
 		}
-		
+
 		public void addRhcInformationToDeactivate(ANG_RHC_Information__c rhcInfo){
 			deactivateRhcInformationLst.add(rhcInfo);
 		}
@@ -107,12 +109,16 @@ public with sharing class ANG_AgencyChangesHelper {
 		public void addRiskAlertsToUpdate(List<ANG_Risk_Alert__c> riskAlertsLst){
 			riskAlertsToUpdateLst.addAll(riskAlertsLst);
 		}
-		
+
 		public void addAccountsToRecalculateFsAmounts(Id accountId){
 			accountsToRecalculateFsAmounts.add(accountId);
 		}
 
-		public void runDeletes(){
+		public void addHierarchyToDelete(AMS_Agencies_Hierarchy__c hierarchy){
+			hierarchiesToDeleteLst.add(hierarchy);
+		}
+
+		public void runPreDeletes(){
 
 			if(relationsToDeleteLst != NULL && !relationsToDeleteLst.isEmpty()){
 				delete relationsToDeleteLst;
@@ -124,6 +130,12 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		}
 
+		public void runPostDeletes(){
+			if(hierarchiesToDeleteLst != NULL && !hierarchiesToDeleteLst.isEmpty()){
+				delete hierarchiesToDeleteLst;
+			}
+		}
+
 		public Boolean runUpsert(){
 
 			System.debug('[ANG_AgencyChangesHelper] Running upsert'); 
@@ -132,7 +144,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
 
-			runDeletes();
+			runPreDeletes();
 
 			if(relationsMap != null && !relationsMap.isEmpty()){
 				System.debug('[ANG_AgencyChangesHelper] Upserting following relations:'+relationsMap);
@@ -145,6 +157,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				upsert hierarchies.values();
 				hasUpserted = true;	
 			}
+
+			runPostDeletes();
 
 			if(accountsMap != null && !accountsMap.isEmpty() && !accountsChanged.isEmpty()){
 
