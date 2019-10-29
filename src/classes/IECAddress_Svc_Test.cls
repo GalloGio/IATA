@@ -2,11 +2,11 @@
 private class IECAddress_Svc_Test 
 {
 	/****************************************************************************************************
-	    Created by Thai 2016-12-15
-	        Cover method syncCustomerWithSAP that indirectly covers methods setCalloutHeader,
-	        getRequestType, getSAPPaymentType, getSAPRegion, getSAPVATNumber, getSAPPaymentType, 
-	        syncCustomerMasterWithSAP, createNewIECAddress
-	        and classes Location_Queue, Location_Batch
+		Created by Thai 2016-12-15
+			Cover method syncCustomerWithSAP that indirectly covers methods setCalloutHeader,
+			getRequestType, getSAPPaymentType, getSAPRegion, getSAPVATNumber, getSAPPaymentType, 
+			syncCustomerMasterWithSAP, createNewIECAddress
+			and classes Location_Queue, Location_Batch
 	****************************************************************************************************/
 	@isTest static void test_syncCustomerWithSAP()
 	{
@@ -32,14 +32,14 @@ private class IECAddress_Svc_Test
 				}
 			
 			Account accountHQ1 = new Account(Name = 'Test HQ 1', Sector__c = 'Test', Category__c = 'Test'
-			                               , BillingStreet ='Billing Street 1', BillingCity= 'Billing City 1', BillingPostalCode ='H0H0H0'
-			                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id);
+										   , BillingStreet ='Billing Street 1', BillingCity= 'Billing City 1', BillingPostalCode ='H0H0H0'
+										   , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id);
 			insert accountHQ1;
 			Account accountHQ2 = new Account(Name = 'Test HQ 2', Sector__c = 'Test', Category__c = 'Test'
-			                               , BillingStreet ='Billing Street 2', BillingCity= 'Billing City 2', BillingPostalCode ='H0H0H0'
-			                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Shipping_Country__c = countryCanada.Id,IATA_ISO_Billing_State__c = stateOntario.Id
-			                               , ShippingStreet ='Shipping Street 2', ShippingCity = 'Shipping City 2', ShippingPostalCode ='H0H0H0'
-			                               , IATA_ISO_Shipping_State__c = stateOntario.Id);
+										   , BillingStreet ='Billing Street 2', BillingCity= 'Billing City 2', BillingPostalCode ='H0H0H0'
+										   , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Shipping_Country__c = countryCanada.Id,IATA_ISO_Billing_State__c = stateOntario.Id
+										   , ShippingStreet ='Shipping Street 2', ShippingCity = 'Shipping City 2', ShippingPostalCode ='H0H0H0'
+										   , IATA_ISO_Shipping_State__c = stateOntario.Id);
 			insert accountHQ2;
 			
 			List<Contact> lstContact = TestDataGenerator.generateContacts(accountHQ1.Id, 1, false);
@@ -63,10 +63,10 @@ private class IECAddress_Svc_Test
 			insert lstLocation;
 		Test.stopTest();
 		system.assert(6 == [select count()
-		                    from Location__c
-		                    where (Id = :lstLocation[0].Id and SAP_Id__c = 'Sold1') or (Id = :lstLocation[3].Id and SAP_Id__c = 'Sold1')
-		                       or (Id = :lstLocation[1].Id and SAP_Id__c = 'Bill1') or (Id = :lstLocation[2].Id and SAP_Id__c = 'Ship1')
-		                       or (Id = :lstLocation[4].Id and SAP_Id__c = 'Bill1') or (Id = :lstLocation[5].Id and SAP_Id__c = 'Ship1')], 'Wrong count');
+							from Location__c
+							where (Id = :lstLocation[0].Id and SAP_Id__c = 'Sold1') or (Id = :lstLocation[3].Id and SAP_Id__c = 'Sold1')
+							   or (Id = :lstLocation[1].Id and SAP_Id__c = 'Bill1') or (Id = :lstLocation[2].Id and SAP_Id__c = 'Ship1')
+							   or (Id = :lstLocation[4].Id and SAP_Id__c = 'Bill1') or (Id = :lstLocation[5].Id and SAP_Id__c = 'Ship1')], 'Wrong count');
 
 		//*** cover update scenario for sold to
 		IECAddress_Svc.syncCustomerWithSAP(Location_Sel.getLocationToSyncSAP(new List<Id>{lstLocation[0].Id}, null, null, null, null).values(), null, true);
@@ -100,11 +100,11 @@ private class IECAddress_Svc_Test
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-15
-	        Cover method syncCustomerWithSAP that indirectly covers methods setCalloutHeader,
-	        getRequestType, getSAPPaymentType, getSAPRegion, getSAPVATNumber, getSAPPaymentType, 
-	        syncCustomerMasterWithSAP
-	        and classes Location_Queue, Location_Batch
+		Created by Thai 2016-12-15
+			Cover method syncCustomerWithSAP that indirectly covers methods setCalloutHeader,
+			getRequestType, getSAPPaymentType, getSAPRegion, getSAPVATNumber, getSAPPaymentType, 
+			syncCustomerMasterWithSAP
+			and classes Location_Queue, Location_Batch
 	****************************************************************************************************/
 	@isTest static void test_miscMethods()
 	{
