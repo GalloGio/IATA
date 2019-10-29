@@ -54,7 +54,14 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL INTEGER CONTACT_BATCH= 15;
     PRIVATE STATIC FINAL INTEGER BRANCH_BATCH = 15;
 
-    public static Contact contactInfo = new Contact();
+public static final Id RECORDTYPE_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+public static final Id RECORDTYPE_AIRLINE_BR = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+public static final Id RECORDTYPE_AIRLINE_HQ = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+public static final list<Id> VALID_ACCOUNT_RT = new list<String> {RECORDTYPE_AGENCY, RECORDTYPE_AIRLINE_BR, RECORDTYPE_AIRLINE_HQ};
+
+	public class PortalProfileException extends Exception {}
+
+public static Contact contactInfo = new Contact();
 
     public static User myUser {
         get {
@@ -76,6 +83,16 @@ public with sharing class PortalProfileCtrl {
 
         set;
     }
+
+    public static Boolean isAccountDomain {
+		get {
+			Boolean issp_AccountDomain = ISSP_AccountDomainPermission__c.getInstance(myUser.Contact.Account.RecordType.DeveloperName) != null;
+			Boolean isAdmin = CSP_Utils.isAdmin();
+
+			return issp_AccountDomain && isAdmin;
+		}
+		set;
+	}
 
     /**
     * Todo: Implement contact search.
@@ -268,7 +285,7 @@ public with sharing class PortalProfileCtrl {
         //PRIVACY CARD
         List<FieldWrapper> lstfw5 = new List<FieldWrapper>();
         lstfw5.add(new FieldWrapper(LABEL_PRIVACYMANAGEMENTTITLE, LABEL_PRIVACYMANAGEMENTTEXT, LABEL_PRIVACYMANAGEMENTLINK ));
-        //lstCardWrapper.add(new CardWrapper(LABEL_PRIVACYMANAGEMENTTITLE, lstfw5, false)); // Temporary Silencing for the privacy panel- to be released soon
+        lstCardWrapper.add(new CardWrapper(LABEL_PRIVACYMANAGEMENTTITLE, lstfw5, false));
 
         return lstCardWrapper;
     }
@@ -421,6 +438,10 @@ public with sharing class PortalProfileCtrl {
         }
         lstCardWrapper.add(new CardWrapper(LABEL_BASICS, lstfw1, true));
 
+        if (isAccountDomain) {
+			lstfw1.add(new FieldWrapper('AccountDomainPermission',false,false));
+		}
+
         //COMPANY CONTACT CARD
         List<FieldWrapper> lstfw2 = new List<FieldWrapper>();
         for(Schema.FieldSetMember f : contactFields) {
@@ -504,6 +525,9 @@ public with sharing class PortalProfileCtrl {
         @AuraEnabled 
         public Boolean isPrivacyManagement;
 
+        @AuraEnabled
+        public Boolean isAccountDomainPermission;
+
         public FieldWrapper(String title, String label, String link){
             this.label = label;
             this.link = link;
@@ -536,6 +560,7 @@ public with sharing class PortalProfileCtrl {
             this.visible = visible;
             this.labeled = false;
             this.isAccessibility = (fieldName == 'Authorization' ? true : false);
+            this.isAccountDomainPermission = (fieldName == 'AccountDomainPermission' ? true : false);
             if (fieldName == 'Authorization') {
                 this.accessibilityList = new List<accessibilityWrapper>{
                         new accessibilityWrapper(false, LABEL_INVOICE_CONTACT, 'Invoicing_Contact__c'),
@@ -820,6 +845,89 @@ public with sharing class PortalProfileCtrl {
     @AuraEnabled
     public static String goToPrivacyPortal(){
         return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.GDPR, '');
+    }
+
+    @AuraEnabled
+	public static List<Account_Domain__c> getAccountDomains(Id accountId){
+		return [SELECT Id, Name, CreatedDate, Account__c, Account__r.Name FROM Account_Domain__c WHERE Account__c =: accountId];
+	}
+
+	@AuraEnabled
+	public static Boolean isAccountDomain(){
+		return isAccountDomain;
+	}
+
+	@AuraEnabled
+	public static List<Account> getMapHierarchyAccounts(Id contactId) {
+		if(contactId == null) 
+			return new list<Account>();
+
+		Contact con = [Select id, AccountId from Contact where id = :contactId];
+
+		Account account = [
+					Select id, Name,
+					ParentId,
+					Parent.ParentId,
+					Parent.Parent.ParentId,
+					Parent.Parent.Parent.ParentId,
+					Parent.Parent.Parent.Parent.ParentId
+					From Account
+					Where id = :con.AccountId ];
+
+				// find the top parent
+				Id parentId = null;
+				if (account.ParentId == null ) {
+					parentId = account.Id;
+				} else if (account.Parent.ParentId == null ) {
+					parentId = account.ParentId;
+				} else if (account.Parent.Parent.ParentId == null ) {
+					parentId = account.Parent.ParentId;
+				} else if (account.Parent.Parent.Parent.ParentId == null ) {
+					parentId = account.Parent.Parent.ParentId;
+				} else if (account.Parent.Parent.Parent.Parent.ParentId == null ) {
+					parentId = account.Parent.Parent.Parent.ParentId;
+				} else {
+					parentId = account.Parent.Parent.Parent.Parent.ParentId;
+				}
+
+		// Get all account in the hierarchy
+		return new List<Account>([
+			SELECT Id,Name, Site, IATA_ISO_Country__c, Location_Type__c, BillingStreet, IsPartner,
+				BillingCity, BillingPostalCode, BillingState, BillingCountry, IATA_ISO_Country__r.Name
+			FROM Account
+			WHERE RecordTypeId IN :VALID_ACCOUNT_RT
+			AND Status__c != 'Terminated'
+			AND Id != :con.AccountId 
+			AND ( Id = :parentId
+			OR ParentId = :parentId
+			OR Parent.ParentId = :parentId
+			OR Parent.Parent.ParentId = :parentId
+			OR Parent.Parent.Parent.ParentId = :parentId
+			OR Parent.Parent.Parent.Parent.ParentId = :parentId)]);
+	}
+
+	@AuraEnabled
+	public static void relocateContact(Account acc, String contactId) {
+        try {
+            Contact con = [SELECT Id, AccountId FROM Contact where Id =: contactId];
+            
+			// set  parent account as partner user 
+            if (!acc.IsPartner) {
+                acc.IsPartner = true;
+                update acc;
+            }
+
+            // relocate contact
+            con.AccountId = acc.Id;
+            update con;
+
+        } catch (DMLException e) {
+            System.debug('DML ERROR RelocateContact ' + e.getMessage());
+			throw new PortalProfileException(Label.ISSP_Relocate_Failed + ' - ' + e.getMessage());
+        } catch (Exception e) {
+            System.debug('ERROR RelocateContact ' + e.getMessage());
+			throw new PortalProfileException(Label.ISSP_Relocate_Failed + ' - ' + e.getMessage());
+        }
     }
 
 }

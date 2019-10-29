@@ -348,6 +348,7 @@ Language__c ,
         <columns>Type__c</columns>
         <columns>Expire_in_days__c</columns>
         <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>All templates</label>
         <language>en_US</language>

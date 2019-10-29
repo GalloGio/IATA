@@ -81,7 +81,7 @@ global class ANG_OscarProcessHelper {
 					Is_PCI_compliant__c, Account__r.Top_Parent__r.Id , AMS_Online_Accreditation__r.Id,Account__r.Location_Type__c,RecordType.DeveloperName,
 					Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP17__c,STEP8__c,Process_Start_Date__c, Account__r.Due_Diligence_Status__c, AMS_Online_Accreditation__r.Location_Class__c, 
 					AMS_Online_Accreditation__r.Link_agent_name__c , AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c, Account__r.Location_Class__c,
-					Account__r.Sector__c , Account__r.Company_type__C, STEP6__c, Is_NewGen__c,ANG_PCI_compliance_expiry_date__c, Account__r.Top_Parent__r.Status__c, Business_Process__c,
+					Account__r.Sector__c , Account__r.Company_type__C, STEP6__c, Region__c, Is_NewGen__c,ANG_PCI_compliance_expiry_date__c, Account__r.Top_Parent__r.Status__c, Business_Process__c,
 					(SELECT Id FROM Agencies_Applied_Change_codes__r) , (select Id from Appointments__r)
 					from AMS_OSCAR__c where Id = : oscarId LIMIT 1];
 
@@ -96,7 +96,7 @@ global class ANG_OscarProcessHelper {
 			updater.oscarMap.put(oscar.Id,oscar);
 			updater.acctMap.put(theAccount.Id,theAccount);
 			updater.onlineAMap.put(theAccreditation.Id,theAccreditation);
-
+			
 			/*** AMSU-162 ***/                                                       /************************ ENHC0012583 *************************/
 			if((AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) || AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c)) && !isShippingAddressValid(theAccreditation)) {
 				isIATACodeGenerationRunning = false;
@@ -308,7 +308,7 @@ global class ANG_OscarProcessHelper {
 
 			if(changeCodeCreated){
 				System.debug('[ANG_OscarProcessHelper] Preparing to create an Agency Update.');
-				AMS_AgencyUpdateHelper.agencyUpdate( [Select Id, Change_Code__c, Account__c, Oscar__c, Active__c from Agency_Applied_Change_code__c where Account__c = :accountId AND Change_Code__c = 'NEW' and Oscar__c = :oscarId LIMIT 1]);
+				AMS_AgencyUpdateHelper.agencyUpdate( [Select Id, Change_Code__c, Account__c, Oscar__c, Active__c, Skip_Agency_Update__c from Agency_Applied_Change_code__c where Account__c = :accountId AND Change_Code__c = 'NEW' and Oscar__c = :oscarId LIMIT 1]);
 			}
 		}
 		else{
@@ -934,37 +934,46 @@ global class ANG_OscarProcessHelper {
 			else
 				aaObject = accountsAA.get(aa.Account__c);
 
-			if(aa.ANG_FormOfPayment_ID__c == 'CA')
+			if(aa.ANG_FormOfPayment_ID__c == 'CA'){
 				aaObject.addCash(aa);
-			else
-				aaObject.addCreditCard(aa);
+			} else{
+					aaObject.addCreditCard(aa);
+			}
 
-			accountsAA.put(aa.Account__c,aaObject);
+			if(aaObject.creditCardAA.Account__r.Is_PCI_compliant__c == 'No' || aaObject.creditCardAA.Account__r.Is_PCI_compliant__c == 'Nil CC')
+            	aaObject.preventCCActivation = true;
+				
+            accountsAA.put(aa.Account__c,aaObject);
 
 		}
 
-		String process = restoreCash  && restoreCreditCard  ? 'Restore All' : 
-						 restrictCash && restrictCreditCard ? 'Restrict All' : 
-						 restrictCash ? 'Restrict Cash' :
-						 restrictCreditCard ? 'Restrict Credit Card' :
-						 restoreCash ? 'Restore Cash' : 'Restore Credit Card';
-
-		List<ANG_Forms_Of_Payment_CC_Matrix__mdt> matrixAAProcess = [SELECT Cash_before__c,Credit_Card_before__c,Action_in_FoP_OSCAR__c,Cash_after__c,Credit_Card_after__c,Change_Code__c FROM ANG_Forms_Of_Payment_CC_Matrix__mdt WHERE Action_in_FoP_OSCAR__c =:process];
+		String process = null;
+		
+		List<ANG_Forms_Of_Payment_CC_Matrix__mdt> matrixAAProcess = [SELECT Cash_before__c,Credit_Card_before__c,Action_in_FoP_OSCAR__c,Cash_after__c,Credit_Card_after__c,Change_Code__c FROM ANG_Forms_Of_Payment_CC_Matrix__mdt];
 
 		Map<String,ANG_Forms_Of_Payment_CC_Matrix__mdt> matrixAAProcessMap = new Map<String,ANG_Forms_Of_Payment_CC_Matrix__mdt>();
 
 		for(ANG_Forms_Of_Payment_CC_Matrix__mdt matrixObject: matrixAAProcess)
-			matrixAAProcessMap.put(matrixObject.Cash_before__c+matrixObject.Credit_Card_before__c,matrixObject);
+			matrixAAProcessMap.put(matrixObject.Action_in_FoP_OSCAR__c+matrixObject.Cash_before__c+matrixObject.Credit_Card_before__c,matrixObject);
 
 		ANG_Forms_Of_Payment_CC_Matrix__mdt matrixObject;
-
+		        
 		for(AgencyAuthorizationOBject aaOjectToAnalyze: accountsAA.values()){
-			
-			matrixObject = matrixAAProcessMap.get(aaOjectToAnalyze.oldCA+aaOjectToAnalyze.oldCC);
 
-			System.debug('matrixObject is ' + matrixObject);
+			process =  	 restoreCash  && restoreCreditCard  && !aaOjectToAnalyze.preventCCActivation? 'Restore All' : 
+						 restoreCash  && restoreCreditCard  && aaOjectToAnalyze.preventCCActivation? 'Restore Cash':
+						 restrictCash && restrictCreditCard ? 'Restrict All' : 
+						 restrictCash ? 'Restrict Cash' :
+						 restrictCreditCard ? 'Restrict Credit Card' :
+						 restoreCash ? 'Restore Cash' : 
+						 restoreCreditCard && !aaOjectToAnalyze.preventCCActivation ? 'Restore Credit Card' : null;
 
-			aaOjectToAnalyze.addCashValue(matrixObject.Cash_after__c, matrixObject.Change_Code__c);
+			if(process == null)
+				continue;
+
+			matrixObject = matrixAAProcessMap.get(process+aaOjectToAnalyze.oldCA+aaOjectToAnalyze.oldCC);
+
+			aaOjectToAnalyze.addCashValue(matrixObject.Cash_after__c, matrixObject.Change_Code__c);           
 			aaOjectToAnalyze.addCreditCardValue(matrixObject.Credit_Card_after__c, matrixObject.Change_Code__c);
 			
 			if(aaOjectToAnalyze.changedCA)
@@ -999,12 +1008,15 @@ global class ANG_OscarProcessHelper {
 		boolean changedCC;
 		boolean changedCA;
 
+		public boolean preventCCActivation;
+
 		public AgencyAuthorizationOBject(Id accountId){
 			this.accountId = accountId;
 			this.changedCC = false;
 			this.changedCA = false;
 			this.oldCA = null;
 			this.oldCC = null;
+			this.preventCCActivation = false;
 		}
 
 		public void addCreditCard(Agency_Authorization__c aa){
@@ -2591,5 +2603,51 @@ global class ANG_OscarProcessHelper {
     i=0;
     i=0;
   }
+
+	public static Set<String> fetchOptOutFromFinancialReviewCountriesCfg(Set<Id> countryIdSet){
+
+        Set<String> optOutCountryConfig = new Set<String>();
+
+        if(!countryIdSet.isEmpty()){
+            for(IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountriesByIds(countryIdSet)){
+                for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
+                    if(att != null && att.RecordType.DeveloperName == AMS_Utils.OPT_OUT_ACCREDITATION_CFG_RT_NAME){
+                        optOutCountryConfig.add(country.Id + '.' + att.Location_Class__c);
+                    }
+                }
+            }
+        }
+
+        return optOutCountryConfig;
+
+    }
+
+	public static void updateCaseStatusForAccounts(Set<Id> accountIdSet, Id recordTypeId, String newCaseStatus){
+
+		//Fetch all the cases with the 'recordTypeId' related with the given accounts
+		//that are not in the given 'newCaseStatus' status 
+		List<Case> caseLst = new List<Case>(
+			[SELECT 
+				Id,
+				Status 
+				FROM 
+				Case 
+				WHERE 
+					AccountId IN :accountIdSet 
+				AND RecordTypeId = :recordTypeId
+				AND Status != :newCaseStatus
+			]
+		);
+
+		//Updates the status to the given 'newCaseStatus' for every case
+		for(Case c : caseLst){
+			c.Status = newCaseStatus;
+		}
+
+		if(!caseLst.isEmpty()){
+			update caseLst;
+		}
+
+	}
 
 }

@@ -71,7 +71,7 @@
             <name>Change_Code_Change_Recordtype_Irregula</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Agency_Applied_Change_code__c.Change_Code__c</field>
             <operation>equals</operation>
@@ -86,7 +86,7 @@
             <name>Change_Code_Change_Recordtype_NO_Irreg</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Agency_Applied_Change_code__c.Change_Code__c</field>
             <operation>notEqual</operation>
@@ -151,7 +151,7 @@
             <name>Update_IRR_Unique_Id</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>For IRRegularities with an A operation, rename them</description>
         <formula>AND(NOT(RIGHT(AIMS_ID__c,1)=&apos;A&apos;), Operation__c = &apos;A&apos;)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -162,7 +162,7 @@
             <name>Change_Code_Unpublish</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Set the published in bulletin flag to false if process is MSO</description>
         <formula>IF( OR( ISPICKVAL( Account__r.Location_Class__c , &apos;M&apos;), ISPICKVAL( Account__r.Location_Class__c , &apos;T&apos;), ISPICKVAL( Account__r.Location_Class__c , &apos;G&apos;), ISPICKVAL( Account__r.Location_Class__c , &apos;X&apos;), CONTAINS( TEXT( OSCAR__r.Process__c ) , &apos;CER.1.0&apos;)), true, false)</formula>
         <triggerType>onCreateOnly</triggerType>

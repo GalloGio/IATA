@@ -8,6 +8,7 @@ import getCaseTypeAndCountry from '@salesforce/apex/PortalSupportReachUsCtrl.get
 import insertCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.insertCase';
 import createCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.createCase';
 import getCallUsPhoneNumber from '@salesforce/apex/PortalSupportReachUsCtrl.getCallUsPhoneNumber';
+import isAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
 
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
 
@@ -89,6 +90,8 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     @track showModal = false;
     @track callUsPhoneNumberConfigs;
     @track phoneNumber = [];
+
+    @track showRecentCasesList = true;
     //@track suggestion;
 
     //global variables
@@ -165,6 +168,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         this.getCallUsPhoneNumber();
 
+        isAirlineUser().then(result => {
+            this.showRecentCasesList = !result; //if airline user, hide case list
+        });
         //visual aspect for tiles
         this.question_selected = this.iconsBaseLink + 'question_selected' + this.iconsExtension;
         this.question_unselected = this.iconsBaseLink + 'question_unselected' + this.iconsExtension;
@@ -430,7 +436,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //first element on the picklist
         for (const item of this.myResult) {
-            if (!map.has(item.childs) && item.topicName === this.topic) {
+            if (!map.has(item.childs) && item.topicName === this.topic && item.categoryName === this.category) {
                 Object.keys(item.childs).forEach(function (el) {
                     mySubTopicOptionsAux.push({
                         label: el, value: item.childs[el]
@@ -457,7 +463,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                     this.optionsButton = true;
                     if (this.emergencyCategories.some(obj => obj.value === this.topic + ('__c'))
                         && this.emergencyCategories.some(obj => obj.value.includes(this.subTopic + '__c'))) {
-                        this.emergencyButton = true;
+                            if(this.isQuestion){
+                                this.emergencyButton = true;
+                            }
                     }
                 }
             } else {
@@ -487,7 +495,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
                 if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
                     && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
-                    this.emergencyButton = true;
+                        if(this.isQuestion){
+                            this.emergencyButton = true;
+                        }
                 }
             }
         } else {
@@ -507,7 +517,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
             if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
                 && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
-                this.emergencyButton = true;
+                    if(this.isQuestion){
+                        this.emergencyButton = true;
+                    }
             }
         } else {
             this.optionsButton = false;
@@ -572,7 +584,13 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //Shows Options Panel
         let showOptionsPanel = new Promise((resolve, reject) => {
-            const showoptions = new CustomEvent('showoptions');
+            const showoptions = new CustomEvent('showoptions', { 
+                detail: {
+                    topic: this.topic,
+                    subtopic: this.subTopic,
+                    category: this.category
+                }
+            });
             // Fire the custom event
             this.dispatchEvent(showoptions);
 
@@ -864,5 +882,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                         && item.DeveloperName === 'LVA_CallUs_GEN'); // ---- Seventh Condition ------//
             });
         }
+    }
+
+    hideRecentCasesList() {
+        this.showRecentCasesList = false;
     }
 }

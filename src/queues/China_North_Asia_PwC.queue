@@ -5,7 +5,7 @@
     <name>China &amp; North Asia PwC</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementMgrI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
         <roles>
             <role>China_N_Asia_Agency_Risk_Management_Staff</role>

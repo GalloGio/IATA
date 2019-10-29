@@ -1,10 +1,22 @@
 <aura:component  implements="forceCommunity:availableForAllPageTypes" access="global">
-    <div class="row bg-black70 bar">
-      <div class="logoDiv">
-        <img src="{!$Resource.GDPR_Portal + '/img/iata-logo-other.svg'}" alt="IATA Logo" class="logo-small gdpr" />
+    <div class="row bg-black70 fixCommunity">
+      <div >
+        <img src="{!$Resource.GDPR_Portal + '/img/iata-logo-other.svg'}" alt="IATA Logo" class="logo-second_small gdpr" />
       </div>
-      <div class="col gdprTxt">
-        <h2>Our mission is to represent, lead and serve the airline industry</h2>
+      <div class="col gdprTxt" style="font-size: 23px; margin-top:15px;">Our mission is to represent, lead and serve the airline industry</div>
+      
+      <hr/>
+      
+      <div class="slds-grid slds-gutters gdprTxt gridFooter">
+          <div class="slds-col">
+            <span><a href="https://www.iata.org" target="_blank">www.IATA.org</a></span>
+          </div>
+          <div class="slds-col slds-align_absolute-center">
+            <span>© International Air Transportation Association (IATA). All rights reserved.</span>
+          </div>
+          <div class="slds-col" align="right" >
+              <a class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">Privacy policy</a>            
+          </div>
       </div>
     </div>
 </aura:component>

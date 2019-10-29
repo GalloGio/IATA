@@ -428,7 +428,7 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>FDS ICCS Generic Request Management</value>
+            <value>FDS ICCS Generic Request Management,Process</value>
         </criteriaItems>
         <description>Change case status to Action Needed when an incoming email is received to a case with status Pending Customer or Escalated Externally. Including extra criteria for info.americas@iata.org in CC.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -527,7 +527,7 @@
         </actions>
         <active>true</active>
         <description>case gets reopened when an email enters the case</description>
-        <formula>AND(  OR( Parent.RecordType.DeveloperName == &apos;External_Cases_ACCA&apos;, Parent.RecordType.DeveloperName == &apos;CS_Process_IDFS_ISS&apos;, Parent.RecordType.DeveloperName == &apos;SEDA&apos;, Parent.RecordType.DeveloperName == &apos;Invoicing_Collection_Cases&apos;, Parent.RecordType.DeveloperName == &apos;FDS_ICCS_Email_to_Case&apos;, Parent.RecordType.DeveloperName == &apos;SIDRA&apos;,  AND(OR( Parent.RecordType.DeveloperName == &apos;CasesAmericas&apos;, Parent.RecordType.DeveloperName == &apos;CasesMENA&apos;, Parent.RecordType.DeveloperName == &apos;Cases_China_North_Asia&apos;, Parent.RecordType.DeveloperName == &apos;CasesEurope&apos;,  Parent.RecordType.DeveloperName == &apos;Cases_Global&apos;, Parent.RecordType.DeveloperName == &apos;ExternalCasesIDFSglobal&apos;, Parent.RecordType.DeveloperName == &apos;ComplaintIDFS&apos;), DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)),  OR( NOT(CONTAINS(FromAddress,&quot;acca&quot;)), NOT(CONTAINS(FromAddress,&quot;accelya&quot;)) ),  OR( CONTAINS(HtmlBody,&quot;ref:&quot;), CONTAINS(Subject,&quot;ref:&quot;), CONTAINS(TextBody,&quot;ref:&quot;) ),  Incoming=TRUE, Parent.IsClosed=TRUE )</formula>
+        <formula>AND(  OR( Parent.RecordType.DeveloperName == &apos;External_Cases_ACCA&apos;, Parent.RecordType.DeveloperName == &apos;CS_Process_IDFS_ISS&apos;, Parent.RecordType.DeveloperName == &apos;CS_Process_IDFS_ISS&apos;, Parent.RecordType.DeveloperName == &apos;SEDA&apos;, Parent.RecordType.DeveloperName == &apos;Invoicing_Collection_Cases&apos;, Parent.RecordType.DeveloperName == &apos;FDS_ICCS_Email_to_Case&apos;, Parent.RecordType.DeveloperName == &apos;SIDRA&apos;,  AND(OR( Parent.RecordType.DeveloperName == &apos;CasesAmericas&apos;, Parent.RecordType.DeveloperName == &apos;CasesMENA&apos;, Parent.RecordType.DeveloperName == &apos;Cases_China_North_Asia&apos;, Parent.RecordType.DeveloperName == &apos;CasesEurope&apos;,  Parent.RecordType.DeveloperName == &apos;Cases_Global&apos;, Parent.RecordType.DeveloperName == &apos;ExternalCasesIDFSglobal&apos;, Parent.RecordType.DeveloperName == &apos;ComplaintIDFS&apos;), DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)),  OR( NOT(CONTAINS(FromAddress,&quot;acca&quot;)), NOT(CONTAINS(FromAddress,&quot;accelya&quot;)) ),  OR( CONTAINS(HtmlBody,&quot;ref:&quot;), CONTAINS(Subject,&quot;ref:&quot;), CONTAINS(TextBody,&quot;ref:&quot;) ),  Incoming=TRUE, Parent.IsClosed=TRUE )</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -615,7 +615,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND ( Parent.IsClosed = FALSE, CreatedDate &gt; Parent.CreatedDate , Incoming = TRUE , OR ( AND ( Parent.RecordType.DeveloperName = &quot;SIDRA&quot;, NOT(ISNULL(Parent.Update_AIMS_DEF__c)) ), AND ( Parent.RecordType.DeveloperName = &quot;IATA_Financial_Review&quot;, FromAddress &lt;&gt; &quot;noreply.ifap@iata.org&quot; ), Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;, Parent.RecordType.DeveloperName = &quot;SIDRA_Lite&quot;, Parent.RecordType.DeveloperName = &quot;CNS_Collection_Process&quot;, Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;, Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;, Parent.RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;,Parent.RecordType.DeveloperName = &quot;FDS_ASP_Management&quot;, Parent.RecordType.DeveloperName =&apos;Airline_Coding_Application&apos;, AND ( Parent.RecordType.DeveloperName = &quot;ID_Card_Application&quot;, FromAddress &lt;&gt; &quot;iataglobalidcardprogram@iata.org&quot;, Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card Renewal Application&quot;, Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card New Application&quot;, Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card Replacement Application&quot;, Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card Reissue Application&quot; ) ), NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New Email &amp; Comment&quot;)), NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New Comment&quot;)) )</formula>
+        <formula>AND (   Parent.IsClosed = FALSE,   CreatedDate &gt; Parent.CreatedDate,   Incoming = TRUE,   OR (     AND (       Parent.RecordType.DeveloperName = &quot;SIDRA&quot;,       NOT(ISNULL(Parent.Update_AIMS_DEF__c))     ),     AND (       Parent.RecordType.DeveloperName = &quot;IATA_Financial_Review&quot;,       FromAddress &lt;&gt; &quot;noreply.ifap@iata.org&quot;     ),     Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,     Parent.RecordType.DeveloperName = &quot;SIDRA_Lite&quot;,     Parent.RecordType.DeveloperName = &quot;CNS_Collection_Process&quot;,     Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,     Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,     Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;,     Parent.RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;,     Parent.RecordType.DeveloperName = &quot;FDS_ASP_Management&quot;,     Parent.RecordType.DeveloperName = &quot;FDS_ICCS_Bank_Account_Management&quot;,     Parent.RecordType.DeveloperName = &quot;FDS_ICCS_Membership_Management&quot;,     Parent.RecordType.DeveloperName = &quot;FDS_ICCS_Product_Management&quot;,     Parent.RecordType.DeveloperName = &quot;Airline_Coding_Application&quot;,     Parent.RecordType.DeveloperName = &quot;Invoicing_Collection_Cases&quot;,     AND (       Parent.RecordType.DeveloperName = &quot;ID_Card_Application&quot;,       FromAddress &lt;&gt; &quot;iataglobalidcardprogram@iata.org&quot;,       Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card Renewal Application&quot;,       Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card New Application&quot;,       Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card Replacement Application&quot;,       Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card Reissue Application&quot;     )   ),   NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New Email &amp; Comment&quot;)),   NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New Comment&quot;)) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -625,16 +625,21 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 3 AND 4 AND (2 OR 6) AND 5</booleanFilter>
-        <criteriaItems>
-            <field>EmailMessage.Incoming</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
+        <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5 AND 6</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
             <value>Internal Cases (IDFS ISS),SAAM,New Process (IDFS ISS),IDFS Airline Participation Process,IATA Financial Review,ID Card Application,SIDRA Lite,OSCAR Communication,Airline Coding Application</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>CNS Collection Process,Invoicing Collection Cases</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>EmailMessage.Incoming</field>
+            <operation>equals</operation>
+            <value>True</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IsClosed</field>
@@ -650,11 +655,6 @@
             <field>EmailMessage.FromAddress</field>
             <operation>notEqual</operation>
             <value>noreply.ifap@iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>CNS Collection Process</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -674,7 +674,7 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Internal Cases (IDFS ISS),SAAM,New Process (IDFS ISS),IDFS Airline Participation Process,SEDA,IATA Financial Review,ID Card Application,SIDRA Lite,OSCAR Communication,CNS Collection Process</value>
+            <value>Internal Cases (IDFS ISS),SAAM,New Process (IDFS ISS),IDFS Airline Participation Process,SEDA,IATA Financial Review,ID Card Application,SIDRA Lite,OSCAR Communication,CNS Collection Process,Invoicing Collection Cases</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IsClosed</field>

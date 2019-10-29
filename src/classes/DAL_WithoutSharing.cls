@@ -82,7 +82,7 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
 	List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
 	                          OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
 	                          User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
-	                          Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name
+	                          Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name,Account.RecordTypeId,Account.RecordType.Name
 	                          from Contact
 	                          where AccountId IN:allBranches.keySet()
 	                          and (FirstName LIKE :wildString OR LastName LIKE :wildString OR Name LIKE :wildString OR Email LIKE :wildString OR Name = :queryString)
@@ -95,6 +95,11 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
 
 	return new List<Contact>();
 }
+	  @AuraEnabled
+    public static List<Account> getRelatedAccounts(String finalQuery){
+
+	    return Database.query(finalQuery);
+    }
 
 	//returns user Information wihtout visibility control
 	@AuraEnabled

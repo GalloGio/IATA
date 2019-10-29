@@ -7,11 +7,11 @@
             <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
         </publicGroups>
         <roles>
-            <role>SalesDirectorA</role>
-            <role>SalesManagerBIITCOA</role>
-            <role>SalesManagersAmericasA</role>
-            <role>SalesManagersAsiaPacA</role>
-            <role>SalesManagersEuropeA</role>
+            <role>SalesDirector</role>
+            <role>SalesManagerBIITCO</role>
+            <role>SalesManagersAmericas</role>
+            <role>SalesManagersAsiaPac</role>
+            <role>SalesManagersEurope</role>
         </roles>
         <users>
             <user>barrocasb@iata.org</user>

@@ -30,6 +30,10 @@
                 <behavior>Edit</behavior>
                 <field>ISO_CODE_STANDARD__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Informatica_Value__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -55,6 +59,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>GeonameName__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Admin_Subdivision_Level__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

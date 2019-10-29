@@ -567,6 +567,17 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IDCard_Key_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the Agent benefits from ID Card Key Account Conditions. Replicated from &quot;IDCard_Key_Account__c&quot; at Account Level</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if the Agent benefits from ID Card Key Account Conditions. Replicated from &quot;IDCard_Key_Account__c&quot; at Account Level</inlineHelpText>
+        <label>IDCard Key Account</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Incorporation_Type__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>

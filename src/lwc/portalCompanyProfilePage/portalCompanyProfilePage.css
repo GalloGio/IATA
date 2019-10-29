@@ -53,6 +53,11 @@
     justify-content: center;
 }
 
+.searchContainer{
+    display: flex;
+    align-items: end;
+}
+
 .displayFlex {
   display: flex;
 }
@@ -63,4 +68,9 @@
 
 .heightCreateContact {
   height: 100%;
+}
+
+.adminContactsTable {
+    max-height: 330px;
+    display: flex;
 }

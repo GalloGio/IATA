@@ -310,7 +310,7 @@
     </listViews>
     <nameField>
         <displayFormat>ACR-{000000000}</displayFormat>
-        <label>Account Contact Role Name</label>
+        <label>Account Contact Role Id</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>

@@ -383,13 +383,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     currentPageList.push(counter);
                 }
             } else {
-                if (this.pageNumber < 5) {
+                if (this.currentPageNumber < 5) {
                     currentPageList.push(2, 3, 4, 5, 6);
                 } else {
-                    if (this.pageNumber > (currentTotalPages - 5)) {
+                    if (this.currentPageNumber > (currentTotalPages - 5)) {
                         currentPageList.push(currentTotalPages - 5, currentTotalPages - 4, currentTotalPages - 3, currentTotalPages - 2, currentTotalPages - 1);
                     } else {
-                        currentPageList.push(this.pageNumber - 2, this.pageNumber - 1, this.pageNumber, this.pageNumber + 1, this.pageNumber + 2);
+                        currentPageList.push(this.currentPageNumber - 2, this.currentPageNumber - 1, this.currentPageNumber, this.currentPageNumber + 1, this.currentPageNumber + 2);
                     }
                 }
             }
@@ -431,8 +431,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs }).then(result => {
                 let resultData = JSON.parse(JSON.stringify(result));
                 this.processContacList(resultData, currentPage);
-                this.refreshContactPageView(currentPage)
+                this.generatePageList();
+                this.refreshContactPageView(currentPage);
             });
+        }else{
+            this.generatePageList();
         }
         this.loadingContacts = false;
         this.currentContactPage = this.contactList[this.currentPageNumber - 1];
@@ -729,7 +732,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.showSpinner = false;
                     this.showConfirmPopup = false;
                     this.resetComponent();
-                }).catch(error => {
+                }).catch(error=>{
+					this.showSpinner = false;
                     this.showConfirmPopup = false;
                 });
                 break;
@@ -742,6 +746,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.showConfirmPopup = false;
                     this.resetComponent();
                 }).catch(error => {
+					this.showSpinner = false;
                     this.showConfirmPopup = false;
                 });
                 break;
