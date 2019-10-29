@@ -13,6 +13,8 @@ public with sharing class PortalLoginCtrl {
         public String selfRegistrationUrl{get;set;}
         @AuraEnabled
         public String forgotPasswordUrl{get;set;}
+        @AuraEnabled
+        public String troubleShootingUrl{get;set;}
     }
 
     public class LoginResult{
@@ -43,7 +45,11 @@ public with sharing class PortalLoginCtrl {
         config.isSelfRegistrationEnabled = authConfig.getSelfRegistrationEnabled();
         config.selfRegistrationUrl = authConfig.getSelfRegistrationUrl();
         config.forgotPasswordUrl = authConfig.getForgotPasswordUrl();
-        system.debug('config: ' + config);
+        config.troubleShootingUrl = Label.CSP_PortalPath + 'faq-article?language=en_US&q=troubleshooting';
+        ISSP_CS__c cs = ISSP_CS__c.getInstance('TroubleShootingArticleId');
+        if(cs != null){
+            config.troubleShootingUrl = config.troubleShootingUrl + '&id1=' + cs.value__c;
+        }
         return config;
     }
 
@@ -53,11 +59,8 @@ public with sharing class PortalLoginCtrl {
         result.userIsFrozen = false;
         string startUrl = '';
 
-        system.debug('landingPage: ' + landingPage);
-
         if(landingPage != null && landingPage != ''){
             landingPage = EncodingUtil.urlDecode(landingPage, 'UTF-8');
-            system.debug('landingPage: ' + landingPage);
             if(landingPage.contains(Label.CSP_PortalPath)){
                 startUrl = landingPage;
             }else{
@@ -66,8 +69,6 @@ public with sharing class PortalLoginCtrl {
         }else{
             startUrl = Label.CSP_PortalPath;
         }
-
-        system.debug('startUrl: ' + startUrl);
 
         User oneUser;
         username = (null != username) ? username.trim() : username;
@@ -116,18 +117,15 @@ public with sharing class PortalLoginCtrl {
 
             username=null != oneUser ? oneUser.Username : username;
 
-            system.debug('startUrl: ' + startUrl);
-
             System.PageReference pageRef = Site.login(username, password, startUrl);
 
             result.isSuccess = true;
             result.sessionUrl = pageRef.getUrl();
-            system.debug('result: ' + result);
+
             return result;
         }
         catch (Exception ex) {
             //return serror message string in case of any errors
-            system.debug('ERROR ON LOGIN: '+ex.getMessage());
             result.isSuccess = false;
             result.errorMessage = Label.OneId_LoginFail;
             result.sessionUrl = '';

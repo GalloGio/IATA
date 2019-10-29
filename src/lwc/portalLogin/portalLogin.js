@@ -331,7 +331,7 @@ export default class PortalLogin extends LightningElement {
     }
 
     handleNavigateToTroubleshooting() {
-        navigateToPage(this.labels.OneId_CSP_Troubleshooting_Link);
+        navigateToPage(this.config.troubleShootingUrl);
     }
 
     /* ==============================================================================================================*/
