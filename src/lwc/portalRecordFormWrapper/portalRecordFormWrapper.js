@@ -83,6 +83,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track hasAccessToSISPortal; //WMO-736 - ACAMBAS
     @track SISPortalLink; //WMO-736 - ACAMBAS
 
+    @track iconUrl;
+    @track sisPage;
+
     timeout = null;
 
     @track listSelected = [];
@@ -209,12 +212,13 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                     let portalService = JSON.parse(JSON.stringify(result));
 
                     if (portalService !== undefined && portalService !== '') {
-                        let SISIconHTML = portalService.recordService.Application_icon__c;
+                        //let SISIconHTML = portalService.recordService.Application_icon__c;
                         let SISPortalURL = portalService.recordService.Application_URL__c;
-
+                        this.iconUrl = portalService.recordService.Application_icon_URL__c;
                         goToOldPortalService({ myurl: SISPortalURL }).then(result => {
-                            this.SISPortalLink = Link_To_SIS.replace('{1}', SISIconHTML);
-                            this.SISPortalLink = this.SISPortalLink.replace('{2}', result);
+                            //this.SISPortalLink = Link_To_SIS.replace('{1}', SISIconHTML);
+                            //this.SISPortalLink = this.SISPortalLink.replace('{2}', result);
+                            this.sisPage = result;
                         })
                     }
                 });
