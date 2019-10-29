@@ -617,6 +617,10 @@ public without sharing class PortalIftpUtils {
 													-> one record for each station associated to the employee (role_address__c record inserted)
 													-> one record for each station removed from the employee (role_address__c record deleted) */
 		List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
+		List<IFTP_History__c> IftpHistoryStartWorkingItp = new List<IFTP_History__c>();
+		List<IFTP_History__c> IftpHistoryStartWorkingStation = new List<IFTP_History__c>();
+		List<IFTP_History__c> IftpHistoryStopWorkingStation = new List<IFTP_History__c>();
+		List<IFTP_History__c> IftpHistoryLoseProficiency = new List<IFTP_History__c>();
 
 		try{
 
@@ -831,7 +835,7 @@ public without sharing class PortalIftpUtils {
 																		accContRole.Company_Code__c,
 																		cont.FirstName,
 																		cont.LastName);
-								IftpHistoryRecordsToBeInserted.add(ihrec);
+								IftpHistoryStartWorkingItp.add(ihrec);
 							}
 						} else{
 							contactsToInsert.add(cont);
@@ -841,7 +845,7 @@ public without sharing class PortalIftpUtils {
 																		accContRole.Company_Code__c,
 																		cont.FirstName,
 																		cont.LastName);
-							IftpHistoryRecordsToBeInserted.add(ihrec);
+							IftpHistoryStartWorkingItp.add(ihrec);
 						}
 
 						ImportResultsWrapper irw = new ImportResultsWrapper(
@@ -994,7 +998,7 @@ public without sharing class PortalIftpUtils {
 																		rolAddr.Address__r.Code__c,
 																		rolAddr.Address__r.City__c
 																		);
-						IftpHistoryRecordsToBeInserted.add(ihrec);
+						IftpHistoryStartWorkingStation.add(ihrec);
 					}
 
 					// For stations the employee is no longer working in
@@ -1007,7 +1011,7 @@ public without sharing class PortalIftpUtils {
 																		rolAddr.Address__r.Code__c,
 																		rolAddr.Address__r.City__c
 																		);
-						IftpHistoryRecordsToBeInserted.add(ihrec);
+						IftpHistoryStopWorkingStation.add(ihrec);
 					}
 					// For every proficiency related record, of the employee in the station he stopped working
 					// get role_address__c records
@@ -1047,7 +1051,7 @@ public without sharing class PortalIftpUtils {
 																			proficiencyRec.Proficiency_level__c,
 																			proficiencyRec.Proficiency_Granted_By__c
 																			);
-							IftpHistoryRecordsToBeInserted.add(ihrec);
+							IftpHistoryLoseProficiency.add(ihrec);
 
 						}
 					}
@@ -1056,6 +1060,11 @@ public without sharing class PortalIftpUtils {
 					// station related to employee records and employee proficiency related to station records
 					delete roleAdressToBeDeleted;
 					//insert all history records
+					IftpHistoryRecordsToBeInserted.addAll(IftpHistoryLoseProficiency);
+					IftpHistoryRecordsToBeInserted.addAll(IftpHistoryStopWorkingStation);
+					IftpHistoryRecordsToBeInserted.addAll(IftpHistoryStartWorkingItp);
+					IftpHistoryRecordsToBeInserted.addAll(IftpHistoryStartWorkingStation);
+
 					if(IftpHistoryRecordsToBeInserted.size() > 0){
 						portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
 					}
@@ -1140,6 +1149,9 @@ public without sharing class PortalIftpUtils {
 				List<Contact> contactsToInactive = new List<Contact>();
 				List<Role_Address__c> roleAdressToBeDeleted = new List<Role_Address__c>();
 				List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
+				List<IFTP_History__c> IftpHistoryStoptWorkingItp = new List<IFTP_History__c>();
+				List<IFTP_History__c> IftpHistoryStopWorkingStation = new List<IFTP_History__c>();
+				List<IFTP_History__c> IftpHistoryLoseProficiency = new List<IFTP_History__c>();
 
 				Map<String, Account_Contact_Role__c> mapEmployeesByCompanyCode = new Map<String, Account_Contact_Role__c>();
 				for(Account_Contact_Role__c rec: accEmps){
@@ -1184,7 +1196,7 @@ public without sharing class PortalIftpUtils {
 																								rec.Company_Code__c,
 																								rec.First_Name__c,
 																								rec.Last_Name__c);
-					IftpHistoryRecordsToBeInserted.add(ihrec);
+					IftpHistoryStoptWorkingItp.add(ihrec);
 				}
 				roleAdressToBeDeleted = [SELECT Id,
 												Account_Contact_Role__c,
@@ -1213,7 +1225,7 @@ public without sharing class PortalIftpUtils {
 																		rolAddr.Address__r.Code__c,
 																		rolAddr.Address__r.City__c
 																		);
-						IftpHistoryRecordsToBeInserted.add(ihrec);
+						IftpHistoryStopWorkingStation.add(ihrec);
 					} else {
 						ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Loose_Proficiency,
 																			rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c,
@@ -1225,7 +1237,7 @@ public without sharing class PortalIftpUtils {
 																			rolAddr.Proficiency_level__c,
 																			rolAddr.Proficiency_Granted_By__c
 																			);
-						IftpHistoryRecordsToBeInserted.add(ihrec);
+						IftpHistoryLoseProficiency.add(ihrec);
 					}
 				}
 
@@ -1240,6 +1252,9 @@ public without sharing class PortalIftpUtils {
 						// station related to employee records and employee proficiency related to station records
 						delete roleAdressToBeDeleted;
 						//insert all history records
+						IftpHistoryRecordsToBeInserted.addAll(IftpHistoryLoseProficiency);
+						IftpHistoryRecordsToBeInserted.addAll(IftpHistoryStopWorkingStation);
+						IftpHistoryRecordsToBeInserted.addAll(IftpHistoryStoptWorkingItp);
 						portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
 
 						for(ImportResultsWrapper r : results){
