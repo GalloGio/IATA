@@ -356,7 +356,7 @@ public without sharing class PortalIftpUtils {
 	@AuraEnabled(cacheable=true)
 	public static List<Account> getAllITP(){
 
-		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
+		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'ITP');
 
 		List<Account_Role__c> accRoleCompanies = [SELECT Account__c
 													FROM Account_Role__c
