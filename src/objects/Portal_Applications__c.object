@@ -730,7 +730,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
-&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;Risk Profile and RHC&quot;, IF($User.ANG_Customer_Country_ISO__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
 &quot;ICCS&quot;,&quot;ICCS&quot;,
 Name 
 )</formula>
@@ -779,9 +779,11 @@ Name
 &quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
-&quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description, 
-&quot;ICE – IATA Customer E-Statement&quot;,$Label.ISSP_ICE_Description, 
-&quot;&quot;)</formula>
+&quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
+&quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_ICE_Description,
+&quot;Risk Profile and RHC&quot;, IF($User.ANG_Customer_Country_ISO__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
+&quot;&quot;
+       )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service Description List A</label>
         <required>false</required>
@@ -956,46 +958,41 @@ Name
     <fields>
         <fullName>Visible__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(OR(Name = &quot;IFG Production&quot;, Name = &quot;IFG Sandbox&quot;),
-$User.IFG_Account_Member__c
-,
-OR( 
-   
-    AND( 
-    Agency__c = true, 
-    $User.Customer_type__c=&quot;Agency&quot; 
-    ), 
-    AND( 
-    VisibleCNS__c= true, 
-    $User.Customer_type__c=&quot;CNS Agency&quot; 
-    ), 
-    AND( 
-    Not_ICH_Airline__c = true, 
-    CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
-    NOT(CONTAINS($User.Customer_type__c,&quot;ICH&quot;)) 
-    ), 
-    AND( 
-    ICH_Airline__c = true, 
-    CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
-    CONTAINS($User.Customer_type__c,&quot;ICH&quot;) 
-    ), 
-    AND( 
-    GSSA__c = true, 
-    CONTAINS($User.Customer_type__c,&quot;GSSA&quot;) 
-    ), 
-    AND( 
-    Name = &quot;Resource Center&quot;, 
-    CONTAINS($UserRole.Name ,&quot;General Public&quot;) 
-    ), 
-    AND( 
-    Others__c = true, 
-    CONTAINS($User.Contact_Account_Record_Type__c  ,&quot;Others&quot;) 
-    ), 
-    AND(Name = &quot;Payment Link&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)), 
-    AND(Name = &quot;Paypal&quot;,$User.CNS_Account_or_Agency__c),
-    AND(Name = &quot;Resource Center&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)),
-    AND(Name = &quot;Transparency in Payments (TIP)&quot;,($User.Is_TIP_User__c))
-)
+        <formula>IF(OR(
+    Name = &quot;IFG Production&quot;, Name = &quot;IFG Sandbox&quot;),
+    $User.IFG_Account_Member__c,
+    OR( 
+        AND(Agency__c = true, 
+            $User.Customer_type__c=&quot;Agency&quot;,
+            NOT(Name = &quot;Access BOP&quot;)), 
+        AND(VisibleCNS__c= true, 
+            $User.Customer_type__c=&quot;CNS Agency&quot;), 
+        AND(Not_ICH_Airline__c = true,
+            Name != &quot;Payment Link&quot;, 
+            CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
+            NOT(CONTAINS($User.Customer_type__c,&quot;ICH&quot;))), 
+        AND(ICH_Airline__c = true, 
+            Name != &quot;Payment Link&quot;, 
+            CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
+            CONTAINS($User.Customer_type__c,&quot;ICH&quot;)), 
+        AND(GSSA__c = true, 
+            CONTAINS($User.Customer_type__c,&quot;GSSA&quot;)), 
+        AND(Name = &quot;Resource Center&quot;, 
+            CONTAINS($UserRole.Name ,&quot;General Public&quot;)), 
+        AND(Others__c = true, 
+            CONTAINS($User.Contact_Account_Record_Type__c  ,&quot;Others&quot;)), 
+        AND(Name = &quot;Payment Link&quot;, 
+            NOT($User.Customer_type__c=&quot;CNS Agency&quot;)), 
+        AND(Name = &quot;Paypal&quot;,
+            $User.CNS_Account_or_Agency__c),
+        AND(Name = &quot;Resource Center&quot;, 
+            NOT($User.Customer_type__c=&quot;CNS Agency&quot;),
+            NOT(CONTAINS($User.Customer_type__c,&quot;Airline&quot;))),
+        AND(Name = &quot;Transparency in Payments (TIP)&quot;,
+            ($User.Is_TIP_User__c)),
+        AND(Name = &quot;Access BOP&quot;,
+            $User.ANG_Customer_Country_ISO__c = &quot;CN&quot;)
+    )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>

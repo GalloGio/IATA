@@ -311,7 +311,7 @@
                         </div>
                          
                         <div class="termsHolder">                         
-                          <apex:inputCheckbox value="{!bAccept}"  id="checkboxTermsOfUse" /> <label for="j_id0:activeSubscriptionForm:checkboxTermsOfUse">I have read and accept the <a href="{!$Site.BaseUrl}/iecTerms" target="_blank">Terms of Use</a></label>                       
+                          <apex:inputCheckbox value="{!bAccept}"  id="checkboxTermsOfUse" /> <label for="j_id0:activeSubscriptionForm:checkboxTermsOfUse">I have read and accept the <a href="{!$Site.BaseRequestURL}/iecTerms" target="_blank">Terms of Use</a></label>                       
                         </div>
                         
                         <apex:panelGrid columns="1" id="reCAPTCHAGrid" rendered="{!bShowRECAPTCHA}" style="margin-left: 45px;" >
@@ -343,9 +343,9 @@
                           <input id="loginPassword" type="password" style="padding-left: 114px; width: 252px;" />
                         </div>
                                         
-                        <p class="forgotPassword" > Forgot you password? <a href="{!$Site.BaseUrl}/ieclogin?respw=true">Click here</a>
+                        <p class="forgotPassword" > Forgot you password? <a href="{!$Site.BaseRequestURL}/ieclogin?respw=true">Click here</a>
                         </p>                                          
-                        <a href="{!$Site.BaseUrl}/ieclogin" class="customButton">Log in</a>                    
+                        <a href="{!$Site.BaseRequestURL}/ieclogin" class="customButton">Log in</a>                    
                       
                       </div>                
                     </div>

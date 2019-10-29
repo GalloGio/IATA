@@ -61,6 +61,10 @@
                 <behavior>Edit</behavior>
                 <field>AMS_Default_State__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Informatica_Value__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -281,6 +285,10 @@
                 <behavior>Edit</behavior>
                 <field>ANG_IEP_Model__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_RHC_LocationType__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -465,6 +473,13 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Name</fields>
+        <fields>ISO_Code__c</fields>
+        <fields>ISO_Code_Numeric__c</fields>
+        <fields>ANG_IEP_Model__c</fields>
+        <fields>ANG_Portal_Service__c</fields>
+    </miniLayout>
     <relatedLists>
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>

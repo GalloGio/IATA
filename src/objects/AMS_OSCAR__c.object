@@ -53,6 +53,96 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
+    <fieldSets>
+        <fullName>KPI_Fields</fullName>
+        <description>Fields used to calculate OSCAR effective age.</description>
+        <displayedFields>
+            <field>Id</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Process__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Dossier_Reception_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Payment_requested__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Proof_of_payment_received__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Bank_Guarantee_requested__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Bank_Guarantee_received__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Agreement_requested__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>PSAA_EACP_Agreement_received__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Disapproval_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Reconsideration_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Process_Eff_Age__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Change_effective_as_of__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Suspended_in_BSPLink_CASSLink__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Form_Effective_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Case_Reason__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>KPI Fields</label>
+    </fieldSets>
     <fields>
         <fullName>AIMS_updated__c</fullName>
         <externalId>false</externalId>
@@ -462,6 +552,18 @@ IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Conversion to International&quot;), &q
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Accreditation_Process_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Accreditation Process Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Agency_Authorization_created__c</fullName>
@@ -1606,6 +1708,18 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Case_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Reason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Certificate_Generated__c</fullName>
@@ -3013,6 +3127,20 @@ Format: YYYY</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>KPI_Aux1__c</fullName>
+        <externalId>false</externalId>
+        <formula>Suspended_in_BSPLink_CASSLink__c - Form_Effective_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>KPI Aux1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Late_notified_change__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -3373,6 +3501,34 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Previous_HE__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Stores the reference for the previous HE account when performing a change of location type. This field is set when the sanity check step is passed.</description>
+        <externalId>false</externalId>
+        <label>Previous HE</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>OSCARs (Previous HE)</relationshipLabel>
+        <relationshipName>Previous_HE_Accounts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Process_Eff_Age__c</fullName>
+        <externalId>false</externalId>
+        <label>Process Eff. Age</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Process_Start_Date__c</fullName>
@@ -8060,7 +8216,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
     </listViews>
     <listViews>
         <fullName>AgencyManagementAfricaME_AMS_OSCAR</fullName>
-        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
         <columns>NAME</columns>
         <columns>Account__c</columns>
         <columns>Country__c</columns>
@@ -8086,6 +8242,11 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             <operation>equals</operation>
             <value>VR.1.0,VR.1.0.CA,ANG.FS.OPTINOUT,CER.1.0</value>
         </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>AMS_OSCAR__c.ANG_ANNUAL_REVALIDATION</value>
+        </filters>
         <label>Agency Management - Africa &amp; ME</label>
         <language>en_US</language>
         <queue>AgencyManagementAfricaME</queue>
@@ -8110,6 +8271,11 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             <field>Status__c</field>
             <operation>notEqual</operation>
             <value>Closed,Closed_Not Accepted,Closed_Rejected,Closed_Withdrawn</value>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>AMS_OSCAR__c.ANG_ANNUAL_REVALIDATION</value>
         </filters>
         <label>Agency Management - Americas</label>
         <language>en_US</language>
@@ -8230,7 +8396,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
     </listViews>
     <listViews>
         <fullName>CasesACCEuropeOffOnshore_AMS_OSCAR</fullName>
-        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
         <columns>NAME</columns>
         <columns>Account__c</columns>
         <columns>Country__c</columns>
@@ -8255,6 +8421,11 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             <field>Process__c</field>
             <operation>equals</operation>
             <value>VR.1.0,VR.1.0.CA,ANG.FS.OPTINOUT,CER.1.0</value>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>AMS_OSCAR__c.ANG_ANNUAL_REVALIDATION</value>
         </filters>
         <label>Agency Management - Europe</label>
         <language>en_US</language>
@@ -64994,6 +65165,26 @@ TEXT(RPM_Approval__c) = &quot;Authorize Approval&quot; &amp;&amp; ISBLANK(AMS_On
         <errorMessage>The OSCAR cannot be approved until the remittance frequency is populated.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Agreement_received</fullName>
+        <active>true</active>
+        <description>Agreement received can&apos;t be populated if agreement requested is empty</description>
+        <errorConditionFormula>AND(
+	NOT(ISNULL(PSAA_EACP_Agreement_received__c)),
+	ISNULL(Agreement_requested__c)
+	)</errorConditionFormula>
+        <errorMessage>Please fill the &quot;Agreement requested&quot; date before filling the Agreement received date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Bank_Guarantee_received</fullName>
+        <active>true</active>
+        <description>Bank guarantee received can&apos;t be populated if bank guarantee requested is empty</description>
+        <errorConditionFormula>AND(
+		NOT(ISNULL(Bank_Guarantee_received__c)),
+		ISNULL( Bank_Guarantee_requested__c)
+		)</errorConditionFormula>
+        <errorMessage>Please fill the &quot;Bank guarantee requested&quot; date before populating the &quot;Bank guarantee received&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Cannot_Approve_Oscar_If_FS_not_confirmed</fullName>
         <active>true</active>
         <description>If &quot;Request financial security&quot; step is set to passed and &quot;Confirm financial security received&quot; is not set to passed then the Manager is not allowed to approve the OSCAR</description>
@@ -65109,6 +65300,17 @@ NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account
         <errorMessage>This type of change doesn&apos;t require validation or approval</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Payment_received_validation</fullName>
+        <active>true</active>
+        <description>Paymente received can&apos;t be empty if there&apos;s no data in Payment requested</description>
+        <errorConditionFormula>AND(
+		ISNULL(Payment_requested__c),
+		NOT(ISNULL(Proof_of_payment_received__c )),
+		NOT(RecordType.Name = &quot;CERTIFICATE&quot;)
+		)</errorConditionFormula>
+        <errorMessage>Please fill the &quot;Payment requested&quot; date before populating the &quot;Payment received&quot;</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>RPM_Approval_only_after_Validation</fullName>
         <active>false</active>
         <description>Enforce the proper process by ensuring that the manager approval cannot happen before the assistant manager&apos;s validation.</description>
@@ -65119,6 +65321,48 @@ NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account
 )</errorConditionFormula>
         <errorDisplayField>RPM_Approval__c</errorDisplayField>
         <errorMessage>The manager Approval / Disapproval cannot happen before the assistant manager&apos;s Validation.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Reconsideration_date</fullName>
+        <active>true</active>
+        <description>Reconsideration date can&apos;t be populated if there&apos;s no disapproval date</description>
+        <errorConditionFormula>AND(
+		NOT(ISNULL( Reconsideration_date__c )),
+		ISNULL( Disapproval_date__c )
+		)</errorConditionFormula>
+        <errorMessage>Please fill the &quot;Disapproval date&quot; before populating the &quot;Reconsideration date&quot;</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>STEP12_BG_Requested_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR (AND(
+        ISPICKVAL(STEP12__c, &apos;In Progress&apos;),
+        ISNULL(Bank_Guarantee_requested__c)
+	),
+	AND(
+        ISPICKVAL(STEP34__c, &apos;Passed&apos;),
+        ISNULL(Bank_Guarantee_requested__c)
+	)
+)</errorConditionFormula>
+        <errorMessage>Manage Financial Security cannot be in progress without a bank guarantee request date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>STEP14_Agreement_Requested_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+        ISPICKVAL(STEP14__c, &apos;In Progress&apos;),
+        ISNULL(Agreement_requested__c)
+        )</errorConditionFormula>
+        <errorMessage>Manage Agreement cannot be in progress without a bank guarantee request date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>STEP8_Payment_Requested_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+        ISPICKVAL(STEP8__c, &apos;Passed&apos;),
+        ISNULL(Payment_requested__c )
+)</errorConditionFormula>
+        <errorMessage>Issue Billing Document Step cannot be &quot;Passed&quot; without a &quot;Payment requested date&quot;. Please check the &quot;Payment Requested&quot; checkbox before passing the step.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Use_OSCAR_only_on_Agency_Accounts</fullName>

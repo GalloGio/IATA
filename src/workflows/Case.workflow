@@ -207,12 +207,9 @@
     </alerts>
     <alerts>
         <fullName>Bankingcase</fullName>
+        <ccEmails>mad-gdc-banking@iata.org</ccEmails>
         <description>SCE: New Banking case</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>ylonenj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>All/EUR_CaseassignmentBanking</template>
     </alerts>
@@ -1000,7 +997,7 @@
         <description>SCE: Case wrongly escalated</description>
         <protected>false</protected>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -2823,7 +2820,7 @@
         <description>SIDRA_00_Created for not accepted country</description>
         <protected>false</protected>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -3904,9 +3901,9 @@
         <ccEmails>ganeaa@iata.org</ccEmails>
         <description>Send Email to Online store support</description>
         <protected>false</protected>
-        <senderAddress>onlinestoresupport@iata.org</senderAddress>
+        <senderAddress>iatacustomerservice@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>Vendor_Templates/Contact_Vendor</template>
+        <template>Vendor_Templates/Contact_SNOW_ecommercecs</template>
     </alerts>
     <alerts>
         <fullName>Send_a_notification_to_SIS_Customer_Support_when_a_SIS_E_Joining_form_is_submitt</fullName>

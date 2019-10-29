@@ -15,6 +15,15 @@
         <content>IATA_Training_cases</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CS_Process_IDFS_ISS</recordType>
+        <type>Flexipage</type>
+        <profile>IATA Training - Support Team</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>IATA_Training_cases</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.IATA_Training</recordType>
         <type>Flexipage</type>
         <profile>Admin</profile>

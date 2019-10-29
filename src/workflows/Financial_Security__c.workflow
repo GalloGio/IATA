@@ -23,10 +23,6 @@
         <ccEmails>ameaccreditation@iata.org</ccEmails>
         <description>SARA Automatic Creation of Renewal cases - AME</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>garciam@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>SARA/Automatic_Security_Renewal_Process</template>

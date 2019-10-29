@@ -69,7 +69,7 @@ private class ANG_PortalApplicationRightTest {
 					Localesidkey = 'en_US', 
 					ContactId = contact.Id,
 					Timezonesidkey = 'Asia/Dubai',
-					Username = contact.email+'portalappright.test1',
+					Username = contact.email+System.now()+'portalappright.test1',
 					PortalRole = 'Manager',
 					CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 					ProfileId = ISSP_Constant.TEST_User_ProfileID,
