@@ -620,7 +620,7 @@ public without sharing class PortalIftpUtils {
 
 		try{
 
-			String RECTYPE_ITP = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'IFTP');
+			String RECTYPE_ITP = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
 
 			UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 

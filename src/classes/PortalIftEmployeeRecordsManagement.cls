@@ -103,7 +103,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 			Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
 			Boolean isInactiveEmployee = false;
 
-			String RECTYPE_ITP = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'IFTP');
+			String RECTYPE_ITP = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
 
 			PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 
