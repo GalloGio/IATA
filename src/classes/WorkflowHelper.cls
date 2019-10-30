@@ -349,7 +349,7 @@ public without sharing class WorkflowHelper {
         }     
 
         if((oldContact == null && accountManagementKeyContact)
-            || (oldContact != null && oldContact.Account_Management_Key_Contact__c != newContact.Account_Management_Key_Contact__c)) {
+            || (oldContact != null && oldContact.Account_Management_Key_Contact__c != accountManagementKeyContact)) {
 
             newContact.HasOptedOutOfEmail = true;
             newContact.Marketing_Communications_Opt_in__c = false;
