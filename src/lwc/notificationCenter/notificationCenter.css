@@ -1,0 +1,12 @@
+.comp {
+    background-color: rgb(255, 255, 255);
+}
+
+.slds-modal__content {
+    min-height: 350px;
+}
+
+.sendButton {
+    position: relative ;
+    top: 100px ;
+}

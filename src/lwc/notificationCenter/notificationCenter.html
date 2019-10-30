@@ -1,0 +1,141 @@
+<template>
+    <div class="slds-box comp">
+        <div class="slds-m-vertical_small slds-align_absolute-center">
+            <div class="slds-text-heading_large slds-m-horizontal_small ">Notification Center</div>
+        </div>
+        <div class=" slds-box slds-m-vertical_large" >
+            <div class="slds-box slds-m-vertical_large">
+                <div class="slds-text-heading_small">Filters</div>
+                <div class="slds-grid">
+                    <div class="slds-size_1-of-6 slds-p-right_small">
+                        <lightning-record-edit-form object-api-name="Account" onsubmit={handleSubmitForm}>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-1 ">
+                                    <div>
+                                        <lightning-input-field field-name="Sector__c" data-filter="sector"></lightning-input-field>
+                                    </div>
+                                    <div>
+                                        <lightning-input-field field-name="Category__c" data-filter="category"></lightning-input-field>
+                                    </div>
+                                    <div>
+                                        <lightning-combobox
+                                            class="portalService"
+                                            name="portalService"
+                                            label="Portal Service"
+                                            placeholder="--None--"
+                                            options={portalServices}>
+                                        </lightning-combobox>
+                                        <!--lightning-input-field field-name="Preferred_Language__c" data-filter="language"></lightning-input-field-->
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                    <div class="slds-size_1-of-6">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-1">  
+                                <lightning-dual-listbox name="country"
+                                label="Country"
+                                class="contryListField"
+                                source-label="Available"
+                                selected-label="Selected"
+                                field-level-help="Select contries"
+                                options={countrylist}
+                                onchange={handleCountrySelection}></lightning-dual-listbox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6 slds-align_absolute-center">                        
+                        <lightning-button variant="brand" name="filter" label="Filter results" onclick={handleFilterTable}></lightning-button>
+                    </div>
+                    <div class="slds-col slds-size_2-of-6"></div>
+                    <div class="slds-col slds-size_1-of-6 slds-align_absolute-center">
+                        <div>   
+                            <div class="slds-size_1-of-1 slds-m-vertical_medium slds-align_absolute-center">
+                                    <lightning-button variant="brand" name="notifySelect" label="Notify Selected" onclick={handleNotifySelected}>
+                                    </lightning-button>
+                                </div>                         
+                            <div class="slds-size_1-of-1 slds-m-vertical_medium slds-align_absolute-center">
+                                <lightning-button variant="brand" name="notifyAll" label="Notify All Filtered" onclick={handleNotifyAll}>
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <template if:false={error} >
+                <div class="slds-p-top_large slds-m-vertical_large">
+                    <lightning-datatable data-id="myTable"
+                                         key-field="ContactId"
+                                         data={data}
+                                         show-row-number-column
+                                         selected-rows={selectedRows}
+                                         row-number-offset={offset}
+                                         onrowselection={handleRowSelection}
+                                         columns={columns}
+                                         onrowaction={handleRowAction}>
+                    </lightning-datatable>
+                </div>
+            </template>
+            <div class="slds-align_absolute-center slsd-m-vertical_large">
+                <lightning-button disabled={isFirstPage} name="previous" label="Previous" onclick={handleTableNavigation} class="slds-m-horizontal_xx-small">
+                </lightning-button>
+                <lightning-button disabled={isLastPage} name="next" label="Next" onclick={handleTableNavigation} class="slds-m-horizontal_xx-small">
+                </lightning-button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- =========== MODAL =========== -->
+    <template if:true={showModal}>
+        <section
+            role="dialog"
+            tabindex="-1"
+            aria-labelledby="modal-heading-01"
+            aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open slds-modal_small"
+        >
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon
+                        class="slds-modal__close"
+                        title="Close"
+                        icon-name="utility:close"
+                        icon-class="slds-button_icon-inverse"
+                        onclick={handleModalClose}>
+                    </lightning-button-icon>
+
+                    <h2 class="slds-text-heading_medium slds-hyphenate header-string">Notification setup</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-grid slds-gutters_medium slds-wrap">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-combobox
+                                class="notificationTemplatePicker"
+                                name="notificationTemplate"
+                                label="Notification Template"
+                                placeholder="--None--"
+                                options={notificationTempaltes}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <h2 class="header">Options</h2>
+                            <lightning-input type="toggle" label="Also send email" name="sendEmail" onchange={handleSendEmailChange}></lightning-input>
+                        </div>
+                    
+                        <div class="slds-col slds-size_1-of-1 slds-align_absolute-center">                        
+                            <lightning-button variant="brand" class="sendButton" name="sendNotification" label="Send" onclick={handlerSendNotification}></lightning-button>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slds-modal__footer modal-hidden">
+                    <!--slot name="footer" onslotchange={handleSlotFooterChange}></slot-->
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!-- =========== End Modal =========== -->
+</template>

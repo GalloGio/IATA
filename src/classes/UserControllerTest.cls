@@ -57,21 +57,23 @@ private class UserControllerTest {
 
         Contact newContact = new Contact();
         newContact.FirstName = 'test';
-        newContact.LastName = 'test'; 
+        newContact.LastName = 'testUserController'; 
         newContact.Email = DateTime.now().getTime() +'_test@test.test';
         newContact.AccountId = newAccount.Id;
         newContact.Preferred_Language__c = 'English';
         newContact.Country__c = 'Canada';
+        newContact.Community__c = 'ISS Customer Portal';
         newContact.Last_registration_notification_date__c = System.today();
 
 
         Contact newContact2 = new Contact();
         newContact2.FirstName = 'test2';
-        newContact2.LastName = 'test2'; 
+        newContact2.LastName = 'test2UserController'; 
         newContact2.Email = DateTime.now().getTime() +'_test2@test.test';
         newContact2.AccountId = newAccount2.Id;        
         newContact2.Preferred_Language__c = 'Portuguese';
         newContact.Country__c = 'Portugal';
+        newContact2.Community__c = 'ISS Customer Portal';
         newContact2.Last_registration_notification_date__c = System.today();
 
 
@@ -105,15 +107,31 @@ private class UserControllerTest {
                                 contactId = newContact2.Id,
                                 //FederationIdentifier = conId15,
                                 timezonesidkey = 'Asia/Dubai',
-                                Username = 'testUsername2@te st.teste',
+                                Username = 'testUsername2@test.teste',
                                 PortalRole = '',
                                 CommunityNickname = 'test2 User',
                                 ProfileId = profileId,
-
                                 IsActive = true);
+    
+        insert (new List<User>{newUser,newUser2});
 
-            
-            insert (new List<User>{newUser,newUser2});
+        Portal_Applications__c portalApp = new Portal_Applications__c(
+            Name = 'testService'
+        );
+
+        insert portalApp;
+
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+            Portal_Application__c = portalApp.Id,
+            Contact__c = newContact.Id,
+            Right__c = 'Access Granted'            
+        );
+        Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
+            Portal_Application__c = portalApp.Id,
+            Contact__c = newContact2.Id,
+            Right__c = 'Access Granted'            
+        );
+        insert (new List<Portal_Application_Right__c>{appRight,appRight2});
     }
 
     @isTest 
@@ -191,6 +209,78 @@ private class UserControllerTest {
 
         System.assertNotEquals(null, users);
         System.assertEquals(2, users.size());
+    }
+    
+    @isTest
+    static void shouldReturnAllComunityUsers(){
+        Test.startTest();
+        List<User> usersCreated = [SELECT Id, FirstName FROM User WHERE NAME IN ('test testUserController','test2 test2UserController')];
+        List<User> users = UserController.getAllCspCommunityUsers(null,null,null,null,0); 
+        Test.stopTest();       
+        System.debug('VALINHO USER LIST');
+        System.debug(usersCreated);       
+
+        Integer count= 0;
+        System.assertNotEquals(null, users);
+        Id user1Id = usersCreated.get(0).Id;
+        Id user2Id = usersCreated.get(1).Id;
+        System.debug('VALINHO USER LIST 2');
+        for(User user : users){
+            System.debug(user);
+            if(user.Id == user1Id || user.Id == user2Id){
+                count++;
+            }
+        }
+        System.assertEquals(2, count);
+    }
+
+    @isTest 
+    static void shouldReturnsOnlyMilitaryCommunityUsers(){
+        Test.startTest();
+        List<User> users = UserController.getAllCspCommunityUsers('Military','Airline',null,null,0); 
+        Test.stopTest();
+        System.assertNotEquals(null, users);
+        System.assertEquals(1, users.size());
+    }
+/*
+     @isTest 
+    static void shouldReturnsOnlyCommunityUsersFromEnghlish(){
+        Test.startTest();
+        List<User> users = UserController.getAllCspCommunityUsers('Military','Airline',new List<String> {'Canada'},null,0); 
+        
+        Test.stopTest();
+        System.assertNotEquals(null, users);
+        System.assertEquals(1, users.size());
+    }*/
+
+    @isTest 
+    static void shouldReturnCommunityUsersFilteredByService(){
+        Test.startTest();
+        List<User> users = UserController.getAllCspCommunityUsers(null,null,null,'testService',0); 
+        Test.stopTest();
+        System.assertNotEquals(null, users);
+        System.assertEquals(2, users.size());
+    }
+
+    @isTest 
+    static void shouldReturnsNumberOfMilitaryCommunityUsers(){
+        Test.startTest();
+        Integer users = UserController.countCspCommunityUsers('Military','Airline',null,null); 
+        Test.stopTest();
+        System.assertNotEquals(null, users);
+        System.assertEquals(1, users);
+    }
+
+    @isTest 
+    static void shouldReturnIdsOfCommunityUsers(){
+        Test.startTest();
+        User userCreated = [SELECT Id FROM User WHERE NAME ='test testUserController'];
+        List<User> users = UserController.getFilteredCspCommunityIds('Military','Airline',null,null); 
+        Test.stopTest();
+        System.assertNotEquals(null, users);
+        System.assertEquals(1, users.size());
+        System.assertEquals(userCreated.Id, users[0].Id);
+
     }
 
 }
