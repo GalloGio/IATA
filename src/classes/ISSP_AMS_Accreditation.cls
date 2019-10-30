@@ -8154,7 +8154,7 @@ system.debug('aqui sectorValue ' + sectorValue);
             this.phone = phone;
             this.firstName = firstName;
             this.lastName = lastName;
-            this.financialInterest = financialInterest;
+			this.financialInterest = financialInterest.setScale(2);
         }
     }
 
