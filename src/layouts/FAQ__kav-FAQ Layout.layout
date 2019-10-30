@@ -31,6 +31,9 @@
                 <field>IsVisibleInPrm</field>
             </layoutItems>
             <layoutItems>
+                <field>New_Articles__c</field>
+            </layoutItems>
+            <layoutItems>
                 <field>CreatedById</field>
             </layoutItems>
         </layoutColumns>
