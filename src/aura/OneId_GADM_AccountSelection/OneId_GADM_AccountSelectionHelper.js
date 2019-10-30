@@ -28,14 +28,6 @@
 			c.set('v.account.Sector__c', 'Airline');
 
 		}
-		if(customerType == 'Ground Service Provider') {
-		    fieldLabels = [$A.get("$Label.c.ISSP_CompanyName"), $A.get("$Label.c.ISSP_Address"), $A.get("$Label.c.ISSP_Country"), $A.get("$Label.c.ISSP_Designator_Code"), labels["IATACode__c"]];
-            fieldNames = ['Name', 'BillingStreet', 'IATA_ISO_Country__r.Name', 'Airline_designator__c', 'IATACode__c', 'Category__c'];
-            searchFields.push('Airline_designator__c');
-
-            filters['Sector__c'] = 'Ground Service Provider';
-            c.set('v.account.Sector__c', 'Ground Service Provider');
-        }
 		if(customerType == 'GloballSalesAgent'){
 			delete filters['Sector__c'];
 		}

@@ -120,7 +120,6 @@ Constant Class
     public static Map<String, Set<String>> accountRecordTypeByUserType = new Map<String, Set<String>>
     {
         'Airline' => new set<string>{'IATA_Airline', 'IATA_Airline_BR', 'Standard_Account'},
-        'Ground Service Provider' => new set<string>{'Others'},
         'GloballSalesAgent' => new set<string>{'IATA_GSA'},
         'Agency' => new set<string>{'IATA_Agency'},
         'NonIATAAgent' => new set<string>{'Others', 'Standard_Account'},

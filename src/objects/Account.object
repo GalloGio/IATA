@@ -6799,7 +6799,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValue>Equipment Manufacturer</controllingFieldValue>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <controllingFieldValue>General Sales Agent</controllingFieldValue>
-                <controllingFieldValue>Ground Service Provider</controllingFieldValue>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
                 <valueName>Other</valueName>
             </valueSettings>
@@ -16163,11 +16162,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>Governmental Institution</fullName>
                     <default>false</default>
                     <label>Governmental Institution</label>
-                </value>
-                <value>
-                    <fullName>Ground Service Provider</fullName>
-                    <default>false</default>
-                    <label>Ground Service Provider</label>
                 </value>
                 <value>
                     <fullName>Holding Company</fullName>

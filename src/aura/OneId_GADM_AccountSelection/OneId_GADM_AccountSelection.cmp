@@ -61,7 +61,6 @@
                                 <ui:inputSelect value="{!v.customerType}" class="slds-select" change="{!c.customerSelected}">
                                     <ui:inputSelectOption text="" label="{!$Label.c.ISSP_Select_Type_of_Company}" value="true"/>
                                     <ui:inputSelectOption text="Airline" label="{!$Label.c.ISSP_Airline}"/>
-                                    <ui:inputSelectOption text="Ground Service Provider" label="{! $Label.c.GADM_Ground_Service_Provider}"/>
                                 </ui:inputSelect>
                             </div>
                         </div>
@@ -102,7 +101,7 @@
                                              country="{!v.country}"
                                              changeName="{! !(v.customerType == 'Airline' &amp;&amp; !empty(v.account.IATA_ISO_Country__c) &amp;&amp; v.account.IATA_ISO_Country__c != v.selectedCountry)}"
                                              changeSector="{!v.customerType == 'OtherCompany'}"
-                                             changeCategory="{!v.customerType == 'OtherCompany' || (or(v.customerType == 'Airline', v.customerType == 'Ground Service Provider') &amp;&amp; (empty(v.account.IATA_ISO_Country__c) || v.account.IATA_ISO_Country__c == v.selectedCountry))}"
+                                             changeCategory="{!v.customerType == 'OtherCompany' || (v.customerType == 'Airline' &amp;&amp; (empty(v.account.IATA_ISO_Country__c) || v.account.IATA_ISO_Country__c == v.selectedCountry))}"
                     />
                 </aura:set>
             </aura:if>
