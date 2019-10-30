@@ -128,9 +128,17 @@
                                         </div>
 
                                         
-                                        <div if:true={canAddUsers} class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
+                                        <div if:true={canAddUsers} class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3 slds-grid slds-wrap slds-grid_align-end">
+                                            <lightning-button if:true={showMassApprove} variant="brand" label={label.grantAccessTitle}
+                                                title={label.grantAccessTitle} class="slds-col containedButtonSlim slds-m-left_medium slds-small-size_1-of-2 slds-medium-size_3-of-12 slds-large-size_1-of-5"
+                                                onclick={handleMassApproveAccess}>
+                                            </lightning-button>
+                                            <lightning-button if:true={showMassDeny} variant="brand" label={label.denyAccessTitle}
+                                                title={label.denyAccessTitle} class="slds-col containedButtonSlim slds-m-left_medium slds-small-size_1-of-2 slds-medium-size_3-of-12 slds-large-size_1-of-5"
+                                                onclick={handleMassDenyAccess}>
+                                            </lightning-button>
                                             <lightning-button variant="brand" label={label.addNewUser}
-                                                title={label.addNewUser} class="slds-float_right containedButtonSlim"
+                                                title={label.addNewUser} class="slds-col containedButtonSlim slds-m-left_medium slds-small-size_1-of-2 slds-medium-size_3-of-12 slds-large-size_1-of-5"
                                                 onclick={toggleAddUserModal}>
                                                 </lightning-button>
                                             </div>
@@ -139,10 +147,11 @@
                                     <div  if:false={noResultsFound} class="slds-col slds-p-top_medium slds-size_1-of-1 text-gray">
                                         <lightning-datatable data={currentContactPage}
                                                              columns={contactTableColums}
-                                                             hide-checkbox-column key-field="Id"
+                                                             key-field="Id"
                                                              onrowaction={handleRowAction}
                                                              is-loading={loadingContacts}
                                                              resize-column-disabled=true
+                                                             onrowselection={onRowSelection}
                                             class="serviceContactList">
                                         </lightning-datatable>
                                         <!-- PAGINATION -->

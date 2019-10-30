@@ -66,6 +66,8 @@ import searchContacts from '@salesforce/apex/PortalServicesCtrl.searchContactsIn
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
+import massGrantUserAccess from '@salesforce/apex/PortalServicesCtrl.massGrantAccess';
+import massDenyUserAccess from '@salesforce/apex/PortalServicesCtrl.massDenyAccess';
 import denyUserAccess from '@salesforce/apex/PortalServicesCtrl.denyAccess';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import getContactsForAssignment from '@salesforce/apex/PortalServicesCtrl.getContactsForServiceAssignment';
@@ -207,6 +209,31 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     PAGE_SIZE = 10; //nr of contact record per page
 
+    // Variables for mass update
+    @track selectedRecords = [];
+    @track showMassApprove = false;
+    @track showMassDeny = false;
+
+    checkMassActionButtons() {
+        if(this.selectedRecords && this.selectedRecords.length > 0) {
+            const uniqueGrant = [...new Set(this.selectedRecords.map((rec) => {
+                return rec.showGrant;
+                })
+            )];
+            this.showMassApprove = !uniqueGrant.includes(false);
+            
+            const uniqueDeny = [...new Set(this.selectedRecords.map((rec) => {
+                return rec.showDeny;
+                })
+            )];
+            this.showMassDeny = !uniqueDeny.includes(false);
+
+        } else {
+            this.showMassApprove = false;
+            this.showMassDeny = false;
+        }
+    }
+
     connectedCallback() {
 
         //get the parameters for this page
@@ -321,6 +348,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
                 //this.showSpinner = false;
                 this.componentLoading = false;
+                this.checkMassActionButtons();
             });
     }
 
@@ -533,6 +561,42 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     }
 
+    onRowSelection(event) {
+        const selectedRows = event.detail.selectedRows;
+        this.selectedRecords = selectedRows;
+        
+        this.checkMassActionButtons();
+    }
+
+    handleMassApproveAccess(event) {
+        console.log('MASS Approve', event.detail, this.selectedRecords);
+        let contactNames = this.selectedRecords.map(function(elem){
+            return elem.contactName;
+        }).join("; ");
+
+        this.popupTitle = this.label.grantAccessTitle;
+        
+        this.popupMsg = this.label.confirmGrantAccessMsg.replace('{0}', this.serviceRecord.recordService.ServiceName__c).replace('{1}', contactNames);
+        this.mode = 'mass_grant';
+        this.showConfirmPopup = true;
+    }
+
+    handleMassDenyAccess(event) {
+        console.log('MASS DENY', event.detail, this.selectedRecords);
+        let contactNames = this.selectedRecords.map(function(elem){
+            return elem.contactName;
+        }).join("; ");
+
+        let title = this.label.denyAccessTitle;
+        let msg = this.label.confirmDenyAccessMsg.replace('{0}', this.serviceRecord.recordService.ServiceName__c).replace('{1}', contactNames);
+        
+        this.popupTitle = title;
+        this.popupMsg = msg;
+
+        this.mode = 'mass_deny';
+        this.showConfirmPopup = true;
+    }
+
     //Action on the top button ( request access or navigate to service)
     handleTopAction() {
         let serviceRec = JSON.parse(JSON.stringify(this.serviceRecord));
@@ -721,12 +785,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.showSpinner = true;
 
         let methodParams = {
-            contactId: this.selectedlRow.contactId,
             serviceId: this.serviceRecord.recordService.Id,
             reason: this.appRejReason
         };
         switch (this.mode) {
             case 'grant':
+                methodParams.contactId = this.selectedlRow.contactId;
                 grantUserAccess(methodParams).then(result => {
                     this.componentLoading = true;
                     this.showSpinner = false;
@@ -738,6 +802,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 });
                 break;
             case 'deny':
+                methodParams.contactId = this.selectedlRow.contactId;
                 methodParams.isFromContactTable = this.isFromContactTable;
 
                 denyUserAccess(methodParams).then(result => {
@@ -750,9 +815,81 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.showConfirmPopup = false;
                 });
                 break;
+            case 'mass_grant':
+                this.confirmMassGrantAction(this.selectedRecords);
+                break;
+            case 'mass_deny':
+                this.confirmMassDenyAction(this.selectedRecords);
+                break;
             default:
                 this.showSpinner = false;
         }
+    }
+
+    confirmMassGrantAction(recordsList) {
+        let contactIds = recordsList.map((rec) => { return rec.contactId });
+
+        let methodParam = { 
+            contactIds: contactIds,
+            serviceId: this.serviceRecord.recordService.Id,
+            reason: this.appRejReason
+        };
+
+        massGrantUserAccess(methodParam)
+        .then(result => {
+            this.componentLoading = true;
+            this.showSpinner = false;
+            this.showConfirmPopup = false;
+
+            this.resetComponent();
+            this.checkMassActionButtons();
+        }).catch( error => {
+            this.showConfirmPopup = false;
+            this.showSpinner = false;
+            this.componentLoading = false;
+            this.checkMassActionButtons();
+            
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: error,
+                    variant: 'error'
+                })
+            );
+        });
+    }
+    
+    confirmMassDenyAction(recordsList) {
+        let contactIds = recordsList.map((rec) => { return rec.contactId });
+
+        let methodParam = { 
+            contactIds: contactIds,
+            serviceId: this.serviceRecord.recordService.Id,
+            reason: this.appRejReason
+        };
+
+        massDenyUserAccess(methodParam)
+        .then(result => {
+            this.componentLoading = true;
+            this.showSpinner = false;
+            this.showConfirmPopup = false;
+            
+            this.resetComponent();
+            this.checkMassActionButtons();
+        }).catch( error => {
+            this.showConfirmPopup = false;
+            this.showSpinner = false;
+            this.componentLoading = false;
+            this.checkMassActionButtons();
+
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: error,
+                    variant: 'error'
+                })
+            );
+        });
     }
 
     /* Add Users to service */
