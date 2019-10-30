@@ -80,8 +80,14 @@ input:-webkit-autofill:active  {
     display: inherit;
 }
 
+/* Fixes IE display */
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
     .IEFixDisplay{
         display: inline-block;
+        width: 100%;
     }
 }
+
+/* Removes the icon from IE input */
+input::-ms-clear {  display: none; width : 0; height: 0; }
+input::-ms-reveal {  display: none; width : 0; height: 0; }
