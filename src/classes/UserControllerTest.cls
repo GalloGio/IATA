@@ -216,22 +216,17 @@ private class UserControllerTest {
         Test.startTest();
         List<User> usersCreated = [SELECT Id, FirstName FROM User WHERE NAME IN ('test testUserController','test2 test2UserController')];
         List<User> users = UserController.getAllCspCommunityUsers(null,null,null,null,0); 
-        Test.stopTest();       
-        System.debug('VALINHO USER LIST');
-        System.debug(usersCreated);       
-
-        Integer count= 0;
-        System.assertNotEquals(null, users);
-        Id user1Id = usersCreated.get(0).Id;
-        Id user2Id = usersCreated.get(1).Id;
-        System.debug('VALINHO USER LIST 2');
+        
+        List<Id> ids = new List<Id>();
         for(User user : users){
-            System.debug(user);
-            if(user.Id == user1Id || user.Id == user2Id){
-                count++;
-            }
+            ids.add(user.Id);
         }
-        System.assertEquals(2, count);
+        
+        List<NetworkMember> members = [SELECT MemberId FROM NetworkMember where NetworkId IN (SELECT Id FROM Network WHERE Name = 'CS Portal') AND MemberId IN :ids];
+        Test.stopTest();       
+        
+        System.assert(users.size() >= 2); 
+        System.assertEquals(users.size(), members.size());
     }
 
     @isTest 
