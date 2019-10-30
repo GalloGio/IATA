@@ -69,26 +69,6 @@ private class IECUsageCompiler_tst {
         insert oLiveUsage12;
     }
     
-    private static void createCustomerData() {
-        
-        // create customer usage for CAC Pro
-        
-        IEC_Usage_Tracker_Live__c oLiveUsage1 = IECTestUtil.createSampleLiveUsageCounter(oContact1, 1, IECConstants.ProductCategory_SF_CACPRO, IECConstants.IECUsageTrackerSearchStatus_Success, IECConstants.IECUsageTrackerSearchTarget_Agency);
-        insert oLiveUsage1;
-        IEC_Usage_Tracker_Live__c oLiveUsage2 = IECTestUtil.createSampleLiveUsageCounter(oContact1, 1, IECConstants.ProductCategory_SF_CACPRO, IECConstants.IECUsageTrackerSearchStatus_Success, IECConstants.IECUsageTrackerSearchTarget_Agency);
-        insert oLiveUsage2;
-        IEC_Usage_Tracker_Live__c oLiveUsage3 = IECTestUtil.createSampleLiveUsageCounter(oContact1, 1, IECConstants.ProductCategory_SF_CACPRO, IECConstants.IECUsageTrackerSearchStatus_Fail, IECConstants.IECUsageTrackerSearchTarget_Agency);
-        insert oLiveUsage3;
-        IEC_Usage_Tracker_Live__c oLiveUsage4 = IECTestUtil.createSampleLiveUsageCounter(oContact2, 1, IECConstants.ProductCategory_SF_CACPRO, IECConstants.IECUsageTrackerSearchStatus_Success, IECConstants.IECUsageTrackerSearchTarget_Agency);
-        insert oLiveUsage4;
-        IEC_Usage_Tracker_Live__c oLiveUsage5 = IECTestUtil.createSampleLiveUsageCounter(oContact2, 1, IECConstants.ProductCategory_SF_CACPRO, IECConstants.IECUsageTrackerSearchStatus_Success, IECConstants.IECUsageTrackerSearchTarget_Agency);
-        insert oLiveUsage5;
-        IEC_Usage_Tracker_Live__c oLiveUsage6 = IECTestUtil.createSampleLiveUsageCounter(oContact3, 1, IECConstants.ProductCategory_SF_CACPRO, IECConstants.IECUsageTrackerSearchStatus_Success, IECConstants.IECUsageTrackerSearchTarget_Agency);
-        insert oLiveUsage6;
-        IEC_Usage_Tracker_Live__c oLiveUsage7 = IECTestUtil.createSampleLiveUsageCounter(oContact4, 1, IECConstants.ProductCategory_SF_CACPRO, IECConstants.IECUsageTrackerSearchStatus_Success, IECConstants.IECUsageTrackerSearchTarget_Agency);
-        insert oLiveUsage7;
-    }
-
     static testMethod void testCompileAnonymousLiveUsage() {
         
         try {

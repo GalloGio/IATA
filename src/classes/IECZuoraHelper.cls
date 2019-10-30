@@ -1167,46 +1167,6 @@ public with sharing class IECZuoraHelper {
 			processingType = zInvoiceItem.getValue('ProcessingType') != null ? (Decimal)zInvoiceItem.getValue('ProcessingType') : null;
 		}
 	}
-	
-	
-    public static Zuora.zObject getZuoraAccountById(String zuoraId) {
-
-    	system.debug('Inside getZuoraAccountById(' + zuoraId + ')');
-    	
-        try {
-	        List<Zuora.zObject> accountResult = queryApiCall('select Id,AccountNumber,BillToId,Name,SoldToId from Account where Id = \'' + zuoraId + '\'');
-    	    
-    	    	
-    	    if (accountResult == null || accountResult.size() == 0) {
-        	    return null;
-        	}
-            
-        	return accountResult.get(0);
-    	} catch(Exception ex) {
-    		system.debug('Exception: ' + ex.getMessage());
-    		return null;
-    	}
-    }	
-    
-    public static Zuora.zObject getZuoraContactById(String zuoraId) {
-    	
-    	system.debug('Inside getZuoraContactById(' + zuoraId + ')');
-        
-        try {
-        	
-        	List<Zuora.zObject> contactResult = queryApiCall('select Id, FirstName, LastName, Address1, Address2, City, Country, PostalCode, State, WorkEmail from Contact where Id = \'' + zuoraId + '\'');
-        	if (contactResult == null || contactResult.size() == 0) {
-            	return null;
-    	    }
-            
-	        return contactResult.get(0);
-
-    	} catch(Exception ex) {
-    		system.debug('Exception: ' + ex.getMessage());
-    		return null;
-    	}
-        
-    }	
 
     /**
     * Retrieve PaymentMethod from a list using the ID
@@ -1442,65 +1402,6 @@ public with sharing class IECZuoraHelper {
         } 
         catch (Exception e) {
             throw new IECApplicationException('Could not retreive Payment Methods with Id ' + sPaymentMethodZuoraId + '. Error: ' + e.getMessage());
-        }
-    }
-    
-    /**
-     * Query Zuora to return a Subscription by its id
-     * @param sSubscriptionZuoraId The Zuora Id of the subscription
-     * @return A Zuora.zObject representing the Subscription
-     */
-    public static Zuora.zObject getZuoraSubscriptionById(String sSubscriptionZuoraId) {
-        try {
-            if (String.isBlank(sSubscriptionZuoraId))
-            	return null;
-            	
-            Zuora.zObject zSubscription = null;
-            
-            // if not in test method
-            if (!Test.isRunningTest()) {
-                List<Zuora.zObject> lstSubscriptions = IECZuoraHelper.queryApiCall('select Id, AutoRenew, ContractAcceptanceDate, ContractEffectiveDate, Name, OriginalId, PreviousSubscriptionId, ServiceActivationDate, Status, SubscriptionEndDate, SubscriptionStartDate, TermEndDate, TermStartDate from Subscription where Id = \'' + sSubscriptionZuoraId + '\'');
-                if (lstSubscriptions == null || lstSubscriptions.isEmpty())
-                	return null;
-                else
-                	zSubscription = lstSubscriptions.get(0);
-            }
-            // in test method
-            else
-                zSubscription = IECTestUtil.createSampleZuoraSubscription('A-S00001014', Datetime.now(), 1, 'Active');
-             
-            return zSubscription;
-        } 
-        catch (Exception e) {
-            throw new IECApplicationException('Could not retreive Subscription with Id ' + sSubscriptionZuoraId + '. Error: ' + e.getMessage());
-        }
-    }
-    
-    /**
-     * Query Zuora to return a list of Subscriptions by its Number
-     * @param sSubscriptionNumber The Subscription Number
-     * @return A Zuora.zObject representing the Subscription
-     */
-    public static List<Zuora.zObject> getZuoraSubscriptionsByNumber(String sSubscriptionNumber) {
-        try {
-            if (String.isBlank(sSubscriptionNumber))
-            	return null;
-
-            // if not in test method
-            if (!Test.isRunningTest()) {
-                List<Zuora.zObject> lstSubscriptions = IECZuoraHelper.queryApiCall('select Id, AutoRenew, ContractAcceptanceDate, ContractEffectiveDate, Name, OriginalId, PreviousSubscriptionId, ServiceActivationDate, Status, SubscriptionEndDate, SubscriptionStartDate, TermEndDate, TermStartDate, Version from Subscription where Name = \'' + sSubscriptionNumber + '\'');
-                if (lstSubscriptions == null || lstSubscriptions.isEmpty())
-                	return null;
-                else
-                	return lstSubscriptions;
-            }
-            // in test method
-            else
-                return new List<Zuora.zObject> { IECTestUtil.createSampleZuoraSubscription('A-S0000420', Datetime.now(), 1, 'Active'),
-                	 							 IECTestUtil.createSampleZuoraSubscription('A-S0000420', Datetime.now().addDays(5), 2, 'Active')};
-        } 
-        catch (Exception e) {
-            throw new IECApplicationException('Could not retreive Subscription with Id ' + sSubscriptionNumber + '. Error: ' + e.getMessage());
         }
     }
     

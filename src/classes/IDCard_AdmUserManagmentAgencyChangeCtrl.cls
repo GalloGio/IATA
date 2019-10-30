@@ -252,9 +252,7 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 			currentRecords.clear();
 		}
 		
-		return;
- 		
-		
+		return;	
 	}
 	
 	public void complete(){
@@ -268,51 +266,10 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
         return IDCardUtil.EncryptEncodeParameter(ver).replaceAll('%', '%25');
     }
 	
-	/*
-	public void removeContact(){
-		changes.remove(removeId);
-		return;
-	}
-	
-	public PageReference processChanges(){
-		List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
-		
-		//for(String vernum:changes.keySet()){
-		for(AgencyChangeWrapper acw : changes.values()){
-			acw.previousContact.AccountId = keyContactAndDelegateForAccountList.get(acw.newIataCode).Account__c;
-			ID_Card_Application__c idcapp = IDCardApplicationFactory.createIDCardApplication(acw.previousContact,'Replacement');
-	        idcapp.Package_of_Travel_Professionals_Course_1__c = acw.packageTravel1;
-	        idcapp.Package_of_Travel_Professionals_Course_2__c = acw.packageTravel2;
-	        idcapp = IDCardApplicationFactory.applyApplicationFees(idcapp,keyContactAndDelegateForAccountList.get(acw.newIataCode).Account__r,null);
-	        apps.add(idcapp);
-		}
-		
-		system.savepoint sp = database.setSavepoint();
-		list<database.Saveresult> sres = database.insert(apps,true);
-		boolean err = false;
-		for(integer i=0; i<apps.size(); i++){
-			database.Saveresult sr = sres[i];
-			if(!sr.isSuccess()){
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Applicant '+apps[i].Displayed_Name__c+' with VER number '+apps[i].VER_Number__c+': '+sr.getErrors()[0].getMessage()));
-				err = true;
-			}
-		}
-		if(err){
-			database.rollback(sp);
-			return null;
-		}else{
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, 'The changement of agency was successfully requested for '+apps.size()+' applicants'));
-			changes = new map<String, AgencyChangeWrapper>();
-		}
-		return new PageReference('/IDCard_AdmUserManagment');
-	}
-	*/
-	
 	public pagereference cancel(){
 		return Page.IDCard_AdmUserList;
 		return new pagereference('/IDCard_AdmUserList');
 	}
-	
 	
 	public class AgencyChangeWrapper {
 		public String verNum {get;set;}

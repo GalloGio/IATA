@@ -105,7 +105,7 @@ public with sharing class ISSP_PortalUserCreation {
         Map<String,String> res;
         //Save Account,Iso country and prefered language in a temporary contact
         //In order to restore it after the rollback
-        //newContact = customClone(con);
+    
         //Save backup point before the contac is saved
         Savepoint sPointContact = Database.setSavepoint();
         try{
@@ -137,14 +137,6 @@ public with sharing class ISSP_PortalUserCreation {
         */
         return true;
 
-
-    }
-    private Contact customClone(Contact con){
-        Contact newContact = new Contact();
-        newContact.ISO_Country__c = con.ISO_Country__c;
-        newContact.AccountId = con.AccountId;
-        newContact.Preferred_Language__c = con.Preferred_Language__c;
-        return newContact;
 
     }
     

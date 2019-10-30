@@ -132,15 +132,4 @@ public without sharing class ISSP_HierarchyAccountTeamAccounts {
        system.debug('\n\n creatAccountTeamMember => accountTeamMemberList:'+accountTeamMemberList+'\n\n');
        return accountTeamMemberList; 
     }
-        
-    public static Set<Id> makeTopParentIds(List<Account> Accounts){
-        Set<Id> topParentIds = new Set<id>();
-        for(Account acc : Accounts){
-            if(acc.Top_Parent__c!= null)
-                topParentIds.add(acc.Top_Parent__c);
-            else
-                topParentIds.add(acc.Id);
-        }
-        return topParentIds;
-    }
 }

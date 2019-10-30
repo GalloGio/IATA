@@ -78,12 +78,6 @@ private class ISSP_internal_Case_topic_subtopic_TEST {
 		Test.stopTest();
 	}
 
-
-	  private static Integer getIndex(clsDataCategoryContainer cont) {
-    	//controller.DataCategoryContainer.lst_DataCategories[index]
-    	return 0;
-    }
-
     private static String getSubCat(clsDataCategoryContainer cont, Integer index) {
     	return cont.lst_DataCategories[index].CategoryName;
     }

@@ -63,35 +63,7 @@ public class IEC_ZuoraPricing2SAP_Svc
         //return (String.isBlank(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.CustomerType__c) ? IECConstants.PARAM_CUSTOMERTYPE_DEFAULT :
         //        pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.CustomerType__c);
     }
-
-
-    // get products to track pricing
-    public Map<Id, Product2> getTrackingProduct()
-    {
-        // build criteria specified by business
-        String strSOQL = '';
-        for (IEC_ZuoraPricing2SAP_Filter__c filter : [select SAP_Sales_Channel_Code__c, SAP_Division_Code__c, Exclude_SAP_Material_Number__c
-                                                      from IEC_ZuoraPricing2SAP_Filter__c])
-            strSOQL += ' or (SAP_Sales_Channel_Code__c = \'' + filter.SAP_Sales_Channel_Code__c + '\''
-                           + ' and SAP_Division_Code__c = \'' + filter.SAP_Division_Code__c + '\''
-                           + (String.isBlank(filter.Exclude_SAP_Material_Number__c) ? ''
-                              : ' and SAP_Material_Number__c not in (' + filter.Exclude_SAP_Material_Number__c + ')')
-                           + ')';
-        
-        // search products
-        Map<Id, Product2> mapZProductId_Product = new Map<Id, Product2>();
-        if (!String.isBlank(strSOQL))
-        {
-            strSOQL = 'select Id, SAP_Material_Number__c from Product2'
-                    + ' where SAP_Material_Number__c != null and SAP_Status_Code__c in (\'A\', \'Z4\')'
-                    + ' and (' + strSOQL.substring(4) + ')';
-            for (Product2 p : Database.query(strSOQL))
-                mapZProductId_Product.put(p.Id, p);
-        }
-        return mapZProductId_Product;
-    }
-
-
+    
     // get products to track pricing
     public Map<Id, Product2> getTrackingProduct2()
     {

@@ -187,22 +187,7 @@ public without sharing class ISSP_ChangePassword {
         displayPopup = false;        
     }
 
-    public void provisioning(){ 
-    /*               
-        provUser = [Select Id, Username, LastLoginDate,UID__c, ByPassValidationRule__c from user where id =:UserInfo.getUserId()];
-        PermissionSetAssignment[] lstcurrentUserPerSet = [SELECT Id, PermissionSet.Name,AssigneeId 
-                                                                FROM PermissionSetAssignment 
-                                                                WHERE AssigneeId = :Userinfo.getUserId() AND PermissionSet.Name = 'FRED_Provisioning'];
-        
-        List <PermissionSet> fredprovisioning = [SELECT Id FROM PermissionSet WHERE Name = 'FRED_Provisioning'];        
-        if(!fredprovisioning.isEmpty() && lstcurrentUserPerSet.size() == 0){
-            PermissionSetAssignment assignPset = new PermissionSetAssignment();
-                assignPset.AssigneeId = provUser.Id;
-                assignPset.PermissionSetId = fredprovisioning[0].Id;
-            insert assignPset;
-        }      
-        */
-
+    public void provisioning(){
         LightningConnectedAppHelper.submit('FRED', 'FRED Primary User');
     }
 

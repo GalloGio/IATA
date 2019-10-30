@@ -61,27 +61,6 @@ public with sharing class IECSubscriptionManager {
     }
     
     /**
-     * Re-enables a contact to purchase a trial product
-     * @param idContact Salesforce ID for customer portal contact
-     * @param idRatePlan Salesforce ID for trial rate plan
-     */
-    public static void enableTrialSubscription(Id idContact, Id idRatePlanInformation) {
-        
-        List<Trial__c> trials =
-            [SELECT Id, Ignore__c 
-            FROM Trial__c
-            WHERE Contact__c = :idContact
-                AND Product_Rate_Plan_Information__c = :idRatePlanInformation
-                AND Ignore__c = false];
-        for(Trial__c trial : trials){
-            trial.Ignore__c = true;
-        }
-        if(!trials.isEmpty()){
-            update trials;
-        }       
-    }
-    
-    /**
      * Checks whether a given product is triable or not
      * @param idProduct Salesforce ID for product information
      * @return True/False whether the product is triable

@@ -149,20 +149,6 @@ global with sharing class IDCard_SF_AIMS_WebService {
         return GetXmlResponse(SFUPDATEOK, pSFIdCardRecordId, '');
     }
 
-    //Not used anymore .. formula field instead
-    private static string GetHoursWorkedCode(string HoursWorked) {
-        if (HoursWorked != null) {
-            if (HoursWorked.toUpperCase() == HOURSWORKED35MORE) {
-                return '1';
-            } else if (HoursWorked.toUpperCase() == HOURSWORKED2534) {
-                return '2';
-            } else if (HoursWorked.toUpperCase() == HOURSWORKED2024) {
-                return '3';
-            } else return '4';
-        }
-        return '';
-    }
-
     private static string GetMonthNumericValue(string aMonth) {
         if (aMonth.toUpperCase() == JANUARY || aMonth == '1')    return '01';
         else if (aMonth.toUpperCase() == FEBRUARY || aMonth == '2') return '02';

@@ -693,7 +693,6 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
     {
         IEC_ZuoraPricing2SAP_Svc svc = new IEC_ZuoraPricing2SAP_Svc();
         // cannot use following to generate tracking data because it raises error "You cannot make callout after creating a Savepoint"
-        //Map<Id, Product2> mapZProductId_Product = svc.getTrackingProduct();
         //Map<String, zqu__ProductRatePlanChargeTier__c> mapZId_Tier = getZuoraPricing(mapZProductId_Product);
         //svc.trackPricing(mapZId_Tier.values(), mapZProductId_Product);
         List<IEC_ZuoraPricing2SAP_Tracking__c> lstTracking = new List<IEC_ZuoraPricing2SAP_Tracking__c>();

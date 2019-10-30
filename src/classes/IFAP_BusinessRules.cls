@@ -481,26 +481,6 @@ public with sharing class IFAP_BusinessRules {
     }
 
     /**
-     * To use once on deployment to production
-     */
-    public static Boolean assignAssessmentTemplateToAccountsWhereMissing(Integer maxLimit) {
-
-        Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-        Account[] listAccountToAssign = [Select a.Id, a.Name, a.Type, a.BillingCountry, a.Assessment_Template__c From Account a where a.Assessment_Template__c = null and a.RecordTypeId = :accountRecordTypeId limit :maxLimit];
-
-        for (Account a : listAccountToAssign) {
-            //Boolean result = setAssessmentTemplateToAccount(a);
-            Id assessmentTemplateId = getAssessmentTemplateForAccount(a);
-            if (assessmentTemplateId != null) {
-                a.Assessment_Template__c = assessmentTemplateId;
-                update a;
-            }
-        }
-
-        return true;
-    }
-
-    /**
     * Quality Issue
     * Check if at least one Reassessment Accounting issue is related to the current quality issue.
     **/

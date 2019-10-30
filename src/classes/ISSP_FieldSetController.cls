@@ -230,38 +230,6 @@ public with sharing class ISSP_FieldSetController {
             else if (binaryJSON != null && binaryJSON.contains (fieldStr))
                 f.htmlClass += ' binary-on ';
         }
-
-        // EllieP style. for-in-for
-        //for (String label : getSortedNames (fieldsMap)) {
-        //    for (string fieldStr : fieldsMap.keySet ()) {
-        //        if (label != fieldsMap.get (fieldStr).label || chosenFields.contains (fieldStr))
-        //          continue;
-        //          
-        //      chosenFields.add (fieldStr);
-        //      
-        //      Field f = fieldsMap.get (fieldStr);
-        //      otherFields.add (f);
-        //      
-        //      if (bnryFlds.contains (fieldStr) || fieldStr.contains ('.'))
-        //          f.htmlClass += ' no-binary ';
-        //    }
-        //}
-        
-        /*
-        // MichaelS style
-        for (String api : fieldsMap.keySet ()) {
-            if (chosenFields.contains (api))
-                continue;
-            
-            Field f = fieldsMap.get (api);
-            otherFields.add (f);
-            
-            if (bnryFlds.contains (api) || api.contains ('.'))
-                f.htmlClass += ' no-binary ';
-        }
-        
-        //otherFields.sort ();
-        */
         
         // build sorted list
         map<String, Field> m = new map<String, Field> ();
@@ -282,18 +250,7 @@ public with sharing class ISSP_FieldSetController {
             otherFields.add (m.get (label));
         
     } // initFields (map<String, Field>)
-    
-    private list<string> getSortedNames (map<String, Field> fieldsMap) {
-        list<string> sortedNames = new list<String> ();
         
-        for (string fieldStr : fieldsMap.keySet ())
-            sortedNames.add (fieldsMap.get (fieldStr).label);
-
-        sortedNames.sort ();
-        
-        return sortedNames;
-    }
-    
     private Field getField(string fieldKey,Schema.SObjectField sof){
         Field currentField = new Field(sof.getDescribe().getLabel(),fieldKey);
         return currentField;
@@ -330,17 +287,4 @@ public with sharing class ISSP_FieldSetController {
         public Field (String myLabel, String myApiName) { label = myLabel; apiName = myApiName; htmlClass = ''; }
         
     }
-    
-    /*
-    public static testmethod void unitTest(){
-        Map<string,string> valuesMap = new Map<string,string>();
-        valuesMap.put('test1','test1');
-        valuesMap.put('test2','test2');
-        FieldSetController fsc = new FieldSetController(valuesMap,'test1');
-        fsc = new FieldSetController('account',null);
-        fsc.getLanguage();
-        fsc.getSeparator();
-    }
-    */
-    
 }

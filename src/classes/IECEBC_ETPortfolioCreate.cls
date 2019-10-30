@@ -79,15 +79,6 @@ public class IECEBC_ETPortfolioCreate {
             throw new UnexpectedResponse_Exception('Unexpected Response');
         }      
     }  
-      
-    public static void CreateListPortfolioObjects(String restWS, String EBCResourceId){
-    	List<Attachment> attList = [SELECT Id, Name, Body, ContentType FROM Attachment WHERE ParentId = :EBCResourceId];
-        Integer i = 0;
-        for(Attachment a : attList){
-            i ++;
-            CreatePortfolioObject(restWS, 'att-' + i + '-' + a.Name, a.Id);
-        }    
-    }
     
     public static void CreatePortfolioObject(String restWS, String fileName, String attachmentId){     
         

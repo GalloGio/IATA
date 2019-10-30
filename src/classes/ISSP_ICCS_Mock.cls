@@ -1948,17 +1948,6 @@ public class ISSP_ICCS_Mock{
 		2413 => ADHOC_FUTURE_SI_CYCLE_13_PARTICIPATION_2_DETAIL,
 		1613 => ADHOC_SI_CYCLE_13_PARTICIPATION_1_DETAIL
 	};
-
-
-
-	public static String getParticipationSettlementInstructions(Integer participationId){
-		if(participationId == 1){
-			return '[' + STANDARD_SI_PARTICIPATION_1 + ',' + FUTURE_SI_CYCLE_14_PARTICIPATION_1 + ']';
-		}
-		else{
-			return '[' + STANDARD_SI_PARTICIPATION_2 + ',' + FUTURE_SI_CYCLE_15_PARTICIPATION_2 + ']';
-		}
-	}
 	
 	public static String getSettlementInstruction(Integer settlementInstructionId){
 		if(settlementInstructionId == 11){
@@ -1977,15 +1966,6 @@ public class ISSP_ICCS_Mock{
 
 	public static String getSettlementInstructions(){
 		return '[' + STANDARD_SI_PARTICIPATION_1_DETAIL + ',' + FUTURE_SI_CYCLE_14_PARTICIPATION_1_DETAIL + ',' + STANDARD_SI_PARTICIPATION_2_DETAIL + ',' + FUTURE_SI_CYCLE_15_PARTICIPATION_2_DETAIL + ']';
-	}
-
-	public static String getSettlementInstructionsOfCycle(String cycleId){
-		if(cycleId == '2017#12'){
-			return '[' + ADHOC_STANDARD_SI_CYCLE_12_PARTICIPATION_1 + ',' + ADHOC_STANDARD_SI_CYCLE_12_PARTICIPATION_2 + ',' + ADHOC_FUTURE_SI_CYCLE_12_PARTICIPATION_1 + ',' + ADHOC_SI_CYCLE_12_PARTICIPATION_1 + ']';
-		}
-		else{
-			return '[' + ADHOC_STANDARD_SI_CYCLE_13_PARTICIPATION_1 + ',' + ADHOC_STANDARD_SI_CYCLE_13_PARTICIPATION_2 + ',' + ADHOC_FUTURE_SI_CYCLE_13_PARTICIPATION_2 + ',' + ADHOC_SI_CYCLE_13_PARTICIPATION_1 + ']';
-		}
 	}
 
 	public static String getCycleSettlementInstructions(String cycleId){
