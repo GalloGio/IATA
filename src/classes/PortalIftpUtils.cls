@@ -1616,8 +1616,10 @@ public without sharing class PortalIftpUtils {
 
 		String baseUrl = Site.getBaseSecureUrl();
 		String pathPrefix = Site.getPathPrefix().replace('/s', '');
-		ISSP_CS__c url = ISSP_CS__c.getValues('Absorb SSO');
-		return baseUrl + pathPrefix + url.Value__c;
+		List<AppMenuItem> ami = [SELECT StartUrl FROM AppMenuItem WHERE Name = 'Absorb' LIMIT 1];
+		system.assert(ami.size() == 1, 'Connected app Absorb does not exist.');
+
+		return baseUrl + pathPrefix + ami[0].StartUrl;
 
 	}
 	private static String clearString(String s){
