@@ -10,11 +10,6 @@ public class Customer_DTO
         loginContactId = contactId;
     }
 
-    public static void resetLoginEvent() {
-        isLoginEvent = false;
-        loginContactId = null;
-    }
-
     // Ecommerce Enhancements end
 
     private static Customer_DTO singleton = null;
@@ -262,11 +257,5 @@ public class Customer_DTO
                 customer.shipTos.add(Address_DTO.format2DTO(loc));
             }
         }
-    }
-
-    public static void saveBillToAddress(Customer_DTO customer)
-    {
-        update customer.sfContact; 
-
     }
 }
