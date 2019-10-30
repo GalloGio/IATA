@@ -44,15 +44,6 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 						}
 						
 					}
-				} else if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_LOCATION_FORM) {
-					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
-						locationCodeApplicationId = participation.Id;
-					}
-					else {
-						if(eachExistingCase.Status != 'Closed' && eachExistingCase.Status != 'Closed_Rejected'){
-							caseLocationCodeApplicationId = eachExistingCase.Id;
-						}
-					}
 				} else if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_BAGGAGE_FORM) {
 					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
 						baggageApplicationId = participation.Id;
