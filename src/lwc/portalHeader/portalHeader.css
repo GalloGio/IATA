@@ -133,10 +133,15 @@
   cursor: pointer;
 }
 
+.buttonYouIATA{
+	white-space:nowrap;
+}
 .buttonService:hover:after,
 .buttonSupport:hover:after,
+.buttonYouIATA:hover:after,
 .buttonService.selectedButton:after,
-.buttonSupport.selectedButton:after {
+.buttonSupport.selectedButton:after,
+.buttonYouIATA.selectedButton:after {
   content: "";
   width: 100%;
   height: 4px;
@@ -180,6 +185,11 @@
   background-color: #1e32fa;
 }
 
+.headerButtonNotificationsContainer {
+	white-space: nowrap;
+}
+
+
 .headerButtonNotificationsContainer:hover {
   cursor: pointer;
 }
@@ -193,13 +203,12 @@
 }
 
 .notificationNumber {
-  background-color: #fac832;
-  font-size: 11px;
-  text-align: center;
-  z-index: 2;
-  float: right;
-  position: relative;
-  margin-left: -6px;
+	background-color: #fac832;
+	font-size: 11px;
+	text-align: center;
+	z-index: 2;
+	margin-left: -6px;
+	display: inline;
 }
 
 .headerButtonProfileContainer:hover .openProfile,
