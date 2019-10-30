@@ -3235,6 +3235,13 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Breadcrump_MyProfile_Title</shortDescription>
         <value>User Profile</value>
     </labels>
+	<labels>
+        <fullName>CSP_Buy_Online</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Buy Online</shortDescription>
+        <value>Buy Online</value>
+    </labels>
     <labels>
         <fullName>CSP_Cancel</fullName>
         <categories>CS Portal</categories>
@@ -3623,6 +3630,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_IMPORTANT</shortDescription>
         <value>IMPORTANT</value>
+    </labels>
+	<labels>
+        <fullName>CSP_Learn_More</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Learn More</shortDescription>
+        <value>Learn More</value>
     </labels>
     <labels>
         <fullName>CSP_LogOut</fullName>
@@ -4435,6 +4449,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Welcome_Panel_Bullet_4_Title</shortDescription>
         <value>Get answers</value>
+    </labels>
+	<labels>
+        <fullName>CSP_YouIATA_Highlights</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_YouIATA_Highlights</shortDescription>
+        <value>Selected Highlights</value>
     </labels>
     <labels>
         <fullName>CSP_You_Dont_Have_Announcements</fullName>
