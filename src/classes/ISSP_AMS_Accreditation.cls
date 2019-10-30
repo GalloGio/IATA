@@ -8154,7 +8154,7 @@ system.debug('aqui sectorValue ' + sectorValue);
             this.phone = phone;
             this.firstName = firstName;
             this.lastName = lastName;
-            this.financialInterest = financialInterest;
+			this.financialInterest = financialInterest.setScale(2);
         }
     }
 
@@ -8215,23 +8215,7 @@ system.debug('aqui sectorValue ' + sectorValue);
         }                           
     }
 
-    public Map<Id, HierarchyItem> hierarchy{
-        get;
-        set;
-    }
-
-    public void checkSelectAllAEs() {
-        resetHierarchy();
-
-        selectAll = true;
-        
-        for (String accountId: hierarchy.keySet()) {
-            if (!hierarchy.get(accountId).selected) {
-                selectAll = false;
-                break;
-            }
-        }
-    }
+    public Map<Id, HierarchyItem> hierarchy{get; set;}
 
     public Boolean selectAll{
         get {

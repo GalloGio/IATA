@@ -402,19 +402,6 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Cloned_From_Contact__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Cloned_From_Contact</label>
-        <referenceTo>AMS_Accreditation_Contact__c</referenceTo>
-        <relationshipLabel>AMS Accreditation Contacts</relationshipLabel>
-        <relationshipName>AMS_Accreditation_Contacts</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Company_Name_Local__c</fullName>
         <externalId>false</externalId>
         <label>Company Name (Local language)</label>
@@ -583,16 +570,6 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Invoicing Contact</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>Is_Cloned_From_Another_Form__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Used to determine whether the contact is a &quot;clone&quot; from another staging record or not. Used in the import owners functionality in the accreditation page Step C for Multicountry scenarios</description>
-        <externalId>false</externalId>
-        <label>Is Cloned From Another Form</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
