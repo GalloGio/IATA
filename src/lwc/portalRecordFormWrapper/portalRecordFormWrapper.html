@@ -315,6 +315,22 @@
                                             <div
                                                 class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
 
+                                                <lightning-messages>
+                                                </lightning-messages>
+
+                                                <template if:true={showHelpText}>
+													<div if:false={isAirline}>
+														<div class="slds-p-horizontal_medium slds-p-vertical_small text-xxsmall blueLink">
+															<lightning-formatted-rich-text value={labels.CSP_CompanyAdministration_Link} ></lightning-formatted-rich-text><br/>
+															<lightning-formatted-rich-text value={linkToDoChanges} ></lightning-formatted-rich-text><br/>
+															
+														</div>
+													</div>
+                                                    <div if:true={isAirline} class="slds-p-horizontal_medium slds-p-vertical_small text-xxsmall blueLink">
+                                                        <lightning-formatted-rich-text value={labels.CSP_Airline_Changes_Access} ></lightning-formatted-rich-text>
+                                                    </div>
+                                                </template>
+
                                                 <!-- Display same fields for edit -->
                                                 <template if:false={haveEditFields}>
                                                     <template for:each={fields} for:item="field">

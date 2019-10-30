@@ -22,7 +22,7 @@
 
 .searchBarBarContainer {
     display: flex;
-    flex: 1 0 auto;
+    flex: auto;
     align-items: center;
     justify-content: center;
 }
@@ -52,3 +52,12 @@
 .slds-backdrop{
     z-index: 4000;
 }
+
+.rotateIcon {
+    transform: rotate(45deg);
+  }
+  
+  .marginTop {
+    margin-top: 3px;
+  }
+  
