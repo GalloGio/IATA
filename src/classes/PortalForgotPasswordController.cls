@@ -23,9 +23,7 @@ public without sharing class PortalForgotPasswordController {
         config.troubleShootingUrl = Label.CSP_PortalPath + 'faq-article?language=en_US&q=troubleshooting';
 
         ISSP_CS__c cs = ISSP_CS__c.getInstance('TroubleShootingArticleId');
-        if(cs != null){
-            config.troubleShootingUrl = config.troubleShootingUrl + '&id1=' + cs.value__c;
-        }
+        if(cs != null) config.troubleShootingUrl = config.troubleShootingUrl + '&id1=' + cs.value__c;
 
         return config;
     }
