@@ -107,7 +107,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
 
         isAdmin().then(result1 => {
             checkIfIsAirlineUser().then(result2=>{
-                this.showButton = (result1 && result2);
+                this.showButton = (result1 && result2 && this.homePageLocal);
             });
         });
 
