@@ -1617,7 +1617,7 @@ public without sharing class PortalIftpUtils {
 		String baseUrl = Site.getBaseSecureUrl();
 		String pathPrefix = Site.getPathPrefix().replace('/s', '');
 		List<AppMenuItem> ami = [SELECT StartUrl FROM AppMenuItem WHERE Name = 'Absorb' LIMIT 1];
-		system.assert(ami.size() == 1, 'Connected app Absorb does not exist.');
+		system.assert(!ami.isEmpty(), 'Connected app Absorb does not exist.');
 
 		return baseUrl + pathPrefix + ami[0].StartUrl;
 
