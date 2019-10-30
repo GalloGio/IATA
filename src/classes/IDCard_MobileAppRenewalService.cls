@@ -251,7 +251,8 @@ public with sharing class IDCard_MobileAppRenewalService
         if (String.isBlank(uir) && String.isNotBlank(requestInformation.newIDC.Photo__c))
             uir = requestInformation.newIDC.Photo__c;
         values.put('uir', (String.isBlank(uir) ? '' : uir).replaceAll('[^0-9]*', ''));
-        values.put('webstarKey', requestInformation.newIDC.WebStar_P00_Key__c);
+        values.put('webstarP00Key', requestInformation.newIDC.WebStar_P00_Key__c);
+        values.put('webstarId', requestInformation.account.WebStar_ID__c);
 
         return IDCard_ServiceResponse.makeGenericServiceResponse(values);
     }
@@ -1175,7 +1176,7 @@ public with sharing class IDCard_MobileAppRenewalService
 
     public static Account getAccountObjectFromIATACode(String iataCode)
     {
-        Account[] theAccounts = [SELECT IATACode__c, BillingCountry, Type, Id 
+        Account[] theAccounts = [SELECT Id, IATACode__c, BillingCountry, Type, WebStar_ID__c
                                  FROM Account
                                  WHERE RecordType.Name = 'Agency'
                                     AND IATACode__c = :iataCode

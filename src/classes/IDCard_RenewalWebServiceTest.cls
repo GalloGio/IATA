@@ -57,7 +57,7 @@ public class IDCard_RenewalWebServiceTest
         }
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -126,7 +126,7 @@ public class IDCard_RenewalWebServiceTest
         System.assertEquals(System.now().date().addMonths(24), idCards.get(2).Valid_To_Date__c); // calculated from the active card "get(0)"
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -185,7 +185,7 @@ public class IDCard_RenewalWebServiceTest
         IDCard_RenewalWebService.doPost();
 
         Object actualResponse = getResponse(RestContext.response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -238,7 +238,7 @@ public class IDCard_RenewalWebServiceTest
         IDCard_RenewalWebService.doPost();
 
         Object actualResponse = getResponse(RestContext.response);
-        System.assertEquals(409, RestContext.response.statuscode);
+        System.assertEquals(409, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>);
         String message = (String) ((Map<String, Object>) actualResponse).get('message');
@@ -265,7 +265,7 @@ public class IDCard_RenewalWebServiceTest
         IDCard_RenewalWebService.doPost();
 
         Object actualResponse = getResponse(RestContext.response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -321,7 +321,7 @@ public class IDCard_RenewalWebServiceTest
         Test.stopTest();
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -378,7 +378,7 @@ public class IDCard_RenewalWebServiceTest
         Test.stopTest();
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -435,7 +435,7 @@ public class IDCard_RenewalWebServiceTest
         Test.stopTest();
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -492,7 +492,7 @@ public class IDCard_RenewalWebServiceTest
         Test.stopTest();
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -549,7 +549,7 @@ public class IDCard_RenewalWebServiceTest
         Test.stopTest();
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -605,7 +605,7 @@ public class IDCard_RenewalWebServiceTest
         Test.stopTest();
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -661,7 +661,7 @@ public class IDCard_RenewalWebServiceTest
         Test.stopTest();
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -717,7 +717,7 @@ public class IDCard_RenewalWebServiceTest
         Test.stopTest();
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -773,7 +773,7 @@ public class IDCard_RenewalWebServiceTest
         Test.stopTest();
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -782,14 +782,13 @@ public class IDCard_RenewalWebServiceTest
         System.assert(String.isNotBlank((String)mapResponse.get('caseNumber')), mapResponse);
         System.assert(String.isNotBlank((String)mapResponse.get('idCardApplicationId')), mapResponse);
         System.assert(String.isNotBlank((String)mapResponse.get('idCardId')), mapResponse);
-        System.assert(String.isNotBlank((String)mapResponse.get('uir')), mapResponse);
 
         Id caseId = (Id) mapResponse.get('caseId');
         String caseNumber = (String) mapResponse.get('caseNumber');
         Id idCardApplicationId = (Id) mapResponse.get('idCardApplicationId');
         Id idCardId = (Id) mapResponse.get('idCardId');
         String uit = (String) mapResponse.get('uir');
-
+		
         // validate case
         Case c = getCase(caseId);
         validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false, false); // forced digital
@@ -832,7 +831,7 @@ public class IDCard_RenewalWebServiceTest
         Test.stopTest();
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -842,13 +841,17 @@ public class IDCard_RenewalWebServiceTest
         System.assert(String.isNotBlank((String)mapResponse.get('idCardApplicationId')), mapResponse);
         System.assert(String.isNotBlank((String)mapResponse.get('idCardId')), mapResponse);
         System.assert(String.isNotBlank((String)mapResponse.get('uir')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('webstarP00Key')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('webstarId')), mapResponse);
 
         Id caseId = (Id) mapResponse.get('caseId');
         String caseNumber = (String) mapResponse.get('caseNumber');
         Id idCardApplicationId = (Id) mapResponse.get('idCardApplicationId');
         Id idCardId = (Id) mapResponse.get('idCardId');
         String uit = (String) mapResponse.get('uir');
-
+        System.assertEquals('WSKey', (String) mapResponse.get('webstarP00Key'), 'Found:'+(String) mapResponse.get('webstarP00Key'));
+        System.assertEquals('WSKey', (String) mapResponse.get('webstarId'), 'Found:'+(String) mapResponse.get('webstarId'));
+		
         // validate case
         Case c = getCase(caseId);
         validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false, false); // forced digital
@@ -891,7 +894,7 @@ public class IDCard_RenewalWebServiceTest
         Test.stopTest();
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -901,13 +904,15 @@ public class IDCard_RenewalWebServiceTest
         System.assert(String.isNotBlank((String)mapResponse.get('idCardApplicationId')), mapResponse);
         System.assert(String.isNotBlank((String)mapResponse.get('idCardId')), mapResponse);
         System.assert(String.isNotBlank((String)mapResponse.get('uir')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('webstarP00Key')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('webstarId')), mapResponse);
 
         Id caseId = (Id) mapResponse.get('caseId');
         String caseNumber = (String) mapResponse.get('caseNumber');
         Id idCardApplicationId = (Id) mapResponse.get('idCardApplicationId');
         Id idCardId = (Id) mapResponse.get('idCardId');
         String uit = (String) mapResponse.get('uir');
-
+		
         // validate case
         Case c = getCase(caseId);
         validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false, false); // forced digital
@@ -931,7 +936,7 @@ public class IDCard_RenewalWebServiceTest
     @isTest
     public static void testValidRequest_USAgentFromIdCardWithoutContact_hasContactInSystem()
     {
-        setData(true);
+        setData(true, 'WSKey');
 
         // there is a "lost" contact in the system for the same email;
         Contact lostContact = createUSContact();
@@ -963,7 +968,7 @@ public class IDCard_RenewalWebServiceTest
         IDCard_RenewalWebService.doPost();
 
         Object actualResponse = getResponse(RestContext.response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -973,13 +978,15 @@ public class IDCard_RenewalWebServiceTest
         System.assert(String.isNotBlank((String)mapResponse.get('idCardApplicationId')), mapResponse);
         System.assert(String.isNotBlank((String)mapResponse.get('idCardId')), mapResponse);
         System.assert(String.isNotBlank((String)mapResponse.get('uir')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('webstarP00Key')), mapResponse);
+        System.assert(String.isNotBlank((String)mapResponse.get('webstarId')), mapResponse);
 
         Id caseId = (Id) mapResponse.get('caseId');
         String caseNumber = (String) mapResponse.get('caseNumber');
         Id idCardApplicationId = (Id) mapResponse.get('idCardApplicationId');
         Id idCardId = (Id) mapResponse.get('idCardId');
         String uit = (String) mapResponse.get('uir');
-
+		
         // validate case
         Case c = getCase(caseId);
         validateCase(c, caseNumber, idCardApplicationId, true, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, false, true); // forced digital
@@ -1023,7 +1030,7 @@ public class IDCard_RenewalWebServiceTest
         Test.stopTest();
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(200, RestContext.response.statuscode);
+        System.assertEquals(200, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>, 'Value: ' + actualResponse);   
         
@@ -1076,7 +1083,7 @@ public class IDCard_RenewalWebServiceTest
         Test.stopTest();
 
         Object actualResponse = getResponse(response);
-        System.assertEquals(400, RestContext.response.statuscode);
+        System.assertEquals(400, RestContext.response.statuscode, actualResponse);
         System.assertNotEquals(null, actualResponse);
         System.assert(actualResponse instanceof Map<String, Object>);
         String message = (String) ((Map<String, Object>) actualResponse).get('message');
@@ -1157,7 +1164,7 @@ public class IDCard_RenewalWebServiceTest
 		'}';
     }
 
-    private static void setData(Boolean isUSAgent)
+    private static void setData(Boolean isUSAgent, String webstarKey)
     {
         if (testData != null)
             return;
@@ -1175,6 +1182,7 @@ public class IDCard_RenewalWebServiceTest
             Account a = testData.IDCard_Accounts[0].clone();
             a.BillingCountry = 'USA';
             a.Type = 'IATAN Passenger Sales Agent (USA Only)';
+			a.WebStar_ID__c = webstarKey;
             // invalidate the existing account
             testData.IDCard_Accounts[0].IATACode__c = 'invalid';
             update testData.IDCard_Accounts[0];
@@ -1186,7 +1194,7 @@ public class IDCard_RenewalWebServiceTest
 
     private static void setNewCard(Boolean setSpecializationFieldsOnIDC, Boolean isUSAgent, String webstarKey)
     {
-        setData(isUSAgent);
+        setData(isUSAgent, webstarKey);
 
         // id card application
         if (isUSAgent)
@@ -1294,7 +1302,7 @@ public class IDCard_RenewalWebServiceTest
 
     private static void setNewUSAgentCard(Boolean createContact, String webstarKey)
     {
-        setData(true);
+        setData(true, webstarKey);
 
         // contact
         if (createContact)
