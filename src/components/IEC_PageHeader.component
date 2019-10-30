@@ -188,11 +188,19 @@
                                 <apex:actionFunction name="signUpAction" action="{!miniRegister}"/>
                             </apex:form>
                         </li>
-                    </apex:variable>                    
+                    </apex:variable>
                     
                     <apex:variable value="1" var="notDashBoardOrCheckout" rendered="{!AND(is_dashboard!=true,is_checkout!=true)}">
-                        <li class="menu contact"><a class="icon envelope" href="mailto:onlinestoresupport@iata.org" target="_blank" onclick="pushClickGoToContactLink();"><span class="text">Contact</span></a></li>
-
+                        <li class="menu contact">
+                            <a class="icon envelope" href="mailto:ymq-cds@iata.org" target="_blank" onclick="pushClickGoToContactLink();">
+                                <span class="text">Sales Contact</span>
+                            </a>
+                        </li>
+                        <li class="menu contact">
+                            <apex:form >
+                                <apex:commandLink id="redirectCsPortal" action="{!csPortalCommunityRedirect}" styleClass="icon plus" type="text/html" target="_blank"><span class="text">Support Contact</span></apex:commandLink>
+                            </apex:form>
+                        </li>
 
                         <apex:variable value="1" var="isOldShoppingCart" rendered="{!NOT(newShoppingCart)}">
 
