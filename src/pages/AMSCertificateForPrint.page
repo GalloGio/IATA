@@ -48,7 +48,7 @@
 					<tr  style="height: 223px;">
 						<td colspan="2">
 							<div style="height:50px;font-size: 2.7em;">
-								<apex:outputText value="{!acc.Legal_name__c}"/>
+								<apex:outputText value="{!acc.Name}"/>
 							</div>
 							<div style="height:70px;font-size: 25px;">
 								<apex:outputText value="{!acc.TradeName__c}"/><br></br>
