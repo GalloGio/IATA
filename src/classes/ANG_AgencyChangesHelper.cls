@@ -31,7 +31,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		public Set<Id> accountsChanged;
 
 		public Map<Id,AMS_Agencies_Hierarchy__c> hierarchies;
-		public List<AMS_Agencies_Hierarchy__c> hierarchiesToDeleteLst;
+		public Map<Id, AMS_Agencies_Hierarchy__c> hierarchiesToDeleteMap;
 
 		public AChangeStructure(){
 			relationsMap = new Map<Id, AMS_Agencies_relationhip__c>();
@@ -52,7 +52,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			agencyAuthorizationToUpdateLst = new List<Agency_Authorization__c>();
 			calculateRiskAssessmentMap = new Map<Id, Map<Id, Integer>>();
 			riskAlertsToUpdateLst = new List<ANG_Risk_Alert__c>();
-			hierarchiesToDeleteLst = new List<AMS_Agencies_Hierarchy__c>();
+			hierarchiesToDeleteMap = new Map<Id, AMS_Agencies_Hierarchy__c>();
 		}
 
 		public void addAccount(Account account){
@@ -115,7 +115,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		}
 
 		public void addHierarchyToDelete(AMS_Agencies_Hierarchy__c hierarchy){
-			hierarchiesToDeleteLst.add(hierarchy);
+			hierarchiesToDeleteMap.put(hierarchy.Id, hierarchy);
 		}
 
 		public void runPreDeletes(){
@@ -131,8 +131,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		}
 
 		public void runPostDeletes(){
-			if(hierarchiesToDeleteLst != NULL && !hierarchiesToDeleteLst.isEmpty()){
-				delete hierarchiesToDeleteLst;
+			if(hierarchiesToDeleteMap != NULL && !hierarchiesToDeleteMap.isEmpty()){
+				delete hierarchiesToDeleteMap.values();
 			}
 		}
 
@@ -345,13 +345,14 @@ public with sharing class ANG_AgencyChangesHelper {
 
 						if(isMulticountry) accountIdset.add(oscar.New_Parent__c);
 
-
 						allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(accountIdSet);
 
-						accountHierarchyRelationships = extractAllAccounts(allRelationsOnHierarchy);
+						List<AMS_Agencies_relationhip__c> acquiredHierarchyRelationships = allRelationsOnHierarchy.get(oscar.Account__c);
+						accountHierarchyRelationships = extractAllAccounts(new Map<Id, List<AMS_Agencies_relationhip__c>>{oscar.Account__c => acquiredHierarchyRelationships});
 						accountHierarchyRelationships.add(oscar.Account__c);
-            isAllHierarchySelected = isAllHierarchySelected(oscar,accountHierarchyRelationships);
-            System.debug('[ANG_AgencyChangesHelper] isAllHierarchySelected is set to:'+isAllHierarchySelected);
+
+						isAllHierarchySelected = isAllHierarchySelected(oscar,accountHierarchyRelationships);
+						System.debug('[ANG_AgencyChangesHelper] isAllHierarchySelected is set to:'+isAllHierarchySelected);
 
 						Account acct = changesContainer.accountsMap.get(oscar.Account__c);
 
@@ -919,8 +920,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static AChangeStructure  detachTerminatedAccountsFromHierarchy(Map<Id, List<AMS_Agencies_relationhip__c>> allRelations, AChangeStructure toReturn){
 
-		Set<AMS_Agencies_Hierarchy__c> hierarchiesToDelete = new Set<AMS_Agencies_Hierarchy__c>();
-
 		Set<String> terminatedStatus = new Set <String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S1_NOTACCREDITED, AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING, AMS_Utils.ACC_S3_NOTINOPERATION, ''};
 		
 		List<AMS_Agencies_relationhip__c> relToDelete = new List<AMS_Agencies_relationhip__c>();
@@ -938,7 +937,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					toReturn.addAccount(childAccount);
 
 					relToDelete.add(rel);
-					hierarchiesToDelete.add(new AMS_Agencies_Hierarchy__c(Id = rel.hierarchy__c));
+					toReturn.addHierarchyToDelete(new AMS_Agencies_Hierarchy__c(Id = rel.hierarchy__c));
 				}
 			
 			}
@@ -946,10 +945,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		if(!relToDelete.isEmpty()){
 			delete relToDelete;
-		}
-
-		if(!hierarchiesToDelete.isEmpty()){
-			delete new List<AMS_Agencies_Hierarchy__c>(hierarchiesToDelete);
 		}
 		
 		return toReturn;
@@ -2295,12 +2290,13 @@ public with sharing class ANG_AgencyChangesHelper {
     	for(List<AMS_Agencies_relationhip__c> relationsLst: relations.values())
     		for(AMS_Agencies_relationhip__c rel : relationsLst){
 
-    			toReturn.add(rel.Parent_Account__c);
-    			
-    			if(!terminatedStatus.contains(rel.Child_Account__r.Status__c))
-    				toReturn.add(rel.Child_Account__c);
+				toReturn.add(rel.Parent_Account__c);
 
-    	}
+    			if(String.isNotBlank(rel.Child_Account__r.Status__c) && !terminatedStatus.contains(rel.Child_Account__r.Status__c)){
+    				toReturn.add(rel.Child_Account__c);
+				}
+
+    		}
 
     	return toReturn;
     }
