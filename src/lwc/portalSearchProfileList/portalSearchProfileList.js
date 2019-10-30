@@ -172,14 +172,19 @@ export default class PortalSearchProfileList extends NavigationMixin(LightningEl
                 
                 filteringObjectAux.profileComponent.nrResults = recordsString.length;
 
-                if (recordsString && recordsString.length > 10) {
+                if (recordsString) {
                     this.listAccounts = recordsString.filter(obj => obj.profileType === this.label.Company);
                     this.listContacts = recordsString.filter(obj => obj.profileType === 'Contact');
-                    let slicedContactProfileList = this.listContacts.length > 5 ? this.listContacts.slice(0, 10 - this.listAccounts.slice(0, 5).length) : this.listContacts;
-                    let slicedAccountProfileList = this.listAccounts.length > 5 ? this.listAccounts.slice(0, 10 - slicedContactProfileList.length) : this.listAccounts;
 
-                    let profileListAux = slicedContactProfileList.concat(slicedAccountProfileList);
-                    this.profileList = profileListAux;
+                    if (recordsString.length > 10) {
+                        let slicedContactProfileList = this.listContacts.length > 5 ? this.listContacts.slice(0, 10 - this.listAccounts.slice(0, 5).length) : this.listContacts;
+                        let slicedAccountProfileList = this.listAccounts.length > 5 ? this.listAccounts.slice(0, 10 - slicedContactProfileList.length) : this.listAccounts;
+                        let profileListAux = slicedContactProfileList.concat(slicedAccountProfileList);
+                        this.profileList = profileListAux;
+                    } else {
+                        let profileListAux = this.listAccounts.concat(this.listContacts);
+                        this.profileList = profileListAux;
+                    }
                 }
 
                 if (this.pageNumber < 1) {
