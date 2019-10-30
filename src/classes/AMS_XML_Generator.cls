@@ -742,7 +742,7 @@ public with sharing class AMS_XML_Generator {
 
 /*  NEWGEN-801 */
         //WMO-715
-        lAgencyAuthorizations = [SELECT Id, ANG_FormOfPayment_ID__c,Account__c, RecordTypeId from Agency_Authorization__c where Account__c in :setAgencyKeys and (RecordTypeId =:formOfPaymentRTId OR RecordTypeId =:BSPLinkId) and Status__c = 'Active' ];
+        lAgencyAuthorizations = [SELECT Id, ANG_FormOfPayment_ID__c,Account__c, RecordTypeId, Account__r.Location_Class__c, Account__r.Category__c, Status__c from Agency_Authorization__c where Account__c in :setAgencyKeys and (RecordTypeId =:formOfPaymentRTId OR RecordTypeId =:BSPLinkId)];
 
         if(mAgencyAuthorizations == null)
             mAgencyAuthorizations =  new Map<Id, List<Agency_Authorization__c>>();
@@ -1791,17 +1791,33 @@ public with sharing class AMS_XML_Generator {
 
                 getElementNode(nodeAauthorizationsNode, 'form_of_payment_id',null);
                 //WMO-715
-                getElementNode(nodeAauthorizationsNode, 'BSPlink',null);
+                getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation',null);
             
             }else{
-                
+                Set<String> changeCodeSet = new Set<String>{'NEW','FIN','TER','CLO'};
                 for(Agency_Authorization__c aaElem: agencyAuthl){
 
                     //WMO-715
-                    if(aaElem.RecordTypeId == formOfPaymentRTId){
+                    if(aaElem.RecordTypeId == formOfPaymentRTId && aaElem.Status__c == 'Active'){
                         getElementNode(nodeAauthorizationsNode, 'form_of_payment_id',aaElem.ANG_FormOfPayment_ID__c);
                     }else if(aaElem.RecordTypeId == BSPLinkId){
-                        getElementNode(nodeAauthorizationsNode, 'BSPlink', 'Yes');
+                        if(aaElem.Account__r.Location_Class__c == 'G' && aaElem.Account__r.Category__c == 'GSA General Sales Agent'){
+                            if(mAg_VS_AgChangeCode.containsKey(aaElem.Account__c)){
+                                if(mAg_VS_AgChangeCode.get(aaElem.Account__c).Change_Code__c == 'GSA' && aaElem.Status__c == 'Active'){
+                                    getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation', 'Yes');
+                                }else if(mAg_VS_AgChangeCode.get(aaElem.Account__c).Change_Code__c == 'GSD' && aaElem.Status__c == 'Non-Active'){
+                                    getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation', 'No');
+                                }else if(!changeCodeSet.contains(mAg_VS_AgChangeCode.get(aaElem.Account__c).Change_Code__c) && aaElem.Status__c == 'Active'){
+                                    getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation', 'Yes');
+                                }else{
+                                    getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation',null);
+                                }
+                            }else{
+                                getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation',null);
+                            }
+                        }else{
+                            getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation',null);
+                        }
                     }
                 
                 }
