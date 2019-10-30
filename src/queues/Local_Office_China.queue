@@ -5,22 +5,22 @@
     <name>Local Office - China</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementMgrI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementStaffI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaASDStaffI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaASDSupervisorI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaBankingManagerI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementStaff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaASDStaff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaASDSupervisor</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaBankingManager</roleAndSubordinateInternal>
             <roleAndSubordinateInternal>China_N_Asia_Business_Delivery_Manager</roleAndSubordinateInternal>
             <roleAndSubordinateInternal>China_N_Asia_Business_Delivery_Staff</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaCustomerServiceManagerI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaCustomerServiceStaffI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaOperationalManagementI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaRSManagerI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaRSStaffI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNorthAsiaHubLeaderI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>CountryManagerChinaI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>IDFSChinaNorthAsiaRegionalOfficeI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>StaffChinaI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaCustomerServiceManager</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaCustomerServiceStaff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaOperationalManagement</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaRSManager</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaRSStaff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNorthAsiaHubLeader</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerChina</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>IDFSChinaNorthAsiaRegionalOffice</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffChina</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>This custom metadata maps Case Reason to a Process Type and has the reference field and value to calculate case KPI</description>
-    <label>Case Process Type</label>
-    <pluralLabel>Case Process Types</pluralLabel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>KPI_Reference_Field__c</fullName>
         <externalId>false</externalId>
@@ -55,4 +52,20 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <label>Case Process Type</label>
+    <listViews>
+        <fullName>All_w_details</fullName>
+        <columns>MasterLabel</columns>
+        <columns>Type__c</columns>
+        <columns>DeveloperName</columns>
+        <columns>KPI_Reference_Value__c</columns>
+        <columns>KPI_Reference_Field__c</columns>
+        <columns>Reason__c</columns>
+        <columns>Record_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All w details</label>
+        <language>en_US</language>
+    </listViews>
+    <pluralLabel>Case Process Types</pluralLabel>
+    <visibility>Public</visibility>
 </CustomObject>

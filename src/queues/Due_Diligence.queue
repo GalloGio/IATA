@@ -9,11 +9,11 @@
         </publicGroups>
         <roles>
             <role>Corporate_Compliance</role>
-            <role>DistributionAgencyManagementHOA</role>
+            <role>DistributionAgencyManagementHO</role>
             <role>Distribution_Airline_Coding</role>
             <role>E_F</role>
-            <role>IDFSEFServicesA</role>
-            <role>StaffTIESSA</role>
+            <role>IDFSEFServices</role>
+            <role>StaffTIESS</role>
         </roles>
     </queueMembers>
     <queueSobject>

@@ -5,12 +5,12 @@
     <name>Local Office - Pakistan</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>CountryManagerPakistanI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>StaffPakistanI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerPakistan</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffPakistan</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
         <roles>
-            <role>APCustomerServiceManagerA</role>
-            <role>APCustomerServiceStaffA</role>
+            <role>APCustomerServiceManager</role>
+            <role>APCustomerServiceStaff</role>
         </roles>
     </queueMembers>
     <queueSobject>

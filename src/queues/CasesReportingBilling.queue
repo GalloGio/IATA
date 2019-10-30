@@ -10,7 +10,7 @@
             <publicGroup>IDFSEuropeallusers</publicGroup>
         </publicGroups>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>AfricaMEOperationsManagerI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>AfricaMEOperationsManager</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>
