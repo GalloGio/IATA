@@ -356,7 +356,7 @@ public without sharing class PortalIftpUtils {
 	@AuraEnabled(cacheable=true)
 	public static List<Account> getAllITP(){
 
-		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'ITP');
+		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
 
 		List<Account_Role__c> accRoleCompanies = [SELECT Account__c
 													FROM Account_Role__c
@@ -617,10 +617,14 @@ public without sharing class PortalIftpUtils {
 													-> one record for each station associated to the employee (role_address__c record inserted)
 													-> one record for each station removed from the employee (role_address__c record deleted) */
 		List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
+		List<IFTP_History__c> IftpHistoryStartWorkingItp = new List<IFTP_History__c>();
+		List<IFTP_History__c> IftpHistoryStartWorkingStation = new List<IFTP_History__c>();
+		List<IFTP_History__c> IftpHistoryStopWorkingStation = new List<IFTP_History__c>();
+		List<IFTP_History__c> IftpHistoryLoseProficiency = new List<IFTP_History__c>();
 
 		try{
 
-			String RECTYPE_ITP = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'IFTP');
+			String RECTYPE_ITP = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
 
 			UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 
@@ -831,7 +835,7 @@ public without sharing class PortalIftpUtils {
 																		accContRole.Company_Code__c,
 																		cont.FirstName,
 																		cont.LastName);
-								IftpHistoryRecordsToBeInserted.add(ihrec);
+								IftpHistoryStartWorkingItp.add(ihrec);
 							}
 						} else{
 							contactsToInsert.add(cont);
@@ -841,7 +845,7 @@ public without sharing class PortalIftpUtils {
 																		accContRole.Company_Code__c,
 																		cont.FirstName,
 																		cont.LastName);
-							IftpHistoryRecordsToBeInserted.add(ihrec);
+							IftpHistoryStartWorkingItp.add(ihrec);
 						}
 
 						ImportResultsWrapper irw = new ImportResultsWrapper(
@@ -994,7 +998,7 @@ public without sharing class PortalIftpUtils {
 																		rolAddr.Address__r.Code__c,
 																		rolAddr.Address__r.City__c
 																		);
-						IftpHistoryRecordsToBeInserted.add(ihrec);
+						IftpHistoryStartWorkingStation.add(ihrec);
 					}
 
 					// For stations the employee is no longer working in
@@ -1007,7 +1011,7 @@ public without sharing class PortalIftpUtils {
 																		rolAddr.Address__r.Code__c,
 																		rolAddr.Address__r.City__c
 																		);
-						IftpHistoryRecordsToBeInserted.add(ihrec);
+						IftpHistoryStopWorkingStation.add(ihrec);
 					}
 					// For every proficiency related record, of the employee in the station he stopped working
 					// get role_address__c records
@@ -1047,7 +1051,7 @@ public without sharing class PortalIftpUtils {
 																			proficiencyRec.Proficiency_level__c,
 																			proficiencyRec.Proficiency_Granted_By__c
 																			);
-							IftpHistoryRecordsToBeInserted.add(ihrec);
+							IftpHistoryLoseProficiency.add(ihrec);
 
 						}
 					}
@@ -1056,6 +1060,11 @@ public without sharing class PortalIftpUtils {
 					// station related to employee records and employee proficiency related to station records
 					delete roleAdressToBeDeleted;
 					//insert all history records
+					IftpHistoryRecordsToBeInserted.addAll(IftpHistoryLoseProficiency);
+					IftpHistoryRecordsToBeInserted.addAll(IftpHistoryStopWorkingStation);
+					IftpHistoryRecordsToBeInserted.addAll(IftpHistoryStartWorkingItp);
+					IftpHistoryRecordsToBeInserted.addAll(IftpHistoryStartWorkingStation);
+
 					if(IftpHistoryRecordsToBeInserted.size() > 0){
 						portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
 					}
@@ -1140,6 +1149,9 @@ public without sharing class PortalIftpUtils {
 				List<Contact> contactsToInactive = new List<Contact>();
 				List<Role_Address__c> roleAdressToBeDeleted = new List<Role_Address__c>();
 				List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
+				List<IFTP_History__c> IftpHistoryStoptWorkingItp = new List<IFTP_History__c>();
+				List<IFTP_History__c> IftpHistoryStopWorkingStation = new List<IFTP_History__c>();
+				List<IFTP_History__c> IftpHistoryLoseProficiency = new List<IFTP_History__c>();
 
 				Map<String, Account_Contact_Role__c> mapEmployeesByCompanyCode = new Map<String, Account_Contact_Role__c>();
 				for(Account_Contact_Role__c rec: accEmps){
@@ -1184,7 +1196,7 @@ public without sharing class PortalIftpUtils {
 																								rec.Company_Code__c,
 																								rec.First_Name__c,
 																								rec.Last_Name__c);
-					IftpHistoryRecordsToBeInserted.add(ihrec);
+					IftpHistoryStoptWorkingItp.add(ihrec);
 				}
 				roleAdressToBeDeleted = [SELECT Id,
 												Account_Contact_Role__c,
@@ -1213,7 +1225,7 @@ public without sharing class PortalIftpUtils {
 																		rolAddr.Address__r.Code__c,
 																		rolAddr.Address__r.City__c
 																		);
-						IftpHistoryRecordsToBeInserted.add(ihrec);
+						IftpHistoryStopWorkingStation.add(ihrec);
 					} else {
 						ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Loose_Proficiency,
 																			rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c,
@@ -1225,7 +1237,7 @@ public without sharing class PortalIftpUtils {
 																			rolAddr.Proficiency_level__c,
 																			rolAddr.Proficiency_Granted_By__c
 																			);
-						IftpHistoryRecordsToBeInserted.add(ihrec);
+						IftpHistoryLoseProficiency.add(ihrec);
 					}
 				}
 
@@ -1240,6 +1252,9 @@ public without sharing class PortalIftpUtils {
 						// station related to employee records and employee proficiency related to station records
 						delete roleAdressToBeDeleted;
 						//insert all history records
+						IftpHistoryRecordsToBeInserted.addAll(IftpHistoryLoseProficiency);
+						IftpHistoryRecordsToBeInserted.addAll(IftpHistoryStopWorkingStation);
+						IftpHistoryRecordsToBeInserted.addAll(IftpHistoryStoptWorkingItp);
 						portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
 
 						for(ImportResultsWrapper r : results){
@@ -1279,113 +1294,27 @@ public without sharing class PortalIftpUtils {
 		return results;
 	}
 
-	/*
-		Method: manageUploadGlobalOJT
-		For this method is necessary to have a library on Salesforce to place the file, in order to
-		allow sharing (pdf download).
-		To acomplish this make sure to have the library created, with permissions for a specific
-		public group (that contains all the necessary groups of users) as 'Portal Partner', and keep the id
-		of the library in a custom setting as follows: custom settings->ISS cs -> 'IFTP-DocumentLibrary'
 
-	*/
 	@AuraEnabled (cacheable=false)
 	public static Boolean manageUploadGlobalOJT(Id fileId){
-		Boolean result = true;
-		try{
-			UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
-			Id ownerId = [Select Id FROM group WHERE Type = 'Queue' and Name = 'IFTP'].Id;
-
-			ID ProcessRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
-
-			Savepoint sp = Database.setSavepoint();
-			try {
-				Account_Role__c accRole = new Account_Role__c();
-				accRole.id = ui.accountRole;
-				accRole.OJT_file_id__c = fileId;
-				accRole.OJT_file_validated__c = false;
-				update accRole;
-
-				ContentDocumentLink cdl = new ContentDocumentLink();
-				cdl.ContentDocumentId = fileId;
-				cdl.ShareType = 'I';
-				cdl.Visibility = 'AllUsers';
-				//cdl.LinkedEntityId = '0581j00000050jV';
-				cdl.LinkedEntityId = ISSP_CS__c.getValues('IFTP-DocumentLibrary').Value__c;
-
-				insert cdl;
-
-				//Create case for upload file validation
-				//ContentDocument cdocument = [select id,LatestPublishedVersionId, title from ContentDocument where Id = :fileId LIMIT 1];
-				ContentVersion cversion = [select id, title, versiondata, fileType from ContentVersion where ContentDocumentId = :fileId LIMIT 1];
-
-				String ojt_global_file_c_version_id = cversion.id;
-				String baseUrl = URL.getSalesforceBaseUrl().toExternalForm();
-
-				String description = 'Request Global OJT File Validation: \n';
-
-
-				Case transferCase = new Case();
-				transferCase.recordtypeID = ProcessRTId;
-				transferCase.AccountId = ui.accountId;
-				transferCase.OwnerId = ownerId;
-				transferCase.Subject = 'Request Global OJT File Validation';
-				transferCase.Description = description;
-				transferCase.ContactId = ui.contactId;
-				transferCase.Status = 'Open';
-				transferCase.Visible_on_ISS_Portal__c = true;
-				transferCase.CaseArea__c = 'IATA Fuelling Training Portal (IFTP)';
-				transferCase.Reason1__c  = 'IFTP OJT File Validation';
-				transferCase.Region__c = ui.accountRegion;
-				transferCase.BSPCountry__c = ui.accountCountry;
-
-				insert transferCase;
-
-				Attachment att = new Attachment();
-				att.ParentId = transferCase.Id;
-				att.Name = cversion.title + '.' + cversion.fileType;
-				att.Body = cversion.VersionData;
-
-				insert att;
-			}
-			catch (DMLException e) {
-				result = false;
-				System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException - ' + e );
-				System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException - ' + e.getStackTraceString() );
-				Database.rollback(sp);
-				try{
-					List<ContentDocument> fileList = new List<ContentDocument>();
-					fileList.add(new ContentDocument(id = fileId));
-					delete fileList;
-				}
-				catch (DMLException eDML) {
-					result = false;
-					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException delete fileList - ' + eDML );
-					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] DMLException delete fileList - ' + eDML.getStackTraceString() );
-
-				}
-
-			}
-		}
-		catch (Exception ex){
-			result = false;
-			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] Exception - ' + ex );
-			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadGlobalOJT] Exception - ' + ex.getStackTraceString() );
-		}
-		return result;
+		return manageUploadOJTFile('Global', fileId, null, null);
 	}
-
-	/*
-		Method: manageUploadStationOJT
-		For this method is necessary to have a library on Salesforce to place the file, in order to
-		allow sharing (pdf download).
-		To acomplish this make sure to have the library created, with permissions for a specific
-		public group (that contains all the necessary groups of users) as 'Portal Partner', and keep the id
-		of the library in a custom setting as follows: custom settings->ISS cs -> 'IFTP-DocumentLibrary'
-
-	*/
 
 	@AuraEnabled (cacheable=false)
 	public static Boolean manageUploadStationOJT(Id fileId, Id recordID, String stationInfo){
+		return manageUploadOJTFile('Station', fileId, recordID, stationInfo);
+	}
+	/*
+		Method: manageUploadOJTFile
+		For this method is necessary to have a library on Salesforce to place the file, in order to
+		allow sharing (pdf download).
+		To acomplish this make sure to have the library created, with permissions for a specific
+		public group (that contains all the necessary groups of users) as 'Portal Partner', and keep the id
+		of the library in a custom setting as follows: custom settings->ISS cs -> 'IFTP-DocumentLibrary'
+
+	*/
+	@AuraEnabled (cacheable=false)
+	public static Boolean manageUploadOJTFile(String type, Id fileId, Id recordID, String stationInfo){
 		Boolean result = true;
 		try{
 			UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
@@ -1395,38 +1324,48 @@ public without sharing class PortalIftpUtils {
 
 			Savepoint sp = Database.setSavepoint();
 			try {
-				Role_Address__c rolAddr = new Role_Address__c();
-				rolAddr.id = recordID;
-				rolAddr.OJT_File_Id__c = fileId;
-				rolAddr.OJT_file_validated__c = false;
-				update rolAddr;
-
-				ContentDocumentLink cdl = new ContentDocumentLink();
-				cdl.ContentDocumentId = fileId;
-				cdl.ShareType = 'I';
-				cdl.Visibility = 'AllUsers';
-				//cdl.LinkedEntityId = '0581j00000050jV';
-				cdl.LinkedEntityId = ISSP_CS__c.getValues('IFTP-DocumentLibrary').Value__c;
-				insert cdl;
+				if(type.equalsIgnoreCase('Station')){
+					Role_Address__c rolAddr = new Role_Address__c();
+					rolAddr.id = recordID;
+					rolAddr.OJT_File_Id__c = fileId;
+					rolAddr.OJT_file_validated__c = false;
+					update rolAddr;
+				} else {
+					if(type.equalsIgnoreCase('Global')){
+						Account_Role__c accRole = new Account_Role__c();
+						accRole.id = ui.accountRole;
+						accRole.OJT_file_id__c = fileId;
+						accRole.OJT_file_validated__c = false;
+						update accRole;
+					}
+				}
+				if(!Test.isRunningTest()){
+					ContentDocumentLink cdl = new ContentDocumentLink();
+					cdl.ContentDocumentId = fileId;
+					cdl.ShareType = 'I';
+					cdl.Visibility = 'AllUsers';
+					cdl.LinkedEntityId = ISSP_CS__c.getValues('IFTP-DocumentLibrary').Value__c;
+					insert cdl;
+				}
 
 				//Create case for upload file validation
-				//ContentDocument cdocument = [select id,LatestPublishedVersionId, title from ContentDocument where Id = :fileId LIMIT 1];
 				ContentVersion cversion = [select id, title, versiondata, fileType from ContentVersion where ContentDocumentId = :fileId AND IsLatest = true  LIMIT 1];
-				//String ojt_global_file_url =  cdocument.LatestPublishedVersionId;
-				String ojt_station_file_c_version_id = cversion.id;
-				String baseUrl = URL.getSalesforceBaseUrl().toExternalForm();
-
-				String description = 'Request Station OJT File Validation: \n';
-				description += 'Station: ';
-				description += stationInfo;
-				description += ' \n';
-
-
+				String description;
+				String subject;
+				if(type.equalsIgnoreCase('Station')){
+					description = 'Request Station OJT File Validation: \n' + 'Station: ' + stationInfo + ' \n';
+					subject = 'Request Station OJT File Validation';
+				} else {
+					if(type.equalsIgnoreCase('Global')){
+						description = 'Request Global OJT File Validation \n';
+						subject = 'Request Global OJT File Validation';
+					}
+				}
 				Case transferCase = new Case();
 				transferCase.recordtypeID = ProcessRTId;
 				transferCase.AccountId = ui.accountId;
 				transferCase.OwnerId = ownerId;
-				transferCase.Subject = 'Request Station OJT File Validation';
+				transferCase.Subject = subject;
 				transferCase.Description = description;
 				transferCase.ContactId = ui.contactId;
 				transferCase.Status = 'Open';
@@ -1435,39 +1374,36 @@ public without sharing class PortalIftpUtils {
 				transferCase.Reason1__c  = 'IFTP OJT File Validation';
 				transferCase.Region__c = ui.accountRegion;
 				transferCase.BSPCountry__c = ui.accountCountry;
-
 				insert transferCase;
 
 				Attachment att = new Attachment();
 				att.ParentId = transferCase.Id;
 				att.Name = cversion.title + '.' + cversion.fileType;
 				att.Body = cversion.VersionData;
-
 				insert att;
 			}
 			catch (DMLException e) {
-				System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException - ' + e );
-				System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException - ' + e.getStackTraceString() );
-				Database.rollback(sp);
 				result = false;
+				System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadOJTFile] DMLException - ' + e );
+				System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadOJTFile] DMLException - ' + e.getStackTraceString() );
+				Database.rollback(sp);
 				try{
 					List<ContentDocument> fileList = new List<ContentDocument>();
 					fileList.add(new ContentDocument(id = fileId));
 					delete fileList;
 				}
 				catch (DMLException eDML) {
-					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException delete fileList - ' + eDML );
-					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] DMLException delete fileList - ' + eDML.getStackTraceString());
 					result = false;
+					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadOJTFile] DMLException delete fileList - ' + eDML );
+					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadOJTFile] DMLException delete fileList - ' + eDML.getStackTraceString());
 				}
 			}
 		}
 		catch (Exception ex){
-			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] Exception - ' + ex );
-			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadStationOJT] Exception - ' + ex.getStackTraceString() );
 			result = false;
+			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadOJTFile] Exception - ' + ex );
+			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - manageUploadOJTFile] Exception - ' + ex.getStackTraceString() );
 		}
-
 		return result;
 	}
 

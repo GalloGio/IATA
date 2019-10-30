@@ -73,6 +73,13 @@ public class portalIftpTestClass {
 		OJTdocument.FolderId = [select id from folder where name = 'Public Folder'].id;
 		insert OJTdocument;
 
+
+		ContentVersion cvOJT2 = new ContentVersion();
+		cvOJT2.title = 'OJT Document';
+		cvOJT2.PathOnClient = 'test';
+		cvOJT2.versiondata = Blob.valueOf('Some Text');
+		insert cvOJT2;
+
 		//Create Accounts Role
 		Id accRoleITP_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
 

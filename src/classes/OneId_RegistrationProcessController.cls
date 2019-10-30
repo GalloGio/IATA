@@ -1,5 +1,5 @@
 public without sharing class OneId_RegistrationProcessController {
-    
+
     public static Boolean isNewAcc = false;   
     public static Boolean createBranch = false;
     public static String languageString = 'English';
@@ -646,9 +646,9 @@ public without sharing class OneId_RegistrationProcessController {
                 if(acc.Sector__c == 'Airline Supplier' && acc.Category__c == 'Fuel Supplier' ){
 
                     String RECTYPE_ITP_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
-                    String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'ITP');
+                    String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
                     String RECTYPE_Others = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
-                
+
                     Account_Roles__c accRoles = [SELECT id FROM Account_Roles__c 
                                             WHERE Name = 'Airline Supplier - ITP' limit 1];
 

@@ -103,7 +103,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 			Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
 			Boolean isInactiveEmployee = false;
 
-			String RECTYPE_ITP = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'IFTP');
+			String RECTYPE_ITP = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
 
 			PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 
@@ -447,6 +447,9 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 		List<Id> stationIdNotITPList = new List<Id>();
 		ResultWrapper rw = new ResultWrapper();
 		List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
+		List<IFTP_History__c> IftpHistoryRecordsStartWorkStation = new List<IFTP_History__c>();
+		List<IFTP_History__c> IftpHistoryRecordsStopWorkStation = new List<IFTP_History__c>();
+		List<IFTP_History__c> IftpHistoryRecordsLoseProficiency = new List<IFTP_History__c>();
 		List<Address__c> ItpAddressesList = PortalIftpUtils.getITPStations();
 
 		try{
@@ -557,7 +560,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 																		rolAddrToDelete.Address__r.Code__c,
 																		rolAddrToDelete.Address__r.City__c
 																		);
-						IftpHistoryRecordsToBeInserted.add(ihrec);
+						IftpHistoryRecordsStopWorkStation.add(ihrec);
 					}
 
 					List<Role_Address__c> roleAddressesToUpdateProficiency = [SELECT Id,
@@ -593,7 +596,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 																		proficiencyRec.Proficiency_level__c,
 																		proficiencyRec.Proficiency_Granted_By__c
 																		);
-						IftpHistoryRecordsToBeInserted.add(ihrec0);
+						IftpHistoryRecordsLoseProficiency.add(ihrec0);
 					}
 
 					if (roleAddressesDeleted.size() > 0){
@@ -626,10 +629,13 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 																		rolAddrInserted.Address__r.Code__c,
 																		rolAddrInserted.Address__r.City__c
 																		);
-						IftpHistoryRecordsToBeInserted.add(ihrec);
+						IftpHistoryRecordsStartWorkStation.add(ihrec);
 					}
 
 					if(roleAddressToBeInsertedList.size() > 0 || originalRoleAddressesList.size() > 0){
+						IftpHistoryRecordsToBeInserted.addAll(IftpHistoryRecordsLoseProficiency);
+						IftpHistoryRecordsToBeInserted.addAll(IftpHistoryRecordsStopWorkStation);
+						IftpHistoryRecordsToBeInserted.addAll(IftpHistoryRecordsStartWorkStation);
 						portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
 					}
 
