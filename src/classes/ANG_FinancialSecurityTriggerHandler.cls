@@ -296,6 +296,8 @@ public class ANG_FinancialSecurityTriggerHandler{
 	 */
 	private void calculateMinimumFS(List<Financial_Security__c> fsLst, Map<Id, decimal> minFsAmountAggregatedByParent){
 
+		ANG_Risk_Helper.accIdSet = this.accountsMap.keySet();
+
 		for(Financial_Security__c fs : fsLst){
 
 			Account acct = this.accountsMap.get(fs.Account__c);
