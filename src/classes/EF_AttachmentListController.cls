@@ -214,20 +214,6 @@ global with sharing class EF_AttachmentListController {
     }
 
     /**
-        Change all Attachments to public
-    **/
-    public void makeAllPublic() {
-        changePermissionToAll(true);
-    }
-
-    /**
-        Change all Attachments to private
-    **/
-    public void makeAllPrivate() {
-        changePermissionToAll(false);
-    }
-
-    /**
         Set the same permission to all attachments
     **/
     private void changePermissionToAll(Boolean value) {

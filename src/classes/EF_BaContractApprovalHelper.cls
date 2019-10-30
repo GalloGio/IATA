@@ -144,16 +144,6 @@ public with sharing class EF_BaContractApprovalHelper
         return hasChanged;
     }
 
-
-    public static void rollbackPreviousRecordValues(sObject newValues, sObject oldValues, List<String> fieldList)
-    {
-        Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
-        for(String field : fieldList)
-        {
-            newValues.put(field, oldValues.get(field));
-        }
-    }
-
     // Loop over for any changes to key elements and put any changes into a temp storage record along with the parent Contract ID
     public static EF_Approval__c fillTemporaryApprovalStorage(EF_Approval__c approvalStorageRecord, sObject newValues, List<String> fieldList, String fieldToUse)
     {

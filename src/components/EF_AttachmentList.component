@@ -359,10 +359,6 @@
                 <apex:outputPanel layout="none">
                     <apex:commandButton value="{!$Label.Select_File}" title="Select File" onclick="openDialog(); return false;" immediate="true" />
                 </apex:outputPanel>
-
-                <!-- <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect('{!TransferAttachmentsUrl}');" immediate="true" />
-                <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList();" />
-                <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList()" /> -->
             </apex:pageblockButtons>
 
             <apex:pageBlockTable id="tableAttachments" value="{!listAttachments}" var="attach" Title="title">

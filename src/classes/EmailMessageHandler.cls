@@ -57,16 +57,6 @@ public with sharing class EmailMessageHandler {
 		
 	}
 	
-	
-	/*
-	 * This method prevents the deletion of email messages
-	 */
-	public static void PreventEmailDeletion(list<EmailMessage> lstTriggerOld) {
-		for (EmailMessage em : lstTriggerOld) {
-			em.addError('You are not allowed to delete this Email message.');
-		}
-	}
-
 	/*
 	 * If an email message related to a case closed for more than 2 weeks is received
 	 * and this case is in one of the selected recordtypes then

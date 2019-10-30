@@ -169,11 +169,6 @@ public with sharing class GDP_FileDefRatePlanDefWizard {
                                
         
     }
-    public PageReference onSelectInvoice()
-    {
-
-        return null;
-    }
     
     public PageReference GoBack()
     {

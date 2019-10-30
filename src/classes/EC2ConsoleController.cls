@@ -94,14 +94,4 @@ public class EC2ConsoleController {
         options.add(new SelectOption('self','My Images'));          
         return options;
     }
-    
-      private String createTestCredentials(){
-       
-        AWSKey__c testKey = new AWSKey__c(name='test keys',key__c='key',secret__c='secret');
-        insert testKey;
-        return testKey.name;
-        
-     }
-     
-    
 }

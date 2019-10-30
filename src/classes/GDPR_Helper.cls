@@ -333,9 +333,6 @@ public without sharing class GDPR_Helper {
          sendEmail(email, htmlBody);
     }
 
-    public static void controlGDPRAccess(String link){
-
-    }
     private static String generateToken(String sObjectId){
         String token = sObjectId+'-'+generateTokenHelper();
 

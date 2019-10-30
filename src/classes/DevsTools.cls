@@ -1,19 +1,4 @@
-public with sharing class DevsTools {
-
-
-    /**
-    * Returns the class name of a Sobject (or sobject subclass) instance
-    *
-    * @param anObject The object for which the class name is requested
-    * @return the class name 
-    */
-    public static String getClassName(Sobject anObject) {
-        if (anObject == null)
-            return null;
-        String value = String.valueOf(anObject);
-        return value.split(':')[0];	
-    }
-    
+public with sharing class DevsTools {    
    /**
    *
    * return information about curernt environment 
@@ -22,7 +7,6 @@ public with sharing class DevsTools {
 	    String s  =  System.URL.getSalesforceBaseUrl().getHost();
 	    return (Pattern.matches('(.*\\.)?cs[0-9]*(-api)?\\..*force.com',s));
 	}   
-   
    
    private static String[] receivers = new List<String>(); 
     

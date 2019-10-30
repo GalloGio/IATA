@@ -159,9 +159,6 @@ private class EF_AttachmentListControllerTest {
         controller.callEditAttachment();
 
         AmazonFile__c af = controller.amazonFileToUpload;
-        // controller.makeAllPublic();
-        // controller.makeAllPrivate();
-        // controller.changePermissionToAll(true);
 
         String credentialName = controller.credentialName;
         EF_AttachmentListController.UploadFile u = EF_AttachmentListController.createUploadFile('0018E00000Gfake', 'filenameupload',  'contentType', 1000000, '001', credentialName);
