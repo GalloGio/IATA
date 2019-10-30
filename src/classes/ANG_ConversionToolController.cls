@@ -286,12 +286,6 @@ public with sharing class ANG_ConversionToolController {
 		String messageText = ANG_ConversionHelper.errorMessages.get(errorDetailCode);
 		return(messageText);
 	}
-
-	public String getLongDetailMessage(){
-		
-		String messageText = ANG_ConversionHelper.errorMessagesLongDescription.get(errorDetailCode);
-		return(messageText);
-	}
 	
 	public class wrapperHierarchyStructure {
 		public ANG_ConversionHelper.HierarchyStructure struct {get; set;}

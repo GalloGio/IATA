@@ -60,10 +60,6 @@ private class IncreaseZeroPercentClassCoverage{
        // t.setArchivedMessageId('1');
         t1 = t.getArchivedMessageId();
         //t.setArchivedMessage(t.getArchivedMessage());
-        
-        //t.deleteAction();
-       
-
     }
     
      static testMethod void test6(){

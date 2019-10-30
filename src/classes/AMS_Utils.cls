@@ -1268,22 +1268,6 @@ public without sharing class AMS_Utils {
 
     }
 
-    private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
-
-        if(accountHierarchyRelationships.isEmpty())
-            return true;
-
-        if(accountHierarchyRelationships.values().isEmpty())
-            return true;
-
-        for(List<AMS_Agencies_relationhip__c> agency:accountHierarchyRelationships.values()){
-            if(!agency.isEmpty())
-                return false;
-        }
-
-        return true;
-    }
-
     public static Boolean ownershipIsToBeMigrated(String typesOfChange){
 
         Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);

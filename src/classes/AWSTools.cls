@@ -38,29 +38,6 @@ global  class AWSTools {
 	 	}
 	 	return r;
 	 }
-
-	 /**
-	 *
-	 * Create a bucket on Amazon S3
-	 * if saveInSystem = true , will erase default bucket with new one on SFDC Configuration
-	 */
-	 public boolean createBucket(String bucketNameToCreate, boolean saveInSystem){
-		  try{	 
-			   Datetime now = Datetime.now();        
-			  
-			   //This performs the Web Service call to Amazon S3 and create a new bucket.
-			   if(!Test.isRunningTest())
-		       S3.CreateBucketResult createBucketReslt = as3.CreateBucket(bucketNameToCreate,null,as3.key,now,as3.signature('CreateBucket',now));
-		        system.debug('[Attachment Migration Process debug] Successfull bucket creation');
-		       return true;
-	       }
-	
-	       catch(Exception ex){
-			   	 system.debug('[Attachment Migration Process debug] Error while creating a BucketAmazon');
-			   return false;	
-		   }
-       
-	}
 	 
 	 /**
 	 *

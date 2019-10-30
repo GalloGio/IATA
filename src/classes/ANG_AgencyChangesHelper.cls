@@ -488,10 +488,6 @@ public with sharing class ANG_AgencyChangesHelper {
 		return false;
 	}
 
-	public static AChangeStructure processHierarchyChanges(AMS_OSCAR__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet, Boolean isAllHierarchySelected) {
-		return processHierarchyChangesAux(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected, null);
-	}
-
 	public static AChangeStructure processHierarchyChangesAux(AMS_OSCAR__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet, Boolean isAllHierarchySelected, Map<Id, List<AMS_Agencies_relationhip__c>> allRelations) {
 		
         System.debug('[ANG_AgencyChangesHelper] - Accounts involved are:'+accountIdsInvolvedSet);
@@ -1373,27 +1369,6 @@ public with sharing class ANG_AgencyChangesHelper {
 		changesContainer.addChangeCodeDef(changeCodeDef, acc);
 
 		return changesContainer;
-
-	}
-
-	public static Agency_Applied_Change_code__c createChangeCode(AMS_OSCAR_JSON.ChangeCode changeCodeDefinition, AMS_OSCAR__c oscar, Id accId){
-
-		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
-
-		Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
-				Active__c = true
-		, Account__c = accId
-		, Change_Code__c = changeCodeDefinition.name
-		, OSCAR__c = oscar.Id
-		, Bulletin_Information__c = (changeCodeDefinition.memoText == null) ? '' : changeCodeDefinition.memoText.toUpperCase()
-		, Reason_Code__c = changeCodeDefinition.reasonCode
-		, Reason_Description__c = changeCodeDefinition.reasonDesc
-		, Source__c = source
-		, CreatedDate_User__c = convertToHubEffectiveDate(system.today())
-				//, To_Publish_in_e_Bulletin__c = changeCode.publishedOnEBulletin
-		);
-
-		return aacNEW;
 
 	}
 

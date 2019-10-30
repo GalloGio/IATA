@@ -178,15 +178,6 @@ public class  AmsIataCodeGeneratorTest
         return a;
     }
     
-    public static AMS_Address__c createAgencyPrimaryAddress(Account ag, IATA_ISO_Country__c c,IATA_ISO_State__c s ){
-        AMS_Address__c a = new AMS_Address__c(Account__c = ag.Id, Country__c = c.Id);
-        a.Address_Type__c = 'Primary';
-        a.Address_1__c = 'A street';
-        if(s!=null)
-            a.State__c = s.ID; 
-        return a;
-    }
-    
     @isTest
     static void testNoISOStateInAccreditation_CountryDefaultStateUsed(){
          createData(false);

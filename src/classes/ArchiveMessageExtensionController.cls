@@ -29,12 +29,6 @@ global  class  ArchiveMessageExtensionController{
     public Archived_Message__c getArchivedMessage() {
         return this.archivedMessage;
     }
-    
-    
-    public void deleteAction(){
-        delete originalMessage;
-        delete archivedMessage;
-    }
  
     /**
     * Constructor. 

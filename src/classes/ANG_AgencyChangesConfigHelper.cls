@@ -60,17 +60,6 @@ public class ANG_AgencyChangesConfigHelper{
 		return null;
 	}
 
-	public static List<String> getFieldSetsToMigrate(Map<String, String> config) {
-
-		if (config.get('Fields to Migrate') != null) {
-			system.debug('FieldSetsToMigrate: ' + config.get('Fields to Migrate').split(';'));
-			return config.get('Fields to Migrate').split(';');
-		}
-
-		return null;
-
-	}
-
 	public static void setNotApplicableSteps(ANG_AgencyChangesConfig__c config, AMS_OSCAR__c oscar) {
 		if(config == null || config.TCA_Not_Applicable_Steps__c == null) return;
 		

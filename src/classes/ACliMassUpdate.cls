@@ -51,9 +51,7 @@ public  class ACliMassUpdate {
          return acliAcct.values();
     
     }
-    private void setAcliAccountsPage(list<AcliAccount> value){
-         AcliAccountsPage = value;
-    }
+
     public PageReference doNull(){
         setStateOFF(!stateOFF);
       return null;

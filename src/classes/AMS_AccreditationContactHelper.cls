@@ -21,27 +21,6 @@ public with sharing class AMS_AccreditationContactHelper
         return rolePersonMap;
     }
     
-    public static Map<String, AMS_Account_Role__c> findRolesAndContactsByEmail(Set<String> emailSet, Set<Id> acContactSet)
-    {
-        String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Account_Role__c');
-        String query = 'select ' + commaSeparatedFields;
-        query = query + ', Contact__r.FirstName, Contact__r.LastName, Contact__r.Email, Contact__r.Phone, Contact__r.Title, Contact__r.Membership_Main_Contact__c ';
-        query = query + ' from AMS_Account_Role__c where RecordTypeId = \'' + RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership') + '\' and Person__c = null and (Contact__r.Email in :emailSet or Contact__r.Id in :acContactSet)';
-        List<AMS_Account_Role__c> roleList = Database.query(query);
-        Map<String, AMS_Account_Role__c> roleContactMap = new Map<String, AMS_Account_Role__c>();
-        for(AMS_Account_Role__c ar : roleList)
-        {
-            if(roleContactMap.get(ar.Contact__r.Email) == null){
-                roleContactMap.put(ar.Contact__r.Email, ar);
-            } else {
-                // TODO at a later stage. Right now we are safe to assume that emails are unique and there should not be Persons using the same email.
-            }
-        }
-        return roleContactMap;
-    }
-    
-    
-    
     public static Map<Id, Contact> findContactsByEmail(Set<String> emailSet)
     {
         Map<ID, Contact> contactMap = new Map<Id, Contact>([select Id, Email from Contact where Email in :emailSet limit 49999]);

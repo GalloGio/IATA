@@ -38,11 +38,6 @@ static testMethod void test_AllMethod() {
     Test.setCurrentPageReference(new PageReference('/apex/ContactOrder'));
     cls = new AccountContactOrder_Ext(new ApexPages.standardController(listContact[1]));
     system.assert(cls.vfOrder.size() == 2, 'Incorrect number of orders for contact: ' + cls.vfOrder);
-    
-    //*** deleteOrder method
-    cls.orderIdToDelete = listOrder[0].Id;
-    cls.deleteOrder();
-    system.assert(cls.vfOrder.size() == 1, 'Incorrect number of orders after delete: ' + cls.vfOrder);
 } //*** end of "test_AllMethod"
 
 
