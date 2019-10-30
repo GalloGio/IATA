@@ -4,6 +4,8 @@
 
 <!-- Portal Login -->
 <template>
+
+
     <c-portal-login-container preventrefresh=false>
         <span slot="pageBody">
             <div if:true={showLoginForm}>
@@ -19,8 +21,8 @@
                                 {pageMessage}
                                 <div style="padding: 1.5rem;"></div>
                             </div>
-                            <div if:true={config.isUsernamePasswordEnabled}>
-                                    <lightning-layout multiple-rows vertical-align="end">
+                            <div if:true={config.isUsernamePasswordEnabled} class="IEFixDisplay">
+                                    <lightning-layout multiple-rows vertical-align="end" class="IEFixDisplay">
                                         <div class="IEFixDisplay">
                                             <lightning-layout-item size="12">
                                                 <div class="formElementContainer">
@@ -45,9 +47,9 @@
                                                         <input type="text" value={email} data-id="emailInput" placeholder=" " required="" class="slds-input"
                                                             onkeyup={handleEmailChange} onfocusout={handleEmailFocusOut} readonly={isEmailFieldReadOnly} />
                                                     </div>
-                                                <div if:true={isEmailInvalid}>
-                                                    <div class="slds-form-element__help">{labels.CSP_Invalid_Email}</div>
-                                                </div>
+                                                    <div if:true={isEmailInvalid}>
+                                                        <div class="slds-form-element__help">{labels.CSP_Invalid_Email}</div>
+                                                    </div>
                                                 </div>
                                             </lightning-layout-item>
                                             <lightning-layout-item size="12">
@@ -58,7 +60,7 @@
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
                                                         <div class="text-xxsmall text-gray">
-                                                        {labels.CSP_Password}
+                                                            {labels.CSP_Password}
                                                         </div>
                                                     </div>
                                                     <div>
@@ -138,7 +140,9 @@
                                             </lightning-layout-item>
                                             </template>
 
+
                                             <template if:true={config.isSelfRegistrationEnabled}>
+
                                                 <lightning-layout-item size="12">
                                                     <div class="containerBorderTop" style="height:24px;">
 
@@ -160,7 +164,6 @@
                                                     </div>
                                                 </lightning-layout-item>
                                             </template>
-
                                         </div>
                                     </lightning-layout>
                                 </div>
@@ -197,4 +200,5 @@
             <div class="slds-spinner__dot-b"></div>
         </div>
     </div>
+
 </template>
