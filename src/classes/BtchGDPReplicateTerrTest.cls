@@ -110,57 +110,6 @@ private class BtchGDPReplicateTerrTest {
 	
 	} // end of Init
 	
-	private static void showTerritory( DateTime batchStartTime)
-	{
-		List<GSA_Territory__c> gterall = [select Id, Name, LastModifiedDate, AIMS_ID__c
-										  , Related_account__c, Related_Accreditation__c 
-										  from GSA_Territory__c];
-		System.debug( 'all territory :' + gterall);
-		
-		List<Accreditation__c> accredall = [select Id, Name, AIMS_ID__c, Related_Account__c
-												, Related_Account__r.Name
-												, Class__c, Class__r.Code__c
-												from Accreditation__c
-										   		order by Id];
-		System.debug( 'all accreditation:' + accredall);
-		
-		
-		IEC_Batch_Replication__c btchRep = IECUtil.GetBatchReplication('GDP Replicate: Territories' );
-		System.debug( 'showTerritory btchRep: ' + btchRep);
-		String query =
-			'SELECT Id, AIMS_ID__c, IATA_Code__c'
-			+ ', Related_Account__r.IATACode__c'
-			+ ', Check_Digit__c'
-			+ ', IATA_ISO_Country__c'
-			+ ', IATA_ISO_NCode__c'
-			+ ', Location_Country_Name__c'
-			+ ', Accreditation_ID__c'
-			+ ', Airline_Code__c'
-			+ ', Airline_Name__c'
-			+ ', Appointment_Type__c'
-			+ ', Appointment_Date__c'
-			+ ', Related_Accreditation__c'
-			+ ', Territory_ISO_Country__c'
-			+ ', Territory_IATA_Numeric_Country_Code__c'
-			+ ', Territory_Country_Name__c'
-			+ ', Territory_State_Abbreviation__c'
-			+ ', Territory_Description__c'
-			+ ', AIMS_Related_Account__c'
-			+ '	FROM GSA_Territory__c'
-			+ '	WHERE LastModifiedDate >= ' + btchRep.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
-			+ '		AND LastModifiedDate < ' + batchStartTime.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
-			+ '		AND (AIMS_ID__c != null)'
-			//+ '		AND RecordTypeId = \'' + IECUtil.GetRecordTypeId('GSA_Territory__c', 'Live') + '\''
-			+ '     AND Related_Account__c IN (SELECT Id FROM Account WHERE Location_Class__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\'))'                  
-			+ '		AND Related_Accreditation__c != null '
-			;
-			
-		System.debug( 'territories: query: ' + query);
-		List<GSA_Territory__c> gterlist = Database.query(query);
-		System.debug( '\n\nterritory result:' + gterlist.size());
-		System.debug( 'territories: ' + gterlist);
-	}
-	
 	// create but not insert a territory
 	private static GSA_Territory__c newTerritory( String acctAimsId )
 	{

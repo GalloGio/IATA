@@ -204,12 +204,6 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 		insert att;
 	}
 	
-	private void setQueuedResponseFile() {
-		responsePWCError response = new responsePWCError('IN_PROGRESS', '');
-		Attachment att = createAttachment( WSCreateCasesFromPWC.FILE_NAME_RESPONSE, this.batchNumber.Id, JSON.serialize(response) );
-		insert att;
-	}
-	
 	private Attachment createAttachment( String filename, Id parentId, String data ) {
 		Attachment att = new Attachment(
 			Body = Blob.valueOf(data),

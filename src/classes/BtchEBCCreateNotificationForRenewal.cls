@@ -319,7 +319,6 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 	
 	// ========================================================================
 	global Database.querylocator start(Database.BatchableContext BC){
-		//showQuery(query);
 		return Database.getQueryLocator(query);
 	} // end of queryLocator
 	
@@ -553,16 +552,5 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 		}
 		private set;
 	} // end of availableEbcRatePlanIdSetstring getter/setter
-	
-	// ========================================================================
-	// debugging tool to show if the query return some records
-	private static void showQuery( String query)
-	{
-		System.debug( '\n=======================================================\n') ;
-		System.debug( '\nBtchEBCCreateNotificationForRenewal query at ' + DateTime.now() + ':\n' + query) ;
-		List<Zuora__SubscriptionProductCharge__c> subProdChargeList = Database.query(query + ' LIMIT 5');
-		System.debug( '\nZuora__SubscriptionProductCharge query num of recs:' + subProdChargeList.size());
-		System.debug( 'Zuora__SubscriptionProductCharge query result:' + subProdChargeList);
-	} // showQuery
 	
 } // end of BtchEBCCreateNotificationForRenewal class
