@@ -178,11 +178,6 @@ public with sharing class PortalFAQsCtrl {
         return Database.query(query);
     }
 
-    @AuraEnabled(cacheable=true)
-    public static String getArticleTitle(String articleId) {
-        return [SELECT Title FROM FAQ__kav WHERE Id = :articleId].Title;
-    }
-
     @AuraEnabled
     public static void createFeedback(String articleId, String articleNumber, String articleTitle, String feedbackSource, String feedbackComments, String sessionId, Boolean isDeferred) {
         // validate that the feedback source option is a valid option

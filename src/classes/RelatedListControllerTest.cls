@@ -34,9 +34,6 @@ private class RelatedListControllerTest {
 		Test.setCurrentPage(pg);
 		
 		Test.startTest();
-
-			//ApexPages.StandardController sc = new ApexPages.standardController(acc);
-
         	RelatedListController rlController = new RelatedListController();
 
         	rlController.sortOrder = 'asc';
@@ -50,20 +47,6 @@ private class RelatedListControllerTest {
 
         	rlController.getShowNewButton();
         	rlController.getshowUpdateButton();
-
-        	//rlController.sortByField();
-        	//
-        	//
-        	//rlController.cancelChanges();
-        	//rlController.updateRecords();
-        	//rlController.changeInlineEditMode();
-
-        	//rlController.setUpdatableFields();
-        	//rlController.deleteRecord();
-        	//rlController.deleteRecord();
-			//System.assert(controller.saveAction, 'Error saving');
-			//System.assert(!controller.hasEditableFields, 'Found editable fields');
-			//System.assert(controller.getExistOscarInspections(), 'No inspections found');
 		Test.stopTest();
 	}
 
@@ -76,9 +59,6 @@ private class RelatedListControllerTest {
 		Test.setCurrentPage(pg);
 		
 		Test.startTest();
-
-			//ApexPages.StandardController sc = new ApexPages.standardController(acc);
-
         	RelatedListController rlController = new RelatedListController();
 
         	rlController.sortOrder = 'desc';

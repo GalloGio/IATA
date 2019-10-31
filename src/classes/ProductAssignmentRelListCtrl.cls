@@ -7,37 +7,8 @@ public with sharing class ProductAssignmentRelListCtrl {
     public boolean isRelatedList {get;set;}
     
     public ProductAssignmentRelListCtrl(ApexPages.StandardController standardcontroller){
-         isRelatedList = (ApexPages.currentPage().getParameters().get('isPage') != 'true');
-         acc = (Account)standardcontroller.getRecord();
-         /*List<Product_Assignment__c> allPA= [SELECT Id, Name, ICCS_Product_Currency__r.Country__c, ICCS_Product_Currency__r.Currency__c, Bank_Account_Code__c, Bank_Account_Currency__c, 
-                                                    Notice_of_Assignment__c, GSA_Agreement__c,Third_Party_Payment__c, Status__c,De_Activation_Date__c, Split_Type__c, ICCS_Product_Currency__r.Product__c,
-                                                    Percentage__c, Amount__c
-                                            FROM Product_Assignment__c
-                                            WHERE Account__c = :acc.Id ORDER BY ICCS_Product_Currency__r.Country__c ASC];
-        
-        Date LastChangeDate ;
-        pas = new List<Product_Assignment__c>();
-        
-        counter = 0;
-        printLimit = 10;
-        for(Product_Assignment__c pa : allPA){
-            if(pa.Status__c == 'Active'){
-                if(!(isRelatedList && pas.size()>=printLimit))
-                    pas.add(pa);
-                counter ++;
-            }
-            if(LastChangeDate==null || pa.De_Activation_Date__c > LastChangeDate)
-                LastChangeDate = pa.De_Activation_Date__c;
-        }
-        
-        if(pas.size()==0){
-            for(Product_Assignment__c pa : allPA){
-                if(LastChangeDate==pa.De_Activation_Date__c)
-                    if(!(isRelatedList && pas.size()>=printLimit))
-                        pas.add(pa);
-                    counter ++;
-            }
-        }*/
+        isRelatedList = (ApexPages.currentPage().getParameters().get('isPage') != 'true');
+        acc = (Account)standardcontroller.getRecord();
 
         pas = new List<Product_Assignment__c>();
         counter = 0;

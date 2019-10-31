@@ -76,9 +76,6 @@ public class Product_Dom {
         Product_Svc.setIsNewVersion(newList);
 
         /** Ecommerce Enhancements R2 **/
-        /* Begin INC335264
-        *Product_Svc.checkProductAcceptedPaymentMethods(newList, null);
-        */
         Product_Svc.setAcceptedPaymentMehodsDefaultValue(newList);
         /** End INC335264**/
 
@@ -92,16 +89,10 @@ public class Product_Dom {
         Product_Svc.setProductManager(oldList, newList, false);
 
         /** Ecommerce Enhancements R2 **/
-        /* INC335264
-        /Product_Svc.checkProductAcceptedPaymentMethods(newList, oldMap);
-        */
         Product_Svc.setAcceptedPaymentMehodsDefaultValue(newList);
         /** End INC335264**/
     }
-//private void onBeforeDelete() {
-    //getData(false, true);
-    //customBeforeDelete();
-//}
+
     private void onAfterInsert() {
         //On demand test run
         if (Test.isRunningTest() && Utility.getNumericSetting('Execute Trigger Product') != 1) return;
@@ -191,7 +182,6 @@ public class Product_Dom {
         else if(System.isFuture())
             Product_Svc.saveZProducts(productById.keySet());
         else
-            //Product_Svc.saveZProductsFuture(productById.keySet());
             System.enqueueJob(new Product_Svc.saveZProductsQueueable(productById.keySet()));
     }
 

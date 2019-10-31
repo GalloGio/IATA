@@ -413,28 +413,6 @@ public class SCIMServProvManager {
         serviceRqRow.Access_Status_Reason__c= Label.IFG_Prov_Declined;
 
         update serviceRqRow;
-/*
-                    //Get One ID App Service table related row
-                    OneIdUsrAppRow=[SELECT Application__c,Identity_User__c
-                                    FROM One_Id_User_Applications__c
-                                    WHERE Provisioning_Status__c=:LightningConnectedAppHelper.OID_USER_APP_STATUS_COMPLETED
-                                      AND Identity_User__c=:u.Id
-                                      AND Application__c=:IFGProvManagHandler.appConf.Id];
-                    //TODO: CONFIRM if is to change to deleted
-                    //One id service accesss update status row
-                    //LightningConnectedAppHelper.OID_USER_APP_STATUS_COMPLETED ou DELETED?
-                    OneIdUsrAppRow.Provisioning_Status__c=LightningConnectedAppHelper.OID_USER_APP_STATUS_DELETED;
-                    Update OneIdUsrAppRow;
-*/
-
-        //remove permission set with rest user
-        //(web service REST user have permissions to do this operation)
-        //Remove permission set --> this will triggers User deativation provisioning
-        //(since REST services uses a full license user)
-        //SCIMProvisioningRequestUpdate.removePermissionSet(u.Id, 'IFG_Provisioning_Prod');
-        //SCIMProvisioningRequestUpdate.removePermissionSet(
-        //				u.Id,
-        //				IFGProvManagHandler.appConf.PermissionSet_Provisioning__c);
     }
 
     @future
@@ -569,16 +547,6 @@ public class SCIMServProvManager {
             //Setting IFG_User_Status__c values
             if (!item.Right__c.equals(SCIMServProvManager.IATA_STS_ACCESS_DENIED)){
 
-                //if (getSCIMAppNameFromId(item.Portal_Application__c).equals(SCIMServProvManager.PRE_PROD_SRV_PROV) &&
-                //        getSCIMAppNameFromId(item.Portal_Application__c).equals(SCIMServProvManager.PROD_SRV_PROV)
-                //) {
-                //    recordUserStatusValue = SCIMServProvManager.IFG_USR_STS_PROD_AND_PRE_PROD;
-                //} else if (getSCIMAppNameFromId(item.Portal_Application__c).equals(SCIMServProvManager.PROD_SRV_PROV)) {
-                //    recordUserStatusValue = SCIMServProvManager.IFG_USR_STS_PROD;
-                //} else if (getSCIMAppNameFromId(item.Portal_Application__c).equals(SCIMServProvManager.PRE_PROD_SRV_PROV)) {
-                //    recordUserStatusValue = SCIMServProvManager.IFG_USR_STS_PRE_PROD;
-                //}
-
                 System.debug('basto1p - reviewIFGUserStatusAndContactSharing inside IATA_STS_ACCESS_DENIED');
                 //Set Record_Sharing_Criteria__c values
                 if (isIFGServiceRow(item)) {
@@ -607,82 +575,6 @@ public class SCIMServProvManager {
         }
 
         if(!updateContactList.isEmpty()) update updateContactList.values();
-    }
-
-
-    @future
-    public static void reviewIFGAccountSharing(Set<Id> listOfAccounts){
-        Set<id> allContactsKeys = new Set<id>();
-
-        if(!SCIMServProvManager.PREVENT_TRIGGER_RUN) SCIMServProvManager.PREVENT_TRIGGER_RUN = true;
-
-        if(listOfAccounts != null && !listOfAccounts.isEmpty()){
-            Map<id, Account> uSharingList = new Map<id, Account>();
-            Map<String, Boolean> mapAccServiceFound=new Map<String, Boolean>();
-
-            List<Contact> contactsList = [select id, Record_Sharing_Criteria__c, IFG_PreProduction__c, IFG_Production__c, accountid, account.Record_Sharing_Criteria__c,
-             (select id, Application_Name_Text_Field__c, Portal_Application__c, Right__c
-             from Portal_Application_Rights__r
-             where Right__c != :IATA_STS_ACCESS_DENIED)
-             from contact
-             where accountId in :listOfAccounts];
-
-            /*
-            System.debug('basto1p - reviewIFGAccountSharing.contactsList='+contactsList);
-            for (contact conAux : contactsList){
-                allContactsKeys.add(conAux.id);
-            }
-            */
-            System.debug('basto1p - reviewIFGAccountSharing.allContactsKeys='+allContactsKeys);
-            List<Portal_Application_Right__c> ServiceAccList = [select Id, Right__c, Contact__c, Portal_Application__c, Contact__r.Record_Sharing_Criteria__c
-                    FROM Portal_Application_Right__c
-                    where Contact__r.Account.Id in :listOfAccounts];
-            System.debug('basto1p - reviewIFGAccountSharing.ServiceAccList='+ServiceAccList);
-            SCIMServProvManager.initIATAServAccessMapOfApps(ServiceAccList);
-
-            String recordSharingCriteriaAux;
-            String mapAccountServiceKey;
-            for(Contact con : contactsList){
-                Decimal totalIFGServices = 0;
-                recordSharingCriteriaAux='';
-                mapAccountServiceKey='';
-
-                for(Portal_Application_Right__c ri : con.Portal_Application_Rights__r){
-                    System.debug('basto1p - reviewIFGAccountSharing.ri.Portal_Application__c='+ri.Portal_Application__c);
-                    if(isIFGServiceRow(ri)) totalIFGServices++;
-                }
-
-                System.debug('basto1p - con.account.Record_Sharing_Criteria__c='+con.account.Record_Sharing_Criteria__c);
-
-                mapAccountServiceKey=con.account.Id+'_'+RSC_IFG_ACTIVE_USERS;
-                if(totalIFGServices > 0
-                        && (mapAccServiceFound.get(mapAccountServiceKey)!=true)){
-
-                    mapAccServiceFound.put(mapAccountServiceKey,true);
-                    recordSharingCriteriaAux=multiSelectPickListAppendValue(con.account.Record_Sharing_Criteria__c,RSC_IFG_ACTIVE_USERS);
-                    System.debug('basto1p - ADD recordSharingCriteriaAux='+recordSharingCriteriaAux+'; Account='+con.account.Id);
-
-                    Account anAccount = new Account(id = con.accountId, Record_Sharing_Criteria__c = recordSharingCriteriaAux);
-                    uSharingList.put(con.accountId, anAccount);
-
-                }
-                else if (mapAccServiceFound.get(mapAccountServiceKey)!=true
-                        && mapAccServiceFound.get(mapAccountServiceKey)!=false){
-                    mapAccServiceFound.put(mapAccountServiceKey,false);
-
-                    recordSharingCriteriaAux=multiSelectPickListDeleteValue(con.account.Record_Sharing_Criteria__c,RSC_IFG_ACTIVE_USERS);
-                    System.debug('basto1p - REMOVE recordSharingCriteriaAux='+recordSharingCriteriaAux+'; Account='+con.account.Id);
-
-                    Account anAccount = new Account(id = con.accountId, Record_Sharing_Criteria__c = recordSharingCriteriaAux);
-                    uSharingList.put(con.accountId, anAccount);
-                }
-            }
-
-            //Update
-            System.debug('basto1p - UPDATE uSharingList='+uSharingList);
-            if(!uSharingList.isEmpty()) update uSharingList.values();
-        }
-
     }
 
     public static String multiSelectPickListAppendValue(String PickListCurrentValues, String ValueToAppend){

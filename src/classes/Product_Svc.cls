@@ -111,17 +111,6 @@ public class Product_Svc
     }
 
     /****************************************************************************************************
-        Created by CGI - David D
-           Call saveZProducts in Future mode
-    *****************************************************************************************************/
-    //UNUSED - replaced by saveZProductsQueueable
-    @future(callout=true)
-    public static void saveZProductsFuture(Set<Id> productIds)
-    {
-        String result = saveZProducts(productIds);
-    }
-
-    /****************************************************************************************************
         INC375801 - Susana Alves
            Call saveZProducts in queueable mode
     *****************************************************************************************************/
@@ -882,64 +871,6 @@ public class Product_Svc
     	return mapProduct2Id_Compliance;
     } //*** end of "IsProductAndCountryCompliant"
     
-
-    /** Ecommerce Enhancements R2 **/
-
-    public static void checkProductAcceptedPaymentMethods(
-        List<Product2> newList,
-        Map<Id,Product2> oldMap
-    ) {
-        Set<Id> productIdSet = new Set<Id>();
-        Map<Id,String> acceptedPaymentMethodsMap = new Map<Id,String>();
-
-        for (Product2 product : newList) {
-            productIdSet.add(product.Id);
-
-            if (product.IEC_Parent_Product__c != null) {
-                productIdSet.add(product.IEC_Parent_Product__c);
-            }
-        }
-
-        for (Product2 product : [SELECT Id, Accepted_Payment_Methods__c FROM Product2 WHERE Id IN :productIdSet]) {
-            acceptedPaymentMethodsMap.put(product.Id, product.Accepted_Payment_Methods__c);
-        }
-        
-        for (Product2 product : newList) {
-            if (product.IEC_Parent_Product__c == null) {
-                // parent product
-                if (String.isBlank(product.Accepted_Payment_Methods__c)) {
-                    if (Test.isRunningTest() == false) {
-                        product.addError(Label.ACCEPTED_PAYMENT_METHODS_MANDATORY);
-                    }
-                }
-            } else {
-                // child product
-                String parentAcceptedPaymentMethod = acceptedPaymentMethodsMap.get(product.IEC_Parent_Product__c);
-
-                if (
-                    String.isBlank(product.Accepted_Payment_Methods__c) == false
-                    &&
-                    isEqual(product.Accepted_Payment_Methods__c, parentAcceptedPaymentMethod) == false
-                ) {
-                    if (Test.isRunningTest() == false) {
-                        product.addError(Label.ACCEPTED_PAYMENT_METHODS_NOT_EQUAL_TO_PARENT);
-                    }
-                } else {
-                    // if blank, set to parent
-                    if (String.isBlank(product.Accepted_Payment_Methods__c)) {
-                        if (String.isBlank(parentAcceptedPaymentMethod)) {
-                            if (Test.isRunningTest() == false) {
-                                product.addError(Label.PARENT_ACCEPTED_PAYMENT_METHODS_IS_EMPTY);
-                            }
-                        } else {
-                            product.Accepted_Payment_Methods__c = parentAcceptedPaymentMethod;
-                        }
-                    }
-                }
-            }
-        }
-    } //*** end of checkProductAcceptedPaymentMethods
-
     public static void replicateProductAcceptedPaymentMethods(
         List<Product2> newList,
         Map<Id,Product2> oldMap
