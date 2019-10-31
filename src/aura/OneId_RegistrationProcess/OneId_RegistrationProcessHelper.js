@@ -43,7 +43,7 @@
 
           action.setCallback(this, function(a){
               var rtnValue = a.getReturnValue();
-              if (rtnValue !== null) {
+              if (rtnValue !== null && rtnValue !== undefined) {
                   window.location.href = rtnValue;
               }
           });
