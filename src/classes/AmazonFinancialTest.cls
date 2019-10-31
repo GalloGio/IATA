@@ -74,6 +74,7 @@ private class AmazonFinancialTest {
         return caseObj;
     }
 
+    @isTest
     private static void testNotArchivedCase(){
         createAmazonCredential();
         Case caseObj = initializeCase();
