@@ -332,40 +332,12 @@ public without sharing class OneIdLightningLoginFormController {
         return sanctionCountry;
     }
     
-    /*
-    @AuraEnabled
-    public static Boolean getLoginInfo(String clientIpAddress) {
-        loginInfo=new LoginModel();
-        
-        loginInfo.show90Days=show90Days;
-        
-        loginInfo.isUsernamePasswordEnabled=getIsUsernamePasswordEnabled();
-        loginInfo.isSelfRegistrationEnabled=getIsSelfRegistrationEnabled();
-        loginInfo.forgotPasswordUrl=getForgotPasswordUrl();
-        
-        loginInfo.sanctionCountry=getSanctionCountry(clientIpAddress);
-        
-        return loginInfo;
-    }
-    */
     
     @AuraEnabled
     public static Boolean getShow90Days() {
-        //show90Days=true;
         return show90Days;
     }
-    
-    /*@AuraEnabled
-    public static Boolean getSanctionCountry(String clientIpAddress) {
-        //Set client ip address
-        ipAddress=clientIpAddress; 
-
-        findLocationCaller();
         
-        //sanctionCountry=true;
-        return sanctionCountry;
-    }*/
-    
     @AuraEnabled
     public static Boolean getIsUsernamePasswordEnabled() {
         Auth.AuthConfiguration authConfig = getAuthConfig();

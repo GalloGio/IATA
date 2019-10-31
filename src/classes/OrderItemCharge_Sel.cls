@@ -47,14 +47,5 @@ public with sharing class OrderItemCharge_Sel  extends Selector
         }
 
         return ret;
-    }
-	
-	/****************************************************************************************************
-        Created by CGI - David
-            return List of Charges (discounts) to delete
-    ****************************************************************************************************/
-    public List<Order_Item_Charge__c> orderItemChargesToDelete(){
-        return [SELECT id from Order_Item_Charge__c where Order_Item__c = null];
-    }
-	
+    }	
 }

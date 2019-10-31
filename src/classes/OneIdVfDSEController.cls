@@ -823,39 +823,7 @@ public without sharing class OneIdVfDSEController {
             System.debug('\n\n\n **** ' + obj + ' *** \n\n\n');
         }
     }
-/*
-    public static string generatePassword(){
-        String res = '11111111';
 
-        while(Pattern.matches('[a-zA-Z]{8}', res) || Pattern.matches('[0-9]{8}', res)){
-            res = DateTime.now().format('dd/MM/yyyy hh:mm:ss a', 'PST');
-            Blob hash = Crypto.generateDigest('MD5', Blob.valueOf(res));
-            String token = EncodingUtil.convertToHex(hash);
-            res = String.valueOf(token);
-            res = res.substring(0,8);
-
-        }
-        return res;
-    }
-*/
-
-    /*
-    //@future
-    public static void sendEmail(string userId , string contactId){
-        EmailTemplate et = [Select e.Id, e.Name, e.DeveloperName From EmailTemplate e where DeveloperName=:'ISSP_New_Member_Welcome_Email']; //niv.g
-        //EmailTemplate et = [Select e.Id, e.Name, e.DeveloperName From EmailTemplate e where DeveloperName=:'IATAPortalWelcomeEmailTemplateVF'];
-        if(et != null){
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            mail.setTemplateId(et.Id);//TODO!!!!!!!!
-            mail.setTargetObjectId(userId);
-            mail.setSaveAsActivity(false);
-            mail.setReplyTo('noreply@iata.org'); //its valid email id
-            mail.setSenderDisplayName('ISS Portal ');
-            Messaging.sendEmail(
-                    new Messaging.SingleEmailMessage[]{mail});
-        }
-    }
-*/
     public PageReference selectType(){
         showcreateother = false;
         onegpa = false;
@@ -953,9 +921,6 @@ public without sharing class OneIdVfDSEController {
         types.add(new SelectOption(Airline,Label.ISSP_Airline));
         types.add(new SelectOption(GSA,Label.ISSP_GSSA));
         types.add(new SelectOption(Agency,Label.IDCard_ka_agency));
-        //types.add(new SelectOption(Agency,'IATA Accredited Agent'));
-        //types.add(new SelectOption(NonIATA,'Non IATA Agent'));
-        //types.add(new SelectOption(TIESS,'TIESS'));
         types.add(new SelectOption(OtherCompany,Label.ISSP_Other_Company));
         types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));
         return types;
@@ -1046,42 +1011,6 @@ public without sharing class OneIdVfDSEController {
         return null;
     }
 
-
-    //public Boolean checkCaptcha()  {
-        /*
-        System.debug('captchaId: ' + captchaId);
-        System.debug('captchaAnswer: ' + captchaAnswer);
-        String url = 'http://captchator.com/captcha/check_answer/' + captchaId + '/' + captchaAnswer;
-        HttpResponse response = null;
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint(url);
-        req.setMethod('GET');
-        if (Test.isRunningTest()){
-            captchaVerified = true;
-            return true;
-        }
-        else{
-            try {
-                Http http = new Http();
-                response = http.send(req);
-                System.debug('reCAPTCHA response: ' + response);
-                System.debug('reCAPTCHA body: ' + response.getBody());
-                if (response.getBody() == '1'){
-                    captchaVerified = true;
-                    return true;
-                }
-            } catch(System.Exception e) {
-                return false;
-                System.debug('ERROR: ' + e);
-            }
-        }
-        return false;
-        */
-        //return null;
-    //}
-
-
-
     public void findLocation(){
 
         ISSP_CS__c cs = ISSP_CS__c.getInstance('ipinfo_token');
@@ -1111,31 +1040,11 @@ public without sharing class OneIdVfDSEController {
                     System.debug('Site User is located in ' + whichcountry);
                 }
             }
-
-
         }catch(Exception e){
 
         }
-
-
     }
 
-
-
-
-    //TF-SP08 - for first agency user, give access to custom permission set
-   /* @Future
-    public static void permissionNewAgency(String userId){
-        if (userId != null && userId != '') {
-            List <PermissionSet> permList = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_New_Agency_permission_set'];
-            if (!permList.isEmpty()){
-                PermissionSetAssignment newAssign = new PermissionSetAssignment();
-                newAssign.AssigneeId = userId;
-                newAssign.PermissionSetId = permList[0].Id;
-                insert newAssign;
-            }
-        }
-    }*/
     // to be used in visualforce page OneIdVfCreateAccount
     public Static String getHostURL(){
         return OneIdUtils.getOrgUrl();

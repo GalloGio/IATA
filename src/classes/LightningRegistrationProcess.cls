@@ -646,35 +646,12 @@ public without sharing class LightningRegistrationProcess{
             template = 'Identity_Portal_FRED_New_User';            
             link = prefix + '/s/IdentityFirstLogin?'+encodedPart+'&serviceName=FRED';
             system.debug('aqui link ' + link);            
-            //link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) + '/FRED_First_Login?'+encodedPart;
         }  
         
         Map<String,String> emailWrap = new Map<String,String>();
-        
-        //emailWrap = Identity_PassWordBuilMessageWrapper(con, password, link);   // OneIdEnh CSP-ID002: replace with service aware method
 
         emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper(con, password, link, Comm_User_Helper.ONEIDENTITY, serviceName);
         Comm_User_Helper.sendEmail(template, emailWrap, con, serviceName);
-    }
-    
-    public static  Map<String, String> Identity_PassWordBuilMessageWrapper(Contact con, String password, String link){
-        String portalName = Label.OneId_Community_Name;
-
-        Map<String, String> mapBodyParamsIdentity = new map<String,String>{
-
-            '{!Contact.Salutation}' => con.Salutation,
-            '{!Contact.Password}' => password,
-            '{!Receiving_User.FirstName}' =>con.Firstname,
-            '{!Receiving_User.LastName}' => con.LastName,
-            '{!Receiving_User.Email}' => con.Email,
-            '{!Community_Name}' => portalName ,
-            '{!Community_Url}' => link, 
-            '{!$Label.ISSP_Email_Here}' => 'here',
-            '{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply,
-            '{!$Label.OneId_IATA_represent_lead_and_serve_the_airline_industry}' => Label.OneId_IATA_represent_lead_and_serve_the_airline_industry
-        };
-
-        return mapBodyParamsIdentity;
     }
     
     @future 
@@ -686,20 +663,6 @@ public without sharing class LightningRegistrationProcess{
             database.upsert(psa); 
             System.debug('End Assigning PermissionSet'); 
     }
-
-    @future 
-    public Static Void assignGDPRPermissionSet (Id userId) {
-            System.debug('Assigning GDPR PermissionSet');
-            // Assign GDPR permission set to user
-            PermissionSet ps = [SELECT Id,Name FROM PermissionSet WHERE Name = 'GDPR'];
-            list<PermissionSetAssignment> gdprAssignment = [SELECT Assignee.name FROM PermissionSetAssignment WHERE PermissionSetId =: ps.Id and AssigneeId =: userId];
-            // Assign only when user doesn't have the permission set yet
-            if(gdprAssignment.isEmpty()){ 
-                PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = ps.Id, AssigneeId = userId);
-                database.upsert(psa); 
-            }
-            System.debug('End Assigning GDPR PermissionSet'); 
-    }
     
     @future
     public static void setFederationId (String userid, String email) {
@@ -707,13 +670,7 @@ public without sharing class LightningRegistrationProcess{
         u.FederationIdentifier = u.id;
         database.update(u);
     }
-/*    
-    @AuraEnabled
-    public Static String setHostURL (){
-       return OneIdUtils.getOrgUrl();
-    }
-    
-*/    
+  
     // to be used in visualforce page OneIdVfCAPTCHA
     @AuraEnabled
     public Static String getHostURL(){

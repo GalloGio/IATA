@@ -851,7 +851,6 @@ public without sharing class Order_Svc
         }
 
         //Get the list of field that do not allows modifications
-        //set<String> orderFields = new set<String>(Utility.getOrderFieldsToForbidModification());
         Id profileId = userinfo.getProfileId();
         String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
         
@@ -2874,15 +2873,6 @@ public without sharing class Order_Svc
         return Utility.getTextSettingToArray('Order status allows order modification',',');
     }
     
-    /****************************************************************************************************
-    Created by Kevin Ky 2015-10-01
-        Return the list of Order fields to forbid modification
-    ****************************************************************************************************/
-    public static list<String> getOrderFieldsToForbidModification(){
-        return Utility.getSeqTextSetting('Order fields to forbid modification',',').split(',');
-    }
-    
-
     /****************************************************************************************************
     Created by Kevin Ky 2015-10-05
         Return the list of profile that allows Order modification
