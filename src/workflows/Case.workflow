@@ -6,7 +6,6 @@
         <ccEmails>Jana_sun@163.com</ccEmails>
         <ccEmails>Cindy.acca@gmail.com</ccEmails>
         <ccEmails>xbkcw@126.com</ccEmails>
-        <ccEmails>gwars77@hotmail.com</ccEmails>
         <description>ACCA: Notification on new Application Change Request</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -199,7 +198,7 @@
         <description>BSPlink Email alert</description>
         <protected>false</protected>
         <recipients>
-            <recipient>mcbrideg@iata.org</recipient>
+            <recipient>jimenezm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -208,14 +207,34 @@
     </alerts>
     <alerts>
         <fullName>Bankingcase</fullName>
+        <ccEmails>mad-gdc-banking@iata.org</ccEmails>
         <description>SCE: New Banking case</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>ylonenj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>All/EUR_CaseassignmentBanking</template>
+    </alerts>
+    <alerts>
+        <fullName>CNS_Deadline_Date_Reached</fullName>
+        <description>CNS Deadline Date Reached</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/CNS_Deadline_Date_Reached</template>
+    </alerts>
+    <alerts>
+        <fullName>Case_changed</fullName>
+        <description>Case changed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GDPR_Templates/Case_changed</template>
     </alerts>
     <alerts>
         <fullName>Cases_Russia</fullName>
@@ -662,7 +681,7 @@
         <description>DPC: Notification on new CSR</description>
         <protected>false</protected>
         <recipients>
-            <recipient>mcbrideg@iata.org</recipient>
+            <recipient>jimenezm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -818,7 +837,7 @@
     <alerts>
         <fullName>IATA_iiNet_Service_Now</fullName>
         <ccEmails>iata@service-now.com</ccEmails>
-        <ccEmails>iinetCare@iata.org</ccEmails>
+        <ccEmails>iinetcare@iata.org</ccEmails>
         <description>IATA iiNet Service Now</description>
         <protected>false</protected>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -978,7 +997,7 @@
         <description>SCE: Case wrongly escalated</description>
         <protected>false</protected>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -1351,6 +1370,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1360,10 +1383,6 @@
         </recipients>
         <recipients>
             <recipient>moutany@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1416,10 +1435,6 @@
         </recipients>
         <recipients>
             <recipient>taverasr@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>theryg@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2293,6 +2308,18 @@
         <template>SCEQOS/InstantSurveyCustomerService</template>
     </alerts>
     <alerts>
+        <fullName>NDC_Matchmaker_Email_Notification_on_Case_Creation</fullName>
+        <description>NDC Matchmaker Email Notification on Case Creation</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>NDC_Matchmaker</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/NDC_Case_Assignment</template>
+    </alerts>
+    <alerts>
         <fullName>NewALmanagementprocess</fullName>
         <description>SCE: New Airline management process</description>
         <protected>false</protected>
@@ -2797,7 +2824,7 @@
         <description>SIDRA_00_Created for not accepted country</description>
         <protected>false</protected>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -2868,6 +2895,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2881,10 +2912,6 @@
         </recipients>
         <recipients>
             <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3012,6 +3039,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3025,10 +3056,6 @@
         </recipients>
         <recipients>
             <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3857,6 +3884,38 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Workflow_and_Metrics_team/Salesforce_Change_Request_UAT_Required_Reminder</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_to_L3_IASC_Vendor</fullName>
+        <ccEmails>survey@ipsosresearch.com</ccEmails>
+        <description>Send Email to L3 IASC Vendor</description>
+        <protected>false</protected>
+        <senderAddress>iatacustomerservice@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Vendor_Templates/Contact_Vendor</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_to_Online_store_support</fullName>
+        <ccEmails>servicedesk@iata.org</ccEmails>
+        <ccEmails>szpyndam@iata.org</ccEmails>
+        <ccEmails>ganeaa@iata.org</ccEmails>
+        <description>Send Email to Online store support</description>
+        <protected>false</protected>
+        <senderAddress>iatacustomerservice@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Vendor_Templates/Contact_SNOW_ecommercecs</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_a_notification_to_SIS_Customer_Support_when_a_SIS_E_Joining_form_is_submitt</fullName>
+        <description>Send a notification to SIS Customer Support when a SIS E-Joining form is submitted</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>SISCustomerSupport</recipient>
+            <type>role</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>SIS_E_Invoicing/SIS_E_Invoicing_New_Form_submitted_internal_use</template>
     </alerts>
     <alerts>
         <fullName>Send_an_email_as_soon_as_a_case_is_created_for_IDCard_Application</fullName>
@@ -4838,6 +4897,16 @@
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Change_owner_to_be_GDPR_Queue</fullName>
+        <field>OwnerId</field>
+        <lookupValue>GDPR</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Change owner to be GDPR Queue</name>
+        <notifyAssignee>true</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Change_owner_to_global_KM_queue</fullName>
         <field>OwnerId</field>
         <lookupValue>Knowledge_Management_GVA</lookupValue>
@@ -5004,6 +5073,14 @@
         <name>Chg owner to Fraction (&lt;1USD) Closed</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Clear_Case_New_Interaction_tracking</fullName>
+        <field>New_interaction__c</field>
+        <name>Clear Case New Interaction tracking</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -5553,25 +5630,92 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
     <fieldUpdates>
         <fullName>IDFS_CREATED_BY_ROLE</fullName>
         <field>Created_By_Role__c</field>
-        <formula>IF(OR(CONTAINS( $UserRole.Name, &quot;Customer Service&quot;),CONTAINS( $UserRole.Name, &quot;CS Manager&quot;)),&quot;Customer Service&quot;, 
-(IF(OR(CONTAINS($UserRole.Name, &quot;CS Staff&quot;), CONTAINS ($UserRole.Name,&quot;CS staff&quot;)),&quot;Customer Service&quot;, 
-(IF(OR(CONTAINS( $UserRole.Name, &quot;Risk Management&quot;),CONTAINS( $UserRole.Name, &quot;ARM Staff&quot;)),&quot;Risk Management&quot;, 
-(IF(OR(CONTAINS( $UserRole.Name, &quot;Agency Management&quot;),CONTAINS( $UserRole.Name, &quot;ACC/ARM&quot;)),&quot;Agency Management&quot;, 
-(IF(OR(CONTAINS( $UserRole.Name, &quot;ACC staff&quot;), CONTAINS($UserRole.Name,&quot;Acc Manager&quot;)),&quot;Agency Management&quot;, 
-(IF(OR(CONTAINS( $UserRole.Name, &quot;R&amp;S Staff&quot;), CONTAINS($UserRole.Name,&quot;R&amp;S Manager&quot;)),&quot;Remittance &amp; Settlement&quot;, 
-(IF(OR(CONTAINS( $UserRole.Name, &quot;I&amp;C&quot;), CONTAINS($UserRole.Name,&quot; Operations Manager&quot;)),&quot;Operations&quot;, 
-(IF(OR(CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)),&quot;Operations&quot;, 
-(IF(CONTAINS($UserRole.Name, &quot;ARM staff&quot;),&quot;Risk Management&quot;, 
-(IF(CONTAINS( $UserRole.Name, &quot;R&amp;S staff&quot;),&quot;Remittance &amp; Settlement&quot;, 
-(IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;, 
-(IF(CONTAINS($UserRole.Name,&quot;E&amp;F Client Services&quot;),&quot;E&amp;F Client services&quot;, 
-(IF(CONTAINS($UserRole.Name,&quot;E&amp;F &quot;),&quot;E&amp;F Staff&quot;,
-(IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;, 
-(IF(CONTAINS($UserRole.Name, &quot;Acc Staff&quot;),&quot;Agency Management&quot;, 
-(IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;)),&quot;IATA Partner&quot;,
-(IF(AND(CONTAINS($UserRole.Name, &quot;Record owner&quot;),ISPICKVAL(Origin,&quot;Voicemail&quot;)),&quot;Voicemail&quot;,
-(IF(CONTAINS($UserRole.Name, &quot;Record owner&quot;),&quot;IATA System&quot;,
-(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))</formula>
+        <formula>(IF( 
+  CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;), 
+  &quot;DPC External&quot;, 
+  (IF( 
+  OR( 
+  CONTAINS( $Profile.Name,&quot;ISS Portal&quot;), 
+  CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;), 
+  CONTAINS($Profile.Name,&quot;IATA IDCard Profile&quot;) 
+  ), 
+  &quot;IATA Partner&quot;, 
+  (IF( 
+  OR( 
+  CONTAINS($Profile.Name,&quot;Hub CS Management&quot;), 
+  CONTAINS( $Profile.Name,&quot;GCS -&quot;) 
+  ), 
+  &quot;Customer Service&quot;, 
+  (IF( 
+  OR( 
+  CONTAINS( $UserRole.Name, &quot;Risk Management&quot;), 
+  CONTAINS( $UserRole.Name, &quot;ARM Staff&quot;), 
+  CONTAINS($UserRole.Name, &quot;ARM staff&quot;) 
+  ), 
+  &quot;Risk Management&quot;, 
+  (IF( 
+  CONTAINS($UserRole.Name,&quot;IDO Industry Solutions&quot;), 
+  &quot;ID Card team&quot;, 
+  (IF( 
+  OR( 
+  CONTAINS( $UserRole.Name, &quot;Agency Management&quot;), 
+  CONTAINS( $UserRole.Name, &quot;ACC/ARM&quot;), 
+  CONTAINS( $UserRole.Name, &quot;ACC staff&quot;), 
+  CONTAINS($UserRole.Name,&quot;Acc Manager&quot;), 
+  CONTAINS($UserRole.Name, &quot;Acc Staff&quot;) 
+  ), 
+  &quot;Agency Management&quot;, 
+  (IF( 
+  OR( 
+  CONTAINS( $UserRole.Name, &quot;R&amp;S Staff&quot;), 
+  CONTAINS($UserRole.Name,&quot;R&amp;S Manager&quot;), 
+  CONTAINS( $UserRole.Name, &quot;R&amp;S staff&quot;) 
+  ), 
+  &quot;Remittance &amp; Settlement&quot;, 
+  (IF( 
+  CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;), 
+  &quot;SIS Help Desk&quot;, 
+  (IF( 
+  CONTAINS( $UserRole.Name, &quot;Banking&quot;), 
+  &quot;Banking&quot;, 
+  (IF(CONTAINS($UserRole.Name,&quot;E&amp;F Client Services&quot;), 
+  &quot;E&amp;F Client services&quot;, 
+  (IF( 
+  CONTAINS($UserRole.Name,&quot;E&amp;F&quot;), 
+  &quot;E&amp;F Staff&quot;, 
+  (IF( 
+  CONTAINS($UserRole.Name,&quot;IATAN&quot;), 
+  &quot;IATAN&quot;, 
+  (IF( 
+  CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;), 
+  &quot;Business Delivery&quot;, 
+  (IF( 
+  CONTAINS( $UserRole.Name, &quot;I&amp;C&quot;), 
+  &quot;Invoicing &amp; Collection&quot;, 
+  (IF( 
+  OR( 
+  CONTAINS( $UserRole.Name, &quot;Operations Manager&quot;), 
+  CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;), 
+  CONTAINS( $UserRole.Name, &quot;Operational Management&quot;) 
+  ), 
+  &quot;Billing and Reporting&quot;, 
+  (IF( 
+  CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;, 
+  (IF( 
+  CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;), 
+  &quot;Airline Management&quot;, 
+  (IF(AND(
+    CONTAINS($UserRole.Name, &quot;Record owner&quot;),
+    ISPICKVAL(Origin,&quot;Voicemail&quot;)),
+  &quot;Voicemail&quot;,
+  (IF(OR(
+    CONTAINS($UserRole.Name, &quot;Record owner&quot;),
+    CONTAINS($UserRole.Name, &quot;System Integration non AIMS&quot;),
+    CONTAINS($UserRole.Name, &quot;IATA Information Technology Services&quot;)
+  ),
+    &quot;IATA System&quot;,
+  
+  &quot;IATA Other&quot;))))))))))))))))))))))))))))))))))))))</formula>
         <name>IDFS_CREATED_BY_ROLE</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -7262,6 +7406,15 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Case_New_Interaction_tracking</fullName>
+        <field>New_interaction__c</field>
+        <literalValue>The case has been recently updated.</literalValue>
+        <name>Update Case New Interaction tracking</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Case_Status_Sanity_Check_Failure</fullName>
         <field>Status</field>
         <literalValue>Sanity Check Failure</literalValue>
@@ -7443,6 +7596,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>update_closed_by_role_field</fullName>
         <description>This field update contains a formula based on User&apos;s profile and role, the result is stored in the case field &apos;Closed by Role&apos;</description>
         <field>Closed_by_Role__c</field>
+<<<<<<< HEAD
         <formula>(IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;),CONTAINS($Profile.Name,&quot;IATA IDCard Profile&quot;)),&quot;IATA Partner&quot;,
 (IF(OR(CONTAINS($Profile.Name,&quot;Hub CS Management&quot;),CONTAINS( $Profile.Name,&quot;IDFS Americas - Hub Staff&quot;)),&quot;Customer Service&quot;,
 (IF(CONTAINS($UserRole.Name,&quot;IDO Industry Solutions&quot;),&quot;ID Card team&quot;,
@@ -7460,6 +7614,83 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
 (IF(CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;,
 (IF(CONTAINS($Profile.Name, &quot;GCS -&quot;), &quot;Customer Service&quot;,
 (IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;))))))))))))))))))))))))))))))))))</formula>
+=======
+        <formula>(IF(
+  CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;),
+  &quot;DPC External&quot;,
+(IF(
+  OR(
+    CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),
+    CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;),
+    CONTAINS($Profile.Name,&quot;IATA IDCard Profile&quot;)
+    ),
+    &quot;IATA Partner&quot;,
+(IF(
+  OR(
+    CONTAINS($Profile.Name,&quot;Hub CS Management&quot;),
+    CONTAINS( $Profile.Name,&quot;GCS -&quot;)
+    ),
+    &quot;Customer Service&quot;,
+  (IF(
+    OR(
+      CONTAINS( $UserRole.Name, &quot;Risk Management&quot;),
+      CONTAINS( $UserRole.Name, &quot;ARM Staff&quot;),
+      CONTAINS($UserRole.Name, &quot;ARM staff&quot;)
+    ),
+    &quot;Risk Management&quot;,
+  (IF(
+  CONTAINS($UserRole.Name,&quot;IDO Industry Solutions&quot;),
+  &quot;ID Card team&quot;,
+(IF(
+  OR(
+CONTAINS( $UserRole.Name, &quot;Agency Management&quot;),
+CONTAINS( $UserRole.Name, &quot;ACC/ARM&quot;),
+CONTAINS( $UserRole.Name, &quot;ACC staff&quot;), 
+CONTAINS($UserRole.Name,&quot;Acc Manager&quot;),
+CONTAINS($UserRole.Name, &quot;Acc Staff&quot;)
+    ),
+    &quot;Agency Management&quot;,
+(IF(
+  OR(
+  CONTAINS( $UserRole.Name, &quot;R&amp;S Staff&quot;),
+CONTAINS($UserRole.Name,&quot;R&amp;S Manager&quot;),
+CONTAINS( $UserRole.Name, &quot;R&amp;S staff&quot;)
+  ),
+  &quot;Remittance &amp; Settlement&quot;,
+(IF(
+  CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;),
+  &quot;SIS Help Desk&quot;,
+(IF(
+  CONTAINS( $UserRole.Name, &quot;Banking&quot;),
+  &quot;Banking&quot;,
+(IF(CONTAINS($UserRole.Name,&quot;E&amp;F Client Services&quot;),
+&quot;E&amp;F Client services&quot;,
+(IF(
+  CONTAINS($UserRole.Name,&quot;E&amp;F&quot;),
+  &quot;E&amp;F Staff&quot;,
+(IF(
+  CONTAINS($UserRole.Name,&quot;IATAN&quot;),
+  &quot;IATAN&quot;, 
+(IF(
+  CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),
+  &quot;Business Delivery&quot;, 
+(IF(
+  CONTAINS( $UserRole.Name, &quot;I&amp;C&quot;),
+  &quot;Invoicing &amp; Collection&quot;,
+(IF(
+  OR(
+CONTAINS( $UserRole.Name, &quot;Operations Manager&quot;),
+CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),
+CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
+  ), 
+  &quot;Billing and Reporting&quot;, 
+(IF(
+  CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;,  
+(IF(
+  CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),
+  &quot;Airline Management&quot;,
+  &quot;IATA Other&quot;))))))))))))))))))))))))))))))))))</formula>
+>>>>>>> master
         <name>update closed by role field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -8405,6 +8636,20 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Assign GDPR cases to queue</fullName>
+        <actions>
+            <name>Change_owner_to_be_GDPR_Queue</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>contains</operation>
+            <value>GDPR</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
         <fullName>Assign to AIR Tech Zone Queue</fullName>
         <actions>
             <name>Send_notification</name>
@@ -8535,6 +8780,31 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>the query is reopened and assigned to BJS complaint team</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>CNS Case Send Email When Deadline Date Is Reached</fullName>
+        <actions>
+            <name>CNS_Deadline_Date_Reached</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.SAAM_Deadline_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>CNS Collection Process</value>
+        </criteriaItems>
+        <description>Send email when Deadline Date Is reached for CNS cases.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <offsetFromField>Case.SAAM_Deadline_Date__c</offsetFromField>
+            <timeLength>4</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>CSR %3A New comment added</fullName>
@@ -8687,6 +8957,17 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Cases Escalated To SNOW</fullName>
+        <actions>
+            <name>IATA_iiNet_Service_Now</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <description>Cases Escalated To SNOW</description>
+        <formula>OwnerId = &apos;00G1r0000031kjM&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Change record type from Europe to AME</fullName>
         <actions>
             <name>Change_record_type_from_Europe_to_AME</name>
@@ -8705,6 +8986,17 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>Some countries for which we2case cases are created in AME have Europe as record type. This rule changes to the AME record type.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Clear field tracking</fullName>
+        <actions>
+            <name>Clear_Case_New_Interaction_tracking</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>clears field tracking message</description>
+        <formula>ISPICKVAL(New_interaction__c,&apos;The case has been recently updated.&apos;) &amp;&amp; LastModifiedById==OwnerId</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Clicktools Workflow_AM_CX_CHINESE</fullName>
@@ -10092,7 +10384,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10205,7 +10497,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -10263,7 +10555,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -10316,7 +10608,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10379,7 +10671,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10437,7 +10729,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10495,7 +10787,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10553,7 +10845,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10611,7 +10903,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10669,7 +10961,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10727,7 +11019,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10785,7 +11077,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10843,7 +11135,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10901,7 +11193,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10959,7 +11251,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11017,7 +11309,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11933,7 +12225,11 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>Clear New interaction field when Query is closed. It is necessary when query  had another Record Type with New Interaction Info</description>
+<<<<<<< HEAD
         <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;, RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; , RecordType.DeveloperName = &quot;CasesMENA&quot; , RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;, RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;, RecordType.DeveloperName =&quot;ID_Card_Application&quot;, RecordType.DeveloperName =&apos;Airline_Coding_Application&apos;,RecordType.DeveloperName =&apos;DPC_Service_Request&apos;) , OwnerId = LastModifiedById, contains(TEXT(Status),&quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
+=======
+        <formula>AND(   OR (     RecordType.DeveloperName = &quot;Cases_Global&quot;,     RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,     RecordType.DeveloperName = &quot;Invoicing_Collection_Cases&quot;,     RecordType.DeveloperName = &quot;CasesAmericas&quot;,     RecordType.DeveloperName = &quot;CasesEurope&quot;,     RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; ,     RecordType.DeveloperName = &quot;CasesMENA&quot; ,     RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,     RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,     RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,     RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;,     RecordType.DeveloperName = &quot;ComplaintIDFS&quot;,     RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;,     RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,     RecordType.DeveloperName = &quot;IATA_Financial_Review&quot;,     RecordType.DeveloperName = &quot;ID_Card_Application&quot;,     RecordType.DeveloperName = &apos;Airline_Coding_Application&apos;,     RecordType.DeveloperName = &apos;DPC_Service_Request&apos;,     RecordType.DeveloperName = &apos;CNS_Collection_Process&apos;   ) ,   OwnerId = LastModifiedById,   contains(TEXT(Status),&quot;Closed&quot;),   not(ispickval(New_interaction__c, &quot;&quot;)) )</formula>
+>>>>>>> master
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -12084,6 +12380,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>the query is reopened and assigned to GDC MAD complaint queue</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GDPR Case Updated</fullName>
+        <actions>
+            <name>Case_changed</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>NOT( ISNEW() ) &amp;&amp; RecordType__c = &apos;GDPR Request&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>I%26C_Update_Status to Action Needed</fullName>
@@ -13196,7 +13502,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND (2 OR 3 OR 4 OR 6) and 5</booleanFilter>
+        <booleanFilter>1 AND (2 OR 3 OR 4 OR 6) AND 5 AND 7</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -13220,12 +13526,17 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/20/2013</value>
+            <value>12/20/2013 1:00 AM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
             <value>&quot;Macedonia, the former Yugoslav Republic of&quot;</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.SIDRA_Lite_Reason__c</field>
+            <operation>notContain</operation>
+            <value>CNS Collection,CNS Financial Review</value>
         </criteriaItems>
         <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -13289,7 +13600,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterThan</operation>
-            <value>9/29/2012 6:00 PM</value>
+            <value>9/29/2012 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Short_Payment_Amount_USD__c</field>
@@ -13447,7 +13758,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
             <operation>greaterThan</operation>
-            <value>9/1/2013 6:00 PM</value>
+            <value>9/1/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DEF_Approval_Rejection__c</field>
@@ -13487,7 +13798,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
             <operation>greaterThan</operation>
-            <value>9/1/2013 6:00 PM</value>
+            <value>9/1/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DEF_Approval_Rejection__c</field>
@@ -15215,7 +15526,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>5/30/2016 6:00 PM</value>
+            <value>5/30/2016 7:00 PM</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -15983,6 +16294,25 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         </criteriaItems>
         <description>Rule to define if a case is an internal or external query.</description>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>NDC Matchmaker Team Notification</fullName>
+        <actions>
+            <name>NDC_Matchmaker_Email_Notification_on_Case_Creation</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>New,Open</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>NDC Management</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>NFE System to product owner</fullName>
@@ -18521,6 +18851,17 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Update Tracking Field</fullName>
+        <actions>
+            <name>Update_Case_New_Interaction_tracking</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Updates field tracking field if a case is updated by someone who is not the case owner</description>
+        <formula>CONTAINS($Label.CaseRTtrackedByCS,RecordType.DeveloperName) &amp;&amp; ( ISCHANGED(CaseArea__c)|| ISCHANGED(Reason1__c)|| ISCHANGED(BSPCountry__c)|| ISCHANGED(Case_Remarks__c)|| ISCHANGED(Attachment_received_possible_POP__c)|| ISCHANGED(Region__c)|| ISCHANGED(AccountId)|| ISCHANGED(ContactId)|| ISCHANGED(Origin)|| ISCHANGED(ParentId)|| ISCHANGED(Priority)|| ISCHANGED(Subject)|| ISCHANGED(Status)  ) &amp;&amp; LastModifiedById&lt;&gt;OwnerId</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Web - Change Case Area to Accreditation</fullName>
         <actions>
             <name>Case_Area_Accreditation</name>
@@ -19044,9 +19385,9 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         </actions>
         <active>true</active>
         <criteriaItems>
-            <field>Case.Status</field>
+            <field>Case.IsClosed</field>
             <operation>equals</operation>
-            <value>Closed</value>
+            <value>True</value>
         </criteriaItems>
         <description>DG_Capture_Analytics__c checkbox should updated to true when Case Status equals Closed.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>

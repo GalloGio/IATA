@@ -1,5 +1,6 @@
 public without sharing class ISSP_Case {
 
+    private static Id AP_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
     private static Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     private static Id AME_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesMENA');
     private static Id AMERICAS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesAmericas');
@@ -124,6 +125,32 @@ public without sharing class ISSP_Case {
     public String firstCommParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
 
     public ANG_ProgressBarHelper progressBarHelper{get; set;}
+
+
+    public Boolean isNewPortal {
+    get {
+        if(isNewPortal == null) {
+            isNewPortal = CSP_Utils.isNewPortalActive();
+        }
+        return isNewPortal;
+    }
+    set;
+    }
+
+    public String portalRedirectToUserProfile {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_Contact?id=' + newCase.ContactId + '&mid=M1S2' + (communityName == 'CNS' ? '&CommunityName=' + communityName : '');
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('my-profile');
+            return url;
+        }
+        
+    }
+    set;
+    }
+
 
     public PageReference pageLoad() {
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
@@ -714,25 +741,7 @@ public without sharing class ISSP_Case {
         //basto1p
         statusValMapped=getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,newCase.Status);
 
-        Map<String, String> objectsIds = new Map<String, String>();
-        objectsIds.put('AMS_OSCAR__C', newCase.OSCAR__c);
-        objectsIds.put('CASE', newCase.id);
-
-        // If the process is null the use the reason on the casop.
-        String process = '';
-        if(newCase.Oscar__r.Process__c == null || (newCase.Oscar__r.Process__c != null && newCase.Oscar__r.Process__c == '')) {
-            process = newCase.Reason1__c;
-        } else {
-            process = newCase.Oscar__r.Process__c;
-        }
-
-        progressBarHelper = new ANG_ProgressBarHelper(process, objectsIds);
-
-        for (ANG_ProgressNode node : progressBarHelper.progressNodes) {
-            if (node.titleTranslatable != null && node.titleTranslatable != '') {
-                node.title = getCustomLabel(node.titleTranslatable);
-            }
-        }
+        progressBarHelper = new ANG_ProgressBarHelper(newCase);
     }
 
     @TestVisible private String getCustomLabel(String labelName) {
@@ -749,6 +758,12 @@ public without sharing class ISSP_Case {
         if (filedName!=null && fieldValueToMapp!=null){
             if ( filedName.equalsIgnoreCase(ISSP_Case.STATUS_FLD_NAME) && fieldValueToMapp.equals('Solution Provided')){
                 returnVal=Label.ISSP_Solution_Provided;
+            }
+            else if (filedName.equalsIgnoreCase(ISSP_Case.STATUS_FLD_NAME) && fieldValueToMapp.equals('Completed')){
+                returnVal='Assigned';
+            }
+            else if (filedName.equalsIgnoreCase(ISSP_Case.STATUS_FLD_NAME) && fieldValueToMapp.equals('Submitted')){
+                returnVal='Submitted';
             }
             /*
             else if (filedName.equalsIgnoreCase('CaseType') && fieldValueToMapp.equals('Solution Provided')){

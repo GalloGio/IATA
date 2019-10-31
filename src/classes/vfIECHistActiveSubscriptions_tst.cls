@@ -37,10 +37,10 @@ public class vfIECHistActiveSubscriptions_tst {
         if (bCreateCharge) {
             // create dummy subscription charge
             lstSubscriptionCharge = new List<Zuora__SubscriptionProductCharge__c> {
-                IECTestUtil.createSampleSubscriptionCharge(subs01.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
-                , IECTestUtil.createSampleSubscriptionCharge(subs02.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
-                , IECTestUtil.createSampleSubscriptionCharge(subs03.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
-                , IECTestUtil.createSampleSubscriptionCharge(subs04.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
+                IECTestUtil.createSampleSubscriptionCharge2(subs01.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
+                , IECTestUtil.createSampleSubscriptionCharge2(subs02.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
+                , IECTestUtil.createSampleSubscriptionCharge2(subs03.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
+                , IECTestUtil.createSampleSubscriptionCharge2(subs04.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
             };
             insert lstSubscriptionCharge;
 
@@ -69,8 +69,8 @@ public class vfIECHistActiveSubscriptions_tst {
     private static Product_Category__c oProductCategory;
     private static Product_Information__c oProductInfo;
     private static Product_Information__c oProductInfo2;
-    private static zqu__ZProduct__c oProduct;
-    private static zqu__ZProduct__c oProduct2;
+    private static Product2 oProduct2;
+    private static Product2 oProduct;
     private static zqu__ProductRatePlan__c oProductRatePlan;
     private static zqu__ProductRatePlan__c oProductRatePlan2;
     private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge;
@@ -112,24 +112,24 @@ public class vfIECHistActiveSubscriptions_tst {
         oProductCategory = IECTestUtil.CreateSampleProductCategory('PCTST', true);
         insert oProductCategory;
         
-        oProduct = IECTestUtil.CreateSampleProduct('PTST');
+        oProduct = IECTestUtil.CreateSampleProduct2('PTST');
         insert oProduct;
         
-        oProduct2 = IECTestUtil.CreateSampleProduct('PTST2');
+        oProduct2 = IECTestUtil.CreateSampleProduct2('PTST2');
         insert oProduct2;
         
-        oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+        oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
         oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
         insert oProductInfo;
         
-        oProductInfo2 = IECTestUtil.CreateSampleProductInfo('PITST2', oProductCategory, oProduct2);
+        oProductInfo2 = IECTestUtil.CreateSampleProductInfo2('PITST2', oProductCategory, oProduct2);
         oProductInfo2.Product_Audience__c = IECConstants.ProductInformationAudience_MEMBERAIRLINE;
         insert oProductInfo2;
         
-        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
+        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('PRPTST', false, oProduct);
         insert oProductRatePlan;
         
-        oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan('PRPTST2', false, oProduct2);
+        oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan2('PRPTST2', false, oProduct2);
         insert oProductRatePlan2;
         
         oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 1);

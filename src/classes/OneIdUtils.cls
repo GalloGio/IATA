@@ -1,17 +1,20 @@
 public without sharing class OneIdUtils {
 	
-    public Enum Mode {CURRENT, ISSP, IDENTITY}
+    public Enum Mode {CURRENT, ISSP, IDENTITY, GDPR, CSP}
     
-	@AuraEnabled
-	public static String ORG_URL {get; set;}
     @AuraEnabled
-	public static String COMMUNITY_URL_NAME {get; set;}
+    public static String ORG_URL {get; set;}
     @AuraEnabled
-	public static String COMMUNITY_COMPLETE_URL {get; set;}
+    public static String COMMUNITY_URL_NAME {get; set;}
+    @AuraEnabled
+    public static String COMMUNITY_COMPLETE_URL {get; set;}
+
+
+
    
     @AuraEnabled
     public Static String getOrgUrl (){
-    	ORG_URL = URL.getSalesforceBaseUrl().getHost();
+        ORG_URL = URL.getSalesforceBaseUrl().getHost();
         System.debug('getOrgUrl() RESULT='+ORG_URL);
         return ORG_URL;
     }
@@ -25,11 +28,19 @@ public without sharing class OneIdUtils {
         return COMMUNITY_URL_NAME;
     }
 
-    private static Map<String, String> networks{
+    private static Map<OneIdUtils.mode, String> networks{
         get{
             if(networks == null){
-                networks = new Map<String, String>();
-                for(Network n : [SELECT Id, Name FROM Network]) networks.put(n.Name, String.valueOf(n.Id).substring(0, 15));
+                networks = new Map<OneIdUtils.mode, String>();
+                for(Network n : [SELECT Id, Name FROM Network]){
+                    OneIdUtils.mode key;
+                    if(n.name == 'IATA Portal') key =Mode.ISSP ;
+                    else if(n.name == 'identity') key =Mode.IDENTITY ;
+                    else if(n.name == 'CS Portal') key =Mode.CSP ;
+                    else if(n.name == Label.TECH_GDPR_Network_Name) key =Mode.GDPR ;
+                    else continue;
+                    networks.put(key, String.valueOf(n.Id).substring(0, 15));
+                } 
             }
             return networks;
         }
@@ -40,23 +51,28 @@ public without sharing class OneIdUtils {
     public Static String getSiteCompleteUrl (){
         return getSiteCompleteUrl(Mode.CURRENT);
     }    
-   
+    
+    @AuraEnabled
+    public Static String getCommunityRedirection (String portal, String startUrl){
+        OneIdUtils.Mode key;
+        if(portal == 'ISSP') key =Mode.ISSP ;
+        else if(portal == 'identity') key =Mode.IDENTITY ;
+        else if(portal == 'CSP') key =Mode.CSP ;
+       
+    return getCommunityRedirection (key,startUrl);
+    }
+
     @AuraEnabled
     public Static String getCommunityRedirection (Mode m, String startUrl){
         String networdUrl = '/servlet/networks/switch?networkId=';
         String sUrl = '';
         
-        if(startUrl != '') sUrl = '&startURL='+EncodingUtil.urlEncode(startUrl, 'UTF-8');        
+        if(startUrl != '' && (startUrl != 'undefined') )sUrl = '&startURL='+EncodingUtil.urlEncode(startUrl, 'UTF-8');        
 
         System.debug(loggingLevel.FINE, '____ [cls OneIdUtils - getSiteCompleteUrl] Mode - ' + m);
         if(m == Mode.CURRENT) COMMUNITY_COMPLETE_URL = Site.getBaseUrl();
-        else{            
-            String netMode;
-            
-            if(m == Mode.ISSP) netMode = 'IATA Portal';
-            if(m == Mode.IDENTITY) netMode = 'identity';
-            
-            String networkId = networks.get(netMode);
+        else{  
+            String networkId = networks.get(m);
             
             System.debug('final url ' + networdUrl+networkId+sUrl);
             

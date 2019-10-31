@@ -9,7 +9,7 @@
 public class vfIECGSSHist_tst {
     private static Product_Category__c oProductCategory;
     private static Product_Information__c oProductInfo;
-    private static zqu__ZProduct__c oProduct;
+    private static Product2 oProduct;
     private static zqu__ProductRatePlan__c oProductRatePlan;
     private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge;
     private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
@@ -33,14 +33,14 @@ public class vfIECGSSHist_tst {
             oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_GSS, true);
             insert oProductCategory;
             
-            oProduct = IECTestUtil.CreateSampleProduct('PTST');
+            oProduct = IECTestUtil.CreateSampleProduct2('PTST');
             insert oProduct;
             
-            oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+            oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
             oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
             insert oProductInfo;
             
-            oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
+            oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('PRPTST', false, oProduct);
             insert oProductRatePlan;
             
             oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 1);
@@ -58,7 +58,7 @@ public class vfIECGSSHist_tst {
 	            insert subscriptionDay;
 	            
 	            // create dummy subscription charge
-	            subscriptionChargeDay = IECTestUtil.createSampleSubscriptionCharge(subscriptionDay.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+	            subscriptionChargeDay = IECTestUtil.createSampleSubscriptionCharge2(subscriptionDay.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
 	            insert subscriptionChargeDay;
 	            
 	            GDP_File_Description__c fileDay = IECTestUtil.CreateSampleGDPFileDescription('D', 'Daily', IECConstants.ProductCategory_SF_GSS);
@@ -77,7 +77,7 @@ public class vfIECGSSHist_tst {
 	            insert subscriptionWeek;
 	            
 	            // create dummy subscription charge
-	            subscriptionChargeWeek = IECTestUtil.createSampleSubscriptionCharge(subscriptionWeek.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+	            subscriptionChargeWeek = IECTestUtil.createSampleSubscriptionCharge2(subscriptionWeek.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
 	            insert subscriptionChargeWeek;
 	            
 	            GDP_File_Description__c fileWeek = IECTestUtil.CreateSampleGDPFileDescription('D', 'Weekly', IECConstants.ProductCategory_SF_GSS);
@@ -96,7 +96,7 @@ public class vfIECGSSHist_tst {
 	            insert subscriptionBiMon;
 	            
 	            // create dummy subscription charge
-	            subscriptionChargeBiMon = IECTestUtil.createSampleSubscriptionCharge(subscriptionBiMon.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+	            subscriptionChargeBiMon = IECTestUtil.createSampleSubscriptionCharge2(subscriptionBiMon.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
 	            insert subscriptionChargeBiMon;
 	            
 	            GDP_File_Description__c fileBiMon = IECTestUtil.CreateSampleGDPFileDescription('P', 'Semi-Monthly', IECConstants.ProductCategory_SF_GSS);
@@ -118,7 +118,7 @@ public class vfIECGSSHist_tst {
 	            insert subscriptionMon;
 	            
 	            // create dummy subscription charge
-	            subscriptionChargeMon = IECTestUtil.createSampleSubscriptionCharge(subscriptionMon.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+	            subscriptionChargeMon = IECTestUtil.createSampleSubscriptionCharge2(subscriptionMon.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
 	            insert subscriptionChargeMon;
 	            
 	            GDP_File_Description__c fileMon = IECTestUtil.CreateSampleGDPFileDescription('T', 'Monthly', IECConstants.ProductCategory_SF_GSS);

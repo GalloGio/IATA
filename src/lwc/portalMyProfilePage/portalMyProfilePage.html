@@ -1,0 +1,33 @@
+<template>
+
+    <c-portal-page-container>
+        <span slot="componentContent">
+
+            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large">
+
+                <!-- Sticky navigation -->
+                <div class="stickyNavigation slds-col slds-size_1-of-3">
+                    <c-portal-company-profile-info-nav class="slds-large-show" onnavigate={handleNavigation}>
+                    </c-portal-company-profile-info-nav>
+                </div>
+
+                <!-- Profile sections -->
+                <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-3 slds-float_right">
+
+                    <template if:true={mapOfValuesContact}>
+                        <template for:each={mapOfValuesContact} for:item="keyValue">
+                            <c-portal-record-form-wrapper key={keyValue.key} object-name="Contact" static-fields={contactInfo}
+                                record-id={loggedUser.ContactId} fields={keyValue.value} show-edit={keyValue.isEditable} edit-basics="true"
+                                class="section" section-title={keyValue.key} data-name={keyValue.key}
+                                services={services} onrefreshview={refreshview} is-for-edit="true" showfunction={keyValue.showfunction}
+                                section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
+                            </c-portal-record-form-wrapper>
+                        </template>
+                    </template>
+
+                </div>
+            </div>
+
+        </span>
+    </c-portal-page-container>
+</template>

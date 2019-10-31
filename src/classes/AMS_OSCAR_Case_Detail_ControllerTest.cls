@@ -113,6 +113,9 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 			insert settlement;
 
+			country.AMS_Settlement_System__c = settlement.Id;
+			update country;
+
 			AMS_Operation__c opCode = new AMS_Operation__c(
 				Name = 'test operation',
 				Settlement__c = settlement.id,
@@ -127,14 +130,16 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			ANG_BSP_Attributes__c bSPAttributes1 = new ANG_BSP_Attributes__c(
 				Class_Type__c  = 'P',
 				Remittance_Frequency__c = 'D',
-				Operation__c = opCode.Id
+				Operation__c = opCode.Id,
+				BSP__c = settlement.Id
 			);
 			bSPAttributes.add(bSPAttributes1);
 
 				ANG_BSP_Attributes__c bSPAttributes2 = new ANG_BSP_Attributes__c(
 				Class_Type__c  = 'P',
 				Remittance_Frequency__c = 'V',
-				Operation__c = opCode.Id
+				Operation__c = opCode.Id,
+				BSP__c = settlement.Id
 			);
 			bSPAttributes.add(bSPAttributes2);
 			
@@ -231,6 +236,9 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
         insert settlement;
 
+		country.AMS_Settlement_System__c = settlement.Id;
+		update country;
+
         AMS_Operation__c opCode = new AMS_Operation__c(
             Name = 'test operation',
             Settlement__c = settlement.id,
@@ -243,7 +251,8 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
         ANG_BSP_Attributes__c bSPAttributes = new ANG_BSP_Attributes__c(
             Class_Type__c  = 'P',
             Remittance_Frequency__c = 'V',
-            Operation__c = opCode.Id
+            Operation__c = opCode.Id,
+			BSP__c = settlement.Id
         );
 
         insert bSPAttributes;
@@ -269,20 +278,12 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 	@isTest static void chinaConversionHideStagingAreaTest(){
 
-		Case c = 
-			[SELECT 
-				Id, 
-				OSCAR__c 
-			 FROM 
-			 	Case 
-			 WHERE 
-			 	Oscar__c IN 
-			 		(SELECT 
-			 			Id
-			 		 FROM 
-			 		 	AMS_OSCAR__c
-			 		 WHERE 
-			 		 	AMS_Online_Accreditation__c != ''
+		Case c = [SELECT Id, OSCAR__c 
+			 	FROM Case 
+			 	WHERE Oscar__c IN 
+                  	(SELECT Id
+			 		 FROM AMS_OSCAR__c
+			 		 WHERE AMS_Online_Accreditation__c != ''
 			 		) 
 			 LIMIT 1];
 
@@ -291,18 +292,18 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 		oscar.id = c.OSCAR__c;
 		oscar.Process__c = AMS_Utils.NGCHINACONVERSION;
 		
-		update oscar;
-		
-		PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
-		pg.getParameters().put('id', c.Id);
-		Test.setCurrentPage(pg);
-		
-		AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
-
-        System.assert(!controller.isChangeOfLocation, 'Should not be a change of location');
-
-		System.assert(!controller.showStagingArea, 'The staging area for China Conversions should be hidden');
-
+        Test.startTest();
+            update oscar;
+            
+            PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
+            pg.getParameters().put('id', c.Id);
+            Test.setCurrentPage(pg);
+            
+            AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
+    
+            System.assert(!controller.isChangeOfLocation, 'Should not be a change of location');
+            System.assert(!controller.showStagingArea, 'The staging area for China Conversions should be hidden');
+		Test.stopTest();
 	}
 
 	@isTest static void chinaConversionShowOscarOnGoingWarningTest(){

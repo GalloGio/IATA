@@ -1,0 +1,11 @@
+<apex:page standardController="Account">
+    <apex:includeLightning />
+
+    <div id="lightning" />
+
+    <script>
+        $Lightning.use("c:DetailPageMessagesApp", function() {
+            $Lightning.createComponent("c:DetailPageMessagesCmp", {paramRecordId : "{!Account.Id}", paramObjectName : "Account"}, "lightning");
+        });
+    </script>
+</apex:page>

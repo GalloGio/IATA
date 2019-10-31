@@ -53,6 +53,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Agency_Counter__c</fullName>
         <description>This field will hold the Agency statistic count depending on the &quot;Key&quot; field.</description>

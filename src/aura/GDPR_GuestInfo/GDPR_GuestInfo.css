@@ -1,0 +1,17 @@
+.THIS .ckb{
+    display: inline-block !important; 
+}
+.THIS .terms{
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.THIS .fields{
+    max-width: 300px;
+    height: 40px !important;
+}
+.THIS .labels{
+    display: block;
+    font-size: 15px;
+    margin-bottom: 5px;
+}

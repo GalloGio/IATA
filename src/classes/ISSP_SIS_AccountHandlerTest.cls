@@ -14,6 +14,17 @@ private class ISSP_SIS_AccountHandlerTest {
         	new ISSP_SIS_Account_Allowed_Countries__c(Name='SP')
         };
         insert listAllowedCountries;
+        insert new ISSP_SIS_Account_Allowed_Location__c(
+            Name='1',
+            Location_Classes__c = 'A,B',
+            Location_Types__c = 'AA,BB'
+        );
+        list<ISSP_SIS_Account_Allowed_Status__c> listAllowedStatus = new list<ISSP_SIS_Account_Allowed_Status__c>();
+        listAllowedStatus.add(new ISSP_SIS_Account_Allowed_Status__c(Name='Approved'));
+        listAllowedStatus.add(new ISSP_SIS_Account_Allowed_Status__c(Name='Cash basis/no commission'));
+        listAllowedStatus.add(new ISSP_SIS_Account_Allowed_Status__c(Name='Cash basis/with commission'));
+        listAllowedStatus.add(new ISSP_SIS_Account_Allowed_Status__c(Name='Changes processed'));
+        insert listAllowedStatus;
     }
 
     static testMethod void test_afterInsert_NonSISAccount() {
@@ -33,7 +44,9 @@ private class ISSP_SIS_AccountHandlerTest {
             RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
             Status__c = 'Changes processed',
             IATA_ISO_Country__c = country.Id,
-            Name = 'test'
+            Name = 'test',
+            Location_Class__c = 'B',
+            Location_Type__c = 'BB'
         );
         ISSP_WS_SIS_Callout_CreateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess><SISMemberID>' + testSISID + '</SISMemberID></Response>';
         
@@ -60,7 +73,9 @@ private class ISSP_SIS_AccountHandlerTest {
             Status__c = 'Changes processed',
             IATA_ISO_Country__c = country.Id,
             Name = 'test',
-            SIS_ID__c = testSISID
+            SIS_ID__c = testSISID,
+            Location_Class__c = 'A',
+            Location_Type__c = 'AA'
         );
         
         ISSP_WS_SIS_Callout_UpdateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess><SISMemberID>' + testSISID + '</SISMemberID></Response>';
@@ -83,7 +98,9 @@ private class ISSP_SIS_AccountHandlerTest {
         String testSISID = '123456';
         IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c='SP'];
         Account account = new Account(
-            Name = 'test'
+            Name = 'test',
+            Location_Class__c = 'A',
+            Location_Type__c = 'AA'
         );
         insert account;
         
@@ -115,7 +132,9 @@ private class ISSP_SIS_AccountHandlerTest {
             RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
             Status__c = '',
             Name = 'test',
-            SIS_ID__c = testSISID
+            SIS_ID__c = testSISID,
+            Location_Class__c = 'A',
+            Location_Type__c = 'AA'
         );
         insert account;
         
@@ -146,6 +165,7 @@ private class ISSP_SIS_AccountHandlerTest {
                 Name='1',
                 Recordtype__c='IATA_Agency',
                 Status__c='Approved',
+                Location_Class__c='B',
                 Country_ISO_Codes__c='SP',
                 SIS_Status__c='Active',
                 SIS_Substatus__c='TOU'
@@ -154,6 +174,16 @@ private class ISSP_SIS_AccountHandlerTest {
                 Name='2',
                 Recordtype__c='IATA_Agency',
                 Status__c='Approved',
+                Location_Class__c='A',
+                Country_ISO_Codes__c='JO',
+                SIS_Status__c='Active',
+                SIS_Substatus__c='ISPA Airline'
+            ),
+            new ISSP_SIS_Account_Status__c(
+                Name='3',
+                Recordtype__c='IATA_Agency',
+                Status__c='Approved',
+                Location_Class__c='All',
                 Country_ISO_Codes__c='All',
                 SIS_Status__c='Terminated',
                 SIS_Substatus__c='TERMINATED'
@@ -169,6 +199,8 @@ private class ISSP_SIS_AccountHandlerTest {
             Name = 'test',
             RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
             Status__c = 'Approved',
+            Location_Class__c = 'B',
+            Location_Type__c = 'BB',
             IATA_ISO_Country__c = country.Id
         );
         ISSP_WS_SIS_Callout_CreateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess><SISMemberID>123465</SISMemberID></Response>';
@@ -189,6 +221,8 @@ private class ISSP_SIS_AccountHandlerTest {
             Name = 'test',
             RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
             Status__c = 'Approved',
+            Location_Class__c = 'B',
+            Location_Type__c = 'BB',
             IATA_ISO_Country__c = country.Id
         );
         ISSP_WS_SIS_Callout_CreateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess><SISMemberID>123465</SISMemberID></Response>';
@@ -200,6 +234,36 @@ private class ISSP_SIS_AccountHandlerTest {
         Account result = [SELECT Id, SIS_Status__c, SIS_Sub_Status__c FROM Account where Id = :account.Id];
         System.assertEquals('Terminated', result.SIS_Status__c);
         System.assertEquals('TERMINATED', result.SIS_Sub_Status__c);
+    }
+    
+    static testMethod void test_beforeUpdate_UpdateSISStatus2() {
+        loadCS_SISAccount();
+        IATA_ISO_Country__c spain = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c='SP'];
+        IATA_ISO_Country__c jordan = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c='JO'];
+        
+        Account account = new Account(
+            Name = 'test',
+            RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
+            Location_Class__c = 'A',
+            Location_Type__c = 'AA'
+        );
+        insert account;
+        ISSP_WS_SIS_Callout_CreateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess><SISMemberID>123465</SISMemberID></Response>';
+        
+        Account result = [SELECT Id, SIS_Status__c, SIS_Sub_Status__c FROM Account where Id = :account.Id];
+        System.assert(String.isBlank(result.SIS_Status__c));
+        System.assert(String.isBlank(result.SIS_Sub_Status__c));
+        
+        Test.startTest();
+        account.IATA_ISO_Country__c = jordan.Id;
+        account.Location_Class__c = 'A';
+        account.Status__c = 'Approved';
+        update account;
+        Test.stopTest();
+        
+        result = [SELECT Id, SIS_Status__c, SIS_Sub_Status__c FROM Account where Id = :account.Id];
+        System.assertEquals('Active', result.SIS_Status__c);
+        System.assertEquals('ISPA Airline', result.SIS_Sub_Status__c);
     }
 
     static testMethod void test_giveSISAppToAccountUsers() {
@@ -221,8 +285,8 @@ private class ISSP_SIS_AccountHandlerTest {
         insert account;
         
         Test.startTest();
-        account.Sector__c = 'Airline';
-        account.Category__c = 'CASS Associate';
+        account.Sector__c = AMS_Utils.SECTOR_PASSENGER;
+        account.Category__c = AMS_Utils.CATEGORY_CASSASSOCIATE;
         update account;
         Test.stopTest();
     }

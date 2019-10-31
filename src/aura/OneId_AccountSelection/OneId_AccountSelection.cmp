@@ -4,7 +4,16 @@
 	
 	<aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
 
-	<aura:attribute type="Account" name="account" default="{ 'sobjectType': 'Account', 'Sector__c' : 'Travel Agent' }" />
+	<!--Data Quality-->
+	<!--Passing these fields to the account creation component so they are accessible in account selection controller-->
+	<aura:attribute type="String" name="billingCityId" />
+	<aura:attribute type="String" name="billingStateId" />
+	<aura:attribute type="String" name="shippingCityId" />
+	<aura:attribute type="String" name="shippingStateId" />
+	<aura:attribute type="IATA_ISO_Country__c" name="countryShipping" access="private" default="{'sobjectType' : 'IATA_ISO_Country__c'}"/>
+	<!--Data Quality-->
+
+	<aura:attribute type="Account" name="account" default="{ 'sobjectType': 'Account', 'Sector__c' : 'Travel Agent', 'Iso_state__c':'', 'Iata_Iso_City__c':'' }" />
 	<aura:attribute type="Contact" name="contact" default="{ 'sobjectType': 'Contact' }" />
 	<aura:attribute type="Boolean" name="search" default="true" />
 	<aura:attribute type="String" name="serviceName" />
@@ -18,8 +27,9 @@
 	<aura:attribute type="Map" name="accountLabels" access="private"/>
 	<aura:attribute type="Map" name="filters" default="{}" access="private"/>
 
-  	<aura:attribute type="OneId_RegistrationProcessController.CountryInformation" name="countryInformation" access="private"/>
+  	<aura:attribute type="OneId_RegistrationProcessController.CountryInformation" name="countryInformation"/>
 	<aura:attribute type="IATA_ISO_Country__c" name="country" access="private"/>
+	
 	<aura:attribute type="String" name="selectedCountry" access="private"/>
   	<aura:attribute type="List" name="agencyTypes" access="private"/> 
 	<aura:attribute type="Boolean" name="showCreateNew" default="false" />
@@ -81,10 +91,17 @@
 			<c:OneId_AccountCreation aura:id="creationComponent"
 				account="{!v.account}"
 				country="{!v.country}"
+				countryShipping="{!v.countryShipping}"
 				changeName="{! !(v.customerType == 'Airline' &amp;&amp; !empty(v.account.IATA_ISO_Country__c) &amp;&amp; v.account.IATA_ISO_Country__c != v.selectedCountry)}"
 				changeSector="{!v.customerType == 'OtherCompany'}"
 				changeCategory="{!v.customerType == 'OtherCompany' || v.customerType=='FreightForwarder' || (v.customerType == 'Airline' &amp;&amp; (empty(v.account.IATA_ISO_Country__c) || v.account.IATA_ISO_Country__c == v.selectedCountry))}"
-			/>
+				billingCityId="{!v.billingCityId}"
+				billingStateId="{!v.billingStateId}"
+				shippingCityId="{!v.shippingCityId}"
+				shippingStateId="{!v.shippingStateId}"				
+				countryInformation = "{!v.countryInformation}"
+				/>
+ 
 		</aura:set>
 	</aura:if>
 

@@ -253,7 +253,7 @@
             <label>assignment rule</label>
         </rules>
     </decisions>
-    <interviewLabel>case_run_assignment_rules-7_InterviewLabel</interviewLabel>
+    <interviewLabel>case_run_assignment_rules-14_InterviewLabel</interviewLabel>
     <label>case run assignment rules</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -294,6 +294,9 @@
             </value>
         </processMetadataValues>
         <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
             <name>isChildRelationship</name>
             <value>
                 <booleanValue>false</booleanValue>
@@ -305,8 +308,11 @@
                 <stringValue>[Case]</stringValue>
             </value>
         </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
         <name>myRule_1_A2</name>
-        <label>change record type</label>
+        <label>UpdateAssignField</label>
         <locationX>100</locationX>
         <locationY>300</locationY>
         <filters>
@@ -326,7 +332,7 @@
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
-                    <stringValue>ID</stringValue>
+                    <stringValue>Boolean</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -338,30 +344,30 @@
             <processMetadataValues>
                 <name>leftHandSideLabel</name>
                 <value>
-                    <stringValue>Record Type ID</stringValue>
+                    <stringValue>Assign using active assignment rules</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue>RecordType</stringValue>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
                 <name>rightHandSideType</name>
                 <value>
-                    <stringValue>ID</stringValue>
+                    <stringValue>Boolean</stringValue>
                 </value>
             </processMetadataValues>
-            <field>RecordTypeId</field>
+            <field>Assign__c</field>
             <value>
-                <stringValue>012200000000DSOAA2</stringValue>
+                <booleanValue>false</booleanValue>
             </value>
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

@@ -14,62 +14,67 @@ public class IATAIsoCountryDAO {
 	 *
 	 * @return IATA_ISO_Country Map 
 	 */
-	private static Map<ID, IATA_ISO_Country__c> fetchMapIataIsoCountry(){
-
-		return new Map<ID, IATA_ISO_Country__c>([SELECT Id, Name, ISO_Code__c, International_dialing_code_ISD__c, Region__c, 
-													  	AMS_Default_State__c, AIMS_Area_Name__c, AIMS_Area_ID__c, AMS_Settlement_System__c, 
-													  	AMS_Settlement_System_CASS__c, Case_BSP_Country__c, IATA_Regional_Office__c, ISO_Code_Numeric__c,
-
-														//AMS_XML_Generator Fields
-														BSP_Country_free_text__c, CASS_Country_free_text__c,SLA_Type__c, Sub_Region__c, 
-														Country_Manager__r.Name,
-														Informatica_Value__c,
-														IATA_COUNTRY_EN__c,
-                                                        IATA_Contry_KR__c,
-                                                       	IATA_Country_FR__c,
-                                                    	IATA_Country_IT__c,
-                                                        IATA_Country_JP__c,
-                                                        IATA_Country_PT__c,
-                                                        IATA_Country_SP__c,
-                                                        IATA_Country_ZH__c,
-                                                        Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c,
-                                                        IEC_Zip_Postal_Code_required__c,
-                                                        Acli_Country__c,
-
-                                                        AMS_Pilot_Country__c,
-                                                        Travel_Branch_Country__c, 
-                                                        Travel_HO_Country__c, 
-                                                        Cargo_Branch_Country__c, 
-                                                        Cargo_HO_Country__c, 
-                                                        Branches_abroad_not_allowed__c,
-                                                        Sanctioned_Country__c,
-                                                        Profit_Center__c,
-                                                        Is_Non_Compliant__c,
-                                                        CurrencyIsoCode, Country_Manager__c,
-                                                        ISS_Office_Location__c, OSCAR_Enabled__c,
-                                                        ANG_Enable_NewGen__c, EU_Country__c,
-                                                        Tax_Number_label__c, Tax_number_format__c,
-                                                        Tax_number_help_text__c, Hide_Tax_Number_VAT__c,
-                                                        Tax_Number_VAT_field_mandatory__c, Postal_Code_Format_regEx__c,
-														State_Province_Mandatory__c, Postal_Code_Hint_Format__c,
-                                                        EACP_Country__c, CASS_Import__c,
-                                                        Disable_non_IATA_Cargo_Agents__c, original_bank_details_not_required__c,
-                                                        Local_language_Agency_details_required__c, Prevent_Portal_Trade_Name_Change__c,
-                                                        Enable_Notice_of_Change__c, SAAM_enable_non_IATA_Cargo_Agents__c,
-                                                        Enable_Minor_Changes_from_Portal__c, AMS_Accreditation_New_Labels__c,
-                                                        EBulletin_enabled__c, AMS_Vouchers_Benchmark__c, AMS_Max_Vouchers_Per_Year__c,
-                                                        LVA_CountryLanguage__c, CNS_Country__c, ANG_Portal_Service__c, Airline_EasyPay_Opt_Out_Date__c, 
-
-                                                        (SELECT Id, Name, ISO_Code__c, IEC_Valid_SAP__c
-                                                        FROM IATA_ISO_States__r
-                                                        ORDER BY Name),
-
-                                                        (SELECT Id, Minimum_DGR_BR__c, Minimum_DGR_HO__c, Location_Class__c, RecordType.Name, 
-                                                        		Threshold__c, RecordType.DeveloperName
-													   	FROM AMS_Country_Specific_Attributes__r)
-
-											  	FROM IATA_ISO_Country__c ]);
-	}
+    private static Map<ID, IATA_ISO_Country__c> fetchMapIataIsoCountry(){
+        
+        return new Map<ID, IATA_ISO_Country__c>([SELECT Id, Name, ISO_Code__c, International_dialing_code_ISD__c, Region__c, 
+                                                 AMS_Default_State__c, AIMS_Area_Name__c, AIMS_Area_ID__c, AMS_Settlement_System__c, 
+                                                 AMS_Settlement_System_CASS__c, Case_BSP_Country__c, IATA_Regional_Office__c, ISO_Code_Numeric__c,
+                                                 
+                                                 //AMS_XML_Generator Fields
+                                                 BSP_Country_free_text__c, CASS_Country_free_text__c,SLA_Type__c, Sub_Region__c, 
+                                                 Country_Manager__r.Name,
+                                                 Informatica_Value__c,
+                                                 IATA_COUNTRY_EN__c,
+                                                 IATA_Contry_KR__c,
+                                                 IATA_Country_FR__c,
+                                                 IATA_Country_IT__c,
+                                                 IATA_Country_JP__c,
+                                                 IATA_Country_PT__c,
+                                                 IATA_Country_SP__c,
+                                                 IATA_Country_ZH__c,
+                                                 Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, VAT_2_Validation_Required__c ,
+                                                 IEC_Zip_Postal_Code_required__c,
+                                                 Acli_Country__c,
+                                                 
+                                                 AMS_Pilot_Country__c,
+                                                 Travel_Branch_Country__c, 
+                                                 Travel_HO_Country__c, 
+                                                 Cargo_Branch_Country__c, 
+                                                 Cargo_HO_Country__c, 
+                                                 Branches_abroad_not_allowed__c,
+                                                 Sanctioned_Country__c,
+                                                 Profit_Center__c,
+                                                 Is_Non_Compliant__c,
+                                                 CurrencyIsoCode, Country_Manager__c,
+                                                 ISS_Office_Location__c, OSCAR_Enabled__c,
+                                                 ANG_Enable_NewGen__c, EU_Country__c,
+                                                 Tax_Number_label__c, Tax_Number_2_label__c,
+                                                 Tax_number_format__c, Tax_Number_2_Format__c,
+                                                 Tax_number_help_text__c, Tax_Number_2_Help_Text__c,
+                                                 Hide_Tax_Number_VAT__c, Hide_Tax_Number_2_VAT_field_2__c,
+                                                 Tax_Number_VAT_field_mandatory__c, Tax_Number_2_VAT_field_2_mandatory__c,
+                                                 Postal_Code_Format_regEx__c,State_Province_Mandatory__c, Postal_Code_Hint_Format__c,
+                                                 EACP_Country__c, CASS_Import__c,
+                                                 Disable_non_IATA_Cargo_Agents__c, original_bank_details_not_required__c,
+                                                 Local_language_Agency_details_required__c, Prevent_Portal_Trade_Name_Change__c,
+                                                 Enable_Notice_of_Change__c, SAAM_enable_non_IATA_Cargo_Agents__c,
+                                                 Enable_Minor_Changes_from_Portal__c, AMS_Accreditation_New_Labels__c,
+                                                 EBulletin_enabled__c, AMS_Vouchers_Benchmark__c, AMS_Max_Vouchers_Per_Year__c,
+                                                 LVA_CountryLanguage__c, CNS_Country__c, ANG_Portal_Service__c, Airline_EasyPay_Opt_Out_Date__c,
+                                                 State_Province_Picklist__c, ANG_IEP_Model__c, 
+												 Region_Province_and_Cities_Enabled__c,
+						AMS_Settlement_System__r.Name, AMS_Settlement_System__r.Remittance_Frequency_per_State__c,                                                 
+                                                 (SELECT Id, Name, ISO_Code__c, IEC_Valid_SAP__c
+                                                  FROM IATA_ISO_States__r
+                                                  ORDER BY Name),
+                                                 
+                                                 (SELECT Id, Minimum_DGR_BR__c, Minimum_DGR_HO__c, Location_Class__c, RecordType.Name, 
+                                                  Threshold__c, RecordType.DeveloperName, Block_notification_on_RHC_amount_update__c, 
+                                                        		Block_notification_on_Risk_Status_update__c, CurrencyIsoCode, ANG_Minimum_RHC_Amount__c
+                                                  FROM AMS_Country_Specific_Attributes__r)
+                                                 
+                                                 FROM IATA_ISO_Country__c ]);
+    }
 
 
 	/**
@@ -314,6 +319,26 @@ public class IATAIsoCountryDAO {
 		for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountries()){
 			if(isoCountry.Case_BSP_Country__c != null && isoCountry.Case_BSP_Country__c != ''){
 				isoCountryList.add(isoCountry);
+			}
+		}
+		return isoCountryList;
+	}
+
+	/**
+	 * Method that return a list of IATA_ISO_Country list without all
+	 * Case_BSP_Country__c != null AND Case_BSP_Country__c != ''
+	 * 
+	 * @return List of IATA_ISO_Country
+	 */
+	public static List<IATA_ISO_Country__c> getIsoCountriesBySettlementSystemName(Set<String> setSettlementNames){  
+
+		List<IATA_ISO_Country__c> isoCountryList = new List<IATA_ISO_Country__c>();
+
+		for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountries()){
+			if(isoCountry.AMS_Settlement_System__c != null && isoCountry.AMS_Settlement_System__r.Name != null && isoCountry.AMS_Settlement_System__r.Name != ''){
+				if(setSettlementNames != null && !setSettlementNames.isEmpty() && setSettlementNames.contains(isoCountry.AMS_Settlement_System__r.Name)){
+					isoCountryList.add(isoCountry);
+				}
 			}
 		}
 		return isoCountryList;

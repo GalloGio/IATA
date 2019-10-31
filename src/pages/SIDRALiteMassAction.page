@@ -186,6 +186,8 @@ function selectedCases() {
           <input class="line-select" onchange="selectedCases();" type="checkbox"/>
         </apex:column>
 
+        <apex:column value="{!wrapper.cse.IATA_Code__c}" />
+
         <apex:column >
           <apex:facet name="header">{!$ObjectType.Case.fields.CaseNumber.label}</apex:facet>
           <apex:outputLink value="/{!wrapper.cse.Id}?retURL={!$CurrentPage.URL}">{!wrapper.cse.CaseNumber}</apex:outputLink>

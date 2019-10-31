@@ -91,7 +91,7 @@
 	                <div class="group-title">{!$Label.Products}</div>
 	                <ul class="nav">
 	                	<apex:repeat value="{!mega_menus}" var="key">
-	                    	<li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!key}">{!mega_menus[key]}</a></li>
+	                    	<li><a href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!key}">{!mega_menus[key]}</a></li>
 	                    </apex:repeat>
 	                </ul>
 	            </div>

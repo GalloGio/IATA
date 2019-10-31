@@ -5,70 +5,88 @@ private class AMS_AccountTriggerHandlerTest {
 
 		List<Account> acctsToInsert = new List<Account>();
 
-		Account acc1 = new Account();
-		acc1.Name = 'HO Account 1';
-		acc1.Type = 'IATA Cargo Agent';
-		acc1.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
+		Account acc1 = new Account(
+            Name = 'HO Account 1',
+            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Sector__c = AMS_Utils.SECTOR_CARGO,
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+            REASON_FOR_CREATION__C = 'Created by customer'
+        );
 
 		insert acc1;
 
-		Account acc2 = new Account();
-		acc2.Name = 'BR Account 2';
-		acc2.Type = 'IATA Cargo Agent';
-		acc2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
-		acc2.ParentId = acc1.Id;
-		acc2.Sector__c = 'Cargo Agent';
-		acc2.REASON_FOR_CREATION__C = 'Created by customer';
-		
-		Account acc3 = new Account();
-		acc3.Name = 'BR Account 3';
-		acc3.Type = 'IATA Cargo Agent';
-		acc3.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
-		acc3.ParentId = acc1.Id;
-		acc3.Sector__c = 'Cargo Agent';
-		acc3.REASON_FOR_CREATION__C = 'Created by customer';
-	   
-		Account acc4 = new Account();
-		acc4.Name = 'BR Account 4';
-		acc4.Type = 'IATA Cargo Agent';
-		acc4.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
-		acc4.ParentId = acc1.Id;
-		acc4.Sector__c = 'Cargo Agent';
-		acc4.REASON_FOR_CREATION__C = 'Created by customer';
-		
+		Account acc2 = new Account(
+            Name = 'BR Account 2',
+            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+            ParentId = acc1.Id,
+            Sector__c = AMS_Utils.SECTOR_CARGO,
+            REASON_FOR_CREATION__C = 'Created by customer'
+		);		
+        
+		Account acc3 = new Account(
+            Name = 'BR Account 3',
+            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+            ParentId = acc1.Id,
+            Sector__c = AMS_Utils.SECTOR_CARGO,
+            REASON_FOR_CREATION__C = 'Created by customer'
+	   	);
+        
+		Account acc4 = new Account(
+            Name = 'BR Account 4',
+            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+            ParentId = acc1.Id,
+            Sector__c = AMS_Utils.SECTOR_CARGO,
+            REASON_FOR_CREATION__C = 'Created by customer'
+        );
+        
 		// different set
-
-		Account acc1d = new Account();
-		acc1d.Name = 'HO Account Diff 1';
-		acc1d.Type = 'IATA Cargo Agent';
-		acc1d.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
-		
+		Account acc1d = new Account(
+            Name = 'HO Account Diff 1',
+            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Sector__c = AMS_Utils.SECTOR_CARGO,
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+            REASON_FOR_CREATION__C = 'Created by customer'
+		);
 		insert acc1d;
 		
-		Account acc2d = new Account();
-		acc2d.Name = 'BR Account Diff 2';
-		acc2d.Type = 'IATA Cargo Agent';
-		acc2d.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
-		acc2d.ParentId = acc1d.Id;
-		acc2d.Sector__c = 'Cargo Agent';
-		acc2d.REASON_FOR_CREATION__C = 'Created by customer';
-
-		Account acc3d = new Account();
-		acc3d.Name = 'BR Account Diff 3';
-		acc3d.Type = 'IATA Cargo Agent';
-		acc3d.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
-		acc3d.ParentId = acc1d.Id;
-		acc3d.Sector__c = 'Cargo Agent';
-		acc3d.REASON_FOR_CREATION__C = 'Created by customer';
-
-		Account acc4d = new Account();
-		acc4d.Name = 'BR Account Diff 4';
-		acc4d.Type = 'IATA Cargo Agent';
-		acc4d.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
-		acc4d.ParentId = acc1d.Id;
-		acc4d.Sector__c = 'Cargo Agent';
-		acc4d.REASON_FOR_CREATION__C = 'Created by customer';
-
+		Account acc2d = new Account(
+            Name = 'BR Account Diff 2',
+            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+            ParentId = acc1d.Id,
+            Sector__c = AMS_Utils.SECTOR_CARGO,
+            REASON_FOR_CREATION__C = 'Created by customer'
+		);
+        
+		Account acc3d = new Account(
+            Name = 'BR Account Diff 3',
+            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+            ParentId = acc1d.Id,
+            Sector__c = AMS_Utils.SECTOR_CARGO,
+            REASON_FOR_CREATION__C = 'Created by customer'
+		);
+        
+		Account acc4d = new Account(
+            Name = 'BR Account Diff 4',
+            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+            ParentId = acc1d.Id,
+            Sector__c = AMS_Utils.SECTOR_CARGO,
+            REASON_FOR_CREATION__C = 'Created by customer'
+		);
+        
 		acctsToInsert.add(acc2);
 		acctsToInsert.add(acc3);
 		acctsToInsert.add(acc4);
@@ -214,13 +232,16 @@ private class AMS_AccountTriggerHandlerTest {
 	//Test the trigger trgAccount
 	static testMethod void test_trgAccount() {
 		IECTestUtil.bIgnoreCurrentUserProfile = true;
-		Account acc1 = new Account();
-		acc1.Name = 'HO Account 1';
-		acc1.Type = 'IATA Cargo Agent';
-		acc1.WebStar_ID__c = 'Some Test';
-		acc1.Is_your_firm_handling_Dangerous_Goods__c = 'No';
-		acc1.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-
+		Account acc1 = new Account(
+            Name = 'HO Account 1',
+            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Sector__c = AMS_Utils.SECTOR_CARGO,
+            WebStar_ID__c = 'Some Test',
+            Is_your_firm_handling_Dangerous_Goods__c = 'No',
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+            REASON_FOR_CREATION__C = 'Account is missing'
+		);
 		try{
 			insert acc1;
 		}catch(Exception e){
@@ -233,9 +254,7 @@ private class AMS_AccountTriggerHandlerTest {
 		IECTestUtil.bIgnoreCurrentUserProfile = true;
 		AMS_Agency_Regulation__c certificate1 = new AMS_Agency_Regulation__c(Last_Name__c = 'test1', Account__c = acc1.Id, Expiry_Date__c = Date.today().addDays(365), Type_of_Certificate__c = 'DGR', Is_your_firm_handling_Dangerous_Goods__c = 'No');
 		insert certificate1;
-		acc1.Reason_for_creation__c = 'Account is missing';
 		acc1.Last_Modified_by_Source__c = System.now();
-		acc1.Sector__c = AMS_Utils.SECTOR_CARGO;
 		acc1.Is_your_firm_handling_Dangerous_Goods__c = 'Yes';
 		update acc1;
 	}
@@ -273,7 +292,7 @@ private class AMS_AccountTriggerHandlerTest {
 								Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
 		insert a;
 
-		insert new AMS_Oscar__c(Account__c = a.Id, Status__c = 'Open');
+		insert new AMS_Oscar__c(Account__c = a.Id, Status__c = 'Open', STEP17__c = 'In Progress');
 
 		Test.startTest();
 
@@ -306,7 +325,8 @@ private class AMS_AccountTriggerHandlerTest {
 
 		Account account = new Account(
 			Name = 'Test Account',
-			Type = 'IATA Cargo Agent',
+			Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
 			Cass_Number__c = '000',
 			Sector__c = AMS_Utils.SECTOR_CARGO,
 			IATA_ISO_Country__c = country.Id,
@@ -318,7 +338,8 @@ private class AMS_AccountTriggerHandlerTest {
 
 		Account account2 = new Account(
 			Name = 'Test Account',
-			Type = 'IATA Cargo Agent',
+			Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
 			Cass_Number__c = null,
 			Sector__c = AMS_Utils.SECTOR_CARGO,
 			Location_Type__c = 'HO',

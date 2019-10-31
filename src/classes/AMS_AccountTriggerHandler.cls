@@ -126,13 +126,6 @@ public class AMS_AccountTriggerHandler {
         for(Account ag:accs){
             if(ag.Sector__c == 'Travel Agent' || ag.Sector__c == 'Cargo Agent')
             {
-                // DNG - This is not used anymore since that agencies object is not used ...
-                /*
-                if(verifyFieldChanges(ag, oldMap.get(ag.Id)))    
-                {
-                    agencies.add(ag);
-                }
-                */
                 //consider agency with iata code with NEW primary Address  OR agencies with Address with new iata code
                 if((ag.IATA_ISO_Country__c!= oldMap.get(ag.Id).IATA_ISO_Country__c && ag.IATACode__c!=null) || (ag.IATA_ISO_Country__c!=null && ag.IATACode__c!=null && oldMap.get(ag.Id).IATACode__c != ag.IATACode__c)){
                     system.debug('[AMS_AgencyTrigger] updated Primary Address for Agency '+ag.Id);
@@ -140,17 +133,10 @@ public class AMS_AccountTriggerHandler {
                 }
             }
         }
-
-        //FM - 22-09-2016 - stop creating "agency update" Records
-        //if(agencies != null && agencies.size()>0)
-        //    AMS_AgencyUpdateHelper.agencyUpdate(agencies);
-
         if(operationHelpercandidate != null && operationHelpercandidate.size()>0){
             system.debug('[AMS_AgencyTrigger] updating Operation for '+operationHelpercandidate.size()+' Agencies');
             AMS_AgencyHelper.updateAgenciesOperations(operationHelpercandidate);
         }
-
-
     }
 
     public static void handleManualMinorChanges(List<Account> accs, Map<Id,Account> oldMap){
@@ -167,7 +153,6 @@ public class AMS_AccountTriggerHandler {
             if(!acct.Country_OSCAR_Enabled__c) continue;
             //LF: end change
         
-
             List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges = new List<AMS_RecordCreatorWebservice.AccountChanges>();
 
             for (String fieldName : accountFields.keySet()) {
@@ -514,7 +499,7 @@ public class AMS_AccountTriggerHandler {
 
         System.debug(loggingLevel.FINE, '____ [cls AMS_AccountTriggerHandler - handleDDUpdates] ddAccounts - ' + ddAccounts.keySet());
 
-        List<AMS_OSCAR__c> oscars = [SELECT Id, Account__c  FROM AMS_OSCAR__c WHERE Account__c IN :ddAccounts.keySet() AND Status__c NOT IN :closedStatus];
+        List<AMS_OSCAR__c> oscars = [SELECT Id, Account__c  FROM AMS_OSCAR__c WHERE Account__c IN :ddAccounts.keySet() AND Status__c NOT IN :closedStatus AND STEP17__c = 'In Progress'];
         for(AMS_OSCAR__c oscar : oscars){
             Account acc = ddAccounts.get(oscar.Account__c);
 

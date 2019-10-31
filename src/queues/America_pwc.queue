@@ -4,7 +4,7 @@
     <name>Americas PwC</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>AmericasAgencyManagementManagerI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>AmericasAgencyManagementManager</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>

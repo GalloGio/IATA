@@ -1,0 +1,29 @@
+<template>
+
+    <c-portal-services-card-container image-url={service.recordService.Application_icon_URL__c} background-variant="white">
+
+        <span slot="serviceName">{service.recordService.ServiceName__c}</span>
+        <span slot="serviceDescription">
+            <lightning-formatted-rich-text value={service.recordService.Service_Description__c} class="breakWord introMessage"></lightning-formatted-rich-text>
+        </span>
+    
+        <span slot="leftButton">
+            <lightning-button variant="base" 
+                label={label.CSP_Services_ServiceInformation}
+                title={label.CSP_Services_ServiceInformation}
+                onclick={goToServiceInformationButtonClick}
+                class="slds-p-right_small text-xxsmall text-bold blueCustomButtonLink">
+            </lightning-button>
+        </span>
+        <span slot="rightButton">
+            <lightning-button 
+                label={service.btnLabel} 
+                class="containedButtonSlim" 
+                onclick={enableServiceButtonClick}>
+            </lightning-button>
+        </span>
+    </c-portal-services-card-container>
+    <c-portal-services-request-service-modal service-record={serviceInfo} display-confirm={showConfirm} onrequestcompleted={requestComplete}></c-portal-services-request-service-modal>
+
+    
+</template>

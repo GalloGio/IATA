@@ -161,7 +161,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <externalId>false</externalId>
         <label>Change Code</label>
         <length>3</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -336,6 +336,28 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Field7Values__c</fullName>
+        <description>Values to check on the seventh field</description>
+        <externalId>false</externalId>
+        <label>Field7Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field7__c</fullName>
+        <description>API Name of the seventh field to check</description>
+        <externalId>false</externalId>
+        <label>Field7</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Generate_Irregularity_Sequence__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -438,7 +460,6 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>NAME</columns>
         <columns>Change_Code__c</columns>
         <columns>Reason_Code__c</columns>
-        <columns>Reason_Code_Description__c</columns>
         <columns>Published_in_bulletin__c</columns>
         <columns>Record_Type__c</columns>
         <columns>Field1__c</columns>
@@ -447,8 +468,10 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Field4__c</columns>
         <columns>Field5__c</columns>
         <columns>Field6__c</columns>
+        <columns>Field7__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>Clear_Irregularities__c</columns>
+        <columns>Risk_ChangeCode__c</columns>
         <filterScope>Everything</filterScope>
         <label>ALL</label>
         <language>en_US</language>
@@ -520,11 +543,12 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>CREATED_DATE</columns>
         <columns>SETUP_OWNER_NAME</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>NEW</value>
+            <value>LSP</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
@@ -574,7 +598,22 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>NG_RB</fullName>
+        <fullName>Irregularities</fullName>
+        <columns>Change_Code__c</columns>
+        <columns>NAME</columns>
+        <columns>Risk_ChangeCode__c</columns>
+        <columns>Clear_Irregularities__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>IRR</value>
+        </filters>
+        <label>Irregularities</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>NewGen</fullName>
         <columns>NAME</columns>
         <columns>Change_Code__c</columns>
         <columns>Record_Type__c</columns>
@@ -590,7 +629,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
             <operation>contains</operation>
             <value>ANG</value>
         </filters>
-        <label>NG_RB</label>
+        <label>NewGen</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -617,6 +656,32 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
             <value>0</value>
         </filters>
         <label>Not Applicable to CNS</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>RVW_Change_Code</fullName>
+        <columns>Class_Type__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Field2__c</columns>
+        <columns>Field2Values__c</columns>
+        <columns>Field3__c</columns>
+        <columns>Field3Values__c</columns>
+        <columns>Field4__c</columns>
+        <columns>Field4Values__c</columns>
+        <columns>Field5__c</columns>
+        <columns>Field5Values__c</columns>
+        <columns>Field6__c</columns>
+        <columns>Field6Values__c</columns>
+        <columns>Accreditation_Model__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>RVW</value>
+        </filters>
+        <label>RVW Change Code</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -667,6 +732,134 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
             <value>NOT</value>
         </filters>
         <label>Risk Change Code (R4) - NOT</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>SIDRA_ALL</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Field2__c</columns>
+        <columns>Field2Values__c</columns>
+        <columns>Field3__c</columns>
+        <columns>Field3Values__c</columns>
+        <columns>Field4__c</columns>
+        <columns>Field4Values__c</columns>
+        <columns>Field5__c</columns>
+        <columns>Account_status_change__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Record_Type__c</field>
+            <operation>equals</operation>
+            <value>SIDRA</value>
+        </filters>
+        <label>SIDRA</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>SIDRA_Lite</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Field2__c</columns>
+        <columns>Field2Values__c</columns>
+        <columns>Field3__c</columns>
+        <columns>Field3Values__c</columns>
+        <columns>Field4__c</columns>
+        <columns>Field4Values__c</columns>
+        <columns>Field5__c</columns>
+        <columns>Field5Values__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Record_Type__c</field>
+            <operation>equals</operation>
+            <value>SIDRA_Lite</value>
+        </filters>
+        <label>SIDRA_Lite</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>STR</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Field2__c</columns>
+        <columns>Field2Values__c</columns>
+        <columns>Field3__c</columns>
+        <columns>Field3Values__c</columns>
+        <columns>Field4__c</columns>
+        <columns>Field4Values__c</columns>
+        <columns>Field5__c</columns>
+        <columns>Field5Values__c</columns>
+        <columns>Field6__c</columns>
+        <columns>Field6Values__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>STR</value>
+        </filters>
+        <label>STR</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>TER</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Field2__c</columns>
+        <columns>Field2Values__c</columns>
+        <columns>Field3__c</columns>
+        <columns>Field3Values__c</columns>
+        <columns>Field4__c</columns>
+        <columns>Field4Values__c</columns>
+        <columns>Field5__c</columns>
+        <columns>Field5Values__c</columns>
+        <columns>Field6__c</columns>
+        <columns>Field6Values__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>TER</value>
+        </filters>
+        <label>TER</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>TIDS_Billable_CC</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Billable__c</columns>
+        <columns>Published_in_bulletin__c</columns>
+        <columns>Billable_Location_Class__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Risk_ChangeCode__c</columns>
+        <columns>Skip_Agency_Update__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Billable_Location_Class__c</field>
+            <operation>contains</operation>
+            <value>T</value>
+        </filters>
+        <label>TIDS Billable CC</label>
         <language>en_US</language>
     </listViews>
     <listViews>

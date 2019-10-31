@@ -53,8 +53,10 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Relationship_Type__c</fullName>
+        <description>Represents the type of relationship. It can either require to &quot;Swap&quot;, &quot;Upgrade&quot;, &quot;Suggestion&quot; Product Rate Plan Information</description>
         <externalId>false</externalId>
         <label>Relationship Type</label>
         <required>false</required>
@@ -84,6 +86,7 @@
     <fields>
         <fullName>Source_Product_Rate_Plan_Information__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Source rate plan before swapping</description>
         <externalId>false</externalId>
         <inlineHelpText>Source rate plan before swapping</inlineHelpText>
         <label>Source Product Rate Plan Information</label>

@@ -82,20 +82,49 @@ public class IEC_ZuoraPricing2SAP_Svc
         Map<Id, Product2> mapZProductId_Product = new Map<Id, Product2>();
         if (!String.isBlank(strSOQL))
         {
-            strSOQL = 'select SAP_Material_Number__c, ZProduct__c from Product2'
-                    + ' where SAP_Material_Number__c != null and ZProduct__c != null and SAP_Status_Code__c in (\'A\', \'Z4\')'
+            strSOQL = 'select Id, SAP_Material_Number__c from Product2'
+                    + ' where SAP_Material_Number__c != null and SAP_Status_Code__c in (\'A\', \'Z4\')'
                     + ' and (' + strSOQL.substring(4) + ')';
             for (Product2 p : Database.query(strSOQL))
-                mapZProductId_Product.put(p.ZProduct__c, p);
+                mapZProductId_Product.put(p.Id, p);
         }
         return mapZProductId_Product;
+    }
+
+
+    // get products to track pricing
+    public Map<Id, Product2> getTrackingProduct2()
+    {
+        // build criteria specified by business
+        String strSOQL = '';
+        for (IEC_ZuoraPricing2SAP_Filter__c filter : [select SAP_Sales_Channel_Code__c, SAP_Division_Code__c, Exclude_SAP_Material_Number__c
+                                                      from IEC_ZuoraPricing2SAP_Filter__c])
+            strSOQL += ' or (SAP_Sales_Channel_Code__c = \'' + filter.SAP_Sales_Channel_Code__c + '\''
+                           + ' and SAP_Division_Code__c = \'' + filter.SAP_Division_Code__c + '\''
+                           + (String.isBlank(filter.Exclude_SAP_Material_Number__c) ? ''
+                              : ' and SAP_Material_Number__c not in (' + filter.Exclude_SAP_Material_Number__c + ')')
+                           + ')';
+        
+        // search products
+        Map<Id, Product2> mapProductId_Product = new Map<Id, Product2>();
+        if (String.isNotBlank(strSOQL))
+        {
+            strSOQL = 'select SAP_Material_Number__c from Product2'
+                    + ' where SAP_Material_Number__c != null and SAP_Status_Code__c in (\'A\', \'Z4\')'
+                    + ' and (' + strSOQL.substring(4) + ')';
+
+            for (Product2 p : Database.query(strSOQL))
+                mapProductId_Product.put(p.Id, p);
+            
+        }
+        return mapProductId_Product;
     }
 
 
     // determine if to delete a pricing
     Boolean isPricingDeleted(zqu__ProductRatePlanChargeTier__c pricing)
     {
-        return pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__Deleted__c ||
+        return pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__r.zqu__Deleted__c ||
                pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Deleted__c ||
                pricing.zqu__ProductRatePlanCharge__r.zqu__Deleted__c ||
                pricing.zqu__Deleted__c || pricing.IsDeleted;
@@ -110,8 +139,8 @@ public class IEC_ZuoraPricing2SAP_Svc
             dtLatest = pricing.zqu__ProductRatePlanCharge__r.LastModifiedDate;
         if (dtLatest < pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.LastModifiedDate)
             dtLatest = pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.LastModifiedDate;
-        if (dtLatest < pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.LastModifiedDate)
-            dtLatest = pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.LastModifiedDate;
+        if (dtLatest < pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__r.LastModifiedDate)
+            dtLatest = pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__r.LastModifiedDate;
         return dtLatest;
     }
 
@@ -216,7 +245,7 @@ public class IEC_ZuoraPricing2SAP_Svc
                     lstUpdateTracking.add(tracking);
                 }
                 // updated price changes SAP condition pricing
-                else if (isPricingConditionChanged(mapZProductId_Product.get(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c).SAP_Material_Number__c
+                else if (isPricingConditionChanged(mapZProductId_Product.get(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__c).SAP_Material_Number__c
                                                  , pricing, tracking))
                 {
                     // insert updated price later
@@ -269,7 +298,7 @@ public class IEC_ZuoraPricing2SAP_Svc
                 newTracking.IsFreeShipping__c = isZuoraTrue(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.IsFreeShipping__c);
                 newTracking.IsPreSale__c = isZuoraTrue(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.IsPreSale__c);
                 newTracking.CustomerType__c = zuoraCustomerType(pricing);
-                newTracking.Material_Number__c = mapZProductId_Product.get(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c).SAP_Material_Number__c;
+                newTracking.Material_Number__c = mapZProductId_Product.get(pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__c).SAP_Material_Number__c;
                 newTracking.Currency__c = zuoraCurrency(pricing);
                 newTracking.AmountOrPercentage__c = pricing.zqu__Price__c;
                 newTracking.IsRecurring__c = isZuoraRecurring(pricing.zqu__ProductRatePlanCharge__r.zqu__Model__c, pricing.zqu__ProductRatePlanCharge__r.zqu__Type__c);
@@ -337,7 +366,7 @@ public class IEC_ZuoraPricing2SAP_Svc
         }
     }
 
-
+   
     // send prices to SAP
     public void sendPricing(List<IEC_ZuoraPricing2SAP_Tracking__c> lstTracking)
     {

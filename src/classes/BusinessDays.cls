@@ -8,7 +8,7 @@ public class BusinessDays {
     
     public static boolean isAllowedRunTwice = False;
     
-    public static   map<Id, Date>  BusinessDaysPerCaseIdCalc(map<id, Case> triggerNewMap) {
+    public static map<Id, Date> BusinessDaysPerCaseIdCalc(map<id, Case> triggerNewMap) {
         
         map<Id, Date> nextBusinessDay = new map<Id, Date>();
         
@@ -27,8 +27,7 @@ public class BusinessDays {
                 integer month = c.Short_Payment_Date__c.month();
                 
                 targetTime = Datetime.newInstance(year, month, day, 10, 30, 0);
-                
-                
+
                 NextDate = BusinessHours.nextStartDate(c.BusinessHoursId, targetTime);
                 dateTime businessNextDayAfter = NextDate;
                 
@@ -38,22 +37,15 @@ public class BusinessDays {
                 } while (businessNextDayAfter.day() ==  NextDate.day());
                 
                 returnDateTime = compareThisDates(targetTime, NextDate) ? businessNextDayAfter : NextDate; // 1 day in milliseconds
-                
                 returnDate = Date.newInstance(returnDatetime.year(), returnDatetime.month(), returnDatetime.day());
-                
                 nextBusinessDay.put(CaseID, returnDate);
-                
             }
         }
-        
-        
         return nextBusinessDay;
-        
     }
-    
-    
-    public static  boolean compareThisDates(dateTime date1, dateTime date2) {
-        
+
+    public static boolean compareThisDates(dateTime date1, dateTime date2) {
+
         if (date1.year() == date2.year() && date1.month() == date2.month() && date1.day() == date2.day() )
             return true;
         
@@ -74,7 +66,6 @@ public class BusinessDays {
             
         }
         return  TriggerNewMap;
-        
     }
     
     private static final set<String> REOPENINGREASONS = new set<string> {'new query', 'thank you', 'no action'};
@@ -109,23 +100,32 @@ public class BusinessDays {
                 
                 Case updatedCase = TriggerNewMap.get(caseID);
                 Case oldCase = TriggerOldMap.get(caseID);
-                
-                //if(updatedCase.BusinessHoursId <> oldCase.BusinessHoursId){
+                /*
                 dateTime originalCreated = updatedCase.CreatedDate;
                 dateTime createDatePlusOne = updatedCase.CreatedDate.addHours(1);
                 dateTime result  =   businessHours.nextStartDate( updatedCase.businessHoursId, createDatePlusOne);
-                updatedCase.First_Business_Day__c   = createDatePlusOne.day() == result.day() ?  originalCreated : result;
-                //}
-                /*    if(updatedCase.First_Business_Day__c.hour() == updatedCase.createdDate.addHours(1).hour())
-throw new transformationException('updatedCase.First_Business_Day__c' +  updatedCase.First_Business_Day__c
-+'createDatePlusOne.day()' +createDatePlusOne.day()
-+'result.day()' +result.day()
-+'result     ' +      result
-+'originalCreated ' +originalCreated);*/
-                
-                
+                updatedCase.First_Business_Day__c   = createDatePlusOne.day() == result.day() ?  originalCreated : result;                
+                */
                 //OK, the status has changed or the businessHoursChanged
                 
+                dateTime originalCreated = updatedCase.CreatedDate;
+                dateTime createdDatePlusOne = updatedCase.CreatedDate.addHours(1);
+
+                boolean isCreatedDateWithinBH = businessHours.isWithin(updatedCase.businessHoursId, originalCreated);
+                boolean isCreatedDatePlusOneWithinBH = businessHours.isWithin(updatedCase.businessHoursId, createdDatePlusOne);
+
+                //------- Covers the 4 scenarios: --------- 
+                //CD - True  && CD+1 - True  - Created date time
+                //CD - False && CD+1 - False - Next start date time
+                //CD - True  && CD+1 - False - Next start date time
+                //CD - False && CD+1 - True  - Next start date time 
+                if(isCreatedDateWithinBH && isCreatedDatePlusOneWithinBH){
+                    updatedCase.First_Business_Day__c = originalCreated;
+                }
+                else {
+                    updatedCase.First_Business_Day__c =  businessHours.nextStartDate( updatedCase.businessHoursId, createdDatePlusOne);
+                }
+
                 if (
                     !oldCase.IsClosed
                     ||
@@ -162,16 +162,10 @@ throw new transformationException('updatedCase.First_Business_Day__c' +  updated
                     System.debug('+++ST ' + oldCase.Status);
                     System.debug('+++STB '+ stopStatusSetPerBucket.get(oldCase.Status));
                     
-                    // if record type == process it is a escalated internally case
-                   // if (oldCase.RecordTypeId == processRTId) {
-                     //   updatedCase.Time_Escalated__c += timeSinceLastStatus;
-                       // updatedCase.Time_Unassigned__c += unassignedTime;
-                        
-                    //} else 
                     if (oldCase.RecordTypeId != globalRT && oldCase.BusinessHoursId  == defaultHours.Id) {
                         updatedCase.Time_Unassigned__c += normaleDatetimeSinceLastStatus;
                     }
-                    else if (stopStatusSetPerBucket.get(oldCase.Status) == 'Pending Customer') {
+                    else if (stopStatusSetPerBucket.get(oldCase.Status) == 'With Customer') {
                         
                         // to do  hard coded.....beware.....how about a custom setting?
                         
@@ -207,15 +201,6 @@ throw new transformationException('updatedCase.First_Business_Day__c' +  updated
                 }
                 
                 updatedCase.Last_Status_Change__c = System.now();
-                
-                
-                //throw new transformationException('  asdsasd  ' + updatedCase.Last_Status_Change__c  +    '  updatedCase.First_closure_date__c  ' + updatedCase.First_closure_date__c );
-                
-                /*if (updatedCase.First_closure_date__c <> null ) {
-updatedCase.ClosedSameDay__c =  compareThisDates( updatedCase.First_Business_Day__c, updatedCase.First_closure_date__c) || (updatedCase.First_closure_date__c < updatedCase.First_Business_Day__c)  ? 'Yes' : 'No';
-// throw new transformationException('updatedCase.First_Business_Day__c    '+ updatedCase.First_Business_Day__c
-//                                     +   '   updatedCase.First_closure_date__c    ' + updatedCase.First_closure_date__c);
-}*/
                 
             }
         }

@@ -908,4 +908,23 @@ public class ISSP_AvailableServices_Test {
         }
         Test.stopTest();
     }    
+
+    public static testMethod void testGetVisibleApplications() {
+        list<Portal_Applications__c> listApps = new list<Portal_Applications__c>();
+        listApps.add(new Portal_Applications__c(Name='Join SIS e-Invoicing',Requestable__c=true));
+        listApps.add(new Portal_Applications__c(Name='testApp',Requestable__c=true));
+        insert listApps;
+
+        Account account = new Account(
+            Name='testaccount',
+            Sector__c='Airline',
+            Category__c='Cargo Only'
+        );
+        insert account;
+
+        Test.startTest();
+        ISSP_AvailableServices controller = new ISSP_AvailableServices();
+        list<String> result = controller.getVisibleApplicationNames(account);
+        Test.stopTest();
+    }
 }

@@ -1,0 +1,47 @@
+<div style="background-color: #1E32FA; margin-bottom: 30px; font-family: Arial, Helvetica, sans-serif;">
+        <table style="color:white; font-size: 23px;font-weight: 600;">
+            <tr>
+            <td><img style="margin-right:15px;margin-left:40px;margin-top:15px;margin-bottom:15px;width:73px;height:50px;" src="https://iata--c.eu12.content.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Png&versionId=0681r00000BTmVA&operationContext=DELIVERY&contentId=05T1r00000dOEHZ&page=0&d=/a/1r000000EU6r/LOi9lDSOQ.C8HaVJIasBLxLjxSbtA35uT1V0eFm8.Wc&oid=00D2000000008TF&dpt=null&viewId="/></td>
+            <td><hr style="margin-right:15px;height:34px; width:1px;background-color:#A5ADFD;"/></td>
+            <td><p style="font-size:23px;">Signup &amp; Privacy Portal <p></td>
+            </tr>
+        </table>
+        </div>
+
+Dear  user<br/><br/>
+
+Your case with number {!Case.CaseNumber} has been updated.<br/>
+Status is {!Case.Status}<br/><br/>
+
+Best regards,<br/><br/>
+
+IATA support team
+
+<div style="background-color: #535151; margin-top: 30px; font-family: Arial, Helvetica, sans-serif;">
+        <table style="color:white; font-size: 23px; width:100%;">
+            <tr>
+                <td style="width:20%"><img style="margin-right:15px;margin-left:40px;margin-top:15px;margin-bottom:15px;width:73px;height:50px;" src="https://iata--c.eu12.content.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Png&versionId=0681r00000BTmVA&operationContext=DELIVERY&contentId=05T1r00000dOEHZ&page=0&d=/a/1r000000EU6r/LOi9lDSOQ.C8HaVJIasBLxLjxSbtA35uT1V0eFm8.Wc&oid=00D2000000008TF&dpt=null&viewId=" /></td>
+                <td colspan="2" style="width:80%">Our mission is to represent, lead and serve the airline industry</td>            
+            </tr>
+            <tr>
+                <td style="width:100%;" colspan="3">
+                    <hr style="margin-right:40px; margin-left:40px;"/>
+                </td>
+            </tr>
+            <tr >
+            
+            <td style="width:20%; text-align:center;">
+                <span><a style="font-size:15px; text-decoration: none; color:#ffffff;" href="https://www.iata.org" target="_blank">www.IATA.org</a></span>
+            </td>
+            <td style="width:60%; text-align:center;">
+                <span style="font-size:15px;">© International Air Transportation Association (IATA). All rights reserved.</span>
+            </td>
+
+            <td style="width:20%; text-align:center;">
+                <a style="font-size:15px; text-decoration: none; color:#ffffff;" class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">Privacy policy</a>            
+            </td>
+            
+          </tr>
+
+        </table>
+        </div>

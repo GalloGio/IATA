@@ -56,6 +56,7 @@ public without sharing class ISSP_WS_Utilities {
         u.contactId = contactId;
         u.timezonesidkey = 'Asia/Dubai';
         u.UID__c = Comm_User_Helper.NewGuid();
+        u.FederationIdentifier = contactId.substring(0, 15);
         return u;
     }
 
@@ -282,21 +283,6 @@ public without sharing class ISSP_WS_Utilities {
         } catch (Exception e) {
             System.debug('ERROR inserting logs ' + e.getMessage());
         }
-    }
-
-    /**
-        Find all valid SIS contacts from the input accounts to give them access
-        to SIS Joining app
-    **/
-    @future
-    public static void invokeGiveSISAppToAccountUsers(list<Id> listAccountId) {
-        list<User> listUser = [SELECT Id, ContactId FROM User WHERE ProfileId IN :ISSP_Constant.adminIdSet AND (Contact.AccountId IN :listAccountId OR Contact.Account.Top_Parent__c IN :listAccountId)];
-
-        list<Id> listContactId = new list<Id>();
-        for (User user: listUser) {
-            listContactId.add(user.contactId);
-        }
-        grantAccessToSIS(listContactId);
     }
 
     /**

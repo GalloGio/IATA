@@ -11,7 +11,7 @@
 
                 //this is works for RelayState=service=name AS PART of the start URL (FRED)
                 var str = decodeURIComponent(paramsMap.startURL);
-                if(paramsMap.serviceName == '' && str && str.indexOf('RelayState') > 0 && str.indexOf('serviceName=') > 0){
+                if(paramsMap.serviceName == '' && str && str.indexOf('serviceName=') > 0){
                     var temp = str.split('serviceName=')[1];
                     paramsMap.serviceName = temp.substring(0, temp.indexOf('&'));
                 }

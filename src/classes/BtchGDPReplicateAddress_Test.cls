@@ -1,6 +1,7 @@
 @isTest
 private class BtchGDPReplicateAddress_Test {
     static testMethod void test_AllMethod() {
+	/*
         TestData.ForReplicateAddress testData = new TestData.ForReplicateAddress();
         System.runAs(testData.user) {
             TestUtilities.createIECGDPReplicationSetting(true);
@@ -13,5 +14,6 @@ private class BtchGDPReplicateAddress_Test {
             // } catch(Exception e) {}
             Test.stopTest(); 
         }
+		*/
     }
 }

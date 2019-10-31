@@ -103,19 +103,6 @@ public class vfIECQuote extends IECPageController {
         	return IECConstants.getUSAStates();
     	}
     }
-    /*
-    public String encryptedComments {
-    	get {
-    		return IECUtil.EncryptParameter(String.isBlank(sComments) ? '' : sComments);
-    	}
-    }*/
-    
-    //public String returnURLParamForLogin {
-    //	get {
-    //		return '?rpiid=' + IECUtil.EncryptParameter(sProductRatePlanInfoId);
-    //	}
-    //	private set;
-    //}
 
 	/**
 	 * Constructor
@@ -366,21 +353,14 @@ public class vfIECQuote extends IECPageController {
 			List<String> lstErrorMessages = new List<String>();
 			
 			// validate mandatory fields
-			if (String.isBlank(oContact.FirstName))
-				lstErrorMessages.add(Label.IEC_Error_Required_field + ' First Name');
-			if (String.isBlank(oContact.LastName))
-				lstErrorMessages.add(Label.IEC_Error_Required_field + ' Last Name');
-			if (String.isBlank(oContact.Title))
-				lstErrorMessages.add(Label.IEC_Error_Required_field + ' Job Title');
-			if (String.isBlank(oContact.Email))
-				lstErrorMessages.add(Label.IEC_Error_Required_field + ' Email');
-			if (String.isBlank(oContact.Phone))
-				lstErrorMessages.add(Label.IEC_Error_Required_field + ' Phone');
+			if (String.isBlank(oContact.FirstName))			lstErrorMessages.add(Label.IEC_Error_Required_field + ' First Name');
+			if (String.isBlank(oContact.LastName))			lstErrorMessages.add(Label.IEC_Error_Required_field + ' Last Name');
+			if (String.isBlank(oContact.Title))				lstErrorMessages.add(Label.IEC_Error_Required_field + ' Job Title');
+			if (String.isBlank(oContact.Email))				lstErrorMessages.add(Label.IEC_Error_Required_field + ' Email');
+			if (String.isBlank(oContact.Phone))				lstErrorMessages.add(Label.IEC_Error_Required_field + ' Phone');
 
-			if (String.isBlank(oBillingAddress.Street__c))
-				lstErrorMessages.add(Label.IEC_Error_Required_field + ' Address');
-			if (String.isBlank(oBillingAddress.City__c))
-				lstErrorMessages.add(Label.IEC_Error_Required_field + ' City');
+			if (String.isBlank(oBillingAddress.Street__c))	lstErrorMessages.add(Label.IEC_Error_Required_field + ' Address');
+			if (String.isBlank(oBillingAddress.City__c))	lstErrorMessages.add(Label.IEC_Error_Required_field + ' City');
 
 			if (String.isBlank(oBillingAddress.ISO_Country__c)) { // Changed by Samy (2016-03-01) from Country__c
 				lstErrorMessages.add(Label.IEC_Error_Required_field + ' Country');
@@ -432,15 +412,10 @@ public class vfIECQuote extends IECPageController {
                 {
 						lstErrorMessages.add(Label.IEC_Error_Required_field + ' State/Province');
                 }
-				/*
-				if (String.isBlank(oBillingAddress.ZipCode__c))
-					lstErrorMessages.add(Label.IEC_Error_Required_field + ' Zip/Postal code');
-				*/
 			}
 			
 			if (lstErrorMessages.isEmpty()) {
 				oContact.VAT_Country_Code__c = (vatConfig.VATValidationRequired) ? vatConfig.CountryCode : null;
-				//update oContact;
 				IECUserManager.updateContactViaWebService(oContact);
                 
                 // First check if the address has been changed before trying to save, otherwise just ignore

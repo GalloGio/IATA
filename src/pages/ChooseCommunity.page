@@ -12,13 +12,26 @@
        </div>
 -->
     <c:Loading />
-
+    
+    <style type="text/css">
+        .my-class {
+        font-weight: bolder;
+        border:solid red;
+        text-align: center;
+        color: red;
+        font-size: 25px;
+        }
+    </style>
     
     
     <apex:form >
         <apex:pageMessages ></apex:pageMessages>
 
-    <apex:pageBlock title="Reset Password" tabStyle="Contact"  >
+    <apex:pageBlock title="Reset Password" tabStyle="Contact"  >    
+     <div class="my-class">
+     <apex:outputLabel >IMPORTANT: Please use this option only to reset password for users of ISS Customer Portal, <br/>E-Commerce Portal or CNS Portal </apex:outputLabel>
+     </div>
+     <br/>&nbsp;
         <apex:pageBlockButtons >
                         <apex:commandButton value="Send Password" action="{!SendEmail}"  disabled="{!noUser}"
                            onclick="if(!confirm('Reset password for this user for the selected community?'))return false;startLoading(); return true;"

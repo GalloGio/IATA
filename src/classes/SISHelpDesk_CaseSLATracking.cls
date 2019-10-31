@@ -257,8 +257,7 @@ public with sharing class SISHelpDesk_CaseSLATracking
 		}			
 	}
 	
-	public static void updateSLA_Kale_BeginStopStatus (Case aCase, BusinessHours aBusinessHours)
-	{				
+	public static void updateSLA_Kale_BeginStopStatus (Case aCase, BusinessHours aBusinessHours){				
 		Datetime currentTime = Datetime.now();
 		Double elapsedTimeFromLastUpdate;	
 		
@@ -268,21 +267,14 @@ public with sharing class SISHelpDesk_CaseSLATracking
 			//Priority One calculation is not based on Business Hours				
 			if (aCase.Priority == priorityOne)
 			{
-				if (aCase.Kale_SLATracking_LastUpdated__c == null)
-				{
-					//elapsedTimeFromLastUpdate = (currentTime.getTime() - aCase.createdDate.getTime()) / 3600000.0;
+				if (aCase.Kale_SLATracking_LastUpdated__c == null){
 					elapsedTimeFromLastUpdate = 0;
-				}
-				else
-				{
+				}else{
 					elapsedTimeFromLastUpdate = (currentTime.getTime() - aCase.Kale_SLATracking_LastUpdated__c.getTime()) / 3600000.0;		
 				}										
-				if (aCase.Kale_SLATracking__c == null || aCase.Kale_SLATracking__c == 0)	
-				{
+				if (aCase.Kale_SLATracking__c == null || aCase.Kale_SLATracking__c == 0){
 					aCase.Kale_SLATracking__c = elapsedTimeFromLastUpdate;
-				}
-				else
-				{
+				}else{
 					aCase.Kale_SLATracking__c = aCase.Kale_SLATracking__c + elapsedTimeFromLastUpdate;
 				}	
 				aCase.Kale_SLATracking_LastUpdated__c = currentTime;									
@@ -290,22 +282,15 @@ public with sharing class SISHelpDesk_CaseSLATracking
 			//Priority Two and Three calculation are based on Business Hours
 			if ((aCase.Priority == priorityTwo) || (aCase.Priority == priorityThree))
 			{
-				if (aCase.Kale_SLATracking_LastUpdated__c == null)
-				{
-					//elapsedTimeFromLastUpdate = BusinessHours.diff(aBusinessHours.Id, aCase.CreatedDate, currentTime) / 3600000.0;
+				if (aCase.Kale_SLATracking_LastUpdated__c == null){
 					elapsedTimeFromLastUpdate = 0;
-				}
-				else
-				{									
+				}else{									
 					elapsedTimeFromLastUpdate = BusinessHours.diff(aBusinessHours.Id, aCase.Kale_SLATracking_LastUpdated__c, currentTime) / 3600000.0;
 				}
 								
-				if (aCase.Kale_SLATracking__c == null || aCase.Kale_SLATracking__c == 0)	
-				{					
+				if (aCase.Kale_SLATracking__c == null || aCase.Kale_SLATracking__c == 0){					
 					aCase.Kale_SLATracking__c = elapsedTimeFromLastUpdate;
-				}
-				else
-				{					
+				}else{					
 					aCase.Kale_SLATracking__c = aCase.Kale_SLATracking__c + elapsedTimeFromLastUpdate;
 				}	
 				aCase.Kale_SLATracking_LastUpdated__c = currentTime;									

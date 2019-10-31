@@ -20,33 +20,22 @@ public with sharing class Account_Svc {
 
 		//Select only accounts that respond to certain criteria
 		list<Account> accsToPass = new list<Account>();
-		for (Account runAccs : lstAccount)
-		{
-			if(runAccs.ACLI_SAP_Id__c == null && runAccs.ACLI_Status__c != 'Active company') {
-				accsToPass.add(runAccs);
-			}
-		}
-		
-	    for (Account acc : accsToPass)
-	    {
-	    	/* Commented till figure out whether we are going to filter using recordtypes or not
-    		// Make sure that the account has the required RecType
-	    	if (setAccRecTypeToSAP.contains(acc.RecordTypeId))
-	    	{
-	    	*/
-	    		// Check that specific list of fields are modified to sync to SAP
-	    		if (!lstAccFieldsToSAP.isEmpty())
-	    		{
-		    		for(String field : lstAccFieldsToSAP)
-		    		{
-	                    if(!String.isBlank(field) && acc.get(field) != mapOldAccount.get(acc.Id).get(field))
-	                    {
-				    		setAccIdsToSync.add(acc.Id);
+
+		// Check that specific list of fields are modified to sync to SAP
+	    if (!lstAccFieldsToSAP.isEmpty()){
+
+			for (Account runAccs : lstAccount){
+				if(runAccs.ACLI_SAP_Id__c == null && runAccs.ACLI_Status__c != 'Active company') {
+
+					for(String field : lstAccFieldsToSAP){
+
+	                    if(!String.isBlank(field) && runAccs.get(field) != mapOldAccount.get(runAccs.Id).get(field)){
+				    		setAccIdsToSync.add(runAccs.Id);
 				    		break;
 	                    }
 	                }
 	    		}
-	    	/*}*/
+	    	}
 	    }
 
 	    if(setAccIdsToSync.isEmpty())
@@ -61,9 +50,7 @@ public with sharing class Account_Svc {
 	    		AND Active__c = true]);
 	    
 	    // Make the SAP call to update the account/contact
-	    if (!mapLocation.isEmpty())
-	    {
+	    if (!mapLocation.isEmpty())	    	    	
 	    	IECAddress_Svc.syncCustomerMasterWithSAP(mapLocation.keySet());
-	    }
     }
 }

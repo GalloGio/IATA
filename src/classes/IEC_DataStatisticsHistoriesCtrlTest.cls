@@ -4,7 +4,7 @@ private class IEC_DataStatisticsHistoriesCtrlTest
 	private static List<Zuora__Subscription__c> lstSubscriptionList;
 	private static List<Zuora__SubscriptionProductCharge__c> lstSubscriptionCharge;
 
-	private static zqu__ZProduct__c oProduct;
+	private static Product2 oProduct;
 	private static zqu__ProductRatePlan__c oProductRatePlan;
 	private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
 
@@ -42,10 +42,10 @@ private class IEC_DataStatisticsHistoriesCtrlTest
         if (bCreateCharge) {
             // create dummy subscription charge
             lstSubscriptionCharge = new List<Zuora__SubscriptionProductCharge__c> {
-                IECTestUtil.createSampleSubscriptionCharge(subs01.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
-                , IECTestUtil.createSampleSubscriptionCharge(subs02.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
-                , IECTestUtil.createSampleSubscriptionCharge(subs03.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
-                , IECTestUtil.createSampleSubscriptionCharge(subs04.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
+                IECTestUtil.createSampleSubscriptionCharge2(subs01.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
+                , IECTestUtil.createSampleSubscriptionCharge2(subs02.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
+                , IECTestUtil.createSampleSubscriptionCharge2(subs03.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
+                , IECTestUtil.createSampleSubscriptionCharge2(subs04.Id, Date.Today().addYears(1), oProduct, oProductRatePlan)
             };
             insert lstSubscriptionCharge;
 

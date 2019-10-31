@@ -48,6 +48,9 @@ public class ANG_AgencyChangesHelperTest {
 		AMS_Agencies_relationhip__c r3 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true, Child_Account__c = a3.Id , Parent_Account__c = account.Id, Hierarchy__c = h.Id);
 
 		insert new List<AMS_Agencies_relationhip__c>{r1,r2,r3};
+		
+		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+		insert pa;
 
 	}
 
@@ -1348,7 +1351,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfOwnership(oscar, accountIdsInvolvedSet, null, true);
 
-        List<AMS_Account_Role__c> roleList = [select Owner_Name__c, Legacy_External_ID__c, Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, Active__c from AMS_Account_Role__c];
+        List<AMS_Account_Role__c> roleList = [select Owner_Name__c, Legacy_External_ID__c, Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, Active__c from AMS_Account_Role__c where Active__c = true];
 
         For(AMS_Account_Role__c role :roleList)
 	        System.debug('[ANG_AgencyChangesHelperTest]: Owner inserted:' + role);
@@ -1477,7 +1480,7 @@ public class ANG_AgencyChangesHelperTest {
         For(AMS_Account_Role__c role :roleList)
 	        System.debug('[ANG_AgencyChangesHelperTest]: Owner inserted:' + role);
 
-        System.assertEquals(14,roleList.size());
+        System.assertEquals(17,roleList.size());
 
 		roleList = [select Owner_Name__c, Legacy_External_ID__c, Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, Active__c from AMS_Account_Role__c where Active__c = true];
 
@@ -1860,6 +1863,7 @@ public class ANG_AgencyChangesHelperTest {
 		oscar.Is_PCI_compliant__c = 'Yes';
 		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = 'Location type';
+		ANG_AgencyChangesHelper.isMigrationRunning = true;
 
 		update oscar;
 
@@ -2273,7 +2277,7 @@ public class ANG_AgencyChangesHelperTest {
 		accountsIds.add(a1.Id);
 		accountsIds.add(he1.Id);
 
-		ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accountsIds);
+		ANG_AgencyChangesHelper.fetchAgOperationPerAccount(accountsIds);
 
 		
 		//2nd oscar - CAD
@@ -2511,7 +2515,7 @@ public class ANG_AgencyChangesHelperTest {
 		accountsIds.add(a1.Id);
 		accountsIds.add(he1.Id);
 
-		ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accountsIds);
+		ANG_AgencyChangesHelper.fetchAgOperationPerAccount(accountsIds);
 
 		Test.stopTest();
 
@@ -2796,5 +2800,212 @@ public class ANG_AgencyChangesHelperTest {
 		Test.stopTest();
 
 	}
+
+	/**
+	 * Test method to assert the correct behavior on change code generation (CDL & CDF) 
+	 * when performing a change of location type to a different legal entity  
+	 */ 
+	@isTest static void changeOfLocationTypeDiffLegalEntityTest(){
+
+        ANG_AgencyChangesConfig__c changeLocationTypeDiffLegalEnt = new ANG_AgencyChangesConfig__c();
+        changeLocationTypeDiffLegalEnt.Name = 'ChangeLocationTypeDifferentLegalEntity';
+        changeLocationTypeDiffLegalEnt.TC_Location_type_diff_legal_ent__c = true;
+        changeLocationTypeDiffLegalEnt.TCA_Sanity_check__c = 'CDL';
+        changeLocationTypeDiffLegalEnt.TCA_Manager_approval__c = 'CDF';
+        changeLocationTypeDiffLegalEnt.TCA_Application_withdrawal__c = 'CWD';
+
+        insert new List<ANG_AgencyChangesConfig__c>{changeLocationTypeDiffLegalEnt};
+
+       	AMS_ChangeCodes__c cdlCode = new AMS_ChangeCodes__c(
+       		Name = 'CDL',
+       		Account_status_change__c = '8;9',
+       		Billable__c = true,
+       		Change_Code__c = 'CDL',
+       		Reason_Code_Description__c = 'CHANGE IN PROCESS',
+       		Reason_Code__c = '81',
+       		Integration_RecId__c = 'C',
+       		Class_Type__c = 'P',
+       		Billable_Location_Class__c = 'P;D'
+       	);
+
+       	AMS_ChangeCodes__c cdfCode = new AMS_ChangeCodes__c(
+       		Name = 'CDF',
+       		Account_status_change__c = '9;8',
+       		Change_Code__c = 'CDF',
+       		Reason_Code_Description__c = 'ACCREDITED-MEET-STANDARDS',
+       		Reason_Code__c = '91',
+       		Integration_RecId__c = 'C',
+       		Class_Type__c = 'P'
+       	);
+
+       	AMS_ChangeCodes__c cwdCode = new AMS_ChangeCodes__c(
+       		Name = 'CWD',
+       		Account_status_change__c = '9;8',
+       		Bulletin_Memo_Text__c = 'ACCREDITED-MEET-STANDARDS',
+       		Reason_Code__c = '91',
+       		Change_Code__c = 'CWD',
+       		Integration_RecId__c = 'C',
+       		Published_in_bulletin__c = true
+       	);
+
+       	insert new List<AMS_ChangeCodes__c>{cdlCode, cdfCode, cwdCode};
+
+		Account acct = 
+			[SELECT 
+				Id, 
+				Name, 
+				ParentId,
+				IATA_ISO_Country__c, 
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c, 
+				Location_Class__c, 
+				Location_Type__c
+			 FROM 
+			 	Account 
+			 WHERE 
+			 	ANG_IsNewGenAgency__c = TRUE
+			 AND
+			 	Location_Type__c = :AMS_Utils.AE
+			 LIMIT 1
+			];
+
+		Contact cont = new Contact(
+      		AccountId = acct.id, 
+      		Firstname = 'Richard', 
+      		Lastname = 'Vaughan', 
+      		Phone = '666123456', 
+      		MobilePhone = '911111111', 
+      		Email = 'richard.vaughan@test.com', 
+      		Financial_Assessment_Contact__c = false
+      	);
+
+		insert cont;
+
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+			Account__c = acct.Id,
+			Process__c = AMS_Utils.NGCHANGES, 
+			RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES,
+			Status__c = 'Open',
+			STEP10__c = 'Passed'
+		);
+
+		insert oscar;
+
+		Case oscarCase = new Case();
+		oscarCase.Oscar__c = oscar.Id;
+		oscarCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
+        oscarCase.AccountId = acct.Id;
+        oscarCase.ContactId = cont.Id;
+        insert oscarCase;
+
+		loadCredentials();
+
+		AmazonFile__c aFile = new AmazonFile__c(
+			Full_Name_Unique__c = 'Attachment Required',
+			Case__c = oscarCase.Id
+		);
+
+		insert aFile;
+
+		AMS_Pax_Accreditation_Form__c staging = new AMS_Pax_Accreditation_Form__c();
+
+		staging.RecordTypeId = AMS_Utils.RECTYPE_NEWGEN_CHANGES_PAX;
+		staging.Account_Name__c = acct.Name;
+		staging.ISSP_AMS_Legal_Status__c = 'Association';
+		staging.Branch_Office_Country__c = acct.IATA_ISO_Country__c;
+		staging.Branch_Office_Street_name_number__c = 'sdfsdf';
+		staging.Branch_Office_City__c = 'sdfsdfdf';
+		staging.IATA_ISO_State__c = acct.Iso_State__c;
+		staging.Branch_Office_Email__c = 'sdfsdfgdg@f3434.com';
+		staging.Branch_Office_Phone__c = '123123123';
+		staging.ISSP_AMS_Premises_located_at_airport__c = 'No';
+		staging.Abbreviated_name__c = 'Multicountry ';
+		staging.Abbreviated_Address__c = 'sdfsdf';
+		staging.Remittance_frequency__c = 'M';
+		staging.Solicitation_Flag__c = false;
+		staging.Location_Class__c = acct.Location_Class__c;
+		staging.Location_Type__c = acct.Location_Type__c;
+		staging.SAAM_Case__c = oscarCase.Id;
+		staging.ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+
+		insert staging;
+
+		AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(
+			AMS_Pax_Accreditation_Form__c = staging.Id, 
+			First_name__c = 'Richard', 
+			Last_name__c = 'Vaughan', 
+			Agency_owner__c = true, 
+			Email__c = 'richard.vaughan@test.com', 
+			PhoneNational__c = '123123123',
+			Phone__c = '123123123', 
+			Contact__c = cont.Id, 
+			Financial_interest__c = 100, 
+			RecordTypeId = AMS_Utils.AccreditationContactPersonRT
+		);
+
+		insert acontact;
+
+		Set<Id> accountsInvolvedSet = new Set<Id> {acct.Id, acct.ParentId};
+
+		oscar.AMS_Online_Accreditation__c = staging.Id;
+        oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY;
+		update oscar;
+
+		Test.startTest();
+
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
+
+		update oscar;
+
+		assertChangeCodes('CDL', accountsInvolvedSet);
+
+		oscar.STEP2__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		update oscar;
+
+		assertChangeCodes('CDF', accountsInvolvedSet);
+
+		Test.stopTest();
+
+	}
+
+	/**
+	 * Given a change code and a list of account ids 
+	 * verifies if the change code was generated for every given agent
+	 * @param  changeCode: String
+	 * @param  accountsInvolvedSet: Set<Id> 
+	 */ 
+	private static void assertChangeCodes(String changeCode, Set<Id> accountsInvolvedSet){
+
+		List<Agency_Applied_Change_code__c> appliedChangeCodesLst = new List<Agency_Applied_Change_code__c>(
+			[SELECT 
+				Id, 
+				Account__c, 
+				Change_Code__c 
+			 FROM 
+			 	Agency_Applied_Change_code__c 
+			 WHERE 
+			 	Account__c IN :accountsInvolvedSet
+			 AND 
+			 	Change_Code__c = :changeCode
+			]
+		);
+
+		integer accountsSize = accountsInvolvedSet.size();
+
+		system.assert(appliedChangeCodesLst.size() == accountsSize, 'Should be generated ' + accountsSize + ' change codes.');
+
+		for(Agency_Applied_Change_code__c aacc : appliedChangeCodesLst){
+			system.assert(aacc.Change_Code__c == changeCode, 'Change code ' + changecode + ' should be generated.');
+		}
+
+	}
+
 
 }

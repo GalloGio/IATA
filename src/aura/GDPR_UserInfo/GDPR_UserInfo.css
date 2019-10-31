@@ -1,0 +1,19 @@
+.THIS .fields{
+    max-width: 300px;
+    height: 40px !important;
+    font-weight:normal;
+}
+.THIS .labels{
+    display: block;
+    font-size: 15px;
+    margin-bottom: 5px;
+    font-weight:normal;
+}
+
+.THIS .section {
+    height: 48px;
+    background-color: #F2F2F2;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}

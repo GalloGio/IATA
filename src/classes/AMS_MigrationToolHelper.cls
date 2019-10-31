@@ -5,7 +5,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 	private static final Set<String> newgenProcesses = new Set<String>{'ANG.MAJOR.CHANGES.1.0','VR.1.0','CER.1.0','CORRECTION.1.0','BANK.ACCOUNT.CHANGES','NGFormsOfPayment','ANG_FS_OPTINOUT','ANG.NEW.HE.LITE.1.0','ANG.NEW.AE.1.0','ANG.NEW.HE.STANDARD.1.0'};
 
-	private static final Set<String> doesNotNeedStagingAreaProcesses = new Set<String>{'VR.1.0','VR.1.0.CA','CER.1.0',AMS_Utils.NGOPTINOUT,AMS_Utils.NGFOP,AMS_Utils.BANKACCCHANGES, AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP, AMS_Utils.NGGDI};
+	private static final Set<String> doesNotNeedStagingAreaProcesses = new Set<String>{'VR.1.0','VR.1.0.CA','CER.1.0',AMS_Utils.NGOPTINOUT,AMS_Utils.NGFOP,AMS_Utils.BANKACCCHANGES, AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_MODEL_B_PLUS_ACCOUNT_SETUP, AMS_Utils.NGGDI};
 	
 		public static Map<String,String> newgenCaseReason{
 		get{
@@ -23,6 +23,7 @@ public without sharing class AMS_MigrationToolHelper {
 			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => 'IEP Bank account setup',
 			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP => 'Onboarding IEP Model A',
 			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP => 'Screening IEP Model B',
+			AMS_RecordCreatorWebservice.IEP_MODEL_B_PLUS_ACCOUNT_SETUP => 'Onboarding IEP Model B+',
 			AMS_Utils.NGGDI => 'GDI setup'
 		};
 		}
@@ -42,6 +43,7 @@ public without sharing class AMS_MigrationToolHelper {
 			'ANG.NEW.HE.STANDARD.1.0' => AMS_Utils.RECTYPE_NEWHE,
 			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELA,
 			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELB,
+			AMS_RecordCreatorWebservice.IEP_MODEL_B_PLUS_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELBPLUS,
 			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,
 			AMS_Utils.NGGDI => AMS_Utils.RECTYPE_GDI
 		};
@@ -637,7 +639,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 	private static AMS_OSCAR__c updateDatesFromSAAM(AMS_OSCAR__c oscar, String caseId){
 		
-		List<Case> cases = [SELECT id, Financial_Assessment_compliant__c,Reason_for_change_of_Financial_result__c, Documentation_Complete__c, Financial_Assessment_received__c,Bank_Guarantee_amount__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_reception_date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Invoice_number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,PSAA_signed_copy_sent__c,SAAM_Deadline_Date__c,AIMS_updated__c,Finalized_in_AIMS__c from Case where Id = :caseId];
+		List<Case> cases = [SELECT id, Proof_of_payment_requested__c, Financial_Assessment_compliant__c,Reason_for_change_of_Financial_result__c, Documentation_Complete__c, Financial_Assessment_received__c,Bank_Guarantee_amount__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_reception_date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Invoice_number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,PSAA_signed_copy_sent__c,SAAM_Deadline_Date__c,AIMS_updated__c,Finalized_in_AIMS__c from Case where Id = :caseId];
 
 		if(cases.isEmpty())
 			return null;
@@ -674,8 +676,12 @@ public without sharing class AMS_MigrationToolHelper {
 		oscar.Local_Inspection_received__c = saamCase.Local_Inspection_received__c;
 		oscar.Local_Inspection_requested__c = saamCase.Local_Inspection_requested__c;
 		oscar.Process_Start_Date__c = saamCase.Process_Start_Date__c;
+		//WMO-564
+		oscar.Payment_requested__c = saamCase.Proof_of_payment_requested__c == null ? null : saamCase.Proof_of_payment_requested__c.date();
 		oscar.Proof_of_payment_received__c = saamCase.Proof_of_payment_received__c;
 		oscar.PSAA_EACP_Agreement_received__c = saamCase.PSAA_EACP_Agreement_received__c;
+		//WMO-564
+		oscar.Agreement_requested__c = saamCase.PSAA_signed_copy_sent__c;
 		oscar.Welcome_Pack_Sent__c = saamCase.PSAA_signed_copy_sent__c;
 		oscar.Sanity_check_deadline__c = saamCase.SAAM_Deadline_Date__c;
 		oscar.Sanity_check_received__c = saamCase.Documentation_Complete__c;
@@ -810,7 +816,7 @@ public without sharing class AMS_MigrationToolHelper {
                 oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
             if(processType == 'CER.1.0')
                 oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
-            if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP ||  processType == AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
+            if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
                 oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'BANK_ACCOUNT_SETUP');
 
 

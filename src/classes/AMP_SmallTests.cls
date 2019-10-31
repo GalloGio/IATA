@@ -15,8 +15,13 @@ private class AMP_SmallTests {
 
 		Service__c testService = new Service__c();
 		testService.name = 'test';
-		testService.Service_Publication__c = 'Services';
+		testService.Service_Publication__c = 'Publications';
 		insert testService;
+
+		Service__c testService2 = new Service__c();
+		testService2.name = 'test';
+		testService2.Service_Publication__c = 'Services';
+		insert testService2;
 
 		Account_Service__c ac = new Account_Service__c();
 		ac.Account__c = a.Id;
@@ -24,8 +29,15 @@ private class AMP_SmallTests {
 		ac.Active__c = true;
 		insert ac;
 
+		Account_Service__c ac2 = new Account_Service__c();
+		ac2.Account__c = a.Id;
+		ac2.Service__c = testService2.Id;
+		ac2.Active__c = true;
+		insert ac2;
+        
 		AMP_ProductsController pcontroller = new AMP_ProductsController(stdController);
 		Boolean canView = AMP_ProductsController.canViewSalesfigures();
+        Boolean isIATAMember = AMP_ProductsController.isIATAMember(a.Id);
 
 		Account b = AMP_AccountManagementController.getAccount(a.Id);
 		System.assertEquals(a.Name, b.Name, 'Accounts should be the same');

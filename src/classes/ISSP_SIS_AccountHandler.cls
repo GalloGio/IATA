@@ -7,44 +7,52 @@ public with sharing class ISSP_SIS_AccountHandler {
     
     public static final ID RT_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
     public static set<ID> ALLOWED_COUNTRIES = null;
+    public static set<String> ALLOWED_LOCATIONS = null;
+    public static set<String> ALLOWED_STATUS = ISSP_SIS_Account_Allowed_Status__c.getAll().keyset();
+
     public static Boolean BLOCK_EXECUTION = false;
     
-    public static map<String,list<ISSP_SIS_Account_Status__c>> MAP_SIS_ACCOUNT_STATUS = null;
+    public static map<String,ISSP_SIS_Account_Status__c> MAP_SIS_ACCOUNT_STATUS = null;
     /**
         Get the map with the custom setting 'ISSP_SIS_Account_Status__c' or creates it if not initialized
     **/
-    public static map<String,list<ISSP_SIS_Account_Status__c>> getMapSISAccountStatus() {
+    public static map<String,ISSP_SIS_Account_Status__c> getMapSISAccountStatus() {
         //initialize map only once
         if (MAP_SIS_ACCOUNT_STATUS == null) {
-            MAP_SIS_ACCOUNT_STATUS = new map<String,list<ISSP_SIS_Account_Status__c>>();
+            MAP_SIS_ACCOUNT_STATUS = new map<String,ISSP_SIS_Account_Status__c>();
             for (ISSP_SIS_Account_Status__c setting: ISSP_SIS_Account_Status__c.getAll().values()) {
-                String key = RecordTypeSingleton.getInstance().getRecordTypeId('Account', setting.Recordtype__c) + ' ' + setting.Status__c;
-                list<ISSP_SIS_Account_Status__c> listSettings = MAP_SIS_ACCOUNT_STATUS.get(key);
-                if (listSettings==null) {
-                    listSettings = new list<ISSP_SIS_Account_Status__c>();
+                list<String> listISOCode = setting.Country_ISO_Codes__c==null? new list<String>(): setting.Country_ISO_Codes__c.split(',');
+                list<String> listLocations = setting.Location_Class__c==null? new list<String>(): setting.Location_Class__c.split(',');
+                for (String countryISOCode: listISOCode) {
+                    for (String location: listLocations) {
+                        String key = RecordTypeSingleton.getInstance().getRecordTypeId('Account', setting.Recordtype__c) + ' ' + setting.Status__c + ' ' + location + ' ' + countryISOCode;
+                        MAP_SIS_ACCOUNT_STATUS.put(key, setting);
+                    }
                 }
-                listSettings.add(setting);
-                MAP_SIS_ACCOUNT_STATUS.put(key, listSettings);
             }
         }
         return MAP_SIS_ACCOUNT_STATUS;
     }
 
     /**
-        Finds in Custom Metadata SIS_Management_Visibility__mdt all valid combinations
-        of Sector + Category
+        Get the set of all valid combinations of location class an location Type
+        defined in the CS 'ISSP_SIS_Account_Allowed_Location__c'
     **/
-    private static set<String> VALID_SIS_SECTOR_CATEGORY = null;
-    public static set<String> getValidSISSectorCategory() {
-        if (VALID_SIS_SECTOR_CATEGORY==null) {
-            VALID_SIS_SECTOR_CATEGORY = new set<String>();
-            for (SIS_Management_Visibility__mdt sisVisibility:
-            [SELECT Id, Sector__c, Category__c FROM SIS_Management_Visibility__mdt WHERE Is_Visible__c = true] ) {
-                VALID_SIS_SECTOR_CATEGORY.add(sisVisibility.Sector__c + ',' + sisVisibility.Category__c);
+    public static set<String> getAllowedLocations() {
+        // initialize  the location set if it is the first time
+        if (ALLOWED_LOCATIONS==null) {
+            ALLOWED_LOCATIONS = new set<String>();
+            for (ISSP_SIS_Account_Allowed_Location__c setting: ISSP_SIS_Account_Allowed_Location__c.getAll().values()) {
+                for (String locationClass: setting.Location_Classes__c.split(',')) {
+                    for (String locationType: setting.Location_Types__c.split(',')) {
+                        ALLOWED_LOCATIONS.add(locationClass.trim() + ',' + locationType.trim());
+                    }
+                }
             }
         }
-        return VALID_SIS_SECTOR_CATEGORY;
+        return ALLOWED_LOCATIONS;
     }
+
     /**
         BEFORE INSERT
     **/
@@ -62,10 +70,8 @@ public with sharing class ISSP_SIS_AccountHandler {
         list<Id> listInsertAccountId = new list<Id>();
         list<Id> listUpdateAccountId = new list<Id>();
         for (Account account: listAccount) {
-            if (validSISAccount(account) && (account.Status__c == 'Approved' 
-                || account.Status__c == 'Cash basis/no commission' 
-                || account.Status__c == 'Cash basis/with commission' 
-                || account.Status__c == 'Changes processed')) {
+            if (validSISAccount(account)
+                && ALLOWED_STATUS.contains(account.Status__c)) {
                 if (String.isBlank(account.SIS_ID__c)) {
                     listInsertAccountId.add(account.Id);
                 } else {
@@ -78,7 +84,7 @@ public with sharing class ISSP_SIS_AccountHandler {
         		ISSP_WS_Utilities.invokeCreateAccount(listInsertAccountId);
         	}
         	else{
-	            System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listInsertAccountId, 'invokeCreateAccount'));
+            	System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listInsertAccountId, 'invokeCreateAccount'));
         	}
             BLOCK_EXECUTION = true;
         }
@@ -87,7 +93,7 @@ public with sharing class ISSP_SIS_AccountHandler {
         		ISSP_WS_Utilities.invokeUpdateAccount(listUpdateAccountId);
         	}
         	else{
-	            System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listUpdateAccountId, 'invokeUpdateAccount'));
+            	System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listUpdateAccountId, 'invokeUpdateAccount'));
         	}
             BLOCK_EXECUTION = true;
         }
@@ -98,7 +104,6 @@ public with sharing class ISSP_SIS_AccountHandler {
     **/
     public static void beforeUpdate(map<Id,Account> mapNews, map<Id,Account> mapOlds) {
         if (BLOCK_EXECUTION) return;
-        giveSISAppToAccountUsers(mapNews, mapOlds);
         validateFieldAvailableSISManagement(mapNews, mapOlds);
         updateSISStatusFields(mapNews, mapOlds);
         
@@ -156,8 +161,9 @@ public with sharing class ISSP_SIS_AccountHandler {
             }
             return account.RecordtypeId==RT_AGENCY &&
                 (account.Quality__c.contains('YES') || account.Quality__c.contains('015w0000001yCfW')) &&
-                ALLOWED_COUNTRIES.contains(account.IATA_ISO_Country__c);
-            
+                ALLOWED_COUNTRIES.contains(account.IATA_ISO_Country__c) &&
+                checkAccountLocation(account);
+
         } catch (Exception e) {
             System.debug('ERROR in validSISAccount for account ' + account + ' ' + e.getMessage());
             return false;
@@ -180,10 +186,7 @@ public with sharing class ISSP_SIS_AccountHandler {
             }      
         }
 
-        if(accountnew.Status__c == 'Approved' 
-                || accountnew.Status__c == 'Cash basis/no commission' 
-                || accountnew.Status__c == 'Cash basis/with commission' 
-                || accountnew.Status__c == 'Changes processed') {
+        if(ALLOWED_STATUS.contains(accountnew.Status__c)) {
             for (String fieldName: ISSP_WS_SIS_Callout_CreateAccount.LIST_FIELD_NAMES) {
                 if (fieldName!='BillingAddress')
                 if (accountNew.get(fieldName) != accountOld.get(fieldName)) {
@@ -204,22 +207,17 @@ public with sharing class ISSP_SIS_AccountHandler {
             Account accountOld = mapOlds.get(accountNew.Id);
             if (accountNew.RecordTypeId!=accountOld.RecordtypeId ||
                 accountNew.Status__c!=accountOld.Status__c ||
-                accountNew.IATA_ISO_Country__c!=accountOld.IATA_ISO_Country__c
+                accountNew.IATA_ISO_Country__c!=accountOld.IATA_ISO_Country__c ||
+                accountNew.Location_Class__c!=accountOld.Location_Class__c
             ) {
                 listAccount.add(accountNew);
             }
         }
         updateSISStatusFields(listAccount);
     }    
+    
     // for insert
     private static void updateSISStatusFields(list<Account> listAccount) {
-        //get countries map
-        set<Id> setCountryId = new set<Id>();
-        for (Account account: listAccount) {
-            setCountryId.add(account.IATA_ISO_Country__c);
-        }
-        map<String,IATA_ISO_Country__c> mapCountries = new map<String,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(setCountryId));
-        
         for (Account account: listAccount) {
             // include country objetct in the account
             account.IATA_ISO_Country__r = AMS_utils.mapCountries.get(account.IATA_ISO_Country__c);
@@ -239,24 +237,36 @@ public with sharing class ISSP_SIS_AccountHandler {
     **/
     private static ISSP_SIS_Account_Status__c findCustomSettingSISStatus(Account account) {
         //find  custom setting
-        map<String,list<ISSP_SIS_Account_Status__c>> mapSettings = getMapSISAccountStatus();
-        // get list of possible Setting for a specific recordtype and status
-        String key = account.RecordtypeId + ' ' + account.Status__c;
-        list<ISSP_SIS_Account_Status__c> listSettings = mapSettings.get(key);
-        if (listSettings==null) return null;
-        ISSP_SIS_Account_Status__c allCountriesSettings = null;
-        // if a list of possible settings is found select the one that includes the account country
-        for (ISSP_SIS_Account_Status__c setting: listSettings) {
-            if (setting.Country_ISO_Codes__c.equalsIgnoreCase('All')) {
-                allCountriesSettings = setting;
-            } else {
-                if (setting.Country_ISO_Codes__c.contains(account.IATA_ISO_Country__r.ISO_Code__c)) {
-                    return setting;
-                }
-            }
-        }
-        // if no country is found use the setting with the keyword 'All'
-        return allCountriesSettings;
+        map<String,ISSP_SIS_Account_Status__c> mapSettings = getMapSISAccountStatus();
+        // first find the setting for all exact values
+        String key = account.RecordtypeId + ' ' + account.Status__c + ' ' + account.Location_Class__c + ' ' + account.IATA_ISO_Country__r.ISO_Code__c;
+        ISSP_SIS_Account_Status__c setting = mapSettings.get(key);
+        if (setting!=null) return setting;
+        
+        // second only when the country has a wildcard
+        key = account.RecordtypeId + ' ' + account.Status__c + ' ' + account.Location_Class__c + ' All';
+        setting = mapSettings.get(key);
+        if (setting!=null) return setting;
+        
+        // third when the location class has the wildcard
+        key = account.RecordtypeId + ' ' + account.Status__c + ' All ' + account.IATA_ISO_Country__r.ISO_Code__c;
+        setting = mapSettings.get(key);
+        if (setting!=null) return setting;
+        
+        // finally when the location class and the country have wildcards
+        key = account.RecordtypeId + ' ' + account.Status__c + ' All All';
+        setting = mapSettings.get(key);
+        return setting;
+    }
+
+    /**
+        check if account location fields are valid according to the CS ISSP_SIS_Account_Allowed_Location__c
+    **/
+    public static Boolean checkAccountLocation(Account account) {
+        String locationClass = account.Location_Class__c==null? '': account.Location_Class__c.trim();
+        String locationType = account.Location_Type__c==null? '': account.Location_Type__c.trim();
+        String key = locationClass + ',' + locationType;
+        return getAllowedLocations().contains(key);
     }
     
     /**
@@ -283,30 +293,4 @@ public with sharing class ISSP_SIS_AccountHandler {
         }
     }
 
-    /**
-        Finds all suitable accounts to find portal users to give them SIS Joining App
-    **/
-    public static void giveSISAppToAccountUsers(map<Id,Account> mapNews, map<Id,Account> mapOlds) {
-        list<Id> listAccountId = new list<Id>();
-        for (Account accountNew: mapNews.values()) {
-            Account accountOld = mapOlds.get(accountNew.Id);
-            if (accountNew.Sector__c!=accountOld.Sector__c ||
-                accountNew.Category__c!=accountOld.Category__c
-            ) {
-                String key = accountNew.Sector__c + ',' + accountNew.Category__c;
-                if (getValidSISSectorCategory().contains(key)) {
-                    listAccountId.add(accountNew.Id);
-                }
-            }
-        }
-        if (!listAccountId.isEmpty()) {
-            // give SIS Joining App to all interested users inside these accounts
-        	if(Test.isRunningTest()){
-	            ISSP_WS_Utilities.invokeGiveSISAppToAccountUsers(listAccountId);
-        	}
-        	else{
-				System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listAccountId, 'invokeGiveSISAppToAccountUsers'));
-        	}
-        }
-    }
 }

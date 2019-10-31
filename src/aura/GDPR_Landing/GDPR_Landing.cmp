@@ -1,0 +1,30 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" controller="GDPR_Landing_CTRL">
+    <ltng:require styles="{!$Resource.GDPR_Portal  + '/css/screen.css'}" />
+    <div class="container">
+        <h3>Our Signup &amp; Privacy Portal allows you to subscribe to IATA news and update your preferences.</h3>        
+        <br/>
+
+        <p>
+            You can:<br/>
+            <ul class="IATA_UlLi">
+                <li>Manage your profile</li>
+                <li>Manage your subscriptions to newsletters and updates on our products and services such as training, publications, events…</li>        
+            </ul>
+        </p>
+        <br/>
+
+        <p><b>Are you a new user?</b> Start by entering below the email address through which you want to receive our news</p>
+        <p><b>Are you already subscribed to our news?</b> Enter the email address through which you receive our updates</p>
+        <p><b>Are you a Customer Portal user?</b> Use the same e-mail address as for your Customer Portal account</p>
+        <div class="slds-align_absolute-center" style="height: 5rem;">
+            <div class="slds-align_absolute-center" style="height: 3rem;">
+                <ui:inputEmail aura:id="inputEmail" class="form-control inputHeight" placeholder="Enter your email address"/>&nbsp;&nbsp;
+                <button class="btn btn-primary btn-greyL noTop" type="submit" onclick="{!c.checkUserTrue}">Submit</button>
+            </div>        
+        </div>
+        <p>Your privacy matters to us. Please read our <a class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">privacy statement.</a></p>
+        <div class="slds-align--absolute-center" style="height:100%">
+            <lightning:spinner aura:id="spinner" variant="brand" size="large" class="slds-hide"/>
+        </div>
+    </div>
+</aura:component>

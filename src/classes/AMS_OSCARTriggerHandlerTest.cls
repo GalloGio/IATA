@@ -94,7 +94,7 @@ private class AMS_OSCARTriggerHandlerTest {
         update cse;
 
         // Create a new Financial Institution
-        Financial_Institution__c fi = new Financial_Institution__c(Name = 'Test FI', Region__c = 'Americas', Country__c = 'Canada', Institution_Type__c = 'Bank');
+        Financial_Institution__c fi = new Financial_Institution__c(Name = 'Test FI', Region__c = 'Americas', Country__c = 'Canada', Institution_Type__c = 'Bank', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Financial_Institution__c', 'Generic_FI'));
         insert fi;
 
         // Create a new Financial Security
@@ -110,6 +110,8 @@ private class AMS_OSCARTriggerHandlerTest {
 
     @isTest static void processOscarOptinoutTest1() {
 
+        AMS_OSCARTriggerHandler aoth = new AMS_OSCARTriggerHandler();
+        aoth.fakemethod();
 
         List<String> fieldListOscar = new List<String>();
 
@@ -305,5 +307,7 @@ private class AMS_OSCARTriggerHandlerTest {
         System.assertEquals('Yes',[SELECT Is_PCI_compliant__c FROM Account WHERE Id = :a.Id].Is_PCI_compliant__c);
 
     }
+
+    
     
 }

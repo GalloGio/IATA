@@ -51,6 +51,10 @@ public with sharing class ISSP_CurrencyCenterHomeController {
         return new PageReference('/ISSP_CurrencyCenterCountriesMap?type=Watch List');
     }
 
+    public PageReference GoToAllOthers() {
+        return new PageReference('/ISSP_CurrencyCenterCountriesMap?type=All Others');
+    }
+
     public PageReference GoToManageNotifications() {
         return new PageReference('/ISSP_CurrencyCenterManageNotifications');
     }

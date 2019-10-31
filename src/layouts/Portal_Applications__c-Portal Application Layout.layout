@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -53,6 +52,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Provisioning_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GDPR_PrivacyStatement__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -236,7 +239,21 @@
         <fields>ANG_Portal_Service_Role__c</fields>
         <fields>Account.ACC_RECORDTYPE</fields>
         <fields>CREATED_DATE</fields>
+        <fields>Last_Visit_Date__c</fields>
         <relatedList>Portal_Application_Right__c.Portal_Application__c</relatedList>
+        <sortField>Last_Visit_Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Version_Number__c</fields>
+        <fields>Is_Latest__c</fields>
+        <fields>Effective_Start_Date__c</fields>
+        <relatedList>Term_and_Condition__c.NewGenApp_PortalService__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Account_Role_Services__c.Portal_Service__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>

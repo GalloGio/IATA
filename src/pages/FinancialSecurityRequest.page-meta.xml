@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>25.0</apiVersion>
+    <apiVersion>40.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <description>From this page the user will be able to send the email to inform the Agent that financial security information is requested. This is will done by SF user once the financial results are available</description>

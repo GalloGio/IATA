@@ -63,6 +63,8 @@ public without sharing class AMS_EBulletinReportHelper {
 
 	private static final String NOTAPPLICABLE = 'Not Applicable'; 
 	private static final String ADDITIONALQUERYFIELDS = ',Account__r.ANG_IsNewGenAgency__c';
+
+	public static final Integer MAXIMUM_CHANGE_CODES_PER_FILE = 2900;
  
 	private static Decimal ownersTotalPercentage = 0;
 
@@ -1184,9 +1186,8 @@ public without sharing class AMS_EBulletinReportHelper {
 		return string.valueOf(dValue.day() + '-' + lsMonthName.get(dValue.month()) + '-' + dValue.year());
 	}
 
-
 	@future
-	 public static void updateEbulletinProfile(Datetime dateLastRun, ID ebProfileID, ID attachmentID) {
+	 public static void updateEbulletinProfile(Datetime dateLastRun, ID ebProfileID, Set<ID> attachmentID) {
 
 		//Set the last run time
 		AMS_eBulletin_Profile__c ebProfile = [select Last_Run__c from AMS_eBulletin_Profile__c where id = :ebProfileID ];
@@ -1196,7 +1197,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		update ebProfile;
 
 	    Datetime limitDate = system.now().addDays(-5);
-		delete [select id from attachment where parentid = :ebProfileID and id <> :attachmentID and createdDate < :limitDate ];
+		delete [select id from attachment where parentid = :ebProfileID and id not in :attachmentID and createdDate < :limitDate ];
 	}
 
 		/** 

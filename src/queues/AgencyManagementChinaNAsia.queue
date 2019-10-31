@@ -5,9 +5,13 @@
     <name>Agency Management - China &amp; N. Asia</name>
     <queueMembers>
         <publicGroups>
+            <publicGroup>Hub_BJS_Key_Controls_AM</publicGroup>
             <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
             <publicGroup>IDFSChinaNAsiaallusers</publicGroup>
         </publicGroups>
+        <roles>
+            <role>ChinaNAsiaAgencyManagementStaff</role>
+        </roles>
     </queueMembers>
     <queueSobject>
         <sobjectType>AMS_OSCAR__c</sobjectType>

@@ -12,7 +12,7 @@ public with sharing class RTSMonthlyDigestEmailComponentController {
                 ANG_Risk_Alert__c 
 			WHERE  
                 ANG_Severity__c = 'Red' 
-				AND recordTypeid = :Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId()
+				AND recordTypeid = :RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS')
                 AND CreatedDate >= :Date.today().addMonths(-1)
                 AND CreatedDate < :Date.today() 
         ];

@@ -24,6 +24,11 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
         <!--script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" /-->
         <!--script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" /-->
+
+        <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip.min.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip-utils.min.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.jszip, '/FileSaver.min.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.min.js')}"/>
        
         
         
@@ -53,6 +58,10 @@
                
         .bPageBlock {
             border-top-width : thin !important;
+        }
+
+        .bPageBlock .labelCol, body .print .topics-label{
+            text-align: left;
         }
         
         .labelCol{
@@ -87,6 +96,14 @@
             border: 1px solid transparent !important;
             /*background: */
         }
+
+        .btn.iatabtn.iatabtn-default.iatabtn-edit{
+            margin: 30px 0;
+        }
+
+        .btn.iatabtn.iatabtn-default.iatabtn-download{
+            margin-left: 0;
+        }
         
         .tb-header {
             padding-right:20px;
@@ -109,16 +126,29 @@
         
         .errorMsg {color:#d74c3b}
             
-        .progress-bar-off {
-                color:#6BBBEA;
-                font-weight:bold;
-                background-image:none !important;
-                background-color:transparent !important;
-                border-right:2px solid white;
+        .progress{
+            background-image: none;
+            height: unset;
+            background-color: #fff;
+            box-shadow: none;
+            margin-bottom: 0 !important;
         }
         
         .progress-bar {
-                font-size:inherit;
+            padding: 5px;
+            color: #fff;
+            font-weight: bold;
+            font-size:inherit;
+            background-image: none;
+            background-color: #1e32fa;
+            box-shadow: none;
+        }
+
+        .progress-bar-off {
+            font-weight: bold;
+            background-image: none !important;
+            background-color: #f0f2f5 !important;
+            border-bottom: none !important;
         }
         
         .data2Col {
@@ -129,7 +159,7 @@
 
         
         .pbSubheader {
-            background-color:  #1797c0 !important;
+            background-color:  #1e32fa !important;
             color: #fff;
             font-weight:bold;
             font-size:15px;
@@ -189,7 +219,8 @@
              .row1 {padding-bottom:16px; vertical-align: text-top;}
 
         #container{width:100%;height: 40px;}
-        #right{float:right;width:30%;}
+        #right{float:right;}
+        #right .panel-title a{color:#FFF !important;}
         #right:hover a{
             color:#FFF;
         }
@@ -224,19 +255,24 @@
 
         .title{
             font-weight:bold !important;
-            color:rgb(51, 122, 183) !important;
+            color: #1e32fa !important;
         }
 
         .h4, h4 {
             font-size: 18px;
-            color:rgb(51, 122, 183) ;
+            /*color:#1e32fa;*/
+        }
+
+        .h5, h5 {
+            font-weight:bold;
+            color:rgb(51, 122, 183);
         }
 
         td{
             color:#4a4a56 !important;
         }
     </style>
-    
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
     <script>
             
             function isInArray(arr, val) {
@@ -274,9 +310,21 @@
                 el.style.display='none';
             }
         }
-                 
-        
-    
+
+        function downloadZIP(attachmentIds) {
+          
+            ISSP_AMS_EBulletin.getAllAttachmentsToZip(attachmentIds, function(result, event){
+         
+                try {
+                    var zipfiles = new ZipFiles(result, "reports.zip");
+                    zipfiles.downloadZip();
+                } catch (e) {
+                    alert(e);
+                }
+            }, {buffer: true, escape: false, timeout: 120000} );
+        }
+
+
         function isIE(){
             //alert(navigator.userAgent);
             //return /MSIE/.test(navigator.userAgent);
@@ -478,10 +526,10 @@
       }
       </script>
     </apex:outputPanel>
-            
+    <c:ISSP_CustomNavigation />
      <div class="container">
        <div id="contentWrapper">
-           <c:ISSP_CustomNavigation />
+           
             
    
             
@@ -845,11 +893,11 @@
                             <apex:pageBlockSection columns="1">
                                 <apex:pageBlockSectionItem dataStyle="text-align:right; width: 25%;" rendered="{!isStep1_1}">
                                     <apex:outputPanel >
-                                        <apex:commandButton action="{!goToStepHome}" value="{!$Label.ISSP_Cancel}" />
+                                        <apex:commandButton styleClass="iatabtn iatabtn-danger" action="{!goToStepHome}" value="{!$Label.ISSP_Cancel}" />
                                         &nbsp;&nbsp;
-                                        <apex:commandButton action="{!saveAMSFormAndGoSideways}" value="{!$Label.ISSP_AMS_eBulletin_WEEKLY_Setup}"  rendered="{!newFormDaily.Opt_in__c}"/>
+                                        <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndGoSideways}" value="{!$Label.ISSP_AMS_eBulletin_WEEKLY_Setup}"  rendered="{!newFormDaily.Opt_in__c}"/>
                                         &nbsp;&nbsp;
-                                        <apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormDaily.Opt_in__c}"/>
+                                        <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormDaily.Opt_in__c}"/>
                                     </apex:outputPanel>
                                 </apex:pageBlockSectionItem>
                             </apex:pageBlockSection>
@@ -1147,11 +1195,11 @@
                             <apex:pageBlockSection columns="1">
                                 <apex:pageBlockSectionItem dataStyle="text-align:right; width: 50%;" rendered="{!isStep1_2}">
                                     <apex:outputPanel >
-                                        <apex:commandButton action="{!goToStepHome}" value="{!$Label.ISSP_Cancel}" />
+                                        <apex:commandButton styleClass="iatabtn iatabtn-danger" action="{!goToStepHome}" value="{!$Label.ISSP_Cancel}" />
                                         &nbsp;&nbsp;
-                                        <apex:commandButton action="{!saveAMSFormAndGoSideways}" value="{!$Label.ISSP_AMS_eBulletin_DAILY_Setup}"  rendered="{!newFormWeekly.Opt_in__c}"/>
+                                        <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndGoSideways}" value="{!$Label.ISSP_AMS_eBulletin_DAILY_Setup}"  rendered="{!newFormWeekly.Opt_in__c}"/>
                                         &nbsp;&nbsp;
-                                        <apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormWeekly.Opt_in__c}"/>
+                                        <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormWeekly.Opt_in__c}"/>
                                     </apex:outputPanel>    
                                 </apex:pageBlockSectionItem>
                             </apex:pageBlockSection>
@@ -1263,7 +1311,9 @@
                                             <tr>
                                                 <td>
                                                     <apex:outputpanel >
-                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsDaily}</span> <apex:commandButton action="{!goToStep1_1}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}" style="margin-left:30px;vertical-align:bottom !important"/>
+                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsDaily}</span>
+                                                        <br/>
+                                                        <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-edit" action="{!goToStep1_1}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}"/>
                                                     </apex:outputpanel>
                                                 </td>
                                             </tr>
@@ -1491,7 +1541,7 @@
                                                     <br/>
 
                                                     <apex:actionFunction name="planeStartDaily" action="{!isGettingReportStartDaily}" reRender="waitingPlaneDaily,btnDailyDownload"/>
-                                                    <apex:outputPanel id='waitingPlaneDaily'>
+                                                    <apex:outputPanel id="waitingPlaneDaily">
                                                         <apex:pageBlockSectionItem rendered="{!isGettingReportDaily}">
                                                             <div class="title">
                                                                 <img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
@@ -1499,21 +1549,46 @@
                                                             </div>
                                                         </apex:pageBlockSectionItem>
                                                     </apex:outputPanel>
-                                                    <apex:commandButton id="btnDailyDownload" action="{!dailyReportDownload}" onclick="planeStartDaily();" reRender="batchStatusPollerDaily" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadDailyReport}" disabled="{!IF(AND(newFormDaily.Opt_in__c, NOT(isGettingReportDaily)) ,'false','true')}"/>
+                                                    <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-download" id="btnDailyDownload" action="{!dailyReportDownload}" onclick="planeStartDaily();" reRender="batchStatusPollerDaily" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadDailyReport}" disabled="{!IF(AND(newFormDaily.Opt_in__c, NOT(isGettingReportDaily)) ,'false','true')}"/>
                                                     <apex:outputPanel id="batchStatusPollerDaily">
-                                                        <apex:actionPoller oncomplete="openWindow();" reRender="newWindow,theMessages,waitingPlaneDaily,btnDailyDownload" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
+                                                        <apex:actionPoller reRender="reportsDailyTable,newWindow,theMessages,waitingPlaneDaily,btnDailyDownload" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
                                                     </apex:outputPanel>
+
+                                                    <br/>
                                                             
                                                     <apex:outputPanel id="newWindow">
                                                         <script>      
-                                                            function openWindow(){        
-                                                                var sWindow = '{!dailyFileDownload}';
+                                                            function openWindow(sWindow){
                                                                 if(sWindow != ''){
                                                                     window.open(sWindow);
                                                                 }
                                                             }
                                                         </script>
                                                     </apex:outputPanel>
+
+                                                    <!--<apex:outputpanel id="reportsDailyTable" rendered="{!isAvailableToShowDaily}">-->
+                                                    <apex:outputpanel id="reportsDailyTable">
+                                                        <apex:outputPanel rendered="{!isAvailableToShowDaily}">
+                                                            <span class="h5">{!$Label.ISSP_AMS_eBulletin_GeneratedReports}</span>
+                                                            <table width="100%">
+                                                                <tr>
+                                                                    <td width="100%">
+                                                                        <apex:commandLink onclick="downloadZIP('{!dailyFileDownloadListJSON}');return false;" value="{!$Label.ISSP_DownloadAll}"></apex:commandLink>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <table width="100%">
+                                                                <apex:repeat value="{!dailyFileDownloadList}" var="dailyFile" id="filesDailyList">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <apex:commandLink onclick="openWindow('{!dailyFile.urlReport}')" value="({!$Label.ISSP_Download})"></apex:commandLink>
+                                                                        </td>
+                                                                        <td>{!dailyFile.nameReport}</td> 
+                                                                    </tr>
+                                                               </apex:repeat>
+                                                            </table>
+                                                        </apex:outputPanel>
+                                                    </apex:outputpanel>
 
                                                     
                                                 </td>
@@ -1562,7 +1637,9 @@
                                             <tr>
                                                 <td>
                                                 <apex:outputpanel >
-                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsWeekly}</span> <apex:commandButton action="{!goToStep1_2}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}" style="margin-left:20px;vertical-align:bottom !important"/>
+                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsWeekly}</span> 
+                                                        <br/>
+                                                        <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-edit" action="{!goToStep1_2}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}"/>
                                                     </apex:outputpanel>
                                                </td>
                                             </tr>
@@ -1772,7 +1849,7 @@
                                                             <br/>                                                           
 
                                                                 <apex:actionFunction name="planeStartWeekly" action="{!isGettingReportStartWeekly}" reRender="waitingPlaneWeekly,btnWeeklyDownload"/>
-                                                                <apex:outputPanel id='waitingPlaneWeekly'>
+                                                                <apex:outputPanel id="waitingPlaneWeekly">
                                                                     <apex:pageBlockSectionItem rendered="{!isGettingReportWeekly}">
                                                                         <div class="title">
                                                                             <img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
@@ -1780,32 +1857,51 @@
                                                                         </div>
                                                                     </apex:pageBlockSectionItem>
                                                                 </apex:outputPanel>
-                                                                <apex:commandButton id="btnWeeklyDownload" action="{!weeklyReportDownload}" onclick="planeStartWeekly();" reRender="batchStatusPollerWeekly" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadWeeklyReport}" disabled="{!IF(AND(newFormWeekly.Opt_in__c, NOT(isGettingReportWeekly)) ,'false','true')}"/>
+                                                                <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-download" id="btnWeeklyDownload" action="{!weeklyReportDownload}" onclick="planeStartWeekly();" reRender="batchStatusPollerWeekly" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadWeeklyReport}" disabled="{!IF(AND(newFormWeekly.Opt_in__c, NOT(isGettingReportWeekly)) ,'false','true')}"/>
                                                                 <apex:outputPanel id="batchStatusPollerWeekly">
-                                                                    <apex:actionPoller oncomplete="openWindow();" reRender="newWindow,theMessages,waitingPlaneWeekly,btnWeeklyDownload" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
+                                                                    <apex:actionPoller reRender="newWindow,theMessages,waitingPlaneWeekly,btnWeeklyDownload,reportsWeeklyTable" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
                                                                 </apex:outputPanel>
                                                             
-                                                                
+                                                                <br/>
                                                             
                                                                 <apex:outputPanel id="newWindow">
-                                                                <script>      
-                                                                    function openWindow(){        
-                                                                        var sWindow = '{!weeklyFileDownload}';
+                                                                <script>     
+                                                                    function openWindow(sWindow){        
                                                                         if(sWindow != ''){
                                                                             window.open(sWindow);
                                                                         }
                                                                     }
                                                                 </script>
                                                                 </apex:outputPanel>
-                                                            
-                                                    
+
+                                                                <apex:outputpanel id="reportsWeeklyTable">
+                                                                    <apex:outputPanel rendered="{!isAvailableToShowWeekly}">
+                                                                        <span class="h5">{!$Label.ISSP_AMS_eBulletin_GeneratedReports}</span>
+                                                                        <table width="100%">
+                                                                            <tr>
+                                                                                <td width="100%">
+                                                                                    <apex:commandLink onclick="downloadZIP('{!weeklyFileDownloadListJSON}');return false;" value="{!$Label.ISSP_DownloadAll}"></apex:commandLink>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <table width="100%">
+                                                                            <apex:repeat value="{!weeklyFileDownloadList}" var="weeklyFile" id="filesWeeklyList">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <apex:commandLink onclick="openWindow('{!weeklyFile.urlReport}')" value="({!$Label.ISSP_Download})"></apex:commandLink>
+                                                                                    </td>
+                                                                                    <td>{!weeklyFile.nameReport}</td> 
+                                                                                </tr>
+                                                                           </apex:repeat>
+                                                                        </table>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputpanel>                                                  
                                                         </td>
                                                     </tr>
                                                     </table> 
                                                 </td>
                                             </tr>
                                             </table>                            
-
                                         </td>
                                     </tr>
                                     </table>    
@@ -1839,9 +1935,9 @@
 
            
          </div>
-         <c:ISSP_CustomFooter />
+         
          </div>
-       
+         <c:ISSP_CustomFooter />
     </body>  
 </html>
 

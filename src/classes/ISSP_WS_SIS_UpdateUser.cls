@@ -76,6 +76,7 @@ global with sharing class ISSP_WS_SIS_UpdateUser {
                 Contact.Status__c,
                 Contact.SIS_Contact_Type__c,
                 Contact.Account.SIS_ID__c,
+                Contact.Account.Top_Parent__c,
                 Contact.Community__c
             FROM User
             WHERE FederationIdentifier = :inputData.FederationID ];
@@ -103,7 +104,12 @@ global with sharing class ISSP_WS_SIS_UpdateUser {
         Boolean updateContact = false;
         // Check SIS_ID__c = SISmemberId
         if (SISMemberID != contact.Account.SIS_ID__c) { // or contact SIS ID
-            throw new ISSP_WS_SIS_Common.WSException('024',''); // new error
+            Id topParentId = contact.Account.Top_Parent__c == null? contact.AccountId: contact.Account.Top_Parent__c;
+            if (!checkFullHierarchy(SISMemberID, topParentId)) {
+                throw new ISSP_WS_SIS_Common.WSException('024',''); // SIS ID is not in any of the accounts of the entire hierarchy
+            }
+            contact.SIS_ID__c = SISMemberID;
+            updateContact = true;
         }
         //check if contact is active
         if (contact.User_Portal_Status__c == 'Rejected'
@@ -137,6 +143,18 @@ global with sharing class ISSP_WS_SIS_UpdateUser {
         }
     }
     
+    /**
+        find the input sisId in the hierarchy of the input account
+    **/
+    private static Boolean checkFullHierarchy(String sisId, Id parentAccountId) {
+        return [
+            SELECT Id
+            FROM Account
+            WHERE (Id = :parentAccountId OR Top_Parent__c = :parentAccountId)
+            AND SIS_ID__c = :sisId
+        ].size() > 0;
+    }
+
     /**
         Creates the response object for UpdateUser WS when it is success
     **/

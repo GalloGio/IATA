@@ -53,8 +53,10 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Country_ISO_Code__c</fullName>
+        <description>2-lettered Country Code</description>
         <externalId>false</externalId>
         <label>Country ISO Code</label>
         <length>2</length>
@@ -65,6 +67,7 @@
     </fields>
     <fields>
         <fullName>Country_Name__c</fullName>
+        <description>Country name</description>
         <externalId>false</externalId>
         <label>Country Name</label>
         <length>255</length>
@@ -75,6 +78,7 @@
     </fields>
     <fields>
         <fullName>Passenger_Cargo__c</fullName>
+        <description>Represents if the template is for Passangers (&quot;P&quot;) or for Cargo (&quot;C&quot;)</description>
         <externalId>false</externalId>
         <label>Passenger/Cargo</label>
         <required>false</required>
@@ -114,6 +118,7 @@
         <columns>Country_Name__c</columns>
         <columns>Country_ISO_Code__c</columns>
         <columns>Passenger_Cargo__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

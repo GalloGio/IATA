@@ -4,7 +4,7 @@ private class ANG_OscarWizardFlowControllerTest {
     @testSetup static void setup(){
 
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
-        IATA_ISO_Country__c chinaCountry = new IATA_ISO_Country__c (Name='China',ISO_Code__c='CN', Enable_NewGen_Pilot__c = true);
+        IATA_ISO_Country__c chinaCountry = new IATA_ISO_Country__c (Name='China',ISO_Code__c='CN', Enable_NewGen_Pilot__c = true, ANG_Enable_NewGen__c = true);
         
         insert new List<IATA_ISO_Country__c>{ctry, chinaCountry};    
 

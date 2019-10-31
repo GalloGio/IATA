@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Not Started</fullName>
+        <default>false</default>
+        <label>Not Started</label>
+    </customValue>
+    <customValue>
+        <fullName>Progressing</fullName>
+        <default>false</default>
+        <label>Progressing</label>
+    </customValue>
+    <customValue>
+        <fullName>Fail</fullName>
+        <default>false</default>
+        <label>Fail</label>
+    </customValue>
+    <customValue>
+        <fullName>Pending Customer</fullName>
+        <default>false</default>
+        <label>Pending Customer</label>
+    </customValue>
+    <customValue>
+        <fullName>Not Applicable</fullName>
+        <default>false</default>
+        <label>Not Applicable</label>
+    </customValue>
+    <customValue>
+        <fullName>Completed</fullName>
+        <default>false</default>
+        <label>Completed</label>
+    </customValue>
+    <masterLabel>Stage Status</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

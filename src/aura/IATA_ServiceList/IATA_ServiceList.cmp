@@ -1,0 +1,54 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable,lightning:isUrlAddressable" controller="IATA_ServiceList_CTRL" access="GLOBAL">
+	
+    <aura:attribute name="localLoading" type="Boolean" default="true" />
+    
+    <aura:attribute name="lstServices" type="Object" />
+    <aura:attribute name="lstServicesLength" type="Integer" default="0" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- Spinner DIV -->
+    <aura:if isTrue="{!v.localLoading}">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+    <aura:if isTrue="{!v.lstServicesLength > 0}" >
+    
+        <!-- MAIN CONTENT AREA -->
+        <div class="slds-grid slds-wrap slds-grid--align-center">
+            <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                <div class="slds-text-heading_large slds-m-vertical_large IATA_section">
+                    My Services
+                </div>
+                
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Service Name">Service Name</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Privacy Policy">Privacy Policy</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.lstServices}" var="service">
+                            <tr class="slds-hint-parent">
+                                <td data-label="Service Name">
+                                    <div class="slds-truncate" title="{!service.Portal_Application__r.Name}">{!service.Portal_Application__r.Name}</div>
+                                </td>
+                                <th data-label="Privacy Policy" >
+                                    <div class="slds-truncate" title="{!service.Portal_Application__r.GDPR_PrivacyStatement__c}"><ui:outputURL value="{!service.Portal_Application__r.GDPR_PrivacyStatement__c}" target="_blank" label="Link"/></div>
+                                </th>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="slds-text-heading_large slds-m-vertical_large IATA_sectionEndSeparator"></div>
+        
+    </aura:if>
+    
+    
+</aura:component>

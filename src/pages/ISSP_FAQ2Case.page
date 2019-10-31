@@ -1128,7 +1128,7 @@
                                     <apex:actionFunction name="createStatRecord" action="{!createSatisfiedRecord}" reRender="mainHolder,OPpbButton" immediate="true"/>
 
                                      <apex:actionFunction name="GenerateFieldsBySettings" action="{!GenerateFieldsBySettings}" reRender="mainHolder,OPpbButton" immediate="true"/>
-                             <apex:actionfunction name="refreshAirlineList" action="{!refreshAirlineList}" rerender="chatButtonsPnl,FieldsRep,countryPnl,AirlinesPnl,OPpbButton,callButtonPnl" status="actStatusId2" />
+                             <apex:actionfunction name="refreshAirlineList" action="{!refreshAirlineList}" rerender="chatButtonsPnl,FieldsRep,AirlinesPnl,OPpbButton,callButtonPnl" status="actStatusId2" />
                              <apex:actionfunction name="refreshAirlineList1" action="{!copyCountryISO}" rerender="chatButtonsPnl,SLonchange,OPpbButton,callButtonPnl" />
 
 

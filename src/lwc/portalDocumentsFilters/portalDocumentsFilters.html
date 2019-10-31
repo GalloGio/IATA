@@ -1,0 +1,31 @@
+<template>
+    <!-- TOP SEARCH -->
+    <div class="heigthInfo">
+        <div class="slds-p-around_medium customCardTitleBox cursorPointer customBorderlessCardGray cardStyle" onclick={handleTopSearch}>
+            <span class="slds-p-left_small text-bold">{label.CSP_Search_TopResults}</span>
+        </div>
+    </div>
+
+    <div if:true={loading} class="spinnerContainer">
+            <lightning-spinner class="background-superLightGray" size="medium"></lightning-spinner>
+    </div>
+
+    <!-- FILTERS -->
+    <div if:false={loading} class="customBorderlessCardGray">
+        <template for:each={lstTiles} for:item="tile">
+            <div class={tile.class} onclick={categorySelected} key={tile.categoryApiName} data-item={tile.categoryApiName}>
+                <lightning-icon class="darkBlueIcon" if:true={tile.open} icon-name="utility:chevrondown" size="xx-small" data-item={tile.categoryApiName}></lightning-icon>
+                <lightning-icon class="darkBlueIcon" if:false={tile.open} icon-name="utility:chevronright" size="xx-small" data-item={tile.categoryApiName}></lightning-icon>
+                <span class="slds-p-left_small text-bold" data-item={tile.categoryApiName}>{tile.categoryName} ({tile.noResults})</span>
+            </div>        
+            <div if:true={tile.open} key={tile.categoryApiName} data-item={tile.categoryApiName}>
+                <div class="slds-m-around_medium slds-align_absolute-center">
+                    <lightning-combobox class="fullWidth" name="documentsProductType" label="Product Type" value="Product Type" options={typePicklistValues} onchange={handleTypePicklist}></lightning-combobox>
+                </div>
+                <div class="slds-m-around_medium slds-align_absolute-center">
+                    <lightning-combobox class="fullWidth" name="documentsPublishedCountry" label="Published Country" value="Published Country" options={countryPicklistValues} onchange={handleCountryPicklist}></lightning-combobox>
+                </div>
+            </div>
+        </template>        
+    </div>
+</template>

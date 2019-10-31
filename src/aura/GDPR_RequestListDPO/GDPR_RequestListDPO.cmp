@@ -1,0 +1,222 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable,lightning:isUrlAddressable" controller="GDPR_RequestList_CTRL" access="GLOBAL">
+	
+    <aura:attribute name="localLoading" type="Boolean" default="true" />
+    
+    <aura:attribute name="lstCases" type="Object" />
+    <aura:attribute name="lstCasesLength" type="Integer" default="0" />
+    
+    <aura:attribute name="showCasePopupDPO" type="Boolean" default="false" />
+    <aura:attribute name="showCasePopupObjectDPO" type="Object" default="{}"/>
+    
+    <aura:attribute name="isContactDPO" type="Boolean" default="false" />
+    
+    <aura:attribute name="isTabletOrPhone" type="Boolean" default="false" />
+    <aura:attribute name="viewAsCard" type="Boolean" default="false" />
+    <aura:attribute name="tableMinWidth" type="Integer" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:EVT_GDPR_UpdateCaseList" action="{!c.handleEVT_GDPR_UpdateCaseList}"/>
+    
+    <aura:if isTrue="{!v.isContactDPO}">
+    
+        <!-- Spinner DIV -->
+        <aura:if isTrue="{!v.localLoading}">
+            <lightning:spinner alternativeText="Loading" />
+        </aura:if>
+        
+        <!-- MAIN CONTENT AREA -->
+        <div class="slds-grid slds-wrap slds-grid--align-center">
+            
+            <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                
+                <div class="slds-text-heading_large slds-m-vertical_large IATA_section">
+                    My DPO Cases
+                </div>
+                
+                <aura:if isTrue="{!or(v.isTabletOrPhone,v.viewAsCard)}">
+            	
+                    <aura:if isTrue="{!v.lstCasesLength > 0}" >
+                        <aura:iteration items="{!v.lstCases}" var="case">
+                            <lightning:card class="cardBorder slds-m-vertical_x-small">
+                                <aura:set attribute="actions">
+                                    <lightning:buttonIcon iconName="utility:preview" alternativeText="Settings" aura:id="{!case.Id}" 
+                                                          name="{!case.Id}" onclick="{!c.openDPOCasePopupHandleClick}" />
+                                </aura:set>
+                                <aura:set attribute="title">
+                                    {!'Case '+case.CaseNumber}
+                                </aura:set>
+                                <p class="slds-p-horizontal_small">
+                                    <dl class="slds-dl_horizontal">
+                                        <dt class="slds-dl_horizontal__label">
+                                            <p class="slds-truncate" title="Subject">Subject:</p>
+                                        </dt>
+                                        <dd class="slds-dl_horizontal__detail slds-tile__meta">
+                                            <p class="slds-truncate" title="{!case.Subject}">{!case.Subject}</p>
+                                        </dd>
+                                        <dt class="slds-dl_horizontal__label">
+                                            <p class="slds-truncate" title="Status">Status:</p>
+                                        </dt>
+                                        <dd class="slds-dl_horizontal__detail slds-tile__meta">
+                                            <p class="slds-truncate" title="{!case.Status}">{!case.Status}</p>
+                                        </dd>
+                                    </dl>
+                                </p>
+                            </lightning:card>
+                        </aura:iteration>
+    
+                    </aura:if>
+                
+                    <aura:set attribute="else" >
+                    
+                        <table id="requestListDPOTableId" class="slds-table slds-table_cell-buffer slds-table_bordered" style="width:100%">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="&nbsp;">&nbsp;</div>
+                                    </th>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Case number">Case number</div>
+                                    </th>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Subject">Subject</div>
+                                    </th>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Status">Status</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <aura:if isTrue="{!v.lstCasesLength > 0}" >
+                                <tbody>
+                                    <aura:iteration items="{!v.lstCases}" var="case">
+                                        <tr class="slds-hint-parent">
+                                            <td data-label="">
+                                                <div class="slds-truncate" title="{!case.CaseNumber}">
+                                                    <lightning:buttonIcon iconName="utility:preview" alternativeText="Settings" aura:id="{!case.Id}" 
+                                                                                              name="{!case.Id}" onclick="{!c.openDPOCasePopupHandleClick}" />
+                                                </div>
+                                            </td>
+                                            <td data-label="Case number">
+                                                <div class="slds-truncate" title="{!case.CaseNumber}">{!case.CaseNumber}</div>
+                                            </td>
+                                            <td data-label="Subject">
+                                                <div title="{!case.Subject}">{!case.Subject}</div>
+                                            </td>
+                                            <td data-label="Status">
+                                                <div class="slds-truncate" title="{!case.Status}">{!case.Status}</div>
+                                            </td>
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </aura:if>
+                        </table>
+                    
+                    </aura:set>
+
+            	</aura:if>
+                
+            </div>
+            
+        </div>
+        
+        <div class="slds-text-heading_large slds-m-vertical_large IATA_sectionEndSeparator"></div>
+        
+        <aura:if isTrue="{!v.showCasePopupDPO}">
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <h2 id="header99" class="slds-text-heading--medium">Case {!v.showCasePopupObjectDPO.CaseNumber}</h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <div class="slds-grid slds-wrap slds-grid--align-center">
+                            
+                            <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                                <div class="slds-form-element slds-form-element_readonly">
+                                    <span class="slds-form-element__label">Case Number</span>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static"><ui:outputText value="{!v.showCasePopupObjectDPO.CaseNumber}"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                                <div class="slds-form-element slds-form-element_readonly">
+                                    <span class="slds-form-element__label">Subject</span>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static"><ui:outputText value="{!v.showCasePopupObjectDPO.Subject}"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                                <div class="slds-form-element slds-form-element_readonly">
+                                    <span class="slds-form-element__label">Description</span>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static"><ui:outputText value="{!v.showCasePopupObjectDPO.Description}"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                                <div class="slds-form-element slds-form-element_readonly">
+                                    <span class="slds-form-element__label">Status</span>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static"><ui:outputText value="{!v.showCasePopupObjectDPO.Status}"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                                <div class="slds-form-element slds-form-element_readonly">
+                                    <span class="slds-form-element__label">Data Privacy Rights</span>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static"><ui:outputText value="{!v.showCasePopupObjectDPO.Data_Privacy_Rights__c}"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                                <div class="slds-form-element slds-form-element_readonly">
+                                    <span class="slds-form-element__label">Passenger Name</span>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static"><ui:outputText value="{!v.showCasePopupObjectDPO.Passenger_Name_PXNM__c}"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                                <div class="slds-form-element slds-form-element_readonly">
+                                    <span class="slds-form-element__label">Ticket Number</span>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static"><ui:outputText value="{!v.showCasePopupObjectDPO.Ticket_Number_TDNR__c}"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                                <div class="slds-form-element slds-form-element_readonly">
+                                    <span class="slds-form-element__label">Date of Issue</span>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static"><ui:outputDate value="{!v.showCasePopupObjectDPO.Date_of_Issue_DAIS__c}"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="btn btn-primary btn-greyL" onclick="{!c.closeDPOCasePopupHandleClick}">Close</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+    
+    </aura:if>
+    
+</aura:component>

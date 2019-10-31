@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event sent when one account is create on the AccountCreation" >
+	<aura:attribute name="state" type="String"/>
+	<aura:attribute name="account" type="Account"/>
+</aura:event>

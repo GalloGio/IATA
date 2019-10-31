@@ -1,0 +1,47 @@
+<!--
+    Component Name: ISSP_AMC_FAQ.component
+    Related Classes: ISSP_AMC_FAQ.cls
+
+    Copyright @Right IT Services
+
+    Purpose: 
+
+    VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
+    1.0         Miguel Duarte       25-10-2018      INITIAL DEVELOPMENT
+ -->
+<apex:component >
+    <apex:attribute name="categories" description="FAQ Categories" type="String" required="true" />
+    <apex:attribute name="userLanguage" description="User language" type="String" required="true" />
+    <apex:attribute name="communityName" description="Community Name" type="String" required="true" />
+
+    <div>
+        <div class="row">
+            <div>
+                <h2 class="subtitle">{!$Label.ISSP_FAQ}</h2>
+                <div class="redFringe"></div>
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="table-responsive-md">
+                <table class="table table-striped">
+                    <knowledge:articleList articleVar="articleItem"
+                        language="{!userLanguage}"
+                        articleTypes="FAQ__kav"
+                        sortBy="mostViewed"
+                        pageSize="5"
+                        pageNumber="1"
+                        categories="FAQs:{!categories}"
+                        isQueryGenerated="true"
+                        >
+                            <tr>
+                                <td>
+                                    <a href="{!URLFOR($Action.KnowledgeArticle.View, articleItem.id)}&CommunityName={!communityName}">{!articleItem.title}</a>
+                                </td>
+                            </tr>
+                    </knowledge:articleList>
+                </table>
+            </div>
+        </div>
+    </div>
+</apex:component>

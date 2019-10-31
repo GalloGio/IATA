@@ -8,7 +8,9 @@ public with sharing class FeedItemHelper {
 	public static void CheckPostTopics(list<FeedItem> lstTriggerNew) {
 		
 		// get the accounts of interest to which the feed items are linked - we only apply the logic to Airline HQ accounts that are IATA Members
-		set<Id> setRelatedAccountIds = new set<Id>();		
+		set<Id> setRelatedAccountIds = new set<Id>();	
+		set<String> setFeedItemTypes = new set<String>{'TextPost','ContentPost','LinkPost','PollPost','QuestionPost'};
+
 		for (FeedItem fi : lstTriggerNew) {
 			//check apostrophe ' (&#39) RN-INC339011
 			if (fi.body != null) {
@@ -22,7 +24,7 @@ public with sharing class FeedItemHelper {
 	
 				if (String.valueOf(fi.ParentId).startsWith('001') 
 					&& !regexMatcher.matches() 
-					&& fi.Type == 'TextPost') {
+					&& setFeedItemTypes.contains(fi.Type)) {
 						setRelatedAccountIds.add(fi.ParentId);
 				}
 			}
@@ -30,10 +32,17 @@ public with sharing class FeedItemHelper {
  	   	
 		if (!setRelatedAccountIds.isEmpty()) {
 
-			map<Id, Account> mapAccountsPerId = new map<Id, Account>([SELECT Id FROM Account
-																		WHERE Id IN :setRelatedAccountIds
-																		AND RecordType.DeveloperName = 'IATA_Airline'
-																		AND Membership_status__c = 'IATA member']);
+			Map<Id, Account> mapAccountsPerId = new Map<Id, Account>(
+				[SELECT 
+					Id 
+				 FROM 
+				 	Account
+				 WHERE 
+				 	 Id IN :setRelatedAccountIds
+				 AND RecordType.DeveloperName = 'IATA_Airline'
+				 AND Sector__c = 'Airline'
+				]
+			);
 
 			// if there are IATA member Airline HQ accounts that have invalid feeditems posted to them, raise the error
 			if (!mapAccountsPerId.values().isEmpty()) {

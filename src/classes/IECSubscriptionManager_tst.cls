@@ -6,8 +6,8 @@ public with sharing class IECSubscriptionManager_tst {
 	private static Product_Category__c oProductCategory;
 	private static Product_Information__c oProductInfo;
 	private static Product_Information__c oProductInfo2;
-	private static zqu__ZProduct__c oProduct;
-	private static zqu__ZProduct__c oProduct2;
+	private static Product2 oProduct;
+	private static Product2 oProduct2;
 	private static zqu__ProductRatePlan__c oProductRatePlan;
 	private static zqu__ProductRatePlan__c oProductRatePlan2;
 	private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
@@ -32,24 +32,24 @@ public with sharing class IECSubscriptionManager_tst {
 		oProductCategory = IECTestUtil.CreateSampleProductCategory('PCTST', true);
 		insert oProductCategory;
 		
-		oProduct = IECTestUtil.CreateSampleProduct('PTST');
+		oProduct = IECTestUtil.CreateSampleProduct2('PTST');
 		insert oProduct;
 		
-		oProduct2 = IECTestUtil.CreateSampleProduct('PTST2');
+		oProduct2 = IECTestUtil.CreateSampleProduct2('PTST2');
 		insert oProduct2;
 		
-		oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+		oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
 		oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
 		insert oProductInfo;
 		
-		oProductInfo2 = IECTestUtil.CreateSampleProductInfo('PITST2', oProductCategory, oProduct2);
+		oProductInfo2 = IECTestUtil.CreateSampleProductInfo2('PITST2', oProductCategory, oProduct2);
 		oProductInfo2.Product_Audience__c = IECConstants.ProductInformationAudience_MEMBERAIRLINE;
 		insert oProductInfo2;
 		
-		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', triable, oProduct);
+		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('PRPTST', triable, oProduct);
 		insert oProductRatePlan;
 		
-		oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan('PRPTST2', triable, oProduct2);
+		oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan2('PRPTST2', triable, oProduct2);
 		insert oProductRatePlan2;
 		
 		oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST', triable, oProductRatePlan, oProductInfo);
@@ -258,7 +258,7 @@ public with sharing class IECSubscriptionManager_tst {
 		system.assertEquals(listCartItems.get(0).Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__c, oSubHist.Purchased_Product_Category__c, 'The appropriate Product Category should be saved');
 		system.assertEquals(listCartItems.get(0).Related_Rate_Plan_Information__r.Related_Product_Information__c, oSubHist.Purchased_Product_Information__c, 'The appropriate Product Information should be saved');
 		system.assertEquals(listCartItems.get(0).Related_Rate_Plan_Information__c, oSubHist.Purchased_Product_Rate_Plan_Information__c, 'The appropriate Rate Plan Information should be saved');
-		system.assertEquals(listCartItems.get(0).Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product__r.zqu__SKU__c, oSubHist.Purchased_Product_SKU__c, 'The appropriate Product SKU should be saved');
+		system.assertEquals(listCartItems.get(0).Related_Rate_Plan_Information__r.Related_Product_Information__r.New_Related_Product__r.zqu__SKU2__c, oSubHist.Purchased_Product_SKU__c, 'The appropriate Product SKU should be saved');
 		system.assertEquals(iQuantity, oSubHist.Rate_Plan_Quantity__c, 'The appropriate quantity should be saved');
 		system.assertEquals(res.InvoiceNumber, oSubHist.Invoice_Number__c, 'The appropriate Invoice Number should be saved');
 		// doesnt work, dont know why...

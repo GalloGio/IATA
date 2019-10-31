@@ -37,7 +37,8 @@ public class ISSP_AP_FieldLists {
             'Participate_in_any_Commission_Control__c'	=> '',
             'Participate_in_any_Remit_scheme__c' 		=> '',
             'Accept_payment_Cards_for_BSP_ticket__c' 	=> '',
-            'Join_BSP_ECCB__c' 							=> ''
+            'Join_BSP_ECCB__c' 							=> '',
+            'Flights_operated_in_the_BSP_country__c'	=> ''
             };
 
     // mandatory fields when Participate_in_any_Commission_Control__c == 'Yes'
@@ -150,11 +151,10 @@ public class ISSP_AP_FieldLists {
             'Billing_File_Emrgcy_Contact_Job_Title__c' 		=> '',
             'Billing_File_Emrgcy_Contact_Email__c' 			=> '',
             'Receive_HOT_files__c' 							=> '',
-            'PDF_Report_Delivery_Format__c' 				=> '',
             'Receive_XLS_Reports__c' 						=> '',
             'Pay_Commission_to_agents__c' 					=> ''
             };
-                                                                            
+
    	//Mandatory CASS fields specific to France
 	public static final Map<String,String> cass_FR_MandatoryFields = new Map<String,String>{
 		'Company_Registration_number__c'     	=> '',

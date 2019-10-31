@@ -3,10 +3,14 @@
  */
  
 global with sharing class AirlineSuspensionCaseController {
+    public static final String NOT_APPLICABLE = 'Not Applicable';
+
     public Airline_Suspension__c asrecord {public get; private set;}
     public Case c {public get; private set;}
     public String mode {public get; private set;}
     public Boolean errors {public get; private set;}
+    public List<SelectOption> listUnselectedGroups{get;set;}
+    public List<SelectOption> listSelectedGroups{get;set;}
     public MailMergeTemplate template { public get {
             try {
                 return [SELECT Id, Name FROM MailMergeTemplate WHERE Name = 'AS Pre Suspension Checklist' LIMIT 1];  
@@ -123,7 +127,7 @@ global with sharing class AirlineSuspensionCaseController {
                     asrecord.IATA_member_locked_value__c = c.Account.Membership_status__c == 'IATA member' ? 'Yes' : 'No';
                     asrecord.ICCS_membership_Status_locked_value__c = c.Account.ICCS_Membership_Status__c != null ? c.Account.ICCS_Membership_Status__c : 'Not member';
                 }
-                
+
             } else if (lstASRecords.isEmpty()) {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No associated Airline Suspension record found! Please contact support.'));
             } else {
@@ -132,7 +136,7 @@ global with sharing class AirlineSuspensionCaseController {
         } else {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Invalid Case'));
         }
-        
+
         mode = 'view';
     }
     
@@ -178,18 +182,54 @@ global with sharing class AirlineSuspensionCaseController {
         
         return mapResult;
     }
-    
-    
+
+    /**
+        Initializing select options for field Participates_in_IATA_Governance_Groups__c
+    **/
+    private void initCustomMultipickList() {
+        set<SelectOption> setUnselectedGroups= new set<SelectOption>();
+        set<SelectOption> setSelectedGroups= new set<SelectOption>();
+        // for NON IATA Memebers only 'Not Applicable' option is available
+        if (this.asrecord.IATA_member__c=='No') {
+            asrecord.Participates_in_IATA_Governance_Groups__c = NOT_APPLICABLE;
+        } else {
+            setUnselectedGroups=getGroupNamesOptions();
+        }
+        if (asrecord.Participates_in_IATA_Governance_Groups__c!=null) {
+            for (String groupname: asrecord.Participates_in_IATA_Governance_Groups__c.split(';')) {
+                SelectOption option = new SelectOption(groupname,groupname);
+                setUnselectedGroups.remove(option);
+                setSelectedGroups.add(option);
+            }
+        }
+        if (this.asrecord.IATA_member__c!='No') {
+            setSelectedGroups.remove(new SelectOption(NOT_APPLICABLE,NOT_APPLICABLE));
+        }
+        this.listUnselectedGroups = new list<SelectOption>(setUnselectedGroups);
+        this.listSelectedGroups = new list<SelectOption>(setSelectedGroups);
+        this.listUnselectedGroups.sort();
+        this.listSelectedGroups.sort();
+    }
+
     public void EditSuspension () {
         mode = 'edit';
+        initCustomMultipickList();
     }
     
     
     public PageReference SaveSuspension () {
         try {
+            // update field from the custom multipicklist
+            list<String> listGroupNames = new list<String>();
+            for (SelectOption option: this.listSelectedGroups) {
+                listGroupNames.add(option.getValue());
+            }
+            this.asrecord.Participates_in_IATA_Governance_Groups__c = String.join(listGroupNames,';');
+
             update asrecord;
             
             PageReference curPage = ApexPages.currentPage();
+            curPage.getParameters().put('id',this.c.Id);
             curPage.setRedirect(true);
             return curPage;
         } catch (DMLException e) {
@@ -202,6 +242,7 @@ global with sharing class AirlineSuspensionCaseController {
     
     public PageReference CancelSuspensionEdit() {
         PageReference curPage = ApexPages.currentPage();
+        curPage.getParameters().put('id',this.c.Id);
         curPage.setRedirect(true);
         return curPage;
     }
@@ -229,8 +270,18 @@ global with sharing class AirlineSuspensionCaseController {
             update asrecord;
         
     }
-    
-    
+
+    /**
+        Get all core group names
+    **/
+    public set<SelectOption> getGroupNamesOptions() {
+        set<SelectOption> options = new set<SelectOption>();
+        for(AMPCoreGroups__c a : [SELECT Name, Order__c from AMPCoreGroups__c ORDER BY Order__c ASC]) {
+            options.add(new SelectOption(a.Name,a.Name));
+        }
+        return options;
+    }
+
     /*
     public void CreateAttachmentToParentCase () {
         String attBody;

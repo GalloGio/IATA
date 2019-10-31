@@ -153,7 +153,8 @@ private class ams2gdp_Batch_Account_Test
 	}
 
 	@isTest static void positiveTestAccount2Batch3() {
-        TestData.ForReplicatePhone testData = new TestData.ForReplicatePhone();
+        /*
+		TestData.ForReplicatePhone testData = new TestData.ForReplicatePhone();
 		
         System.runAs(testData.user) {
 			
@@ -167,5 +168,6 @@ private class ams2gdp_Batch_Account_Test
 			Test.stopTest();
 			// system.assert(batch.query, '5');
 		}
+		*/
 	}
 }

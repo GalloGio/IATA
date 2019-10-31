@@ -1,0 +1,13 @@
+.THIS .datatableWrapper{
+    max-height: 150px;
+    overflow-y: scroll;
+}
+
+.THIS .card-max-size{
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.THIS .menu-button-link a{
+color: rgba(27, 82, 151, 1);
+}

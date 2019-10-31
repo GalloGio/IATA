@@ -25,7 +25,7 @@ public class ANG_UserTriggerHandler {
     public void onBeforeUpdate(){ }
     
     public void onAfterUpdate(){ 
-        ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'User', 'User_History__c');
+        //ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'User', 'User_History__c');
     }
 
     public void onAfterInsert(){
@@ -64,7 +64,7 @@ public class ANG_UserTriggerHandler {
         for(Id u : userIds) users.add(new User(Id = u, FederationIdentifier = u));
 
         doNotRun = true; //prevent recursion of triggers
-        update users;
+        WithoutSharingOperations.updateUserList(users);
         doNotRun = false;
     }		
 }

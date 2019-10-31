@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Additional_Terms_Custom_Labels__c</fullName>
         <description>Additional Terms Custom Labels</description>
@@ -237,6 +238,20 @@
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Portal_Service__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Portal Service to which this One Id Service is linked</description>
+        <externalId>false</externalId>
+        <label>Portal Service</label>
+        <referenceTo>Portal_Applications__c</referenceTo>
+        <relationshipLabel>One Id Service Providers Config</relationshipLabel>
+        <relationshipName>One_Id_Service_Providers_Config</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Portal_Visible__c</fullName>

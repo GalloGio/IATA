@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Audience__c</fullName>
         <description>Audience targeted by the Master Filter</description>
@@ -1026,10 +1027,10 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <columns>Billing_Account__c</columns>
         <columns>Campaign_ID__c</columns>
         <columns>Status__c</columns>
+        <columns>Scheduled_Date__c</columns>
         <columns>Audience__c</columns>
         <columns>EBC_Master_Filter__c</columns>
         <columns>Number_of_Recipients__c</columns>
-        <columns>Scheduled_Date__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>
@@ -1148,13 +1149,13 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <filterScope>Everything</filterScope>
         <filters>
             <field>Billing_Account__c</field>
-            <operation>equals</operation>
-            <value>HotelsPro DMCC</value>
+            <operation>contains</operation>
+            <value>IATA - TestingEBC</value>
         </filters>
         <filters>
             <field>Status__c</field>
             <operation>equals</operation>
-            <value>PENDING_APPROVAL</value>
+            <value>SENT</value>
         </filters>
         <label>ZZ - MISC Search</label>
         <language>en_US</language>

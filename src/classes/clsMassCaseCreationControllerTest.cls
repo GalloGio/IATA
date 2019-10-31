@@ -251,6 +251,7 @@ private class clsMassCaseCreationControllerTest {
         Apexpages.currentPage().getParameters().put('agentstatus','');
         Apexpages.currentPage().getParameters().put('yearend','--All--');
         Apexpages.currentPage().getParameters().put('exclOpenCases','false');
+        Apexpages.currentPage().getParameters().put('exclFAOptOut','false');
 
         controller.runSearch();
         
@@ -323,6 +324,7 @@ private class clsMassCaseCreationControllerTest {
         Apexpages.currentPage().getParameters().put('agentstatus','');
         Apexpages.currentPage().getParameters().put('yearend','--All--');
         Apexpages.currentPage().getParameters().put('exclOpenCases','false');
+        Apexpages.currentPage().getParameters().put('exclFAOptOut','false');
         
         EmailTemplate__c emailTemplate = new EmailTemplate__c(IATA_ISO_Country__c = isoc.Id);
         insert emailTemplate;
@@ -360,6 +362,7 @@ private class clsMassCaseCreationControllerTest {
         Apexpages.currentPage().getParameters().put('email','2');
         Apexpages.currentPage().getParameters().put('yearend','2017');
         Apexpages.currentPage().getParameters().put('exclOpenCases','true');
+        Apexpages.currentPage().getParameters().put('exclFAOptOut','true');
         
         Boolean agentWithClosedCaseSelected = controller.agentWithClosedCaseSelected;
         

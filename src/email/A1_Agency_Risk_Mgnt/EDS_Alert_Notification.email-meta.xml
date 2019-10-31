@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template to notify stakeholders on reception of a new EDS Alert</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>EDS Alert Notification</name>
+    <style>none</style>
+    <subject>Notice of EDS Alert for Agent ##IATA_CODE## in ##COUNTRY##</subject>
+    <textOnly>This is to inform you that according to our Early Detection monitoring activities, we have detected that ##AGENT_NAME## - ##IATA_CODE## has breached ##TRIGGERED_RULES##.
+
+The agent current standing is:
+
+##RULES_LIST##
+
+The current RHC Consumed amount in USD is ##OPEN_CASH_POSITION##. A case has been created to initiate an investigation and determine further actions.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

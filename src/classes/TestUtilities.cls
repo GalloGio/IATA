@@ -62,12 +62,7 @@ public class TestUtilities {
 
     public static IATA_ISO_Country__c createCountry() {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c();
-        // for (Integer i = 0; i < count; i++) {
-            country = new IATA_ISO_Country__c(
-				Name='United States',
-                ISO_Code__c='US'
-				// AIMS_ID__c = 'test' + String.valueOf(i)
-			);
+        country = new IATA_ISO_Country__c(Name='United States', ISO_Code__c='US');
         upsert country;
         return country;
     }

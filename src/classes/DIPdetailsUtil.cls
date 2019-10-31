@@ -4,15 +4,14 @@ public with sharing class DIPdetailsUtil {
 	 */
 	public static void CreateDIPDetailsRecords (Set<Id> setCaseIds) {
 		List<DIP_Details__c> lstDIPRecords = new List<DIP_Details__c>();
-		
 		for (Id caseId : setCaseIds) {
 			DIP_Details__c newDIP = new DIP_Details__c(Case__c = caseId);
-			
 			lstDIPRecords.add(newDIP);
 		}
 		
 		try {
-			insert lstDIPRecords;
+			if(!lstDIPRecords.isEmpty())
+				insert lstDIPRecords;
 		} catch (Exception e) {
 			system.debug(e.getMessage());
 		}

@@ -75,6 +75,11 @@
         <default>false</default>
         <label>Conversion to International</label>
     </customValue>
+    <customValue>
+        <fullName>Letter Generation</fullName>
+        <default>false</default>
+        <label>Letter Generation</label>
+    </customValue>
     <masterLabel>ANG Types of Change</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

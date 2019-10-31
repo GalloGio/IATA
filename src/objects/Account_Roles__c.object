@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Sector__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Passenger only</fullName>
+                    <default>false</default>
+                    <label>Passenger only</label>
+                </value>
+                <value>
+                    <fullName>Passenger and Cargo</fullName>
+                    <default>false</default>
+                    <label>Passenger and Cargo</label>
+                </value>
+                <value>
+                    <fullName>Non-IATA Travel Agent</fullName>
+                    <default>false</default>
+                    <label>Non-IATA Travel Agent</label>
+                </value>
+                <value>
+                    <fullName>Non-IATA Passenger Agent</fullName>
+                    <default>false</default>
+                    <label>Non-IATA Passenger Agent</label>
+                </value>
+                <value>
+                    <fullName>Global Distribution System</fullName>
+                    <default>false</default>
+                    <label>Global Distribution System</label>
+                </value>
+                <value>
+                    <fullName>Content Aggregator</fullName>
+                    <default>false</default>
+                    <label>Content Aggregator</label>
+                </value>
+                <value>
+                    <fullName>IATA Passenger Sales Agent</fullName>
+                    <default>false</default>
+                    <label>IATA Passenger Sales Agent</label>
+                </value>
+                <value>
+                    <fullName>System Solutions Provider</fullName>
+                    <default>false</default>
+                    <label>System Solutions Provider</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Airline</controllingFieldValue>
+                <valueName>Passenger only</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airline</controllingFieldValue>
+                <valueName>Passenger and Cargo</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <valueName>Non-IATA Travel Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <valueName>IATA Passenger Sales Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airline Supplier</controllingFieldValue>
+                <valueName>Global Distribution System</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airline Supplier</controllingFieldValue>
+                <valueName>Content Aggregator</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airline Supplier</controllingFieldValue>
+                <valueName>System Solutions Provider</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Sector__c</fullName>
+        <externalId>false</externalId>
+        <label>Sector</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Airline</fullName>
+                    <default>false</default>
+                    <label>Airline</label>
+                </value>
+                <value>
+                    <fullName>Travel Agent</fullName>
+                    <default>false</default>
+                    <label>Travel Agent</label>
+                </value>
+                <value>
+                    <fullName>Airline Supplier</fullName>
+                    <default>false</default>
+                    <label>Airline Supplier</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Account Roles</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Account Roles Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Account Roles&apos;</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -8,7 +8,8 @@ public with sharing class CommunitiesLandingController {
     	//TD: use this controller to manage redirection from the serviceName param
     	string serviceName = ApexPages.currentPage().getParameters().get('serviceName');
         string startUrl = ApexPages.currentPage().getParameters().get('startUrl');
-    	
+    	system.debug(serviceName);
+			system.debug(startUrl);
     	if(string.isBlank(serviceName))
 	        return Network.communitiesLanding();
 	    else{
@@ -19,6 +20,10 @@ public with sharing class CommunitiesLandingController {
                 return new pageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Homepage'));
               }
             } 
+						if(serviceName==Label.TECH_GDPR_Community_Name){
+							// GP-17: GDPR need a direct redirection to the GDPR portal not to OneId home page
+							return new pageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.GDPR, '/'));
+						}
 	    }
 	    
 	    //Just in case

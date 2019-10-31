@@ -1,0 +1,67 @@
+.THIS.bar{
+    margin-top: 70px; 
+    padding: 35px 60px;
+    
+}
+
+.THIS .gdpr{
+    min-width: 55px;
+}
+
+.THIS .gdprTxt{
+    color: white; 
+    align-self: center;
+}
+
+.THIS .logo-second_small{
+    margin-right:15px;
+    margin-left:40px;
+    margin-top:15px;
+    margin-bottom:15px;
+    width:73px;
+    height:50px;
+}
+
+.THIS hr{
+    margin-right: 40px;
+    margin-left: 40px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 1px; 
+    width: 100%;
+    background-color:#999999;
+}
+.THIS.fixCommunity {
+    margin-right: 0px ;
+    margin-left: 0px ;    
+}
+
+.THIS a{
+    text-decoration: none;    
+    color:#ffffff;
+}
+
+
+.THIS .gridFooter{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 40px;
+    margin-right:40px;
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .THIS .logoDiv{
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    .THIS .gdprTxt{
+        text-align: center;
+    }
+
+    .THIS h2 {
+        font-size:23px;
+    }
+}

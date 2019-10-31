@@ -8,6 +8,8 @@
     <customButtons>SIDRA_Lite_Action_NEW</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
     <customButtons>E2CP__New_Comment</customButtons>
+    <customButtons>Apply_Cash_Condition</customButtons>
+    <customButtons>Remove_Cash_Condition</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -246,6 +248,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SIDRA_Exclude_from_report_exceptions__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Financial_Assessment_Points__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

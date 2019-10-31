@@ -71,6 +71,20 @@ public without sharing class IECTestUtil {
             return pi;
     }
     
+    public static Product_Information__c CreateSampleProductInfo2(String sName, Product_Category__c oProductCategory, Product2 oProduct) {
+        return CreateSampleProductInfo2(sName, oProductCategory, oProduct, IECConstants.ProductInformationAudience_DEFAULT);
+    }
+    
+    public static Product_Information__c createSampleProductInfo2(String sName, Product_Category__c oProductCategory, Product2 oProduct, String productAudience) {
+        Product_Information__c pi = new Product_Information__c();
+            pi.Name = sName;
+            pi.Related_Product_Category__c = oProductCategory.Id;
+            pi.New_Related_Product__c = oProduct.Id;
+            pi.Product_Audience__c = productAudience;
+
+            return pi;
+    }
+
     public static zqu__ZProduct__c CreateSampleProduct(String sName) {
         return new zqu__ZProduct__c(
             Name = sName
@@ -78,6 +92,19 @@ public without sharing class IECTestUtil {
             , zqu__EffectiveStartDate__c = Date.today().addDays(-15)
             , zqu__EffectiveEndDate__c = Date.today().addDays(15)
             , zqu__SKU__c = 'SKU' + (Math.random()*1000000000)
+        );
+    }
+
+    public static Product2 createSampleProduct2(String sName) {
+        String sku = 'SKU' + (Math.random()*1000000000);
+
+        return new Product2(
+            Name = sName
+            , zqu__ZuoraId__c = 'P-' + (Math.random()*1000000000)
+            , zqu__EffectiveStartDate__c = Date.today().addDays(-15)
+            , zqu__EffectiveEndDate__c = Date.today().addDays(15)
+            , zqu__SKU2__c = sku
+            , zqu__SKU__c = sku
         );
     }
     
@@ -92,24 +119,37 @@ public without sharing class IECTestUtil {
             
             return prp;
     }
+
+    public static zqu__ProductRatePlan__c createSampleProductRatePlan2(String sName, Boolean triable, Product2 oProduct) {
+        zqu__ProductRatePlan__c prp = new zqu__ProductRatePlan__c();
+            prp.Name = sName;
+            prp.zqu__Product__c = oProduct.Id;
+            prp.zqu__ZuoraId__c = 'PRP' + (Math.random()*1000000000);
+            prp.zqu__EffectiveStartDate__c = Date.today().addDays(-15);
+            prp.zqu__EffectiveEndDate__c = Date.today().addDays(15);
+            prp.IsTriable__c = triable?'Yes':'No';
+            prp.zqu__Deleted__c = false;
+            
+            return prp;
+    }
     
     public static Product_Rate_Plan_Information__c CreateSampleProductRatePlanInfo(String sName, Boolean triable, zqu__ProductRatePlan__c oProductRatePlan, Product_Information__c oProductInfo) {
         Product_Rate_Plan_Information__c prpi = new Product_Rate_Plan_Information__c();
-            prpi.Name = sName;
-            prpi.Related_Product_Information__c = oProductInfo.Id;
-            prpi.Product_Rate_Plan__c = oProductRatePlan.Id;
-            prpi.Active__c = true;
-            prpi.Monthly_Price__c = 10.00;
-            prpi.Display_As_Monthly_Fee__c = !triable;
-            //prpi.User_Interface_Display__c = 'Yes';
-            prpi.Order__c = 1;
-            prpi.Short_Description__c = 'Sample Product Rate Plan Information';
-            prpi.Long_Description__c = 'long desc';
-            
-            return prpi;
+        prpi.Name = sName;
+        prpi.Related_Product_Information__c = oProductInfo.Id;
+        prpi.Product_Rate_Plan__c = oProductRatePlan.Id;
+        prpi.Active__c = true;
+        prpi.Monthly_Price__c = 10.00;
+        prpi.Display_As_Monthly_Fee__c = !triable;
+        //prpi.User_Interface_Display__c = 'Yes';
+        prpi.Order__c = 1;
+        prpi.Short_Description__c = 'Sample Product Rate Plan Information';
+        prpi.Long_Description__c = 'long desc';
+        
+        return prpi;
     }
     
-    public static zqu__ProductRatePlanCharge__c CreateSampleProductRatePlanCharge(zqu__ProductRatePlan__c oRelatedRatePlan, String sName, double dPrice) {
+    public static zqu__ProductRatePlanCharge__c createSampleProductRatePlanCharge(zqu__ProductRatePlan__c oRelatedRatePlan, String sName, double dPrice) {
         zqu__ProductRatePlanCharge__c ratePlanCharge = new zqu__ProductRatePlanCharge__c();
             ratePlanCharge.Name = sName;
             ratePlanCharge.zqu__ProductRatePlan__c = oRelatedRatePlan.Id;
@@ -167,12 +207,6 @@ public without sharing class IECTestUtil {
         newAccount.Customer_Type__c = ClientType;
         newAccount.Name = 'Company';
 
-
-        //IATA_ISO_Country__c isoCountry = CreateSampleIATAISOCountry();
-        //insert isoCountry;
-        //newAccount.IATA_ISO_Country__c = isoCountry.Id;
-
-
         newAccount.OwnerId = IECUserManager.getIECAccountOwnerId();
         
         if (ClientType == IECConstants.Account_ClientType_MemberAirline) {
@@ -184,7 +218,7 @@ public without sharing class IECTestUtil {
     }
     
     public static Contact createSampleContact(Account oAccount) {
-    	
+     
         Contact contact = new Contact(
             RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Contact', 'Standard_Contact')
             , AccountId = oAccount.Id
@@ -252,24 +286,13 @@ public without sharing class IECTestUtil {
             , ReceivesInfoEmails = false
         );
         insert u;
-        
+          
         newContact.OwnerId = u.Id;
         update newContact;
         
         trgPortalUserAfterInserUpdate = true;
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
-      //  trgPortalUserAfterInserUpdate = false;
-        /*
-        // assign Permission Set to provide access to objects
-        Id permissionSetId = IECUserManager.getCustomerPermissionSetId();
-        if (permissionSetId != null) {
-            PermissionSetAssignment oPermissionSetAssignment = new PermissionSetAssignment();
-            oPermissionSetAssignment.AssigneeId = userId;
-            oPermissionSetAssignment.PermissionSetId = permissionSetId;
-            insert oPermissionSetAssignment;
-        }
-*/
-         
+                                                
         IECUserManager.login(u.Username, 'testpassword', null);
            
         return u;
@@ -419,7 +442,7 @@ public without sharing class IECTestUtil {
         Zuora__Subscription__c subscription = new Zuora__Subscription__c();
         String zuoraId =  IECUtil.NewGuid();
         subscription.Zuora__External_Id__c = 
-            subscription.Zuora__Zuora_Id__c = zuoraId.substring(0, 32);
+        subscription.Zuora__Zuora_Id__c = zuoraId.substring(0, 32);
         subscription.Zuora__RenewalTerm__c = '12 Months';
         subscription.Zuora__Version__c = 1;
     
@@ -485,17 +508,45 @@ public without sharing class IECTestUtil {
             , Zuora__ProductEffectiveEndDate__c = oProduct.zqu__EffectiveEndDate__c
         );
     }
+
+    public static Zuora__SubscriptionProductCharge__c createSampleSubscriptionCharge2(Id subscriptionId, Date sEffectiveDate, Product2 oProduct, zqu__ProductRatePlan__c oProductRatePlan) {
+        string sZID = IECUtil.NewGuid().substring(0, 32);
+        return new Zuora__SubscriptionProductCharge__c(
+            Zuora__External_Id__c = sZID
+            , Zuora__Zuora_Id__c = sZID
+            , Name = 'CHARGETEST'
+            , Zuora__Subscription__c = subscriptionId
+            , Zuora__BillingPeriod__c = 'Annual'
+            , Zuora__EffectiveStartDate__c = sEffectiveDate
+            , Zuora__TotalContractValue__c = 25
+            , Zuora__MonthlyRecurringRevenue__c = 2
+            , Zuora__Price__c = 25
+            , Zuora__Quantity__c = 1
+            , Zuora__ExtendedAmount__c = 25
+            , Zuora__BillingPeriodStartDay__c = '19th of the month'
+            , Zuora__Model__c = IECConstants.ChargeModel_Zuora_FlatFeePricing
+            , Zuora__Type__c = 'Recurring'
+            , Zuora__RatePlanName__c = oProductRatePlan.Name
+            , Zuora__RatePlanDescription__c = oProductRatePlan.zqu__Description__c
+            , Zuora__RatePlanEffectiveEndDate__c = oProductRatePlan.zqu__EffectiveEndDate__c
+            , Zuora__ProductName__c = oProduct.Name
+            , Zuora__ProductSKU__c = oProduct.zqu__SKU2__c
+            , Zuora__ProductEffectiveEndDate__c = oProduct.zqu__EffectiveEndDate__c
+        );
+        
+    }
     
     public static Zuora.zObject createSampleZuoraAccount() {
         return createSampleZuoraAccount(null, null, null);
     }
     
     public static Zuora.zObject createSampleZuoraAccount(String zId, String CrmId, String CrmContactId) {
+
         Zuora.zObject acc = new Zuora.zObject('Account');
         acc.setValue('Id', zId);
         acc.setValue('CrmId', CrmId);
         acc.setValue('CRMContactID__c', CrmContactId);
-        acc.setValue('Name', 'Sample_Account_Name' /*+ System.currentTimeMillis()*/);
+        acc.setValue('Name', 'Sample_Account_Name');
         acc.setValue('AccountNumber', 'A0987654321');
         acc.setValue('Currency', 'USD');
         acc.setValue('BillCycleDay', 1);
@@ -508,6 +559,7 @@ public without sharing class IECTestUtil {
         //acc.setValue('IATA_Area__c', 'Area 1');
         
         // Sample Account is used for subscription preview. Since we don't want to hit CyberSource, set Other as the default payment method
+
         acc.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_Other_ZuoraID);
         
         return acc;
@@ -654,30 +706,10 @@ public without sharing class IECTestUtil {
             , Area_of_Activity__c = 'Sample Area of Activity'
         );
     }
-    /*
-    public static GDP_Account__c CreateSampleGDPAccount(String IATACode, Id CountryId, String Status) {
-        return new GDP_Account__c(
-            Name = IATACode
-            , Class__c = 'Domestic'
-            , Country_ISO_Code__c = CountryId
-            , Status__c = Status
-            , Trade_Name__c = 'Agency Trading Name'
-        );
-    }
-    */
+    
     public static IECAddress__c CreateSampleIECAddress(Contact oContact, String sType) {
         //*** modified by Thai (2016-02-29) to create address and necessary relations instead of preparing a new address
         
-        //return new IECAddress__c(
-        //    Address_Type__c = sType
-        //    , Country__c = 'CA'
-        //    , City__c = 'Montreal'
-        //    , Contact__c = oContact.Id
-        //    , State__c = 'QC'
-        //    , Street__c = '123 main street'
-        //    , ZipCode__c = 'h1q2w3'
-        //);
-
         //*** get ISO country
         IATA_ISO_Country__c country;
         try
@@ -1008,892 +1040,5 @@ public without sharing class IECTestUtil {
           , Product_Type__c = sProductType
         );
     }
-	
-	
-	/*public static void fakecoverage () {
-		Integer i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-
-	}*/
+    
 }

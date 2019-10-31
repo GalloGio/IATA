@@ -80,16 +80,7 @@ global without sharing class ISSP_CurrencyCenterCalendarController {
 		// countries
 		String fieldName = getIsoCountryFieldName();
 		map<String,IATA_ISO_Country__c> mapNameCountry = new map<String,IATA_ISO_Country__c>();
-		List<IATA_ISO_Country__c> isoCountries = [SELECT Id, Name,
-													IATA_COUNTRY_EN__c,
-													IATA_Contry_KR__c,
-													IATA_Country_FR__c,
-													IATA_Country_IT__c,
-													IATA_Country_JP__c,
-													IATA_Country_PT__c,
-													IATA_Country_SP__c,
-													IATA_Country_ZH__c
-													FROM IATA_ISO_Country__c];
+		List<IATA_ISO_Country__c> isoCountries =  IATAIsoCountryDAO.getIsoCountries();
 		Map<String, String> mapIsoCountries = new Map<String, String>();
 		for(IATA_ISO_Country__c isoCountry:isoCountries){
 			String countryName = (String)isoCountry.get(fieldName);

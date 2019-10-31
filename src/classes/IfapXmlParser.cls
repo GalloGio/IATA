@@ -120,6 +120,12 @@ public with sharing class IfapXmlParser {
                                         reader.next();
                                   		ifapResult.Error=parseError(reader);
                           
+	                	}else if ('FinancialCriteriaTotalScore' == localName ) {
+                                        reader.next();
+                                         if(reader.getEventType() == XmlTag.CHARACTERS && reader.HasText()){
+                                         ifapResult.FinancialCriteriaTotalScore=reader.getText();
+                        }
+                          
 	                	}                           
                        
                 }  
@@ -284,7 +290,9 @@ public with sharing class IfapXmlParser {
 		public class IfapResult{
 			
 		    private FinancialSecurity FinancialSecurity;
-		
+
+			private String FinancialCriteriaTotalScore;
+
 		    private String GFAStatus;
 		
 		    private File[] Files;
@@ -305,10 +313,18 @@ public with sharing class IfapXmlParser {
 		        return GFAStatus;
 		    }
 		
+		    public String getFinancialCriteriaTotalScore(){
+		        return FinancialCriteriaTotalScore;
+		    }
+
 		    public void setGFAStatus (String GFAStatus){
 		        this.GFAStatus = GFAStatus;
 		    }
 		
+		    public void setFinancialCriteriaTotalScore (String FinancialCriteriaTotalScore){
+		        this.FinancialCriteriaTotalScore = FinancialCriteriaTotalScore;
+		    }
+
 		    public File[] getFiles (){
 		        return Files;
 		    }

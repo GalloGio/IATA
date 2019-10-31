@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template to notify agents about Risk Status or Forecasted RHC Amount updates</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Risk Information Update</name>
+    <style>none</style>
+    <subject>Risk Information Update</subject>
+    <textOnly>Dear Agent,
+
+We would like to inform you that according to our records your Risk Status / Cash conditions have been recently updated.
+Your risk information result now in:
+
+Risk Status: #RISK_STATUS#
+Cash conditions limited to Financial Security: #CASH_CONDITIONS#
+RHC Amount: #RHC_AMOUNT#
+RHC Effective Date: #RHC_EFFECTIVE_DATE#
+
+Please check more details on the IATA Customer Portal.
+Thank you
+
+IATA – Global Delivery Center
+
+-----------------------------------------------------------------------------
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

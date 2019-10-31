@@ -1,0 +1,30 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable,lightning:isUrlAddressable" access="global" controller="GDPR_SubscriptionsAndInterests_CTRL">
+
+    <ltng:require scripts="{!$Resource.GDPR_Helper}" />
+
+    <aura:attribute name="unsubscribe" type="Boolean" default="false"/>
+    <aura:attribute name="opted_out" type="Boolean"  default="true"/> 
+    <aura:attribute name="localLoading" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="EVT_GDPR_OptOutSync" type="c:EVT_GDPR_OptOutSync"/>
+    <aura:handler event="c:EVT_GDPR_OptOutSync" action="{!c.handleEVT_GDPR_OptOutSync}"/>
+
+
+     <!-- Spinner DIV -->
+     <aura:if isTrue="{!v.localLoading}">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+
+    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-text-align_center">
+        <p><b>Don’t want to receive IATA Communication?</b></p><br />
+        <aura:if isTrue="{!v.opted_out}">
+            <p class="redMsg">*If you want to subscribe again, un-tick the box.</p>
+        </aura:if>
+        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-text-align_center" >
+            <ui:inputCheckbox  aura:id="unsubscribeCbx" value="{!v.unsubscribe}" class="slds-p-horizontal--small cbx" change="{!c.changeUnsubscribe}"/>
+            <span class="label"><b>Unsubscribe</b></span>
+        </div>
+    </div>
+
+</aura:component>

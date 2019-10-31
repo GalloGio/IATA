@@ -4,6 +4,7 @@ private class ISSP_BO_Report_Test {
     static testMethod void ISSP_BO_Report_Test_1() {
     	
     	Account acc = ISSP_ObjectFactory.createNewAccount();
+        acc.Sector__c = 'Airline';
         insert acc;
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
@@ -93,6 +94,7 @@ private class ISSP_BO_Report_Test {
     	thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
     	system.runAs(thisUser){
 	    	Account acc = ISSP_ObjectFactory.createNewAccount();
+            acc.Sector__c = 'Airline';
 			insert acc;
 			Contact contact = ISSP_ObjectFactory.createNewContact();
 	        contact.AccountId = acc.Id;

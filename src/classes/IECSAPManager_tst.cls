@@ -20,7 +20,7 @@ public class IECSAPManager_tst {
 	private static Zuora__CustomerAccount__c oBillingAccount;
 	private static SAP_Account__c oSAPAccount;
 	
-	private static zqu__ZProduct__c oProduct;
+	private static Product2 oProduct;
 	private static zqu__ProductRatePlan__c oProductRatePlan;
 	private static zqu__ProductRatePlan__c oProductRatePlan2;
 	private static Zuora__Subscription__c oSubscription;
@@ -48,18 +48,18 @@ public class IECSAPManager_tst {
     	insert oSAPAccount;
     	
     	// create dummy Zuora product
-    	oProduct = IECTestUtil.CreateSampleProduct('Product1');
+    	oProduct = IECTestUtil.CreateSampleProduct2('Product1');
     	oProduct.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
     	oProduct.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
     	insert oProduct;
     	
     	// create dummy Zuora rate plan
-    	oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, oProduct);
+    	oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 1', false, oProduct);
     	oProductRatePlan.zqu__Deleted__c = false;
     	insert oProductRatePlan;
     	
     	// create dummy Zuora rate plan #2
-    	oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan('Rate plan 2', false, oProduct);
+    	oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 2', false, oProduct);
     	oProductRatePlan2.zqu__Deleted__c = false;
     	insert oProductRatePlan2;
     	
@@ -68,7 +68,7 @@ public class IECSAPManager_tst {
         insert oSubscription;
         
         // create dummy oSubscription charge
-        oSubscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+        oSubscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(oSubscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
         insert oSubscriptionCharge;
         
         // create dummy oSubscription2
@@ -76,7 +76,7 @@ public class IECSAPManager_tst {
         insert oSubscription2;
         
         // create dummy oSubscription2 charge
-        oSubscriptionCharge2 = IECTestUtil.createSampleSubscriptionCharge(oSubscription2.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan2);
+        oSubscriptionCharge2 = IECTestUtil.createSampleSubscriptionCharge2(oSubscription2.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan2);
         insert oSubscriptionCharge2;
 	}
 	
@@ -101,42 +101,6 @@ public class IECSAPManager_tst {
 		zInvoiceItem.setValue('TaxAmount', 0);
 		zInvoiceItem.setValue('UnitPrice', 142.31);
 		lstInvoiceItems.add(zInvoiceItem);
-		/*
-		// Two Invoice items for 2nd Invoice which is an Upgrade
-		Zuora.zObject zInvoiceItem2 = new Zuora.zObject('InvoiceItem'); 
-		zInvoiceItem2.setValue('Id', IECUtil.NewGuid().substring(0, 32));
-		zInvoiceItem2.setValue('ChargeAmount', 750.0);
-		zInvoiceItem2.setValue('ChargeDate', DateTime.now());
-		zInvoiceItem2.setValue('ChargeName', 'CHARGE - Licence');
-		zInvoiceItem2.setValue('InvoiceId', oInvoice2.Zuora__External_Id__c);
-		zInvoiceItem2.setValue('ProductId', oProduct.zqu__ZuoraId__c);
-		zInvoiceItem2.setValue('SubscriptionId', oSubscription2.Zuora__External_Id__c);
-		zInvoiceItem2.setValue('SubscriptionNumber', oSubscription2.Name);
-		zInvoiceItem2.setValue('RatePlanChargeId', oSubscriptionCharge2.Zuora__External_Id__c);
-		zInvoiceItem2.setValue('Quantity', 1);
-		zInvoiceItem.setValue('ServiceStartDate', DateTime.now());
-		zInvoiceItem.setValue('ServiceEndDate', DateTime.now().addYears(1));
-		zInvoiceItem2.setValue('TaxAmount', 0);
-		zInvoiceItem2.setValue('UnitPrice', 750.0);
-		lstInvoiceItems.add(zInvoiceItem2);
-		
-		Zuora.zObject zInvoiceItem3 = new Zuora.zObject('InvoiceItem'); 
-		zInvoiceItem3.setValue('Id', IECUtil.NewGuid().substring(0, 32));
-		zInvoiceItem3.setValue('ChargeAmount', -50.0);
-		zInvoiceItem3.setValue('ChargeDate', DateTime.now());
-		zInvoiceItem3.setValue('ChargeName', 'CHARGE - prorated credit');
-		zInvoiceItem3.setValue('InvoiceId', oInvoice2.Zuora__External_Id__c);
-		zInvoiceItem3.setValue('ProductId', oProduct.zqu__ZuoraId__c);
-		zInvoiceItem3.setValue('SubscriptionId', oSubscription2.Zuora__External_Id__c);
-		zInvoiceItem3.setValue('SubscriptionNumber', oSubscription2.Name);
-		zInvoiceItem3.setValue('RatePlanChargeId', oSubscriptionCharge2.Zuora__External_Id__c);
-		zInvoiceItem3.setValue('Quantity', 1);
-		zInvoiceItem.setValue('ServiceStartDate', DateTime.now());
-		zInvoiceItem.setValue('ServiceEndDate', DateTime.now().addYears(1));
-		zInvoiceItem3.setValue('TaxAmount', 0);
-		zInvoiceItem3.setValue('UnitPrice', 50.0);
-		lstInvoiceItems.add(zInvoiceItem3);
-		*/
 		return lstInvoiceItems;
 	}
 

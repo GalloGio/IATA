@@ -2,6 +2,27 @@
 private class ISSP_AddAttachment_Test {
 
     @isTest static void test_method_one() {
+        WrapperAttachTest.loadTestCredentials();
+
+        insert new list <AWSKey__c>{
+            new AWSKey__c(
+                name = 'sandbox',
+                Key__c = 'asd',
+                Secret__c = 'asd',
+                IAS_configuration_name__c = 'asdas',
+                IAS_Access_Point__c = 'asd',
+                Bucket__c = 'asd',
+                AWS_ENDPOINT_URL__c = 'asd'
+          ),
+            new AWSKey__c(
+                name = 'production',
+                Key__c = 'asd',
+                Secret__c = 'asd',
+                IAS_configuration_name__c = 'asdas',
+                IAS_Access_Point__c = 'asd',
+                Bucket__c = 'asd',
+                AWS_ENDPOINT_URL__c = 'asd'
+            )};
 
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                 IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -70,10 +91,18 @@ private class ISSP_AddAttachment_Test {
         
         AmazonFile__c af = new AmazonFile__c();
         af.Case__c = newcase.Id;
+        af.Name= 'Test';
+        af.Full_Name_Unique__c='Test_Record_Amazonfile';
 
+        //insert af;
         System.runAs(newUser) {
             Apexpages.currentPage().getParameters().put('Caseid', newcase.Id);
             ISSP_AddAttachment controller = new ISSP_AddAttachment();
+            Attachment att= new Attachment(
+                name='attTest',
+                body=Blob.valueOf('Test')
+            );
+            controller.attachment=att;
             controller.upload();
             controller.vAccountConcerned = parent.Id;        
             controller.getNoNSAOffices();

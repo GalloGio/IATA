@@ -38,20 +38,31 @@
     <div class="panel-body" id="body-enquiries">
     <apex:form >
         <div class="progress" style="{!IF(isPassAccreditation==false, 'display:block', 'display:none')}">
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!lblStepA}" id="Prev1"/>
+            <!--<div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!lblStepA}" id="Prev1"/>   Comment by DB, the div commandlink below has same ID, and styles of div are more like the others  -->
+        <div class="progress iata-tabs">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                <apex:commandLink styleclass="link-white" action="{!goToStep1}" id="Prev1">
+                    <apex:outputText value="{!lblStepA}" escape="false"/>
+                </apex:commandLink>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep2}" value="{!lblStepB}" id="Prev2"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
+                <apex:commandLink styleclass="link-white" action="{!goToStep2}" id="Prev2">
+                    <apex:outputText value="{!lblStepB}" escape="false"/>
+                </apex:commandLink>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-               <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" id="Prev3"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                <apex:commandLink styleclass="link-white" action="{!goToStep3}" id="Prev3">
+                    <apex:outputText value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" escape="false"/>
+                </apex:commandLink>
             </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;">
-                {!lblStepD}
+            <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;">
+                <apex:outputText value="{!lblStepD}" escape="false"/>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep5}" value="{!lblStepE}" id="Next5"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
+                <apex:commandLink styleclass="link-white" action="{!goToStep5}" id="Next5">
+                    <apex:outputText value="{!lblStepE}" escape="false"/>
+                </apex:commandLink>
             </div>
         </div>
         <div class="progress" style="{!IF(isPassAccreditation==true, 'display:block', 'display:none')}">
@@ -93,25 +104,25 @@
             reqIdentifier="{!reqs.File_Identifier2__c}"  
             rendered="{!NOT(ISBLANK(reqs.File_Identifier2__c))}"     
         />
-        <apex:outputPanel  rendered="{!(ISBLANK(reqs.File_Identifier2__c))}">
+        <apex:outputPanel rendered="{!(ISBLANK(reqs.File_Identifier2__c))}">
             <div class = "well">
-            <apex:outputText style="font-weight:bold" value ="{!reqs.Name}" escape="false"/>
+            <apex:outputText style="font-weight:bold" value="{!reqs.Name}" escape="false"/>
             <br/> 
-            <apex:outputText value ="{!reqs.Requirement_text__c}" escape="false"/>
+            <apex:outputText value="{!reqs.Requirement_text__c}" escape="false"/>
             <br/>
             </div>
         </apex:outputPanel>
     </apex:repeat>
        </apex:pageBlock>
-         <apex:form id="UploadForm">
-         <apex:pageBlock >
-             <apex:pageBlockButtons location="bottom">
-                <apex:commandButton styleClass="btn" action="{!goToStep3}" value="{!$Label.ISSP_Back}"/>&nbsp;
-                 <apex:commandButton styleClass="btn" action="{!goToStep5}" value="{!$Label.ISSP_Next}" />
-                <apex:commandButton styleClass="btn" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" /> 
-            </apex:pageBlockButtons>
-        </apex:pageBlock>
-             </apex:form>
+            <apex:form id="UploadForm">
+                <apex:pageBlock >
+                    <apex:pageBlockButtons location="bottom">
+                        <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-right" action="{!goToStep5}" value="{!$Label.ISSP_Next}"/>
+                        <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-right" action="{!goToStep3}" value="{!$Label.ISSP_Back}"/>
+                        <apex:commandButton styleClass="iatabtn iatabtn-danger iatabtn-left" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" /> 
+                    </apex:pageBlockButtons>
+                </apex:pageBlock>
+            </apex:form>
          </div>               
       </div>
     </div>    

@@ -10,8 +10,8 @@ private class IECShoppingCartHelper_tst {
 	private static Product_Category__c oProductCategory;
 	private static Product_Information__c oProductInfo;
 	private static Product_Information__c oProductInfo2;
-	private static zqu__ZProduct__c oProduct;
-	private static zqu__ZProduct__c oProduct2;
+	private static Product2 oProduct;
+	private static Product2 oProduct2;
 	private static zqu__ProductRatePlan__c oProductRatePlan;
 	private static zqu__ProductRatePlan__c oProductRatePlan2;
 	private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
@@ -24,24 +24,24 @@ private class IECShoppingCartHelper_tst {
 		oProductCategory = IECTestUtil.CreateSampleProductCategory('PCTST', true);
 		insert oProductCategory;
 		
-		oProduct = IECTestUtil.CreateSampleProduct('PTST');
+		oProduct = IECTestUtil.CreateSampleProduct2('PTST');
 		insert oProduct;
 		
-		oProduct2 = IECTestUtil.CreateSampleProduct('PTST2');
+		oProduct2 = IECTestUtil.CreateSampleProduct2('PTST2');
 		insert oProduct2;
 		
-		oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+		oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
 		oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
 		insert oProductInfo;
 		
-		oProductInfo2 = IECTestUtil.CreateSampleProductInfo('PITST2', oProductCategory, oProduct2);
+		oProductInfo2 = IECTestUtil.CreateSampleProductInfo2('PITST2', oProductCategory, oProduct2);
 		oProductInfo2.Product_Audience__c = IECConstants.ProductInformationAudience_MEMBERAIRLINE;
 		insert oProductInfo2;
 		
-		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', triable, oProduct);
+		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('PRPTST', triable, oProduct);
 		insert oProductRatePlan;
 		
-		oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan('PRPTST2', triable, oProduct2);
+		oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan2('PRPTST2', triable, oProduct2);
 		insert oProductRatePlan2;
 		
 		oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST', triable, oProductRatePlan, oProductInfo);
@@ -68,13 +68,13 @@ private class IECShoppingCartHelper_tst {
     static testMethod void testAddRemoveEmpty() {
 
         // create dummy Zuora product
-    	zqu__ZProduct__c prod = IECTestUtil.CreateSampleProduct('Product1');
+    	Product2 prod = IECTestUtil.CreateSampleProduct2('Product1');
     	prod.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
     	prod.ProductCategory__c = IECConstants.ProductCategory_SF_CACPRO;
     	insert prod;
     	
     	// create dummy Zuora rate plan
-    	zqu__ProductRatePlan__c ratePlan = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, prod);
+    	zqu__ProductRatePlan__c ratePlan = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 1', false, prod);
     	ratePlan.zqu__Deleted__c = false;
     	insert ratePlan;
     	
@@ -89,7 +89,7 @@ private class IECShoppingCartHelper_tst {
         insert myProdCat;
         
         // create dummy product info
-        Product_Information__c myProdInfo = IECTestUtil.CreateSampleProductInfo('My product', myProdCat, prod);
+        Product_Information__c myProdInfo = IECTestUtil.CreateSampleProductInfo2('My product', myProdCat, prod);
         insert myProdInfo;
         
         // create dummy rate plan information

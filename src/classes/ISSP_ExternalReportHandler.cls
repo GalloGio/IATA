@@ -18,6 +18,15 @@ public class ISSP_ExternalReportHandler {
         }
     }
 
+    public static void afterUpdate(List<ISSP_External_Report__c> extRepList) {
+        //
+        // TODO - Bulkify this 
+        //        
+        for(ISSP_External_Report__c er : extRepList) {       
+            setExternalRecordSharing(er);   
+        }
+    }
+
     private static void setExternalRecordSharing(ISSP_External_Report__c er) {
     	//Handling sharing settings for Contacts related to the givin Account
         List<Contact> SharingContacts_List = new List<Contact>([select Id , Name , AccountID From Contact Where AccountId = :er.Account__c OR Account.Top_Parent__c = :er.Account__c]);
@@ -48,11 +57,12 @@ public class ISSP_ExternalReportHandler {
                 }
                  
                 //Get all users related to contacts
-                List<User> UserSharing_List = new List<User>([SELECT ID,EMAIL FROM User WHERE contactid IN: contactIds_haveAccess]);
-
-                //Give access to specific record to User or Group of Users  
-                ExternalFilesUtils.setExternalReportsSharingSetting(UserSharing_List, er, 'Read');
+                Map<Id,User> UserSharing_List = new Map<Id,User>([SELECT Id FROM User WHERE contactid IN: contactIds_haveAccess]);
+                Map<Id,Set<Id>> reportUsersMap = new Map<Id,Set<Id>>();
+                reportUsersMap.put(er.Id, UserSharing_List.keySet());
                 
+                //Give access to specific record to User or Group of Users
+                System.enqueueJob(new ExternalFilesUtils(reportUsersMap, 'Read'));                  
             }
         }
     }

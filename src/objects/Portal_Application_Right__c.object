@@ -59,6 +59,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fieldSets>
         <fullName>ISSPAccServiceListView</fullName>
         <description>ISSP_AccesstoService</description>
@@ -107,12 +108,46 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Access_Pending_Detail__c</fullName>
+        <externalId>false</externalId>
+        <label>Access Pending Detail</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pending IATA Approval</fullName>
+                    <default>false</default>
+                    <label>Pending IATA Approval</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Access_Status_Reason__c</fullName>
         <externalId>false</externalId>
         <label>Reason</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Airline_Prefix__c</fullName>
+        <description>Used by TD to display data for CASS Airlines.</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.Account.Airline_Prefix__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Airline Prefix</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -438,6 +473,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Last_Visit_Date__c</fullName>
+        <description>Last time when user visited this service</description>
+        <externalId>false</externalId>
+        <label>Last Visit Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Last_modified_by_internal_user__c</fullName>
         <description>This is a helper field used by the Process Builder</description>
         <externalId>false</externalId>
@@ -537,7 +582,7 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 &quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
 &quot;MSO Management&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
-&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;Risk Profile and RHC&quot;, IF(Contact__r.Account.IATA_ISO_Country__r.ISO_Code__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
 &quot;ICCS&quot;, &quot;ICCS&quot;,
 Application_Name__c
 )</formula>
@@ -598,6 +643,11 @@ Application_Name__c
                     <fullName>Access Denied</fullName>
                     <default>false</default>
                     <label>Access Denied</label>
+                </value>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -718,7 +768,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
     <label>Portal Service Access</label>
     <listViews>
         <fullName>All</fullName>
-        <columns>OBJECT_ID</columns>
+        <columns>NAME</columns>
         <columns>Contact__c</columns>
         <columns>Portal_Application__c</columns>
         <columns>Right__c</columns>
@@ -733,32 +783,6 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <language>en_US</language>
         <sharedTo>
             <allPartnerUsers></allPartnerUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>All1</fullName>
-        <columns>Contact__c</columns>
-        <columns>Portal_Application__c</columns>
-        <columns>Right__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>All_Internal</fullName>
-        <columns>Contact__c</columns>
-        <columns>Portal_Application__c</columns>
-        <columns>Right__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
         </sharedTo>
     </listViews>
     <listViews>
@@ -865,6 +889,13 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <active>true</active>
         <label>Application access request</label>
         <picklistValues>
+            <picklist>Access_Pending_Detail__c</picklist>
+            <values>
+                <fullName>Pending IATA Approval</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Invoice_Type__c</picklist>
             <values>
                 <fullName>Cass Invoices</fullName>
@@ -906,6 +937,13 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <fullName>Application_rigth</fullName>
         <active>true</active>
         <label>Application rigth</label>
+        <picklistValues>
+            <picklist>Access_Pending_Detail__c</picklist>
+            <values>
+                <fullName>Pending IATA Approval</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Invoice_Type__c</picklist>
             <values>
@@ -960,6 +998,13 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <fullName>Biller_Direct</fullName>
         <active>true</active>
         <label>Biller Direct</label>
+        <picklistValues>
+            <picklist>Access_Pending_Detail__c</picklist>
+            <values>
+                <fullName>Pending IATA Approval</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Invoice_Type__c</picklist>
             <values>
@@ -1053,6 +1098,18 @@ NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
         <errorMessage>Access cannot be granted since the Agency&apos;s accreditation type for this contact does not match the portal service (Restrict by Accreditation Type).</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>MIR_service_for_airlines_only</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+    Application_Name__c = &quot;Management Information Report&quot;,
+    ISPICKVAL(Right__c,&apos;Access Granted&apos;),
+      NOT(
+      ISPICKVAL(Contact__r.Account.Sector__c,&apos;Airline&apos;)
+      )
+    )</errorConditionFormula>
+        <errorMessage>Management Information Report portal service can only be granted for users under airline accounts.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>MR_cannot_be_approved_by_admin</fullName>
         <active>false</active>
         <errorConditionFormula>AND( 
@@ -1103,7 +1160,9 @@ NOT(BEGINS($Profile.Name, &apos;identity&apos;))
         <active>true</active>
         <description>Internal users must not be able to assign an IATA EasyPay portal service with Access Status = Access Requested to a contact.</description>
         <errorConditionFormula>and(
+OR(
 Text(Right__c) = &apos;Access Requested&apos;,
+Text(Right__c) = &apos;Access Granted&apos;),
 CONTAINS(Application_Name__c, &apos;IATA EasyPay&apos;),
 NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)),
 $Profile.Name != &apos;ISS Portal Agency Delegated Admin User&apos;,

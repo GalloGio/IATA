@@ -406,7 +406,7 @@ global class ISSP_WS_NewUser {
                                     if (thisUser.FederationIdentifier == null){
                                         thisUser.FederationIdentifier = thisUser.FedContactId__c;
                                         try{
-                                            update thisUser;
+                                            WithoutSharingOperations.updateUser(thisUser);
                                         }
                                         catch (Exception e){
                                             Database.rollback(sPointContact);
@@ -485,7 +485,7 @@ global class ISSP_WS_NewUser {
                                     try{
                                         //String userId = Site.createPortalUser(u, userAccount, null, true);
                                         u.FederationIdentifier = conId15;
-                                        insert u;
+                                        WithoutSharingOperations.insertUser(u);
                                         theUser = u.Id;
                                         ISSP_WS_Utilities.sendUserEmail(u, con);
                                         insert appRight;
@@ -538,7 +538,7 @@ global class ISSP_WS_NewUser {
                                         try{
                                             //String userId = Site.createPortalUser(u, userAccount, null, true);
                                             u.FederationIdentifier = conId15;
-                                            insert u;
+                                            WithoutSharingOperations.insertUser(u);
                                             ISSP_WS_Utilities.sendUserEmail(u, con);
                                             update thisAppRight;
                                         }
@@ -680,7 +680,7 @@ global class ISSP_WS_NewUser {
                             try{
                                 //String userId = Site.createPortalUser(u, userAccount, null, true);
                                 u.FederationIdentifier = conId15;
-                                insert u;
+                                WithoutSharingOperations.insertUser(u);
                                 theUser = u.Id;
                                 ISSP_WS_Utilities.sendUserEmail(u, con);
                                 insert appRight;

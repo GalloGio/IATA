@@ -62,7 +62,7 @@ Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;
 On this must be used API value of Special_Remarks__c field on Account</description>
         <externalId>false</externalId>
         <label>Special Remarks</label>
-        <length>2</length>
+        <length>3</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>

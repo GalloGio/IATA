@@ -292,6 +292,21 @@ public without sharing class AMP_ChatterTopicSubscribeController {
                 'display: block!important;'+
                 'width: 100%!important'+
             '}'+
+            'td.buttonWrapper {'+
+		        'width: 98 !important;'+
+		        'height: 23 !important;'+
+		    '}'+
+		    'a.button { width: 96 !important; }'+
+		    'a.buttonWide { width: 118 !important; }'+
+		    'a.buttonAuto { padding-left:1em !important; padding-right:1em !important;}'+
+		    'a.button, a.buttonWide, a.buttonAuto {'+
+		    	'height: 23 !important;'+
+		        'line-height: 23px !important;'+
+		        'border-radius: 4px !important;'+
+		        '-webkit-border-radius: 4px !important;'+ 
+		        '-moz-border-radius: 4px !important;'+
+		    '}'+
+		      
         '}'+
     '</style>';
 		emailBody +=	'</head>';
@@ -551,6 +566,9 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 				lsFITopics.add(ta.Topic.Name);
 			}
 		}
+		
+		String remainingURL = '';
+		
 		if(lsAccountIds.size()>0 && lsFITopics.isEmpty()) {
 			emailBody += '<tr style="padding:0;text-align:left;vertical-align:top">'+
 							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left;white-space:normal;">'+
@@ -560,10 +578,15 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			for(Id i : lsAccountIds) {
 				emailBody += mpAccountId2Account.get(i).Name + ' ';
 			}
+			
 			emailBody += '</p></th>'+
 			'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
 			'</tr>';
+
+			remainingURL = lsAccountIds.size() > 1 ? ('/apex/AMP_ReplyToPostFromDigestByTopic?feedItemId=' + fi.Id) : ('/' + fi.Id);
+			
 		}
+		
 		if(lsFITopics.size()>0) {
 			emailBody += '<tr style="padding:0;text-align:left;vertical-align:top">'+
 							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
@@ -575,9 +598,43 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			emailBody += '</p></th>'+
 			'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
 			'</tr>';
+			
+			remainingURL = '/apex/AMP_ReplyToPostFromDigestByTopic?feedItemId=' + fi.Id;
+			
 		}
+		
 		emailBody +='</tbody></table>\n';
+			
+		if(String.isNotBlank(remainingURL)){
+			emailBody += '  <br/>';
+			emailBody += '<table><tbody>';
+			
+			emailBody +=' 	<tr>';
+			emailBody +=' 		<td class="buttonWrapper" style="font-family: Salesforce Sans, Helvetica Neue, Helvetica, Arial, Sans Serif; font-size: 14px;" width="116">';
+			emailBody +=' 			<span class="button">';
+			emailBody +='				<!--[if mso]>';	
+			emailBody +='				<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" style="height:28px v-text-anchor: middle; width:114" strokecolor="#137CBD" arcsize="7%" fill="t">';
+			emailBody +='					<v:fill angle="180" type="gradient" color="#137CBD" color2="#137CBD"/>';
+			emailBody +='					<w:anchorlock/>';
+			emailBody +='					<center style="color: #FFFFFF; font-family: Salesforce Sans, Helvetica Neue, Helvetica, Arial, Sans Serif;; font-size:13px;font-weight:normal;"><a style="text-decoration: none; color: #FFFFFF;" href="'+ URL.getSalesforceBaseUrl().toExternalForm() + remainingURL + '" target="_blank"><span style="white-space: nowrap;">Comment</span></a></center>';
+			emailBody +='				</v:roundrect>';
+			emailBody +='				<!--[if !mso] -->';			
+			emailBody +=' 				<a href="'+ URL.getSalesforceBaseUrl().toExternalForm() + remainingURL + '" style="font-family: Salesforce Sans, Helvetica Neue, Helvetica, Arial, Sans Serif; -webkit-text-size-adjust: none; font-size: 14px; color: #FFFFFF; background-color: #137CBD; text-decoration: none; text-align: center; border: 1px solid #137CBD; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;  background-image: linear-gradient(top, #137CBD, #137CBD); background-image: -o-linear-gradient(top, #137CBD, #137CBD); background-image: -moz-linear-gradient(top, #137CBD, #137CBD); background-image: -webkit-linear-gradient(top, #137CBD, #137CBD); background-image: -ms-linear-gradient(top, #137CBD, #137CBD); display: inline-block; line-height:28px; width:114px" class="button" target="_blank"><span class="text" style="white-space: nowrap;"><b>Comment</b></span></a>';
+			emailBody +='				<!-- <![endif]-->';
+			emailBody +=' 			</span>';
+			emailBody +=' 		</td>';
+			emailBody +='		<td style="font-family: Salesforce Sans, Helvetica Neue, Helvetica, Arial, Sans Serif;font-size: 14px;">';
+			emailBody +='			<div class="text" style="color: #595959; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; white-space: nowrap;"> &nbsp; </div>';
+			emailBody +='		</td>';
+			emailBody +='	</tr>';
+			emailBody += '</tbody></table>';
+			
+		}
+		
+		emailBody +='<br/>';
+			
 		return emailBody;
+		
 	}
 
 	// this is the thin grey separator between feeditems under the same header

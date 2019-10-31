@@ -1,0 +1,57 @@
+<template>
+
+    <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+        <div class="modal">
+            <div class="customPopupInteriorHalfScreenCentered">
+
+                <!-- Popup Header -->
+                <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
+                    <span>{labels.ISSP_TC_Accept}</span>
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                            onclick={closeModal}></lightning-icon>
+                    </span>
+                </div>
+
+                <div class="slds-is-relative">
+
+                    <div if:true={isLoading}>
+                        <div class="modalSpinnerContainer">
+                            <lightning-spinner class="" alternative-text="Loading" size="medium">
+                            </lightning-spinner>
+                        </div>
+                    </div>
+
+                    <div
+                        class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large customWhiteBackground">
+
+                        <div class="slds-m-left_x-small slds-m-bottom_small">
+                            <label class="checkbox-button">
+                                <input type="checkbox" required name="acceptTerms" class="checkbox-button__input"
+                                    onchange={handleChange}>
+                                <span class="checkbox-button__control" onchange={handleChange}></span>
+                                <span class="text-small font checkbox-button__label">
+                                    <a target="_blank" href="http://www.iata.org/customer-portal/Pages/terms.aspx">
+                                        {labels.ISSP_Registration_acceptGeneralConditions}
+                                    </a>
+                                </span>
+                            </label>
+                            <div class="slds-p-around_x-small">
+                                <span class={errorMessageClass}> {labels.CSP_Accept_Terms_Error} </span>
+                            </div>
+                        </div>
+
+                        <!-- BUTTON -->
+                        <div class="slds-align_absolute-center slds-m-top_medium slds-m-bottom_medium">
+                            <lightning-button variant="brand" class="slds-m-top_small containedButton"
+                                label={labels.Next} onclick={save}>
+                            </lightning-button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</template>
