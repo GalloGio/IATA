@@ -973,6 +973,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
                     mode: 'pester'
                 });
                 this.dispatchEvent(event2);
+                this.loadingModal = false;
             } else {
                     recordToManage.Role_Addresses__r.forEach((rolAddr => {
                         let r = {};
@@ -1044,6 +1045,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
                 mode: 'pester'
             });
             this.dispatchEvent(event4);
+            this.loadingModal = false;
         }
     }
 
