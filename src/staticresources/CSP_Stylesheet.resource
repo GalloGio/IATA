@@ -494,7 +494,10 @@ lightning-datatable .slds-th__action {
 
 /* ############################################## */
 /* Classes for the buttons */
-
+.twoLines button[type=button],
+button.twoLines {
+    min-height: 3rem!important;
+}
 .containedButtonSmaller, 
 .containedButtonSmaller button {
   -webkit-transition-duration: 0.4s; /* Safari */
@@ -625,7 +628,7 @@ lightning-datatable .slds-th__action {
 
 .containedButton-size {
     height: 56px;
-    width: 100%;
+    width: 200px;
 }
 
 .filterButton,
