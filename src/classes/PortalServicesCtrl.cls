@@ -654,12 +654,15 @@ public boolean isPendingAccess {get; set;}
 public boolean isInactive {get; set;}
 @AuraEnabled
 public boolean hasNoContact {get; set;}
+@AuraEnabled
+public string country {get; set;}
 
 
 
 public ContactWrapper(Portal_Application_Right__c par){
 	String accountLocation = String.isNotBlank(par.Contact__r.Account.BillingCity) ? ' (' + par.Contact__r.Account.BillingCity + ')' : '';
 
+	this.country=par.contact__r.Account_Country__c;
 	this.contactId=par.contact__c;
 	this.contactName=par.contact__r.name;
 	this.emailAddress=par.contact__r.email;
@@ -1188,6 +1191,7 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 
             extraFields.put('iataCodeLocation',iataCodeLocation);
             extraFields.put('status',contact.User_Portal_Status__c);
+			extraFields.put('country',contact.Account_Country__c);
             res.setExtraFields(extraFields);
 
             results.add(res);

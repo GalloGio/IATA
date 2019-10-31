@@ -42,7 +42,8 @@ public with sharing class PortalApplicationRight_Sel extends Selector {
 			'Portal_Application_Right__c.Contact__r.Status__c',
 			'Portal_Application_Right__c.Account__c',		
 			'Portal_Application_Right__c.Contact__r.Account.IATACode__c',		
-			'Portal_Application_Right__c.Contact__r.Account.BillingCity'		
+			'Portal_Application_Right__c.Contact__r.Account.BillingCity',
+			'Portal_Application_Right__c.Contact__r.Account_Country__c'		
 		};
 	}
 

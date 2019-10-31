@@ -34,6 +34,7 @@ import searchContactPlaceholder from '@salesforce/label/c.CSP_Search_In_Contacts
 import ISSP_IATA_Location_Code from '@salesforce/label/c.ISSP_IATA_Location_Code';
 import Email from '@salesforce/label/c.Email';
 import Status from '@salesforce/label/c.Status';
+import Country from '@salesforce/label/c.Country';
 import CSP_User from '@salesforce/label/c.CSP_User';
 import confirm from '@salesforce/label/c.ISSP_Confirm';
 import cancel from '@salesforce/label/c.CSP_Cancel';
@@ -230,6 +231,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     { label: Email, fieldName: 'emailAddress', type: 'text' },
                     { label: ISSP_IATA_Location_Code, fieldName: 'iataCodeLoc', type: 'text' },
                     { label: Status, fieldName: 'serviceRight', type: 'text' },
+                    { label: Country, fieldName: 'country', type: 'text' },
                     { type: 'action', typeAttributes: { iconName: 'utility:delete', disabled: true, rowActions: this.getRowActions } }
                 ];
         
@@ -318,7 +320,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             .then(result => {
                 let resultData = JSON.parse(JSON.stringify(result));
                 this.initialPageLoad(resultData, this.serviceRecord.totalNrContacts);
-
+                console.log('data from server: ',resultData);
                 //this.showSpinner = false;
                 this.componentLoading = false;
             });
@@ -968,6 +970,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         getContactsForAssignment({ serviceId: this.serviceId }).then(result => {
 
             let availableContacts = JSON.parse(JSON.stringify(result));
+            console.log('getContacts results',this.availableContacts)
             let toAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
 
             let available = availableContacts.filter(function (c) {
