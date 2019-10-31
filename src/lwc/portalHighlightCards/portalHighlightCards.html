@@ -12,10 +12,10 @@
                 <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
             </div>
             <div if:false={loading} class="slds-is-relative" style="overflow: hidden;">
-                <div class={swipe} style={testMove}>
+                <div class={swipe} style={cardMove}>
                     <template for:each={highlightListToIterate} for:item="highlight">
                         <div key={highlight.Type} ontouchstart={touchStart} ontouchmove={touchMove}
-                            class="slds-col slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-is-relative">
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-is-relative">
                             <c-portal-highlight-card type="type" highlight={highlight}></c-portal-highlight-card>
                         </div>
                     </template>
@@ -25,7 +25,7 @@
                     style="z-index: 1; opacity: 1; margin-top: -410px;">
                     <template for:each={highlightListToIterate} for:item="highlight">
                         <div key={highlight.Type}
-                            class="slds-col slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-is-relative">
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-is-relative">
                             <c-portal-highlight-card type="type" highlight={highlight}></c-portal-highlight-card>
                         </div>
                     </template>

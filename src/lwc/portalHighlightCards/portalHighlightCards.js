@@ -33,7 +33,7 @@ export default class PortalHighlightCards extends LightningElement {
     @track firstPosition;
 
     @track swipe = "slds-grid slds-wrap slds-align--absolute-center slds-gutters_direct-medium slds-is-relative swipeClass swipeMove";
-    @track testMove = "margin-left: 0; opacity: 1";
+    @track cardMove = "margin-left: 0; opacity: 1";
 
     connectedCallback() {
 
@@ -107,12 +107,12 @@ export default class PortalHighlightCards extends LightningElement {
 
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         setTimeout(() => {
-            this.testMove = "margin-left: 0; opacity: 0";
+            this.cardMove = "margin-left: 0; opacity: 0";
         }, 300);
 
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         setTimeout(() => {
-            this.testMove = "margin-left: 0; opacity: 1";
+            this.cardMove = "margin-left: 0; opacity: 1";
         }, 1300);
     }
 
@@ -191,19 +191,17 @@ export default class PortalHighlightCards extends LightningElement {
             if (this.firstPosition > position) {
                 if ((this.firstPosition - position) > 50) {
                     this.firstPosition = null;
-                    this.testMove = "margin-left: -100vw; opacity: 0.3";
+                    this.cardMove = "margin-left: -100vw; opacity: 0.3";
                     this.handleNextPage();
                 }
             } else {
                 if ((position - this.firstPosition) > 50) {
                     this.firstPosition = null;
-                    this.testMove = "margin-left: 100vw; opacity: 0.3";
+                    this.cardMove = "margin-left: 100vw; opacity: 0.3";
                     this.handlePreviousPage();
                 }
             }
         }
     }
-
-
 
 }
