@@ -85,13 +85,6 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
     
     public override List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
-        /*
-        options.add(new SelectOption('CreatedDate DESC ','Sort By', true)); 
-        options.add(new SelectOption('CreatedDate DESC','Creation Date'));
-        options.add(new SelectOption('LastModifiedDate DESC','Last Edited'));
-        options.add(new SelectOption('Name ASC','Name')); 
-        options.add(new SelectOption('Audience__c ASC', 'Audience'));
-        */
 
         options.add(new SelectOption('CreatedDate','Sort By', true)); 
         options.add(new SelectOption('Name ASC ','List Name')); 

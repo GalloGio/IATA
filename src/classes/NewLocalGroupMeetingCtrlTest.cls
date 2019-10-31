@@ -10,25 +10,26 @@ public class NewLocalGroupMeetingCtrlTest{
     public static Contact contcomplete;
     public static Contact contduplicate;
 
-    private static User testUser = createTestUser();
+    private static User testUser { 
+        get { 
+            Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+            User tu = New User(
+                Alias = 'standt', Email='standarduser@testorg.com',
+                EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+                LocaleSidKey='en_US', ProfileId = testProfile.Id,
+                TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+                License_Cost_Center__c = 'ISF005CH01'
+            );
 
-    public static User createTestUser(){
-        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
-        User tu = New User(
-            Alias = 'standt', Email='standarduser@testorg.com',
-            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-            LocaleSidKey='en_US', ProfileId = testProfile.Id,
-            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
-            License_Cost_Center__c = 'ISF005CH01'
-        );
+            insert tu;
 
-        insert tu;
+            PermissionSet myPermissionSet = [SELECT ID from permissionSet where Name = 'Local_group_owners'];
+            PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = tu.Id);
+            insert psa;
 
-        PermissionSet myPermissionSet = [SELECT ID from permissionSet where Name = 'Local_group_owners'];
-        PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = tu.Id);
-        insert psa;
-
-        return tu;
+            return tu;
+        } 
+        set;
     }
 
     public static void initTestData(Integer NRECORDS){

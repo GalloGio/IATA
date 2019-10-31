@@ -10,9 +10,6 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         get;
         set;
     }
-    public String getMetadataString() {
-        return metadata.Body.toString();
-    }
     public Attachment templateJSON {
         get;
         set;

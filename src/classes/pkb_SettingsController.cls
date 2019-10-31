@@ -44,7 +44,6 @@ public with sharing class pkb_SettingsController {
 
   /* Knowledge Articles Custom Settings Management */
   public String kaTypes {get;set;}
-  public void dummySet(){}
 
   /* ***** GENERAL DISPLAY AND PROCESSING CONDITIONALS ***** */
 

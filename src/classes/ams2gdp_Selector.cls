@@ -54,15 +54,6 @@ public class ams2gdp_Selector
 		return result;
 	}
 
-	/*public static List<String> getAMS_InspectionIdsByAccountIds(List<String> accountIds)
-	{
-		List<String> result = new List<String>();
-		for(AMS_Inspection__c item:[SELECT Id FROM AMS_Inspection__c WHERE Account__c IN:accountIds])
-			result.add(item.Id);
-
-		return result;
-	}*/
-
 	public static List<String> getAMS_TerritoryIdsByAccountIds(List<String> accountIds)
 	{
 		List<String> result = new List<String>();
@@ -225,17 +216,6 @@ public class ams2gdp_Selector
 		return result;
 	}
 
-
-	// public static Map<String, GDP_Reference_Table__c> getGDPReferenceTablebyDefinitionAndTable(Set<String> definitions, String table)
-	// {
-	// 	Map<String, GDP_Reference_Table__c> result = new Map<String, GDP_Reference_Table__c>();
-	//
-	// 	for(GDP_Reference_Table__c tbl : [SELECT Id, Code__c, Table__c, Definition__c FROM GDP_Reference_Table__c WHERE Definition__c IN : definitions AND Table__c = :table])
-	// 		result.put(tbl.Definition__c, tbl);
-	//
-	// 	return result;
-	// }
-
 	public static Map<String, GDP_Reference_Table__c> getGDPReferenceTablebyDescriptionAndTable(Set<String> names, String table)
 	{
 		Map<String, GDP_Reference_Table__c> result = new Map<String, GDP_Reference_Table__c>();
@@ -245,16 +225,6 @@ public class ams2gdp_Selector
 
 		return result;
 	}
-
-	// public static Map<String, GDP_Reference_Table__c> getGDPReferenceTablebyDefinitionAndTable(Set<String> definitions, String table, String sys)
-	// {
-	// 	Map<String, GDP_Reference_Table__c> result = new Map<String, GDP_Reference_Table__c>();
-	//
-	// 	for(GDP_Reference_Table__c tbl : [SELECT Id, Code__c, Table__c, Definition__c FROM GDP_Reference_Table__c WHERE Definition__c IN : definitions AND Table__c = :table AND System__c = :sys])
-	// 		result.put(tbl.Definition__c, tbl);
-	//
-	// 	return result;
-	// }
 
 	public static Map<String, GDP_Reference_Table__c> getGDPReferenceTablebyDescriptionAndTable(Set<String> descriptions, String table, String sys)
 	{

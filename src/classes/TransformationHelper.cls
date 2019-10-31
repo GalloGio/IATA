@@ -63,20 +63,6 @@ public class TransformationHelper {
     site = site.ToUpperCase();
 
     return site;
-
-
-  }
-
-  public static Set<String> getPicklistValues(String ObjectApi_name, String Field_name) {
-
-    Set<String> lstPickvals = new Set<String>();
-    Map<String, Schema.SObjectField> field_map = Schema.getGlobalDescribe().get(ObjectApi_name).newSObject().getSObjectType().getDescribe().fields.getMap();
-
-    for (Schema.PicklistEntry a : field_map.get(Field_name).getDescribe().getPickListValues()) {
-      lstPickvals.add(a.getValue());
-    }
-
-    return lstPickvals;
   }
 
   public static String getAllFields(Map<String, Schema.SObjectField> fieldMap) {

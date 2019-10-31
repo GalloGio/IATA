@@ -10,16 +10,6 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 	// component parameters
 	public String[] listProductInformationIDs { get; set; }
 	public String componentIdToRerender { get; set; }
-	/*// Commented to rollback override acceptance
-	public Boolean overrideExistingAcceptance {
-		get {
-			return (overrideExistingAcceptance == null) ? true : overrideExistingAcceptance;
-		}
-		set {
-			overrideExistingAcceptance = value;
-		}
-	}
-	*/
 	
 	// member variables
 	public List<UITermsAndConditions> lstTnCsToDisplay;
@@ -115,10 +105,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 				// for each product information id passed as component parameter
 				for (String productInformationID : listProductInformationIDs) {
 					Terms_and_Conditions__c oTC = IECProductManager.getCurrentTermsAndConditionForProduct(productInformationID);
-					if (oTC != null
-						// Commented to rollback override acceptance
-						/*&& (overrideExistingAcceptance
-							|| !IECProductManager.hasTnCBeenAcceptedByCustomer(oTC.Id, pageController.loggedCustomer.RelatedContact.Id))*/) {
+					if (oTC != null) {
 						listTCToDisplay.add(new UITermsAndConditions(oTC));
 					}
 				}

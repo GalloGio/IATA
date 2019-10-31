@@ -250,11 +250,7 @@ public with sharing class sendSingleTrackedEmailController {
             Reason__c = reason
         );
     }
-    
-    // This method is not used anymore. It stays here for deployment reasons
-    public void applyTemplate(){
-    }
-    
+
     public void setTemplate(String templateDeveloperName){
         emailTemplate = [select Id, Name, Subject, Body, HtmlValue, Markup, BrandTemplateId, TemplateStyle, TemplateType, Encoding from EmailTemplate where DeveloperName = :templateDeveloperName][0];
         setTemplate();    
@@ -702,16 +698,6 @@ public with sharing class sendSingleTrackedEmailController {
         List<Tracked_Email__c> trackedEmails = [select Id, Name, Status__c, FromAddress__c, Email__c, ToContact__r.Name, ToContact__r.Email, Case__c, Html_Body__c, TextBody__c, AdditionalTo__c, CcAddress__c, BccAddress__c, Subject__c, FromName__c, Reason__c, OwnerId, Case__r.Id, Case__r.CaseNumber, Case__r.Case_Thread_ID__c from Tracked_Email__c where Id in: trackedEmailIds];
 
         SignaturitUtils.sendTrackedEmails(trackedEmails);
-    }
-    
-    // Delete email and its attachments if sending fails
-    private void deleteEmail(){
-        // delete tracked email and attachments
-        List<Attachment> attachments = [select Id from Attachment where parentId =:email.id];
-        if(!attachments.isEmpty()){
-            delete attachments;
-        }
-        delete email;
     }
     
     /**

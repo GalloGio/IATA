@@ -237,19 +237,6 @@ public with sharing class pkb_SecurityHandler {
     }
 
     /**
-    * Converts the input string to a comma separated, single quote escaped string,
-    * surrounded by parenthesis. This format is suitable for dynamic SOQL queries.
-    * @param oList a list of objects
-    * @return a string formated for SOQL queries.
-    */
-    public static String queryFormat(List<Object> oList) {
-        List<String> values = new List<String>();
-        mapList(oList, values, new EscapeQuotesMapper());
-        List<String> quotedValues = new List<String>();
-        mapList(values, quotedValues, new QuoteMapper());
-        return '(' + joinList(quotedValues, ',') + ')';
-    }
-    /**
     * @param oList list of strings to be joined
     * @param separator the string that will separate the items of oList in the joined string
     * @return a string with all the elelments of oList concateneted and separated with separator

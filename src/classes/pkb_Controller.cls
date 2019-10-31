@@ -1314,36 +1314,4 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
         returnList.addAll(sortOptionList(greater));
         return returnList;
     }
-    
-    //TF
-    public PageReference retrieveArticle() {
-      
-        string myartid = ApexPages.currentPage().getParameters().get('artid');
-        string myartType = ApexPages.currentPage().getParameters().get('artType');
-        string myartURL = ApexPages.currentPage().getParameters().get('artURL');
-        viewCount = 100;
-        if (myartType == 'FAQ__kav'){
-      AggregateResult[] articleStatRecords = [SELECT URL_Name__c, Stat_Type__c, Count(Id) Counting 
-                                        FROM ArticleStatistics__c 
-                                        WHERE URL_Name__c =: myartURL
-                                        GROUP BY URL_Name__c, Stat_Type__c];
-      Integer artStatSize = Integer.valueOf(articleStatRecords.size());
-        
-      for (Integer i = 0; i < artStatSize; i++) {
-        String statType = String.valueOf(articleStatRecords[i].get('Stat_Type__c'));
-              
-              // If the satistic type of the group id 'View' --> will get the number of records in that group
-              if (statType == ENV.ArticleStatType.View) {
-                  viewCount = Integer.valueOf(articleStatRecords[i].get('Counting'));
-              }
-              
-              // The satistic type of the group id 'Satisfied'
-              if (statType == ENV.ArticleStatType.Satisfied) {
-                  satisfiedCount = Integer.valueOf(articleStatRecords[i].get('Counting'));
-              }
-      }
-        }
-        
-        return null;
-    }
 }

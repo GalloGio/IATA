@@ -2475,11 +2475,6 @@ if(ApexPages.currentPage() != null){
     }
     }
     
-    public void refreshAreasOfConcernPickList(){
-        system.debug('basto1p - TOPIC: ' + topic);
-        system.debug('basto1p - SUB-TOPIC: ' + subtopic);
-        
-    }
     public void setIsIFG(String categoryName){
         system.debug('basto1p - setIsIFG categoryName='+categoryName);
         if (categoryName==IFG_TOPIC) {

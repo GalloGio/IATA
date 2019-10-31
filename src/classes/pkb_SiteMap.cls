@@ -15,8 +15,6 @@ public with sharing class pkb_SiteMap {
     public Integer offset {get; set;}
 
     public pkb_SiteMap() {
-
-        init();
         //populate offset for queries
         this.offset = 0;
         String tmpOffset = ApexPages.currentPage().getParameters().get('offset');
@@ -31,25 +29,6 @@ public with sharing class pkb_SiteMap {
         }else{
             this.lang = availableLanguages.get(0);
         }
-    }
-
-    /**
-    * @description populates available articles and languages
-    * using the schema of the KnowledgeArticleVersion object
-    **/
-    private void init(){
-        /*
-        availableArticleTypes = new List<String>();
-        for (Schema.PicklistEntry a : KnowledgeArticleVersion.ArticleType.getDescribe().getPickListValues()){
-            availableArticleTypes.add( a.getValue());
-        }
-
-        availableLanguages = new List<String>();
-        for (Schema.PicklistEntry a : KnowledgeArticleVersion.Language.getDescribe().getPickListValues()){
-            availableLanguages.add( a.getValue());
-        }
-        */
-
     }
 
     // A property to return the proper Sites URL, used to build our full URL later

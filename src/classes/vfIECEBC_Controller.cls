@@ -74,28 +74,6 @@ public virtual class vfIECEBC_Controller {
 	// Exception to be thrown by the controllers
 	public class Controller_Exception extends Exception{}
 	
-	// ========================================================================
-	// constructor
-	public vfIECEBC_Controller()
-	{
-	}
-	
-	// ========================================================================
-	// verify and update if needed the value of billingAccount.eBroadcast_Add_On_Advanced_Reporting__c.
-	// this can be called from any controller that might need this.
-	public void verifyAddOnEnhancedReportingFlagValidity()
-	{
-		if (billingAccount.eBroadcast_Add_On_Advanced_Reporting__c != hasValidAddOnEnhancedReporting)  
-		{ // billingAccount needs update
-			Zuora__CustomerAccount__c updatedBillingAccount = new Zuora__CustomerAccount__c(
-					Id = billingAccount.Id
-					,  eBroadcast_Add_On_Advanced_Reporting__c = hasValidAddOnEnhancedReporting
-				); 
-			update updatedBillingAccount;
-			rereadBillingAccount();
-		}
-	} // end of verifyAddOnEnhancedReportingFlagValidity
-	
 	// The current user
 	public User usr {
 		get {

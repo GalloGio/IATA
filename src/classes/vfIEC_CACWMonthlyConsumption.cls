@@ -307,104 +307,9 @@ public  class vfIEC_CACWMonthlyConsumption {
             // for historical value, the value might be incorrect
             p.APICallsForPeriodAllowed = Integer.valueOf(currentSubscriptionMaxApiCallPerMonth); // this corrects previous maxusage calculation
             // SL Note: need to check about why the code below was commented out.
-             /*  
-            List<Date> limitKeys = new List<Date>(limits.keySet());
-            limitKeys.sort();
-
-            for(Date d : limitKeys) {
-                if (p.periodStartDate > d || p.periodEndDate < d) continue;
-
-                previousLimit = limits.get(d);
-                p.APICallsForPeriodAllowed = limits.get(d);
-            }
-
-            if (p.APICallsForPeriodAllowed == 0) p.APICallsForPeriodAllowed = previousLimit;
-            */
         }
     } // end of applySubscriptionDetails
-    
-    // original, plus update p.APICallsForPeriodAllowed = currentSubscriptionMaxApiCallPerMonth;  for the current month
-    private void applySubscriptionDetailsORIGINAL(Map<String, CACWebAPIPeriodConsumption> matrix) {
-        List<CAC_Subscription_Detail__c> details = [
-            Select Max_API_Call_Per_Month__c,
-                (Select Id, Credit__c, Date__c From CAC_Subscription_Credits__r Where Date__c >= :startDate AND Date__c <= :endDate),
-                (SELECT NewValue,OldValue, CreatedDate FROM Histories WHERE Field = 'Max_API_Call_Per_Month__c' ORDER BY CreatedDate DESC)
-            From CAC_Subscription_Detail__c
-            Where Subscription__c = :s.Id
-            AND Status__c='Active'
-        ];
 
-        Map<Date, Integer> credits = new Map<Date, Integer>();
-        Map<Date, Integer> limits = new Map<Date, Integer>();
-        Integer originalLimit = 0;
-        decimal currentSubscriptionMaxApiCallPerMonth = 0;
-        for(CAC_Subscription_Detail__c detail : details) {
-            currentSubscriptionMaxApiCallPerMonth += (detail.Max_API_Call_Per_Month__c == null)? 0 : detail.Max_API_Call_Per_Month__c; 
-            
-            for(CAC_Subscription_Credit__c detailCredit : detail.CAC_Subscription_Credits__r) {
-                Integer credit = (credits.containsKey(detailCredit.Date__c) ? (credits.get(detailCredit.Date__c)) : 0);
-                credit += Integer.valueOf(detailCredit.Credit__c);
-                credits.put(detailCredit.Date__c, credit);
-            }
-
-            System.debug(detail.Histories);
-
-            Integer i = 0;
-            Date lastDateChecked;
-            for(CAC_Subscription_Detail__History detailHistory : detail.Histories) {
-                i++;
-                if (i == detail.Histories.size()) { // Store the original value
-                    originalLimit += Integer.valueOf(detailHistory.OldValue);
-                }
-
-                Date d = Date.newInstance(detailHistory.CreatedDate.year(), detailHistory.CreatedDate.month(), detailHistory.CreatedDate.day());
-
-                if (d == lastDateChecked) continue;
-                lastDateChecked = d;
-
-                Integer l = (limits.containsKey(d) ? (limits.get(d)) : 0);
-                System.debug(l);
-
-                l += Integer.valueOf(detailHistory.NewValue);
-                limits.put(d, l);
-            }
-
-            if (detail.Histories == null || detail.Histories.size() == 0) originalLimit += Integer.valueOf(detail.Max_API_Call_Per_Month__c);
-        }
-
-        if (!limits.containsKey(matrix.values()[0].periodStartDate)) limits.put(matrix.values()[0].periodStartDate, originalLimit);
-
-        Integer previousLimit; 
-        List<String> matrixKeys = new List<String>(matrix.keySet());
-        matrixKeys.sort();
-
-
-        for(String key : matrixKeys) {
-            CACWebAPIPeriodConsumption p = matrix.get(key);
-            
-            for(Date d : credits.keySet()) {
-                if (p.periodStartDate > d || p.periodEndDate < d) continue;
-                p.Credits += credits.get(d);
-            }
-            
-            
-            p.APICallsForPeriodAllowed = Integer.valueOf(currentSubscriptionMaxApiCallPerMonth); // this corrects previous maxusage calculation
-            // SL Note: need to check about why the code below was commented out.
-             /*  
-            List<Date> limitKeys = new List<Date>(limits.keySet());
-            limitKeys.sort();
-
-            for(Date d : limitKeys) {
-                if (p.periodStartDate > d || p.periodEndDate < d) continue;
-
-                previousLimit = limits.get(d);
-                p.APICallsForPeriodAllowed = limits.get(d);
-            }
-
-            if (p.APICallsForPeriodAllowed == 0) p.APICallsForPeriodAllowed = previousLimit;
-            */
-        }
-    }
     
     public Class UsageAggregateResult
     {
@@ -492,53 +397,7 @@ public  class vfIEC_CACWMonthlyConsumption {
         }
         return umap.Values();
     }
-        /*
-     private List<AggregateResult> getAggregateResult() {
-         if (segment == 'Daily') {
-            return [
-                SELECT
-                    SUM(Counter__c) cntTotal,
-                    CAC_Subscription_Detail__r.Subscription__c,
-                    calendar_year(Date__c) year, calendar_month(Date__c) month, DAY_IN_MONTH(Date__c) day
-                FROM IEC_Compiled_Usage_Tracker__c 
-                WHERE CAC_Subscription_Detail__r.Subscription__c = :s.Id
-                    AND Date__c >= :startDate
-                    AND Date__c <= :endDate
-                GROUP BY CAC_Subscription_Detail__r.Subscription__c, calendar_year(Date__c), calendar_month(Date__c), DAY_IN_MONTH(Date__c)
-                ORDER BY calendar_year(Date__c) DESC, calendar_month(Date__c), DAY_IN_MONTH(Date__c) DESC
-            ];
-        } else if (segment == 'Monthly') {
-            return [
-                SELECT
-                    SUM(Counter__c) cntTotal,
-                    CAC_Subscription_Detail__r.Subscription__c,
-                    calendar_year(Date__c) year, calendar_month(Date__c) month
-                FROM IEC_Compiled_Usage_Tracker__c 
-                WHERE CAC_Subscription_Detail__r.Subscription__c = :s.Id
-                    AND Date__c >= :startDate
-                    AND Date__c <= :endDate
-                GROUP BY CAC_Subscription_Detail__r.Subscription__c, calendar_year(Date__c), calendar_month(Date__c)
-                ORDER BY calendar_year(Date__c) DESC, calendar_month(Date__c) DESC
-            ];
-        } else if (segment == 'Yearly') {
-            return [
-                SELECT
-                    SUM(Counter__c) cntTotal,
-                    CAC_Subscription_Detail__r.Subscription__c,
-                    calendar_year(Date__c) year
-                FROM IEC_Compiled_Usage_Tracker__c 
-                WHERE CAC_Subscription_Detail__r.Subscription__c = :s.Id
-                    AND Date__c >= :startDate
-                    AND Date__c <= :endDate                    
-                GROUP BY CAC_Subscription_Detail__r.Subscription__c, calendar_year(Date__c)
-                ORDER BY calendar_year(Date__c) DESC
-            ];
-        }
-        
-        return null;
-        
-    }
-*/
+      
     /* 
     * @description extension's constructor. Uses main controller as input parameter
     */

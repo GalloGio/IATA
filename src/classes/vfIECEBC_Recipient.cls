@@ -22,17 +22,4 @@ public class vfIECEBC_Recipient extends vfIECEBC_Controller {
         get;
         set;
     }
-    
-    
-    /////////////
-
-    public PageReference navigateToStepGeo() {
-        if (String.isBlank(filter.Audience__c)) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Please set an Audience.'));
-            return null;
-        }
-        
-        wizardStep = 'Geo';
-        return null;
-    }
 }

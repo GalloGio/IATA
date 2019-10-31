@@ -457,32 +457,6 @@ global class WrapperAttach implements Comparable {
     }
 
     /**
-        Get all Archived Attachments related to this object
-    private static list<WrapperAttach> getArchivedAttachments(Id sobjectId) {
-        list<WrapperAttach> listAttach = new list<WrapperAttach>();
-        if (String.ValueOf(sobjectId.getSObjectType()).equals('Case')) {
-            return listAttach;
-        }
-        try {
-            list<Archived_Attachment__c> archivedAttachments  = [
-                SELECT AWS_S3_URL__c, Name, ArchivedMessage__c, Bucket__c, Case__c, Id, BodyLength__c, Original_Creation_Date__c, OriginalCreatedBy__c, ContentType__c, LastModifiedDate
-                FROM Archived_Attachment__c
-                where Case__c= :sobjectId
-                and ArchivedMessage__c = null
-                order by Original_Creation_Date__c desc
-            ];
-
-            for(Archived_Attachment__c attach: archivedAttachments){
-                listAttach.add(new WrapperAttach(attach));
-            }
-        } catch (Exception e) {
-            System.debug(e.getMessage());
-        }
-        return listAttach;
-    }
-    **/
-
-    /**
         Get all files in the bucket related to this object
     **/
     private static list<WrapperAttach> getAmazonAttachments(Id sobjectId) {
@@ -580,24 +554,6 @@ global class WrapperAttach implements Comparable {
         }
         return attachList;
     }
-
-
-   
-    /**
-        Return generates content public link
-    **/
-    public static ContentDistribution generateContentDistribution (ContentDocument cd) {       
-        ContentDistribution cdi = new ContentDistribution();
-        cdi.name = cd.title;
-        cdi.ContentVersionId = cd.LatestPublishedVersionId;
-        cdi.PreferencesAllowViewInBrowser= true;
-        cdi.PreferencesLinkLatestVersion=true;
-        cdi.PreferencesNotifyOnVisit=false;
-        cdi.PreferencesPasswordRequired=false;
-        cdi.PreferencesAllowOriginalDownload= true;
-        
-        return cdi;
-    }  
 
     /**
         Return map with versionData used in transfer Attachments, contentDocumentid as key

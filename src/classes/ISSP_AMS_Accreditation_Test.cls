@@ -5356,36 +5356,7 @@ private class ISSP_AMS_Accreditation_Test {
 
         return newUser;
     }
-
-    private static User icc_testUser2(Contact con, String language) {
-        String orgId = UserInfo.getOrganizationId();
-        String dateString = String.valueof(Datetime.now()).replace(' ', '').replace(':', '').replace('-', '');
-        Integer randomInt = Integer.valueOf(math.rint(math.random() * 1000000));
-        String uniqueName = orgId + String.valueof(datetime.now());
-        String conId15 = con.Id;
-        conId15 = conId15.substring(0, 15);
-        User newUser = new User(alias = 'dsfsdfds',
-                                email = con.email,
-                                emailencodingkey = 'UTF-8',
-                                firstname = con.firstName,
-                                lastname = con.lastname,
-                                languagelocalekey = language,
-                                localesidkey = language,
-                                contactId = con.Id,
-                                FederationIdentifier = conId15,
-                                timezonesidkey = 'Asia/Dubai',
-                                Username = uniqueName + string.valueof(Integer.valueOf(math.rint(math.random() * 1000000))) + '@test' + orgId + '.org',
-                                PortalRole = 'Manager',
-                                CommunityNickname = con.email.substring(0, con.email.indexOf('@')) + Datetime.now().formatLong().substring(10, 15),
-                                ProfileId = ISSP_Constant.TEST_User_ProfileID,
-                                IsActive = true);
-        insert newUser;
-        con.OwnerId = newUser.Id;
-        update con;
-
-        return newUser;
-    }
-
+    
     private static ISSP_AMS_Accreditation icc_initialize(IATA_ISO_Country__c country, Account child) {
         AMS_Accreditation_Country_CheckList__c AMS_Acc_Checklist = new  AMS_Accreditation_Country_CheckList__c();
         AMS_Acc_Checklist.IATA_ISO_Country__c = country.id ;

@@ -68,7 +68,4 @@ public with sharing class clsDataCategoryContainer {
 	       cdc.print();
 		}
 	}
-    //SELECT Id,Title FROM FAQ__kav Where PublishStatus = 'Online' WITH DATA CATEGORY All_Customers
-    //All_Customers,Agency,Airline
-
 }
