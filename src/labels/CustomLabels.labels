@@ -12873,7 +12873,6 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <value>Baggage Tag Range</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_First_Page_Summary_Header_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -12882,11 +12881,8 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <value>Type &amp; Location</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Form</fullName>
-=======
         <fullName>ISSP_AMC_BAGAGE_TAG_RANGE_DESC</fullName>
         <categories>Page Text</categories>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_BAGAGE_TAG_RANGE_DESC</shortDescription>
@@ -13265,7 +13261,6 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <value>No numbers or special characters allowed!</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_LeftNav_Section2_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -13281,12 +13276,8 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <value>2. Branch Location</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_LeftNav_Section3</fullName>
-        <categories>ISSP, AMS</categories>
-=======
         <fullName>ISSP_AMC_DATE_ISSUE</fullName>
         <categories>Page Labels</categories>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_DATE_ISSUE</shortDescription>
@@ -13330,7 +13321,6 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <value>Application for Approval of an IATA Designator Code</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_LeftNav_Section3_PASS_Branch</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -13338,11 +13328,7 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <value>3. Contacts</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_LeftNav_Section4</fullName>
-        <categories>ISSP, AMS</categories>
-=======
         <fullName>ISSP_AMC_DOWNLOAD</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMC DOWNLOAD</shortDescription>
@@ -13592,7 +13578,6 @@ which states &quot;XXX airline has granted authority to XXX freight forwarder to
         <value>IATA Codes are an integral part of the travel industry and essential for the identification of an airline, its destinations and its traffic documents. They are also fundamental to the smooth running of hundreds of electronic applications which have been built around these coding systems for passenger and cargo traffic purposes.</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Local_Details_Please_Enter_PASS</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -13601,18 +13586,13 @@ which states &quot;XXX airline has granted authority to XXX freight forwarder to
         <value>Please enter the Legal Name and Physical &amp; Correspondence address in your local language.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Local_Details_Title</fullName>
-        <categories>ISSP, Portal, AMS</categories>
-=======
         <fullName>ISSP_AMC_IATA_CODE_VALIDATION</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_IATA_CODE_VALIDATION</shortDescription>
         <value>Invalid code format!</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Local_Details_Title_PASS_BRANCH</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -13621,11 +13601,8 @@ which states &quot;XXX airline has granted authority to XXX freight forwarder to
         <value>Details in Local language</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_MSO_Alternatively</fullName>
-=======
         <fullName>ISSP_AMC_ICAO_CODE</fullName>
         <categories>Page Labels</categories>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_ICAO_CODE</shortDescription>
@@ -14706,7 +14683,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Upload signed confirmation in letterhead from an airline holding a valid IATA Code that the CRS is providing services to the airline</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_NoC_No_Company_Owners_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -14715,10 +14691,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>There are no companies listed as current owners of your company.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_NoC_Non_IATA_Owner_Estimates</fullName>
-=======
         <fullName>ISSP_AMC_TELEPHONE_NUMBER</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_TELEPHONE_NUMBER</shortDescription>
@@ -15173,7 +15146,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Type of Agency</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_No_Pending_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -15182,11 +15154,8 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>You don&apos;t have any pending PASS applications.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_No_Requirements</fullName>
-=======
         <fullName>ISSP_AMS_Apply_New_Associate_Entity</fullName>
         <categories>ISSP, AMS</categories>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Apply_New_Associate_Entity</shortDescription>
@@ -15371,7 +15340,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>SECTION 3 - Other Info</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_OPTION_PAX_PASS_BRANCH</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -15388,11 +15356,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>PASS Agent – New Head Office</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_OPTION_PAX_SA</fullName>
-        <categories>ISSP,AMS</categories>
-=======
         <fullName>ISSP_AMS_CGO_BR_ReadOnly_Head_Office_have_access</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_CGO_BR_ReadOnly_Head_Office_have_access</shortDescription>
@@ -15563,10 +15527,7 @@ Enter the names and titles for the directors or officers of a corporation, and t
 Select at least one Authorised Signatory and PASS Contact, and choose the and Portal Administrator.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_PAX_Company</fullName>
-=======
         <fullName>ISSP_AMS_CGO_BR_ReadOnly_SECTION4</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_CGO_BR_ReadOnly_SECTION4</shortDescription>
@@ -15797,7 +15758,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Far East</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_STEP_3_1_Title_PASS_BRANCH</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -15806,11 +15766,7 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>SECTION 1 - Head Office Details</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_STEP_3_2_Title</fullName>
-        <categories>ISSP, AMS</categories>
-=======
         <fullName>ISSP_AMS_CGO_Region_MiddleEast</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_CGO_Region_MiddleEast</shortDescription>
@@ -15824,7 +15780,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>South America</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_STEP_3_2_Title_PASS_BRANCH</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -15833,11 +15788,7 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>SECTION 2 - Identification of Branch Location</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Sales_Instructions</fullName>
-        <categories>ISSP, AMS</categories>
-=======
         <fullName>ISSP_AMS_CGO_Region_USA</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_CGO_Region_USA</shortDescription>
@@ -15998,7 +15949,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>identified in SECTION 2 to make these statements and file this document.</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Step0_Intro_Accred_PASS</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -16006,11 +15956,7 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Please note that online applications must be submitted by an Authorised Signatory of the Company.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step0_Intro_CNS</fullName>
-        <categories>ISSP, AMS</categories>
-=======
         <fullName>ISSP_AMS_CGO_T_Cs_TXT3</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_CGO_T_Cs_TXT3</shortDescription>
@@ -16024,7 +15970,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>The undersigned applies for inclusion on the official IATA Cargo Agency List for</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Step0_Intro_PASS</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -16032,11 +15977,7 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Welcome to the online IATA PASS application.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step0_Minor_Changes</fullName>
-        <categories>ISSP, AMS</categories>
-=======
         <fullName>ISSP_AMS_CGO_T_Cs_TXT4_New</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_CGO_T_Cs_TXT4 New</shortDescription>
@@ -16130,7 +16071,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>capacity</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Step0_SAA_PASS</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -16138,11 +16078,7 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>IATA Postal Accounts Settlement System</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step0_Specific_Sales_Activity</fullName>
-        <categories>ISSP, AMS</categories>
-=======
         <fullName>ISSP_AMS_Cargo_Branch_Form_Group_Title_Address</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_Group_Title_Address</shortDescription>
@@ -16254,7 +16190,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Select at least one Authorised Signatory and one CASS Contact.</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Step1_ProgressBar_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -16263,11 +16198,7 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>A. Review Country Requirements</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step1_Separate_Application</fullName>
-        <categories>ISSP, AMS</categories>
-=======
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_New</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION3_New</shortDescription>
@@ -16295,7 +16226,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>he Head Office will also have access in CASSlink to this branch:</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Step1_Title_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -16304,11 +16234,7 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Application for Approval as an IATA Passenger/Cargo Sales Agent/PASS Participant</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step1_Two_Weeks_Expiry</fullName>
-        <categories>ISSP, AMS</categories>
-=======
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION4_Q3</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION4_Q3</shortDescription>
@@ -16322,7 +16248,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>The Head Office</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Step2_Check_List_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -16331,11 +16256,7 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Check List</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step2_Instructions</fullName>
-        <categories>ISSP, AMS</categories>
-=======
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION4_Q3_TXT2</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION4_Q3_TXT2</shortDescription>
@@ -16356,7 +16277,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>(please indicate code)</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Step2_ProgressBar_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -16365,10 +16285,7 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>B. Complete Application Form</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step3_3_1_Title</fullName>
-=======
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION4_Q4</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION4_Q4</shortDescription>
@@ -16512,7 +16429,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>SECTION 3 - Other Info</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Step3_4_Companies_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -16521,10 +16437,7 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>If your company is fully- or partially-owned by one or more companies, please enter the details here (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step3_4_Companies_SubTitle</fullName>
-=======
         <fullName>ISSP_AMS_Cargo_Cass_SECTION_3_Q1</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>shortDescription</shortDescription>
@@ -17224,7 +17137,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Facilities</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Step3_ProgressBar_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -17233,12 +17145,8 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>C. Upload Files</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step3_Save_Anytime</fullName>
-        <categories>ISSP, AMS</categories>
-=======
         <fullName>ISSP_AMS_Facilities_Facility_Name</fullName>
         <categories>ISSP, AMs</categories>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Facilities_Facility_Name</shortDescription>
@@ -17261,7 +17169,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Facility Type</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Step4_ProgressBar_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -17270,10 +17177,7 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>D. Submit to IATA</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step4_Upload_Continue</fullName>
-=======
         <fullName>ISSP_AMS_File_Upload_Issue</fullName>
->>>>>>> master
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
@@ -17465,7 +17369,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Please select if the Associate Entity is a separate Legal Entity.</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_StepsAll_PASS_Participant_Title</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -17474,11 +17377,8 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Application for approval as a PASS Participant</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_StepsAll_Passenger_Title</fullName>
-=======
         <fullName>ISSP_AMS_If_Approved_Gross_Amnt</fullName>
         <categories>ISSP, AMS</categories>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS If Approved Gross Amnt</shortDescription>
@@ -17523,7 +17423,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Invalid IATAN Code: Please enter a valid code</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_TC_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -17532,10 +17431,7 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>I hereby certify that the foregoing statements, including statements made in any attachments hereto, are true and correct to the best of my knowledge and belief, and that I am authorized by the firm identified in Section 1 to make these statements and file this document.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_T_Cs1</fullName>
-=======
         <fullName>ISSP_AMS_Invalid_IATA_Code</fullName>
->>>>>>> master
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
@@ -17579,7 +17475,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>JUMP TO:</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Trade_Reg_Number_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -17588,11 +17483,7 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Trade Registration Number</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Trained_Staff_Name</fullName>
-        <categories>ISSP, AMs</categories>
-=======
         <fullName>ISSP_AMS_LABEL_Listed_Shares</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS LABEL Listed Shares</shortDescription>
@@ -17631,7 +17522,6 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Government Owned Enterprise</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Update_Agency_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -17640,12 +17530,8 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Update details</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Update_HO_details</fullName>
-        <categories>ISSP, AMS</categories>
-=======
         <fullName>ISSP_AMS_LS_Limited_Company</fullName>
         <categories>ISSP, Portal, AMS</categories>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS LS Limited Company</shortDescription>
@@ -19419,7 +19305,6 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>A. Select Type of Change</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AP_PASS_Form_Administrators_Recommendation</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -19427,12 +19312,8 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Recommendation:  Each Airline should have one or two Administrators.  The Administrator in each Airline/GSSA is responsible for creating, updating, assigning permissions and deleting Users for the purpose of manaing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the Airlines.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AP_Partnership_Download_PDF</fullName>
-        <categories>ISSP AP</categories>
-=======
         <fullName>ISSP_AMS_NoC_StepB_message</fullName>
         <categories>ISSP AMS NoC</categories>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_StepB_message</shortDescription>
@@ -23516,7 +23397,6 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Risk Event Status</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_Loading_PASS_Details</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -23525,12 +23405,8 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Loading Freight Forwarder details...</value>
     </labels>
     <labels>
-        <fullName>ISSP_Loading_Travel_Agency_Details</fullName>
-        <categories>ISSP, AMS</categories>
-=======
         <fullName>ISSP_ANG_STATUS_APPROVED</fullName>
         <categories>ISSP,ANG</categories>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Approved</shortDescription>
@@ -24563,7 +24439,6 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Cargo Agent</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -24580,10 +24455,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>PASS</value>
     </labels>
     <labels>
-        <fullName>ISSP_PAX_Validating_VAT_Number</fullName>
-=======
         <fullName>ISSP_Cargo_Agent_New</fullName>
->>>>>>> master
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
@@ -25948,7 +25820,6 @@ Please add below all your company valid email domains, including different ones 
         <value>New BSP/CASS Payment Contact</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_Requirements_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -25957,12 +25828,8 @@ Please add below all your company valid email domains, including different ones 
         <value>Requirements</value>
     </labels>
     <labels>
-        <fullName>ISSP_Reset_Password</fullName>
-        <categories>Portal</categories>
-=======
         <fullName>ISSP_Email_CNS_Portal</fullName>
         <categories>ISSP, Email</categories>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_CNS_Portal</shortDescription>
