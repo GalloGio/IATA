@@ -6827,6 +6827,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <valueName>Agency Holding Company</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Education</controllingFieldValue>
+                <valueName>Education</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Holding Company</controllingFieldValue>
                 <valueName>Airline Holding Company</valueName>
             </valueSettings>
@@ -65128,10 +65132,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other Private Sector Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Park</fullName>
                 <default>false</default>
             </values>
             <values>
