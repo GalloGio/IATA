@@ -6,7 +6,7 @@
     <fields>
         <fullName>Number_Of_Occurrences__c</fullName>
         <externalId>false</externalId>
-        <label>Number Of Occurrences</label>
+        <label>Funds Received Number Of Occurrences</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
@@ -14,6 +14,17 @@
         <type>Number</type>
         <unique>false</unique>
     </fields>
-    <label>BSP Accumulation Occurrences</label>
+    <fields>
+        <fullName>Reported_Sales_Number_Of_Occurrences__c</fullName>
+        <externalId>false</externalId>
+        <label>Reported Sales Number Of Occurrences</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>SIDRA BSP Accumulation Occurrences</label>
     <visibility>Public</visibility>
 </CustomObject>

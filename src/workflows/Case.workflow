@@ -13684,7 +13684,8 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
 		RecordType.DeveloperName = &apos;SIDRA&apos;,  
 		OR(
 			AND(ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;), Short_Payment_Amount_USD__c &gt; 50),
-			AND(ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;), Short_Payment_Amount_USD__c &gt; 1000)
+			AND(ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;), Short_Payment_Amount_USD__c &gt; 50, Settlement_Model__c = &quot;Funds Received&quot;),
+			AND(ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;), Short_Payment_Amount_USD__c &gt; 1000, Settlement_Model__c = &quot;Reported Sales&quot;)
 		),  
 		NOT(ISPICKVAL( IRR_Withdrawal_Reason__c , &quot;IATA Charges&quot;)),   
 		OR(
@@ -13723,7 +13724,8 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
 		Short_Payment_Amount_USD__c &gt; 1,   
 		OR(
 			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50, ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;)),
-			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 1000, ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;))
+			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50, ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),  Settlement_Model__c = &quot;Funds Received&quot;), 
+			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 1000, ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;), Settlement_Model__c = &quot;Reported Sales&quot;)  
 			)   		
 		
 		)</formula>

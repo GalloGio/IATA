@@ -10,6 +10,21 @@ public class trgSidraCaseBeforeInsertUpdate_Test {
         integer c = 0;
         ID SidraPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 
+        AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
+            Name = 'BSP-SG',
+            RecordTypeId = AMS_Utils.RECTYPE_BSP,
+            Settlement_Model__c = 'Funds Received'
+        );
+
+        insert bspSG;
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
+                                    IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
+                                    IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' ,
+                                    Enable_Minor_Changes_from_Portal__c = true, AMS_Settlement_System__c = bspSG.id,
+                                    Local_language_Agency_details_required__c = true);
+        insert country;
+
         Account account1 = new Account(IATACode__c = '1234567');    // 7 digits
         account1.Name = 'Test account';
         account1.BillingCity = 'Montreal';
@@ -17,6 +32,7 @@ public class trgSidraCaseBeforeInsertUpdate_Test {
         account1.BillingStreet = 'some street';
         account1.Type = 'IATA Passenger Sales Agent';
         account1.Location_Type__c = 'HO';
+        account1.IATA_ISO_Country__c = country.id;
         insert account1;
 
 

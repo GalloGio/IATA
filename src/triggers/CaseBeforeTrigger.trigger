@@ -1787,7 +1787,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     }
                     if(CaseOccurrencesGoliveDate__c.getInstance().Go_Live_Date__c != null){
                         if(Date.today() > CaseOccurrencesGoliveDate__c.getInstance().Go_Live_Date__c){
-                            if(mCase.BSP_CASS__c == 'BSP' && BSPAccumulationOccurrences__c.getInstance().Number_Of_Occurrences__c != null){
+                            if(mCase.Settlement_Model__c == 'Reported Sales' && mCase.BSP_CASS__c == 'BSP' && BSPAccumulationOccurrences__c.getInstance().Reported_Sales_Number_Of_Occurrences__c != null){
+                                selectedNumberForCassOrBSP = BSPAccumulationOccurrences__c.getInstance().Reported_Sales_Number_Of_Occurrences__c;
+                            }else if(mCase.Settlement_Model__c == 'Funds Received' && mCase.BSP_CASS__c == 'BSP' && BSPAccumulationOccurrences__c.getInstance().Number_Of_Occurrences__c != null){
+                                selectedNumberForCassOrBSP = BSPAccumulationOccurrences__c.getInstance().Number_Of_Occurrences__c;
+                            }else if(mCase.BSP_CASS__c == 'BSP' && BSPAccumulationOccurrences__c.getInstance().Number_Of_Occurrences__c != null){
                                 selectedNumberForCassOrBSP = BSPAccumulationOccurrences__c.getInstance().Number_Of_Occurrences__c;
                             }
                         }

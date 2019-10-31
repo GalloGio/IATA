@@ -12,6 +12,6 @@
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
-    <label>Case 3 Occurrences Go live Date</label>
+    <label>SIDRA Case 3 Occurrences Go live Date</label>
     <visibility>Public</visibility>
 </CustomObject>
