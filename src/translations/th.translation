@@ -1789,6 +1789,10 @@
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Airline_Changes_Access --></label>
+        <name>CSP_Airline_Changes_Access</name>
+    </customLabels>
+    <customLabels>
         <label>การประกาศ</label>
         <name>CSP_Announcement</name>
     </customLabels>
@@ -1807,6 +1811,10 @@
     <customLabels>
         <label>การค้นหาขั้นสูง</label>
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_CaseDetails_Title --></label>
+        <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
         <label>ข้อมูลบริษัท</label>
@@ -1839,6 +1847,10 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrump_You_IATA --></label>
+        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>ยกเลิก</label>
@@ -1897,6 +1909,10 @@
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_CompanyAdministration_Link --></label>
+        <name>CSP_CompanyAdministration_Link</name>
+    </customLabels>
+    <customLabels>
         <label>ดูคำร้องของบริษัทของฉัน</label>
         <name>CSP_CompanyCases</name>
     </customLabels>
@@ -1923,6 +1939,10 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_CreatedOn --></label>
+        <name>CSP_CreatedOn</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_DateFrom --></label>
@@ -2045,12 +2065,20 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_LastUpdate --></label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>ออกจากระบบ</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
         <label>คุณสามารถจัดการผู้ใช้ จากรายการด้านล่างนี้</label>
         <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Manage_Recipients --></label>
+        <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
         <label>จัดการบริการ</label>
@@ -2183,6 +2211,10 @@
     <customLabels>
         <label>คำร้องที่อยู่ระหว่างการดำเนินการ</label>
         <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Details Details page --></label>
+        <name>CSP_Recipients</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
@@ -2421,6 +2453,14 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Access --></label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Request --></label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
         <label>ประเภทของคำร้อง</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
@@ -2459,6 +2499,18 @@
     <customLabels>
         <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_YouAndIATA --></label>
+        <name>CSP_YouAndIATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_YouIATA_Highlights --></label>
+        <name>CSP_YouIATA_Highlights</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_YouIATA_Highlights_Text --></label>
+        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -20396,6 +20448,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
+        <label><!-- Case Details Details page --></label>
+        <name>csp_AdditionalDetails</name>
+    </customLabels>
+    <customLabels>
         <label>บริษัทตัวแทนอ่านอย่างเดียว</label>
         <name>csp_AgencyReadOnly</name>
     </customLabels>
@@ -20682,6 +20738,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>บริการช่วยเหลือ</label>
         <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Details Details page --></label>
+        <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>
         <label>&quot;ริษัทตัวแทนของคุณยังไม่ได้เปิดบัญชี IATA EasyPay ในขณะนี้&lt;br/&gt;&lt;br/&gt;โปรดติดต่อผู้มีอำนาจลงนามผูกพันบริษัทสำนักงาน ใหญ่ของคุณ เพื่อขอให้ทางหน่วยงานเปิดบัญชี IATA EasyPay ในฐานะผู้ดูแลระบบพอร์ทัล คุณสามารถอัปเดต &lt;a href=&quot;&quot;/my-profile&quot;&quot;&gt;ข้อมูลส่วนตัว&lt;/a&gt;ของคุณ เพื่อกำหนดให้ตัวคุณเองเป็นผู้มีอำนาจลงนามผูกพัน ตามกฎหมาย หรือมอบหมายผู้ดูแลระบบพอร์ทัลที่ เหมาะสมจากหน้า &lt;a href=&quot;&quot;/company-profile&quot;&quot;&gt;การจัดการของ บริษัท -&gt; ผู้ติดต่อ&lt;/a&gt; และขอให้พวกเขาเปิดบัญชี EasyPay ของคุณ โปรด&lt;a href=&quot;&quot;/Support-Reach-Us&quot;&quot;&gt;ติดต่อฝ่ายบริการช่วยเหลือ&lt;/a&gt; หากคุณต้องการความช่วยเหลือ&quot;</label>

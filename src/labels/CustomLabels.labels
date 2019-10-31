@@ -3133,13 +3133,13 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Add_User</shortDescription>
         <value>Add User</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_Airline_Changes_Access</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Airline_Changes_Access</shortDescription>
-        <value>You can submit your account details changes through the &lt;a href= "/s/support-reach-us"&gt;Reach Us Page&lt;/a&gt;</value>
-	</labels>
+        <value>You can submit your account details changes through the &lt;a href= &quot;/s/support-reach-us&quot;&gt;Reach Us Page&lt;/a&gt;</value>
+    </labels>
     <labels>
         <fullName>CSP_Announcement</fullName>
         <language>en_US</language>
@@ -3250,7 +3250,7 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Breadcrump_MyProfile_Title</shortDescription>
         <value>User Profile</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_Breadcrump_You_IATA</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3362,13 +3362,13 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Community</shortDescription>
         <value>Community</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_CompanyAdministration_Link</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_CompanyAdministration_Link</shortDescription>
         <value>You can submit your account details changes through the IATA Accreditation and Changes service.</value>
-	</labels>
+    </labels>
     <labels>
         <fullName>CSP_CompanyCases</fullName>
         <language>en_US</language>
@@ -3646,14 +3646,6 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Home_WelcomeTitle</shortDescription>
         <value>Welcome [username]</value>
     </labels>
-	<labels>
-        <fullName>CSP_LastUpdate</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_LastUpdate</shortDescription>
-        <value>Last Update</value>
-    </labels>
     <labels>
         <fullName>CSP_IATA_Country</fullName>
         <language>en_US</language>
@@ -3667,6 +3659,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_IMPORTANT</shortDescription>
         <value>IMPORTANT</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LastUpdate</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LastUpdate</shortDescription>
+        <value>Last Update</value>
     </labels>
     <labels>
         <fullName>CSP_LogOut</fullName>
@@ -3683,7 +3683,7 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Manage_Portal_Users</shortDescription>
         <value>You can manage the users from the list below.</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_Manage_Recipients</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4416,20 +4416,20 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Title</shortDescription>
         <value>Title</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_Travel_Agent_Accreditation_Changes_Access</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Travel_Agent_Accreditation_Changes_Access</shortDescription>
         <value>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Click here to directly access the IATA Accreditation and Changes&lt;/a&gt;</value>
-	</labels>
-	<labels>
+    </labels>
+    <labels>
         <fullName>CSP_Travel_Agent_Accreditation_Changes_Request</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Travel_Agent_Accreditation_Changes_Request</shortDescription>
         <value>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt;Click here to request the IATA Accreditation and Changes&lt;/a&gt;</value>
-	</labels>
+    </labels>
     <labels>
         <fullName>CSP_TypeOfCase</fullName>
         <categories>CS Portal</categories>
@@ -4445,27 +4445,6 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_User</shortDescription>
         <value>User</value>
-    </labels>
-	<labels>
-        <fullName>CSP_YouAndIATA</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_YouAndIATA</shortDescription>
-        <value>You &amp; IATA</value>
-    </labels>
-	<labels>
-        <fullName>CSP_YouIATA_Highlights</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_YouIATA_Highlights</shortDescription>
-        <value>Selected Highlights For You</value>
-    </labels>
-    <labels>
-        <fullName>CSP_YouIATA_Highlights_Text</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_YouIATA_Highlights_Text</shortDescription>
-        <value>Here you can discover a wide variety of IATA services, publications, products, and resources on aviation industry. Specially tailored after your interests and activity history.</value>
     </labels>
     <labels>
         <fullName>CSP_Welcome_Panel_Bullet_1_Desc</fullName>
@@ -4530,6 +4509,27 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Welcome_Panel_Bullet_4_Title</shortDescription>
         <value>Get answers</value>
+    </labels>
+    <labels>
+        <fullName>CSP_YouAndIATA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_YouAndIATA</shortDescription>
+        <value>You &amp; IATA</value>
+    </labels>
+    <labels>
+        <fullName>CSP_YouIATA_Highlights</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_YouIATA_Highlights</shortDescription>
+        <value>Selected Highlights For You</value>
+    </labels>
+    <labels>
+        <fullName>CSP_YouIATA_Highlights_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_YouIATA_Highlights_Text</shortDescription>
+        <value>Here you can discover a wide variety of IATA services, publications, products, and resources on aviation industry. Specially tailored after your interests and activity history.</value>
     </labels>
     <labels>
         <fullName>CSP_You_Dont_Have_Announcements</fullName>
@@ -38906,7 +38906,7 @@ title,Title,Name</value>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Complete the form to see the recommended support options</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>csp_AdditionalDetails</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -39856,7 +39856,7 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Select the topic covering the problem.</value>
-    </labels>    
+    </labels>
     <labels>
         <fullName>days_left</fullName>
         <language>en_US</language>
