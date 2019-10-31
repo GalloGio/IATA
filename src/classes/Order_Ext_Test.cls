@@ -69,51 +69,6 @@ private class Order_Ext_Test
         insert sfPortalUsers;
 	} //*** end of "generateAccountsContacts"
 
-	private static void generateProducts()
-	{
-		//-- Products 
-        List<Product2> products = TestDataGenerator.generateProducts(3,false);
-		List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
-		List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();
-		List<PricebookEntry> lst_pbe = new List<PricebookEntry>();
-
-		for(Integer x = 0; x < products.size(); x++)
-		{
-			Product2 prod = products[x]; 
-			zRatePlans.addAll(TestDataGenerator.generateZRatePlans2(prod.Id,1,false)); //1 rate plan per product
-			prod.SAP_Status_Code__c = 'A';
-			prod.Post_to_Ecommerce_Date__c = System.today().addDays(-7);
-		}
-
-		insert zRatePlans;
-
-		//Create Unit Price Charge & Discount for each Plan 
-		for(zqu__ProductRatePlan__c rp : zRatePlans)
-		{
-			//Unit Price & Discount
-			List<zqu__ProductRatePlanCharge__c> charges = TestDataGenerator.generateZCharges(rp.Id, 2, false);
-			charges[0].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_PER_UNIT;
-			charges[1].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT;
-			zCharges.addAll(charges);
-		}
-
-		insert zCharges;
-		insert products;
-
-		//-- Create PriceBookEntries for each product 		
-		for(Product2 p : products)
-		{
-			lst_pbe.add(new PricebookEntry(
-				Pricebook2Id = Test.getStandardPricebookId(),
-				Product2Id = p.Id,
-				UnitPrice = 20
-			));
-		}
-		insert lst_pbe;
-
-	}
-
-
 	static testMethod void test_Order_Header()
 	{
         //-- Generate Test Data 
@@ -131,16 +86,6 @@ private class Order_Ext_Test
         soldToLocation.VAT_Number__c = 'FR92384753760';
         update soldToLocation;
 
-        //Location__c soldToLocationAcc1 = TestDataGenerator.generateLocations(IECConstants.SOLDTO, lstAddresses[0].Id, accounts[0].Id, null);
-        //soldToLocationAcc1.VAT_Number__c = 'FR61420495178';
-        //update soldToLocationAcc1;
-
-        //Create billTo Location
-        //Location__c billToLocation = TestDataGenerator.generateLocations(IECConstants.BILLTO, lstAddresses[1].Id, accounts[1].Id, sfContacts[0].Id);
-
-        //Create ShipTo Location
-        //Location__c shipToLocation = TestDataGenerator.generateLocations(IECConstants.SHIPTO, lstAddresses[2].Id, accounts[1].Id, sfContacts[1].Id);
-
         //*** create new order
         Test.setCurrentPageReference(new PageReference('/apex/Order?retURL=' + Order.SObjectType.getDescribe().getKeyPrefix() + '&save_new=1&contactID=' + sfContacts[0].Id));
         ext = new Order_Ext(new ApexPages.StandardController(new Order()));
@@ -153,12 +98,6 @@ Test.startTest();
         Contact oContact = [select BillTo_Location__c, BillTo_Location__r.Address__c, ShipTo_Location__c, ShipTo_Location__r.Address__c from Contact where Id = :sfContacts[0].Id limit 1];
         system.assertEquals(ext.vfOrder.BillTo_Location__c, oContact.BillTo_Location__c);
         system.assertEquals(ext.vfOrder.ShipTo_Location__c, oContact.ShipTo_Location__c);
-
-        //set the contact default location
-        //Contact contact = sfContacts[0];
-        //contact.BillTo_Location__c = billToLocation.Id;
-        //contact.ShipTo_Location__c = shipToLocation.Id;
-        //update contact;
 
         //Set the BillTo Contact
         ext.vfOrder.BillTo_Location__c = null;

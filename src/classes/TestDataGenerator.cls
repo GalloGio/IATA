@@ -248,18 +248,6 @@ public with sharing class TestDataGenerator
         return results;
     }
 
-    public static map<Id,Zuora.zApi.SubscribeResult> subcribeResult(Id orderId){
-        map<Id,Zuora.zApi.SubscribeResult> orderId_ZuoraResp = new map<Id,Zuora.zApi.SubscribeResult>();
-        Zuora.zApi.SubscribeResult res = new Zuora.zApi.SubscribeResult();
-        res.Success = true;
-        res.InvoiceId = '2c92c0f950a292810150c3ab92326a69';
-        res.SubscriptionId = '2c92c0f950a292810150c3ab85f66a59';
-        res.InvoiceNumber = 'INV00001453';
-        res.AccountId = '4028e6992e836e4a012e914e1ddf5a2a';
-        orderId_ZuoraResp.put(orderId,res);
-        return orderId_ZuoraResp;
-    }
-
     /****************************************************************************************************
         Created by CGI, Kevin Ky 2015-11-06
             Generate zoura Invoice
@@ -314,21 +302,6 @@ public with sharing class TestDataGenerator
         }
         return lstSaveResult;
     }
-
-    public static List<Zuora.zApi.SaveResult> generatePaymentResultsWithError(){
-        Zuora.zApi.SaveResult sr = new Zuora.zApi.SaveResult();
-        sr.Success = false;
-        sr.Id = '2c92c0f850dca6710150dea56af04813';
-        sr.Errors = new List<Zuora.zObject>();
-        Zuora.zObject error = new Zuora.zObject('Error');
-        error.setValue('Code', 'Invalid card');
-        error.setValue('Field', 'ReferenceId');
-        error.setValue('Message', 'Invalid credit card');
-        sr.Errors.add(error);
-
-        return new List<Zuora.zApi.SaveResult>{sr};
-    }
-
 
     /****************************************************************************************************
         Created by CGI, Kevin Ky 2015-11-06
@@ -1268,15 +1241,6 @@ public with sharing class TestDataGenerator
         generateSAPSettings();
     } //*** end of "generateApexSetting"
 
-    public static String shippedTemplate(){
-        EmailTemplate e = new EmailTemplate (
-            developerName = 'test', FolderId = 'Give Id Of Email Folder', TemplateType= 'visualforce', Name = 'Product shipped',
-            Markup = '<messaging:emailTemplate subject="Your Item for order {!relatedTo.Order.Name} as been shipped" recipientType="Contact" relatedToType="OrderItem"> <messaging:htmlEmailBody > <html> <body> <c:ProductShippedNotificationContent orderItem="{!relatedTo.Id}" /> </body> </html> </messaging:htmlEmailBody> </messaging:emailTemplate>'
-        ); 
-        insert e;
-        return e.Id;
-    }
-
     public static void generateTemplateSettings()
     {
         EmailTemplate tpl = generateTemplate(1,true)[0];
@@ -1324,42 +1288,6 @@ public with sharing class TestDataGenerator
         insert listCS;
     }//*** end of "generateUtilitySetting"
 
-
-    /****************************************************************************************************
-        Created by CGI, David D 2015-09-08
-            Generate EComProduct_DTO records
-            @param nb = number of records to generate
-    ****************************************************************************************************/
-    public static List<EComProduct_DTO> generateEcomProducts(Integer nb)
-    {
-        List<EComProduct_DTO> ret = new List<EComProduct_DTO>();
-        for(Integer i=0; i < nb;  i++)
-        {
-            EComProduct_DTO eProd = new EComProduct_DTO();
-            PriceInfo_DTO price  = new PriceInfo_DTO();
-            //price.standardUnitPrice = 90;
-            //price.customerUnitPrice = 80;
-            //price.customerAmountDiscount = 5;
-
-
-            eProd.ProductId = 'product-'+i;
-            eProd.ProductName = 'Product '+i;
-            eProd.ProductNumber = TestDataGenerator.generateProductCode();
-            eProd.ProductCategory = Utility.getRandomPicklistValue('Product2','Family');
-            eProd.Media = Utility.getRandomPicklistValue('Product2','Media__c');
-            eProd.Language = Utility.getRandomPicklistValue('Product2','Language__c');
-            eProd.EffectiveFrom = TestDataGenerator.DEFAULT_EFFECTIVE_START_DATE;
-            eProd.EffectiveTo = TestDataGenerator.DEFAULT_EFFECTIVE_END_DATE;
-            eProd.PriceInfo = price;
-            eProd.OrderQuantity = 1;
-            eProd.displayPrice = true;
-
-            ret.add(eProd);
-        }
-
-        return ret;
-    }
-    
     /****************************************************************************************************
         Created by CGI, Kevin ky 2015-09-23
             Generate Order
@@ -1519,18 +1447,6 @@ public with sharing class TestDataGenerator
         insert ret; 
 
         return ret;
-    }
-
-    public static Cookie addProductsInCookie(map<String,Decimal> productCode_Qty){
-        String cookieValue = '';
-        for(String prodCode : productCode_Qty.keySet()){
-            Decimal qty = productCode_Qty.get(prodCode);
-            cookieValue += (cookieValue == '') ? prodCode + '_' + qty : '#' + prodCode + '_' + qty;
-        }
-        Cookie cookie = new Cookie('IECOrders_1', cookieValue, null, Utility.getIntegerSetting('IEC Order Cookie maxAge'), false);
-        ApexPages.currentPage().setCookies(new Cookie[]{cookie});
-        
-        return cookie;
     }
 
     public static List<PriceInfo_DTO> generatePriceInfo(Integer nb)
@@ -1743,15 +1659,4 @@ public with sharing class TestDataGenerator
 
         return eventRelease;
     }
-
-
-    public static void generateCustomSettingDisableRecaptcha(){
-
-        UtilityCS__c disableRecaptcha = new UtilityCS__c(Name ='DisableRecaptcha', Value__c = 'false');
-
-        insert disableRecaptcha;
-
-    }
-
-
 }
