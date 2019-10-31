@@ -733,7 +733,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.showConfirmPopup = false;
                     this.resetComponent();
                 }).catch(error=>{
-					this.showSpinner = false;
+                    this.showSpinner = false;
                     this.showConfirmPopup = false;
                 });
                 break;
@@ -746,7 +746,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.showConfirmPopup = false;
                     this.resetComponent();
                 }).catch(error => {
-					this.showSpinner = false;
+                    this.showSpinner = false;
                     this.showConfirmPopup = false;
                 });
                 break;

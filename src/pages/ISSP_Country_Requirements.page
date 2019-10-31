@@ -97,12 +97,12 @@
                             							</div>
                             							<div id="contactUs">
                               								Can't find what you need?<br />
-                          									<a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1">
+                          									<a href="{!path}support-reach-us">
                               									Contact Us
                           									</a>
                               								<br /><br />
                           									Located in the United States?<br />
-                              								Please Contact Us <a href="http://www.iatan.org/Pages/default.aspx">here</a>
+                              								Please Contact Us <a href="http://www.iatan.org/" target="_blank">here</a>
                               								<p />
                             							</div>
                           							</apex:pageblock>

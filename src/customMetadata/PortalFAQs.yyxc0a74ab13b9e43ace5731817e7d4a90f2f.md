@@ -79,6 +79,10 @@
         <value xsi:type="xsd:string">Cargo</value>
     </values>
     <values>
+        <field>DataCategoryVisibility__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:type="xsd:string">General_Information_IATA_Publications</value>
     </values>
@@ -104,7 +108,7 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:double">1.0</value>
     </values>
     <values>
         <field>Permission_Set_Name__c</field>
