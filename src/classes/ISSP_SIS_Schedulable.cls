@@ -24,6 +24,9 @@ public class ISSP_SIS_Schedulable implements Schedulable {
         else if(methodName == 'invokeUpdateAccount'){
             ISSP_WS_Utilities.invokeUpdateAccount(listRecordId);
         }
+        else if(methodName == 'invokeGiveSISAppToAccountUsers'){
+            ISSP_WS_Utilities.invokeGiveSISAppToAccountUsers(listRecordId);
+        }
         System.abortJob(sc.getTriggerId());
     }
 
