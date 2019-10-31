@@ -100350,7 +100350,8 @@ ISCHANGED(Account_Type__c),
 ISCHANGED(Website)
 ),
 NOT(CONTAINS($Profile.Name, &quot;System Administrator - automated processes&quot;)),
-NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
+NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;MER Membership&quot;))
 )</errorConditionFormula>
         <errorMessage>For accounts with record type AL HQ, only the Account Management Team can update the content of the following fields: Account Type and Website</errorMessage>
     </validationRules>
