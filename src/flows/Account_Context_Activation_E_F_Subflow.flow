@@ -117,8 +117,8 @@
     <assignments>
         <name>AddErrorMsgNoContact</name>
         <label>AddErrorMsgNoContact</label>
-        <locationX>700</locationX>
-        <locationY>577</locationY>
+        <locationX>709</locationX>
+        <locationY>569</locationY>
         <assignmentItems>
             <assignToReference>VerificationErrorMessage</assignToReference>
             <operator>Add</operator>
@@ -127,7 +127,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_E_F_Contact_Role</targetReference>
+            <targetReference>Account_Role_exists</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -275,6 +275,31 @@
                 <targetReference>AddErrorMsgAccountRole</targetReference>
             </connector>
             <label>Account role uncreated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Account_Role_exists</name>
+        <label>Account Role exists ?</label>
+        <locationX>317</locationX>
+        <locationY>571</locationY>
+        <defaultConnector>
+            <targetReference>Get_E_F_Contact_Role</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>no_account_role</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountRole</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AddErrorMsgContactRole</targetReference>
+            </connector>
+            <label>no account role</label>
         </rules>
     </decisions>
     <decisions>
@@ -461,7 +486,7 @@
         <locationX>464</locationX>
         <locationY>514</locationY>
         <defaultConnector>
-            <targetReference>Get_E_F_Contact_Role</targetReference>
+            <targetReference>Account_Role_exists</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -762,8 +787,8 @@
     <recordLookups>
         <name>Get_E_F_Contact_Role</name>
         <label>Get E&amp;F Contact Role</label>
-        <locationX>233</locationX>
-        <locationY>586</locationY>
+        <locationX>237</locationX>
+        <locationY>648</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Contact_role_created</targetReference>
@@ -874,7 +899,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>FlowContinueBackgroundScreen</targetReference>
+            <targetReference>Account_role_has_no_flow_status</targetReference>
         </connector>
         <fields>
             <name>SalesArea</name>
