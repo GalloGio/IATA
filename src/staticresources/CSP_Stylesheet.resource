@@ -260,15 +260,12 @@ body {
 .lightBlueSendButton svg {
     fill:#a5adfd;
 }
-.caseMessagesContainer{
-    height: 350px;
-}
+
 .caseMessagesSelfBubble{
     background-color: #525252;
     color:#FFFFFF;
     border-radius: 1px;
     font-size: 14px;
-    text-align: right;
   	font-weight: normal;
   	font-style: normal;
   	font-stretch: normal;
@@ -343,6 +340,23 @@ body {
 .rightLinkBlueBorder {
     border-right: solid 1px #1e32fa;
 }
+
+.aroundMediumGrayBorder {
+    border: solid 1px #999999;
+    border-radius: 1px;
+}
+.topMediumGrayBorder {
+    border-top: solid 1px #999999;
+}
+.leftMediumGrayBorder {
+    border-left: solid 1px #999999;
+}
+.bottomMediumGrayBorder {
+    border-bottom: solid 1px #999999;
+}
+.rightMediumGrayBorder {
+    border-right: solid 1px #999999;
+}
 /* ############################################## */
 
 
@@ -411,7 +425,7 @@ lightning-datatable .slds-th__action {
 }
 
 .Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
-.Submitted lightning-primitive-cell-wrapper lightning-formatted-text
+.Submitted lightning-primitive-cell-wrapper lightning-formatted-text,
 .Closed span, .AcceptedFutureDate span, .Submitted span {
     background-color: #b1e8b5;
     padding: 4px 6px 2px 6px;
@@ -518,6 +532,7 @@ lightning-datatable .slds-th__action {
   width: 200px;
   word-break: break-word;
   border: none;
+  display: inline-block;
 }
 
 .containedButton, .containedButton button, .containedButton button:active, .containedButton button:visited, .containedButton button:focus {
@@ -538,6 +553,7 @@ lightning-datatable .slds-th__action {
     width: 220px;
     word-break: break-word;
     border: none;
+    display: inline-block;
 }
 .containedButton button:hover {
 	border-radius: 1px;
@@ -620,13 +636,13 @@ lightning-datatable .slds-th__action {
     color: #33f;
     min-height: 40px;
     height: 56px;
-    width: 200px;
+    width: 220px;
     word-break: normal;
 }
 
 .containedButton-size {
     height: 56px;
-    width: 200px;
+    width: 100%;
 }
 
 .filterButton,
@@ -740,6 +756,10 @@ lightning-datatable .slds-th__action {
     color: #000000;
 }
 
+.slds-button__icon_right,
+.slds-button__icon--right {
+    margin-left: 0;
+}
 /* ############################################## */
 /* Text Sizing */
 
@@ -832,6 +852,10 @@ lightning-datatable .slds-th__action {
 
 .text-linkBlue{
     color: #1e32fa;
+}
+
+.text-red{
+    color: #f04632;
 }
 
 .text-transparent{
@@ -1462,7 +1486,8 @@ lightning-datatable .slds-th__action {
     border: none;
 }
 
-.containedButtonWhite button {
+.containedButtonWhite button,
+.containedButtonWhite button:hover {
     background-color: #ffffff;
     transition-duration: 0.4s;
     border-radius: 1px;
@@ -1478,6 +1503,8 @@ lightning-datatable .slds-th__action {
     width: 220px;
     word-break: break-all;
     border: none;
+    display: inline-block;
+    min-height: 40px;
 }
 
 /* Custom picklist Support Reach Us*/
@@ -1784,3 +1811,40 @@ visibility: hidden;
         padding: 4px 6px 2px 0px;
     }
 }
+/* USED TO FADE IN COMPONENTS */
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes fadeInKeyFrame {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+/* Standard syntax */
+@keyframes fadeInKeyFrame {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes fadeOutKeyFrame {
+    from {opacity:1;}
+    to {opacity:0;}
+}
+/* Standard syntax */
+@keyframes fadeOutKeyFrame {
+    from {opacity:1;}
+    to {opacity:0;}
+}
+/* if you want to fade in, use just this class */
+.fadeInCss{
+    -webkit-animation-name: fadeInKeyFrame; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.3s; /* Safari 4.0 - 8.0 */
+    animation-name: fadeInKeyFrame;
+    animation-duration: 0.3s;
+}
+/* if you want to fade out, use just this class */
+.fadeOutCss{
+    -webkit-animation-name: fadeOutKeyFrame; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.3s; /* Safari 4.0 - 8.0 */
+    animation-name: fadeOutKeyFrame;
+    animation-duration: 0.3s;
+}
+/*#################################*/

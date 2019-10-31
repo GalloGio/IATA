@@ -1,0 +1,33 @@
+<template>
+
+    <div if:false={branchesLoading} class="fadeInCss">
+        <div class="slds-grid slds-wrap slds-p-top_medium slds-m-bottom_medium slds-size_1-of-3">
+            <div class="slds-p-top_xx-large bottomLightGrayBorder searchContainer">
+                <img src={searchColored} height="24" width="24" />
+                <lightning-input name="branch-search"
+                    type="text"
+                    placeholder={label.csp_Find_Branch}
+                    class="hideInputLabel borderlessInput grayInputBackground text-xsmall"
+                    onchange={onchangeBranchesSearchText}
+                    value={branchesFilteringObject.searchInput}>
+                </lightning-input>
+            </div>
+        </div>  
+        <div class="slds-grid slds-wrap slds-m-top_x-small">
+            <c-portal-contact-list is-account="true" object-name="Account" class="fullWidth"
+                fields-list={branchFields} fields-list-to-create={fieldsListToCreate}
+                default-sort={branchesFilteringObject.sortField} records={branchesList} openmodel={openmodel} recordid={recordid}
+                objectid={accountid} fetching={branchesLoading} onsearchrecords={searchRecords} show-edit={editBasics} search-key={searchTextBranches}>
+            </c-portal-contact-list>
+        </div>
+
+        <!-- PAGINATION -->
+        <!--<c-portal-paginator pagination-object-parent={paginationObject} onselectedpage={handleSelectedPage}></c-portal-paginator>-->
+
+    </div>
+
+    <div if:true={branchesLoading} class="spinnerContainer fadeInCss" >
+        <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+    </div>
+    
+</template>
