@@ -131,7 +131,7 @@
             <operation>equals</operation>
             <value>TODAY,LAST_N_DAYS:30</value>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_CompletedTasks}</label>
+        <label>{!FilterNames.Task_CompletedTasks}</label>
     </listViews>
     <listViews>
         <fullName>DelegatedTasks</fullName>
@@ -145,7 +145,7 @@
         <columns>LAST_UPDATE</columns>
         <columns>UPDATEDBY_USER.ALIAS</columns>
         <filterScope>Delegated</filterScope>
-        <label>ENCODED:{!FilterNames.Task_DelegatedTasks}</label>
+        <label>{!FilterNames.Task_DelegatedTasks}</label>
     </listViews>
     <listViews>
         <fullName>OpenTasks</fullName>
@@ -222,7 +222,7 @@
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_RecurringTasks}</label>
+        <label>{!FilterNames.Task_RecurringTasks}</label>
     </listViews>
     <listViews>
         <fullName>TodaysTasks</fullName>
@@ -279,7 +279,7 @@
             <field>DUE_DATE</field>
             <operation>equals</operation>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_UnscheduledTasks}</label>
+        <label>{!FilterNames.Task_UnscheduledTasks}</label>
     </listViews>
     <recordTypes>
         <fullName>Airlines_Industry_Communication</fullName>

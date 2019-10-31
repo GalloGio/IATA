@@ -3748,6 +3748,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                     <fullName>NEW.PASS.BR.1.0</fullName>
                     <default>false</default>
                     <label>NEW.PASS.BR.1.0</label>
+                </value>
                 <value>
                     <fullName>IEP.MODEL.B.PLUS.ACCOUNT.SETUP</fullName>
                     <default>false</default>

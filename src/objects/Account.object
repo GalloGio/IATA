@@ -6813,6 +6813,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValue>Airline</controllingFieldValue>
                 <controllingFieldValue>Airline Supplier</controllingFieldValue>
                 <controllingFieldValue>Association</controllingFieldValue>
+                <controllingFieldValue>Education</controllingFieldValue>
                 <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <controllingFieldValue>Training</controllingFieldValue>
                 <controllingFieldValue>Equipment Manufacturer</controllingFieldValue>
@@ -16205,11 +16206,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>General Public</fullName>
                     <default>false</default>
                     <label>General Public</label>
-                </value>
-                <value>
-                    <fullName>Cargo Agent</fullName>
-                    <default>false</default>
-                    <label>Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>General Sales Agent</fullName>
@@ -65052,6 +65048,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>Category__c</picklist>
             <values>
                 <fullName>Airline Point of Sale</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Park</fullName>
                 <default>false</default>
             </values>
             <values>
