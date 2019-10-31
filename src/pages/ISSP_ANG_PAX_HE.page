@@ -1975,7 +1975,7 @@
                         <table>
                             <tr><td class="modalrow">
                                 <apex:outputLabel value="{!$ObjectType.Contact.fields.Salutation.Label}" /><br/>
-                                <apex:inputField value="{!newContact.Salutation__c}" />
+                                <apex:inputField value="{!newContact.Salutation__c}" style="margin-right: 50px;"/>
                                 </td></tr>
                             <tr><td class="modalrow">
                                 <apex:outputLabel value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsFirstNameENG, $ObjectType.Contact.fields.FirstName.Label)}" /><br/>
