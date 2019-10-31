@@ -72,7 +72,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         {label: 'Employee Code', fieldName: 'companyNumber', type: 'text', sortable: true},
         {label: 'Aircraft Type', fieldName: 'trainingName', type: 'text', sortable: true},
         {label: 'Expiration Date', fieldName: 'expirationDate', type: 'date', sortable: true, 
-            typeAttributes: {year: "numeric", month: "long", day: "2-digit"}, 
+            typeAttributes: {year: "numeric", month: "short", day: "2-digit"}, 
             cellAttributes: { class: { fieldName: 'expirationStatus' }, iconName: { fieldName: 'expirationIcon' }, iconPosition: 'right' } },
         {label: 'Days', fieldName: 'days', type: 'number', initialWidth: 70, sortable: true,  
             cellAttributes: { class: { fieldName: 'expirationStatus' }} },

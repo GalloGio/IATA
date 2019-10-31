@@ -278,25 +278,25 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
 
         this.columns = [
-            {label: 'First Name', fieldName: 'firstName', type: 'text', sortable: true},
             {label: 'Last Name', fieldName: 'lastName', type: 'text', sortable: true},
+            {label: 'First Name', fieldName: 'firstName', type: 'text', sortable: true},
             {label: 'Employee Code', fieldName: 'companyNumber', type: 'text', sortable: true},
             {label: 'Operation Type', fieldName: 'trainingName', type: 'text', sortable: true},
-            {label: 'ITP name', fieldName: 'itpName', type: 'text', sortable: true},
-            {label: 'Expiration Date', fieldName: 'expirationDate', type: 'date', sortable: true, 
-                typeAttributes: {year: "numeric", month: "long", day: "2-digit"}, 
+            {label: 'Expiration', fieldName: 'expirationDate', type: 'date', sortable: true, 
+                typeAttributes: {year: "numeric", month: "short", day: "2-digit"}, 
                 cellAttributes: { class: { fieldName: 'expirationStatus' }, iconName: { fieldName: 'expirationIcon' }, iconPosition: 'right' } },
             {label: 'Proficiency', fieldName: 'proficiency', type: 'text', sortable: true},
-            {label: 'Station', fieldName: 'station', type: 'text', sortable: true},
-            {label: 'PREREQ', fieldName: 'indicatorPrereq', type: 'text', sortable: true,
+            {label: 'Prereq', fieldName: 'indicatorPrereq', type: 'text', sortable: true,
                 cellAttributes: { class: { fieldName: 'indicatorStatus' }, iconName: { fieldName: 'indicatorIcon' }, iconPosition: 'right' },
                 tooltip: 'test' 
             },
-            {label: 'EXPIRATION', fieldName: 'indicatorExpiration', type: 'date', sortable: true,
-                typeAttributes: {year: "numeric", month: "long", day: "2-digit"},
+            {label: 'Expiration', fieldName: 'indicatorExpiration', type: 'date', sortable: true,
+                typeAttributes: {year: "numeric", month: "short", day: "2-digit"},
                 cellAttributes: { class: { fieldName: 'indicatorStatus' }, iconName: { fieldName: 'indicatorIcon' }, iconPosition: 'right' },
                 tooltip: 'test' 
-            }
+            },
+            {label: 'Station', fieldName: 'station', type: 'text', sortable: true},
+            {label: 'ITP name', fieldName: 'itpName', type: 'text', sortable: true}
         ];
     }
 
@@ -401,11 +401,11 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
         
         this.loading = true;
-        //getTrainingRecords({searchValues: JSON.parse(JSON.stringify(auxSearchValues)) })
         getTrainingRecords({searchValues: auxSearchValues, searchType: 'RecordsDetail' })
         .then(results => {
             if(results && results.length > 0) {
                 this.data = results;
+                console.log('### this.data ' , this.data);
                 this.dataRecords = true;
             } else {
                 this.dataRecords = false; 
