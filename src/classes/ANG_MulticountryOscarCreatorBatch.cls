@@ -129,16 +129,18 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 	}
 	
 	global void finish(Database.BatchableContext BC) {
-
+			
 		if(accountAccreditationFormsMap != NULL && accountAccreditationFormsMap.containsKey(acct.Id)){
 			List<AmazonFile__c> amazonFilesLst = accountAccreditationFormsMap.get(acct.Id).AmazonFiles__r;
-			
+			List<AmazonFile__c> amazonFilesToUpdate = new List<AmazonFile__c>();
+
 			if(amazonFilesLst != NULl && !amazonFilesLst.isEmpty()){
 				Set<String> attatchmentsNameToTransfer = new Set<String>();
 				List<WrapperAttach> attatchments = WrapperAttach.getListAttachments(amazonFilesLst.get(0).case__c);
 
 				for(AmazonFile__c a : amazonFilesLst){
 					attatchmentsNameToTransfer.add(a.name);
+					amazonFilesToUpdate.add(new AmazonFile__c(id = a.id, case__c = newCaseMC.id));
 				}
 
 				for(WrapperAttach wa : attatchments){
@@ -147,6 +149,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 						wa.moveToBucket();
 					}
 				}
+				update amazonFilesToUpdate;
 			}
 		}
 	}
