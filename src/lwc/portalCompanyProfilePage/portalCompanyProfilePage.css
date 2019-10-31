@@ -70,6 +70,16 @@
   height: 100%;
 }
 
+.inputFilter {
+    display: flex;
+    align-items: center;
+}
+
+.inputFilter lightning-input {
+    width: 100%;
+    margin-top: -1px;
+}
+
 .adminContactsTable {
     max-height: 330px;
     display: flex;
