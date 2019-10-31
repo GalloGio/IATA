@@ -29,7 +29,7 @@ private class Pardot_API_Test
         Pardot_API.createProspect(p);
         
         // Update prospect interest
-        Pardot_API.updateProspectInterestAsync('56308118', 'iata.fred.dev+1@gmail.com', new list<String>{'Cargo','Safety'});
+        Pardot_API.updateProspectInterest('56308118', 'iata.fred.dev+1@gmail.com', new list<String>{'Cargo','Safety'});
         
         // Subscription to list 111 and 222
         Pardot_API.createListMembershipBulk('56308118', new list<String>{'111','222'});

@@ -1793,6 +1793,10 @@ la seguente procedura per completarlo :
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Airline_Changes_Access --></label>
+        <name>CSP_Airline_Changes_Access</name>
+    </customLabels>
+    <customLabels>
         <label>Annuncio</label>
         <name>CSP_Announcement</name>
     </customLabels>
@@ -1811,6 +1815,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label>Ricerca avanzata</label>
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_CaseDetails_Title --></label>
+        <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
         <label>Profilo aziendale</label>
@@ -1843,6 +1851,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrump_You_IATA --></label>
+        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>Annulla</label>
@@ -1901,6 +1913,10 @@ la seguente procedura per completarlo :
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_CompanyAdministration_Link --></label>
+        <name>CSP_CompanyAdministration_Link</name>
+    </customLabels>
+    <customLabels>
         <label>Visualizza i miei casi aziendali</label>
         <name>CSP_CompanyCases</name>
     </customLabels>
@@ -1927,6 +1943,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_CreatedOn --></label>
+        <name>CSP_CreatedOn</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_DateFrom --></label>
@@ -2049,12 +2069,20 @@ la seguente procedura per completarlo :
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_LastUpdate --></label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>Uscire</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
         <label>Gli utenti possono essere gestiti dalla lista qui sotto.</label>
         <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Manage_Recipients --></label>
+        <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
         <label>Gestione del servizio</label>
@@ -2187,6 +2215,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label>Casi in corso</label>
         <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Details Details page --></label>
+        <name>CSP_Recipients</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
@@ -2425,6 +2457,14 @@ la seguente procedura per completarlo :
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Access --></label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Request --></label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
         <label>Tipo di caso</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
@@ -2463,6 +2503,18 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_YouAndIATA --></label>
+        <name>CSP_YouAndIATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_YouIATA_Highlights --></label>
+        <name>CSP_YouIATA_Highlights</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_YouIATA_Highlights_Text --></label>
+        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -20399,6 +20451,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
+        <label><!-- Case Details Details page --></label>
+        <name>csp_AdditionalDetails</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Request New Service --></label>
         <name>csp_AgencyReadOnly</name>
     </customLabels>
@@ -20685,6 +20741,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label>Supporto</label>
         <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Details Details page --></label>
+        <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>
         <label>La sua agenzia attualmente non dispone di un account IATA EasyPay.&lt;br/&gt;&lt;br/&gt;Si prega di contattare il firmatario autorizzato della propria sede centrale per richiedere l&apos;apertura di un account IATA EasyPay. In qualità di amministratore del portale potrà aggiornare le &lt;a href=&quot;/my-profile&quot;&gt;Informazioni personali&lt;/a&gt; per autonominarsi firmatario autorizzato, oppure potrà richiedere al corretto amministratore del portale dalla pagina &lt;a href=&quot;/company-profile&quot;&gt;Amministrazione dell&apos;azienda-&gt;Contatti&lt;/a&gt; di aprire il suo account EasyPay.&lt;br/&gt;&lt;br/&gt;Non esiti a &lt;a href=&quot;/Support-Reach-Us&quot;&gt;contattare l&apos;assistenza&lt;/a&gt; per qualsiasi necessità.</label>
