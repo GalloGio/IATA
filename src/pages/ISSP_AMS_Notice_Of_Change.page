@@ -2340,7 +2340,7 @@
 		//END NEWGEN-523
 
 		//NEWGEN-1227
-		if ((lScopeOfChange === 'HO - All Branches' || lScopeOfChange === 'HO - Selected Branches' || '{!newForm.Agency_Codes_Concerned__c}'.includes(",")) && {!BranchAccounts}.length > 0) {
+		if ((lScopeOfChange === 'HO - All Branches' || lScopeOfChange === 'HO - Selected Branches' || '{!newForm.Agency_Codes_Concerned__c}'.includes(",")) && ('{!BranchAccounts}'.match(/label=/g) || []).length > 0) {
 			checkb.prop('checked', false);
 			checkb.prop('disabled', true);
 			setWarningBoxOnHover(checkb, '{!$Label.ISSP_NoC_Location_Warning}');
@@ -2378,7 +2378,7 @@
 			setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 		}
 		
-		if ({!multipleCountriesSelected} && {!BranchAccounts}.length > 0) {
+		if ({!multipleCountriesSelected} && ('{!BranchAccounts}'.match(/label=/g) || []).length > 0) {
 			$j('[id$=notifyLegalDetailsChange]').prop('disabled', true);
 
 			if (!({!isMCAccredited} && lScopeOfChange !== 'HO Only')) {
