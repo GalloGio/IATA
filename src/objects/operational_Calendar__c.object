@@ -958,7 +958,7 @@
     <fields>
         <fullName>Protest_Deadline_ACH_Transactions__c</fullName>
         <externalId>false</externalId>
-        <label>Protest Deadline (ACH Transactions)</label>
+        <label>Protest Deadline (ACH)</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -967,7 +967,7 @@
     <fields>
         <fullName>Protest_Deadline_IATA_Transactions__c</fullName>
         <externalId>false</externalId>
-        <label>Protest Deadline (IATA Transactions)</label>
+        <label>Protest Deadline (IATA)</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1014,7 +1014,7 @@
     <fields>
         <fullName>Settlement_Day_ACH_Transactions__c</fullName>
         <externalId>false</externalId>
-        <label>Settlement Day (ACH Transactions)</label>
+        <label>Settlement Day (ACH)</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1032,7 +1032,7 @@
     <fields>
         <fullName>Settlement_Day_IATA_Transactions__c</fullName>
         <externalId>false</externalId>
-        <label>Settlement Day (IATA Transactions)</label>
+        <label>Settlement Day (IATA)</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1050,7 +1050,7 @@
     <fields>
         <fullName>Settlement_Sheet_Posting_Date_IATA_Tran__c</fullName>
         <externalId>false</externalId>
-        <label>Settlement Sheet Posting Date (IATA Tran</label>
+        <label>Settlement Sheet Posting Date (IATA)</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1060,7 +1060,7 @@
         <fullName>Settlement_Sheet_Posting_Date__c</fullName>
         <description>Settlement Sheet Posting Date (ACH Transactions)</description>
         <externalId>false</externalId>
-        <label>Settlement Sheet Posting Date</label>
+        <label>Settlement Sheet Posting Date (ACH)</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

@@ -205,6 +205,7 @@ global without sharing class ISSP_OperationalCalendarController {
                 Contact.Account.ICH_Member__c,
                 Contact.Account.ACH_Member__c,
                 Contact.Account.ICCS_Membership_Status__c,
+                Contact.Account.CNS_Account__c,
                 Contact.Account.Top_Parent__r.SIS_Status__c,
                 Contact.Account.Top_Parent__r.SIS_Sub_Status__c,
                 Contact.Account.Top_Parent__r.ICH_Member__c,
@@ -343,7 +344,7 @@ global without sharing class ISSP_OperationalCalendarController {
                     //special case for CNS, instead of being CASS it is marked as CNS
                     if (SET_CNS_COUNTRIES.contains(countryId) && operation.Operation_Type__c.contains('CASS')) {
                         groupType = 'CNS';
-                        if (IS_AGENT && this.user.Contact.CNS_Contact__c) {
+                        if (IS_AGENT && this.user.Contact.Account.CNS_Account__c) {
                             this.defaultOperationType = 'CNS';
                             this.defaultOperationSubtype = operation.Operation_Type__c;
                             this.defaultCountry = countryId;
@@ -1152,7 +1153,7 @@ global without sharing class ISSP_OperationalCalendarController {
                 FileWrapper countryFile = filesByCountryOp.get(country.Name);
                 if(countryFile == null) {
                     String fileName = Label.ISSP_OperationalCalendar + ' ' + country.Name + '-' + operationType + ' ' + currentYear;
-                    countryFile = new FileWrapper(fileName, orientation, fieldsListSelected, country.Name);
+                    countryFile = new FileWrapper(fileName, orientation, fieldsListSelected, country.Name, operationType);
                     filesByCountryOp.put(country.Name, countryFile);
                 }
                 if(countryFile.lastModifiedDate < opc.LastModifiedDate.date()) {
@@ -1213,7 +1214,7 @@ global without sharing class ISSP_OperationalCalendarController {
             for(Operational_Calendar__c opc : Database.query(queryStr)) {
                 // create row using the operational calendar record
                 String fileName = Label.ISSP_OperationalCalendar + ' ' + opc.Country__r.Name + ' - ' + operation + ' ' + currentYear;
-                FileWrapper countryFile = new FileWrapper(fileName, orientation, fieldsList, opc.Country__r.Name);
+                FileWrapper countryFile = new FileWrapper(fileName, orientation, fieldsList, opc.Country__r.Name, operation);
                 List<CellWrapper> row = createRow(opc, fieldsList, 'tableBodyOdd');
                 countryFile.table.body.add(row);
 
@@ -1279,6 +1280,7 @@ global without sharing class ISSP_OperationalCalendarController {
             Object untypedVal = opCalendar.get(fieldApiName);
             String val = member.getType() == Schema.DisplayType.Date ? formatDate((Date) untypedVal) : safeValue(untypedVal);
             if (fieldApiName=='Country__c') val = MAP_COUNTRIES.get(val);
+            if (fieldApiName=='frequency_code__c') val = MAP_FREQUENCIES.get(val);
             res.add(new CellWrapper(rowStyle, val));
         }
         return res;
@@ -1328,17 +1330,19 @@ global without sharing class ISSP_OperationalCalendarController {
             }
         }
         public String lastModifiedDateStr {get;set;}
+        public String operationType {get;set;}
         public String fileName {get;set;}
         public String countryName {get;set;}
         public String orientation {get;set;}
         public TableBodyWrapper table {get;set;}
 
-        public FileWrapper(String fileName, String orientation, List<Schema.FieldSetMember> fieldsList, String countryName) {
+        public FileWrapper(String fileName, String orientation, List<Schema.FieldSetMember> fieldsList, String countryName, String operationType) {
             this.fileName = fileName;
             this.countryName = countryName;
             this.orientation = orientation;
             this.table = new TableBodyWrapper(fieldsList);
             this.lastModifiedDate = Date.newInstance(1900, 1, 1);
+            this.operationType = operationType;
         }
     }
 
@@ -1349,7 +1353,8 @@ global without sharing class ISSP_OperationalCalendarController {
             this.body = new List<List<CellWrapper>>();
             List<CellWrapper> headerRow = new List<CellWrapper>();
             for(Schema.FieldSetMember member : fieldsList) {
-                headerRow.add(new CellWrapper('tableHeader', member.getLabel()));
+                String headerLabel = member.getFieldPath()=='frequency_code__c'? 'Remittance Frequency': member.getLabel();
+                headerRow.add(new CellWrapper('tableHeader', headerLabel));
             }
             this.body.add(headerRow);
         }

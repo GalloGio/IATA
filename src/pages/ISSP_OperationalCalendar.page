@@ -44,6 +44,7 @@
     console.log(MAP_COUNTRIES);
     console.log(LIST_FILTERS);
     console.log(defaultOperationType);
+    console.log(defaultSubtype);
     console.log(defaultCountry);
     console.log(defaultFrequency);
     $(document).ready(function() {
@@ -78,15 +79,14 @@
             enableFilters(enabled);
         });
         $("#resetButton").click(function() {
-            $("#typeFilter").val(defaultOperationType);
+            setFilterValue($("#typeFilter"), "", defaultOperationType);
             updatePicklistsFromType();
-            $("#subtypeFilter").val(defaultOperationType);
-            updatePicklistsFromType();
-            $("#cycleFilter").val(defaultCycle);
-            $("#countryFilter").val(defaultCountry);
-            //updatePicklistsFromCountry();
-            $("#frequencyFilter").val(defaultFrequency);
-            //updatePicklistsFromFrequency();
+            setFilterValue($("#subtypeFilter"), "", defaultSubtype);
+            updatePicklistsFromSubtype();
+            setFilterValue($("#cycleFilter"), "", defaultCycle);
+            setFilterValue($("#countryFilter"), "", defaultCountry);
+            setFilterValue($("#frequencyFilter"), "", defaultFrequency);
+            setFilterValue($("#currencyFilter"), "", "");
             $("#enableFiltersCheck").prop('checked',false);
             enableFilters(false);
             refreshEvents(true);
@@ -123,39 +123,14 @@
         //populate first filter
         var listValues = containsInArray(LIST_FILTERS, '');
         updatePicklist($("#typeFilter"), listValues, 0, '');
-        // set default values
-        if ("{!$CurrentPage.parameters.ftype}" > "") {
-            $("#typeFilter").val(decodeURIComponent("{!$CurrentPage.parameters.ftype}"));
-        } else {
-            $("#typeFilter").val(defaultOperationType);
-        }
+        setFilterValue($("#typeFilter"), "{!$CurrentPage.parameters.ftype}", defaultOperationType);
         updatePicklistsFromType();
-        if ("{!$CurrentPage.parameters.fsubtype}">"") {
-            $("#subtypeFilter").val(decodeURIComponent("{!$CurrentPage.parameters.fsubtype}"));
-        } else {
-            $("#subtypeFilter").val(defaultSubtype);
-        }
+        setFilterValue($("#subtypeFilter"), "{!$CurrentPage.parameters.fsubtype}", defaultSubtype);
         updatePicklistsFromSubtype();
-        if ("{!$CurrentPage.parameters.fcycle}">"") {
-            $("#cycleFilter").val(decodeURIComponent("{!$CurrentPage.parameters.fcycle}"));
-        } else {
-            $("#cycleFilter").val(defaultCycle);
-        }
-        if ("{!$CurrentPage.parameters.fcountry}">"") {
-            $("#countryFilter").val(decodeURIComponent("{!$CurrentPage.parameters.fcountry}"));
-        } else {
-            $("#countryFilter").val(defaultCountry);
-        }
-        //updatePicklistsFromCountry();
-        if ("{!$CurrentPage.parameters.ffrequency}">"") {
-            $("#frequencyFilter").val(decodeURIComponent("{!$CurrentPage.parameters.ffrequency}"));
-        } else {
-            $("#frequencyFilter").val(defaultFrequency);
-        }
-        //updatePicklistsFromFrequency();
-        if ("{!$CurrentPage.parameters.fcurrency}">"") {
-            $("#currencyFilter").val(decodeURIComponent("{!$CurrentPage.parameters.fcurrency}"));
-        }
+        setFilterValue($("#cycleFilter"), "{!$CurrentPage.parameters.fcycle}", defaultCycle);
+        setFilterValue($("#countryFilter"), "{!$CurrentPage.parameters.fcountry}", defaultCountry);
+        setFilterValue($("#frequencyFilter"), "{!$CurrentPage.parameters.ffrequency}", defaultFrequency);
+        setFilterValue($("#currencyFilter"), "{!$CurrentPage.parameters.fcurrency}", "");
         var fenablefilters = "{!$CurrentPage.parameters.fenablefilters}";
         if (fenablefilters>"") {
             var isEnabled = fenablefilters=='true';
@@ -167,6 +142,17 @@
                 enableFilters(false);
             }
         }
+    }
+
+    function setFilterValue(input, value, defaultvalue) {
+        if (value=="all") {
+            input.val("");
+        } else if (value>"") {
+            input.val(value);
+        } else {
+            input.val(defaultvalue);
+        }
+        if (input.val()==null) input.val(input.find("option:first").val());
     }
 
     function enableFilters(enabled) {
@@ -294,31 +280,44 @@
     }
     
     function getDetailsUrl() {
-        var href="/ISSP_OperationalCalendarDetails?MainNav=resources&subNav=OperationalCalendar&mid=M2S4";
-        if ($("#typeFilter").val()>"") {
-            href+="&ftype=" + encodeURIComponent($("#typeFilter").val());
+        let href="/ISSP_OperationalCalendarDetails?MainNav=resources&subNav=OperationalCalendar&mid=M2S4";
+        let typeFilter = getFilterValue($("#typeFilter"));
+        if (typeFilter!=null) {
+            href+="&ftype=" + typeFilter;
         }
-        if ($("#subtypeFilter").val()>"") {
-          href+="&fsubtype=" + encodeURIComponent($("#subtypeFilter").val());
+        let subtypeFilter = getFilterValue($("#subtypeFilter"));
+        if (subtypeFilter!=null) {
+            href+="&fsubtype=" + subtypeFilter;
         }
-        if ($("#cycleFilter").val()>"") {
-          href+="&fcycle=" + encodeURIComponent($("#cycleFilter").val());
+        let cycleFilter = getFilterValue($("#cycleFilter"));
+        if (cycleFilter!=null) {
+            href+="&fcycle=" + cycleFilter;
         }
-        if ($("#countryFilter").val()>"") {
-            href+="&fcountry=" + encodeURIComponent($("#countryFilter").val());
+        let countryFilter = getFilterValue($("#countryFilter"));
+        if (countryFilter!=null) {
+            href+="&fcountry=" + countryFilter;
         }
-        if ($("#frequencyFilter").val()>"") {
-            href+="&ffrequency=" + encodeURIComponent($("#frequencyFilter").val());
+        let frequencyFilter = getFilterValue($("#frequencyFilter"));
+        if (frequencyFilter!=null) {
+            href+="&ffrequency=" + frequencyFilter;
         }
-        if ($("#currencyFilter").val()>"") {
-            href+="&fcurrency=" + encodeURIComponent($("#currencyFilter").val());
+        let currencyFilter = getFilterValue($("#currencyFilter"));
+        if (currencyFilter!=null) {
+            href+="&fcurrency=" + currencyFilter;
         }
         if ($("#enableFiltersCheck").prop("checked")) {
             href+="&fenablefilters=true";
         }
         return href;
     }
-    
+
+    function getFilterValue(input) {
+        if (input==null) return null;
+        let value = encodeURIComponent(input.val());
+        if (value=="") value = "all";
+        return value
+    }
+
     function refreshEvents(ignoreError) {
         hideError();
         setCalendarTitle();

@@ -101,11 +101,12 @@
     console.log(MAP_COUNTRIES);
     console.log(LIST_FILTERS);
     console.log(defaultOperationType);
+    console.log(defaultSubtype);
     console.log(defaultCountry);
     console.log(defaultFrequency);
     $(document).ready(function() {
         initFilters();
-        refreshDetails(true);
+        refreshDetails(false);
         
         $("#typeFilter").change(function() {
             updatePicklistsFromType();
@@ -140,15 +141,14 @@
             enableFilters(enabled);
         });
         $("#resetButton").click(function() {
-            $("#typeFilter").val(defaultOperationType);
+            setFilterValue($("#typeFilter"), "", defaultOperationType);
             updatePicklistsFromType();
-            $("#subtypeFilter").val(defaultOperationType);
+            setFilterValue($("#subtypeFilter"), "", defaultSubtype);
             updatePicklistsFromSubtype();
-            $("#cycleFilter").val(defaultCycle);
-            $("#countryFilter").val(defaultCountry);
-            //updatePicklistsFromCountry();
-            $("#frequencyFilter").val(defaultFrequency);
-            //updatePicklistsFromFrequency();
+            setFilterValue($("#cycleFilter"), "", defaultCycle);
+            setFilterValue($("#countryFilter"), "", defaultCountry);
+            setFilterValue($("#frequencyFilter"), "", defaultFrequency);
+            setFilterValue($("#currencyFilter"), "", "");
             $('#billingPeriodFilter').val(new Date().getFullYear());
             $("#enableFiltersCheck").prop('checked',false);
             enableFilters(false);
@@ -171,38 +171,15 @@
         //populate first filter
         var listValues = containsInArray(LIST_FILTERS, '');
         updatePicklist($("#typeFilter"), listValues, 0, '');
-        if ("{!$CurrentPage.parameters.ftype}">"") {
-            $("#typeFilter").val(decodeURIComponent("{!$CurrentPage.parameters.ftype}"));
-        } else {
-            $("#typeFilter").val(defaultOperationType);
-        }
+        setFilterValue($("#typeFilter"), "{!$CurrentPage.parameters.ftype}", defaultOperationType);
         updatePicklistsFromType();
-        if ("{!$CurrentPage.parameters.fsubtype}">"") {
-            $("#subtypeFilter").val(decodeURIComponent("{!$CurrentPage.parameters.fsubtype}"));
-        } else {
-            $("#subtypeFilter").val(defaultSubtype);
-        }
+        setFilterValue($("#subtypeFilter"), "{!$CurrentPage.parameters.fsubtype}", defaultSubtype);
         updatePicklistsFromSubtype();
-        if ("{!$CurrentPage.parameters.fcycle}">"") {
-            $("#cycleFilter").val(decodeURIComponent("{!$CurrentPage.parameters.fcycle}"));
-        } else {
-            $("#cycleFilter").val(defaultCycle);
-        }
-        if ("{!$CurrentPage.parameters.fcountry}">"") {
-            $("#countryFilter").val(decodeURIComponent("{!$CurrentPage.parameters.fcountry}"));
-        } else {
-            $("#countryFilter").val(defaultCountry);
-        }
-        //updatePicklistsFromCountry(true);
-        if ("{!$CurrentPage.parameters.ffrequency}">"") {
-            $("#frequencyFilter").val(decodeURIComponent("{!$CurrentPage.parameters.ffrequency}"));
-        } else {
-            $("#frequencyFilter").val(defaultFrequency);
-        }
-        //updatePicklistsFromFrequency();
-        if ("{!$CurrentPage.parameters.fcurrency}">"") {
-            $("#currencyFilter").val(decodeURIComponent("{!$CurrentPage.parameters.fcurrency}"));
-        }
+        setFilterValue($("#cycleFilter"), "{!$CurrentPage.parameters.fcycle}", defaultCycle);
+        setFilterValue($("#countryFilter"), "{!$CurrentPage.parameters.fcountry}", defaultCountry);
+        setFilterValue($("#frequencyFilter"), "{!$CurrentPage.parameters.ffrequency}", defaultFrequency);
+        setFilterValue($("#currencyFilter"), "{!$CurrentPage.parameters.fcurrency}", "");
+
         var fenablefilters = "{!$CurrentPage.parameters.fenablefilters}";
         if (fenablefilters>"") {
             var isEnabled = fenablefilters=='true';
@@ -215,7 +192,18 @@
             }
         }
     }
-    
+
+    function setFilterValue(input, value, defaultvalue) {
+        if (value=="all") {
+            input.val("");
+        } else if (value>"") {
+            input.val(value);
+        } else {
+            input.val(defaultvalue);
+        }
+        if (input.val()==null) input.val(input.find("option:first").val());
+    }
+
     function enableFilters(enabled) {
         if (isAirline) return;
         var disabled = !enabled;
@@ -307,7 +295,7 @@
         },
         title: function () { return getExportFileNamePDF();},
         messageBottom: function ( doc ) {
-			return {
+            return {
                 alignment: 'left',
                 text: "\n{!$Label.ISSP_OperationalCalendar_PDFFooterText}",
                 margin: [40, 100]
@@ -318,19 +306,19 @@
             doc.content.splice( 0, 0, {
                 margin: [ 0, 0, 0, 0 ],
                 alignment: 'center',
-                image: getLogo()
+                image: getLogo(nvl($("#typeFilter").val()))
             });
             doc['header']=(function(page, pages) {
                 if (page>1) return {
                     columns: [
                         {
-							margin: [ 40, 0],
+                            margin: [ 80, 5],
                             alignment: 'left',
-                            image: getLogo(),
+                            image: getLogo(nvl($("#typeFilter").val())),
                             width: 40
                         },
                         {
-							margin: [ 0, 10],
+                            margin: [ 0, 10],
                             alignment: 'center',
                             fontSize: 16,
                             text: getExportFileNamePDF()
@@ -341,8 +329,8 @@
             doc['footer']=(function(page, pages) {
                 return {
                     columns: [
-                        '\n{!$Label.ISSP_OperationalCalendar_DownloadDate}: ' + moment().format('D MMM YYYY'),
-                        '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: ' + formatDate(getLastModifiedDate()),
+                        '\n{!$Label.ISSP_OperationalCalendar_DownloadDate}: \n' + moment().format('D MMM YYYY'),
+                        '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: \n' + formatDate(getLastModifiedDate()),
                         '\n'+ getDiscalimer(),
                         {
                             alignment: 'right',
@@ -366,8 +354,8 @@
         return '';
     }
 
-    function getLogo() {
-        if (nvl($("#typeFilter").val())=="CNS") {
+    function getLogo(typeFilter) {
+        if (typeFilter=="CNS") {
             return cns_logo;
         }
         return iata_logo;
@@ -581,6 +569,7 @@
         var frequency = nvl($("#frequencyFilter").val());
         var currency = nvl($("#currencyFilter").val());
         var billingPeriod = nvl($("#billingPeriodFilter").val());
+        if (billingPeriod=="") billingPeriod=0;
         console.log("operationType: " + operationType + " cycle: " + cycle + " country: " + country + " frequency: " + frequency + " currency: " + currency + " billingPeriod: " + billingPeriod);
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_OperationalCalendarController.loadDetailsRemote}',
@@ -675,30 +664,43 @@
     }
     function showCalendar() {
         var href="/ISSP_OperationalCalendar?MainNav=resources&subNav=OperationalCalendar&mid=M2S4";
-        if ($("#typeFilter").val()>"") {
-          href+="&ftype=" + encodeURIComponent($("#typeFilter").val());
+        let typeFilter = getFilterValue($("#typeFilter"));
+        if (typeFilter!=null) {
+            href+="&ftype=" + typeFilter;
         }
-        if ($("#subtypeFilter").val()>"") {
-          href+="&fsubtype=" + encodeURIComponent($("#subtypeFilter").val());
+        let subtypeFilter = getFilterValue($("#subtypeFilter"));
+        if (subtypeFilter!=null) {
+            href+="&fsubtype=" + subtypeFilter;
         }
-        if ($("#cycleFilter").val()>"") {
-          href+="&fcycle=" + encodeURIComponent($("#cycleFilter").val());
+        let cycleFilter = getFilterValue($("#cycleFilter"));
+        if (cycleFilter!=null) {
+            href+="&fcycle=" + cycleFilter;
         }
-        if ($("#countryFilter").val()>"") {
-          href+="&fcountry=" + encodeURIComponent($("#countryFilter").val());
+        let countryFilter = getFilterValue($("#countryFilter"));
+        if (countryFilter!=null) {
+            href+="&fcountry=" + countryFilter;
         }
-        if ($("#frequencyFilter").val()>"") {
-          href+="&ffrequency=" + encodeURIComponent($("#frequencyFilter").val());
+        let frequencyFilter = getFilterValue($("#frequencyFilter"));
+        if (frequencyFilter!=null) {
+            href+="&ffrequency=" + frequencyFilter;
         }
-        if ($("#currencyFilter").val()>"") {
-          href+="&fcurrency=" + encodeURIComponent($("#currencyFilter").val());
+        let currencyFilter = getFilterValue($("#currencyFilter"));
+        if (currencyFilter!=null) {
+            href+="&fcurrency=" + currencyFilter;
         }
         if ($("#enableFiltersCheck").prop("checked")) {
             href+="&fenablefilters=true";
         }
         window.location.href = href;
     }
-    
+
+    function getFilterValue(input) {
+        if (input==null) return null;
+        let value = encodeURIComponent(input.val());
+        if (value=="") value = "all";
+        return value
+    }
+
     function getExportFileNameCSV() {
         return getExportFileNamePDF() + '_' + new Date().toDateString().replace(/ /g , "-");
     }
@@ -968,7 +970,7 @@
             content: [
                 {
                     alignment: "center",
-                    image: getLogo(),
+                    image: getLogo(data.operationType),
                     margin: [0,0,0,0]
                 },
                 {
@@ -976,22 +978,54 @@
                     text: data.fileName,
                     margin: [0,0,0,12]
                 },
-                {                    
+                {
                     layout: "noBorders",
                     table: {
                         headerRows: 1,
                         body: applyTableStyle(data.table.body, data.fileName)
                     }
+                },
+                {
+                    style: "title",
+                    text: "\n{!$Label.ISSP_OperationalCalendar_PDFFooterText}",
                 }
             ],
+            header: function(page, pages) {
+                if (page>1) return {
+                    columns: [
+                        {
+                            margin: [ 80, 5],
+                            alignment: 'left',
+                            image: getLogo(data.operationType),
+                            width: 40
+                        },
+                        {
+                            margin: [ 0, 10],
+                            alignment: 'center',
+                            fontSize: 16,
+                            text: data.fileName
+                        }
+                    ]
+                }
+            },
             footer: function(page, pages) {
                 return {
                     columns: [
-                        '\n{!$Label.ISSP_OperationalCalendar_DownloadDate}: ' + moment().format('D MMM YYYY'),
-                        '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: ' + data.lastModifiedDateStr,
+                        {
+                            alignment: 'left',
+                            text: ['{!$Label.ISSP_OperationalCalendar_DownloadDate}:','\n',moment().format('D MMM YYYY')]
+                        },
+                        {
+                            alignment: 'left',
+                            text: ['{!$Label.ISSP_OperationalCalendar_LastModifiedDate}:','\n',data.lastModifiedDateStr]
+                        },
                         {
                             alignment: 'right',
-                            text: ['\n',{ text: page.toString() },  ' / ', { text: pages.toString() }]
+                            text: ['www.iata.org/CS']
+                        },
+                        {
+                            alignment: 'right',
+                            text: [{ text: page.toString() },  ' / ', { text: pages.toString() }]
                         }
                     ],
                     margin: [10, 0]
