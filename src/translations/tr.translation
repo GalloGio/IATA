@@ -1789,6 +1789,10 @@
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Airline_Changes_Access --></label>
+        <name>CSP_Airline_Changes_Access</name>
+    </customLabels>
+    <customLabels>
         <label>Duyuru</label>
         <name>CSP_Announcement</name>
     </customLabels>
@@ -1807,6 +1811,10 @@
     <customLabels>
         <label>Gelişmiş Arama</label>
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_CaseDetails_Title --></label>
+        <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
         <label>Şirket Profili</label>
@@ -1839,6 +1847,10 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrump_You_IATA --></label>
+        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>İptal et</label>
@@ -1897,6 +1909,10 @@
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_CompanyAdministration_Link --></label>
+        <name>CSP_CompanyAdministration_Link</name>
+    </customLabels>
+    <customLabels>
         <label>Şirket Sorgularımı Görüntüle</label>
         <name>CSP_CompanyCases</name>
     </customLabels>
@@ -1923,6 +1939,10 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_CreatedOn --></label>
+        <name>CSP_CreatedOn</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_DateFrom --></label>
@@ -2045,12 +2065,20 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_LastUpdate --></label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>Çıkış Yap</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
         <label>kullanıcılarrı aşağıdaki listeden yönetebilirsiniz.</label>
         <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Manage_Recipients --></label>
+        <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
         <label>Hizmeti Yönetin</label>
@@ -2183,6 +2211,10 @@
     <customLabels>
         <label>Devam Eden Vakalar</label>
         <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Details Details page --></label>
+        <name>CSP_Recipients</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
@@ -2421,6 +2453,14 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Access --></label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Request --></label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
         <label>Sorgunun Türü</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
@@ -2459,6 +2499,18 @@
     <customLabels>
         <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_YouAndIATA --></label>
+        <name>CSP_YouAndIATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_YouIATA_Highlights --></label>
+        <name>CSP_YouIATA_Highlights</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_YouIATA_Highlights_Text --></label>
+        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -20404,6 +20456,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
+        <label><!-- Case Details Details page --></label>
+        <name>csp_AdditionalDetails</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Request New Service --></label>
         <name>csp_AgencyReadOnly</name>
     </customLabels>
@@ -20690,6 +20746,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customLabels>
         <label>Destek</label>
         <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Details Details page --></label>
+        <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>
         <label>&quot;Acentenizin şu anda açık IATA (Uluslararası Hava Taşımacılığı Birliği) ATA (Uluslararası Hava Taşımacılığı Birliği) EasyPay Hesabı yok. &lt;br /&gt; &lt;br /&gt;IATA (Uluslararası Hava Taşımacılığı Birliği) EasyPay Hesabı açmalarını istemek için lütfen Genel Merkezinizin Yetkili İmzası ile iletişim kurun. Portal Yöneticisi olarak, güncelleyebilirsiniz &lt;a href=&quot;/my-profile&quot;&gt;Kişisel Bilgi&lt;/a&gt; kendinizi Yasal Yetkili İmza Sahibi olarak yetkilendirmek veya doğru portal yöneticisini &lt;a href =&quot;/company-profile&quot;&gt;Şirket Yönetim -&gt; İletişim Bilgileri&lt;/a&gt; sayfasından atayın ve EasyPay hesabınızı açmalarını isteyin.&lt;br/&gt;&lt;br/&gt;Yardıma ihtiyacınız olursa lütfen &lt;a href=&quot;/Support-Reach-Us&quot;&gt;İletişim Desteği&lt;/a&gt; ile temasa geçin.</label>
