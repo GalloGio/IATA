@@ -735,10 +735,6 @@ lightning-datatable .slds-th__action {
     color: #000000;
 }
 
-.slds-button__icon_right,
-.slds-button__icon--right {
-    margin-left: 0;
-}
 /* ############################################## */
 /* Text Sizing */
 
