@@ -333,7 +333,7 @@ public without sharing class WorkflowHelper {
         if((oldContact == null && newContact.Record_Sharing_Criteria__c != null) 
             || (oldContact != null && oldContact.Record_Sharing_Criteria__c != newContact.Record_Sharing_Criteria__c)) {
             
-            newContact.Record_Sharing_Criteria_AUX__c = newContact.Record_Sharing_Criteria__c.contains('IFG Active Users') ? 'IFG Active Users;' : (newContact.Record_Sharing_Criteria__c.contains('TIP User') ? 'TIP User;' : '');        
+            newContact.Record_Sharing_Criteria_AUX__c = newContact.Record_Sharing_Criteria__c == null ? '' : (newContact.Record_Sharing_Criteria__c.contains('IFG Active Users') ? 'IFG Active Users;' : (newContact.Record_Sharing_Criteria__c.contains('TIP User') ? 'TIP User;' : ''));        
         }
     }
 
