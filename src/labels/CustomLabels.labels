@@ -10995,7 +10995,6 @@ Your ID Card application manager has been informed of your request.</value>
         <value>YOUR ID CARD will expire on</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Accept_TOS_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -11006,9 +11005,7 @@ Your ID Card application manager has been informed of your request.</value>
     <labels>
         <fullName>ISSP_AMS_Add_Company</fullName>
         <categories>ISSP, AMS</categories>
-=======
         <fullName>ID_Card_Fees</fullName>
->>>>>>> master
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Fees</shortDescription>
