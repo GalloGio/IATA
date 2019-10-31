@@ -66,6 +66,7 @@ public with sharing class DAL_WithoutSharingTest {
             List<Contact> myContactsByAccountId = DAL_WithoutSharing.getContactsByAccountId(child.id, 0, 0);
             List<Contact> searchMyContactsByAccountId = DAL_WithoutSharing.searchContactsByAccountId(child.id, 0, 0, '');
             newMap = DAL_WithoutSharing.getUserOptions(newUser.id);
+			system.AssertEquals(DAL_WithoutSharing.hasAccessToService('asd',con.id),false);
         }
         
         Test.stopTest();
