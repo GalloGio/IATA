@@ -282,10 +282,12 @@ public without sharing class Data_Submission_List_CTRL {
 
         String userTimeZoneString = null;
 
-        if(userTimeZoneOffset != null && userTimeZoneOffset != 0) {
-            if(userTimeZoneOffset > 0) {
+        if(userTimeZoneOffset != null) {
+            if(userTimeZoneOffset == 0) {
+                userTimeZoneString = '(GMT +0)';
+            } else if(userTimeZoneOffset > 0) {
                 userTimeZoneString = '(GMT + ' + userTimeZoneOffset/3600000 + ')';
-            }else{
+            } else if(userTimeZoneOffset < 0){
                 userTimeZoneString = '(GMT ' + userTimeZoneOffset/3600000 + ')';
             }
         }

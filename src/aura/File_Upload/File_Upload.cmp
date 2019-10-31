@@ -84,8 +84,8 @@
                                 <div class="listRow">
                                     <div class="slds-truncate listText" title="{! file.name}">{! file.name}</div>
                                     <div class="listIcon">
-                                        <button name="Remove file" class="slds-button" title="Remove file">
-                                            <span data-value="{!file.name}" onclick="{!c.removeFile}"><lightning:icon iconName="utility:close" size="small"/></span>
+                                        <button name="Remove file" class="slds-button" title="Remove file" data-value="{!file.name}" onclick="{!c.removeFile}">
+                                            <span><lightning:icon iconName="utility:close" size="small"/></span>
                                         </button>
                                     </div>
                                 </div>

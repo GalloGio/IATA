@@ -26,11 +26,12 @@
     margin: 0 auto;
 }
 
-.THIS .dragDropMessage {
+/*NOT WIRKING WITH IE*/
+/*.THIS .dragDropMessage {
     margin: auto;
         position: absolute;
 
-}
+}*/
 
 .THIS .lookup {
     max-width: 300px;

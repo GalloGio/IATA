@@ -104,7 +104,7 @@
                                                     <a data-id="{!column.field_name}" class="slds-th__action slds-text-link--reset sortableField" onclick="{!c.changeSort}">
                                                         <div data-id="{!column.field_name}" class="slds-assistive-text">Sort </div>
                                                         <div data-id="{!column.field_name}" class="slds-truncate sortableFieldName" title="{!column.field_label}">{!column.field_label == 'Date' ? column.field_label + ' ' + v.userInformation.userTimeZone : column.field_label}</div>
-                                                        <lightning:icon class="sortableFieldArrow" iconName="{! (v.SortOrder == 'DESC') ? 'utility:arrowdown' : 'utility:arrowup'}" size="xx-small"/>
+                                                        <lightning:icon data-id="{!column.field_name}" class="sortableFieldArrow" iconName="{! (v.SortOrder == 'DESC') ? 'utility:arrowdown' : 'utility:arrowup'}" size="xx-small"/>
                                                     </a>
 
                                                 </th>
@@ -131,11 +131,11 @@
 
                             <aura:if isTrue="{!v.TotalRecords == 0}">
                                 <tr>
-                                    <td colspan="{!if(v.SelectionColumn, v.TableColumns.length+1, v.TableColumns.length)}">
+                                    <!--<td colspan="{!if(v.SelectionColumn, v.TableColumns.length+1, v.TableColumns.length)}">-->
                                         <div class="slds-p-around--small slds-align--absolute-center">
                                             {! $Label.c.GADM_Data_Submission_no_records}
                                         </div>
-                                    </td>
+                                    <!--</td>-->
                                 </tr>
                                 <aura:set attribute="else">
                                     <aura:iteration items="{!v.TableRows}" var="row" indexVar="index">

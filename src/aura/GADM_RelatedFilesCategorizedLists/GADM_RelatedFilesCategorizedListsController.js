@@ -14,8 +14,22 @@
         action.setCallback(this, function(response) {
             const state = response.getState();
             if (state === 'SUCCESS') {
-                component.set("v.files", response.getReturnValue());
-                component.set("v.fileCategories", [...new Set(response.getReturnValue().map(x => x['category']))]);
+                let result = response.getReturnValue();
+                if(! $A.util.isEmpty(result)) {
+                    component.set("v.files", result);
+
+                    let categories = [];
+
+                    for(let i =0; i < result.length; i++) {
+                        if(categories.indexOf(result[i].category) >= 0) {
+                            //item is already in categories
+                        }else{
+                           categories.push(result[i].category);
+                        }
+                    }
+                    component.set("v.fileCategories", categories);
+                }
+
             }
         });
         $A.enqueueAction(action);

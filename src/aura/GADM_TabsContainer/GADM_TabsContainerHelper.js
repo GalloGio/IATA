@@ -157,7 +157,7 @@
             }else if(status === 'ERROR'){
                 //show error
                 console.log('error:: ' + error);
-                self.showMessage('error', 'Unexpected error!', 'Unable to create component!');
+                self.showMessage('error', 'Unexpected error!', 'Unable to create component ' + name + '!');
 
             }
         });
