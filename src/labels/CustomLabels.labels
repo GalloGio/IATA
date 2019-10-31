@@ -11003,7 +11003,6 @@ Your ID Card application manager has been informed of your request.</value>
         <value>Please accept the Terms and Conditions before submitting your PASS Accreditation application to IATA.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Add_Company</fullName>
         <categories>ISSP, AMS</categories>
         <fullName>ID_Card_Fees</fullName>
         <language>en_US</language>
@@ -15384,7 +15383,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>SECTION 3 - Company Contacts</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_PASS_Application</fullName>
         <language>en_US</language>
         <protected>false</protected>
