@@ -598,6 +598,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 con.Phone = string.valueOf(inputMap.get('phone'));
             }
 
+            con.User_Portal_Status__c = 'Pending Approval';
+
             if((inputMap.get('language') != null)){
                 con.Preferred_Language__c = string.valueOf(inputMap.get('language'));
                 string langKey = 'en_US';
@@ -772,7 +774,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
             con.Phone = params.phone;
             con.Email = params.email;
             con.Community__c = 'ISS Customer Portal';
-            con.User_Portal_Status__c = 'Pending';
+			con.User_Portal_Status__c = 'Pending Approval';
             //todo: perform field check before insert
 
             DataBase.SaveResult sr = DataBase.Insert(con);
