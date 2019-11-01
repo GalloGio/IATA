@@ -1414,10 +1414,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sadiqs@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>sanchezc@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2835,10 +2831,6 @@
         <description>SIDRA_DEF0101 Key account magament Tech DEF</description>
         <protected>false</protected>
         <recipients>
-            <recipient>david.oliveira.bento@pwc.com.pass</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>abbadid@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2860,6 +2852,10 @@
         </recipients>
         <recipients>
             <recipient>dovgano@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>garciam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2927,10 +2923,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sadiqs@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>sanchezc@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2967,10 +2959,6 @@
         <description>SIDRA_DEF0102 Key account magament non payment DEF</description>
         <protected>false</protected>
         <recipients>
-            <recipient>david.oliveira.bento@pwc.com.pass</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>abbadid@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3000,6 +2988,10 @@
         </recipients>
         <recipients>
             <recipient>dovgano@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>garciam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3084,10 +3076,6 @@
         </recipients>
         <recipients>
             <recipient>rodriguezp@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sadiqs@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3734,6 +3722,18 @@
         <template>SIS_Help_Desk/SIS_Email_notification_to_SIS_Ops_team_for_review_and_acceptance</template>
     </alerts>
     <alerts>
+        <fullName>SIS_EInvoicing_Case_confirmation_Send_Notification</fullName>
+        <description>Send a notification to portal user who submitted a SIS E-Joining form</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>SIS_E_Invoicing/SIS_E_Invoicing_Case_confirmation_online_HTML_English</template>
+    </alerts>
+    <alerts>
         <fullName>SIS_Escalated_Case_Assignment</fullName>
         <description>SIS Escalated Case Assignment</description>
         <protected>false</protected>
@@ -4086,6 +4086,18 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Approval_notifications_DPC_Systems/Rejection_of_CR</template>
+    </alerts>
+    <alerts>
+        <fullName>X1st_email_on_CS_escalated_case</fullName>
+        <description>1st email on CS escalated case</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Escalation_1st_level_CS_managers</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Escalated_cases/X1st_escalation</template>
     </alerts>
     <alerts>
         <fullName>sMAP_Inform_to_CM_Case_Owner</fullName>
@@ -5607,6 +5619,17 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <name>ICH Case Type</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>ICH_Web_Case_Assignment</fullName>
+        <description>Changes record type to Cases - Global on web cases</description>
+        <field>RecordTypeId</field>
+        <lookupValue>Cases_Global</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>ICH Web CaseAssignment</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -8667,7 +8690,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS)</value>
+            <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS),Cases - Global</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Origin</field>
@@ -8691,7 +8714,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Americas,Cases - Asia &amp; Pacific,Cases - Europe,Cases - Africa &amp; Middle East,Cases - China &amp; North Asia,Internal Cases (IDFS ISS),SAAM,SIDRA,Complaint (IDFS ISS)</value>
+            <value>Cases - Americas,Cases - Asia &amp; Pacific,Cases - Europe,Cases - Africa &amp; Middle East,Cases - China &amp; North Asia,Internal Cases (IDFS ISS),SAAM,SIDRA,Complaint (IDFS ISS),Cases - Global</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Origin</field>
@@ -8731,7 +8754,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - China &amp; North Asia,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific</value>
+            <value>ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - China &amp; North Asia,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - Global</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IsComplaint__c</field>
@@ -12144,6 +12167,36 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>Escalation case 1st email</fullName>
+        <actions>
+            <name>X1st_email_on_CS_escalated_case</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - Global,Cases - China &amp; North Asia</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.OwnerId</field>
+            <operation>notContain</operation>
+            <value>Recycle</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Escalation</value>
+        </criteriaItems>
+        <description>Sends an email to CS managers when the case has origin &quot;Escalated&quot;</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>External split for OPS Mgt cases</fullName>
         <actions>
             <name>External_OPS_Mgt_cases</name>
@@ -12206,7 +12259,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <active>true</active>
         <description>Clear New interaction field when Query is closed. It is necessary when query  had another Record Type with New Interaction Info</description>
         <formula>AND(   OR (     RecordType.DeveloperName = &quot;Cases_Global&quot;,     RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,     RecordType.DeveloperName = &quot;Invoicing_Collection_Cases&quot;,     RecordType.DeveloperName = &quot;CasesAmericas&quot;,     RecordType.DeveloperName = &quot;CasesEurope&quot;,     RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; ,     RecordType.DeveloperName = &quot;CasesMENA&quot; ,     RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,     RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,     RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,     RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;,     RecordType.DeveloperName = &quot;ComplaintIDFS&quot;,     RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;,     RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,     RecordType.DeveloperName = &quot;IATA_Financial_Review&quot;,     RecordType.DeveloperName = &quot;ID_Card_Application&quot;,     RecordType.DeveloperName = &apos;Airline_Coding_Application&apos;,     RecordType.DeveloperName = &apos;DPC_Service_Request&apos;,     RecordType.DeveloperName = &apos;CNS_Collection_Process&apos;   ) ,   OwnerId = LastModifiedById,   contains(TEXT(Status),&quot;Closed&quot;),   not(ispickval(New_interaction__c, &quot;&quot;)) )</formula>
-
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -12328,7 +12380,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Internal Cases (IDFS ISS),Process</value>
+            <value>Cases - Global,Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Internal Cases (IDFS ISS),Process</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
@@ -13313,7 +13365,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND 3</booleanFilter>
+        <booleanFilter>(1 OR 4) AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -13328,6 +13380,11 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <field>Case.Reopening_reason__c</field>
             <operation>equals</operation>
             <value>same query</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - Global</value>
         </criteriaItems>
         <description>Fills in the first time resolution of the case</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -13354,11 +13411,11 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND (3  OR (4 AND 5))</booleanFilter>
+        <booleanFilter>(1 OR 6) AND 2 AND (3  OR (4 AND 5))</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>,Cases - Europe,ACCA Customer Service Request (External),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Manual order / Returned document form,Order of AWB / allocation (CASS),Complaint (IDFS ISS)</value>
+            <value>Cases - Europe,ACCA Customer Service Request (External),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Manual order / Returned document form,Order of AWB / allocation (CASS),Complaint (IDFS ISS)</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -13378,6 +13435,11 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <field>Case.Reopening_reason__c</field>
             <operation>equals</operation>
             <value>same query,complaint</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>,Cases - Global</value>
         </criteriaItems>
         <description>fills in the final resolution date of the case</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -13636,7 +13698,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND ( 		SIDRA_exchange_rate_updated__c,    		TEXT(IRR_Withdrawal_Reason__c)  &lt;&gt;  &apos;IATA Charges&apos;,  		OR(  			RecordType.DeveloperName = &apos;SIDRA&apos;,         			RecordType.DeveloperName = &apos;SIDRA_BR&apos;  		),  		CreatedDate &gt; DATETIMEVALUE( &quot;2012-09-30 00:00:00&quot;),  		Short_Payment_Amount_USD__c &gt; 1,      		ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50 )</formula>
+        <formula>AND (      SIDRA_exchange_rate_updated__c,         TEXT(IRR_Withdrawal_Reason__c)  &lt;&gt;  &apos;IATA Charges&apos;,         OR(             RecordType.DeveloperName = &apos;SIDRA&apos;,                   RecordType.DeveloperName = &apos;SIDRA_BR&apos;         ),          CreatedDate &gt; DATETIMEVALUE( &quot;2012-09-30 00:00:00&quot;),       Short_Payment_Amount_USD__c &gt; 1,             ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50 )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -15055,7 +15117,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </actions>
         <active>true</active>
         <description>System sends notification to the Case Owner as soon as the IFAP Case Status is changed to &quot;Assessment Performed&quot; for all Financial Review Type cases</description>
-        <formula>AND( 		$RecordType.Name == &apos;IATA Financial Review&apos;, 		AND (ISCHANGED(Status), 				OR( 					ISPICKVAL(Status,&apos;Assessment Performed&apos;), 					ISPICKVAL(Status,&apos;Action Needed&apos;), 					ISPICKVAL(Status,&apos;Sanity Check Failure&apos;) 					) 			)  		)</formula>
+        <formula>AND(       $RecordType.Name == &apos;IATA Financial Review&apos;,      AND (ISCHANGED(Status),                 OR(                     ISPICKVAL(Status,&apos;Assessment Performed&apos;),                     ISPICKVAL(Status,&apos;Action Needed&apos;),                    ISPICKVAL(Status,&apos;Sanity Check Failure&apos;)                  )           )       )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -15635,7 +15697,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>equals</operation>
             <value>FDS ICCS Membership Management,FDS ASP Management,FDS ICCS Bank Account Management,FDS ICCS Product Management</value>
         </criteriaItems>
-	<criteriaItems>
+    <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
             <value>PASS Country</value>
@@ -15776,7 +15838,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>equals</operation>
             <value>CHG – Data Maintenance</value>
         </criteriaItems>
-	   <criteriaItems>
+    <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
             <value>PASS Country Aggregator,PASS Participation</value>
@@ -16560,7 +16622,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
         </criteriaItems>
         <description>For COMPLAINTS =&gt; update rec type to Complaint (IDFS ISS) except for Topic=TIESS OR Subtopic= &quot;Interline Agreements (MITA)&quot; OR Subtopic= any &quot;IATA Codes (not applicable to Agents)&quot; subtopics except &quot;MSO - Member Sales Office&quot;</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -16967,7 +17029,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS)</value>
+            <value>Cases - Global,Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS)</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
@@ -18119,7 +18181,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Asia &amp; Pacific,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - China &amp; North Asia</value>
+            <value>Cases - Global,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Asia &amp; Pacific,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - China &amp; North Asia</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IsComplaint__c</field>
@@ -18147,6 +18209,17 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>MITA Interline Agreements</value>
         </criteriaItems>
         <description>the query is reopened and assigned to SIN complaint team</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>SIS E-Joining - Case Submitted Notification</fullName>
+        <actions>
+            <name>SIS_EInvoicing_Case_confirmation_Send_Notification</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>When a new case for SIS E-Joining is submitted( its status changes from Draft to Open) this notification is sent</description>
+        <formula>AND(   RecordType.DeveloperName=&apos;IDFS_Airline_Participation_Process&apos;,   ISPICKVAL(CaseArea__c,&apos;Airline Joining&apos;),   ISPICKVAL(Reason1__c,&apos;SIS Client&apos;),   ISPICKVAL(Classification_SIS__c,&apos;SIS Membership&apos;),   ISPICKVAL(Status,&apos;For Review and Acceptance&apos;),   ISPICKVAL($User.UserType,&apos;PowerPartner&apos;) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -18424,7 +18497,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Make_new_case_visible_in_CustPortal</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
@@ -18637,6 +18710,26 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Resolved</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>SIS and ICH New Web Case</fullName>
+        <actions>
+            <name>ICH_Web_Case_Assignment</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.CaseArea__c</field>
+            <operation>equals</operation>
+            <value>ICH,SIS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Web</value>
+        </criteriaItems>
+        <description>Whenever a new ICH web case is created, assign record type</description>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>SNOW Incident</fullName>

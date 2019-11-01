@@ -3669,9 +3669,9 @@
     &apos;Not Applicable&apos;,
     IF(ISPICKVAL(Location_Type__c, &apos;HE&apos;),
         TEXT(ANG_HE_RiskHistoryAssessment__c),
-		IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;&apos;),
-			&apos;&apos;,		
-			TEXT(Top_Parent__r.ANG_HE_RiskHistoryAssessment__c)
+        IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;&apos;),
+            &apos;&apos;,       
+            TEXT(Top_Parent__r.ANG_HE_RiskHistoryAssessment__c)
         )
     )
 )</formula>
@@ -3686,13 +3686,13 @@
         <externalId>false</externalId>
         <formula>IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ANG_FA_Opt_out__c,
     &apos;Not Applicable&apos;,
-	IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
-		TEXT(ANG_HE_RiskStatus__c),
-		IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;&apos;),
-			&apos;&apos;,			
-			TEXT(Top_Parent__r.ANG_HE_RiskStatus__c)
-		)
-	)
+    IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
+        TEXT(ANG_HE_RiskStatus__c),
+        IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;&apos;),
+            &apos;&apos;,           
+            TEXT(Top_Parent__r.ANG_HE_RiskStatus__c)
+        )
+    )
 )</formula>
         <label>Risk Status</label>
         <required>false</required>
@@ -6712,7 +6712,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <default>false</default>
                     <label>Payment Provider</label>
                 </value>
-                <value>
+        <value>
                     <fullName>Postal Service</fullName>
                     <default>false</default>
                     <label>Postal Service</label>
@@ -7022,12 +7022,8 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <valueName>Travel Agency Association</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Education</controllingFieldValue>
-                <valueName>CASS Associate</valueName>
-            </valueSettings>
-            <valueSettings>
                 <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Postal Service</valueName>
+                <valueName>CASS Associate</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Cargo Agent</controllingFieldValue>
@@ -30698,7 +30694,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-	    <fullName>Postal Service</fullName>
+        <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -36468,7 +36464,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <fullName>Passenger only</fullName>
                 <default>false</default>
             </values>
-	    <values>
+        <values>
                 <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
@@ -43581,7 +43577,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <fullName>Passenger only</fullName>
                 <default>false</default>
             </values>
-	    <values>
+        <values>
                 <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
@@ -49655,7 +49651,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <fullName>Other</fullName>
                 <default>false</default>
             </values>
-	    <values>
+        <values>
                 <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
@@ -65050,10 +65046,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Park (Theme Park)</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Airport Operator</fullName>
                 <default>false</default>
             </values>
@@ -65123,46 +65115,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Private Sector Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger and Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger only</fullName>
-                <default>false</default>
-            </values>
-	    <values>
-                <fullName>Postal Service</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Processor</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Publishing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Railway Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resort</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>System Solutions Provider</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -71056,6 +71008,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger only</fullName>
+                <default>false</default>
+            </values>
+        <values>
+                <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -80181,10 +80137,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <fullName>Governmental Aviation</fullName>
                 <default>false</default>
             </values>
-	    <values>
-                <fullName>Postal Service</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Ground Handler</fullName>
                 <default>false</default>
@@ -86252,7 +86204,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <fullName>Passenger only</fullName>
                 <default>false</default>
             </values>
-	    <values>
+        <values>
                 <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
@@ -92742,7 +92694,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <fullName>Other</fullName>
                 <default>false</default>
             </values>
-	    <values>
+        <values>
                 <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
@@ -100360,28 +100312,28 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <active>true</active>
         <description>The ACLI Customer Number can be modified only by the coding team and only for accounts with record type Airline Headquarter, Operator, Standard Account or Others</description>
         <errorConditionFormula>AND(
-	ISCHANGED(ACLI_SAP_Id__c),
-	OR(
-		AND(
-			RecordType.DeveloperName != &apos;IATA_Airline&apos;,
-			RecordType.DeveloperName != &apos;Operator&apos;,
-			RecordType.DeveloperName != &apos;Others&apos;,
-			RecordType.DeveloperName != &apos;Standard_Account&apos;
-		),
-		AND(
-			OR(
-				RecordType.DeveloperName == &apos;Operator&apos;,
-				RecordType.DeveloperName == &apos;Others&apos;,
-				RecordType.DeveloperName == &apos;Standard_Account&apos;
-			),
-			NOT($Permission.ACLI_Customer_Number),
-			NOT($Permission.Airline_HQ_ACLI)
-		),
-		AND(
-			RecordType.DeveloperName == &apos;IATA_Airline&apos;,
-			NOT($Permission.Airline_HQ_ACLI)
-		)
-	)
+    ISCHANGED(ACLI_SAP_Id__c),
+    OR(
+        AND(
+            RecordType.DeveloperName != &apos;IATA_Airline&apos;,
+            RecordType.DeveloperName != &apos;Operator&apos;,
+            RecordType.DeveloperName != &apos;Others&apos;,
+            RecordType.DeveloperName != &apos;Standard_Account&apos;
+        ),
+        AND(
+            OR(
+                RecordType.DeveloperName == &apos;Operator&apos;,
+                RecordType.DeveloperName == &apos;Others&apos;,
+                RecordType.DeveloperName == &apos;Standard_Account&apos;
+            ),
+            NOT($Permission.ACLI_Customer_Number),
+            NOT($Permission.Airline_HQ_ACLI)
+        ),
+        AND(
+            RecordType.DeveloperName == &apos;IATA_Airline&apos;,
+            NOT($Permission.Airline_HQ_ACLI)
+        )
+    )
 )</errorConditionFormula>
         <errorDisplayField>ACLI_SAP_Id__c</errorDisplayField>
         <errorMessage>The ACLI Customer Number can be modified only by the coding team and only for accounts with record type Airline Headquarter, Operator, Standard Account or Others</errorMessage>
@@ -100438,16 +100390,16 @@ $Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c
         <fullName>Airline_HO_Name</fullName>
         <active>true</active>
         <description>You are not allowed to change the field &quot;Account Name&quot;. The only Exception is if you are also changing one of the following:Legal_name__c,TradeName__c,Name_on_AOC__c. This assignment logic is done via Account Trigger.</description>
-        <errorConditionFormula>AND (	ISCHANGED(Name) ,
-		RecordType.DeveloperName  = &apos;IATA_Airline&apos;,
-		NOT(
-			OR(
-				ISCHANGED(Legal_name__c),
-				ISCHANGED(TradeName__c),
-				ISCHANGED(Name_on_AOC__c)
-			)
-		)
-	)</errorConditionFormula>
+        <errorConditionFormula>AND (    ISCHANGED(Name) ,
+        RecordType.DeveloperName  = &apos;IATA_Airline&apos;,
+        NOT(
+            OR(
+                ISCHANGED(Legal_name__c),
+                ISCHANGED(TradeName__c),
+                ISCHANGED(Name_on_AOC__c)
+            )
+        )
+    )</errorConditionFormula>
         <errorDisplayField>Name</errorDisplayField>
         <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
     </validationRules>
@@ -100484,13 +100436,13 @@ NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
         <active>true</active>
         <description>For Airline HQ, only the profile MER Membership can update the field IATA Membership Status.</description>
         <errorConditionFormula>AND(
-	NOT(ISNEW()),
-	OR(
-		RecordType.DeveloperName=&apos;IATA_Airline&apos;,
-		RecordType.DeveloperName=&apos;Operator&apos;
-	),
-	ISCHANGED(Membership_status__c),
-	NOT($Permission.Airline_HQ_MER_Membership)
+    NOT(ISNEW()),
+    OR(
+        RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+        RecordType.DeveloperName=&apos;Operator&apos;
+    ),
+    ISCHANGED(Membership_status__c),
+    NOT($Permission.Airline_HQ_MER_Membership)
 )</errorConditionFormula>
         <errorDisplayField>Membership_status__c</errorDisplayField>
         <errorMessage>For Airline HQ, only the profile MER Membership can update the field IATA Membership Status.</errorMessage>
@@ -100517,34 +100469,34 @@ NOT(ISPICKVAL(Membership_status__c,&apos;Non-IATA member&apos;))
         <active>true</active>
         <description>For Airline HQ, some fields can be updated only by the ACLI-SF daily process</description>
         <errorConditionFormula>AND(
-	NOT(ISNEW()),
-	RecordType.DeveloperName=&apos;IATA_Airline&apos;,
-	NOT($Permission.Airline_HQ_ACLI),
-	OR(
-		ISCHANGED(Name_on_AOC__c),
-		ISCHANGED(IATACode__c),
-		ISCHANGED(Old_IATA_Code__c),
-		ISCHANGED(ICAO_designator__c),
-		ISCHANGED(Airline_designator__c),
-		ISCHANGED(Old_Airline_designator__c),
-		ISCHANGED(duplicate_flag_indicato__c),
-		ISCHANGED(BillingStreet),
-		ISCHANGED(BillingCity),
-		ISCHANGED(BillingState),
-		ISCHANGED(BillingPostalCode),
-		ISCHANGED(BillingCountry),
-		ISCHANGED(IATA_ISO_Country__c),
-		ISCHANGED(ACLI_Status__c),
-		ISCHANGED(Type_of__c),
-		ISCHANGED(Type_of_Service__c),
-		ISCHANGED(Airline_Prefix__c),
-		ISCHANGED(Old_Airline_Prefix__c),
-		ISCHANGED(ACLI_SAP_Id__c),
-		ISCHANGED(AOC_Expiry_Date__c),
-		ISCHANGED(Legal_name__c),
-		ISCHANGED(Area_of_Operation__c),
-		ISCHANGED(Membership_SITA__c)
-	)
+    NOT(ISNEW()),
+    RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+    NOT($Permission.Airline_HQ_ACLI),
+    OR(
+        ISCHANGED(Name_on_AOC__c),
+        ISCHANGED(IATACode__c),
+        ISCHANGED(Old_IATA_Code__c),
+        ISCHANGED(ICAO_designator__c),
+        ISCHANGED(Airline_designator__c),
+        ISCHANGED(Old_Airline_designator__c),
+        ISCHANGED(duplicate_flag_indicato__c),
+        ISCHANGED(BillingStreet),
+        ISCHANGED(BillingCity),
+        ISCHANGED(BillingState),
+        ISCHANGED(BillingPostalCode),
+        ISCHANGED(BillingCountry),
+        ISCHANGED(IATA_ISO_Country__c),
+        ISCHANGED(ACLI_Status__c),
+        ISCHANGED(Type_of__c),
+        ISCHANGED(Type_of_Service__c),
+        ISCHANGED(Airline_Prefix__c),
+        ISCHANGED(Old_Airline_Prefix__c),
+        ISCHANGED(ACLI_SAP_Id__c),
+        ISCHANGED(AOC_Expiry_Date__c),
+        ISCHANGED(Legal_name__c),
+        ISCHANGED(Area_of_Operation__c),
+        ISCHANGED(Membership_SITA__c)
+    )
 )</errorConditionFormula>
         <errorMessage>The following fields can by updated only by the daily ACLI-SF process:
 Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-character), Old 2-letter Airline Designator Code, Duplicate flag indicator, ISO Country, ACLI Status</errorMessage>
@@ -100554,22 +100506,22 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <active>true</active>
         <description>For Airline HQ, the Sector and Category fields can be updated only if the Type of Operations Code is S, the Acli Status  is &apos;Active Company&apos; and only by the Account Management Team.</description>
         <errorConditionFormula>AND(
-	NOT(ISNEW()),
-	RecordType.DeveloperName=&apos;IATA_Airline&apos;,
-	OR(
-		ISCHANGED(Sector__c),
-		ISCHANGED(Category__c)
-		
-	),
-	NOT($Permission.Airline_HQ_ACLI),
-	OR(
-		NOT($Permission.Airline_HQ_Account_Team_Management),
-		AND(
-			NOT(ISPICKVAL(Type_of__c,&quot;S&quot;)),
-			NOT(ISCHANGED(Type_of__c))
-		),
-		ISPICKVAL(ACLI_Status__c, &apos;Inactive Company&apos;)
-	)
+    NOT(ISNEW()),
+    RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+    OR(
+        ISCHANGED(Sector__c),
+        ISCHANGED(Category__c)
+        
+    ),
+    NOT($Permission.Airline_HQ_ACLI),
+    OR(
+        NOT($Permission.Airline_HQ_Account_Team_Management),
+        AND(
+            NOT(ISPICKVAL(Type_of__c,&quot;S&quot;)),
+            NOT(ISCHANGED(Type_of__c))
+        ),
+        ISPICKVAL(ACLI_Status__c, &apos;Inactive Company&apos;)
+    )
 )</errorConditionFormula>
         <errorMessage>For Airline HQ, the Sector and Category fields can be updated only if the Type of Operations Code is S, the Acli Status  is &apos;Active Company&apos; and only by the Account Management Team.</errorMessage>
     </validationRules>
@@ -100994,7 +100946,7 @@ IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
         <fullName>No_tabs_in_VAT_Number</fullName>
         <active>true</active>
         <description>Tab character is forbidden in VAT_Number__c field</description>
-        <errorConditionFormula>CONTAINS(VAT_Number__c ,&quot;	&quot;)</errorConditionFormula>
+        <errorConditionFormula>CONTAINS(VAT_Number__c ,&quot;   &quot;)</errorConditionFormula>
         <errorDisplayField>VAT_Number__c</errorDisplayField>
         <errorMessage>Please remove tabs from VAT number.</errorMessage>
     </validationRules>
@@ -101359,12 +101311,12 @@ if(&apos;{!Account.Airline_designator__c}&apos; == null || &apos;{!Account.Airli
 
     var airlineId = &apos;{!Account.Id}&apos;;
 
-    if (typeof srcUp == &apos;function&apos;) {	
-		javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);
-	}else{
-		//window.location.href = &apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId;
+    if (typeof srcUp == &apos;function&apos;) { 
+        javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);
+    }else{
+        //window.location.href = &apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId;
         alert(&apos;This option is to use on the console&apos;);
-	}
+    }
 }</url>
     </webLinks>
     <webLinks>
