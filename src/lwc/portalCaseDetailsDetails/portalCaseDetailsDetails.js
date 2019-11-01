@@ -223,7 +223,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     }
 
     get getPDF2_3() {
-        if (this.caseDetails) {
+        if (this.caseDetails && this.optionBuilder) {
             return this.caseDetails.Reason1__c === 'Bank Detail Update' || this.caseDetails.Reason1__c.startsWith('CH') || this.caseDetails.Reason1__c.startsWith('CL') || this.caseDetails.Reason1__c === 'Major Change' || this.optionBuilder.isNoticeOfChange;
         }
         return null;
