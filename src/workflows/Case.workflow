@@ -15841,7 +15841,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>PASS Country Aggregator,PASS Participation</value>
+            <value>PASS Country Aggregator/PASS Participation</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
