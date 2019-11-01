@@ -964,7 +964,8 @@ Name
     OR( 
         AND(Agency__c = true, 
             $User.Customer_type__c=&quot;Agency&quot;,
-            NOT(Name = &quot;Access BOP&quot;)), 
+            NOT(Name = &quot;Access BOP&quot;),
+            NOT(Name = &quot;Payment Link&quot;)), 
         AND(VisibleCNS__c= true, 
             $User.Customer_type__c=&quot;CNS Agency&quot;), 
         AND(Not_ICH_Airline__c = true,
