@@ -2835,6 +2835,10 @@
         <description>SIDRA_DEF0101 Key account magament Tech DEF</description>
         <protected>false</protected>
         <recipients>
+            <recipient>david.oliveira.bento@pwc.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>abbadid@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2966,6 +2970,10 @@
         <fullName>SIDRA_DEF0102_Key_account_magament_NP_DEF</fullName>
         <description>SIDRA_DEF0102 Key account magament non payment DEF</description>
         <protected>false</protected>
+        <recipients>
+            <recipient>david.oliveira.bento@pwc.com</recipient>
+            <type>user</type>
+        </recipients>
         <recipients>
             <recipient>abbadid@iata.org</recipient>
             <type>user</type>

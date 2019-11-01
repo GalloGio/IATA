@@ -6828,7 +6828,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Education</controllingFieldValue>
-                <valueName>Education</valueName>
+                <valueName>Academic/Research Body</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Education</controllingFieldValue>
+                <valueName>Training Centre</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Holding Company</controllingFieldValue>
@@ -65055,7 +65059,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Park</fullName>
+                <fullName>Park (Theme Park)</fullName>
                 <default>false</default>
             </values>
             <values>
