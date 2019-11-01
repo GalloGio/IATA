@@ -1,129 +1,146 @@
-<apex:page controller="ISSP_AMS_Accreditation"
-           extensions="ISSP_AmazonS3_Ctrl"
-           showHeader="false"
-           sidebar="false"
-           standardStylesheets="false">
-    
+<apex:page controller="ISSP_AMS_Accreditation" extensions="ISSP_AmazonS3_Ctrl" showHeader="false" sidebar="false"
+    standardStylesheets="false">
+
     <style>
         .uploadprogress {
-    position: relative;
-    width: 100%;
-    height: 7px;
-    background: #C7DA9F;
-    border-radius: 10px;
-    overflow: hidden;
-            
-    .btn {
-        background:none;
-    }
-    .btn-progressBar-PASS {
-            padding: 2px 40px !important;
+            position: relative;
+            width: 100%;
+            height: 7px;
+            background: #C7DA9F;
+            border-radius: 10px;
+            overflow: hidden;
+
+            .btn {
+                background: none;
+            }
+
+            .btn-progressBar-PASS {
+                padding: 2px 40px !important;
+            }
         }
-}
     </style>
-    
+
     <div class="panel-primary">
-            <div class="panel-heading head_panel_green">
- 	<h3 class="panel-title">
-        <!-- { ! I F(BEGINS(sectorValue,'Travel_Agent'), lblPAXTitle, 'Application for approval as' + IF(OR(BEGINS(newForm.Agent_Type__c, 'I'),BEGINS(newForm.Agent_Type__c, 'E')), ' an ', ' a ') + newForm.Agent_Type__c) } -->
-        {!IF(isNoticeOfChange, lblNoCRequest,
-                    IF(BEGINS(sectorValue,'Travel_Agent'), lblPAXTitle, 
-                        IF(newForm.Agent_Type__c == 'IATA Cargo Agent', lblCargoTitle,
-                            IF(newForm.Agent_Type__c == 'EACP Intermediary', lblEACPTitle, 
-                                IF(newForm.Agent_Type__c == 'CASS Associate', lblCASSTitle, 
-                                    IF(newForm.Agent_Type__c == 'Import Agent', lblImporAgentTitle, 
-                                        IF(newForm.Agent_Type__c == 'Courier', lblCourierTitle, $Label.ISSP_AMS_StepsAll_Application_Approval_Title)))))))}
-    </h3>
-            </div>
-    <div class="panel-body" id="body-enquiries">
-    <apex:form >
-        <div class="progress" style="{!IF(isPassAccreditation==false, 'display:block', 'display:none')}">
-            <!--<div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+        <div class="panel-heading head_panel_green">
+            <h3 class="panel-title">
+                <!-- { ! I F(BEGINS(sectorValue,'Travel_Agent'), lblPAXTitle, 'Application for approval as' + IF(OR(BEGINS(newForm.Agent_Type__c, 'I'),BEGINS(newForm.Agent_Type__c, 'E')), ' an ', ' a ') + newForm.Agent_Type__c) } -->
+                {!IF(isNoticeOfChange, lblNoCRequest,
+                IF(BEGINS(sectorValue,'Travel_Agent'), lblPAXTitle,
+                IF(newForm.Agent_Type__c == 'IATA Cargo Agent', lblCargoTitle,
+                IF(newForm.Agent_Type__c == 'EACP Intermediary', lblEACPTitle,
+                IF(newForm.Agent_Type__c == 'CASS Associate', lblCASSTitle,
+                IF(newForm.Agent_Type__c == 'Import Agent', lblImporAgentTitle,
+                IF(newForm.Agent_Type__c == 'Courier', lblCourierTitle,
+                $Label.ISSP_AMS_StepsAll_Application_Approval_Title)))))))}
+            </h3>
+        </div>
+        <div class="panel-body" id="body-enquiries">
+            <apex:form>
+                <div class="progress" style="{!IF(isPassAccreditation==false, 'display:block', 'display:none')}">
+                    <!--<div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
                 <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!lblStepA}" id="Prev1"/>   Comment by DB, the div commandlink below has same ID, and styles of div are more like the others  -->
-        <div class="progress iata-tabs">
-            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                <apex:commandLink styleclass="link-white" action="{!goToStep1}" id="Prev1">
-                    <apex:outputText value="{!lblStepA}" escape="false"/>
-                </apex:commandLink>
-            </div>
-            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-                <apex:commandLink styleclass="link-white" action="{!goToStep2}" id="Prev2">
-                    <apex:outputText value="{!lblStepB}" escape="false"/>
-                </apex:commandLink>
-            </div>
-            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                <apex:commandLink styleclass="link-white" action="{!goToStep3}" id="Prev3">
-                    <apex:outputText value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" escape="false"/>
-                </apex:commandLink>
-            </div>
-            <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;">
-                <apex:outputText value="{!lblStepD}" escape="false"/>
-            </div>
-            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                <apex:commandLink styleclass="link-white" action="{!goToStep5}" id="Next5">
-                    <apex:outputText value="{!lblStepE}" escape="false"/>
-                </apex:commandLink>
-            </div>
-        </div>
-        <div class="progress" style="{!IF(isPassAccreditation==true, 'display:block', 'display:none')}">
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 30%;">
-                <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!goToStep2}" value="{!lblStepA}" id="Prev2PASS"/>
-            </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 27%;">
-               <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!goToStep3}" value="{!lblStepB}" id="Prev3PASS"/>
-            </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                {!lblStepC}
-            </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 21%">
-                <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!goToStep5}" value="{!lblStepD}" id="Next5PASS"/>
-            </div>
-        </div>
-        </apex:form>
-     <div class="col-md-12">
-        <apex:variable var="sectorValueLabel" value="{!IF(sectorValue=='Travel_Agent', $Label.ISSP_Travel_Agent, IF(newlabels, $Label.ISSP_Cargo_Agent_New, $Label.ISSP_Cargo_Agent))}" />
-        <apex:pageBlock mode="detail" id="theBlock" title="{!IF(isPassAccreditation==true,$Label.ISSP_Requirements_PASS,amsCountryLabel+' - '+ IF(displayLanguage=='en_US', sectorValueLabel, $Label.ISSP_Requirements)+' '+ IF(displayLanguage=='en_US', $Label.ISSP_Requirements, sectorValueLabel))}">
-            <div class="bg-info"><strong>{!$Label.ISSP_AMS_Step4_File_Upload}</strong></div>
-            <br />
-                <apex:pageMessages />
-                      <div id="loading" style="display:none; width:100%">
-                        <div style="height:100%;width:100%;z-index:5; position:absolute;background:black;opacity:0.5;" ></div>
+                    <div class="progress iata-tabs">
+                        <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20"
+                            aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                            <apex:commandLink styleclass="link-white" action="{!goToStep1}" id="Prev1">
+                                <apex:outputText value="{!lblStepA}" escape="false" />
+                            </apex:commandLink>
+                        </div>
+                        <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40"
+                            aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
+                            <apex:commandLink styleclass="link-white" action="{!goToStep2}" id="Prev2">
+                                <apex:outputText value="{!lblStepB}" escape="false" />
+                            </apex:commandLink>
+                        </div>
+                        <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60"
+                            aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                            <apex:commandLink styleclass="link-white" action="{!goToStep3}" id="Prev3">
+                                <apex:outputText value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}"
+                                    escape="false" />
+                            </apex:commandLink>
+                        </div>
+                        <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="80"
+                            aria-valuemin="0" aria-valuemax="100" style="width: 16%;">
+                            <apex:outputText value="{!lblStepD}" escape="false" />
+                        </div>
+                        <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100"
+                            aria-valuemin="0" aria-valuemax="100" style="width: 15%">
+                            <apex:commandLink styleclass="link-white" action="{!goToStep5}" id="Next5">
+                                <apex:outputText value="{!lblStepE}" escape="false" />
+                            </apex:commandLink>
+                        </div>
+                    </div>
+                    <div class="progress" style="{!IF(isPassAccreditation==true, 'display:block', 'display:none')}">
+                        <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40"
+                            aria-valuemin="0" aria-valuemax="0" style="width: 30%;">
+                            <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!goToStep2}"
+                                value="{!lblStepA}" id="Prev2PASS" />
+                        </div>
+                        <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60"
+                            aria-valuemin="0" aria-valuemax="100" style="width: 27%;">
+                            <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!goToStep3}"
+                                value="{!lblStepB}" id="Prev3PASS" />
+                        </div>
+                        <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0"
+                            aria-valuemax="100" style="width: 22%;">
+                            {!lblStepC}
+                        </div>
+                        <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100"
+                            aria-valuemin="0" aria-valuemax="100" style="width: 21%">
+                            <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!goToStep5}"
+                                value="{!lblStepD}" id="Next5PASS" />
+                        </div>
+                    </div>
+            </apex:form>
+            <div class="col-md-12">
+                <apex:variable var="sectorValueLabel"
+                    value="{!IF(sectorValue=='Travel_Agent', $Label.ISSP_Travel_Agent, IF(newlabels, $Label.ISSP_Cargo_Agent_New, $Label.ISSP_Cargo_Agent))}" />
+                <apex:pageBlock mode="detail" id="theBlock"
+                    title="{!IF(isPassAccreditation==true,$Label.ISSP_Requirements_PASS,amsCountryLabel+' - '+ IF(displayLanguage=='en_US', sectorValueLabel, $Label.ISSP_Requirements)+' '+ IF(displayLanguage=='en_US', $Label.ISSP_Requirements, sectorValueLabel))}">
+                    <div class="bg-info"><strong>{!$Label.ISSP_AMS_Step4_File_Upload}</strong></div>
+                    <br />
+                    <apex:pageMessages />
+                    <div id="loading" style="display:none; width:100%">
+                        <div style="height:100%;width:100%;z-index:5; position:absolute;background:black;opacity:0.5;">
+                        </div>
                         <div style="border:1px solid black; background:white; text-align:center;
                         display: inline-block; padding: 1em; padding-left: 3em; padding-right: 3em;
-                        position: absolute; top:60%; left:45%; z-index:10;" >
-                        <apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>{!$Label.ISSP_AMS_Updating_Files}
+                        position: absolute; top:60%; left:45%; z-index:10;">
+                            <apex:image url="{!URLFOR($Resource.loadinggif)}" /><br />{!$Label.ISSP_AMS_Updating_Files}
+                        </div>
                     </div>
-                    </div>
-    <apex:variable var="cnt" value="{!0}" />
-    <apex:repeat value="{!List_CountryReqments}" var="reqs">
-        <apex:variable var="cnt" value="{!cnt+1}" />
-            <c:ISSP_AMS_FormUpload reqCnt="{!cnt}"
-            reqRequired="{!reqs.File_to_Upload__c}"
-            reqName="{!reqs.Name}"
-            reqDescription="{!reqs.Requirement_text__c}"
-            reqIdentifier="{!reqs.File_Identifier2__c}"  
-            rendered="{!NOT(ISBLANK(reqs.File_Identifier2__c))}"     
-        />
-        <apex:outputPanel rendered="{!(ISBLANK(reqs.File_Identifier2__c))}">
-            <div class = "well">
-            <apex:outputText style="font-weight:bold" value="{!reqs.Name}" escape="false"/>
-            <br/> 
-            <apex:outputText value="{!reqs.Requirement_text__c}" escape="false"/>
-            <br/>
-            </div>
-        </apex:outputPanel>
-    </apex:repeat>
-       </apex:pageBlock>
-            <apex:form id="UploadForm">
-                <apex:pageBlock >
-                    <apex:pageBlockButtons location="bottom">
-                        <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-right" action="{!goToStep5}" value="{!$Label.ISSP_Next}"/>
-                        <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-right" action="{!goToStep3}" value="{!$Label.ISSP_Back}"/>
-                        <apex:commandButton styleClass="iatabtn iatabtn-danger iatabtn-left" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" /> 
-                    </apex:pageBlockButtons>
+                    <apex:variable var="cnt" value="{!0}" />
+                    <apex:repeat value="{!List_CountryReqments}" var="reqs">
+                        <apex:variable var="cnt" value="{!cnt+1}" />
+                        <c:ISSP_AMS_FormUpload reqCnt="{!cnt}" reqRequired="{!reqs.File_to_Upload__c}"
+                            reqName="{!reqs.Name}" reqDescription="{!reqs.Requirement_text__c}"
+                            reqIdentifier="{!reqs.File_Identifier2__c}"
+                            rendered="{!NOT(ISBLANK(reqs.File_Identifier2__c))}" />
+                        <apex:outputPanel rendered="{!(ISBLANK(reqs.File_Identifier2__c))}">
+                            <div class="well">
+                                <apex:outputText style="font-weight:bold" value="{!reqs.Name}" escape="false" />
+                                <br />
+                                <apex:outputText value="{!reqs.Requirement_text__c}" escape="false" />
+                                <br />
+                            </div>
+                        </apex:outputPanel>
+                    </apex:repeat>
                 </apex:pageBlock>
-            </apex:form>
-         </div>               
-      </div>
-    </div>    
+                <apex:form id="UploadForm">
+                    <apex:pageBlock>
+                        <apex:pageBlockButtons location="bottom">
+                            <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-right" action="{!goToStep5}"
+                                value="{!$Label.ISSP_Next}" />
+                            <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-right" action="{!goToStep3}"
+                                value="{!$Label.ISSP_Back}" />
+                            <apex:commandButton styleClass="iatabtn iatabtn-danger iatabtn-left"
+                                action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" />
+                        </apex:pageBlockButtons>
+                    </apex:pageBlock>
+                </apex:form>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
 </apex:page>

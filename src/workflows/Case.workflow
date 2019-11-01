@@ -2863,10 +2863,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>gilj@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3004,10 +3000,6 @@
         </recipients>
         <recipients>
             <recipient>dovgano@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>garciam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

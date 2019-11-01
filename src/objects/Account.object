@@ -6813,7 +6813,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValue>Airline</controllingFieldValue>
                 <controllingFieldValue>Airline Supplier</controllingFieldValue>
                 <controllingFieldValue>Association</controllingFieldValue>
-                <controllingFieldValue>Education</controllingFieldValue>
                 <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <controllingFieldValue>Training</controllingFieldValue>
                 <controllingFieldValue>Equipment Manufacturer</controllingFieldValue>
