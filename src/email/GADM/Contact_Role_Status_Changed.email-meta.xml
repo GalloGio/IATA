@@ -9,7 +9,7 @@
 
 Role “{!Contact_Role_Service_Access__c.Contact_Roles_Name__c}” status has been changed to {!Contact_Role_Service_Access__c.Status__c}.
 
-Please note that the role of “{!Contact_Role_Service_Access__c.Contact_Roles_Name__c}” *tense* {!Contact_Role_Service_Access__c.Status__c}. For a full explanation of user roles and permission, please refer to the Program Operations Manual.
+Please note that the role of “{!Contact_Role_Service_Access__c.Contact_Roles_Name__c}” for {!Contact_Role_Service_Access__c.Contact__c} to GADM Service for {!Contact_Role_Service_Access__c.Account__c} *tense* {!Contact_Role_Service_Access__c.Status__c}. For a full explanation of user roles and permission, please refer to the Program Operations Manual.
 
 GADM Team
 gadm@iata.org</textOnly>

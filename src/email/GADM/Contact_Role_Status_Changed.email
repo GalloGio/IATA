@@ -260,9 +260,9 @@
         <!-- Logo + Share this email : END --><!-- Header : BEGIN -->
         <tr>
             <td style="padding: 15px 30px; font-family: sans-serif; font-size: 12px; line-height: 16px; color: #000000;" class=""><h4 style="margin: 0 0 15px; font-size: 14px; line-height: 125%; color: #1e32fa; font-weight: normal;"></h4>
-                <p>Dear {!Contact.Name}{!Receiving_User.Name},</p>
+                <p>Dear member,</p>
                 <p style="margin: 0;">Role “{!Contact_Role_Service_Access__c.Contact_Roles_Name__c}” status has been changed to {!Contact_Role_Service_Access__c.Status__c}.</p>
-                <p style="margin: 0;">Please note that the role of “{!Contact_Role_Service_Access__c.Contact_Roles_Name__c}” *tense* {!Contact_Role_Service_Access__c.Status__c}. For a full explanation of user roles and permission, please refer to the Program Operations Manual.</p>
+                <p style="margin: 0;">Please note that the role of “{!Contact_Role_Service_Access__c.Contact_Roles_Name__c}” for {!Contact_Role_Service_Access__c.Contact__c} to GADM Service for {!Contact_Role_Service_Access__c.Account__c} *tense* {!Contact_Role_Service_Access__c.Status__c}. For a full explanation of user roles and permission, please refer to the Program Operations Manual.</p>
             </td>
         </tr>
 
