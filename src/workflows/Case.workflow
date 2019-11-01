@@ -2835,7 +2835,7 @@
         <description>SIDRA_DEF0101 Key account magament Tech DEF</description>
         <protected>false</protected>
         <recipients>
-            <recipient>david.oliveira.bento@pwc.com</recipient>
+            <recipient>david.oliveira.bento@pwc.com.pass</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2971,7 +2971,7 @@
         <description>SIDRA_DEF0102 Key account magament non payment DEF</description>
         <protected>false</protected>
         <recipients>
-            <recipient>david.oliveira.bento@pwc.com</recipient>
+            <recipient>david.oliveira.bento@pwc.com.pass</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -15784,7 +15784,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>equals</operation>
             <value>CHG – Data Maintenance</value>
         </criteriaItems>
-	<criteriaItems>
+	   <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
             <value>PASS Country Aggregator,PASS Participation</value>
