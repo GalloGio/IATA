@@ -8,9 +8,9 @@
             <publicGroup>IATAIWProjectTeam</publicGroup>
         </publicGroups>
         <roles>
-            <role>IATAInvoiceWorksA</role>
-            <role>IATAIWCallCentreA</role>
-            <role>iPayablesA</role>
+            <role>IATAInvoiceWorks</role>
+            <role>IATAIWCallCentre</role>
+            <role>iPayables</role>
         </roles>
     </queueMembers>
     <queueSobject>

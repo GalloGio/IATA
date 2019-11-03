@@ -36,7 +36,7 @@
                                 <div class="slds-col slds-size_1-of-1">
                                     <div class="slds-grid slds-wrap slds-gutters_xx-small slds-p-vertical_xxx-small">
                                         <template for:each={categories} for:item="keyValue" for:index="keyValueIndex">
-                                            <div key={keyValue.name}>
+                                            <div key={keyValue.apiName}>
                                                 <c-portal-documents-category document-object={keyValue} onfilter={handleFilter} oncategoryfilter={categoryFilter}></c-portal-documents-category>
                                             </div>
                                         </template>

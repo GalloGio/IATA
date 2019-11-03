@@ -4,7 +4,7 @@
     <name>Europe PwC</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>MADHubACCManagerI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>MADHubACCManager</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>
