@@ -279,7 +279,7 @@ public class AMS_ChangeCodesHelper {
         Id oscarId = null;
 
         if (oscar != null)
-           
+            oscarId = oscar.Id;
 
         //Added this query and if statement so that if the process is for a PASS Accreditation, the Agency Applied Change code is forced to have the To_Publish_in_e_Bulletin__c field to false   
         Account oscarAccount=[SELECT Id, Sector__c, Category__c FROM Account WHERE Id=:oscarAgency.Id LIMIT 1];
@@ -287,7 +287,6 @@ public class AMS_ChangeCodesHelper {
         if(oscarAccount.Sector__c==AMS_Utils.SECTOR_PASS && oscarAccount.Category__c==AMS_Utils.categoryPass){
             changeCode.publishedOnEBulletin=false;
         }
-            oscarId = oscar.Id; 
         
         String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
