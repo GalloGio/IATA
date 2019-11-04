@@ -36,6 +36,7 @@ public class IDCard_RenewalRequestTest {
 		'	  \"quantity\": 1,'+
 		'	  \"price\": 25.00'+
 		'	},'+
+		'	{'+
 		'	  \"id\": \"PRINTING\",'+
 		'	  \"description\": \"Physical Card\",'+
 		'	  \"quantity\": 1,'+
