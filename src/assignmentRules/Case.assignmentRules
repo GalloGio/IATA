@@ -2629,8 +2629,11 @@ RecordType.Name = &quot;Cases - Global&quot;
 ),
 or (
 ISPICKVAL(Topic__c, &quot;Weblink&quot;) ,
-ISPICKVAL(Topic__c, &quot;NDClink&quot;)
-))</formula>
+ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;),
+ Subtopic__c = &quot;BSP NDC API&quot;
+),
+NOT(ISPICKVAL( Priority , &quot;Emergency&quot;))
+)</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_OnlineStore</assignedTo>

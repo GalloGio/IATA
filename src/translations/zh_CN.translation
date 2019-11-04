@@ -1789,7 +1789,7 @@
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Airline_Changes_Access --></label>
+        <label>您可以通过&lt;a href= &apos;/s/support-reach-us&apos;&gt;联系我们页面&lt;/a&gt;提交您的帐户信息变更</label>
         <name>CSP_Airline_Changes_Access</name>
     </customLabels>
     <customLabels>
@@ -1813,7 +1813,7 @@
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Breadcrumb_CaseDetails_Title --></label>
+        <label>案件详情</label>
         <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
@@ -1849,7 +1849,7 @@
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Breadcrump_You_IATA --></label>
+        <label>您和 IATA</label>
         <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
@@ -1909,7 +1909,7 @@
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_CompanyAdministration_Link --></label>
+        <label>您可以通过 IATA 认证和更改服务提交帐户详细信息变更。</label>
         <name>CSP_CompanyAdministration_Link</name>
     </customLabels>
     <customLabels>
@@ -1941,7 +1941,7 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_CreatedOn --></label>
+        <label>创建于</label>
         <name>CSP_CreatedOn</name>
     </customLabels>
     <customLabels>
@@ -2065,7 +2065,7 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_LastUpdate --></label>
+        <label>最后更新</label>
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
@@ -2077,7 +2077,7 @@
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Manage_Recipients --></label>
+        <label>管理收件者</label>
         <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
@@ -2213,7 +2213,7 @@
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Details Details page --></label>
+        <label>收件者</label>
         <name>CSP_Recipients</name>
     </customLabels>
     <customLabels>
@@ -2453,11 +2453,11 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Access --></label>
+        <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;点击这里直接访问 IATA 认证和更改&lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Request --></label>
+        <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt;点击这里请求 IATA 认证和更改&lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
     </customLabels>
     <customLabels>
@@ -2501,15 +2501,15 @@
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_YouAndIATA --></label>
+        <label>您和 IATA</label>
         <name>CSP_YouAndIATA</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_YouIATA_Highlights --></label>
+        <label>为您精选的重点服务</label>
         <name>CSP_YouIATA_Highlights</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_YouIATA_Highlights_Text --></label>
+        <label>您可以在这里发现各种 IATA 服务、出版物、产品和航空业的资源。根据您的兴趣和活动历史纪录特别定制。</label>
         <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
@@ -12545,7 +12545,7 @@ and
         <name>ISSP_Account_not_approved</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>批准</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
@@ -13331,7 +13331,7 @@ and
         <name>ISSP_Deny_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Description --></label>
+        <label>描述</label>
         <name>ISSP_Description</name>
     </customLabels>
     <customLabels>
@@ -14751,7 +14751,7 @@ and
         <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>以管理员身分批准</label>
         <name>ISSP_MakeAdmin</name>
     </customLabels>
     <customLabels>
@@ -20438,7 +20438,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Details Details page --></label>
+        <label>额外详细信息</label>
         <name>csp_AdditionalDetails</name>
     </customLabels>
     <customLabels>
@@ -20730,7 +20730,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_Query</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Details Details page --></label>
+        <label>还有其他需要通知的对象吗？</label>
         <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>

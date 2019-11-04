@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>xce679744a129e1885e1c17b466de3501f0</label>
+    <label>x6d9afa228dbf1904ae813cfba0c604aab1</label>
     <protected>false</protected>
     <values>
         <field>Account_Categories__c</field>
@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>DataCategoryLabel_en_US__c</field>
-        <value xsi:type="xsd:string">Self-study courses</value>
+        <value xsi:type="xsd:string">Payment</value>
     </values>
     <values>
         <field>DataCategoryLabel_es__c</field>
@@ -76,15 +76,15 @@
     </values>
     <values>
         <field>DataCategoryName__c</field>
-        <value xsi:type="xsd:string">Training</value>
+        <value xsi:type="xsd:string">Data_Products</value>
     </values>
     <values>
         <field>DataSubtopicName__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Payment_FFP_Frequent_Flyer_Program_Benchmark</value>
     </values>
     <values>
         <field>DataTopicName__c</field>
-        <value xsi:type="xsd:string">Self_study_courses</value>
+        <value xsi:type="xsd:string">FFP</value>
     </values>
     <values>
         <field>FAQsStructure__c</field>
@@ -104,7 +104,7 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:double">4.0</value>
     </values>
     <values>
         <field>Permission_Set_Name__c</field>
