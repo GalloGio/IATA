@@ -427,6 +427,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 				pd.Oscar__c = this.oscar.Id;
 				pd.Account__c = saw.acct.Id;
 				pd.RecordTypeId = rtAgencyInvolved;
+				pd.ANG_Location_Type_Conversion__c  = saw.acct.Location_Type__c;
 				processDetailLst.add(pd);
 			}
 		}
