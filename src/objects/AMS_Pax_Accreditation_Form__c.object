@@ -952,6 +952,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+		<displayedFields>
+            <field>Preferred_RHC_currency__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Hierarchy Conversion To MC</label>
     </fieldSets>
     <fieldSets>

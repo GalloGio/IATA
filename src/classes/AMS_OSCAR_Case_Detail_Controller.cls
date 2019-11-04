@@ -179,8 +179,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             String sCorrectionType_of_change = '';
 
             if(oscarObj != null && oscarObj.Type_of_change__c != null) editableFields = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.Type_of_change__c);
-            if(oscarObj != null && oscarObj.ANG_Type_of_change__c != null && oscarObj.Process__c != 'ANG.CONVERT.ST.TO.MC') editableFields = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.ANG_Type_of_change__c);
-            if(oscarObj != null && oscarObj.ANG_Type_of_change__c != null && oscarObj.Process__c == 'ANG.CONVERT.ST.TO.MC') editableFields = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.ANG_Type_of_change__c+'_CONVERSION');
+            if(oscarObj != null && oscarObj.ANG_Type_of_change__c != null && !isConversionFromStandardToMulticountry) editableFields = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.ANG_Type_of_change__c);
+            if(oscarObj != null && oscarObj.ANG_Type_of_change__c != null && isConversionFromStandardToMulticountry) editableFields = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.ANG_Type_of_change__c+'_CONVERSION');
 
             //FM AMSU-1
             //AMSU-151 (AMSU-1) - added chech for isVATnumberSpecialCase in order to use the new 
@@ -228,7 +228,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     private Boolean isEditable(String fieldName){
 
-        if(this.oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == 'Multicountry' && this.oscarObj.process__c != 'ANG.CONVERT.ST.TO.MC'){
+        if(this.oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && !isConversionFromStandardToMulticountry){
 			return false;
 		}
 		
@@ -243,10 +243,10 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         //if(fieldName == 'Location_Type__c' && isNewGenProcess) return false;
         if(fieldName == 'ANG_Accreditation_Type__c' && isNewGenProcess && !isAgencyChanges) return false;  
 		if(fieldName == 'Location_Type__c' && !isAgencyChanges && accreditationObj.Location_Type__c == AMS_Utils.HO && !String.isBlank(accreditationObj.IATACode__c)) return false; //AC-ENHC0012276
-        if(!isAgencyChanges && !isAgencyCorrection  && this.oscarObj.process__c != 'ANG.CONVERT.ST.TO.MC') return true;
+        if(!isAgencyChanges && !isAgencyCorrection  && !isConversionFromStandardToMulticountry) return true;
         if (fieldName == 'Remittance_frequency__c'
             && isNewGenProcess
-            && this.oscarObj.process__c != 'ANG.CONVERT.ST.TO.MC'
+            && !isConversionFromStandardToMulticountry
             && ((oscarObj.Process__c == AMS_Utils.NEWAE && ! rfPerState)
                 || (oscarObj.Process__c == AMS_Utils.MCAE && isAEAccount && ! rfPerState)))
         {
@@ -445,6 +445,11 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         private set;
     }
 
+	public Boolean isConversionFromStandardToMulticountry { 
+		get { return oscarObj.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY;}
+		set;
+	}
+
     public Boolean isOSCARCorrection{
         get{
             return oscarObj != null && oscarObj.Process__c == AMS_Utils.NGCORRECTION;
@@ -634,7 +639,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean hasEditableFields{
         get{
 
-            if(oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == 'Multicountry' && this.oscarObj.process__c != 'ANG.CONVERT.ST.TO.MC'){
+            if(oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && !isConversionFromStandardToMulticountry){
                 return false;
             }
             
