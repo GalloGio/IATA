@@ -258,6 +258,7 @@ private class ContactHandlerTest {
                 SELECT Id, Checkbox_Fieldname__c, Parent__r.MasterLabel
                 FROM Portal_Application_Contact_Visibility__mdt
                 WHERE Add_Service_On_Checked__c = true
+                AND Parent__r.MasterLabel='Management Information Report'
                 LIMIT 1];
         System.assert(visibility!=null);
         System.assert(visibility.Checkbox_Fieldname__c!=null);
