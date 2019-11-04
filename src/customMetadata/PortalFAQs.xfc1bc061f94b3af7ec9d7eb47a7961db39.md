@@ -79,6 +79,10 @@
         <value xsi:type="xsd:string">Baggage_Prorate</value>
     </values>
     <values>
+        <field>DataCategoryVisibility__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:type="xsd:string">BP_General_Information</value>
     </values>
