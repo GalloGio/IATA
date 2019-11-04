@@ -20307,13 +20307,6 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
         <errorMessage>Changing a BSPlink user&apos;s email may cause problems with SSO.If the user&apos;s access to BSPlink is to be switched to another email, do the changes in BSPlink. Otherwise if the contact is changing their email, please post a comment on the portal chatter group</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Email_Update_Date_Must_be_Added</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND(ISCHANGED( Email_Status__c ), OR( Email_Status_Update__c    &lt;    TODAY(), ISNULL( Email_Status_Update__c  )))</errorConditionFormula>
-        <errorDisplayField>Email_Status_Update__c</errorDisplayField>
-        <errorMessage>Email Status has been modified, please enter update date</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Has_Authorized_Signatory_External</fullName>
         <active>true</active>
         <description>External users can&apos;t edit the first and last name nor the email of the Account if there is at least 1 Authorized Signatory.</description>
