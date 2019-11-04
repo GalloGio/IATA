@@ -2629,8 +2629,11 @@ RecordType.Name = &quot;Cases - Global&quot;
 ),
 or (
 ISPICKVAL(Topic__c, &quot;Weblink&quot;) ,
-ISPICKVAL(Topic__c, &quot;NDClink&quot;)
-))</formula>
+ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;),
+ Subtopic__c = &quot;BSP NDC API&quot;
+),
+NOT(ISPICKVAL( Priority , &quot;Emergency&quot;))
+)</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_OnlineStore</assignedTo>
@@ -7038,7 +7041,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <template>SIS_Help_Desk/SIS_Help_Desk_Case_Assignment</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>garciam@iata.org</assignedTo>
+            <assignedTo>shalbakf@iata.org</assignedTo>
             <assignedToType>User</assignedToType>
             <criteriaItems>
                 <field>Case.Origin</field>

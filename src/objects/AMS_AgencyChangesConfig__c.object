@@ -159,6 +159,7 @@
     <listViews>
         <fullName>Multiple_changes_combination</fullName>
         <columns>NAME</columns>
+        <columns>Process__c</columns>
         <columns>TC_Legal_status__c</columns>
         <columns>TC_Name__c</columns>
         <columns>TC_Location__c</columns>
@@ -169,7 +170,6 @@
         <columns>TC_Ownership_to_IATA_Agent__c</columns>
         <columns>TC_Ownership_to_non_IATA_Agent__c</columns>
         <columns>TC_Removal_of_trade_name__c</columns>
-        <columns>SETUP_TYPE</columns>
         <columns>TCA_Not_Applicable_Steps__c</columns>
         <columns>TCA_Sanity_check__c</columns>
         <columns>TCA_Manager_approval__c</columns>

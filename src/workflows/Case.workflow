@@ -207,12 +207,9 @@
     </alerts>
     <alerts>
         <fullName>Bankingcase</fullName>
+        <ccEmails>mad-gdc-banking@iata.org</ccEmails>
         <description>SCE: New Banking case</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>ylonenj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>All/EUR_CaseassignmentBanking</template>
     </alerts>
@@ -1000,7 +997,7 @@
         <description>SCE: Case wrongly escalated</description>
         <protected>false</protected>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -2823,7 +2820,7 @@
         <description>SIDRA_00_Created for not accepted country</description>
         <protected>false</protected>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -4089,6 +4086,66 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Approval_notifications_DPC_Systems/Rejection_of_CR</template>
+    </alerts>
+    <alerts>
+        <fullName>Warning</fullName>
+        <description>Warning First Contact with Client</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>Warning2_First_Contact_with_Client</fullName>
+        <description>Warning First Contact with Client</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>WarningEmail_Maximum_Case_Age_with_IATA</fullName>
+        <description>WarningEmail Maximum Case Age with IATA</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>Warning_Email_Maximum_Case_Age_with_IATA</fullName>
+        <description>WarningEmail Maximum Case Age with IATA</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>Warning_First_Contact_with_Client</fullName>
+        <description>Warning First Contact with Client</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>Warning_Maximum_Age_with_IATA</fullName>
+        <description>WarningEmail Maximum Case Age with IATA</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
     </alerts>
     <alerts>
         <fullName>X1st_email_on_CS_escalated_case</fullName>

@@ -46,3 +46,7 @@
     letter-spacing: normal;
     color: #333;
 }
+
+.paddingRight {
+    padding-right: 0;
+}
