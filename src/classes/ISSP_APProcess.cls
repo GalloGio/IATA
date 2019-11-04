@@ -1110,6 +1110,7 @@ global without sharing class ISSP_APProcess {
     }
 
     public Pagereference goToFinalStep(){
+        List<Attachment> attch = getAttachList();
         try{
             if (isBSP || isCASS) {
                 if (!getShowJoinICCSQuestion()) {
@@ -1303,6 +1304,7 @@ global without sharing class ISSP_APProcess {
     public List<SelectOption> getItems() {
         List <AP_Country_Requierment__c> isoListJoining;
         List <Services_Rendered__c> isoListChange;
+        List<SelectOption> options = new List<SelectOption>();
 
         strOperationType = Apexpages.currentPage().getParameters().get('strOT');
 
@@ -1358,7 +1360,7 @@ global without sharing class ISSP_APProcess {
             }
         }
 
-        List<SelectOption> options = new List<SelectOption>();
+        
         Set<String> sISOCode = New Set<String>();
 
             options.add(new SelectOption('', '--None--'));
