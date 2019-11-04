@@ -132,28 +132,22 @@
                     line-height: 1.63;
                     letter-spacing: normal;
                     color: #525252;">
-                        You can manage the people that you want to be informed about this case.
-                        Add new recipients or remove existing ones.
+                        {labels.CSP_AddOrRemove_Recipients}
                     </div>
 
-                    <div class="slds-p-around_small" style="font-size: 14px; font-weight: normal; font-style: normal; font-stretch: normal; line-height: 1.43; letter-spacing: normal; color: #525252;">
+                    <div style="font-size: 14px; font-weight: normal; font-style: normal; font-stretch: normal; line-height: 1.43; letter-spacing: normal; color: #525252;">
                         E-mail Adress
                     </div>
-                    <div class="aroundLightGrayBorder slds-p-around_small">
-                        <lightning-input
-                            name="newRecipientTextInput"
-                            class="hideInputLabel borderlessInput newRecipientTextInput" 
-                            onchange={handleInputChange}
-                            value={newRecipient}
-                            style="display: inline-block;width: 80%;" 
-                            type="email" >
-                        </lightning-input>
-                        <lightning-button label="Add" variant="neutral" onclick={addNewRecipientButtonClick} style="display: inline-block;float: right;"></lightning-button>
+                    <div class="slds-p-vertical_small">
+                        <c-portal-search-lookup-component onsearch={handleContactSearch}
+                        item-name="emaillookup" data-id="emaillookup" onemaillookup={showEmailResults}
+                        required-class={requiredClass} placeholder="Search Email Recipient"
+                        onselectionchange={addNewRecipientButtonClick}>
+                    </c-portal-search-lookup-component>
                     </div>
-                    <div class="slds-m-top_large" style="min-height:150px;">
-
+                    <div class="slds-scrollable_y recipients-box">
                         <template for:each={lstRecipients} for:item="recipient">
-                            <span key={recipient.id} class="slds-p-around_x-small slds-m-around_xx-small" style="display:inline-block;border-radius: 1px;background-color: #f7f8fc;font-size: 14px; font-weight: normal; font-style: normal; font-stretch: normal; line-height: 1.71; letter-spacing: normal;color: #4a4d61;">
+                            <span key={recipient.id} class="slds-p-around_x-small slds-m-around_xx-small custom-recipients">
                                 {recipient.email}
                                 <lightning-icon class="cursorPointer" key={recipient.id} icon-name="utility:close" size="x-small" onclick={removeRecipient} data-item={recipient.id}></lightning-icon>
                             </span>
