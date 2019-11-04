@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>DataCategoryLabel_en_US__c</field>
-        <value xsi:type="xsd:string">Product delivery</value>
+        <value xsi:type="xsd:string">NDClink</value>
     </values>
     <values>
         <field>DataCategoryLabel_es__c</field>
@@ -80,7 +80,7 @@
     </values>
     <values>
         <field>DataSubtopicName__c</field>
-        <value xsi:type="xsd:string">Product_delivery_NDClink</value>
+        <value xsi:type="xsd:string">NDClink1</value>
     </values>
     <values>
         <field>DataTopicName__c</field>
