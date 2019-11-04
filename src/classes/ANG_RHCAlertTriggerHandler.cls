@@ -1059,20 +1059,25 @@ public class ANG_RHCAlertTriggerHandler{
     private void sendEmailToMailingList(Map<ANG_Risk_Alert__c, AMS_Country_Specific_Attribute__c> alertsToNotify, List<String> toAddresses) {
 
         if(toAddresses.isEmpty()) {
-            System.debug('###sendEmailToMailingList: No emails found found');
+            System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCAlertTriggerHandler - sendEmailToMailingList] No emails found');
             return;
         }
 
-        System.debug('###sendEmailToMailingList: toAddresses: ' + toAddresses);
+        System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCAlertTriggerHandler - sendEmailToMailingList] toAddresses: ' + toAddresses);
 
         List<OrgWideEmailAddress> orgWideEmail = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
 
         if (orgWideEmail.isEmpty()) {
-            System.debug('###sendEmailToMailingList: No org wide email found');
+            System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCAlertTriggerHandler - sendEmailToMailingList] No org wide email found');
             return;
         }
 
         Map<Id, EmailTemplate> riskAlertTemplateMap = getRiskAlertEmailTemplates(alertsToNotify);
+
+		if(riskAlertTemplateMap.isEmpty()){
+			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCAlertTriggerHandler - sendEmailToMailingList] No email templates found');
+			return;
+		}
 
         Map<Id, Account> riskAlertAccountDetails = getAccountDetails(alertsToNotify.keySet());
 
@@ -1082,6 +1087,11 @@ public class ANG_RHCAlertTriggerHandler{
 
         for (ANG_Risk_Alert__c riskAlert: alertsToNotify.keySet()) {
             EmailTemplate template = riskAlertTemplateMap.get(riskAlert.Id);
+
+			if(template == NULL){
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCAlertTriggerHandler - sendEmailToMailingList] Email template not found for Risk Alert: ' + riskAlert.Name);
+				continue;
+			}
 
             String iataCode = riskAlertAccountDetails.get(riskAlert.id).IATACode__c;
             iataCode = (iataCode == null) ? '' : iataCode;
