@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>x41126f264ee6c79ca1c25bcce6ac2caddd</label>
+    <label>xf07e194a70cedaaab491b2d5c2b802639c12312</label>
     <protected>false</protected>
     <values>
         <field>Account_Categories__c</field>
@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>DataCategoryLabel_en_US__c</field>
-        <value xsi:type="xsd:string">Technical Issue</value>
+        <value xsi:type="xsd:string">BSP NDC API</value>
     </values>
     <values>
         <field>DataCategoryLabel_es__c</field>
@@ -76,15 +76,15 @@
     </values>
     <values>
         <field>DataCategoryName__c</field>
-        <value xsi:type="xsd:string">Data_Products</value>
+        <value xsi:type="xsd:string">Travel</value>
     </values>
     <values>
         <field>DataSubtopicName__c</field>
-        <value xsi:type="xsd:string">Technical_Issue_FFP_Frequent_Flyer_Program_Benchmark</value>
+        <value xsi:type="xsd:string">BSP_NDC_API</value>
     </values>
     <values>
         <field>DataTopicName__c</field>
-        <value xsi:type="xsd:string">FFP</value>
+        <value xsi:type="xsd:string">Passenger_BSP_Operations</value>
     </values>
     <values>
         <field>FAQsStructure__c</field>
@@ -104,7 +104,7 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:type="xsd:double">5.0</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Permission_Set_Name__c</field>

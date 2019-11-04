@@ -2630,7 +2630,8 @@ RecordType.Name = &quot;Cases - Global&quot;
 or (
 ISPICKVAL(Topic__c, &quot;Weblink&quot;) ,
 ISPICKVAL(Topic__c, &quot;NDClink&quot;)
-))</formula>
+)
+)</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_OnlineStore</assignedTo>
