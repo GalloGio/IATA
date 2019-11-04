@@ -29,13 +29,15 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             if (rfPerState != null)
                 return rfPerState;
 
-			List<IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{accreditationObj.Branch_Office_Country__c});
-			
-			if(!countries.isEmpty()){
-				IATA_ISO_Country__c cntry = countries.get(0);
-				rfPerStateBspId = cntry.AMS_Settlement_System__c;
-				rfPerState = cntry.AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
-				return rfPerState;
+			if(accreditationObj != NULL && accreditationObj.Branch_Office_Country__c != NULL){
+				List<IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{accreditationObj.Branch_Office_Country__c});
+				
+				if(!countries.isEmpty()){
+					IATA_ISO_Country__c cntry = countries.get(0);
+					rfPerStateBspId = cntry.AMS_Settlement_System__c;
+					rfPerState = cntry.AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
+					return rfPerState;
+				}
 			}
             
             rfPerState = false;
