@@ -18,7 +18,8 @@ public with sharing class IDCard_MobileAppRenewalService
         'VI', // Virgin Islands (unincorporated territory)
         'PW', // Palau (associated state)
         'MH', // Marshall Islands (associated state)
-        'FM'  // Federated States of Micronesia (associated state)
+        'FM', // Federated States of Micronesia (associated state)
+		'UP'  // United States of America
     };
 
     /**
