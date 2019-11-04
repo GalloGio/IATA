@@ -213,6 +213,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.pageParams = getParamsFromPage();
         if (this.pageParams) {
             this.serviceId = this.pageParams.serviceId;
+            
+            if (this.pageParams.openRequestService){
+                this.showConfirm = true;
+            }
+
         }
 
         getLoggedUser().then(userResult => {
