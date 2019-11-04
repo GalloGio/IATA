@@ -79,10 +79,6 @@
         <value xsi:type="xsd:string">Travel</value>
     </values>
     <values>
-        <field>DataCategoryVisibility__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:type="xsd:string">TIESS_New_registration</value>
     </values>
