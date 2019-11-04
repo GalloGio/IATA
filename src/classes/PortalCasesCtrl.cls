@@ -811,11 +811,6 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
 	return lstToReturn;
 }
 
-    @AuraEnabled
-    public static DAL_WithoutSharing.ReturnWrapper submitNewMessage(String caseId, String messageTextAux){
-        return DAL_WithoutSharing.submitNewMessage(caseId,messageTextAux);
-    }
-
     /*
     * Method that adds a new Recipient for this case
     */

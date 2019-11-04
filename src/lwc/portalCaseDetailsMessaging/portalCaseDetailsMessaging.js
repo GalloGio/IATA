@@ -1,6 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
 import getCaseMessages from '@salesforce/apex/PortalCasesCtrl.getCaseMessages';
-import submitNewMessage from '@salesforce/apex/PortalCasesCtrl.submitNewMessage';
+import submitNewMessage from '@salesforce/apex/DAL_WithoutSharing.submitNewMessage';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
