@@ -340,6 +340,23 @@ body {
 .rightLinkBlueBorder {
     border-right: solid 1px #1e32fa;
 }
+
+.aroundMediumGrayBorder {
+    border: solid 1px #999999;
+    border-radius: 1px;
+}
+.topMediumGrayBorder {
+    border-top: solid 1px #999999;
+}
+.leftMediumGrayBorder {
+    border-left: solid 1px #999999;
+}
+.bottomMediumGrayBorder {
+    border-bottom: solid 1px #999999;
+}
+.rightMediumGrayBorder {
+    border-right: solid 1px #999999;
+}
 /* ############################################## */
 
 
@@ -835,6 +852,10 @@ lightning-datatable .slds-th__action {
 
 .text-linkBlue{
     color: #1e32fa;
+}
+
+.text-red{
+    color: #f04632;
 }
 
 .text-transparent{
@@ -1827,3 +1848,40 @@ visibility: hidden;
         padding: 4px 6px 2px 0px;
     }
 }
+/* USED TO FADE IN COMPONENTS */
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes fadeInKeyFrame {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+/* Standard syntax */
+@keyframes fadeInKeyFrame {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes fadeOutKeyFrame {
+    from {opacity:1;}
+    to {opacity:0;}
+}
+/* Standard syntax */
+@keyframes fadeOutKeyFrame {
+    from {opacity:1;}
+    to {opacity:0;}
+}
+/* if you want to fade in, use just this class */
+.fadeInCss{
+    -webkit-animation-name: fadeInKeyFrame; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.3s; /* Safari 4.0 - 8.0 */
+    animation-name: fadeInKeyFrame;
+    animation-duration: 0.3s;
+}
+/* if you want to fade out, use just this class */
+.fadeOutCss{
+    -webkit-animation-name: fadeOutKeyFrame; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.3s; /* Safari 4.0 - 8.0 */
+    animation-name: fadeOutKeyFrame;
+    animation-duration: 0.3s;
+}
+/*#################################*/
