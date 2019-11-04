@@ -1345,6 +1345,180 @@ private class CaseBeforeTriggerTest {
     system.assertEquals(false, cases[0].Action_needed_Small_Amount__c);
   }
 
+  
+  public static testmethod void TestSidraCases_3() {
+    Case aCase;
+    integer c = 0;
+    ID SidraPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+
+    insert new CASSAccumulationOccurrences__c(Number_Of_Occurrences__c = 3);
+    insert new CaseOccurrencesGoliveDate__c(Go_Live_Date__c = Date.today().addDays(-1));
+    insert new BSPAccumulationOccurrences__c(Number_Of_Occurrences__c = 3, Reported_Sales_Number_Of_Occurrences__c = 2);
+
+    AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
+        Name = 'BSP-SG',
+        RecordTypeId = AMS_Utils.RECTYPE_BSP,
+        Settlement_Model__c = 'Funds Received'
+    );
+
+    insert bspSG;
+    IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
+																IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
+                                IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
+                                IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' ,
+                                Enable_Minor_Changes_from_Portal__c = true, AMS_Settlement_System__c = bspSG.id,
+                                Local_language_Agency_details_required__c = true);
+    insert country;
+
+    Account account1 = new Account(IATACode__c = '1234567');    // 7 digits
+    account1.Name = 'Test account';
+    account1.BillingCity = 'Montreal';
+    account1.BillingCountry = 'Canada';
+    account1.BillingStreet = 'some street';
+    account1.Type = 'IATA Passenger Sales Agent';
+    account1.Location_Type__c = 'HO';
+    account1.IATA_ISO_Country__c = country.id;
+    insert account1;
+
+    AMS_Settlement_System__c bspSG2 = new AMS_Settlement_System__c(
+        Name = 'BSP-SG',
+        RecordTypeId = AMS_Utils.RECTYPE_BSP,
+        Settlement_Model__c = 'Reported Sales'
+    );
+
+    insert bspSG2;
+    IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', IATA_Contry_KR__c = 'test2',
+																IATA_COUNTRY_EN__c = 'testEN2' , IATA_Country_FR__c = 'testFR2' , IATA_Country_ZH__c = 'testZH2' ,
+                                IATA_Country_IT__c = 'testIT2' , IATA_Country_JP__c = 'testJP2' , ISO_Code__c = '89',
+                                IATA_Country_PT__c = 'testPT2' , IATA_Country_SP__c = 'testSP2' , Case_BSP_Country__c = 'test2' ,
+                                Enable_Minor_Changes_from_Portal__c = true, AMS_Settlement_System__c = bspSG2.id,
+                                Local_language_Agency_details_required__c = true);
+    insert country2;
+
+    Account account2 = new Account(IATACode__c = '1234567');    // 7 digits
+    account2.Name = 'Test account2';
+    account2.BillingCity = 'Montreal';
+    account2.BillingCountry = 'Canada';
+    account2.BillingStreet = 'some street';
+    account2.Type = 'IATA Passenger Sales Agent';
+    account2.Location_Type__c = 'HO';
+    account2.IATA_ISO_Country__c = country2.id;
+    insert account2;
+
+
+    Contact con = new Contact();
+    con.FirstName = 'Dummy';
+    con.LastName = 'Contact';
+    con.Type_of_Contact__c = 'IFAP Contact';
+    con.AccountId = account1.Id;
+    con.Email = 'some@email.org';
+    con.Financial_Assessment_Contact__c = true;
+    insert con;
+
+    
+    Contact con2 = new Contact();
+    con2.FirstName = 'Dummy2';
+    con2.LastName = 'Contact2';
+    con2.Type_of_Contact__c = 'IFAP Contact2';
+    con2.AccountId = account2.Id;
+    con2.Email = 'some2@email.org';
+    con2.Financial_Assessment_Contact__c = true;
+    insert con2;
+
+    AMS_Settlement_System__c bspSG3 = new AMS_Settlement_System__c(
+        Name = 'BSP-SG',
+        RecordTypeId = AMS_Utils.RECTYPE_BSP
+    );
+
+    insert bspSG3;
+    IATA_ISO_Country__c country3 = new IATA_ISO_Country__c(name = 'test3', IATA_Contry_KR__c = 'test3',
+																IATA_COUNTRY_EN__c = 'testEN3' , IATA_Country_FR__c = 'testFR3' , IATA_Country_ZH__c = 'testZH3' ,
+                                IATA_Country_IT__c = 'testIT3' , IATA_Country_JP__c = 'testJP3' , ISO_Code__c = '33',
+                                IATA_Country_PT__c = 'testPT3' , IATA_Country_SP__c = 'testSP3' , Case_BSP_Country__c = 'test3' ,
+                                Enable_Minor_Changes_from_Portal__c = true, AMS_Settlement_System__c = bspSG3.id,
+                                Local_language_Agency_details_required__c = true);
+    insert country3;
+
+    Account account3 = new Account(IATACode__c = '1234567');    // 7 digits
+    account3.Name = 'Test account';
+    account3.BillingCity = 'Montreal';
+    account3.BillingCountry = 'Canada';
+    account3.BillingStreet = 'some street';
+    account3.Type = 'IATA Passenger Sales Agent';
+    account3.Location_Type__c = 'HO';
+    account3.IATA_ISO_Country__c = country3.id;
+    insert account3;
+
+    Contact con3 = new Contact();
+    con3.FirstName = 'Dummy3';
+    con3.LastName = 'Contact3';
+    con3.Type_of_Contact__c = 'IFAP Contact3';
+    con3.AccountId = account3.Id;
+    con3.Email = 'some3@email.org';
+    con3.Financial_Assessment_Contact__c = true;
+    insert con3;
+
+    List<Case> cases = new List<Case>();
+
+    // SMALLAMOUNT
+    cases.add(new Case( ContactId = con.Id,
+                        AccountId = con.accountId,
+                        Subject = 'TestCase Sidra Small Amount ' + c,
+                        Origin = 'Web',
+                        RecordTypeId = SidraPcaseRecordTypeID,
+                        Description = 'description ' + c++,
+                        Billing_Amount__c = 2000000,
+                        Short_Payment_Amount__c = 1010,
+                        CurrencyExchangeRateUSD__c = 1,
+                        SIDRA_exchange_rate_updated__c = true,
+                        BSP_CASS__c = 'BSP',
+                        Late_Payment_Date__c = Date.today()
+                      ));
+
+    cases.add(new Case( ContactId = con2.Id,
+                        AccountId = con2.accountId,
+                        Subject = 'TestCase Sidra Small Amount ' + c,
+                        Origin = 'Web',
+                        RecordTypeId = SidraPcaseRecordTypeID,
+                        Description = 'description ' + c++,
+                        Billing_Amount__c = 20000,
+                        Short_Payment_Amount__c = 50,
+                        CurrencyExchangeRateUSD__c = 1,
+                        SIDRA_exchange_rate_updated__c = true,
+                        BSP_CASS__c = 'BSP',
+                        Late_Payment_Date__c = Date.today()
+                      ));
+
+    cases.add(new Case( ContactId = con3.Id,
+                        AccountId = con3.accountId,
+                        Subject = 'TestCase Sidra Small Amount ' + c,
+                        Origin = 'Web',
+                        RecordTypeId = SidraPcaseRecordTypeID,
+                        Description = 'description ' + c++,
+                        Billing_Amount__c = 20000,
+                        Short_Payment_Amount__c = 50,
+                        CurrencyExchangeRateUSD__c = 1,
+                        SIDRA_exchange_rate_updated__c = true,
+                        BSP_CASS__c = 'BSP',
+                        Late_Payment_Date__c = Date.today()
+                      ));
+
+    insert cases;
+
+    Test.StartTest();
+      cases = [SELECT Id, Subject,  IRR_Withdrawal_Reason__c FROM Case];
+      integer countSA = 0, countMP = 0, countN = 0;
+      for (Case cs : cases) {
+        if (cs.IRR_Withdrawal_Reason__c == SMALLAMOUNT)  countSA++;
+        else if (cs.IRR_Withdrawal_Reason__c == MINORPOLICY) countMP++;
+        else    countN++;
+      }
+    system.assertEquals(1, countSA);
+    system.assertEquals(1, countMP);
+    system.assertEquals(1, countN);
+    Test.stopTest();
+  }
+
 //*********************************************************************
 
   //Create County codes
