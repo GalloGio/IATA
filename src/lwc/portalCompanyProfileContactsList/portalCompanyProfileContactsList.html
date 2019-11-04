@@ -4,32 +4,45 @@
         <div class="slds-grid slds-wrap">
             <div class="slds-col slds-size_1-of-1">
                 <div class="slds-grid slds-wrap slds-grid_align-end slds-m-top_x-large slds-gutters_direct-x-small">
-                    <div class="slds-col slds-small-size_1-of-2 slds-medium-size_3-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
-                        <!-- APPROVE -->
-                        <lightning-button if:true={showManageButtons} variant="brand" label={label.ISSP_Activate}
+
+                    <!-- DOWNLOAD CSV -->
+                    <div class="slds-col slds-small-size_1-of-2 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_medium cursorPointer" onclick={getAllContactsToExport}>
+                        <lightning-button class="slds-p-left_xx-large slds-align-middle text-bold text-xsmall" variant="base" 
+                            label={label.ISSP_Download}>
+                        </lightning-button>
+                        <lightning-icon class="slds-p-left_xx-large darkBlueIcon" icon-name="utility:download" size="x-small"></lightning-icon>
+                    </div>
+
+                    <!-- APPROVE -->
+                    <div if:true={showManageButtons} class="slds-col slds-small-size_1-of-2 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
+                        <lightning-button variant="brand" label={label.ISSP_Activate}
                             class="containedButtonSmaller fullWidth" onclick={grantAccess} data-item="approve">
                         </lightning-button>
                     </div>
-                    <div class="slds-col slds-small-size_1-of-2 slds-medium-size_3-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
-                        <!-- DECLINE -->
-                        <lightning-button if:true={showManageButtons} variant="brand" label={label.ISSP_Inactivate}
+
+                    <!-- DECLINE -->
+                    <div if:true={showManageButtons} class="slds-col slds-small-size_1-of-2 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
+                        <lightning-button variant="brand" label={label.ISSP_Inactivate}
                             class="containedButtonSmaller fullWidth" onclick={denyAccess} data-item="inactive">
                         </lightning-button>
                     </div>
-                    <div class="slds-col slds-small-size_1-of-2 slds-medium-size_3-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
-                        <!-- ASSESSMENT CONTRACT -->
+
+                    <!-- ASSESSMENT CONTRACT -->
+                    <div class="slds-col slds-small-size_1-of-2 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
                         <lightning-button variant="brand" label={label.ISSP_Assign_IFAP}
                             title={label.ISSP_Assign_IFAP} onclick={navigateToIFAP}
                             class="containedButtonSmaller fullWidth">
                         </lightning-button>
                     </div>
-                    <div class="slds-col slds-small-size_1-of-2 slds-medium-size_3-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
-                        <!-- LIST VIEW -->
+
+                    <!-- LIST VIEW -->
+                    <div class="slds-col slds-small-size_1-of-2 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
                         <lightning-button variant="brand" label={label.csp_CreateNewContact} 
                             title={label.csp_CreateNewContact} disabled={contactsNotLoaded}
                             onclick={createContact} class="containedButtonSmaller fullWidth">
                         </lightning-button>
                     </div>
+
                 </div>
             </div>
 

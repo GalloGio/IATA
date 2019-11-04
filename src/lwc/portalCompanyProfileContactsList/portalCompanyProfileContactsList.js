@@ -12,8 +12,11 @@ import ISSP_Inactivate from '@salesforce/label/c.ISSP_Inactivate';
 import ISSP_Activate from '@salesforce/label/c.ISSP_Activate';
 import ISSP_Assign_IFAP from '@salesforce/label/c.ISSP_Assign_IFAP';
 import csp_CreateNewContact from '@salesforce/label/c.csp_CreateNewContact';
-
+import ISSP_Download from '@salesforce/label/c.ISSP_Download';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
+import { reduceErrors } from 'c/ldsUtils';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class PortalCompanyProfileContactsList extends LightningElement {
 
@@ -27,7 +30,8 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         ISSP_Activate,
         ISSP_Inactivate,
         ISSP_Assign_IFAP,
-        csp_CreateNewContact
+        csp_CreateNewContact,
+        ISSP_Download
     };
 
     @track contactsLoaded = false;
@@ -293,4 +297,87 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
     denyAccess(event) {
         this.action = event.target.dataset.item;
     }
+
+    getAllContactsToExport() {
+        this.contactsLoaded = false;
+
+        let allContactsFilteringObject = {
+            searchInput : '',
+            sortField : 'Name',
+            sortDirection : 'ASC',
+            firstLetter : 'All'
+        };
+
+        searchForCompanyContacts({ 
+            companybranchFilterWrapper: JSON.stringify(allContactsFilteringObject), 
+            requestedPage: '1' 
+        })
+            .then(result => {
+                this.allContacts = this.processContacts(JSON.parse(result.recordsString), []);
+                this.downloadCSV();
+            })
+            .catch(error => {
+                this.contactsLoaded = true;
+                const toastEvent = new ShowToastEvent({
+                    title: 'Error',
+                    message: reduceErrors(error).join(', '),
+                    variant: 'error'
+                });
+                this.dispatchEvent(toastEvent);
+        });
+    }
+
+    downloadCSV() {
+        let rowEnd = '\n';
+        let csvString = '';
+        let rowDataLabel = new Set();
+        let rowDataFieldsMap = [];
+        let allContacts = this.contactFields.ROWS;
+
+        // CSV Header
+        allContacts.forEach(function (record) {
+            Object.keys(record).forEach(function (key) {
+                rowDataLabel.add(record.label);
+                rowDataFieldsMap[record.fieldName] = record.label;
+            });
+        });
+
+        rowDataLabel = Array.from(rowDataLabel);
+        csvString += rowDataLabel.join(','); // columns
+        csvString += rowEnd;
+
+        // get the data from allContacts based on key value (columns name) from rowDataFieldsMap
+        for(let i=0; i < this.allContacts.length; i++) {
+            let colValue = 0;
+
+            for(let key in rowDataFieldsMap) {
+                if(rowDataFieldsMap.hasOwnProperty(key)) {
+                    let rowKey = key; // get columns name
+                    
+                    if(colValue > 0) {
+                        csvString += ',';
+                    }
+                    // If the column is undefined, it as blank in the CSV.
+                    let value = this.allContacts[i][rowKey] === undefined ? '' : this.allContacts[i][rowKey]; 
+                    csvString += '"'+ value +'"';
+                    colValue++;
+                }
+            }
+            csvString += rowEnd;
+        }
+
+        // Creating anchor element to download
+        let downloadElement = document.createElement('a');
+
+        // This  encodeURI encodes special characters, except: , / ? : @ & = + $ # (Use encodeURIComponent() to encode these characters).
+        downloadElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csvString);
+        downloadElement.target = '_self';
+        // CSV File Name
+        downloadElement.download = 'exportContacts.csv';
+        // below statement is required if you are using firefox browser
+        document.body.appendChild(downloadElement);
+        // click() Javascript function to download CSV file
+        downloadElement.click();
+        this.contactsLoaded = true;
+    }    
 }
