@@ -6072,6 +6072,31 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </valueSet>
     </fields>
     <fields>
+        <fullName>BSP_non_air__c</fullName>
+        <externalId>false</externalId>
+        <label>BSP non air</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>BSPlink_code__c</fullName>
         <externalId>false</externalId>
         <label>BSPlink code</label>
