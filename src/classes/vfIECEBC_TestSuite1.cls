@@ -1,3 +1,4 @@
+@isTest
 public class vfIECEBC_TestSuite1 {
     public static Account IECTestUtil_Account { get { return vfIECEBC_TestSuite.IECTestUtil_Account; } set { vfIECEBC_TestSuite.IECTestUtil_Account = value; } }
     public static Contact IECTestUtil_Contact { get { return vfIECEBC_TestSuite.IECTestUtil_Contact; } set { vfIECEBC_TestSuite.IECTestUtil_Contact = value; } }

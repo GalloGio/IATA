@@ -105,15 +105,13 @@ private class Product_Svc_Test
         Test.stopTest();
     }
 
-     static void test_processZProductSaveResult()
-     {
-         Test.startTest();
-        //processZProductSaveResult(List<Product2> products, List<Zuora.zApi.SaveResult> results)
+    @isTest(seeAllData=true)
+    static void test_processZProductSaveResult()
+    {
+        Test.startTest();
         List<Product2> products = TestDataGenerator.generateProducts(2, false); 
         List<Zuora.zObject> zobjects = TestDataGenerator.generateZProducts(2);
-        zobjects[0].setValue('SAP_Material_Number__c',products[0].SAP_Material_Number__c);
-        zobjects[1].setValue('SAP_Material_Number__c',products[1].SAP_Material_Number__c);
-
+    
         //Inject error
         zobjects[1].setValue('EffectiveStartDate','');
 
@@ -125,15 +123,10 @@ private class Product_Svc_Test
             err.setValue('Code', 'INVALID_FIELD');
         results[0].Errors.add(err);
 
-
         String result = Product_Svc.processZProductSaveResult(products, results);
-
-        System.debug('result::'+result);
-         
+            
         Test.stopTest();
-     }
-
-
+    }
     
     @isTest(seeAllData=true)
     static void test_setIsNewVersion()
@@ -506,12 +499,4 @@ private class Product_Svc_Test
         }
 
 	} //*** end of "test_Miscellaneous2"
-
-    static void testOthers() {
-        System.assert(Product_Svc.isEqual(null, null));
-        System.assert(Product_Svc.isEqual('', null));
-        System.assert(Product_Svc.isEqual(null, ''));
-        System.assert(! Product_Svc.isEqual('X', ''));
-    }
-
 }

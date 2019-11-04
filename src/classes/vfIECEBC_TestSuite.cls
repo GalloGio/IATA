@@ -1,3 +1,4 @@
+@isTest
 public class vfIECEBC_TestSuite {
     public static Account IECTestUtil_Account;
     public static Contact IECTestUtil_Contact;
@@ -427,82 +428,6 @@ public class vfIECEBC_TestSuite {
 
     }
 
-    public static void testCampaignScheduling() {
-
-        PageReference pageRef = Page.IECEBC_CampaignSchedule;
-        Test.setCurrentPage(pageRef);
-
-        User usr = initPreRunAs(true);
-
-        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
-        masterFilter.Audience__c = 'Agency';
-        insert masterFilter;
-
-        EBC_Template__c tpl = new EBC_Template__c();
-        insert tpl;
-
-        EBC_Campaign__c camp = new EBC_Campaign__c();
-        camp.Name = 'Foo Bar';
-        camp.Subject__c = 'Foo Subject';
-        camp.From_Name__c = 'Foo From Name';
-        camp.Is_Google_Analytics_Tracker_Active__c = true;
-        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
-        System.debug(IECTestUtil_Account.Id);
-        camp.Billing_Account__c = oBillingAccount.Id;
-        camp.EBC_Master_Filter__c = masterFilter.Id;
-        camp.EBC_Design__c = tpl.Id;
-        insert camp;
-
-        System.runAs(usr) {
-            initPostRunAs();
-            Test.startTest();
-
-            // Layout PageLoad
-            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
-            System.assertEquals(null, layoutController.pageLoad());
-
-            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
-            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-
-            //saveAsTemplate() coverage
-            PageReference pref = campaignExtCon.saveAsTemplate();
-
-            System.debug(campaignExtCon.campaign);
-            vfIECEBC_CampaignSchedule scheduleExtCon = new vfIECEBC_CampaignSchedule(sc);
-
-            System.assert(scheduleExtCon.getUserTimezoneOffset() == '-04:00' || scheduleExtCon.getUserTimezoneOffset() == '-05:00');
-            System.assertEquals('Eastern Standard Time', scheduleExtCon.getUserTimezoneDisplayName());
-            System.assertEquals(null, scheduleExtCon.validationMessage);
-
-            Datetime dt = Datetime.now().addDays(1);
-            scheduleExtCon.humanCampaignDate = dt.format('MMMM d y');
-            scheduleExtCon.campaignDate = dt.month() + '/' + dt.day() + '/' + dt.year();
-            scheduleExtCon.campaignHours = dt.hour() > 12 ? dt.hour() - 12 : dt.hour();
-            scheduleExtCon.campaignMinutes = dt.minute();
-            scheduleExtCon.campaignMeridiem = dt.hour() > 12 ? 'PM' : 'AM';
-            scheduleExtCon.validate();
-            //System.assertNotEquals(null, scheduleExtCon.validationMessage);
-            System.debug(scheduleExtCon.validationMessage);
-            System.assert(scheduleExtCon.validationMessage.contains('2 business days'));
-
-            dt = Datetime.now().addDays(5);
-            scheduleExtCon.humanCampaignDate = dt.format('MMMM d y');
-            scheduleExtCon.campaignDate = dt.month() + '/' + dt.day() + '/' + dt.year();
-            scheduleExtCon.campaignHours = dt.hour() > 12 ? dt.hour() - 12 : dt.hour();
-            scheduleExtCon.campaignMinutes = dt.minute();
-            scheduleExtCon.campaignMeridiem = dt.hour() > 12 ? 'PM' : 'AM';
-            //camp.Scheduled_Date__c = Datetime.now().addDays(5);
-            scheduleExtCon.validate();
-            System.assertEquals(null, scheduleExtCon.validationMessage);
-
-            PageReference pr = campaignExtCon.saveAndContinue();
-
-            System.assertEquals(0, ApexPages.getMessages().size());
-
-            System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
-            System.assertEquals(campaignExtCon.getPRByStepNumber(6, true).getUrl(), pr.getUrl());
-        }
-    }
     public static void testCampaignConfirmUpdateCount() {
 
         User usr = initPreRunAs(true);
@@ -522,20 +447,6 @@ public class vfIECEBC_TestSuite {
         insert tpl;
         EBC_Campaign__c camp = new EBC_Campaign__c(Name = 'Foo Bar', Subject__c = 'Foo Subject', From_Name__c = 'Foo From Name', Is_Google_Analytics_Tracker_Active__c = true, Google_Analytics_Tracking_Code__c = 'UA-XXXXXX', Billing_Account__c = oBillingAccount.Id, EBC_Master_Filter__c = masterFilter.Id, EBC_Design__c = tpl.Id);
         insert camp;
-        /*
-        List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',            GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'b',            GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'c',            GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'd',            GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'e',            GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'f',            GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'notincluded',  GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1'),
-            new GDP_Products_Account_View__c(Name = 'optout',       GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'duplicate',    GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'duplicate1',   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0')
-        };
-        insert gpavs;*/
 
         List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
 

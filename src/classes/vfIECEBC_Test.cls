@@ -25,9 +25,6 @@ public class vfIECEBC_Test {
     public static testMethod void testCampaignTemplate() {
         vfIECEBC_TestSuite.testCampaignTemplate();
     }
-    public static testMethod void testCampaignScheduling() {
-        //vfIECEBC_TestSuite.testCampaignScheduling();
-    }
     public static testMethod void testCampaignPreview() {
         vfIECEBC_TestSuite.testCampaignPreview();
     }

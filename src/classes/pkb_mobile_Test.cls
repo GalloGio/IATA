@@ -375,12 +375,9 @@ public class pkb_mobile_Test {
         Case c = [select Id, pkbgeolocalization__Latitude__s, pkbgeolocalization__Longitude__s/*,Customer_emoticon_value__c, Customer_emoticon__c*/  from Case where id = : resp.caseId];
         system.assertEquals(c.pkbgeolocalization__Latitude__s, 0.2 );
         system.assertEquals(c.pkbgeolocalization__Longitude__s, 0.2);
-
-
     }
 
-
-
+    @isTest
     static void test_processContactUsAndDeflection() {
 
         //create deflection
