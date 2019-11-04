@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>aax33d82d7c0637ca6ebd00152f5de260ac68</label>
+    <label>aaxx33d82d7c0637ca6ebd00152f5de260ac68</label>
     <protected>false</protected>
     <values>
         <field>Account_Categories__c</field>
@@ -79,6 +79,10 @@
         <value xsi:type="xsd:string">Financial_Services</value>
     </values>
     <values>
+        <field>DataCategoryVisibility__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>DataSubtopicName__c</field>
         <value xsi:type="xsd:string">Update_Account_Details_IATA_Publications</value>
     </values>
@@ -104,7 +108,7 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:double">7.0</value>
     </values>
     <values>
         <field>Permission_Set_Name__c</field>

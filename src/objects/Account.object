@@ -100350,7 +100350,8 @@ ISCHANGED(Account_Type__c),
 ISCHANGED(Website)
 ),
 NOT(CONTAINS($Profile.Name, &quot;System Administrator - automated processes&quot;)),
-NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
+NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;MER Membership&quot;))
 )</errorConditionFormula>
         <errorMessage>For accounts with record type AL HQ, only the Account Management Team can update the content of the following fields: Account Type and Website</errorMessage>
     </validationRules>
@@ -100889,7 +100890,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
     <validationRules>
         <fullName>Parent_account_is_Airline</fullName>
         <active>true</active>
-        <errorConditionFormula>Merged_Account__c &lt;&gt; &apos;Merged&apos; &amp;&amp; RecordType.DeveloperName = &apos;IATA_Airline_BR&apos; &amp;&amp; ( Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline_BR&apos; &amp;&amp; Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline&apos;)</errorConditionFormula>
+        <errorConditionFormula>Merged_Account__c &lt;&gt; &apos;Merged&apos; &amp;&amp; RecordType.DeveloperName = &apos;IATA_Airline_BR&apos; &amp;&amp; ( Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline_BR&apos; &amp;&amp; Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline&apos;) &amp;&amp; NOT(ICH_Member__c)</errorConditionFormula>
         <errorDisplayField>ParentId</errorDisplayField>
         <errorMessage>The parent account must be an airline</errorMessage>
     </validationRules>
