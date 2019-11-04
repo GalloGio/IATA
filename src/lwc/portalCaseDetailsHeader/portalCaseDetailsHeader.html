@@ -134,7 +134,7 @@
                         onselectionchange={addNewRecipientButtonClick}>
                     </c-portal-search-lookup-component>
                     </div>
-                    <div class="slds-m-top_large slds-scrollable_y recipients-box">
+                    <div class="slds-scrollable_y recipients-box">
                         <template for:each={lstRecipients} for:item="recipient">
                             <span key={recipient.id} class="slds-p-around_x-small slds-m-around_xx-small custom-recipients">
                                 {recipient.email}
