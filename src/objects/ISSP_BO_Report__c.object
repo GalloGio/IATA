@@ -105,6 +105,25 @@ TEXT(year(Report_Date__c))</formula>
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>for_a_specific_date</fullName>
+        <columns>NAME</columns>
+        <columns>Report_Date__c</columns>
+        <columns>Report_Date_format__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Report_Date__c</field>
+            <operation>greaterThan</operation>
+            <value>9/1/2019</value>
+        </filters>
+        <filters>
+            <field>Report_Date__c</field>
+            <operation>lessThan</operation>
+            <value>10/15/2019</value>
+        </filters>
+        <label>for a specific date</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>BO_Rep-{00000}</displayFormat>
         <label>ISSP BO Report Name</label>

@@ -11,153 +11,91 @@ public without sharing class GDPR_Helper {
 
     public static UserType doUserExists(String email){      
         
-        List<User> searchUsers = new List<User>();
-        List<Contact> searchContacts = new List<Contact>();
-        List<Lead> searchLeads = new List<Lead>();
         // Check if email is fobidden first
-        if(GDPR_Helper.isDisposalEmail(email))
-            return UserType.FORBID;
+        if(GDPR_Helper.isDisposalEmail(email)) return UserType.FORBID;
 
-        try{
-            searchUsers = [SELECT ID FROM USER WHERE Email = :email ORDER BY LastModifiedDate DESC];        
-            System.debug('[SEARCH USERS] - '+searchUsers);
-        }catch(Exception e){
-            System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
-        }
-        
-        Integer users = searchUsers.size();
+        List<User> searchUsers = [SELECT ID FROM USER WHERE Contact.Email = :email ORDER BY LastModifiedDate DESC LIMIT 1];
         
         /***IF THERE ARE USERS***/
-        if(users > 0){
+        if(!searchUsers.isEmpty()){
             
             //Send Email
             // Link to oneId with redirection to GDPR Portal
-            String link = Label.OneId_URL_To_GDPR;
-            sendAccessEmail(email, link);
+            sendAccessEmail(email, Label.OneId_URL_To_GDPR);
             
             return UserType.USER;
         
         }else{
             
-            searchContacts = searchContactsHelper(email);
+            List<Contact> searchContacts = [SELECT ID, LastName, FirstName, IndividualId FROM CONTACT WHERE Email = :email ORDER BY LastModifiedDate DESC LIMIT 1];
 
-            Integer contacts = searchContacts.size();
+            /***IF THERE ARE NO USERS AND THERE ARE CONTACTS***/
+            if(!searchContacts.isEmpty()){
 
-        /***IF THERE ARE NO USERS AND THERE ARE CONTACTS***/
-            if(contacts > 0){
-
-                Contact c = searchContacts[0];           
+                Contact c = searchContacts[0];
+                Individual ind;
                 
                 //If already exists an Individual associated with the Contact.
-
-                if(c.IndividualId!=null){
-                    String individualId = String.valueOf(c.IndividualId);
-                    
+                if(c.IndividualId!=null){                   
                     //Fetch the Individual record
-                    Individual ind = doIndividualExists(null, individualId);
+                    ind = findIndividual(c.IndividualId);
                     
-                    updateEncryptEmailProcess(ind, email);
-                    
-                    return UserType.CONTACT;
-
                 //If there is NO Individual associated with the Contact.
                 }else{
 
                     //Search for the existance of an Individual with the same email
-                    Individual ind = doIndividualExists(email, null);
+                    ind = findIndividual(email);
                     
-                    //If already exists an Individual that has the inserted email.
-                    if(ind!=null){
-                        
-                        //Associate this Individual with the contact.
-                        c.IndividualId = ind.Id;
-                    
-                        //Update the contact.
-                        contactUpdateHelper(c);
-                        
-                        updateEncryptEmailProcess(ind, email);
-                        
-                        return UserType.CONTACT;
-                    
-                    //If there is NO Individual associated with the contact and there is NO Individual that has the inserted email
-                    }else{
-                        
+                    if(ind==null){
+                        //If there is NO Individual associated with the contact and there is NO Individual that has the inserted email
                         //Create new Individual                        
                         ind = createIndividual(c.firstName, c.lastName, email);
-
-                        //Associate this Individual with the contact.
-                        c.IndividualId = ind.Id;
-                        
-                        //Update the contact.
-                        contactUpdateHelper(c);
-                        
-                        updateEncryptEmailProcess(ind, email);
-                        
-                        return UserType.CONTACT;
+                    }     
                     
-                    }                    
+                    //Associate this Individual with the contact.
+                    c.IndividualId = ind.Id;
+                    //Update the contact.
+                    update c;               
                 }
+                
+                updateEncryptEmailProcessWithLink(ind, email);
+                return UserType.CONTACT;
 
             /*IF THERE IS NO CONTACTS WITH THE INTRODUCED EMAIL -> REPEAT THE PROCESS FOR LEADS */
-            
             }else{
                 
-                searchLeads = searchLeadsHelper(email);
+                List<Lead> searchLeads = [SELECT ID, LastName, FirstName, IndividualId FROM LEAD WHERE Email = :email ORDER BY pi__url__c ASC NULLS LAST, LastModifiedDate DESC LIMIT 1];
 
-                Integer leads = searchLeads.size();
-                
                 /***IF THERE ARE NO USERS AND THERE ARE CONTACTS***/
-                if(leads>0){
+                if(!searchLeads.isEmpty()){
 
                     Lead l = searchLeads[0];
+                    Individual ind;
                     
                     //If already exists an Individual associated with the Lead.
                     if(l.IndividualId!=null){
-                        
-                        String individualId = String.valueOf(l.IndividualId);
-
                         //Fetch the Individual record
-                        Individual ind = doIndividualExists(null, individualId);
-                        
-                        updateEncryptEmailProcess(ind, email);
-                        
-                        return UserType.LEAD;
-
+                        ind = findIndividual(l.IndividualId);
                     //If there is NO Individual associated with the Contact.
                     }else{
                         //Search for the existance of an Individual with the same email
-                        Individual ind = doIndividualExists(email, null);
+                        ind = findIndividual(email);
 
-                        //If already exists an Individual that has the inserted email.
-                        if(ind!=null){
-
-                            //Associate this Individual with the lead.
-                            l.IndividualId = ind.Id;  
-                            
-                            //Update the lead.
-                            leadUpdateHelper(l);
-                            
-                            updateEncryptEmailProcess(ind, email);
-                            
-                            return UserType.LEAD;
-
-                        //If there is NO Individual associated with the lead and there is NO Individual that has the inserted email
-                        }else{
-                            
+                        if(ind==null){
                             //Create new Individual
                             ind = createIndividual(l.firstName, l.lastName, email);
-                            
-                            //Associate this Individual with the lead.
-                            l.IndividualId = ind.Id;
-
-                            //Update the lead.
-                            leadUpdateHelper(l);
-
-                            updateEncryptEmailProcess(ind, email);
-                            
-                            return UserType.LEAD;
                         }
+                        
+                        //Associate this Individual with the lead.
+                        l.IndividualId = ind.Id;  
+                        
+                        //Update the lead.
+                        update l;
                     }
+
+                    
+                    updateEncryptEmailProcessWithLink(ind, email);
+                    return UserType.LEAD;
             
                 }else{
                 
@@ -166,7 +104,6 @@ public without sharing class GDPR_Helper {
                     String token = String.valueOf(System.TODAY()).left(10)+email.toLowerCase(); //Ex: 2018.12.24myemail@gmail.com
                     String encryptedToken = Comm_User_Helper.EncryptString(token);
                     String link = Site.getBaseURL()+'/s/guest-information?token='+encryptedToken;
-                    system.debug('link'+link);
                     sendAccessEmailUnknown(email, link);
                     
                     return UserType.NONE;
@@ -174,111 +111,95 @@ public without sharing class GDPR_Helper {
             }
         }
     }
+
     public static Individual createIndividual(String firstName, String lastName, String email){
-        Individual indiv = new Individual(FirstName = firstName, LastName = lastName, Email__c = email);
-        
-        try{
-            INSERT indiv;
-        }catch(Exception e){
-            System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
-        }
-        return indiv;
+        Individual i = new Individual(FirstName = firstName, LastName = lastName, Email__c = email);
+        insert i;
+        return i;
     }
 
     public static void createLead(String firstName, String lastName, String email, String company){
         // Create lead. Lead trigger will attach the individual record. The connector will sync the prospect (SF=>Pardot)
-        Lead lead = new Lead(FirstName = firstName, LastName = lastName, Email = email, company = company);
-        try{
-            INSERT lead;
-        }catch(Exception e){
-            System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
-        }
+        Lead l = new Lead(FirstName = firstName, LastName = lastName, Email = email, company = company);
+        insert l;
     }
-
     
 
-     public static String headerHtml() {
-        String str = '<div style="background-color: #1E32FA; margin-bottom: 30px; font-family: Arial, Helvetica, sans-serif;">'+
-        '<table style="color:white; font-size: 23px;font-weight: 600;">'+
-            '<tr>'+
-            '<td><img style="margin-right:15px;margin-left:40px;margin-top:15px;margin-bottom:15px;width:73px;height:50px;" src="'+Label.IATA_GDPR_White_Logo+'"/></td>'+
-            '<td><hr style="margin-right:15px;height:34px; width:1px;background-color:#A5ADFD;"/></td>'+
-            '<td><p style="font-size:23px;">Signup &amp; Privacy Portal <p></td>'+
-            '</tr>'+
-        '</table>'+
-        '</div>';
+    public static String headerHtml() {
+        String str = '<table style="background-color: #1E32FA; width:100%;"><tr><td style="padding: 15px 40px;">'+
+                '<table style="color:white; font-family: Arial, Helvetica, sans-serif; font-size: 23px;font-weight: 600;">'+
+                '<tr>'+
+                    '<td style="padding: 0;"><img width="73" height="50" src="'+Label.IATA_GDPR_White_Logo+'"/></td>'+
+                    '<td style="border-left: 2px solid white; padding-left: 20px; width: 100%;">Signup &amp; Privacy Portal</td>'+
+                '</tr>'+
+                '</table>'+
+            '</td></tr></table>';
         return str;
     }
 
     public static String footerHtml() {
-       String str = '<div style="background-color: #535151; margin-top: 30px; font-family: Arial, Helvetica, sans-serif;">'+
-        '<table style="color:white; font-size: 23px; width:100%;">'+
+        String str = '<table style="background-color: #535151; color:white; font-family: Arial, Helvetica, sans-serif; font-size: 23px; width:100%; padding: 15px 40px">'+
             '<tr>'+
-                '<td style="width:20%"><img style="margin-right:15px;margin-left:40px;margin-top:15px;margin-bottom:15px;width:73px;height:50px;" src="'+Label.IATA_GDPR_White_Logo+'" /></td>'+
-                '<td colspan="2" style="width:80%">Our mission is to represent, lead and serve the airline industry</td>'+            
+                '<td style="width:20%"><img width="73" height="50" src="'+Label.IATA_GDPR_White_Logo+'" /></td>'+
+                '<td colspan="2">Our mission is to represent, lead and serve the airline industry</td>'+            
             '</tr>'+
-            '<tr>'+
-                '<td style="width:100%;" colspan="3">'+
-                    '<hr style="margin-right:40px; margin-left:40px;"/>'+
+
+            '<tr><td colspan="3"><hr/></td></tr>'+
+
+            '<tr >'+
+                '<td style="width:20%; text-align:center;">'+
+                    '<span><a style="font-size:15px; text-decoration: none; color:#ffffff;" href="https://www.iata.org" target="_blank">www.IATA.org</a></span>'+
+                '</td>'+
+                '<td style="width:60%; text-align:center;">'+
+                    '<span style="font-size:15px;">© International Air Transportation Association (IATA). All rights reserved.</span>'+
+                '</td>'+
+                '<td style="width:20%; text-align:center;">'+
+                    '<a style="font-size:15px; text-decoration: none; color:#ffffff;" class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">Privacy policy</a>'+
                 '</td>'+
             '</tr>'+
-            '<tr >'+
             
-            '<td style="width:20%; text-align:center;">'+
-                '<span><a style="font-size:15px; text-decoration: none; color:#ffffff;" href="https://www.iata.org" target="_blank">www.IATA.org</a></span>'+
-            '</td>'+
-            '<td style="width:60%; text-align:center;">'+
-                '<span style="font-size:15px;">© International Air Transportation Association (IATA). All rights reserved.</span>'+
-            '</td>'+
-
-            '<td style="width:20%; text-align:center;">'+
-                '<a style="font-size:15px; text-decoration: none; color:#ffffff;" class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">Privacy policy</a>'+            
-            '</td>'+
-            
-          '</tr>'+
-
-        '</table>'+
-        '</div>';
+            '</table>';
         return str;
     }
 
     public static void sendEmail(String email, String htmlBody) {
         OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'IATA Noreply'];
         Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage();
-        emailMsg.setOrgWideEmailAddressId(owea.get(0).Id); 	                            
+        emailMsg.setOrgWideEmailAddressId(owea.get(0).Id);                             
         emailMsg.setToAddresses(new String[]{email});
         emailMsg.saveAsActivity = false;
         emailMsg.setHtmlBody(htmlBody);
-        Messaging.SendEmailResult[] results = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{emailMsg});
+        emailMsg.setSubject('Signup & Privacy Portal');
+        if(!Test.isRunningTest()) Messaging.sendEmail(new Messaging.SingleEmailMessage[]{emailMsg});
     }
 
     public static void sendAccessEmailUnknown(String email, String link){
         String htmlBody = '<html>'+
-                            '<body>'+
-                                headerHtml()+
-                                'Thank you for your interest in IATA.<br/>'+ 
-                                'Please <a href="'+link+'">follow this link</a> to access our Signup & Privacy portal.<br/><br/>'+
-                                'All the best,<br/>'+
-                                'The IATA Team'+
-                                    footerHtml()+
-                            '</body>'+
-                            '</html>';  
+                '<body>'+
+                    headerHtml()+
+                    '<p style="margin: 30px 0">Thank you for your interest in IATA.<br/>'+ 
+                    'Please <a href="'+link+'">follow this link</a> to access our Signup & Privacy portal.<br/><br/>'+
+                    'All the best,<br/>'+
+                    'The IATA Team</p>'+
+                    footerHtml()+
+                '</body>'+
+            '</html>';   
         sendEmail(email, htmlBody);
     }
 
     public static void sendAccessEmail(String email, String link){
         String htmlBody = '<html>'+
-                            '<body>'+
-                                headerHtml()+
-                                'Thank you for your interest in IATA.<br/>'+ 
-                                'Please <a href="'+link+'">follow this link</a>  to access our Signup & Privacy portal.<br/><br/>'+
-                                'All the best,<br/>'+
-                                'The IATA Team'+
-                                footerHtml()+
-                            '</body>'+
-                            '</html>';  
+                '<body>'+
+                    headerHtml()+
+                    '<p style="margin: 30px 0">Thank you for your interest in IATA.<br/>'+ 
+                    'Please <a href="'+link+'">follow this link</a> to access our Signup & Privacy portal.<br/><br/>'+
+                    'All the best,<br/>'+
+                    'The IATA Team</p>'+
+                    footerHtml()+
+                '</body>'+
+            '</html>';  
 
-         sendEmail(email, htmlBody);
+        sendEmail(email, htmlBody);
     }
 
     // CR3: Merge 2 emails into 1 (a new version)
@@ -286,29 +207,29 @@ public without sharing class GDPR_Helper {
         String htmlBody = '<html>'+
                             '<body>'+
                                 headerHtml()+
-                                'Welcome to IATA<br/><br/>'+
+                                '<p style="margin: 30px 0">Welcome to IATA<br/><br/>'+
                                 'Thank you for registering to the IATA Signup & Privacy Portal.<br/><br/>'+
                                 'Please click on the following <a href="'+link+'">link</a> to access the Portal.<br/><br/>'+
                                 'Best regards,<br/>'+
-                                'IATA Team'+
+                                'IATA Team</p>'+
                                 footerHtml()+
                             '</body>'+
                             '</html>';  
 
-         sendEmail(email, htmlBody);
+        sendEmail(email, htmlBody);
     }
 
     public static void sendWelcomeEmail(String email){
         String htmlBody = '<html>'+
                             '<body>'+
                                 headerHtml()+
-                                'Welcome to IATA<br/><br/>'+ 
+                                '<p style="margin: 30px 0">Welcome to IATA<br/><br/>'+ 
                                 'Thank you for registering to the IATA Signup & Privacy Portal, your one place to:<br/>'+
                                 '- Manage Your Profile;<br/>'+
                                 '- Manage Your Subscriptions (newsletters, products and services);<br/>'+
-                                '- Manage Your Interests for Our Products & Services (events, training, publications);<br/><br/>'+                                
+                                '- Manage Your Interests for Our Products & Services (events, training, publications);<br/><br/>'+
                                 'Best regards,<br/>'+
-                                'IATA Team'+
+                                'IATA Team</p>'+
                                     footerHtml()+
                             '</body>'+
                             '</html>';  
@@ -319,107 +240,45 @@ public without sharing class GDPR_Helper {
         String htmlBody = '<html>'+
                             '<body>'+
                                 headerHtml()+
-                                'Dear user,<br/><br/>'+ 
+                                '<p style="margin: 30px 0">Dear user,<br/><br/>'+ 
                                 'We confirm that your modifications of your subscriptions and interests have been taken into account.<br/><br/>';
                                 if(optout) {
                                     htmlBody += 'You decided to unsubsribe from all IATA communication. You will no longer receive any email from our service.<br/><br/>';
                                 }
                                 htmlBody +='Best regards,<br/>'+
-                                'IATA Team'+
+                                'IATA Team</p>'+
                                 footerHtml()+
                             '</body>'+
                             '</html>';  
 
-         sendEmail(email, htmlBody);
+        sendEmail(email, htmlBody);
     }
 
-    public static void controlGDPRAccess(String link){
-
-    }
     private static String generateToken(String sObjectId){
-        String token = sObjectId+'-'+generateTokenHelper();
-
-        return token;
-    }
-    private static String generateTokenHelper(){    
 
         Integer randomNumber = Integer.valueOf(Math.floor(Math.random()*100));
         Integer randomCharPointer = Integer.valueOf(Math.floor(Math.random()*50));
         String randomString = String.valueOf(randomNumber)+characters.subString(randomCharPointer, randomCharPointer+1);
         
-        return randomString;
+        return sObjectId+'-'+randomString;
     }
 
-    private static List<Contact> searchContactsHelper(String email){
-        List<Contact> searchContacts = new List<Contact>();
-        try{
-            searchContacts = [SELECT ID, LastName, FirstName, IndividualId FROM CONTACT WHERE Email = :email ORDER BY LastModifiedDate DESC];        
-            System.debug('[SEARCH CONTACTS] - '+searchContacts);
-        }catch(Exception e){
-            System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
-        }
-        return searchContacts;
-    }
 
-    private static List<Lead> searchLeadsHelper(String email){
-        List<Lead> searchLeads = new List<Lead>();
-        try{
-            searchLeads = [SELECT ID, LastName, FirstName, IndividualId FROM LEAD WHERE Email = :email ORDER BY pi__url__c ASC NULLS LAST, LastModifiedDate DESC];
-            System.debug('[SEARCH LEADS] - '+searchLeads);
-        }catch(Exception e){
-            System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
-        }        
-        return searchLeads;   
-    }
-
-    public static Individual doIndividualExists(String email, String indId){
-        List<Individual> il = new List<Individual>();
+    public static Individual findIndividual(String identifier){
+        String whereClause;
         
-        String searchString = 'SELECT ID, Token__c, Timestamp__c FROM INDIVIDUAL WHERE ';
-        
-        if(email!=null){
-            searchString+='Email__c = '+'\''+email+'\'';
-        }else{
-            searchString+='Id = '+'\''+indId+'\'';
+        try{
+            whereClause = 'Id = '+'\''+Id.valueOf(identifier)+'\'';
+        }catch(System.StringException e){
+            //not an id, it must be a string (we use a try catch because other ways of checking for id are more complicated)
+            whereClause = 'Email__c = '+'\''+identifier+'\'';
         }
             
-        try{
-            il = Database.query(searchstring);
-        }catch(Exception e){
-            System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
-        }
-        System.debug('[INDIVIDUAL] - '+il.size());
+        List<Individual> il = Database.query('SELECT ID, Token__c, Timestamp__c FROM INDIVIDUAL WHERE ' + whereClause);
 
-        return (il.size()>0)?il[0]:null;
+        return il.isEmpty() ? null : il[0];
     }
 
-    private static void contactUpdateHelper(Contact c){
-        try{
-            UPDATE c;
-        }catch(Exception e){
-            System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
-        }
-    }
-
-    private static void leadUpdateHelper(Lead l){
-        try{
-            UPDATE l;
-        }catch(Exception e){
-            System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
-        }
-    }
-
-    private static void individualUpdateHelper(Individual ind){         
-        try{
-            UPDATE ind;
-        }catch(Exception e){
-            System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
-        }
-    }
-    
-    public static void updateEncryptEmailProcess(Individual ind, String email){
-        updateEncryptEmailProcessWithLink(ind, email);
-    }
 
     public static String updateEncryptEmailProcessWithLink(Individual ind, String email){
         String individualId = String.valueOf(ind.Id);
@@ -428,7 +287,7 @@ public without sharing class GDPR_Helper {
         ind.Timestamp__c = String.valueOf(System.now().getTime());
         
         //Update Individual
-        individualUpdateHelper(ind);                            
+        update ind;                            
         
         //Encrypt token
         String encryptedToken = Comm_User_Helper.EncryptString(token);
@@ -445,74 +304,73 @@ public without sharing class GDPR_Helper {
     public static String retrieveUserInfo(String individualId, Boolean isGuest) {
         UserInfoWrapper uiw = new UserInfoWrapper();
 
-		if(isGuest) {
-			// Decrypt token to get individual Id in clear
-			individualId = Comm_User_Helper.DecryptString(individualId);
+        if(isGuest) {
+            // Decrypt token to get individual Id in clear
+            individualId = Comm_User_Helper.DecryptString(individualId);
             uiw.individualId = individualId;
-		}
+        }
 
-		if(String.isBlank(individualId)) {
-			User registreredUser = [SELECT  Contact.IndividualId, Contact.LastName, Contact.FirstName, Contact.email FROM User WHERE Id =: UserInfo.getUserId() limit 1];
+        if(String.isBlank(individualId)) {
+            User registreredUser = [SELECT  Contact.IndividualId, Contact.LastName, Contact.FirstName, Contact.email FROM User WHERE Id =: UserInfo.getUserId() limit 1];
             // Create indivudal if not exist for existing contact
             if(registreredUser.Contact.IndividualId == null) {
                 Individual ind = createIndividual(registreredUser.Contact.firstName, registreredUser.Contact.lastName, registreredUser.Contact.email);
                 individualId = ind.id;
             } else 
-			    individualId = registreredUser.Contact.IndividualId;
-             
+                individualId = registreredUser.Contact.IndividualId;
+            
             uiw.individualId = individualId;
-		}
-		Individual indiv = new Individual();
-		list<Individual> indivs = [SELECT id, FirstName, LastName, Salutation, Country__c, Company__c, Job_Title__c, Phone__c, Industry__c, Email__c FROM Individual WHERE Id =: individualId];
-		indiv = ! indivs.isEmpty() ? indivs[0] : null;
+        }
+        list<Individual> indivs = [SELECT id, FirstName, LastName, Salutation, Country__c, Company__c, Job_Title__c, Phone__c, Industry__c, Email__c FROM Individual WHERE Id =: individualId];
+        Individual indiv = ! indivs.isEmpty() ? indivs[0] : null;
 
-		if(indiv != null) {
-			// Retrieve from Pardot based on email
-			Pardot_API.Pardot_Prospect prospect = new Pardot_API.Pardot_Prospect();
-			prospect = Pardot_API.getProspect(indivs[0].email__c);
-			if(prospect != null) {
-				indiv = prospectToIndividual(indiv, prospect);
+        if(indiv != null) {
+            // Retrieve from Pardot based on email
+            Pardot_API.Pardot_Prospect prospect = new Pardot_API.Pardot_Prospect();
+            prospect = Pardot_API.getProspect(indivs[0].email__c);
+            if(prospect != null) {
+                indiv = prospectToIndividual(indiv, prospect);
                 uiw.prospectId = prospect.Id;
                 uiw.subscriptions = prospect.list_subscription;
                 uiw.salesforceId = prospect.salesforceId;
-			} 
-			// Return individual informatino if Pardot is down or no prospect found
-		}
+            } 
+            // Return individual informatino if Pardot is down or no prospect found
+        }
         uiw.individual = indiv;
         
-		return JSON.serialize(uiw);
-	}
+        return JSON.serialize(uiw);
+    }
 
     private static Individual prospectToIndividual(Individual indiv, Pardot_API.Pardot_Prospect prospect) {
-		if(prospect == null) return null;
+        if(prospect == null) return null;
 
-		//indiv.Name = prospect.last_name; // not writable
-		indiv.Email__c = prospect.email;
-		indiv.FirstName = prospect.first_name;
-		indiv.LastName = prospect.last_name;
-		indiv.Salutation = prospect.salutation;
-		indiv.Company__c = prospect.company;
-		indiv.Job_Title__c = prospect.job_title;
-		indiv.Phone__c = prospect.phone;
-		indiv.Country__c = prospect.country;
-		indiv.Industry__c = prospect.industry;
+        //indiv.Name = prospect.last_name; // not writable
+        indiv.Email__c = prospect.email;
+        indiv.FirstName = prospect.first_name;
+        indiv.LastName = prospect.last_name;
+        indiv.Salutation = prospect.salutation;
+        indiv.Company__c = prospect.company;
+        indiv.Job_Title__c = prospect.job_title;
+        indiv.Phone__c = prospect.phone;
+        indiv.Country__c = prospect.country;
+        indiv.Industry__c = prospect.industry;
 
-		return indiv;
-	}
+        return indiv;
+    }
 
     public class UserInfoWrapper {
         @AuraEnabled
-	    public Individual individual {get;set;} 
-	    @AuraEnabled
-	    public String individualId {get;set;} 
+        public Individual individual {get;set;} 
         @AuraEnabled
-	    public String prospectId {get;set;}
+        public String individualId {get;set;} 
         @AuraEnabled
-	    public String salesforceId {get;set;} 
+        public String prospectId {get;set;}
         @AuraEnabled
-	    public list<Pardot_API.List_Subscription> subscriptions {get;set;} 
+        public String salesforceId {get;set;} 
         @AuraEnabled
-	    public String interests {get;set;} 
-	
-	}
+        public list<Pardot_API.List_Subscription> subscriptions {get;set;} 
+        @AuraEnabled
+        public String interests {get;set;} 
+    
+    }
 }

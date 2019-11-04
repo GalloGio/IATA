@@ -23,15 +23,14 @@ export default class PortalHomeCalendar extends LightningElement {
     };
 
     @track loading = true;
-    @track caseDetails ;
+    @track caseDetails;
     @track lstMessages;
 
     @track newMessage = '';
     @track showSendMessageButton = false;
     @track messageInputLoading = false;
 
-    @track showCaseMessagingSection = false;
-    @track messagingHeight = 'height:400px;';
+    @track showCaseMessagingSection = true;
 
     conversationImageURL = CSP_PortalPath + 'CSPortal/Images/Icons/messageBallons.svg';
 
@@ -128,12 +127,18 @@ export default class PortalHomeCalendar extends LightningElement {
     toggleCaseMessagingSection(){
         if(this.showCaseMessagingSection){
             this.showCaseMessagingSection = false;
-            this.messagingHeight = 'height:400px;transition: height 0.3s ease;';
         }else{
             this.showCaseMessagingSection = true;
-            this.messagingHeight = 'height:100%;transition: height 0.3s ease;';
         }
+        
+        this.toggleCollapsed('[data-msgdiv]', 'collapsed');
+        this.toggleCollapsed('[data-msgicon ]', 'arrowExpanded');
+        
     }
-
+	
+	toggleCollapsed(elem, cssclass) {
+		this.template.querySelector(elem).classList.toggle(cssclass);
+	}
+	
 
 }

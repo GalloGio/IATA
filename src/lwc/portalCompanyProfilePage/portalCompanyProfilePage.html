@@ -63,7 +63,7 @@
                                             <c-portal-record-form-wrapper key={keyValue.key} object-name="Account"
                                                 record-id={loggedUser.Contact.AccountId} fields={keyValue.value}
                                                 show-edit={canEditAccount} class="section" section-title={keyValue.key}
-                                                data-name={keyValue.key} edit-basics={editBasics}
+                                                data-name={keyValue.key} edit-basics={editBasics} tab-name={tabName}
                                                 section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
                                             </c-portal-record-form-wrapper>
                                         </template>
@@ -133,53 +133,64 @@
                         <template if:true={tab2Active}>
 
                             <template if:true={contactsLoaded}>
+                                <lightning-layout multiple-rows class="slds-text-align_right slds-m-top_x-large slds-gutters_xx-small slds-p-around_xx-small" pull-to-boundary="small" horizontal-align="spread">
 
-                                <div class="slds-grid slds-clearfix slds-m-top_xx-large slds-m-bottom_medium">                                   
-
-                                    <div class="slds-col slds-p-top_medium slds-size_1-of-2">
-                                        <div class="searchContainer">
-                                            <div class="searchContainer bottomLightGrayBorder">
-                                                <img src={searchColored} height="24" width="24" />
-                                                <lightning-input name="contact-search"
-                                                    type="text"
-                                                    placeholder={labels.FindContact}
-                                                    class="borderlessInput grayInputBackground hideInputLabel text-xsmall"
-                                                    value={searchValue}
-                                                    onchange={onchangeSearchInputContacts}>
-                                                </lightning-input>
-                                            </div>
+                                    <!-- SEARCH -->
+                                    <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow" medium-device-size="6" large-device-size="3">
+                                        <div class="bottomLightGrayBorder slds-m-around_small inputFilter">
+                                            <img src={searchColored}>
+                                            <lightning-input name="contact-search" type="text" value={searchValue}
+                                                placeholder={labels.FindContact}
+                                                onchange={onchangeSearchInputContacts}
+                                                class="borderlessInput hideInputLabel grayInputBackground grayInputPlaceholder searchStyle">
+                                            </lightning-input>
                                         </div>
-                                    </div>
+                                    </lightning-layout-item>
 
-                                    <div class="slds-col slds-size_1-of-2">                                          
-                                        <div class="slds-float_right displayFlex">
-                                            <!-- LABELS -->
-                                            <span if:true={showIFAPBtn}>
-                                                <lightning-button variant="brand" label={labels.ISSP_Assign_IFAP}
-                                                    title={labels.ISSP_Assign_IFAP} onclick={navigateToIFAP}
-                                                    class="slds-float_right containedButton marginRight">
-                                                </lightning-button>
-                                            </span>
-                                            <span>
-                                                <lightning-button variant="brand" label={labels.NewContact}
-                                                    title="Create New Contact" disabled={contactsNotLoaded}
-                                                    onclick={createContact} class="slds-float_right containedButton heightCreateContact">
-                                                </lightning-button>
-                                            </span>
-                                        </div>
+                                    <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="auto" medium-device-size="6" large-device-size="9">
                                         
-                                    </div>
+                                        <!-- APPROVE -->
+                                        <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">
+                                            <lightning-button if:true={showManageButtons} variant="brand" label={labels.ISSP_Activate}
+                                                class="containedButtonSmaller" onclick={grantAccess} data-item="approve">
+                                            </lightning-button>
+                                        </lightning-layout-item>
 
+                                        <!-- DECLINE -->
+                                        <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">
+                                            <lightning-button if:true={showManageButtons} variant="brand" label={labels.ISSP_Inactivate}
+                                                class="containedButtonSmaller" onclick={denyAccess} data-item="inactive">
+                                            </lightning-button>
+                                        </lightning-layout-item>
 
-                                </div>
+                                        <!-- ASSESSMENT CONTRACT -->
+                                        <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">
+                                            <lightning-button variant="brand" label={labels.ISSP_Assign_IFAP}
+                                                title={labels.ISSP_Assign_IFAP} onclick={navigateToIFAP}
+                                                class="containedButtonSmaller">
+                                            </lightning-button>
+                                        </lightning-layout-item>
+
+                                        <!-- LIST VIEW -->
+                                        <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">    
+                                            <lightning-button variant="brand" label={labels.NewContact} 
+                                                title="Create New Contact" disabled={contactsNotLoaded}
+                                                onclick={createContact} class="containedButtonSmaller">
+                                            </lightning-button>
+                                        </lightning-layout-item>
+
+                                    </lightning-layout-item>
+
+                                </lightning-layout>
 
                                 <div class="slds-grid slds-wrap slds-m-top_x-small">
                                     <c-portal-contact-list is-account="false" object-name="Contact" class="fullWidth"
                                         default-sort="Name" fields-list={contactFields}
-                                        fields-list-to-create={fieldsListToCreate} records={contacts}
+                                        fields-list-to-create={fieldsListToCreate} records={contacts} wrapper={contactsWrapper}
                                         openmodel={openmodel} recordid={recordid} accountid={accountid}
                                         objectid={objectid} ongetcontacts={getContacts} fetching={isFetching}
-                                        onrefreshview={refreshview} onsearchrecords={searchRecords} search-key={searchTextContacts}>
+                                        onrefreshview={refreshview} onsearchrecords={searchRecords} search-key={searchTextContacts} onmanageusers={manageUsers}
+                                        action-name={action}>
                                     </c-portal-contact-list>
 
                                 </div>

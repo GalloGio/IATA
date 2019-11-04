@@ -608,7 +608,7 @@ global without sharing class Comm_User_Helper {
                   template = 'Communities_Forgot_Password_Email3';
                   emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'ISSP');
               }else if(Community.contains('CNS')){
-                  string prefix ='https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c);
+                  string prefix = Site.getBaseUrl() == null || Site.getBaseUrl() == '' ? 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) : Site.getBaseUrl();
                   link = prefix + '/ISSP_First_Login?CommunityName=CNS&'+encodedPart;
                   template = 'Communities_Forgot_Password_Email3_CNS';
                   emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'CNS');

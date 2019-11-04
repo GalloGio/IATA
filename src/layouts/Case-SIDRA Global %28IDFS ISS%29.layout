@@ -111,10 +111,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SIDRA_Exclude_from_report_exceptions__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Acc_IRR_leading_to_DEF__c</field>
             </layoutItems>
             <layoutItems>

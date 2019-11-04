@@ -79,7 +79,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
         let detailObject = JSON.parse(JSON.stringify(this.documentObject));   
 
         for(let i = 0; i < detailObject.categories.length; i++) {
-            if(detailObject.categories[i].name === detailCategory.name &&
+            if(detailObject.categories[i].apiName === detailCategory.apiName &&
                 (
                     (detailObject.categories[i].noResults !== detailCategory.noResults) ||
                     detailObject.categories[i].searchText !== detailCategory.searchText ||
@@ -109,7 +109,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
             }
         } else {
             for(let i = 0; i < detailObject.categories.length; i++) {
-                if(detailObject.categorySelected === detailObject.categories[i].name && detailObject.categories[i].noResults !== 0) {
+                if(detailObject.categorySelected === detailObject.categories[i].apiName && detailObject.categories[i].noResults !== 0) {
                     found = true; 
                     break;
                 }

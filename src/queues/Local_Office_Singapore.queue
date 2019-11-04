@@ -5,12 +5,12 @@
     <name>Local Office - Singapore</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>CountryManagerSingaporeI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>StaffSingaporeI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerSingapore</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffSingapore</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
         <roles>
-            <role>APCustomerServiceManagerA</role>
-            <role>APCustomerServiceStaffA</role>
+            <role>APCustomerServiceManager</role>
+            <role>APCustomerServiceStaff</role>
         </roles>
         <users>
             <user>chopras@iata.org</user>
