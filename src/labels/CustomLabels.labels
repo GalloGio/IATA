@@ -4467,13 +4467,6 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_YouAndIATA</shortDescription>
         <value>You &amp; IATA</value>
     </labels>
-	<labels>
-        <fullName>CSP_YouIATA_Highlights</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_YouIATA_Highlights</shortDescription>
-        <value>Selected Highlights For You</value>
-    </labels>
     <labels>
         <fullName>CSP_YouIATA_Highlights_Text</fullName>
         <language>en_US</language>
