@@ -592,10 +592,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		        //Initial Validation 
 		        for (Case c : casesToTrigger){
 		        	system.debug('REASON: '+c.reason1__c);
-
 		        	if (ServicesToCheck.contains(c.reason1__c) && c.Status == 'Closed' && (c.BSPCountry__c != AMS_Utils.passIATAMultipleCountries || !c.Reason1__c.startsWith('PASS')) && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed')){
-		        	// if (ServicesToCheck.contains(c.reason1__c) && c.Status == 'Closed' && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed')){ - The logic above contains more conditions - DB
-
 			            caseMap.put(c.id,c);
 			            caseIdPerAccID.put(c.accountID,c.id);
 			        } else if( !ServicesToCheck.contains(c.reason1__c)){

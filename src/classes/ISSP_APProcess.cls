@@ -54,7 +54,6 @@ global without sharing class ISSP_APProcess {
     public string strParentBillingCity {get; set;}
     public string strParentBillingState {get; set;}
     public string strParentBillingCountry {get; set;}
-    public string strParentAOCName {get; set;}
     public string fileName {get;set;}
     public string strCountryspecURL {get;set;}
     public string strCountryspecLinkLabel {get;set;}
@@ -103,8 +102,6 @@ global without sharing class ISSP_APProcess {
     public Integer airlineOptInDays {get;set;}
     public Integer airlineOptOutDays {get;set;}
     public Boolean isoCountryEligible {get;set;} //Variable to define if the isoCountry is EasyPay Eligible (used in VF Page)
-    
-    public String draftCaseIdParam {get;set;}
 
     public Boolean getIsNewCountryProcess() {
         try {
@@ -341,6 +338,8 @@ global without sharing class ISSP_APProcess {
                 isStep2= true;
             }else if(stepNumber == '3'){
                 isStep3= true;
+                retrieveAPProcessForm();
+
                 if(newForm.Id==null) {
                     newForm.Airline_Local_address_in_the_BSP_Country__c = newCase.BSPCountry__c;
                 }
@@ -377,6 +376,7 @@ global without sharing class ISSP_APProcess {
             }else if(stepNumber == '4'){
                 system.debug('STEP 4 - 1');
                 isStep4 = true;
+                retrieveAPProcessForm();
                 system.debug('STEP 4 - 2');
                 newForm.Submitted_to_IATA__c = FALSE;
 
@@ -558,7 +558,6 @@ global without sharing class ISSP_APProcess {
                 isStep1 = true;
             }
         }
-        retrieveAccountToShowSections();
 
         if(stepNumber == '1' || stepNumber == null) {
             fetchPassCountries(newCase);
@@ -566,6 +565,7 @@ global without sharing class ISSP_APProcess {
         if(stepNumber == '4') {
             wrapperPassCountries=fetchWrapperCaseCountries(newCase);
         }
+        retrieveAccountToShowSections();
 
         populateCountriesMap();
         poupulateOptInOutOptions();
@@ -794,7 +794,16 @@ global without sharing class ISSP_APProcess {
         newCase.IFAP_Country_ISO__c = apcountryisocode;
         newCase.Description = description;
 
-        if(isPassAirline && !isGSSAUser){// One of the countries that is chosen for the Pass Joining will be in the IFAP_Country_ISO__c case field. If there are more than one country, the rest of them are going to be in the Country_Concerned__c case field
+        isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
+        newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
+        newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c;
+        newCase.Visible_on_ISS_Portal__c = true;
+
+        newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
+
+        //AS - R03 SP03; for when GSSA create joining processs on behalf of Airline
+
+    if(isPassAirline && !isGSSAUser){// One of the countries that is chosen for the Pass Joining will be in the IFAP_Country_ISO__c case field. If there are more than one country, the rest of them are going to be in the Country_Concerned__c case field
             String countryConcerned='';
             if(!selectedPASSCountries.isEmpty()) {
                 if(selectedPASSCountries.size()==1){//if there is only one selected country, there won't be child cases, so the field IFAP_Country_ISO__c is going to be populated
@@ -831,29 +840,28 @@ global without sharing class ISSP_APProcess {
         }else{
             newCase.Country_Concerned__c=null;
             retrieveCountryRequirements(newCase.IFAP_Country_ISO__c, strLoB);
-            if (isGSSAUser){
-                //GSSA user has selected Airline HQ account for Joining, or BR AL Account for Change (from Services Rendered), from dropdown list of Airlines in Step 1
-                if (cassairlineid != '' && cassairlineid != null){
-                    List <Account> airlineList = [SELECT Id, Name, IATACode__c, Airline_designator__c, Airline_Prefix__c FROM Account WHERE Id = :cassairlineid];
-                    if (!airlineList.isEmpty()){
-                        newCase.IATAcode__c = airlineList[0].IATACode__c;
-                        newCase.Provider__c = con.AccountId;  //Put GSSA as Provider for backwards compatibility
-                        newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, hqAccount.Airline_designator__c,
-                                                                                hqAccount.Airline_Prefix__c,
-                                                                                apCountryisocode, airlineList[0].Name, airlineList[0].Id);
-                    }
-                }
-            } else {
-                newCase.IATAcode__c = con.Account.IATACode__c;  //Web IATA Code on case
-                if (newCase.Account_Concerned__c==null) {
-                    newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
-                                                                        con.Account.IATACode__c,
-                                                                        apCountryisocode, con.Account.Name, vHqAccountId);
+        if (isGSSAUser){
+            //GSSA user has selected Airline HQ account for Joining, or BR AL Account for Change (from Services Rendered), from dropdown list of Airlines in Step 1
+            if (cassairlineid != '' && cassairlineid != null){
+                List <Account> airlineList = [SELECT Id, Name, IATACode__c, Airline_designator__c, Airline_Prefix__c FROM Account WHERE Id = :cassairlineid];
+                if (!airlineList.isEmpty()){
+                    newCase.IATAcode__c = airlineList[0].IATACode__c;
+                    newCase.Provider__c = con.AccountId;  //Put GSSA as Provider for backwards compatibility
+                    newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, hqAccount.Airline_designator__c,
+                                                                            hqAccount.Airline_Prefix__c,
+                                                                            apCountryisocode, airlineList[0].Name, airlineList[0].Id);
                 }
             }
-        
+        } else {
+            newCase.IATAcode__c = con.Account.IATACode__c;  //Web IATA Code on case
+            if (newCase.Account_Concerned__c==null) {
+                newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
+                                                                    con.Account.IATACode__c,
+                                                                    apCountryisocode, con.Account.Name, vHqAccountId);
+            }
+        }
 
-        if((isPassAirline && selectedPASSCountries.size()==1) || !isPassAirline || isGSSAUser){//If the Airline is not PASS or if there is only one selected country, the Country related fields can be populated
+    if((isPassAirline && selectedPASSCountries.size()==1) || !isPassAirline || isGSSAUser){//If the Airline is not PASS or if there is only one selected country, the Country related fields can be populated
             isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
             newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
             newCase.Country_concerned_by_the_query__c = countryRequirement.Country__r.Case_BSP_Country__c;
@@ -861,34 +869,23 @@ global without sharing class ISSP_APProcess {
             newCase.Region__c=null;
         }
 
-        newCase.Visible_on_ISS_Portal__c = true;
-
-        //AS - R03 SP03; for when GSSA create joining processs on behalf of Airline
-
-
         //Defining default values for the case
         //create case with RT IDFS Airline Participation Process
         newCase.recordTypeId = RECORD_TYPE_ID;
         newCase.Origin = 'Portal';
-        
+        newCase.Country_concerned_by_the_query__c = countryRequirement.Country__r.Case_BSP_Country__c;
 
         newCase.CaseArea__c = strAreaType;
 
         managePASS=checkExistingPassServiceRenderedInAccount(con.AccountId);
 
         if(strAreaType=='Airline Joining') {
-
-          	newCase.Reason1__c = caseReason(strOperationType, strParentMembershipstatus);            
+            newCase.Reason1__c = caseReason(strOperationType, strParentMembershipstatus);            
             String passProcess = ' Joining Process - ';
             if(managePASS){
                 passProcess = ' Countries - ';
             }
             newCase.Subject='Airline Participation - '+ strOperationType + passProcess + newCase.Country_concerned_by_the_query__c;
-
-            // Not necessary the lines below, as the variable passProcess by default is 'Joining Process -' , it only changes if managePass is true. DB
-            //newCase.Reason1__c = caseReason(strOperationType, strParentMembershipstatus);
-            //newCase.Subject='Airline Participation - '+ strOperationType + ' Joining Process - ' + newCase.Country_concerned_by_the_query__c;
-
         } else {
             newCase.Reason1__c = strChangeType;
             newCase.Subject='Airline Participation - ' + strOperationType + ' - '+ strChangeType + ' - ' + newCase.Country_concerned_by_the_query__c;
@@ -1108,12 +1105,8 @@ global without sharing class ISSP_APProcess {
     }
 
     public Pagereference goToFinalStep(){
+    List<Attachment> attch = getAttachList();
         try{
-<<<<<<< HEAD
-            if(isocountry!=null){
-                newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null && isocountry.Airline_EasyPay_Opt_Out_Date__c <= Date.today() && isocountry.Airline_EasyPay_Opt_Out_Date__c != null);
-            }
-=======
             if (isBSP || isCASS) {
                 if (!getShowJoinICCSQuestion()) {
                     this.newForm.Airline_wish_to_join_ICCS__c = 'No';
@@ -1130,8 +1123,10 @@ global without sharing class ISSP_APProcess {
                 return null;
             }
 
-            newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null && isocountry.Airline_EasyPay_Opt_Out_Date__c <= Date.today() && isocountry.Airline_EasyPay_Opt_Out_Date__c != null);
->>>>>>> master
+        
+            if(isocountry!=null){
+                newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null && isocountry.Airline_EasyPay_Opt_Out_Date__c <= Date.today() && isocountry.Airline_EasyPay_Opt_Out_Date__c != null);
+            }
 
             newForm.Submitted_to_IATA__c = TRUE;
             if(strAreaType == 'Airline Joining') {
@@ -1226,7 +1221,6 @@ global without sharing class ISSP_APProcess {
         return null;
     }
 
-<<<<<<< HEAD
     @future(callout=true)
     public static void copyAttachmentsToChildCases(Id parentCase, Map<Id,String> childCaseIdIsoCodeMap){
 
@@ -1244,7 +1238,8 @@ global without sharing class ISSP_APProcess {
         if(!AFList.isEmpty()){
             insert AFList;
         }
-=======
+    }
+
     /**
         Returns a list of all required filed to upload for current form type
     **/
@@ -1278,7 +1273,6 @@ global without sharing class ISSP_APProcess {
         }
         System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
         return listMandatoryFiles;
->>>>>>> master
     }
 
     public Pagereference redirectToCasesList(){
@@ -1359,25 +1353,27 @@ global without sharing class ISSP_APProcess {
                              ORDER BY ISO_Country_formula__c];
             }
         }
+
+        List<SelectOption> options = new List<SelectOption>();
         Set<String> sISOCode = New Set<String>();
 
-            options.add(new SelectOption('', '--None--'));
-             if(strAreaType=='Airline Joining') {
-                for(AP_Country_Requierment__c iso : isoListJoining){
-                //        if (sISOCode.Contains(iso.Country__r.ISO_Code__c) == FALSE){ ---INC314169---
-                          sISOCode.add(iso.Country__r.ISO_Code__c);
-                            options.add(new SelectOption(iso.Country__r.ISO_Code__c,iso.Name));
-                //        }
-                }
-                } else {
-                  for(Services_Rendered__c iso : isoListChange){
-                      if (sISOCode.Contains(iso.ISO_Country_Code__c) == FALSE){
-                           sISOCode.add(iso.ISO_Country_Code__c);
-                      options.add(new SelectOption(iso.ISO_Country_Code__c,iso.ISO_Country_formula__c));
-                         }
-                }
-              }
-        }
+        options.add(new SelectOption('', '--None--'));
+         if(strAreaType=='Airline Joining') {
+            for(AP_Country_Requierment__c iso : isoListJoining){
+            //        if (sISOCode.Contains(iso.Country__r.ISO_Code__c) == FALSE){ ---INC314169---
+                      sISOCode.add(iso.Country__r.ISO_Code__c);
+                        options.add(new SelectOption(iso.Country__r.ISO_Code__c,iso.Name));
+            //        }
+            }
+            } else {
+              for(Services_Rendered__c iso : isoListChange){
+                  if (sISOCode.Contains(iso.ISO_Country_Code__c) == FALSE){
+                       sISOCode.add(iso.ISO_Country_Code__c);
+                  options.add(new SelectOption(iso.ISO_Country_Code__c,iso.ISO_Country_formula__c));
+                     }
+            }
+          }
+
         return options;
     }
 
@@ -1659,7 +1655,6 @@ global without sharing class ISSP_APProcess {
         return true;
     }
 
-<<<<<<< HEAD
     public pagereference UploadFile(){
         if(fileBody == null || fileName == null)  {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Please select a file.');
@@ -1693,14 +1688,6 @@ global without sharing class ISSP_APProcess {
         }
         return attachmentList;
     }
-=======
-    ///Keeping these lines to avoid deployment issues, can be removed after successful prod deployment
-    public pagereference UploadFile(){return null;}
-    public List<Attachment> getAttachList(){return new List<Attachment>();}
-    public string strParentLegalName {get; set;}
-    public string strParentTradeName {get; set;}
-    ///
->>>>>>> master
 
     //TF
     public void getCityData(){
@@ -1779,7 +1766,6 @@ global without sharing class ISSP_APProcess {
         strParentBillingState = hqAccount.BillingState;
         strParentBillingCode = hqAccount.BillingPostalCode;
         strParentBillingCountry = hqAccount.BillingCountry;
-        strParentAOCName = hqAccount.Name;
     }
 
     Public Id retrieveAirlineConcerned(Account hq, String DesignatorCode, String IATACode, String CountryCode, String AL_Name, Id AL_Id) {
@@ -1951,8 +1937,8 @@ global without sharing class ISSP_APProcess {
 
     private void getLob(String strLine) {
      //Verify if it's a BSP or a CASS Form
-        if(strLine.startsWith('BSP')) {
-            isBSP = true;
+      if(strLine.startsWith('BSP')) {
+          isBSP = true;
             strLoB = 'BSP';
         } else if(strLine.startsWith('CASS')){
             isCASS = true;
@@ -2015,9 +2001,7 @@ global without sharing class ISSP_APProcess {
 
         emails.add(mail);
 
-        if(!test.isRunningtest()){
-            Messaging.sendEmail(emails);
-        }
+        Messaging.sendEmail(emails);
     }
 
     public void editGSTNumber()
@@ -2234,157 +2218,6 @@ global without sharing class ISSP_APProcess {
         return listFieldsToCheck;
     }
 
-<<<<<<< HEAD
-    //PASS
-    public Pagereference changeIsPassAirlineMethod(){
-        strOperationType = Apexpages.currentPage().getParameters().get('strOT');
-        
-        if(strOperationType=='PASS'){
-            isPassAirline=true;
-        }else{
-            isPassAirline=false;
-        }
-        return null;
-    }
-
-    public void fetchPassCountries(Case passCase){
-        List<String> selectedCountriesAux = new List<String>();
-        List<String> existingPassCountriesIso = new List<String>();
-        existingPassCountries=new List<String>();
-
-        possiblePassCountries = new List<SelectOption>();
-        selectedPASSCountries = new List<SelectOption>();
-        
-
-        List <AP_Country_Requierment__c> isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.ISO_Code__c  
-                                                            FROM AP_Country_Requierment__c
-                                                            WHERE Line_of_business__c = 'PASS' ORDER by Name];
-
-        if(con.Account!=null){
-            //List<Case> passCaseList=[SELECT Id,IFAP_Country_ISO__c,BSPCountry__c, Country_Concerned__c FROM Case WHERE AccountId=:con.Account.Id AND (Reason1__c=:AMS_Utils.passAirlineCaseReason OR Reason1__c=:AMS_Utils.passAggregatorCaseReason) AND Status!='Draft'];
-
-            List<Services_Rendered__c> SRList = [SELECT BSP_Country__c FROM Services_Rendered__c WHERE Services_Rendered_By__c = :con.Account.Id AND 
-                                                Services_Rendered_Type__c LIKE 'PASS %' AND Source_Case__r.BSPCountry__c != 'Multiple' AND BSP_Country__c != null];
-            for(Services_Rendered__c SRRecord : SRList){
-                existingPassCountriesIso.add(SRRecord.BSP_Country__c);
-            }
-        }
-
-        //In order to present to the user the selected and possible countries, the selectedPassCountries need to be built using the country that is in the IFAP_Country_ISO__c case field and the
-        //also get the other countries that are in the Country_Concerned__c case field.
-        if(passCase!=null && isPassAirline){
-            selectedCountriesAux.add(passCase.IFAP_Country_ISO__c);
-            if(passCase.Country_Concerned__c!=null){
-                selectedCountriesAux.addAll(passCase.Country_Concerned__c.split(';'));
-            }
-        }
-
-        for(AP_Country_Requierment__c isoJoiningCountry:isoListJoining){
-            if(existingPassCountriesIso.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
-                existingPassCountries.add(isoJoiningCountry.Country__r.Name);
-            }else if(selectedCountriesAux.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
-                selectedPassCountries.add(new SelectOption(isoJoiningCountry.Country__r.ISO_Code__c, isoJoiningCountry.Country__r.Name));
-            }else{
-                possiblePassCountries.add(new SelectOption(isoJoiningCountry.Country__r.ISO_Code__c, isoJoiningCountry.Country__r.Name));
-            }
-        }
-    }
-
-    public List<passCountriesWrapper> fetchWrapperCaseCountries(Case passCase){
-        List<passCountriesWrapper> passCountries= new List<passCountriesWrapper>();
-        List<String> isoCodeList= new List<String>();
-        passCountriesWrapper passCountryAux;
-
-        isocodeList.add(passCase.IFAP_Country_ISO__c);
-        if(passCase.Country_Concerned__c!=null){
-            isocodeList.addAll(passCase.Country_Concerned__c.split(';'));
-        }
-
-        List <AP_Country_Requierment__c> isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.ISO_Code__c,Country__r.Id  
-                                                            FROM AP_Country_Requierment__c
-                                                            WHERE Line_of_business__c = 'PASS' AND Country__r.ISO_Code__c IN:isocodeList ORDER by Name];
-
-        for(AP_Country_Requierment__c isoJoining : isoListJoining) {
-            passCountryAux=new passCountriesWrapper(isoJoining.Country__r.Name,isoJoining.Country__r.ISO_Code__c,isoJoining.Country__r.Id);
-            passCountries.add(passCountryAux);
-        }
-        return passCountries;
-    }
-
-    public Map<String,IATA_ISO_Country__c> fetchISOCountryMap(List<String> isoCodeList) {
-        Map<String,IATA_ISO_Country__c> isoCountryMap=new Map<String,IATA_ISO_Country__c>();
-
-        List<IATA_ISO_Country__c> isocountryList = [SELECT Id, Name,ISO_Code__c,CurrencyIsoCode
-                                                    FROM IATA_ISO_Country__c
-                                                    WHERE ISO_Code__c IN :isoCodeList ];
-
-        for(IATA_ISO_Country__c isoCountry:isocountryList){
-            isoCountryMap.put(isoCountry.ISO_Code__c,isoCountry);
-        }
-
-        return isoCountryMap;
-    }
-
-    public Boolean checkExistingPassServiceRenderedInAccount(Id accountId){
-        List<Services_Rendered__c> serviceRenderedList=[SELECT Id 
-                                                        FROM Services_Rendered__c 
-                                                        WHERE Services_Rendered_Type__c=:AMS_Utils.passCountryCaseReason 
-                                                        AND (Services_Rendered_By__r.Id=:accountId OR Services_Rendered_By__r.Top_Parent__r.Id=:accountId)];
-
-        if(serviceRenderedList.size()>0){
-            return true;
-        }
-
-        return false;
-    }
-
-    public void UploadAmazonFile(){
-    }
-
-    public class passCountriesWrapper{
-        public String countryName{get;set;}
-        public String countryIsoCode{get;set;}
-        public transient Blob countryFileBody {get;set;}
-        public String countryFileName {get;set;}
-        public Id countryIsoCodeId {get;set;}
-
-        public passCountriesWrapper(String countryNameWrapper,String countryIsoCodeWrapper,Id countryIsoCodeIdWrapper){
-            countryName=countryNameWrapper;
-            countryIsoCode=countryIsoCodeWrapper;
-            countryIsoCodeId=countryIsoCodeIdWrapper;
-        }
-    }
-
-    public PageReference showHideHotFilesPreferenceMethod(){
-        if(newForm.Receive_HOT_files__c=='YES'){
-            showHotFilesPreference=true;
-            if(newForm.Hot_files_delivery_format__c=='E-mail and Download'){
-                showHotFilesEmail=true;
-            }else{
-                showHotFilesEmail=false;
-            }
-        }else{
-            showHotFilesPreference=false;
-            showHotFilesEmail=false;
-        }
-        return null;
-    }
-
-    public PageReference showHidePdfReportsPreferenceMethod(){
-        if(newForm.Receive_PDF_Reports__c=='YES'){
-            showPDFReportsPreference=true;
-            if(newForm.PDF_Report_Delivery_Format__c=='E-mail and Download'){
-                showPDFReportsEmail=true;
-            }else{
-                showPDFReportsEmail=false;
-            }
-        }else{
-            showPDFReportsPreference=false;
-            showPDFReportsEmail=false;
-        }
-        return null;
-    }
-=======
     /**
         If the country requirement value VAT_no_always_inserted_into_ISS_systems__c is set
         to YES means that at least one VAT field is mandatory
@@ -2582,5 +2415,151 @@ global without sharing class ISSP_APProcess {
             WHERE Authorized_Signatories_Package__c IN :accountToShowSections.Authorized_Signatories_Packages__r];
     }
 
->>>>>>> master
+    //PASS
+    public Pagereference changeIsPassAirlineMethod(){
+        strOperationType = Apexpages.currentPage().getParameters().get('strOT');
+        
+        if(strOperationType=='PASS'){
+            isPassAirline=true;
+        }else{
+            isPassAirline=false;
+        }
+        return null;
+    }
+
+    public void fetchPassCountries(Case passCase){
+        List<String> selectedCountriesAux = new List<String>();
+        List<String> existingPassCountriesIso = new List<String>();
+        existingPassCountries=new List<String>();
+
+        possiblePassCountries = new List<SelectOption>();
+        selectedPASSCountries = new List<SelectOption>();
+        
+
+        List <AP_Country_Requierment__c> isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.ISO_Code__c  
+                                                            FROM AP_Country_Requierment__c
+                                                            WHERE Line_of_business__c = 'PASS' ORDER by Name];
+
+        if(con.Account!=null){
+            //List<Case> passCaseList=[SELECT Id,IFAP_Country_ISO__c,BSPCountry__c, Country_Concerned__c FROM Case WHERE AccountId=:con.Account.Id AND (Reason1__c=:AMS_Utils.passAirlineCaseReason OR Reason1__c=:AMS_Utils.passAggregatorCaseReason) AND Status!='Draft'];
+
+            List<Services_Rendered__c> SRList = [SELECT BSP_Country__c FROM Services_Rendered__c WHERE Services_Rendered_By__c = :con.Account.Id AND 
+                                                Services_Rendered_Type__c LIKE 'PASS %' AND Source_Case__r.BSPCountry__c != 'Multiple' AND BSP_Country__c != null];
+            for(Services_Rendered__c SRRecord : SRList){
+                existingPassCountriesIso.add(SRRecord.BSP_Country__c);
+            }
+        }
+
+        //In order to present to the user the selected and possible countries, the selectedPassCountries need to be built using the country that is in the IFAP_Country_ISO__c case field and the
+        //also get the other countries that are in the Country_Concerned__c case field.
+        if(passCase!=null && isPassAirline){
+            selectedCountriesAux.add(passCase.IFAP_Country_ISO__c);
+            if(passCase.Country_Concerned__c!=null){
+                selectedCountriesAux.addAll(passCase.Country_Concerned__c.split(';'));
+            }
+        }
+
+        for(AP_Country_Requierment__c isoJoiningCountry:isoListJoining){
+            if(existingPassCountriesIso.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
+                existingPassCountries.add(isoJoiningCountry.Country__r.Name);
+            }else if(selectedCountriesAux.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
+                selectedPassCountries.add(new SelectOption(isoJoiningCountry.Country__r.ISO_Code__c, isoJoiningCountry.Country__r.Name));
+            }else{
+                possiblePassCountries.add(new SelectOption(isoJoiningCountry.Country__r.ISO_Code__c, isoJoiningCountry.Country__r.Name));
+            }
+        }
+    }
+
+    public List<passCountriesWrapper> fetchWrapperCaseCountries(Case passCase){
+        List<passCountriesWrapper> passCountries= new List<passCountriesWrapper>();
+        List<String> isoCodeList= new List<String>();
+        passCountriesWrapper passCountryAux;
+
+        isocodeList.add(passCase.IFAP_Country_ISO__c);
+        if(passCase.Country_Concerned__c!=null){
+            isocodeList.addAll(passCase.Country_Concerned__c.split(';'));
+        }
+
+        List <AP_Country_Requierment__c> isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.ISO_Code__c,Country__r.Id  
+                                                            FROM AP_Country_Requierment__c
+                                                            WHERE Line_of_business__c = 'PASS' AND Country__r.ISO_Code__c IN:isocodeList ORDER by Name];
+
+        for(AP_Country_Requierment__c isoJoining : isoListJoining) {
+            passCountryAux=new passCountriesWrapper(isoJoining.Country__r.Name,isoJoining.Country__r.ISO_Code__c,isoJoining.Country__r.Id);
+            passCountries.add(passCountryAux);
+        }
+        return passCountries;
+    }
+
+    public Map<String,IATA_ISO_Country__c> fetchISOCountryMap(List<String> isoCodeList) {
+        Map<String,IATA_ISO_Country__c> isoCountryMap=new Map<String,IATA_ISO_Country__c>();
+
+        List<IATA_ISO_Country__c> isocountryList = [SELECT Id, Name,ISO_Code__c,CurrencyIsoCode
+                                                    FROM IATA_ISO_Country__c
+                                                    WHERE ISO_Code__c IN :isoCodeList ];
+
+        for(IATA_ISO_Country__c isoCountry:isocountryList){
+            isoCountryMap.put(isoCountry.ISO_Code__c,isoCountry);
+        }
+
+        return isoCountryMap;
+    }
+
+    public Boolean checkExistingPassServiceRenderedInAccount(Id accountId){
+        List<Services_Rendered__c> serviceRenderedList=[SELECT Id 
+                                                        FROM Services_Rendered__c 
+                                                        WHERE Services_Rendered_Type__c=:AMS_Utils.passCountryCaseReason 
+                                                        AND (Services_Rendered_By__r.Id=:accountId OR Services_Rendered_By__r.Top_Parent__r.Id=:accountId)];
+
+        if(serviceRenderedList.size()>0){
+            return true;
+        }
+
+        return false;
+    }
+
+    public class passCountriesWrapper{
+        public String countryName{get;set;}
+        public String countryIsoCode{get;set;}
+        public transient Blob countryFileBody {get;set;}
+        public String countryFileName {get;set;}
+        public Id countryIsoCodeId {get;set;}
+
+        public passCountriesWrapper(String countryNameWrapper,String countryIsoCodeWrapper,Id countryIsoCodeIdWrapper){
+            countryName=countryNameWrapper;
+            countryIsoCode=countryIsoCodeWrapper;
+            countryIsoCodeId=countryIsoCodeIdWrapper;
+        }
+    }
+    
+    public PageReference showHideHotFilesPreferenceMethod(){
+        if(newForm.Receive_HOT_files__c=='YES'){
+            showHotFilesPreference=true;
+            if(newForm.Hot_files_delivery_format__c=='E-mail and Download'){
+                showHotFilesEmail=true;
+            }else{
+                showHotFilesEmail=false;
+            }
+        }else{
+            showHotFilesPreference=false;
+            showHotFilesEmail=false;
+        }
+        return null;
+    }
+
+    public PageReference showHidePdfReportsPreferenceMethod(){
+        if(newForm.Receive_PDF_Reports__c=='YES'){
+            showPDFReportsPreference=true;
+            if(newForm.PDF_Report_Delivery_Format__c=='E-mail and Download'){
+                showPDFReportsEmail=true;
+            }else{
+                showPDFReportsEmail=false;
+            }
+        }else{
+            showPDFReportsPreference=false;
+            showPDFReportsEmail=false;
+        }
+        return null;
+    }
+
 }
