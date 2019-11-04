@@ -29,6 +29,7 @@ export default class PortalHomeCalendar extends LightningElement {
     @track newMessage = '';
     @track showSendMessageButton = false;
     @track messageInputLoading = false;
+	@track loadingCom = false;
 
     @track showCaseMessagingSection = true;
 
@@ -96,6 +97,7 @@ export default class PortalHomeCalendar extends LightningElement {
     sendNewMessageJS(){
         if(this.newMessage.length > 0){
             this.messageInputLoading = true;
+			this.loadingCom = true;
             this.showSendMessageButton = false;
             submitNewMessage({ caseId : this.pageParams.caseId, messageTextAux : this.newMessage})
                 .then(results => {
@@ -110,10 +112,11 @@ export default class PortalHomeCalendar extends LightningElement {
                         this.dispatchEvent(toastEvent);
 
                         this.newMessage = '';
-                        this.template.querySelector('textarea').style.height  = '5px';
-                        this.template.querySelector('textarea').value = '';
-                        this.showSendMessageButton = false;
+						this.showSendMessageButton = false;
+						this.loadingCom = false;                                        
                         this.getCaseMessagesJS();
+						this.template.querySelector('textarea').style.height  = '5px';
+                        this.template.querySelector('textarea').value = '';
                     }
                 })
                 .catch(error => {
