@@ -110,3 +110,20 @@
   margin-left: 10px;
   
 }
+
+.recipients-box{
+    height: 150px;
+}
+
+.custom-recipients {
+    display:inline-block;
+    border-radius: 1px;
+    background-color: #f7f8fc;
+    font-size: 14px; 
+    font-weight: normal; 
+    font-style: normal; 
+    font-stretch: normal; 
+    line-height: 1.71; 
+    letter-spacing: normal;
+    color: #4a4d61;
+}
