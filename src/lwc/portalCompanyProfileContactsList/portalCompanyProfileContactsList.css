@@ -76,6 +76,10 @@
     text-decoration: underline;
 }
 
+.buttonAlignment {
+    padding-left: 10%;
+}
+
 .alphaFilterSelected{
     text-decoration: underline;
 }
