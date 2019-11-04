@@ -61,14 +61,6 @@
                                             <lightning:formattedText value="{!item.contactName}"/>
                                         </a>
                                     </th>
-                                    <th data-label="Account Name" scope="row" class="slds-cell-wrap">
-                                        <a href="{!item.accountLink}" target="_blank">
-                                            <lightning:formattedText value="{!item.accountName}"/>
-                                        </a>
-                                    </th>
-                                    <th data-label="Site" scope="row" class="slds-cell-wrap">
-                                        <lightning:formattedRichText value="{!item.accountSite}"/>
-                                    </th>  
                                     <th data-label="Type" scope="row" class="slds-cell-wrap">
                                         <lightning:formattedRichText value="{!item.contactType}"/>
                                     </th>  

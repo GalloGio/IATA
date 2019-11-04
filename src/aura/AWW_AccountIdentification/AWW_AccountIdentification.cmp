@@ -72,7 +72,7 @@
                         <div class="slds-form-element">
                             <label class="slds-form-element__label">IATA Account Number</label>
                             <div class="slds-form-element__control">
-                                TO CLARIFY
+                                {!v.record.Global_ID__c}
                             </div>
                         </div>         
                     </div>              
@@ -94,25 +94,9 @@
                     </div>     
                     <div class="slds-col slds-size_1-of-3 slds-p-bottom_medium">
                         <div class="slds-form-element">
-                            <label class="slds-form-element__label">EU Agency Consent</label>
-                            <div class="slds-form-element__control">
-                                TO CLARIFY
-                            </div>
-                        </div> 
-                    </div>
-                    <div class="slds-col slds-size_1-of-3 slds-p-bottom_medium">
-                        <div class="slds-form-element">
                             <label class="slds-form-element__label">Ownership Type</label>
                             <div class="slds-form-element__control">
                                 {!v.record.AM_Ownership_Type__c}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slds-col slds-size_1-of-3 slds-p-bottom_medium">
-                        <div class="slds-form-element">
-                            <label class="slds-form-element__label">Agency Segmentation</label>
-                            <div class="slds-form-element__control">
-                                TO CLARIFY
                             </div>
                         </div>
                     </div>

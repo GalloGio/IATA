@@ -149,6 +149,7 @@ private class AWW_AgencyManagementTest {
         Account wwAccount = [SELECT Id FROM Account WHERE RecordType.DeveloperName= 'Agency_WW_HQ'];
         Test.startTest();
         AWW_CoreRelationshipCtrl.calculateAccountRelations(wwAccount.Id);
+        AWW_CoreRelationshipCtrl.getUserAccessRightsAMPAgencyManagement();
         Test.stopTest();
     }
 

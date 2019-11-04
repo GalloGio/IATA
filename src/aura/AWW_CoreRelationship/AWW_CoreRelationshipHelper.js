@@ -77,5 +77,17 @@
         document.body.appendChild(link); 
 
         link.click();
+    },
+    checkHaveAMPAgencyManagement : function(component) {
+        var action = component.get('c.getUserAccessRightsAMPAgencyManagement');
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (component.isValid() && state === "SUCCESS") {                
+                var result = response.getReturnValue();
+                component.set('v.haveAMPAgencyManagement',result );
+            }   
+        });
+
+        $A.enqueueAction(action);
     }
 })

@@ -2,6 +2,7 @@
     init : function(component,event,helper) {
         helper.initTables(component);
         helper.fetchData(component);
+        helper.checkHaveAMPAgencyManagement(component);
     },
     edit : function(component,event,helper) {
         var modalCmp = component.find('edit-modal');

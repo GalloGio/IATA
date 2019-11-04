@@ -2,13 +2,11 @@
     initTable : function(component) {
         component.set('v.columns', [
             {title: 'Name', fieldname: 'contactName', sortable: true},
-            {title: 'Account Name', fieldname: 'accountName', sortable: true},
-            {title: 'Site', fieldname: 'accountSite', sortable: true},
             {title: 'Type', fieldname: 'contactType', sortable: false},
             {title: 'Primary for', fieldname: 'contactName', sortable: true},
             {title: 'Title', fieldname: 'title', sortable: true},
-            {title: 'Phone', fieldname: 'phone', sortable: true},
-            {title: 'Mobile', fieldname: 'mobile', sortable: true},
+            {title: 'Phone', fieldname: 'phone', sortable: false},
+            {title: 'Mobile', fieldname: 'mobile', sortable: false},
             {title: 'Email', fieldname: 'email', sortable: true}
         ]);
     },

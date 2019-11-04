@@ -4,6 +4,7 @@
     <aura:attribute name="selectedTab" type="String" default="iata"/>
     <aura:attribute name="paxEntities" type="List"/>
     <aura:attribute name="cargoEntities" type="List"/>
+    <aura:attribute name="haveAMPAgencyManagement" type="Boolean"/>
 
     <aura:registerEvent name="refreshTab" type="c:AWW_RefreshTabEvent"/>
     <aura:registerEvent name="controlSpinner" type="c:AWW_Spinner"/>
@@ -36,8 +37,10 @@
                     </aura:renderIf>
                     <div class="slds-grid slds-wrap">
                         <div class="{!'slds-col slds-p-around_x-small slds-size_1-of-3 ' + if(v.selectedTab == 'iata', 'activeTab', 'inactiveTab')}" data-option="iata" onclick="{!c.changeTab}">Core Relationship with IATA</div>
-                        <div class="{!'slds-col slds-p-around_x-small slds-size_1-of-3 ' + if(v.selectedTab == 'non_iata_pax', 'activeTab', 'inactiveTab')}" data-option="non_iata_pax" onclick="{!c.changeTab}">Relationship with External Entities (Passenger)</div>
-                        <div class="{!'slds-col slds-p-around_x-small slds-size_1-of-3 ' + if(v.selectedTab == 'non_iata_cargo', 'activeTab', 'inactiveTab')}" data-option="non_iata_cargo" onclick="{!c.changeTab}">Relationship with External Entities (Cargo)</div>
+                        <aura:if isTrue="{!v.haveAMPAgencyManagement}">
+                            <div class="{!'slds-col slds-p-around_x-small slds-size_1-of-3 ' + if(v.selectedTab == 'non_iata_pax', 'activeTab', 'inactiveTab')}" data-option="non_iata_pax" onclick="{!c.changeTab}">Relationship with External Entities (Passenger)</div>
+                            <div class="{!'slds-col slds-p-around_x-small slds-size_1-of-3 ' + if(v.selectedTab == 'non_iata_cargo', 'activeTab', 'inactiveTab')}" data-option="non_iata_cargo" onclick="{!c.changeTab}">Relationship with External Entities (Cargo)</div>
+                        </aura:if> 
                     </div>
                     <aura:if isTrue="{!v.selectedTab == 'iata'}">
                         <div class="slds-grid slds-p-around_medium slds-gutters slds-wrap">

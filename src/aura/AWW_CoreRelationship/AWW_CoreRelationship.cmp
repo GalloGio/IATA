@@ -13,6 +13,7 @@
     <aura:attribute name="data6" type="List"/>
     <aura:attribute name="record" type="Account"/>
     <aura:attribute name="canEdit" type="Boolean"/>
+    <aura:attribute name="haveAMPAgencyManagement" type="Boolean" default="false" />
 
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
     <aura:handler name="refreshTab" event="c:AWW_RefreshTabEvent" action="{!c.refreshTab}"/>  
@@ -74,5 +75,5 @@
         </div>
     </div>
 
-    <c:AWW_CoreRelationshipEdit aura:id="edit-modal" paxEntities="{!v.data4}" cargoEntities="{!v.data5}"/> 
+    <c:AWW_CoreRelationshipEdit aura:id="edit-modal" paxEntities="{!v.data4}" cargoEntities="{!v.data5}" haveAMPAgencyManagement="{!v.haveAMPAgencyManagement}"/> 
 </aura:component>

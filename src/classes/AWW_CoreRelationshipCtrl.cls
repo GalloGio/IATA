@@ -1,5 +1,21 @@
 public with sharing class AWW_CoreRelationshipCtrl {
     
+
+    @AuraEnabled
+    public static Boolean getUserAccessRightsAMPAgencyManagement() {
+        List<PermissionSetAssignment> permissions = [
+            SELECT PermissionSet.Name
+            FROM PermissionSetAssignment 
+            WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSet.Name IN ('AMP_Agency_Management')
+        ];
+
+        if(permissions.isEmpty()) {
+            return false;
+        } else {
+            return (permissions[0].PermissionSet.Name == 'AMP_Agency_Management' ? true : false);
+        }
+    }
+
     @AuraEnabled
     public static Response calculateAccountRelations(Id accountId) {
         Response res = new Response();
