@@ -57,7 +57,11 @@ public without sharing class ISSP_AMS_Accreditation {
 	{
 		get
 		{
-			List<String> codes = newForm.Agency_Codes_Concerned__c.split(',');
+            List<String> codes = new List<String>();
+            if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
+                codes = newForm.Agency_Codes_Concerned__c.split(',');
+            }
+            
 			if (accountConcerned != null)
 				codes.add(accountConcerned.IATACode__c);
 			Map<Id, Account> countries = getSelectedBranchList(codes);
@@ -466,14 +470,13 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public String selectedCoutriesForNoCMC {get; set;}
-    public String goGlobalDocumentId {
+    public String goGlobalDocumentLink {
         get {
-            List<ContentDocument> goGlobalGuide = [SELECT Id, Title, LatestPublishedVersionId
-                                                FROM ContentDocument
-                                                WHERE Title = 'GoGlobal Accreditation User Guide'
-                                                LIMIT 1];
+            List<ISSP_PDF_Per_Region__c> goGlobalGuide = [SELECT Name, Address__c, Link_To_PDF__c 
+                                                        FROM ISSP_PDF_Per_Region__c
+                                                        WHERE Name = 'GoGlobal User Guide'];
             
-            return goGlobalGuide.isEmpty() ? '' : goGlobalGuide[0].LatestPublishedVersionId;
+            return goGlobalGuide.isEmpty() ? '' : goGlobalGuide[0].Link_To_PDF__c;
         } 
         set;
     }

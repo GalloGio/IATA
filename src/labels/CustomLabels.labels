@@ -1381,13 +1381,6 @@ IATA Customer Service</value>
         <value>Conversion From</value>
     </labels>
     <labels>
-        <fullName>ANG_ISSP_ConversionFromGoGlobalTooltip</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG ISSP Conversion From GoGlobal Tooltip</shortDescription>
-        <value>Conversion From GoGlobal Tooltip</value>
-    </labels>
-    <labels>
         <fullName>ANG_ISSP_ConversionFromGoLiteTooltip</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2013,7 +2006,7 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature10Tooltip</shortDescription>
-        <value>Quarterly Financial Review Tooltip</value>
+        <value>Financial Review Mandatory for GoGlobal Agents.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature11</fullName>

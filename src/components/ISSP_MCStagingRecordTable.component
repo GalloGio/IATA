@@ -59,7 +59,7 @@
     <div class="row" style="padding-top: 10px;">
         <div class="col-md-12" id="McQuestions">
             <apex:outputText value="{!$Label.ANG_ISSP_Multicountry_Question}"/> &nbsp;
-            <apex:outputLink value="/csportal/s/documents-search?searchText=GoGlobal&docId={!goGlobalDocumentId}" target="_blank">{!$Label.ANG_ISSP_ProductComparisonViewHere}</apex:outputLink>
+            <apex:outputLink value="{!goGlobalDocumentLink}" target="_blank">{!$Label.ANG_ISSP_ProductComparisonViewHere}</apex:outputLink>
         </div>
     </div>
     
