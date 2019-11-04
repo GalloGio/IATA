@@ -195,16 +195,14 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_BSP          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
 
     public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
-	public static final String RECTYPE_NEWGEN_CHANGES_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
-	
+    public static final String RECTYPE_NEWGEN_CHANGES_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
+    
     public static final String RECTYPE_AIRLINE      = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline');
     public static final String RECTYPE_AIRLINE_BR   = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline_BR');
 
-    public static final Id OSCAR_COMUNICATION = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-
     //AMS Country Specific Attribute
     public static final String RECTYPE_CSA_RISK_NOTIFICATION   = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','Risk_Notification');
-
+    
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
     public static final Set<String> IEP_PROCESSES = new Set<String>{IEPBANKACCOUNTSETUP, IEPMODELAACCOUNTSETUP, IEPMODELBACCOUNTSETUP,IEPMODELBPLUSACCOUNTSETUP};
@@ -291,8 +289,8 @@ public without sharing class AMS_Utils {
     public static final String CATEGORY_AIRPORT_AUTHORITY = 'Airport Authority';
     public static final String CATEGORY_AIRPORT_CONCESSIONAIRE = 'Airport Concessionaire';
     public static final String CATEGORY_AIRPORT_OPERATOR = 'Airport Operator';
-	public static final String CATEGORY_TOUR_OPERATOR = 'Tour Operator';
-  	public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
+    public static final String CATEGORY_TOUR_OPERATOR = 'Tour Operator';
+    public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
 
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
@@ -1723,7 +1721,7 @@ public without sharing class AMS_Utils {
                 if(String.isNotBlank(insp.OSCAR__c) && insp.OSCAR__r.Process__c != null && (insp.OSCAR__r.Process__c == AMS_Utils.new_GSA_BSP || insp.OSCAR__r.Process__c == AMS_Utils.new_AHA_BSP || insp.OSCAR__r.Process__c == AMS_Utils.new_GSSA)){ 
                     insp.Date_Organisation_Status_attained__c = system.today();
                 }else{
-                	insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
+                    insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
                 }
                 /* AMSU-161 - end */
                 
@@ -1988,50 +1986,50 @@ public without sharing class AMS_Utils {
 
     //TD 20180607: "old" method signature to avoid issues with classes
     public static String getChangeCodeMemoText(String process,String changeCodeId) {
-    	return (getChangeCodeMemoText(process, changeCodeId, null));
+        return (getChangeCodeMemoText(process, changeCodeId, null));
     }
 
     //Get Change Code memo Text (All this configs should be passed for a Custom Setting)
     //TD 2018067 - added custom setting field in input
     public static String getChangeCodeMemoText(String process,String changeCodeId, AMS_ChangeCodes__c CCConfig) {
-    	if(changeCodeId.indexOf('-CNS-')>-1){
-    		//CNS PROCESS. GET BULLETIN MEMO TEXT FROM CHANGE CODE CONFIGURATION
-    		if(CCConfig==null)	CCConfig = AMS_ChangeCodes__c.getInstance(changeCodeId);
-    		
-    		if(CCConfig!=null){
-    			string sMemoText = (string.isBlank(CCConfig.Bulletin_Memo_Text__c)?'':CCConfig.Bulletin_Memo_Text__c) 
-    								+ (string.isBlank(CCConfig.Bulletin_Memo_Text2__c)?'':CCConfig.Bulletin_Memo_Text2__c) 
-    								+ (string.isBlank(CCConfig.Bulletin_Memo_Text3__c)?'':CCConfig.Bulletin_Memo_Text3__c);
-    			if(string.isNotBlank(sMemoText))
-    				return sMemoText = sMemoText.toUpperCase();
-    		}
-    		return '';
-    	}else{
-    		//UNTOUCHED FOR NON CNS PROCESSES
-    		String memoText = 'New application';
-    	
-    	    if (process == new_HO || process == new_BR_ABROAD){
-    	        if(changeCodeId != 'NWD') memoText += ' - Head Office';
-    	    }else if (process == new_BR){
-    	        memoText += ' - Branch';
-    	    }else if (process == NEWHELITE || process == NEWHESTANDARD){
-    	        if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Head Entity';
-    	    }else if (process == NEWAE){
-    	        if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Associate Entity';
-    	    }else if (process == new_TIDS){
-    	        memoText += ' - TIDS';
-    	    }else if (process == new_SA){
-    	        memoText += ' - SA';
-    	    }else if (process == new_GSSA){
-    	        memoText += ' - GSSA';
-    	    }else if (process == new_GSA_BSP || process == new_GSA){
-    	        memoText += ' - GSA';
-    	    }else if (process == new_AHA_BSP || process == new_AHA){
-    	        memoText += ' - AHA';
-    	    }
+        if(changeCodeId.indexOf('-CNS-')>-1){
+            //CNS PROCESS. GET BULLETIN MEMO TEXT FROM CHANGE CODE CONFIGURATION
+            if(CCConfig==null)  CCConfig = AMS_ChangeCodes__c.getInstance(changeCodeId);
+            
+            if(CCConfig!=null){
+                string sMemoText = (string.isBlank(CCConfig.Bulletin_Memo_Text__c)?'':CCConfig.Bulletin_Memo_Text__c) 
+                                    + (string.isBlank(CCConfig.Bulletin_Memo_Text2__c)?'':CCConfig.Bulletin_Memo_Text2__c) 
+                                    + (string.isBlank(CCConfig.Bulletin_Memo_Text3__c)?'':CCConfig.Bulletin_Memo_Text3__c);
+                if(string.isNotBlank(sMemoText))
+                    return sMemoText = sMemoText.toUpperCase();
+            }
+            return '';
+        }else{
+            //UNTOUCHED FOR NON CNS PROCESSES
+            String memoText = 'New application';
+        
+            if (process == new_HO || process == new_BR_ABROAD){
+                if(changeCodeId != 'NWD') memoText += ' - Head Office';
+            }else if (process == new_BR){
+                memoText += ' - Branch';
+            }else if (process == NEWHELITE || process == NEWHESTANDARD){
+                if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Head Entity';
+            }else if (process == NEWAE){
+                if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Associate Entity';
+            }else if (process == new_TIDS){
+                memoText += ' - TIDS';
+            }else if (process == new_SA){
+                memoText += ' - SA';
+            }else if (process == new_GSSA){
+                memoText += ' - GSSA';
+            }else if (process == new_GSA_BSP || process == new_GSA){
+                memoText += ' - GSA';
+            }else if (process == new_AHA_BSP || process == new_AHA){
+                memoText += ' - AHA';
+            }
      
-    	    return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
-    	}
+            return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
+        }
     }
 
 
@@ -2398,7 +2396,7 @@ public without sharing class AMS_Utils {
                         if(replaceWithSpace) sRes = sRes.replaceAll(m.group(), mSpecialChars.get('SPACE'));
                     }
 
-				}
+                }
 
                 //Check for TAB (\t)
                 if(s.contains('\t')) {
@@ -2633,7 +2631,7 @@ public without sharing class AMS_Utils {
     **/
     public static List<String> validateCharacters(sObject record, List<Schema.FieldSetMember> fieldsToCheck) {
         //WMO-538
-		Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
+        Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
         String ISO_8859_1_regEx = regExCS != null && String.isNotBlank(regExCS.Text_1__c) ? regExCS.Text_1__c : '^[\\x00-\\x7F\\xA0-\\xFF]+$';
         return validateCharacters(record, fieldsToCheck, ISO_8859_1_regEx);
     }
@@ -2672,13 +2670,13 @@ public without sharing class AMS_Utils {
     /*** AMSU-173 ***/
     public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};
     
-	/*** AMSU-195 Start ***/
+    /*** AMSU-195 Start ***/
     /**
     *   Method that validates if the record fields contain only latin characters
     **/
     public static List<String> cleanAndUpdateSpecialChars(sObject record, List<Schema.FieldSetMember> fieldsToCheck, Boolean toUpdate) {
         //WMO-538
-		Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
+        Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
         String ISO_8859_1_regEx = regExCS != null && String.isNotBlank(regExCS.Text_1__c) ? regExCS.Text_1__c : '^[\\x00-\\x7F\\xA0-\\xFF]+$';
         return cleanAndUpdateSpecialChars(record, fieldsToCheck, toUpdate, ISO_8859_1_regEx);
     }
@@ -2708,25 +2706,25 @@ public without sharing class AMS_Utils {
     /*** AMSU-195 End ***/
 
     public static String beautifyErrorMessage(String message){
-		
-		try {
+        
+        try {
 
-	        Pattern patt  = Pattern.compile('(.+)EXCEPTION, ((.+)):(.+)');
-	        Matcher match = patt.matcher(message);
-			
-			if(match.matches()){
-		        //Extract useful message from the exception message
-		        String userFriendlyMsg = match.group(3);
-		        return userFriendlyMsg;
-			}
-				        
-		}catch(Exception e){
-			//If something went wrong with the matcher 
-			//we just return the original message
-			system.debug(LoggingLevel.ERROR, e.getMessage());
-		}
+            Pattern patt  = Pattern.compile('(.+)EXCEPTION, ((.+)):(.+)');
+            Matcher match = patt.matcher(message);
+            
+            if(match.matches()){
+                //Extract useful message from the exception message
+                String userFriendlyMsg = match.group(3);
+                return userFriendlyMsg;
+            }
+                        
+        }catch(Exception e){
+            //If something went wrong with the matcher 
+            //we just return the original message
+            system.debug(LoggingLevel.ERROR, e.getMessage());
+        }
 
-		return message;
+        return message;
 
     }
 

@@ -5057,6 +5057,31 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         }
     }
 
+    private void retPASSReqments(boolean isFromValidation){
+        SYSTEM.DEBUG('Getting PASS requirements');
+
+        String selectedLang;
+
+        if (applyLanguage == 'fr') {
+            selectedLang = 'French';
+        } else if (applyLanguage == 'es') {
+            selectedLang = 'Spanish';
+        } else {
+            selectedLang = 'English';
+        }
+
+        RecordType PASSReqRecType = [Select Id From RecordType  Where SobjectType = 'AMS_Accreditation_Requirement__c' and DeveloperName = 'PASS'];
+
+        System.debug('retPASSReqments - sector: ' + sector + '; amsOfficeType: ' + amsOfficeType);
+        this.List_CountryReqments = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c
+                                     FROM AMS_Accreditation_Requirement__c
+                                     WHERE AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
+                                                AND Location_type__c INCLUDES (:amsOfficeType) AND Language__c = :selectedLang
+                                                AND RecordTypeId = :PASSReqRecType.Id
+                                                        ORDER BY Sort_Order__c ASC
+                                    ];
+    }
+
 
     private void retCargoCountryReqments(boolean isFromValidation) {
         Set<String> allowIdentifierSet = new Set<String>();
