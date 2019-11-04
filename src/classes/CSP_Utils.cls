@@ -381,10 +381,6 @@ public with sharing class CSP_Utils {
         return loggedUser.Profile.Name.contains('Airline');
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> MTSL-830_to_GCS_Enh/GCSE_R2_ConflictFix
     /*
     * Public class used thoughout the portal to return nr of records, a list of records and other properties
     */
