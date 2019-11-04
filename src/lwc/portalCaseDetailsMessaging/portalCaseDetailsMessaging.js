@@ -30,7 +30,8 @@ export default class PortalHomeCalendar extends LightningElement {
     @track showSendMessageButton = false;
     @track messageInputLoading = false;
 
-    @track showCaseMessagingSection = true;
+    @track showCaseMessagingSection = false;
+    @track messagingHeight = 'display:none';
 
     conversationImageURL = CSP_PortalPath + 'CSPortal/Images/Icons/messageBallons.svg';
 

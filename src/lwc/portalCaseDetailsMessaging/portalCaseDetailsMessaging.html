@@ -11,12 +11,13 @@
                         <span class="slds-p-left_large">{label.CSP_CaseMessage_MessageTitle}</span>
                     </div>
                 </div>
+            </div>
 
             <div class="slds-scrollable caseMessagesContainer" data-msgdiv>
                 <div class="slds-grid slds-wrap slds-p-around_x-large messagesContainer">
 
                     <template for:each={lstMessages} for:item="message" for:index="index">
-                        <div key={message.id} if:true={message.isSelf} class="caseMessagesSelfBubbleContainer">
+                        <div key={message.id} if:true={message.isSelf} class="caseMessagesOtherBubbleContainer">
                             <div class="slds-p-around_medium caseMessagesSelfBubble">
                                 <lightning-formatted-text value={message.messageText} class="breakWord">
                                 </lightning-formatted-text>
