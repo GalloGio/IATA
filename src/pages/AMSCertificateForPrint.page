@@ -19,32 +19,6 @@
 		<apex:repeat value="{!certificates}" var="page">
 			<apex:repeat value="{!page}" var="acc">
 				<table class="tabeStyle" id="myTable">
-					<tr style="height: 223px;">
-						<td style="width: 50%;">
-							<div class="headerImg">
-								<apex:pageBlock rendered="{!(acc.Sector__c == 'Cargo Agent')}">
-									<apex:image height="100px"  value="{!allLabels['HeaderImageAccreditedCargoAgent'].URLImage__c}"></apex:image>
-								</apex:pageBlock>
-								<apex:pageBlock rendered="{!(acc.Sector__c == 'Travel Agent')}">
-									<apex:image height="100px"  value="{!allLabels['HeaderImageAccreditedTravelAgent'].URLImage__c}"></apex:image>
-								</apex:pageBlock>
-							</div>
-							<div style="font-size: 2.2em;">
-								Certificate <br></br> of Accreditation
-							</div>
-							<div style="line-height: 30px;">
-								IATA is proud to certify that
-							</div>
-						</td>
-						<td style="width: 50%;">
-								<apex:pageBlock rendered="{!(acc.Sector__c == 'Cargo Agent')}">
-									<img src="{!allLabels['HeaderImageAccreditedCargoAgentTR'].URLImage__c}" height="217.5px;" style="position: relative;left: 56%;"/>
-								</apex:pageBlock>
-								<apex:pageBlock rendered="{!(acc.Sector__c == 'Travel Agent')}">
-									<img src="{!allLabels['HeaderImageAccreditedTravelAgentTR'].URLImage__c}" height="217.5px;" style="position: relative;left: 56%;"/>
-								</apex:pageBlock>
-						</td>
-					</tr>
 					<tr  style="height: 223px;">
 						<td colspan="2">
 							<div style="height:50px;font-size: 2.7em;">
@@ -54,77 +28,12 @@
 								<apex:outputText value="{!acc.TradeName__c}"/><br></br>
 								<apex:outputText value="{!acc.BillingCity}"/>,&nbsp;<apex:outputText value="{!acc.IATA_ISO_Country__r.Name}"/>
 							</div>
-							<div  style="height:40px;">
-								has met the professional standards of the <b>International Air Transport Association</b><br></br>
-								to promote, sell and handle international air cargo transportation.
-							</div>
-							<div  style="height:40px;">
-								<table>
-									<tr>
-										<td style="width:33.3%;font-size: 13px;">IATA code: <apex:outputText value="{!acc.IATACode__c}"/></td>
-										<td style="width:300px;font-size: 13px;">Validate online at: checkcode.com</td>
-										<td style="width:33.3%;font-size: 13px;">Certificate validity: {!allLabels['CertificateValidity'].Certificate_Validity__c}</td>
-									</tr>
-								</table>
-							</div>
 						</td>
 					</tr>
 					<tr  style="height: 223px;">
 						<td>
 							<table  style="height:200px;width: 100%;">
-								<tr>
-									<td>
-										<apex:pageBlock rendered="{!(acc.Region_formula__c == 'Africa & Middle East' || acc.Region_formula__c == 'Americas' || acc.Region_formula__c == 'Europe')}">
-											<img align="middle" src="{!allLabels['EU_CMYK_Signature1Image'].URLImage__c}" style="width: 80%;"/>
-										</apex:pageBlock>
-										<apex:pageBlock rendered="{!acc.Region_formula__c == 'China & North Asia'}">
-											<img align="middle" src="{!allLabels['NORTH_ASIAPMS_Signature1Image'].URLImage__c}" style="width: 80%;"/>
-										</apex:pageBlock>
-										<apex:pageBlock rendered="{!acc.Region_formula__c == 'Asia & Pacific'}">
-											<img align="middle" src="{!allLabels['ASPAC_CMYK_Signature1Image'].URLImage__c}" style="width: 80%;"/>
-										</apex:pageBlock>
-									</td>
-									<td style="width:20px;">
-									</td>
-									<td>
-										<apex:pageBlock rendered="{!(acc.Region_formula__c == 'Africa & Middle East' || acc.Region_formula__c == 'Americas' || acc.Region_formula__c == 'Europe')}">
-											<img align="middle" src="{!allLabels['EU_CMYK_Signature2Image'].URLImage__c}" style="width: 80%;"/>
-										</apex:pageBlock>
-										<apex:pageBlock rendered="{!acc.Region_formula__c == 'China & North Asia'}">
-											<img align="middle" src="{!allLabels['NORTH_ASIAPMS_Signature2Image'].URLImage__c}" style="width: 80%;"/>
-										</apex:pageBlock>
-										<apex:pageBlock rendered="{!acc.Region_formula__c == 'Asia & Pacific'}">
-											<img align="middle" src="{!allLabels['ASPAC_CMYK_Signature2Image'].URLImage__c}" style="width: 80%;"/>
-										</apex:pageBlock>
-									</td>
-								</tr>
 								<tr style="position: relative;">
-									<td style="font-size: 10px;width:170px;">
-										<hr style="width:80%;margin:0px;"></hr>
-										<apex:pageBlock rendered="{!(acc.Region_formula__c == 'Africa & Middle East' || acc.Region_formula__c == 'Americas' || acc.Region_formula__c == 'Europe')}">
-											<apex:outputText value="{!allLabels['EUCMYKSignature1'].Description_Signature__c}" style="white-space:pre;" escape="false"/>
-										</apex:pageBlock>
-										<apex:pageBlock rendered="{!acc.Region_formula__c == 'China & North Asia'}">
-											<apex:outputText value="{!allLabels['NORTH_ASIAPMS_Signature1'].Description_Signature__c}" style="white-space:pre;" escape="false"/>
-										</apex:pageBlock>
-										<apex:pageBlock rendered="{!acc.Region_formula__c == 'Asia & Pacific'}">
-											<apex:outputText value="{!allLabels['ASPAC_CMYK_Signature1'].Description_Signature__c}" style="white-space:pre;" escape="false"/>
-										</apex:pageBlock>
-									</td>
-									<td style="width:20px;">
-									</td>
-									<td style="font-size: 10px;width:170px;margin-left:20px;">
-										<hr style="width:80%;margin:0px;"></hr>
-										<apex:pageBlock rendered="{!(acc.Region_formula__c == 'Africa & Middle East' || acc.Region_formula__c == 'Americas' || acc.Region_formula__c == 'Europe')}">
-											<apex:outputText value="{!allLabels['EUCMYKSignature2'].Description_Signature__c}" style="white-space:pre;" escape="false"/>
-										</apex:pageBlock>
-										<apex:pageBlock rendered="{!acc.Region_formula__c == 'China & North Asia'}">
-											<apex:outputText value="{!allLabels['NORTH_ASIAPMS_Signature2'].Description_Signature__c}" style="white-space:pre;" escape="false"/>
-										</apex:pageBlock>
-										<apex:pageBlock rendered="{!acc.Region_formula__c == 'Asia & Pacific'}">
-											<apex:outputText value="{!allLabels['ASPAC_CMYK_Signature2'].Description_Signature__c}" style="white-space:pre;" escape="false"/>
-										</apex:pageBlock>
-									</td>
 									<td>
 										<div style="position: absolute;color: #dddddd;opacity: 0.2;font-size: 9em;font-weight: bold;top:-45%;z-index: -999;">
 											{!IF(ISBLANK($CurrentPage.Parameters.year), YEAR(TODAY()), $CurrentPage.Parameters.year)}
@@ -132,9 +41,6 @@
 									</td>
 								</tr>
 							</table>
-						</td>
-						<td>
-							<img style="position: relative;top: 25%;left: 65%;" src="{!allLabels['IATASymbolImage'].URLImage__c}" height="150px"/>
 						</td>
 					</tr>
 				</table>
