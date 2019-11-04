@@ -697,8 +697,6 @@ public with sharing class PortalCasesCtrl {
         RecordType.Id = :newCase.RecordType.Id
         AND (RecordType.DeveloperName IN :validRecordtypes)];
         
-                //AMSU-119
-        // || isMSOcase -> ADICIONAR
         return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-14)) || isMSO );
     }
 
