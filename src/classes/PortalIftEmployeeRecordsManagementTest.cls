@@ -98,7 +98,7 @@ private class PortalIftEmployeeRecordsManagementTest {
 
     @IsTest
     static void inactivateEmployeeTest(){
-        User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
+        User u1 = [select id, ContactId, Contact.AccountId  from user where Email = 'test.cont3@test.com' limit 1];
         Id contactToDelete = [SELECT id FROM contact WHERE LastName like 'Student' LIMIT 1].id;
         Account_Contact_Role__c employeeToInactivate = [SELECT id, Contact__c, name, Company_Code__c, First_Name__c, Last_Name__c, Status__c FROM Account_Contact_Role__c WHERE contact__c = :contactToDelete];
 
@@ -108,7 +108,7 @@ private class PortalIftEmployeeRecordsManagementTest {
             
             PortalIftEmployeeRecordsManagement.ResultWrapper res2 = PortalIftEmployeeRecordsManagement.inactivateEmployee(employeeToInactivate);
             System.assert(res2.succeeded);
-            PortalIftEmployeeRecordsManagement.ResultWrapper res42 = PortalIftEmployeeRecordsManagement.updateEmployee(employeeToInactivate, 'reactivate_and_update');
+            PortalIftEmployeeRecordsManagement.ResultWrapper res42 = PortalIftEmployeeRecordsManagement.updateEmployee(u1.Contact.AccountId, employeeToInactivate, 'reactivate_and_update');
             System.assert(res42.succeeded);
 
         }
@@ -117,7 +117,7 @@ private class PortalIftEmployeeRecordsManagementTest {
 
     @IsTest
     static void updateEmployeeTest(){
-        User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
+        User u1 = [select id, Contact.AccountId from user where Email = 'test.cont3@test.com' limit 1];
         PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper employeeToAdd = new PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper();
         employeeToAdd.code = 'GG11';
         employeeToAdd.first_name = 'Rita1';
@@ -145,7 +145,7 @@ private class PortalIftEmployeeRecordsManagementTest {
                                                         FROM Account_Contact_Role__c
                                                         WHERE Id = :employeeToUpdateAccRolId];
 
-            PortalIftEmployeeRecordsManagement.ResultWrapper res2 = PortalIftEmployeeRecordsManagement.updateEmployee(employeeToUpdate, null);
+            PortalIftEmployeeRecordsManagement.ResultWrapper res2 = PortalIftEmployeeRecordsManagement.updateEmployee(u1.Contact.AccountId,employeeToUpdate, null);
             System.assert(res2.succeeded);
 
             Contact employeeToUpdateContact_2 = new Contact(Id = employeeToUpdate.Contact__c,
@@ -166,15 +166,15 @@ private class PortalIftEmployeeRecordsManagementTest {
                                                         WHERE Contact__c = :employeeToUpdateContact_2.id];
             
             employeeToUpdate_2.Company_Code__c = '';
-            PortalIftEmployeeRecordsManagement.ResultWrapper res3 = PortalIftEmployeeRecordsManagement.updateEmployee(employeeToUpdate_2, null);
+            PortalIftEmployeeRecordsManagement.ResultWrapper res3 = PortalIftEmployeeRecordsManagement.updateEmployee(u1.Contact.AccountId, employeeToUpdate_2, null);
             System.assert(!res3.succeeded);
 
             employeeToUpdate_2.Company_Code__c = 'Abc';
-            PortalIftEmployeeRecordsManagement.ResultWrapper res4 = PortalIftEmployeeRecordsManagement.updateEmployee(employeeToUpdate_2, null);
+            PortalIftEmployeeRecordsManagement.ResultWrapper res4 = PortalIftEmployeeRecordsManagement.updateEmployee(u1.Contact.AccountId, employeeToUpdate_2, null);
             System.assert(!res4.succeeded);
 
             employeeToUpdate_2.id = null;
-            PortalIftEmployeeRecordsManagement.ResultWrapper res5 = PortalIftEmployeeRecordsManagement.updateEmployee(employeeToUpdate_2, null);
+            PortalIftEmployeeRecordsManagement.ResultWrapper res5 = PortalIftEmployeeRecordsManagement.updateEmployee(u1.Contact.AccountId, employeeToUpdate_2, null);
             System.assert(!res5.succeeded);
         }
         Test.stopTest();
@@ -182,7 +182,7 @@ private class PortalIftEmployeeRecordsManagementTest {
 
     @IsTest
     static void updateEmployeeStationsTest(){
-        User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
+        User u1 = [select id, Contact.AccountId from user where Email = 'test.cont3@test.com' limit 1];
         Id employeeAccContRol = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Role__c = 'ITP Trainee' LIMIT 1].id;
         List<Role_Address__c> employeeStation = [SELECT id, name FROM Role_Address__c WHERE Account_Contact_Role__c = :employeeAccContRol LIMIT 1];
         List<Role_Address__c> employeeStation_2 = [SELECT Account_Contact_Role__c, Address__c, name FROM Role_Address__c WHERE Account_Contact_Role__c = :employeeAccContRol LIMIT 1];

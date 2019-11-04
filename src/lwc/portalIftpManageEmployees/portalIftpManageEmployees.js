@@ -5,7 +5,7 @@ import { registerListener, unregisterAllListeners, fireEvent } from 'c/pubsub';
 
 import addNewEmployee from '@salesforce/apex/PortalIftEmployeeRecordsManagement.addNewEmployee';
 import resetEmployeePassword from '@salesforce/apex/PortalIftEmployeeRecordsManagement.resetEmployeePassword';
-import getAllITPEmployees from '@salesforce/apex/PortalIftEmployeeRecordsManagement.getAllITPEmployees';
+import getAllITPEmployees from '@salesforce/apex/PortalIftpUtils.getAllITPEmployees';
 import getITPEmployeesWithStationsInfo from '@salesforce/apex/PortalIftEmployeeRecordsManagement.getITPEmployeesWithStationsInfo';
 import getITPStations from '@salesforce/apex/PortalIftpUtils.getITPStations';
 import inactivateEmployee from '@salesforce/apex/PortalIftEmployeeRecordsManagement.inactivateEmployee';
@@ -433,7 +433,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
             let allITPEmployees = JSON.parse(JSON.stringify(result));
             let existsInactive = false;
             allITPEmployees.forEach(emp => {
-                if(emp.Company_Code__c === this.employeeToInsert.code.trim() && emp.Status__c ==='Inactive'){
+                if(emp.Company_Code__c.trim().toLowerCase() === this.employeeToInsert.code.trim().toLowerCase() && emp.Status__c ==='Inactive'){
                     existsInactive = true;
                     this.employeeToInsert.id = emp.Id;
                     this.employeeToInsert.contactId = emp.Contact__c;
@@ -510,9 +510,8 @@ export default class PortalIftpManageEmployees extends LightningElement {
         recordToReactivate.Status__c = 'Active';
         recordToReactivate.Title__c = employeeToInsert.title;
         this.openReactivateConfirmationModal = false;
-
         
-        updateEmployee({recordToUpdate: recordToReactivate, updateType: 'reactivate_and_update'})
+        updateEmployee({accountId: this.userInfo.accountId, recordToUpdate: recordToReactivate, updateType: 'reactivate_and_update'})
             .then(r => {
                 let result = JSON.parse(JSON.stringify(r));
                 let variant;
@@ -520,7 +519,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
                 let message; 
                 if(result.succeeded){
                     this.openModal = false;
-                    //refreshApex(this.wiredITPEmployeesWithStationsInfoResult);
                     this.handleSearchButtonClick();
                     variant = 'success';
                     mode = 'pester';
@@ -679,7 +677,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
 
             let record = JSON.parse(JSON.stringify(this.recordToManage));
             record.Role_Addresses__r = null;
-            updateEmployee({recordToUpdate: record})
+            updateEmployee({accountId: this.userInfo.accountId, recordToUpdate: record, updateType: 'update'})
             .then(r => {
                 let result = JSON.parse(JSON.stringify(r));
                 let variant;
