@@ -3,6 +3,10 @@
     <div if:true={componentLoading} class="spinnerContainer">
         <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
     </div>
+    
+    <div class="slds-m-top--xx-large slds-m-bottom--small customLightShadow">
+        <c-portal-highlight-cards special-case={specialCase} type="Services"></c-portal-highlight-cards>
+    </div>
 
     <div if:false={componentLoading} class="slds-grid slds-wrap slds-gutters_direct-small">
 
