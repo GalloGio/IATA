@@ -1640,6 +1640,11 @@ visibility: hidden;
         max-height: none;
         height: auto;
     }
+    .attlist table {
+        width: 100%;
+        min-width: 100%;
+        width: 100%!important;
+    }
     .attlist thead {
         height: 40px;
         border-bottom: 1px solid #999; 
@@ -1649,10 +1654,8 @@ visibility: hidden;
     .attlist tbody {
         display: block;
         position: relative;
-    }
-    .attlist thead th,
-    .attlist tbody td {
-        max-width: 150px;
+        width: 100%!important;
+        min-width: 100%;
     }
     .attlist th:first-child {
         display: none;
@@ -1669,10 +1672,10 @@ visibility: hidden;
         max-width: 100px;
         width: 100px!important;
     }
-    .attlist thead th:last-child {
-        min-width: 150px;
-        max-width: 150px;
-        width: 150px!important;
+    .attlist thead th:nth-child(4) {
+        min-width: 250px;
+        max-width: 250px;
+        width: 250px!important;
     }
     .attlist tbody td:nth-child(2) {
         min-width: 450px;
@@ -1684,10 +1687,10 @@ visibility: hidden;
         max-width: 100px;
         width: 100px!important;
     }
-    .attlist tbody td:last-child {
-        min-width: 150px;
-        max-width: 150px;
-        width: 150px!important;
+    .attlist tbody td:nth-child(4) {
+        min-width: 250px;
+        max-width: 250px;
+        width: 250px!important;
     }
     .customCardTitleBox .slds-col.slds-size_1-of-1.slds-medium-size_2-of-12 {
         width: 16.6666666667%;
