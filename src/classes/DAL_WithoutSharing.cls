@@ -300,4 +300,30 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
 
         return returnWrapper;
     }
+
+	@AuraEnabled
+    public static ReturnWrapper submitNewMessage(String caseId, String messageTextAux){
+        ReturnWrapper returnWrapper = new ReturnWrapper();
+        Savepoint sp = Database.setSavepoint();
+        Case caseAux = new Case();
+        caseAux.Id = caseId;
+        caseAux.New_interaction__c = 'New Comment';
+        caseAux.New_Comment_From_Connection_User__c = true;
+        CaseComment caseCommentAux = new CaseComment();
+        caseCommentAux.ParentId = caseId;
+        caseCommentAux.CommentBody = messageTextAux;
+
+        try{
+            insert caseCommentAux;
+            update caseAux;
+            returnWrapper = new ReturnWrapper(true, Label.CSP_CaseMessage_SubmitSuccess, ''); 
+        }catch(Exception e){
+            Database.rollback(sp);
+            returnWrapper = new ReturnWrapper(false, e.getMessage(), '');
+        }
+
+        return returnWrapper;
+    }
+
+
 }

@@ -118,7 +118,7 @@ private class PortalCasesCtrlTest {
                 
                 CSP_Utils.ReturnWrapper addNewRecipientTest = CSP_Utils.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
             }
             CSP_Utils.ReturnWrapper addNewRecipientTest1 = CSP_Utils.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
             CSP_Utils.ReturnWrapper addNewRecipientTest2 = CSP_Utils.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
@@ -155,7 +155,7 @@ private class PortalCasesCtrlTest {
                 
                 CSP_Utils.ReturnWrapper addNewRecipientTest = CSP_Utils.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
             }
             CSP_Utils.ReturnWrapper addNewRecipientTest1 = CSP_Utils.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
             CSP_Utils.ReturnWrapper addNewRecipientTest2 = CSP_Utils.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
@@ -183,7 +183,7 @@ private class PortalCasesCtrlTest {
                 
                 CSP_Utils.ReturnWrapper addNewRecipientTest = CSP_Utils.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
 
 
                 PortalCasesCtrl.MessageWrapper mw = new PortalCasesCtrl.MessageWrapper();
