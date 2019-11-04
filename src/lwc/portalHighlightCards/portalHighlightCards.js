@@ -35,10 +35,15 @@ export default class PortalHighlightCards extends LightningElement {
     @track swipe = "slds-grid slds-wrap slds-align--absolute-center slds-gutters_direct-medium slds-is-relative swipeClass swipeMove";
     @track cardMove = "margin-left: 0; opacity: 1";
 
+    @track showHighlights = true;
+
     connectedCallback() {
 
         getRecommendations({ 'type': this.type }).then(result => {
             let resultsLocal = JSON.parse(JSON.stringify(result));
+
+            if (resultsLocal.length <= 0)
+                this.showHighlights = false;
 
             resultsLocal.forEach(function (highlight) {
                 highlight.imgURL = 'background-image: url("' + highlight.imgURL + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:130px;';
