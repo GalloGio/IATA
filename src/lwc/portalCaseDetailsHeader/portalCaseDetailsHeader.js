@@ -21,6 +21,8 @@ import CSP_Status from '@salesforce/label/c.CSP_Status';
 import CSP_CreatedOn from '@salesforce/label/c.CSP_CreatedOn';
 import CSP_LastUpdate from '@salesforce/label/c.CSP_LastUpdate';
 import CSP_Manage_Recipients from '@salesforce/label/c.CSP_Manage_Recipients';
+import CSP_AddOrRemove_Recipients from '@salesforce/label/c.CSP_AddOrRemove_Recipients';
+
 export default class PortalHomeCalendar extends LightningElement {
 
     @track loading = true;
@@ -28,7 +30,7 @@ export default class PortalHomeCalendar extends LightningElement {
 
     @track showManageRecipientsPopup = false;
     @track manageRecipientsOkButtonDisabled = false;
-    @track lstRecipients;
+    @track lstRecipients = [];
     @track newRecipient = '';
     @track haveRecipients = false;
     @track CaseStatusClass = '';
@@ -39,6 +41,12 @@ export default class PortalHomeCalendar extends LightningElement {
 
     @track displayOscarProgressBar = false;
     @track progressStatusList = [];
+
+    //variable to control error class sent to child component
+    @track requiredClass;
+
+    //stores emails to be sent to case creation
+    caseEmails = [];
     
     @track labels = {
         ISSP_Survey,
@@ -47,6 +55,7 @@ export default class PortalHomeCalendar extends LightningElement {
 		CSP_Recipients,
 		ISSP_CaseNumber,
 		ISSP_Subject,
+        CSP_AddOrRemove_Recipients,
 		CSP_Status,
 		CSP_CreatedOn,
 		CSP_LastUpdate,
@@ -66,6 +75,8 @@ export default class PortalHomeCalendar extends LightningElement {
         }
 
 	this.getSurveyLink();
+    this.getRelatedAccounts();
+    this.getRelatedContacts();
     }
 
     getCaseByIdJS(){
@@ -96,14 +107,11 @@ export default class PortalHomeCalendar extends LightningElement {
                 this.haveRecipients = false;
             }
 
-            console.log('results.Status: ' , results.Status);
-
             this.loading = false;
             this.pendingCustomerCase = results.Status === 'Pending customer';
 
             this.CaseStatusClass = results.Status.replace(/\s/g, '').replace(/_|-|\./g, '');
 
-            console.log('pendingCustomerCase: ' , this.pendingCustomerCase);
         })
         .catch(error => {
             console.log('error: ' , error);
@@ -123,6 +131,78 @@ export default class PortalHomeCalendar extends LightningElement {
 
     }
 
+    //get the profile of the user
+    getProfile() {
+        getProfile()
+            .then(result => {
+                this.agentProfile = JSON.parse(JSON.stringify(result)).includes('ISS Portal Agency');
+                if (!JSON.parse(JSON.stringify(result)).includes('Admin')) {
+                    this.setPortalUserIATACode();
+                }
+            });
+    }
+
+    //gets related accounts and sets them in global var
+    getRelatedAccounts() {
+        //activate spinner
+        this.loading = true;
+        searchAccounts({ searchTerm: null })
+            .then(relatedAccountsResult => {
+
+                let allresults = JSON.parse(JSON.stringify(relatedAccountsResult));
+                this.relatedAccounts = allresults;
+
+                if (allresults.length === 1) {
+                    this.singleresult = allresults;
+                } else if (allresults.length === 0) {
+                    this.singleresult = [{ title: this.label.CSP_NoSearchResults }];
+                }
+                this.getProfile();
+
+                //activate spinner
+                this.loading = false;
+            });
+    }
+
+    //gets related contacts and sets them in global var
+    getRelatedContacts() {
+        //activate spinner
+        this.loading = true;
+        searchContacts({ searchTerm: null })
+            .then(relatedContactsResult => {
+                this.relatedContacts = JSON.parse(JSON.stringify(relatedContactsResult));
+                this.relatedContacts = this.relatedContacts.filter(obj => obj.id !== this.caseDetails.ContactId); //remove self if case owner
+                //deactivate spinner
+                this.loading = false;
+            });
+    }
+
+    //shows results upon clicking the search.
+    showEmailResults() {
+        this.template.querySelector('[data-id="emaillookup"]').setSearchResults(this.relatedContacts);
+    }
+
+    //performs search based on the input - minimum of 3 keystrokes - 300ms per search (check child component)
+    handleContactSearch(event) {
+        searchContacts(event.detail)
+            .then(results => {
+                this.template.querySelector('[data-id="emaillookup"]').setSearchResults(results);
+                this.requiredClass = '';
+            })
+            .catch((error) => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Search could not be performed',
+                        message: 'An error occured. Please refresh the page or contact administration',
+                        variant: 'error'
+                    })
+                );
+                //Errors usually are due to session timeout.
+                // eslint-disable-next-line no-console
+                console.log('Lookup Error: ' + error);
+            });
+    }
+
     openManageRecipientsPopup(){
         this.showManageRecipientsPopup = true;
     }
@@ -136,28 +216,25 @@ export default class PortalHomeCalendar extends LightningElement {
     }
 
     addNewRecipientButtonClick(){
+        let inputCmp = this.template.querySelector('[data-id="emaillookup"]').getSelection()[0].subtitle;
+        let comp = this.template.querySelector('[data-id="emaillookup"]');
+        comp.focus();
 
-        let inputCmp = this.template.querySelector(".newRecipientTextInput");
-        let emailIsValid = inputCmp.checkValidity();
-
-        if(emailIsValid){
-            let value = inputCmp.value;
-            this.loading = true;
-
-            addNewRecipient({ caseId : this.caseDetails.Id, newRecipientEmail : value })
+        this.loading = true;    
+        addNewRecipient({ caseId : this.caseDetails.Id, newRecipientEmail : inputCmp })
             .then(results => {
                 if(results.success === true){
+
                     //show success toast
                     const toastEvent = new ShowToastEvent({
                         title: "SUCCESS",
                         message: results.returnMessage,
                         variant: "success",
                     });
-                    this.dispatchEvent(toastEvent);
-                    this.newRecipient = '';
-                    inputCmp.value = '';
-
                     this.getCaseByIdJS();
+                    this.dispatchEvent(toastEvent);
+                    this.loading = false;
+
                 }else{
                     //show error toast
                     const toastEvent = new ShowToastEvent({
@@ -176,9 +253,8 @@ export default class PortalHomeCalendar extends LightningElement {
                 this.loading = false;
             });
 
-        }else{
-            inputCmp.reportValidity();
-        }
+            
+
     }
 
     removeRecipient(event){
@@ -195,9 +271,11 @@ export default class PortalHomeCalendar extends LightningElement {
                     message: results.returnMessage,
                     variant: "success",
                 });
-                this.dispatchEvent(toastEvent);
-
                 this.getCaseByIdJS();
+                this.dispatchEvent(toastEvent);
+                
+                this.loading = false;
+                
             }else{
                 //show error toast
                 const toastEvent = new ShowToastEvent({

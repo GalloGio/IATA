@@ -322,6 +322,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         searchContacts({ searchTerm: null })
             .then(relatedContactsResult => {
                 this.relatedContacts = JSON.parse(JSON.stringify(relatedContactsResult));
+                this.relatedContacts = this.relatedContacts.filter(obj => obj.id !== this.caseDetails.ContactId); //remove self if case owner
                 //deactivate spinner
                 this.loading = false;
             });
