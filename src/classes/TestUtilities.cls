@@ -1,3 +1,4 @@
+@isTest
 public class TestUtilities {
 	
 	public static IEC_GDP_Replication__c createIECGDPReplicationSetting(Boolean toInsert) {
