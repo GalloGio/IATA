@@ -57,7 +57,11 @@ public without sharing class ISSP_AMS_Accreditation {
 	{
 		get
 		{
-			List<String> codes = newForm.Agency_Codes_Concerned__c.split(',');
+            List<String> codes = new List<String>();
+            if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
+                codes = newForm.Agency_Codes_Concerned__c.split(',');
+            }
+            
 			if (accountConcerned != null)
 				codes.add(accountConcerned.IATACode__c);
 			Map<Id, Account> countries = getSelectedBranchList(codes);
