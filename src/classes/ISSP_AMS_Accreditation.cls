@@ -510,7 +510,7 @@ public without sharing class ISSP_AMS_Accreditation {
             lblStepB = Label.ISSP_AMS_Step2_ProgressBar;
             lblStepC = Label.ISSP_AMS_Step3_ProgressBar;
             lblStepD = Label.ISSP_AMS_Step4_ProgressBar;
-
+        }
             if(communityName=='CNS'){lblStepE = Label.ISSP_AMS_Step5_ProgressBar_CNS;}
                 else{ lblStepE = Label.ISSP_AMS_Step5_ProgressBar;}
 
