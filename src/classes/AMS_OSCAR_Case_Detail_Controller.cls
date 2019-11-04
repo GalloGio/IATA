@@ -29,18 +29,16 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             if (rfPerState != null)
                 return rfPerState;
 
-            if (AMS_Utils.oscarNewGenNewAppProcesses.contains(oscarObj.Process__c)
-                || shouldCheckRemittanceFrequency())
-            {
-                List<IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{accreditationObj.Branch_Office_Country__c});
-                
-                if(!countries.isEmpty()){
-                    IATA_ISO_Country__c cntry = countries.get(0);
-                    rfPerStateBspId = cntry.AMS_Settlement_System__c;
-                    rfPerState = cntry.AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
-                    return rfPerState;
-                }
-            }
+			if(accreditationObj != NULL && accreditationObj.Branch_Office_Country__c != NULL){
+				List<IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{accreditationObj.Branch_Office_Country__c});
+				
+				if(!countries.isEmpty()){
+					IATA_ISO_Country__c cntry = countries.get(0);
+					rfPerStateBspId = cntry.AMS_Settlement_System__c;
+					rfPerState = cntry.AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
+					return rfPerState;
+				}
+			}
             
             rfPerState = false;
             return rfPerState;
@@ -852,15 +850,6 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public void cancel(){
         this.saveAction = true;
     } 
-
-    private Boolean shouldCheckRemittanceFrequency()
-    {
-        return accreditationObj != null && oscarObj != null
-                    //&& accreditationObj.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
-                    && oscarObj.Process__c == AMS_Utils.NGCHANGES
-                    && (oscarObj.ANG_Type_Of_Change__c == AMS_Utils.ANG_LOCATION
-                        || oscarObj.ANG_Type_Of_Change__c == AMS_Utils.VFMR);
-    }
 
     public class FormField {
         public String name { get; set; }
