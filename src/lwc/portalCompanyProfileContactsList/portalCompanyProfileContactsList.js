@@ -120,6 +120,7 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
 
     //resets and recalls the first branches page
     resetContactsList(){
+        this.contactsLoaded = false;
         this.contacts = [];
         this.contactsFilteringObject.searchInput = '';
         this.currentPage = 1;

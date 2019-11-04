@@ -375,7 +375,7 @@ export default class PortalContactList extends LightningElement {
         } else {
             inactivate({ contactList : JSON.stringify(this.contactsWrapper), reasonToInactive : this.inactiveReason })
                 .then(results => {
-                    this.loading = false;
+                    
                     if(results.isSuccess) {
                         const toastEvent = new ShowToastEvent({
                             title: this._labels.CSP_Success,
@@ -392,7 +392,7 @@ export default class PortalContactList extends LightningElement {
                     
                 })
                 .catch(error => {
-                    this.loading = false;
+                    
                     const toastEvent = new ShowToastEvent({
                         title: _labels.PKB2_js_error,
                         message: reduceErrors(error).join(', '),
@@ -714,7 +714,13 @@ export default class PortalContactList extends LightningElement {
     }
 
     refreshview() {
-        this.dispatchEvent(new CustomEvent('refreshview'));
+        // Timeout used to get the updated values from Apex. Otherwise the list was refreshed without the updated values.
+        clearTimeout(this.timeout);
+        
+        this.timeout = setTimeout(() => {
+            
+            this.dispatchEvent(new CustomEvent('refreshview'));
+        }, 1000, this);
     }
 
     //pagination methods
