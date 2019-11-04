@@ -25,6 +25,7 @@ import CSP_LastUpdate from '@salesforce/label/c.CSP_LastUpdate';
 import CSP_Manage_Recipients from '@salesforce/label/c.CSP_Manage_Recipients';
 import CSP_AddOrRemove_Recipients from '@salesforce/label/c.CSP_AddOrRemove_Recipients';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import CSP_EmailAddress from '@salesforce/label/c.Email_address';
 
 export default class PortalHomeCalendar extends LightningElement {
 
@@ -62,12 +63,13 @@ export default class PortalHomeCalendar extends LightningElement {
 		CSP_Recipients,
 		ISSP_CaseNumber,
 		ISSP_Subject,
-        	CSP_AddOrRemove_Recipients,
+        CSP_AddOrRemove_Recipients,
 		ISSP_Case_Closed_More_Than_2_Months,
 		CSP_Status,
 		CSP_CreatedOn,
 		CSP_LastUpdate,
-		CSP_Manage_Recipients
+		CSP_Manage_Recipients,
+		CSP_EmailAddress
     }
  //Icons
     infoIcon = CSP_PortalPath + 'CSPortal/Images/Icons/info.svg';
