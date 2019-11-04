@@ -50,7 +50,7 @@ public without sharing class PortalIftpStationsManagement {
     * @return Map<Id,List<AirlinesItpAddressWrapper>>
     */
     @AuraEnabled
-    public static Map<Id,List<AirlinesItpAddressWrapper>> getItpStationsAirlines(){
+    public static Map<Id,List<AirlinesItpAddressWrapper>> getItpStationsAirlines(Id accountId){
 
         Id userId = System.UserInfo.getUserId();
 
@@ -72,7 +72,7 @@ public without sharing class PortalIftpStationsManagement {
                                                                 Account_Role_Relationship__r.To__c,
                                                                 Account_Role_Relationship__r.To__r.account__r.name
                                                     FROM Role_Address__c
-                                                    WHERE  Account_Role_Relationship__r.To__r.Account__c = :userAcc.contact.accountid];
+                                                    WHERE  Account_Role_Relationship__r.To__r.Account__c = :accountId];
         for(Role_Address__c rec: ItpStationsAirlines){
 
             if(!airlinesItpAddressByAddress.containsKey(rec.Address__c)){
@@ -94,6 +94,15 @@ public without sharing class PortalIftpStationsManagement {
         }
 
         return airlinesItpAddressByAddress;
+    }
+
+    @AuraEnabled
+    public static Map<Id,List<AirlinesItpAddressWrapper>> getItpStationsAirlines(){
+
+        Id userId = System.UserInfo.getUserId();
+        User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
+
+        return getItpStationsAirlines(userAcc.contact.accountid);
     }
 
     /********************************************************************************
@@ -201,7 +210,7 @@ public without sharing class PortalIftpStationsManagement {
 
             if(!dataToInsert.isEmpty()){
                 //Check if station - airline - itp already exists, if so remove from insert list
-                Map<Id,List<AirlinesItpAddressWrapper>> stationsAirlinesMap = PortalIftpStationsManagement.getItpStationsAirlines();
+                Map<Id,List<AirlinesItpAddressWrapper>> stationsAirlinesMap = getItpStationsAirlines();
 
                 Map<Id, Set<Id>> stationsAirlineAccRolIdMap = new Map<Id, Set<Id>>();
                 for(Id i: stationsAirlinesMap.keySet()){
@@ -370,7 +379,7 @@ public without sharing class PortalIftpStationsManagement {
     }
 
     @AuraEnabled
-    public static DeleteStationResultsWrapper deleteStationFromItp(Object stationToBeDeleted, List<Object> stationToBeDeletedAirlinesList){
+    public static DeleteStationResultsWrapper deleteStationFromItp(Id accountId, Object stationToBeDeleted, List<Object> stationToBeDeletedAirlinesList){
         DeleteStationResultsWrapper delResWrp;
         PortalIftpUtils.StationRecordsWrapper  stationToDelete = (PortalIftpUtils.StationRecordsWrapper)JSON.deserialize(JSON.serialize(stationToBeDeleted), PortalIftpUtils.StationRecordsWrapper.class);
         List<AirlinesItpAddressWrapper> stationToDeleteAirlinesList = (List<AirlinesItpAddressWrapper>)JSON.deserialize(JSON.serialize(stationToBeDeletedAirlinesList), List<AirlinesItpAddressWrapper>.class);
@@ -378,7 +387,7 @@ public without sharing class PortalIftpStationsManagement {
         try{
             //check if station has not been deleted yet
             Boolean existsStations = false;
-            for(Address__c addr : PortalIftpUtils.getITPStations()){
+            for(Address__c addr : PortalIftpUtils.getITPStations(accountId)){
                 if(stationToDelete.addressId.equals(addr.Id)){
                     existsStations = true;
                     break;
@@ -400,7 +409,7 @@ public without sharing class PortalIftpStationsManagement {
                 } else {
                         List<Role_Address__c> roleAddrToDeleteList = new List<Role_Address__c>();
                         //check if airline still connected to that station for that ITP, not removed yet
-                        Map<Id,List<AirlinesItpAddressWrapper>> airlinesByStationMap = PortalIftpStationsManagement.getItpStationsAirlines();
+                        Map<Id,List<AirlinesItpAddressWrapper>> airlinesByStationMap = getItpStationsAirlines();
                         List<AirlinesItpAddressWrapper> stationAirlinesInDatabase = airlinesByStationMap.get(stationToDelete.addressId);
                         if(stationAirlinesInDatabase != null){ 
 

@@ -8,6 +8,19 @@ public without sharing class PortalIftpUtils {
 		}
 		return false;
 	}
+	
+	@AuraEnabled(cacheable=false)
+	public static List<Account_Contact_Role__c> getAllITPEmployees(Id accountId){
+		//cacheable=false MANDATORY
+		List<Account_Contact_Role__c> emps = [SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c,
+													Contact__c, Email__c,First_Name__c,Id,Integration_Status__c,
+													Last_Name__c,Name,Personal_Email__c,Contact_Roles__c,
+													Position__c,RecordTypeId,Service_Rendered__c,Status__c,Title__c,
+													TransferFlag__c,UniqueKey__c, Details__c, Global_ID__c
+												FROM Account_Contact_Role__c
+												WHERE  Contact__r.accountid = :accountId];
+		return emps;
+	}
 
 	@AuraEnabled(cacheable=false)
 	public static UserInfoRecordsWrapper getUserInfo(){
@@ -206,13 +219,15 @@ public without sharing class PortalIftpUtils {
 		return emps;
 	}
 
-
 	@AuraEnabled(cacheable=true)
 	public static Address__c getITPStationEmployees(Id addressId){
-
 		Id userId = System.UserInfo.getUserId();
-
 		User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
+		return getITPStationEmployees(userAcc.contact.accountid, addressId);
+	}
+
+	@AuraEnabled(cacheable=true)
+	public static Address__c getITPStationEmployees(Id accountId, Id addressId){
 
 		Address__c station = [SELECT Id, City__c, Code__c, Description__c ,
 											(SELECT Account_Contact_Role__r.Account__c,
@@ -221,7 +236,7 @@ public without sharing class PortalIftpUtils {
 													Account_Contact_Role__r.Id,
 													Account_Contact_Role__r.Last_Name__c
 											FROM Role_Addresses__r
-											WHERE Account_Contact_Role__r.Contact__r.accountid = :userAcc.contact.accountid
+											WHERE Account_Contact_Role__r.Contact__r.accountid = :accountId
 											AND Account_Contact_Role__r.Status__c <> 'Inactive')
 									 FROM Address__c
 									 WHERE Id = :addressId];
@@ -229,17 +244,14 @@ public without sharing class PortalIftpUtils {
 	}
 
 	@AuraEnabled
-	public static List<StationRecordsWrapper> getITPStationsForDatatable(){
+	public static List<StationRecordsWrapper> getITPStationsForDatatable(Id accountId){
 
 		List<StationRecordsWrapper> retStations = new List<StationRecordsWrapper>();
 
-		Id userId = System.UserInfo.getUserId();
-
-		User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
 
 		List<Role_Address__c> stations = [SELECT id, name, Description__c, Airport_Details__c, Address__c, Address__r.City__c, Address__r.Code__c, Address__r.Description__c, Account_Role_Service__r.Name
 											FROM Role_Address__c
-											WHERE Account_Role_Service__r.Account_Role__r.Account__c = :userAcc.contact.accountid];
+											WHERE Account_Role_Service__r.Account_Role__r.Account__c = :accountId];
 
 		for(Role_Address__c ra : stations){
 
@@ -258,6 +270,13 @@ public without sharing class PortalIftpUtils {
 
 		return retStations;
 	}
+
+	@AuraEnabled
+	public static List<StationRecordsWrapper> getITPStationsForDatatable(){
+        Id userId = System.UserInfo.getUserId();
+        User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
+        return getITPStationsForDatatable(userAcc.contact.accountid);
+    }
 
 	/*
 	* @description
@@ -461,13 +480,13 @@ public without sharing class PortalIftpUtils {
 	}
 
 	@AuraEnabled (cacheable=false)
-	public static InsertStationWrapper insertStation(List<Object> dataToSave){
+	public static InsertStationWrapper insertStation(Id accountId, List<Object> dataToSave){
 		InsertStationWrapper isw;
 		try{
 
 			List<Role_Address__c> stationsToInsert = new List<Role_Address__c>();
 
-			List<Address__c> ITPStationsInDatabase = getITPStations();
+			List<Address__c> ITPStationsInDatabase = getITPStations(accountId);
 
 			for(Object rec : dataToSave){
 				Role_Address__c auxStation = (Role_Address__c)JSON.deserialize(JSON.serialize(rec ), Role_Address__c.class);
@@ -628,7 +647,7 @@ public without sharing class PortalIftpUtils {
 
 			UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 
-			List<Account_Contact_Role__c> accEmps = PortalIftEmployeeRecordsManagement.getAllITPEmployees(ui.accountId);
+			List<Account_Contact_Role__c> accEmps = getAllITPEmployees(ui.accountId);
 			List<Address__c> allAddr = getAllStations();
 			List<Address__c> userAddr = getITPStations(ui.accountId);
 
@@ -1143,7 +1162,7 @@ public without sharing class PortalIftpUtils {
 			if (!csvFileLines.isEmpty()){
 
 				UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
-				List<Account_Contact_Role__c> accEmps = PortalIftEmployeeRecordsManagement.getAllITPEmployees();
+				List<Account_Contact_Role__c> accEmps = getAllITPEmployees(ui.accountId);
 
 				List<Account_Contact_Role__c> accContRoleToInactive = new List<Account_Contact_Role__c>();
 				List<Contact> contactsToInactive = new List<Contact>();
