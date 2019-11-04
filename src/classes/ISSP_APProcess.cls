@@ -102,6 +102,8 @@ global without sharing class ISSP_APProcess {
     public Integer airlineOptInDays {get;set;}
     public Integer airlineOptOutDays {get;set;}
     public Boolean isoCountryEligible {get;set;} //Variable to define if the isoCountry is EasyPay Eligible (used in VF Page)
+    
+    public String draftCaseIdParam {get;set;}
 
     public Boolean getIsNewCountryProcess() {
         try {
@@ -338,8 +340,6 @@ global without sharing class ISSP_APProcess {
                 isStep2= true;
             }else if(stepNumber == '3'){
                 isStep3= true;
-                retrieveAPProcessForm();
-
                 if(newForm.Id==null) {
                     newForm.Airline_Local_address_in_the_BSP_Country__c = newCase.BSPCountry__c;
                 }
@@ -376,7 +376,6 @@ global without sharing class ISSP_APProcess {
             }else if(stepNumber == '4'){
                 system.debug('STEP 4 - 1');
                 isStep4 = true;
-                retrieveAPProcessForm();
                 system.debug('STEP 4 - 2');
                 newForm.Submitted_to_IATA__c = FALSE;
 
@@ -802,7 +801,6 @@ global without sharing class ISSP_APProcess {
         newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
 
         //AS - R03 SP03; for when GSSA create joining processs on behalf of Airline
-
     if(isPassAirline && !isGSSAUser){// One of the countries that is chosen for the Pass Joining will be in the IFAP_Country_ISO__c case field. If there are more than one country, the rest of them are going to be in the Country_Concerned__c case field
             String countryConcerned='';
             if(!selectedPASSCountries.isEmpty()) {
@@ -859,21 +857,28 @@ global without sharing class ISSP_APProcess {
                                                                     con.Account.IATACode__c,
                                                                     apCountryisocode, con.Account.Name, vHqAccountId);
             }
-        }
+    }
 
-    if((isPassAirline && selectedPASSCountries.size()==1) || !isPassAirline || isGSSAUser){//If the Airline is not PASS or if there is only one selected country, the Country related fields can be populated
+
+        if((isPassAirline && selectedPASSCountries.size()==1) || !isPassAirline || isGSSAUser){//If the Airline is not PASS or if there is only one selected country, the Country related fields can be populated
             isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
             newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
             newCase.Country_concerned_by_the_query__c = countryRequirement.Country__r.Case_BSP_Country__c;
             newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
             newCase.Region__c=null;
         }
+    }
+
+        newCase.Visible_on_ISS_Portal__c = true;
+
+        //AS - R03 SP03; for when GSSA create joining processs on behalf of Airline
+
 
         //Defining default values for the case
         //create case with RT IDFS Airline Participation Process
         newCase.recordTypeId = RECORD_TYPE_ID;
         newCase.Origin = 'Portal';
-        newCase.Country_concerned_by_the_query__c = countryRequirement.Country__r.Case_BSP_Country__c;
+        
 
         newCase.CaseArea__c = strAreaType;
 
@@ -1105,7 +1110,6 @@ global without sharing class ISSP_APProcess {
     }
 
     public Pagereference goToFinalStep(){
-    List<Attachment> attch = getAttachList();
         try{
             if (isBSP || isCASS) {
                 if (!getShowJoinICCSQuestion()) {
@@ -1220,8 +1224,8 @@ global without sharing class ISSP_APProcess {
 
         return null;
     }
-
-    @future(callout=true)
+    
+@future(callout=true)
     public static void copyAttachmentsToChildCases(Id parentCase, Map<Id,String> childCaseIdIsoCodeMap){
 
         List<WrapperAttach> wrapperList = WrapperAttach.getListAttachments(parentCase,true);
@@ -1239,7 +1243,6 @@ global without sharing class ISSP_APProcess {
             insert AFList;
         }
     }
-
     /**
         Returns a list of all required filed to upload for current form type
     **/
@@ -1300,7 +1303,6 @@ global without sharing class ISSP_APProcess {
     public List<SelectOption> getItems() {
         List <AP_Country_Requierment__c> isoListJoining;
         List <Services_Rendered__c> isoListChange;
-        List<SelectOption> options = new List<SelectOption>();
 
         strOperationType = Apexpages.currentPage().getParameters().get('strOT');
 
@@ -1337,15 +1339,17 @@ global without sharing class ISSP_APProcess {
             } else {  //AP Change process, so based country list on Services Rendered
                 if(!isGSSAUser) {
                   if(strLOB=='CASS' || dupLoB == 'CASS') {
-                   isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
+                    isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
                                 WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c LIKE '%CASS%' AND Services_Rendered_Status__c='Active'
                                  ORDER BY ISO_Country_formula__c];
-                } else {
+                  } 
+           else {
                    isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
                                 WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c='BSP Participation' AND Services_Rendered_Status__c='Active'
                                  ORDER BY ISO_Country_formula__c];
-                }
-                } else {
+                    }
+                } 
+        else {
                     System.DEBUG('GSSA HQ Id: ' + vGSSAAccountId);
 
         isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
@@ -1357,23 +1361,23 @@ global without sharing class ISSP_APProcess {
         List<SelectOption> options = new List<SelectOption>();
         Set<String> sISOCode = New Set<String>();
 
-        options.add(new SelectOption('', '--None--'));
-         if(strAreaType=='Airline Joining') {
-            for(AP_Country_Requierment__c iso : isoListJoining){
-            //        if (sISOCode.Contains(iso.Country__r.ISO_Code__c) == FALSE){ ---INC314169---
-                      sISOCode.add(iso.Country__r.ISO_Code__c);
-                        options.add(new SelectOption(iso.Country__r.ISO_Code__c,iso.Name));
-            //        }
-            }
-            } else {
-              for(Services_Rendered__c iso : isoListChange){
-                  if (sISOCode.Contains(iso.ISO_Country_Code__c) == FALSE){
-                       sISOCode.add(iso.ISO_Country_Code__c);
-                  options.add(new SelectOption(iso.ISO_Country_Code__c,iso.ISO_Country_formula__c));
-                     }
-            }
-          }
-
+            options.add(new SelectOption('', '--None--'));
+             if(strAreaType=='Airline Joining') {
+                for(AP_Country_Requierment__c iso : isoListJoining){
+                //        if (sISOCode.Contains(iso.Country__r.ISO_Code__c) == FALSE){ ---INC314169---
+                          sISOCode.add(iso.Country__r.ISO_Code__c);
+                            options.add(new SelectOption(iso.Country__r.ISO_Code__c,iso.Name));
+                //        }
+                }
+                } else {
+                  for(Services_Rendered__c iso : isoListChange){
+                      if (sISOCode.Contains(iso.ISO_Country_Code__c) == FALSE){
+                           sISOCode.add(iso.ISO_Country_Code__c);
+                      options.add(new SelectOption(iso.ISO_Country_Code__c,iso.ISO_Country_formula__c));
+                         }
+                }
+              }
+        }
         return options;
     }
 
@@ -1654,8 +1658,7 @@ global without sharing class ISSP_APProcess {
         }
         return true;
     }
-
-    public pagereference UploadFile(){
+public pagereference UploadFile(){
         if(fileBody == null || fileName == null)  {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Please select a file.');
             ApexPages.addMessage(myMsg);
@@ -1688,6 +1691,11 @@ global without sharing class ISSP_APProcess {
         }
         return attachmentList;
     }
+    ///Keeping these lines to avoid deployment issues, can be removed after successful prod deployment
+  
+    public string strParentLegalName {get; set;}
+    public string strParentTradeName {get; set;}
+    ///
 
     //TF
     public void getCityData(){
@@ -2001,7 +2009,9 @@ global without sharing class ISSP_APProcess {
 
         emails.add(mail);
 
-        Messaging.sendEmail(emails);
+        if(!test.isRunningtest()){
+            Messaging.sendEmail(emails);
+        }
     }
 
     public void editGSTNumber()
@@ -2415,7 +2425,7 @@ global without sharing class ISSP_APProcess {
             WHERE Authorized_Signatories_Package__c IN :accountToShowSections.Authorized_Signatories_Packages__r];
     }
 
-    //PASS
+//PASS
     public Pagereference changeIsPassAirlineMethod(){
         strOperationType = Apexpages.currentPage().getParameters().get('strOT');
         
@@ -2518,6 +2528,9 @@ global without sharing class ISSP_APProcess {
         return false;
     }
 
+    public void UploadAmazonFile(){
+    }
+
     public class passCountriesWrapper{
         public String countryName{get;set;}
         public String countryIsoCode{get;set;}
@@ -2531,7 +2544,7 @@ global without sharing class ISSP_APProcess {
             countryIsoCodeId=countryIsoCodeIdWrapper;
         }
     }
-    
+
     public PageReference showHideHotFilesPreferenceMethod(){
         if(newForm.Receive_HOT_files__c=='YES'){
             showHotFilesPreference=true;
