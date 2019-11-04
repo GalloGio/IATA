@@ -104,7 +104,7 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:double">9.0</value>
     </values>
     <values>
         <field>Permission_Set_Name__c</field>

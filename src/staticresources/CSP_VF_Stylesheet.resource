@@ -11,6 +11,10 @@
     border-top: 0;
 }
 
+body {
+    background: none !important
+}
+
 body, div.container {
     background-color: rgb(240, 242, 245) !important;
 }
@@ -24,6 +28,10 @@ body, div.container {
 .panel-body {
     background-color: white;
     box-shadow: 5px 5px 20px #e2e2e2;
+}
+
+.container #hidefilter {
+    color: white !important;
 }
 
 .container a, .container .customlink {
