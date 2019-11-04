@@ -19,7 +19,7 @@ public without sharing class ISSP_AMS_Accreditation {
         get{
             if(ISO_8859_1_regEx == null) {
                 //WMO-538
-		        Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
+                Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
                 ISO_8859_1_regEx = regExCS != null && String.isNotBlank(regExCS.Text_1__c) ? regExCS.Text_1__c : '^[\\x00-\\x7F\\xA0-\\xFF]+$';
             } 
             return ISO_8859_1_regEx;
@@ -264,6 +264,17 @@ public without sharing class ISSP_AMS_Accreditation {
         } 
         set;
     }
+    public Boolean isPassAccreditation{
+        get{ 
+            if(ApexPages.currentPage().getParameters().get('accType')=='PASS')
+                return true;
+            else
+                return false;
+            }
+        set;
+    }
+
+    public String passParam { get { if(isPassAccreditation==true){ return '&accType=PASS';} return '';} set;}
 
     public Boolean isNewPortal {
     get {
@@ -343,18 +354,6 @@ public without sharing class ISSP_AMS_Accreditation {
     set;
     }
     
-
-    public Boolean isPassAccreditation{
-        get{ 
-            if(ApexPages.currentPage().getParameters().get('accType')=='PASS')
-                return true;
-            else
-                return false;
-            }
-        set;
-    }
-
-    public String passParam { get { if(isPassAccreditation==true){ return '&accType=PASS';} return '';} set;}
 
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
@@ -515,17 +514,16 @@ public without sharing class ISSP_AMS_Accreditation {
             if(communityName=='CNS'){lblStepE = Label.ISSP_AMS_Step5_ProgressBar_CNS;}
                 else{ lblStepE = Label.ISSP_AMS_Step5_ProgressBar;}
 
-            lblNoCStepA = Label.ISSP_AMS_NoC_StepA;
-            lblNoCStepC = Label.ISSP_AMS_NoC_StepC;
-            if(communityName=='CNS'){lblNoCStepD = Label.ISSP_AMS_NOC_StepD_ProgressBar_CNS;}
-                else{ lblNoCStepD = Label.ISSP_AMS_NOC_StepD_ProgressBar;}
-            if(communityName=='CNS'){
-                lblStep1Title = Label.ISSP_AMS_Step1_Title_CNS;  
-            }else{
-                lblStep1Title = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_Step1_Title_New: Label.ISSP_AMS_Step1_Title;
-            }
+        lblNoCStepA = Label.ISSP_AMS_NoC_StepA;
+        lblNoCStepC = Label.ISSP_AMS_NoC_StepC;
+        if(communityName=='CNS'){lblNoCStepD = Label.ISSP_AMS_NOC_StepD_ProgressBar_CNS;}
+            else{ lblNoCStepD = Label.ISSP_AMS_NOC_StepD_ProgressBar;}
+        if(communityName=='CNS'){
+            lblStep1Title = Label.ISSP_AMS_Step1_Title_CNS;
+        }else{
+            lblStep1Title = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_Step1_Title_New: Label.ISSP_AMS_Step1_Title;
         }
-        
+
         lblNocRequest = Label.ISSP_AMS_NoC_Request_for_Change;
         lblPAXTitle = Label.ISSP_AMS_StepsAll_Travel_Title;
         if(communityName=='CNS'){
@@ -1831,7 +1829,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     }
             }
 
-			/*** AMSU-121 ***/
+            /*** AMSU-121 ***/
             if(newForm.Is_change_location__c) {
                 newForm.Shipping_Street__c = null;
                 newForm.Shipping_City__c = null;
@@ -3415,7 +3413,7 @@ public without sharing class ISSP_AMS_Accreditation {
         return true;
     }
 
-	/*** AMSU--112 Start ***/
+    /*** AMSU--112 Start ***/
     public Set<String> accfieldsToCheck = new Set<String> {'BillingState', 'BillingStreet', 'BillingCity', 'TradeName__c', 'Name', 'BillingPostalCode'};
     public Set<String> formfieldsToCheck = new Set<String> {'Account_Name__c', 'Trade_Name__c', 'Branch_Office_Street_name_number__c', 'Branch_Office_City__c', 'Branch_Office_Postal_code__c', 'State_Province__c',
                                                             'Shipping_Street__c', 'Shipping_City__c', 'Shipping_Postal_Code__c', 'Shipping_State__c', 'Shipping_Country__c', 'ISSP_AMS_License_No__c',
@@ -3489,69 +3487,69 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         /*** AMSU-112 - Start ***/
-		//replace tab character
+        //replace tab character
         checkTabCharacters(newForm, hqAccount, newContact);
-		//check non latin characters
+        //check non latin characters
         if((!String.isBlank(newForm.Account_Name__c) && !p.matcher(newForm.Account_Name__c).matches()) || (!String.isBlank(hqAccount.Name) && !p.matcher(hqAccount.Name).matches())) {
-			newForm.Account_Name__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if((!String.isBlank(newForm.Trade_Name__c) && !p.matcher(newForm.Trade_Name__c).matches()) ||(!String.isBlank(hqAccount.TradeName__c) && !p.matcher(hqAccount.TradeName__c).matches())) {
-			newForm.Trade_Name__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if(!String.isBlank(newForm.ISSP_AMS_License_No__c) && !p.matcher(newForm.ISSP_AMS_License_No__c).matches()) {
-			newForm.ISSP_AMS_License_No__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if(!String.isBlank(newForm.ISSP_AMS_Trade_Reg_No__c) && !p.matcher(newForm.ISSP_AMS_Trade_Reg_No__c).matches()) {
-			newForm.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if(!String.isBlank(newForm.Branch_Office_Street_name_number__c) && !p.matcher(newForm.Branch_Office_Street_name_number__c).matches()) {
-			newForm.Branch_Office_Street_name_number__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if(!String.isBlank(newForm.Branch_Office_City__c) && !p.matcher(newForm.Branch_Office_City__c).matches()) {
-			newForm.Branch_Office_City__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if(!String.isBlank(newForm.Branch_Office_Postal_code__c) && !p.matcher(newForm.Branch_Office_Postal_code__c).matches()) {
-			newForm.Branch_Office_Postal_code__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if(!String.isBlank(newForm.State_Province__c) && !p.matcher(newForm.State_Province__c).matches()) {
-			newForm.State_Province__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if(!String.isBlank(newForm.ISSP_AMS_VAT_Number_Input__c) && !p.matcher(newForm.ISSP_AMS_VAT_Number_Input__c).matches()) {
-			newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if(!String.isBlank(newForm.ISSP_AMS_VAT_number__c) && !p.matcher(newForm.ISSP_AMS_VAT_number__c).matches()) { 
-			newForm.ISSP_AMS_VAT_number__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if((!String.isBlank(newForm.Shipping_Street__c) && !p.matcher(newForm.Shipping_Street__c).matches()) || (!String.isBlank(hqAccount.ShippingStreet) && !p.matcher(hqAccount.ShippingStreet).matches())) {
-			newForm.Shipping_Street__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if((!String.isBlank(newForm.Shipping_City__c) && !p.matcher(newForm.Shipping_City__c).matches()) || (!String.isBlank(hqAccount.ShippingCity) && !p.matcher(hqAccount.ShippingCity).matches())) {
-			newForm.Shipping_City__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if((!String.isBlank(newForm.Shipping_Postal_Code__c) && !p.matcher(newForm.Shipping_Postal_Code__c).matches()) || (!String.isBlank(hqAccount.ShippingPostalCode) && !p.matcher(hqAccount.ShippingPostalCode).matches())) {
-			newForm.Shipping_Postal_Code__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if((!String.isBlank(newForm.Shipping_State__c) && !p.matcher(newForm.Shipping_State__c).matches()) || (!String.isBlank(hqAccount.ShippingState) && !p.matcher(hqAccount.ShippingState).matches())) {
-			newForm.Shipping_State__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
-		if((!String.isBlank(newForm.Shipping_Country__c) && !p.matcher(newForm.Shipping_Country__c).matches()) || (!String.isBlank(hqAccount.ShippingCountry) && !p.matcher(hqAccount.ShippingCountry).matches())) {
-			newForm.Shipping_Country__c.addError(Label.ISSP_EnterValidString);
-			errorFound = true;
-		}
+            newForm.Account_Name__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if((!String.isBlank(newForm.Trade_Name__c) && !p.matcher(newForm.Trade_Name__c).matches()) ||(!String.isBlank(hqAccount.TradeName__c) && !p.matcher(hqAccount.TradeName__c).matches())) {
+            newForm.Trade_Name__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if(!String.isBlank(newForm.ISSP_AMS_License_No__c) && !p.matcher(newForm.ISSP_AMS_License_No__c).matches()) {
+            newForm.ISSP_AMS_License_No__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if(!String.isBlank(newForm.ISSP_AMS_Trade_Reg_No__c) && !p.matcher(newForm.ISSP_AMS_Trade_Reg_No__c).matches()) {
+            newForm.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if(!String.isBlank(newForm.Branch_Office_Street_name_number__c) && !p.matcher(newForm.Branch_Office_Street_name_number__c).matches()) {
+            newForm.Branch_Office_Street_name_number__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if(!String.isBlank(newForm.Branch_Office_City__c) && !p.matcher(newForm.Branch_Office_City__c).matches()) {
+            newForm.Branch_Office_City__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if(!String.isBlank(newForm.Branch_Office_Postal_code__c) && !p.matcher(newForm.Branch_Office_Postal_code__c).matches()) {
+            newForm.Branch_Office_Postal_code__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if(!String.isBlank(newForm.State_Province__c) && !p.matcher(newForm.State_Province__c).matches()) {
+            newForm.State_Province__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if(!String.isBlank(newForm.ISSP_AMS_VAT_Number_Input__c) && !p.matcher(newForm.ISSP_AMS_VAT_Number_Input__c).matches()) {
+            newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if(!String.isBlank(newForm.ISSP_AMS_VAT_number__c) && !p.matcher(newForm.ISSP_AMS_VAT_number__c).matches()) { 
+            newForm.ISSP_AMS_VAT_number__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if((!String.isBlank(newForm.Shipping_Street__c) && !p.matcher(newForm.Shipping_Street__c).matches()) || (!String.isBlank(hqAccount.ShippingStreet) && !p.matcher(hqAccount.ShippingStreet).matches())) {
+            newForm.Shipping_Street__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if((!String.isBlank(newForm.Shipping_City__c) && !p.matcher(newForm.Shipping_City__c).matches()) || (!String.isBlank(hqAccount.ShippingCity) && !p.matcher(hqAccount.ShippingCity).matches())) {
+            newForm.Shipping_City__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if((!String.isBlank(newForm.Shipping_Postal_Code__c) && !p.matcher(newForm.Shipping_Postal_Code__c).matches()) || (!String.isBlank(hqAccount.ShippingPostalCode) && !p.matcher(hqAccount.ShippingPostalCode).matches())) {
+            newForm.Shipping_Postal_Code__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if((!String.isBlank(newForm.Shipping_State__c) && !p.matcher(newForm.Shipping_State__c).matches()) || (!String.isBlank(hqAccount.ShippingState) && !p.matcher(hqAccount.ShippingState).matches())) {
+            newForm.Shipping_State__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
+        if((!String.isBlank(newForm.Shipping_Country__c) && !p.matcher(newForm.Shipping_Country__c).matches()) || (!String.isBlank(hqAccount.ShippingCountry) && !p.matcher(hqAccount.ShippingCountry).matches())) {
+            newForm.Shipping_Country__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
         /*** AMSU-112 - End ***/
 
 
@@ -8138,36 +8136,36 @@ system.debug('aqui sectorValue ' + sectorValue);
     //Select Hierarchy
 
     public Map<Id, HierarchyItem> hierarchy{
-		get{
-			if(hierarchy == null) {
-				hierarchy = new Map<Id, HierarchyItem>();
-				
-				List<Account> acc = getBranchList(false);
-				for(Account a : acc){
-					Boolean isSelected = false;
-					hierarchy.put(a.Id, new HierarchyItem(a,isSelected));
-				}							
-			}
-			return hierarchy;
-		}
-		set;
-	}    
+        get{
+            if(hierarchy == null) {
+                hierarchy = new Map<Id, HierarchyItem>();
+                
+                List<Account> acc = getBranchList(false);
+                for(Account a : acc){
+                    Boolean isSelected = false;
+                    hierarchy.put(a.Id, new HierarchyItem(a,isSelected));
+                }                           
+            }
+            return hierarchy;
+        }
+        set;
+    }    
 
     public Boolean selectAll{
-		get{
-			if(selectAll == null) selectAll = false;
-			return selectAll;
-		}
-		set;
-	}
+        get{
+            if(selectAll == null) selectAll = false;
+            return selectAll;
+        }
+        set;
+    }
 
     public List<HierarchyItem> hierarchyValues{
-		get{
-			return hierarchy.values();
-		}
-	}
+        get{
+            return hierarchy.values();
+        }
+    }
 
-	private Integer rowsPerPage = 100;
+    private Integer rowsPerPage = 100;
 
     public Integer currentPage{
         get{
@@ -8179,7 +8177,7 @@ system.debug('aqui sectorValue ' + sectorValue);
         set;
     }
     
-	public Integer totalPages{
+    public Integer totalPages{
         get{
             return hierarchyValuesForDisplay.size();
         }
@@ -8208,68 +8206,68 @@ system.debug('aqui sectorValue ' + sectorValue);
     }
 
     // ***********************************
-	// ********** constructor ************
-	// ***********************************
-	/*public ANG_AccountHierarchySelectionController(ApexPages.StandardController stdController){
-		if(!Test.isRunningTest()) stdController.addFields(new List<String>(oscarFields));
+    // ********** constructor ************
+    // ***********************************
+    /*public ANG_AccountHierarchySelectionController(ApexPages.StandardController stdController){
+        if(!Test.isRunningTest()) stdController.addFields(new List<String>(oscarFields));
 
-		oscarId = stdController.getId();
-		oscar = (AMS_OSCAR__c)stdController.getRecord();
-	}*/
+        oscarId = stdController.getId();
+        oscar = (AMS_OSCAR__c)stdController.getRecord();
+    }*/
 
 
     // ***********************************
-	// *********** wrappers **************
-	// ***********************************
-	public class HierarchyItem{
+    // *********** wrappers **************
+    // ***********************************
+    public class HierarchyItem{
 
-		public Account acc { get; set; }
-		public Boolean selected { get; set; }
+        public Account acc { get; set; }
+        public Boolean selected { get; set; }
 
-		public HierarchyItem(Account a, Boolean selected){
-			this.acc = a;
-			this.selected = selected;
-		}
-	}
+        public HierarchyItem(Account a, Boolean selected){
+            this.acc = a;
+            this.selected = selected;
+        }
+    }
 
 
     // ***********************************
-	// ********* helper methods **********
-	// ***********************************
+    // ********* helper methods **********
+    // ***********************************
 
-	public void doSelectAll(){
-		for(HierarchyItem hi : hierarchyValues){
+    public void doSelectAll(){
+        for(HierarchyItem hi : hierarchyValues){
             hi.selected = selectAll;
-		}
-	}
+        }
+    }
 
     public Boolean getDisablePrevious() { 
-		//this will disable the previous and beginning buttons
-		return (currentPage <= 0);
-	}
+        //this will disable the previous and beginning buttons
+        return (currentPage <= 0);
+    }
 
-	public Boolean getDisableNext() { //this will disable the next and end buttons
-		return (currentPage >= hierarchyValuesForDisplay.size()-1);
-	}
+    public Boolean getDisableNext() { //this will disable the next and end buttons
+        return (currentPage >= hierarchyValuesForDisplay.size()-1);
+    }
 
     public PageReference Beginning() { //user clicked beginning 
-		currentPage = 0;
-		return null;
-	}
+        currentPage = 0;
+        return null;
+    }
 
-	public PageReference Previous() { //user clicked previous button
-		currentPage--;
-		return null;
-	}
+    public PageReference Previous() { //user clicked previous button
+        currentPage--;
+        return null;
+    }
 
-	public PageReference Next() { //user clicked next button
-		currentPage++;
-		return null;
-	}
+    public PageReference Next() { //user clicked next button
+        currentPage++;
+        return null;
+    }
 
-	public PageReference End() { //user clicked end
-		currentPage = hierarchyValuesForDisplay.size()-1;
-		return null;
-	}
+    public PageReference End() { //user clicked end
+        currentPage = hierarchyValuesForDisplay.size()-1;
+        return null;
+    }
     
 }
