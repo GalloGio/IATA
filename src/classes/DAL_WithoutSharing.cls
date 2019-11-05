@@ -224,10 +224,7 @@ public without sharing class DAL_WithoutSharing {
                     }
                 }
             }
-
-        	if(!lstProfileWrapper.isEmpty()){
-        	    result.recordsString = JSON.Serialize(lstProfileWrapper);
-        	}
+       	    result.recordsString = JSON.Serialize(lstProfileWrapper);
 		}
         
         return result;
