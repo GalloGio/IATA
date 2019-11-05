@@ -6088,10 +6088,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <fields>
         <fullName>Billing_Address_formated__c</fullName>
         <externalId>false</externalId>
-        <formula>if(LEN(BillingStreet)&gt;0, BillingStreet&amp; &quot; &quot; , &quot;&quot; ) &amp; BR() &amp;
-if(LEN(BillingCity)&gt;0, BillingCity&amp; &quot;, &quot; , &quot;&quot; )&amp;
-if(LEN(BillingPostalCode)&gt;0, BillingPostalCode&amp; &quot; &quot; , &quot;&quot; )&amp; BR() &amp;
-if(LEN(BillingState)&gt;0, BillingState,&quot;&quot;) &amp;
+        <formula>if(LEN(BillingStreet)&gt;0, BillingStreet&amp; &quot; &quot; , &quot;&quot; ) &amp; BR() &amp; 
+if(LEN(BillingCity)&gt;0, BillingCity&amp; &quot;, &quot; , &quot;&quot; )&amp; 
+if(LEN(BillingPostalCode)&gt;0, BillingPostalCode&amp; &quot; &quot; , &quot;&quot; )&amp; BR() &amp; 
+if(LEN(BillingState)&gt;0, BillingState,&quot;&quot;) &amp; 
 If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Billing Address formated</label>
@@ -6276,8 +6276,8 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
     <fields>
         <fullName>CNS_Agency__c</fullName>
         <externalId>false</externalId>
-        <formula>AND(
-   IATA_ISO_Country__r.CNS_Country__c=true,
+        <formula>AND( 
+   IATA_ISO_Country__r.CNS_Country__c=true, 
    OR(ISPICKVAL(Location_Class__c,&quot;C&quot;),ISPICKVAL(Location_Class__c,&quot;R&quot;))
  )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -9722,18 +9722,18 @@ V - Co-operative</inlineHelpText>
         <formula>IF(AND(RecordTypeId =&quot;012w0000000QBMW&quot;,NOT(CONTAINS(Name, &quot;BSP&quot;)),NOT(CONTAINS(Name, &quot;Test&quot;)),NOT(CONTAINS(Name, &quot;test&quot;)),NOT(CONTAINS(Name, &quot;TEST&quot;)),NOT(CONTAINS(Name, &quot;SPDR&quot;)),
 OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;D&quot;)),OR(ISPICKVAL(Status__c,&quot;Changes processed&quot;),ISPICKVAL(Status__c,&quot;Cash basis/no commission&quot;),ISPICKVAL(Status__c,&quot;Cash basis/with commission&quot;),ISPICKVAL(Status__c,&quot;Listed&quot;),ISPICKVAL(Status__c,&quot;Review&quot;),ISPICKVAL(Status__c,&quot;Under review&quot;),ISPICKVAL(Status__c,&quot;approved&quot;))),
 
-(IF( ISPICKVAL(Status__c,&quot;&quot;), 0,10)
-+IF( ISPICKVAL(Location_Type__c,&quot;&quot;), 0,10)
+(IF( ISPICKVAL(Status__c,&quot;&quot;), 0,10) 
++IF( ISPICKVAL(Location_Type__c,&quot;&quot;), 0,10) 
 
-+ IF( LEN(IATACode__c) != 8, 0,10) + IF( LEN(Name) = 0, 0,10)
-+ IF( ISBLANK(Accreditation_date__c), 0,10)
-+ IF( ISPICKVAL(Sector__c,&quot;&quot;), 0,5) + IF( ISPICKVAL(Category__c,&quot;&quot;), 0,5)
-+IF(LEN(Short_Name__c)= 0, 0,5) + IF( ISPICKVAL(Company_Type__c,&quot;&quot;), 0,5)
++ IF( LEN(IATACode__c) != 8, 0,10) + IF( LEN(Name) = 0, 0,10) 
++ IF( ISBLANK(Accreditation_date__c), 0,10) 
++ IF( ISPICKVAL(Sector__c,&quot;&quot;), 0,5) + IF( ISPICKVAL(Category__c,&quot;&quot;), 0,5) 
++IF(LEN(Short_Name__c)= 0, 0,5) + IF( ISPICKVAL(Company_Type__c,&quot;&quot;), 0,5) 
 +IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(LEN(Phone)= 0,0,5))
-+IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(LEN(Email__c)= 0,0,5))
-+IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;),CONTAINS(Country_ISO_Code__c,&quot;FI&quot;)),5,IF(Has_a_Financial_Assessment_Contact__c = FALSE,0,5))
-+IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(Has_an_Administrator_User_Portal__c = FALSE,0,5))
-+IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;),CONTAINS(Country_ISO_Code__c,&quot;FI&quot;)),5,IF( ISPICKVAL(Fin_statements_submission_deadline__c,&quot;&quot;), 0,5))
++IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(LEN(Email__c)= 0,0,5)) 
++IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;),CONTAINS(Country_ISO_Code__c,&quot;FI&quot;)),5,IF(Has_a_Financial_Assessment_Contact__c = FALSE,0,5)) 
++IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;)),5,IF(Has_an_Administrator_User_Portal__c = FALSE,0,5)) 
++IF(OR(ISPICKVAL(Location_Type__c,&quot;BR&quot;),ISPICKVAL(Location_Type__c,&quot;SA&quot;),CONTAINS(Country_ISO_Code__c,&quot;FI&quot;)),5,IF( ISPICKVAL(Fin_statements_submission_deadline__c,&quot;&quot;), 0,5)) 
 
 + IF( LEN(Reason__c) = 0, 0,5)),1)</formula>
         <label>Data Quality Score</label>
@@ -10085,8 +10085,8 @@ OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;
     </fields>
     <fields>
         <fullName>EF_Liquidator_Administrator__c</fullName>
-        <description>E&amp;F CRM Project
-(EF-864) Add airline status details.
+        <description>E&amp;F CRM Project 
+(EF-864) Add airline status details. 
 when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <externalId>false</externalId>
         <label>Liquidator/Administrator</label>
@@ -10155,8 +10155,8 @@ Val. Rule to check format.</description>
     </fields>
     <fields>
         <fullName>EF_Status_Additional_Information__c</fullName>
-        <description>E&amp;F CRM Project
-(EF-864) Add airline status details.
+        <description>E&amp;F CRM Project 
+(EF-864) Add airline status details. 
 when E&amp;F Status gets inactive, this field can hold information about why the account got innactive</description>
         <externalId>false</externalId>
         <label>E&amp;F Status Additional Information</label>
@@ -14118,7 +14118,7 @@ O-SATO
 P-Passenger
 S-SSI
 T-TIDS
-V-Travel Service Intermediaries-TSI (USA Only)
+V-Travel Service Intermediaries-TSI (USA Only) 
 X-Handling Agents and Shipping Lines
 J-Joint Vent</inlineHelpText>
         <label>Location Class</label>
@@ -14230,25 +14230,25 @@ J-Joint Vent</inlineHelpText>
     <fields>
         <fullName>Location_Type_Ordered__c</fullName>
         <externalId>false</externalId>
-        <formula>case (TEXT(Location_Type__c)
-, &apos;AO&apos;, 1
-, &apos;EP&apos;, 1
-, &apos;HO&apos;, 1
-, &apos;HE&apos;, 1
+        <formula>case (TEXT(Location_Type__c) 
+, &apos;AO&apos;, 1 
+, &apos;EP&apos;, 1 
+, &apos;HO&apos;, 1 
+, &apos;HE&apos;, 1 
 
-, &apos;BR&apos;, 2
-, &apos;CS&apos;, 2
-, &apos;EB&apos;, 2
-, &apos;ES&apos;, 2
-, &apos;SE&apos;, 2
-, &apos;TD&apos;, 2
-, &apos;WH&apos;, 2
-, &apos;AE&apos;, 2
+, &apos;BR&apos;, 2 
+, &apos;CS&apos;, 2 
+, &apos;EB&apos;, 2 
+, &apos;ES&apos;, 2 
+, &apos;SE&apos;, 2 
+, &apos;TD&apos;, 2 
+, &apos;WH&apos;, 2 
+, &apos;AE&apos;, 2 
 
-, &apos;ST&apos;, 3
-, &apos;AW&apos;, 3
-, &apos;SA&apos;, 3
-, 99
+, &apos;ST&apos;, 3 
+, &apos;AW&apos;, 3 
+, &apos;SA&apos;, 3 
+, 99 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Location Type Ordered</label>
@@ -19118,9 +19118,9 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <fullName>Total_BSP_CASS_Participations__c</fullName>
         <description>The total number of active CASS and BSP participations for the airline.</description>
         <externalId>false</externalId>
-        <formula>IF (
-  ISBLANK( ParentId ),
-  Airline_BSP_Participations__c + Airline_CASS_Participations__c,
+        <formula>IF ( 
+  ISBLANK( ParentId ), 
+  Airline_BSP_Participations__c + Airline_CASS_Participations__c, 
   IF (
     ParentId &lt;&gt; null,
     Parent.Airline_BSP_Participations__c + Parent.Airline_CASS_Participations__c,
@@ -19171,10 +19171,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
 Denotes an aviation training center authorized by IATA&apos;s Training and Development Institute ITDI.
 This field is kept up-to-date with the feedback of ITDI at least twice a year during the ATC Spring and Fall promotions.</description>
         <externalId>false</externalId>
-        <inlineHelpText>• ATC - IATA Authorized Training Centers
-• ATS - IATA Accredited Training Schools
-• RTP - IATA Regional Training Partners
-• IATA Academic Partners
+        <inlineHelpText>• ATC - IATA Authorized Training Centers 
+• ATS - IATA Accredited Training Schools 
+• RTP - IATA Regional Training Partners 
+• IATA Academic Partners 
 • Company</inlineHelpText>
         <label>Training Membership</label>
         <required>false</required>
@@ -19259,18 +19259,18 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <externalId>false</externalId>
         <formula>CASE (
   TEXT(Type_of__c),
-  &apos;A&apos;, &apos;Scheduled Passenger&apos;,
-  &apos;B&apos;, &apos;Non-Scheduled Passenger&apos;,
-  &apos;C&apos;, &apos;Scheduled Cargo&apos;,
-  &apos;D&apos;, &apos;Non-Scheduled Cargo&apos;,
-  &apos;G&apos;, &apos;ULD&apos;,
-  &apos;H&apos;, &apos;CRS&apos;,
-  &apos;K&apos;, &apos;Bus Line&apos;,
-  &apos;I&apos;, &apos;Scheduled Passenger and Cargo&apos;,
-  &apos;J&apos;, &apos;Non-Scheduled Passenger and Cargo&apos;,
-  &apos;S&apos;, &apos;Miscellaneous&apos;,
-  &apos;F&apos;, &apos;Cruise Line&apos;,
-  &apos;E&apos;, &apos;Railway Line&apos;,
+  &apos;A&apos;, &apos;Scheduled Passenger&apos;, 
+  &apos;B&apos;, &apos;Non-Scheduled Passenger&apos;, 
+  &apos;C&apos;, &apos;Scheduled Cargo&apos;, 
+  &apos;D&apos;, &apos;Non-Scheduled Cargo&apos;, 
+  &apos;G&apos;, &apos;ULD&apos;, 
+  &apos;H&apos;, &apos;CRS&apos;, 
+  &apos;K&apos;, &apos;Bus Line&apos;, 
+  &apos;I&apos;, &apos;Scheduled Passenger and Cargo&apos;, 
+  &apos;J&apos;, &apos;Non-Scheduled Passenger and Cargo&apos;, 
+  &apos;S&apos;, &apos;Miscellaneous&apos;, 
+  &apos;F&apos;, &apos;Cruise Line&apos;, 
+  &apos;E&apos;, &apos;Railway Line&apos;, 
   &apos;Z&apos;, &apos;Inactive&apos;,
   &apos;&apos;
 )</formula>
@@ -23856,6 +23856,23 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <group>HUBMadrid</group>
             <group>IDFSFrance</group>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Freight_Forwarder</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>ACCOUNT.PHONE1</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>Sector__c</field>
+            <operation>equals</operation>
+            <value>Cargo Agent</value>
+        </filters>
+        <label>Freight Forwarder</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>GDP_My_Accounts</fullName>
@@ -100302,7 +100319,7 @@ $User.Profile_Name__c  =  &apos;FDS – Agency Management - Supervisor (Approver
 $User.Profile_Name__c  =  &apos;FDS – Agency Management – Hub Administrator&apos;,
 $User.Profile_Name__c  =  &apos;FDS Hub Analyst ARM&apos;,
 $User.Profile_Name__c  =  &apos;Developer&apos;,
-$Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c
+$Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c 
 )
 )
 )</errorConditionFormula>
@@ -100330,10 +100347,10 @@ $Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c
         <fullName>Airline_HO_Trade_Name</fullName>
         <active>true</active>
         <description>The trade name for Member airlines can only be updated by the account management team or membership.</description>
-        <errorConditionFormula>ISCHANGED(TradeName__c ) &amp;&amp;
-RecordType.DeveloperName  = &apos;IATA_Airline&apos;  &amp;&amp;
+        <errorConditionFormula>ISCHANGED(TradeName__c ) &amp;&amp;  
+RecordType.DeveloperName  = &apos;IATA_Airline&apos;  &amp;&amp; 
 NOT((
-$User.Profile_Name__c = &apos;Account management team&apos; ||
+$User.Profile_Name__c = &apos;Account management team&apos; || 
 $User.Profile_Name__c = &apos;MER Membership&apos;
 ))</errorConditionFormula>
         <errorDisplayField>TradeName__c</errorDisplayField>
@@ -100350,7 +100367,8 @@ ISCHANGED(Account_Type__c),
 ISCHANGED(Website)
 ),
 NOT(CONTAINS($Profile.Name, &quot;System Administrator - automated processes&quot;)),
-NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
+NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;MER Membership&quot;))
 )</errorConditionFormula>
         <errorMessage>For accounts with record type AL HQ, only the Account Management Team can update the content of the following fields: Account Type and Website</errorMessage>
     </validationRules>
@@ -100434,7 +100452,7 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
 	OR(
 		ISCHANGED(Sector__c),
 		ISCHANGED(Category__c)
-
+		
 	),
 	NOT($Permission.Airline_HQ_ACLI),
 	OR(
@@ -100459,7 +100477,7 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <fullName>Billing_Address</fullName>
         <active>false</active>
         <description>To prevent null values in billing city &amp; country field</description>
-        <errorConditionFormula>AND(
+        <errorConditionFormula>AND( 
 $Profile.Name &lt;&gt; &apos;MACS - Administrator&apos;,
  OR(LEN(BillingCity)&lt;3,LEN( BillingCountry)&lt;3),
 PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c ,
@@ -100889,7 +100907,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
     <validationRules>
         <fullName>Parent_account_is_Airline</fullName>
         <active>true</active>
-        <errorConditionFormula>Merged_Account__c &lt;&gt; &apos;Merged&apos; &amp;&amp; RecordType.DeveloperName = &apos;IATA_Airline_BR&apos; &amp;&amp; ( Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline_BR&apos; &amp;&amp; Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline&apos;)</errorConditionFormula>
+        <errorConditionFormula>Merged_Account__c &lt;&gt; &apos;Merged&apos; &amp;&amp; RecordType.DeveloperName = &apos;IATA_Airline_BR&apos; &amp;&amp; ( Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline_BR&apos; &amp;&amp; Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline&apos;) &amp;&amp; NOT(ICH_Member__c)</errorConditionFormula>
         <errorDisplayField>ParentId</errorDisplayField>
         <errorMessage>The parent account must be an airline</errorMessage>
     </validationRules>
