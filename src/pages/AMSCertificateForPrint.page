@@ -48,8 +48,8 @@
 								<table>
 									<tr>
 										<td style="width:33.3%;font-size: 13px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!acc.IATACode__c}"/></td>
+										<td style="width:300px;font-size: 13px;"></td>
 										<td style="width:33.3%;font-size: 13px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {!allLabels['CertificateValidity'].Certificate_Validity__c}</td>
-										<td style="width:33.3%;font-size: 13px;"></td>
 									</tr>
 								</table>
 							</div>
