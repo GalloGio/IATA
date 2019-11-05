@@ -43,7 +43,11 @@ public class AMS_SOQL_Export {
         
         //run the query
         queryResults = database.query(queryString);
-        
-        
+    }
+
+    //creates and returns a newline character for the CSV export. Seems kind of hacky I know, but there does not seem to be a better
+    //way to generate a newline character within visualforce itself.
+    public static String getNewLine() {
+        return '\n';
     }
 }
