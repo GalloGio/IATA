@@ -62,14 +62,16 @@ public with sharing class PortalRecommendationCtrl {
 
         for(Card_Visibility__c rec : recommendationList) {
             recommendations.add(new RecommendationWrapper(
-                (String.isBlank(rec.Recommendation_Visibility__r.Icon_URL__c) ? '/csportal/s/' + (!String.isBlank(rec.Recommendation_Visibility__r.Product_Description__c) ? productHighlight : serviceHighlight) : rec.Recommendation_Visibility__r.Icon_URL__c),
+                rec.Recommendation_Visibility__r.Icon_URL__c,
                 rec.Recommendation_Visibility__r.RecordType.Name,
                 rec.Recommendation_Visibility__r.RecommendationTitle__c,
                 (!String.isBlank(rec.Recommendation_Visibility__r.Product_Description__c) ? rec.Recommendation_Visibility__r.Product_Description__c: rec.Recommendation_Visibility__r.Service_Description__c),
                 learnMoreLabel,
                 rec.Recommendation_Visibility__r.InformationButtonLink__c,
                 (!String.isBlank(rec.Recommendation_Visibility__r.Product_Description__c) ? buyOnlineLabel : requestServiceLabel),
-                rec.Recommendation_Visibility__r.ActionButtonLink__c));
+                rec.Recommendation_Visibility__r.ActionButtonLink__c,
+                (!String.isBlank(rec.Recommendation_Visibility__r.Product_Description__c) ? 'PRODUCT' : 'SERVICE')
+                ));
         }
 
         return recommendations;
@@ -92,8 +94,10 @@ public with sharing class PortalRecommendationCtrl {
         String actionButton {get; set;}
         @AuraEnabled
         String actionButtonLink {get; set;}
+        @AuraEnabled
+        String actionType {get; set;}
 
-        public RecommendationWrapper(String imgURL, String type, String title, String text, String informationButton, String informationButtonLink, String actionButton, String actionButtonLink) {
+        public RecommendationWrapper(String imgURL, String type, String title, String text, String informationButton, String informationButtonLink, String actionButton, String actionButtonLink, String actionType) {
             this.imgURL = imgURL;
             this.type = type;
             this.title = title;
@@ -102,6 +106,7 @@ public with sharing class PortalRecommendationCtrl {
             this.informationButtonLink = informationButtonLink;
             this.actionButton = actionButton;
             this.actionButtonLink = actionButtonLink;
+            this.actionType = actionType;
         }
     }
 }
