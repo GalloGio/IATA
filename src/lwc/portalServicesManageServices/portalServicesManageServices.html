@@ -127,9 +127,16 @@
                                             
                                         </div>
                                         <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-grid slds-wrap">
-                                                <button class="slds-button_icon slds-button__icon_right filterButton" onclick={openServicesFilterModal}>
-                                                        {label.CSP_Filter}<img class="slds-float_right filterIcon" src={filterIconUrl}>
-                                                </button>
+                                            <div if:false={filtered}>
+                                                    <button class="slds-button_icon slds-button__icon_right filterButton" onclick={openServicesFilterModal}>
+                                                            {label.CSP_Filter}<img class="slds-float_right filterIcon" src={filterIconUrl}>
+                                                    </button>
+                                            </div>
+                                            <div if:true={filtered}>
+                                                    <button class="slds-button_icon slds-button__icon_right filterButton" onclick={openServicesFilterModal}>
+                                                            {label.CSP_Filtered}<img class="slds-float_right filterIcon" src={filterIconUrl}>
+                                                    </button>
+                                            </div>
                                         </div>
                                         <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-grid slds-wrap slds-grid_align-end">
                                             <div if:true={canAddUsers}>
@@ -161,7 +168,6 @@
                                         </lightning-datatable>
                                         <!-- PAGINATION -->
                                         <c-paginator
-
                                                 page-number={currentPageNumber}
                                                 page-size={PAGE_SIZE}
                                                 total-pages={totalNrPages}
