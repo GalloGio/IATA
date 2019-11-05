@@ -532,7 +532,7 @@ public without sharing class PortalIftpUtils {
 
 			//SELECT Id, City__c, Code__c, Description__c FROM Address__c
 			List<Address__c> allAddr = getAllStations();
-			List<Address__c> userAddr = getITPStations();
+			List<Address__c> userAddr = getITPStations(ui.accountId);
 
 			Map<String, Address__c> mAllAddr = new Map<String, Address__c>();
 			Map<String, Address__c> mUserAddr = new Map<String, Address__c>();
@@ -769,10 +769,9 @@ public without sharing class PortalIftpUtils {
 							Set<String> stationsCodes = new Set<String>();
 							auxstationsCodes = stationsCodesString.split(';');
 							if(auxstationsCodes.size() > 0){
-
 								// stations: trim codes and remove duplicates
 								for(String code: auxstationsCodes){
-									stationsCodes.add(code.trim());
+									stationsCodes.add(code.trim().toUpperCase());
 								}
 								// Check if ITP has station
 								Boolean addrInITPAddrs = false;
@@ -947,7 +946,7 @@ public without sharing class PortalIftpUtils {
 						stationsCodes = mapEmployeeStationCodes.get(key);
 						if(accountContactRoleID != null){
 							Boolean isFirstStation = true;
-							for(String code: stationsCodes ){
+							for(String code: stationsCodes){
 								Boolean exists = false;
 								if(isUpdateEmployee){
 									// Check if station to be added is already a station of that employee
@@ -986,7 +985,6 @@ public without sharing class PortalIftpUtils {
 											isFirstStation = false;
 										}
 										roleAdressToInsert.add(roleAddressAux);
-										break;
 									}
 								}
 							}
