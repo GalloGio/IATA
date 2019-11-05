@@ -1162,7 +1162,6 @@ public class Faq2CaseTest {
         RestContext.response= res;
 
         System.runAs(newUser){
-            Test.startTest();
                 vfISSP_FAQ2Case.CustomerSupporWrapperGet customerSupportInfo = vfISSP_FAQ2Case.doGet();
                 // should have topics to choose
                 System.assert(customerSupportInfo.topicsMap != null && customerSupportInfo.topicsMap.size() > 0);
@@ -1170,7 +1169,6 @@ public class Faq2CaseTest {
                 System.assert(customerSupportInfo.subTopicsMap != null && customerSupportInfo.subTopicsMap.size() > 0);
                 // should have countries to choose
                 System.assert(customerSupportInfo.countryMap != null && customerSupportInfo.countryMap.size() > 0);
-            Test.stopTest();
         }
     }
 
