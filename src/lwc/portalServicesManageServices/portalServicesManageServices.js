@@ -246,6 +246,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.pageParams = getParamsFromPage();
         if (this.pageParams) {
             this.serviceId = this.pageParams.serviceId;
+            if (this.pageParams.status) {
+                if(this.pageParams.status=='Access_Requested'){
+                    this.selectedStatus = "Access Requested";
+                }
+            }
         }
 
         getLoggedUser().then(userResult => {
@@ -274,7 +279,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
                         this.optionsCountry = this.getPickWithAllValue(myCountryOptions);
                     });
-                    this.optionsStatus=getPickWithAllValue(this.optionsStatus);
+                    this.optionsStatus=this.getPickWithAllValue(this.optionsStatus);
                 //If Airline user - Country ELSE IATACODE
                 if (this.airlineUser) {
                     this.contactTableColums = [
@@ -1107,11 +1112,15 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         let resultList = [];
         let filteredResults=[];
         let filters=[];
+        if(this.selectedCountry!=''||this.selectedIataCode!=''||this.selectedStatus!=''){
         this.globalResults.forEach(el => {
             if((el.serviceRight == this.selectedStatus && this.selectedStatus!='') || (el.country == this.selectedCountry&&this.selectedCountry!='') || (el.iataCodeLoc == this.selectedIataCode && this.selectedIataCode!='')){
                 filteredResults.push(el);
             }
         });
+        }else{
+            filteredResults=this.globalResults;
+        }
         if(this.searchKey!=''){
             filteredResults.forEach(elem => {
                 if(elem.contactName.toLowerCase().search(this.searchKey) != -1 || elem.iataCodeLoc.toLowerCase().search(this.searchKey) != -1 || elem.emailAddress.toLowerCase().search(this.searchKey) != -1){
