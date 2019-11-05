@@ -119,19 +119,13 @@
 
             <div class="customPopupInteriorHalfScreenCentered">
                 <!-- Popup Header -->
-                <div class="slds-p-around_medium" style="font-size: 20px;font-weight: 500;font-style: normal;font-stretch: normal;line-height: 1.6;letter-spacing: normal;color: #333333;">
+                <div class="slds-p-around_medium text-medium text-bold text-darkGray manage-recipients">
 					{labels.CSP_Manage_Recipients}
                 </div>
 
                 <!-- Popup Body -->
                 <div class="slds-p-around_medium customWhiteBackground">
-                    <div class="slds-p-vertical_large" style="font-size: 16px;
-                    font-weight: normal;
-                    font-style: normal;
-                    font-stretch: normal;
-                    line-height: 1.63;
-                    letter-spacing: normal;
-                    color: #525252;">
+                    <div class="slds-p-vertical_large text-xsmall text-gray manage-recipientsinfo">
                         {labels.CSP_AddOrRemove_Recipients}
                     </div>
 
@@ -147,7 +141,7 @@
                     </div>
                     <div class="slds-scrollable_y recipients-box">
                         <template for:each={lstRecipients} for:item="recipient">
-                            <span key={recipient.id} class="slds-p-around_x-small slds-m-around_xx-small custom-recipients">
+                            <span key={recipient.id} class="slds-p-around_x-small slds-m-around_xx-small text-xxsmall custom-recipients">
                                 {recipient.email}
                                 <lightning-icon class="cursorPointer" key={recipient.id} icon-name="utility:close" size="x-small" onclick={removeRecipient} data-item={recipient.id}></lightning-icon>
                             </span>
