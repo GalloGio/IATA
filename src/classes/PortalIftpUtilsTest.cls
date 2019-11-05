@@ -24,7 +24,7 @@ public class PortalIftpUtilsTest {
 			}
 
 
-			Map<Id, List<Address__c>> addMapList1 = PortalIftpUtils.getEmployeesStations(empIdsList);
+			Map<Id, List<Airport_Detail__c>> addMapList1 = PortalIftpUtils.getEmployeesStations(empIdsList);
 			System.assertEquals(addMapList1.keySet().size(), 1);
 
 			List<Account_Contact_Role__c> accRoleList1 = PortalIftpUtils.getITPEmployees(accId);
@@ -51,13 +51,13 @@ public class PortalIftpUtilsTest {
 			PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 			System.assertEquals(ui.id, u2.id);
 
-			List<Address__c> addList2 = PortalIftpUtils.getAllStations();
+			List<Airport_Detail__c> addList2 = PortalIftpUtils.getAllStations();
 			System.assert(addList2.size() > 0, 'Fail to getAllStations!');
 
-			List<Address__c> addList22 = PortalIftpUtils.getUserStations();
+			List<Airport_Detail__c> addList22 = PortalIftpUtils.getUserStations();
 			System.assert(addList22.size() > 0, 'Fail to getUserStations!');
 
-			List<Address__c> addList3 = PortalIftpUtils.getITPStations();
+			List<Airport_Detail__c> addList3 = PortalIftpUtils.getITPStations();
 			System.assert(addList3.size() > 0, 'Fail to getITPStations!');
 
 			List<PortalIftpUtils.StationRecordsWrapper> swrap = PortalIftpUtils.getITPStationsForDatatable();
@@ -92,7 +92,7 @@ public class PortalIftpUtilsTest {
 		Id empItpId2 = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Emp Ins Document2'].ContentDocumentId;
 		Id stationItpId = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Station Ins Document'].ContentDocumentId;
 		Id ItpOJTId = [SELECT Id FROM Document WHERE name = 'OJT Document'].Id;
-		Id add2Id = [Select Id From Address__c where Code__c = 'GVX' limit 1].Id;
+		Id add2Id = [Select Id From Airport_Detail__c where Code__c = 'GVX' limit 1].Id;
 		List<Role_Address__c> roleAddrList3 = [Select Id, Description__c, Address__c, Name, Account_Role_Service__c from Role_Address__c];
 
 		Test.startTest();
@@ -107,7 +107,7 @@ public class PortalIftpUtilsTest {
 			PortalIftpUtils.InsertStationWrapper updStationWrapper = PortalIftpUtils.updateStation(roleAddrList3, null);
 			System.assert(updStationWrapper.succeeded);
 
-			Address__c addr = PortalIftpUtils.getITPStationEmployees(add2Id);
+			Airport_Detail__c addr = PortalIftpUtils.getITPStationEmployees(add2Id);
 			System.assertEquals(addr.Code__c, 'GVX');
 
 			List<PortalIftpUtils.ImportResultsWrapper> irw1 = PortalIftpUtils.importStationsCSVFile(stationItpId);
@@ -207,7 +207,7 @@ public class PortalIftpUtilsTest {
 		User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
 
 		Id itpAccouRoleServId = [SELECT id FROM Account_Role_Service__c WHERE Account_Role__r.Account__r.name LIKE 'ITP Account'].id;
-		Id addressID = [SELECT id FROM Address__c WHERE Code__c LIKE 'GVX'].id;
+		Id addressID = [SELECT id FROM Airport_Detail__c WHERE Code__c LIKE 'GVX'].id;
 
 		System.runAs(u1) {
 

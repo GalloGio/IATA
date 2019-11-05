@@ -387,7 +387,7 @@ public without sharing class PortalIftpStationsManagement {
         try{
             //check if station has not been deleted yet
             Boolean existsStations = false;
-            for(Address__c addr : PortalIftpUtils.getITPStations(accountId)){
+            for(Airport_Detail__c addr : PortalIftpUtils.getITPStations(accountId)){
                 if(stationToDelete.addressId.equals(addr.Id)){
                     existsStations = true;
                     break;
@@ -398,7 +398,7 @@ public without sharing class PortalIftpStationsManagement {
 
                 boolean existsEmployees = false;
                 //Check if there are employees working in that station for that ITP
-                Address__c stationsWithEmployees = PortalIftpUtils.getITPStationEmployees(stationToDelete.addressId);
+                Airport_Detail__c stationsWithEmployees = PortalIftpUtils.getITPStationEmployees(stationToDelete.addressId);
                 if(stationsWithEmployees != null && stationsWithEmployees.Role_Addresses__r != null && stationsWithEmployees.Role_Addresses__r.size() > 0){
                     existsEmployees = true;
                 }

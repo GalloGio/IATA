@@ -202,9 +202,9 @@ private class PortalIftEmployeeRecordsManagementTest {
     static void updateEmployeeStationsTest2(){
         User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
 
-        Address__c Addr1 = [SELECT Id, Code__c FROM Address__c WHERE Code__c = 'GVX' LIMIT 1];
-        Address__c Addr2 = [SELECT Id, Code__c FROM Address__c WHERE Code__c = 'PTX' LIMIT 1];
-        Address__c Addr3 = [SELECT Id, Code__c FROM Address__c WHERE Code__c = 'FRX' LIMIT 1];
+        Airport_Detail__c Addr1 = [SELECT Id, Code__c FROM Airport_Detail__c WHERE Code__c = 'GVX' LIMIT 1];
+        Airport_Detail__c Addr2 = [SELECT Id, Code__c FROM Airport_Detail__c WHERE Code__c = 'PTX' LIMIT 1];
+        Airport_Detail__c Addr3 = [SELECT Id, Code__c FROM Airport_Detail__c WHERE Code__c = 'FRX' LIMIT 1];
 
             
         Account_Contact_Role__c employee = [SELECT Id, Company_Code__c, First_Name__c, Last_Name__c FROM Account_Contact_Role__c WHERE Company_Code__c = 'Abc' LIMIT 1];

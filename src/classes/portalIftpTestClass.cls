@@ -19,10 +19,10 @@ public class portalIftpTestClass {
 		insert countryList;
 
 		//Create Address
-		List<Address__c> addressList = new List<Address__c>();
-		Address__c add1 = new Address__c(City__c = 'LisbonX', Code__c = 'PTX', IATA_ISO_Country__c = ctr1.Id);
-		Address__c add2 = new Address__c(City__c = 'GenevaX', Code__c = 'GVX', IATA_ISO_Country__c = ctr2.Id);
-		Address__c add3 = new Address__c(City__c = 'ParisX', Code__c = 'FRX', IATA_ISO_Country__c = ctr4.Id);
+		List<Airport_Detail__c> addressList = new List<Airport_Detail__c>();
+		Airport_Detail__c add1 = new Airport_Detail__c(City__c = 'LisbonX', Code__c = 'PTX', IATA_ISO_Country__c = ctr1.Id);
+		Airport_Detail__c add2 = new Airport_Detail__c(City__c = 'GenevaX', Code__c = 'GVX', IATA_ISO_Country__c = ctr2.Id);
+		Airport_Detail__c add3 = new Airport_Detail__c(City__c = 'ParisX', Code__c = 'FRX', IATA_ISO_Country__c = ctr4.Id);
 		addressList.add(add1);
 		addressList.add(add2);
 		addressList.add(add3);

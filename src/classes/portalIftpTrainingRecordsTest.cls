@@ -230,7 +230,7 @@ public class portalIftpTrainingRecordsTest {
 
 		List<portalIftpTrainingRecords.CertificationProficiencyWrapper> recordsToUpdateList = new List<portalIftpTrainingRecords.CertificationProficiencyWrapper>();
 		portalIftpTrainingRecords.CertificationProficiencyWrapper recordToUpdate = new portalIftpTrainingRecords.CertificationProficiencyWrapper();
-		recordToUpdate.address_Id = [SELECT Id FROM Address__c WHERE code__c like 'PTX' LIMIT 1].Id;
+        recordToUpdate.address_Id = [SELECT Id FROM Airport_Detail__c WHERE code__c like 'PTX' LIMIT 1].Id;
 		recordToUpdate.employee_code = 'Abc';
 		recordToUpdate.address_code = 'PTX';
 		recordToUpdate.certification_code = 'P1';
