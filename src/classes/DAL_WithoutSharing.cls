@@ -201,10 +201,7 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
                     }
                 }
             }
-
-        	if(!lstProfileWrapper.isEmpty()){
-        	    result.recordsString = JSON.Serialize(lstProfileWrapper);
-        	}
+       	    result.recordsString = JSON.Serialize(lstProfileWrapper);
 		}
         
         return result;
