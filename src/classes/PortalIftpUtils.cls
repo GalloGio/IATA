@@ -8,7 +8,7 @@ public without sharing class PortalIftpUtils {
 		}
 		return false;
 	}
-	
+
 	@AuraEnabled(cacheable=false)
 	public static List<Account_Contact_Role__c> getAllITPEmployees(Id accountId){
 		//cacheable=false MANDATORY
@@ -273,10 +273,10 @@ public without sharing class PortalIftpUtils {
 
 	@AuraEnabled
 	public static List<StationRecordsWrapper> getITPStationsForDatatable(){
-        Id userId = System.UserInfo.getUserId();
-        User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
-        return getITPStationsForDatatable(userAcc.contact.accountid);
-    }
+		Id userId = System.UserInfo.getUserId();
+		User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
+		return getITPStationsForDatatable(userAcc.contact.accountid);
+	}
 
 	/*
 	* @description
