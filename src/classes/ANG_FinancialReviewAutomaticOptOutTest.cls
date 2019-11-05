@@ -249,7 +249,8 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			SAAM_Case__c = oscarCase.Id,
 			Remittance_frequency__c = 'M',
 			Location_Class__c = 'D',
-			Location_Type__c = AMS_Utils.HE
+			Location_Type__c = AMS_Utils.HE,
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 		);
 
 		Id rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
@@ -263,7 +264,8 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			Location_Class__c = 'D',
 			Location_Type__c = AMS_Utils.HE,
 			RecordTypeId = rtChangesStagingId,
-			ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_CASH
+			ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 		);
 
 		insert new List<AMS_Pax_Accreditation_Form__c>{stagingArea, chgsStagingArea};
