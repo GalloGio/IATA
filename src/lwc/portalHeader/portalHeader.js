@@ -508,6 +508,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
             let params = {};
             params.serviceId = notification.id;
+            //Parameter added to force filtrage for Access Requested Contacts on the Service Management Page.
+            params.status = "Access_Requested";
             this.currentURL = window.location.href;
 
             if (this.currentURL.includes(this.labels.PortalName)) {
