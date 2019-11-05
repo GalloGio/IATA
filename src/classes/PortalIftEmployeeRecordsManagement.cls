@@ -446,7 +446,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 		List<IFTP_History__c> IftpHistoryRecordsStartWorkStation = new List<IFTP_History__c>();
 		List<IFTP_History__c> IftpHistoryRecordsStopWorkStation = new List<IFTP_History__c>();
 		List<IFTP_History__c> IftpHistoryRecordsLoseProficiency = new List<IFTP_History__c>();
-		List<Address__c> ItpAddressesList = PortalIftpUtils.getITPStations();
+		List<Airport_Detail__c> ItpAddressesList = PortalIftpUtils.getITPStations();
 
 		try{
 			List<String> allMessages = new List<String>();
@@ -491,7 +491,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
 					if(!exists){
 						Boolean isITPStation = false;
-						for(Address__c addr: ItpAddressesList){
+						for(Airport_Detail__c addr: ItpAddressesList){
 							if(addr.Id == newRec.Address__c){
 								isITPStation = true;
 							}
@@ -637,13 +637,13 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
 					String message = '';
 					if(stationIdNotITPList.size() > 0){
-						List<Address__c> addrNotInITP = [SELECT Id, Code__c FROM Address__c WHERE Id IN :stationIdNotITPList];
+						List<Airport_Detail__c> addrNotInITP = [SELECT Id, Code__c FROM Airport_Detail__c WHERE Id IN :stationIdNotITPList];
 
 
 						if(stationIdNotITPList.size() == 1){
 							message = addrNotInITP[0].Code__c + ' is no longer a station for this ITP. ' + ' Other stations updated successfully.';
 						} else{
-							for(Address__c addr : addrNotInITP){
+							for(Airport_Detail__c addr : addrNotInITP){
 								message = message + addr.Code__c + ', ';
 							}
 							message.substring(0, message.length()-3);

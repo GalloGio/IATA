@@ -22,7 +22,7 @@
     <tabs>standard-Contact</tabs>
     <tabs>Account_Contact_Role__c</tabs>
     <tabs>Contact_Roles__c</tabs>
-    <tabs>Address__c</tabs>
+    <tabs>Airport_Detail__c</tabs>
     <tabs>Role_Address__c</tabs>
     <tabs>Account_Role__c</tabs>
     <tabs>Account_Roles__c</tabs>
