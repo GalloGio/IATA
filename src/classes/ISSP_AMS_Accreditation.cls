@@ -4491,7 +4491,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
                         Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
-                        ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
+                        ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, IATA_ISO_Country__r.Name,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
                         IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, IATA_ISO_Country__r.AMS_Settlement_System__c, Country_ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c,
@@ -6342,7 +6342,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         errorFound = true;
                     }
 
-                    if (hqAccount.Status__c != 'Terminated' || hqAccount.Status__c == null) {
+                    if ((hqAccount.Status__c != 'Terminated' || hqAccount.Status__c == null) && hqAccount.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
                         if (hqAccount.ShippingStreet == null){
                             hqAccount.ShippingStreet.addError(Label.ISSP_YouMustEnter);
                             errorFound = true;
