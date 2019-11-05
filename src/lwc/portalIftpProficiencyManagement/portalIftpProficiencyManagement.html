@@ -93,7 +93,6 @@
                     </template>
                     <template if:false={loading}>
                         <div if:true={dataRecords}>
-                            <!-- <div class="slds-p-around_medium slds-grid slds-wrap slds-gutters_x-small slds-grid_align-end"> -->
                             <div class="slds-grid slds-gutters slds-grid_align-end" if:true={showAllProficientButton}>
                                 <div class="addProficiencyLevelButtonContainer slds-col slds-m-left_x-small">
                                     <lightning-button if:true={showButtonAllProficient}
@@ -102,20 +101,6 @@
                                                         label="All Proficient"
                                                         onclick={handleSelectAllProficient}>
                                     </lightning-button>
-                                    <!--
-                                    <lightning-button if:true={showButtonLevel2}
-                                                        variant="success" 
-                                                        class="slds-m-left_x-small"
-                                                        label="All Level 2"
-                                                        onclick={handleSelectAllLevel2}>
-                                    </lightning-button>
-                                    <lightning-button if:true={showButtonLevel3}
-                                                        variant="success" 
-                                                        class="slds-m-left_x-small"
-                                                        label="All Level 3"
-                                                        onclick={handleSelectAllLevel3}>
-                                    </lightning-button>
-                                    -->
                                 </div>
                                 <div class="slds-col slds-m-right_x-small">
                                     <lightning-combobox
@@ -138,7 +123,8 @@
                                 onsort={updateColumnSorting}
                                 onrowselection={getSelectedRows}
                                 onrowaction={handleRowAction}
-                                onheaderaction={handleHeaderAction}>
+                                onheaderaction={handleHeaderAction}
+                                class="displayWrapText">
                             </lightning-datatable>
 
                             <div class="slds-p-around_medium slds-grid slds-wrap slds-gutters_x-small slds-grid_align-center" if:true={showDatatableButtons}>

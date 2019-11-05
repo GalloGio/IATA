@@ -99,7 +99,8 @@
                             label="Expiration Date From" 
                             value={fromDateValue} 
                             min="2018-01-01"
-                            onchange={handleChangeFromDate}>
+                            onchange={handleChangeFromDate}
+                            class="displayWrapText">
                         </lightning-input>
                     </div>    
                     <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
@@ -109,7 +110,8 @@
                             label="Expiration Date To" 
                             value={toDateValue}
                             min={toDateMinValue} 
-                            onchange={handleChangeToDate}>
+                            onchange={handleChangeToDate}
+                            class="displayWrapText">
                         </lightning-input>
                     </div>  
                 </div>
@@ -171,7 +173,8 @@
                                 sorted-by={sortedBy}
                                 sorted-direction={sortedDirection}
                                 onsort={updateColumnSorting}
-                                hide-checkbox-column>
+                                hide-checkbox-column
+                                class="displayWrapText">
                             </lightning-datatable>
                         </div>
                         <div if:false={dataRecords}>

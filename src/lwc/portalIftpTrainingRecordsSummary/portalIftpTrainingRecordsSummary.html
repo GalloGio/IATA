@@ -88,7 +88,8 @@
                                                 sorted-by={sortedBy} 
                                                 sorted-direction={sortedDirection}
                                                 onsort={updateColumnSorting} 
-                                                onrowaction={handleRowAction}>
+                                                onrowaction={handleRowAction}
+                                                class="displayWrapText">
                             </lightning-datatable>
                         </div>
                         <div if:false={dataRecords}>
@@ -137,7 +138,8 @@
                                                             sorted-direction={sortedDirectionStationOptions}
                                                             onsort={updatecolumnsSearchStationSorting}
                                                             max-row-selection=1
-                                                            onrowselection={getSelectedRows}>
+                                                            onrowselection={getSelectedRows}
+                                                            class="displayWrapText">
                                         </lightning-datatable>
                                     </div>
                                 </div>
