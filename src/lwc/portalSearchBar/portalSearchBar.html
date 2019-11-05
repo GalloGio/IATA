@@ -9,7 +9,7 @@
                 <img src={searchIconUrl} class="slds-p-left_small" height="42" width="42"/>
             </div>
             <div class="searchBarBarContainer">
-                <div class="fullWidth">
+                <div class="searchBarBar fullWidth">
                     <lightning-input
                         name="enter-search"
                         type="text"
@@ -22,6 +22,11 @@
                     </lightning-input>
                 </div>
             </div>
+
+            <div if:true={showCross} class="searchBarIcon slds-m-right--large">
+                <lightning-icon class="cursorPointer rotateIcon" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
+            </div>
+            
             <div>
                 <span if:true={loadingTypehead} class="barSpinner">
                     <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
