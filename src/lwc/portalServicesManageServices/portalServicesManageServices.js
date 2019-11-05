@@ -229,11 +229,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     filterIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/filter.svg';
     filteredIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/filtered.svg';
     selectedCountry = "";
-    selectedCountryValue='';
+    selectedCountryValue = '';
     selectedStatus = "";
     selectedIataCode = "";
     searchKey = '';
-    globalResults=[];
+    globalResults = [];
     @track optionsCountry = [];
     @track optionsStatus = [
         { label: "Access Granted", value: "Access Granted" },
@@ -246,11 +246,16 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.pageParams = getParamsFromPage();
         if (this.pageParams) {
             this.serviceId = this.pageParams.serviceId;
+
+            if (this.pageParams.openRequestService) {
+                this.showConfirm = true;
+            }
             if (this.pageParams.status) {
-                if(this.pageParams.status=='Access_Requested'){
+                if (this.pageParams.status == 'Access_Request') {
                     this.selectedStatus = "Access Requested";
                 }
             }
+
         }
 
         getLoggedUser().then(userResult => {
@@ -279,7 +284,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
                         this.optionsCountry = this.getPickWithAllValue(myCountryOptions);
                     });
-                    this.optionsStatus=this.getPickWithAllValue(this.optionsStatus);
+                this.optionsStatus = this.getPickWithAllValue(this.optionsStatus);
                 //If Airline user - Country ELSE IATACODE
                 if (this.airlineUser) {
                     this.contactTableColums = [
@@ -313,9 +318,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     { label: '', type: 'button', initialWidth: 35, typeAttributes: { label: '', variant: "base", title: 'Remove', name: 'removeContact', iconName: 'utility:delete' } }
                 ];
 
-                if(this.selectedStatus=="Access Requested"){
-                    this.applyFiltersModal();
-                }
+
             }
         });
 
@@ -391,31 +394,36 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs })
             .then(result => {
                 let resultData = JSON.parse(JSON.stringify(result));
-                resultData=this.sortResults(resultData);
-                this.initialPageLoad(resultData, this.serviceRecord.totalNrContacts);
                 console.log('data from server: ', resultData);
-                this.globalResults=resultData;
+                resultData = this.sortResults(resultData);
+                this.globalResults = resultData;
+                this.initialPageLoad(resultData, this.serviceRecord.totalNrContacts);
                 if (this.pageParams && this.pageParams.status !== null && this.pageParams.status === 'Access_Requested') {
                     resultData = resultData.filter(item => { return item.serviceRight === 'Access Requested' });
                     this.searchKey = this.pageParams.status.replace('_', ' ');
                 }
+                if (this.selectedStatus == "Access Requested") {
+                    this.applyFiltersModal();
+                }
                 //this.showSpinner = false;
                 this.componentLoading = false;
+                this.checkMassActionButtons();
+                
             });
     }
 
-    sortResults(results){
-        let tempList=[];
-        results.forEach(el => {
-            if(el.serviceRight=='Access Requested'){
-                tempList.push(el);
+    sortResults(results) {
+        let tempList = [];
+        let tempList1 = [];
+        let tempList2 = [];
+        results.forEach(function (el) {
+            if (el.serviceRight === 'Access Requested') {
+                tempList1.push(el);
+            } else {
+                tempList2.push(el);
             }
         });
-        results.forEach(el => {
-            if(!(el in tempList)){
-                tempList.push(el);
-            }
-        });
+        tempList = tempList1.concat(tempList2);
         return tempList;
     }
 
@@ -463,8 +471,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.currentContactPage = tempList[startPage - 1];
         if (!this.searchMode)
             this.nrLoadedRecs += contactList.length;
-
     }
+
 
     //generates paginators menu
     generatePageList() {
@@ -529,7 +537,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.generatePageList();
                 this.refreshContactPageView(currentPage);
             });
-        }else{
+        } else {
             this.generatePageList();
         }
         this.loadingContacts = false;
@@ -562,7 +570,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         return el.contactName.toLowerCase().search(searchKey) != -1 || el.iataCodeLoc.toLowerCase().search(searchKey) != -1 || el.emailAddress.toLowerCase().search(searchKey) != -1;
                     });
                     resultList = resultList.concat(filteredResults);
-
                 });
 
                 this.contactList = [];
@@ -1044,7 +1051,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
         values.forEach((c, pos, arr) => {
             let contact = availableContacts.find(function (con) { return c.id === con.id; });
-            contact .deleteIcon = 'utility:delete';
+            contact.deleteIcon = 'utility:delete';
 
             contactsToAdd.push(contact);
         });
@@ -1055,7 +1062,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     removeContact(event) {
         let itemVal = event.target.dataset.item;
         let contactsToAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
-
         this.contactsToAdd = contactsToAdd.filter(item => item.id !== itemVal);
     }
 
@@ -1074,6 +1080,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
             this.availableContacts = available;
 
+
         });
     }
 
@@ -1084,6 +1091,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             getContactsForAssignment({ serviceId: this.serviceId, queryString: details.searchTerm })
                 .then(results => {
                     let availableContacts = JSON.parse(JSON.stringify(results));
+
                     let toAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
 
                     let available = availableContacts.filter(function (c) {
@@ -1123,39 +1131,32 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     /*  -- FILTER MODAL -- */
     applyFiltersModal() {
-
-        console.log('selected country: ', this.selectedCountry)
-        console.log('selected status: ', this.selectedStatus)
-        console.log('selected iataCode: ', this.selectedIataCode)
-        console.log('selected searchKey: ', this.searchKey)
-        
         let resultList = [];
-        let filteredResults=[];
-        let filters=[];
-        if(this.selectedCountry!=''||this.selectedIataCode!=''||this.selectedStatus!=''){
-            this.searchMode=true;
-        this.globalResults.forEach(el => {
-            if((el.serviceRight == this.selectedStatus && this.selectedStatus!='') || (el.country == this.selectedCountry&&this.selectedCountry!='') || (el.iataCodeLoc == this.selectedIataCode && this.selectedIataCode!='')){
-                filteredResults.push(el);
-            }
-        });
-        }else{
-            
-            filteredResults=this.globalResults;
+        let filteredResults = [];
+        let filters = [];
+        if (this.selectedCountry != '' || this.selectedIataCode != '' || this.selectedStatus != '') {
+            this.searchMode = true;
+            this.filtered = true;
+            this.globalResults.forEach(el => {
+                if ((el.serviceRight == this.selectedStatus && this.selectedStatus != '') || (el.country == this.selectedCountry && this.selectedCountry != '') || (el.iataCodeLoc == this.selectedIataCode && this.selectedIataCode != '')) {
+                    filteredResults.push(el);
+                }
+            });
+        } else {
+            filteredResults = this.globalResults;
         }
-        if(this.searchKey!=''){
+        if (this.searchKey != '') {
             filteredResults.forEach(elem => {
-                if(elem.contactName.toLowerCase().search(this.searchKey) != -1 || elem.iataCodeLoc.toLowerCase().search(this.searchKey) != -1 || elem.emailAddress.toLowerCase().search(this.searchKey) != -1){
+                if (elem.contactName.toLowerCase().search(this.searchKey) != -1 || elem.iataCodeLoc.toLowerCase().search(this.searchKey) != -1 || elem.emailAddress.toLowerCase().search(this.searchKey) != -1) {
                     filters.push(elem);
                 }
             });
-        }else{
-            filters=filteredResults;
+        } else {
+            filters = filteredResults;
         }
         resultList = filters;
         this.contactList = [];
-        this.contactList=resultList;
-        console.log('filteredResults: ',resultList)
+        this.contactList = resultList;
         this.processContacList(resultList, 1);
         this.totalNrPages = Math.ceil(resultList.length / this.PAGE_SIZE);
         this.generatePageList();
@@ -1174,16 +1175,16 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.selectedCountry = "";
         this.selectedIataCode = "";
         this.resetComponent();
-        this.searchText='';
-        this.filtered=false;
-        this.searchMode=false;
+        this.searchText = '';
+        this.filtered = false;
+        this.searchMode = false;
         //close modal
         this.closeServicesFilterModal();
     }
 
     handleChangeCountryFilter(event) {
         this.selectedCountry = '';
-        this.selectedCountryValue=event.detail.value;
+        this.selectedCountryValue = event.detail.value;
         this.optionsCountry.forEach(el => {
             if (el.value == this.selectedCountryValue) {
                 this.selectedCountry = el.label;
@@ -1193,7 +1194,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     handleChangeStatusFilter(event) {
         this.selectedStatus = event.detail.value;
-        console.log("selected Status: ", this.selectedStatus)
     }
 
     openServicesFilterModal() {
