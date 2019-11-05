@@ -1,7 +1,6 @@
 ({
     doInit : function(component,event,helper) {
-        helper.initTable(component);
-        helper.fetchData(component);
+        helper.checkUserHaveAccessRightsAMPIssuesAndPriorities(component);
     },
     viewCurrent : function(component,event,helper) {
         component.set('v.activityView', 'current');

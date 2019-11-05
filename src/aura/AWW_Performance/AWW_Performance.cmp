@@ -3,6 +3,7 @@
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="canEdit" type="Boolean"/>
+    <aura:attribute name="haveUserAMPIssuesAndPriorities" type="Boolean" default="fasle"/>
     <aura:attribute name="sortBy" type="String"/>
     <aura:attribute name="sortDirection" type="String"/>
 
@@ -13,7 +14,14 @@
         <div class="slds-box slds-p-around_none slds-theme_shade">
             <lightning:card class="bckColor" title="BMA/RSA/OSA" iconName="custom:custom48">
                 <aura:set attribute="actions">
-                    <lightning:button variant="Neutral" label="New" title="New" onclick="{!c.new}"  class="{!if(v.canEdit,'','slds-hide')}"/>
+                    <aura:if isTrue="{!v.canEdit}">
+                            <lightning:button variant="Neutral" label="New" title="New" onclick="{!c.new}"/>
+                        <aura:set attribute="else">
+                            <aura:if isTrue="{!v.haveUserAMPIssuesAndPriorities}">
+                                    <lightning:button variant="Neutral" label="New" title="New" onclick="{!c.new}"/>
+                            </aura:if> 
+                        </aura:set>
+                    </aura:if> 
                 </aura:set>
             </lightning:card>
             <div class="slds-m-around_medium slds-table_bordered slds-border_left slds-border_right">

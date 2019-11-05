@@ -110029,6 +110029,29 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <errorMessage>Billing City and Billing Country are mandatory fields</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Block_Users_Editin_IATA_Billing_Address</fullName>
+        <active>true</active>
+        <description>Blocks users from editing the following fields if they don’t have the permission set AMP Agency Management</description>
+        <errorConditionFormula>AND($Permission.AMP_Agency_Management = False, ISCHANGED( BillingAddress ) )</errorConditionFormula>
+        <errorMessage>You do not have permission to edit Billing Address. Please contact your administrator.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Block_Users_Editin_IATA_ISO_Country</fullName>
+        <active>true</active>
+        <description>Blocks users from editing the following fields if they don’t have the permission set AMP Agency Management</description>
+        <errorConditionFormula>AND($Permission.AMP_Agency_Management = False, ISCHANGED(IATA_ISO_Country__c) )</errorConditionFormula>
+        <errorDisplayField>IATA_ISO_Country__c</errorDisplayField>
+        <errorMessage>You do not have permission to edit this field. Please contact your administrator.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Block_Users_Editin_IATA_VAT_Number</fullName>
+        <active>true</active>
+        <description>Blocks users from editing the following fields if they don’t have the permission set AMP Agency Management</description>
+        <errorConditionFormula>AND($Permission.AMP_Agency_Management = False, ISCHANGED( VAT_Number__c ) )</errorConditionFormula>
+        <errorDisplayField>VAT_Number__c</errorDisplayField>
+        <errorMessage>You do not have permission to edit this field. Please contact your administrator.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Block_non_AGM_user_from_modifying_agents</fullName>
         <active>false</active>
         <description>Avoids AMS data being changed from profiles outside AGM and SF administration.</description>

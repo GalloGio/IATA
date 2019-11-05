@@ -9,6 +9,7 @@
     <aura:attribute name="canEdit" type="Boolean"/>
     <aura:attribute name="sortBy" type="String"/>
     <aura:attribute name="sortDirection" type="String"/>
+    <aura:attribute name="haveUserAMPIssuesAndPriorities" type="Boolean" default="fasle"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="refreshTab" event="c:AWW_RefreshTabEvent" action="{!c.refreshTab}"/>
@@ -29,9 +30,18 @@
                             <div class="slds-col">
                                 <lightning:button variant="Neutral" label="Print" title="Print" onclick="{!c.print}"/>
                             </div>
-                            <div class="{!'slds-col ' + if(v.canEdit,'','slds-hide')}">
-                                <lightning:button variant="Neutral" label="New" title="New" onclick="{!c.new}"/> 
-                            </div>
+                            <aura:if isTrue="{!v.canEdit}">
+                                <div class="slds-col">
+                                    <lightning:button variant="Neutral" label="New" title="New" onclick="{!c.new}"/> 
+                                </div>
+                                <aura:set attribute="else">
+                                    <aura:if isTrue="{!v.haveUserAMPIssuesAndPriorities}">
+                                        <div class="slds-col">
+                                            <lightning:button variant="Neutral" label="New" title="New" onclick="{!c.new}"/> 
+                                        </div>
+                                    </aura:if> 
+                                </aura:set>
+                            </aura:if> 
                         </div>
                     </aura:set>
                 </lightning:card>

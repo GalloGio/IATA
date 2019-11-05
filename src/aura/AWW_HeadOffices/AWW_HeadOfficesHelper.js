@@ -91,5 +91,18 @@
         });
         component.set('v.data', data);
         this.buildData(component);
+    },
+    checkHaveAMPAgencyManagement : function(component) {
+        var action = component.get('c.getUserAccessRightsAMPAgencyManagement');
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (component.isValid() && state === "SUCCESS") {                
+                var result = response.getReturnValue();
+                console.log('MR::: ', result);
+                component.set('v.haveAMPAgencyManagement',result );
+            }   
+        });
+
+        $A.enqueueAction(action);
     }
 })

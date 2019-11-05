@@ -1,5 +1,21 @@
 public with sharing class AWW_AccountPlanCtrl {
 
+
+    @AuraEnabled
+    public static Boolean getUserAccessRightsAMPIssuesAndPriorities() {
+        List<PermissionSetAssignment> permissions = [
+            SELECT PermissionSet.Name
+            FROM PermissionSetAssignment 
+            WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSet.Name IN ('AMP_Issues_and_Priorities')
+        ];
+
+        if(permissions.isEmpty()) {
+            return false;
+        } else {
+            return (permissions[0].PermissionSet.Name == 'AMP_Issues_and_Priorities' ? true : false);
+        }
+    }
+    
     @AuraEnabled
     public static List<ObjectiveWrapper> getObjectives(Id accountId){
         List<ObjectiveWrapper> res = new List<ObjectiveWrapper>();

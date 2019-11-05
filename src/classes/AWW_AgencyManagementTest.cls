@@ -160,6 +160,7 @@ private class AWW_AgencyManagementTest {
         AWW_HeadOfficesCtrl.getHeadOffices(wwAccount.Id);
         AWW_HeadOfficesCtrl.searchAccounts('Test', wwAccount.Id, 'remove');
         AWW_HeadOfficesCtrl.getAgencyHierarchy(agency.Id);
+        AWW_HeadOfficesCtrl.getUserAccessRightsAMPAgencyManagement();
         Test.stopTest();
     }
 
@@ -172,6 +173,7 @@ private class AWW_AgencyManagementTest {
         AWW_PerformanceCtrl.upsertRecord(obj, wwAccount.Id);
         List<Objective__c> objectives = AWW_PerformanceCtrl.getRecords(wwAccount.Id);
         System.assertEquals(1, objectives.size());
+        AWW_PerformanceCtrl.getUserAccessRightsAMPIssuesAndPriorities();
         Test.stopTest();
     }
 
@@ -194,6 +196,7 @@ private class AWW_AgencyManagementTest {
         System.assertEquals(1, objectives.size());
         AWW_AccountPlanCtrl.deleteRecord(objectives[0].convertToSFRecord());
         objectives = AWW_AccountPlanCtrl.getObjectives(wwAccount.Id);
+        AWW_AccountPlanCtrl.getUserAccessRightsAMPIssuesAndPriorities();
         System.assertEquals(0, objectives.size());
         Test.stopTest();
     }    

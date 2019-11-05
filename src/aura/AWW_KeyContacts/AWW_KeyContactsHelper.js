@@ -3,7 +3,7 @@
         component.set('v.columns', [
             {title: 'Name', fieldname: 'contactName', sortable: true},
             {title: 'Type', fieldname: 'contactType', sortable: false},
-            {title: 'Primary for', fieldname: 'contactName', sortable: true},
+            {title: 'Primary for', fieldname: 'primaryFor', sortable: true},
             {title: 'Title', fieldname: 'title', sortable: true},
             {title: 'Phone', fieldname: 'phone', sortable: false},
             {title: 'Mobile', fieldname: 'mobile', sortable: false},
@@ -47,7 +47,6 @@
     sortRecords : function(component, sortField, ascOrder) {
         var records = component.get('v.filteredData');
         records.sort(function(a,b) {
-            console.log('aqui');
             var t1 = a[sortField] == b[sortField],
                 t2 = a[sortField] > b[sortField];
             return t1? 0: (ascOrder?-1:1)*(t2?-1:1);

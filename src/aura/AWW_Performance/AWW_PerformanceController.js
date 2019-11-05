@@ -1,7 +1,6 @@
 ({
     doInit : function(component, event, helper) {
-        helper.initTable(component);
-        helper.fetchData(component);
+        helper.checkUserHaveAccessRightsAMPIssuesAndPriorities(component);
     },
     handleRowAction : function(component, event, helper) {
         var modalCmp = component.find('manage-record');

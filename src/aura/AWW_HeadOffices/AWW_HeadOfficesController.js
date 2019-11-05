@@ -2,6 +2,7 @@
     init : function(component, event, helper) {
         helper.initTable(component);
         helper.loadHeadOffices(component, helper);
+        helper.checkHaveAMPAgencyManagement(component);
     },
     showManageHierarchy : function(component, event, helper) {
         var modalCmp = component.find('manageHierarchyCmp');

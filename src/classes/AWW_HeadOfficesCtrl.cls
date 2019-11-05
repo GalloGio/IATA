@@ -2,6 +2,21 @@ public with sharing class AWW_HeadOfficesCtrl {
 
     public List<AccountWrapper> headOffices {get;set;}
 
+    @AuraEnabled
+    public static Boolean getUserAccessRightsAMPAgencyManagement() {
+        List<PermissionSetAssignment> permissions = [
+            SELECT PermissionSet.Name
+            FROM PermissionSetAssignment 
+            WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSet.Name IN ('AMP_Agency_Management')
+        ];
+
+        if(permissions.isEmpty()) {
+            return false;
+        } else {
+            return (permissions[0].PermissionSet.Name == 'AMP_Agency_Management' ? true : false);
+        }
+    }
+    
     public AWW_HeadOfficesCtrl (ApexPages.StandardController stdController) {
         Account acc = (Account) stdController.getRecord();
         this.headOffices = getHeadOffices(acc.Id);

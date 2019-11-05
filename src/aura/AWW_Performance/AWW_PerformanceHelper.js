@@ -5,14 +5,17 @@
             {label: 'Type', fieldName: 'Type__c', type: 'text', sortable : true},
             {label: 'Account Status', fieldName: 'Status__c', type: 'text', sortable : true}
         ];
-
         if(component.get('v.canEdit') == true) {
             var actions = [
                 {label: 'Edit', name: 'edit_issue', 'iconName': 'utility:edit'}
             ];
             columns.push({type: 'action', typeAttributes: {rowActions: actions}});
+        }else if(component.get('v.haveUserAMPIssuesAndPriorities') == true){
+            var actions = [
+                {label: 'Edit', name: 'edit_issue', 'iconName': 'utility:edit'}
+            ];
+            columns.push({type: 'action', typeAttributes: {rowActions: actions}});
         }
-
         component.set('v.columns', columns);
     },
     fetchData : function(component) {
@@ -43,5 +46,19 @@
             return reverse * ((a>b) - (b>a));
         });
         component.set('v.data', data);
+    },
+    checkUserHaveAccessRightsAMPIssuesAndPriorities: function(component) {
+        var action = component.get('c.getUserAccessRightsAMPIssuesAndPriorities');
+
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (component.isValid() && state === "SUCCESS") {
+                component.set('v.haveUserAMPIssuesAndPriorities', response.getReturnValue());
+            }
+            this.initTable(component);
+            this.fetchData(component);
+        });
+
+        $A.enqueueAction(action);
     }
 })
