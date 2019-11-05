@@ -204,7 +204,7 @@ public class PortalIftpUtilsTest {
 
 		Test.startTest();
 
-		User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
+		User u1 = [select id, Contact.AccountId from user where Email = 'test.cont3@test.com' limit 1];
 
 		Id itpAccouRoleServId = [SELECT id FROM Account_Role_Service__c WHERE Account_Role__r.Account__r.name LIKE 'ITP Account'].id;
 		Id addressID = [SELECT id FROM Airport_Detail__c WHERE Code__c LIKE 'GVX'].id;
@@ -216,7 +216,7 @@ public class PortalIftpUtilsTest {
 			List<Role_Address__c> toDelete = new List<Role_Address__c>();
 			toDelete.add(roleAddressITP);
 
-			PortalIftpUtils.InsertStationWrapper insertStationRes = PortalIftpUtils.insertStation(toDelete);
+			PortalIftpUtils.InsertStationWrapper insertStationRes = PortalIftpUtils.insertStation(u1.Contact.AccountId, toDelete);
 			System.assert(insertStationRes.succeeded);
 		}
 
