@@ -408,7 +408,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 //this.showSpinner = false;
                 this.componentLoading = false;
                 this.checkMassActionButtons();
-                
+
             });
     }
 
@@ -1131,6 +1131,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     /*  -- FILTER MODAL -- */
     applyFiltersModal() {
+        console.log('country: ' + this.selectedCountry + ' status: ' + this.selectedStatus)
         let resultList = [];
         let filteredResults = [];
         let filters = [];
@@ -1190,6 +1191,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.selectedCountry = el.label;
             }
         });
+        if (this.selectedCountry == 'All')
+            this.selectedCountry = '';
     }
 
     handleChangeStatusFilter(event) {
