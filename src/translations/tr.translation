@@ -1789,7 +1789,7 @@
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Airline_Changes_Access --></label>
+        <label>&lt;a href= &apos;/s/support-reach-us&apos;&gt; Bize Ulaşın Sayfası &lt;/a&gt; aracılığıyla hesap bilgilerinizin değişikliklerini gönderebilirsiniz.</label>
         <name>CSP_Airline_Changes_Access</name>
     </customLabels>
     <customLabels>
@@ -1813,7 +1813,7 @@
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Breadcrumb_CaseDetails_Title --></label>
+        <label>Vaka Detayları</label>
         <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
@@ -1849,7 +1849,7 @@
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Breadcrump_You_IATA --></label>
+        <label>Siz &amp; IATA</label>
         <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
@@ -1909,7 +1909,7 @@
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_CompanyAdministration_Link --></label>
+        <label>Hesap detaylarınızdaki değişiklikleri IATA akreditasyonu ve Değişiklikleri servisinden gönderebilirsiniz.</label>
         <name>CSP_CompanyAdministration_Link</name>
     </customLabels>
     <customLabels>
@@ -1941,7 +1941,7 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_CreatedOn --></label>
+        <label>Tarihinde düzenlendi</label>
         <name>CSP_CreatedOn</name>
     </customLabels>
     <customLabels>
@@ -2065,7 +2065,7 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_LastUpdate --></label>
+        <label>Son Güncelleme</label>
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
@@ -2077,7 +2077,7 @@
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Manage_Recipients --></label>
+        <label>Alıcıları Yönetin</label>
         <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
@@ -2213,7 +2213,7 @@
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Details Details page --></label>
+        <label>Alıcılar</label>
         <name>CSP_Recipients</name>
     </customLabels>
     <customLabels>
@@ -2453,11 +2453,11 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Access --></label>
+        <label>&lt; a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot; &gt;IATA akreditasyonu ve Değişiklikler&apos;e doğrudan erişim için buraya tıklayın&lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Request --></label>
+        <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt;IATA akreditasyonu ve Değişikliklerini istemek için buraya tıklayın &lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
     </customLabels>
     <customLabels>
@@ -2501,15 +2501,15 @@
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_YouAndIATA --></label>
+        <label>Siz &amp; IATA</label>
         <name>CSP_YouAndIATA</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_YouIATA_Highlights --></label>
+        <label>Sizin İçin Seçilmiş Önemli Noktalar</label>
         <name>CSP_YouIATA_Highlights</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_YouIATA_Highlights_Text --></label>
+        <label>Burada çok çeşitli IATA Hizmetlerini, havacılık endüstrisi ile ilgili yayınları, ürünleri ve kaynakları keşfedebilirsiniz. İlgi alanlarınız ve faaliyet geçmişiniz göz önüne alınarak özel olarak hazırlanmıştır.</label>
         <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
@@ -12542,7 +12542,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_Account_not_approved</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Onaylayın</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
@@ -13328,7 +13328,7 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
         <name>ISSP_Deny_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Description --></label>
+        <label>Açıklama</label>
         <name>ISSP_Description</name>
     </customLabels>
     <customLabels>
@@ -14749,7 +14749,7 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
         <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Yönetici olarak onaylayın</label>
         <name>ISSP_MakeAdmin</name>
     </customLabels>
     <customLabels>
@@ -20456,7 +20456,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Details Details page --></label>
+        <label>Ek detaylar</label>
         <name>csp_AdditionalDetails</name>
     </customLabels>
     <customLabels>
@@ -20748,7 +20748,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>csp_Query</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Details Details page --></label>
+        <label>Haberdar edilecek başka biri var mı?</label>
         <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>

@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>DataCategoryLabel_en_US__c</field>
-        <value xsi:type="xsd:string">NDClink</value>
+        <value xsi:type="xsd:string">NDC - New Distribution Capability</value>
     </values>
     <values>
         <field>DataCategoryLabel_es__c</field>
@@ -77,10 +77,6 @@
     <values>
         <field>DataCategoryName__c</field>
         <value xsi:type="xsd:string">Financial_Services</value>
-    </values>
-    <values>
-        <field>DataCategoryVisibility__c</field>
-        <value xsi:nil="true"/>
     </values>
     <values>
         <field>DataSubtopicName__c</field>

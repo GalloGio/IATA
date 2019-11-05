@@ -1183,6 +1183,9 @@
     <listViews>
         <fullName>files_by_case</fullName>
         <columns>NAME</columns>
+        <columns>File_Identifier__c</columns>
+        <columns>Full_Name_Unique__c</columns>
+        <columns>Description__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Case__c</field>
