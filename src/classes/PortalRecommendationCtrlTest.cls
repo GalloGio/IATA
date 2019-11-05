@@ -25,8 +25,6 @@ public class PortalRecommendationCtrlTest {
             Id recommendationRT = RecordTypeSingleton.getInstance().getRecordTypeId('Recommendations_Visibility__c', 'ServiceRecommendation');
             Recommendations_Visibility__c recommendation = new Recommendations_Visibility__c(
                 IsActive__c = true,
-                Category__c = acc.Category__c,
-                Sector__c = acc.Sector__c,
                 StartDate__c = Date.today().addDays(-2),
                 EndDate__c = Date.today().addDays(2),
                 RecordTypeId = recommendationRT

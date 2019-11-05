@@ -4,6 +4,8 @@ import getRecommendations from '@salesforce/apex/PortalRecommendationCtrl.getRec
 
 import CSP_YouIATA_Highlights from '@salesforce/label/c.CSP_YouIATA_Highlights';
 
+import CSPortal from '@salesforce/resourceUrl/CSPortal';
+
 export default class PortalHighlightCards extends LightningElement {
 
     //global variables
@@ -35,13 +37,34 @@ export default class PortalHighlightCards extends LightningElement {
     @track swipe = "slds-grid slds-wrap slds-align--absolute-center slds-gutters_direct-medium slds-is-relative swipeClass swipeMove";
     @track cardMove = "margin-left: 0; opacity: 1";
 
+    @track showHighlights = true;
+
     connectedCallback() {
 
         getRecommendations({ 'type': this.type }).then(result => {
             let resultsLocal = JSON.parse(JSON.stringify(result));
 
+            if (resultsLocal.length <= 0)
+                this.showHighlights = false;
+
             resultsLocal.forEach(function (highlight) {
-                highlight.imgURL = 'background-image: url("' + highlight.imgURL + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:130px;';
+                let servicesImage = CSPortal + '/Images/ServiceHighlight.JPG';
+                let productImage = CSPortal + '/Images/ProductHighlight.JPG';
+
+                let iconImage;
+
+                if (highlight.imgURL === undefined || highlight.imgURL === null) {
+                    if (highlight.actionType === 'PRODUCT') {
+                        iconImage = productImage;
+                    } else if (highlight.actionType === 'SERVICE') {
+                        iconImage = servicesImage;
+                    }
+                } else {
+                    iconImage = highlight.imgURL;
+                }
+                
+                highlight.imgURL = 'background-image: url("' + iconImage + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:130px;';
+
             });
 
             this.highlightList = resultsLocal;
