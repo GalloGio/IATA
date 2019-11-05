@@ -118,31 +118,45 @@
                                         {label.manageUserslb}
                                     </div>
                                     <div class="slds-col slds-grid slds-wrap slds-p-top_medium slds-size_1-of-1">
-                                        <div
-                                            class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-top_medium bottomLightGrayBorder searchContainer">
+                                        <div class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-top_medium bottomLightGrayBorder searchContainer">
                                             <img src={searchIconUrl} height="24" width="24" />
                                                 <lightning-input name="newRecipientTextInput" placeholder={label.searchContactPlaceholder}
                                                 class="hideInputLabel borderlessInput grayInputPlaceholder"
                                                 value={searchText} onchange={searchRecord}>
                                             </lightning-input>
+                                            
                                         </div>
-
-                                        
-                                        <div if:true={canAddUsers} class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
-                                            <lightning-button variant="brand" label={label.addNewUser}
-                                                title={label.addNewUser} class="slds-float_right containedButtonSlim"
+                                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-grid slds-wrap">
+                                                <button class="slds-button_icon slds-button__icon_right filterButton" onclick={openServicesFilterModal}>
+                                                        {label.CSP_Filter}<img class="slds-float_right filterIcon" src={filterIconUrl}>
+                                                </button>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-grid slds-wrap slds-grid_align-end">
+                                            <div if:true={canAddUsers}>
+                                                <lightning-button if:true={showMassApprove} variant="brand" label={label.grantAccessTitle}
+                                                title={label.grantAccessTitle} class="slds-col containedButtonSlim slds-m-left_medium slds-small-size_1-of-2 slds-medium-size_3-of-12 slds-large-size_1-of-5"
+                                                onclick={handleMassApproveAccess}>
+                                                </lightning-button>
+                                                <lightning-button if:true={showMassDeny} variant="brand" label={label.denyAccessTitle}
+                                                title={label.denyAccessTitle} class="slds-col containedButtonSlim slds-m-left_medium slds-small-size_1-of-2 slds-medium-size_3-of-12 slds-large-size_1-of-5"
+                                                onclick={handleMassDenyAccess}>
+                                                </lightning-button>
+                                                <lightning-button variant="brand" label={label.addNewUser}
+                                                title={label.addNewUser} class="slds-col containedButtonSlim slds-m-left_medium slds-small-size_1-of-2 slds-medium-size_3-of-12 slds-large-size_1-of-5"
                                                 onclick={toggleAddUserModal}>
                                                 </lightning-button>
                                             </div>
+                                        </div>
 
                                     </div>
                                     <div  if:false={noResultsFound} class="slds-col slds-p-top_medium slds-size_1-of-1 text-gray">
                                         <lightning-datatable data={currentContactPage}
                                                              columns={contactTableColums}
-                                                             hide-checkbox-column key-field="Id"
+                                                             key-field="Id"
                                                              onrowaction={handleRowAction}
                                                              is-loading={loadingContacts}
                                                              resize-column-disabled=true
+                                                             onrowselection={onRowSelection}
                                             class="serviceContactList">
                                         </lightning-datatable>
                                         <!-- PAGINATION -->
@@ -382,6 +396,53 @@
             </div>
         </div>
     </div>
+
+    <!-- FILTER MODAL -->
+    <div if:true={viewServicesFiltersModal} class="modal">
+            <div class="customPopupInteriorHalfScreenCentered threeQuartersWidth" style="width: 30%;">
+                <!-- Popup Header -->
+            <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                    <span>{label.CSP_Filter}</span>
+                </div>
+    
+                <!-- Popup Body -->
+                <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                    <div class="slds-grid slds-wrap">
+                    <lightning-layout multiple-rows  class="slds-p-horizontal_medium" pull-to-boundary="medium" horizontal-align="spread" style="width: 100%;">
+                        <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium" if:true={airlineUser}>
+                            <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow">
+                                <lightning-combobox name="countryComboBox" label={label.CSP_Search_Case_Country} value={selectedCountryValue} options={optionsCountry} style="margin-bottom:5px;" onchange={handleChangeCountryFilter}></lightning-combobox>
+                            </lightning-layout-item>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium" if:false={airlineUser}>
+                            <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow">
+                                <lightning-combobox name="iataCodeComboBox" label={label.ISSP_IATA_Location_Code} style="margin-bottom:5px;" onchange={handleChangeIataCodeFilter}></lightning-combobox>
+                            </lightning-layout-item>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium">
+                                <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow">
+                                        <lightning-combobox name="statusComboBox" label={label.Status} placeholder=" " value={selectedStatus} options={optionsStatus} style="margin-bottom:5px;" onchange={handleChangeStatusFilter}></lightning-combobox>
+                                </lightning-layout-item>
+                        </div>
+                    </lightning-layout>
+                </div>
+                </div>
+    
+                <!-- Popup Footer -->
+                <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                    <div class="slds-align_absolute-center">
+                        <lightning-button class="blueCustomButtonLink slds-p-right_xx-large" label={label.CSP_RemoveAllFilters}
+                                          variant="neutral" onclick={handleResetFilters}>
+                        </lightning-button>
+                        <lightning-button label={label.CSP_Apply} variant="brand"
+                                          onclick={applyFiltersModal}>
+                        </lightning-button>
+    
+                    </div>
+                </div>
+            </div>
+    
+        </div>
 
     <!-- REQUEST/ENABLE NEW SERVICE MODAL -->
     <c-portal-services-request-service-modal service-name={serviceName} service-record={serviceRecord} display-confirm={showConfirm}
