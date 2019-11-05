@@ -15,6 +15,7 @@ public with sharing class PortalRecommendationCtrl {
             'Recommendation_Visibility__r.RecommendationTitle__c',
             'Recommendation_Visibility__r.ActionButtonLink__c',
             'Recommendation_Visibility__r.InformationButtonLink__c',
+            'Recommendation_Visibility__r.RecordTypeId',
             'Recommendation_Visibility__r.RecordType.Name',
             'Recommendation_Visibility__r.Important__c'
 		};
@@ -65,12 +66,12 @@ public with sharing class PortalRecommendationCtrl {
                 rec.Recommendation_Visibility__r.Icon_URL__c,
                 rec.Recommendation_Visibility__r.RecordType.Name,
                 rec.Recommendation_Visibility__r.RecommendationTitle__c,
-                (!String.isBlank(rec.Recommendation_Visibility__r.Product_Description__c) ? rec.Recommendation_Visibility__r.Product_Description__c: rec.Recommendation_Visibility__r.Service_Description__c),
+                (rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? rec.Recommendation_Visibility__r.Product_Description__c: rec.Recommendation_Visibility__r.Service_Description__c),
                 learnMoreLabel,
                 rec.Recommendation_Visibility__r.InformationButtonLink__c,
-                (!String.isBlank(rec.Recommendation_Visibility__r.Product_Description__c) ? buyOnlineLabel : requestServiceLabel),
+                (rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? buyOnlineLabel : requestServiceLabel),
                 rec.Recommendation_Visibility__r.ActionButtonLink__c,
-                (!String.isBlank(rec.Recommendation_Visibility__r.Product_Description__c) ? 'PRODUCT' : 'SERVICE')
+                (rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? 'PRODUCT' : 'SERVICE')
                 ));
         }
 
