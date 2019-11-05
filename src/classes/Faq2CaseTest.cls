@@ -1,5 +1,15 @@
 @isTest
-private class Faq2CaseTest {
+public class Faq2CaseTest {
+
+	public static string fullFAQVisibilityPermissionsetId{
+		get{
+			if(Faq2CaseTest.fullFAQVisibilityPermissionsetId ==null){
+				Faq2CaseTest.fullFAQVisibilityPermissionsetId=[select id from permissionset where name ='All_DataCategories_Visible' limit 1].get(0).id;
+			}
+			return Faq2CaseTest.fullFAQVisibilityPermissionsetId;
+		}
+		set;
+	}
 
     @testSetup static void loadData() {
         list<ISSP_Case_Fields__c> listCaseFields = new list<ISSP_Case_Fields__c>{
@@ -227,12 +237,12 @@ private class Faq2CaseTest {
         con.Email = 'Test@test11.com';
         system.debug('rrrrrrrrrr  ' + con.Owner.UserRoleId);
         insert con;
-        System.debug('con Id: ' + con.Id);
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
+        Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);		
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
         con.OwnerId = newUser.Id;
         update con;
-        Test.startTest();
         System.runAs(newUser)
         {
             
@@ -280,7 +290,6 @@ private class Faq2CaseTest {
 
             ctrl.CheckCountryMatch('ES','ES');
         }
-        Test.stopTest();
     }
 
     @isTest
@@ -310,12 +319,12 @@ private class Faq2CaseTest {
         con.AccountId= child.Id;
         con.Email = 'Test@test11.com';
         insert con;
-        System.debug('con Id: ' + con.Id);
-         User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
+        Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);		
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
         con.OwnerId = newUser.Id;
         update con;
-        Test.startTest();
         System.runAs(newUser)
         {
             vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
@@ -344,7 +353,6 @@ private class Faq2CaseTest {
             ctrl.isGSAOnly = true;
             ctrl.saveAttach();
         }
-        Test.stopTest();
     }
 
     @isTest
@@ -370,7 +378,10 @@ private class Faq2CaseTest {
         con.Email = 'testxxaasddasdasd@test.com';
         con.AccountId= headQuarter.Id;
         insert con;
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);		
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
 
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1');
         insert country;
@@ -484,12 +495,13 @@ private class Faq2CaseTest {
         con.AccountId= child.Id;
         con.Email = 'Test@test11.com';
         insert con;
-        System.debug('con Id: ' + con.Id);
-         User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
+        Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);		
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
         con.OwnerId = newUser.Id;
         update con;
-        Test.startTest();
+       
         System.runAs(newUser)
         {
           vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
@@ -506,7 +518,7 @@ private class Faq2CaseTest {
           controller.refreshSubTopicPickList();
           keg = controller.countryList;
         }
-        Test.stopTest();
+       
     }
 
     @isTest
@@ -532,7 +544,7 @@ private class Faq2CaseTest {
         con.Email = 'Test@test11.com';
         insert con;
         System.debug('con Id: ' + con.Id);
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
@@ -575,12 +587,13 @@ private class Faq2CaseTest {
         con.AccountId= child.Id;
         con.Email = 'Test@test11.com';
         insert con;
-        System.debug('con Id: ' + con.Id);
-         User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
+       Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
         con.OwnerId = newUser.Id;
         update con;
-        Test.startTest();
+       
         System.runAs(newUser)
         {
           vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
@@ -596,7 +609,6 @@ private class Faq2CaseTest {
           controller.refreshSubTopicPickList();
           keg = controller.countryList;
         }
-        Test.stopTest();
     }
 
     @isTest
@@ -621,12 +633,12 @@ private class Faq2CaseTest {
         con.AccountId= child.Id;
         con.Email = 'Test@test11.com';
         insert con;
-        System.debug('con Id: ' + con.Id);
-         User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
+       Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
         con.OwnerId = newUser.Id;
         update con;
-        Test.startTest();
         System.runAs(newUser)
         {
           vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
@@ -642,7 +654,6 @@ private class Faq2CaseTest {
           controller.refreshSubTopicPickList();
           keg = controller.countryList;
         }
-        Test.stopTest();
     }
 
     @isTest
@@ -675,12 +686,12 @@ private class Faq2CaseTest {
         con.AccountId= child.Id;
         con.Email = 'Test@test11.com';
         insert con;
-        System.debug('con Id: ' + con.Id);
-         User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
+       Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);		
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
         con.OwnerId = newUser.Id;
         update con;
-        Test.startTest();
         System.runAs(newUser)
         {
           vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
@@ -711,7 +722,6 @@ private class Faq2CaseTest {
           test = controller.region;
           
         }
-        Test.stopTest();
     }
 
     @isTest
@@ -733,12 +743,12 @@ private class Faq2CaseTest {
 		con.Email = 'Test@test11.com';
 		con.CNS_Contact__c = true;
         insert con;
-        System.debug('con Id: ' + con.Id);
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
+       Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
         con.OwnerId = newUser.Id;
         update con;
-        Test.startTest();
         System.runAs(newUser)
         {
 		  vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
@@ -776,7 +786,6 @@ private class Faq2CaseTest {
           setCCOthersEmail(controller,'Test@test11.com');
           controller.save();
 		}
-		Test.stopTest();
     }
 
     @isTest
@@ -798,12 +807,12 @@ private class Faq2CaseTest {
         con.Email = 'Test@test11.com';
         con.CNS_Contact__c = true;
         insert con;
-        System.debug('con Id: ' + con.Id);
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
+       Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
         con.OwnerId = newUser.Id;
         update con;
-        Test.startTest();
         System.runAs(newUser)
         {
             vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
@@ -841,7 +850,6 @@ private class Faq2CaseTest {
             setCCOthersEmail(controller,'Test@test11.com');
             controller.saveAttach();
         }
-        Test.stopTest();
     }
     
     @isTest
@@ -861,7 +869,7 @@ private class Faq2CaseTest {
         con.CNS_Contact__c = true;
         insert con;
         System.debug('con Id: ' + con.Id);
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
@@ -1003,7 +1011,10 @@ private class Faq2CaseTest {
         system.debug('con zzzzzz ' + con);
         
         //User
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
         con.OwnerId = newUser.Id;
         update con;
         system.debug('newUser zzzzzz ' + newUser);
@@ -1013,7 +1024,6 @@ private class Faq2CaseTest {
         
         
         //Run Test
-        Test.StartTest();
         System.runAs(newUser){
             
             vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
@@ -1074,7 +1084,6 @@ private class Faq2CaseTest {
             
             controller.cancel();
         }
-        Test.StopTest();
     }
     
 
@@ -1136,7 +1145,10 @@ private class Faq2CaseTest {
         system.debug('con zzzzzz ' + con);
         
         //User
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
         con.OwnerId = newUser.Id;
         update con;
         system.debug('newUser zzzzzz ' + newUser);
@@ -1220,7 +1232,10 @@ private class Faq2CaseTest {
         system.debug('con zzzzzz ' + con);
         
         //User
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+       Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
         con.OwnerId = newUser.Id;
         update con;
         system.debug('newUser zzzzzz ' + newUser);
@@ -1234,10 +1249,9 @@ private class Faq2CaseTest {
         RestContext.response= res;
 
         System.runAs(newUser){
-            Test.startTest();
                 vfISSP_FAQ2Case.CustomerSupporWrapperPost customerSupportInfo = vfISSP_FAQ2Case.doPost('0', 'CGO_Accreditations_Fees__c', 'AE', '', 'This is a test subject',
                                                                                     'This is a test description', 'Phone [NewGenAPP - Android]');
-            Test.stopTest();
+           
         }
     }
     
@@ -1278,7 +1292,7 @@ private class Faq2CaseTest {
         con.Email = 'testxxaasddasdasda@test.com';
         con.AccountId= headQuarter.Id;
         insert con;
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
 
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1');
         insert country;
@@ -1330,10 +1344,12 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+       Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
 
         System.runAs(newUser){
-            Test.startTest();
             PageReference pageref = Page.ISSP_FAQ2Case;
             pageref.getParameters().put('type', 'AirlineChargesUpdate');
             Test.setCurrentPage(pageref);
@@ -1341,7 +1357,6 @@ private class Faq2CaseTest {
             controller.pageLoad();
             System.debug('isToShowFAQs: ' + controller.isToShowFAQs);
             System.assertEquals(ISSP_CurrencyCenterUtil.FaqSubtopic_AirlineChargesUpdate, controller.subtopic);
-            Test.stopTest();
         }
     }
 
@@ -1362,10 +1377,12 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
 
         System.runAs(newUser){
-            Test.startTest();
             PageReference pageref = Page.ISSP_FAQ2Case;
             pageref.getParameters().put('type', 'CurrencyRepatriationIssues');
             Test.setCurrentPage(pageref);
@@ -1373,7 +1390,6 @@ private class Faq2CaseTest {
             controller.pageLoad();
             System.debug('isToShowFAQs: ' + controller.isToShowFAQs);
             System.assertEquals(ISSP_CurrencyCenterUtil.FaqSubtopic_CurrencyRepatriation, controller.subtopic);
-            Test.stopTest();
         }
     }
 
@@ -1394,10 +1410,12 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
 
         System.runAs(newUser){
-            Test.startTest();
             PageReference pageref = Page.ISSP_FAQ2Case;
             pageref.getParameters().put('type', 'RequestSurveyUpdate');
             Test.setCurrentPage(pageref);
@@ -1405,7 +1423,6 @@ private class Faq2CaseTest {
             controller.pageLoad();
             System.debug('isToShowFAQs: ' + controller.isToShowFAQs);
             System.assertEquals(ISSP_CurrencyCenterUtil.FaqSubtopic_RequestSurveyUpdate, controller.subtopic);
-            Test.stopTest();
         }
     }
 
@@ -1426,14 +1443,17 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
 
         System.runAs(newUser){
             FAQ__kav article = new FAQ__kav(
                     Title = 'test apex',
                     Summary = 'test from apex',
                     Answer__c = 'test',
-                    URLName = 'test'
+                    URLName = 'ThisIsATest'
             );
             insert article;
             System.debug('article: ' + article);
@@ -1470,7 +1490,10 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
 
         System.runAs(newUser){
             vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
@@ -1504,7 +1527,7 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
 
         Portal_Applications__c papp = new Portal_Applications__c();
         papp.Application_URL__c = '/ISSP_CurrencyCenterHome';
@@ -1549,13 +1572,16 @@ private class Faq2CaseTest {
         con.AccountId= headQuarter.Id;
         insert con;
 
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        Test.startTest();
+        User newUser =ISSP_ObjectFactory.createPortalUser(con);
+		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
 
         System.runAs(newUser){
             vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
 
             ctrl.pageLoad();
-
+			
             ctrl.topic = '1';
             clsDataCategory selectDataCategory = ctrl.DataCategoryContainer.lst_DataCategories[1];
             ctrl.refreshTopicPickList();
@@ -1576,4 +1602,14 @@ private class Faq2CaseTest {
             PageReference pr = ctrl.create();
         }
     }
+
+	 
+	@future
+	public static void assignPermissionSet(Id userid,String permissionsetId){
+		PermissionSetAssignment ps = new PermissionSetAssignment();
+		ps.AssigneeId =userid;
+		ps.PermissionSetId =  permissionsetId;
+
+		insert ps;
+	}
  }
