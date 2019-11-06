@@ -39,6 +39,8 @@ export default class PortalHomeCalendar extends LightningElement {
     @track lstRecipients = [];
     @track newRecipient = '';
     @track haveRecipients = false;
+    @api isExpired = false;
+    @track expiredCard;
     @track CaseStatusClass = '';
     @track surveyLink;
 
@@ -71,9 +73,9 @@ export default class PortalHomeCalendar extends LightningElement {
 		CSP_Manage_Recipients,
 		CSP_EmailAddress
     }
- //Icons
-    infoIcon = CSP_PortalPath + 'CSPortal/Images/Icons/info.svg';
-    
+
+    //Icons
+    infoIcon = CSP_PortalPath + 'CSPortal/Images/Icons/info.svg';   
 
     connectedCallback() {
         //get the parameters for this page
