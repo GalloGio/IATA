@@ -65,7 +65,7 @@ export default class PortalHomeCalendar extends LightningElement {
 		CSP_Recipients,
 		ISSP_CaseNumber,
 		ISSP_Subject,
-        	CSP_AddOrRemove_Recipients,
+        CSP_AddOrRemove_Recipients,
 		ISSP_Case_Closed_More_Than_2_Months,
 		CSP_Status,
 		CSP_CreatedOn,
@@ -75,10 +75,7 @@ export default class PortalHomeCalendar extends LightningElement {
     }
 
     //Icons
-    infoIcon = CSP_PortalPath + 'CSPortal/Images/Icons/info.svg';
-    
-        ISSP_Case_Closed_More_Than_2_Months,
-    }
+    infoIcon = CSP_PortalPath + 'CSPortal/Images/Icons/info.svg';   
 
     connectedCallback() {
         //get the parameters for this page
