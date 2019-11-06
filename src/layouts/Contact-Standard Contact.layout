@@ -6,9 +6,9 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>SAP_Airline_Request</customButtons>
     <customButtons>SIS_Airline_Request</customButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
+    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
     <layoutSections>
@@ -318,6 +318,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Distribution_Risk_Expert__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Invoicing_Contact__c</field>
             </layoutItems>
             <layoutItems>
@@ -573,14 +577,14 @@
             <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>EnablePartnerPortalUser</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Contact.Reset_Password</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>EnablePartnerPortalUser</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>1</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Contact.Log_Phone_case_lContact_lightning</actionName>
@@ -1014,7 +1018,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Authorized_Signatories_Package__c.NAME</fields>
-        <fields>Authorized_Signatories_Package__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>Authorized_Signatory__c.Contact__c</relatedList>
     </relatedLists>

@@ -1,7 +1,5 @@
 public with sharing class ISSP_AvailableServices{
 
-    public static final string WILDCARD = 'ALL';
-
     public string selectedList {get;set;}
     public List<ServiceWrapper> ServiceList;
     public Map<String,ISSPServiceListView__c> ServiceListViewMap {get;set;} 
@@ -444,7 +442,7 @@ public with sharing class ISSP_AvailableServices{
                 list<Portal_Applications__c> listApps = Database.query(queryString);
 
                 // Second search based in Custom Matadata for all those remaining apps
-                list<String> listValidAppNames = getVisibleApplicationNames(currentPortalUser.contact.account);
+                list<String> listValidAppNames = PortalApplicationSettingHelper.getVisibleApplicationNames(currentPortalUser.contact.account);
                 queryString = 'SELECT ' + query
                     + ' FROM Portal_Applications__c'
                     + ' WHERE Id NOT IN :listApps'
@@ -462,30 +460,6 @@ public with sharing class ISSP_AvailableServices{
             }
             return setCon;
         }set;
-    }
-
-    /**
-        Returns a list of all visible application names for the input account
-        according to the Custom Metadata Portal_Application_Setting__mdt
-    **/
-    @TestVisible
-    private list<String> getVisibleApplicationNames(Account account) {
-        // Get the list of services visible for thi input account based on the Custom metadata Portal_Application_Setting__mdt
-        list<String> listVisibleApplicationNames = new list<String>();
-        if (account==null) return listVisibleApplicationNames;
-        for (Portal_Application_Setting__mdt setting: [
-                SELECT id, MasterLabel,
-                    (SELECT Sector__c, Category__c
-                    FROM Portal_Application_Visibilities__r
-                    WHERE is_Visible__c = true
-                    AND Sector__c = :account.Sector__c
-                    AND Category__c IN (:account.Category__c,:WILDCARD))
-                FROM Portal_Application_Setting__mdt]) {
-            if (setting.Portal_Application_Visibilities__r.size()>0) {
-                listVisibleApplicationNames.add(setting.MasterLabel);
-            }
-        }
-        return listVisibleApplicationNames;
     }
 
     public class ServiceWrapper {

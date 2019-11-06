@@ -119,6 +119,8 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
     }
     onchangeSearchInput(event){
         this.searchText = event.target.value;
+        
+        this.showCross = this.searchText.length > 0;
 
         // Clear the timeout if it has already been set.
         // This will prevent the previous task from executing
@@ -177,6 +179,12 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
             this.resultsClass = '';
         }
         
+    }
+
+    removeTextSearch() {
+        this.filteringObject.searchText = '';
+        this.searchText = '';
+        this.showCross = false;
     }
 
 }
