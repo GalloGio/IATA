@@ -67,6 +67,14 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Aggregator_Website__c</fullName>
+        <externalId>false</externalId>
+        <label>Aggregator Website</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>Company_Type__c</fullName>
         <description>Indicates if the company is an airline, a seller or an aggregator.</description>
         <externalId>false</externalId>
@@ -729,6 +737,14 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Seller_Website__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller Website</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
     </fields>
     <fields>
         <fullName>Submittable_for_Approval__c</fullName>
