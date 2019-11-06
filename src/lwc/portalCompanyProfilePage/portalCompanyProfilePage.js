@@ -141,4 +141,10 @@ export default class PortalCompanyProfilePageTest extends LightningElement {
     get tab3Active() { return this.lstTabs[3] != null && this.lstTabs[3].active; }
     get tab4Active() { return this.lstTabs[4] != null && this.lstTabs[4].active; }
 
+    reloadData(){
+        if(this.tab2Active){
+            //performs the reload in case the Contacts tab is clicked--- Api function exposed on the c-portal-company-profile-contacts-list component
+            this.template.querySelector('c-portal-company-profile-contacts-list').reloadData();
+        }
+    }
 }

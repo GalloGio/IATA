@@ -6,3 +6,7 @@
 .fullWidth{
     width:100%;
 }
+
+.rotateIcon {
+    transform: rotate(45deg);
+}

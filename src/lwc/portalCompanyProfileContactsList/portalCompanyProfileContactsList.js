@@ -34,6 +34,14 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         ISSP_Download
     };
 
+    @api 
+    reloadData(){
+        //reloads Data when the Contacts tab (active) is clicked
+        if(this.contactsFilteringObject.searchInput !== ''){
+            this.removeTextSearch();
+        }
+    }
+
     @track contactsLoaded = false;
 
     @track contactsFilteringObject = {
@@ -42,6 +50,8 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         sortDirection : 'ASC',
         firstLetter : 'All'
     };
+
+ 
 
     /*@track paginationObject = {
         totalItems : 15,
@@ -381,4 +391,11 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         downloadElement.click();
         this.contactsLoaded = true;
     }    
+
+    removeTextSearch() {
+        this.contactsFilteringObject.searchInput = '';
+        this.showCross = false;
+        this.contactsLoaded = false;
+        this.retrieveContactsList(1);
+    }
 }
