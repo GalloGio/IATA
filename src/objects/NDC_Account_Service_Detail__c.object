@@ -748,6 +748,46 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+    <fields>
+        <fullName>Target_Customers__c</fullName>
+        <externalId>false</externalId>
+        <label>Target Customers</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Metasearch</fullName>
+                    <default>false</default>
+                    <label>Metasearch</label>
+                </value>
+                <value>
+                    <fullName>Online Booking Tool</fullName>
+                    <default>false</default>
+                    <label>Online Booking Tool</label>
+                </value>
+                <value>
+                    <fullName>Online Travel Agency</fullName>
+                    <default>false</default>
+                    <label>Online Travel Agency</label>
+                </value>
+                <value>
+                    <fullName>Travel Agent</fullName>
+                    <default>false</default>
+                    <label>Travel Agent</label>
+                </value>
+                <value>
+                    <fullName>Travel Management Company</fullName>
+                    <default>false</default>
+                    <label>Travel Management Company</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
     <label>NDC Account Service Detail</label>
     <listViews>
         <fullName>All</fullName>
