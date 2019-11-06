@@ -1,4 +1,15 @@
 <template>
+
+        <template if:true={isExpired}>
+            <!-- slds-m-vertical_small -->
+            <article class="slds-card expiredCard"> 
+                    <div style="height:40px;">
+                            <!-- <p class="slds-p-horizontal_small text-xxxsmall">{labels.ISSP_Case_Closed_More_Than_2_Months}</p> -->
+                        <p class="slds-p-horizontal_small caseClosed2W"><img src={infoIcon}> <span>{labels.ISSP_Case_Closed_More_Than_2_Months}</span></p>
+                    </div>
+            </article>
+        </template>
+
     <div class="customCard">
         <template if:true={loading}>
             <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>

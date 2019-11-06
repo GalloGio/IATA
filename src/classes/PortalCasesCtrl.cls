@@ -669,7 +669,7 @@ public with sharing class PortalCasesCtrl {
                         Subtopic__c, Region__c, Reason1__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
                         Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,
                         RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
-                        Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone
+                        Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone,RecordType.Id,RecordType.DeveloperName
                         FROM Case 
                         WHERE Id = :caseId];
 
@@ -677,6 +677,31 @@ public with sharing class PortalCasesCtrl {
             caseAux = buildSubject(caseAux);
         }
         return caseAux;
+    }
+
+    /**
+        Returns true if the input case has an specific RecordType
+        and is closed for more than 2 weeks
+    **/
+    @AuraEnabled
+    public static Boolean getHideForClosedCases(String caseId) {
+        set<String> validRecordtypes = new set<String>{'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 
+        'CasesAmericas', 'ExternalCasesIDFSglobal', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs'};
+        Case newCase = getCaseById(caseId);
+        boolean isMSO = isMSOcase(newCase);
+
+        List<Case> cases = 
+        [SELECT Id,RecordType.Id 
+        FROM Case 
+        WHERE 
+        RecordType.Id = :newCase.RecordType.Id
+        AND (RecordType.DeveloperName IN :validRecordtypes)];
+        
+        return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-14)) || isMSO );
+    }
+
+    private Static boolean isMSOcase(Case newCase){
+        return (newCase.RecordType.DeveloperName == 'OSCAR_Communication' && (newCase.Reason1__c == 'GSA / MSO / Handling Agent' || newCase.Subject.startsWith('MSO code ') ));
     }
 
     private Static Case buildSubject(Case caseAux){

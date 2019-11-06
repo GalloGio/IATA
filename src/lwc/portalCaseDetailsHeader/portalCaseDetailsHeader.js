@@ -1,7 +1,8 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track,api } from 'lwc';
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import removeRecipient from '@salesforce/apex/PortalCasesCtrl.removeRecipient';
 import addNewRecipient from '@salesforce/apex/PortalCasesCtrl.addNewRecipient';
+import getHideForClosedCases from '@salesforce/apex/PortalCasesCtrl.getHideForClosedCases';
 import getOscarProgress from '@salesforce/apex/portal_OscarProgressBar.getOscarProgress';
 import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
 
@@ -21,6 +22,9 @@ import CSP_Status from '@salesforce/label/c.CSP_Status';
 import CSP_CreatedOn from '@salesforce/label/c.CSP_CreatedOn';
 import CSP_LastUpdate from '@salesforce/label/c.CSP_LastUpdate';
 import CSP_Manage_Recipients from '@salesforce/label/c.CSP_Manage_Recipients';
+import ISSP_Case_Closed_More_Than_2_Months from '@salesforce/label/c.ISSP_Case_Closed_More_Than_2_Months';
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 export default class PortalHomeCalendar extends LightningElement {
 
     @track loading = true;
@@ -31,6 +35,8 @@ export default class PortalHomeCalendar extends LightningElement {
     @track lstRecipients;
     @track newRecipient = '';
     @track haveRecipients = false;
+    @api isExpired = false;
+    @track expiredCard;
     @track CaseStatusClass = '';
     @track surveyLink;
 
@@ -40,6 +46,11 @@ export default class PortalHomeCalendar extends LightningElement {
     @track displayOscarProgressBar = false;
     @track progressStatusList = [];
     
+    //Icons
+    infoIcon = CSP_PortalPath + 'CSPortal/Images/Icons/info.svg';
+    
+        ISSP_Case_Closed_More_Than_2_Months,
+
     @track labels = {
         ISSP_Survey,
         Open,
@@ -96,12 +107,8 @@ export default class PortalHomeCalendar extends LightningElement {
                 this.haveRecipients = false;
             }
 
-            console.log('results.Status: ' , results.Status);
-
             this.loading = false;
             this.pendingCustomerCase = results.Status === 'Pending customer';
-
-            this.CaseStatusClass = results.Status.replace(/\s/g, '').replace(/_|-|\./g, '');
 
             console.log('pendingCustomerCase: ' , this.pendingCustomerCase);
         })
@@ -110,6 +117,20 @@ export default class PortalHomeCalendar extends LightningElement {
             this.loading = false;
         });
         
+        getHideForClosedCases({ caseId : this.pageParams.caseId })
+        .then(results => {
+            this.isExpired = results; //Disable
+
+            const selectedEvent = new CustomEvent("sendexpired", {
+                detail: this.isExpired
+              });
+
+            // Dispatches the event.
+            this.dispatchEvent(selectedEvent);
+        })
+        .catch(e => {
+            console.log(e);
+        });
     }
 
     getProgressBarStatus() {
