@@ -4,6 +4,9 @@ import removeRecipient from '@salesforce/apex/PortalCasesCtrl.removeRecipient';
 import addNewRecipient from '@salesforce/apex/PortalCasesCtrl.addNewRecipient';
 import getOscarProgress from '@salesforce/apex/portal_OscarProgressBar.getOscarProgress';
 import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
+import searchContacts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.searchContacts';
+import searchAccounts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.searchAccounts';
+import getProfile from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.getProfile';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
