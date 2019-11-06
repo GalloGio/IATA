@@ -222,7 +222,7 @@
                                                     Loading Countries...
                                                 </div>
                                                 <div id="countryListId" class="col-sm-10">
-                                                    <apex:selectList id="countryconcerned" Label="BSP / CASS Country" styleClass="country-select" style="width:200px" value="{!newCase.IFAP_Country_ISO__c}" onchange="refreshCASSAirlineList(this.value);" required="true" size="1">
+                                                    <apex:selectList id="countryconcerned" Label="BSP / CASS Country" styleClass="country-select" style="width:200px" value="{!newCase.IFAP_Country_ISO__c}" onchange="refreshCASSAirlineList(this.value);" required="{!!isPassAirline}" size="1">
                                                         <apex:selectOptions value="{!items}"/>
                                                     </apex:selectList>
                                                 </div>
