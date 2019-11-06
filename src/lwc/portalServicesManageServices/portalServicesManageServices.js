@@ -170,7 +170,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track currentPageNumber = 1;
 
     searchMode = false;
-
+    @track searchText='';
 
     searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
@@ -232,7 +232,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     selectedCountryValue = '';
     selectedStatus = "";
     selectedIataCode = "";
-    searchKey = '';
+    @track searchKey = '';
     globalResults = [];
     @track optionsCountry = [];
     @track optionsStatus = [
@@ -547,6 +547,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     //search Records
     searchRecord(event) {
         let searchKey = event.target.value.toLowerCase().trim();
+        this.searchText = event.target.value;
         this.searchKey = searchKey;
         if (searchKey !== '' && searchKey.length >= 3) {
             //enters search mode
@@ -1131,7 +1132,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     /*  -- FILTER MODAL -- */
     applyFiltersModal() {
-        console.log('country: ' + this.selectedCountry + ' status: ' + this.selectedStatus)
         let resultList = [];
         let filteredResults = [];
         let filters = [];
@@ -1175,10 +1175,14 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.selectedStatus = "";
         this.selectedCountry = "";
         this.selectedIataCode = "";
-        this.resetComponent();
-        this.searchText = '';
+        this.searchText = "";
+        this.searchKey="";
         this.filtered = false;
         this.searchMode = false;
+        this.contactList = this.globalResults;
+        this.processContacList(this.globalResults, 1);
+        this.totalNrPages = Math.ceil(this.globalResults.length / this.PAGE_SIZE);
+        this.generatePageList();
         //close modal
         this.closeServicesFilterModal();
     }
