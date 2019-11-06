@@ -223,7 +223,10 @@ public without sharing class RegistrationComunicationsController {
         String url = getPortalProfileUrl();
 
         Map<String,Messaging.SingleEmailMessage> templatesByLanguage = new Map<String,Messaging.SingleEmailMessage>();
-        Integer maxLanguages = (Integer) [SELECT COUNT_DISTINCT(LanguageLocaleKey) FROM User][0].get('expr0');
+        
+        Schema.DescribeFieldResult fieldResult = User.LanguageLocaleKey.getDescribe();
+        List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+        Integer maxLanguages = ple.size();
 
         for(User user :users){
             if(!templatesByLanguage.containsKey(user.LanguageLocaleKey)){
