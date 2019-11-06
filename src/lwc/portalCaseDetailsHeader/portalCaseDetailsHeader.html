@@ -79,7 +79,7 @@
 
                 </div>
                 <div
-                    class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_7-of-12 slds-p-around_medium">
+                    class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_7-of-12 slds-p-around_medium slds-text-align_right">
                     <div style="float: right; max-width: 100%;">
                         <div if:true={haveRecipients}>
                             <span class="recipients-label">{labels.CSP_Recipients}</span>
@@ -88,7 +88,8 @@
                             </div>
                             <lightning-button variant="base" label={labels.CSP_Manage_Recipients}
                                 class="slds-m-horizontal_medium recipients-label text-blue button_no_margin"
-                                onclick={openManageRecipientsPopup}>
+                                onclick={openManageRecipientsPopup}
+								disabled={isExpired}>
                             </lightning-button>
                         </div>
                         <div if:false={haveRecipients}>

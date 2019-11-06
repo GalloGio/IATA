@@ -1,7 +1,7 @@
-import { LightningElement,api } from 'lwc';
+import { LightningElement,track } from 'lwc';
 
 export default class PortalCaseDetailsPage extends LightningElement {
-     @api isExpired;
+     @track isExpired;
 
     handleExpired(event) {
         this.isExpired = event.detail;
