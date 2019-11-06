@@ -566,7 +566,7 @@
                 <value>
                     <fullName>Not Applicable</fullName>
                     <default>false</default>
-                    <label>No Servicing</label>
+                    <label>Not Applicable</label>
                 </value>
                 <value>
                     <fullName>Voluntary</fullName>
