@@ -12,8 +12,7 @@ private class FinancialSecurityHandlerTest {
         insert a;  
 
         Contact co1 = new Contact(AccountId = a.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, Financial_Assessment_Contact__c = true, User_Portal_Status__c = 'Approved Admin');
-        Contact co2 = new Contact(AccountId = a.id, Firstname = 'teste2', Lastname='test2', Phone = '911111112', MobilePhone = '911111112', Email = 'test2@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved Admin');
-        insert new List<Contact> {co1,co2};
+        insert co1;
 
         // Create a new Financial Institution
         Financial_Institution__c fi = new Financial_Institution__c(Name = 'Test FI', Region__c = 'Americas', Country__c = 'Canada', Institution_Type__c = 'Bank');
