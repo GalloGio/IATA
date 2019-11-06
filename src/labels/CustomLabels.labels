@@ -1827,7 +1827,7 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Multicountry_Submit_Message_New_AE</shortDescription>
-        <value>It is required to add at least one Associate Entity in a country other than your Head Entity in order to submit your GoGlobal aplication to IATA. Your Head Entity must own at least 50% of any such Associate Entity. You can also include new Associate Entities in the same country as your Head Entity with your application.</value>
+        <value>It is required to add at least one Associate Entity in a country other than your Head Entity in order to submit your GoGlobal aplication to IATA. Your Head Entity must place under its Accreditation any entity of which it owns 50% or more. You can also include new Associate Entities in the same country as your Head Entity with your application.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Multicountry_Question</fullName>
