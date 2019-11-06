@@ -16,6 +16,7 @@ public class ContentVersionTriggerHandler {
 	}
 
     /*All the logic for after insert should go into this*/
+
     public static void afterInsertContentVersionTriggerHandler() {
 
     	String orgWideEmail = 'IATA Noreply';
