@@ -332,6 +332,65 @@ The Account Role record should be named after the functional capability for whic
         <type>Text</type>
         <unique>true</unique>
     </fields>
+    <fields>
+        <fullName>Flow_Status__c</fullName>
+        <description>Status used in the flow "Full Customer Creation", identify if the account has started the flow (pending status) and finished the flow (completed status)</description>
+        <externalId>false</externalId>
+        <label>Flow status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Account_name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Functional_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Functional Role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Functional_Roles</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>DisplayAccount_FunctionalRole__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.Name &amp;" "&amp; TEXT(Functional_Role__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account and Functional Role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>Account Role</label>
     <nameField>
         <displayFormat>AR-{0000}</displayFormat>
@@ -546,63 +605,4 @@ The Account Role record should be named after the functional capability for whic
         <protected>false</protected>
         <url>/flow/TIP_Payment_Provider_Termination?vAccountRoleId={!Account_Role__c.Id}&amp;retURL=/{!Account_Role__c.Id}</url>
     </webLinks>
-	<fields>
-        <fullName>Flow_Status__c</fullName>
-        <description>Status used in the flow "Full Customer Creation", identify if the account has started the flow (pending status) and finished the flow (completed status)</description>
-        <externalId>false</externalId>
-        <label>Flow status</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Pending</fullName>
-                    <default>false</default>
-                    <label>Pending</label>
-                </value>
-                <value>
-                    <fullName>Completed</fullName>
-                    <default>false</default>
-                    <label>Completed</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>Account_name__c</fullName>
-        <externalId>false</externalId>
-        <formula>Account__r.Name</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Account name</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Functional_Role__c</fullName>
-        <externalId>false</externalId>
-        <label>Functional Role</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetName>Functional_Roles</valueSetName>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>DisplayAccount_FunctionalRole__c</fullName>
-        <externalId>false</externalId>
-        <formula>Account__r.Name &amp;" "&amp; TEXT(Functional_Role__c)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Account and Functional Role</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
 </CustomObject>
