@@ -562,7 +562,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 return result;
             }
 
-            Contact con = [SELECT Id FROM Contact WHERE Id =: contactId LIMIT 1];
+			Contact con = [SELECT Id, Community__c FROM Contact WHERE Id =: contactId LIMIT 1];
 
             if(customerTypeChanged == true){
                 //Find Bucket Account
@@ -596,6 +596,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
             if((inputMap.get('phone') != null)){
                 con.Phone = string.valueOf(inputMap.get('phone'));
+            }
+
+            if(String.isBlank(con.Community__c)){
+                con.Community__c = 'ISS Customer Portal';
             }
 
             con.User_Portal_Status__c = 'Pending Approval';
