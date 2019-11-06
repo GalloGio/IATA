@@ -1,4 +1,4 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track,api,wire } from 'lwc';
 
 import { navigateToPage } from 'c/navigationUtils';
 
@@ -45,12 +45,22 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
     @track showAddDocsModal = false;
 
-
     @track nrDocs = 0;
 
     @track showNewDescriptionSection = false;
-	@track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
+    @track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
+    @track trackedIsExpired = false;
+
+
+    @api
+    get isexpired() {
+        return this.trackedIsExpired;
+    }
+    set isexpired(value) {
+        this.trackedIsExpired = value;
+	}
 	
+	@track caseobres;
 
     @track labels = {
         AddDocumentsMsg,
@@ -72,7 +82,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     };
 
     acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
-
+	
 
 
     connectedCallback() {
@@ -102,7 +112,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
                         });
 
                     this.loading = false;
-                    
+                        
                 })
                 .catch(error => {
                     console.log('error: ', error);
@@ -122,7 +132,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
             });
         }
-        
+
     }
 
     renderedCallback() {
