@@ -82,9 +82,8 @@
         <relatedList>Account_Role_Service__c.Account_Role__c</relatedList>
     </relatedLists>
     <relatedLists>
-    <relatedLists>
         <fields>Contact_Name__c</fields>
-        <fields>Portal_Contact_Roles__c</fields>
+        <fields>Contact_Roles__c</fields>
         <fields>Contact_Role_Name__c</fields>
         <fields>NAME</fields>
         <fields>Service_Rendered__c</fields>

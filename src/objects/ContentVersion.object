@@ -6145,11 +6145,7 @@
             <values>
                 <fullName>SIS - Simplified Invoicing %26 Settlement</fullName>
                 <default>false</default>
-            </values>
-            <values>
-                <fullName>SIS Membership</fullName>
-                <default>false</default>
-            </values>
+            </values>            
             <values>
                 <fullName>iiNet</fullName>
                 <default>false</default>

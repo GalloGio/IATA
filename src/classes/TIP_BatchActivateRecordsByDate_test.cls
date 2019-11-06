@@ -136,7 +136,7 @@ public class TIP_BatchActivateRecordsByDate_test {
         return contactRole;
     }
 
-	private static Account_Contact_Role__c createAccountContactRole(String accountId, String accountRoleId) {
+	private static Account_Contact_Role__c createAccountContactRole(String accountId, String accountRoleId, Id contactRolesId) {
         Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
 		Account_Contact_Role__c acr = new Account_Contact_Role__c();
         acr.Account__c = accountId;

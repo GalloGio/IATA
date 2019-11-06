@@ -1769,12 +1769,7 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Zuora_Billing_Acount_Id__c</field>
             <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Account.World_Wide_Account__c</field>
-            <table>Contact</table>
-        </columns>
+        </columns>       
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Account.Top_Parent__c.Id</field>
@@ -1857,27 +1852,12 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Account__c.Id</field>
             <table>Contact.Related_Contacts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Account__c.Top_Parent__c.World_Wide_Account__c.Id</field>
-            <table>Contact.Related_Contacts__r</table>
-        </columns>
+        </columns>        
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Account__c.Top_Parent__c.Id</field>
             <table>Contact.Related_Contacts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Account__c.World_Wide_Account__c</field>
-            <table>Contact.Related_Contacts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Account__c.World_Wide_Account__c.Id</field>
-            <table>Contact.Related_Contacts__r</table>
-        </columns>
+        </columns>       
         <masterLabel>Related to Accounts</masterLabel>
     </sections>
     <sections>
@@ -1885,17 +1865,7 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Account.Id</field>
             <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Account.World_Wide_Account__c.Id</field>
-            <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Account.Top_Parent__c.World_Wide_Account__c.Id</field>
-            <table>Contact</table>
-        </columns>
+        </columns>        
         <masterLabel>Master Parent</masterLabel>
     </sections>
 </ReportType>
