@@ -527,7 +527,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 });
             }
         } else {
-            navigateToPage("company-profile?tab=contact&contactName=" + notification.contactName);
+            navigateToPage("company-profile?tab=contact");
         }
     }
 
