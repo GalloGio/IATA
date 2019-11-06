@@ -60,8 +60,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     set isexpired(value) {
         this.trackedIsExpired = value;
 	}
-	
-	@track caseobres;
 
     @track labels = {
         AddDocumentsMsg,
