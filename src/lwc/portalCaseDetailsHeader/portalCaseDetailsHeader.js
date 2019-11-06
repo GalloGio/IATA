@@ -39,6 +39,8 @@ export default class PortalHomeCalendar extends LightningElement {
     @track lstRecipients = [];
     @track newRecipient = '';
     @track haveRecipients = false;
+    @api isExpired = false;
+    @track expiredCard;
     @track CaseStatusClass = '';
     @track surveyLink;
 
@@ -63,7 +65,7 @@ export default class PortalHomeCalendar extends LightningElement {
 		CSP_Recipients,
 		ISSP_CaseNumber,
 		ISSP_Subject,
-        CSP_AddOrRemove_Recipients,
+        	CSP_AddOrRemove_Recipients,
 		ISSP_Case_Closed_More_Than_2_Months,
 		CSP_Status,
 		CSP_CreatedOn,
@@ -71,9 +73,12 @@ export default class PortalHomeCalendar extends LightningElement {
 		CSP_Manage_Recipients,
 		CSP_EmailAddress
     }
- //Icons
+
+    //Icons
     infoIcon = CSP_PortalPath + 'CSPortal/Images/Icons/info.svg';
     
+        ISSP_Case_Closed_More_Than_2_Months,
+    }
 
     connectedCallback() {
         //get the parameters for this page

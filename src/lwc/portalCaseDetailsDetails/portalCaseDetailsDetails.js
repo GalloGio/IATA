@@ -1,4 +1,4 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track,api,wire } from 'lwc';
 
 import { navigateToPage } from 'c/navigationUtils';
 
@@ -49,8 +49,19 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track nrDocs = 0;
 
     @track showNewDescriptionSection = false;
-	@track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
+    @track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
+    @track trackedIsExpired = false;
+
+
+    @api
+    get isexpired() {
+        return this.trackedIsExpired;
+    }
+    set isexpired(value) {
+        this.trackedIsExpired = value;
+	}
 	
+	@track caseobres;
 
     @track labels = {
         AddDocumentsMsg,
