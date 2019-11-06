@@ -2147,12 +2147,7 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Training_Membership__c</field>
             <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BSP_non_air__c</field>
-            <table>Account</table>
-        </columns>
+        </columns>        
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>iiNet_Account__c</field>
