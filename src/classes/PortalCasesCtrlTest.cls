@@ -116,14 +116,14 @@ private class PortalCasesCtrlTest {
                 
                 PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
                 
-                CSP_Utils.ReturnWrapper addNewRecipientTest = CSP_Utils.addNewRecipient(newCase1.Id, '');
+                DAL_WithoutSharing.ReturnWrapper addNewRecipientTest = DAL_WithoutSharing.addNewRecipient(newCase1.Id, '');
                 
                 PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
             }
-            CSP_Utils.ReturnWrapper addNewRecipientTest1 = CSP_Utils.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
-            CSP_Utils.ReturnWrapper addNewRecipientTest2 = CSP_Utils.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
+            DAL_WithoutSharing.ReturnWrapper addNewRecipientTest1 = DAL_WithoutSharing.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
+            DAL_WithoutSharing.ReturnWrapper addNewRecipientTest2 = DAL_WithoutSharing.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
             List<PortalCasesCtrl.MessageWrapper> lstCases = PortalCasesCtrl.getCaseMessages(newCase.Id);
-            CSP_Utils.ReturnWrapper removeRecipientTest = CSP_Utils.removeRecipient(newCase1.Id, 'tes@test.com');
+            DAL_WithoutSharing.ReturnWrapper removeRecipientTest = DAL_WithoutSharing.removeRecipient(newCase1.Id, 'tes@test.com');
         Test.stopTest();
         
         
@@ -153,14 +153,14 @@ private class PortalCasesCtrlTest {
                 
                 PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(true, true, true);
                 
-                CSP_Utils.ReturnWrapper addNewRecipientTest = CSP_Utils.addNewRecipient(newCase1.Id, '');
+                DAL_WithoutSharing.ReturnWrapper addNewRecipientTest = DAL_WithoutSharing.addNewRecipient(newCase1.Id, '');
                 
                 PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
             }
-            CSP_Utils.ReturnWrapper addNewRecipientTest1 = CSP_Utils.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
-            CSP_Utils.ReturnWrapper addNewRecipientTest2 = CSP_Utils.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
+            DAL_WithoutSharing.ReturnWrapper addNewRecipientTest1 = DAL_WithoutSharing.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
+            DAL_WithoutSharing.ReturnWrapper addNewRecipientTest2 = DAL_WithoutSharing.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
             List<PortalCasesCtrl.MessageWrapper> lstCases = PortalCasesCtrl.getCaseMessages(newCase.Id);
-            CSP_Utils.ReturnWrapper removeRecipientTest = CSP_Utils.removeRecipient(newCase1.Id, 'tes@test.com');
+            DAL_WithoutSharing.ReturnWrapper removeRecipientTest = DAL_WithoutSharing.removeRecipient(newCase1.Id, 'tes@test.com');
         Test.stopTest();
     }
     
@@ -181,7 +181,7 @@ private class PortalCasesCtrlTest {
                 
                 PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
                 
-                CSP_Utils.ReturnWrapper addNewRecipientTest = CSP_Utils.addNewRecipient(newCase1.Id, '');
+                DAL_WithoutSharing.ReturnWrapper addNewRecipientTest = DAL_WithoutSharing.addNewRecipient(newCase1.Id, '');
                 
                 PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
 
@@ -189,10 +189,10 @@ private class PortalCasesCtrlTest {
                 PortalCasesCtrl.MessageWrapper mw = new PortalCasesCtrl.MessageWrapper();
                 
             }
-            CSP_Utils.ReturnWrapper addNewRecipientTest1 = CSP_Utils.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
-            CSP_Utils.ReturnWrapper addNewRecipientTest2 = CSP_Utils.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
+            DAL_WithoutSharing.ReturnWrapper addNewRecipientTest1 = DAL_WithoutSharing.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
+            DAL_WithoutSharing.ReturnWrapper addNewRecipientTest2 = DAL_WithoutSharing.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
             List<PortalCasesCtrl.MessageWrapper> lstCases = PortalCasesCtrl.getCaseMessages(newCase.Id);
-            CSP_Utils.ReturnWrapper removeRecipientTest = CSP_Utils.removeRecipient(newCase1.Id, 'tes@test.com');
+            DAL_WithoutSharing.ReturnWrapper removeRecipientTest = DAL_WithoutSharing.removeRecipient(newCase1.Id, 'tes@test.com');
         Test.stopTest();
     }
 
@@ -225,7 +225,7 @@ private class PortalCasesCtrlTest {
                 insert cs;
                                 
                 
-                CSP_Utils.ReturnWrapper addNewRecipientTest = CSP_Utils.addNewRecipient(cs.Id, 'janedanetest@test.test');
+                DAL_WithoutSharing.ReturnWrapper addNewRecipientTest = DAL_WithoutSharing.addNewRecipient(cs.Id, 'janedanetest@test.test');
                 
             }
 
