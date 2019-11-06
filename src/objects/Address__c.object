@@ -249,9 +249,9 @@
     </nameField>
     <pluralLabel>Addresses</pluralLabel>
     <recordTypes>
-        <fullName>Address</fullName>
+        <fullName>MASTER</fullName>
         <active>true</active>
-        <label>Address</label>
+        <label>MASTER</label>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>

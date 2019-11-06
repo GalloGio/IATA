@@ -34,14 +34,17 @@ public with sharing class ContactSyncUtils extends SObjectSyncUtils {
 	 * Handle synchronize logic between Salesforce and SAP/DMS
 	 *
 	 * @param sobjIdsByAccountIds
-	 * @param eventType (Insert, Update, Delete, Undelete)
+	 * @param isInsert
+	 * @param isUpdate
+	 * @param isDelete
+	 * @param isUndelete
 	 */
-	public void doSynchronisation(List<SObject> sObjects, String eventType) {
+	public void doSynchronisation(List<SObject> sObjects, Boolean isInsert, Boolean isUpdate, Boolean isDelete, Boolean isUndelete) {
 		if (sObjects.size() == 0) {
 			return;
 		}
 
-		PlatformEventUtils.clear();
+		Map<Id, SObject> mapToSend = new Map<Id, SObject>();
 
 		Set<String> doneKeys = new Set<String>();
 		String key;
@@ -51,16 +54,15 @@ public with sharing class ContactSyncUtils extends SObjectSyncUtils {
 			if(!doneKeys.contains(key)) {
 				doneKeys.add(key);
 
-				PlatformEventUtils.add(new AccountContactRole__e(
-						EventType__c = eventType,
-						RecordType__c = accountContactRole.RecordType.DeveloperName,
-						RecordId__c = accountContactRole.Id
-				));
+				mapToSend.put(accountContactRole.Id, accountContactRole);
 			}
 		}
 
-
-		Boolean isFullSuccess = PlatformEventUtils.send();
+		if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+			System.enqueueJob(new PlatformEvents_Helper(mapToSend, 'AccountContactRole__e', 'Account_Contact_Role__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
+		} else {
+			PlatformEvents_Helper.publishEvents(mapToSend, 'AccountContactRole__e', 'Account_Contact_Role__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+		}
 	}
 
 

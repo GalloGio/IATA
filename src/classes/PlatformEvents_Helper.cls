@@ -42,6 +42,7 @@ public class PlatformEvents_Helper implements Queueable {
                 'Contact' => 'Contact__e',
                 'Account_Contact_Role__c' => 'AccountContactRole__e',
                 'Account_Role__c' => 'AccountRole__e',
+                'Address_Role_Business_Context__c' => 'AddressRoleBusinessContext__e',
                 'Partner_products__c' => 'PartnerProduct__e',
                 'TIP_Pay_Prov_Prod_Country_Config__c' => 'Product_Country_Config__e',
                 'TIP_BIN_Range__c' => 'Product_Bin_Range__e',
@@ -132,9 +133,9 @@ public class PlatformEvents_Helper implements Queueable {
                 'EventType' => 'Type__c'
             };
         }
-        
-        if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' 
-        	|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='RemoteInvocation__e'){
+
+        if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e'
+        	|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='RemoteInvocation__e' || sObj=='AddressRoleBusinessContext__e'){
             return new map<String,String>{
                 'Id' => 'RecordId__c',
                 'Recordtype' => 'RecordType__c',

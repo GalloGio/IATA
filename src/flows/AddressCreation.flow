@@ -656,8 +656,8 @@
     <decisions>
         <name>AddressRoleAirportBusinessExistORNot_0</name>
         <label>AddressRoleAirportBusinessExistORNot</label>
-        <locationX>1334</locationX>
-        <locationY>1028</locationY>
+        <locationX>1351</locationX>
+        <locationY>1064</locationY>
         <defaultConnector>
             <targetReference>UpdateExistingAddress_0_0_0_0</targetReference>
         </defaultConnector>
@@ -701,6 +701,56 @@
                 <targetReference>DeleteAddressRole</targetReference>
             </connector>
             <label>YES</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>AllNonBusinessAddressExist</name>
+        <label>AllNonBusinessAddressExist</label>
+        <locationX>1237</locationX>
+        <locationY>961</locationY>
+        <defaultConnector>
+            <targetReference>AddressRoleBranchExistORNot</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>AllNonBusinessAddressExist_YES</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CollectionExistingNonBusinessAddress</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DeleteAllNonBusinessAddress</targetReference>
+            </connector>
+            <label>AllNonBusinessAddressExist YES</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>AllNonBusinessAddressExist_0</name>
+        <label>AllNonBusinessAddressExist</label>
+        <locationX>1171</locationX>
+        <locationY>1390</locationY>
+        <defaultConnector>
+            <targetReference>AddressRoleAirportBusinessExistORNot_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>AllNonBusinessAddressExist_YES_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CollectionExistingNonBusinessAddress</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DeleteAllNonBusinessAddress_0</targetReference>
+            </connector>
+            <label>AllNonBusinessAddressExist YES</label>
         </rules>
     </decisions>
     <decisions>
@@ -935,6 +985,26 @@
         </connector>
         <inputReference>CollectionAddressRole</inputReference>
     </recordDeletes>
+    <recordDeletes>
+        <name>DeleteAllNonBusinessAddress</name>
+        <label>DeleteAllNonBusinessAddress</label>
+        <locationX>1361</locationX>
+        <locationY>831</locationY>
+        <connector>
+            <targetReference>AddressRoleBranchExistORNot</targetReference>
+        </connector>
+        <inputReference>CollectionExistingNonBusinessAddress</inputReference>
+    </recordDeletes>
+    <recordDeletes>
+        <name>DeleteAllNonBusinessAddress_0</name>
+        <label>DeleteAllNonBusinessAddress</label>
+        <locationX>1280</locationX>
+        <locationY>1226</locationY>
+        <connector>
+            <targetReference>AddressRoleAirportBusinessExistORNot_0</targetReference>
+        </connector>
+        <inputReference>CollectionExistingNonBusinessAddress</inputReference>
+    </recordDeletes>
     <recordLookups>
         <name>Does_Main_Address_exist</name>
         <label>Does Main Address exist</label>
@@ -966,10 +1036,10 @@
         <name>GetAddressRoleBusiness</name>
         <label>GetAddressRoleBusiness</label>
         <locationX>1148</locationX>
-        <locationY>641</locationY>
+        <locationY>640</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AddressRoleBranchExistORNot</targetReference>
+            <targetReference>GetAllExistingNonBusinessAddress</targetReference>
         </connector>
         <filters>
             <field>Address__c</field>
@@ -996,7 +1066,7 @@
         <locationY>1040</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AddressRoleAirportBusinessExistORNot_0</targetReference>
+            <targetReference>GetAllExistingNonBusinessAddress_0</targetReference>
         </connector>
         <filters>
             <field>Address__c</field>
@@ -1035,6 +1105,62 @@
         <object>Address__c</object>
         <outputReference>ExistingAddressAirport</outputReference>
         <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>GetAllExistingNonBusinessAddress</name>
+        <label>GetAllExistingNonBusinessAddress</label>
+        <locationX>1146</locationX>
+        <locationY>816</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AllNonBusinessAddressExist</targetReference>
+        </connector>
+        <filters>
+            <field>Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountInputID</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Is_Business_Address__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Address__c</object>
+        <outputReference>CollectionExistingNonBusinessAddress</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Country__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>GetAllExistingNonBusinessAddress_0</name>
+        <label>GetAllExistingNonBusinessAddress</label>
+        <locationX>1106</locationX>
+        <locationY>1226</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AllNonBusinessAddressExist_0</targetReference>
+        </connector>
+        <filters>
+            <field>Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountInputID</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Is_Business_Address__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Address__c</object>
+        <outputReference>CollectionExistingNonBusinessAddress</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Country__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>GetExistingAddressRole</name>
@@ -1116,7 +1242,7 @@
         <name>GetExistingMainAddress_0</name>
         <label>GetExistingMainAddress</label>
         <locationX>943</locationX>
-        <locationY>641</locationY>
+        <locationY>640</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetAddressRoleBusiness</targetReference>
@@ -1393,6 +1519,14 @@
     </variables>
     <variables>
         <name>CollectionCountAirportAuthorityMainAddress</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Address__c</objectType>
+    </variables>
+    <variables>
+        <name>CollectionExistingNonBusinessAddress</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>

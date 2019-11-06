@@ -76,6 +76,29 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
         ISSP_SIS_AccountHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
     }
 
+    AccountTriggerHandler accountTriggerHandler = new AccountTriggerHandler();
+    /* Before Insert */
+    if (Trigger.isInsert && Trigger.isBefore) {
+        //accountTriggerHandler.OnBeforeInsert(Trigger.new);
+    }
+//    /* After Insert */ else if (Trigger.isInsert && Trigger.isAfter) {
+//        accountTriggerHandler.OnAfterInsert(Trigger.new);
+//    }
+//    /* Before Update */ else if (Trigger.isUpdate && Trigger.isBefore) {
+//        accountTriggerHandler.OnBeforeUpdate(Trigger.old, Trigger.new, Trigger.newMap);
+//    }
+    /* After Update */ else if (Trigger.isUpdate && Trigger.isAfter) {
+        accountTriggerHandler.OnAfterUpdate(Trigger.old, Trigger.new, Trigger.newMap);
+    }
+//    /* Before Delete */ else if (Trigger.isDelete && Trigger.isBefore) {
+//        accountTriggerHandler.OnBeforeDelete(Trigger.old, Trigger.oldMap);
+//    }
+//    /* After Delete */ else if (Trigger.isDelete && Trigger.isAfter) {
+//        accountTriggerHandler.OnAfterDelete(Trigger.old, Trigger.oldMap);
+//    }
+//    /* After Undelete */ else if (Trigger.isUnDelete) {
+//        accountTriggerHandler.OnUndelete(Trigger.new);
+//    }
 
 //Trigger the platform events
     if(trigger.isAfter){

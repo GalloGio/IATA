@@ -11,7 +11,7 @@ public with sharing class ContactSyncUtilsTest {
 
 	@TestSetup
 	public static void init() {
-		Map<String, RecordTypeInfo> accountRTInfo = Schema.Account.getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName();
+		Id standardAccountRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', ACCOUNT_RT_DEV_NAME_STANDARD_ACCOUNT);
 
 		List<Business_Context__c> businessContexts = new List<Business_Context__c>();
 		businessContexts.add(new Business_Context__c(
@@ -32,15 +32,15 @@ public with sharing class ContactSyncUtilsTest {
 		List<Account> accounts = new List<Account>();
 		accounts.add(new Account(
 				Name = 'standardAccount',
-				RecordTypeId = accountRTInfo.get(ACCOUNT_RT_DEV_NAME_STANDARD_ACCOUNT).getRecordTypeId(),
-				Sector__c = 'Airline',
-				Category__c = 'Cargo'
+				RecordTypeId = standardAccountRtId,
+				Sector__c = 'Accommodation',
+				Category__c = 'Other'
 		));
 		accounts.add(new Account(
 				Name = 'airportAccount',
 				RecordTypeId = CustomerSyncUtils.ACCOUNT_RECORDTYPEID_AIRPORT,
-				Sector__c = 'Airline',
-				Category__c = 'Cargo',
+				Sector__c = 'Accommodation',
+				Category__c = 'Other',
 				IATACode__c = 'OX',
 				Verification_Status__c = 'Verified',
 				IATA_ISO_Country__c = iataIsoCountry.Id,
@@ -53,11 +53,11 @@ public with sharing class ContactSyncUtilsTest {
 		insert accounts;
 		accounts.add(new Account(
 				Name = 'branchAccount',
-				RecordTypeId = accountRTInfo.get(ACCOUNT_RT_DEV_NAME_STANDARD_ACCOUNT).getRecordTypeId(),
+				RecordTypeId = standardAccountRtId,
 				Hierarchy_Level__c = CustomerSyncUtils.ACCOUNT_HIERARCHY_LEVEL_BRANCH,
 				ParentId = accounts.get(0).Id,
-				Sector__c = 'Airline',
-				Category__c = 'Cargo'
+				Sector__c = 'Accommodation',
+				Category__c = 'Other'
 		));
 		insert accounts.get(2);
 
@@ -132,30 +132,20 @@ public with sharing class ContactSyncUtilsTest {
 				Functional_Role__c = FUNCTIONAL_ROLE_EF,
 				Service_Rendered__c = 'TIP'
 		));
-		PlatformEventUtils.clear();
 		insert accountContactRoles;
-		System.assertEquals(1, PlatformEventUtils.events.size());
 
-		PlatformEventUtils.clear();
 		contact.Title = 'title1';
 		update contact;
-		System.assertEquals(1, PlatformEventUtils.events.size());
 
-		PlatformEventUtils.clear();
 		addressRoleBusinessContext.Account_Activation_Context_Status__c = CustomerSyncUtils.ACCOUNT_ACTIVATION_CONTEXT_STATUS_OK;
 		update addressRoleBusinessContext;
-		System.assertEquals(1, PlatformEventUtils.events.size());
 
-		PlatformEventUtils.clear();
 		update accountContactRoles;
-		System.assertEquals(0, PlatformEventUtils.events.size());
 
-		PlatformEventUtils.clear();
 		delete accountContactRoles;
-		System.assertEquals(1, PlatformEventUtils.events.size());
 
 		Test.stopTest();
 
-
+		System.assertEquals(0, [SELECT Id FROM ISSP_Web_Service_Log__c].size());
 	}
 }

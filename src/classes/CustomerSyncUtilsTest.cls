@@ -10,7 +10,7 @@ public with sharing class CustomerSyncUtilsTest {
 
 	@TestSetup
 	public static void init() {
-		Map<String, RecordTypeInfo> accountRTInfo = Schema.Account.getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName();
+		Id standardAccountRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', ACCOUNT_RT_DEV_NAME_STANDARD_ACCOUNT);
 
 		List<Business_Context__c> businessContexts = new List<Business_Context__c>();
 		businessContexts.add(new Business_Context__c(
@@ -31,15 +31,15 @@ public with sharing class CustomerSyncUtilsTest {
 		List<Account> accounts = new List<Account>();
 		accounts.add(new Account(
 				Name = 'standardAccount',
-				RecordTypeId = accountRTInfo.get(ACCOUNT_RT_DEV_NAME_STANDARD_ACCOUNT).getRecordTypeId(),
-				Sector__c = 'Airline',
-				Category__c = 'Cargo'
+				RecordTypeId = standardAccountRtId,
+				Sector__c = 'Accommodation',
+				Category__c = 'Other'
 		));
 		accounts.add(new Account(
 				Name = 'airportAccount',
 				RecordTypeId = CustomerSyncUtils.ACCOUNT_RECORDTYPEID_AIRPORT,
-				Sector__c = 'Airline',
-				Category__c = 'Cargo',
+				Sector__c = 'Accommodation',
+				Category__c = 'Other',
 				IATACode__c = 'OX',
 				Verification_Status__c = 'Verified',
 				IATA_ISO_Country__c = iataIsoCountry.Id,
@@ -52,11 +52,11 @@ public with sharing class CustomerSyncUtilsTest {
 		insert accounts;
 		accounts.add(new Account(
 				Name = 'branchAccount',
-				RecordTypeId = accountRTInfo.get(ACCOUNT_RT_DEV_NAME_STANDARD_ACCOUNT).getRecordTypeId(),
+				RecordTypeId = standardAccountRtId,
 				Hierarchy_Level__c = CustomerSyncUtils.ACCOUNT_HIERARCHY_LEVEL_BRANCH,
 				ParentId = accounts.get(0).Id,
-				Sector__c = 'Airline',
-				Category__c = 'Cargo'
+				Sector__c = 'Accommodation',
+				Category__c = 'Other'
 		));
 		insert accounts.get(2);
 
@@ -112,7 +112,7 @@ public with sharing class CustomerSyncUtilsTest {
 
 		Test.stopTest();
 
-		System.assertEquals(0, PlatformEventUtils.events.size());
+		System.assertEquals(0, [SELECT Id FROM ISSP_Web_Service_Log__c].size());
 	}
 
 	private static testMethod void testDoSynchronizationOnStandardAccountSynchronized(){
@@ -131,24 +131,17 @@ public with sharing class CustomerSyncUtilsTest {
 		addressRoleBusinessContext.Address_Role__r.SIS_Location_ID__c = 'Main';
 		update addressRoleBusinessContext.Address_Role__r;
 
-		System.assertEquals(1, PlatformEventUtils.events.size());
-
 		addressRoleBusinessContext.Address_Role__r.Address__r.Po_Box__c = '1';
 		update addressRoleBusinessContext.Address_Role__r.Address__r;
 
-		System.assertEquals(1, PlatformEventUtils.events.size());
-
-		// TODO Pourquoi la mise à jour du compte ne met pas à jour l'adresse
 		addressRoleBusinessContext.Address_Role__r.Address__r.Account__r.Business_City_Name__c = 'City1';
 		update addressRoleBusinessContext.Address_Role__r.Address__r.Account__r;
-
-		System.assertEquals(1, PlatformEventUtils.events.size());
 
 		delete addressRoleBusinessContext;
 
 		Test.stopTest();
 
-		System.assertEquals(1, PlatformEventUtils.events.size());
+		System.assertEquals(0, [SELECT Id FROM ISSP_Web_Service_Log__c].size());
 	}
 
 	private static testMethod void testDoSynchronizationOnBranchSynchronized(){
@@ -187,7 +180,7 @@ public with sharing class CustomerSyncUtilsTest {
 
 		Test.stopTest();
 
-		System.assertEquals(1, PlatformEventUtils.events.size());
+		System.assertEquals(0, [SELECT Id FROM ISSP_Web_Service_Log__c].size());
 	}
 
 	private static testMethod void testDoSynchronizationOnAirportSynchronized(){
@@ -215,16 +208,12 @@ public with sharing class CustomerSyncUtilsTest {
 		));
 		insert accountRelationships;
 
-		System.assertEquals(1, PlatformEventUtils.events.size());
-
 		update accountRelationships;
-
-		System.assertEquals(1, PlatformEventUtils.events.size());
 
 		delete accountRelationships;
 
 		Test.stopTest();
 
-		System.assertEquals(1, PlatformEventUtils.events.size());
+		System.assertEquals(0, [SELECT Id FROM ISSP_Web_Service_Log__c].size());
 	}
 }

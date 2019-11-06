@@ -162,9 +162,9 @@
     </nameField>
     <pluralLabel>E&amp;F Contact Role Details</pluralLabel>
     <recordTypes>
-        <fullName>StandardEFContact</fullName>
+        <fullName>MASTER</fullName>
         <active>true</active>
-        <label>Standard E&amp;F Contact</label>
+        <label>MASTER</label>
         <picklistValues>
             <picklist>Detailed_contact_role__c</picklist>
             <values>

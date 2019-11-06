@@ -84,6 +84,16 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>Flow_By_Pass_VR__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used in flows or proces builder to bypass validation rules</description>
+        <externalId>false</externalId>
+        <label>Flow_By_Pass_VR</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Global_ID__c</fullName>
         <displayFormat>a0N{0000000000}</displayFormat>
         <externalId>false</externalId>
@@ -127,9 +137,9 @@
     <pluralLabel>Addresses Role</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
-        <fullName>MASTER</fullName>
+        <fullName>Master</fullName>
         <active>true</active>
-        <label>MASTER</label>
+        <label>Master</label>
         <picklistValues>
             <picklist>Role_Type__c</picklist>
             <values>
@@ -138,7 +148,7 @@
             </values>
             <values>
                 <fullName>Business</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
             <values>
                 <fullName>Shipping</fullName>

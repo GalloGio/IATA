@@ -9,7 +9,7 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 
 	public class CustomerSyncException extends Exception {}
 
-	@TestVisible private final static Id ACCOUNT_RECORDTYPEID_AIRPORT = Schema.Account.SObjectType.getDescribe().getRecordTypeInfosByDeveloperName().get('Airport').getRecordTypeId();
+	@TestVisible private final static Id ACCOUNT_RECORDTYPEID_AIRPORT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Airport');
 	@TestVisible private final static String ACCOUNT_HIERARCHY_LEVEL_BRANCH = 'Branch';
 	@TestVisible private final static String ACCOUNT_ACTIVATION_CONTEXT_STATUS_OK = 'Completed';
 	@TestVisible private final static String ADDRESS_ROLE_ROLE_TYPE_BUSINESS = 'Business';
@@ -90,9 +90,12 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 	 *
 	 * @param contexts (Standard, Airport, Branch)
 	 * @param sobjIdsByAccountIds
-	 * @param eventType (Insert, Update, Delete, Undelete)
+	 * @param isInsert
+	 * @param isUpdate
+	 * @param isDelete
+	 * @param isUndelete
 	 */
-	public void doSynchronisation(List<Context> contexts, List<SObject> sObjects, String eventType) {
+	public void doSynchronisation(List<Context> contexts, List<SObject> sObjects, Boolean isInsert, Boolean isUpdate, Boolean isDelete, Boolean isUndelete) {
 
 		if (sObjects.size() == 0){
 			return;
@@ -102,7 +105,7 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 
 		getAccountInformation(contexts, ARBCIdsByAccountId.keySet());
 
-		PlatformEventUtils.clear();
+		Map<Id, SObject> mapToSend = new Map<Id, SObject>();
 
 		Account account;
 		for (Id accountId : ARBCIdsByAccountId.keySet()) {
@@ -116,16 +119,16 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 			}
 
 			for (SObject sobj : ARBCIdsByAccountId.get(accountId)) {
-				PlatformEventUtils.add(new AddressRoleBusinessContext__e(
-					EventType__c = eventType,
-					RecordType__c = sobj.get('RecordTypeId') != null ? (String) sobj.getSObject('RecordType').get('DeveloperName') : '',
-					RecordId__c = sobj.Id
-				));
+				mapToSend.put(sobj.Id, sobj);
 			}
 
 		}
 
-		Boolean isFullSuccess = PlatformEventUtils.send();
+		if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+			System.enqueueJob(new PlatformEvents_Helper(mapToSend, 'AddressRoleBusinessContext__e', 'Address_Role_Business_Context__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
+		} else {
+			PlatformEvents_Helper.publishEvents(mapToSend, 'AddressRoleBusinessContext__e', 'Address_Role_Business_Context__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+		}
 	}
 
 	/**
