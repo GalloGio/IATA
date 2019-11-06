@@ -19710,6 +19710,183 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Business_City_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Business City</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_Geo_Coordinates__c</fullName>
+        <description>This is the Latitude and Longitude of where an Account is physically located.</description>
+        <displayLocationInDecimal>false</displayLocationInDecimal>
+        <externalId>false</externalId>
+        <label>Business Geo-Coordinates</label>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Location</type>
+    </fields>
+    <fields>
+        <fullName>Business_Po_Box__c</fullName>
+        <externalId>false</externalId>
+        <label>Business PO Box</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_State_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Business State</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hierarchy_Level__c</fullName>
+        <defaultValue>&quot;Single Location&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Hierarchy Level</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Domestic</fullName>
+                    <default>false</default>
+                    <label>Domestic</label>
+                </value>
+                <value>
+                    <fullName>Global</fullName>
+                    <default>false</default>
+                    <label>Global</label>
+                </value>
+                <value>
+                    <fullName>Branch</fullName>
+                    <default>false</default>
+                    <label>Branch</label>
+                </value>
+                <value>
+                    <fullName>Single Location</fullName>
+                    <default>true</default>
+                    <label>Single Location</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Holding_Parent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Holding Parent</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Branch</relationshipLabel>
+        <relationshipName>Holding_Parent</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_Iso_Country_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA Iso Country Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_PO_Box_Address__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label> Is PO Box Address</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>RecordTypeDeveloperName__c</fullName>
+        <description>Used for flow, avoid requesting record type table</description>
+        <externalId>false</externalId>
+        <formula>RecordType.DeveloperName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RecordTypeDeveloperName</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sold_To_Completed__c</fullName>
+        <externalId>false</externalId>
+        <label>Sold_To_Completed</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TechUpdate_AddressFlow__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Tech Update Address Flow</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Verification_Status__c</fullName>
+        <defaultValue>&quot;Unverified&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Verification Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Unverified</fullName>
+                    <default>true</default>
+                    <label>Unverified</label>
+                </value>
+                <value>
+                    <fullName>Partial</fullName>
+                    <default>false</default>
+                    <label>Partial</label>
+                </value>
+                <value>
+                    <fullName>Verified</fullName>
+                    <default>false</default>
+                    <label>Verified</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
     <listViews>
         <fullName>AOC_Expiry_dates_Airline_Coding</fullName>
         <columns>ACCOUNT.NAME</columns>
@@ -100197,1694 +100374,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts>
-        <customTabListAdditionalFields>ACCOUNT.NAME</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Quality__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ACCOUNT.SITE</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ACCOUNT.ADDRESS1_CITY</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ACCOUNT.PHONE1</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</customTabListAdditionalFields>
-        <customTabListAdditionalFields>CORE.USERS.LAST_NAME</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Sector__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Category__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Quality__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>ACCOUNT.RECORDTYPE</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Location_Type__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Field_Head_Office__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>ACCOUNT.SITE</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>ACCOUNT.ADDRESS1_CITY</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</lookupDialogsAdditionalFields>
-        <lookupFilterFields>ACCOUNT.NAME</lookupFilterFields>
-        <lookupFilterFields>ACCOUNT.RECORDTYPE</lookupFilterFields>
-        <lookupFilterFields>Field_Head_Office__c</lookupFilterFields>
-        <lookupFilterFields>Location_Type__c</lookupFilterFields>
-        <lookupFilterFields>ACCOUNT.ADDRESS1_COUNTRY</lookupFilterFields>
-        <lookupFilterFields>ACCOUNT.SITE</lookupFilterFields>
-        <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Quality__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>CORE.USERS.ALIAS</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>ACCOUNT.TYPE</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>ACCOUNT.PHONE1</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>ACCOUNT.ADDRESS1_CITY</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>Field_Head_Office__c</searchFilterFields>
-        <searchFilterFields>IATA_Member__c</searchFilterFields>
-        <searchFilterFields>IATA_ISO_Country__c</searchFilterFields>
-        <searchFilterFields>Sector__c</searchFilterFields>
-        <searchFilterFields>Strategic_Partners__c</searchFilterFields>
-        <searchFilterFields>Location_Type__c</searchFilterFields>
-        <searchFilterFields>Category__c</searchFilterFields>
-        <searchFilterFields>ICCS_Membership_Status__c</searchFilterFields>
-        <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Quality__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.RECORDTYPE</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Sector__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Category__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Location_Type__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
-    </searchLayouts>
-    <sharingModel>Private</sharingModel>
-    <validationRules>
-        <fullName>ACLI_Customer_Number_Editability</fullName>
-        <active>true</active>
-        <description>The ACLI Customer Number can be modified only by the coding team and only for accounts with record type Airline Headquarter, Operator, Standard Account or Others</description>
-        <errorConditionFormula>AND(
-	ISCHANGED(ACLI_SAP_Id__c),
-	OR(
-		AND(
-			RecordType.DeveloperName != &apos;IATA_Airline&apos;,
-			RecordType.DeveloperName != &apos;Operator&apos;,
-			RecordType.DeveloperName != &apos;Others&apos;,
-			RecordType.DeveloperName != &apos;Standard_Account&apos;
-		),
-		AND(
-			OR(
-				RecordType.DeveloperName == &apos;Operator&apos;,
-				RecordType.DeveloperName == &apos;Others&apos;,
-				RecordType.DeveloperName == &apos;Standard_Account&apos;
-			),
-			NOT($Permission.ACLI_Customer_Number),
-			NOT($Permission.Airline_HQ_ACLI)
-		),
-		AND(
-			RecordType.DeveloperName == &apos;IATA_Airline&apos;,
-			NOT($Permission.Airline_HQ_ACLI)
-		)
-	)
-)</errorConditionFormula>
-        <errorDisplayField>ACLI_SAP_Id__c</errorDisplayField>
-        <errorMessage>The ACLI Customer Number can be modified only by the coding team and only for accounts with record type Airline Headquarter, Operator, Standard Account or Others</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>ACLI_SAP_ID_format_validation</fullName>
-        <active>true</active>
-        <description>Validates that the ACLI Customer Number starts with &quot;00&quot; and has 10 characters</description>
-        <errorConditionFormula>NOT(
-  OR(
-    ACLI_SAP_Id__c==&quot;&quot;,
-    ISNULL(ACLI_SAP_Id__c),
-    REGEX(ACLI_SAP_Id__c, &quot;00[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]&quot;)
-  )
-)</errorConditionFormula>
-        <errorDisplayField>ACLI_SAP_Id__c</errorDisplayField>
-        <errorMessage>ACLI Customer Number has to start with &quot;00&quot; and be 10 characters long, please correct the format of the ID.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Account_Name_cannot_include_Ltd_or_Intl</fullName>
-        <active>false</active>
-        <errorConditionFormula>OR(
-CONTAINS(Name,&quot;Ltd&quot;),
-CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
-        <errorDisplayField>Name</errorDisplayField>
-        <errorMessage>Account Name cannot include Ltd or Intl</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Agency_Name</fullName>
-        <active>true</active>
-        <description>prevent users should changing the agencies name</description>
-        <errorConditionFormula>AND
-(
-ISCHANGED(Name),
-RecordType.DeveloperName = &apos;IATA_Agency&apos;,
-NOT(
-OR
-(
-$User.Profile_Name__c  =  &apos;System Administrator&apos;,
-$User.Profile_Name__c  =  &apos;System Administrator - automated processes&apos;,
-$User.Profile_Name__c  =  &apos;System administrator - Stakeholders&apos;,
-$User.Profile_Name__c  =  &apos;FDS – Agency Management - Supervisor (Approver)&apos;,
-$User.Profile_Name__c  =  &apos;FDS – Agency Management – Hub Administrator&apos;,
-$User.Profile_Name__c  =  &apos;FDS Hub Analyst ARM&apos;,
-$User.Profile_Name__c  =  &apos;Developer&apos;,
-$Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c 
-)
-)
-)</errorConditionFormula>
-        <errorDisplayField>Name</errorDisplayField>
-        <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Airline_HO_Name</fullName>
-        <active>true</active>
-        <description>You are not allowed to change the field &quot;Account Name&quot;. The only Exception is if you are also changing one of the following:Legal_name__c,TradeName__c,Name_on_AOC__c. This assignment logic is done via Account Trigger.</description>
-        <errorConditionFormula>AND (	ISCHANGED(Name) ,
-		RecordType.DeveloperName  = &apos;IATA_Airline&apos;,
-		NOT(
-			OR(
-				ISCHANGED(Legal_name__c),
-				ISCHANGED(TradeName__c),
-				ISCHANGED(Name_on_AOC__c)
-			)
-		)
-	)</errorConditionFormula>
-        <errorDisplayField>Name</errorDisplayField>
-        <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Airline_HO_Trade_Name</fullName>
-        <active>true</active>
-        <description>The trade name for Member airlines can only be updated by the account management team or membership.</description>
-        <errorConditionFormula>ISCHANGED(TradeName__c ) &amp;&amp;  
-RecordType.DeveloperName  = &apos;IATA_Airline&apos;  &amp;&amp; 
-NOT((
-$User.Profile_Name__c = &apos;Account management team&apos; || 
-$User.Profile_Name__c = &apos;MER Membership&apos;
-))</errorConditionFormula>
-        <errorDisplayField>TradeName__c</errorDisplayField>
-        <errorMessage>The trade name for Member airlines can only be updated by the account management team or membership.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Airline_HQ_Account_Type</fullName>
-        <active>true</active>
-        <description>For Airline HQ only the Account Management Team can update the Account Type and Website field</description>
-        <errorConditionFormula>AND(
-RecordType.DeveloperName=&apos;IATA_Airline&apos;,
-OR(
-ISCHANGED(Account_Type__c),
-ISCHANGED(Website)
-),
-NOT(CONTAINS($Profile.Name, &quot;System Administrator - automated processes&quot;)),
-NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;)),
-NOT(CONTAINS($Profile.Name, &quot;MER Membership&quot;))
-)</errorConditionFormula>
-        <errorMessage>For accounts with record type AL HQ, only the Account Management Team can update the content of the following fields: Account Type and Website</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Airline_HQ_IATA_Membership_Status_1</fullName>
-        <active>true</active>
-        <description>For Airline HQ, only the profile MER Membership can update the field IATA Membership Status.</description>
-        <errorConditionFormula>AND(
-	NOT(ISNEW()),
-	OR(
-		RecordType.DeveloperName=&apos;IATA_Airline&apos;,
-		RecordType.DeveloperName=&apos;Operator&apos;
-	),
-	ISCHANGED(Membership_status__c),
-	NOT($Permission.Airline_HQ_MER_Membership)
-)</errorConditionFormula>
-        <errorDisplayField>Membership_status__c</errorDisplayField>
-        <errorMessage>For Airline HQ, only the profile MER Membership can update the field IATA Membership Status.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Airline_HQ_IATA_Membership_Status_2</fullName>
-        <active>true</active>
-        <description>Only airlines can be IATA members.</description>
-        <errorConditionFormula>AND(
-NOT(ISNEW()),
-OR(
-RecordType.DeveloperName=&apos;IATA_Airline&apos;,
-RecordType.DeveloperName=&apos;Operator&apos;
-),
-$Permission.Airline_HQ_MER_Membership,
-NOT(ISPICKVAL(Sector__c,&apos;Airline&apos;)),
-NOT(ISPICKVAL(Membership_status__c,&apos;Non-IATA member&apos;))
-)</errorConditionFormula>
-        <errorDisplayField>Membership_status__c</errorDisplayField>
-        <errorMessage>Only airlines can be IATA members.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Airline_HQ_Read_Only_Fields</fullName>
-        <active>true</active>
-        <description>For Airline HQ, some fields can be updated only by the ACLI-SF daily process</description>
-        <errorConditionFormula>AND(
-	NOT(ISNEW()),
-	RecordType.DeveloperName=&apos;IATA_Airline&apos;,
-	NOT($Permission.Airline_HQ_ACLI),
-	OR(
-		ISCHANGED(Name_on_AOC__c),
-		ISCHANGED(IATACode__c),
-		ISCHANGED(Old_IATA_Code__c),
-		ISCHANGED(ICAO_designator__c),
-		ISCHANGED(Airline_designator__c),
-		ISCHANGED(Old_Airline_designator__c),
-		ISCHANGED(duplicate_flag_indicato__c),
-		ISCHANGED(BillingStreet),
-		ISCHANGED(BillingCity),
-		ISCHANGED(BillingState),
-		ISCHANGED(BillingPostalCode),
-		ISCHANGED(BillingCountry),
-		ISCHANGED(IATA_ISO_Country__c),
-		ISCHANGED(ACLI_Status__c),
-		ISCHANGED(Type_of__c),
-		ISCHANGED(Type_of_Service__c),
-		ISCHANGED(Airline_Prefix__c),
-		ISCHANGED(Old_Airline_Prefix__c),
-		ISCHANGED(ACLI_SAP_Id__c),
-		ISCHANGED(AOC_Expiry_Date__c),
-		ISCHANGED(Legal_name__c),
-		ISCHANGED(Area_of_Operation__c),
-		ISCHANGED(Membership_SITA__c)
-	)
-)</errorConditionFormula>
-        <errorMessage>The following fields can by updated only by the daily ACLI-SF process:
-Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-character), Old 2-letter Airline Designator Code, Duplicate flag indicator, ISO Country, ACLI Status</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Airline_HQ_Sector_Category</fullName>
-        <active>true</active>
-        <description>For Airline HQ, the Sector and Category fields can be updated only if the Type of Operations Code is S, the Acli Status  is &apos;Active Company&apos; and only by the Account Management Team.</description>
-        <errorConditionFormula>AND(
-	NOT(ISNEW()),
-	RecordType.DeveloperName=&apos;IATA_Airline&apos;,
-	OR(
-		ISCHANGED(Sector__c),
-		ISCHANGED(Category__c)
-		
-	),
-	NOT($Permission.Airline_HQ_ACLI),
-	OR(
-		NOT($Permission.Airline_HQ_Account_Team_Management),
-		AND(
-			NOT(ISPICKVAL(Type_of__c,&quot;S&quot;)),
-			NOT(ISCHANGED(Type_of__c))
-		),
-		ISPICKVAL(ACLI_Status__c, &apos;Inactive Company&apos;)
-	)
-)</errorConditionFormula>
-        <errorMessage>For Airline HQ, the Sector and Category fields can be updated only if the Type of Operations Code is S, the Acli Status  is &apos;Active Company&apos; and only by the Account Management Team.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>BR_and_SA_Standard_Account_Parent_Id</fullName>
-        <active>true</active>
-        <description>BR and SA Standard Account Parent Id must be filled.</description>
-        <errorConditionFormula>AND($RecordType.Name=&quot;Standard Account&quot;, OR(ISPICKVAL(Sector__c,&apos;Cargo Agent&apos;),ISPICKVAL(Sector__c,&apos;Travel Agent&apos;)), ISBLANK(ParentId), OR(ISPICKVAL(Location_Type__c,&apos;BR&apos;),ISPICKVAL(Location_Type__c,&apos;SA&apos;)))</errorConditionFormula>
-        <errorMessage>Standard Accounts of type BR and SA must have Parent Id filled for Travel and Cargo Agents.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Billing_Address</fullName>
-        <active>false</active>
-        <description>To prevent null values in billing city &amp; country field</description>
-        <errorConditionFormula>AND( 
-$Profile.Name &lt;&gt; &apos;MACS - Administrator&apos;,
- OR(LEN(BillingCity)&lt;3,LEN( BillingCountry)&lt;3),
-PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c ,
-PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c,
- Source_System__c &lt;&gt;&apos;AIMS&apos;, Source_System__c &lt;&gt;&apos;SIS&apos;,RecordTypeId&lt;&gt;&apos;01220000000Q3F1&apos;
-)</errorConditionFormula>
-        <errorMessage>Billing City and Billing Country are mandatory fields</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Block_non_AGM_user_from_modifying_agents</fullName>
-        <active>false</active>
-        <description>Avoids AMS data being changed from profiles outside AGM and SF administration.</description>
-        <errorConditionFormula>AND(
-RecordType.DeveloperName = &apos;IATA_Agency&apos;,
-NOT(
-OR(
-$User.ProfileId = &apos;00ew0000001cuCY&apos;,
-$User.ProfileId = &apos;00ew0000001cuCZ&apos;,
-$User.ProfileId = &apos;00ew00000012qoC&apos;,
-$User.ProfileId = &apos;00e20000000h0gF&apos;,
-$User.ProfileId = &apos;00ew0000001R6uT&apos;,
-$User.ProfileId = &apos;00e20000000kvcd&apos;,
-$User.ProfileId = &apos;00e20000001Q8eH&apos;,
-$User.ProfileId = &apos;00ew0000001QUyp&apos;,
-$User.ProfileId = &apos;00e20000001QMpc&apos;,
-$User.ProfileId = &apos;00ew0000001Pj0u&apos;,
-$User.ProfileId = &apos;00ew0000001R6Uk&apos;,
-$User.ProfileId = &apos;00ew0000001QRzE&apos;,
-$User.ProfileId = &apos;00ew0000001QRzF&apos;,
-$User.ProfileId = &apos;00ew0000001QoC9&apos;,
-$User.ProfileId = &apos;00ew0000001QRzG&apos;,
-$User.ProfileId = &apos;00ew0000001QRzD&apos;,
-$User.ProfileId = &apos;00ew0000001QoBp&apos;,
-$User.ProfileId = &apos;00ew0000001QRzC&apos;,
-$User.ProfileId = &apos;00e20000001QJgR&apos;,
-$User.ProfileId = &apos;00e20000001QJSd&apos;,
-$User.ProfileId = &apos;00e20000001QJSs&apos;,
-$User.ProfileId = &apos;00e1r0000021q6N&apos;,
-$User.ProfileId = &apos;00e1r0000021q6S&apos;,
-$User.ProfileId = &apos;00ew0000001R6Za&apos;,
-$User.ProfileId = &apos;00ew0000001R7Ci&apos;)))</errorConditionFormula>
-        <errorMessage>You are not allowed to modify AMS data, Please contact agency management or your system admin</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>CASS_Number_3_Digits</fullName>
-        <active>true</active>
-        <description>The CASS Number must have 3 digits</description>
-        <errorConditionFormula>NOT(OR(ISBLANK(CASS_Number__c) , REGEX(  CASS_Number__c , &quot;[0-9]{3}&quot;)))</errorConditionFormula>
-        <errorMessage>The CASS Number must have 3 digits.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Cannot_change_HO_location_type</fullName>
-        <active>true</active>
-        <description>Cannot change the Location Type from HO or HE to anything else than HE or HO if the account has a financial assessment contact linked to it.</description>
-        <errorConditionFormula>AND(
-  RecordType.DeveloperName = &apos;IATA_Agency&apos;,
-  ISCHANGED(Location_Type__c),
-  OR (
-    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HO&apos;),
-    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HE&apos;)
-  ),
-  NOT(ISPICKVAL(Location_Type__c, &apos;HO&apos;)),
-  NOT(ISPICKVAL(Location_Type__c, &apos;HE&apos;)),
-  Has_a_Financial_Assessment_Contact__c
-)</errorConditionFormula>
-        <errorMessage>The Location Type of this account cannot be changed from &apos;HO&apos; or &apos;HE&apos; because it has a Financial Assessment Contact linked to it.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>CategoryOtherRequired</fullName>
-        <active>true</active>
-        <description>If Category= Airline, then Category_Other_Value__c must be filled</description>
-        <errorConditionFormula>AND(
-ISPICKVAL(Category__c,&quot;Other&quot;),
-Category_Other_Value__c = &quot;&quot;
-)</errorConditionFormula>
-        <errorDisplayField>Category_Other_Value__c</errorDisplayField>
-        <errorMessage>The Category (Other) Value is mandatory if Category is Other</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Comment_Reason_for_creation_Mandatory</fullName>
-        <active>true</active>
-        <errorConditionFormula>TEXT(Reason_for_creation__c) = &apos;Other&apos; &amp;&amp;  ISBLANK(Comments_Reason_for_creation__c)</errorConditionFormula>
-        <errorDisplayField>Comments_Reason_for_creation__c</errorDisplayField>
-        <errorMessage>Please fill the Comments field when choosing &quot;Other&quot;</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Comment_data_quality_feedback_Mandatory</fullName>
-        <active>true</active>
-        <errorConditionFormula>NOT(isnull(Data_quality_feedback__c)) &amp;&amp; ISBLANK(Comment_data_quality_feedback__c)</errorConditionFormula>
-        <errorDisplayField>Comment_data_quality_feedback__c</errorDisplayField>
-        <errorMessage>Please fill the Comment field when choosing a value for Data quality feedback</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Create_Head_office</fullName>
-        <active>true</active>
-        <description>Airline head office accounts can be created only by administrator, please contact your administrator</description>
-        <errorConditionFormula>AND(
-ISNEW(), ISPICKVAL( Field_Head_Office__c , &quot;Headquarter&quot;), 
-ISPICKVAL( Industry, &quot;Airline&quot;),
-NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)),
-NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
-)</errorConditionFormula>
-        <errorMessage>Airline head office accounts can be created only by an administrator</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>EF_AS_Specialist_Prevent_Client_Edit</fullName>
-        <active>true</active>
-        <description>If User is Airline Service Specialist prevent editing Client Accounts</description>
-        <errorConditionFormula>AND( 
-ISPICKVAL($User.EF_User_Role__c, &apos;Airline Services Specialists&apos;), 
-RecordType.Name=&apos;Others&apos; )</errorConditionFormula>
-        <errorMessage>You don&apos;t have the right level of access to edit Client Accounts</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>EF_Account_Client_Reactivation</fullName>
-        <active>true</active>
-        <description>E&amp;F Status on Client can be reactivated if the user has the correct setting on his user</description>
-        <errorConditionFormula>AND(
-NOT($User.EF_Client_Reactivation__c),
-OR(ISPICKVAL(EF_Status__c, &apos;Active&apos;), ISPICKVAL(EF_Status__c, &apos;&apos;) ),
-TEXT(PRIORVALUE(EF_Status__c))=&apos;Inactive&apos;,
-RecordType.Name=&apos;Others&apos;
-)</errorConditionFormula>
-        <errorMessage>You are not allowed to reactivate Client accounts for E&amp;F.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>EF_Account_Customer_Reactivation</fullName>
-        <active>true</active>
-        <description>E&amp;F Status on Customers can be reactivated if the user has the correct setting on his user</description>
-        <errorConditionFormula>AND(
-NOT($User.EF_Customer_Reactivation__c),  
-OR(ISPICKVAL(EF_Status__c, &apos;Active&apos;), ISPICKVAL(EF_Status__c, &apos;&apos;) ),
-TEXT(PRIORVALUE(EF_Status__c))=&apos;Inactive&apos;,
-OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&apos;, RecordType.Name=&apos;Airline Headquarters&apos;) 
-)</errorConditionFormula>
-        <errorMessage>You are not allowed to reactivate Customer accounts for E&amp;F.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>EF_BlockRemoveSISVerifiedOnOperator</fullName>
-        <active>false</active>
-        <description>Can&apos;t set to false SIS Verified if Record Type is Operator</description>
-        <errorConditionFormula>AND(
-  OR($User.Profile_Name__c == &apos;E&amp;F staff&apos;, $User.Profile_Name__c == &apos;E&amp;F Management&apos;),
-  OR(RecordType.DeveloperName=&apos;Operator&apos;, RecordType.DeveloperName=&apos;Others&apos;),
-  EF_SIS_Code_Verified__c=false 
-)</errorConditionFormula>
-        <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
-        <errorMessage>SIS Verified can&apos;t be unchecked if Record Type is Operator</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>EF_CantSetSISVerifiedIfSISCodeEmpty</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND(
-   EF_SIS_Code_Verified__c=true,
-   OR(ISBLANK(EF_SIS_Code__c), ISBLANK(EF_SIS_Designator__c))
-   
-)</errorConditionFormula>
-        <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
-        <errorMessage>SIS Verified can&apos;t be checked if SIS Accounting Code or SIS Designator are empty</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>EF_MandatoryFields</fullName>
-        <active>true</active>
-        <description>Sets the mandatory fields for E&amp;F Profiles. (E&amp;F Type, E&amp;F Status, E&amp;F Sub-status, E&amp;F Status DAte Change)</description>
-        <errorConditionFormula>AND( 
- CONTAINS($User.Profile_Name__c, &apos;E&amp;F&apos;),   
-OR(RecordType.DeveloperName=&apos;Standard_Account&apos;, RecordType.DeveloperName=&apos;Others&apos;, RecordType.DeveloperName=&apos;Operator&apos;, 
-RecordType.DeveloperName=&apos;IATA_Airline_BR&apos;,
-RecordType.DeveloperName=&apos;IATA_Airline&apos;),
-OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), AND(ISPICKVAL( EF_Status__c, &quot;Inactive&quot;), ISPICKVAL( EF_SubStatus__c ,&quot;&quot;)), ISNULL(EF_Effective_Date__c) )
-)</errorConditionFormula>
-        <errorMessage>Please fill in E&amp;F Type, E&amp;F Status, E&amp;F Sub-Status, E&amp;F Status Date Change</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>EF_SIS_Location_ID_format_check</fullName>
-        <active>true</active>
-        <description>E&amp;F SIS Location ID just can take values 1 to 99 and Main.</description>
-        <errorConditionFormula>AND(
-NOT(ISBLANK(EF_SIS_Location_ID__c)),
-AND( EF_SIS_Location_ID__c &lt;&gt;&quot;Main&quot;,
-NOT(
-OR(
-REGEX(EF_SIS_Location_ID__c, &quot;[1-9]{1}&quot;),
-REGEX(EF_SIS_Location_ID__c, &quot;[0-9]{2}&quot;)
-)
-)
-)
-)</errorConditionFormula>
-        <errorDisplayField>EF_SIS_Location_ID__c</errorDisplayField>
-        <errorMessage>SIS Location ID just accepts values Main, and numbers from 1 to 99</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Edit_Head_office</fullName>
-        <active>false</active>
-        <description>It is to avoid end user editing head office account information.</description>
-        <errorConditionFormula>AND( 
-NOT( $User.ProfileId = &quot;00e20000000ncPi&quot;), 
-NOT(ISNEW()), 
-ISPICKVAL( Field_Head_Office__c , &quot;Headquarter&quot;), 
-ISPICKVAL( Industry, &quot;Airline&quot;), 
-NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)), 
-PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c , 
-PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c,
-Source_System__c &lt;&gt;&apos;AIMS&apos; 
-)</errorConditionFormula>
-        <errorMessage>Head office account can be edited only by administrator, please contact your administrator</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Enforce_HE_Parent_on_AE_Account</fullName>
-        <active>true</active>
-        <description>AE cannot be a standalone agency (or has an AE as a parent) except for some Status :
-
-&quot;Terminated&quot;, &quot;Not accreditated&quot;,&quot;New application pending&quot; and &quot;Not in Operation&quot;, NULL</description>
-        <errorConditionFormula>OR(
-AND( 
-OR( 
-RecordType.DeveloperName = &apos;Standard_Account&apos;, RecordType.DeveloperName = &apos;IATA_Agency&apos; 
-), 
-TEXT(Location_Type__c) = &apos;AE&apos;, 
-TEXT(Parent.Location_Type__c) &lt;&gt; &apos;HE&apos;, 
-NOT(OR(ISPICKVAL(Status__c, &quot;Terminated&quot;), 
-ISPICKVAL(Status__c, &quot;Not in operation&quot;), 
-ISPICKVAL(Status__c, &quot;New application pending&quot;), 
-ISPICKVAL(Status__c, &quot;Not accreditated&quot;), 
-ISPICKVAL(Status__c, &quot;&quot;) 
-)) 
-),AND(
-TEXT(Location_Type__c) = &apos;AE&apos;, 
-TEXT(Parent.Location_Type__c) = &apos;AE&apos;)
-)</errorConditionFormula>
-        <errorMessage>An Associate Entity (with proper status) must have a parent account with location type HE (or has an AE as a parent)</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Field_Head_Office_Required</fullName>
-        <active>false</active>
-        <description>If Industry = Airline, then Field/Head Office must be filled</description>
-        <errorConditionFormula>AND(
-ISPICKVAL(Industry,&quot;Airline&quot;), 
-ISPICKVAL(Field_Head_Office__c,&quot;&quot;),
-PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c ,  
-PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c 
-)</errorConditionFormula>
-        <errorDisplayField>Field_Head_Office__c</errorDisplayField>
-        <errorMessage>The Field/Head Office is mandatory for airlines</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>General_Public_Admin_only</fullName>
-        <active>true</active>
-        <description>Only administrators can edit General Public accounts</description>
-        <errorConditionFormula>AND
-(
-OR
-(CONTAINS(UPPER(Name), &quot;GENERAL PUBLIC&quot;) ||
-TEXT(Sector__c) = &quot;General Public&quot; ||
-ISPICKVAL(PRIORVALUE(Sector__c),&quot;General Public&quot;))
-,
-OR
-(ISCHANGED(Sector__c),
-ISCHANGED(Category__c),
-ISCHANGED(Name),
-ISCHANGED(IATA_ISO_Country__c),
-ISCHANGED(RecordTypeId))
-,
-NOT
-(CONTAINS($Profile.Name, &quot;System Administrator&quot;) || CONTAINS($Profile.Name, &quot;Restricted Profile - automated process&quot;))
-)</errorConditionFormula>
-        <errorMessage>Please contact an administrator if you wish to create or modify a general public account</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>IATACode_IsMandatory</fullName>
-        <active>false</active>
-        <description>Iata code it&apos;s mandatory</description>
-        <errorConditionFormula>AND(
-OR(
- RecordType.DeveloperName = &apos;IATA_Airline_BR&apos;,
- RecordType.DeveloperName = &apos;IATA_Airline&apos;), 
-OR( ISBLANK(IATACode__c),ISNULL(IATACode__c))  )</errorConditionFormula>
-        <errorMessage>IATA Code is mandatory</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>ID_Card_Discount_only_on_Key_Account</fullName>
-        <active>true</active>
-        <description>To insert a value on ID Card Key Account Discount, the field Key Account must be set to true.</description>
-        <errorConditionFormula>AND(IDCard_Key_Account__c = false,
-ID_Card_Key_Account_Discount__c &lt;&gt; 0,  NOT(ISNULL(ID_Card_Key_Account_Discount__c)),
-NOT(ISCHANGED(IDCard_Key_Account__c)))</errorConditionFormula>
-        <errorDisplayField>ID_Card_Key_Account_Discount__c</errorDisplayField>
-        <errorMessage>To insert a discount this Account must be a Key Account.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>ID_Card_Discount_values</fullName>
-        <active>true</active>
-        <description>The value for the ID Card Key Account Discount must be between 0% and 100%.</description>
-        <errorConditionFormula>AND(NOT(ISNULL(ID_Card_Key_Account_Discount__c)),
-OR(ID_Card_Key_Account_Discount__c &lt; 0,
-ID_Card_Key_Account_Discount__c &gt; 1))</errorConditionFormula>
-        <errorDisplayField>ID_Card_Key_Account_Discount__c</errorDisplayField>
-        <errorMessage>Please insert a value between 0% and 100%.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>If_Member_only_MER_can_Edit</fullName>
-        <active>true</active>
-        <description>If Member only MER can Edit not even coding</description>
-        <errorConditionFormula>if(AND(ISPICKVAL(Membership_status__c,&apos;IATA member&apos;),
-        OR(ISCHANGED(Name),ISCHANGED(BillingStreet),
-          ISCHANGED(BillingCity),ISCHANGED(BillingState),
-          ISCHANGED(BillingCountry),ISCHANGED(BillingPostalCode),
-          ISCHANGED(BillingCountry),ISCHANGED(IATATrainingUrl__c),
-          ISCHANGED(BillingCountry),ISCHANGED(Website),
-          ISCHANGED(IATA_ISO_Country__c)),
-        RecordType.DeveloperName = &apos;IATA_Airline&apos;,
-        NOT($User.Profile_Name__c =&apos;System Administrator&apos;),
-        NOT($User.Profile_Name__c =&apos;MER Membership&apos;),
-        NOT($User.Profile_Name__c =&apos;Account management team&apos;),
-        NOT($User.Profile_Name__c =&apos;System administrator - Stakeholders&apos;),
-        NOT($User.Profile_Name__c =&apos;System Administrator - automated processes&apos;),
-        NOT($User.Profile_Name__c =&apos;Developer&apos;)),       
-        TRUE ,FALSE)</errorConditionFormula>
-        <errorMessage>The airline is a member and the name or the billing address cannot be edited. Only MER is allowed.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Industry_Required</fullName>
-        <active>false</active>
-        <description>To prevent null values in Industry field</description>
-        <errorConditionFormula>and(
-ISPICKVAL(Industry,&apos;&apos;),
-PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c ,
-PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c ,
-NOT  CONTAINS(&quot;administrator&quot;,  $UserRole.Name) ,
-Source_System__c  &lt;&gt; &apos;AIMS&apos;
-)</errorConditionFormula>
-        <errorDisplayField>Industry</errorDisplayField>
-        <errorMessage>Industry is a required field.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Limit_Remittance_Frequency_Options</fullName>
-        <active>true</active>
-        <errorConditionFormula>OR(
-
-AND(
-
-ANG_IsNewGenAgency__c,  
-
-NOT(Country_ISO_Code__c  = &apos;BR&apos;),
-
-IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;T&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 1 ),
-
-AND(
-
-ANG_IsNewGenAgency__c,  
-
-Country_ISO_Code__c  = &apos;BR&apos;,
-
-IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;T&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
-IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
-
-)</errorConditionFormula>
-        <errorDisplayField>Remittance_frequency__c</errorDisplayField>
-        <errorMessage>The amount of selected options is not valid for this agency.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Location_Type_cannot_choose_HE_or_AE</fullName>
-        <active>true</active>
-        <description>User cannot set location type HE/AE if the location class is not P/D and country is not NewGen.</description>
-        <errorConditionFormula>AND(ISNEW(),OR(ISPICKVAL(Location_Type__c,&apos;HE&apos;),ISPICKVAL(Location_Type__c,&apos;AE&apos;)),OR(NOT(ANG_IsNewGenAgency__c),NOT(OR(ISPICKVAL(Location_Class__c,&apos;P&apos;),ISPICKVAL(Location_Class__c,&apos;D&apos;)))))</errorConditionFormula>
-        <errorMessage>You cannot set location type HE/AE if the location class is not P/D and country is not NewGen.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>MITA_Mandatory_Fields_For_Members</fullName>
-        <active>true</active>
-        <description>Conditions to fit when an account becomes a MITA or BIETA member</description>
-        <errorConditionFormula>AND(OR(ISCHANGED(MITA_Member__c), ISCHANGED(BIETA_Member__c)),
-  OR(
-    MITA_Member__c,
-    BIETA_Member__c
-  ),
-  OR(
-    NOT(ISPICKVAL(ACLI_Status__c,&apos;Active Company&apos;)),
-    Airline_designator__c == &apos;&apos;,
-    AND(IATACode__c == &apos;&apos;, Airline_Prefix__c == &apos;&apos;)
-  )
-)</errorConditionFormula>
-        <errorMessage>For MITA or BIETA Members is mandatory to have the status Active Company, and fill the 2 letters code and IATA code</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Name_Not_Member_and_External_Relations</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND (ISCHANGED( Name ), ($Profile.Name = &apos;MER Membership&apos;), NOT(ISPICKVAL( Membership_status__c , &apos;IATA member&apos;))  )</errorConditionFormula>
-        <errorMessage>You cannot modify non IATA members name</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>No_tabs_in_VAT_Number</fullName>
-        <active>true</active>
-        <description>Tab character is forbidden in VAT_Number__c field</description>
-        <errorConditionFormula>CONTAINS(VAT_Number__c ,&quot;	&quot;)</errorConditionFormula>
-        <errorDisplayField>VAT_Number__c</errorDisplayField>
-        <errorMessage>Please remove tabs from VAT number.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Parent_Acc_Airline_Designator_Required</fullName>
-        <active>false</active>
-        <description>If Industry = Airline, then Field/Head Office must be filled</description>
-        <errorConditionFormula>AND(
-ISPICKVAL(Industry,&quot;Airline&quot;), 
-NOT(ISPICKVAL(Field_Head_Office__c,&quot;Headquarter&quot;)),
-OR( LEN(ParentId)=0, LEN(Airline_designator__c)=0),
-PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c,
-PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c 
-)</errorConditionFormula>
-        <errorMessage>If Industry = Airline, and Field Head Office not = Headquarter, then Parent Account must be filled and Airline Designator must be filled</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Parent_account_is_Airline</fullName>
-        <active>true</active>
-        <errorConditionFormula>Merged_Account__c &lt;&gt; &apos;Merged&apos; &amp;&amp; RecordType.DeveloperName = &apos;IATA_Airline_BR&apos; &amp;&amp; ( Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline_BR&apos; &amp;&amp; Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline&apos;) &amp;&amp; NOT(ICH_Member__c)</errorConditionFormula>
-        <errorDisplayField>ParentId</errorDisplayField>
-        <errorMessage>The parent account must be an airline</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Passenger_Abbreviated_name_lenght</fullName>
-        <active>true</active>
-        <description>Abbreviated name length - 30 Chars to Passenger Agencies and 60 chars to Cargo Agencies</description>
-        <errorConditionFormula>AND( ISPICKVAL(Sector__c,&apos;Travel Agent&apos;)  ,  ISPICKVAL(IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c, &apos;Maestro&apos;),LEN( Abbreviated_name__c) &gt; 30 )</errorConditionFormula>
-        <errorMessage>Abbreviated Name of the Agency has more than 30Chars, 30 is the maximum length.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>PreventEFStatusActiveIfParentInactive</fullName>
-        <active>false</active>
-        <description>If Parent EF_Status is Inactive the child can&apos;t be active.</description>
-        <errorConditionFormula>AND(
-    ISPICKVAL(Parent.EF_Status__c, &apos;Inactive&apos;),
-    ISCHANGED(EF_Status__c),
-    ISPICKVAL(EF_Status__c, &apos;Active&apos;)
-  )</errorConditionFormula>
-        <errorDisplayField>EF_Status__c</errorDisplayField>
-        <errorMessage>Account can&apos;t be Active for E&amp;F becaue Parent E&amp;F Status is Inactive</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Reason_for_creation_is_required</fullName>
-        <active>true</active>
-        <description>Reason for creation is required if airline or agency account</description>
-        <errorConditionFormula>AND((RecordType.Name == &apos;Standard Account&apos;),
-OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Agent&apos;)
-,ISPICKVAL(Industry, &apos;General Sales Agent&apos;)
-,ISPICKVAL(Industry, &apos;Cargo Agent&apos;)), isblank(text(Reason_for_creation__c )))</errorConditionFormula>
-        <errorDisplayField>Reason_for_creation__c</errorDisplayField>
-        <errorMessage>Please select the reason for creation.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Virtual_Branch_Iso_Country</fullName>
-        <active>true</active>
-        <description>For a Virtual Branch Iso Country is mandatory</description>
-        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;IATA_Airline_BR&apos;, ISPICKVAL( Branch_Type__c , &apos;Virtual&apos;),  ISBLANK(  IATA_ISO_Country__c ) )</errorConditionFormula>
-        <errorMessage>For a Virtual Branch Iso Country is mandatory</errorMessage>
-    </validationRules>
-    <webLinks>
-        <fullName>APXTConga4__Conga_Composer_OAuth</fullName>
-        <availability>online</availability>
-        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT ***
-
-OAuth buttons require additional setup. Please see the Composer Installation Guide for more details.
-
-COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Composer Configuration Guide for details.</description>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>660</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Conga Composer (OAuth)</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>/apex/APXTConga4__Conga_Composer
-?id={!Account.Id}</url>
-        <width>900</width>
-    </webLinks>
-    <webLinks>
-        <fullName>APXTConga4__Conga_Mail_Merge</fullName>
-        <availability>online</availability>
-        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT ***
-
-COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Conga Configuration Guide for details.</description>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>false</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>450</height>
-        <isResizable>false</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Conga Composer</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>https://composer.congamerge.com
-?sessionId={!API.Session_ID}
-&amp;serverUrl={!API.Partner_Server_URL_290}
-&amp;id={!Account.Id}</url>
-        <width>625</width>
-    </webLinks>
-    <webLinks>
-        <fullName>ATWOnline</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>true</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>true</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>ATW Online</masterLabel>
-        <openType>newWindow</openType>
-        <position>fullScreen</position>
-        <protected>false</protected>
-        <showsLocation>true</showsLocation>
-        <showsStatus>true</showsStatus>
-        <url>http://www.atwonline.com/resources/search.html?qs=%22{!Account.Name}
-%22</url>
-    </webLinks>
-    <webLinks>
-        <fullName>AZAirports</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>true</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>true</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>AZ Airports</masterLabel>
-        <openType>newWindow</openType>
-        <position>fullScreen</position>
-        <protected>false</protected>
-        <showsLocation>true</showsLocation>
-        <showsStatus>true</showsStatus>
-        <url>http://www.azworldairports.com/indexes/p-apt.htm</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Account_Map</fullName>
-        <availability>online</availability>
-        <description>Shows location of account in a map</description>
-        <displayType>link</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Account Map</masterLabel>
-        <openType>sidebar</openType>
-        <page>nicepage</page>
-        <protected>false</protected>
-    </webLinks>
-    <webLinks>
-        <fullName>Account_archive</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>sControl</linkType>
-        <masterLabel>Account archive</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <scontrol>Account_archive</scontrol>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-    </webLinks>
-    <webLinks>
-        <fullName>BLND_FormFactoryAccountLink</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <height>550</height>
-        <linkType>url</linkType>
-        <masterLabel>FormFactory Account Link</masterLabel>
-        <openType>sidebar</openType>
-        <protected>false</protected>
-        <url>https://www.dreamfactory.net/sforce/formfactory/formfactory.html? 
-sforce_session_id={!API.Session_ID}&amp; 
-sforce_server_url={!API.Partner_Server_URL_120}&amp; 
-sforce_user_name={!User.Username}&amp; 
-sforce_full_name={!User.Name}&amp; 
-sforce_user_id={!User.Id}&amp; 
-custom_link_name=FormFactory Form Name&amp; 
-myaccount={!Account.Id}&amp; 
-myuser={!User.Id}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Change_my_Account_details</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <linkType>url</linkType>
-        <masterLabel>Change my Account details</masterLabel>
-        <openType>replace</openType>
-        <protected>false</protected>
-        <url>/500/e?00N20000000h1xp=&quot;Accreditation&quot;&amp;00N20000000h23T=&quot;Changes&quot;&amp;cas14=&quot;Changes to my Account&quot;&amp;cas15=&quot;Enter the details of the changes that you want to make.&quot;&amp;cancelURL=/{!Account.Id}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Change_my_Contact_details</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <linkType>url</linkType>
-        <masterLabel>Change my Contact details</masterLabel>
-        <openType>replace</openType>
-        <protected>false</protected>
-        <url>/500/e?00N20000000h1xp=&quot;Accreditation&quot;&amp;00N20000000h23T=&quot;Changes&quot;&amp;cas14=&quot;Changes to my Contact details &quot;&amp;cas15=&quot;Enter the details of the changes that you want to make.&quot;&amp;cancelURL={!Account.Id}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Chatter_Broadcast_Tool</fullName>
-        <availability>online</availability>
-        <description>Designed for the Account Management project, this tool allows to post text messages to the Chatter Feeds of several accounts at a time.</description>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <height>600</height>
-        <linkType>url</linkType>
-        <masterLabel>Chatter Broadcast Tool</masterLabel>
-        <openType>sidebar</openType>
-        <protected>false</protected>
-        <url>/apex/AMP_ChatterBroadcastTool?accountId={!Account.Id}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>China_Pilot_Conversion_Wizard</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <linkType>javascript</linkType>
-        <masterLabel>China Pilot Conversion Wizard</masterLabel>
-        <openType>onClickJavaScript</openType>
-        <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
-
-var countryIsoCode = &apos;{!Account.Country_ISO_Code__c}&apos;; 
-
-// China Only
-if(countryIsoCode != &apos;CN&apos;){
-    alert(&apos;This functionality is only available for accounts in China&apos;);
-} 
-else if((&apos;{!Account.Location_Type__c}&apos; == &apos;HE&apos; || &apos;{!Account.Location_Type__c}&apos; == &apos;HO&apos; || &apos;{!Account.Location_Type__c}&apos; == &apos;AO&apos;) &amp;&amp; &apos;{!Account.Location_Class__c}&apos; == &apos;D&apos; &amp;&amp; &apos;{!Account.IATACode__c}&apos; != &apos;&apos;) {
-   javascript:srcUp(&quot;/apex/AMS_AccountOSCARWizardPage?accountId={!Account.Id}&amp;NewGenPilot=true&quot;);
-}
-else {
-   alert(&apos;Conditions are not verified to trigger a conversion process on this agent&apos;);
-}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Create_Airline_Branch</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Create Airline Branch</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>/001/e?retURL=%2F{!Account.Id} 
-&amp;RecordType=012200000004TQC
-&amp;cancelURL=%2F{!Account.Id} 
-&amp;acc3={!Account.Name} 
-&amp;acc2={!Account.Name} 
-&amp;acc3_lkid={!Account.Id} 
-&amp;acc6={!Account.Type}
-&amp;ent=Account 
-&amp;00N20000000pA4m={!Account.Legal_name__c} 
-&amp;00N20000000pA4h={!Account.Airline_designator__c} 
-&amp;00N20000000hrzo={!Account.IATA_Member__c} 
-&amp;00N20000000mApw=Branch
-&amp;00N20000000pA4w={!Account.Membership_status__c}
-&amp;acc7={!Account.Industry}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Create_GSA_agency</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <linkType>javascript</linkType>
-        <masterLabel>Create GSA agency</masterLabel>
-        <openType>onClickJavaScript</openType>
-        <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/connection.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/apex.js&quot; )} 
-
-var connection = sforce.connection; 
-
-var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;); 
-
-var newgsaagency= new sforce.SObject(&quot;Account&quot;); 
-
-newgsaagency.RecordTypeId = recType.Id; 
-newgsaagency.Name = &apos;{!Account.Name}&apos;;
-newgsaagency.Sector__c = &quot;Travel Agent&quot;;
-newgsaagency.Category__c = &quot;GSA General Sales Agent&quot;;
-newgsaagency.Location_Class__c = &quot;G&quot;;
-newgsaagency.Location_Type__c = &quot;HO&quot;;
-newgsaagency.Reason_for_creation__c = &quot;New Agent&quot;;
-
-result = sforce.connection.create([newgsaagency]); 
-var accId = result[0].id;
-
-var airlineId = &apos;{!Account.Id}&apos;; 
-
-javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.GSA.1.0&amp;airlineId=&apos;+airlineId);</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Create_MSO_agency</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <linkType>javascript</linkType>
-        <masterLabel>Create MSO agency</masterLabel>
-        <openType>onClickJavaScript</openType>
-        <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/connection.js&quot;)}
-{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/apex.js&quot; )}
-
-var connection = sforce.connection;
-
-var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;);
-
-if(&apos;{!Account.Airline_designator__c}&apos; == null || &apos;{!Account.Airline_designator__c}&apos; == &apos;&apos;){
-    alert(&apos;Error: {!$Label.ISSP_AMS_MSO_Request_Issue_Airline_Designator}&apos;);
-    
-}else{
-    var newmsoagency= new sforce.SObject(&quot;Account&quot;);
-
-    newmsoagency.RecordTypeId = recType.Id;
-    newmsoagency.Name = &quot;{!Account.Name}&quot;;
-    newmsoagency.Sector__c = &quot;Travel Agent&quot;;
-    newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
-    newmsoagency.Location_Class__c = &quot;M&quot;;
-    newmsoagency.Location_Type__c = &quot;HO&quot;;
-    newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
-
-    if({!Account.IATA_Member__c} == true) { 
-        newmsoagency.Location_Category__c = &quot;IC&quot;; 
-    } else { 
-        newmsoagency.Location_Category__c = &quot;NI&quot;; 
-    }
-
-    result = sforce.connection.create([newmsoagency]);
-    var accId = result[0].id;
-
-    var airlineId = &apos;{!Account.Id}&apos;;
-
-    if (typeof srcUp == &apos;function&apos;) {	
-		javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);
-	}else{
-		//window.location.href = &apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId;
-        alert(&apos;This option is to use on the console&apos;);
-	}
-}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>DSE__DS_AccountHierarchyButton</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Account Hierarchy</masterLabel>
-        <openType>sidebar</openType>
-        <page>DSE__DS_AccountHierarchy</page>
-        <protected>false</protected>
-    </webLinks>
-    <webLinks>
-        <fullName>DSE__DS_Account_Find_Duplicates</fullName>
-        <availability>online</availability>
-        <description>Cloud Customer 360: Search for similar Accounts</description>
-        <displayType>button</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Find Duplicates</masterLabel>
-        <openType>sidebar</openType>
-        <page>DSE__DS_AccountScoutPage</page>
-        <protected>false</protected>
-    </webLinks>
-    <webLinks>
-        <fullName>DSE__DS_Advanced_Hierarchy_View</fullName>
-        <availability>online</availability>
-        <description>Cloud Customer 360: Displays all the related object records for the account</description>
-        <displayType>button</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Customer 360 View</masterLabel>
-        <openType>sidebar</openType>
-        <page>DSE__DS_HierarchyRLView</page>
-        <protected>false</protected>
-    </webLinks>
-    <webLinks>
-        <fullName>DSE__DS_Change_Address_Button</fullName>
-        <availability>online</availability>
-        <description>Cloud Customer 360: displays all related data records for the account</description>
-        <displayType>button</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Consolidated View</masterLabel>
-        <openType>sidebar</openType>
-        <page>DSE__DS_CallDataManagerAccount</page>
-        <protected>false</protected>
-    </webLinks>
-    <webLinks>
-        <fullName>Detailed_Hierarchy_View</fullName>
-        <availability>online</availability>
-        <description>Opens the Detailed Hierarchy View VF page, either in a new tab in the console or in the current window in normal view.</description>
-        <displayType>button</displayType>
-        <linkType>javascript</linkType>
-        <masterLabel>Detailed Hierarchy View</masterLabel>
-        <openType>onClickJavaScript</openType>
-        <protected>false</protected>
-        <url>if(typeof(srcUp)==&apos;function&apos;){
-  srcUp(&apos;/apex/AccountHierarchy?id={!Account.Id}&amp;console=1&apos;);
-} else {
-  window.location.href=&apos;/apex/AccountHierarchy?id={!Account.Id}&apos;;
-}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>ENZ__AttachFTP</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>350</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Attach (FTP)</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>https://www.enzigma.com/sforce/ftp/Attach.aspx?FieldName=ENZ__Account__c&amp;FieldValue={!Account.Id}&amp;OrgID={!Organization.Id}&amp;SFUrl={!API.Partner_Server_URL_70}&amp;SFSessionID={!API.Session_ID}</url>
-        <width>500</width>
-    </webLinks>
-    <webLinks>
-        <fullName>EasyUpload</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <height>600</height>
-        <linkType>url</linkType>
-        <masterLabel>EasyUpload</masterLabel>
-        <openType>sidebar</openType>
-        <protected>false</protected>
-        <url>/apex/EasyUploadAttachment?parentId={!Account.Id}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>FinancialDataHoovers</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>true</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Financial Data - Hoovers</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>http://www.hoovers.com/free/search/simple/xmillion/index.xhtml?page=1&amp;query_string={!Account_Name}&amp;which=company</url>
-        <width>600</width>
-    </webLinks>
-    <webLinks>
-        <fullName>Financialprofile</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Financial profile</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>http://search.hoovers.com/free/search/simple/xmillion/index.xhtml?which=company&amp;query_string={!Account_Name}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>FindScripts</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <height>600</height>
-        <linkType>url</linkType>
-        <masterLabel>Find Scripts</masterLabel>
-        <openType>sidebar</openType>
-        <protected>false</protected>
-        <url>/appex/app.jsp?appParam=CallScripting&amp;page=account_list&amp;call_sid={!API_Session_ID}&amp;call_url={!API_Partner_Server_URL_70}&amp;eid={!Account_ID}&amp;Account_ID={!Account_ID}&amp;Account_Name={!Account_Name}&amp;Account_NumberOfEmployees={!Account_NumberOfEmployees}&amp;Account_Industry={!Account_Industry}&amp;Account_AnnualRevenue={!Account_AnnualRevenue}&amp;Account_BillingCity={!Account_BillingCity}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Google</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>true</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>true</hasToolbar>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Google</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>true</showsLocation>
-        <showsStatus>true</showsStatus>
-        <url>http://www.google.com/search?hl=en&amp;ie=UTF-8&amp;oe=UTF-8&amp;q={!Account_Name}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>HelpforScripts</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Help for Scripts</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>/servlet/servlet.FileDownload?file=015200000002o5K</url>
-        <width>600</width>
-    </webLinks>
-    <webLinks>
-        <fullName>Key_Account_Plan</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <linkType>url</linkType>
-        <masterLabel>Account Plan</masterLabel>
-        <openType>replace</openType>
-        <protected>false</protected>
-        <url>/apex/AMP_KeyAccountPlan?accountId={!Account.Id}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Map</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Map</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>http://maps.google.com/maps?q={!Account_FullBillingAddress}%20{!Account_BillingCity}%20{!Account_BillingState}%20{!Account_BillingPostalCode}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>NewRelatedAccount</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <linkType>url</linkType>
-        <masterLabel>New Airline Branch</masterLabel>
-        <openType>replace</openType>
-        <protected>false</protected>
-        <url>/apex/NewRelatedAccount?accID={!Account.Id}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Related_Contact_ICCSEmail_Activity_History</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Related Contact ICCS Email Activity History</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>https://iata--iccs.cs18.my.salesforce.com/00O11000000O2EG?drilldown=1&amp;drillcol=0721100000054gf&amp;drillval={!Account.Id}&amp;drillop=equals</url>
-    </webLinks>
-    <webLinks>
-        <fullName>ScheduleFollowup</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Schedule Follow-up</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>/00T/e?retURL=%2F{!Account.Id}&amp;what_id={!Account.Id}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Start_Oscar_Wizard</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <linkType>javascript</linkType>
-        <masterLabel>Start Oscar Wizard</masterLabel>
-        <openType>onClickJavaScript</openType>
-        <protected>false</protected>
-        <url>javascript:srcUp(&quot;/apex/AMS_AccountOSCARWizardPage?accountId={!Account.Id}&quot;);</url>
-    </webLinks>
-    <webLinks>
-        <fullName>SuperpagesUSA</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Superpages - USA</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>http://yellowpages.superpages.com/listings.jsp?C=&amp;N={!Account_Name}&amp;T2=&amp;select=&amp;R=N&amp;search22=Find+It&amp;SRC2=&amp;STYPE=S&amp;PG=L</url>
-    </webLinks>
-    <webLinks>
-        <fullName>VisualOrgChart</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Visual Org Chart</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>https://www.dreamfactory.com/orgview/orgview.html?
-sessionid={!API.Session_ID}&amp;
-serverurl={!API.Partner_Server_URL_60}&amp;
-username={!User.Username}&amp;
-fullname={!User.Name}&amp;
-linkid={!Account.Id}&amp;
-userid={!User.Id}</url>
-        <width>800</width>
-    </webLinks>
-    <webLinks>
-        <fullName>Web_App_View</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <linkType>url</linkType>
-        <masterLabel>Account Profile &gt;</masterLabel>
-        <openType>replace</openType>
-        <protected>false</protected>
-        <url>https://{! MID($Api.Partner_Server_URL_370, 9, FIND( &apos;.&apos;, $Api.Partner_Server_URL_370 )-9 ) }.lightning.force.com/c/AccountProfile.app?accountId={!Account.Id}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Zuora__Sync_Data_from_ZBilling</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Sync Data from ZBilling</masterLabel>
-        <openType>noSidebar</openType>
-        <page>Zuora__AccountOnDemandSync</page>
-        <protected>false</protected>
-    </webLinks>
-    <webLinks>
-        <fullName>account_exception_report</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>sControl</linkType>
-        <masterLabel>account exception report</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <scontrol>account_exception_report</scontrol>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-    </webLinks>
-    <webLinks>
-        <fullName>pi__Send_Pardot_Emails</fullName>
-        <availability>online</availability>
-        <displayType>massActionButton</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Send Engage Email</masterLabel>
-        <openType>sidebar</openType>
-        <page>pi__MicroCampaignPersonAccount</page>
-        <protected>false</protected>
-        <requireRowSelection>true</requireRowSelection>
-    </webLinks>
-    <webLinks>
-        <fullName>pi__Send_Single_Pardot_Email</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Send Engage Email</masterLabel>
-        <openType>sidebar</openType>
-        <page>pi__MicroCampaignSinglePersonAccount</page>
-        <protected>false</protected>
-    </webLinks>
-    <webLinks>
-        <fullName>pi__Send_To_Prospect_Insight</fullName>
-        <availability>online</availability>
-        <description>Send this Person Account to Pardot</description>
-        <displayType>button</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Send To Pardot</masterLabel>
-        <openType>sidebar</openType>
-        <page>pi__PardotAccountSendToPardot</page>
-        <protected>false</protected>
-    </webLinks>
-    <webLinks>
-        <fullName>zqu__New_Quote</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <linkType>url</linkType>
-        <masterLabel>New Quote</masterLabel>
-        <openType>replace</openType>
-        <protected>false</protected>
-        <url>{!URLFOR($Site.BaseRequestUrl+&apos;/apex/zqu__QuoteOption&apos;, null)}?crmAccountId={!Account.Id}&amp;retUrl=/{!Account.Id}</url>
-    </webLinks>
-	<fields>
-        <fullName>Business_City_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>Business City</label>
-        <length>255</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Business_Geo_Coordinates__c</fullName>
-        <description>This is the Latitude and Longitude of where an Account is physically located.</description>
-        <displayLocationInDecimal>false</displayLocationInDecimal>
-        <externalId>false</externalId>
-        <label>Business Geo-Coordinates</label>
-        <required>false</required>
-        <scale>2</scale>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Location</type>
-    </fields>
-    <fields>
-        <fullName>Business_Po_Box__c</fullName>
-        <externalId>false</externalId>
-        <label>Business PO Box</label>
-        <length>255</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Business_Postal_Code__c</fullName>
-        <description>This is the Postal Code of where an Account is physically located.</description>
-        <externalId>false</externalId>
-        <label>Business Postal Code</label>
-        <length>255</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Business_State_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>Business State</label>
-        <length>255</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Business_Street__c</fullName>
-        <description>This is the Street of where an Account is physically located.</description>
-        <externalId>false</externalId>
-        <label>Business Street</label>
-        <length>255</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Global_ID__c</fullName>
-        <displayFormat>001{0000000000}</displayFormat>
-        <externalId>false</externalId>
-        <label>Global ID</label>
-        <trackHistory>false</trackHistory>
-        <type>AutoNumber</type>
-    </fields>
-    <fields>
-        <fullName>Hierarchy_Level__c</fullName>
-        <defaultValue>&quot;Single Location&quot;</defaultValue>
-        <externalId>false</externalId>
-        <label>Hierarchy Level</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Domestic</fullName>
-                    <default>false</default>
-                    <label>Domestic</label>
-                </value>
-                <value>
-                    <fullName>Global</fullName>
-                    <default>false</default>
-                    <label>Global</label>
-                </value>
-                <value>
-                    <fullName>Branch</fullName>
-                    <default>false</default>
-                    <label>Branch</label>
-                </value>
-                <value>
-                    <fullName>Single Location</fullName>
-                    <default>true</default>
-                    <label>Single Location</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>Holding_Parent__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Holding Parent</label>
-        <referenceTo>Account</referenceTo>
-        <relationshipLabel>Branch</relationshipLabel>
-        <relationshipName>Holding_Parent</relationshipName>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>IATA_ISO_Country__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>This is the Country of where an Account is physically located.</description>
-        <externalId>false</externalId>
-        <label>IATA ISO Country</label>
-        <referenceTo>IATA_ISO_Country__c</referenceTo>
-        <relationshipLabel>Accounts</relationshipLabel>
-        <relationshipName>Accounts_ISO_Country</relationshipName>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>IATA_Iso_Country_Name__c</fullName>
-        <externalId>false</externalId>
-        <formula>IATA_ISO_Country__r.Name</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>IATA Iso Country Name</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Is_PO_Box_Address__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label> Is PO Box Address</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>RecordTypeDeveloperName__c</fullName>
-        <description>Used for flow, avoid requesting record type table</description>
-        <externalId>false</externalId>
-        <formula>RecordType.DeveloperName</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>RecordTypeDeveloperName</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Sold_To_Completed__c</fullName>
-        <externalId>false</externalId>
-        <label>Sold_To_Completed</label>
-        <length>255</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>TechUpdate_AddressFlow__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Tech Update Address Flow</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>Verification_Status__c</fullName>
-        <defaultValue>&quot;Unverified&quot;</defaultValue>
-        <externalId>false</externalId>
-        <label>Verification Status</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Unverified</fullName>
-                    <default>true</default>
-                    <label>Unverified</label>
-                </value>
-                <value>
-                    <fullName>Partial</fullName>
-                    <default>false</default>
-                    <label>Partial</label>
-                </value>
-                <value>
-                    <fullName>Verified</fullName>
-                    <default>false</default>
-                    <label>Verified</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
     <recordTypes>
         <fullName>Airport</fullName>
         <active>true</active>
@@ -102809,6 +101298,758 @@ userid={!User.Id}</url>
             </values>
         </picklistValues>
     </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>ACCOUNT.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Quality__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ACCOUNT.SITE</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ACCOUNT.ADDRESS1_CITY</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ACCOUNT.PHONE1</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CORE.USERS.LAST_NAME</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Sector__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Category__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Quality__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ACCOUNT.RECORDTYPE</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Location_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Field_Head_Office__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ACCOUNT.SITE</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ACCOUNT.ADDRESS1_CITY</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</lookupDialogsAdditionalFields>
+        <lookupFilterFields>ACCOUNT.NAME</lookupFilterFields>
+        <lookupFilterFields>ACCOUNT.RECORDTYPE</lookupFilterFields>
+        <lookupFilterFields>Field_Head_Office__c</lookupFilterFields>
+        <lookupFilterFields>Location_Type__c</lookupFilterFields>
+        <lookupFilterFields>ACCOUNT.ADDRESS1_COUNTRY</lookupFilterFields>
+        <lookupFilterFields>ACCOUNT.SITE</lookupFilterFields>
+        <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Quality__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CORE.USERS.ALIAS</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ACCOUNT.TYPE</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ACCOUNT.PHONE1</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ACCOUNT.ADDRESS1_CITY</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>Field_Head_Office__c</searchFilterFields>
+        <searchFilterFields>IATA_Member__c</searchFilterFields>
+        <searchFilterFields>IATA_ISO_Country__c</searchFilterFields>
+        <searchFilterFields>Sector__c</searchFilterFields>
+        <searchFilterFields>Strategic_Partners__c</searchFilterFields>
+        <searchFilterFields>Location_Type__c</searchFilterFields>
+        <searchFilterFields>Category__c</searchFilterFields>
+        <searchFilterFields>ICCS_Membership_Status__c</searchFilterFields>
+        <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Quality__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.RECORDTYPE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Sector__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Category__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Location_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <validationRules>
+        <fullName>ACLI_Customer_Number_Editability</fullName>
+        <active>true</active>
+        <description>The ACLI Customer Number can be modified only by the coding team and only for accounts with record type Airline Headquarter, Operator, Standard Account or Others</description>
+        <errorConditionFormula>AND(
+	ISCHANGED(ACLI_SAP_Id__c),
+	OR(
+		AND(
+			RecordType.DeveloperName != &apos;IATA_Airline&apos;,
+			RecordType.DeveloperName != &apos;Operator&apos;,
+			RecordType.DeveloperName != &apos;Others&apos;,
+			RecordType.DeveloperName != &apos;Standard_Account&apos;
+		),
+		AND(
+			OR(
+				RecordType.DeveloperName == &apos;Operator&apos;,
+				RecordType.DeveloperName == &apos;Others&apos;,
+				RecordType.DeveloperName == &apos;Standard_Account&apos;
+			),
+			NOT($Permission.ACLI_Customer_Number),
+			NOT($Permission.Airline_HQ_ACLI)
+		),
+		AND(
+			RecordType.DeveloperName == &apos;IATA_Airline&apos;,
+			NOT($Permission.Airline_HQ_ACLI)
+		)
+	)
+)</errorConditionFormula>
+        <errorDisplayField>ACLI_SAP_Id__c</errorDisplayField>
+        <errorMessage>The ACLI Customer Number can be modified only by the coding team and only for accounts with record type Airline Headquarter, Operator, Standard Account or Others</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ACLI_SAP_ID_format_validation</fullName>
+        <active>true</active>
+        <description>Validates that the ACLI Customer Number starts with &quot;00&quot; and has 10 characters</description>
+        <errorConditionFormula>NOT(
+  OR(
+    ACLI_SAP_Id__c==&quot;&quot;,
+    ISNULL(ACLI_SAP_Id__c),
+    REGEX(ACLI_SAP_Id__c, &quot;00[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]&quot;)
+  )
+)</errorConditionFormula>
+        <errorDisplayField>ACLI_SAP_Id__c</errorDisplayField>
+        <errorMessage>ACLI Customer Number has to start with &quot;00&quot; and be 10 characters long, please correct the format of the ID.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Account_Name_cannot_include_Ltd_or_Intl</fullName>
+        <active>false</active>
+        <errorConditionFormula>OR(
+CONTAINS(Name,&quot;Ltd&quot;),
+CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
+        <errorMessage>Account Name cannot include Ltd or Intl</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Agency_Name</fullName>
+        <active>true</active>
+        <description>prevent users should changing the agencies name</description>
+        <errorConditionFormula>AND
+(
+ISCHANGED(Name),
+RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+NOT(
+OR
+(
+$User.Profile_Name__c  =  &apos;System Administrator&apos;,
+$User.Profile_Name__c  =  &apos;System Administrator - automated processes&apos;,
+$User.Profile_Name__c  =  &apos;System administrator - Stakeholders&apos;,
+$User.Profile_Name__c  =  &apos;FDS – Agency Management - Supervisor (Approver)&apos;,
+$User.Profile_Name__c  =  &apos;FDS – Agency Management – Hub Administrator&apos;,
+$User.Profile_Name__c  =  &apos;FDS Hub Analyst ARM&apos;,
+$User.Profile_Name__c  =  &apos;Developer&apos;,
+$Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c 
+)
+)
+)</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
+        <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HO_Name</fullName>
+        <active>true</active>
+        <description>You are not allowed to change the field &quot;Account Name&quot;. The only Exception is if you are also changing one of the following:Legal_name__c,TradeName__c,Name_on_AOC__c. This assignment logic is done via Account Trigger.</description>
+        <errorConditionFormula>AND (	ISCHANGED(Name) ,
+		RecordType.DeveloperName  = &apos;IATA_Airline&apos;,
+		NOT(
+			OR(
+				ISCHANGED(Legal_name__c),
+				ISCHANGED(TradeName__c),
+				ISCHANGED(Name_on_AOC__c)
+			)
+		)
+	)</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
+        <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HO_Trade_Name</fullName>
+        <active>true</active>
+        <description>The trade name for Member airlines can only be updated by the account management team or membership.</description>
+        <errorConditionFormula>ISCHANGED(TradeName__c ) &amp;&amp;  
+RecordType.DeveloperName  = &apos;IATA_Airline&apos;  &amp;&amp; 
+NOT((
+$User.Profile_Name__c = &apos;Account management team&apos; || 
+$User.Profile_Name__c = &apos;MER Membership&apos;
+))</errorConditionFormula>
+        <errorDisplayField>TradeName__c</errorDisplayField>
+        <errorMessage>The trade name for Member airlines can only be updated by the account management team or membership.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HQ_Account_Type</fullName>
+        <active>true</active>
+        <description>For Airline HQ only the Account Management Team can update the Account Type and Website field</description>
+        <errorConditionFormula>AND(
+RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+OR(
+ISCHANGED(Account_Type__c),
+ISCHANGED(Website)
+),
+NOT(CONTAINS($Profile.Name, &quot;System Administrator - automated processes&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;MER Membership&quot;))
+)</errorConditionFormula>
+        <errorMessage>For accounts with record type AL HQ, only the Account Management Team can update the content of the following fields: Account Type and Website</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HQ_IATA_Membership_Status_1</fullName>
+        <active>true</active>
+        <description>For Airline HQ, only the profile MER Membership can update the field IATA Membership Status.</description>
+        <errorConditionFormula>AND(
+	NOT(ISNEW()),
+	OR(
+		RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+		RecordType.DeveloperName=&apos;Operator&apos;
+	),
+	ISCHANGED(Membership_status__c),
+	NOT($Permission.Airline_HQ_MER_Membership)
+)</errorConditionFormula>
+        <errorDisplayField>Membership_status__c</errorDisplayField>
+        <errorMessage>For Airline HQ, only the profile MER Membership can update the field IATA Membership Status.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HQ_IATA_Membership_Status_2</fullName>
+        <active>true</active>
+        <description>Only airlines can be IATA members.</description>
+        <errorConditionFormula>AND(
+NOT(ISNEW()),
+OR(
+RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+RecordType.DeveloperName=&apos;Operator&apos;
+),
+$Permission.Airline_HQ_MER_Membership,
+NOT(ISPICKVAL(Sector__c,&apos;Airline&apos;)),
+NOT(ISPICKVAL(Membership_status__c,&apos;Non-IATA member&apos;))
+)</errorConditionFormula>
+        <errorDisplayField>Membership_status__c</errorDisplayField>
+        <errorMessage>Only airlines can be IATA members.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HQ_Read_Only_Fields</fullName>
+        <active>true</active>
+        <description>For Airline HQ, some fields can be updated only by the ACLI-SF daily process</description>
+        <errorConditionFormula>AND(
+	NOT(ISNEW()),
+	RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+	NOT($Permission.Airline_HQ_ACLI),
+	OR(
+		ISCHANGED(Name_on_AOC__c),
+		ISCHANGED(IATACode__c),
+		ISCHANGED(Old_IATA_Code__c),
+		ISCHANGED(ICAO_designator__c),
+		ISCHANGED(Airline_designator__c),
+		ISCHANGED(Old_Airline_designator__c),
+		ISCHANGED(duplicate_flag_indicato__c),
+		ISCHANGED(BillingStreet),
+		ISCHANGED(BillingCity),
+		ISCHANGED(BillingState),
+		ISCHANGED(BillingPostalCode),
+		ISCHANGED(BillingCountry),
+		ISCHANGED(IATA_ISO_Country__c),
+		ISCHANGED(ACLI_Status__c),
+		ISCHANGED(Type_of__c),
+		ISCHANGED(Type_of_Service__c),
+		ISCHANGED(Airline_Prefix__c),
+		ISCHANGED(Old_Airline_Prefix__c),
+		ISCHANGED(ACLI_SAP_Id__c),
+		ISCHANGED(AOC_Expiry_Date__c),
+		ISCHANGED(Legal_name__c),
+		ISCHANGED(Area_of_Operation__c),
+		ISCHANGED(Membership_SITA__c)
+	)
+)</errorConditionFormula>
+        <errorMessage>The following fields can by updated only by the daily ACLI-SF process:
+Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-character), Old 2-letter Airline Designator Code, Duplicate flag indicator, ISO Country, ACLI Status</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HQ_Sector_Category</fullName>
+        <active>true</active>
+        <description>For Airline HQ, the Sector and Category fields can be updated only if the Type of Operations Code is S, the Acli Status  is &apos;Active Company&apos; and only by the Account Management Team.</description>
+        <errorConditionFormula>AND(
+	NOT(ISNEW()),
+	RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+	OR(
+		ISCHANGED(Sector__c),
+		ISCHANGED(Category__c)
+		
+	),
+	NOT($Permission.Airline_HQ_ACLI),
+	OR(
+		NOT($Permission.Airline_HQ_Account_Team_Management),
+		AND(
+			NOT(ISPICKVAL(Type_of__c,&quot;S&quot;)),
+			NOT(ISCHANGED(Type_of__c))
+		),
+		ISPICKVAL(ACLI_Status__c, &apos;Inactive Company&apos;)
+	)
+)</errorConditionFormula>
+        <errorMessage>For Airline HQ, the Sector and Category fields can be updated only if the Type of Operations Code is S, the Acli Status  is &apos;Active Company&apos; and only by the Account Management Team.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>BR_and_SA_Standard_Account_Parent_Id</fullName>
+        <active>true</active>
+        <description>BR and SA Standard Account Parent Id must be filled.</description>
+        <errorConditionFormula>AND($RecordType.Name=&quot;Standard Account&quot;, OR(ISPICKVAL(Sector__c,&apos;Cargo Agent&apos;),ISPICKVAL(Sector__c,&apos;Travel Agent&apos;)), ISBLANK(ParentId), OR(ISPICKVAL(Location_Type__c,&apos;BR&apos;),ISPICKVAL(Location_Type__c,&apos;SA&apos;)))</errorConditionFormula>
+        <errorMessage>Standard Accounts of type BR and SA must have Parent Id filled for Travel and Cargo Agents.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Billing_Address</fullName>
+        <active>false</active>
+        <description>To prevent null values in billing city &amp; country field</description>
+        <errorConditionFormula>AND( 
+$Profile.Name &lt;&gt; &apos;MACS - Administrator&apos;,
+ OR(LEN(BillingCity)&lt;3,LEN( BillingCountry)&lt;3),
+PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c ,
+PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c,
+ Source_System__c &lt;&gt;&apos;AIMS&apos;, Source_System__c &lt;&gt;&apos;SIS&apos;,RecordTypeId&lt;&gt;&apos;01220000000Q3F1&apos;
+)</errorConditionFormula>
+        <errorMessage>Billing City and Billing Country are mandatory fields</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Block_non_AGM_user_from_modifying_agents</fullName>
+        <active>false</active>
+        <description>Avoids AMS data being changed from profiles outside AGM and SF administration.</description>
+        <errorConditionFormula>AND(
+RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+NOT(
+OR(
+$User.ProfileId = &apos;00ew0000001cuCY&apos;,
+$User.ProfileId = &apos;00ew0000001cuCZ&apos;,
+$User.ProfileId = &apos;00ew00000012qoC&apos;,
+$User.ProfileId = &apos;00e20000000h0gF&apos;,
+$User.ProfileId = &apos;00ew0000001R6uT&apos;,
+$User.ProfileId = &apos;00e20000000kvcd&apos;,
+$User.ProfileId = &apos;00e20000001Q8eH&apos;,
+$User.ProfileId = &apos;00ew0000001QUyp&apos;,
+$User.ProfileId = &apos;00e20000001QMpc&apos;,
+$User.ProfileId = &apos;00ew0000001Pj0u&apos;,
+$User.ProfileId = &apos;00ew0000001R6Uk&apos;,
+$User.ProfileId = &apos;00ew0000001QRzE&apos;,
+$User.ProfileId = &apos;00ew0000001QRzF&apos;,
+$User.ProfileId = &apos;00ew0000001QoC9&apos;,
+$User.ProfileId = &apos;00ew0000001QRzG&apos;,
+$User.ProfileId = &apos;00ew0000001QRzD&apos;,
+$User.ProfileId = &apos;00ew0000001QoBp&apos;,
+$User.ProfileId = &apos;00ew0000001QRzC&apos;,
+$User.ProfileId = &apos;00e20000001QJgR&apos;,
+$User.ProfileId = &apos;00e20000001QJSd&apos;,
+$User.ProfileId = &apos;00e20000001QJSs&apos;,
+$User.ProfileId = &apos;00e1r0000021q6N&apos;,
+$User.ProfileId = &apos;00e1r0000021q6S&apos;,
+$User.ProfileId = &apos;00ew0000001R6Za&apos;,
+$User.ProfileId = &apos;00ew0000001R7Ci&apos;)))</errorConditionFormula>
+        <errorMessage>You are not allowed to modify AMS data, Please contact agency management or your system admin</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>CASS_Number_3_Digits</fullName>
+        <active>true</active>
+        <description>The CASS Number must have 3 digits</description>
+        <errorConditionFormula>NOT(OR(ISBLANK(CASS_Number__c) , REGEX(  CASS_Number__c , &quot;[0-9]{3}&quot;)))</errorConditionFormula>
+        <errorMessage>The CASS Number must have 3 digits.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Cannot_change_HO_location_type</fullName>
+        <active>true</active>
+        <description>Cannot change the Location Type from HO or HE to anything else than HE or HO if the account has a financial assessment contact linked to it.</description>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+  ISCHANGED(Location_Type__c),
+  OR (
+    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HO&apos;),
+    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HE&apos;)
+  ),
+  NOT(ISPICKVAL(Location_Type__c, &apos;HO&apos;)),
+  NOT(ISPICKVAL(Location_Type__c, &apos;HE&apos;)),
+  Has_a_Financial_Assessment_Contact__c
+)</errorConditionFormula>
+        <errorMessage>The Location Type of this account cannot be changed from &apos;HO&apos; or &apos;HE&apos; because it has a Financial Assessment Contact linked to it.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>CategoryOtherRequired</fullName>
+        <active>true</active>
+        <description>If Category= Airline, then Category_Other_Value__c must be filled</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Category__c,&quot;Other&quot;),
+Category_Other_Value__c = &quot;&quot;
+)</errorConditionFormula>
+        <errorDisplayField>Category_Other_Value__c</errorDisplayField>
+        <errorMessage>The Category (Other) Value is mandatory if Category is Other</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Comment_Reason_for_creation_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>TEXT(Reason_for_creation__c) = &apos;Other&apos; &amp;&amp;  ISBLANK(Comments_Reason_for_creation__c)</errorConditionFormula>
+        <errorDisplayField>Comments_Reason_for_creation__c</errorDisplayField>
+        <errorMessage>Please fill the Comments field when choosing &quot;Other&quot;</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Comment_data_quality_feedback_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(isnull(Data_quality_feedback__c)) &amp;&amp; ISBLANK(Comment_data_quality_feedback__c)</errorConditionFormula>
+        <errorDisplayField>Comment_data_quality_feedback__c</errorDisplayField>
+        <errorMessage>Please fill the Comment field when choosing a value for Data quality feedback</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Create_Head_office</fullName>
+        <active>true</active>
+        <description>Airline head office accounts can be created only by administrator, please contact your administrator</description>
+        <errorConditionFormula>AND(
+ISNEW(), ISPICKVAL( Field_Head_Office__c , &quot;Headquarter&quot;), 
+ISPICKVAL( Industry, &quot;Airline&quot;),
+NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
+)</errorConditionFormula>
+        <errorMessage>Airline head office accounts can be created only by an administrator</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_AS_Specialist_Prevent_Client_Edit</fullName>
+        <active>true</active>
+        <description>If User is Airline Service Specialist prevent editing Client Accounts</description>
+        <errorConditionFormula>AND( 
+ISPICKVAL($User.EF_User_Role__c, &apos;Airline Services Specialists&apos;), 
+RecordType.Name=&apos;Others&apos; )</errorConditionFormula>
+        <errorMessage>You don&apos;t have the right level of access to edit Client Accounts</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Account_Client_Reactivation</fullName>
+        <active>true</active>
+        <description>E&amp;F Status on Client can be reactivated if the user has the correct setting on his user</description>
+        <errorConditionFormula>AND(
+NOT($User.EF_Client_Reactivation__c),
+OR(ISPICKVAL(EF_Status__c, &apos;Active&apos;), ISPICKVAL(EF_Status__c, &apos;&apos;) ),
+TEXT(PRIORVALUE(EF_Status__c))=&apos;Inactive&apos;,
+RecordType.Name=&apos;Others&apos;
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to reactivate Client accounts for E&amp;F.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Account_Customer_Reactivation</fullName>
+        <active>true</active>
+        <description>E&amp;F Status on Customers can be reactivated if the user has the correct setting on his user</description>
+        <errorConditionFormula>AND(
+NOT($User.EF_Customer_Reactivation__c),  
+OR(ISPICKVAL(EF_Status__c, &apos;Active&apos;), ISPICKVAL(EF_Status__c, &apos;&apos;) ),
+TEXT(PRIORVALUE(EF_Status__c))=&apos;Inactive&apos;,
+OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&apos;, RecordType.Name=&apos;Airline Headquarters&apos;) 
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to reactivate Customer accounts for E&amp;F.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_BlockRemoveSISVerifiedOnOperator</fullName>
+        <active>false</active>
+        <description>Can&apos;t set to false SIS Verified if Record Type is Operator</description>
+        <errorConditionFormula>AND(
+  OR($User.Profile_Name__c == &apos;E&amp;F staff&apos;, $User.Profile_Name__c == &apos;E&amp;F Management&apos;),
+  OR(RecordType.DeveloperName=&apos;Operator&apos;, RecordType.DeveloperName=&apos;Others&apos;),
+  EF_SIS_Code_Verified__c=false 
+)</errorConditionFormula>
+        <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
+        <errorMessage>SIS Verified can&apos;t be unchecked if Record Type is Operator</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_CantSetSISVerifiedIfSISCodeEmpty</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND(
+   EF_SIS_Code_Verified__c=true,
+   OR(ISBLANK(EF_SIS_Code__c), ISBLANK(EF_SIS_Designator__c))
+   
+)</errorConditionFormula>
+        <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
+        <errorMessage>SIS Verified can&apos;t be checked if SIS Accounting Code or SIS Designator are empty</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_MandatoryFields</fullName>
+        <active>true</active>
+        <description>Sets the mandatory fields for E&amp;F Profiles. (E&amp;F Type, E&amp;F Status, E&amp;F Sub-status, E&amp;F Status DAte Change)</description>
+        <errorConditionFormula>AND( 
+ CONTAINS($User.Profile_Name__c, &apos;E&amp;F&apos;),   
+OR(RecordType.DeveloperName=&apos;Standard_Account&apos;, RecordType.DeveloperName=&apos;Others&apos;, RecordType.DeveloperName=&apos;Operator&apos;, 
+RecordType.DeveloperName=&apos;IATA_Airline_BR&apos;,
+RecordType.DeveloperName=&apos;IATA_Airline&apos;),
+OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), AND(ISPICKVAL( EF_Status__c, &quot;Inactive&quot;), ISPICKVAL( EF_SubStatus__c ,&quot;&quot;)), ISNULL(EF_Effective_Date__c) )
+)</errorConditionFormula>
+        <errorMessage>Please fill in E&amp;F Type, E&amp;F Status, E&amp;F Sub-Status, E&amp;F Status Date Change</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_SIS_Location_ID_format_check</fullName>
+        <active>true</active>
+        <description>E&amp;F SIS Location ID just can take values 1 to 99 and Main.</description>
+        <errorConditionFormula>AND(
+NOT(ISBLANK(EF_SIS_Location_ID__c)),
+AND( EF_SIS_Location_ID__c &lt;&gt;&quot;Main&quot;,
+NOT(
+OR(
+REGEX(EF_SIS_Location_ID__c, &quot;[1-9]{1}&quot;),
+REGEX(EF_SIS_Location_ID__c, &quot;[0-9]{2}&quot;)
+)
+)
+)
+)</errorConditionFormula>
+        <errorDisplayField>EF_SIS_Location_ID__c</errorDisplayField>
+        <errorMessage>SIS Location ID just accepts values Main, and numbers from 1 to 99</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Edit_Head_office</fullName>
+        <active>false</active>
+        <description>It is to avoid end user editing head office account information.</description>
+        <errorConditionFormula>AND( 
+NOT( $User.ProfileId = &quot;00e20000000ncPi&quot;), 
+NOT(ISNEW()), 
+ISPICKVAL( Field_Head_Office__c , &quot;Headquarter&quot;), 
+ISPICKVAL( Industry, &quot;Airline&quot;), 
+NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)), 
+PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c , 
+PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c,
+Source_System__c &lt;&gt;&apos;AIMS&apos; 
+)</errorConditionFormula>
+        <errorMessage>Head office account can be edited only by administrator, please contact your administrator</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Enforce_HE_Parent_on_AE_Account</fullName>
+        <active>true</active>
+        <description>AE cannot be a standalone agency (or has an AE as a parent) except for some Status :
+
+&quot;Terminated&quot;, &quot;Not accreditated&quot;,&quot;New application pending&quot; and &quot;Not in Operation&quot;, NULL</description>
+        <errorConditionFormula>OR(
+AND( 
+OR( 
+RecordType.DeveloperName = &apos;Standard_Account&apos;, RecordType.DeveloperName = &apos;IATA_Agency&apos; 
+), 
+TEXT(Location_Type__c) = &apos;AE&apos;, 
+TEXT(Parent.Location_Type__c) &lt;&gt; &apos;HE&apos;, 
+NOT(OR(ISPICKVAL(Status__c, &quot;Terminated&quot;), 
+ISPICKVAL(Status__c, &quot;Not in operation&quot;), 
+ISPICKVAL(Status__c, &quot;New application pending&quot;), 
+ISPICKVAL(Status__c, &quot;Not accreditated&quot;), 
+ISPICKVAL(Status__c, &quot;&quot;) 
+)) 
+),AND(
+TEXT(Location_Type__c) = &apos;AE&apos;, 
+TEXT(Parent.Location_Type__c) = &apos;AE&apos;)
+)</errorConditionFormula>
+        <errorMessage>An Associate Entity (with proper status) must have a parent account with location type HE (or has an AE as a parent)</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Field_Head_Office_Required</fullName>
+        <active>false</active>
+        <description>If Industry = Airline, then Field/Head Office must be filled</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Industry,&quot;Airline&quot;), 
+ISPICKVAL(Field_Head_Office__c,&quot;&quot;),
+PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c ,  
+PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c 
+)</errorConditionFormula>
+        <errorDisplayField>Field_Head_Office__c</errorDisplayField>
+        <errorMessage>The Field/Head Office is mandatory for airlines</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>General_Public_Admin_only</fullName>
+        <active>true</active>
+        <description>Only administrators can edit General Public accounts</description>
+        <errorConditionFormula>AND
+(
+OR
+(CONTAINS(UPPER(Name), &quot;GENERAL PUBLIC&quot;) ||
+TEXT(Sector__c) = &quot;General Public&quot; ||
+ISPICKVAL(PRIORVALUE(Sector__c),&quot;General Public&quot;))
+,
+OR
+(ISCHANGED(Sector__c),
+ISCHANGED(Category__c),
+ISCHANGED(Name),
+ISCHANGED(IATA_ISO_Country__c),
+ISCHANGED(RecordTypeId))
+,
+NOT
+(CONTAINS($Profile.Name, &quot;System Administrator&quot;) || CONTAINS($Profile.Name, &quot;Restricted Profile - automated process&quot;))
+)</errorConditionFormula>
+        <errorMessage>Please contact an administrator if you wish to create or modify a general public account</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>IATACode_IsMandatory</fullName>
+        <active>false</active>
+        <description>Iata code it&apos;s mandatory</description>
+        <errorConditionFormula>AND(
+OR(
+ RecordType.DeveloperName = &apos;IATA_Airline_BR&apos;,
+ RecordType.DeveloperName = &apos;IATA_Airline&apos;), 
+OR( ISBLANK(IATACode__c),ISNULL(IATACode__c))  )</errorConditionFormula>
+        <errorMessage>IATA Code is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ID_Card_Discount_only_on_Key_Account</fullName>
+        <active>true</active>
+        <description>To insert a value on ID Card Key Account Discount, the field Key Account must be set to true.</description>
+        <errorConditionFormula>AND(IDCard_Key_Account__c = false,
+ID_Card_Key_Account_Discount__c &lt;&gt; 0,  NOT(ISNULL(ID_Card_Key_Account_Discount__c)),
+NOT(ISCHANGED(IDCard_Key_Account__c)))</errorConditionFormula>
+        <errorDisplayField>ID_Card_Key_Account_Discount__c</errorDisplayField>
+        <errorMessage>To insert a discount this Account must be a Key Account.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ID_Card_Discount_values</fullName>
+        <active>true</active>
+        <description>The value for the ID Card Key Account Discount must be between 0% and 100%.</description>
+        <errorConditionFormula>AND(NOT(ISNULL(ID_Card_Key_Account_Discount__c)),
+OR(ID_Card_Key_Account_Discount__c &lt; 0,
+ID_Card_Key_Account_Discount__c &gt; 1))</errorConditionFormula>
+        <errorDisplayField>ID_Card_Key_Account_Discount__c</errorDisplayField>
+        <errorMessage>Please insert a value between 0% and 100%.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>If_Member_only_MER_can_Edit</fullName>
+        <active>true</active>
+        <description>If Member only MER can Edit not even coding</description>
+        <errorConditionFormula>if(AND(ISPICKVAL(Membership_status__c,&apos;IATA member&apos;),
+        OR(ISCHANGED(Name),ISCHANGED(BillingStreet),
+          ISCHANGED(BillingCity),ISCHANGED(BillingState),
+          ISCHANGED(BillingCountry),ISCHANGED(BillingPostalCode),
+          ISCHANGED(BillingCountry),ISCHANGED(IATATrainingUrl__c),
+          ISCHANGED(BillingCountry),ISCHANGED(Website),
+          ISCHANGED(IATA_ISO_Country__c)),
+        RecordType.DeveloperName = &apos;IATA_Airline&apos;,
+        NOT($User.Profile_Name__c =&apos;System Administrator&apos;),
+        NOT($User.Profile_Name__c =&apos;MER Membership&apos;),
+        NOT($User.Profile_Name__c =&apos;Account management team&apos;),
+        NOT($User.Profile_Name__c =&apos;System administrator - Stakeholders&apos;),
+        NOT($User.Profile_Name__c =&apos;System Administrator - automated processes&apos;),
+        NOT($User.Profile_Name__c =&apos;Developer&apos;)),       
+        TRUE ,FALSE)</errorConditionFormula>
+        <errorMessage>The airline is a member and the name or the billing address cannot be edited. Only MER is allowed.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Industry_Required</fullName>
+        <active>false</active>
+        <description>To prevent null values in Industry field</description>
+        <errorConditionFormula>and(
+ISPICKVAL(Industry,&apos;&apos;),
+PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c ,
+PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c ,
+NOT  CONTAINS(&quot;administrator&quot;,  $UserRole.Name) ,
+Source_System__c  &lt;&gt; &apos;AIMS&apos;
+)</errorConditionFormula>
+        <errorDisplayField>Industry</errorDisplayField>
+        <errorMessage>Industry is a required field.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Limit_Remittance_Frequency_Options</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(
+
+AND(
+
+ANG_IsNewGenAgency__c,  
+
+NOT(Country_ISO_Code__c  = &apos;BR&apos;),
+
+IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;T&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 1 ),
+
+AND(
+
+ANG_IsNewGenAgency__c,  
+
+Country_ISO_Code__c  = &apos;BR&apos;,
+
+IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;T&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
+
+)</errorConditionFormula>
+        <errorDisplayField>Remittance_frequency__c</errorDisplayField>
+        <errorMessage>The amount of selected options is not valid for this agency.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Location_Type_cannot_choose_HE_or_AE</fullName>
+        <active>true</active>
+        <description>User cannot set location type HE/AE if the location class is not P/D and country is not NewGen.</description>
+        <errorConditionFormula>AND(ISNEW(),OR(ISPICKVAL(Location_Type__c,&apos;HE&apos;),ISPICKVAL(Location_Type__c,&apos;AE&apos;)),OR(NOT(ANG_IsNewGenAgency__c),NOT(OR(ISPICKVAL(Location_Class__c,&apos;P&apos;),ISPICKVAL(Location_Class__c,&apos;D&apos;)))))</errorConditionFormula>
+        <errorMessage>You cannot set location type HE/AE if the location class is not P/D and country is not NewGen.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>MITA_Mandatory_Fields_For_Members</fullName>
+        <active>true</active>
+        <description>Conditions to fit when an account becomes a MITA or BIETA member</description>
+        <errorConditionFormula>AND(OR(ISCHANGED(MITA_Member__c), ISCHANGED(BIETA_Member__c)),
+  OR(
+    MITA_Member__c,
+    BIETA_Member__c
+  ),
+  OR(
+    NOT(ISPICKVAL(ACLI_Status__c,&apos;Active Company&apos;)),
+    Airline_designator__c == &apos;&apos;,
+    AND(IATACode__c == &apos;&apos;, Airline_Prefix__c == &apos;&apos;)
+  )
+)</errorConditionFormula>
+        <errorMessage>For MITA or BIETA Members is mandatory to have the status Active Company, and fill the 2 letters code and IATA code</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Name_Not_Member_and_External_Relations</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND (ISCHANGED( Name ), ($Profile.Name = &apos;MER Membership&apos;), NOT(ISPICKVAL( Membership_status__c , &apos;IATA member&apos;))  )</errorConditionFormula>
+        <errorMessage>You cannot modify non IATA members name</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_tabs_in_VAT_Number</fullName>
+        <active>true</active>
+        <description>Tab character is forbidden in VAT_Number__c field</description>
+        <errorConditionFormula>CONTAINS(VAT_Number__c ,&quot;	&quot;)</errorConditionFormula>
+        <errorDisplayField>VAT_Number__c</errorDisplayField>
+        <errorMessage>Please remove tabs from VAT number.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Parent_Acc_Airline_Designator_Required</fullName>
+        <active>false</active>
+        <description>If Industry = Airline, then Field/Head Office must be filled</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Industry,&quot;Airline&quot;), 
+NOT(ISPICKVAL(Field_Head_Office__c,&quot;Headquarter&quot;)),
+OR( LEN(ParentId)=0, LEN(Airline_designator__c)=0),
+PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c,
+PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c 
+)</errorConditionFormula>
+        <errorMessage>If Industry = Airline, and Field Head Office not = Headquarter, then Parent Account must be filled and Airline Designator must be filled</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Parent_account_is_Airline</fullName>
+        <active>true</active>
+        <errorConditionFormula>Merged_Account__c &lt;&gt; &apos;Merged&apos; &amp;&amp; RecordType.DeveloperName = &apos;IATA_Airline_BR&apos; &amp;&amp; ( Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline_BR&apos; &amp;&amp; Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline&apos;) &amp;&amp; NOT(ICH_Member__c)</errorConditionFormula>
+        <errorDisplayField>ParentId</errorDisplayField>
+        <errorMessage>The parent account must be an airline</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Passenger_Abbreviated_name_lenght</fullName>
+        <active>true</active>
+        <description>Abbreviated name length - 30 Chars to Passenger Agencies and 60 chars to Cargo Agencies</description>
+        <errorConditionFormula>AND( ISPICKVAL(Sector__c,&apos;Travel Agent&apos;)  ,  ISPICKVAL(IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c, &apos;Maestro&apos;),LEN( Abbreviated_name__c) &gt; 30 )</errorConditionFormula>
+        <errorMessage>Abbreviated Name of the Agency has more than 30Chars, 30 is the maximum length.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>PreventEFStatusActiveIfParentInactive</fullName>
+        <active>false</active>
+        <description>If Parent EF_Status is Inactive the child can&apos;t be active.</description>
+        <errorConditionFormula>AND(
+    ISPICKVAL(Parent.EF_Status__c, &apos;Inactive&apos;),
+    ISCHANGED(EF_Status__c),
+    ISPICKVAL(EF_Status__c, &apos;Active&apos;)
+  )</errorConditionFormula>
+        <errorDisplayField>EF_Status__c</errorDisplayField>
+        <errorMessage>Account can&apos;t be Active for E&amp;F becaue Parent E&amp;F Status is Inactive</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Reason_for_creation_is_required</fullName>
+        <active>true</active>
+        <description>Reason for creation is required if airline or agency account</description>
+        <errorConditionFormula>AND((RecordType.Name == &apos;Standard Account&apos;),
+OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Agent&apos;)
+,ISPICKVAL(Industry, &apos;General Sales Agent&apos;)
+,ISPICKVAL(Industry, &apos;Cargo Agent&apos;)), isblank(text(Reason_for_creation__c )))</errorConditionFormula>
+        <errorDisplayField>Reason_for_creation__c</errorDisplayField>
+        <errorMessage>Please select the reason for creation.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Virtual_Branch_Iso_Country</fullName>
+        <active>true</active>
+        <description>For a Virtual Branch Iso Country is mandatory</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;IATA_Airline_BR&apos;, ISPICKVAL( Branch_Type__c , &apos;Virtual&apos;),  ISBLANK(  IATA_ISO_Country__c ) )</errorConditionFormula>
+        <errorMessage>For a Virtual Branch Iso Country is mandatory</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>Address_StandardRecordtype</fullName>
         <active>false</active>
@@ -103021,6 +102262,719 @@ ISPICKVAL(Verification_Status__c, &apos;Partial&apos;),
         <errorDisplayField>Category__c</errorDisplayField>
         <errorMessage>The account needs to have a Sector and a Category.</errorMessage>
     </validationRules>
+    <webLinks>
+        <fullName>APXTConga4__Conga_Composer_OAuth</fullName>
+        <availability>online</availability>
+        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT ***
+
+OAuth buttons require additional setup. Please see the Composer Installation Guide for more details.
+
+COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Composer Configuration Guide for details.</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>660</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Conga Composer (OAuth)</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/apex/APXTConga4__Conga_Composer
+?id={!Account.Id}</url>
+        <width>900</width>
+    </webLinks>
+    <webLinks>
+        <fullName>APXTConga4__Conga_Mail_Merge</fullName>
+        <availability>online</availability>
+        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT ***
+
+COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Conga Configuration Guide for details.</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>false</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>450</height>
+        <isResizable>false</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Conga Composer</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://composer.congamerge.com
+?sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_290}
+&amp;id={!Account.Id}</url>
+        <width>625</width>
+    </webLinks>
+    <webLinks>
+        <fullName>ATWOnline</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>true</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>true</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>ATW Online</masterLabel>
+        <openType>newWindow</openType>
+        <position>fullScreen</position>
+        <protected>false</protected>
+        <showsLocation>true</showsLocation>
+        <showsStatus>true</showsStatus>
+        <url>http://www.atwonline.com/resources/search.html?qs=%22{!Account.Name}
+%22</url>
+    </webLinks>
+    <webLinks>
+        <fullName>AZAirports</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>true</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>true</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>AZ Airports</masterLabel>
+        <openType>newWindow</openType>
+        <position>fullScreen</position>
+        <protected>false</protected>
+        <showsLocation>true</showsLocation>
+        <showsStatus>true</showsStatus>
+        <url>http://www.azworldairports.com/indexes/p-apt.htm</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Account_Map</fullName>
+        <availability>online</availability>
+        <description>Shows location of account in a map</description>
+        <displayType>link</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Account Map</masterLabel>
+        <openType>sidebar</openType>
+        <page>nicepage</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Account_archive</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>sControl</linkType>
+        <masterLabel>Account archive</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <scontrol>Account_archive</scontrol>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+    </webLinks>
+    <webLinks>
+        <fullName>BLND_FormFactoryAccountLink</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>550</height>
+        <linkType>url</linkType>
+        <masterLabel>FormFactory Account Link</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>https://www.dreamfactory.net/sforce/formfactory/formfactory.html? 
+sforce_session_id={!API.Session_ID}&amp; 
+sforce_server_url={!API.Partner_Server_URL_120}&amp; 
+sforce_user_name={!User.Username}&amp; 
+sforce_full_name={!User.Name}&amp; 
+sforce_user_id={!User.Id}&amp; 
+custom_link_name=FormFactory Form Name&amp; 
+myaccount={!Account.Id}&amp; 
+myuser={!User.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Change_my_Account_details</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Change my Account details</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/500/e?00N20000000h1xp=&quot;Accreditation&quot;&amp;00N20000000h23T=&quot;Changes&quot;&amp;cas14=&quot;Changes to my Account&quot;&amp;cas15=&quot;Enter the details of the changes that you want to make.&quot;&amp;cancelURL=/{!Account.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Change_my_Contact_details</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Change my Contact details</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/500/e?00N20000000h1xp=&quot;Accreditation&quot;&amp;00N20000000h23T=&quot;Changes&quot;&amp;cas14=&quot;Changes to my Contact details &quot;&amp;cas15=&quot;Enter the details of the changes that you want to make.&quot;&amp;cancelURL={!Account.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Chatter_Broadcast_Tool</fullName>
+        <availability>online</availability>
+        <description>Designed for the Account Management project, this tool allows to post text messages to the Chatter Feeds of several accounts at a time.</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Chatter Broadcast Tool</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/AMP_ChatterBroadcastTool?accountId={!Account.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>China_Pilot_Conversion_Wizard</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>China Pilot Conversion Wizard</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
+
+var countryIsoCode = &apos;{!Account.Country_ISO_Code__c}&apos;; 
+
+// China Only
+if(countryIsoCode != &apos;CN&apos;){
+    alert(&apos;This functionality is only available for accounts in China&apos;);
+} 
+else if((&apos;{!Account.Location_Type__c}&apos; == &apos;HE&apos; || &apos;{!Account.Location_Type__c}&apos; == &apos;HO&apos; || &apos;{!Account.Location_Type__c}&apos; == &apos;AO&apos;) &amp;&amp; &apos;{!Account.Location_Class__c}&apos; == &apos;D&apos; &amp;&amp; &apos;{!Account.IATACode__c}&apos; != &apos;&apos;) {
+   javascript:srcUp(&quot;/apex/AMS_AccountOSCARWizardPage?accountId={!Account.Id}&amp;NewGenPilot=true&quot;);
+}
+else {
+   alert(&apos;Conditions are not verified to trigger a conversion process on this agent&apos;);
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_Airline_Branch</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Create Airline Branch</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/001/e?retURL=%2F{!Account.Id} 
+&amp;RecordType=012200000004TQC
+&amp;cancelURL=%2F{!Account.Id} 
+&amp;acc3={!Account.Name} 
+&amp;acc2={!Account.Name} 
+&amp;acc3_lkid={!Account.Id} 
+&amp;acc6={!Account.Type}
+&amp;ent=Account 
+&amp;00N20000000pA4m={!Account.Legal_name__c} 
+&amp;00N20000000pA4h={!Account.Airline_designator__c} 
+&amp;00N20000000hrzo={!Account.IATA_Member__c} 
+&amp;00N20000000mApw=Branch
+&amp;00N20000000pA4w={!Account.Membership_status__c}
+&amp;acc7={!Account.Industry}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_GSA_agency</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create GSA agency</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/apex.js&quot; )} 
+
+var connection = sforce.connection; 
+
+var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;); 
+
+var newgsaagency= new sforce.SObject(&quot;Account&quot;); 
+
+newgsaagency.RecordTypeId = recType.Id; 
+newgsaagency.Name = &apos;{!Account.Name}&apos;;
+newgsaagency.Sector__c = &quot;Travel Agent&quot;;
+newgsaagency.Category__c = &quot;GSA General Sales Agent&quot;;
+newgsaagency.Location_Class__c = &quot;G&quot;;
+newgsaagency.Location_Type__c = &quot;HO&quot;;
+newgsaagency.Reason_for_creation__c = &quot;New Agent&quot;;
+
+result = sforce.connection.create([newgsaagency]); 
+var accId = result[0].id;
+
+var airlineId = &apos;{!Account.Id}&apos;; 
+
+javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.GSA.1.0&amp;airlineId=&apos;+airlineId);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_MSO_agency</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create MSO agency</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/apex.js&quot; )}
+
+var connection = sforce.connection;
+
+var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;);
+
+if(&apos;{!Account.Airline_designator__c}&apos; == null || &apos;{!Account.Airline_designator__c}&apos; == &apos;&apos;){
+    alert(&apos;Error: {!$Label.ISSP_AMS_MSO_Request_Issue_Airline_Designator}&apos;);
+    
+}else{
+    var newmsoagency= new sforce.SObject(&quot;Account&quot;);
+
+    newmsoagency.RecordTypeId = recType.Id;
+    newmsoagency.Name = &quot;{!Account.Name}&quot;;
+    newmsoagency.Sector__c = &quot;Travel Agent&quot;;
+    newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
+    newmsoagency.Location_Class__c = &quot;M&quot;;
+    newmsoagency.Location_Type__c = &quot;HO&quot;;
+    newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
+
+    if({!Account.IATA_Member__c} == true) { 
+        newmsoagency.Location_Category__c = &quot;IC&quot;; 
+    } else { 
+        newmsoagency.Location_Category__c = &quot;NI&quot;; 
+    }
+
+    result = sforce.connection.create([newmsoagency]);
+    var accId = result[0].id;
+
+    var airlineId = &apos;{!Account.Id}&apos;;
+
+    if (typeof srcUp == &apos;function&apos;) {	
+		javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);
+	}else{
+		//window.location.href = &apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId;
+        alert(&apos;This option is to use on the console&apos;);
+	}
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>DSE__DS_AccountHierarchyButton</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Account Hierarchy</masterLabel>
+        <openType>sidebar</openType>
+        <page>DSE__DS_AccountHierarchy</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>DSE__DS_Account_Find_Duplicates</fullName>
+        <availability>online</availability>
+        <description>Cloud Customer 360: Search for similar Accounts</description>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Find Duplicates</masterLabel>
+        <openType>sidebar</openType>
+        <page>DSE__DS_AccountScoutPage</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>DSE__DS_Advanced_Hierarchy_View</fullName>
+        <availability>online</availability>
+        <description>Cloud Customer 360: Displays all the related object records for the account</description>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Customer 360 View</masterLabel>
+        <openType>sidebar</openType>
+        <page>DSE__DS_HierarchyRLView</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>DSE__DS_Change_Address_Button</fullName>
+        <availability>online</availability>
+        <description>Cloud Customer 360: displays all related data records for the account</description>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Consolidated View</masterLabel>
+        <openType>sidebar</openType>
+        <page>DSE__DS_CallDataManagerAccount</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Detailed_Hierarchy_View</fullName>
+        <availability>online</availability>
+        <description>Opens the Detailed Hierarchy View VF page, either in a new tab in the console or in the current window in normal view.</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Detailed Hierarchy View</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if(typeof(srcUp)==&apos;function&apos;){
+  srcUp(&apos;/apex/AccountHierarchy?id={!Account.Id}&amp;console=1&apos;);
+} else {
+  window.location.href=&apos;/apex/AccountHierarchy?id={!Account.Id}&apos;;
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>ENZ__AttachFTP</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>350</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Attach (FTP)</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.enzigma.com/sforce/ftp/Attach.aspx?FieldName=ENZ__Account__c&amp;FieldValue={!Account.Id}&amp;OrgID={!Organization.Id}&amp;SFUrl={!API.Partner_Server_URL_70}&amp;SFSessionID={!API.Session_ID}</url>
+        <width>500</width>
+    </webLinks>
+    <webLinks>
+        <fullName>EasyUpload</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>EasyUpload</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/EasyUploadAttachment?parentId={!Account.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>FinancialDataHoovers</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>true</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Financial Data - Hoovers</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>http://www.hoovers.com/free/search/simple/xmillion/index.xhtml?page=1&amp;query_string={!Account_Name}&amp;which=company</url>
+        <width>600</width>
+    </webLinks>
+    <webLinks>
+        <fullName>Financialprofile</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Financial profile</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>http://search.hoovers.com/free/search/simple/xmillion/index.xhtml?which=company&amp;query_string={!Account_Name}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>FindScripts</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Find Scripts</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/appex/app.jsp?appParam=CallScripting&amp;page=account_list&amp;call_sid={!API_Session_ID}&amp;call_url={!API_Partner_Server_URL_70}&amp;eid={!Account_ID}&amp;Account_ID={!Account_ID}&amp;Account_Name={!Account_Name}&amp;Account_NumberOfEmployees={!Account_NumberOfEmployees}&amp;Account_Industry={!Account_Industry}&amp;Account_AnnualRevenue={!Account_AnnualRevenue}&amp;Account_BillingCity={!Account_BillingCity}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Google</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>true</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>true</hasToolbar>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Google</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>true</showsLocation>
+        <showsStatus>true</showsStatus>
+        <url>http://www.google.com/search?hl=en&amp;ie=UTF-8&amp;oe=UTF-8&amp;q={!Account_Name}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>HelpforScripts</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Help for Scripts</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/servlet/servlet.FileDownload?file=015200000002o5K</url>
+        <width>600</width>
+    </webLinks>
+    <webLinks>
+        <fullName>Key_Account_Plan</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Account Plan</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/apex/AMP_KeyAccountPlan?accountId={!Account.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Map</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Map</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>http://maps.google.com/maps?q={!Account_FullBillingAddress}%20{!Account_BillingCity}%20{!Account_BillingState}%20{!Account_BillingPostalCode}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>NewRelatedAccount</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>New Airline Branch</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/apex/NewRelatedAccount?accID={!Account.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Related_Contact_ICCSEmail_Activity_History</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Related Contact ICCS Email Activity History</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://iata--iccs.cs18.my.salesforce.com/00O11000000O2EG?drilldown=1&amp;drillcol=0721100000054gf&amp;drillval={!Account.Id}&amp;drillop=equals</url>
+    </webLinks>
+    <webLinks>
+        <fullName>ScheduleFollowup</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Schedule Follow-up</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/00T/e?retURL=%2F{!Account.Id}&amp;what_id={!Account.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Start_Oscar_Wizard</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Start Oscar Wizard</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>javascript:srcUp(&quot;/apex/AMS_AccountOSCARWizardPage?accountId={!Account.Id}&quot;);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>SuperpagesUSA</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Superpages - USA</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>http://yellowpages.superpages.com/listings.jsp?C=&amp;N={!Account_Name}&amp;T2=&amp;select=&amp;R=N&amp;search22=Find+It&amp;SRC2=&amp;STYPE=S&amp;PG=L</url>
+    </webLinks>
+    <webLinks>
+        <fullName>VisualOrgChart</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Visual Org Chart</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.dreamfactory.com/orgview/orgview.html?
+sessionid={!API.Session_ID}&amp;
+serverurl={!API.Partner_Server_URL_60}&amp;
+username={!User.Username}&amp;
+fullname={!User.Name}&amp;
+linkid={!Account.Id}&amp;
+userid={!User.Id}</url>
+        <width>800</width>
+    </webLinks>
+    <webLinks>
+        <fullName>Web_App_View</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Account Profile &gt;</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>https://{! MID($Api.Partner_Server_URL_370, 9, FIND( &apos;.&apos;, $Api.Partner_Server_URL_370 )-9 ) }.lightning.force.com/c/AccountProfile.app?accountId={!Account.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Zuora__Sync_Data_from_ZBilling</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Sync Data from ZBilling</masterLabel>
+        <openType>noSidebar</openType>
+        <page>Zuora__AccountOnDemandSync</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>account_exception_report</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>sControl</linkType>
+        <masterLabel>account exception report</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <scontrol>account_exception_report</scontrol>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+    </webLinks>
+    <webLinks>
+        <fullName>pi__Send_Pardot_Emails</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Send Engage Email</masterLabel>
+        <openType>sidebar</openType>
+        <page>pi__MicroCampaignPersonAccount</page>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+    </webLinks>
+    <webLinks>
+        <fullName>pi__Send_Single_Pardot_Email</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Send Engage Email</masterLabel>
+        <openType>sidebar</openType>
+        <page>pi__MicroCampaignSinglePersonAccount</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>pi__Send_To_Prospect_Insight</fullName>
+        <availability>online</availability>
+        <description>Send this Person Account to Pardot</description>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Send To Pardot</masterLabel>
+        <openType>sidebar</openType>
+        <page>pi__PardotAccountSendToPardot</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>zqu__New_Quote</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>New Quote</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>{!URLFOR($Site.BaseRequestUrl+&apos;/apex/zqu__QuoteOption&apos;, null)}?crmAccountId={!Account.Id}&amp;retUrl=/{!Account.Id}</url>
+    </webLinks>
     <webLinks>
         <fullName>Account_Context_Activation</fullName>
         <availability>online</availability>
