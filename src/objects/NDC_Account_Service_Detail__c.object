@@ -143,6 +143,14 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Live_on_NDC__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Live on NDC</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>NDC_Airline_Profile__c</fullName>
         <description>Is Airline Profile implemented?</description>
         <externalId>false</externalId>
