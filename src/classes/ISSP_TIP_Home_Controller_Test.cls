@@ -93,7 +93,7 @@ private class ISSP_TIP_Home_Controller_Test {
         Account_Contact_Role__c acr = new Account_Contact_Role__c();
         acr.Account__c = parent.id;
         acr.Account_Role__c = ar.id;
-        acr.Portal_Contact_Roles__c = contactRole.Id;
+        acr.Contact_Roles__c = contactRole.Id;
         acr.RecordTypeId = functionalRecordTypeId;
         acr.Contact_Role__c = 'Primary Contact';
         acr.Contact__c = con.Id;
