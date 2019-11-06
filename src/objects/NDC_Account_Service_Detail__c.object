@@ -534,17 +534,17 @@
                 <value>
                     <fullName>OTA</fullName>
                     <default>false</default>
-                    <label>Online Travel Agency</label>
+                    <label>OTA</label>
                 </value>
                 <value>
                     <fullName>TMC</fullName>
                     <default>false</default>
-                    <label>Travel Management Company</label>
+                    <label>TMC</label>
                 </value>
                 <value>
                     <fullName>OBT</fullName>
                     <default>false</default>
-                    <label>Online Booking Tool</label>
+                    <label>OBT</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -566,7 +566,7 @@
                 <value>
                     <fullName>Not Applicable</fullName>
                     <default>false</default>
-                    <label>No Servicing</label>
+                    <label>Not Applicable</label>
                 </value>
                 <value>
                     <fullName>Voluntary</fullName>
