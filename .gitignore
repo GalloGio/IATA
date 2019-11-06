@@ -410,3 +410,4 @@ sfdx-project.json
 .forceCode/
 .sfdx/
 .vscode/
+src/lwc/jsconfig.json
