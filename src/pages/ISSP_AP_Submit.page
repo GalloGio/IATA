@@ -349,23 +349,32 @@
                     </apex:outputPanel>
                 </apex:pageBlockSection>
 
-                <apex:pageBlockSection columns="1" collapsible="false" rendered="{!AND(NOT(IsSISMember),listSISTypes.size>0)}">
+                <apex:pageBlockSection columns="1" collapsible="false" rendered="{!AND(NOT(IsSISMember),OR(ShowISPAForm,ShowISUAForm))}">
                     <apex:facet name="header">
                         <apex:outputpanel >
                             {!$Label.ISSP_SIS_Membership_Participation_Agreement}
                         </apex:outputpanel>
                     </apex:facet>
-                    <apex:repeat value="{!listSISTypes}" var="sisType" >
-                        <apex:outputPanel>
-                            <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
-                            <apex:outputLink value="/ISSP_SISMembershipApplicationFormPDF?id={!newForm.Id}&sistype={!sisType}" style="color:#31708f; text-decoration: underline;" target="_new">
-                                Download SIS application Form ({!sisType})
-                            </apex:outputLink>
-                            <apex:outputText value="  (please download and sign this agreement if you are applying to the ICH as an Airline)" rendered="{!sisType=='ISPA'}"/>
-                        </apex:outputPanel>
-                    </apex:repeat>
-                    <apex:iframe scrolling="false" height="180px"
-                    src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Upload signed SIS participation form&reqDescription=&reqIdentifier=SignedSISForm"/>
+                    
+                    <!-- ISPA form -->
+                    <apex:outputPanel rendered="{!ShowISPAForm}">
+                        <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
+                        <apex:outputLink value="/ISSP_SISMembershipApplicationFormPDF?id={!newForm.Id}&sistype=ISPA" style="color:#31708f; text-decoration: underline;" target="_new">
+                            Download SIS application Form (ISPA)
+                        </apex:outputLink>
+                        <apex:outputText value="  (please download and sign this agreement if you are applying to the ICH as an Airline)"/>
+                        <apex:iframe scrolling="false" height="180px"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Upload signed SIS participation form (ISPA)&reqDescription=&reqIdentifier=SignedSISISPAForm"/>
+                    </apex:outputPanel>
+
+                    <!-- ISUA form -->
+                    <apex:outputPanel rendered="{!ShowISUAForm}">
+                        <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
+                        <apex:outputLink value="/ISSP_SISMembershipApplicationFormPDF?id={!newForm.Id}&sistype=ISUA" style="color:#31708f; text-decoration: underline;" target="_new">
+                            Download SIS application Form (ISUA)
+                        </apex:outputLink>
+                    </apex:outputPanel>
+
                 </apex:pageBlockSection>
 
                 <!-- Accept Discalimer -->

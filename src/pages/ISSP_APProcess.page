@@ -125,7 +125,7 @@
                                                 <li><strong>Sponsored Airline:</strong> An Airline whose revenue accounting functions are performed by an IATA Member Airline</li>
                                                 <li><strong>Sponsored Associates:</strong> A Non-Airline whose revenue accounting functions are performed by an IATA Member Airline</li>
                                                 <li><strong>Associate Member:</strong> a Non-Airline who is providing services to Members of the IATA Clearing House</li>
-                                                <li><strong>Associate Member - Subsidiary:</strong> A Non-Airline who is providing services and who is a Subsidiary of an IATA Member Airline who participates in the IATA Clearing House</li>
+                                                <li><strong>Associate Member - Subsidiary:</strong> An Associate or an Airline who is providing services and who is a Subsidiary of an IATA Member Airline who is an active member of the IATA Clearing House</li>
                                                 <li><strong>Associate Member - Aggregator:</strong> An Aggregator Member is an Associate Member who participates in the IATA Clearing House and has Associate Subsidiaries participating under the responsibility of the parent organization</li>
                                             </ul>
                                         </p>

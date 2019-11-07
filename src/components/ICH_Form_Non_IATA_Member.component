@@ -641,6 +641,7 @@
         /> Please download and complete the ICH Bank Mandate form in the link below, and upload using the box:
         <apex:outputPanel layout="block" rendered="{!ctrl.ICHBankMandateFormUrl!=null}">
             <apex:outputLink value="{!ctrl.ICHBankMandateFormUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!ctrl.ICHBankMandateFormName}</apex:outputLink>
+            <apex:outputText value="  (Please use the same download file link for both bank mandate file uploads)" rendered="{!show2bankMandate}" />
         </apex:outputPanel>
     
         <!-- Bank Mandate upload for GBP, EUR and USD -->

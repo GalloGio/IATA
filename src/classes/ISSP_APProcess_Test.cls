@@ -91,6 +91,8 @@ private class ISSP_APProcess_Test
             insert new ISSP_CS__c(Name='ISSP_APProcess_New_Countries', Value__c='CH');
             ctrl.getIsNewCountryProcess();
             ctrl.getListSISTypes();
+            ctrl.getShowISPAForm();
+            ctrl.getShowISUAForm();
         }
         Test.stopTest();
 
@@ -1643,6 +1645,12 @@ private class ISSP_APProcess_Test
             ctrl.getCASSCounterIndemnityAgreementName();
             ctrl.getCASSFormOfApplicacionConcurrenceUrl();
             ctrl.getCASSFormOfApplicacionConcurrenceName();
+            ctrl.getICHBankMandateFormUrl();
+            ctrl.getICHBankMandateFormName();
+            ctrl.getSISBankMandateFormUrl();
+            ctrl.getSISBankMandateFormName();
+            ctrl.getAdditionalSignatoryFormUrl();
+            ctrl.getAdditionalSignatoryFormName();
             ctrl.securityCheck();
             ctrl.getShowJoinICCSQuestion();
             ctrl.getShowJoinICCS();
@@ -1736,7 +1744,7 @@ private class ISSP_APProcess_Test
             ctrl.getICHCurrencyClearanceOptions();
             ctrl.getIsSISMember();
             ctrl.getIsValidDueDiligence();
-            ctrl.strAreaType='Airline Joining';
+            ctrl.newCase.CaseArea__c='Airline Joining';
             ctrl.isBSP = true;
             ctrl.isCASS = false;
             ctrl.getApp();
@@ -1749,11 +1757,11 @@ private class ISSP_APProcess_Test
             ctrl.isICH = true;
             ctrl.getApp();
             ctrl.getPageTitle();
-            ctrl.strAreaType='Airline Change';
-            ctrl.strChangeType='Minor database changes';
+            ctrl.newCase.CaseArea__c='Airline Change';
+            ctrl.newCase.Reason1__c='Minor database changes';
             ctrl.getApp();
             ctrl.getPageTitle();
-            ctrl.strChangeType='Bank Account Instructions';
+            ctrl.newCase.Reason1__c='Bank Account Instructions';
             ctrl.getApp();
             ctrl.getPageTitle();
             ctrl.getPageTitle();

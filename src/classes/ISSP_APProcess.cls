@@ -1197,8 +1197,8 @@ global without sharing class ISSP_APProcess {
         }
         if (isICH) {
             listMandatoryFiles.add('SignedICHForm');
-            if (!getIsSISMember() && !getListSISTypes().isEmpty()) {
-                listMandatoryFiles.add('SignedSISForm');
+            if (!getIsSISMember() && getShowISPAForm()) {
+                listMandatoryFiles.add('SignedSISISPAForm');
             }
         }
         System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
@@ -2531,6 +2531,20 @@ global without sharing class ISSP_APProcess {
             }
         }
         return listTypes;
+    }
+
+    /**
+        Return true is the ICH form must show a SIS ISPA form
+    **/
+    public Boolean getShowISPAForm() {
+        return (getIsICHType_IATAMember() || getIsICHType_NonIATAMember() || getIsICHType_AssociateSubsidiary() || getIsICHType_SponsoredAirline());
+    }
+
+    /**
+        Return true is the ICH form must show a SIS ISUA form
+    **/
+    public Boolean getShowISUAForm() {
+        return (getIsICHType_SponsoredAssociates() || getIsICHType_AssociateSubsidiary() || getIsICHType_AssociateSP() || getIsICHType_AssociateAggregator());
     }
 
     //dummy method to be remoded
