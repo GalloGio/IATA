@@ -512,7 +512,7 @@ global class ANG_RME_Alert_Service {
 		req.setTimeout(120000);
         if(!String.isBlank(locType)){
             Boolean isGE = (locType == AMS_Utils.GE);
-            req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode).replace('{offerId}',offerId) + '?client_id=' + params.client_id__c + '&client_secret=' + params.client_secret__c + '&isGE=' + isGE);
+            req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode).replace('{offerId}',offerId) + '?client_id=' + params.client_id__c + '&client_secret=' + params.client_secret__c + '&isGe=' + isGE);
         } else {
             req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode).replace('{offerId}',offerId) + '?client_id=' + params.client_id__c + '&client_secret=' + params.client_secret__c );
         }
