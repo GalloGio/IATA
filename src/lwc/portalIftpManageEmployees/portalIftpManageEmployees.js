@@ -274,6 +274,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
         this.showSearchCriteria = false;
         this.loading = true;
         this.initData();
+        this.handleSearchButtonClick();
     }
 
     /***********************************************************
@@ -308,7 +309,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
         this.showSearch = true;
         if(this.auxSearchValues.stationCode === 'Not Allocated' || this.auxSearchValues.stationCode === null){
             isNotAllocated = true;
-            this.stationValue = null;
             this.auxSearchValues.stationCode = null;
         }
         getITPEmployeesWithStationsInfo({searchValues: this.auxSearchValues, origin: 'Manage Employees'})
@@ -1006,7 +1006,6 @@ export default class PortalIftpManageEmployees extends LightningElement {
                     let mode;
                     
                     if(result.succeeded){
-                        //refreshApex(this.wiredITPEmployeesWithStationsInfoResult);
                         this.handleSearchButtonClick();
                         variant = 'success';
                         mode = 'pester';

@@ -278,7 +278,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 												Address__r.City__c,
 												Contact_Role_Certification__r.Certification__r.Name,
 												Proficiency_level__c,
-												Proficiency_Granted_By__c
+												Proficiency_Granted_By__c,
+												Proficiency_Status__c
 											FROM Role_Address__c
 											WHERE Account_Contact_Role__c = :auxAccContRol.Id
 											OR Contact_Role_Certification__r.Account_Contact_Role__c = :auxAccContRol.Id];
@@ -294,7 +295,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 																		);
 						IftpHistoryRecordsStopStation.add(ihrec);
 					} else {
-						if(String.isNotBlank(rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c)){
+						if(String.isNotBlank(rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c) && rolAddr.Proficiency_Status__c.equalsIgnoreCase('ACTIVE')){
 							ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Loose_Proficiency,
 																				rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c,
 																				rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c,
