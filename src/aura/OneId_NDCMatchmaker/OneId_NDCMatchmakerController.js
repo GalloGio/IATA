@@ -84,6 +84,7 @@
     	$A.util.removeClass(component.find("NDC_Forms_of_Remittance_and_Settlement__c"), "none");
     	$A.util.removeClass(component.find("NDC_Products_and_Services__c"), "none");
     	$A.util.removeClass(component.find("NDC_Type_of_Connectivity__c"), "none");
+		$A.util.removeClass(component.find("Live_on_NDC__c"), "none");
     	$A.util.removeClass(component.find("NDC_Rich_Content__c"), "none");
     	$A.util.removeClass(component.find("NDC_Rich_Content_Types__c"), "none");
     	$A.util.removeClass(component.find("NDC_Personalisation__c"), "none");

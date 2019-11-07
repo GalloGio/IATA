@@ -99,6 +99,7 @@
                 <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
                     <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Seller_Type__c" /></lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Type_of_Connectivity__c" /></lightning:layoutItem>
+                    <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="Live_on_NDC__c" /></lightning:layoutItem>
                 </aura:if>
                 <div class="slds-m-top_medium">
                     <lightning:button disabled="{!v.disabled}" variant="brand" onclick="{! c.handleEdit}" name="edit" label="Edit" />
@@ -228,6 +229,9 @@
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small">
                         <lightning:inputField class="customRequired none" aura:id="NDC_Type_of_Connectivity__c" fieldName="NDC_Type_of_Connectivity__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="6" padding="horizontal-small">
+                        <lightning:inputField class="customRequired none" aura:id="Live_on_NDC__c" fieldName="Live_on_NDC__c" />
                     </lightning:layoutItem>
                 </aura:if>
                 <div class="slds-m-top_medium">
