@@ -32,8 +32,6 @@ import CSP_EmailAddress from '@salesforce/label/c.Email_address';
 
 export default class PortalHomeCalendar extends LightningElement {
 
-    @api isExpired = false;
-
     @track loading = true;
     @track caseDetails ;
 
@@ -42,12 +40,11 @@ export default class PortalHomeCalendar extends LightningElement {
     @track lstRecipients = [];
     @track newRecipient = '';
     @track haveRecipients = false;
+    
     @api isExpired = false;
     @track expiredCard;
     @track CaseStatusClass = '';
     @track surveyLink;
-
-    @track expiredCard;
 
     @track pendingCustomerCase = false;
     pendingCustomerCaseWarningLabel = CSP_PendingCustomerCase_Warning;
