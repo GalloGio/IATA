@@ -1034,6 +1034,11 @@ public without sharing class ISSP_AMS_Accreditation {
     public ISSP_AMS_Accreditation(ISSP_AddAttachment attachCtrl) {
         isNoticeOfChange = false;
         newAccreditationModels = false;
+		isMultiCountryNewAE = false;
+
+		if (ApexPages.currentPage().getParameters().containsKey('isMultiCountryNewAE')) {
+			isMultiCountryNewAE = Boolean.valueOf(ApexPages.currentPage().getParameters().get('isMultiCountryNewAE'));
+		}
 
         popContact();  //Get the contact details of currently logged in user
 
