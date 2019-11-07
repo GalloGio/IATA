@@ -9,12 +9,9 @@
 
 .arrowExpanded{
     transform: rotate(90deg);
-}.linkColor {
-    color: #337ab7;
 }
 
 .linkColor:hover {
-    color: #337ab7;
     text-decoration: underline;
     cursor: pointer;
 }
@@ -23,4 +20,7 @@
 }
 .a {
     color: blue;
+}
+.documentsAccordionTransition {
+    transition: height 0.8s ease;
 }
