@@ -344,6 +344,27 @@ public class PowerBI_Embedded_Container_CTRL_TEST {
     }
 
     @IsTest
+    private static void checkSessionListCacheCoverageTest() {
+        //can not be tested during deployment as session cache does not exist. Making coverage
+        Boolean presentInCache;
+        Test.startTest();
+        presentInCache = PowerBI_Embedded_Dashboard_List_CTRL.checkSessionCache(UserInfo.getUserId(), 'checkSessionCacheCoverageTest');
+        Test.stopTest();
+        System.assertEquals(false, presentInCache, 'Key is not preset in cache');
+    }
+    
+    @IsTest
+    private static void checkSessionContainerCacheCoverageTest() {
+        //can not be tested during deployment as session cache does not exist. Making coverage
+        Boolean presentInCache;
+        Test.startTest();
+        presentInCache = PowerBI_Embedded_Container_CTRL.checkSessionCache(UserInfo.getUserId(), 'checkSessionCacheCoverageTest');
+        Test.stopTest();
+        System.assertEquals(false, presentInCache, 'Key is not preset in cache');
+    }
+
+
+    @IsTest
     private static void getCategories_noAccessToWorkspaceTest() {
         List<User> myOtherUser = [select Id from User WHERE UserRole.Name = 'IATA Information Technology Services' AND UserPermissionsSFContentUser=true AND IsActive = true LIMIT 2];
         List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];

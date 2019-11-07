@@ -245,11 +245,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>GADM_Account_Service_Detail__c.Account_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>GADM_Account_Service_Detail__c.Account_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -311,11 +306,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>GADM_Account_Service_Detail__c.IATA_Member__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>GADM_Account_Service_Detail__c.IOSA_ISAGO__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
