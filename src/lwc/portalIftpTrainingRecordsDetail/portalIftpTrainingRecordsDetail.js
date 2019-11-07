@@ -405,7 +405,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         .then(results => {
             if(results && results.length > 0) {
                 this.data = results;
-                console.log('### this.data ' , this.data);
                 this.dataRecords = true;
             } else {
                 this.dataRecords = false; 
