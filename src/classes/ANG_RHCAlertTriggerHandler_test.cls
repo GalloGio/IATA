@@ -2,7 +2,7 @@
 private class ANG_RHCAlertTriggerHandler_test {
 
 	@testSetup static voId setup(){
-		
+
 		System.runAs(new User(Id = UserInfo.getUserId())){
 			insert new EmailTemplate(
 				isActive = true,
@@ -26,8 +26,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 			);
 
 		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-FR');
-	    insert iss;
-		
+		insert iss;
+
 		// Create a new ISO Country
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true, AMS_Settlement_System__c = iss.id);
 		IATA_ISO_Country__c defCountry = new IATA_ISO_Country__c(Name = 'All Countries', ISO_Code__c = ANG_RHCAlertTriggerHandler.DEFAULT_CODE, ANG_Enable_NewGen__c = true);
@@ -56,10 +56,10 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		// create a reception case
 		Case c = new Case(
-			Subject = 'rception case', 
-			AccountId = a.Id, 
-			Status = 'Open', 
-			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'InternalCasesEuropeSCE') 
+			Subject = 'rception case',
+			AccountId = a.Id,
+			Status = 'Open',
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'InternalCasesEuropeSCE')
 		);
 		insert c;
 
@@ -74,25 +74,25 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		// Create a new Financial Institution
 		Financial_Institution__c fi = new Financial_Institution__c(
-			Name = 'Test', 
-			Region__c = 'Europe', 
-			Country__c = 'Portugal', 
+			Name = 'Test',
+			Region__c = 'Europe',
+			Country__c = 'Portugal',
 			Institution_Type__c = 'Bank'
 			);
 		insert fi;
 
 		Financial_Security__c fs = new Financial_Security__c(
-			Region__c = 'Europe', 
-			Security_status__c = 'Active', 
-			Account__c = a.Id, 
-			CurrencyIsoCode = 'EUR', 
+			Region__c = 'Europe',
+			Security_status__c = 'Active',
+			Account__c = a.Id,
+			CurrencyIsoCode = 'EUR',
 			Security_Type__c = 'CCG',
 			Amount__c = 100,
-			Expiry_date__c = Date.today().addYears(2), 
+			Expiry_date__c = Date.today().addYears(2),
 			Financial_Institution__c = fi.Id,
-			ValIdity_Start_Date__c = Date.today().addDays(-2), 
-			Reception_Case__c = c.Id, 
-			Reception_Date__c = Date.today(), 
+			ValIdity_Start_Date__c = Date.today().addDays(-2),
+			Reception_Case__c = c.Id,
+			Reception_Date__c = Date.today(),
 			Reasonforrequest__c = 'New Application'
 			);
 		insert fs;
@@ -109,7 +109,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		insert att;
 
 
-		
+
 		List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>{
 			new AMS_ChangeCodes__c(
 				Name = 'FOP', Change_Code__c = 'FOP', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Card payment methods are reinstated.'
@@ -145,7 +145,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		Contact contact = new Contact(
 			FirstName = 'test',
-			LastName = 'test', 
+			LastName = 'test',
 			AccountId = [SELECT Id FROM Account][0].Id,
 			User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM,
 			email = 'testiata@yopmail.com'
@@ -165,7 +165,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		String processRecorType = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'CS_Process_IDFS_ISS');
 
 		System.assertEquals(0, [SELECT Id FROM Case WHERE RecordTypeId = :processRecorType].size(), 'No process should be created at this time');
-		
+
 		insert ara;
 
 
@@ -178,14 +178,14 @@ private class ANG_RHCAlertTriggerHandler_test {
 	private static testmethod voId test_sucess_newgen(){
 
 		Test.startTest();
-		
+
 		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'FR'];
 		country.ANG_Enable_NewGen__c = true;
 		update country;
 
 		Contact contact = new Contact(
 			FirstName = 'test',
-			LastName = 'test', 
+			LastName = 'test',
 			AccountId = [SELECT Id FROM Account][0].Id,
 			User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM,
 			email = 'testiata@yopmail.com'
@@ -202,7 +202,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
-		
+
 
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
@@ -238,13 +238,13 @@ private class ANG_RHCAlertTriggerHandler_test {
 	private static testmethod void createScenario1(){
 
 		/*
-			SCENARIO 1: 
-		- Accredited HE with accr. model = cash and FoP cash active 
-		- A 100% UP risk alert is created so Cash FoP will be deactivated 
-		- A 100% DOWN risk alert is created 
+			SCENARIO 1:
+		- Accredited HE with accr. model = cash and FoP cash active
+		- A 100% UP risk alert is created so Cash FoP will be deactivated
+		- A 100% DOWN risk alert is created
 
-		EXPECTED RESULT 
-		Cash will be restored 
+		EXPECTED RESULT
+		Cash will be restored
 
 		*/
 
@@ -257,7 +257,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
 		insert authorizations;
-		
+
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
@@ -272,7 +272,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		System.assertEquals('Non-Active', aa.Status__c);
 
 		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
-		
+
 		ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
@@ -290,14 +290,14 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 	private static testmethod voId scenario2Test(){
 
-		/*TEST SCENARIO 2: 
-			
-			- Accredited HE with accr. model = cash and FoP cash active 
-			- A 100% UP risk alert is created so Cash FoP will be deactivated 
-			- A 50% DOWN risk alert is created 
+		/*TEST SCENARIO 2:
 
-			EXPECTED RESULT 
-			Cash will be restored 
+			- Accredited HE with accr. model = cash and FoP cash active
+			- A 100% UP risk alert is created so Cash FoP will be deactivated
+			- A 50% DOWN risk alert is created
+
+			EXPECTED RESULT
+			Cash will be restored
 			*/
 
 			Test.startTest();
@@ -348,17 +348,17 @@ private class ANG_RHCAlertTriggerHandler_test {
 		private static testmethod voId scenario3Test(){
 
 		/*
-		SCENARIO 3: 
-		- Accredited HE with accr. model = cash and FoP cash active 
-		- A 100% UP risk alert is created so Cash FoP will be deactivated 
-		- A 75% DOWN risk alert is created 
+		SCENARIO 3:
+		- Accredited HE with accr. model = cash and FoP cash active
+		- A 100% UP risk alert is created so Cash FoP will be deactivated
+		- A 75% DOWN risk alert is created
 
-		EXPECTED RESULT 
-		Cash will be restored 
+		EXPECTED RESULT
+		Cash will be restored
 		*/
 
 		Test.startTest();
-		
+
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
@@ -405,14 +405,14 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 	private static testmethod voId scenario4Test(){
 
-		/*SCENARIO 4: 
-		- Accredited HE with accr. model = cash and FoP cash active 
-		- A FoP OSCAR case is created and processed to restrict cash 
-		- A 100% DOWN risk alert is created 
+		/*SCENARIO 4:
+		- Accredited HE with accr. model = cash and FoP cash active
+		- A FoP OSCAR case is created and processed to restrict cash
+		- A 100% DOWN risk alert is created
 
-		EXPECTED RESULT 
-		Cash will NOT be restored 
-		*/ 
+		EXPECTED RESULT
+		Cash will NOT be restored
+		*/
 
 		Test.startTest();
 
@@ -457,19 +457,19 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 	private static testmethod voId scenario5Test(){
 
-		/*	
-		SCENARIO 5: 
+		/*
+		SCENARIO 5:
 
-		- Accredited HE with accr. model = cash and FoP cash active 
-		- A FoP OSCAR case is created and processed to restrict cash 
-		- A 50% DOWN risk alert is created 
-		- A 75% DOWN risk alert is created 
-		- A 100% DOWN risk alert is created 
+		- Accredited HE with accr. model = cash and FoP cash active
+		- A FoP OSCAR case is created and processed to restrict cash
+		- A 50% DOWN risk alert is created
+		- A 75% DOWN risk alert is created
+		- A 100% DOWN risk alert is created
 
-		EXPECTED RESULT 
-		Cash will NOT be restored 
+		EXPECTED RESULT
+		Cash will NOT be restored
 
-		*/ 
+		*/
 
 		Test.startTest();
 
@@ -483,7 +483,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
 		insert authorizations;
-		
+
 		AMS_OSCAR__c oscar = createOscarFOP();
 
 		ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false ,true);
@@ -534,18 +534,18 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 
 		/*
-		SCENARIO 6: 
-		- Accredited HE with accr. model = cash and FoP cash active 
-		- A 100% UP risk alert is created so Cash FoP will be deactivated 
-		- A 50% DOWN risk alert is created 
-		- Here as in SCENARIO 2 cash is restored 
-		- A FoP OSCAR case is created and processed to restrict cash 
-		- A 75% DOWN risk alert is created 
+		SCENARIO 6:
+		- Accredited HE with accr. model = cash and FoP cash active
+		- A 100% UP risk alert is created so Cash FoP will be deactivated
+		- A 50% DOWN risk alert is created
+		- Here as in SCENARIO 2 cash is restored
+		- A FoP OSCAR case is created and processed to restrict cash
+		- A 75% DOWN risk alert is created
 
-		EXPECTED RESULT 
-		Cash will NOT be restored (because the previous RHC alert was a 50% down and not a 100% up) 
+		EXPECTED RESULT
+		Cash will NOT be restored (because the previous RHC alert was a 50% down and not a 100% up)
 		*/
-		
+
 
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
 
@@ -586,8 +586,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
 
-		System.assertEquals('Active', aa.Status__c);		
-        
+		System.assertEquals('Active', aa.Status__c);
+
 		AMS_OSCAR__c oscar = createOscarFOP();
 
 		ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false ,true);
@@ -640,7 +640,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 		insert oscarCase;
-	
+
 		ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Head_Entity_Standard_no_Cash');
 
 		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
@@ -665,7 +665,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		ID personRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
-		AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = theAccreditation.Id, 
+		AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = theAccreditation.Id,
 			First_name__c='Bugs', Last_name__c='Bunny', Agency_owner__c = true, Email__c='bugsandbunny@imagsd.com' , PhoneNational__c = '123123123',
 			Phone__c='123123123', Contact__c = co1.Id, Financial_interest__c = 100, RecordTypeId=personRT);
 
@@ -679,174 +679,174 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 	private static testmethod void testTicketingAuthorityRemoval(){
 
-    	Account a = [Select Id, Remittance_frequency__c from Account limit 1];
-    	System.debug('##Account: '+ a.Remittance_frequency__c);
+		Account a = [Select Id, Remittance_frequency__c from Account limit 1];
+		System.debug('##Account: '+ a.Remittance_frequency__c);
 
-    	AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
-	    	IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where Name = 'France'].id,
-	        ANG_RTS_Severity__c='Red',
-	        ANG_Send_Email_Agent__c=true ,
-	        ANG_Create_Sidra_Lite__c= true, 
-	        ANG_Remove_Ticketing_Authority__c= true,
-	        recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification')
-     	);
+		AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
+			IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where Name = 'France'].id,
+			ANG_RTS_Severity__c='Red',
+			ANG_Send_Email_Agent__c=true ,
+			ANG_Create_Sidra_Lite__c= true,
+			ANG_Remove_Ticketing_Authority__c= true,
+			recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification')
+	 	);
 
-      	insert csa;
+	  	insert csa;
 
-	    Operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = [SELECT Id FROM AMS_Settlement_System__c WHERE Name = 'BSP-FR'][0].Id, 
-	    	First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
+		Operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = [SELECT Id FROM AMS_Settlement_System__c WHERE Name = 'BSP-FR'][0].Id,
+			First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
 
-	    insert op;
-	    
-	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active', email = 'cooltestcontact@testcontact.com', User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM);
-	    insert con;
+		insert op;
 
-	    //NEWGEN-2005
-	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com', Active__c = true);
+		Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active', email = 'cooltestcontact@testcontact.com', User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM);
+		insert con;
 
-	    test.StartTest();
+		//NEWGEN-2005
+		insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com', Active__c = true);
 
-	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
-		    Recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
-		    ang_Severity__c='Red',
-		    ANG_Account__c = a.Id
-	    );
-	    insert ra;
+		test.StartTest();
 
-	    test.StopTest();
+		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
+			Recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
+			ang_Severity__c='Red',
+			ANG_Account__c = a.Id
+		);
+		insert ra;
 
-	    List<Case> c = [Select Id From Case Where AccountId = :a.Id and RecordType.Name='SIDRA Lite' limit 1];
-	    System.assertEquals(c.size(), 1, 'Sidra lite case was not created');
+		test.StopTest();
 
-	    List<ISSP_Web_Service_Log__c> logs = [Select Id From ISSP_Web_Service_Log__c where Case__c = :c.get(0).Id];
-	    System.assertEquals(logs.size(), 1, 'Response was not saved');
+		List<Case> c = [Select Id From Case Where AccountId = :a.Id and RecordType.Name='SIDRA Lite' limit 1];
+		System.assertEquals(c.size(), 1, 'Sidra lite case was not created');
+
+		List<ISSP_Web_Service_Log__c> logs = [Select Id From ISSP_Web_Service_Log__c where Case__c = :c.get(0).Id];
+		System.assertEquals(logs.size(), 1, 'Response was not saved');
 
   	}
 
   	private static testmethod void testRedAlertCreationNoConfigurationMatched(){
-	    // no configuration for the account country found, so it will use the default one
-	    AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-PT');
-	    insert iss;
+		// no configuration for the account country found, so it will use the default one
+		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-PT');
+		insert iss;
 
-	    IATA_ISO_Country__c  country2= new IATA_ISO_Country__c(
-		    Name = 'Portugal', 
-		    ISO_Code__c = 'PT',
-		    AMS_Settlement_System__c = iss.id,
-		    ANG_Enable_NewGen__c = true
-	    );
+		IATA_ISO_Country__c  country2= new IATA_ISO_Country__c(
+			Name = 'Portugal',
+			ISO_Code__c = 'PT',
+			AMS_Settlement_System__c = iss.id,
+			ANG_Enable_NewGen__c = true
+		);
 
-	    insert country2 ;
+		insert country2 ;
 
-	    AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
-	        IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where iso_code__C='WW'].id,
-	        ANG_Create_Sidra_Lite__c= true, 
-	        ANG_Remove_Ticketing_Authority__c= false,
-	        ANG_Send_Email_Agent__c=false ,
-	        ANG_RTS_Severity__c='Red',
-	        recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification')
-	    );
+		AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
+			IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where iso_code__C='WW'].id,
+			ANG_Create_Sidra_Lite__c= true,
+			ANG_Remove_Ticketing_Authority__c= false,
+			ANG_Send_Email_Agent__c=false ,
+			ANG_RTS_Severity__c='Red',
+			recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification')
+		);
 
-	    insert csa;
+		insert csa;
 
-	    Account a = new Account(
-	    	name='acc1',
-		    Location_Type__c='HE',
-		    Location_Class__c='P',
-		    IATAcode__c = '0000',
-		    Remittance_frequency__c='M',
-		    ANG_Accreditation_Model__c ='Cash',
-		    IATA_ISO_Country__c = country2.id,
-		    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency')
-	    );
-	   	insert a;     	   
+		Account a = new Account(
+			name='acc1',
+			Location_Type__c='HE',
+			Location_Class__c='P',
+			IATAcode__c = '0000',
+			Remittance_frequency__c='M',
+			ANG_Accreditation_Model__c ='Cash',
+			IATA_ISO_Country__c = country2.id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency')
+		);
+	   	insert a;
 
-	    operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id, 
-	    	First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
+		operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id,
+			First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
 
-	    insert op;
-	    
-	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active', email = 'cooltestcontact@testcontact.com', User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM);
-	    insert con;
+		insert op;
 
-	    //NEWGEN-2005
-	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com', Active__c = true);
-	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true);
-	    test.StartTest();
-	    
-	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
-		    Recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
-		    ang_Severity__c='Red',
-		    ANG_Account__c = a.Id
-	    );
-	    insert ra;
-	    
-	    test.StopTest();
-	    
-	    List<Case> c = [Select Id From Case Where AccountId = :a.Id and RecordType.Name='SIDRA Lite' limit 1];
-	    System.assertEquals(c.size(), 1, 'Sidra lite case was not created');
+		Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active', email = 'cooltestcontact@testcontact.com', User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM);
+		insert con;
+
+		//NEWGEN-2005
+		insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com', Active__c = true);
+		insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true);
+		test.StartTest();
+
+		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
+			Recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
+			ang_Severity__c='Red',
+			ANG_Account__c = a.Id
+		);
+		insert ra;
+
+		test.StopTest();
+
+		List<Case> c = [Select Id From Case Where AccountId = :a.Id and RecordType.Name='SIDRA Lite' limit 1];
+		System.assertEquals(c.size(), 1, 'Sidra lite case was not created');
 	}
 
 	private static testmethod void testOrangeAlertCreationNoConfigurationMatched(){
-	    // no configuration for the account country found, so it will use the default one
-	    AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-PT');
-	    insert iss;
+		// no configuration for the account country found, so it will use the default one
+		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-PT');
+		insert iss;
 
-	    IATA_ISO_Country__c  country2= new IATA_ISO_Country__c(
-		    Name = 'Portugal', 
-		    ISO_Code__c = 'PT',
-		    AMS_Settlement_System__c = iss.id,
-		    ANG_Enable_NewGen__c = true
-	    );
+		IATA_ISO_Country__c  country2= new IATA_ISO_Country__c(
+			Name = 'Portugal',
+			ISO_Code__c = 'PT',
+			AMS_Settlement_System__c = iss.id,
+			ANG_Enable_NewGen__c = true
+		);
 
-	    insert country2 ;
+		insert country2 ;
 
-	    AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
-	        IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where iso_code__C='WW'].id,
-	        ANG_Create_Sidra_Lite__c= true, 
-	        ANG_Remove_Ticketing_Authority__c= false,
-	        ANG_Send_Email_Agent__c=false ,
-	        ANG_RTS_Severity__c='Orange',
-	        recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification')
-	    );
+		AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
+			IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where iso_code__C='WW'].id,
+			ANG_Create_Sidra_Lite__c= true,
+			ANG_Remove_Ticketing_Authority__c= false,
+			ANG_Send_Email_Agent__c=false ,
+			ANG_RTS_Severity__c='Orange',
+			recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification')
+		);
 
-	    insert csa;
+		insert csa;
 
-	    Account a = new Account(
-	    	name='acc1',
-		    Location_Type__c='HE',
-		    Location_Class__c='P',
-		    IATAcode__c = '0000',
-		    Remittance_frequency__c='M',
-		    ANG_Accreditation_Model__c ='Cash',
-		    IATA_ISO_Country__c = country2.id,
-		    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency')
-	    );
-	   	insert a;     	   
+		Account a = new Account(
+			name='acc1',
+			Location_Type__c='HE',
+			Location_Class__c='P',
+			IATAcode__c = '0000',
+			Remittance_frequency__c='M',
+			ANG_Accreditation_Model__c ='Cash',
+			IATA_ISO_Country__c = country2.id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency')
+		);
+	   	insert a;
 
-	    operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id, 
-	    	First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
+		operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id,
+			First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
 
-	    insert op;
-	    
-	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active');
-	    insert con;
+		insert op;
 
-	    //NEWGEN-2005
-	    insert new RTS_Senior_Manager__c(Name = 'Test1', Email__c = 'test.2005@yopmail.com');
-	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true);
-	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test3', Email__c = 'test1@iata.org', Active__c = true);
-	    
-	    
-	    test.StartTest();
-	    
-	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
-		    Recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
-		    ang_Severity__c='Orange',
-		    ANG_Account__c = a.Id
-	    );
-	    insert ra;
-	    
-	    test.StopTest();
+		Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active');
+		insert con;
+
+		//NEWGEN-2005
+		insert new RTS_Senior_Manager__c(Name = 'Test1', Email__c = 'test.2005@yopmail.com');
+		insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true);
+		insert new RTS_Orange_Senior_Manager__c(Name = 'Test3', Email__c = 'test1@iata.org', Active__c = true);
+
+
+		test.StartTest();
+
+		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
+			Recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
+			ang_Severity__c='Orange',
+			ANG_Account__c = a.Id
+		);
+		insert ra;
+
+		test.StopTest();
 	}
 
 }
