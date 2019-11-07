@@ -1789,6 +1789,10 @@
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
+        <label>Вы можете представить свои измененные данные счета через &lt;a href= &apos;/s/support-reach-us&apos;&gt;страницу &quot;Связаться с нами&quot; &lt;/а&gt;</label>
+        <name>CSP_Airline_Changes_Access</name>
+    </customLabels>
+    <customLabels>
         <label>Новость</label>
         <name>CSP_Announcement</name>
     </customLabels>
@@ -1807,6 +1811,10 @@
     <customLabels>
         <label>Расширенный поиск</label>
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Детали случая</label>
+        <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
         <label>Профиль компании</label>
@@ -1839,6 +1847,10 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы и ИАТА</label>
+        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>Отменить</label>
@@ -1897,6 +1909,10 @@
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
+        <label>Вы можете загрузить свои измененные данные учетной записи с помощью сервиса &quot;Аккредитация ИАТА и изменения&quot;.</label>
+        <name>CSP_CompanyAdministration_Link</name>
+    </customLabels>
+    <customLabels>
         <label>Посмотреть случаи моей компании</label>
         <name>CSP_CompanyCases</name>
     </customLabels>
@@ -1923,6 +1939,10 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>Создано</label>
+        <name>CSP_CreatedOn</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_DateFrom --></label>
@@ -2045,12 +2065,20 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
+        <label>Последнее обновление</label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>Выйти</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
         <label>Вы можете управлять пользователями из списка ниже.</label>
         <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>Управление получателями</label>
+        <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
         <label>Управление услугой</label>
@@ -2183,6 +2211,10 @@
     <customLabels>
         <label>Текущие случаи</label>
         <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>Получатели</label>
+        <name>CSP_Recipients</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
@@ -2421,6 +2453,14 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt; Нажмите здесь, чтобы получить быстрый доступ к &quot;Аккредитация ИАТА и изменения&quot; &lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt; Нажмите здесь, чтобы запросить &quot;Аккредитация ИАТА и изменения&quot; &lt;/а&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
         <label>Тип случая</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
@@ -2459,6 +2499,18 @@
     <customLabels>
         <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы и ИАТА</label>
+        <name>CSP_YouAndIATA</name>
+    </customLabels>
+    <customLabels>
+        <label>Избранные моменты для вас</label>
+        <name>CSP_YouIATA_Highlights</name>
+    </customLabels>
+    <customLabels>
+        <label>Здесь Вы можете найти широкий спектр услуг ИАТА, публикаций, продуктов и ресурсов по авиационной отрасли. Специально собрано для Вас с учетом Ваших интересов и истории деятельности.</label>
+        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -12491,7 +12543,7 @@
         <name>ISSP_Account_not_approved</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Одобрить</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
@@ -13277,7 +13329,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_Deny_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Description --></label>
+        <label>Описание</label>
         <name>ISSP_Description</name>
     </customLabels>
     <customLabels>
@@ -14698,7 +14750,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Утвердить как администратор</label>
         <name>ISSP_MakeAdmin</name>
     </customLabels>
     <customLabels>
@@ -20405,6 +20457,10 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
+        <label>Дополнительные детали</label>
+        <name>csp_AdditionalDetails</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Request New Service --></label>
         <name>csp_AgencyReadOnly</name>
     </customLabels>
@@ -20691,6 +20747,10 @@ IATA Treasury Dashboard — динамичный информационный в
     <customLabels>
         <label>Поддержка</label>
         <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>Кто-нибудь еще должен быть проинформирован?</label>
+        <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>
         <label>Ваше агентство в настоящее время не имеет открытый аккаунт Международной ассоциации воздушного транспорта EasyPay. &lt;br/&gt;&lt;br/&gt;Пожалуйста, свяжитесь с уполномоченным подписантом Вашего головного офиса, чтобы попросить их открыть аккаунт Международной ассоциации воздушного транспорта EasyPay. Как администратор портала Вы можете или обновить &lt;a href=&quot;/my-profile&quot;&gt;Личную информацию&lt;/a&gt; и назначить себя уполномоченным подписчиком, или назначьте правильного администратора портала на странице &lt;a href=&quot;/company-profile&quot;&gt;Администрации компании -&gt; Контакты&lt;/a&gt; и попросите их открыть Ваш аккаунт EasyPay.&lt;br/&gt;&lt;br/&gt;Пожалуйста, &lt;a href=&quot;/Support-Reach-Us&quot;&gt;свяжитесь со службой поддержки&lt;/а&gt;, если Вам понадобится помощь.</label>

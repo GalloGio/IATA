@@ -46,7 +46,7 @@
                                     </lightning-combobox>
                                 </lightning-layout-item>
                             </div>
-                            <div class="slds-col slds-size_1-of-1">
+                            <div if:true={inactiveStatus} class="slds-col slds-size_1-of-1">
                                 <label class="form-label text-bold">
                                     {reasonLabel}
                                 </label>
